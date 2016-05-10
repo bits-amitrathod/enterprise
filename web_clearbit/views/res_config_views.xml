@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherited_clearbit_view_general_configuration" model="ir.ui.view">
+        <field name="name">General Settings</field>
+        <field name="model">base.config.settings</field>
+        <field name="inherit_id" ref="base_setup.view_general_configuration" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='google_analytics']" position="after">
+                <group string="Clearbit Integration" name="google">
+                    <label for="id" string="Use Clearbit"/>
+                    <div name="web_clearbit">
+                        <div name="module_web_clearbit">
+                            <field name="module_web_clearbit" class="oe_inline"/>
+                            <label for="module_web_clearbit"/>
+                        </div>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

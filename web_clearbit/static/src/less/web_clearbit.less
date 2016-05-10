@@ -1,0 +1,34 @@
+.o_clearbit_dropdown_box {
+    position: absolute;
+    ul {
+        display: block;
+        li {
+            width: 300px;
+            padding: 7px 7px 3px 7px;
+            .o_clearbit_image {
+                position: absolute;
+                height: 30px;
+                width: 30px;
+            }
+            .o_clearbit_info {
+                margin-left: 36px;
+                font-size: 12px;
+                white-space: nowrap;
+                .o_clearbit_name {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    font-weight: bold;
+                }
+                .o_clearbit_domain {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    font-weight: normal;
+                }
+            }
+            &.active {
+                background-color: #F5F5F5;
+                cursor: pointer;
+            }
+        }
+    }
+}
