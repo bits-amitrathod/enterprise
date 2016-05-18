@@ -22,6 +22,11 @@
                             <field name="ups_package_weight_unit" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
                             <field name="ups_package_dimension_unit" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
                             <field name="ups_bill_my_account" attrs="{'invisible': [('delivery_type', '!=', 'ups')]}"/>
+                            <group string="Value Added Services" colspan="4">
+                                <field name="ups_saturday_delivery" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_default_service_type', 'in', ['03','11','13','59','12','65','08'])]}"/>
+                                <field name="ups_cod" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_default_service_type', '=', '96')]}"/>
+                                <field name="ups_cod_funds_code" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_cod', '=', False)]}" widget="radio"/>
+                            </group>
                         </group>
                     </group>
                 </page>
@@ -29,4 +34,14 @@
         </field>
     </record>
 
+    <record id="view_picking_withcarrier_out_form_inherit_delivery_ups" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.ups</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='carrier_id']" position="attributes">
+                <attribute name="domain">[('ups_cod', '=', False)]</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>

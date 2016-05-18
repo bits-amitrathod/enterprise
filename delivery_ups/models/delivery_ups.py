@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, fields, _
+from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError
 from odoo.tools import pycompat
 
@@ -44,6 +44,19 @@ class ProviderUPS(models.Model):
                                            string="UPS Label File Type", default='GIF', oldname='x_label_file_type')
     ups_bill_my_account = fields.Boolean(string='Bill My Account', help="When user select Bill my account checkbox,\n"
                                      "He will be asked to enter account number as bill may account used to charge customer's account")
+    ups_cod = fields.Boolean(string='Collect on delivery',
+        help='This value added service enables UPS to collect the payment of the shipment from your customer.')
+    ups_saturday_delivery = fields.Boolean(string='Saturday Delivery',
+        help='This value added service will allow you to ship the package on saturday also.')
+    ups_cod_funds_code = fields.Selection(selection=[
+        ('0', "Check, Cashier's Check or MoneyOrder"),
+        ('8', "Cashier's Check or MoneyOrder"),
+        ], string='COD Funding Option', default='0')
+
+    @api.onchange('ups_default_service_type')
+    def on_change_service_type(self):
+        self.ups_cod = False
+        self.ups_saturday_delivery = False
 
     def ups_get_shipping_price_from_so(self, order):
         superself = self.sudo()
@@ -71,11 +84,22 @@ class ProviderUPS(models.Model):
         shipment_info = {
             'total_qty': total_qty  # required when service type = 'UPS Worldwide Express Freight'
         }
+
+        if self.ups_cod:
+            cod_info = {
+                'currency': order.partner_id.country_id.currency_id.name,
+                'monetary_value': order.amount_total,
+                'funds_code': self.ups_cod_funds_code,
+            }
+        else:
+            cod_info = None
+
         srm.check_required_value(order.company_id.partner_id, order.warehouse_id.partner_id, order.partner_shipping_id, order=order)
         ups_service_type = order.ups_service_type or self.ups_default_service_type
         result = srm.get_shipping_price(
             shipment_info=shipment_info, packages=packages, shipper=order.company_id.partner_id, ship_from=order.warehouse_id.partner_id,
-            ship_to=order.partner_shipping_id, packaging_type=self.ups_default_packaging_id.shipper_package_code, service_type=ups_service_type)
+            ship_to=order.partner_shipping_id, packaging_type=self.ups_default_packaging_id.shipper_package_code, service_type=ups_service_type,
+            saturday_delivery=self.ups_saturday_delivery, cod_info=cod_info)
 
         if result.get('error_message'):
             raise ValidationError(result['error_message'])
@@ -121,13 +145,23 @@ class ProviderUPS(models.Model):
             }
             ups_service_type = picking.ups_service_type or self.ups_default_service_type
             ups_carrier_account = picking.ups_carrier_account
+
+            if picking.carrier_id.ups_cod:
+                cod_info = {
+                    'currency': picking.partner_id.country_id.currency_id.name,
+                    'monetary_value': picking.sale_id.amount_total,
+                    'funds_code': self.ups_cod_funds_code,
+                }
+            else:
+                cod_info = None
+
             srm.check_required_value(picking.company_id.partner_id, picking.picking_type_id.warehouse_id.partner_id, picking.partner_id, picking=picking)
 
             package_type = picking.package_ids and picking.package_ids[0].packaging_id.shipper_package_code or self.ups_default_packaging_id.shipper_package_code
             result = srm.send_shipping(
                 shipment_info=shipment_info, packages=packages, shipper=picking.company_id.partner_id, ship_from=picking.picking_type_id.warehouse_id.partner_id,
-                ship_to=picking.partner_id, packaging_type=package_type, service_type=ups_service_type, label_file_type=self.ups_label_file_type, ups_carrier_account=ups_carrier_account)
-
+                ship_to=picking.partner_id, packaging_type=package_type, service_type=ups_service_type, label_file_type=self.ups_label_file_type, ups_carrier_account=ups_carrier_account,
+                saturday_delivery=picking.carrier_id.ups_saturday_delivery, cod_info=cod_info)
             if result.get('error_message'):
                 raise ValidationError(result['error_message'])
 

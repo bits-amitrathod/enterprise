@@ -235,7 +235,7 @@ class UPSRequest():
         else:
             return binascii.a2b_base64(image64)
 
-    def set_package_detail(self, client, packages, packaging_type, namespace, ship_from, ship_to):
+    def set_package_detail(self, client, packages, packaging_type, namespace, ship_from, ship_to, cod_info):
         Packages = []
         for i, p in enumerate(packages):
             package = client.factory.create('{}:PackageType'.format(namespace))
@@ -249,6 +249,11 @@ class UPSRequest():
                 package.Dimensions.Length = p.dimension['length'] or ''
                 package.Dimensions.Width = p.dimension['width'] or ''
                 package.Dimensions.Height = p.dimension['height'] or ''
+
+            if cod_info:
+                package.PackageServiceOptions.COD.CODFundsCode = str(cod_info['funds_code'])
+                package.PackageServiceOptions.COD.CODAmount.MonetaryValue = cod_info['monetary_value']
+                package.PackageServiceOptions.COD.CODAmount.CurrencyCode = cod_info['currency']
 
             package.PackageWeight.UnitOfMeasurement.Code = p.weight_unit or ''
             package.PackageWeight.Weight = p.weight or ''
@@ -265,7 +270,7 @@ class UPSRequest():
             Packages.append(package)
         return Packages
 
-    def get_shipping_price(self, shipment_info, packages, shipper, ship_from, ship_to, packaging_type, service_type):
+    def get_shipping_price(self, shipment_info, packages, shipper, ship_from, ship_to, packaging_type, service_type, saturday_delivery, cod_info):
         client = self._set_client(self.rate_wsdl, 'Rate', 'RateRequest')
 
         request = client.factory.create('ns0:RequestType')
@@ -278,7 +283,7 @@ class UPSRequest():
         namespace = 'ns2'
         shipment = client.factory.create('{}:ShipmentType'.format(namespace))
 
-        for package in self.set_package_detail(client, packages, packaging_type, namespace, ship_from, ship_to):
+        for package in self.set_package_detail(client, packages, packaging_type, namespace, ship_from, ship_to, cod_info):
             shipment.Package.append(package)
 
         shipment.Shipper.Name = shipper.name or ''
@@ -315,7 +320,12 @@ class UPSRequest():
         shipment.Service.Description = 'Service Code'
         if service_type == "96":
             shipment.NumOfPieces = int(shipment_info.get('total_qty'))
-        shipment.ShipmentServiceOptions = ''
+
+        if saturday_delivery:
+            shipment.ShipmentServiceOptions.SaturdayDeliveryIndicator = saturday_delivery
+        else:
+            shipment.ShipmentServiceOptions = ''
+
         shipment.ShipmentRatingOptions.NegotiatedRatesIndicator = suds.null()
 
         try:
@@ -345,8 +355,7 @@ class UPSRequest():
         except IOError as e:
             return self.get_error_message('0', 'UPS Server Not Found:\n%s' % e)
 
-    def send_shipping(self, shipment_info, packages, shipper, ship_from, ship_to, packaging_type, service_type, label_file_type='GIF', ups_carrier_account=False):
-
+    def send_shipping(self, shipment_info, packages, shipper, ship_from, ship_to, packaging_type, service_type, saturday_delivery, cod_info=None, label_file_type='GIF', ups_carrier_account=False):
         client = self._set_client(self.ship_wsdl, 'Ship', 'ShipmentRequest')
 
         request = client.factory.create('ns0:RequestType')
@@ -364,7 +373,7 @@ class UPSRequest():
         shipment = client.factory.create('{}:ShipmentType'.format(namespace))
         shipment.Description = shipment_info.get('description')
 
-        for package in self.set_package_detail(client, packages, packaging_type, namespace, ship_from, ship_to):
+        for package in self.set_package_detail(client, packages, packaging_type, namespace, ship_from, ship_to, cod_info):
             shipment.Package.append(package)
 
         shipment.Shipper.AttentionName = shipper.name or ''
@@ -404,7 +413,6 @@ class UPSRequest():
         shipment.Service.Description = 'Service Code'
         if service_type == "96":
             shipment.NumOfPiecesInShipment = int(shipment_info.get('total_qty'))
-        shipment.ShipmentServiceOptions = ''
         shipment.ShipmentRatingOptions.NegotiatedRatesIndicator = suds.null()
 
         # Shipments from US to CA or PR require extra info
@@ -426,6 +434,11 @@ class UPSRequest():
 
         payment_info.ShipmentCharge = shipcharge
         shipment.PaymentInformation = payment_info
+
+        if saturday_delivery:
+            shipment.ShipmentServiceOptions.SaturdayDeliveryIndicator = saturday_delivery
+        else:
+            shipment.ShipmentServiceOptions = ''
 
         try:
             response = client.service.ProcessShipment(
