@@ -90,7 +90,7 @@ class FedexRequest():
         self.RequestedShipment.Recipient.Contact = Contact
         self.RequestedShipment.Recipient.Address = Address
 
-    def shipment_request(self, dropoff_type, service_type, packaging_type, overall_weight_unit):
+    def shipment_request(self, dropoff_type, service_type, packaging_type, overall_weight_unit, saturday_delivery):
         self.RequestedShipment = self.client.factory.create('RequestedShipment')
         self.RequestedShipment.ShipTimestamp = datetime.now()
         self.RequestedShipment.DropoffType = dropoff_type
@@ -105,6 +105,11 @@ class FedexRequest():
         self.RequestedShipment.TotalWeight.Units = overall_weight_unit
         self.RequestedShipment.TotalWeight.Value = 0
         self.listCommodities = []
+        if saturday_delivery:
+            timestamp_day = self.RequestedShipment.ShipTimestamp.strftime("%A")
+            if (service_type == 'FEDEX_2_DAY' and timestamp_day == 'Thursday') or (service_type in ['PRIORITY_OVERNIGHT', 'FIRST_OVERNIGHT', 'INTERNATIONAL_PRIORITY'] and timestamp_day == 'Friday'):
+                SpecialServiceTypes = self.client.factory.create('ShipmentSpecialServiceType')
+                self.RequestedShipment.SpecialServicesRequested.SpecialServiceTypes = [SpecialServiceTypes.SATURDAY_DELIVERY]
 
     def set_currency(self, currency):
         self.RequestedShipment.PreferredCurrency = currency

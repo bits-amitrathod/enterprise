@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
 
-from odoo import models, fields, _
+from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError
 
 from fedex_request import FedexRequest
@@ -67,6 +67,13 @@ class ProviderFedex(models.Model):
                                               ('PNG', 'PNG'),
                                               ('ZPLII', 'ZPLII')],
                                              default='PDF', string="FEDEX Label File Type", oldname='x_fedex_label_file_type')
+    fedex_saturday_delivery = fields.Boolean(string="Saturday Delivery", help="""Special service:Saturday Delivery, can be requested on following days.
+                                                                                 Thursday:\n1.FEDEX_2_DAY.\nFriday:\n1.PRIORITY_OVERNIGHT.\n2.FIRST_OVERNIGHT.
+                                                                                 3.INTERNATIONAL_PRIORITY.\n(To Select Countries)""")
+
+    @api.onchange('fedex_service_type')
+    def on_change_fedex_service_type(self):
+        self.fedex_saturday_delivery = False
 
     def fedex_get_shipping_price_from_so(self, orders):
         res = []
@@ -86,7 +93,7 @@ class ProviderFedex(models.Model):
 
             # Build basic rating request and set addresses
             srm.transaction_detail(order.name)
-            srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, self.fedex_default_packaging_id.shipper_package_code, self.fedex_weight_unit)
+            srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, self.fedex_default_packaging_id.shipper_package_code, self.fedex_weight_unit, self.fedex_saturday_delivery)
             order_currency = order.currency_id
             srm.set_currency(order_currency.name)
             srm.set_shipper(order.company_id.partner_id, order.warehouse_id.partner_id)
@@ -144,7 +151,7 @@ class ProviderFedex(models.Model):
             picking.check_packages_are_identical()
 
             package_type = picking.package_ids and picking.package_ids[0].packaging_id.shipper_package_code or self.fedex_default_packaging_id.shipper_package_code
-            srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, package_type, self.fedex_weight_unit)
+            srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, package_type, self.fedex_weight_unit, self.fedex_saturday_delivery)
             srm.set_currency(picking.company_id.currency_id.name)
             srm.set_shipper(picking.company_id.partner_id, picking.picking_type_id.warehouse_id.partner_id)
             srm.set_recipient(picking.partner_id)
