@@ -498,7 +498,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     _renderTagSheet: function (node) {
         var $result = this._super.apply(this, arguments);
         var formEditorHook = this._renderHook(node, 'inside', '', 'insideSheet');
-        formEditorHook.appendTo($result.find('.o_form_sheet'));
+        formEditorHook.appendTo($result);
         return $result;
     },
     /**
