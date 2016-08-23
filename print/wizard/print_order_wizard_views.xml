@@ -34,16 +34,8 @@
                         </group>
                     </sheet>
                     <footer>
-                        <group>
-                            <span>
-                                <span attrs="{'invisible':[('error_message','!=', False)]}">
-
-                                    <button string="Send" type="object" class="oe_highlight" name="action_apply"/>
-                                    or
-                                </span>
-                                <button string="Cancel" class="oe_link" special="cancel" />
-                            </span>
-                        </group>
+                        <button string="Send" type="object" class="oe_highlight" name="action_apply" attrs="{'invisible':[('error_message','!=', False)]}"/>
+                        <button string="Cancel" class="btn btn-default" special="cancel" />
                     </footer>
                 </form>
             </field>
