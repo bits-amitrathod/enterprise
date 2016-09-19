@@ -887,7 +887,7 @@ var GanttView = View.extend({
                     });
                 }},
 
-                {text: task.active ? _lt("Archive") : _lt("Unarchive"), classes: _.isUndefined(task.active)  ? 'hidden' : 'btn-default', close: true, click: function () {
+                {text: task.active ? _lt("Archive") : _lt("Restore"), classes: _.isUndefined(task.active)  ? 'hidden' : 'btn-default', close: true, click: function () {
                     self.dataset.write(task_id, {active: !task.active})
                         .then(function () {
                             self.reload();

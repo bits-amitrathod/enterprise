@@ -128,7 +128,7 @@
   </record>
 
   <record id="project_forecast_server_action_archive" model="ir.actions.server">
-    <field name="name">Archive/Unarchive</field>
+    <field name="name">Archive/Restore</field>
     <field name="condition">True</field>
     <field name="type">ir.actions.server</field>
     <field name="model_id" ref="model_project_forecast" />
@@ -140,7 +140,7 @@
 </record>
 
 <record id="project_forecast_ir_values_archive" model="ir.values">
-    <field name="name">Archive/Unarchive</field>
+    <field name="name">Archive/Restore</field>
     <field name="action_id" ref="project_forecast_server_action_archive" />
     <field name="value" eval="'ir.actions.server,' + str(ref('project_forecast_server_action_archive'))"/>
     <field name="key">action</field>

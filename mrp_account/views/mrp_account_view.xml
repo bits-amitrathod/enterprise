@@ -53,11 +53,11 @@
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user'))]"/>
             <field name="arch" type="xml">
-                <div name="button_box" position="inside">
+                <button name="toggle_active" position="before">
                     <button name="%(mrp_account.action_cost_struct_product_template)d" type="action"
                         class="oe_stat_button" icon="fa-dollar" string="Cost Analysis" attrs="{'invisible': [('mo_count', '=', 0)]}">
                     </button>
-                </div>
+                </button>
             </field>
         </record>
 

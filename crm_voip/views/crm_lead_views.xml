@@ -53,14 +53,14 @@
       <field name="model">crm.lead</field>
       <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
       <field name="arch" type="xml">
-        <div class="oe_button_box" name="button_box" position="inside">
+        <button name="toggle_active" position="before">
           <button class="oe_stat_button" type="object" name="log_new_phonecall" icon="fa-phone" context="{'default_show_duration': True}">
             <span class="o_stat_text">Log a Call</span>
           </button>
           <button class="oe_stat_button" type="object" name="create_custom_call_in_queue" icon="fa-phone">
             <span class="o_stat_text">Schedule Call</span>
           </button>
-        </div>
+        </button>
       </field>
     </record>
   

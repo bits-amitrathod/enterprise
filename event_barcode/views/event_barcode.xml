@@ -11,7 +11,7 @@
         <field name="inherit_id" ref="event.view_event_form"/>
         <field name="model">event.event</field>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='toggle_active']" position="after">
+            <xpath expr="//button[@name='toggle_active']" position="before">
                 <button name="%(event_barcode_action_main_view)d" type="action" class="oe_stat_button" icon="fa-barcode" string="Barcode Interface"/>
             </xpath>
         </field>
