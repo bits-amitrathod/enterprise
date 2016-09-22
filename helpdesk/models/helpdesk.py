@@ -2,7 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+import random
+
 from dateutil import relativedelta
+
 from odoo import api, fields, models, _, tools
 from odoo.exceptions import UserError, AccessError, ValidationError
 
@@ -21,31 +24,33 @@ class HelpdeskTeam(models.Model):
     _description = "Helpdesk Team"
     _order = 'sequence,name'
 
-    name = fields.Char(string='Helpdesk Team', required=True, translate=True)
-    description = fields.Text(string='About Team', translate=True)
-    company_id = fields.Many2one('res.company', string='Company')
+    name = fields.Char('Helpdesk Team', required=True, translate=True)
+    description = fields.Text('About Team', translate=True)
+    company_id = fields.Many2one(
+        'res.company', string='Company',
+        default=lambda self: self.env['res.company']._company_default_get('helpdesk.team'))
     sequence = fields.Integer(default=10)
     color = fields.Integer('Color Index')
-    stage_ids = fields.Many2many('helpdesk.stage', relation='team_stage_rel', string='Stages', default=[(0, 0, {'name': 'New', 'sequence': 0})],
+    stage_ids = fields.Many2many(
+        'helpdesk.stage', relation='team_stage_rel', string='Stages',
+        default=[(0, 0, {'name': 'New', 'sequence': 0})],
         help="Stages the team will use. This team's tickets will only be able to be in these stages.")
     assign_method = fields.Selection([
         ('manual', 'Manually'),
         ('randomly', 'Randomly'),
-        ('balanced', 'Balanced'),
-    ], string='Assignation Method', required=True, default='manual',
-        help='''Automatic assignation method for new tickets:
-
-        Manually: manual
-        Randomly: randomly but everyone gets the same amount
-        Balanced: to the person with the least amount of open tickets''')
+        ('balanced', 'Balanced')], string='Assignation Method',
+        default='manual', required=True,
+        help='Automatic assignation method for new tickets:\n'
+             '\tManually: manual\n'
+             '\tRandomly: randomly but everyone gets the same amount\n'
+             '\tBalanced: to the person with the least amount of open tickets')
     member_ids = fields.Many2many('res.users', string='Team Members')
     ticket_ids = fields.One2many('helpdesk.ticket', 'team_id', string='Tickets')
 
     use_alias = fields.Boolean('Email alias')
     use_website_helpdesk_form = fields.Boolean('Website Form')
     use_website_helpdesk_livechat = fields.Boolean('Live chat',
-        help="""In Channel: You can create a new ticket by typing "/helpdesk [ticket title]". \
-        You can search ticket by typing "/helpdesk_search [Keyword1],[Keyword2],etc".""")
+        help="In Channel: You can create a new ticket by typing /helpdesk [ticket title]. You can search ticket by typing /helpdesk_search [Keyword1],[Keyword2],.")
     use_website_helpdesk_forum = fields.Boolean('Help Center')
     use_website_helpdesk_slides = fields.Boolean('eLearning')
     use_website_helpdesk_rating = fields.Boolean('Website Rating')
@@ -53,8 +58,8 @@ class HelpdeskTeam(models.Model):
     use_api = fields.Boolean('API')
     use_rating = fields.Boolean('Ratings')
     use_sla = fields.Boolean('SLA Policies')
-    upcoming_sla_fail_tickets = fields.Integer(string='Upcoming SLA Fail Tickets', compute='_count_upcoming_sla_fail_tickets')
-
+    upcoming_sla_fail_tickets = fields.Integer(string='Upcoming SLA Fail Tickets', compute='_compute_upcoming_sla_fail_tickets')
+    unassigned_tickets = fields.Integer(string='Unassigned Tickets', compute='_compute_unassigned_tickets')
     percentage_satisfaction = fields.Integer(
         compute="_compute_percentage_satisfaction", string="% Happy", store=True, default=-1)
 
@@ -66,14 +71,23 @@ class HelpdeskTeam(models.Model):
             team.percentage_satisfaction = activities['great'] * 100 / total_activity_values if total_activity_values else -1
 
     @api.multi
-    def _count_upcoming_sla_fail_tickets(self):
-        Ticket = self.env['helpdesk.ticket']
+    def _compute_upcoming_sla_fail_tickets(self):
+        ticket_data = self.env['helpdesk.ticket'].read_group([
+            ('sla_active', '=', True),
+            ('team_id', 'in', self.ids),
+            ('deadline', '!=', False),
+            ('deadline', '<=', fields.Datetime.to_string((datetime.date.today() + relativedelta.relativedelta(days=1)))),
+        ], ['team_id'], ['team_id'])
+        mapped_data = dict((data['team_id'][0], data['team_id_count']) for data in ticket_data)
         for team in self:
-            team.upcoming_sla_fail_tickets = Ticket.search_count([
-                ('sla_active', '=', True),
-                ('deadline', '!=', False),
-                ('deadline', '<=', fields.Datetime.to_string((datetime.date.today() + relativedelta.relativedelta(days=1)))),
-                ('team_id', '=', team.id)])
+            team.upcoming_sla_fail_tickets = mapped_data.get(team.id, 0)
+
+    @api.multi
+    def _compute_unassigned_tickets(self):
+        ticket_data = self.env['helpdesk.ticket'].read_group([('user_id', '=', False), ('team_id', 'in', self.ids)], ['team_id'], ['team_id'])
+        mapped_data = dict((data['team_id'][0], data['team_id_count']) for data in ticket_data)
+        for team in self:
+            team.unassigned_tickets = mapped_data.get(team.id, 0)
 
     @api.onchange('member_ids')
     def _onchange_member_ids(self):
@@ -88,11 +102,11 @@ class HelpdeskTeam(models.Model):
     @api.onchange('use_alias')
     def _onchange_use_alias(self):
         if not self.alias_name:
-            self.alias_name = self.name if self.use_alias else False
+            self.alias_name = self.env['mail.alias']._clean_and_make_unique(self.name) if self.use_alias else False
 
     @api.model
     def create(self, vals):
-        team = super(HelpdeskTeam, self).create(vals)
+        team = super(HelpdeskTeam, self.with_context(mail_create_nolog=True, mail_create_nosubscribe=True)).create(vals)
         team._check_modules_to_install()
         team._check_sla_group()
         return team
@@ -103,6 +117,12 @@ class HelpdeskTeam(models.Model):
         self._check_modules_to_install()
         self._check_sla_group()
         return result
+
+    @api.multi
+    def unlink(self):
+        stages = self.mapped('stage_ids').filtered(lambda stage: stage.team_ids <= self)
+        stages.unlink()
+        return super(HelpdeskTeam, self).unlink()
 
     @api.multi
     def _check_sla_group(self):
@@ -288,6 +308,18 @@ class HelpdeskTeam(models.Model):
         else:
             raise UserError(_('This target does not exist.'))
 
+    @api.multi
+    def get_new_user(self):
+        self.ensure_one()
+        new_user = self.env['res.users']
+        if self.assign_method == 'randomly':
+            new_user = random.choice(self.member_ids)
+        elif self.assign_method == 'balanced':
+            read_group_res = self.env['helpdesk.ticket'].read_group([('stage_id.is_close', '=', False), ('user_id', 'in', self.member_ids.ids)], ['user_id'], ['user_id'])
+            count_dict = dict((data['user_id'][0], data['user_id_count']) for data in read_group_res)
+            new_user = self.env['res.users'].browse(min(count_dict, key=count_dict.get))
+        return new_user
+
 
 class HelpdeskStage(models.Model):
     _name = 'helpdesk.stage'
@@ -300,12 +332,21 @@ class HelpdeskStage(models.Model):
             return [(4, team_id, 0)]
 
     name = fields.Char(required=True)
-    sequence = fields.Integer(string='Sequence', default=10)
-    is_close = fields.Boolean(string='Is a closed stage')
-    fold = fields.Boolean(string='Folded')
-    team_ids = fields.Many2many('helpdesk.team', relation='team_stage_rel', string='Team', default=_get_default_team_ids, groups="base.group_no_one",
+    sequence = fields.Integer('Sequence', default=10)
+    is_close = fields.Boolean(
+        'Closing Kanban Stage',
+        help='Tickets in this stage are considered as done. This is used notably when'
+             'computing SLAs and KPIs on tickets.')
+    fold = fields.Boolean(
+        'Folded', help='Folded in kanban view')
+    team_ids = fields.Many2many(
+        'helpdesk.team', relation='team_stage_rel', string='Team',
+        default=_get_default_team_ids, groups="base.group_no_one",
         help='Specific team that uses this stage. Other teams will not be able to see or use this stage.')
-    template_id = fields.Many2one('mail.template', string="Email Template for Automated Answer", domain="[('model', '=', 'helpdesk.ticket')]")
+    template_id = fields.Many2one(
+        'mail.template', 'Automated Answer Email Template',
+        domain="[('model', '=', 'helpdesk.ticket')]",
+        help="Automated email sent to the ticket's customer when the ticket reaches this stage.")
 
 
 class HelpdeskTicketType(models.Model):
@@ -339,18 +380,22 @@ class HelpdeskSLA(models.Model):
     _order = "name"
     _description = "Helpdesk SLA Policies"
 
-    name = fields.Char(string='SLA Policy Name', required=True, index=True)
-    description = fields.Text(string='SLA Policy Description')
-    active = fields.Boolean(string='Active', default=True)
-    team_id = fields.Many2one('helpdesk.team', string='Team', required=True)
-    ticket_type_id = fields.Many2one('helpdesk.ticket.type', string="Ticket Type", help="Only apply the SLA to a specific ticket type. If left empty it will apply to all types.")
-    stage_id = fields.Many2one('helpdesk.stage', string='Stage', required=True)
-    priority = fields.Selection(TICKET_PRIORITY, string='Minimum Priority', required=True, default='0')
-    company_id = fields.Many2one(related='team_id.company_id', string='Company', store=True, readonly=True)
-
-    time_days = fields.Integer(string='Days', help="Time to reach given stage based on ticket creation date")
-    time_hours = fields.Integer(string='Hours', help="Time to reach given stage based on ticket creation date")
-    time_minutes = fields.Integer(string='Minutes', help="Time to reach given stage based on ticket creation date")
+    name = fields.Char('SLA Policy Name', required=True, index=True)
+    description = fields.Text('SLA Policy Description')
+    active = fields.Boolean('Active', default=True)
+    team_id = fields.Many2one('helpdesk.team', 'Team', required=True)
+    ticket_type_id = fields.Many2one(
+        'helpdesk.ticket.type', "Ticket Type",
+        help="Only apply the SLA to a specific ticket type. If left empty it will apply to all types.")
+    stage_id = fields.Many2one('helpdesk.stage', 'Stage', required=True)
+    priority = fields.Selection(
+        TICKET_PRIORITY, string='Minimum Priority',
+        default='0', required=True,
+        help='Tickets under this priority will not be taken into account.')
+    company_id = fields.Many2one('res.company', 'Company', related='team_id.company_id', readonly=True, store=True)
+    time_days = fields.Integer('Days', help="Days to reach given stage based on ticket creation date")
+    time_hours = fields.Integer('Hours', help="Hours to reach given stage based on ticket creation date")
+    time_minutes = fields.Integer('Minutes', help="Minutes to reach given stage based on ticket creation date")
 
 
 class HelpdeskTicket(models.Model):
@@ -358,60 +403,50 @@ class HelpdeskTicket(models.Model):
     _description = 'Ticket'
     _order = 'priority desc, id desc'
     _inherit = ['mail.thread', 'ir.needaction_mixin', 'utm.mixin', 'rating.mixin']
-    _mail_mass_mailing = _('Tickets')
+
+    @api.model
+    def default_get(self, fields):
+        res = super(HelpdeskTicket, self).default_get(fields)
+        if res.get('team_id'):
+            update_vals = self._onchange_team_get_values(self.env['helpdesk.team'].browse(res['team_id']))
+            if (not fields or 'user_id' in fields) and 'user_id' not in res:
+                res['user_id'] = update_vals['user_id']
+            if (not fields or 'stage_id' in fields) and 'stage_id' not in res:
+                res['stage_id'] = update_vals['stage_id']
+        return res
 
     def _default_team_id(self):
         return self._context.get('default_team_id')
 
-    def _default_stage_id(self):
-        team_id = self._default_team_id()
-        if team_id:
-            return self.env['helpdesk.stage'].search([('team_ids', 'in', team_id)], order='sequence', limit=1).id
-
-    @api.multi
-    def _read_group_stage_ids(self, domain, read_group_order=None, access_rights_uid=None):
-        access_rights_uid = access_rights_uid or self._uid
-        stage_obj = self.env['helpdesk.stage']
-        order = stage_obj._order
-        # lame hack to allow reverting search, should just work in the trivial case
-        if read_group_order == 'stage_id desc':
-            # remove duplicate word
-            # example: YoMama desc desc
-            # result after join: YoMama desc
-            order = "%s desc" % order
-            words = order.split()
-            order = " ".join(sorted(set(words), key=words.index))
-        # write the domain (reminder: self.ids aren't ticket ids but stage ids)
-        # - ('id', 'in', 'ids'): add columns that should be present
+    @api.model
+    def _read_group_stage_ids(self, stages, domain, order):
+        # write the domain
+        # - ('id', 'in', stages.ids): add columns that should be present
         # - OR ('team_ids', '=', team_id) if team_id: add team columns
-        team_id = self.env.context.get('default_team_id')
-        if team_id:
-            search_domain = ['|', ('id', 'in', self.ids), ('team_ids', 'in', team_id)]
-        else:
-            search_domain = [('id', 'in', self.ids)]
+        search_domain = [('id', 'in', stages.ids)]
+        if self.env.context.get('default_team_id'):
+            search_domain = ['|', ('team_ids', 'in', self.env.context['default_team_id'])] + search_domain
 
-        stages = stage_obj.sudo(access_rights_uid).search(search_domain, order=order)
-        result = stages.sudo(access_rights_uid).name_get()
-
-        fold = {}
-        for stage in stages:
-            fold[stage.id] = stage.fold or False
-        return result, fold
-
-    _group_by_full = {
-        'stage_id': _read_group_stage_ids
-    }
+        return stages.search(search_domain, order=order)
 
     name = fields.Char(string='Subject', required=True, index=True)
 
-    team_id = fields.Many2one('helpdesk.team', string='Helpdesk Team', index=True, default=_default_team_id)
+    team_id = fields.Many2one('helpdesk.team', string='Helpdesk Team', default=_default_team_id, index=True)
     description = fields.Text()
     active = fields.Boolean(default=True)
     ticket_type_id = fields.Many2one('helpdesk.ticket.type', string="Ticket Type")
     tag_ids = fields.Many2many('helpdesk.tag', string='Tags')
     company_id = fields.Many2one(related='team_id.company_id', string='Company', store=True, readonly=True)
     color = fields.Integer(string='Color Index')
-
+    kanban_state = fields.Selection([
+        ('normal', 'Normal'),
+        ('blocked', 'Blocked'),
+        ('done', 'Ready for next stage')], string='Kanban State',
+        default='normal', required=True, track_visibility='onchange',
+        help="A ticket's kanban state indicates special situations affecting it:\n"
+             "* Normal is the default situation\n"
+             "* Blocked indicates something is preventing the progress of this issue\n"
+             "* Ready for next stage indicates the issue is ready to be pulled to the next stage")
     user_id = fields.Many2one('res.users', string='Assigned to', track_visibility='onchange')
     partner_id = fields.Many2one('res.partner', string='Customer')
     partner_tickets = fields.Integer('Number of tickets from the same partner', compute='_compute_partner_tickets')
@@ -421,7 +456,9 @@ class HelpdeskTicket(models.Model):
     partner_email = fields.Char(string='Customer Email')
 
     priority = fields.Selection(TICKET_PRIORITY, string='Priority', default='0')
-    stage_id = fields.Many2one('helpdesk.stage', string='Stage', track_visibility='onchange', default=_default_stage_id, index=True, domain="[('team_ids', '=', team_id)]")
+    stage_id = fields.Many2one('helpdesk.stage', string='Stage', track_visibility='onchange',
+                               group_expand='_read_group_stage_ids',
+                               index=True, domain="[('team_ids', '=', team_id)]")
 
     # next 4 fields are computed in write (or create)
     assign_date = fields.Datetime(string='First assignation date')
@@ -435,26 +472,20 @@ class HelpdeskTicket(models.Model):
     sla_active = fields.Boolean(string='SLA active', compute='_compute_sla_fail', store=True)
     sla_fail = fields.Boolean(string='Failed SLA Policy', compute='_compute_sla_fail', store=True)
 
+    def _onchange_team_get_values(self, team):
+        return {
+            'user_id': team.get_new_user().id,
+            'stage_id': self.env['helpdesk.stage'].search([('team_ids', 'in', team.id)], order='sequence', limit=1).id
+        }
+
     @api.onchange('team_id')
     def _onchange_team_id(self):
         if self.team_id:
-            if not self.user_id or not (self.user_id in self.team_id.member_ids or self.team_id.member_ids):
-                member_ids = self.team_id.member_ids.ids
-                if self.team_id.assign_method == 'randomly' and member_ids:
-                    previous_assigned_user = self.env['helpdesk.ticket'].search([('team_id', '=', self.team_id.id)], order='create_date desc', limit=1).user_id
-                    # handle the case if the previous_assigned_user has left the team.
-                    if previous_assigned_user.id in member_ids:
-                        previous_index = member_ids.index(previous_assigned_user.id)
-                        self.user_id = member_ids[(previous_index + 1) % len(member_ids)]
-                    else:
-                        self.user_id = member_ids[0]
-                elif self.team_id.assign_method == 'balanced' and member_ids:
-                    member_of_team = dict.fromkeys(member_ids, 0)
-                    for member_id in member_of_team:
-                        member_of_team[member_id] = len(self.search([('user_id', '=', member_id), ('stage_id.is_close', '=', False)]))
-                    self.user_id = min(member_of_team, key=member_of_team.get)
+            udpate_vals = self._onchange_team_get_values(self.team_id)
+            if not self.user_id:
+                self.user_id = udpate_vals['user_id']
             if not self.stage_id or self.stage_id not in self.team_id.stage_ids:
-                self.stage_id = self.env['helpdesk.stage'].search([('team_ids', 'in', self.team_id.id)], order='sequence', limit=1)
+                self.stage_id = udpate_vals['stage_id']
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -511,6 +542,9 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def create(self, vals):
+        if vals.get('team_id'):
+            vals.update(self._onchange_team_get_values(self.env['helpdesk.team'].browse(vals['team_id'])))
+
         # context: no_log, because subtype already handle this
         ticket = super(HelpdeskTicket, self.with_context(mail_create_nolog=True)).create(vals)
         if ticket.partner_id:
@@ -519,10 +553,6 @@ class HelpdeskTicket(models.Model):
         if ticket.user_id:
             ticket.assign_date = ticket.create_date
             ticket.assign_hours = 0
-        if ticket.team_id:
-            ticket._onchange_team_id()
-        if vals.get('stage_id'):
-            ticket._email_send()
 
         return ticket
 
@@ -549,8 +579,7 @@ class HelpdeskTicket(models.Model):
         }))
         if vals.get('partner_id'):
             self.message_subscribe([vals['partner_id']])
-        if vals.get('stage_id'):
-            self._email_send()
+
         return res
 
     @api.multi
@@ -583,11 +612,6 @@ class HelpdeskTicket(models.Model):
             'context': {'search_default_is_open': True, 'search_default_partner_id': self.partner_id.id}
         }
 
-    @api.multi
-    def _email_send(self):
-        for ticket in self.filtered(lambda ticket: ticket.stage_id and ticket.stage_id.template_id):
-            ticket.stage_id.template_id.send_mail(res_id=ticket.id, force_send=True)
-
     #DVE FIXME: if partner gets created when sending the message it should be set as partner_id of the ticket.
     @api.multi
     def message_get_suggested_recipients(self):
@@ -603,14 +627,23 @@ class HelpdeskTicket(models.Model):
         return recipients
 
     @api.multi
+    def _track_template(self, tracking):
+        res = super(HelpdeskTicket, self)._track_template(tracking)
+        ticket = self[0]
+        changes, tracking_value_ids = tracking[ticket.id]
+        if 'stage_id' in changes and ticket.stage_id.template_id:
+            res['stage_id'] = (ticket.stage_id.template_id, {'composition_mode': 'mass_mail', 'auto_delete_message': True})
+        return res
+
+    @api.multi
     def _track_subtype(self, init_values):
         self.ensure_one()
-        if 'stage_id' in init_values and self.stage_id.sequence < 1:
+        if 'user_id' in init_values and self.user_id:
+            return 'helpdesk.mt_ticket_assigned'
+        elif 'stage_id' in init_values and self.stage_id.sequence < 1:
             return 'helpdesk.mt_ticket_new'
         elif 'stage_id' in init_values and self.stage_id.sequence >= 1:
             return 'helpdesk.mt_ticket_stage'
-        elif 'user_id' in init_values and self.user_id:  # assigned -> new
-            return 'helpdesk.mt_ticket_new'
         return super(HelpdeskTicket, self)._track_subtype(init_values)
 
     @api.multi

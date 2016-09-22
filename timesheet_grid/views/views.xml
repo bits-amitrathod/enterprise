@@ -10,7 +10,7 @@
                         <group>
                             <group>
                                 <field name="project_id" required="1"/>
-                                <field name="task_id" domain="[['project_id', '=', project_id]]"/>
+                                <field name="task_id" domain="[['project_id', '=', project_id]]" context="{'default_project_id': project_id}"/>
                             </group>
                             <group>
                                 <field name="date"/>
@@ -121,7 +121,7 @@
                     <filter name="my_team"
                             string="My Team"
                             domain="[('user_id.employee_ids.parent_id.user_id', '=', uid)]"
-                            groups="hr_timesheet.group_hr_timesheet_manager"/>
+                            groups="hr_timesheet.group_hr_timesheet_user"/>
                 </xpath>
             </field>
         </record>
@@ -242,20 +242,6 @@
             <field name="arch" type="xml">
                 <xpath expr="//filter[1]" position="attributes">
                     <attribute name="name">groupby_user</attribute>
-                </xpath>
-            </field>
-        </record>
-
-        <record id="project_view_form_timesheets" model="ir.ui.view">
-            <field name="name">Enable timesheet on project</field>
-            <field name="model">project.project</field>
-            <field name="inherit_id" ref="project.edit_project"/>
-            <field name="arch" type="xml">
-                <xpath expr="//div[@name='options_active']" position="inside">
-                    <div>
-                        <field name="allow_timesheets" class="oe_inline" string="Allow timesheets"/>
-                        <label for="allow_timesheets"/>
-                    </div>
                 </xpath>
             </field>
         </record>

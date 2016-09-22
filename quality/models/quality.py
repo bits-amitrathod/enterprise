@@ -175,6 +175,7 @@ class QualityAlertStage(models.Model):
     _name = "quality.alert.stage"
     _description = "Quality Alert Stage"
     _order = "sequence, id"
+    _fold_name = 'folded'
 
     name = fields.Char('Name', required=True)
     sequence = fields.Integer('Sequence')
@@ -192,7 +193,7 @@ class QualityCheck(models.Model):
     quality_state = fields.Selection([
         ('none', 'To do'),
         ('pass', 'Passed'),
-        ('fail', 'Failed')], string='Status',
+        ('fail', 'Failed')], string='Status', track_visibility='onchange',
         default='none', copy=False)
     control_date = fields.Datetime('Control Date', track_visibility='onchange')
     product_id = fields.Many2one(
@@ -208,7 +209,7 @@ class QualityCheck(models.Model):
     note = fields.Html(related='point_id.note', readonly=True)
     test_type = fields.Selection(related="point_id.test_type", readonly=True)
     norm_unit = fields.Char(related='point_id.norm_unit', readonly=True)
-    measure = fields.Float('Measure', default=0.0, digits=dp.get_precision('Quality Tests'))
+    measure = fields.Float('Measure', default=0.0, digits=dp.get_precision('Quality Tests'), track_visibility='onchange')
     measure_success = fields.Selection([
         ('none', 'No measure'),
         ('pass', 'Pass'),
@@ -259,6 +260,13 @@ class QualityCheck(models.Model):
                     'user_id': self.env.user.id,
                     'control_date': datetime.now()})
         return self.redirect_after_pass_fail()
+
+    @api.multi
+    def do_measure(self):
+        if self.measure < self.point_id.tolerance_min or self.measure > self.point_id.tolerance_max:
+            return self.do_fail()
+        else:
+            return self.do_pass()
 
     @api.multi
     def do_alert(self):
@@ -317,8 +325,8 @@ class QualityAlert(models.Model):
 
     name = fields.Char('Name', default=lambda self: _('New'))
     description = fields.Text('Description')
-    stage_id = fields.Many2one(
-        'quality.alert.stage', 'Stage',
+    stage_id = fields.Many2one('quality.alert.stage', 'Stage',
+        group_expand='_read_group_stage_ids',
         default=lambda self: self.env['quality.alert.stage'].search([], limit=1).id)
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.user.company_id)
     reason_id = fields.Many2one('quality.reason', 'Root Cause')
@@ -369,28 +377,10 @@ class QualityAlert(models.Model):
             'res_id': self.check_id.id,
         }
 
-    @api.multi
-    def _read_group_stage_ids(self, domain, read_group_order=None, access_rights_uid=None):
+    @api.model
+    def _read_group_stage_ids(self, stages, domain, order):
         """ Read group customization in order to display all the stages of the ECO type
         in the Kanban view, even if there is no ECO in that stage
         """
-        # Check if the different stages
-        stage_obj = self.env['quality.alert.stage']
-        order = stage_obj._order
-        access_rights_uid = access_rights_uid or self._uid
-        if read_group_order == 'stage_id desc':
-            order = '%s desc' % order
-        search_domain = []
-        category_ids = stage_obj._search(search_domain, order=order, access_rights_uid=access_rights_uid)
-        result = [category.name_get()[0] for category in stage_obj.browse(category_ids)]
-        # restore order of the search
-        result.sort(lambda x, y: cmp(category_ids.index(x[0]), category_ids.index(y[0])))
-
-        fold = {}
-        for stage in stage_obj.browse(category_ids):
-            fold[stage.id] = stage.folded
-        return result, fold
-
-    _group_by_full = {
-        'stage_id': _read_group_stage_ids
-    }
+        stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
+        return stages.browse(stage_ids)

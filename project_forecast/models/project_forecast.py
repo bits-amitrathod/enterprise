@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
+
 from datetime import date, datetime, time, timedelta
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
 
-class User(models.Model):
-    _inherit = 'res.users'
-
-    resource_ids = fields.One2many('resource.resource', 'user_id')
 
 class ProjectForecast(models.Model):
     _name = 'project.forecast'
@@ -22,7 +19,7 @@ class ProjectForecast(models.Model):
     name = fields.Char(compute='_compute_name')
     active = fields.Boolean(default=True)
     user_id = fields.Many2one('res.users', string="User", required=True,
-                              default=default_user_id)
+                              group_expand='all_users', default=default_user_id)
     project_id = fields.Many2one('project.project', string="Project")
     task_id = fields.Many2one('project.task', string="Task", domain="[('project_id', '=', project_id)]")
 
@@ -158,61 +155,8 @@ class ProjectForecast(models.Model):
             duration = timedelta(days=1)
             self.start_date = end - duration
 
-    @api.multi
-    def all_users(self, domain, read_group_order=None, access_rights_uid=None):
-        group = self.env.ref('project.group_project_user') or self.env.ref('base.group_user')
-        name = group.users.name_get()
-        return name, None
-
-    _group_by_full = {
-        'user_id': all_users,
-    }
-
-
-class Project(models.Model):
-    _inherit = 'project.project'
-
-    allow_forecast = fields.Boolean("Allow forecast", default=False, help="This feature shows the Forecast link in the kanban view")
-
-    @api.multi
-    def write(self, vals):
-        if 'active' in vals:
-            self.env['project.forecast'].with_context(active_test=False).search([('project_id', 'in', self.ids)]).write({'active': vals['active']})
-        return super(Project, self).write(vals)
-
-    @api.multi
-    def create_forecast(self):
-        view_id = self.env.ref('project_forecast.project_forecast_view_form').id
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'project.forecast',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': view_id,
-            'target': 'current',
-            'context': {
-                'default_project_id': self.id,
-                'default_user_id': self.user_id.id,
-            }
-        }
-
-
-class Task(models.Model):
-    _inherit = 'project.task'
-
-    @api.multi
-    def create_forecast(self):
-        view_id = self.env.ref('project_forecast.project_forecast_view_form').id
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'project.forecast',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': view_id,
-            'target': 'current',
-            'context': {
-                'default_project_id': self.project_id.id,
-                'default_task_id': self.id,
-                'default_user_id': self.user_id.id,
-            }
-        }
+    @api.model
+    def all_users(self, users, domain, order):
+        group = self.env.ref('project.group_project_user', False) or \
+                self.env.ref('base.group_user')
+        return group.users.search([('id', 'in', group.users.ids)], order=order)
