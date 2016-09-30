@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
+from odoo.addons.website.models.website import slug
 from odoo.exceptions import UserError
 from odoo.tools import plaintext2html
 
@@ -15,7 +16,7 @@ class HelpdeskTeam(models.Model):
     def _compute_forum_url(self):
         for team in self:
             if team.forum_id and team.id:
-                team.forum_url = '/forum/' + team.forum_id.name + '-' + str(team.forum_id.id)
+                team.forum_url = '/forum/%s' % slug(team.forum_id)
             else:
                 team.forum_url = False
 

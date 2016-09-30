@@ -16,6 +16,7 @@ var ReportWidget = Widget.extend({
         'click .o_account_reports_unfoldable': 'unfold',
         'click .fa-trash-o': 'rmContent',
         'click .o_account_reports_saved_summary > span': 'editSummary',
+        'click .o_account_reports_edit_summary_pencil': 'editSummary',
         "click input[name='summary']": 'onClickSummary',
         "click button.saveSummary": 'saveSummary',
         'click button.saveContent': 'saveContent',
@@ -56,7 +57,7 @@ var ReportWidget = Widget.extend({
         if (active_id || id) {
             additional_context = {active_id: active_id || id};
         }
-        additional_context.from_report_id = self.odoo_context.id;
+        additional_context.from_report_id = self.odoo_context.id || null;
         additional_context.from_report_model = self.odoo_context.model;
         if (res_model && active_id) { // Open the view form of the given model
             return this.do_action({
@@ -158,7 +159,7 @@ var ReportWidget = Widget.extend({
     editSummary: function(e) {
         e.stopPropagation();
         e.preventDefault();
-        var $el = $(e.target);
+        var $el = $(e.target).parents('.o_account_reports_summary').find('.o_account_reports_saved_summary span');
         var height = Math.max($el.height(), 100); // Compute the height that will be needed
         var text = $el.html().replace(/\s+/g, ' ').replace(/\r?\n/g, '').replace(/<br>/g, '\n').replace(/(\n\s*)+$/g, ''); // Remove unnecessary spaces and line returns
         var par = $el.parents("div.o_account_reports_summary");

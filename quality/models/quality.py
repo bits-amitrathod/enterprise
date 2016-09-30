@@ -5,7 +5,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import random
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import odoo.addons.decimal_precision as dp
 
@@ -71,8 +71,6 @@ class QualityPoint(models.Model):
 
     @api.onchange('norm')
     def onchange_norm(self):
-        if self.tolerance_min == 0.0:
-            self.tolerance_min = self.norm
         if self.tolerance_max == 0.0:
             self.tolerance_max = self.norm
 
