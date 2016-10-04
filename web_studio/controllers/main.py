@@ -152,8 +152,9 @@ class WebStudioController(http.Controller):
         return action
 
     @http.route('/web_studio/create_new_menu', type='json', auth='user')
-    def create_new_menu(self, name, model_id, is_app=False, parent_id=None, icon=None):
+    def create_new_menu(self, name, model_id=False, is_app=False, parent_id=None, icon=None):
         """ Create a new menu @name, linked to a new action associated to the model_id
+            @param model_id: if not set, the action associated to this menu is the appswitcher
             @param is_app: if True, create an extra menu (app, without parent)
             @param parent_id: the parent of the new menu.
                 To be set if is_app is False.
@@ -161,21 +162,25 @@ class WebStudioController(http.Controller):
                 To be set if is_app is True.
         """
         # create the action
-        model = request.env['ir.model'].browse(model_id)
-        new_action = request.env['ir.actions.act_window'].create({
-            'name': name,
-            'res_model': model.model,
-            'help': """
-                <p>
-                    This is your new action ; by default, it contains a list view and a form view.
-                </p>
-                <p>
-                    You can start customizing these screens by clicking on the Studio icon on the
-                    top right corner (you can also customize this help message there).
-                </p>
-            """,
-        })
-        action_ref = 'ir.actions.act_window,' + str(new_action.id)
+        if model_id:
+            model = request.env['ir.model'].browse(model_id)
+            action = request.env['ir.actions.act_window'].create({
+                'name': name,
+                'res_model': model.model,
+                'help': """
+                    <p>
+                        This is your new action ; by default, it contains a list view and a form view.
+                    </p>
+                    <p>
+                        You can start customizing these screens by clicking on the Studio icon on the
+                        top right corner (you can also customize this help message there).
+                    </p>
+                """,
+            })
+            action_ref = 'ir.actions.act_window,' + str(action.id)
+        else:
+            action = request.env.ref('base.action_open_website')
+            action_ref = 'ir.actions.act_url,' + str(action.id)
 
         if is_app:
             # create the menus (app menu + first submenu)
@@ -199,7 +204,7 @@ class WebStudioController(http.Controller):
 
         return {
             'menu_id': new_menu.id,
-            'action_id': new_action.id,
+            'action_id': action.id,
         }
 
     @http.route('/web_studio/edit_action', type='json', auth='user')
