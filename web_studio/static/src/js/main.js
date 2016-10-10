@@ -4,8 +4,8 @@ odoo.define('web_studio.Main', function (require) {
 var core = require('web.core');
 var data = require('web.data');
 var data_manager = require('web.data_manager');
-var framework = require('web.framework');
-var form_common = require('web.form_common');
+var dom = require('web.dom');
+var form_common = require('web.view_dialogs');
 var Widget = require('web.Widget');
 
 var bus = require('web_studio.bus');
@@ -104,9 +104,9 @@ var Main = Widget.extend({
                 var fragment = document.createDocumentFragment();
                 return self.view_editor.appendTo(fragment).then(function () {
                     if (self.action_editor) {
-                        framework.detach([{widget: self.action_editor}]);
+                        dom.detach([{widget: self.action_editor}]);
                     }
-                    framework.append(self.$el, [fragment], {
+                    dom.append(self.$el, [fragment], {
                         in_DOM: true,
                         callbacks: [{widget: self.view_editor}],
                     });

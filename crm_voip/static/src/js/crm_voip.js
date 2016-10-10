@@ -1,8 +1,8 @@
 odoo.define('crm.voip', function(require) {
 "use strict";
 
-var config = require('web.config');
 var voip_core = require('voip.core');
+var basic_fields = require('web.basic_fields');
 var config = require('web.config');
 var core = require('web.core');
 var Model = require('web.Model');
@@ -11,7 +11,6 @@ var SystrayMenu = require('web.SystrayMenu');
 var web_client = require('web.web_client');
 var WebClient = require('web.WebClient');
 var Widget = require('web.Widget');
-require('web_enterprise.form_widgets'); // FieldPhone must be in the form_widget_registry
 
 var dialing_panel = null;
 
@@ -808,7 +807,7 @@ var VoipTopButton = Widget.extend({
 
     // TODO remove and replace with session_info mechanism
     willStart: function(){
-        var ready = this.session.user_has_group('base.group_user').then(
+        var ready = this.getSession().user_has_group('base.group_user').then(
             function(is_employee){
                 if (!is_employee) {
                     return $.Deferred().reject();
@@ -863,51 +862,74 @@ var transfer_call = function(parent, action){
 core.action_registry.add("reload_panel", reload_panel);
 core.action_registry.add("transfer_call", transfer_call);
 
-// Redefinition of FieldPhone
-core.form_widget_registry.get('phone').include({
-    events: _.clone(core.form_widget_registry.get('phone').prototype.events),
-    init: function() {
-        this._super.apply(this, arguments);
-        this.clickable = true;
-        _.extend(this.events, {
-            'click': function(e) {
-                var current_model = this.getParent().dataset.model;
-                var allowed_models = ['res.partner', 'crm.lead'];
-                // inArray returns -1 if current_model is not in allowed_models.
-                if(!this.get('effective_readonly') || $.inArray(current_model, allowed_models) === -1) {
-                    return;
-                }
-                e.preventDefault();
-                var self = this;
-                var phone_number = this.get('value');
-                
-                if(this.getParent().datarecord.phone === phone_number || this.getParent().datarecord.mobile === phone_number) {
-                    this.do_notify(_t('Start Calling'),
-                        _t('Calling ') + ' ' + phone_number);
-                    if(this.DialingPanel) {
-                        do_call(current_model);
-                    } else {
-                        // To get the formatCurrency function from the server
-                        new Model("res.currency")
-                            .call("get_format_currencies_js_function")
-                            .then(function(data) {
-                                var formatCurrency = new Function("amount, currency_id", data);
-                                self.DialingPanel = new DialingPanel(web_client, formatCurrency);
-                                do_call(current_model);
-                            });
-                    }
-                }
+/**
+ * Override of FieldPhone to use the DialingPanel to perform calls on clicks.
+ */
+var Phone = basic_fields.FieldPhone;
+Phone.include({
+    events: _.extend({}, Phone.prototype.events, {
+        'click': '_onClick',
+    }),
 
-                function do_call(current_model) {
-                    if (current_model == 'res.partner'){
-                        self.DialingPanel.call_partner(phone_number, self.getParent().datarecord.id);
-                    }else if(current_model == 'crm.lead'){
-                        self.DialingPanel.call_opportunity(phone_number, self.getParent().datarecord.id);
-                    }
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * Uses the DialingPanel to perform the call.
+     *
+     * @private
+     * @param {char} phone_number
+     */
+    _call: function (phone_number) {
+        this.do_notify(_t('Start Calling'), _t('Calling ') + ' ' + phone_number);
+        if (this.model === 'res.partner') {
+            this.DialingPanel.call_partner(phone_number, this.res_id);
+        } else if (this.model === 'crm.lead') {
+            this.DialingPanel.call_opportunity(phone_number, this.res_id);
+        }
+    },
+    /**
+     * @override
+     * @private
+     * @returns {boolean} true
+     */
+    _can_call: function () {
+        return true;
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * Called when the phone number is clicked.
+     *
+     * @private
+     * @param {MouseEvent} e
+     */
+    _onClick: function (e) {
+        var allowed_models = ['res.partner', 'crm.lead'];
+        if (this.mode === 'readonly' && _.contains(allowed_models, this.model)) {
+            e.preventDefault();
+            var self = this;
+            var phone_number = this.value;
+
+            if (this.recordData.phone === phone_number || this.recordData.mobile === phone_number) {
+                if (this.DialingPanel) {
+                    this._call(phone_number);
+                } else {
+                    // get the formatCurrency function from the server
+                    this.performModelRPC('res.currency', 'get_format_currencies_js_function')
+                        .then(function (func) {
+                            var formatCurrency = new Function("amount, currency_id", func);
+                            self.DialingPanel = new DialingPanel(web_client, formatCurrency);
+                            self._call(phone_number);
+                        });
                 }
             }
-        });
-    }
+        }
+    },
 });
 
 WebClient.include({

@@ -78,16 +78,16 @@ return KanbanRenderer.extend({
             return this.kanban_record.highlight_nearest_hook($helper, position);
         }
     },
-    get_local_state: function() {
+    getLocalState: function() {
         var state = this._super.apply(this, arguments);
         if (this.kanban_record && this.kanban_record.selected_node_id) {
             state.selected_node_id = this.kanban_record.selected_node_id;
         }
         return state;
     },
-    set_local_state: function(state) {
+    setLocalState: function(state) {
         if (this.kanban_record) {
-            this.kanban_record.set_local_state(state);
+            this.kanban_record.setLocalState(state);
         }
     },
 });

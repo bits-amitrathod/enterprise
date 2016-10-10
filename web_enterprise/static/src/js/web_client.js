@@ -6,7 +6,7 @@ var ActionManager = require('web.ActionManager');
 var config = require('web.config');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
-var framework = require('web.framework');
+var dom = require('web.dom');
 var Model = require('web.DataModel');
 var session = require('web.session');
 
@@ -281,7 +281,7 @@ return AbstractWebClient.extend({
             var self = this;
             this.clear_uncommitted_changes().then(function() {
                 // Save the current scroll position of the action_manager
-                self.action_manager.set_scrollTop(self.get_scrollTop());
+                self.action_manager.setScrollTop(self.getScrollTop());
 
                 // Detach the web_client contents
                 var $to_detach = self.$el.contents()
@@ -290,7 +290,7 @@ return AbstractWebClient.extend({
                         .not('.o_chat_window')
                         .not('.o_notification_manager');
                 self.web_client_content = document.createDocumentFragment();
-                framework.detach([{widget: self.action_manager}], {$to_detach: $to_detach}).appendTo(self.web_client_content);
+                dom.detach([{widget: self.action_manager}], {$to_detach: $to_detach}).appendTo(self.web_client_content);
 
                 // Attach the app_switcher
                 self.append_app_switcher();
@@ -302,8 +302,8 @@ return AbstractWebClient.extend({
                 self.menu.toggle_mode(true, self.action_manager.get_inner_action() !== null);
             });
         } else {
-            framework.detach([{widget: this.app_switcher}]);
-            framework.append(this.$el, [this.web_client_content], {
+            dom.detach([{widget: this.app_switcher}]);
+            dom.append(this.$el, [this.web_client_content], {
                 in_DOM: true,
                 callbacks: [{widget: this.action_manager}],
             });
@@ -312,7 +312,7 @@ return AbstractWebClient.extend({
         }
     },
     append_app_switcher: function () {
-        framework.append(this.$el, [this.app_switcher.$el], {
+        dom.append(this.$el, [this.app_switcher.$el], {
             in_DOM: true,
             callbacks: [{widget: this.app_switcher}],
         });
@@ -321,7 +321,7 @@ return AbstractWebClient.extend({
     // --------------------------------------------------------------
     // Scrolltop handling
     // --------------------------------------------------------------
-    get_scrollTop: function () {
+    getScrollTop: function () {
         if (config.device.size_class <= config.device.SIZES.XS) {
             return this.el.scrollTop;
         } else {
@@ -339,10 +339,10 @@ return AbstractWebClient.extend({
         var offset = {top: ev.data.offset, left: ev.data.offset_left || 0};
         var xs_device = config.device.size_class <= config.device.SIZES.XS;
         if (!offset.top) {
-            offset = framework.getPosition(document.querySelector(ev.data.selector));
+            offset = dom.getPosition(document.querySelector(ev.data.selector));
             if (!xs_device) {
                 // Substract the position of the action_manager as it is the scrolling part
-                offset.top -= framework.getPosition(this.action_manager.el).top;
+                offset.top -= dom.getPosition(this.action_manager.el).top;
             }
         }
         if (xs_device) {

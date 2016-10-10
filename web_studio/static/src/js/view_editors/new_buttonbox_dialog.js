@@ -5,7 +5,7 @@ var core = require('web.core');
 var Dialog = require('web.Dialog');
 var relational_fields = require('web.relational_fields');
 
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var FieldManagerMixin = require('web.FieldManagerMixin');
 var utils = require('web_studio.utils');
 
 var _t = core._t;

@@ -78,7 +78,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     // Updates the control panel and render the elements that have yet to be rendered
     update_cp: function() {
         if (!this.$buttons) {
-            this.render_buttons();
+            this.renderButtons();
         }
         var status = {
             breadcrumbs: this.actionManager.get_breadcrumbs(),
@@ -230,7 +230,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         var date_format = 'YYYY-MM-DD';
         return moment_date.format(date_format);
     },
-    render_buttons: function() {
+    renderButtons: function() {
         var self = this;
         this.$buttons = $(QWeb.render("accountReports.buttons", {buttons: this.buttons}));
         // bind actions

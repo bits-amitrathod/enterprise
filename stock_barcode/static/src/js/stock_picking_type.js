@@ -1,7 +1,7 @@
 odoo.define('stock_barcode.picking_type_kanban', function (require) {
 'use strict';
 
-var KanbanRecord = require('web_kanban.Record');
+var KanbanRecord = require('web.KanbanRecord');
 
 KanbanRecord.include({
     on_card_clicked: function () {

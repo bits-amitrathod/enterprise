@@ -1,14 +1,12 @@
 odoo.define('web_studio.ViewEditorManager', function (require) {
 "use strict";
 
+var concurrency = require("web.concurrency");
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var field_registry = require('web.field_registry');
-var form_common = require('web.form_common');
 var Model = require('web.Model');
-var web_utils = require("web.utils");
-var ViewModel = require('web.ViewModel');
 var Widget = require('web.Widget');
 
 var bus = require('web_studio.bus');
@@ -152,7 +150,7 @@ return Widget.extend({
         this.studio_view_id = options.studio_view_id;
         this.studio_view_arch = options.studio_view_arch;
 
-        this._apply_changes_mutex = new web_utils.Mutex();
+        this._apply_changes_mutex = new concurrency.Mutex();
 
         bus.on('undo_clicked', this, this.undo);
         bus.on('redo_clicked', this, this.redo);
@@ -238,7 +236,7 @@ return Widget.extend({
         var editor;
         var def;
         var renderer_scrolltop = this.$renderer_container.scrollTop();
-        var local_state = this.editor ? this.editor.get_local_state() : false;
+        var local_state = this.editor ? this.editor.getLocalState() : false;
 
         options = _.extend({}, options, {chatter_allowed: this.chatter_allowed}, {show_invisible: this.sidebar.show_invisible});
         if (this.mode === 'edition') {
@@ -274,7 +272,7 @@ return Widget.extend({
             self.editor.$el.appendTo(self.$renderer_container);
             self.$renderer_container.scrollTop(renderer_scrolltop); // restore scroll position
             if (local_state) {
-                self.editor.set_local_state(local_state);
+                self.editor.setLocalState(local_state);
             }
         });
     },

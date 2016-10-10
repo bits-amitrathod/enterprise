@@ -54,7 +54,7 @@ var stock_report_generic = Widget.extend(ControlPanelMixin, {
         var defs = [];
         return new Model('stock.traceability.report').call('get_html', [self.given_context]).then(function (result) {
             self.html = result.html;
-            self.render_buttons();
+            self.renderButtons();
             defs.push(self.update_cp());
             return $.when.apply($, defs);
         });
@@ -62,7 +62,7 @@ var stock_report_generic = Widget.extend(ControlPanelMixin, {
     // Updates the control panel and render the elements that have yet to be rendered
     update_cp: function() {
         if (!this.$buttons) {
-            this.render_buttons();
+            this.renderButtons();
         }
         var status = {
             breadcrumbs: this.actionManager.get_breadcrumbs(),
@@ -70,7 +70,7 @@ var stock_report_generic = Widget.extend(ControlPanelMixin, {
         };
         return this.update_control_panel(status);
     },
-    render_buttons: function() {
+    renderButtons: function() {
         var self = this;
         this.$buttons = $(QWeb.render("stockReports.buttons", {}));
         // pdf output

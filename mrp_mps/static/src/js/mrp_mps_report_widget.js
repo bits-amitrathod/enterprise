@@ -3,17 +3,10 @@ odoo.define('mrp_mps.mrp_mps_report', function (require) {
 
 var core = require('web.core');
 var Widget = require('web.Widget');
-var formats = require('web.formats');
 var Model = require('web.Model');
-var time = require('web.time');
 var ControlPanelMixin = require('web.ControlPanelMixin');
-var Dialog = require('web.Dialog');
-var session = require('web.session');
-var framework = require('web.framework');
-var crash_manager = require('web.crash_manager');
 var SearchView = require('web.SearchView');
 var data = require('web.data');
-var data_manager = require('web.data_manager');
 var pyeval = require('web.pyeval');
 
 var QWeb = core.qweb;
@@ -34,11 +27,8 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         'click .o_mps_product_name': 'open_mps_product',
     },
     init: function(parent, action) {
-        var self = this;
         this.actionManager = parent;
         this.action = action;
-        this.fields_view;
-        this.searchview;
         this.domain = [];
         return this._super.apply(this, arguments);
     },
@@ -47,8 +37,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var defs = [];
         new Model('ir.model.data').call('get_object_reference', ['product', 'product_template_search_view']).then(function(view_id){
             self.dataset = new data.DataSetSearch(this, 'product.product');
-            var def = data_manager
-            .load_fields_view(self.dataset, view_id[1], 'search', false)
+            this.loadFieldView(self.dataset, view_id[1], 'search')
             .then(function (fields_view) {
                 self.fields_view = fields_view;
                 var options = {
@@ -70,7 +59,6 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     },
     start: function() {
         var self = this;
-        this.period;
         this.render_search_view();
         return this._super.apply(this, arguments).then(function () {
             self.$el.html(self.html);
@@ -200,7 +188,9 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     },
     on_search: function (domains) {
         var self = this;
-        var result = pyeval.sync_eval_domains_and_contexts({
+        var session = this.getSession();
+        var result = pyeval.eval_domains_and_contexts({
+            contexts: [session.user_context],
             domains: domains
         });
         this.domain = result.domain;
@@ -220,20 +210,19 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     // Fetches the html and is previous report.context if any, else create it
     get_html: function() {
         var self = this;
-        var defs = [];
         return new Model('mrp.mps.report').call('get_html', [this.domain]).then(function (result) {
             self.html = result.html;
             self.report_context = result.report_context;
-            self.render_buttons();
+            self.renderButtons();
         });
     },
     // Updates the control panel and render the elements that have yet to be rendered
     update_cp: function() {
         var self = this;
         if (!this.$buttons) {
-            this.render_buttons();
+            this.renderButtons();
         }
-        this.$searchview_buttons = $(QWeb.render("MPS.optionButton", {period: self.report_context.period}))
+        this.$searchview_buttons = $(QWeb.render("MPS.optionButton", {period: self.report_context.period}));
         this.$searchview_buttons.siblings('.o_mps_period_filter');
         this.$searchview_buttons.find('.o_mps_option_mps_period').bind('click', function (event) {
             self.option_mps_period(event);
@@ -257,7 +246,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         this._super();
         this.update_cp();
     },
-    render_buttons: function() {
+    renderButtons: function() {
         var self = this;
         this.$buttons = $(QWeb.render("MPS.buttons", {}));
         this.$buttons.on('click', function(){

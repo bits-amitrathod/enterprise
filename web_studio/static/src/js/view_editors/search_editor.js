@@ -3,7 +3,7 @@ odoo.define('web_studio.SearchEditor', function (require) {
 
 var core = require('web.core');
 var DomainSelectorDialog = require("web.DomainSelectorDialog");
-var DomainUtils = require('web.domainUtils');
+var domain = require('web.domain');
 var FormEditorHook = require('web_studio.FormEditorHook');
 var SearchRenderer = require('web_studio.SearchRenderer');
 var session = require('web.session');
@@ -52,7 +52,7 @@ var SearchEditor = SearchRenderer.extend({
                         // Add the node when clicking on the dialog 'save' button
                         domain_dialog.on('domain_selected', self, function (event) {
                             new_attrs = {
-                                domain: DomainUtils.domainToString(event.data.domain),
+                                domain: domain.domainToString(event.data.domain),
                                 string: self.$domain_label_input.val(),
                                 name: 'studio_' + structure + '_' + utils.randomString(5),
                             };
@@ -169,7 +169,7 @@ var SearchEditor = SearchRenderer.extend({
     },
     _render_filter: function(node) {
         var $result = this._super.apply(this, arguments);
-        node.attrs.domain = DomainUtils.domainToString(node.attrs.domain);
+        node.attrs.domain = domain.domainToString(node.attrs.domain);
         this._prepare_editable_search_node(node, $result, 'filter');
         return $result;
     },
@@ -234,14 +234,14 @@ var SearchEditor = SearchRenderer.extend({
         return false;
     },
 
-    get_local_state: function() {
+    getLocalState: function() {
         var state = this._super.apply(this, arguments);
         if (this.selected_node_id) {
             state.selected_node_id = this.selected_node_id;
         }
         return state;
     },
-    set_local_state: function(state) {
+    setLocalState: function(state) {
         if (state.selected_node_id) {
             var $selected_node = this.$('[data-node-id="' + state.selected_node_id + '"]');
             if ($selected_node) {

@@ -6,7 +6,7 @@ var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
 
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var FieldManagerMixin = require('web.FieldManagerMixin');
 
 return Widget.extend(FieldManagerMixin, {
     template: 'web_studio.ActionEditorSidebar',

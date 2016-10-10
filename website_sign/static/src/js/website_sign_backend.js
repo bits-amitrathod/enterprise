@@ -2,9 +2,9 @@ odoo.define('website_sign.views_custo', function(require) {
     'use strict';
 
     var core = require('web.core');
-    var KanbanView = require("web_kanban.KanbanView");
-    var KanbanColumn = require("web_kanban.Column");
-    var KanbanRecord = require("web_kanban.Record");
+    var KanbanView = require("web.KanbanView");
+    var KanbanColumn = require("web.KanbanColumn");
+    var KanbanRecord = require("web.KanbanRecord");
     var ListView = require("web.ListView");
     var Model = require('web.Model');
 
@@ -41,7 +41,7 @@ odoo.define('website_sign.views_custo', function(require) {
 
     function _make_custo(selector_button) {
         return {
-            render_buttons: function () {
+            renderButtons: function () {
                 this._super.apply(this, arguments);
 
                 if (this.model === "signature.request.template") {

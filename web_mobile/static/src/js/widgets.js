@@ -1,12 +1,13 @@
 odoo.define('web_mobile.widgets', function (require) {
+"use strict";
 
 var mobile = require('web_mobile.rpc');
+var AbstractField = require('web.AbstractField');
 var web_datepicker = require('web.datepicker');
+var field_registry = require('web.field_registry');
 var session = require('web.Session');
-var form_relational = require('web.form_relational');
+var relational_fields = require('web.relational_fields');
 var notification_manager = require('web.notification').NotificationManager;
-var common = require('web.form_common');
-var core = require('web.core');
 var UserMenu = require('web.UserMenu');
 var crashManager = require('web.CrashManager');
 
@@ -56,7 +57,7 @@ session.include({
             this._super.apply(this, arguments);
         }
     }
-})
+});
 
 /*
     Android webview not supporting post download and odoo is using post method to download
@@ -64,45 +65,46 @@ session.include({
     ISSUE: https://code.google.com/p/android/issues/detail?id=1780
 */
 
-form_relational.FieldMany2One.include({
-    render_editable: function(){
-        var self = this;
-        this._super.apply(this, arguments);
-        if(mobile.methods.many2oneDialog){
-            this.$el.find('input').prop('disabled', true);
-            $(this.$el).on('click', self.on_mobile_click);
-        }
-    },
-    on_mobile_click:function(e){
-        if(!$(e.target).hasClass('o_external_button')){
-            this.do_invoke_mobile_dialog('');
-        };
-    },
-    do_invoke_mobile_dialog: function(term){
-        var self = this;
-        this.get_search_result(term).done(function(result) {
-            self._callback_actions = {}
+relational_fields.FieldMany2One.include({
+    // TODO
+    // render_editable: function(){
+    //     var self = this;
+    //     this._super.apply(this, arguments);
+    //     if(mobile.methods.many2oneDialog){
+    //         this.$el.find('input').prop('disabled', true);
+    //         $(this.$el).on('click', self.on_mobile_click);
+    //     }
+    // },
+    // on_mobile_click:function(e){
+    //     if(!$(e.target).hasClass('o_external_button')){
+    //         this.do_invoke_mobile_dialog('');
+    //     };
+    // },
+    // do_invoke_mobile_dialog: function(term){
+    //     var self = this;
+    //     this.get_search_result(term).done(function(result) {
+    //         self._callback_actions = {}
 
-            _.each(result, function(r, i){
-                if(!r.hasOwnProperty('id')){
-                    self._callback_actions[i] = r.action;
-                    result[i]['action_id'] = i;
-                }
-            })
-            mobile.methods.many2oneDialog({'records': result, 'label': self.string})
-                .then(function(response){
-                    if(response.data.action == 'search'){
-                        self.do_invoke_mobile_dialog(response.data.term);
-                    }
-                    if(response.data.action == 'select'){
-                        self.reinit_value(response.data.value.id);
-                    }
-                    if(response.data.action == 'action'){
-                        self._callback_actions[response.data.value.action_id]();
-                    }
-                });
-        });
-    }
+    //         _.each(result, function(r, i){
+    //             if(!r.hasOwnProperty('id')){
+    //                 self._callback_actions[i] = r.action;
+    //                 result[i]['action_id'] = i;
+    //             }
+    //         })
+    //         mobile.methods.many2oneDialog({'records': result, 'label': self.string})
+    //             .then(function(response){
+    //                 if(response.data.action == 'search'){
+    //                     self.do_invoke_mobile_dialog(response.data.term);
+    //                 }
+    //                 if(response.data.action == 'select'){
+    //                     self.reinit_value(response.data.value.id);
+    //                 }
+    //                 if(response.data.action == 'action'){
+    //                     self._callback_actions[response.data.value.action_id]();
+    //                 }
+    //             });
+    //     });
+    // }
 });
 
 
@@ -137,25 +139,24 @@ crashManager.include({
         }
         return this._super.apply(this, arguments);
     }
-})
-
-var ContactSync = common.FormWidget.extend({
-    template: 'ContactSync',
-    events: {
-        'click': 'on_click',
-        
-    },
-    init: function(){
-        this.is_mobile = mobile.methods.addContact;
-        return this._super.apply(this, arguments);
-    },
-    on_click: function(){
-        this.field_manager.dataset.read_index(['name', 'image', 'parent_id', 'phone', 'mobile', 'fax', 'email', 'street', 'street2', 'city', 'state_id', 'zip', 'country_id','website','function', 'title'], {}).then(function(r) {
-            mobile.methods.addContact(r);
-        });
-    },
 });
 
-core.form_tag_registry.add('contactsync', ContactSync);
+// var ContactSync = common.FormWidget.extend({
+//     template: 'ContactSync',
+//     events: {
+//         'click': 'on_click',
+//     },
+//     init: function(){
+//         this.is_mobile = mobile.methods.addContact;
+//         return this._super.apply(this, arguments);
+//     },
+//     on_click: function(){
+//         this.field_manager.dataset.read_index(['name', 'image', 'parent_id', 'phone', 'mobile', 'fax', 'email', 'street', 'street2', 'city', 'state_id', 'zip', 'country_id','website','function', 'title'], {}).then(function(r) {
+//             mobile.methods.addContact(r);
+//         });
+//     },
+// });
+
+field_registry.add('contactsync', AbstractField); // TODO
 
 });

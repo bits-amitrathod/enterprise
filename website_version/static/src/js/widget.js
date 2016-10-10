@@ -1,28 +1,33 @@
 odoo.define('website_version.widget', function (require) {
 "use strict";
 
+var AbstractField = require('web.AbstractField');
 var core = require('web.core');
-var form_common = require('web.form_common');
 var framework = require('web.framework');
-var pyeval = require('web.pyeval');
+var field_registry = require('web.field_registry');
 
 var _t = core._t;
 
-var rtoken = form_common.AbstractField.extend({
+
+var rtoken = AbstractField.extend({
     template: 'website_version.GoogleAccess',
+    supportedFieldTypes: ['char'],
+
     start: function() {
       var self = this;
       this.$el.on('click', 'button.GoogleAccess', function() {
-          self.allow_google();
+          if (self.mode !== 'readonly') {
+              self.allow_google();
+          }
       });
+      return this._super.apply(this, arguments);
   },
   allow_google: function() {
     var self = this;
     $('button.GoogleAccess').prop('disabled', true);
-    var context = pyeval.eval('context');
-    self.rpc('/website_version/google_access', {
+    self.performRPC('/website_version/google_access', {
         fromurl: window.location.href,
-        local_context: context
+        local_context: this.getContext(),
     }).done(function(o) {
         if (o.status === "need_auth") {
             alert(_t("You will be redirected to Google to authorize access to your Analytics Account!"));
@@ -34,10 +39,9 @@ var rtoken = form_common.AbstractField.extend({
           }
         }
     }).always(function() { $('button.GoogleAccess').prop('disabled', false); });
-  }
-
+  },
 });
-core.form_widget_registry.add('rtoken', rtoken);
 
+field_registry.add('rtoken', rtoken);
 
 });

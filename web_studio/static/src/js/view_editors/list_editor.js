@@ -89,7 +89,7 @@ return ListRenderer.extend({
         return def;
     },
 
-    _render_header: function() {
+    _renderHeader: function() {
         var $header = this._super.apply(this, arguments);
         var self = this;
         // Insert a hook after each th
@@ -114,7 +114,7 @@ return ListRenderer.extend({
         return $header;
     },
 
-    _render_header_cell: function(node) {
+    _renderHeaderCell: function(node) {
         var $th = this._super.apply(this, arguments);
         if (_.contains(this.invisible_columns, node)) {
             $th.addClass('o_web_studio_show_invisible');
@@ -122,7 +122,7 @@ return ListRenderer.extend({
         return $th;
     },
 
-    _render_empty_row: function() {
+    _renderEmptyRow: function() {
         var $row = this._super.apply(this, arguments);
 
         // Inser a hook after each td
@@ -140,7 +140,7 @@ return ListRenderer.extend({
         return $row;
     },
 
-    _render_row: function() {
+    _renderRow: function() {
         var $row = this._super.apply(this, arguments);
 
         // Inser a hook after each td
@@ -158,7 +158,7 @@ return ListRenderer.extend({
         return $row;
     },
 
-    _render_footer: function() {
+    _renderFooter: function() {
         var $footer = this._super.apply(this, arguments);
 
         // Insert a hook after each td
@@ -206,7 +206,7 @@ return ListRenderer.extend({
         this.trigger_up('node_clicked', {node: node});
     },
 
-    get_local_state: function() {
+    getLocalState: function() {
         var state = this._super.apply(this, arguments);
         if (this.selected_node_id) {
             state.selected_node_id = this.selected_node_id;
@@ -214,7 +214,7 @@ return ListRenderer.extend({
         return state;
     },
 
-    set_local_state: function(state) {
+    setLocalState: function(state) {
         if (state.selected_node_id) {
             var $selected_node = this.$('th[data-node-id="' + state.selected_node_id + '"]');
             if ($selected_node) {

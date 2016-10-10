@@ -4,7 +4,7 @@ odoo.define('web_studio.NewFieldDialog', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var relational_fields = require('web.relational_fields');
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var FieldManagerMixin = require('web.FieldManagerMixin');
 var ModelFieldSelector = require("web.ModelFieldSelector");
 
 var _t = core._t;
@@ -49,7 +49,7 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
 
             this.many2one_field = new Many2one(this, 'field', record, options);
             // TODO: temporary hack, will be fixed with the new views
-            this.many2one_field.node_options.no_create_edit = !core.debug;
+            this.many2one_field.nodeOptions.no_create_edit = !core.debug;
             this.many2one_field.appendTo(this.$('.o_many2one_field'));
         } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
             record_id = this.datamodel.make_record('ir.model', [{
@@ -60,7 +60,7 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
             }]);
             this.many2one_model = new Many2one(this, 'model', this.datamodel.get(record_id), options);
             // TODO: temporary hack, will be fixed with the new views
-            this.many2one_model.node_options.no_create_edit = !core.debug;
+            this.many2one_model.nodeOptions.no_create_edit = !core.debug;
             this.many2one_model.appendTo(this.$('.o_many2one_model'));
         } else if (this.ttype === 'related') {
             // This restores default modal height (bootstrap) and allows field selector to overflow

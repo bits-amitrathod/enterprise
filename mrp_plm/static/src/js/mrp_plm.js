@@ -3,7 +3,7 @@ odoo.define('mrp_plm.update_kanban', function (require) {
 var core = require('web.core');
 var Model = require('web.Model');
 
-var KanbanRecord = require('web_kanban.Record');
+var KanbanRecord = require('web.KanbanRecord');
 
 var QWeb = core.qweb;
 

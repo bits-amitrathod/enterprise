@@ -9,7 +9,7 @@
 
     'version': '0.1',
 
-    'depends': ['grid', 'hr_timesheet'],
+    'depends': ['web_grid', 'hr_timesheet'],
 
     'data': [
         'views/views.xml',

@@ -5,9 +5,8 @@ var core = require('web.core');
 var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var FieldManagerMixin = require('web.FieldManagerMixin');
 
-var Many2ManyTags = relational_fields.FieldMany2ManyTags;
 
 return Widget.extend(FieldManagerMixin, {
     template: 'web_studio.ReportEditorSidebar',

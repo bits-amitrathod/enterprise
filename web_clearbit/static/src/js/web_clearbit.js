@@ -1,23 +1,22 @@
 odoo.define('web_clearbit.autocomplete', function (require) {
 'use strict';
 
+var basic_fields = require('web.basic_fields');
 var core = require('web.core');
-var form_widgets = require('web.form_widgets');
+var field_registry = require('web.field_registry');
 
 var QWeb = core.qweb;
 
-var FieldClearbit = form_widgets.FieldChar.extend({
-    events: _.extend({}, form_widgets.FieldChar.prototype.events, {
+var FieldChar = basic_fields.FieldChar;
+
+var FieldClearbit = FieldChar.extend({
+    events: _.extend({}, FieldChar.prototype.events, {
         'keydown': 'keydown_input',
         'keyup': 'keyup_input',
         'blur': 'remove_dropdown'
     }),
-    init: function (field_manager, node) {
-        this._super(field_manager, node);
-        this.options = {
-            min_length: 0,
-            typing_speed: 400,
-        };
+    init: function () {
+        this._super.apply(this, arguments);
         this.fetch_timer = null;
         this.dropdown_query = false;
     },
@@ -34,7 +33,7 @@ var FieldClearbit = form_widgets.FieldChar.extend({
         }
     },
     keyup_input: function (event) {
-        if(this.field_manager.get_field_value('is_company')) {
+        if(this.recordData.is_company) { // This widget only works for the res.partner model
             switch(event.which) {
                 case $.ui.keyCode.ESCAPE:
                     this.remove_dropdown();
@@ -44,19 +43,16 @@ var FieldClearbit = form_widgets.FieldChar.extend({
                     break;
                 default:
                     this.input_value = this.$el.val().trim();
-                    if(this.dropdown_query != this.input_value) {
+                    if(this.dropdown_query !== this.input_value) {
                         this.show_dropdown();
                     }
             }
         }
     },
     show_dropdown: function () {
-        var self = this;
         clearTimeout(this.fetch_timer);
-        if(this.input_value.length > this.options.min_length) {
-            this.fetch_timer = setTimeout(function () {
-                self.get_clearbit_values();
-            }, this.options.typing_speed);
+        if(this.input_value.length > 0) {
+            this.fetch_timer = setTimeout(this.get_clearbit_values.bind(this), 400);
         } else {
             this.remove_dropdown();
         }
@@ -106,47 +102,52 @@ var FieldClearbit = form_widgets.FieldChar.extend({
     on_select_dropdown: function () {
         var self = this;
         if (!this.$dropdown) {
-            var $active = []
-        } else {
-            var $active = this.$dropdown.find('.o_clearbit_suggestion.active');
+            return;
         }
-        if($active.length == 1) {
+        var $active = this.$dropdown.find('.o_clearbit_suggestion.active');
+        if($active.length === 1) {
             var result = this.suggestions[$active.data('index')];
+            var def;
             if(result.logo) {
-                this.get_image_base64(result.logo, function (result) {
-                    if(result === '404'){
-                        self.field_manager.set_values({'image': false});
-                    }else{
-                        var img_base64 = result.replace(/^data:image[^;]*;base64,?/, '');
-                        // If image not available on given url it simply return "data:"
-                        self.field_manager.set_values({'image': img_base64 == "data:" ? false : img_base64});
-                    }
-                });
-            } else {
-                this.field_manager.set_values({'image': false});
+                def = this.get_image_base64(result.logo);
             }
-            this.field_manager.set_values({'name': result.name, 'website': result.domain});
+            $.when(def).always(function (image_base64) {
+                var value = false;
+                if(image_base64){
+                    value = image_base64.replace(/^data:image[^;]*;base64,?/, '');
+                    // image_base64 equals "data:" if image not available on given url
+                }
+                self.trigger_up('field_changed', {
+                    dataPointID: self.dataPointID,
+                    changes: {
+                        name: result.name,
+                        website: result.domain,
+                        image: value,
+                    },
+                });
+            });
+            this.$el.val(this.format_value(result.name)); // update the input's value directly
             this.remove_dropdown();
         }
     },
-    get_image_base64: function (url, callback) {
+    get_image_base64: function (url) {
+        var def = $.Deferred();
         var xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
         xhr.onload = function () {
             var reader  = new FileReader();
             reader.onloadend = function () {
-                callback(reader.result);
+                def.resolve(reader.result);
             };
             reader.readAsDataURL(xhr.response);
         };
         xhr.open('GET', url);
-        xhr.onerror = function(){
-            callback('404');
-        };
+        xhr.onerror = def.reject.bind(def);
         xhr.send();
+        return def;
     }
 });
 
-core.form_widget_registry.add('field_clearbit', FieldClearbit);
+field_registry.add('field_clearbit', FieldClearbit);
 
 });

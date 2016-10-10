@@ -3,13 +3,13 @@ odoo.define('web_studio.EditMenu', function (require) {
 
 var core = require('web.core');
 var Dialog = require('web.Dialog');
-var form_common = require('web.form_common');
+var FieldManagerMixin = require('web.FieldManagerMixin');
+var form_common = require('web.view_dialogs');
 var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
 
 var customize = require('web_studio.customize');
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
 
 var _t = core._t;
 var Many2One = relational_fields.FieldMany2One;
@@ -231,7 +231,7 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
             };
             self.many2one = new EditMenuMany2One(self, 'model', self.datamodel.get(record_id), options);
             // TODO: temporary hack, will be fixed with the new views
-            self.many2one.node_options.no_create_edit = !core.debug;
+            self.many2one.nodeOptions.no_create_edit = !core.debug;
             self.many2one.appendTo(self.$('.js_model'));
         });
     },

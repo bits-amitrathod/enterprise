@@ -299,7 +299,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
         }
         return false;
     },
-    set_local_state: function(state) {
+    setLocalState: function(state) {
         if (state.selected_node_id) {
             var $selected_node = this.$('[data-node-id="' + state.selected_node_id + '"]');
             if ($selected_node) {

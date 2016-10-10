@@ -7,7 +7,7 @@ var Widget = require('web.Widget');
 var relational_fields = require('web.relational_fields');
 
 var customize = require('web_studio.customize');
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var FieldManagerMixin = require('web.FieldManagerMixin');
 var IconCreator = require('web_studio.IconCreator');
 
 var QWeb = core.qweb;

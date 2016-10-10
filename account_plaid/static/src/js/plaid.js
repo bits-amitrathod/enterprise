@@ -2,13 +2,10 @@ odoo.define('account_plaid.acc_config_widget', function(require) {
 "use strict";
 
 var core = require('web.core');
-var common = require('web.form_common');
 var Model = require('web.Model');
 var framework = require('web.framework');
-var online_sync = require('account_online_sync.acc_config_widget');
 var QWeb = core.qweb;
 var Widget = require('web.Widget');
-var _t = core._t;
 
 
 var PlaidAccountConfigurationWidget = Widget.extend({
@@ -37,7 +34,6 @@ var PlaidAccountConfigurationWidget = Widget.extend({
     },
 
     process_next_step: function() {
-        var self = this;
         var login = this.$('.js_plaid_login').val();
         var password = this.$('.js_plaid_password').val();
         var pin = this.$('.js_plaid_pin').val();
@@ -121,7 +117,6 @@ var PlaidAccountConfigurationWidget = Widget.extend({
     },
 
     process_mfa_step: function() {
-        var self = this;
         var params = {'access_token': this.resp_json.access_token, 'options': '{"login_only": true, "list": true}'}
         if ($('input[name="mfa-selection"]').length > 0){
             params['options'] = '{"send_method": {"mask": "'+ $('input[name="mfa-selection"]:checked').attr('mask') +'"}}';

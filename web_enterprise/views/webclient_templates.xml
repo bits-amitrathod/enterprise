@@ -14,13 +14,13 @@
     </template>
 
     <template id="assets_backend" name="web_enterprise assets backend" inherit_id="web.assets_backend">
-        <xpath expr="//script[@src='/web/static/src/js/web_client.js']" position="replace">
+        <xpath expr="//script[@src='/web/static/src/js/chrome/web_client.js']" position="replace">
             <script type="text/javascript" src="/web_enterprise/static/src/js/web_client.js"></script>
         </xpath>
-        <xpath expr="//script[@src='/web/static/src/js/menu.js']" position="replace">
+        <xpath expr="//script[@src='/web/static/src/js/chrome/menu.js']" position="replace">
             <script type="text/javascript" src="/web_enterprise/static/src/js/menu.js"></script>
         </xpath>
-        <xpath expr="//script[@src='/web/static/src/js/views/form_upgrade_widgets.js']" position="replace">
+        <xpath expr="//script[@src='/web/static/src/js/fields/upgrade_fields.js']" position="replace">
         </xpath>
 
         <xpath expr="//link[@href='/web/static/src/less/bootstrap_overridden.less']" position="replace">

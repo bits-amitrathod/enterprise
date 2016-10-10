@@ -5,8 +5,7 @@ var core = require('web.core');
 var customize = require('web_studio.customize');
 var Dialog = require('web.Dialog');
 var Model = require('web.Model');
-var web_utils = require("web.utils");
-var KanbanView = require('web_kanban.KanbanView');
+var KanbanView = require('web.KanbanView');
 
 var _t = core._t;
 var utils = require('web_studio.utils');

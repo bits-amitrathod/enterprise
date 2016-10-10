@@ -32,12 +32,12 @@ var account_report_followup = account_report.extend({
     },
     render: function() {
         if (this.report_options.partners_to_show){
-            this.render_pager();
+            this.renderPager();
             this.render_searchview();
         }
         this._super();
     },
-    render_pager: function() {
+    renderPager: function() {
         var self = this;
         var pager = new Pager(this, this.report_options.total_pager, this.report_options.pager, 1);
         pager.appendTo($('<div>')); // render the pager

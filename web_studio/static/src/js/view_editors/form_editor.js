@@ -93,7 +93,7 @@ var FormEditor =  FormRenderer.extend({
             }
         });
     },
-    _render_node: function(node) {
+    _renderNode: function(node) {
         var self = this;
         var $el = this._super.apply(this, arguments);
         if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
@@ -109,13 +109,13 @@ var FormEditor =  FormRenderer.extend({
         }
         return $el;
     },
-    _render_tag_sheet: function(node) {
+    _renderTagSheet: function(node) {
         var $result = this._super.apply(this, arguments);
         var formEditorHook = this._render_hook(node, 'inside');
         formEditorHook.appendTo($result.find('.o_form_sheet'));
         return $result;
     },
-    _render_generic_tag: function(node) {
+    _renderGenericTag: function(node) {
         var $result = this._super.apply(this, arguments);
         if (node.attrs.class === 'oe_title') {
             var formEditorHook = this._render_hook(node, 'after');
@@ -123,12 +123,12 @@ var FormEditor =  FormRenderer.extend({
         }
         return $result;
     },
-    _render_tag_field: function(node) {
+    _renderTagField: function(node) {
         var $el = this._super.apply(this, arguments);
         this._process_field(node, $el);
         return $el;
     },
-    _render_field_widget: function(node) {
+    _renderFieldWidget: function(node) {
         var widget = this._super.apply(this, arguments);
         // make empty widgets appear if there is no label
         if (widget.$el.hasClass('o_form_field_empty') && (!node.has_label || node.attrs.nolabel)) {
@@ -137,14 +137,14 @@ var FormEditor =  FormRenderer.extend({
         }
         return widget;
     },
-    _render_tag_group: function(node) {
+    _renderTagGroup: function(node) {
         var $result = this._super.apply(this, arguments);
         // Add hook after this group
         var formEditorHook = this._render_hook(node, 'after');
         formEditorHook.appendTo($('<div>')); // start the widget
         return $result.add(formEditorHook.$el);
     },
-    _render_inner_group: function(node) {
+    _renderInnerGroup: function(node) {
         var self = this;
         var formEditorHook;
         var $result = this._super.apply(this, arguments);
@@ -169,7 +169,7 @@ var FormEditor =  FormRenderer.extend({
         }
         return $result;
     },
-    _render_inner_group_label: function ($result, label, linked_node) {
+    _renderInnerGroupLabel: function ($result, label, linked_node) {
         $result = this._super.apply(this, arguments);
         if (linked_node) {
             // We have to know if this field has a label or not.
@@ -184,7 +184,7 @@ var FormEditor =  FormRenderer.extend({
         formEditorHook.appendTo($('<div>')); // start the widget
         return formEditorHook.$el;
     },
-    _render_inner_field: function(node) {
+    _renderInnerField: function(node) {
         // We have to know if this field has a label or not.
         node.has_label = true;
         var $result = this._super.apply(this, arguments);
@@ -203,7 +203,7 @@ var FormEditor =  FormRenderer.extend({
         this._process_field(node, $result.find('.o_td_label').parent());
         return $result;
     },
-    _render_tag_notebook: function(node) {
+    _renderTagNotebook: function(node) {
         var self = this;
         var $result = this._super.apply(this, arguments);
 
@@ -223,7 +223,7 @@ var FormEditor =  FormRenderer.extend({
         formEditorHook.appendTo($result);
         return $result;
     },
-    _render_tab_header: function(page) {
+    _renderTabHeader: function(page) {
         var self = this;
         var $result = this._super.apply(this, arguments);
         $result.attr('data-node-id', this.node_id++);
@@ -237,7 +237,7 @@ var FormEditor =  FormRenderer.extend({
         this._set_style_events($result);
         return $result;
     },
-    _render_tab_page: function(node) {
+    _renderTabPage: function(node) {
         var $result = this._super.apply(this, arguments);
         // Add hook only for pages that have not yet content.
         if (!$result.children().length) {
@@ -246,7 +246,7 @@ var FormEditor =  FormRenderer.extend({
         }
         return $result;
     },
-    _render_button_box: function() {
+    _renderButtonBox: function() {
         var self = this;
         var $buttonbox = this._super.apply(this, arguments);
         var $buttonhook = $('<button>').addClass('btn btn-sm oe_stat_button o_web_studio_button_hook');
@@ -262,7 +262,7 @@ var FormEditor =  FormRenderer.extend({
         $buttonhook.prependTo($buttonbox);
         return $buttonbox;
     },
-    _render_stat_button: function(node) {
+    _renderStatButton: function(node) {
         var self = this;
         var $button = this._super.apply(this, arguments);
         $button.attr('data-node-id', this.node_id++);
@@ -276,7 +276,7 @@ var FormEditor =  FormRenderer.extend({
         this._set_style_events($button);
         return $button;
     },
-    _handle_attributes: function($el) {
+    _handleAttributes: function($el) {
         this._super.apply(this, arguments);
         if (this.show_invisible && $el.hasClass('o_form_invisible')) {
             $el.removeClass('o_form_invisible').addClass('o_web_studio_show_invisible');
@@ -343,14 +343,14 @@ var FormEditor =  FormRenderer.extend({
 
         return is_nearest_hook;
     },
-    get_local_state: function() {
+    getLocalState: function() {
         var state = this._super.apply(this, arguments);
         if (this.selected_node_id) {
             state.selected_node_id = this.selected_node_id;
         }
         return state;
     },
-    set_local_state: function(state) {
+    setLocalState: function(state) {
         this.silent = true;
         this._super.apply(this, arguments);
         this._reset_clicked_style();

@@ -4,12 +4,12 @@ odoo.define('web_studio.ViewEditorSidebar', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var DomainSelectorDialog = require("web.DomainSelectorDialog");
-var domainUtils = require("web.domainUtils");
+var domain = require("web.domain");
 var field_registry = require('web.field_registry');
 var relational_fields = require('web.relational_fields');
 var session = require("web.session");
 var Widget = require('web.Widget');
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var FieldManagerMixin = require('web.FieldManagerMixin');
 var view_components = require('web_studio.view_components');
 
 var form_component_widget_registry = view_components.registry;
@@ -104,7 +104,7 @@ return Widget.extend(FieldManagerMixin, {
             this.field_widgets = _.chain(field_registry.map)
                 .pairs()
                 .filter(function(arr) {
-                    return _.contains(arr[1].prototype.supported_field_types, field.type) && arr[0].indexOf('.') < 0;
+                    return _.contains(arr[1].prototype.supportedFieldTypes, field.type) && arr[0].indexOf('.') < 0;
                 })
                 .map(function(array) {
                     return array[0];
@@ -231,7 +231,7 @@ return Widget.extend(FieldManagerMixin, {
             value: _.pluck(studio_groups, 'id'),
         }]);
         var many2many_options = {
-            id_for_label: 'groups',
+            idForLabel: 'groups',
             mode: 'edit',
             no_quick_create: true,  // FIXME: enable add option
         };
@@ -409,14 +409,14 @@ return Widget.extend(FieldManagerMixin, {
             debugMode: session.debug,
         }).open();
         dialog.on("domain_selected", this, function (e) {
-            $input.val(domainUtils.domainToString(e.data.domain)).change();
+            $input.val(domain.domainToString(e.data.domain)).change();
         });
     },
     is_true: function(value) {
         return value !== 'false' && value !== 'False';
     },
     domain_to_str: function (domain) {
-        return domainUtils.domainToString(domain);
+        return domain.domainToString(domain);
     },
     _get_new_attributes_from_modifiers: function (modifiers) {
         var newAttributes = {};
@@ -427,7 +427,7 @@ return Widget.extend(FieldManagerMixin, {
             } else { // modifier not applied or under certain condition, remove modifier attribute and use attrs if any
                 newAttributes[key] = "";
                 if (value !== false) {
-                    attrs.push(_.str.sprintf("\"%s\": %s", key, domainUtils.domainToString(value)));
+                    attrs.push(_.str.sprintf("\"%s\": %s", key, domain.domainToString(value)));
                 }
             }
         });
