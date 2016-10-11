@@ -6,7 +6,6 @@ var ListRenderer = require('web.BasicListRenderer');
 return ListRenderer.extend({
     className: ListRenderer.prototype.className + ' o_web_studio_list_view_editor',
     events: _.extend({}, ListRenderer.prototype.events, {
-        'click .o_web_studio_new_column': 'on_new_column',
         'click th:not(.o_web_studio_new_column), td:not(.o_web_studio_new_column)': 'on_existing_column',
     }),
 
@@ -25,35 +24,69 @@ return ListRenderer.extend({
         var self = this;
         var def = this._super.apply(this, arguments);
 
-        // HOVER
-        this.$('th, td').hover(function(ev) {
-            var $el = $(ev.currentTarget);
+        this.$('.o_web_studio_new_column').droppable({
+            accept: ".o_web_studio_component",
+            drop: function(event, ui) {
+                var $el = $(event.target);
+                var position = $el.closest('table').find('th').eq($el.index()).data('position') || 'after';
+                var hooked_field_index = position === 'before' && $el.index() + 1 || $el.index() - 1;
+                var field_name = $el.closest('table').find('th').eq(hooked_field_index).data('name');
+                var node = _.find(self.columns, function (column) {
+                    return column.attrs.name === field_name;
+                });
+                self.selected_node_id = false;
 
-            self._reset_hovered_style();
+                var values = {
+                    type: 'add',
+                    structure: ui.draggable.data('structure'),
+                    field_description: ui.draggable.data('field_description'),
+                    node: node,
+                    new_attrs: ui.draggable.data('new_attrs'),
+                    position: position,
+                };
+                ui.helper.removeClass('ui-draggable-helper-ready');
+                self.trigger_up('on_hook_selected');
+                self.trigger_up('view_change', values);
+            },
+            over: function(event, ui) {
+                var $el = $(event.target);
+                // show "+" on th
+                $el.closest('table')
+                    .find('th')
+                    .eq($el.index())
+                    .addClass('o_web_studio_hovered');
+                $el.closest('table')
+                    .find('tr')
+                    .children(':nth-child(' + ($el.index() + 1) + ')')
+                    .addClass('o_web_studio_hovered');
+
+                ui.helper.addClass('ui-draggable-helper-ready');
+            },
+            out: function(event, ui) {
+                ui.helper.removeClass('ui-draggable-helper-ready');
+                self.$el.find('.o_web_studio_hovered').removeClass('o_web_studio_hovered');
+            }
+        });
+
+        // HOVER
+        this.$('th, td').not('.o_web_studio_new_column').hover(function(ev) {
+            var $el = $(ev.currentTarget);
+            self.$('.o_hover').removeClass('o_hover');
 
             // add style on hovered column
             $el.closest('table')
                 .find('tr')
                 .children(':nth-child(' + ($el.index() + 1) + ')')
                 .addClass('o_hover');
-
-            // show "+" on th
-            $el.closest('table')
-                .find('th')
-                .eq($el.index())
-                .filter('.o_web_studio_new_column')
-                .find('i')
-                .css('visibility', 'visible');
         });
         this.$('table').mouseleave(function() {
-            self._reset_hovered_style();
+            self.$('.o_hover').removeClass('o_hover');
         });
 
         // CLICK
         this.$('th, td').click(function(ev) {
-            self._reset_clicked_style();
-
             var $el = $(ev.currentTarget);
+            self.$('.o_clicked').removeClass('o_clicked');
 
             $el.closest('table')
                 .find('th')
@@ -157,15 +190,6 @@ return ListRenderer.extend({
 
     },
 
-    _reset_clicked_style: function() {
-        this.$('.o_clicked').removeClass('o_clicked');
-    },
-
-    _reset_hovered_style: function() {
-        this.$('.o_hover').removeClass('o_hover');
-        this.$('th.o_web_studio_new_column i').css('visibility', 'hidden');
-    },
-
     on_existing_column: function(ev) {
         var $el = $(ev.currentTarget);
         var $selected_column = $el.closest('table').find('th').eq($el.index());
@@ -176,25 +200,6 @@ return ListRenderer.extend({
         });
         this.selected_node_id = $selected_column.data('node-id');
         this.trigger_up('node_clicked', {node: node});
-    },
-
-    on_new_column: function(ev) {
-        var $el = $(ev.currentTarget);
-
-        // The information (position & field name) is on the corresponding th of the clicked element.
-        var position = $el.closest('table').find('th').eq($el.index()).data('position') || 'after';
-        var hooked_field_index = position === 'before' && $el.index() + 1 || $el.index() - 1;
-        var field_name = $el.closest('table').find('th').eq(hooked_field_index).data('name');
-        var node = _.find(this.columns, function (column) {
-            return column.attrs.name === field_name;
-        });
-        this.selected_node_id = false;
-        this.trigger_up('view_change', {
-            type: 'add',
-            structure: 'field',
-            position: position,
-            node: node,
-        });
     },
 
     get_local_state: function() {

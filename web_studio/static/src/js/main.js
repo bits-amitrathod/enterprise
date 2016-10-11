@@ -92,7 +92,7 @@ var Main = Widget.extend({
                     studio_view_id: studio_view.studio_view_id,
                     studio_view_arch: studio_view.studio_view_arch,
                 };
-                self.view_editor = new ViewEditorManager(self, self.action.res_model, fields_views[view_type], view_type, options);
+                self.view_editor = new ViewEditorManager(self, self.action.res_model, fields_views[view_type], view_type, dataset, options);
 
                 var fragment = document.createDocumentFragment();
                 return self.view_editor.appendTo(fragment).then(function () {

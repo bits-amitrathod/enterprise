@@ -245,11 +245,11 @@ var FormEditor =  FormRenderer.extend({
             $(this).addClass('o_clicked');
         })
         .mouseover(function(event) {
-            $(this).addClass('o_hovered');
+            $(this).addClass('o_web_studio_hovered');
             event.stopPropagation();
         })
         .mouseout(function(event) {
-            $(this).removeClass('o_hovered');
+            $(this).removeClass('o_web_studio_hovered');
             event.stopPropagation();
         });
     },

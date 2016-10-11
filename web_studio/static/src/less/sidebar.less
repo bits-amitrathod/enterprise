@@ -3,23 +3,32 @@
     background-color: @o-studio-bg-medium;
 
     .o_web_studio_sidebar_header {
+        .clearfix();
         cursor: pointer;
         margin-bottom: 15px;
         padding: 0px;
         background-color: @o-studio-bg-dark;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 @o-studio-bg-dark;
-        .o-linear-gradient(@deg: 90deg, @start-color: @o-studio-bg-medium, @end-color: @o-studio-bg-dark);
 
         > div {
-            display: inline-block;
-            margin: 5px;
+            width: percentage(1/3);
+            float: left;
+            text-align: center;
+            padding: 14px 0;
+            color: @o-studio-bg-light;
+            background-color: @o-studio-bg-dark;
+            box-shadow: inset 1px 0 0 @o-studio-bg-medium;
 
             &.inactive {
                 color: grey;
+                cursor: not-allowed;
             }
-
-            > i {
-                margin: 10px;
+            &.actif, &:first-child:last-child {
+                cursor: default;
+                background-color: @o-studio-bg-medium;
+            }
+            &:not(.inactive):not(.actif):hover {
+                color: white;
+                background-color: fade(@o-studio-bg-medium, 50%);
             }
         }
     }
@@ -66,6 +75,68 @@
                 border: 1px solid @o-studio-bg-light;
                 background-color: @o-studio-bg-medium;
                 color: @o-studio-bg-light;
+            }
+        }
+        .o_web_studio_field_type_container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .o_web_studio_component {
+            .o-text-overflow();
+            width: 49%;
+            max-width: 200px;
+            height: 35px;
+            font-weight: 500;
+            line-height: 2.1;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+            padding: 5px;
+            cursor: pointer;
+            box-shadow: 0 1px 0 black;
+            background-color: @o-studio-bg-light;
+            color: @o-studio-bg-dark;
+            &:hover {
+                background-color: white;
+            }
+            &:nth-child(odd) {
+                margin-right: 2%;
+            }
+            &.o_web_studio_debug:not(.ui-draggable-helper) {
+                height: 45px;
+                line-height: 1.6;
+            }
+            .o_web_studio_component_description {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-style: italic;
+                font-size: 10px;
+                line-height: 1;
+            }
+            &:before {
+                .size(18px, 100%);
+                opacity: 0.9;
+                margin-right: 8px;
+                content: "";
+                background-position: left center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                display: block;
+                float: left;
+            }
+            &.ui-draggable-helper {
+                background-color: white;
+                box-shadow: none;
+                border: 1px solid black;
+                z-index: @zindex-modal;
+                .o_web_studio_component_description {
+                    display: none;
+                }
+                &.ui-draggable-helper-ready {
+                    opacity: 1!important;
+                    line-height: 2;
+                    border: 2px solid @odoo-brand-optional;
+                }
             }
         }
     }

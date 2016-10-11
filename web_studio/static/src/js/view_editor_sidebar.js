@@ -4,11 +4,15 @@ odoo.define('web_studio.ViewEditorSidebar', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var field_registry = require('web.field_registry');
+var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
 var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var view_components = require('web_studio.view_components');
 
+var form_component_widget_registry = view_components.registry;
 var _t = core._t;
+var Many2ManyTags = relational_fields.FieldMany2ManyTags;
 
 return Widget.extend(FieldManagerMixin, {
     template: 'web_studio.ViewEditorSidebar',
@@ -18,6 +22,10 @@ return Widget.extend(FieldManagerMixin, {
         },
     }),
     events: {
+        'click .o_web_studio_new:not(.inactive)': function() {
+            this.trigger_up('unselect_element');
+            this.toggle_mode('new');
+        },
         'click .o_web_studio_view': function() {
             this.trigger_up('unselect_element');
             this.toggle_mode('view');
@@ -37,60 +45,58 @@ return Widget.extend(FieldManagerMixin, {
         'change .o_display_chatter input[data-type="email_alias"]': 'change_email_alias',
     },
 
-    init: function (parent, view_type, view_attrs) {
+    init: function (parent, view_type, view_attrs, model, fields) {
         FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
         this.debug = core.debug;
-        this.mode = 'view';
+        this.mode = 'new';
         this.view_type = view_type;
         this.view_attrs = view_attrs || {};
-
-        this.mode_tag_map = {
-            field: 'field',
-            page: 'page',
-            group: 'group',
-            button: 'button',
-        };
-
         this.field_widgets = Object.keys(field_registry.map).sort();
+        this.model = model;
+        this.fields = fields;
     },
+    renderElement: function() {
+        this._super();
+
+        if (this.mode === 'new') {
+            this._append_widgets_components();
+        } else if (this.mode === 'properties') {
+            this._append_widgets_many2many_groups();
+        }
+    },
+
     toggle_mode: function(mode, options) {
         this.mode = mode;
-        this.tag = mode in this.mode_tag_map ? this.mode_tag_map[mode] : 'div';
         this.node = options && options.node || {};
         this.attrs = this.node.attrs;
 
-        if (mode === 'field') {
+        if (options && options.node) {
+            this.tag = this.element = options.node.tag || 'div';
+        }
+
+        if (options && options.field) {
             this.default_value = options.default_value;
-            this.field_parameters = options.field;
             this.attrs = options.field.__attrs;
+            this.tag = this.element = 'field';
+            this.field_parameters = options.field;
             this.modifiers = JSON.parse(options.field.__attrs.modifiers);
             this.compute_field_attrs();
-        }
-        if (mode === 'chatter') {
+        } else if (options && options.node.attrs.class === 'oe_chatter') {
+            this.tag = 'div';
+            this.element = 'chatter';
             this.email_alias = options.email_alias;
         }
-
+        this.render();
+    },
+    render: function () {
+        var scrollTop = this.$el.scrollTop();
         this.renderElement();
-
-        if (mode === 'field') {
-            var studio_groups = this.attrs.studio_groups ? JSON.parse(this.attrs.studio_groups) : [];
-            var record_id = this.datamodel.make_record('ir.model.fields', [{
-                name: 'groups',
-                relation: 'res.groups',
-                relational_value: studio_groups,
-                type: 'many2many',
-                value: _.pluck(studio_groups, 'id'),
-            }]);
-            var many2many_options = {
-                id_for_label: 'groups',
-                mode: 'edit',
-                no_quick_create: true,  // FIXME: enable add option
-            };
-            var Many2ManyTags = relational_fields.FieldMany2ManyTags;
-            this.many2many = new Many2ManyTags(this, 'groups', this.datamodel.get(record_id), many2many_options);
-            this.many2many.appendTo(this.$el.find('.o_groups'));
-        }
+        this.$el.scrollTop(scrollTop);
+    },
+    update_fields: function(fields) {
+        this.fields = fields;
+        this.render();
     },
     compute_field_attrs: function() {
         /* Compute field attributes.
@@ -105,6 +111,58 @@ return Widget.extend(FieldManagerMixin, {
         this.attrs.required = this.field_parameters.required || this.modifiers.required;
         this.attrs.domain = this.attrs.domain || this.field_parameters.domain;
         this.attrs.context = this.attrs.context || this.field_parameters.context;
+    },
+    _append_widgets_components: function() {
+        var self = this;
+        var widget_classes;
+        var form_widgets;
+        var $sidebar_content = this.$('.o_web_studio_sidebar_content');
+
+        // Components
+        if (this.view_type === 'form') {
+            widget_classes = form_component_widget_registry.get('components');
+            form_widgets = widget_classes.map(function(FormComponent) {
+                return new FormComponent(self);
+            });
+            $sidebar_content.append(this._render_widgets_components(form_widgets, 'Components'));
+        }
+        // New Fields
+        widget_classes = form_component_widget_registry.get('new_field');
+        form_widgets = widget_classes.map(function(FormComponent) {
+            return new FormComponent(self);
+        });
+        $sidebar_content.append(this._render_widgets_components(form_widgets, 'New Fields'));
+
+        // Existing Fields
+        var FormComponent = form_component_widget_registry.get('existing_field');
+        form_widgets = _.map(this.fields, function(field, field_name) {
+            return new FormComponent(self, field_name, field.string, field.type);
+        });
+        $sidebar_content.append(this._render_widgets_components(form_widgets, 'Existing Fields'));
+    },
+    _append_widgets_many2many_groups: function() {
+        var studio_groups = this.attrs.studio_groups ? JSON.parse(this.attrs.studio_groups) : [];
+        var record_id = this.datamodel.make_record('ir.model.fields', [{
+            name: 'groups',
+            relation: 'res.groups',
+            relational_value: studio_groups,
+            type: 'many2many',
+            value: _.pluck(studio_groups, 'id'),
+        }]);
+        var many2many_options = {
+            id_for_label: 'groups',
+            mode: 'edit',
+            no_quick_create: true,  // FIXME: enable add option
+        };
+        this.many2many = new Many2ManyTags(this, 'groups', this.datamodel.get(record_id), many2many_options);
+        this.many2many.appendTo(this.$('.o_groups'));
+    },
+    _render_widgets_components: function (form_widgets, category_name) {
+        var $components_container = $('<div>').addClass('o_web_studio_field_type_container');
+        form_widgets.forEach(function(form_component) {
+            form_component.appendTo($components_container);
+        });
+        return ['<h3>' + category_name + '</h3>', $components_container];
     },
     on_xml_editor: function () {
         this.trigger_up('open_xml_editor');
@@ -190,7 +248,7 @@ return Widget.extend(FieldManagerMixin, {
         var attrs;
         var message;
 
-        if (this.mode === 'chatter') {
+        if (this.element === 'chatter') {
             attrs = { 'class': 'oe_chatter' };
             message = _t('Are you sure you want to remove the chatter from the view?');
         } else {

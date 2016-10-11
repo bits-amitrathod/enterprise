@@ -3,13 +3,8 @@ odoo.define('web_studio.FormEditorHook', function (require) {
 
 var Widget = require('web.Widget');
 
-var NewElementDialog = require('web_studio.NewElementDialog');
-
 var FormEditorHook = Widget.extend({
     className: 'o_web_studio_new_line',
-    events: {
-        'click': 'on_click',
-    },
 
     init: function(parent, node, position) {
         this._super.apply(this, arguments);
@@ -20,6 +15,7 @@ var FormEditorHook = Widget.extend({
         }
     },
     start: function() {
+        var self = this;
         var $content;
         switch (this.node.tag) {
             case 'field':
@@ -38,15 +34,35 @@ var FormEditorHook = Widget.extend({
                 break;
         }
         this.$el.append($content);
+
+        this.$el.droppable({
+            accept: ".o_web_studio_component",
+            hoverClass : "o_web_studio_hovered",
+            drop: function(event, ui) {
+                var values = {
+                    type: 'add',
+                    structure: ui.draggable.data('structure'),
+                    field_description: ui.draggable.data('field_description'),
+                    node: self.node,
+                    new_attrs: ui.draggable.data('new_attrs'),
+                    position: self.position,
+                };
+                ui.helper.removeClass('ui-draggable-helper-ready');
+                self.trigger_up('on_hook_selected');
+                self.trigger_up('view_change', values);
+            },
+            over: function(event, ui) {
+                ui.helper.addClass('ui-draggable-helper-ready');
+            },
+            out: function(event, ui) {
+                ui.helper.removeClass('ui-draggable-helper-ready');
+            }
+        });
+
         return this._super.apply(this, arguments);
     },
     _render_span: function() {
         return $('<span>').addClass('o_web_studio_new_line_separator');
-    },
-    on_click: function(event) {
-        event.stopPropagation();
-        this.trigger_up('on_hook_selected');
-        new NewElementDialog(this, this.node, this.position).open();
     },
 });
 

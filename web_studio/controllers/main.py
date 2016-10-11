@@ -213,6 +213,32 @@ class WebStudioController(http.Controller):
         if attachment:
             request.env.user.company_id.background_image = attachment.datas
 
+    def create_new_field(self, values):
+        """ Create a new field with given values.
+            In some cases we have to convert "id" to "name" or "name" to "id"
+            - "model" is the current model we are working on. In js, we only have his name.
+              but we need his id to create the field of this model.
+            - The relational widget doesn't provide any name, we only have the id of the record.
+              This is why we need to search the name depending of the given id.
+        """
+        # Get current model
+        model = request.env['ir.model'].search([('model', '=', values.pop('model_name'))])
+        values.update({'model_id': model.id})
+        # For many2one and many2many fields
+        if values.get('relation_id'):
+            values.update({
+                'relation': request.env['ir.model'].browse(values['relation_id']).model
+            })
+        # For one2many fields
+        if values.get('relation_field_id'):
+            field = request.env['ir.model.fields'].browse(values['relation_field_id'])
+            values.update({
+                'relation': field.model_id.model,
+                'relation_field': field.name,
+            })
+        # Create new field
+        return request.env['ir.model.fields'].create(values)
+
     @http.route('/web_studio/edit_action', type='json', auth='user')
     def edit_action(self, action_type, action_id, args):
 
@@ -286,8 +312,11 @@ class WebStudioController(http.Controller):
 
     @http.route('/web_studio/edit_view', type='json', auth='user')
     def edit_view(self, view_id, studio_view_arch, operations=None):
+        IrModelFields = request.env['ir.model.fields']
         view = request.env['ir.ui.view'].browse(view_id)
         studio_view = self._get_studio_view(view)
+        ViewModel = request.env[view.model]
+        field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
@@ -295,7 +324,14 @@ class WebStudioController(http.Controller):
         for op in operations:
             # Call the right operation handler
             if 'node' in op:
-                op['node'] = self._preprocess_attrs(op['node'])
+                if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
+                    # Check if field exists before creation
+                    field = IrModelFields.search([('name', '=', op['node']['field_description']['name'])], limit=1)
+                    if not field:
+                        field = self.create_new_field(op['node']['field_description'])
+                        field_created = True
+                    op['node']['attrs']['name'] = field.name
+
             getattr(self, '_operation_%s' % (op['type']))(arch, op, view.model)
 
         # Save or create changes into studio view, identifiable by xmlid
@@ -322,9 +358,12 @@ class WebStudioController(http.Controller):
                 'name': "Odoo Studio: %s customization" % (view.name),
             })
 
-        fields_view = request.env[view.model].with_context({'studio': True}).fields_view_get(view.id, view.type)
-
-        return fields_view
+        result = {
+            'fields_view': ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type),
+        }
+        if field_created:
+            result['fields'] = ViewModel.fields_get()
+        return result
 
     @http.route('/web_studio/edit_view_arch', type='json', auth='user')
     def edit_view_arch(self, view_id, view_arch):
@@ -355,12 +394,6 @@ class WebStudioController(http.Controller):
             ('Content-Type', 'application/zip'),
             ('Content-Length', len(content)),
         ], cookies={'fileToken': token})
-
-    def _preprocess_attrs(self, node):
-        # The js can't give us the field name, it only has the field id
-        if node['tag'] == 'field' and 'id' in node['attrs']:
-            node['attrs']['name'] = request.env['ir.model.fields'].browse(node['attrs'].pop('id')).name
-        return node
 
     def _get_or_create_default_view(self, model, view_type, view_id=False):
         View = request.env['ir.ui.view']

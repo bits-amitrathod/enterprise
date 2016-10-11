@@ -21,34 +21,32 @@
                 display: inherit!important;
             }
             .o_web_studio_new_line {
-               :first-child {
-                  line-height: 0px;
-               }
-               span.o_web_studio_new_line_separator {
-                   display: block;
-                   position: relative;
-                   height: 5px;
-                   margin: 2px;
-               }
-               &:hover {
-                   cursor: pointer !important;
-                    span.o_web_studio_new_line_separator {
-                        border-top: 1px solid @odoo-brand-optional;
-
-                        &:after {
-                            float: right;
-                            position: absolute;
-                            left: 100%;
-                            content: "\f0fe";
-                            font-family: FontAwesome;
-                            font-size: 14px;
-                            color: @odoo-brand-optional;
-                        }
-                    }
+                :first-child {
+                    line-height: 0px;
+                }
+                > td {
+                    padding: 0;
+                }
+                span.o_web_studio_new_line_separator {
+                    display: block;
+                    position: relative;
+                    padding: 4px 0;
+                    border: 0px dashed transparent;
+                    .o-transition(all, 0.2s, 0s, cubic-bezier(0.215, 0.610, 0.355, 1.000));
+                }
+            }
+            .o_web_studio_new_line.o_web_studio_hovered {
+                cursor: pointer !important;
+                outline: none;
+                span.o_web_studio_new_line_separator {
+                    background-color: fade(@odoo-brand-optional, 2%);
+                    border: 1px dashed fade(@odoo-brand-optional, 50%);
+                    padding: 20px;
+                    margin: 4px 0;
                 }
             }
         }
-        .o_hovered {
+        .o_web_studio_hovered {
             outline: 1px dashed @odoo-brand-optional;
             cursor: pointer;
         }

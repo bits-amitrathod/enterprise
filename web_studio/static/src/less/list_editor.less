@@ -42,10 +42,13 @@
         }
     }
 
-    td.o_web_studio_new_column {
-        &.o_hover {
+    .o_web_studio_new_column {
+        &.o_web_studio_hovered {
             cursor: pointer !important;
             border-left: 2px solid @odoo-brand-optional;
+            > i {
+                visibility: visible;
+            }
         }
     }
 }

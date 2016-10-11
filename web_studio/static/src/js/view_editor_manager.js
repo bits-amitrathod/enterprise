@@ -28,6 +28,7 @@ var PivotEditor = require('web_studio.PivotEditor');
 var SearchEditor = require('web_studio.SearchEditor');
 
 var NewButtonBoxDialog = require('web_studio.NewButtonBoxDialog');
+var NewFieldDialog = require('web_studio.NewFieldDialog');
 var utils = require('web_studio.utils');
 var ViewEditorSidebar = require('web_studio.ViewEditorSidebar');
 var XMLEditor = require('web_studio.XMLEditor');
@@ -119,11 +120,13 @@ return Widget.extend({
         'open_field_form': 'open_field_form',
     },
 
-    init: function (parent, model, fields_view, view_type, options) {
+    init: function (parent, model, fields_view, view_type, dataset, options) {
+        var self = this;
         this._super.apply(this, arguments);
         this.model = model;
         this.fields_view = fields_view;
         this.view_type = view_type;
+        this.dataset = dataset;
         this.view_id = this.fields_view.view_id;
         this.view_attrs = this.fields_view.arch.attrs;
         this.mode = 'edition';  // the other mode is 'rendering' when using the XML editor
@@ -142,7 +145,6 @@ return Widget.extend({
         this.ids = options.ids || [];
         this.res_id = options.res_id;
         this.chatter_allowed = options.chatter_allowed;
-        this.renderer_scrolltop = 0;
         this.studio_view_id = options.studio_view_id;
         this.studio_view_arch = options.studio_view_arch;
 
@@ -151,17 +153,30 @@ return Widget.extend({
         bus.on('undo_clicked', this, this.undo);
         bus.on('redo_clicked', this, this.redo);
     },
+    willStart: function() {
+        var self = this;
+        return $.when(
+            this.load_demo_data(),
+            this.get_fields(),
+            this._super.apply(this, arguments)
+        ).then(function (demo_data, fields) {
+            self.demo_data = demo_data;
+            self.fields = fields;
+            // Fields not already in view
+            var fields_not_in_view = _.omit(self.fields, Object.keys(self.fields_view.fields));
+            self.sidebar = new ViewEditorSidebar(self, self.view_type, self.view_attrs, self.model, fields_not_in_view);
+        });
+    },
     start: function () {
         var self = this;
-        this.sidebar = new ViewEditorSidebar(this, this.view_type, this.view_attrs);
-
-        return $.when(this.load_demo_data(), this._super.apply(this, arguments)).then(function (demo_data) {
-            self.demo_data = demo_data;
-            // Once all renderers will be implemented, render_content could be considered synchronous
-            return self.render_content().then(function () {
-                self.sidebar.prependTo(self.$el);
-            });
+        this.$renderer_container = $('<div>').addClass('o_web_studio_view_renderer');
+        this.$el.append(this.$renderer_container);
+        return $.when(this._super(), this.render_content()).then(function () {
+            return self.sidebar.prependTo(self.$el);
         });
+    },
+    get_fields: function() {
+        return data_manager.load_fields(this.dataset);
     },
     load_demo_data: function() {
         var self = this;
@@ -195,47 +210,46 @@ return Widget.extend({
     },
     render_content: function (replace, options) {
         var self = this;
-
-        this.renderer_scrolltop = this.$('.o_web_studio_view_renderer').scrollTop();
+        var editor;
+        var def;
+        var renderer_scrolltop = this.$renderer_container.scrollTop();
         var local_state = this.editor ? this.editor.get_local_state() : false;
-
-        if (replace && this.editor) {
-            this.editor.destroy();
-            this.editor = undefined;
-        }
 
         options = _.extend({}, options, {chatter_allowed: this.chatter_allowed});
         if (this.mode === 'edition') {
-            if (!this.editor) {
-                this.editor = new Editors[this.view_type](this, this.fields_view.arch, this.fields_view.fields, this.demo_data, field_registry, options);
+            if (replace || !this.editor) {
+                var Editor = Editors[this.view_type];
+                editor = new Editor(this, this.fields_view.arch, this.fields_view.fields, this.demo_data, field_registry, options);
+                // Update fields and render the sidebar
+                var fields_not_in_view = _.omit(this.fields, Object.keys(this.fields_view.fields));
+                this.sidebar.update_fields(fields_not_in_view);
             }
         } else {
-            if (!this.renderer) {
-                this.editor = Renderers[this.view_type] && new Renderers[this.view_type](this, this.fields_view.arch, this.fields_view.fields, this.demo_data, field_registry, options);
+            var Renderer = Renderers[this.view_type];
+            editor = new Renderer(this, this.fields_view.arch, this.fields_view.fields, this.demo_data, field_registry, options);
+        }
+
+        if (this.editor) {
+            this.editor.destroy();
+        }
+        if (editor) {
+            this.editor = editor;
+            try {
+                // Starting renderers is synchronous, but it's not the case for old views
+                def = this.editor.appendTo(this.$renderer_container).then(function() {
+                    self.$renderer_container.scrollTop(renderer_scrolltop); // restore scroll position
+                });
+            } catch(e) {
+                this.do_warn(_t("Error"), _t("The requested change caused an error in the view.  It could be because a field was deleted, but still used somewhere else."));
+                this.undo(true);
             }
         }
 
-        return this._append_content(this.editor).then(function() {
+        return $.when(def).then(function() {
             if (local_state) {
                 self.editor.set_local_state(local_state);
             }
         });
-    },
-    _append_content: function(content) {
-        try {
-            var self = this;
-            var $renderer_container = $('<div>').addClass('o_web_studio_view_renderer');
-            // Starting renderers is synchronous, but it's not the case for old views
-            return content.prependTo($renderer_container).then(function() {
-                self.$('.o_web_studio_view_renderer').remove();
-                self.$el.append($renderer_container);
-                $renderer_container.scrollTop(self.renderer_scrolltop); // restore scroll position
-            });
-        } catch(e) {
-            this.do_warn(_t("Error"), _t("The requested change caused an error in the view.  It could be because a field was deleted, but still used somewhere else."));
-            this.undo(true);
-            return $.when();
-        }
     },
     toggle_editor_sidebar: function (event) {
         var node = event.data.node;
@@ -249,13 +263,12 @@ return Widget.extend({
             def = customize.get_default_value(this.model, node.attrs.name);
         }
         if (mode === 'div' && node.attrs.class === 'oe_chatter') {
-            mode = 'chatter';
             def = customize.get_email_alias(this.model);
         }
         var self = this;
         $.when(def).then(function(result) {
             _.extend(params, result);
-            self.sidebar.toggle_mode(mode, params);
+            self.sidebar.toggle_mode('properties', params);
         });
     },
     toggle_form_invisible: function (event) {
@@ -334,7 +347,7 @@ return Widget.extend({
         var structure = event.data.structure;
         var type = event.data.type;
         var node = event.data.node;
-        var new_attrs = event.data.new_attrs;
+        var new_attrs = event.data.new_attrs || {};
         var position = event.data.position || 'after';
         var xpath_info;
         if (node && !_.pick(node.attrs, this.expr_attrs[node.tag]).length) {
@@ -362,7 +375,8 @@ return Widget.extend({
                 this._add_page(type, node, xpath_info, position);
                 break;
             case 'field':
-                this._add_field(event, type, node, xpath_info, position);
+                var field_description = event.data.field_description;
+                this._add_field(type, field_description, node, xpath_info, position, new_attrs);
                 break;
             case 'chatter':
                 this._add_chatter(event.data);
@@ -460,14 +474,18 @@ return Widget.extend({
             ));
         }
 
-        return def.then(function (fields_view) {
-            if (!fields_view) {
+        return def.then(function (result) {
+            if (!result.fields_view) {
                 self.do_warn(_t("Error"), _t("This operation caused an error, probably because a xpath was broken"));
                 return self.undo(true).then(function () {
                     return $.Deferred().reject(); // indicate that the operation can't be applied
                 });
             }
-            self.fields_view = data_manager._postprocess_fvg(fields_view);
+            // "/web_studio/edit_view" returns "fields" only when we created a new field.
+            if (result.fields) {
+                self.fields = result.fields;
+            }
+            self.fields_view = data_manager._postprocess_fvg(result.fields_view);
 
             // As the studio view arch is stored in this widget, if this view
             // is updated directly with the XML editor, the arch should be updated.
@@ -555,46 +573,42 @@ return Widget.extend({
             },
         });
     },
-    _add_field: function(event, type, node, xpath_info, position) {
+    _add_field: function(type, field_description, node, xpath_info, position, new_attrs) {
         var self = this;
-        var model = this.model;
-        new Model('ir.model').call('search_read', [[['model', '=', model]]]).then(function(result) {
-            var form = new form_common.SelectCreateDialog(self, {
-                res_model: 'ir.model.fields',
-                title: _t('Select or create a field'),
-                disable_multiple_selection: true,
-                context: {
-                    default_model: model,
-                    default_model_id: result[0].id,
-                },
-                domain: [
-                    ['model', '=', model],
-                    ['name', 'not in', Object.keys(self.fields_view.fields)]
-                ],
-                on_selected: function (field_id) {
-                    field_id = field_id[0];
-                    self.do({
-                        type: type,
-                        target: {
-                            tag: node.tag,
-                            attrs: _.pick(node.attrs, self.expr_attrs[node.tag]),
-                            xpath_info: xpath_info,
-                        },
-                        position: position,
-                        node: {
-                            tag: 'field',
-                            attrs: {
-                                id: field_id,
-                                name: 'studio_field_' + utils.randomString(5),
-                            }
-                        },
-                    });
-                }
-            }).open();
+        var def_field_values;
 
-            if (event.data.on_success) {
-                event.data.on_success();
+        // The field doesn't exist: field_description is the definition of the new field.
+        // No need to have field_description of an existing field
+        if (field_description) {
+            field_description.name = 'x_studio_field_' + utils.randomString(5);
+            field_description.model_name = this.model;
+            // Fields with requirements
+            // Open Dialog to precise the required fields for this field.
+            if (_.contains(['selection', 'one2many', 'many2one', 'many2many'], field_description.ttype)) {
+                def_field_values = $.Deferred();
+                var dialog = new NewFieldDialog(this, this.model, field_description.ttype).open();
+                dialog.on('field_default_values_saved', this, function(values) {
+                    def_field_values.resolve(values);
+                    dialog.close();
+                });
             }
+        }
+        // When the field is created, close the dialog and update the view
+        $.when(def_field_values).then(function(values) {
+            self.do({
+                type: type,
+                target: {
+                    tag: node.tag,
+                    attrs: _.pick(node.attrs, self.expr_attrs[node.tag]),
+                    xpath_info: xpath_info,
+                },
+                position: position,
+                node: {
+                    tag: 'field',
+                    attrs: new_attrs,
+                    field_description: _.extend(field_description, values),
+                },
+            });
         });
     },
     _add_chatter: function(data) {
