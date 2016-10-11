@@ -39,7 +39,7 @@ var ReportEditor = ReportAction.extend({
         this.sidebar = new ReportEditorSidebar(this);
 
         return this._super.apply(this, arguments).then(function() {
-            return self.sidebar.appendTo(self.$el);
+            return self.sidebar.prependTo(self.$el);
         });
     },
     open_report_form: function() {
@@ -54,15 +54,15 @@ var ReportEditor = ReportAction.extend({
     open_xml_editor: function () {
         var self = this;
 
-        this.XMLEditor = new XMLEditor(this, this.view_id);
+        this.XMLEditor = new XMLEditor(this, this.view_id, {'position': 'left'});
 
-        $.when(this.XMLEditor.appendTo(this.$el)).then(function() {
+        $.when(this.XMLEditor.prependTo(this.$el)).then(function() {
             self.sidebar.$el.detach();
         });
     },
     close_xml_editor: function () {
         this.XMLEditor.destroy();
-        this.sidebar.$el.appendTo(this.$el);
+        this.sidebar.$el.prependTo(this.$el);
     },
     save_xml_editor: function (event) {
         var self = this;

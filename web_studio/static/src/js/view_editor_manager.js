@@ -159,7 +159,7 @@ return Widget.extend({
             self.demo_data = demo_data;
             // Once all renderers will be implemented, render_content could be considered synchronous
             return self.render_content().then(function () {
-                self.sidebar.appendTo(self.$el);
+                self.sidebar.prependTo(self.$el);
             });
         });
     },
@@ -228,7 +228,7 @@ return Widget.extend({
             // Starting renderers is synchronous, but it's not the case for old views
             return content.prependTo($renderer_container).then(function() {
                 self.$('.o_web_studio_view_renderer').remove();
-                self.$el.prepend($renderer_container);
+                self.$el.append($renderer_container);
                 $renderer_container.scrollTop(self.renderer_scrolltop); // restore scroll position
             });
         } catch(e) {
@@ -267,10 +267,10 @@ return Widget.extend({
     open_xml_editor: function () {
         var self = this;
 
-        this.XMLEditor = new XMLEditor(this, this.view_id);
+        this.XMLEditor = new XMLEditor(this, this.view_id, {'position': 'left'});
         this.mode = 'rendering';
 
-        $.when(this.render_content(), this.XMLEditor.appendTo(this.$el)).then(function() {
+        $.when(this.render_content(), this.XMLEditor.prependTo(this.$el)).then(function() {
             self.sidebar.$el.detach();
         });
     },
@@ -278,7 +278,7 @@ return Widget.extend({
         this.mode = 'edition';
         this.render_content(true);
         this.XMLEditor.destroy();
-        this.sidebar.appendTo(this.$el);
+        this.sidebar.prependTo(this.$el);
     },
     save_xml_editor: function (event) {
         this.do({

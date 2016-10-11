@@ -50,7 +50,7 @@ var ActionEditor = Widget.extend({
         });
 
         this.sidebar = new ActionEditorSidebar(this, this.action);
-        return this.sidebar.appendTo(this.$el);
+        return this.sidebar.prependTo(this.$el);
     },
     open_action_form: function() {
         this.do_action({
