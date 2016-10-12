@@ -72,6 +72,34 @@ function find_parent(arch, node) {
     return result;
 }
 
+function find_parents_positions(arch, node) {
+    return _find_parents_positions(arch, node, [], 1);
+}
+
+function _find_parents_positions(parent, node, positions, indice) {
+    var result;
+    positions.push({
+        'tag': parent.tag,
+        'indice': indice,
+    });
+    if (parent === node) {
+        return positions;
+    } else {
+        var current_indices = {};
+        _.each(parent.children, function(child) {
+            // Save indice of each sibling node
+            current_indices[child.tag] = current_indices[child.tag] ? current_indices[child.tag] + 1 : 1;
+            var res = _find_parents_positions(child, node, positions, current_indices[child.tag]);
+            if (res) {
+                result = res;
+            } else {
+                positions.pop();
+            }
+        });
+    }
+    return result;
+}
+
 return Widget.extend({
     className: 'o_web_studio_view_editor',
     custom_events: {
@@ -114,19 +142,11 @@ return Widget.extend({
         this.res_id = options.res_id;
         this.chatter_allowed = options.chatter_allowed;
         this.renderer_scrolltop = 0;
+        this.studio_view_id = options.studio_view_id;
+        this.studio_view_arch = options.studio_view_arch;
 
         bus.on('undo_clicked', this, this.undo);
         bus.on('redo_clicked', this, this.redo);
-    },
-    willStart: function () {
-        var self = this;
-        return this._super.apply(this, arguments).then(function() {
-            return customize.get_studio_view_arch(self.model, self.view_type, self.view_id).then(function(result) {
-                self.view_id = result.view_id;
-                self.studio_view_id = result.studio_view_id;
-                self.studio_view_arch = result.studio_view_arch;
-            });
-        });
     },
     start: function () {
         var self = this;
@@ -216,17 +236,17 @@ return Widget.extend({
     },
     toggle_editor_sidebar: function (event) {
         if (event.name === 'field_clicked') {
-            var field_name = event.data.field_name;
-            var field = this.fields_view.fields[field_name];
-            this.sidebar.toggle_mode('field', {field_name: field_name, field: field});
+            var node = event.data.node;
+            var field = this.fields_view.fields[node.attrs.name];
+            this.sidebar.toggle_mode('field', {node: node, field: field});
         } else if (event.name === 'page_clicked') {
-            this.sidebar.toggle_mode('page', {page: event.data});
+            this.sidebar.toggle_mode('page', {page: event.data.node});
         } else if (event.name === 'group_clicked') {
-            this.sidebar.toggle_mode('group', {group: event.data});
+            this.sidebar.toggle_mode('group', {group: event.data.node});
         } else if (event.name === 'chatter_clicked') {
             this.sidebar.toggle_mode('chatter');
         } else if (event.name === 'button_clicked') {
-            this.sidebar.toggle_mode('button', {button: event.data});
+            this.sidebar.toggle_mode('button', {button: event.data.node});
         }
     },
     toggle_form_invisible: function (event) {
@@ -251,7 +271,7 @@ return Widget.extend({
     },
     close_xml_editor: function () {
         this.mode = 'edition';
-        this.render_content();
+        this.render_content(true);
         this.XMLEditor.$el.detach();
         this.sidebar.appendTo(this.$el);
     },
@@ -301,7 +321,10 @@ return Widget.extend({
         var node = event.data.node;
         var new_attrs = event.data.new_attrs;
         var position = event.data.position || 'after';
-        var index = event.data.nodeIndex;  // if there are multiple elements, we need to to specify its index;
+        var xpath_info;
+        if (node && !_.pick(node.attrs, this.expr_attrs[node.tag]).length) {
+            xpath_info = find_parents_positions(this.fields_view.arch, node);
+        }
 
         switch (structure) {
             case 'text':
@@ -309,7 +332,7 @@ return Widget.extend({
             case 'picture':
                 break;
             case 'group':
-                this._add_element(type, node, position, index, 'group');
+                this._add_element(type, node, xpath_info, position, 'group');
                 break;
             case 'buttonbox':
                 this._add_buttonbox(type);
@@ -318,25 +341,25 @@ return Widget.extend({
                 this._add_button(type);
                 break;
             case 'notebook':
-                this._add_element(type, node, position, index, 'notebook');
+                this._add_element(type, node, xpath_info, position, 'notebook');
                 break;
             case 'page':
-                this._add_page(type, node, position);
+                this._add_page(type, node, xpath_info, position);
                 break;
             case 'field':
-                this._add_field(event, type, node, position);
+                this._add_field(event, type, node, xpath_info, position);
                 break;
             case 'chatter':
                 this._add_chatter(event.data);
                 break;
             case 'remove':
-                this._remove_element(type, node);
+                this._remove_element(type, node, xpath_info);
                 break;
             case 'view_attribute':
                 this._edit_view_attributes(type, new_attrs);
                 break;
             case 'edit_attributes':
-                this._edit_attributes_element(type, node, new_attrs);
+                this._edit_attributes_element(type, node, xpath_info, new_attrs);
                 break;
         }
     },
@@ -442,13 +465,13 @@ return Widget.extend({
             this.editor._reset_clicked_style(); // FIXME: this function should be written in an AbstractEditor
         }
     },
-    _add_element: function(type, node, position, index, tag) {
+    _add_element: function(type, node, xpath_info, position, tag) {
         this.do({
             type: type,
             target: {
                 tag: node.tag,
                 attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
-                index: index,
+                xpath_info: xpath_info,
             },
             position: position,
             node: {
@@ -488,12 +511,13 @@ return Widget.extend({
             });
         });
     },
-    _add_page: function(type, node, position) {
+    _add_page: function(type, node, xpath_info, position) {
         this.do({
             type: type,
             target: {
                 tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag])
+                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
+                xpath_info: xpath_info,
             },
             position: position,
             node: {
@@ -505,7 +529,7 @@ return Widget.extend({
             },
         });
     },
-    _add_field: function(event, type, node, position) {
+    _add_field: function(event, type, node, xpath_info, position) {
         var self = this;
         var model = this.model;
         new Model('ir.model').call('search_read', [[['model', '=', model]]]).then(function(result) {
@@ -527,7 +551,8 @@ return Widget.extend({
                         type: type,
                         target: {
                             tag: node.tag,
-                            attrs: _.pick(node.attrs, self.expr_attrs[node.tag])
+                            attrs: _.pick(node.attrs, self.expr_attrs[node.tag]),
+                            xpath_info: xpath_info,
                         },
                         position: position,
                         node: {
@@ -555,7 +580,7 @@ return Widget.extend({
             remove_follower_ids: data.remove_follower_ids,
         });
     },
-    _remove_element: function(type, node) {
+    _remove_element: function(type, node, xpath_info) {
         // We want to check if the parent of the node if not empty
         // If the parent contains only the node we want to delete
         // We will delete the parent instead of the node
@@ -568,7 +593,8 @@ return Widget.extend({
             type: type,
             target: {
                 tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag])
+                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
+                xpath_info: xpath_info,
             },
         });
     },
@@ -582,12 +608,13 @@ return Widget.extend({
             new_attrs: new_attrs,
         });
     },
-    _edit_attributes_element: function(type, node, new_attrs) {
+    _edit_attributes_element: function(type, node, xpath_info, new_attrs) {
         this.do({
             type: type,
             target: {
                 tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag])
+                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
+                xpath_info: xpath_info,
             },
             position: 'attributes',
             node: node,

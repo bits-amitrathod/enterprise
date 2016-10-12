@@ -7,6 +7,7 @@ import time
 import logging
 import uuid
 import json
+import re
 
 from odoo import models, api, fields
 from odoo.exceptions import UserError
@@ -36,17 +37,23 @@ class YodleeProviderAccount(models.Model):
     def register_new_user(self):
         company_id = self.env.user.company_id
         username = self.env.registry.db_name + '_' + str(uuid.uuid4())
-        password = str(uuid.uuid4())
-        email = self.company_id.partner_id.email
+
+        # Implement funky password policy from Yodlee's REST API
+        password = str(uuid.uuid4()).upper().replace('-','#')
+        while re.search(r'(.)\1\1', password):
+            password = str(uuid.uuid4()).upper().replace('-','#')
+
+        email = company_id.partner_id.email
         if not email:
             raise UserError(_('Please configure an email in the company settings.'))
         credentials = self._get_yodlee_credentials()
         self.do_cobrand_login()
-        company_id = self.env.user.company_id
         headerVal = {'Authorization': '{cobSession='+company_id.yodlee_access_token+'}'}
-        requestBody = {'userParam': {'loginName': username, 
-                                    'password': password,
-                                    'email': email}}
+        requestBody = json.dumps(
+            {'user': {'loginName': username,
+                      'password': password,
+                      'email': email}}
+        )
         try:
             resp = requests.post(url=credentials['url']+'/user/register', data=requestBody, headers=headerVal, timeout=30)
         except requests.exceptions.Timeout:
@@ -92,15 +99,12 @@ class YodleeProviderAccount(models.Model):
                 if resp.json().get('errorCode') in ('Y007', 'Y008', 'Y009', 'Y010'):
                     return 'invalid_auth'
                 message = _('Error %s, message: %s, reference code: %s' % (resp_json.get('errorCode'), resp_json.get('errorMessage'), resp_json.get('referenceCode')))
+                message = ("%s\n\n" + _('(Diagnostic: %r for URL %s)')) % (message, resp.status_code, resp.url)
                 self.log_message(message)
                 raise UserError(message)
-            elif resp.status_code in (400, 403):
-                # This is the error coming back from odoo proxy like user not having valid contract
-                self.log_message(resp.text)
-                raise UserError(resp.text)
             resp.raise_for_status()
         except (requests.HTTPError, ValueError):
-            message = _('Get %s status code for call to %s. Content message: %s' % (resp.status_code, resp.url, resp.text))
+            message = ('%s\n\n' + _('(Diagnostic: %r for URL %s)')) % (resp.text.strip(), resp.status_code, resp.url)
             self.log_message(message)
             raise UserError(message)
 

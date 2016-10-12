@@ -107,15 +107,17 @@ class HelpdeskTeam(models.Model):
     @api.model
     def create(self, vals):
         team = super(HelpdeskTeam, self.with_context(mail_create_nolog=True, mail_create_nosubscribe=True)).create(vals)
-        team._check_modules_to_install()
         team._check_sla_group()
+        team._check_modules_to_install()
+        # If you plan to add something after this, use a new environment. The one above is no longer valid after the modules install.
         return team
 
     @api.multi
     def write(self, vals):
         result = super(HelpdeskTeam, self).write(vals)
-        self._check_modules_to_install()
         self._check_sla_group()
+        self._check_modules_to_install()
+        # If you plan to add something after this, use a new environment. The one above is no longer valid after the modules install.
         return result
 
     @api.multi
@@ -128,7 +130,7 @@ class HelpdeskTeam(models.Model):
     def _check_sla_group(self):
         for team in self:
             if team.use_sla and not self.user_has_groups('helpdesk.group_use_sla'):
-                self.env.ref('base.group_user').write({'implied_ids': [(4, self.env.ref('helpdesk.group_use_sla').id)]})
+                self.env.ref('helpdesk.group_helpdesk_user').write({'implied_ids': [(4, self.env.ref('helpdesk.group_use_sla').id)]})
 
     @api.multi
     def _check_modules_to_install(self):
@@ -630,6 +632,11 @@ class HelpdeskTicket(models.Model):
         except AccessError:  # no read access rights -> just ignore suggested recipients because this implies modifying followers
             pass
         return recipients
+
+    @api.model
+    def message_new(self, msg, custom_values=None):
+        values = dict(custom_values or {}, partner_email=msg.get('from'), partner_id=msg.get('author_id'))
+        return super(HelpdeskTicket, self).message_new(msg, custom_values=values)
 
     @api.multi
     def _track_template(self, tracking):

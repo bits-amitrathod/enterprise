@@ -1521,7 +1521,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                   .showValues(true)
                   .margin({right:15,left:15})
                   .valueFormat(function(d) {return self.unit_amount_to_hours_minutes(d);})
-                  .color(["#a24689"])
+                  .color(["#875A7B"])
                   ;
                 self.chart.tooltip.enabled(false);
                 nv.utils.windowResize(self.chart.update);
@@ -1743,7 +1743,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                     session.rpc('/jsonrpc',  { method : 'server_version' , service : 'db', args : []}).then(function(result) {
                         if (result && result.endsWith('e')) {
                             alert("The server does not support timesheet synchronization. You should contact your administrator in order to install the module \"Synchronization with the external timesheet application\"");
-                        } else if (result && result.endsWith('c')) {
+                        } else if (result) {
                             alert("Timesheet Synchronization is available in Odoo Enterprise Edition. You should consider upgrading your Odoo version if you would like to use it.");
                         } else {
                             alert("The server does not support timesheet synchronization. It requires Odoo Enterprise Edition version 9 or newer.");

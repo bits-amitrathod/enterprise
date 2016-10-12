@@ -34,6 +34,11 @@ class IrModel(models.Model):
                                  inverse='_inverse_mail_thread', store=True,
                                  help="Whether this model supports messages and notifications.")
 
+    abstract = fields.Boolean(compute='_compute_abstract',
+                              store=False,
+                              help="Wheter this model is abstract",
+                              search='_search_abstract')
+
     @api.depends('model')
     def _compute_mail_thread(self):
         MailThread = self.pool['mail.thread']
@@ -45,12 +50,28 @@ class IrModel(models.Model):
     def _inverse_mail_thread(self):
         pass        # do nothing; this enables to set the value of the field
 
+    def _compute_abstract(self):
+        for record in self:
+            record.abstract = self.env[record.model]._abstract
+
+    def _search_abstract(self, operator, value):
+        abstract_models = [
+            model._name
+            for model in self.env.itervalues()
+            if model._abstract
+        ]
+        dom_operator = 'in' if (operator, value) in [('=', True), ('!=', False)] else 'not in'
+
+        return [('model', dom_operator, abstract_models)]
+
     @api.model
     def create(self, vals):
         res = super(IrModel, self).create(vals)
 
         if self._context.get('studio'):
             res.create_studio_model_data(res.name)
+            # Create a simplified form view to prevent getting the default one containing all model's fields
+            self.env['ir.ui.view'].create_simplified_form_view(res.model)
 
         return res
 

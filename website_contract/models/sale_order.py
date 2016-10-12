@@ -34,7 +34,7 @@ class SaleOrder(models.Model):
                 'uom_id': opt_line.uom_id.id,
                 'name': opt_line.name,
                 'quantity': opt_line.quantity,
-                'price_unit': self.pricelist_id.get_product_price(mand_line.product_id, 1, self.partner_id, uom_id=mand_line.uom_id.id) if self.pricelist_id else 0,
+                'price_unit': self.pricelist_id.get_product_price(opt_line.product_id, 1, self.partner_id, uom_id=opt_line.uom_id.id) if self.pricelist_id else 0,
             }) for opt_line in self.contract_template.subscription_template_option_ids]
             self.order_line = subscription_lines
             for line in self.order_line:
@@ -108,7 +108,7 @@ class SaleOrder(models.Model):
         invoicing_period = relativedelta(**{periods[values['recurring_rule_type']]: values['recurring_interval']})
         recurring_next_date = today + invoicing_period
         values['recurring_next_date'] = fields.Date.to_string(recurring_next_date)
-        if 'asset_category_id' in contract_tmp._fields:
+        if 'template_asset_category_id' in contract_tmp._fields:
             values['asset_category_id'] = contract_tmp.template_asset_category_id.id
         return values
 

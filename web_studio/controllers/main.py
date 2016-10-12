@@ -257,12 +257,15 @@ class WebStudioController(http.Controller):
     def get_studio_view_arch(self, model, view_type, view_id=False):
         view_type = 'tree' if view_type == 'list' else view_type  # list is stored as tree in db
 
+        if not view_id:
+            # TOFIX: it's possibly not the used view ; see fields_get_view
+            # try to find the lowest priority matching ir.ui.view
+            view_id = request.env['ir.ui.view'].default_view(request.env[model]._name, view_type)
         # We have to create a view with the default view if we want to customize it.
         view = self._get_or_create_default_view(model, view_type, view_id)
         studio_view = self._get_studio_view(view)
 
         return {
-            'view_id': view.id,
             'studio_view_id': studio_view and studio_view.id or False,
             'studio_view_arch': studio_view and studio_view.arch_db or "<data/>",
         }
@@ -337,22 +340,22 @@ class WebStudioController(http.Controller):
         if view_id:
             view = View.browse(view_id)
         else:
-            fields_view = request.env[model].fields_view_get(view_id, view_type)
+            arch = request.env[model].fields_view_get(view_id, view_type)['arch']
             view = View.create({
                 'type': view_type,
                 'model': model,
-                'arch': fields_view['arch'],
+                'arch': arch,
                 'name': "Default %s view for %s" % (view_type, model),
             })
         return view
 
     def _node_to_expr(self, node):
-        # Format of expr is //tag[@attr1_name=attr1_value][@attr2_name=attr2_value][...]
-        expr = '//' + node['tag'] + ''.join(['[@%s=\'%s\']' % (k, v) for k, v in node.get('attrs', {}).items()])
-
-        # Special case when no attrs
-        if not node.get('attrs') and node.get('index'):
-            expr = expr + '[' + str(node['index']) + ']'
+        if not node.get('attrs') and node.get('xpath_info'):
+            # Format of expr is /form/tag1[]/tag2[]/[...]/tag[]
+            expr = ''.join(['/%s[%s]' % (parent['tag'], parent['indice']) for parent in node.get('xpath_info')])
+        else:
+            # Format of expr is //tag[@attr1_name=attr1_value][@attr2_name=attr2_value][...]
+            expr = '//' + node['tag'] + ''.join(['[@%s=\'%s\']' % (k, v) for k, v in node.get('attrs', {}).items()])
 
         # Special case when we have <label/><div/> instead of <field>
         # TODO: This is very naive, couldn't the js detect such a situation and
@@ -379,25 +382,12 @@ class WebStudioController(http.Controller):
     def _operation_remove(self, arch, operation, model=None):
         expr = self._node_to_expr(operation['target'])
 
-        # Did we add this field from studio ? If yes, delete it.
-        target_node = arch.find('.' + expr)
-        # BEWARE ! What if we added this field from studio but we built
-        # other stuff based on that field ? We can't just remove it.
-        xpath_node_on_target = arch.find('xpath[@expr="%s"]' % (expr))
-        if target_node is not None and xpath_node_on_target is None:  # bool(node) == False if node has no children
-            # Check if he is the only one in the parent xpath, if yes, delete the xpath.
-            xpath_node = arch.find('.' + expr + '/..')
-            if len(xpath_node) == 1:
-                arch.remove(xpath_node)
-            else:
-                xpath_node.remove(target_node)
-        else:
-            # We have to create a brand new xpath to remove this field from the view.
-            # TODO: Sometimes, we have to delete more stuff than just a single tag !
-            etree.SubElement(arch, 'xpath', {
-                'expr': expr,
-                'position': 'replace'
-            })
+        # We have to create a brand new xpath to remove this field from the view.
+        # TODO: Sometimes, we have to delete more stuff than just a single tag !
+        etree.SubElement(arch, 'xpath', {
+            'expr': expr,
+            'position': 'replace'
+        })
 
     def _operation_add(self, arch, operation, model):
         node = operation['node']
@@ -426,7 +416,7 @@ class WebStudioController(http.Controller):
             # (2) [button_count_field] is a non-stored computed field (to always have the good value in the stat button, if access rights)
             # (3) [button_action] an act_window action to jump in the related model
             button_field = request.env['ir.model.fields'].browse(node['field'])
-            button_count_field, button_action,  = self._get_or_create_fields_for_button(model, button_field, node['string'])
+            button_count_field, button_action = self._get_or_create_fields_for_button(model, button_field, node['string'])
 
             # the XML looks like <button> <field/> </button : a element `field` needs to be inserted inside the button
             xml_node_field = etree.Element('field', {'widget': 'statinfo', 'name': button_count_field.name, 'string': node['string'] or button_count_field.field_description})
@@ -473,15 +463,23 @@ class WebStudioController(http.Controller):
                 'compute': compute_function.replace('    ', ''),  # remove indentation for safe_eval
             })
 
-        # Link the button with an associated act_window
-        button_action = request.env['ir.actions.act_window'].create({
-            'name': button_name,
-            'res_model': field.model,
-            'view_mode': 'tree,form',
-            'view_type': 'form',
-            'domain': "[('%s', '=', active_id)]" % (field.name),
-            'context': "{'search_default_%s': active_id,'default_%s': active_id}" % (field.name, field.name)
-        })
+        # The action could already exist but we don't want to recreate one each time
+        button_action_domain = "[('%s', '=', active_id)]" % (field.name)
+        button_action_context = "{'search_default_%s': active_id,'default_%s': active_id}" % (field.name, field.name)
+        button_action = request.env['ir.actions.act_window'].search([
+            ('name', '=', button_name), ('res_model', '=', field.model),
+            ('domain', '=', button_action_domain), ('context', '=', button_action_context),
+        ])
+        if not button_action:
+            # Link the button with an associated act_window
+            button_action = request.env['ir.actions.act_window'].create({
+                'name': button_name,
+                'res_model': field.model,
+                'view_mode': 'tree,form',
+                'view_type': 'form',
+                'domain': button_action_domain,
+                'context': button_action_context,
+            })
 
         return button_count_field, button_action
 
