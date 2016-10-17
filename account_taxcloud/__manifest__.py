@@ -8,7 +8,7 @@
     'website': "https://www.odoo.com",
     'category': 'Accounting &amp; Finance',
     'version': '1.0',
-    'depends': ['account'],
+    'depends': ['l10n_us'],
     'data': [
         'security/ir.model.access.csv',
         'views/account_fiscal_position_view.xml',
@@ -17,4 +17,5 @@
         'data/account_taxcloud_data.xml',
     ],
     'license': 'OEEL-1',
+    'auto_install': True
 }
