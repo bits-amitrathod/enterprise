@@ -121,7 +121,7 @@
   </record>
 
   <record id="project_forecast_action_report_activities" model="ir.actions.act_window">
-    <field name="name">Forecast</field>
+    <field name="name">Forecast Analysis</field>
     <field name="res_model">project.forecast</field>
     <field name="view_mode">pivot,gantt,tree,form</field>
     <field name="context">{'group_by': ['user_id', 'project_id'],}</field>
@@ -163,7 +163,7 @@
             sequence="2"
             action="project_forecast_action_by_project"/>
 
-  <menuitem id="project_forecast_report_activities" name="Activities"
+  <menuitem id="project_forecast_report_activities" name="Forecast Analysis"
             parent="project.menu_project_report"
             action="project_forecast_action_report_activities"/>
 
