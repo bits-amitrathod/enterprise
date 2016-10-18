@@ -33,6 +33,13 @@ return {
         });
     },
 
+    set_background_image: function(attachment_id) {
+        return ajax.jsonRpc('/web_studio/set_background_image', 'call', {
+            attachment_id: attachment_id,
+            context: session.user_context,
+        });
+    },
+
     edit_action: function(action, args) {
         var self = this;
         var def = $.Deferred();

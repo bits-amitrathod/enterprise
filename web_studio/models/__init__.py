@@ -12,3 +12,4 @@ import ir_rule
 import ir_ui_menu
 import ir_ui_view
 import res_groups
+import res_company

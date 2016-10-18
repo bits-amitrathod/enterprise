@@ -3,10 +3,12 @@ odoo.define('web_studio.Menu', function (require) {
 
 var core = require('web.core');
 var data_manager = require('web.data_manager');
+var framework = require('web.framework');
 var Menu = require('web_enterprise.Menu');
 var session = require('web.session');
 
 var bus = require('web_studio.bus');
+var customize = require('web_studio.customize');
 var EditMenu = require('web_studio.EditMenu');
 var SubMenu = require('web_studio.SubMenu');
 var SystrayItem = require('web_studio.SystrayItem');
@@ -31,6 +33,13 @@ Menu.include({
                     $opened.removeClass('open');
                 }
             }
+        },
+        'click .o_web_studio_change_background': function() {
+            var self = this;
+            this.$('input.o_form_input_file').on('change', function() {
+                self.$('form.o_form_binary_form').submit();
+            });
+            this.$('input.o_form_input_file').click();
         },
         'click .o_web_studio_export': function(event) {
             event.preventDefault();
@@ -67,6 +76,15 @@ Menu.include({
     init: function() {
         this._super.apply(this, arguments);
         bus.on('studio_toggled', this, this.switch_studio_mode.bind(this));
+        this.widget = "image";
+        this.company_id = session.company_id;
+        this.fileupload_id = _.uniqueId('o_fileupload');
+        $(window).on(this.fileupload_id, this.on_background_loaded);
+    },
+
+    destroy: function () {
+        $(window).off(this.fileupload_id);
+        return this._super.apply(this, arguments);
     },
 
     switch_studio_mode: function(studio_mode, studio_info, action, active_view) {
@@ -96,7 +114,7 @@ Menu.include({
                 }
             } else {
                 // In app switcher
-                this.$app_switcher_menu = $(qweb.render('web_studio.AppSwitcherMenu'));
+                this.$app_switcher_menu = $(qweb.render('web_studio.AppSwitcherMenu', {widget: this}));
                 $main_navbar.prepend(this.$app_switcher_menu);
             }
             // Notes
@@ -132,6 +150,21 @@ Menu.include({
         }
 
         this.studio_mode = studio_mode;
+    },
+
+    on_background_loaded: function(event, result) {
+        if (result.error || !result.id ) {
+            this.do_warn(result.error);
+        } else {
+            framework.blockUI();
+            customize.set_background_image(result.id)
+                .then(function() {
+                    window.location.reload();
+                }).fail(function() {
+                    framework.unblockUI();
+                });
+
+        }
     },
 
     _on_secondary_menu_click: function() {

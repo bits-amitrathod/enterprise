@@ -207,6 +207,12 @@ class WebStudioController(http.Controller):
             'action_id': action.id,
         }
 
+    @http.route('/web_studio/set_background_image', type='json', auth='user')
+    def set_background_image(self, attachment_id):
+        attachment = request.env['ir.attachment'].browse(attachment_id)
+        if attachment:
+            request.env.user.company_id.background_image = attachment.datas
+
     @http.route('/web_studio/edit_action', type='json', auth='user')
     def edit_action(self, action_type, action_id, args):
 

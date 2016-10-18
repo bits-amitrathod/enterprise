@@ -9,6 +9,15 @@ class IrUiMenu(models.Model):
     _inherit = ['studio.mixin', 'ir.ui.menu']
 
     @api.model
+    def load_menus(self, debug):
+        menu_root = super(IrUiMenu, self).load_menus(debug)
+
+        if self.env.user.company_id.background_image:
+            menu_root['background_image'] = True
+
+        return menu_root
+
+    @api.model
     def customize(self, to_move, to_delete):
         """ Apply customizations on menus. The deleted elements will no longer be active.
             When moving a menu, we needed to resequence it. Note that this customization will

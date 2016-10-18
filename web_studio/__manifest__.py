@@ -36,6 +36,7 @@ Note: Only the admin user is allowed to make those customizations.
         'views/ir_actions_report_xml.xml',
         'views/ir_model.xml',
         'views/ir_model_data.xml',
+        'views/res_company.xml',
     ],
     'qweb': [
         "static/src/xml/*.xml",

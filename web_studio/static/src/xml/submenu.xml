@@ -7,6 +7,17 @@
             Customizations <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
+            <li>
+                <a href="#" class="o_web_studio_change_background">Change Background</a>
+                <span class="hide">
+                    <t t-call="HiddenInputFile">
+                        <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                        <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                        <input type="hidden" name="model" value="res.company"/>
+                        <input type="hidden" name="id" t-att-value="widget.company_id"/>
+                    </t>
+                </span>
+            </li>
             <li><a href="#" class="o_web_studio_import">Import</a></li>
             <li><a href="#" class="o_web_studio_export">Export</a></li>
         </ul>
