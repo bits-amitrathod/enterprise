@@ -37,7 +37,24 @@ class CrmLead(models.Model):
             'tag': 'reload_panel',
         }
 
-    # Function call by the stat button
+    # Function called when clicking on the form view widget phone
+    @api.multi
+    def create_call_form_view(self):
+        self.ensure_one()
+        phonecall = self.env['crm.phonecall'].create({
+            'name': self.name,
+            'duration': 0,
+            'user_id': self.env.user.id,
+            'opportunity_id': self.id,
+            'partner_id': self.partner_id.id,
+            'state': 'open',
+            'partner_phone': self.phone or self.partner_id.phone,
+            'partner_mobile': self.partner_id.mobile,
+            'in_queue': True,
+        })
+        return phonecall.id
+
+    # Function called by the stat button
     @api.multi
     def create_custom_call_in_queue(self):
         return {
