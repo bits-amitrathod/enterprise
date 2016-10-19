@@ -191,10 +191,10 @@ class SaleSubscription(models.Model):
 
     @api.multi
     def _prepare_invoice_line(self, line, fiscal_position):
-        account_id = line.product_id.property_account_income_id.id
-        if not account_id:
-            account_id = line.product_id.categ_id.property_account_income_categ_id.id
-        account_id = fiscal_position.map_account(account_id)
+        account = line.product_id.property_account_income_id
+        if not account:
+            account = line.product_id.categ_id.property_account_income_categ_id
+        account_id = fiscal_position.map_account(account).id
 
         tax = line.product_id.taxes_id.filtered(lambda r: r.company_id == line.analytic_account_id.company_id)
         tax = fiscal_position.map_tax(tax)
@@ -243,7 +243,7 @@ class SaleSubscription(models.Model):
                     invoices.append(AccountInvoice.create(sub._prepare_invoice()))
                     invoices[-1].message_post_with_view('mail.message_origin_link',
                      values={'self': invoices[-1], 'origin': sub},
-                     subtype_id=self.env.ref('mail.mt_note'))
+                     subtype_id=self.env.ref('mail.mt_note').id)
                     invoices[-1].compute_taxes()
                     next_date = fields.Date.from_string(sub.recurring_next_date or current_date)
                     rule, interval = sub.recurring_rule_type, sub.recurring_interval
