@@ -262,21 +262,17 @@ return Widget.extend({
     open_xml_editor: function () {
         var self = this;
 
-        if (this.XMLEditor) {
-            this.XMLEditor.destroy();
-        }
         this.XMLEditor = new XMLEditor(this, this.view_id);
         this.mode = 'rendering';
 
         $.when(this.render_content(), this.XMLEditor.appendTo(this.$el)).then(function() {
             self.sidebar.$el.detach();
-            self.XMLEditor.open();
         });
     },
     close_xml_editor: function () {
         this.mode = 'edition';
         this.render_content(true);
-        this.XMLEditor.$el.detach();
+        this.XMLEditor.destroy();
         this.sidebar.appendTo(this.$el);
     },
     save_xml_editor: function (event) {
