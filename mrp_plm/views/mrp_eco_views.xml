@@ -392,6 +392,9 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_see_attachments" type="object" icon="fa-book" attrs="{'invisible': [('state', '=', 'confirmed')]}">
+                            <field string="Attachments" name="attachment_count" widget="statinfo"/>
+                        </button>
                         <button name="open_new_bom" icon="fa-flask" type="object" attrs="{'invisible': [('new_bom_id', '=', False)]}" class="oe_stat_button">
                         <div class="o_form_field o_stat_info mr4">
                             <div>
@@ -417,11 +420,11 @@
                         <group>
                             <field name="type_id" widget="selection"/>
                             <field name="type" widget="radio"/>
-                            <field name="product_tmpl_id" attrs="{'invisible': [('type', '=', 'routing')]}" domain="[('bom_ids', '!=', False)]"/>
-                            <field name="bom_id" attrs="{'invisible': [('type', '=', 'routing')], 'required': [('type', 'in', ('bom', 'both'))]}"/>
+                            <field name="product_tmpl_id" attrs="{'invisible': [('type', '=', 'routing')], 'required': [('type', 'in', ('bom', 'both', 'product'))]}"/>
+                            <field name="bom_id" attrs="{'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both'))]}"/>
                             <field name="new_bom_id" invisible="1"/>
                             <field name="new_routing_id" invisible="1"/>
-                            <field name="routing_id" attrs="{'invisible': [('type', '=', 'bom')], 'required': [('type', 'in', ('routing', 'both'))]}" group="mrp.group_mrp_routings"/>
+                            <field name="routing_id" attrs="{'invisible': [('type', 'in', ('bom','product'))], 'required': [('type', 'in', ('routing', 'both'))]}" group="mrp.group_mrp_routings"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group>

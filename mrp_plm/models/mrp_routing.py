@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class MrpRouting(models.Model):
     _inherit = 'mrp.routing'
 
-    version = fields.Integer('Version', default=0)
+    version = fields.Integer('Version', default=1)
     previous_routing_id = fields.Many2one('mrp.routing', 'Previous Routing')
     revision_ids = fields.Many2many('mrp.routing', compute='_compute_revision_ids')
     eco_ids = fields.One2many('mrp.eco', 'new_routing_id', 'ECOs')

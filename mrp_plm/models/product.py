@@ -10,6 +10,7 @@ class ProductProduct(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
+    version = fields.Integer('Version', default=1)
     eco_inprogress = fields.Boolean('ECO in progress?', compute='_compute_eco_data')
     eco_inprogress_count = fields.Integer('# ECOs in progress', compute='_compute_eco_data')
     attachment_count = fields.Integer('# Attachments', compute='_compute_attachments')

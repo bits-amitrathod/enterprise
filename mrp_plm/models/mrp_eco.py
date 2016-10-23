@@ -179,10 +179,11 @@ class MrpEco(models.Model):
 
     product_tmpl_id = fields.Many2one('product.template', "Product")
     type = fields.Selection([
+        ('product', 'Product Only'),
         ('bom', 'Bill of Materials'),
         ('routing', 'Routing'),
         ('both', 'BoM and Routing')], string='Apply on',
-        default='bom', required=True)
+        default='product', required=True)
     bom_id = fields.Many2one(
         'mrp.bom', "Bill of Materials",
         domain="[('product_tmpl_id', '=', product_tmpl_id)]")  # Should at least have bom or routing on which it is applied?
@@ -202,13 +203,19 @@ class MrpEco(models.Model):
         'mrp.eco.routing.change', 'eco_id', string="ECO Routing Changes",
         compute='_compute_routing_change_ids', store=True)
 
+    attachment_count = fields.Integer('# Attachments', compute='_compute_attachments')
     attachment_ids = fields.One2many(
         'ir.attachment', 'res_id', string='Attachments',
-        auto_join=True, domain=lambda self: [('res_model', '=', self._name)])
+        auto_join=True, domain=lambda self: [('res_model', '=', self._name), '|', ('active','=',True), ('active','=',False)])
     displayed_image_id = fields.Many2one(
         'ir.attachment', 'Displayed Image',
         domain="[('res_model', '=', 'mrp.eco'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]")
     color = fields.Integer('Color')
+
+    @api.multi
+    def _compute_attachments(self):
+        for p in self:
+            self.attachment_count = len(self.attachment_ids)
 
     @api.one
     @api.depends('bom_id.bom_line_ids', 'new_bom_id.bom_line_ids')
@@ -445,13 +452,54 @@ class MrpEco(models.Model):
                 eco.new_bom_id.routing_id = eco.new_routing_id.id
                 for line in eco.new_bom_id.bom_line_ids:
                     line.operation_id = eco.new_routing_id.operation_ids.filtered(lambda x: x.name == line.operation_id.name).id
+            # duplicate all attachment on the product
+            if eco.type in ('bom','both','product'):
+                for attach in self.product_tmpl_id.attachment_ids:
+                    attach.copy({'res_model': 'mrp.eco',
+                        'res_id': eco.id, "origin_id": attach.id,
+                        'checksum': attach.checksum, 'file_size': attach.file_size
+                    })
         self.write({'state': 'progress'})
 
     @api.multi
     def action_apply(self):
+        self.ensure_one()
         self.mapped('new_bom_id').apply_new_version()
         self.mapped('new_routing_id').apply_new_version()
+
+        for attach in self.attachment_ids:
+            attach.copy({'res_model': 'product.template', 'res_id': self.product_tmpl_id.id,
+                'name': attach.name, 'checksum': attach.checksum, 'file_size': attach.file_size})
+            if attach.origin_id:
+                attach.origin_id.write({
+                    'active': False,
+                    'name': attach.origin_id.name + '(v'+str(self.product_tmpl_id.version)+')'
+                })
+
+        self.product_tmpl_id.version = self.product_tmpl_id.version + 1
         self.write({'state': 'done'})
+
+    @api.multi
+    def action_see_attachments(self):
+        domain = ['&', '&', ('res_model', '=', self._name), ('res_id', '=', self.id), '|', ('active','=',False), ('active','=',True)]
+        attachment_view = self.env.ref('mrp.view_document_file_kanban_mrp')
+        return {
+            'name': _('Attachments'),
+            'domain': domain,
+            'res_model': 'ir.attachment',
+            'type': 'ir.actions.act_window',
+            'view_id': attachment_view.id,
+            'views': [(attachment_view.id, 'kanban'), (False, 'form')],
+            'view_mode': 'kanban,tree,form',
+            'view_type': 'form',
+            'help': _('''<p class="oe_view_nocontent_create">
+                        Click to upload files to your ECO, that will be applied to the product later
+                    </p><p>
+                        Use this feature to store any files, like drawings or specifications.
+                    </p>'''),
+            'limit': 80,
+            'context': "{'default_res_model': '%s','default_res_id': %d}" % (self._name, self.id)
+        }
 
     @api.multi
     def action_create_alert(self):
