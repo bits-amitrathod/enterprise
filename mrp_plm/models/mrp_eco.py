@@ -466,14 +466,26 @@ class MrpEco(models.Model):
         self.ensure_one()
         self.mapped('new_bom_id').apply_new_version()
         self.mapped('new_routing_id').apply_new_version()
+        def key(record):
+            return (record.type, record.store_fname, record.url)
 
         for attach in self.attachment_ids:
+            name = attach.name
+            if attach.origin_id:
+                name = name + '(v'+str(self.product_tmpl_id.version)+')'
+            if attach.origin_id and key(attach)==key(attach.origin_id):
+                attach.origin_id.write({
+                    'name': attach.active and attach.name or name,
+                    'active': attach.active,
+                    'priority': attach.priority
+                })
+                continue
             attach.copy({'res_model': 'product.template', 'res_id': self.product_tmpl_id.id,
                 'name': attach.name, 'checksum': attach.checksum, 'file_size': attach.file_size})
             if attach.origin_id:
                 attach.origin_id.write({
                     'active': False,
-                    'name': attach.origin_id.name + '(v'+str(self.product_tmpl_id.version)+')'
+                    'name': name
                 })
 
         self.product_tmpl_id.version = self.product_tmpl_id.version + 1
