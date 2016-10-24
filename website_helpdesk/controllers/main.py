@@ -7,6 +7,7 @@ from werkzeug.exceptions import NotFound
 
 from odoo import http
 from odoo.http import request
+from odoo.tools.translate import _
 
 from odoo.addons.website_portal.controllers.main import website_account
 from odoo.addons.website_form.controllers.main import WebsiteForm
@@ -21,14 +22,46 @@ class website_account(website_account):
         response.qcontext.update({'tickets': tickets_count})
         return response
 
-    @http.route(['/my/tickets'], type='http', auth="user", website=True)
-    def my_helpdesk_tickets(self, **kw):
+    @http.route(['/my/tickets', '/my/tickets/page/<int:page>'], type='http', auth="user", website=True)
+    def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
         user = request.env.user
-        tickets = request.env['helpdesk.ticket'].sudo().search(['|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id)])
+        domain = ['|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id)]
+
+        searchbar_sortings = {
+            'date': {'label': _('Newest'), 'order': 'create_date desc'},
+            'name': {'label': _('Name'), 'order': 'name'},
+        }
+
+        # default sort by value
+        if not sortby:
+            sortby = 'date'
+        order = searchbar_sortings[sortby]['order']
+
+        # archive groups - Default Group By 'create_date'
+        archive_groups = self._get_archive_groups('helpdesk.ticket', domain)
+        if date_begin and date_end:
+            domain += [('create_date', '>', date_begin), ('create_date', '<=', date_end)]
+
+        # pager
+        tickets_count = request.env['helpdesk.ticket'].search_count(domain)
+        pager = request.website.pager(
+            url="/my/tickets",
+            url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby},
+            total=tickets_count,
+            page=page,
+            step=self._items_per_page
+        )
+
+        tickets = request.env['helpdesk.ticket'].sudo().search(domain, order=order, limit=self._items_per_page, offset=pager['offset'])
         values.update({
+            'date': date_begin,
             'tickets': tickets,
             'default_url': '/my/tickets',
+            'pager': pager,
+            'archive_groups': archive_groups,
+            'searchbar_sortings': searchbar_sortings,
+            'sortby': sortby,
         })
         return request.render("website_helpdesk.portal_helpdesk_ticket", values)
 

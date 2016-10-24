@@ -43,7 +43,10 @@
 
     <template id="portal_helpdesk_ticket" name="Helpdesk Ticket">
         <t t-call="website_portal.portal_layout">
-            <h3 class="page-header">Your Tickets</h3>
+            <h3 class="page-header">
+                Your Tickets
+                <t t-call="website_portal.portal_searchbar"/>
+            </h3>
             <t t-if="not tickets">
                 <p>There are currently no Ticket for your account.</p>
             </t>
@@ -69,8 +72,8 @@
                         </td>
                     </tr>
                 </table>
-                 <div t-if="pager" class="o_portal_pager text-center">
-                  <t t-call="website.pager"/>
+                <div t-if="pager" class="o_portal_pager text-center">
+                    <t t-call="website.pager"/>
                 </div>
             </t>
         </t>
@@ -358,7 +361,7 @@
                     <h1 t-esc="team.name" class="text-center"/>
                     <div class="row mb32">
                         <div class="col-md-8">
-                            <t t-call="website_helpdesk.team_rating_data"/>                 
+                            <t t-call="website_helpdesk.team_rating_data"/>
                         </div>
                     </div>
                 </div>

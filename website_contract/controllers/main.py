@@ -31,7 +31,7 @@ class website_account(website_account):
         return response
 
     @http.route(['/my/contract', '/my/contract/page/<int:page>'], type='http', auth="user", website=True)
-    def my_contract(self, page=1, date_begin=None, date_end=None, select=None, sortby=None, **kw):
+    def my_contract(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
         SaleSubscription = request.env['sale.subscription']
@@ -42,26 +42,31 @@ class website_account(website_account):
         if date_begin and date_end:
             domain += [('create_date', '>', date_begin), ('create_date', '<=', date_end)]
 
-        filters = {
+        searchbar_sortings = {
+            'date': {'label': _('Newest'), 'order': 'create_date desc, id desc'},
+            'name': {'label': _('Name'), 'order': 'name asc, id asc'}
+        }
+        searchbar_filters = {
             'all': {'label': _('All'), 'domain': []},
             'open': {'label': _('In Progress'), 'domain': [('state', '=', 'open')]},
             'pending': {'label': _('To Renew'), 'domain': [('state', '=', 'pending')]},
             'close': {'label': _('Closed'), 'domain': [('state', '=', 'close')]},
         }
 
-        sortings = {
-            'date': {'label': _('Newest'), 'order': 'create_date desc, id desc'},
-            'name': {'label': _('Name'), 'order': 'name asc, id asc'}
-        }
-
-        domain += filters.get(select, filters['all'])['domain']
-        order = sortings.get(sortby, sortings['date'])['order']
+        # default sort by value
+        if not sortby:
+            sortby = 'date'
+        order = searchbar_sortings[sortby]['order']
+        # default filter by value
+        if not filterby:
+            filterby = 'all'
+        domain += searchbar_filters[filterby]['domain']
 
         # pager
         account_count = SaleSubscription.search_count(domain)
         pager = request.website.pager(
             url="/my/contract",
-            url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby, 'select': select},
+            url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby, 'filterby': filterby},
             total=account_count,
             page=page,
             step=self._items_per_page
@@ -73,11 +78,11 @@ class website_account(website_account):
             'page_name': 'contract',
             'pager': pager,
             'archive_groups': archive_groups,
-            'sortings': sortings,
-            'sortby': sortby,
-            'filters': OrderedDict(sorted(filters.items())),
-            'select': select,
             'default_url': '/my/contract',
+            'searchbar_sortings': searchbar_sortings,
+            'sortby': sortby,
+            'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
+            'filterby': filterby,
         })
         return request.render("website_contract.portal_my_contracts", values)
 
