@@ -38,4 +38,5 @@ class website_account_followup(website_account):
         values = self._prepare_portal_layout_values()
         rcontext = self._get_followup_values()
         values.update(rcontext)
+        values['page_name'] = 'statement'
         return request.render("website_portal_followup.portal_my_followup", values)

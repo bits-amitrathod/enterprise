@@ -57,6 +57,7 @@ class website_account(website_account):
         values.update({
             'date': date_begin,
             'tickets': tickets,
+            'page_name': 'ticket',
             'default_url': '/my/tickets',
             'pager': pager,
             'archive_groups': archive_groups,

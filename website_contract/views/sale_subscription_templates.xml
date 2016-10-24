@@ -738,7 +738,7 @@
     <!-- Modify website_portal templates -->
     <template id="portal_my_home_menu_contract" name="Portal layout : contract menu entry" inherit_id="website_portal.portal_layout" priority="20">
         <xpath expr="//ul[contains(@class,'o_portal_submenu')]" position="inside">
-            <li>
+            <li t-att-class="page_name == 'contract' and 'active'">
                 <a href="/my/contract">Contracts</a>
             </li>
         </xpath>
