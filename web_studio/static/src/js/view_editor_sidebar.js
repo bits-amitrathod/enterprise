@@ -24,6 +24,7 @@ return Widget.extend(FieldManagerMixin, {
         'click .o_web_studio_xml_editor': 'on_xml_editor',
         'click .o_display_view .o_web_studio_parameters': 'on_view_parameters',
         'click .o_display_field .o_web_studio_parameters': 'on_field_parameters',
+        'click .o_display_view .o_web_studio_defaults': 'on_defaults',
         'change #show_invisible': 'toggle_form_invisible',
         'click .o_web_studio_remove': 'remove_element',
         'change .o_display_view input, .o_display_view select': 'change_view',
@@ -111,6 +112,9 @@ return Widget.extend(FieldManagerMixin, {
     },
     on_field_parameters: function() {
         this.trigger_up('open_field_form', {field_name: this.node.attrs.name});
+    },
+    on_defaults: function() {
+        this.trigger_up('open_defaults');
     },
     toggle_form_invisible: function(ev) {
         this.trigger_up('toggle_form_invisible', ev);

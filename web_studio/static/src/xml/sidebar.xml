@@ -109,6 +109,9 @@
             <t t-call="web_studio.Sidebar.XMLEditor"/>
             <t t-if="widget.view_type == 'form' || widget.view_type == 'list'">
                 <div>
+                    <button t-if="widget.debug" class="btn btn-default o_web_studio_defaults">Default Values</button>
+                </div>
+                <div>
                     <label for="show_invisible">Show invisible elements</label>
                     <input id="show_invisible" type="checkbox"/>
                 </div>

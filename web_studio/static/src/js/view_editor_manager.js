@@ -117,6 +117,7 @@ return Widget.extend({
         'close_xml_editor': 'close_xml_editor',
         'save_xml_editor': 'save_xml_editor',
         'open_view_form': 'open_view_form',
+        'open_defaults': 'open_defaults',
         'open_field_form': 'open_field_form',
     },
 
@@ -285,6 +286,16 @@ return Widget.extend({
             if (event.data.on_success) {
                 event.data.on_success();
             }
+        });
+    },
+    open_defaults: function() {
+        this.do_action({
+            name: _t('Default Values'),
+            type: 'ir.actions.act_window',
+            res_model: 'ir.values',
+            target: 'current',
+            views: [[false, 'list'], [false, 'form']],
+            domain: [['model', '=', this.model], ['key', '=', 'default']],
         });
     },
     open_view_form: function() {
