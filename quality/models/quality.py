@@ -89,7 +89,10 @@ class QualityPoint(models.Model):
 
     @api.multi
     def action_see_spc_control(self):
+        self.ensure_one()
         action = self.env.ref('quality.quality_check_action_spc').read()[0]
+        if self.test_type == 'measure':
+            action['context'] = {'group_by': ['name', 'point_id'], 'graph_measure': ['measure'], 'graph_mode': 'line'}
         action['domain'] = [('point_id', '=', self.ids[0])]
         return action
 
