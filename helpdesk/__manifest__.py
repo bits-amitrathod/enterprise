@@ -11,7 +11,8 @@
         'base_setup',
         'mail',
         'utm',
-        'rating'
+        'rating',
+        'web_tour',
     ],
     'description': """
 Helpdesk - Ticket Management App
@@ -40,6 +41,7 @@ Features:
         'views/email_template_views.xml',
         'views/helpdesk_team_views.xml',
         'views/helpdesk_templates.xml',
+        'views/tour_views.xml',
     ],
     'qweb': [
         "static/src/xml/helpdesk_team_templates.xml",

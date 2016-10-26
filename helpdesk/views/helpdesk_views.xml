@@ -434,27 +434,27 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="Subject..."/></h1>
+                        <h1><field name="name" class="field_name" placeholder="Subject..."/></h1>
                         <field name="sla_name" class="label label-danger oe_inline" attrs="{'invisible': [('sla_active','=',False)]}"/>
                     </div>
                     <group>
                         <group>
                             <field name="team_id"/>
-                            <field name="user_id"/>
+                            <field name="user_id" class="field_user_id"/>
                             <field name="priority" widget="priority"/>
                             <field name="kanban_state" widget="kanban_state_selection"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="deadline" readonly="1" attrs="{'invisible': [('deadline', '=', False)]}"/>
                         </group>
                         <group>
-                            <field name="partner_id"/>
+                            <field name="partner_id" class="field_partner_id"/>
                             <field name="partner_name" attrs="{'invisible': ['|', ('partner_id', '!=', False), ('partner_name', '=', False)]}"/>
                             <field name="partner_email" attrs="{'readonly': [('partner_id', '!=', False)]}"/>
                             <field name="ticket_type_id" widget="selection"/>
                             <field name="tag_ids" widget="many2many_tags"/>
                         </group>
                     </group>
-                    <field name="description" placeholder="Description of the ticket..."/>
+                    <field name="description" class="field_description" placeholder="Description of the ticket..."/>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>

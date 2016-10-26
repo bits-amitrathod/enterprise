@@ -3,3 +3,4 @@
 
 import test_helpdesk_flow
 import test_helpdesk_sla
+import test_ui
