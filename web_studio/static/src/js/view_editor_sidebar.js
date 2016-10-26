@@ -41,37 +41,34 @@ return Widget.extend(FieldManagerMixin, {
         this.mode = 'view';
         this.view_type = view_type;
         this.view_attrs = view_attrs || {};
-    },
-    toggle_mode: function(mode, options) {
-        if (options && options.field) {
-            this.field_parameters = options.field;
-            this.node = options.node;
-            this.attrs = options.field.__attrs;
-            this.modifiers = JSON.parse(options.field.__attrs.modifiers);
-            this.compute_field_attrs();
-        } else if (options && options.page) {
-            this.node = options.page;
-            this.attrs = options.page.attrs;
-        } else if (options && options.group) {
-            this.node = options.group;
-            this.attrs = options.group.attrs;
-        } else if (options && options.button) {
-            this.node = options.button;
-            this.attrs = options.button.attrs;
-        }
 
-        this.mode = mode;
-        var mode_tag_map = {
+        this.mode_tag_map = {
             field: 'field',
             page: 'page',
             group: 'group',
             button: 'button',
         };
-        this.tag = mode in mode_tag_map ? mode_tag_map[mode] : 'div';
+    },
+    toggle_mode: function(mode, options) {
+        this.mode = mode;
+        this.tag = mode in this.mode_tag_map ? this.mode_tag_map[mode] : 'div';
+        this.node = options && options.node || {};
+        this.attrs = this.node.attrs;
+
+        if (mode === 'div' && this.attrs.class === 'oe_chatter') {
+            this.mode = 'chatter';
+        }
+
+        if (mode === 'field') {
+            this.field_parameters = options.field;
+            this.attrs = options.field.__attrs;
+            this.modifiers = JSON.parse(options.field.__attrs.modifiers);
+            this.compute_field_attrs();
+        }
 
         this.renderElement();
 
-        if (this.mode === 'field') {
+        if (mode === 'field') {
             var studio_groups = this.attrs.studio_groups ? JSON.parse(this.attrs.studio_groups) : [];
             var record_id = this.datamodel.make_record('ir.model.fields', [{
                 name: 'groups',
@@ -134,7 +131,6 @@ return Widget.extend(FieldManagerMixin, {
                 structure: 'view_attribute',
                 new_attrs: new_attrs,
             });
-            _.extend(this.view_attrs, new_attrs);
         }
     },
     change_element: function(ev) {
@@ -153,7 +149,6 @@ return Widget.extend(FieldManagerMixin, {
                 node: this.node,
                 new_attrs: new_attrs,
             });
-            _.extend(this.attrs, new_attrs);
         }
     },
     change_field_group: function() {
@@ -165,8 +160,6 @@ return Widget.extend(FieldManagerMixin, {
             node: this.node,
             new_attrs: new_attrs,
         });
-
-        _.extend(this.attrs, new_attrs);
     },
     remove_element: function() {
         var self = this;

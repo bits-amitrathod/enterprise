@@ -38,12 +38,17 @@ var FormEditor =  FormRenderer.extend({
             });
         }
     }),
-
+    custom_events: _.extend({}, FormRenderer.prototype.custom_events, {
+        'on_hook_selected': function() {
+            this.selected_node_id = false;
+        },
+    }),
     init: function(parent, arch, fields, state, widgets_registry, options) {
         this._super.apply(this, arguments);
         this.show_invisible = options && options.show_invisible;
         this.chatter_allowed = options.chatter_allowed;
         this.silent = false;
+        this.node_id = 1;
     },
     _render: function() {
         var self = this;
@@ -73,13 +78,18 @@ var FormEditor =  FormRenderer.extend({
         });
     },
     _render_node: function(node) {
+        var self = this;
         var $el = this._super.apply(this, arguments);
         if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
             this.has_chatter = true;
             this._set_style_events($el);
             // Put a div in overlay preventing all clicks chatter's elements
             $el.append($('<div>', { 'class': 'o_web_studio_overlay' }));
-            $el.on('click', this.trigger_up.bind(this, 'chatter_clicked'));
+            $el.attr('data-node-id', this.node_id++);
+            $el.click(function() {
+                self.selected_node_id = $el.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
+            });
         }
         return $el;
     },
@@ -99,9 +109,11 @@ var FormEditor =  FormRenderer.extend({
         var self = this;
         var $result = this._super.apply(this, arguments);
         // Add click event to see group properties in sidebar
+        $result.attr('data-node-id', this.node_id++);
         $result.click(function(event) {
             if (!_is_handled(event)) {
-                self.trigger_up('group_clicked', {node: node});
+                self.selected_node_id = $result.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
             }
         });
         this._set_style_events($result);
@@ -151,10 +163,12 @@ var FormEditor =  FormRenderer.extend({
         var self = this;
         var $result = this._super.apply(this, arguments);
         $result.data('handle_studio_event', true);
+        $result.attr('data-node-id', this.node_id++);
         $result.click(function(event) {
             event.preventDefault();
             if (!self.silent) {
-                self.trigger_up('page_clicked', {node: page});
+                self.selected_node_id = $result.data('node-id');
+                self.trigger_up('node_clicked', {node: page});
             }
         });
         this._set_style_events($result);
@@ -188,10 +202,12 @@ var FormEditor =  FormRenderer.extend({
     _render_stat_button: function(node) {
         var self = this;
         var $button = this._super.apply(this, arguments);
+        $button.attr('data-node-id', this.node_id++);
         $button.click(function(ev) {
             if (! $(ev.target).closest('.o_form_field').length) {
                 // click on the button and not on the field inside this button
-                self.trigger_up('button_clicked', {node: node});
+                self.selected_node_id = $button.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
             }
         });
         this._set_style_events($button);
@@ -212,10 +228,12 @@ var FormEditor =  FormRenderer.extend({
             this.has_follower_field = true;
         } else {
             // bind handler on field clicked to edit field's attributes
+            $el.attr('data-node-id', this.node_id++);
             $el.click(function(event) {
                 event.preventDefault();
                 event.stopPropagation();
-                self.trigger_up('field_clicked', {node: node});
+                self.selected_node_id = $el.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
             });
             this._set_style_events($el);
         }
@@ -238,10 +256,23 @@ var FormEditor =  FormRenderer.extend({
     _reset_clicked_style: function() {
         this.$('.o_clicked').removeClass('o_clicked');
     },
-    set_local_state: function() {
+    get_local_state: function() {
+        var state = this._super.apply(this, arguments);
+        if (this.selected_node_id) {
+            state.selected_node_id = this.selected_node_id;
+        }
+        return state;
+    },
+    set_local_state: function(state) {
         this.silent = true;
         this._super.apply(this, arguments);
         this._reset_clicked_style();
+        if (state.selected_node_id) {
+            var $selected_node = this.$('[data-node-id="' + state.selected_node_id + '"]');
+            if ($selected_node) {
+                $selected_node.click();
+            }
+        }
         this.silent = false;
     }
 });

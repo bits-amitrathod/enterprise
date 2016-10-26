@@ -18,6 +18,7 @@ return ListRenderer.extend({
         } else {
             this.invisible_columns = [];
         }
+        this.node_id = 1;
     },
 
     _render: function() {
@@ -69,6 +70,7 @@ return ListRenderer.extend({
 
     _render_header: function() {
         var $header = this._super.apply(this, arguments);
+        var self = this;
         _.each($header.find('th'), function(th, index) {
             var $new_th = $('<th>')
                 .addClass('o_web_studio_new_column')
@@ -87,7 +89,7 @@ return ListRenderer.extend({
                 );
                 $new_th_before.insertBefore($(th));
             }
-
+            $(th).attr('data-node-id', self.node_id++);
         });
         return $header;
     },
@@ -166,15 +168,17 @@ return ListRenderer.extend({
 
     on_existing_column: function(ev) {
         var $el = $(ev.currentTarget);
-        var field_name = $el.closest('table').find('th').eq($el.index()).data('name');
+        var $selected_column = $el.closest('table').find('th').eq($el.index());
+
+        var field_name = $selected_column.data('name');
         var node = _.find(this.columns, function (column) {
             return column.attrs.name === field_name;
         });
-        this.trigger_up('field_clicked', {node: node});
+        this.selected_node_id = $selected_column.data('node-id');
+        this.trigger_up('node_clicked', {node: node});
     },
 
     on_new_column: function(ev) {
-        var self = this;
         var $el = $(ev.currentTarget);
 
         // The information (position & field name) is on the corresponding th of the clicked element.
@@ -184,12 +188,30 @@ return ListRenderer.extend({
         var node = _.find(this.columns, function (column) {
             return column.attrs.name === field_name;
         });
-        self.trigger_up('view_change', {
+        this.selected_node_id = false;
+        this.trigger_up('view_change', {
             type: 'add',
             structure: 'field',
             position: position,
             node: node,
         });
+    },
+
+    get_local_state: function() {
+        var state = this._super.apply(this, arguments);
+        if (this.selected_node_id) {
+            state.selected_node_id = this.selected_node_id;
+        }
+        return state;
+    },
+
+    set_local_state: function(state) {
+        if (state.selected_node_id) {
+            var $selected_node = this.$('th[data-node-id="' + state.selected_node_id + '"]');
+            if ($selected_node) {
+                $selected_node.click();
+            }
+        }
     },
 
 });

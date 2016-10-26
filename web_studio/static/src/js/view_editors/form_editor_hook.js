@@ -43,7 +43,9 @@ var FormEditorHook = Widget.extend({
     _render_span: function() {
         return $('<span>').addClass('o_web_studio_new_line_separator');
     },
-    on_click: function() {
+    on_click: function(event) {
+        event.stopPropagation();
+        this.trigger_up('on_hook_selected');
         new NewElementDialog(this, this.node, this.position).open();
     },
 });

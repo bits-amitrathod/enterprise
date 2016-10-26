@@ -105,11 +105,7 @@ function _find_parents_positions(parent, node, positions, indice) {
 return Widget.extend({
     className: 'o_web_studio_view_editor',
     custom_events: {
-        'button_clicked': 'toggle_editor_sidebar',
-        'field_clicked': 'toggle_editor_sidebar',
-        'page_clicked': 'toggle_editor_sidebar',
-        'group_clicked': 'toggle_editor_sidebar',
-        'chatter_clicked': 'toggle_editor_sidebar',
+        'node_clicked': 'toggle_editor_sidebar',
         'unselect_element': 'unselect_element',
         'view_change': 'update_view',
         'toggle_form_invisible': 'toggle_form_invisible',
@@ -240,19 +236,14 @@ return Widget.extend({
         }
     },
     toggle_editor_sidebar: function (event) {
-        if (event.name === 'field_clicked') {
-            var node = event.data.node;
+        var node = event.data.node;
+
+        var params = {node: node};
+        if (node.tag === 'field') {
             var field = this.fields_view.fields[node.attrs.name];
-            this.sidebar.toggle_mode('field', {node: node, field: field});
-        } else if (event.name === 'page_clicked') {
-            this.sidebar.toggle_mode('page', {page: event.data.node});
-        } else if (event.name === 'group_clicked') {
-            this.sidebar.toggle_mode('group', {group: event.data.node});
-        } else if (event.name === 'chatter_clicked') {
-            this.sidebar.toggle_mode('chatter');
-        } else if (event.name === 'button_clicked') {
-            this.sidebar.toggle_mode('button', {button: event.data.node});
+            params.field = field;
         }
+        this.sidebar.toggle_mode(node.tag, params);
     },
     toggle_form_invisible: function (event) {
         var options = {
