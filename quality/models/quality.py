@@ -333,7 +333,7 @@ class QualityAlert(models.Model):
     date_close = fields.Datetime('Date Closed')
     action_corrective = fields.Text('Corrective Action')
     action_preventive = fields.Text('Preventive Action')
-    user_id = fields.Many2one('res.users', 'Responsible', default=lambda self: self.env.user)
+    user_id = fields.Many2one('res.users', 'Responsible', track_visibility='onchange', default=lambda self: self.env.user)
     team_id = fields.Many2one(
         'quality.alert.team', 'Team', required=True,
         default=lambda x: x.env['quality.alert.team'].search([], limit=1))
