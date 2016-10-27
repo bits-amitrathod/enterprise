@@ -43,13 +43,20 @@ var XMLEditor = ace.ViewEditor.extend({
         this._displayArch(currentArch, this.view_id);
     },
     displayError: function () {
-        var error_message = this._super.apply(this, arguments);
-        Dialog.alert(this, '', {$content: $('<div>').html(error_message)});
+        var error = this._super.apply(this, arguments);
+        Dialog.alert(this, '', {
+            title: error.title,
+            $content: $('<div>').html(error.message)
+        });
     },
     displaySelectedView: function () {
         var viewID = this.selectedViewId();
         var currentArch = this.views[viewID].arch;
-        this._displayArch(currentArch, viewID);
+        if (this.buffers[viewID]) {
+            this.displayView(viewID);
+        } else {
+            this._displayArch(currentArch, viewID);
+        }
     },
     saveView: function (session) {
         var self = this;
@@ -75,11 +82,13 @@ var XMLEditor = ace.ViewEditor.extend({
             def.reject(null, session, isWellFormed);
         }
         return def.then(function() {
-            var viewId = self.selectedViewId();
-            var $option = self.$('#ace-view-list').find('[value='+viewId+']');
+            var $option = self.$('#ace-view-list').find('[value=' + session.id +']');
             var bufferName = $option.text();
             var dirtyMarker = " (unsaved changes)";
-            $option.text(bufferName.substring(0, bufferName.indexOf(dirtyMarker)));
+            var index = bufferName.indexOf(dirtyMarker);
+            if (index >= 0) {
+                $option.text(bufferName.substring(0, index));
+            }
         });
     },
     close: function () {
