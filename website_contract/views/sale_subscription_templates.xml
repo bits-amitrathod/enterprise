@@ -737,25 +737,20 @@
     </template>
 
     <!-- Modify website_portal templates -->
-    <template id="portal_my_home_menu_contract" name="Portal layout : contract menu entry" inherit_id="website_portal.portal_layout" priority="20">
+    <template id="portal_my_home_menu_contract" name="Portal layout : contract menu entry" inherit_id="website_portal.portal_layout" priority="10">
         <xpath expr="//ul[contains(@class,'o_portal_submenu')]" position="inside">
-            <li t-att-class="page_name == 'contract' and 'active'">
+            <li  t-if="contract_count" t-att-class="page_name == 'contract' and 'active'">
                 <a href="/my/contract">Contracts</a>
             </li>
         </xpath>
     </template>
 
-    <template id="portal_my_home_contract" name="Portal My Home : contract entries" inherit_id="website_portal.portal_my_home" priority="20">
+    <template id="portal_my_home_contract" name="Portal My Home : contract entries" inherit_id="website_portal.portal_my_home" priority="10">
         <xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">
-            <h3 class="page-header">
+            <h3 t-if="contract_count" class="page-header">
                 <a href="/my/contract">Your Contracts
                     <small class="ml8">
-                        <t t-if="contract_count">
-                            <span class='badge'><t t-esc="contract_count"/></span>
-                        </t>
-                        <t t-if="not contract_count">
-                            There are currently no contracts for your account.
-                        </t>
+                        <span class='badge'><t t-esc="contract_count"/></span>
                     </small>
                 </a>
             </h3>

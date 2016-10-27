@@ -16,25 +16,20 @@
         </xpath>
     </template>
 
-    <template id="portal_my_home_menu_helpdesk" name="Portal layout : helpdesk tickets menu entries" inherit_id="website_portal.portal_layout" priority="25">
+    <template id="portal_my_home_menu_helpdesk" name="Portal layout : helpdesk tickets menu entries" inherit_id="website_portal.portal_layout" priority="50">
         <xpath expr="//ul[contains(@class,'o_portal_submenu')]" position="inside">
-            <li t-att-class="page_name == 'ticket' and 'active'">
+            <li t-if="ticket_count" t-att-class="page_name == 'ticket' and 'active'">
                 <a href="/my/tickets">Tickets</a>
             </li>
         </xpath>
     </template>
 
-    <template id="portal_my_home_helpdesk_ticket" name="Portal My Home : Helpdesk Ticket" inherit_id="website_portal.portal_my_home">
+    <template id="portal_my_home_helpdesk_ticket" name="Portal My Home : Helpdesk Ticket" inherit_id="website_portal.portal_my_home" priority="50">
         <xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">
-            <h3 class="page-header">
+            <h3 t-if="ticket_count" class="page-header">
                 <a href="/my/tickets">Your Tickets
                     <small class="ml8">
-                        <t t-if="tickets">
-                            <span class='badge'><t t-esc="tickets"/></span>
-                        </t>
-                        <t t-if="not tickets">
-                            There are currently no Ticket for your account.
-                        </t>
+                        <span class='badge'><t t-esc="ticket_count"/></span>
                     </small>
                 </a>
             </h3>

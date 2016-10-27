@@ -19,16 +19,12 @@ class website_account(website_account):
             ('state', '!=', 'cancel'),
         ]
 
-    @http.route()
-    def account(self, **kw):
+    def _prepare_portal_layout_values(self):
         """ Add contract details to main account page """
-        response = super(website_account, self).account()
+        values = super(website_account, self)._prepare_portal_layout_values()
         partner = request.env.user.partner_id
-        account_res = request.env['sale.subscription']
-        contract_count = account_res.search_count(self._get_contract_domain(partner))
-        response.qcontext.update({'contract_count': contract_count})
-
-        return response
+        values['contract_count'] = request.env['sale.subscription'].search_count(self._get_contract_domain(partner))
+        return values
 
     @http.route(['/my/contract', '/my/contract/page/<int:page>'], type='http', auth="user", website=True)
     def my_contract(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):
