@@ -19,7 +19,6 @@ for every message in chatter.
         'security/ir.model.access.csv'
     ],
     'installable': True,
-    'application': True,
     'auto_install': True,
     'license': 'OEEL-1',
 }
