@@ -163,6 +163,17 @@
                 t-att-value="widget.attrs.placeholder"/>
         </div>
         <div>
+            <label for="widget">Widget</label>
+            <select id="widget" name="widget">
+                <option t-att-selected="widget.attrs.widget ? undefined : 'selected'"></option>
+                <t t-foreach="widget.field_widgets" t-as="w">
+                    <option t-att-selected="widget.attrs.widget ===  w ? 'selected' : undefined">
+                        <t t-esc="w"/>
+                    </option>
+                </t>
+            </select>
+        </div>
+        <div>
             <label for="required">Required</label>
             <input id="required" name="required" type="checkbox"
                 t-if="!(widget.modifiers.required and widget.modifiers.required !== true)"

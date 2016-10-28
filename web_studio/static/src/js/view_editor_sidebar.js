@@ -3,6 +3,7 @@ odoo.define('web_studio.ViewEditorSidebar', function (require) {
 
 var core = require('web.core');
 var Dialog = require('web.Dialog');
+var field_registry = require('web.field_registry');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
 var FieldManagerMixin = require('web_studio.FieldManagerMixin');
@@ -28,7 +29,7 @@ return Widget.extend(FieldManagerMixin, {
         'change #show_invisible': 'toggle_form_invisible',
         'click .o_web_studio_remove': 'remove_element',
         'change .o_display_view input, .o_display_view select': 'change_view',
-        'change .o_display_field input': 'change_element',
+        'change .o_display_field input, .o_display_field select': 'change_element',
         'change .o_display_page input': 'change_element',
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
@@ -48,6 +49,8 @@ return Widget.extend(FieldManagerMixin, {
             group: 'group',
             button: 'button',
         };
+
+        this.field_widgets = Object.keys(field_registry.map).sort();
     },
     toggle_mode: function(mode, options) {
         this.mode = mode;
