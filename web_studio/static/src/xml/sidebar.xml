@@ -146,55 +146,57 @@
             t-if="widget.modifiers.invisible and widget.modifiers.invisible !== true"
             t-att-value="JSON.stringify(widget.modifiers.invisible)"/>
     </div>
-    <div>
-        <label for="string">Label</label>
-        <input id="string" name="string" type="text"
-            t-att-value="widget.attrs.string"/>
-    </div>
-    <div>
-        <label for="help">Help Tooltip</label>
-        <input id="help" name="help" type="text"
-            t-att-value="widget.attrs.help"/>
-    </div>
-    <div>
-        <label for="placeholder">Placeholder</label>
-        <input id="placeholder" name="placeholder" type="text" placeholder="Placeholder Text"
-            t-att-value="widget.attrs.placeholder"/>
-    </div>
-    <div>
-        <label for="required">Required</label>
-        <input id="required" name="required" type="checkbox"
-            t-if="!(widget.modifiers.required and widget.modifiers.required !== true)"
-            t-att-checked="widget.attrs.required ? 'checked' : undefined"
-            t-att-disabled="widget.field_parameters.required ? 'disabled': undefined"/>
-            <input type="text" disabled="disabled"
-                t-if="widget.modifiers.required and widget.modifiers.required !== true"
-                t-att-value="JSON.stringify(widget.modifiers.required)"/>
-    </div>
-    <div>
-        <label for="readonly">Read only</label>
-        <input id="readonly" name="readonly" type="checkbox"
-            t-if="!(widget.modifiers.readonly and widget.modifiers.readonly !== true)"
-            t-att-checked="widget.attrs.readonly ? 'checked' : undefined"/>
-            <input type="text" disabled="disabled"
-                t-if="widget.modifiers.readonly and widget.modifiers.readonly !== true"
-                t-att-value="JSON.stringify(widget.modifiers.readonly)"/>
-    </div>
-    <div>
-        <label for="groups">Limit visibility to groups</label>
-        <div class="o_groups"/>
-    </div>
-    <t t-if="_.contains(['many2many', 'many2one', 'one2many'], widget.field_parameters.type)">
+    <t t-if="(widget.modifiers.invisible and widget.modifiers.invisible !== true) or !widget.attrs.invisible">
         <div>
-            <label for="domain">Domain</label>
-            <input id="domain" name="domain" type="text"
-                t-att-value="widget.attrs.domain"/>
+            <label for="string">Label</label>
+            <input id="string" name="string" type="text"
+                t-att-value="widget.attrs.string"/>
         </div>
         <div>
-            <label for="context">Context</label>
-            <input id="context" name="context" type="text"
-                t-att-value="JSON.stringify(widget.attrs.context)"/>
+            <label for="help">Help Tooltip</label>
+            <input id="help" name="help" type="text"
+                t-att-value="widget.attrs.help"/>
         </div>
+        <div>
+            <label for="placeholder">Placeholder</label>
+            <input id="placeholder" name="placeholder" type="text" placeholder="Placeholder Text"
+                t-att-value="widget.attrs.placeholder"/>
+        </div>
+        <div>
+            <label for="required">Required</label>
+            <input id="required" name="required" type="checkbox"
+                t-if="!(widget.modifiers.required and widget.modifiers.required !== true)"
+                t-att-checked="widget.attrs.required ? 'checked' : undefined"
+                t-att-disabled="widget.field_parameters.required ? 'disabled': undefined"/>
+                <input type="text" disabled="disabled"
+                    t-if="widget.modifiers.required and widget.modifiers.required !== true"
+                    t-att-value="JSON.stringify(widget.modifiers.required)"/>
+        </div>
+        <div>
+            <label for="readonly">Read only</label>
+            <input id="readonly" name="readonly" type="checkbox"
+                t-if="!(widget.modifiers.readonly and widget.modifiers.readonly !== true)"
+                t-att-checked="widget.attrs.readonly ? 'checked' : undefined"/>
+                <input type="text" disabled="disabled"
+                    t-if="widget.modifiers.readonly and widget.modifiers.readonly !== true"
+                    t-att-value="JSON.stringify(widget.modifiers.readonly)"/>
+        </div>
+        <div>
+            <label for="groups">Limit visibility to groups</label>
+            <div class="o_groups"/>
+        </div>
+        <t t-if="_.contains(['many2many', 'many2one', 'one2many'], widget.field_parameters.type)">
+            <div>
+                <label for="domain">Domain</label>
+                <input id="domain" name="domain" type="text"
+                    t-att-value="widget.attrs.domain"/>
+            </div>
+            <div>
+                <label for="context">Context</label>
+                <input id="context" name="context" type="text"
+                    t-att-value="JSON.stringify(widget.attrs.context)"/>
+            </div>
+        </t>
     </t>
     <t t-call="web_studio.Sidebar.Parameters"/>
     <t t-call="web_studio.Sidebar.Remove"/>
