@@ -632,3 +632,40 @@ class WebStudioController(http.Controller):
                     'alias_model_id': model.id,
                     'alias_name': value,
                 })
+
+    @http.route('/web_studio/get_default_value', type='json', auth='user')
+    def get_default_value(self, model_name, field_name):
+        """ Returns the default value associated to the model @model_name and field @field_name if it exists
+        """
+        default_value = request.env['ir.values'].search([
+            ('key', '=', 'default'),
+            ('model', '=', model_name),
+            ('name', '=', field_name),
+        ], limit=1)
+        if default_value:
+            return default_value.value_unpickle
+
+    @http.route('/web_studio/set_default_value', type='json', auth='user')
+    def set_default_value(self, model_name, field_name, value):
+        """ Set the default value associated to the model @model_name and field @field_name
+             - if there is no default value, it will be created
+             - if there is one and the value is empty, it will be unlinked
+        """
+        default_value = request.env['ir.values'].search([
+            ('key', '=', 'default'),
+            ('model', '=', model_name),
+            ('name', '=', field_name),
+        ], limit=1)
+        if default_value:
+            if value:
+                default_value.value_unpickle = value
+            else:
+                default_value.unlink()
+        else:
+            request.env['ir.values'].create({
+                'key': 'default',
+                'model': model_name,
+                'name': field_name,
+                'value_unpickle': value,
+                'key2': None,
+            })

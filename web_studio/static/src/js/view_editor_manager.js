@@ -109,6 +109,7 @@ return Widget.extend({
         'unselect_element': 'unselect_element',
         'view_change': 'update_view',
         'email_alias_change': 'set_email_alias',
+        'default_value_change': 'set_default_value',
         'toggle_form_invisible': 'toggle_form_invisible',
         'open_xml_editor': 'open_xml_editor',
         'close_xml_editor': 'close_xml_editor',
@@ -245,6 +246,7 @@ return Widget.extend({
         if (mode === 'field') {
             var field = this.fields_view.fields[node.attrs.name];
             params.field = field;
+            def = customize.get_default_value(this.model, node.attrs.name);
         }
         if (mode === 'div' && node.attrs.class === 'oe_chatter') {
             mode = 'chatter';
@@ -379,6 +381,11 @@ return Widget.extend({
     set_email_alias: function(event) {
         var value = event.data.value;
         customize.set_email_alias(this.model, value);
+    },
+    set_default_value: function(event) {
+        var value = event.data.value;
+        var field_name = event.data.field_name;
+        customize.set_default_value(this.model, field_name, value);
     },
     do: function(op) {
         this.operations.push(op);

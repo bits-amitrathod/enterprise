@@ -29,7 +29,8 @@ return Widget.extend(FieldManagerMixin, {
         'change #show_invisible': 'toggle_form_invisible',
         'click .o_web_studio_remove': 'remove_element',
         'change .o_display_view input, .o_display_view select': 'change_view',
-        'change .o_display_field input, .o_display_field select': 'change_element',
+        'change .o_display_field input[data-type="attributes"], .o_display_field select': 'change_element',
+        'change .o_display_field input[data-type="default_value"]': 'change_default_value',
         'change .o_display_page input': 'change_element',
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
@@ -60,6 +61,7 @@ return Widget.extend(FieldManagerMixin, {
         this.attrs = this.node.attrs;
 
         if (mode === 'field') {
+            this.default_value = options.default_value;
             this.field_parameters = options.field;
             this.attrs = options.field.__attrs;
             this.modifiers = JSON.parse(options.field.__attrs.modifiers);
@@ -169,6 +171,16 @@ return Widget.extend(FieldManagerMixin, {
         var value = $input.val();
         if (value !== this.email_alias) {
             this.trigger_up('email_alias_change', {
+                value: value,
+            });
+        }
+    },
+    change_default_value: function(ev) {
+        var $input = $(ev.currentTarget);
+        var value = $input.val();
+        if (value !== this.default_value) {
+            this.trigger_up('default_value_change', {
+                field_name: this.node.attrs.name,
                 value: value,
             });
         }

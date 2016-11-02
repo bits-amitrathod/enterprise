@@ -108,6 +108,25 @@ return {
         });
     },
 
+    get_default_value: function(model_name, field_name) {
+        return ajax.jsonRpc('/web_studio/get_default_value', 'call', {
+            model_name: model_name,
+            field_name: field_name,
+        }).then(function(result) {
+            return {
+                default_value: result,
+            };
+        });
+    },
+
+    set_default_value: function(model_name, field_name, value) {
+        return ajax.jsonRpc('/web_studio/set_default_value', 'call', {
+            model_name: model_name,
+            field_name: field_name,
+            value: value,
+        });
+    },
+
     get_studio_view_arch: function(model, view_type, view_id) {
         return ajax.jsonRpc('/web_studio/get_studio_view_arch', 'call', {
             model: model,
