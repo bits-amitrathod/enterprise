@@ -28,6 +28,11 @@
                  data-images-info='{"logo": {"format": "png"}, "all": {"module": "mass_mailing_themes"}}'>
                  <t t-call="mass_mailing_themes.theme_bold_template"/>
             </div>
+            <div data-name="expo"
+                 data-img="/mass_mailing_themes/static/src/img/theme_imgs/expo_thumb"
+                 data-images-info='{"logo": {"format": "png"}, "all": {"module": "mass_mailing_themes"}}'>
+                 <t t-call="mass_mailing_themes.theme_expo_template"/>
+            </div>
         </xpath>
     </template>
 
@@ -791,5 +796,163 @@
             </div>
         </div>
         <t t-call="mass_mailing.s_mail_block_footer_social"/>
+    </template>
+
+    <!-- Theme "EXPO" default template -->
+    <template id="theme_expo_template">
+        <div class="o_mail_block_banner">
+            <div class="o_mail_snippet_general">
+                <table align="center" cellspacing="0" cellpadding="0" border="0" class="o_mail_table_styles">
+                    <tbody>
+                        <tr>
+                            <td width="100%" valign="top" class="o_mail_full_width_padding">
+                                <a href="#">
+                                    <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_banner.jpg" class="center-block" alt="Your Banner Image"/>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="o_mail_block_title_sub text-center">
+            <div class="o_mail_snippet_general">
+                <table align="center" cellspacing="0" cellpadding="0" class="o_mail_table_styles">
+                    <tbody>
+                        <tr>
+                            <td class="o_mail_v_padding">
+                                <h4 class="o_mail_no_margin"><br/><a href="#">KEYNOTE SPEAKERS</a></h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="o_mail_block_three_cols">
+            <div class="o_mail_snippet_general">
+                <table align="center" cellspacing="0" cellpadding="0" class="o_mail_table_styles o_mail_col_table">
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align:top;width:180px;" class="o_mail_col_mv">
+                                <div class="o_mail_col_container text-center">
+                                    <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_three_cols_1.jpg" class="center-block" alt="Your Picture"/>
+                                    <h4><strong>John Doe</strong></h4>
+                                    <p><i>DOE Studio, USA</i></p>
+                                </div>
+                            </td>
+
+                            <td style="vertical-align:top;width:180px;" class="o_mail_col_mv">
+                                <div class="o_mail_col_container text-center">
+                                    <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_three_cols_2.jpg" class="center-block" alt="Your Picture"/>
+                                    <h4><strong>Anna Smith</strong></h4>
+                                    <p><i>DG Connect, UE</i></p>
+                                </div>
+                            </td>
+
+                            <td style="vertical-align:top;width:180px;" class="o_mail_col_mv">
+                                <div class="o_mail_col_container text-center">
+                                    <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_three_cols_3.jpg" class="center-block" alt="Your Picture"/>
+                                    <h4><strong>Clark Hans</strong></h4>
+                                    <p><i>Web Designer, ES</i></p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="o_mail_block_image_text bg-beta">
+            <div class="o_mail_snippet_general">
+                <table align="center" cellspacing="0" cellpadding="0" class="o_mail_table_styles">
+                    <tbody>
+                        <tr>
+                            <td style="width: 250px; text-align: center; vertical-align: middle;" class="o_mail_col_mv o_mail_img_container o_mail_h_padding o_mail_v_padding">
+                                <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_image_text.jpg" class="center-block" alt="Your Picture" style=""/>
+                            </td>
+                            <td style="width: 350px; vertical-align: middle; text-align: center;" class="o_mail_col_mv o_mail_h_padding o_mail_v_padding">
+                                <h3 class="text-left mt0">Premium Pass</h3>
+                                <p class="o_mail_no_margin " style="text-align:justify;">This pass gives you access to the catering and evening activities! </p>
+                                <div class="text-left" style="margin-top:15px;">
+                                    <a href="#" class="btn btn-sm btn-primary ">Read More</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="o_mail_block_title_sub text-center">
+            <div class="o_mail_snippet_general">
+                <table align="center" cellspacing="0" cellpadding="0" class="o_mail_table_styles">
+                    <tbody>
+                        <tr>
+                            <td class="o_mail_h_padding o_mail_v_padding">
+                                <h4 class="o_mail_no_margin"><br/><br/><a href="#">WORKSHOPS</a></h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="o_mail_block_two_cols">
+            <div class="o_mail_snippet_general">
+                <table align="center" cellspacing="0" cellpadding="0" class="o_mail_table_styles o_mail_col_table">
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align:top;width:270px;" class="o_mail_col_mv">
+                                <div class="o_mail_col_container">
+                                    <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_two_cols_1.jpg" class="center-block" alt="Your Picture"/>
+                                    <h4><strong>John Doe</strong></h4>
+                                    <p><i>DOE Studio, USA</i></p>
+                                    <div class="text-center" style="margin-top:15px;">
+                                        <a href="#" class="btn btn-link o_default_snippet_text">Read More...</a>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td style="vertical-align:top;width:270px;" class="o_mail_col_mv">
+                                <div class="o_mail_col_container">
+                                    <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_two_cols_2.jpg" class="center-block" alt="Your Picture"/>
+                                    <h4><strong>John Doe</strong></h4>
+                                    <p><i>DOE Studio, USA</i></p>
+                                    <div class="text-center" style="margin-top:15px;">
+                                        <a href="#" class="btn btn-link o_default_snippet_text">Read More...</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="o_mail_block_event o_mail_no_colorpicker">
+            <div class="o_mail_snippet_general">
+                <table align="center" cellpadding="0" cellspacing="0" class="o_mail_table_styles">
+                    <tbody><tr>
+                        <td style="width:25%;min-height: 150px;vertical-align:middle;" class="o_mail_h_padding o_mail_v_padding bg-beta text-center o_mail_col_mv">
+                            <h3 class="o_mail_no_margin o_default_snippet_text">21 Jul</h3>
+                            <p class="o_mail_no_margin o_default_snippet_text">ALL DAY</p>
+                        </td>
+                        <td style="width:25%;min-height: 150px;" class="text-center bg-delta o_mail_col_mv">
+                            <img src="/mass_mailing_themes/static/src/img/theme_expo/s_default_image_block_event.jpg" class="center-block" alt="Your Picture"/>
+                        </td>
+                        <td class="o_mail_h_padding o_mail_v_padding o_mail_col_mv" style="min-height: 150px;">
+                            <div style="min-height: 111px">
+                                <h4 class="o_default_snippet_text">Cybersecurity</h4>
+                                <p class="o_mail_no_margin o_default_snippet_text">
+                                    Cyber-threats continue to increase.<br/>
+                                    The discussion will examine how to develop new norms and integrate them into EU
+                                </p>
+                            </div>
+                            <div class="small mt16">
+                                <a href="#" class="btn btn-sm btn-primary o_default_snippet_text">Registration</a>
+                                <a href="#" class="btn btn-sm btn-link o_default_snippet_text" style="margin-left:10px">More Info</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </div>
+        </div>
+        <t t-call="mass_mailing.s_mail_block_footer_social" />
     </template>
 </odoo>
