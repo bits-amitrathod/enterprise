@@ -33,6 +33,7 @@ return Widget.extend(FieldManagerMixin, {
         'change .o_display_page input': 'change_element',
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
+        'change .o_display_chatter input[data-type="email_alias"]': 'change_email_alias',
     },
 
     init: function (parent, view_type, view_attrs) {
@@ -58,15 +59,14 @@ return Widget.extend(FieldManagerMixin, {
         this.node = options && options.node || {};
         this.attrs = this.node.attrs;
 
-        if (mode === 'div' && this.attrs.class === 'oe_chatter') {
-            this.mode = 'chatter';
-        }
-
         if (mode === 'field') {
             this.field_parameters = options.field;
             this.attrs = options.field.__attrs;
             this.modifiers = JSON.parse(options.field.__attrs.modifiers);
             this.compute_field_attrs();
+        }
+        if (mode === 'chatter') {
+            this.email_alias = options.email_alias;
         }
 
         this.renderElement();
@@ -163,6 +163,15 @@ return Widget.extend(FieldManagerMixin, {
             node: this.node,
             new_attrs: new_attrs,
         });
+    },
+    change_email_alias: function(ev) {
+        var $input = $(ev.currentTarget);
+        var value = $input.val();
+        if (value !== this.email_alias) {
+            this.trigger_up('email_alias_change', {
+                value: value,
+            });
+        }
     },
     remove_element: function() {
         var self = this;

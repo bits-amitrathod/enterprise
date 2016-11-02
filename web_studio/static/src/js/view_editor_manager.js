@@ -108,6 +108,7 @@ return Widget.extend({
         'node_clicked': 'toggle_editor_sidebar',
         'unselect_element': 'unselect_element',
         'view_change': 'update_view',
+        'email_alias_change': 'set_email_alias',
         'toggle_form_invisible': 'toggle_form_invisible',
         'open_xml_editor': 'open_xml_editor',
         'close_xml_editor': 'close_xml_editor',
@@ -237,13 +238,23 @@ return Widget.extend({
     },
     toggle_editor_sidebar: function (event) {
         var node = event.data.node;
+        var mode = node.tag;
 
+        var def;
         var params = {node: node};
-        if (node.tag === 'field') {
+        if (mode === 'field') {
             var field = this.fields_view.fields[node.attrs.name];
             params.field = field;
         }
-        this.sidebar.toggle_mode(node.tag, params);
+        if (mode === 'div' && node.attrs.class === 'oe_chatter') {
+            mode = 'chatter';
+            def = customize.get_email_alias(this.model);
+        }
+        var self = this;
+        $.when(def).then(function(result) {
+            _.extend(params, result);
+            self.sidebar.toggle_mode(mode, params);
+        });
     },
     toggle_form_invisible: function (event) {
         var options = {
@@ -364,6 +375,10 @@ return Widget.extend({
                 this._edit_attributes_element(type, node, xpath_info, new_attrs);
                 break;
         }
+    },
+    set_email_alias: function(event) {
+        var value = event.data.value;
+        customize.set_email_alias(this.model, value);
     },
     do: function(op) {
         this.operations.push(op);

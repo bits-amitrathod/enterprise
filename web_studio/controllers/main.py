@@ -602,3 +602,33 @@ class WebStudioController(http.Controller):
         chatter_node.append(follower_node)
         chatter_node.append(thread_node)
         xpath_node.append(chatter_node)
+
+    @http.route('/web_studio/get_email_alias', type='json', auth='user')
+    def get_email_alias(self, model_name):
+        """ Returns the email alias associated to the model @model_name if both exist
+        """
+        model = request.env['ir.model'].search([('model', '=', model_name)], limit=1)
+        if model:
+            email_alias = request.env['mail.alias'].search([('alias_model_id', '=', model.id)], limit=1)
+            if email_alias:
+                return email_alias.alias_name
+
+    @http.route('/web_studio/set_email_alias', type='json', auth='user')
+    def set_email_alias(self, model_name, value):
+        """ Set the email alias associated to the model @model_name
+             - if there is no email alias, it will be created
+             - if there is one and the value is empty, it will be unlinked
+        """
+        model = request.env['ir.model'].search([('model', '=', model_name)], limit=1)
+        if model:
+            email_alias = request.env['mail.alias'].search([('alias_model_id', '=', model.id)], limit=1)
+            if email_alias:
+                if value:
+                    email_alias.alias_name = value
+                else:
+                    email_alias.unlink()
+            else:
+                request.env['mail.alias'].create({
+                    'alias_model_id': model.id,
+                    'alias_name': value,
+                })

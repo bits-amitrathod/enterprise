@@ -127,7 +127,7 @@
     <div t-if="widget.mode === 'group'" class="o_web_studio_sidebar_content o_display_group">
         <t t-call="web_studio.ViewEditorSidebar.group"/>
     </div>
-    <div t-if="widget.mode === 'chatter'" class="o_web_studio_sidebar_content">
+    <div t-if="widget.mode === 'chatter'" class="o_web_studio_sidebar_content o_display_chatter">
         <t t-call="web_studio.ViewEditorSidebar.chatter"/>
     </div>
     <div class="o_web_studio_sidebar_content o_display_button">
@@ -235,6 +235,11 @@
 
 <!-- ChatterEditor -->
 <t t-name="web_studio.ViewEditorSidebar.chatter">
+    <div>
+        <label for="email_alias">Email Alias</label>
+        <input id="email_alias" name="email_alias" type="text" data-type="email_alias"
+            t-att-value="widget.email_alias"/>
+    </div>
     <t t-call="web_studio.Sidebar.Remove"/>
 </t>
 

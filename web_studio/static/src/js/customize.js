@@ -91,6 +91,23 @@ return {
         });
     },
 
+    get_email_alias: function(model_name) {
+        return ajax.jsonRpc('/web_studio/get_email_alias', 'call', {
+            model_name: model_name,
+        }).then(function(result) {
+            return {
+                email_alias: result,
+            };
+        });
+    },
+
+    set_email_alias: function(model_name, value) {
+        return ajax.jsonRpc('/web_studio/set_email_alias', 'call', {
+            model_name: model_name,
+            value: value,
+        });
+    },
+
     get_studio_view_arch: function(model, view_type, view_id) {
         return ajax.jsonRpc('/web_studio/get_studio_view_arch', 'call', {
             model: model,
