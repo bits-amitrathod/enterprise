@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
-
 <div t-name="AppSwitcher" class="o_application_switcher">
     <div class="o_menu_search o_bar_hidden">
         <span class="fa fa-search fa-2x o_menu_search_icon"/>
@@ -309,5 +308,9 @@
 <div t-name="FormRenderingStatusBar" class="o_form_statusbar">
     <div class="o_statusbar_buttons"/>
 </div>
+
+<t t-extend="FormSelection">
+    <t t-jquery=".dropdown-menu.state">$(this).addClass("dropdown-menu-right");</t>
+</t>
 
 </templates>
