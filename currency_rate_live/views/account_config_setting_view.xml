@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-        <record id="view_account_currency_config_settings_inherit" model="ir.ui.view">
-            <field name="name">account settings</field>
-            <field name="model">account.config.settings</field>
-            <field name="inherit_id" ref="account.view_account_config_settings"/>
-            <field name="arch" type="xml">
-                <div name="group_multi_currency" position="after">
-                    <label for="id" string="Live Currency Rate" attrs="{'invisible': [('group_multi_currency', '!=', True)]}"/>
-                    <div attrs="{'invisible': [('group_multi_currency', '!=', True)]}">
-                        <div>
-                            <label for="currency_interval_unit"/>
-                            <field name="currency_interval_unit" class="oe_inline"/>
-                            <button string="Update Now"
-                                name="update_currency_rates"
-                                type="object"
-                                class="oe_link"/>
-                        </div>
-                        <div>
-                            <label for="currency_next_execution_date"/>
-                            <field name="currency_next_execution_date" class="oe_inline"/>
-                        </div>
-                        <div>
-                            <label for="currency_provider"/>
-                            <field name="currency_provider" class="oe_inline"/>
-                        </div>
-                    </div>
+    <record id="account_config_settings_view_form_inherit_currency_rate_live" model="ir.ui.view">
+        <field name="name">account.config.settings.form.inherit.rate.live</field>
+        <field name="model">account.config.settings</field>
+        <field name="inherit_id" ref="account.account_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='update_currency_live']" position="after">
+                <div class="row mt16">
+                    <label string="Service" for="currency_provider" class="col-md-3 o_light_label"/>
+                    <field name="currency_provider" class="oe_inline"/>
                 </div>
-            </field>
-        </record>
+                <div class="row">
+                    <label string="Interval" for="currency_interval_unit" class="col-md-3 o_light_label"/>
+                    <field name="currency_interval_unit" class="oe_inline"/>
+                </div>
+                <div class="row">
+                    <label string="Next Run" for="currency_next_execution_date" class="col-md-3 o_light_label"/>
+                    <field name="currency_next_execution_date" class="oe_inline"/>
+                    <button name="update_currency_rates" type="object" class="btn-link oe_inline">
+                        <i title="Update now" class="fa fa-lg fa-refresh"></i>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
 
 </odoo>

@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_account_config_settings_account_report_inherit" model="ir.ui.view">
-        <field name="name">account.config.settings.account.reports.inherit</field>
+
+    <record id="account_config_settings_view_form_inherit_account_reports" model="ir.ui.view">
+        <field name="name">account.config.settings.form.inherit.reports</field>
         <field name="model">account.config.settings</field>
-        <field name="inherit_id" ref="account.view_account_config_settings"/>
+        <field name="inherit_id" ref="account.account_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <group name="followup" position="inside">
-                <field name="days_between_two_followups"/>
-            </group>
+            <div id="dynamic_report" position="attributes">
+                <attribute name="attrs">{'invisible': [('module_account_accountant', '=', False)]}</attribute>
+            </div>
+            <div id="account_reports" position="after">
+                <div class="content-group" attrs="{'invisible': [('module_account_accountant', '=', False)]}">
+                    <div class="mt16">
+                        <button name="%(account.action_account_report)d" icon="fa-arrow-right" type="action" string="Legal Statement" class="btn-link"/>
+                    </div>
+                    <div>
+                        <button name="%(account.account_tag_action)d" icon="fa-arrow-right" type="action" string="Account Tags" class="btn-link"/>
+                    </div>
+                </div>
+            </div>
+            <div id="account_followup" position="before">
+                <div class="col-md-6 o_setting_box" id="payment_follow_up">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <label string="Payment Follow-up"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                        <div class="text-muted">
+                            Minimum spread between two reminders
+                        </div>
+                        <div class="content-group mt16">
+                            A reminder can be sent as of <field name="days_between_two_followups" class="text-center oe_inline" /> days after the previous reminder
+                        </div>
+                    </div>
+                </div>
+            </div>
         </field>
     </record>
+
 </odoo>

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError, Warning
+
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 from taxcloud_request import TaxCloudRequest
 
@@ -10,7 +11,7 @@ class TaxCloudConfigSettings(models.TransientModel):
 
     taxcloud_api_id = fields.Char(string='TaxCloud API ID')
     taxcloud_api_key = fields.Char(string='TaxCloud API KEY')
-    tic_category_id = fields.Many2one(related='company_id.tic_category_id', string="Default TIC Code *")
+    tic_category_id = fields.Many2one(related='company_id.tic_category_id', string="Default TIC Code")
 
     @api.multi
     def set_default_taxcloud(self):

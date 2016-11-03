@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_account_config_settings_form_inherit_account_sepa" model="ir.ui.view">
-        <field name="name">view.account.config.sepa.form.inherit</field>
+
+    <record id="account_config_settings_view_form" model="ir.ui.view">
+        <field name="name">account.config.settings.form</field>
         <field name="model">account.config.settings</field>
-        <field name="inherit_id" ref="account.view_account_config_settings"/>
+        <field name="inherit_id" ref="account.account_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='followup']" position="before">
-                <group string="SEPA" name="sepa">
-                    <label for="sepa_initiating_party_name"/>
-                    <div>
-                        <field name="sepa_initiating_party_name" class="oe_inline"/>
+            <sheet position="inside">
+                <h2>SEPA</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="sepa_initiating_party_name" class="col-md-3 o_light_label"/>
+                                    <field name="sepa_initiating_party_name"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label for="sepa_orgid_id" class="col-md-3 o_light_label"/>
+                                    <field name="sepa_orgid_id"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label for="sepa_orgid_issr" class="col-md-3 o_light_label"/>
+                                    <field name="sepa_orgid_issr"/>
+                                </div>
+                                <div class="row mt16" groups="base.group_no_one">
+                                    <label for="sepa_pain_version" class="col-md-3 o_light_label"/>
+                                    <field name="sepa_pain_version"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <label for="sepa_orgid_id"/>
-                    <div>
-                        <field name="sepa_orgid_id" class="oe_inline"/>
-                    </div>
-                    <label for="sepa_orgid_issr"/>
-                    <div>
-                        <field name="sepa_orgid_issr" class="oe_inline"/>
-                    </div>
-                    <label for="sepa_pain_version" groups="base.group_no_one"/>
-                    <div groups="base.group_no_one">
-                        <field name="sepa_pain_version" class="oe_inline"/>
-                    </div>
-                </group>
-            </xpath>
+                </div>
+            </sheet>
         </field>
     </record>
+
 </odoo>

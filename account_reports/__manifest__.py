@@ -19,7 +19,7 @@ Accounting Reports
         'views/report_followup.xml',
         'views/partner_view.xml',
         'views/account_journal_dashboard_view.xml',
-        'views/account_config_settings_views.xml',
+        'views/account_config_settings_views.xml'
     ],
     'qweb': [
         'static/src/xml/account_report_template.xml',
