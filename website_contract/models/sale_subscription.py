@@ -228,7 +228,9 @@ class SaleSubscription(models.Model):
             'partner_id': self.partner_id.id,
             'partner_country_id': self.partner_id.country_id.id,
             'invoice_id': invoice.id,
-            'callback_eval': "self.env['sale.subscription'].reconcile_pending_transaction(%s,self,self.invoice_id)" % self.id
+            'callback_model_id': self.env['ir.model'].sudo().search([('model', '=', self._name)], limit=1).id,
+            'callback_res_id': self.id,
+            'callback_method': 'reconcile_pending_transaction',
         }
 
         tx = tx_obj.create(values)
@@ -242,17 +244,19 @@ class SaleSubscription(models.Model):
         tx.s2s_do_transaction(**payment_secure)
         return tx
 
-    @api.model
-    def reconcile_pending_transaction(self, contract_id, tx, invoice):
-        contract = self.browse(contract_id)
+    @api.multi
+    def reconcile_pending_transaction(self, tx, invoice=False):
+        self.ensure_one()
+        if not invoice:
+            invoice = tx.invoice_id
         if tx.state in ['done', 'authorized']:
             invoice.write({'reference': tx.reference, 'name': tx.reference})
             if tx.acquirer_id.journal_id and tx.state == 'done':
                 invoice.action_invoice_open()
                 journal = tx.acquirer_id.journal_id
                 invoice.with_context(default_ref=tx.reference, default_currency_id=tx.currency_id.id).pay_and_reconcile(journal, pay_amount=tx.amount)
-            contract.increment_period()
-            contract.write({'state': 'open', 'date': False})
+            self.increment_period()
+            self.write({'state': 'open', 'date': False})
         else:
             invoice.action_cancel()
             invoice.unlink()
