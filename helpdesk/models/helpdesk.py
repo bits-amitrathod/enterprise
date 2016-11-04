@@ -669,9 +669,7 @@ class HelpdeskTicket(models.Model):
             take_action = self._notification_link_helper('assign')
             helpdesk_actions = [{'url': take_action, 'title': _('I take it')}]
         else:
-            new_action_id = self.env.ref('helpdesk.helpdesk_ticket_action_main').id
-            new_action = self._notification_link_helper('new', action_id=new_action_id)
-            helpdesk_actions = [{'url': new_action, 'title': _('New Ticket')}]
+            helpdesk_actions = []
 
         new_group = (
             'group_helpdesk_user', lambda partner: bool(partner.user_ids) and any(user.has_group('helpdesk.group_helpdesk_user') for user in partner.user_ids), {
