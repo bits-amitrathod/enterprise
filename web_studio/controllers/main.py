@@ -3,21 +3,29 @@
 
 from lxml import etree
 from StringIO import StringIO
-from openerp import http, _
-from openerp.http import request
+from odoo import http, _
+from odoo.http import content_disposition, request
 from odoo.exceptions import UserError, AccessError
+from odoo.addons.web_studio.controllers import export
 
 
 class WebStudioController(http.Controller):
 
     @http.route('/web_studio/init', type='json', auth='user')
-    def studio_init(self, action_id):
-        action_model = request.env['ir.actions.act_window'].browse(action_id).res_model
+    def studio_init(self):
         return {
             'dbuuid': request.env['ir.config_parameter'].get_param('database.uuid'),
-            'chatter_allowed': self._is_chatter_allowed(action_model),
             'multi_lang': bool(request.env['res.lang'].search_count([('code', '!=', 'en_US')])),
         }
+
+    @http.route('/web_studio/chatter_allowed', type='json', auth='user')
+    def is_chatter_allowed(self, model):
+        """ Returns True iff a chatter can be activated on the model's form views, i.e. if
+            - it is a custom model (since we can make it inherit from mail.thread), or
+            - it already inherits from mail.thread.
+        """
+        Model = request.env[model]
+        return Model._custom or isinstance(Model, type(request.env['mail.thread']))
 
     @http.route('/web_studio/get_studio_action', type='json', auth='user')
     def get_studio_action(self, action_name, model, view_id=None, view_type=None):
@@ -152,6 +160,7 @@ class WebStudioController(http.Controller):
             @param icon: the icon of the new app, like [icon, icon_color, background_color].
                 To be set if is_app is True.
         """
+        # create the action
         model = request.env['ir.model'].browse(model_id)
         new_action = request.env['ir.actions.act_window'].create({
             'name': name,
@@ -166,33 +175,26 @@ class WebStudioController(http.Controller):
                 </p>
             """,
         })
+        action_ref = 'ir.actions.act_window,' + str(new_action.id)
 
         if is_app:
-            # we cannot create a menu without action without the context `full_list`
+            # create the menus (app menu + first submenu)
             new_context = dict(request.context)
-            new_context.update({'ir.ui.menu.full_list': True})
+            new_context.update({'ir.ui.menu.full_list': True})  # allows to create a menu without action
             new_menu = request.env['ir.ui.menu'].with_context(new_context).create({
                 'name': name,
                 'web_icon': ','.join(icon),
                 'child_id': [(0, 0, {
                     'name': name,
-                    'action': 'ir.actions.act_window,' + str(new_action.id),
+                    'action': action_ref,
                 })]
             })
-            # if a model has been created for the app but *before* it,
-            # the `module` on model_data for the model and its fields should be changed
-            if model.state == 'manual':
-                module_name = request.env['ir.module.module'].create_or_get_studio_module(new_menu.id)
-                request.env['ir.model.data'].search([
-                    '|',
-                    '&', ('model', '=', 'ir.model'), ('res_id', '=', model.id),
-                    '&', ('model', '=', 'ir.model.fields'), ('res_id', 'in', model.field_id.ids)
-                ]).write({'module': module_name})
         else:
+            # create the submenu
             new_menu = request.env['ir.ui.menu'].create({
                 'name': name,
-                'action': 'ir.actions.act_window,' + str(new_action.id),
-                'parent_id': request.context.get('studio_menu_id'),
+                'action': action_ref,
+                'parent_id': parent_id,
             })
 
         return {
@@ -326,6 +328,22 @@ class WebStudioController(http.Controller):
                     return fields_view
                 except Exception:
                     return False
+
+    @http.route('/web_studio/export', type='http', auth='user')
+    def export(self, token):
+        """ Exports a zip file containing the 'studio_customization' module
+            gathering all customizations done with Studio (customizations of
+            existing apps and freshly created apps).
+        """
+        studio_module = request.env['ir.module.module'].get_studio_module()
+        data = request.env['ir.model.data'].search([('studio', '=', True)])
+        content = export.generate_archive(studio_module, data)
+
+        return request.make_response(content, headers=[
+            ('Content-Disposition', content_disposition('customizations.zip')),
+            ('Content-Type', 'application/zip'),
+            ('Content-Length', len(content)),
+        ], cookies={'fileToken': token})
 
     def _preprocess_attrs(self, node):
         # The js can't give us the field name, it only has the field id
@@ -553,7 +571,7 @@ class WebStudioController(http.Controller):
                 }
             }
 
-        if not self._is_chatter_allowed(operation['model']):
+        if not self.is_chatter_allowed(operation['model']):
             # Chatter can only be activated form models that (can) inherit from mail.thread
             return
 
@@ -579,10 +597,3 @@ class WebStudioController(http.Controller):
         chatter_node.append(follower_node)
         chatter_node.append(thread_node)
         xpath_node.append(chatter_node)
-
-    def _is_chatter_allowed(self, model):
-        # Returns True if a chatter can be activated on the model's form views, i.e. if
-        #  - it is a custom model (since we can make it inherit from mail.thread), or
-        #  - it already inherits from mail.thread.
-        Model = request.env[model]
-        return Model._custom or isinstance(Model, type(request.env['mail.thread']))

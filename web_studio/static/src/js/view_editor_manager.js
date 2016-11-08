@@ -567,7 +567,6 @@ return Widget.extend({
                     });
                 }
             }).open();
-            form.$modal.addClass('o_web_studio');
 
             if (event.data.on_success) {
                 event.data.on_success();
