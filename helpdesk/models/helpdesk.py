@@ -19,7 +19,7 @@ TICKET_PRIORITY = [
 
 class HelpdeskTeam(models.Model):
     _name = "helpdesk.team"
-    _inherit = ['mail.alias.mixin', 'mail.thread', 'ir.needaction_mixin']
+    _inherit = ['mail.alias.mixin', 'mail.thread']
     _description = "Helpdesk Team"
     _order = 'sequence,name'
 
@@ -435,7 +435,7 @@ class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
     _description = 'Ticket'
     _order = 'priority desc, id desc'
-    _inherit = ['mail.thread', 'ir.needaction_mixin', 'utm.mixin', 'rating.mixin']
+    _inherit = ['mail.thread', 'utm.mixin', 'rating.mixin']
 
     @api.model
     def default_get(self, fields):

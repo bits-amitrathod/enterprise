@@ -29,7 +29,7 @@ class MrpEcoType(models.Model):
             eco_type.nb_ecos = MrpEco.search_count([('type_id', '=', eco_type.id)])
             eco_type.nb_validation = MrpEco.search_count([('stage_id.type_id', '=', eco_type.id), ('stage_id.allow_apply_change', '=', True), ('state', '=', 'progress')])
             eco_type.nb_approvals = MrpEco.search_count([('stage_id.type_id', '=', eco_type.id), ('approval_ids.status', '=', 'none')])
-            eco_type.nb_approvals_my = MrpEco.search_count([('stage_id.type_id', '=', eco_type.id), ('approval_ids.status', '=', 'none'), 
+            eco_type.nb_approvals_my = MrpEco.search_count([('stage_id.type_id', '=', eco_type.id), ('approval_ids.status', '=', 'none'),
                                                        ('approval_ids.required_user_ids', '=', self.env.user.id)])
 
     def get_alias_model_name(self, vals):
@@ -133,7 +133,7 @@ class MrpEcoStage(models.Model):
 class MrpEco(models.Model):
     _name = 'mrp.eco'
     _description = 'Engineering Change Order'
-    _inherit = ['mail.thread', 'ir.needaction_mixin']
+    _inherit = ['mail.thread']
 
     name = fields.Char('Reference', copy=False, required=True)
     user_id = fields.Many2one('res.users', 'Responsible', default=lambda self: self.env.user)
