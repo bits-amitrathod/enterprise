@@ -227,32 +227,35 @@ class MrpEco(models.Model):
     @api.one
     @api.depends('bom_id.bom_line_ids', 'new_bom_id.bom_line_ids')
     def _compute_bom_change_ids(self):
-        # TDE TODO: should we add workcenter logic ?
         new_bom_commands = []
-        old_bom_lines = dict(((line.product_id, line.product_uom_id,), line) for line in self.bom_id.bom_line_ids)
+        old_bom_lines = dict((line.product_id, line) for line in self.bom_id.bom_line_ids)
         if self.new_bom_id and self.bom_id:
             for line in self.new_bom_id.bom_line_ids:
-                key = (line.product_id, line.product_uom_id,)
-                old_line = old_bom_lines.pop(key, None)
-                if old_line and tools.float_compare(old_line.product_qty, line.product_qty, line.product_uom_id.rounding) != 0:
+                old_line = old_bom_lines.pop(line.product_id, None)
+                if old_line and (line.product_uom_id, line.product_qty, line.operation_id) != (old_line.product_uom_id, old_line.product_qty, old_line.operation_id):
                     new_bom_commands += [(0, 0, {
                         'change_type': 'update',
                         'product_id': line.product_id.id,
-                        'product_uom_id': line.product_uom_id.id,
+                        'old_uom_id': old_line.product_uom_id.id,
+                        'new_uom_id': line.product_uom_id.id,
+                        'old_operation_id': old_line.operation_id.id,
+                        'new_operation_id': line.operation_id.id,
                         'new_product_qty': line.product_qty,
                         'old_product_qty': old_line.product_qty})]
                 elif not old_line:
                     new_bom_commands += [(0, 0, {
                         'change_type': 'add',
                         'product_id': line.product_id.id,
-                        'product_uom_id': line.product_uom_id.id,
+                        'new_uom_id': line.product_uom_id.id,
+                        'new_operation_id': line.operation_id.id,
                         'new_product_qty': line.product_qty
                     })]
             for key, old_line in old_bom_lines.iteritems():
                 new_bom_commands += [(0, 0, {
                     'change_type': 'remove',
                     'product_id': old_line.product_id.id,
-                    'product_uom_id': old_line.product_uom_id.id,
+                    'old_uom_id': old_line.product_uom_id.id,
+                    'old_operation_id': old_line.operation_id.id,
                     'old_product_qty': old_line.product_qty,
                 })]
         self.bom_change_ids = new_bom_commands
@@ -559,15 +562,25 @@ class MrpEcoBomChange(models.Model):
     eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade', required=True)
     change_type = fields.Selection([('add', 'Add'), ('remove', 'Remove'), ('update', 'Update')], string='Type', required=True)
     product_id = fields.Many2one('product.product', 'Product', required=True)
-    product_uom_id = fields.Many2one('product.uom', 'Product  UoM', required=True)
+    old_uom_id = fields.Many2one('product.uom', 'Previous Product UoM')
+    new_uom_id = fields.Many2one('product.uom', 'New Product UoM')
     old_product_qty = fields.Float('Previous revision quantity', default=0)
     new_product_qty = fields.Float('New revision quantity', default=0)
-    upd_product_qty = fields.Float('Quantity', compute='_compute_upd_product_qty', store=True)
+    old_operation_id = fields.Many2one('mrp.routing.workcenter', 'Previous Consumed in Operation')
+    new_operation_id = fields.Many2one('mrp.routing.workcenter', 'New Consumed in Operation')
+    upd_product_qty = fields.Float('Quantity', compute='_compute_change', store=True)
+    uom_change = fields.Char('Unit of Measure', compute='_compute_change')
+    operation_change = fields.Char(compute='_compute_change', string='Consumed in Operation')
 
     @api.one
-    @api.depends('new_product_qty', 'old_product_qty')
-    def _compute_upd_product_qty(self):
+    @api.depends('new_product_qty', 'old_product_qty', 'old_operation_id', 'new_operation_id', 'old_uom_id', 'new_uom_id')
+    def _compute_change(self):
         self.upd_product_qty = self.new_product_qty - self.old_product_qty
+        self.operation_change = self.new_operation_id.name if self.change_type == 'add' else self.old_operation_id.name
+        if (self.old_uom_id and self.new_uom_id) and self.old_uom_id != self.new_uom_id:
+            self.uom_change = self.old_uom_id.name + ' -> ' + self.new_uom_id.name
+        if (self.old_operation_id != self.new_operation_id) and self.change_type == 'update':
+            self.operation_change = (self.old_operation_id.name or '') + ' -> ' + (self.new_operation_id.name or '')
 
 
 class MrpEcoRoutingChange(models.Model):

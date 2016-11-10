@@ -460,7 +460,8 @@
                                     <field name="change_type"/>
                                     <field name="product_id"/>
                                     <field name="upd_product_qty"/>
-                                    <field name="product_uom_id" groups="product.group_uom"/>
+                                    <field name="uom_change" groups="product.group_uom"/>
+                                    <field name="operation_change" groups="mrp.group_mrp_routings"/>
                                 </tree>
                             </field>
                         </page>
@@ -595,13 +596,16 @@
                         <label for="upd_product_qty"/>
                         <div class="o_row">
                             <field name="upd_product_qty"/>
-                            <field name="product_uom_id" options="{'no_open':True,'no_create':True}" groups="product.group_uom"/>
+                            <field name="old_uom_id" attrs="{'invisible': [('change_type', '!=', 'remove')]}" options="{'no_open':True,'no_create':True}" groups="product.group_uom"/>
+                            <field name="new_uom_id" attrs="{'invisible': [('change_type', '=', 'remove')]}" options="{'no_open':True,'no_create':True}" groups="product.group_uom"/>
                         </div>
                     </group>
                     <group string="ECO details">
                         <field name="change_type"/>
                         <field name="old_product_qty"/>
                         <field name="new_product_qty"/>
+                        <field name="old_operation_id" options="{'no_open':True,'no_create':True}" groups="mrp.group_mrp_routings"/>
+                        <field name="new_operation_id" options="{'no_open':True,'no_create':True}" groups="mrp.group_mrp_routings"/>
                     </group>
                 </group>
             </form>
