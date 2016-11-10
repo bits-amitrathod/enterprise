@@ -7,4 +7,4 @@ from odoo import fields, models
 class SaleConfiguration(models.TransientModel):
     _inherit = 'sale.config.settings'
 
-    module_sale_coupon = fields.Boolean("Manage coupons and promotional offers")
+    default_print_provider = fields.Many2one('print.provider', string='Default Print Provider', default_model='sale.config.settings')

@@ -8,6 +8,7 @@
     'depends': ['delivery', 'mail'],
     'data': [
         'data/delivery_ups_data.xml',
-        'views/delivery_ups_view.xml'
+        'views/delivery_ups_view.xml',
+        'views/sale_config_settings_views.xml',
     ],
 }

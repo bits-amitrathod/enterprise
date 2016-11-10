@@ -9,6 +9,7 @@
     'data': [
         'data/delivery_fedex.xml',
         'views/delivery_fedex.xml',
+        'views/sale_config_settings_views.xml',
     ],
     'license': 'OEEL-1',
 }

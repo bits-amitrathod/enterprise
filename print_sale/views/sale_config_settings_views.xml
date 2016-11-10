@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_config_settings_view_form_inherit_print_sale" model="ir.ui.view">
+        <field name="name">sale.config.settings.inherit.print.sale</field>
+        <field name="model">sale.config.settings</field>
+        <field name="inherit_id" ref="sale.sale_config_settings_view_form_inherit_sale"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='print_docsaway']" position="replace">
+                <div class="row mt16" attrs="{'invisible': [('module_print_docsaway','=',False)]}">
+                    <label for="default_print_provider" class="col-md-4 o_light_label"/>
+                    <field name="default_print_provider" class="col-md-8 oe_inline"/>
+                </div>
+                <button name="%(print.print_provider_action)d" icon="fa-arrow-right" type="action" string="Print Providers" class="btn-link" attrs="{'invisible': [('module_print_docsaway','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

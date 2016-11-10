@@ -21,17 +21,17 @@ class EbayConfiguration(models.TransientModel):
     ebay_domain = fields.Selection([
         ('prod', 'Production'),
         ('sand', 'Sandbox'),
-    ], string='eBay Site', default='sand', required=True)
-    ebay_currency = fields.Many2one("res.currency", string='eBay Currency',
+    ], string='Mode', default='sand', required=True)
+    ebay_currency = fields.Many2one("res.currency", string='Currency',
                                     domain=[('ebay_available', '=', True)], required=True)
     ebay_country = fields.Many2one("res.country", domain=[('ebay_available', '=', True)],
-                                   string="Country Where The Products Are Stored")
-    ebay_site = fields.Many2one("ebay.site", string="eBay Site Used")
-    ebay_zip_code = fields.Char(string="Zip Code Where The Products Are Stored")
-    ebay_location = fields.Char(string="Location Where The Products Are Stored")
-    ebay_out_of_stock = fields.Boolean("Use Out Of Stock Option", default=False)
-    ebay_sales_team = fields.Many2one("crm.team", string="Sales Team")
-    ebay_gallery_plus = fields.Boolean("Use Gallery Plus Option", default=False)
+                                   string="Country")
+    ebay_site = fields.Many2one("ebay.site", string="eBay Website")
+    ebay_zip_code = fields.Char(string="Zip")
+    ebay_location = fields.Char(string="Location")
+    ebay_out_of_stock = fields.Boolean("Out Of Stock", default=False)
+    ebay_sales_team = fields.Many2one("crm.team", string="Sales Channel")
+    ebay_gallery_plus = fields.Boolean("Gallery Plus", default=False)
 
     @api.multi
     def set_ebay(self):

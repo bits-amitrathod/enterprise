@@ -73,9 +73,9 @@ class SaleConfiguration(models.TransientModel):
     _inherit = 'sale.config.settings'
 
     invoiced_timesheet = fields.Selection([
-        ('all', "Invoice all timesheets recorded (approved or not)"),
-        ('approved', "Only invoice approved timesheets"),
-    ], string="Invoice Timesheets")
+        ('all', "Invoice all recorded timesheets"),
+        ('approved', "Invoice approved timesheets only"),
+    ], default='all', string="Timesheets Invoicing")
 
     @api.multi
     def set_default_invoiced_timesheet(self):

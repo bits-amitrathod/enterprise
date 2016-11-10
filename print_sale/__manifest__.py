@@ -8,7 +8,8 @@
     'depends': ['print', 'sale'],
     'data': [
         'wizard/print_document_partner_wizard_views.xml',
-        'views/sale_order_views.xml'
+        'views/sale_order_views.xml',
+        'views/sale_config_settings_views.xml',
     ],
     'installable': True,
     'auto_install': True,
