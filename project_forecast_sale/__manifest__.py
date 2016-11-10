@@ -8,6 +8,6 @@
     'category': 'Hidden',
     'version': '0.1',
 
-    'depends': ['project_forecast', 'sale_timesheet'],
+    'depends': ['project_forecast', 'sale'],
     'auto_install': True
 }
