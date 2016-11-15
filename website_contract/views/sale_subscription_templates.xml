@@ -771,7 +771,7 @@
                 <p>You don't have any subscriptions yet.</p>
             </t>
             <t t-if="accounts">
-                <table class="table table-hover status_table">
+                <div class="table-responsive"><table class="table table-hover status_table">
                     <thead>
                         <tr class="active">
                             <th>Name</th>
@@ -798,7 +798,7 @@
                             <td><span t-esc="account.recurring_total" t-options="{'widget': 'monetary', 'display_currency': account.pricelist_id.currency_id}"/></td>
                         </tr>
                     </t>
-                </table>
+                </table></div>
                 <div class="col-md-12 text-center">
                     <t t-call="website.pager"/>
                 </div>

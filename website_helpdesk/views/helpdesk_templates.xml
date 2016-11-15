@@ -51,7 +51,7 @@
                 <p>There are currently no Ticket for your account.</p>
             </t>
             <t t-if="tickets">
-                <table class="table table-hover status_table">
+                <div class="table-responsive"><table class="table table-hover status_table">
                     <thead>
                         <tr class="active">
                             <th>Ticket Number</th>
@@ -71,7 +71,7 @@
                             <a href="" class="o_my_show_more btn btn-xs btn-default"><span>Show more</span><span class="hidden">Show less</span></a>
                         </td>
                     </tr>
-                </table>
+                </table></div>
                 <div t-if="pager" class="o_portal_pager text-center">
                     <t t-call="website.pager"/>
                 </div>
