@@ -26,7 +26,7 @@ class MrpEcoType(models.Model):
         # TDE FIXME: this seems not good for performances, to check (replace by read_group later on)
         MrpEco = self.env['mrp.eco']
         for eco_type in self:
-            eco_type.nb_ecos = MrpEco.search_count([('type_id', '=', eco_type.id)])
+            eco_type.nb_ecos = MrpEco.search_count([('type_id', '=', eco_type.id), ('state', '!=', 'done')])
             eco_type.nb_validation = MrpEco.search_count([('stage_id.type_id', '=', eco_type.id), ('stage_id.allow_apply_change', '=', True), ('state', '=', 'progress')])
             eco_type.nb_approvals = MrpEco.search_count([('stage_id.type_id', '=', eco_type.id), ('approval_ids.status', '=', 'none')])
             eco_type.nb_approvals_my = MrpEco.search_count([('stage_id.type_id', '=', eco_type.id), ('approval_ids.status', '=', 'none'),
@@ -161,7 +161,7 @@ class MrpEco(models.Model):
         ('date', 'At Date')], string='Effectivity',  # Is this English ?
         default='asap', required=True)  # TDE: usefull ?
     effectivity_date = fields.Datetime('Effectivity Date', track_visibility='onchange')
-    approval_ids = fields.One2many('mrp.eco.approval', 'eco_id', 'Approvals')
+    approval_ids = fields.One2many('mrp.eco.approval', 'eco_id', 'Approvals', help='Approvals by stage')
 
     state = fields.Selection([
         ('confirmed', 'To Do'),
@@ -205,10 +205,10 @@ class MrpEco(models.Model):
     new_routing_revision = fields.Integer('Routing Revision', related='new_routing_id.version', store=True)
     bom_change_ids = fields.One2many(
         'mrp.eco.bom.change', 'eco_id', string="ECO BoM Changes",
-        compute='_compute_bom_change_ids', store=True)
+        compute='_compute_bom_change_ids', help='Difference between old BoM and new BoM revision', store=True)
     routing_change_ids = fields.One2many(
         'mrp.eco.routing.change', 'eco_id', string="ECO Routing Changes",
-        compute='_compute_routing_change_ids', store=True)
+        compute='_compute_routing_change_ids', help='Difference between old routing and new routing revision', store=True)
 
     attachment_count = fields.Integer('# Attachments', compute='_compute_attachments')
     attachment_ids = fields.One2many(

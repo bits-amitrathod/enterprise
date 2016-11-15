@@ -413,7 +413,7 @@
                         <button name="open_new_bom" icon="fa-flask" type="object" attrs="{'invisible': [('new_bom_id', '=', False)]}" class="oe_stat_button">
                         <div class="o_form_field o_stat_info mr4">
                             <div>
-                                <span>Bill of Material</span><br/>
+                                <span>Bill of Materials</span><br/>
                                 <span>Rev :<field name="new_bom_revision" readonly="True"/> </span>
                             </div>
                         </div>
@@ -429,32 +429,32 @@
                     </div>
                     <div class="oe_title">
                         <label for="name" string="Short Summary" class="oe_edit_only"/>
-                        <h2><field name="name"/></h2>
+                        <h2><field name="name" attrs="{'readonly': [('state', '=', 'done')]}"/></h2>
                     </div>
                     <group>
                         <group>
-                            <field name="type_id" widget="selection"/>
-                            <field name="type" widget="radio"/>
-                            <field name="product_tmpl_id" attrs="{'invisible': [('type', '=', 'routing')], 'required': [('type', 'in', ('bom', 'both', 'product'))]}"/>
-                            <field name="bom_id" attrs="{'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both'))]}"/>
+                            <field name="type_id" widget="selection" attrs="{'readonly': [('state', '!=', 'confirmed')]}"/>
+                            <field name="type" widget="radio" attrs="{'readonly': [('state', '!=', 'confirmed')]}"/>
+                            <field name="product_tmpl_id" domain="[('type', 'in', ['consu', 'product'])]" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', '=', 'routing')], 'required': [('type', 'in', ('bom', 'both', 'product'))]}"/>
+                            <field name="bom_id" context="{'default_product_tmpl_id': product_tmpl_id}" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both'))]}"/>
                             <field name="new_bom_id" invisible="1"/>
                             <field name="new_routing_id" invisible="1"/>
-                            <field name="routing_id" attrs="{'invisible': [('type', 'in', ('bom','product'))], 'required': [('type', 'in', ('routing', 'both'))]}" group="mrp.group_mrp_routings"/>
+                            <field name="routing_id" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', 'in', ('bom','product'))], 'required': [('type', 'in', ('routing', 'both'))]}" group="mrp.group_mrp_routings"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group>
-                            <field name="user_id"/>
-                            <field name="effectivity" widget="radio"/>
-                            <field name="effectivity_date" attrs="{'invisible': [('effectivity', '=', 'asap')]}"/>
+                            <field name="user_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="effectivity" widget="radio" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="effectivity_date" attrs="{'invisible': [('effectivity', '=', 'asap')], 'readonly': [('state', '=', 'done')]}"/>
                             <field name="state" invisible="1"/>
-                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="tag_ids" widget="many2many_tags" attrs="{'readonly': [('state', '=', 'done')]}"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Note">
-                            <field name="note" placeholder="Description of the change and its reason ..."/>
+                            <field name="note" attrs="{'readonly': [('state', '=', 'done')]}" placeholder="Description of the change and its reason ..."/>
                         </page>
-                        <page string="BoM Changes" attrs="{'invisible': [('type', '=', 'routing')]}">
+                        <page string="BoM Changes" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type', 'in', ('product','routing'))]}" help="Changes made on the bill of materials">
                             <field name="bom_change_ids">
                                 <tree decoration-danger="type=='remove'" decoration-info="type=='add'">
                                     <field name="change_type"/>
@@ -464,7 +464,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Routing Changes" attrs="{'invisible': [('type','=','bom')]}">
+                        <page string="Routing Changes" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type','in', ('product', 'bom'))]}" help="Changes made on the routing.">
                             <field name="routing_change_ids" context="{'default_routing_id': routing_id}">
                                 <tree decoration-danger="type=='remove'" decoration-info="type=='add'">
                                     <field name="change_type"/>
@@ -474,7 +474,7 @@
                             </field>
                         </page>
                         <page string="Approvals">
-                            <field name="approval_ids" nolabel="1" readonly="1">
+                            <field name="approval_ids" nolabel="1" readonly="1" help="ECO approvals">
                                 <tree decoration-info="template_stage_id==eco_stage_id">
                                     <field name="name"/>
                                     <field name="user_id"/>
@@ -696,19 +696,13 @@
         </field>
     </record>
 
-    <record id="mrp_eco_tag_view_form" model="ir.ui.view">
-        <field name="name">mrp.eco.tag.view.forum</field>
+    <record id="mrp_eco_tag_view_tree" model="ir.ui.view">
+        <field name="name">mrp.eco.tag.view.tree</field>
         <field name="model">mrp.eco.tag</field>
         <field name="arch" type="xml">
-            <form string="Tags">
-                <sheet>
-                    <group>
-                        <group>
-                            <field name="name"/>
-                        </group>
-                    </group>
-                </sheet>
-            </form>
+            <tree string="Tags" editable="bottom">
+                <field name="name"/>
+            </tree>
         </field>
     </record>
 
@@ -716,6 +710,7 @@
         <field name="name">ECO Tags</field>
         <field name="res_model">mrp.eco.tag</field>
         <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
             Click to add a new tag.
@@ -825,6 +820,7 @@
         id="menu_mrp_plm_eco_tag"
         name="ECO Tags"
         action="mrp_eco_tag_action"
+        groups="base.group_no_one"
         parent="menu_mrp_plm_configuration"
         sequence="11"/>
 
