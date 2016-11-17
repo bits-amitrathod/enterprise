@@ -13,6 +13,9 @@ class StockMove(models.Model):
     @api.multi
     def action_confirm(self):
         moves = super(StockMove, self).action_confirm()
+        if self.env.context.get('skip_check'):
+            # Skip checks if extra moves were created during transfer
+            return moves
         pick_moves = defaultdict(lambda: self.env['stock.move'])
         for move in moves:
             pick_moves[move.picking_id] |= move
@@ -40,10 +43,3 @@ class StockMove(models.Model):
                                 'product_id': product.id,
                             })
         return moves
-
-    @api.multi
-    def action_done(self):
-        # It is good to put the check at the lowest level
-        if self.mapped('picking_id').mapped('check_ids').filtered(lambda x: x.quality_state == 'none'):
-            raise UserError(_('You still need to do the quality checks!'))
-        super(StockMove, self).action_done()

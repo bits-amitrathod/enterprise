@@ -191,7 +191,7 @@ class SaleSubscription(models.Model):
             'origin': self.code,
             'fiscal_position_id': fpos_id,
             'payment_term_id': self.partner_id.property_payment_term_id.id,
-            'company_id': self.company_id.id,
+            'company_id': company.id,
             'comment': _("This invoice covers the following period: %s - %s") % (next_date, new_date),
         }
 
@@ -285,6 +285,7 @@ class SaleSubscription(models.Model):
                     'product_uom_qty': line.quantity,
                     'price_unit': line.price_unit,
                     'discount': line.discount,
+                    'name': line.name,
                 }))
             res[contract.id] = {
                 'pricelist_id': contract.pricelist_id.id,
