@@ -10,15 +10,15 @@ class inter_company_rules_configuration(models.TransientModel):
     rule_type = fields.Selection([('so_and_po', 'SO and PO setting for inter company'),
         ('invoice_and_refunds', 'Create Invoice/Refunds when encoding invoice/refunds')],
         help='Select the type to setup inter company rules in selected company.')
-    so_from_po = fields.Boolean(string='Create Sale Orders when buying to this company',
-        help='Generate a Sale Order when a Purchase Order with this company as vendor is created.')
+    so_from_po = fields.Boolean(string='Create Sales Orders when buying to this company',
+        help='Generate a Sales Order when a Purchase Order with this company as vendor is created.')
     po_from_so = fields.Boolean(string='Create Purchase Orders when selling to this company',
-        help='Generate a Purchase Order when a Sale Order with this company as customer is created.')
+        help='Generate a Purchase Order when a Sales Order with this company as customer is created.')
     auto_validation = fields.Boolean(string='Sale/Purchase Orders Auto Validation',
-        help='''When a Sale Order or a Purchase Order is created by a multi
+        help='''When a Sales Order or a Purchase Order is created by a multi
             company rule for this company, it will automatically validate it.''')
     warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse For Purchase Orders',
-        help='Default value to set on Purchase Orders that will be created based on Sale Orders made to this company.')
+        help='Default value to set on Purchase Orders that will be created based on Sales Orders made to this company.')
 
     @api.onchange('rule_type')
     def onchange_rule_type(self):

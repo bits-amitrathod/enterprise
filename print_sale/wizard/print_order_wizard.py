@@ -8,7 +8,7 @@ class PrintOrderlineWizard(models.TransientModel):
     @api.model
     def _default_selection_state(self):
         selection = super(PrintOrderlineWizard, self)._default_selection_state()
-        selection.append(('sale_order_wrong_state', 'Wrong Sale Order State'))
+        selection.append(('sale_order_wrong_state', 'Wrong Sales Order State'))
         return selection
 
     @api.one

@@ -129,14 +129,14 @@ class SaleOrder(models.Model):
     # If we ever decide to move the payment code out of website_sale, we should scrap all this
     def set_project_id(self, account_id):
         """ Set the specified account_id sale.subscription as the sale_order project_id
-        and remove all the recurring products from the sale order if the field was already defined"""
+        and remove all the recurring products from the sales order if the field was already defined"""
         account = self.env['sale.subscription'].browse(account_id)
         if self.project_id != account:
             self.reset_project_id()
         self.write({'project_id': account.analytic_account_id.id, 'user_id': account.user_id.id, 'subscription_management': 'upsell'})
 
     def reset_project_id(self):
-        """ Remove the project_id of the sale order and remove all sale.order.line whose
+        """ Remove the project_id of the sales order and remove all sale.order.line whose
         product is recurring"""
         data = []
         for line in self.order_line:

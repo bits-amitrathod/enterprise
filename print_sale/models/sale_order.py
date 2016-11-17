@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
         for record in self:
             order = PrintOrder.search([('res_model', '=', 'sale.order'), ('res_id', '=', record.id)], limit=1, order='sent_date desc')
             # put confirmation message in the chatter
-            message = _("This sale order was sent by post with the provider %(provider_name)s at the following address. \
+            message = _("This sales order was sent by post with the provider %(provider_name)s at the following address. \
                     <br/><br/> %(partner_name)s <br/> %(partner_street)s <br/> %(partner_city)s %(partner_zip)s \
                     <br/>%(partner_country)s" % {
                         'provider_name' : '<i>%s</i>' % order.provider_id.name,

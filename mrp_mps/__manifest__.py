@@ -14,7 +14,7 @@ Master Production Schedule
 
 Sometimes you need to create the purchase orders for the components of
 manufacturing orders that will only be created later.  Or for production orders
-where you will only have the sale orders later.  The solution is to predict
+where you will only have the sales orders later.  The solution is to predict
 your sale forecasts and based on that you will already create some production
 orders or purchase orders.
 

@@ -660,7 +660,7 @@ class ProductTemplate(models.Model):
             })
             sol._compute_tax_id()
 
-            # create a sale order line if a shipping service is selected
+            # create a sales order line if a shipping service is selected
             if 'ShippingServiceSelected' in transaction:
                 taxes_id = ir_values.get_default('product.template', 'taxes_id', company_id=company_id.id)
                 shipping_name = transaction['ShippingServiceSelected']['ShippingService']

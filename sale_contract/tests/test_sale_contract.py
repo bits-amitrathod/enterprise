@@ -27,7 +27,7 @@ class TestContract(TestContractCommon):
 
     @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
     def test_sale_order(self):
-        """ Test sale order line copying for recurring products on confirm"""
+        """ Test sales order line copying for recurring products on confirm"""
         self.sale_order.action_confirm()
         self.assertTrue(len(self.contract.recurring_invoice_line_ids.ids) == 1, 'sale_contract: recurring_invoice_line_ids not created when confirming sale_order with recurring_product')
         self.assertEqual(self.sale_order.state, 'done', 'sale_contract: so state should be after confirmation done when there is a subscription')

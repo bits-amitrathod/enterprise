@@ -2,7 +2,7 @@
 {
     'name': "Link module between project_forecast and sale(_timesheet)",
     'description': """
-* Automatically enables forecasting on projects created from sale orders
+* Automatically enables forecasting on projects created from sales orders
     """,
 
     'category': 'Hidden',

@@ -8,11 +8,11 @@ class purchase_order(models.Model):
     _inherit = "purchase.order"
 
     auto_generated = fields.Boolean(string='Auto Generated Purchase Order', copy=False)
-    auto_sale_order_id = fields.Many2one('sale.order', string='Source Sale Order', readonly=True, copy=False)
+    auto_sale_order_id = fields.Many2one('sale.order', string='Source Sales Order', readonly=True, copy=False)
 
     @api.multi
     def button_confirm(self):
-        """ Generate inter company sale order base on conditions."""
+        """ Generate inter company sales order base on conditions."""
         res = super(purchase_order, self).button_confirm()
         for order in self:
             # get the company from partner then trigger action of intercompany relation
@@ -24,7 +24,7 @@ class purchase_order(models.Model):
 
     @api.one
     def inter_company_create_sale_order(self, company):
-        """ Create a Sale Order from the current PO (self)
+        """ Create a Sales Order from the current PO (self)
             Note : In this method, reading the current PO is done as sudo, and the creation of the derived
             SO as intercompany_user, minimizing the access right required for the trigger user.
             :param company : the company of the created PO
@@ -60,13 +60,13 @@ class purchase_order(models.Model):
         if not self.partner_ref:
             self.partner_ref = sale_order.name
 
-        #Validation of sale order
+        #Validation of sales order
         if company.auto_validation:
             sale_order.sudo(intercompany_uid).action_confirm()
 
     @api.one
     def _prepare_sale_order_data(self, name, partner, company, direct_delivery_address):
-        """ Generate the Sale Order values from the PO
+        """ Generate the Sales Order values from the PO
             :param name : the origin client reference
             :rtype name : string
             :param partner : the partner reprenseting the company
@@ -98,7 +98,7 @@ class purchase_order(models.Model):
 
     @api.model
     def _prepare_sale_order_line_data(self, line, company, sale_id):
-        """ Generate the Sale Order Line values from the PO line
+        """ Generate the Sales Order Line values from the PO line
             :param line : the origin Purchase Order Line
             :rtype line : purchase.order.line record
             :param company : the company of the created SO

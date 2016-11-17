@@ -228,7 +228,7 @@ class website_contract(http.Controller):
                          str(account.recurring_interval) + ' ' + str(periods[account.recurring_rule_type])]
             msg_body = request.env['ir.ui.view'].render_template('website_contract.chatter_change_contract',
                                                                  values={'msg_before': msg_before, 'msg_after': msg_after})
-            # price options are about to change and are not propagated to existing sale order: reset the SO
+            # price options are about to change and are not propagated to existing sales order: reset the SO
             order = request.website.sudo().sale_get_order()
             if order:
                 order.reset_project_id()

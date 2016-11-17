@@ -7,7 +7,7 @@ class sale_order(models.Model):
 
     _inherit = "sale.order"
 
-    auto_generated = fields.Boolean(string='Auto Generated Sale Order', copy=False)
+    auto_generated = fields.Boolean(string='Auto Generated Sales Order', copy=False)
     auto_purchase_order_id = fields.Many2one('purchase.order', string='Source Purchase Order', readonly=True, copy=False)
 
     @api.multi
@@ -17,7 +17,7 @@ class sale_order(models.Model):
         for order in self:
             if not order.company_id: # if company_id not found, return to normal behavior
                 continue
-            # if company allow to create a Purchase Order from Sale Order, then do it !
+            # if company allow to create a Purchase Order from Sales Order, then do it !
             company = self.env['res.company']._find_company_from_partner(order.partner_id.id)
             if company and company.po_from_so and (not order.auto_generated):
                 order.inter_company_create_purchase_order(company)

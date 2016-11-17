@@ -49,7 +49,7 @@ class TestDeliveryDHL(TransactionCase):
         self.assertGreater(sale_order.delivery_price, 0.0, "DHL delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()
-        self.assertEquals(len(sale_order.picking_ids), 1, "The Sale Order did not generate a picking.")
+        self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
 
         picking = sale_order.picking_ids[0]
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
@@ -87,7 +87,7 @@ class TestDeliveryDHL(TransactionCase):
         self.assertGreater(sale_order.delivery_price, 0.0, "DHL delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()
-        self.assertEquals(len(sale_order.picking_ids), 1, "The Sale Order did not generate a picking.")
+        self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
 
         picking = sale_order.picking_ids[0]
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
@@ -129,7 +129,7 @@ class TestDeliveryDHL(TransactionCase):
         self.assertGreater(sale_order.delivery_price, 0.0, "DHL delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()
-        self.assertEquals(len(sale_order.picking_ids), 1, "The Sale Order did not generate a picking.")
+        self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
 
         picking = sale_order.picking_ids[0]
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")

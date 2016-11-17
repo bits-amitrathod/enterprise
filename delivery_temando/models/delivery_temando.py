@@ -81,7 +81,7 @@ class ProviderTemando(models.Model):
 
             sale_order = picking.sale_id
             if not sale_order:
-                raise ValidationError(_("This picking cannot be sent through Temando, as it has no linked sale order"))
+                raise ValidationError(_("This picking cannot be sent through Temando, as it has no linked sales order"))
 
             request = TemandoRequest(self.prod_environment, superself.temando_username, superself.temando_password)
 

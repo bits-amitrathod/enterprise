@@ -25,7 +25,7 @@
         <div>Option added by customer</div>
         <div>&amp;bull; <b>Option</b>: <t t-esc="new_option.product_id.product_tmpl_id.name"/></div>
         <div>&amp;bull; <b>Price</b>: <t t-esc="price"/></div>
-        <div>&amp;bull; <b>Sale Order</b>: None</div>
+        <div>&amp;bull; <b>Sales Order</b>: None</div>
     </template>
 
     <template id="chatter_remove_option">
@@ -34,10 +34,10 @@
     </template>
 
     <template id="chatter_add_paid_option">
-        <div>New Option added by Sale Order confirmation</div>
+        <div>New Option added by Sales Order confirmation</div>
             <t t-foreach="lines" t-as="line">
                 <div>&amp;bull; <b>Option</b>: <t t-esc="line.product_id.product_tmpl_id.name"/></div>
-                <div>&amp;bull; <b>Sale Order</b>: <t t-esc="line.order_id.name"/></div>
+                <div>&amp;bull; <b>Sales Order</b>: <t t-esc="line.order_id.name"/></div>
                 <div>&amp;bull; <b>Recurring Price</b>: <t t-esc="line.price_unit"/></div>
                 <div>&amp;bull; <b>Discount (partial invoicing period)</b>: <t t-esc="line.discount"/></div>
                 <div>&amp;bull; <b>Discounted Price</b>: <t t-esc="line.price_subtotal"/></div>

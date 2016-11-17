@@ -81,7 +81,7 @@ class ProviderFedex(models.Model):
         for order in orders:
             price = 0.0
 
-            # Estimate weight of the sale order; will be definitely recomputed on the picking field "weight"
+            # Estimate weight of the sales order; will be definitely recomputed on the picking field "weight"
             est_weight_value = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line]) or 0.0
             weight_value = _convert_weight(est_weight_value, self.fedex_weight_unit)
 

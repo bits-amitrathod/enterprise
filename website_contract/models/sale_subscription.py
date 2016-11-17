@@ -180,7 +180,7 @@ class SaleSubscription(models.Model):
             account.recurring_inactive_lines = account.sudo().template_id.subscription_template_option_ids.filtered(lambda r: r.product_id not in [line.product_id for line in account.recurring_invoice_line_ids] and r.portal_access != 'invisible')
 
     def partial_invoice_line(self, sale_order, option_line, refund=False, date_from=False):
-        """ Add an invoice line on the sale order for the specified option and add a discount
+        """ Add an invoice line on the sales order for the specified option and add a discount
         to take the partial recurring period into account """
         order_line_obj = self.env['sale.order.line']
         if option_line.product_id in [line.product_id for line in sale_order.order_line]:

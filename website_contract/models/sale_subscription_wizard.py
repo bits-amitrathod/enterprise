@@ -15,7 +15,7 @@ class SaleSubscriptionWizard(models.TransientModel):
     subscription_id = fields.Many2one('sale.subscription', string="Contract", required=True, default=_default_contract)
     option_lines = fields.One2many('sale.subscription.wizard.option', 'wizard_id', string="Options")
     date_from = fields.Date('Discount Date', default=fields.Date.today(),
-                            help="The discount applied when creating a sale order will be computed as the ratio between "
+                            help="The discount applied when creating a sales order will be computed as the ratio between "
                                  "the full invoicing period of the subscription and the period between this date and the "
                                  "next invoicing date.")
 
