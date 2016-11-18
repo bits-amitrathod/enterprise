@@ -295,8 +295,8 @@
     </div>
     <t t-name="account_contract_dashboard.dashboard_option_filters">
         <!-- Contracts -->
-        <div t-if="widget.contract_templates &amp;&amp; widget.contract_templates.length > 1" class="o_dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">Filter on contracts</a>
+        <div t-if="widget.contract_templates &amp;&amp; widget.contract_templates.length > 1" class="o_dropdown dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Filter on contracts<span class="caret"/></a>
             <ul class="dropdown-menu o_filters_menu" role="menu">
                 <li t-foreach="widget.contract_templates" t-as="template">
                     <a href="#" class="o_contract_template_filter js_tag" t-att-data-id="template.id"><t t-esc="template.name"/></a>
@@ -305,8 +305,8 @@
         </div>
 
         <!-- Tags -->
-        <div t-if="widget.tags &amp;&amp; widget.tags.length > 1" class="o_dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">Filter on tags</a>
+        <div t-if="widget.tags &amp;&amp; widget.tags.length > 1" class="o_dropdown dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Filter on tags<span class="caret"/></a>
             <ul class="dropdown-menu o_filters_menu" role="menu">
                 <li t-foreach="widget.tags" t-as="tag">
                     <a href="#" class="o_tags_filter js_tag" t-att-data-id="tag.id"><t t-esc="tag.name"/></a>
@@ -315,8 +315,8 @@
         </div>
 
         <!-- Companies -->
-        <div t-if="widget.companies &amp;&amp; widget.companies.length > 1" class="o_dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">Filter on companies</a>
+        <div t-if="widget.companies &amp;&amp; widget.companies.length > 1" class="o_dropdown dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Filter on companies<span class="caret"/></a>
             <ul class="dropdown-menu o_filters_menu" role="menu">
                 <li t-foreach="widget.companies" t-as="company">
                     <a href="#" class="o_companies_filter js_tag" t-att-data-id="company.id"><t t-esc="company.name"/></a>
