@@ -35,43 +35,48 @@ class EbayConfiguration(models.TransientModel):
 
     @api.multi
     def set_ebay(self):
-        ebay_dev_id = self[0].ebay_dev_id or ''
-        self.env['ir.config_parameter'].set_param('ebay_dev_id', ebay_dev_id, groups=["base.group_system"])
-        ebay_sales_team = self[0].ebay_sales_team or self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]
-        self.env['ir.config_parameter'].set_param('ebay_sales_team', ebay_sales_team.id)
-        sandbox_token = self[0].ebay_sandbox_token or ''
-        self.env['ir.config_parameter'].set_param('ebay_sandbox_token', sandbox_token, groups=["base.group_system"])
-        sandbox_app_id = self[0].ebay_sandbox_app_id or ''
-        self.env['ir.config_parameter'].set_param('ebay_sandbox_app_id', sandbox_app_id, groups=["base.group_system"])
-        sandbox_cert_id = self[0].ebay_sandbox_cert_id or ''
-        self.env['ir.config_parameter'].set_param('ebay_sandbox_cert_id', sandbox_cert_id, groups=["base.group_system"])
-        prod_token = self[0].ebay_prod_token or ''
-        self.env['ir.config_parameter'].set_param('ebay_prod_token', prod_token, groups=["base.group_system"])
-        prod_app_id = self[0].ebay_prod_app_id or ''
-        self.env['ir.config_parameter'].set_param('ebay_prod_app_id', prod_app_id, groups=["base.group_system"])
-        prod_cert_id = self[0].ebay_prod_cert_id or ''
-        self.env['ir.config_parameter'].set_param('ebay_prod_cert_id', prod_cert_id, groups=["base.group_system"])
-        domain = self[0].ebay_domain or ''
-        self.env['ir.config_parameter'].set_param('ebay_domain', domain)
-        currency = self[0].ebay_currency or self.env['res.currency'].search(
-            [('ebay_available', '=', True)])[0]
-        self.env['ir.config_parameter'].set_param('ebay_currency', currency.id)
+        self.ensure_one()
+        set_param = self.env['ir.config_parameter'].set_param
+
+        ebay_dev_id = self.ebay_dev_id or ''
+        sandbox_token = self.ebay_sandbox_token or ''
+        sandbox_app_id = self.ebay_sandbox_app_id or ''
+        sandbox_cert_id = self.ebay_sandbox_cert_id or ''
+        prod_token = self.ebay_prod_token or ''
+        prod_app_id = self.ebay_prod_app_id or ''
+        prod_cert_id = self.ebay_prod_cert_id or ''
+
+        set_param('ebay_dev_id', ebay_dev_id, groups=["base.group_system"])
+        set_param('ebay_sandbox_token', sandbox_token, groups=["base.group_system"])
+        set_param('ebay_sandbox_app_id', sandbox_app_id, groups=["base.group_system"])
+        set_param('ebay_sandbox_cert_id', sandbox_cert_id, groups=["base.group_system"])
+        set_param('ebay_prod_token', prod_token, groups=["base.group_system"])
+        set_param('ebay_prod_app_id', prod_app_id, groups=["base.group_system"])
+        set_param('ebay_prod_cert_id', prod_cert_id, groups=["base.group_system"])
+
+        ebay_sales_team = self.ebay_sales_team or self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]
+        domain = self.ebay_domain or ''
+        currency = self.ebay_currency or self.env['res.currency'].search([('ebay_available', '=', True)])[0]
         # by default all currencies active field is set to False except EUR and USD
-        self[0].ebay_currency.active = True
-        country = self[0].ebay_country or self.env['res.country'].search(
-            [('ebay_available', '=', True)])[0]
-        self.env['ir.config_parameter'].set_param('ebay_country', country.id)
-        site = self[0].ebay_site or self.env['ebay.site'].search([])[0]
-        self.env['ir.config_parameter'].set_param('ebay_site', site.id)
-        zip_code = self[0].ebay_zip_code or ''
-        self.env['ir.config_parameter'].set_param('ebay_zip_code', zip_code)
-        location = self[0].ebay_location or ''
-        self.env['ir.config_parameter'].set_param('ebay_location', location)
-        gallery_plus = self[0].ebay_gallery_plus or ''
-        self.env['ir.config_parameter'].set_param('ebay_gallery_plus', gallery_plus)
-        out_of_stock = self[0].ebay_out_of_stock or ''
+        self.ebay_currency.active = True
+        country = self.ebay_country or self.env['res.country'].search([('ebay_available', '=', True)])[0]
+        site = self.ebay_site or self.env['ebay.site'].search([])[0]
+        zip_code = self.ebay_zip_code or ''
+        location = self.ebay_location or ''
+        gallery_plus = self.ebay_gallery_plus or ''
+
+        set_param('ebay_sales_team', ebay_sales_team.id)
+        set_param('ebay_domain', domain)
+        set_param('ebay_currency', currency.id)
+        set_param('ebay_country', country.id)
+        set_param('ebay_site', site.id)
+        set_param('ebay_zip_code', zip_code)
+        set_param('ebay_location', location)
+        set_param('ebay_gallery_plus', gallery_plus)
+
+        out_of_stock = self.ebay_out_of_stock or ''
         if out_of_stock != self.env['ir.config_parameter'].get_param('ebay_out_of_stock'):
-            self.env['ir.config_parameter'].set_param('ebay_out_of_stock', out_of_stock)
+            set_param('ebay_out_of_stock', out_of_stock)
 
             if domain == 'sand':
                 if sandbox_token and sandbox_cert_id and sandbox_app_id:
