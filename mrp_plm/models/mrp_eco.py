@@ -133,7 +133,7 @@ class MrpEcoStage(models.Model):
 class MrpEco(models.Model):
     _name = 'mrp.eco'
     _description = 'Engineering Change Order'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char('Reference', copy=False, required=True)
     user_id = fields.Many2one('res.users', 'Responsible', default=lambda self: self.env.user)

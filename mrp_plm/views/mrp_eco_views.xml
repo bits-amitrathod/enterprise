@@ -279,6 +279,18 @@
                     <separator/>
                     <filter name="bomchange" string="BoM" domain="[('type', '!=', 'routing')]"/>
                     <filter name="routingchange" string="Routing" domain="[('type', '!=', 'bom')]"/>
+                    <separator/>
+                    <filter string="My Activities" name="activities_my"
+                        domain="[('activity_ids.user_id', '=', uid)]"/>
+                    <filter string="Today Activities" name="activities_today"
+                        domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter string="Upcoming Activities (7 days)" name="activities_week"
+                        domain="['&amp;', ('activity_ids.date_deadline', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('activity_ids.date_deadline', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))
+                        ]"/>
+                    <filter string="Overdue Activities" name="activities_overdue"
+                        domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                        help="Show all records which has next action date is before today"/>
                 </group>
                 <group expand='0' string='Group by...'>
                     <filter string='Product' name="productgroup" context="{'group_by': 'product_tmpl_id'}"/>
@@ -309,6 +321,8 @@
                 <field name="priority"/>
                 <field name="type"/>
                 <field name="routing_id"/>
+                <field name="activity_ids" />
+                <field name="activity_state" />
                 <templates>
                     <t t-name="kanban-box">
                          <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
@@ -350,8 +364,9 @@
                                     </t>
                                 </div>
                                 <div class="oe_kanban_bottom_right">
-                                    <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
-                                    <div class="pull-left" groups="base.group_user">
+                                    <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar"/>
+                                    <div class="pull-left mr4" groups="base.group_user">
+                                        <field name="activity_ids" widget="kanban_activity"/>
                                         <span t-if="record.kanban_state.raw_value == 'normal'" class="oe_kanban_status oe_kanban_status_grey" title="Waiting for Approvals"/>
                                         <span t-if="record.kanban_state.raw_value == 'done'" class="oe_kanban_status oe_kanban_status_green" title="All Approvals have be done"/>
                                         <span t-if="record.kanban_state.raw_value == 'blocked'" class="oe_kanban_status oe_kanban_status_red" title="Someone rejected this change"/>
@@ -488,6 +503,7 @@
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
             </form>
