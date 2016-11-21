@@ -165,7 +165,7 @@ class WebStudioController(http.Controller):
         if model_id:
             model = request.env['ir.model'].browse(model_id)
             action = request.env['ir.actions.act_window'].create({
-                'name': name,
+                'name': model.name,
                 'res_model': model.model,
                 'help': """
                     <p>
@@ -179,6 +179,7 @@ class WebStudioController(http.Controller):
             })
             action_ref = 'ir.actions.act_window,' + str(action.id)
         else:
+            model = None
             action = request.env.ref('base.action_open_website')
             action_ref = 'ir.actions.act_url,' + str(action.id)
 
@@ -190,7 +191,7 @@ class WebStudioController(http.Controller):
                 'name': name,
                 'web_icon': ','.join(icon),
                 'child_id': [(0, 0, {
-                    'name': name,
+                    'name': model and model.name or name,
                     'action': action_ref,
                 })]
             })
