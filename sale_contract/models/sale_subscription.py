@@ -15,7 +15,7 @@ class SaleSubscription(models.Model):
     _name = "sale.subscription"
     _description = "Sale Subscription"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
-    _inherit = 'mail.thread'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     state = fields.Selection([('draft', 'New'), ('open', 'In Progress'), ('pending', 'To Renew'),
                               ('close', 'Closed'), ('cancel', 'Cancelled')],
