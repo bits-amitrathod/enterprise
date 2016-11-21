@@ -33,9 +33,6 @@ class CrmPhonecallLogWizard(models.TransientModel):
     reschedule_date = fields.Datetime(
         string='Specific Date',
         default=lambda *a: datetime.now() + timedelta(hours=2))
-    next_activity_id = fields.Many2one("crm.activity", "Next Activity")
-    new_title_action = fields.Char('Next Action')
-    new_date_action = fields.Date('Next Action Date')
     show_duration = fields.Boolean('Show Duration')
     custom_duration = fields.Float('Custom Duration', default=0)
     in_automatic_mode = fields.Boolean('In Automatic Mode')
@@ -68,12 +65,6 @@ class CrmPhonecallLogWizard(models.TransientModel):
         values.update(description=self.description)
         if(self.opportunity_id):
             opportunity = self.env['crm.lead'].browse(self.opportunity_id)
-            if self.next_activity_id:
-                opportunity.write({
-                    'next_activity_id': self.next_activity_id.id,
-                    'title_action': self.new_title_action,
-                    'date_action': self.new_date_action,
-                })
             if (self.show_duration):
                 mins = int(self.custom_duration)
                 sec = (self.custom_duration - mins)*0.6
