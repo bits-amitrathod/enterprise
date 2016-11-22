@@ -234,9 +234,9 @@ return AbstractWebClient.extend({
                         self.toggle_app_switcher(true);
                         completed.resolve();
                     }).done(function () {
-                        core.bus.trigger('change_menu_section', ev.data.menu_id);
-                        self.toggle_app_switcher(false);
-                        completed.resolve();
+                        self._on_app_clicked_done(ev)
+                            .then(completed.resolve.bind(completed))
+                            .fail(completed.reject.bind(completed));
                     });
                     setTimeout(function () {
                         completed.resolve();
@@ -244,6 +244,11 @@ return AbstractWebClient.extend({
                     return completed;
                 });
             });
+    },
+    _on_app_clicked_done: function(ev) {
+        core.bus.trigger('change_menu_section', ev.data.menu_id);
+        this.toggle_app_switcher(false);
+        return $.Deferred().resolve();
     },
     on_menu_clicked: function (ev) {
         var self = this;

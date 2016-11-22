@@ -102,6 +102,10 @@ var Menu = Widget.extend({
             return; // unknown menu_id
         }
 
+        if (this.current_primary_menu === primary_menu_id) {
+            return; // already in that menu
+        }
+
         if (this.current_primary_menu) {
             this.$menu_sections[this.current_primary_menu].detach();
         }

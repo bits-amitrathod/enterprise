@@ -65,14 +65,6 @@ AppSwitcher.include({
         this.$new_app = $(QWeb.render('web_studio.AppCreator.NewApp'));
         this.$new_app.appendTo(this.$('.o_apps'));
     },
-    on_menuitem_click: function (event) {
-        // One cannot enter an app from the appswitcher in studio mode
-        if (this.in_studio_mode) {
-            event.preventDefault();
-        } else {
-            this._super.apply(this, arguments);
-        }
-    },
     on_attach_callback: function () {
         this.in_DOM = true;
         if (this.in_studio_mode) {

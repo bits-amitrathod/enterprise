@@ -1,6 +1,7 @@
 .o_web_studio_menu {
     height: @odoo-navbar-height;
     background-color: @o-studio-bg-medium;
+    border: 1px solid @o-studio-bg-medium;
     text-align: center;
 
     .o_web_studio_breadcrumb {
@@ -57,8 +58,8 @@
             > a {
                 display: block;
                 padding: 0 10px;
-                height: @odoo-navbar-height;
-                line-height: @odoo-navbar-height;
+                height: @odoo-navbar-height - 1;
+                line-height: @odoo-navbar-height - 2;
                 color: lightgrey;
 
                 &:hover {

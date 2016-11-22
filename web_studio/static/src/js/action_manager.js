@@ -4,22 +4,15 @@ odoo.define('web_studio.ActionManager', function (require) {
 var ActionManager = require('web.ActionManager');
 
 
-// Includes the ActionManger to handle stashing and restoring of the action stack
+// Includes the ActionManger to handle restoring of an action stack
 ActionManager.include({
-    stash_action_stack: function () {
-        if (this.stashed_action_stack) {
-            console.warn('An action stack has already been stashed');
-        }
-        this.stashed_action_stack = this.action_stack;
-        this.action_stack = [];
-    },
-    restore_action_stack: function () {
+    restore_action_stack: function (action_stack) {
         var self = this;
         var def;
         var to_destroy = this.action_stack;
-        var last_action = _.last(this.stashed_action_stack);
-        this.action_stack = this.stashed_action_stack;
-        this.stashed_action_stack = undefined;
+        var last_action = _.last(action_stack);
+        this.action_stack = action_stack;
+
         if (last_action && last_action.action_descr.id) {
             var view_type = last_action.get_active_view && last_action.get_active_view();
             var res_id = parseInt($.deparam(window.location.hash.slice(1)).id);
@@ -39,6 +32,11 @@ ActionManager.include({
             self.clear_action_stack();
             self.trigger_up('show_app_switcher');
         }).always(this.clear_action_stack.bind(this, to_destroy));
+    },
+
+    clear_action_stack: function (action_stack) {
+        action_stack = action_stack && _.reject(action_stack, {keep_alive: true});
+        this._super(action_stack);
     },
 });
 

@@ -1,6 +1,7 @@
 odoo.define('web_studio.WebClient', function (require) {
 "use strict";
 
+var ActionManager = require('web.ActionManager');
 var core = require('web.core');
 var session = require('web.session');
 var WebClient = require('web.WebClient');
@@ -44,12 +45,38 @@ WebClient.include({
         this._super.apply(this, arguments);
         this.studio_on = false;
         this.studio_info_def = null;
+        this.studio_action_manager = null;
 
         bus.on('studio_toggled', this, function (mode) {
             this.studio_on = !!mode;
             this.update_context(!!mode);
             this.$el.toggleClass('o_in_studio', !!mode);
         });
+    },
+
+    // Create a new action manager that will be used to navigate in Studio
+    set_studio_action_manager: function () {
+        var fragment = document.createDocumentFragment();
+        this.studio_action_manager = new ActionManager(this, {webclient: this});
+
+        // Save the current action stack to restore it when leaving studio.
+        // These actions cannot be destroyed (hence keep_alive) because when
+        // we leave Studio and restore the action stack, these action are re-used.
+        this.studio_action_manager.action_stack = this.action_manager.action_stack;
+        _.each(this.action_manager.action_stack, function (action) {
+            action.keep_alive = true;
+        });
+
+        // TODO after new views: this action manager will not be appended
+        // inside the dom and we don't need the views to be displayed so switch_mode
+        // should be monkey-patched to avoid RPCs.
+
+        return this.studio_action_manager.appendTo(fragment);
+    },
+
+    destroy_studio_action_manager: function () {
+        this.studio_action_manager.destroy();
+        this.studio_action_manager = null;
     },
 
     on_new_app_created: function(ev) {
@@ -116,15 +143,24 @@ WebClient.include({
         var defs = [];
         if (this.studio_on) {
             defs.push(this.load_studio_info());
-            if (!this.app_switcher_displayed) {
+            defs.push(this.set_studio_action_manager());
+
+            if (this.app_switcher_displayed) {
+                this.action_manager.clear_action_stack();
+                this.menu.toggle_mode(true, false);
+            } else {
                 defs.push(this.open_studio('main', { action: action}));
             }
-        } else if (!this.app_switcher_displayed) {
+        } else {
             var def = $.Deferred();
             defs.push(def);
-            this.close_studio().always(def.resolve.bind(def));
+            this.close_studio().always(function() {
+                self.destroy_studio_action_manager();
+                def.resolve();
+            });
         }
         return $.when.apply($, defs).then(function (studio_info) {
+            self.studio_info = studio_info;
             bus.trigger('studio_toggled', mode, studio_info, action_desc, active_view);
             if (self.studio_on) {
                 self._update_studio_systray(true);
@@ -145,20 +181,24 @@ WebClient.include({
         }
         this.update_context(true);
         return this.load_studio_info().then(function(studio_info) {
+            self.studio_info = studio_info;
             return _super().then(function () {
                 var action_descr;
-                var def;
+                var active_view;
+                var defs = [];
+                defs.push(self.set_studio_action_manager());
                 if (studio_mode === 'main') {
                     var action = self.action_manager.get_inner_action();
                     if (action) {
                         action_descr = action.action_descr;
-                        def = self.open_studio('main', { action: action });
+                        active_view = action.get_active_view();
+                        defs.push(self.open_studio('main', { action: action }));
                     } else {
                         return $.when();
                     }
                 }
-                return $.when(def).then(function () {
-                    bus.trigger('studio_toggled', studio_mode, studio_info, action_descr);
+                return $.when(defs).then(function () {
+                    bus.trigger('studio_toggled', studio_mode, studio_info, action_descr, active_view);
                 });
             });
         });
@@ -168,10 +208,10 @@ WebClient.include({
         options = options || {};
         var self = this;
         var action = options.action;
-        var action_options = {};
+        var action_options = {
+            clear_breadcrumbs: true,
+        };
         var def;
-        // Stash current action stack to restore it when leaving studio
-        this.action_manager.stash_action_stack();
         this.studio_on = true;
         this.edited_action = action;
         if (action) {
@@ -193,20 +233,42 @@ WebClient.include({
     },
 
     do_action: function(action, options) {
-        var mode = this.studio_on && (this.app_switcher_displayed ? 'app_creator' : 'main');
-        if (mode === 'main') {
+        if (this.studio_on && action.xml_id) {
+            // we are navigating inside Studio so the studio action manager is used
+            return this.studio_action_manager.do_action.apply(this, arguments);
+        }
+
+        if (this.studio_on) {
+            // these are options used by Studio main action
             options = options || {};
             options.ids = this.studio_ids;
             options.res_id = this.studio_id;
             options.chatter_allowed = this.studio_chatter_allowed;
         }
+
         return this._super.apply(this, arguments);
     },
 
     close_studio: function () {
-        this.studio_on = false;
         this.edited_action = undefined;
-        return this.action_manager.restore_action_stack();
+        this.studio_on = false;
+
+        var action = this.action_manager.get_inner_action();
+        var action_desc = action && action.action_descr || null;
+        var def = $.Deferred();
+        if (this.app_switcher_displayed) {
+            this.action_manager.clear_action_stack();
+            this.menu.toggle_mode(true, false);
+            def.resolve();
+        } else if (action_desc.tag === 'action_web_studio_app_creator') {
+            // we are not in the app_switcher but we want to display it
+            this.action_manager.clear_action_stack();
+            this.toggle_app_switcher(true);
+            def.resolve();
+        } else {
+            def = this.action_manager.restore_action_stack(this.studio_action_manager.action_stack);
+        }
+        return def;
     },
 
     update_context: function (in_studio) {
@@ -219,38 +281,113 @@ WebClient.include({
         }
     },
 
-    do_push_state: function () {
-        if (this.studio_on) {
-            return; // keep edited action in url when we navigate in studio to allow restoring it on refresh
+    do_push_state: function (state) {
+        if (this.studio_on && typeof(state.action) === 'string' && state.action.indexOf('action_web_studio_') !== -1) {
+            return; // keep edited action in url when we enter in studio to allow restoring it on refresh
         }
         return this._super.apply(this, arguments);
+    },
+
+    current_action_updated: function(action) {
+        this._super.apply(this, arguments);
+
+        // the method is overwritten by the debug manager to update to null if the appswitcher is
+        // displayed, but we don't need this in Studio ; we only need to update the action if there is one.
+        if (action && action.action_descr.tag !== 'action_web_studio_main') {
+            this._update_studio_systray(this._is_studio_editable(action));
+            this.edited_action = action;
+        }
     },
 
     /**
      * Studio is disabled by default in systray
      * Add conditions here to enable it
      */
-    current_action_updated: function(action) {
-        this._super.apply(this, arguments);
-        if (this.studio_on) {
-            if (action && action.action_descr.tag !== 'action_web_studio_app_creator') {
-                this._update_studio_systray(true);
-                return;
-            }
-        }
+    _is_studio_editable: function(action) {
         if (action && action.action_descr.xml_id) {
             var descr = action.action_descr;
-            if (descr.type === 'ir.actions.act_window' || descr.xml_id === 'action_web_studio_main') {
-                this._update_studio_systray(true);
-                return;
+            if (descr.type === 'ir.actions.act_window') {
+                return true;
             }
         }
-        this._update_studio_systray(false);
+        return false;
     },
 
-    toggle_app_switcher: function(display) {
-        this._super.apply(this, arguments);
-        if (display) { this._update_studio_systray(true); }
+    // Clicking on a menu/app while being in Studio mode pushed the action
+    // in another action manager and then open studio with this new action.
+    // This allows us to get everything without modifying the dom.
+    on_menu_clicked: function () {
+        if (this.studio_on) {
+            var last_action_stack = this.studio_action_manager.action_stack;
+            var last_state = $.bbq.getState(true);
+            return this._super.apply(this, arguments)
+                .then(this._open_navigated_action_in_studio.bind(this))
+                .fail(this._restore_studio_state.bind(this, last_action_stack, last_state));
+        }
+        return this._super.apply(this, arguments);
+    },
+    on_app_clicked: function() {
+        if (this.studio_on) {
+            var last_action_stack = this.studio_action_manager.action_stack;
+            var last_state = $.bbq.getState(true);
+            return this._super.apply(this, arguments)
+                .fail(this._restore_studio_state.bind(this, last_action_stack, last_state));
+        }
+        return this._super.apply(this, arguments);
+    },
+    _on_app_clicked_done: function(ev) {
+        if (this.studio_on) {
+            core.bus.trigger('change_menu_section', ev.data.menu_id);
+            // load the action before toggle the appswitcher
+            return this._open_navigated_action_in_studio()
+                .then(this.toggle_app_switcher.bind(this, false));
+        } else {
+            return this._super.apply(this, arguments);
+        }
+    },
+    /**
+     * Restore the Studio action manager to a previous state.
+     * This is useful when a do_action has been done on an action that couldn't
+     * be edited by Studio ; in this case, we restore it.
+     */
+    _restore_studio_state: function(action_stack, state) {
+        var last_action = _.last(action_stack);
+        this.studio_action_manager.clear_action_stack();
+        this.studio_action_manager.action_stack = action_stack;
+        this.studio_action_manager.inner_action = last_action;
+        this.studio_action_manager.inner_widget = last_action && last_action.widget;
+        $.bbq.pushState(state, 2);
+    },
+    _open_navigated_action_in_studio: function() {
+        var action = this.studio_action_manager.get_inner_action();
+        if (!this._is_studio_editable(action)) {
+            this.do_warn("Studio", _t("This action is not editable by Studio"));
+            return $.Deferred().reject();
+        }
+        bus.trigger('action_changed', action.action_descr);
+        return this.open_studio('main', { action: action });
+    },
+
+    toggle_app_switcher: function (display) {
+        if (display) {
+            // the Studio icon is enabled in the appswitcher (for the app creator)
+            this._update_studio_systray(true);
+        }
+
+        if (this.studio_on) {
+            if (display) {
+                bus.trigger('studio_toggled', 'app_creator', this.studio_info);
+            } else {
+                if (this.edited_action.action_descr.tag === 'action_web_studio_app_creator') {
+                    // special case for the app_creator, which stays in app_creator mode
+                    bus.trigger('studio_toggled', 'app_creator', this.studio_info);
+                } else {
+                    bus.trigger('studio_toggled', 'main', this.studio_info, this.edited_action.action_descr, this.edited_action.get_active_view());
+                }
+            }
+        }
+
+        return this._super.apply(this, arguments);
     },
 
     _update_studio_systray: function(show) {
@@ -258,7 +395,7 @@ WebClient.include({
             return item instanceof SystrayItem;
         });
         if (show) {
-           systray_item.enable();
+            systray_item.enable();
         } else {
             systray_item.disable();
         }
