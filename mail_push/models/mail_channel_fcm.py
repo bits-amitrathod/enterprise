@@ -98,7 +98,7 @@ class MailChannel(models.Model):
             "author_name": message.author_id.name,
             "model": message.model,
             "res_id": message.res_id,
-            "db_id": self.env['ir.config_parameter'].get_param('database.uuid')
+            "db_id": self.env['ir.config_parameter'].sudo().get_param('database.uuid')
         }
         if message.model == 'mail.channel':
             channel = message.channel_ids.filtered(lambda r: r.id == message.res_id)

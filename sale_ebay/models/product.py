@@ -75,9 +75,9 @@ class ProductTemplate(models.Model):
     def _prepare_item_dict(self):
         if self.ebay_sync_stock:
             self.ebay_quantity = max(int(self.virtual_available), 0)
-        country_id = self.env['ir.config_parameter'].get_param('ebay_country')
+        country_id = self.env['ir.config_parameter'].sudo().get_param('ebay_country')
         country = self.env['res.country'].browse(int(country_id))
-        currency_id = self.env['ir.config_parameter'].get_param('ebay_currency')
+        currency_id = self.env['ir.config_parameter'].sudo().get_param('ebay_currency')
         currency = self.env['res.currency'].browse(int(currency_id))
         comp_currency = self.env.user.company_id.currency_id
         item = {
@@ -93,8 +93,8 @@ class ProductTemplate(models.Model):
                 "ConditionID": self.ebay_item_condition_id.code,
                 "ListingDuration": self.ebay_listing_duration,
                 "ListingType": self.ebay_listing_type,
-                "PostalCode": self.env['ir.config_parameter'].get_param('ebay_zip_code'),
-                "Location": self.env['ir.config_parameter'].get_param('ebay_location'),
+                "PostalCode": self.env['ir.config_parameter'].sudo().get_param('ebay_zip_code'),
+                "Location": self.env['ir.config_parameter'].sudo().get_param('ebay_location'),
                 "Quantity": self.ebay_quantity,
                 "BestOfferDetails": {'BestOfferEnabled': self.ebay_best_offer},
                 "PrivateListing": self.ebay_private_listing,
@@ -119,7 +119,7 @@ class ProductTemplate(models.Model):
         picture_urls = self._create_picture_url()
         if picture_urls:
             item['Item']['PictureDetails'] = {'PictureURL': picture_urls}
-            if self.env['ir.config_parameter'].get_param('ebay_gallery_plus'):
+            if self.env['ir.config_parameter'].sudo().get_param('ebay_gallery_plus'):
                 item['Item']['PictureDetails']['GalleryType'] = 'Plus'
         if self.ebay_listing_type == 'Chinese' and self.ebay_buy_it_now_price:
             item['Item']['BuyItNowPrice'] = comp_currency.compute(self.ebay_buy_it_now_price, currency)
@@ -229,7 +229,7 @@ class ProductTemplate(models.Model):
     def _prepare_variant_dict(self):
         if not self.product_variant_ids.filtered('ebay_use'):
             raise UserError(_("Error Encountered.\n No Variant Set To Be Listed On eBay."))
-        currency_id = self.env['ir.config_parameter'].get_param('ebay_currency')
+        currency_id = self.env['ir.config_parameter'].sudo().get_param('ebay_currency')
         currency = self.env['res.currency'].browse(int(currency_id))
         comp_currency = self.env.user.company_id.currency_id
         items = self._prepare_item_dict()
@@ -241,7 +241,7 @@ class ProductTemplate(models.Model):
             if self.ebay_sync_stock:
                 variant.ebay_quantity = max(int(variant.virtual_available), 0)
             if variant.ebay_use and not variant.ebay_quantity and\
-               not self.env['ir.config_parameter'].get_param('ebay_out_of_stock'):
+               not self.env['ir.config_parameter'].sudo().get_param('ebay_out_of_stock'):
                 raise UserError(_('All the quantities must be greater than 0 or you need to enable the Out Of Stock option.'))
             variant_name_values = []
             for spec in variant.attribute_value_ids:
@@ -347,7 +347,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def ebay_execute(self, verb, data=None, list_nodes=[], verb_attrs=None, files=None):
-        domain = self.env['ir.config_parameter'].get_param('ebay_domain')
+        domain = self.env['ir.config_parameter'].sudo().get_param('ebay_domain')
         ebay_api = self.get_ebay_api(domain)
         try:
             return ebay_api.execute(verb, data, list_nodes, verb_attrs, files)
@@ -397,7 +397,7 @@ class ProductTemplate(models.Model):
 
     @api.one
     def _update_ebay_data(self, response):
-        domain = self.env['ir.config_parameter'].get_param('ebay_domain')
+        domain = self.env['ir.config_parameter'].sudo().get_param('ebay_domain')
         item = self.ebay_execute('GetItem', {'ItemID': response['ItemID']}).dict()
         qty = int(item['Item']['Quantity']) - int(item['Item']['SellingStatus']['QuantitySold'])
         self.write({
@@ -515,7 +515,7 @@ class ProductTemplate(models.Model):
             if self.ebay_listing_status != 'Ended'\
                and self.ebay_listing_status != 'Out Of Stock':
                 self.ebay_listing_status = item['SellingStatus']['ListingStatus']
-                if self.env['ir.config_parameter'].get_param('ebay_out_of_stock') and\
+                if self.env['ir.config_parameter'].sudo().sudo().get_param('ebay_out_of_stock') and\
                    self.ebay_listing_status == 'Ended':
                     self.ebay_listing_status = 'Out Of Stock'
                 if int(item['SellingStatus']['QuantitySold']) > 0:
@@ -626,7 +626,7 @@ class ProductTemplate(models.Model):
                 else:
                     variant_qty = variant.ebay_quantity
                 if variant_qty <= 0:
-                    if self.env['ir.config_parameter'].get_param('ebay_out_of_stock'):
+                    if self.env['ir.config_parameter'].sudo().get_param('ebay_out_of_stock'):
                         self.ebay_listing_status = 'Out Of Stock'
                     else:
                         self.ebay_listing_status = 'Ended'
@@ -637,8 +637,8 @@ class ProductTemplate(models.Model):
                 'origin': 'eBay' + transaction['TransactionID'],
                 'fiscal_position_id': fp_id if fp_id else False,
             })
-            if self.env['ir.config_parameter'].get_param('ebay_sales_team'):
-                sale_order.team_id = int(self.env['ir.config_parameter'].get_param('ebay_sales_team'))
+            if self.env['ir.config_parameter'].sudo().get_param('ebay_sales_team'):
+                sale_order.team_id = int(self.env['ir.config_parameter'].sudo().get_param('ebay_sales_team'))
             currency = self.env['res.currency'].search([
                 ('name', '=', transaction['TransactionPrice']['_currencyID'])])
             company_id = self.env.user.company_id
@@ -705,7 +705,7 @@ class ProductTemplate(models.Model):
                         for variant in self.product_variant_ids:
                             if variant.virtual_available != variant.ebay_quantity:
                                 # If the Out Of Stock option is enabled only need to revise the quantity
-                                if self.env['ir.config_parameter'].get_param('ebay_out_of_stock'):
+                                if self.env['ir.config_parameter'].sudo().get_param('ebay_out_of_stock'):
                                     self.revise_product_ebay()
                                     self.ebay_listing_status = 'Out Of Stock'
                                 else:
@@ -713,7 +713,7 @@ class ProductTemplate(models.Model):
                                     self.ebay_listing_status = 'Ended'
                     elif self.ebay_quantity != self.virtual_available:
                         # If the Out Of Stock option is enabled only need to revise the quantity
-                        if self.env['ir.config_parameter'].get_param('ebay_out_of_stock'):
+                        if self.env['ir.config_parameter'].sudo().get_param('ebay_out_of_stock'):
                             self.revise_product_ebay()
                             self.ebay_listing_status = 'Out Of Stock'
                         else:
@@ -735,7 +735,7 @@ class ProductTemplate(models.Model):
                 # The product is Out Of Stock on eBay but there is stock in Odoo
                 # If the Out Of Stock option is enabled then only revise the product
                 if self.virtual_available > 0 and self.ebay_quantity != self.virtual_available:
-                    if self.env['ir.config_parameter'].get_param('ebay_out_of_stock'):
+                    if self.env['ir.config_parameter'].sudo().get_param('ebay_out_of_stock'):
                         self.revise_product_ebay()
                     else:
                         self.relist_product_ebay()

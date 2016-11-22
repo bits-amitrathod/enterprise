@@ -14,7 +14,7 @@ class WebStudioController(http.Controller):
     @http.route('/web_studio/init', type='json', auth='user')
     def studio_init(self):
         return {
-            'dbuuid': request.env['ir.config_parameter'].get_param('database.uuid'),
+            'dbuuid': request.env['ir.config_parameter'].sudo().get_param('database.uuid'),
             'multi_lang': bool(request.env['res.lang'].search_count([('code', '!=', 'en_US')])),
         }
 

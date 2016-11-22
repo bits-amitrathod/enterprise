@@ -113,8 +113,8 @@ class Versioning_Controller(Website):
         web.write({'google_analytics_key': ga_key.strip(), 'google_analytics_view_id': view_id.strip()})
         if client_id and client_secret:
             icp = request.env['ir.config_parameter']
-            icp.set_param('google_management_client_id', client_id.strip() or '', groups=['base.group_system'])
-            icp.set_param('google_management_client_secret', client_secret.strip() or '', groups=['base.group_system'])
+            icp.set_param('google_management_client_id', client_id.strip() or '')
+            icp.set_param('google_management_client_secret', client_secret.strip() or '')
 
     @http.route('/website_version/all_versions_all_goals', type='json', auth="user", website=True)
     def all_versions_all_goals(self, view_id):
@@ -122,7 +122,7 @@ class Versioning_Controller(Website):
         view = request.env['ir.ui.view']
         version = request.env['website_version.version']
         goal = request.env['website_version.goals']
-        icp = request.env['ir.config_parameter']
+        icp = request.env['ir.config_parameter'].sudo()
         v = view.browse(view_id)
         website_id = request.website.id
         tab_version = version.search_read([('website_id', '=', website_id), '|', ('view_ids.key', '=', v.key), ('view_ids.key', '=', 'website.footer_default')], ['id', 'name'])

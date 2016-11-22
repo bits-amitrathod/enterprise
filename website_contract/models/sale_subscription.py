@@ -232,7 +232,7 @@ class SaleSubscription(models.Model):
 
         tx = tx_obj.create(values)
 
-        baseurl = self.env['ir.config_parameter'].get_param('web.base.url')
+        baseurl = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         payment_secure = {'3d_secure': two_steps_sec,
                           'accept_url': baseurl + '/my/contract/%s/payment/%s/accept/' % (self.uuid, tx.id),
                           'decline_url': baseurl + '/my/contract/%s/payment/%s/decline/' % (self.uuid, tx.id),

@@ -46,13 +46,13 @@ class EbayConfiguration(models.TransientModel):
         prod_app_id = self.ebay_prod_app_id or ''
         prod_cert_id = self.ebay_prod_cert_id or ''
 
-        set_param('ebay_dev_id', ebay_dev_id, groups=["base.group_system"])
-        set_param('ebay_sandbox_token', sandbox_token, groups=["base.group_system"])
-        set_param('ebay_sandbox_app_id', sandbox_app_id, groups=["base.group_system"])
-        set_param('ebay_sandbox_cert_id', sandbox_cert_id, groups=["base.group_system"])
-        set_param('ebay_prod_token', prod_token, groups=["base.group_system"])
-        set_param('ebay_prod_app_id', prod_app_id, groups=["base.group_system"])
-        set_param('ebay_prod_cert_id', prod_cert_id, groups=["base.group_system"])
+        set_param('ebay_dev_id', ebay_dev_id)
+        set_param('ebay_sandbox_token', sandbox_token)
+        set_param('ebay_sandbox_app_id', sandbox_app_id)
+        set_param('ebay_sandbox_cert_id', sandbox_cert_id)
+        set_param('ebay_prod_token', prod_token)
+        set_param('ebay_prod_app_id', prod_app_id)
+        set_param('ebay_prod_cert_id', prod_cert_id)
 
         ebay_sales_team = self.ebay_sales_team or self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]
         domain = self.ebay_domain or ''
@@ -115,25 +115,23 @@ class EbayConfiguration(models.TransientModel):
 
     @api.model
     def get_default_ebay(self, fields):
-        params = self.env['ir.config_parameter'].sudo()
-        ebay_dev_id = params.get_param('ebay_dev_id', default='')
-        ebay_sandbox_token = params.get_param('ebay_sandbox_token', default='')
-        ebay_sandbox_app_id = params.get_param('ebay_sandbox_app_id', default='')
-        ebay_sandbox_cert_id = params.get_param('ebay_sandbox_cert_id', default='')
-        ebay_prod_token = params.get_param('ebay_prod_token', default='')
-        ebay_prod_app_id = params.get_param('ebay_prod_app_id', default='')
-        ebay_prod_cert_id = params.get_param('ebay_prod_cert_id', default='')
-        ebay_domain = params.get_param('ebay_domain', default='sand')
-        ebay_currency = int(params.get_param('ebay_currency', default=self.env.ref('base.USD')))
-        ebay_country = int(params.get_param('ebay_country', default=self.env.ref('base.us')))
-        ebay_site = int(params.get_param('ebay_site',
-                        default=self.env['ebay.site'].search([])[0]))
-        ebay_zip_code = params.get_param('ebay_zip_code')
-        ebay_location = params.get_param('ebay_location')
-        ebay_out_of_stock = params.get_param('ebay_out_of_stock', default=False)
-        ebay_sales_team = int(params.get_param('ebay_sales_team',
-                              default=self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]))
-        ebay_gallery_plus = params.get_param('ebay_gallery_plus')
+        get_param = self.env['ir.config_parameter'].get_param
+        ebay_dev_id = get_param('ebay_dev_id', default='')
+        ebay_sandbox_token = get_param('ebay_sandbox_token', default='')
+        ebay_sandbox_app_id = get_param('ebay_sandbox_app_id', default='')
+        ebay_sandbox_cert_id = get_param('ebay_sandbox_cert_id', default='')
+        ebay_prod_token = get_param('ebay_prod_token', default='')
+        ebay_prod_app_id = get_param('ebay_prod_app_id', default='')
+        ebay_prod_cert_id = get_param('ebay_prod_cert_id', default='')
+        ebay_domain = get_param('ebay_domain', default='sand')
+        ebay_currency = int(get_param('ebay_currency', default=self.env.ref('base.USD')))
+        ebay_country = int(get_param('ebay_country', default=self.env.ref('base.us')))
+        ebay_site = int(get_param('ebay_site', default=self.env['ebay.site'].search([])[0]))
+        ebay_zip_code = get_param('ebay_zip_code')
+        ebay_location = get_param('ebay_location')
+        ebay_out_of_stock = get_param('ebay_out_of_stock', default=False)
+        ebay_sales_team = int(get_param('ebay_sales_team', default=self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]))
+        ebay_gallery_plus = get_param('ebay_gallery_plus')
         return {'ebay_dev_id': ebay_dev_id,
                 'ebay_sandbox_token': ebay_sandbox_token,
                 'ebay_sandbox_app_id': ebay_sandbox_app_id,
