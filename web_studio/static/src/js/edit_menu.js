@@ -162,7 +162,7 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
         this.parent_id = parent_id;
         var options = {
             title: _t('Create a new Menu'),
-            size: 'medium',
+            size: 'small',
             buttons: [
                 {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.save, this)},
                 {text: _t("Cancel"), close: true},

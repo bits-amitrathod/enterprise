@@ -18,7 +18,7 @@ var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
 
         var options = {
             title: _t('Add a Button'),
-            size: 'medium',
+            size: 'small',
             buttons: [
                 {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.save, this)},
                 {text: _t("Cancel"), close: true},
