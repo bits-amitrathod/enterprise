@@ -22,7 +22,7 @@ class MailChannel(models.Model):
     _inherit = 'mail.channel'
 
     def _get_default_fcm_credentials(self):
-        return self.env['base.config.settings'].get_default_fcm_credentials()
+        return self.env['base.config.settings'].sudo().get_default_fcm_credentials()
 
     @api.model
     def _push_notify_fcm(self, identities, message):
