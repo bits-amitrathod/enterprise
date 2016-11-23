@@ -89,6 +89,7 @@ Menu.include({
     },
 
     switch_studio_mode: function(studio_mode, studio_info, action, active_view) {
+        var self = this;
         if (this.studio_mode === studio_mode) {
             return;
         }
@@ -98,7 +99,6 @@ Menu.include({
             if (!this.studio_mode) {
                 this.$systray = $main_navbar
                     .find('.o_menu_systray')
-                    .children(':not(".o_user_menu, .o_web_studio_navbar_item")')
                     .detach();
                 this.$menu_toggle = $main_navbar.find('.o_menu_toggle').detach();
             }
@@ -118,7 +118,22 @@ Menu.include({
                 this.$app_switcher_menu = $(qweb.render('web_studio.AppSwitcherMenu', {widget: this}));
                 $main_navbar.prepend(this.$app_switcher_menu);
             }
-            // Notes
+
+            // Leave button
+            this.$leave_button = $('<div>')
+                .addClass('o_web_studio_leave')
+                .append($('<a>', {
+                    href: '#',
+                    class: 'btn btn-primary',
+                    text: _t("Close"),
+                }))
+                .click(function(event) {
+                    event.preventDefault();
+                    self.trigger_up('click_studio_mode');
+                });
+            this.$leave_button.appendTo($main_navbar);
+
+            // Notes link
             this.$notes = $('<div>')
                 .addClass('o_web_studio_notes')
                 .append($('<a>', {
@@ -126,7 +141,7 @@ Menu.include({
                     target: '_blank',
                     text: _t("Notes"),
                 }));
-            this.$notes.insertAfter($main_navbar.find('.o_menu_systray'));
+            this.$notes.appendTo($main_navbar);
         } else {
             if (this.edit_menu) {
                 this.edit_menu.destroy();
@@ -140,13 +155,17 @@ Menu.include({
                 this.$notes.remove();
                 this.$nodes = undefined;
             }
+            if (this.$leave_button) {
+                this.$leave_button.remove();
+                this.$leave_button = undefined;
+            }
             if (this.$app_switcher_menu) {
                 this.$app_switcher_menu.remove();
                 this.$app_switcher_menu = undefined;
             }
             if (this.studio_mode) {
-                this.$systray.prependTo('.o_menu_systray');
                 this.$menu_toggle.prependTo('.o_main_navbar');
+                this.$systray.prependTo('.o_main_navbar');
             }
         }
 
