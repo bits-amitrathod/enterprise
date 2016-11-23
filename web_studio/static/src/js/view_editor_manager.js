@@ -290,6 +290,7 @@ return Widget.extend({
 
         $.when(this.render_content(), this.XMLEditor.prependTo(this.$el)).then(function() {
             self.sidebar.$el.detach();
+            $('body').addClass('o_in_studio_xml_editor');
         });
     },
     close_xml_editor: function () {
@@ -297,6 +298,7 @@ return Widget.extend({
         this.render_content(true);
         this.XMLEditor.destroy();
         this.sidebar.prependTo(this.$el);
+        $('body').removeClass('o_in_studio_xml_editor');
     },
     save_xml_editor: function (event) {
         this.do({

@@ -1,0 +1,95 @@
+.o-web-studio-checkbox (
+    @label-color: @o-web-studio-text-inactive,
+    @unchecked-color: @o-web-studio-bg-dark) {
+
+    .o_checkbox span {
+        margin-right: 5px;
+        border: none;
+        background-color: @unchecked-color;
+    }
+    label {
+        cursor: pointer;
+        font-size: 12px;
+        color:@label-color;
+        &:hover {
+            color: @o-web-studio-text-light;
+        }
+    }
+    > .o_web_studio_checkbox_inactive {
+        .o_checkbox {
+            input {
+                cursor: not-allowed;
+            }
+            span {
+                background-image: url('/web_studio/static/src/img/ui/checkbox_indeterminate.svg');
+            }
+        }
+        label {
+            cursor: not-allowed;
+        }
+    }
+    input:checked + span {
+        background-image: url('/web_studio/static/src/img/ui/checkbox_active.svg');
+    }
+}
+
+.o-web-studio-select (@top: 26px, @bottom: 35px) {
+    position: relative;
+
+    select, select:active, select:focus{
+        color: @o-web-studio-text-inactive;
+        background-image: none;
+        box-shadow: none;
+        border-color: @o-web-studio-bg-dark;
+    }
+
+    &:after, &:before {
+        color: @o-web-studio-text-inactive;
+        font-family: 'FontAwesome';
+        font-size: 8px;
+        content: "\f077";
+        .o-position-absolute(@top, 8px);
+    }
+    &:after {
+        content: "\f078";
+        .o-position-absolute(@bottom, 8px);
+    }
+    &:hover {
+        &:after, &:before {
+            color: @o-web-studio-text-light;
+        }
+    }
+}
+
+.o-web-studio-btn () {
+    border: 1px solid;
+    font-size: 0.8em;
+    padding: 7px 15px;
+    color: @o-web-studio-bg-light;
+    text-transform: uppercase;
+
+    .o-web-studio-btn-variation (@normal-color, @active-color) {
+        border-color: @normal-color;
+        background-color: @normal-color;
+        color: @o-web-studio-bg-light;
+
+        &:hover, &:active, &:focus {
+            background-color: @active-color;
+            border-color: @active-color;
+            color: white
+        }
+    }
+
+    &.btn-default {
+        .o-web-studio-btn-variation(@o-web-studio-bg-dark, @o-web-studio-bg-darker);
+    }
+    &.btn-primary {
+        .o-web-studio-btn-variation(@odoo-brand-optional, darken(@odoo-brand-optional, 5%));
+    }
+    &.btn-danger {
+        .o-web-studio-btn-variation(@o-web-studio-color-danger, darken(@o-web-studio-color-danger, 5%));
+    }
+    &.btn-warning {
+        .o-web-studio-btn-variation(@o-web-studio-color-warning, darken(@o-web-studio-color-warning, 5%));
+    }
+}

@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
 
-<div t-name="web_studio.Sidebar.Parameters">
-    <button class="btn btn-default o_web_studio_parameters">More Parameters</button>
-</div>
+<t t-name="web_studio.Sidebar.Parameters" t-if="widget.debug">
+    <button class="btn btn-sm btn-default o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
+</t>
 
-<div t-name="web_studio.Sidebar.Remove">
-    <button class="btn btn-default o_web_studio_remove">Remove from View</button>
-</div>
+<t t-name="web_studio.Sidebar.Remove">
+    <button class="btn btn-sm btn-danger pull-right o_web_studio_remove">Remove from View</button>
+</t>
 
-<div t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
-    <button class="btn btn-default o_web_studio_xml_editor">XML Editor</button>
-</div>
+<t t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
+    <button class="btn btn-sm btn-default o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
+</t>
+
+<t t-name="web_studio.Sidebar.Toolbox">
+    <hr/>
+    <div class="o_web_studio_sidebar_toolbox">
+        <t t-raw="0"/>
+    </div>
+</t>
 
 <div t-name="web_studio.ActionEditorSidebar" class="o_web_studio_sidebar">
     <!-- Header -->
-    <div class="o_web_studio_sidebar_header">
-        <div>
-            <i class="fa fa-television" aria-hidden="true"/> Action
-        </div>
-    </div>
+    <div class="o_web_studio_sidebar_header"/>
 
     <!-- Content -->
     <div class="o_web_studio_sidebar_content">
-        <div>
+        <div class="o_web_studio_sidebar_text">
             <label for="name">Action's title</label>
             <input id="name" name="name" t-att-value="widget.action_attrs.name" type="text"/>
         </div>
-        <div>
+        <div class="o_web_studio_sidebar_textarea o_web_studio_sidebar_iscode">
             <label for="help">Empty List Message</label>
             <textarea id="help" name="help" cols="40" rows="5"><t t-esc="widget.action_attrs.help"/></textarea>
         </div>
-        <div>
+        <div class="o_web_studio_sidebar_tags">
             <label for="groups">Limit visibility to groups</label>
             <div class="o_groups"/>
         </div>
-        <t t-call="web_studio.Sidebar.Parameters"/>
+        <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
+            <t t-call="web_studio.Sidebar.Parameters"/>
+        </t>
     </div>
 </div>
 
 <div t-name="web_studio.ReportEditorSidebar" class="o_web_studio_sidebar">
     <!-- Header -->
     <div class="o_web_studio_sidebar_header">
-        <div>
+        <div class="actif">
             <i class="fa fa-television" aria-hidden="true"/> Report
         </div>
     </div>
 
     <!-- Content -->
-    <div class="o_web_studio_sidebar_content">
-        <t t-call="web_studio.Sidebar.Parameters"/>
-        <hr/>
-        <t t-call="web_studio.Sidebar.XMLEditor"/>
+    <div class="o_web_studio_sidebar_content" t-if="widget.debug">
+        <t t-call="web_studio.Sidebar.Toolbox">
+            <t t-call="web_studio.Sidebar.Parameters"/>
+            <t t-call="web_studio.Sidebar.XMLEditor"/>
+        </t>
     </div>
 </div>
 
@@ -68,29 +74,48 @@
             <i class="fa fa-server" aria-hidden="true"/> Properties
         </div>
     </div>
-
     <!-- Content -->
     <div class="o_web_studio_sidebar_content o_display_view">
         <t t-if="widget.mode === 'view'">
             <t t-if="widget.view_type === 'list' or widget.view_type == 'form'">
-                <div>
+                <div class="o_web_studio_sidebar_checkbox">
+                    <div class="o_checkbox">
+                        <input id="create" name="create" type="checkbox"
+                            t-att-checked="widget.view_attrs.create ? undefined : 'checked'"/>
+                        <span/>
+                    </div>
                     <label for="create">Can Create</label>
-                    <input id="create" name="create" type="checkbox"
-                        t-att-checked="widget.view_attrs.create ? undefined : 'checked'"/>
                 </div>
-                <div>
+                <div class="o_web_studio_sidebar_checkbox">
+                    <div class="o_checkbox">
+                        <input id="edit" name="edit" type="checkbox"
+                            t-att-checked="widget.view_attrs.edit ? undefined : 'checked'"/>
+                        <span/>
+                    </div>
                     <label for="edit">Can Edit</label>
-                    <input id="edit" name="edit" type="checkbox"
-                        t-att-checked="widget.view_attrs.edit ? undefined : 'checked'"/>
                 </div>
-                <div>
+                <div class="o_web_studio_sidebar_checkbox">
+                    <div class="o_checkbox">
+                        <input id="delete" name="delete" type="checkbox"
+                            t-att-checked="widget.view_attrs.delete ? undefined : 'checked'"/>
+                        <span/>
+                    </div>
                     <label for="delete">Can Delete</label>
-                    <input id="delete" name="delete" type="checkbox"
-                        t-att-checked="widget.view_attrs.delete ? undefined : 'checked'"/>
+                </div>
+            </t>
+            <t t-if="widget.view_type == 'form' || widget.view_type == 'list'">
+                <div class="o_web_studio_sidebar_separator"/>
+                <div class="o_web_studio_sidebar_checkbox">
+                    <div class="o_checkbox">
+                        <input id="show_invisible" type="checkbox"
+                            t-att-checked="widget.show_invisible ? 'checked' : undefined"/>
+                        <span/>
+                    </div>
+                    <label for="show_invisible">Show invisible elements</label>
                 </div>
             </t>
             <t t-if="widget.view_type == 'list'">
-                <div>
+                <div class="o_web_studio_sidebar_select">
                     <label for="editable">Editable</label>
                     <select id="editable" name="editable">
                         <option></option>
@@ -100,24 +125,22 @@
                 </div>
             </t>
             <t t-if="widget.view_type == 'kanban'">
-                <div>
+                <div class="o_web_studio_sidebar_checkbox">
+                    <div class="o_checkbox">
+                        <input id="quick_create" name="quick_create" type="checkbox"
+                            t-att-checked="widget.view_attrs.quick_create ? undefined : 'checked'"/>
+                        <span/>
+                    </div>
                     <label for="quick_create">Quick Create</label>
-                    <input id="quick_create" name="quick_create" type="checkbox"
-                        t-att-checked="widget.view_attrs.quick_create ? undefined : 'checked'"/>
                 </div>
             </t>
-            <t t-call="web_studio.Sidebar.Parameters"/>
-            <hr/>
-            <t t-call="web_studio.Sidebar.XMLEditor"/>
-            <t t-if="widget.view_type == 'form' || widget.view_type == 'list'">
-                <div>
-                    <button t-if="widget.debug" class="btn btn-default o_web_studio_defaults">Default Values</button>
-                </div>
-                <div>
-                    <label for="show_invisible">Show invisible elements</label>
-                    <input id="show_invisible" type="checkbox"
-                        t-att-checked="widget.show_invisible ? 'checked' : undefined"/>
-                </div>
+            <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
+                <t t-call="web_studio.Sidebar.Parameters"/>
+                <t t-call="web_studio.Sidebar.XMLEditor"/>
+
+                <t t-if="widget.view_type == 'form' || widget.view_type == 'list'">
+                    <button class="btn btn-sm btn-default o_web_studio_defaults">Default Values</button>
+                </t>
             </t>
         </t>
     </div>
@@ -142,32 +165,60 @@
 
 <!-- FieldEditor -->
 <t t-name="web_studio.ViewEditorSidebar.field">
-    <div>
-        <label for="invisible">Invisible</label>
-        <input id="invisible" name="invisible" type="checkbox" data-type="attributes"
-            t-if="!(widget.modifiers.invisible and widget.modifiers.invisible !== true)"
-            t-att-checked="widget.attrs.invisible ? 'checked' : undefined"/>
-        <input type="text" disabled="disabled" data-type="attributes"
-            t-if="widget.modifiers.invisible and widget.modifiers.invisible !== true"
-            t-att-value="JSON.stringify(widget.modifiers.invisible)"/>
+    <div class="o_web_studio_sidebar_checkbox">
+        <t t-set="attrs_invisible" t-value="widget.modifiers.invisible and widget.modifiers.invisible !== true" />
+        <div t-att-class="attrs_invisible ? 'o_web_studio_checkbox_inactive' : undefined">
+            <div class="o_checkbox">
+                <input id="invisible" name="invisible" type="checkbox" data-type="attributes"
+                    t-att-checked="widget.attrs.invisible ? 'checked' : undefined"/>
+                <span/>
+            </div>
+            <label for="invisible">Invisible</label>
+            <a t-if="attrs_invisible" href="#" data-type="invisible" class="btn o_web_studio_attrs">Custom</a>
+        </div>
     </div>
     <t t-if="(widget.modifiers.invisible and widget.modifiers.invisible !== true) or !widget.attrs.invisible">
-        <div>
+        <div class="o_web_studio_sidebar_checkbox">
+            <t t-set="attrs_required" t-value="widget.modifiers.required and widget.modifiers.required !== true" />
+            <div t-att-class="attrs_required ? 'o_web_studio_checkbox_inactive' : undefined">
+                <div class="o_checkbox">
+                    <input id="required" name="required" type="checkbox" data-type="attributes"
+                        t-att-checked="widget.attrs.required ? 'checked' : undefined"
+                        t-att-disabled="widget.field_parameters.required ? 'disabled': undefined"/>
+                    <span/>
+                </div>
+                <label for="required">Required</label>
+                <a t-if="attrs_required" href="#" data-type="required" class="btn o_web_studio_attrs">Custom</a>
+            </div>
+        </div>
+        <div class="o_web_studio_sidebar_checkbox">
+            <t t-set="attrs_readonly" t-value="widget.modifiers.readonly and widget.modifiers.readonly !== true" />
+            <div t-att-class="attrs_readonly ? 'o_web_studio_checkbox_inactive' : undefined">
+                <div class="o_checkbox">
+                    <input id="readonly" name="readonly" type="checkbox" data-type="attributes"
+                        t-att-checked="widget.attrs.readonly ? 'checked' : undefined"/>
+                    <span/>
+                </div>
+                <label for="readonly">Read only</label>
+                <a t-if="attrs_readonly" href="#" data-type="readonly" class="btn o_web_studio_attrs">Custom</a>
+            </div>
+        </div>
+        <div class="o_web_studio_sidebar_text">
             <label for="string">Label</label>
             <input id="string" name="string" type="text" data-type="attributes"
                 t-att-value="widget.attrs.string"/>
         </div>
-        <div>
+        <div class="o_web_studio_sidebar_text">
             <label for="help">Help Tooltip</label>
             <input id="help" name="help" type="text" data-type="attributes"
                 t-att-value="widget.attrs.help"/>
         </div>
-        <div>
+        <div class="o_web_studio_sidebar_text">
             <label for="placeholder">Placeholder</label>
             <input id="placeholder" name="placeholder" type="text" placeholder="Placeholder Text" data-type="attributes"
                 t-att-value="widget.attrs.placeholder"/>
         </div>
-        <div>
+        <div class="o_web_studio_sidebar_select">
             <label for="widget">Widget</label>
             <select id="widget" name="widget">
                 <option t-att-selected="widget.attrs.widget ? undefined : 'selected'"></option>
@@ -178,89 +229,80 @@
                 </t>
             </select>
         </div>
-        <div>
-            <label for="required">Required</label>
-            <input id="required" name="required" type="checkbox" data-type="attributes"
-                t-if="!(widget.modifiers.required and widget.modifiers.required !== true)"
-                t-att-checked="widget.attrs.required ? 'checked' : undefined"
-                t-att-disabled="widget.field_parameters.required ? 'disabled': undefined"/>
-                <input type="text" disabled="disabled" data-type="attributes"
-                    t-if="widget.modifiers.required and widget.modifiers.required !== true"
-                    t-att-value="JSON.stringify(widget.modifiers.required)"/>
-        </div>
-        <div>
-            <label for="readonly">Read only</label>
-            <input id="readonly" name="readonly" type="checkbox" data-type="attributes"
-                t-if="!(widget.modifiers.readonly and widget.modifiers.readonly !== true)"
-                t-att-checked="widget.attrs.readonly ? 'checked' : undefined"/>
-                <input type="text" disabled="disabled" data-type="attributes"
-                    t-if="widget.modifiers.readonly and widget.modifiers.readonly !== true"
-                    t-att-value="JSON.stringify(widget.modifiers.readonly)"/>
-        </div>
-        <div>
+        <div class="o_web_studio_sidebar_text">
             <label for="default_value">Default value</label>
             <input id="default_value" type="text" data-type="default_value"
                 t-att-value="widget.default_value"/>
         </div>
-        <div>
-            <label for="groups">Limit visibility to groups</label>
-            <div class="o_groups"/>
-        </div>
         <t t-if="_.contains(['many2many', 'many2one', 'one2many'], widget.field_parameters.type)">
-            <div>
+            <div class="o_web_studio_sidebar_text o_web_studio_sidebar_iscode">
                 <label for="domain">Domain</label>
                 <input id="domain" name="domain" type="text" data-type="attributes"
                     t-att-value="widget.attrs.domain"/>
             </div>
-            <div>
+            <div class="o_web_studio_sidebar_text o_web_studio_sidebar_iscode">
                 <label for="context">Context</label>
                 <input id="context" name="context" type="text" data-type="attributes"
                     t-att-value="JSON.stringify(widget.attrs.context)"/>
             </div>
         </t>
     </t>
-    <t t-call="web_studio.Sidebar.Parameters"/>
-    <t t-call="web_studio.Sidebar.Remove"/>
+    <div class="o_web_studio_sidebar_tags">
+        <label for="groups">Limit visibility to groups</label>
+        <div class="o_groups"/>
+    </div>
+    <t t-call="web_studio.Sidebar.Toolbox">
+        <t t-call="web_studio.Sidebar.Parameters"/>
+        <t t-call="web_studio.Sidebar.Remove"/>
+    </t>
 </t>
 
 <!-- PageEditor -->
 <t t-name="web_studio.ViewEditorSidebar.page">
-    <div>
+    <div class="o_web_studio_sidebar_text">
         <label for="string">Label</label>
         <input id="string" name="string" type="text"
             t-att-value="widget.attrs.string"/>
     </div>
-    <t t-call="web_studio.Sidebar.Remove"/>
+    <t t-call="web_studio.Sidebar.Toolbox">
+        <t t-call="web_studio.Sidebar.Remove"/>
+    </t>
 </t>
 
 <!-- GroupEditor -->
 <t t-name="web_studio.ViewEditorSidebar.group">
-    <div>
+    <div class="o_web_studio_sidebar_text">
         <label for="string">Label Text</label>
         <input id="string" name="string" type="text"
             t-att-value="widget.attrs.string"/>
     </div>
-    <t t-call="web_studio.Sidebar.Remove"/>
+    <t t-call="web_studio.Sidebar.Toolbox">
+        <t t-call="web_studio.Sidebar.Remove"/>
+    </t>
 </t>
 
 <!-- ChatterEditor -->
 <t t-name="web_studio.ViewEditorSidebar.chatter">
-    <div>
+    <div class="o_web_studio_sidebar_text">
         <label for="email_alias">Email Alias</label>
         <input id="email_alias" name="email_alias" type="text" data-type="email_alias"
             t-att-value="widget.email_alias"/>
     </div>
-    <t t-call="web_studio.Sidebar.Remove"/>
+    <t t-call="web_studio.Sidebar.Toolbox">
+        <t t-call="web_studio.Sidebar.Remove"/>
+    </t>
 </t>
 
 <!-- ButtonEditor -->
 <t t-name="web_studio.ViewEditorSidebar.button">
-    <div>
+    <div  class="o_web_studio_sidebar_text o_web_studio_sidebar_iscode">
         <label>Icon</label>
         <input name="icon" type="text"
             t-att-value="widget.attrs.icon"/>
     </div>
-    <t t-call="web_studio.Sidebar.Remove"/>
+    <t t-call="web_studio.Sidebar.Toolbox">
+        <t t-call="web_studio.Sidebar.Remove"/>
+    </t>
 </t>
 
 

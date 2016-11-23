@@ -8,6 +8,11 @@ var ViewEditor = require('web_editor.ace');
  * default RPC. Also notifies studio when the editor is closed.
  */
 var XMLEditor = ViewEditor.extend({
+    start: function () {
+        var def = this._super.apply(this, arguments);
+        this.$('#ace-view-list').wrap('<div class="o_web_studio_ace_select"/>');
+        return def;
+    },
     _saveView: function (session) {
         var def = $.Deferred();
 

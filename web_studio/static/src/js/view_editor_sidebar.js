@@ -43,6 +43,7 @@ return Widget.extend(FieldManagerMixin, {
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
         'change .o_display_chatter input[data-type="email_alias"]': 'change_email_alias',
+        'click .o_web_studio_attrs': '_show_required_attrs',
     },
 
     init: function (parent, view_type, view_attrs, model, fields) {
@@ -276,6 +277,14 @@ return Widget.extend(FieldManagerMixin, {
             }
         });
     },
+    _show_required_attrs: function(ev) {
+        ev.preventDefault();
+        var modifier = ev.currentTarget.dataset.type;
+        var $content = $('<div>')
+            .append($('<p>').html(_.str.sprintf(_t('The property < %s > of this field will be different from one record to another depending on the following custom domain.<br/>If there is no domain, the property is applied globally to the view'), modifier)))
+            .append($('<p>').text(JSON.stringify(this.modifiers[modifier])));
+        new Dialog(this, {title: _t("Attrs Domain"), $content: $content.html()}).open();
+    }
 });
 
 });
