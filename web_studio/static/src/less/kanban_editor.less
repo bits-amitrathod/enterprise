@@ -1,0 +1,79 @@
+.o_web_studio_client_action {
+    .o_web_studio_view_editor .o_web_studio_view_renderer .o_kanban_view {
+        .o_kanban_record {
+
+            // display the dropdown in kanban editor
+            .o_dropdown_kanban {
+                visibility: visible;
+            }
+
+            .o_dropdown_kanban.o_web_studio_add_dropdown, .o_web_studio_add_priority, .o_web_studio_add_kanban_image, .o_web_studio_add_kanban_tags {
+                cursor: pointer;
+                color: @odoo-brand-optional;
+                font-weight: bold;
+                opacity: 0.1;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                > a {
+                    color: @odoo-brand-optional;
+                }
+            }
+
+            &.o_kanban_demo {
+                opacity: 0.2;
+                padding: 0;
+            }
+
+            .o_web_studio_widget_empty {
+                background-color: lightgrey;
+            }
+
+            .o_hovered {
+                outline: 1px dashed @odoo-brand-optional;
+                cursor: pointer;
+            }
+            .o_clicked {
+                outline: 1px dashed black;
+            }
+
+            .o_web_studio_hook {
+                > span.o_web_studio_hook_separator {
+                    padding: 4px 0;
+                    border: 0px dashed transparent;
+                    .o-transition(all, 0.2s, 0s, cubic-bezier(0.215, 0.610, 0.355, 1.000));
+                }
+                &.o_web_studio_nearest_hook {
+                    cursor: pointer;
+
+                    > span.o_web_studio_hook_separator {
+                        background-color: fade(@odoo-brand-optional, 2%);
+                        border: 1px dashed fade(@odoo-brand-optional, 50%);
+                        padding: 4px 50px;
+                        margin: 4px;
+                    }
+                }
+            }
+        }
+        .o_kanban_group {
+            .o_kanban_demo {
+                min-height: 100px;
+            }
+        }
+    }
+}
+
+.o_web_studio_kanban_helper {
+    cursor: pointer;
+
+    &.o_existing {
+        border-color: black;
+        margin: 5px 0;
+    }
+    &.o_new {
+        color: @odoo-brand-optional;
+        margin: 10px 0;
+    }
+}

@@ -56,7 +56,7 @@ var KanbanRecord = Widget.extend({
     },
 
     start: function() {
-        this.add_widgets();
+        this.add_fields();
         this.attach_tooltip();
         return this._super.apply(this, arguments);
     },
@@ -89,21 +89,42 @@ var KanbanRecord = Widget.extend({
         this.content = this.qweb.render('kanban-box', qweb_context);
     },
 
-    add_widgets: function () {
+    add_fields: function () {
         var self = this;
         this.$("field").each(function() {
             var $field = $(this);
             var field_name = $field.attr("name");
-            var field = self.record[field_name];
             var field_widget = $field.attr("widget");
-            var widget_keys = (field_widget ? [field_widget] : []).concat(['kanban.' + field.type, field.type]);
-            var Widget = field_registry.get_any(widget_keys);
-            var widget = new Widget(self, field_name, self.state, self.options);
-            widget.replace($field);
-            self.sub_widgets.push(widget);
+            if (field_widget) {
+                var widget = self.add_widget($field, field_name, field_widget);
+                self.sub_widgets.push(widget);
+            } else {
+                self.add_field($field, field_name);
+            }
         });
         // We use boostrap tooltips for better and faster display
         this.$('span.o_tag').tooltip({delay: {'show': 50}});
+    },
+
+    add_field: function($field, field_name) {
+        var field = this.record[field_name];
+        var tag = field.__attrs.bold ? '<strong>' : '<span>';
+        var $result = $(tag, {
+            text: field.value,
+        });
+        $field.replaceWith($result);
+        return $result;
+    },
+
+    add_widget: function ($field, field_name, field_widget) {
+        var field = this.record[field_name];
+        var Widget = field_registry.get(field_widget);
+        var widget = new Widget(this, field_name, this.state, this.options);
+        widget.replace($field);
+        if (field.__attrs.bold) {
+            widget.$el.addClass('o_kanban_bold');
+        }
+        return widget;
     },
 
     transform_record: function(record) {
@@ -142,7 +163,7 @@ var KanbanRecord = Widget.extend({
         this.sub_widgets = [];
         this.init_content(record);
         this.renderElement();
-        this.add_widgets();
+        this.add_fields();
         this.attach_tooltip();
     },
 

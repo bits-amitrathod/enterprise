@@ -144,19 +144,21 @@ return Widget.extend(FieldManagerMixin, {
         var $sidebar_content = this.$('.o_web_studio_sidebar_content');
 
         // Components
-        if (this.view_type === 'form') {
-            widget_classes = form_component_widget_registry.get('components');
+        if (_.contains(['kanban', 'form'], this.view_type)) {
+            widget_classes = form_component_widget_registry.get(this.view_type + '_components');
             form_widgets = widget_classes.map(function(FormComponent) {
                 return new FormComponent(self);
             });
             $sidebar_content.append(this._render_widgets_components(form_widgets, 'Components'));
         }
         // New Fields
-        widget_classes = form_component_widget_registry.get('new_field');
-        form_widgets = widget_classes.map(function(FormComponent) {
-            return new FormComponent(self);
-        });
-        $sidebar_content.append(this._render_widgets_components(form_widgets, 'New Fields'));
+        if (_.contains(['list', 'form'], this.view_type)) {
+            widget_classes = form_component_widget_registry.get('new_field');
+            form_widgets = widget_classes.map(function(FormComponent) {
+                return new FormComponent(self);
+            });
+            $sidebar_content.append(this._render_widgets_components(form_widgets, 'New Fields'));
+        }
 
         // Existing Fields
         var FormComponent = form_component_widget_registry.get('existing_field');
@@ -232,7 +234,11 @@ return Widget.extend(FieldManagerMixin, {
         if (attribute) {
             var new_attrs = {};
             if ($input.attr('type') === 'checkbox') {
-                new_attrs[attribute] = $input.is(':checked') ? 'True': 'False';
+                if ($input.is(':checked')) {
+                    new_attrs[attribute] = $input.data('leave-empty') === 'checked' ? '': 'True';
+                } else {
+                    new_attrs[attribute] = $input.data('leave-empty') === 'unchecked' ? '': 'False';
+                }
             } else {
                 new_attrs[attribute] = $input.val();
             }

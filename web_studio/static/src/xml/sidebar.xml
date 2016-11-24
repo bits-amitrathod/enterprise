@@ -64,7 +64,7 @@
 <div t-name="web_studio.ViewEditorSidebar" class="o_web_studio_sidebar">
     <!-- Header -->
     <div class="o_web_studio_sidebar_header">
-        <div t-attf-class="o_web_studio_new #{_.contains(['form', 'list'], widget.view_type)  ? (widget.mode === 'new' ? 'actif' : '') : 'inactive'}">
+        <div t-attf-class="o_web_studio_new #{_.contains(['form', 'list', 'kanban'], widget.view_type)  ? (widget.mode === 'new' ? 'actif' : '') : 'inactive'}">
             <i class="fa fa-plus" aria-hidden="true"/> Add
         </div>
         <div name="view" t-attf-class="o_web_studio_view #{widget.mode === 'view' ? 'actif' : ''}">
@@ -345,6 +345,14 @@
                 <label for="required">Required</label>
                 <a t-if="attrs_required" href="#" data-type="required" class="btn o_web_studio_attrs">Custom</a>
             </div>
+        </div>
+        <div t-if="widget.view_type === 'kanban'" class="o_web_studio_sidebar_checkbox">
+            <div class="o_checkbox">
+                <input id="bold" name="bold" type="checkbox" data-type="attributes"
+                    data-leave-empty="unchecked" t-att-checked="widget.attrs.bold ? 'checked' : undefined"/>
+                <span/>
+            </div>
+            <label for="bold">Bold</label>
         </div>
         <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_checkbox">
             <t t-set="attrs_readonly" t-value="widget.modifiers.readonly and widget.modifiers.readonly !== true" />

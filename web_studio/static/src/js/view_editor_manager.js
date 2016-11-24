@@ -374,7 +374,7 @@ return Widget.extend({
                 this._add_element(type, node, xpath_info, position, 'group');
                 break;
             case 'buttonbox':
-                this._add_buttonbox(type);
+                this._add_buttonbox();
                 break;
             case 'button':
                 this._add_button(type);
@@ -385,12 +385,24 @@ return Widget.extend({
             case 'page':
                 this._add_page(type, node, xpath_info, position);
                 break;
+            case 'separator':
+                this._add_element(type, node, xpath_info, position, 'br');
+                break;
             case 'field':
                 var field_description = event.data.field_description;
                 this._add_field(type, field_description, node, xpath_info, position, new_attrs);
                 break;
             case 'chatter':
                 this._add_chatter(event.data);
+                break;
+            case 'kanban_dropdown':
+                this._add_kanban_dropdown();
+                break;
+            case 'kanban_priority':
+                this._add_kanban_priority(event.data);
+                break;
+            case 'kanban_image':
+                this._add_kanban_image(event.data);
                 break;
             case 'remove':
                 this._remove_element(type, node, xpath_info);
@@ -542,7 +554,7 @@ return Widget.extend({
             },
         });
     },
-    _add_buttonbox: function(type) {
+    _add_buttonbox: function() {
         this.do({
             type: 'buttonbox',
         });
@@ -633,6 +645,23 @@ return Widget.extend({
             model: this.model,
             remove_message_ids: data.remove_message_ids,
             remove_follower_ids: data.remove_follower_ids,
+        });
+    },
+    _add_kanban_dropdown: function() {
+        this.do({
+            type: 'kanban_dropdown',
+        });
+    },
+    _add_kanban_priority: function(data) {
+        this.do({
+            type: 'kanban_priority',
+            field: data.field,
+        });
+    },
+    _add_kanban_image: function(data) {
+        this.do({
+            type: 'kanban_image',
+            field: data.field,
         });
     },
     _remove_element: function(type, node, xpath_info) {

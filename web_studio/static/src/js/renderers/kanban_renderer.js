@@ -163,7 +163,9 @@ return AbstractRenderer.extend({
             self.widgets.push(kanban_record);
             kanban_record.appendTo(fragment);
         });
-
+        this._render_ghost_divs(fragment);
+    },
+    _render_ghost_divs: function (fragment) {
         // add empty invisible divs to make sure that all kanban records are left aligned
         for (var i = 0, ghost_div; i < 6; i++) {
             ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
@@ -235,7 +237,10 @@ return AbstractRenderer.extend({
     remove_widget: function (widget) {
         this.widgets.splice(this.widgets.indexOf(widget), 1);
         widget.destroy();
-    }
+    },
+    get_local_state: function() {
+        return {};
+    },
 });
 
 });
