@@ -37,7 +37,7 @@ FIELDS_TO_EXPORT = {
     'ir.actions.server': [
         'action_id', 'child_ids', 'code', 'condition', 'crud_model_id', 'help', 'link_field_id',
         'link_new_record', 'model_id', 'name', 'sequence', 'state', 'use_create',
-        'use_relational_model', 'use_write', 'wkf_field_id', 'wkf_model_id', 'write_expression',
+        'use_write', 'write_expression',
     ],
     'ir.filters': [
         'action_id', 'active', 'context', 'domain', 'is_default', 'model_id', 'name', 'sort'
@@ -51,7 +51,7 @@ FIELDS_TO_EXPORT = {
         'complete_name', 'compute', 'copy', 'depends', 'domain', 'field_description', 'groups',
         'help', 'index', 'model', 'model_id', 'name', 'on_delete', 'readonly', 'related',
         'relation', 'relation_field', 'required', 'selectable', 'selection',
-        'serialization_field_id', 'size', 'state', 'store', 'track_visibility', 'translate',
+        'size', 'state', 'store', 'track_visibility', 'translate',
         'ttype'
     ],
     'ir.rule': [
@@ -75,7 +75,7 @@ FIELDS_TO_EXPORT = {
 FIELDS_NOT_TO_EXPORT = {
     'base.action.rule': ['act_followers', 'act_user_id', 'trg_date_calendar_id'],
     'ir.actions.report.xml': ['ir_values_id'],
-    'ir.actions.server': ['fields_lines', 'menu_ir_values_id', 'ref_object', 'wkf_transition_id'],
+    'ir.actions.server': ['fields_lines', 'menu_ir_values_id', 'ref_object'],
     'ir.filter': ['user_id'],
     'mail.template': ['attachment_ids', 'mail_server_id', 'ref_ir_value'],
     'res.groups': ['category_id', 'users'],
