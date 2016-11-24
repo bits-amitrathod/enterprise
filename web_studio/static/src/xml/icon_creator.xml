@@ -2,25 +2,55 @@
 <templates>
 
 <div t-name="web_studio.IconCreator" class="o_web_studio_icon_creator">
-    <h5>Create your Icon</h5>
-    <div class="o_web_studio_icon">
-        <div class="o_app_icon"><i/></div>
-    </div>
-    <div class="o_web_studio_selectors">
-        <div class="o_web_studio_selector" data-type="background_color"/>
-        <div class="o_web_studio_selector" data-type="color"/>
-        <div class="o_web_studio_selector" data-type="icon"><i/></div>
-    </div>
+    <t t-if="widget.uploaded">
+        <div class="o_web_studio_uploaded_image">
+            <img t-att-src='"data:image/png;base64, " + widget.uploaded_image' alt="Uploaded image"/>
+        </div>
+        <div class="o_web_studio_upload">
+            <a href="#" class="btn btn-secondary js_discard_upload">Discard Upload</a>
+        </div>
+
+    </t>
+    <t t-else="">
+        <h6>Design your Icon</h6>
+        <div class="o_web_studio_icon">
+            <div class="o_app_icon"><i/></div>
+        </div>
+        <div class="o_web_studio_selectors">
+            <div class="o_web_studio_selector" data-type="background_color"><span class="o_web_studio_selector_pointer"/></div>
+            <div class="o_web_studio_selector" data-type="color"><span class="o_web_studio_selector_pointer"/></div>
+            <div class="o_web_studio_selector" data-type="icon"><i/><span class="o_web_studio_selector_pointer"/></div>
+        </div>
+        <h6>or</h6>
+        <div class="o_web_studio_upload mt16">
+            <a href="#" class="js_upload">Upload it</a>
+            <span class="hide">
+                <t t-call="HiddenInputFile">
+                    <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                    <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                    <input type="hidden" name="model" value="res.users"/>
+                    <input type="hidden" name="id" t-att-value="widget.user_id"/>
+                </t>
+            </span>
+        </div>
+    </t>
 </div>
 
-<div t-name="web_studio.IconCreator.ColorPalette" class="o_web_studio_palette">
-    <t t-foreach="widget.available_colors" t-as="color">
+<!-- Palettes -->
+<div t-name="web_studio.IconCreator.IconColorPalette" class="o_web_studio_palette">
+    <t t-foreach="widget.COLORS" t-as="color">
         <div class="o_web_studio_selector" t-att-style="'background-color: ' + color" t-att-data-color="color"/>
     </t>
 </div>
 
-<div t-name="web_studio.IconCreator.IconPalette" class="o_web_studio_palette">
-    <t t-foreach="widget.available_icons" t-as="icon">
+<div t-name="web_studio.IconCreator.BgPalette" class="o_web_studio_palette">
+    <t t-foreach="widget.BG_COLORS" t-as="color">
+        <div class="o_web_studio_selector" t-att-style="'background-color: ' + color" t-att-data-color="color"/>
+    </t>
+</div>
+
+<div t-name="web_studio.IconCreator.IconPalette" class="o_web_studio_icons_library">
+    <t t-foreach="widget.ICONS" t-as="icon">
         <div class="o_web_studio_selector"><i t-att-class="icon"/></div>
     </t>
 </div>

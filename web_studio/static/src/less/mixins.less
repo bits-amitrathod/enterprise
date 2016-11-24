@@ -1,18 +1,25 @@
 .o-web-studio-checkbox (
     @label-color: @o-web-studio-text-inactive,
-    @unchecked-color: @o-web-studio-bg-dark) {
+    @label-color-active: @o-web-studio-text-light,
+    @label-color-hover: @o-web-studio-text-light,
+    @unchecked-color: @o-web-studio-bg-dark,
+    @unchecked-border: @o-web-studio-bg-dark) {
 
     .o_checkbox span {
         margin-right: 5px;
-        border: none;
+        border: 1px solid @unchecked-border;
         background-color: @unchecked-color;
     }
     label {
         cursor: pointer;
         font-size: 12px;
         color:@label-color;
+
+        &:active {
+            color: @label-color-active;
+        }
         &:hover {
-            color: @o-web-studio-text-light;
+            color: @label-color-hover;
         }
     }
     > .o_web_studio_checkbox_inactive {

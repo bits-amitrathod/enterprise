@@ -1,11 +1,10 @@
-@o-studio-black: #292e36;
-.o-studio-app-creator-background {
+.o-web-studio-app-creator-background {
     .o-linear-gradient(@deg: 90deg, @start-color: #565d78, @end-color: #65545c);
 }
 
 // App switcher in studio mode
 .o_web_client.o_in_studio .o_application_switcher {
-    .o-studio-app-creator-background();
+    .o-web-studio-app-creator-background();
 
     .o_application_switcher_footer,
     .o_menu_search,
@@ -13,17 +12,24 @@
         visibility: hidden;
     }
     .o_app {
-        &.o_web_studio_new_app {
+        &:not(.o_web_studio_new_app) {
+            opacity: 0.5;
             .o_app_icon {
-                border: 1px @odoo-brand-lightsecondary dashed;
+                .transition-property(~"none");
+            }
+            &:hover, &:focus {
+                opacity: 0.9;
+                background-color: transparent;
+            }
+        }
+        &.o_web_studio_new_app {
+            border-color: fade(white, 10%);
+            background-color: fade(white, 5%);
+            .o_app_icon {
+                box-shadow: none;
             }
             &:hover {
-                .o_app_icon {
-                    border-color: white;
-                }
-                .o_caption {
-                    color: white;
-                }
+                border-color: fade(white, 60%);
             }
         }
     }
@@ -31,22 +37,139 @@
 
 // App creator - style
 .o_web_studio_app_creator {
-    .o-studio-app-creator-background();
+    .o-web-studio-app-creator-background();
 
     .o_web_studio_app_creator_box {
-        color: @o-studio-black;
-        border-radius: 3px;
-        box-shadow: 0 1px 5px @o-studio-black;
+        color: @o-web-studio-bg-dark;
+        box-shadow: 0 16px 13px -8px fade( @o-web-studio-bg-dark, 50%);
 
         .o_web_studio_app_creator_left {
             background-color: white;
+            h2 {
+                margin-top: 70px;
+                font-weight: 200;
+            }
+            h1 {
+                font-size: 3.5em;
+                letter-spacing: -1px;
+                margin-bottom: 0.3em;
+            }
+            h5 {
+                font-size: 13px;
+                position: absolute;
+            }
+
+            .o_web_studio_app_creator_name {
+                margin-top: 50px;
+            }
+
+            .o_web_studio_app_creator_model_choice {
+                margin-top: 25px;
+                .o-web-studio-checkbox(@text-color, @o-web-studio-bg-medium, @o-web-studio-bg-dark, white, @gray-light);
+            }
+
+            .o_web_studio_app_creator_model {
+                display: none;
+
+                .o_external_button {
+                    padding-right: 0;
+                    color: @text-color;
+                    &:hover, &:focus, &:active {
+                        background-color: transparent;
+                        color: @o-web-studio-bg-dark;
+                    }
+                }
+            }
+            .o_web_studio_app_creator_field_warning {
+                > label {
+                    color: @o-web-studio-color-danger;
+                }
+            }
         }
         .o_web_studio_app_creator_right {
-            background-color: @o-studio-black;
-            .o_web_studio_app_creator_leave {
-                background-color: transparent;
-                color: white;
+            background-color: @o-web-studio-bg-dark;
+
+            .o_web_studio_welcome_image {
+                width: 183px;
+                height: 183px;
+                border-radius: 4px;
+                box-shadow: 0 7px 16px -5px #000;
             }
+
+            .o_web_studio_upload {
+                color: @o-web-studio-text-inactive;
+
+                > a {
+                    text-transform: uppercase;
+                    font-size: 0.8em;
+                    color: @o-web-studio-text-inactive;
+                }
+            }
+        }
+
+        .o_web_studio_app_creator_next, .o_app_creator_back {
+            text-transform: uppercase;
+            background-color: white;
+            color: @o-web-studio-text-inactive;
+            border: 1px solid @o-web-studio-text-inactive;
+            padding: 6px 40px 7px;
+            font-size: 11px;
+            border-radius: 2px;
+            font-weight: 500;
+            .o-transition(all, 0.3s);
+
+            &.o_web_studio_create {
+                padding: 7px 15px;
+                position: relative;
+                overflow: hidden;
+                cursor: no-drop;
+                opacity: 0.5;
+                .o-transition(all, 0s);
+
+                > span {
+                    opacity: 0;
+                    color: white;
+                    .o-position-absolute(auto, 42px);
+                    .o-transition(opacity, 0.35s);
+                }
+                &:hover, &:focus {
+                    color: @o-web-studio-text-inactive;
+                    border-color: @o-web-studio-text-inactive;
+                }
+
+                &.is_ready {
+                    opacity: 1;
+                    cursor: pointer;
+                    padding-left: 140px;
+                    background-color: @odoo-brand-optional;
+                    border-color: darken(@odoo-brand-optional, 3%);
+                    color: white;
+                    .o-transition(all, 0.3s);
+                    .transition-property(~'padding background');
+                    > span {
+                        opacity: 1;
+                        .o-transition(opacity, 0.1s);
+                    }
+
+                    &:hover, &:focus {
+                        background-color: lighten(@odoo-brand-optional, 2%);
+                        border-color: @odoo-brand-optional;
+                        color: white;
+                    }
+                }
+            }
+
+            &:hover, &:focus {
+                color: @o-web-studio-bg-medium;
+                border-color: @o-web-studio-bg-medium;
+            }
+        }
+        .o_app_creator_back {
+            padding: 7px 15px 6px;
+        }
+
+        .o_form_field.o_form_field_many2one {
+            width: 100%;
         }
     }
 }
@@ -61,7 +184,7 @@
     .o_web_studio_app_creator_box {
         position: relative;
         margin: auto;
-        height: 320px;
+        height: 350px;
         width: 700px;
 
         .o_web_studio_app_creator_left, .o_web_studio_app_creator_right {
@@ -69,14 +192,16 @@
             width: 50%;
             float: left;
             padding: 16px 32px;
+            .o-transition(width, 0.3s);
         }
         .o_web_studio_app_creator_left {
+            border-radius: 3px 0 0 3px;
             .o-flex-display();
             .o-flex-flow(column, nowrap);
 
             .o_web_studio_app_creator_left_content {
                 .o-flex(1, 1, 100%);
-                padding-top: 50px;
+                padding-top: 20px;
 
                 .o_form_field_many2one {
                     width: 100%;
@@ -91,13 +216,11 @@
             }
         }
         .o_web_studio_app_creator_right {
+            border-radius: 0 3px 3px 0;
             .o-flex-display();
             .o-justify-content(center);
             .o-align-items(center);
 
-            .o_web_studio_app_creator_leave {
-                .o-position-absolute(@right: 16px, @top:16px);
-            }
             .o_web_studio_app_creator_right {
                 height: 200px;
                 width: 200px;
@@ -105,3 +228,4 @@
         }
     }
 }
+

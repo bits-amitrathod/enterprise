@@ -158,15 +158,25 @@ class WebStudioController(http.Controller):
     def create_new_menu(self, name, model_id=False, is_app=False, parent_id=None, icon=None):
         """ Create a new menu @name, linked to a new action associated to the model_id
             @param model_id: if not set, the action associated to this menu is the appswitcher
+                except if @is_app is True that will create a new model
             @param is_app: if True, create an extra menu (app, without parent)
             @param parent_id: the parent of the new menu.
                 To be set if is_app is False.
-            @param icon: the icon of the new app, like [icon, icon_color, background_color].
+            @param icon: the icon of the new app.
+                It can either be:
+                 - the ir.attachment id of the uploaded image
+                 - if the icon has been created, an array containing: [icon_class, color, background_color]
                 To be set if is_app is True.
         """
-        # create the action
+        model = None
         if model_id:
             model = request.env['ir.model'].browse(model_id)
+        elif is_app:
+            # create a new model
+            model = request.env['ir.model'].studio_name_create(name)
+
+        # create the action
+        if model:
             action = request.env['ir.actions.act_window'].create({
                 'name': model.name,
                 'res_model': model.model,
@@ -182,22 +192,34 @@ class WebStudioController(http.Controller):
             })
             action_ref = 'ir.actions.act_window,' + str(action.id)
         else:
-            model = None
             action = request.env.ref('base.action_open_website')
             action_ref = 'ir.actions.act_url,' + str(action.id)
 
         if is_app:
             # create the menus (app menu + first submenu)
-            new_context = dict(request.context)
-            new_context.update({'ir.ui.menu.full_list': True})  # allows to create a menu without action
-            new_menu = request.env['ir.ui.menu'].with_context(new_context).create({
+            menu_values = {
                 'name': name,
-                'web_icon': ','.join(icon),
                 'child_id': [(0, 0, {
                     'name': model and model.name or name,
                     'action': action_ref,
                 })]
-            })
+            }
+
+            # set icon related fields (depending on the @icon received)
+            if isinstance(icon, int):
+                icon_id = request.env['ir.attachment'].browse(icon)
+                if not icon_id:
+                    raise UserError(_('The icon is not linked to an attachment'))
+                menu_values['web_icon_data'] = icon_id.datas
+            elif isinstance(icon, list) and len(icon) == 3:
+                menu_values['web_icon'] = ','.join(icon)
+            else:
+                raise UserError(_('The icon has not a correct format'))
+
+            new_context = dict(request.context)
+            new_context.update({'ir.ui.menu.full_list': True})  # allows to create a menu without action
+            new_menu = request.env['ir.ui.menu'].with_context(new_context).create(menu_values)
+
         else:
             # create the submenu
             new_menu = request.env['ir.ui.menu'].create({

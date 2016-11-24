@@ -8,7 +8,11 @@
     </div>
     <div>
         <label>Icon</label>
-        <input name="icon" type="text" value="fa-usd"/>
+        <div>
+            <t t-foreach="widget.ICONS" t-as="icon">
+                <div class="o_web_studio_icon_selector" t-att-data-value="icon"><i t-att-class="icon"/></div>
+            </t>
+        </div>
     </div>
     <div>
         <label>Select a related field</label>

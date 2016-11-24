@@ -92,6 +92,14 @@ class IrModel(models.Model):
         return [('model', dom_operator, abstract_models)]
 
     @api.model
+    def studio_name_create(self, name):
+        model_name = 'x_' + sanitize_for_xmlid(name)
+        return self.create({
+            'name': name,
+            'model': model_name,
+        })
+
+    @api.model
     def create(self, vals):
         res = super(IrModel, self).create(vals)
 
