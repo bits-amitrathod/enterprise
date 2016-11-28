@@ -98,19 +98,13 @@ class crm_team(models.Model):
             self.leads_count = 0
 
     @api.one
-    def _assigned_leads(self):
+    def _assigned_leads_count(self):
         limit_date = datetime.datetime.now() - datetime.timedelta(days=30)
         domain = [('assign_date', '>=', fields.Datetime.to_string(limit_date)),
                   ('team_id', '=', self.id),
                   ('user_id', '!=', False)
                   ]
-        self.assigned_leads = self.env['crm.lead'].search_count(domain)
-
-    @api.one
-    def _unassigned_leads(self):
-        self.unassigned_leads = self.env['crm.lead'].search_count(
-            [('team_id', '=', self.id), ('user_id', '=', False), ('assign_date', '=', False)]
-        )
+        self.assigned_leads_count = self.env['crm.lead'].search_count(domain)
 
     @api.one
     def _capacity(self):
@@ -128,8 +122,7 @@ class crm_team(models.Model):
     ratio = fields.Float(string='Ratio')
     score_team_domain = fields.Char('Domain', track_visibility='onchange')
     leads_count = fields.Integer(compute='_count_leads')
-    assigned_leads = fields.Integer(compute='_assigned_leads')
-    unassigned_leads = fields.Integer(compute='_unassigned_leads')
+    assigned_leads_count = fields.Integer(compute='_assigned_leads_count')
     capacity = fields.Integer(compute='_capacity')
     team_user_ids = fields.One2many('team.user', 'team_id', string='Salesman')
     min_for_assign = fields.Integer("Minimum score", help="Minimum score to be automatically assign (>=)", default=0, required=True)

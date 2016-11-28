@@ -37,7 +37,7 @@ class EbayConfiguration(models.TransientModel):
     def set_ebay(self):
         ebay_dev_id = self[0].ebay_dev_id or ''
         self.env['ir.config_parameter'].set_param('ebay_dev_id', ebay_dev_id, groups=["base.group_system"])
-        ebay_sales_team = self[0].ebay_sales_team or self.env['crm.team'].search([])[0]
+        ebay_sales_team = self[0].ebay_sales_team or self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]
         self.env['ir.config_parameter'].set_param('ebay_sales_team', ebay_sales_team.id)
         sandbox_token = self[0].ebay_sandbox_token or ''
         self.env['ir.config_parameter'].set_param('ebay_sandbox_token', sandbox_token, groups=["base.group_system"])
@@ -127,7 +127,7 @@ class EbayConfiguration(models.TransientModel):
         ebay_location = params.get_param('ebay_location')
         ebay_out_of_stock = params.get_param('ebay_out_of_stock', default=False)
         ebay_sales_team = int(params.get_param('ebay_sales_team',
-                              default=self.env['crm.team'].search([])[0]))
+                              default=self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]))
         ebay_gallery_plus = params.get_param('ebay_gallery_plus')
         return {'ebay_dev_id': ebay_dev_id,
                 'ebay_sandbox_token': ebay_sandbox_token,

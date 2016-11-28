@@ -31,7 +31,7 @@
 
 <!-- Custom reports (aka filters) -->
         <record id="filter_crm_phonecall_sales_team" model="ir.filters">
-            <field name="name">By Sales Team</field>
+            <field name="name">By Sales Channel</field>
             <field name="model_id">crm.phonecall.report</field>
             <field name="domain">[('state','=','done')]</field>
             <field name="user_id" eval="False"/>
@@ -60,10 +60,10 @@
                     <filter string="Not Held" name="not_held" domain="[('state','=','pending')]" 
                         help="Phone calls which receive no answer"/>
                     <separator/>
-                    <filter string="My Sales Team(s)" name="my_sales_team" context="{'invisible_team': False}" domain="[('team_id.user_id','=',uid)]"
+                    <filter string="My Sales Channel(s)" name="my_sales_team" context="{'invisible_team': False}" domain="[('team_id.user_id','=',uid)]"
                             help="Phone calls that are assigned to one of the sale teams I manage" groups="base.group_multi_salesteams"/>
                     <separator/>
-                    <field name="team_id" string="Sales Team" context="{'invisible_team': False}"
+                    <field name="team_id" string="Sales Channel" context="{'invisible_team': False}"
                             groups="base.group_multi_salesteams"/>
                     <field name="user_id" string="Salesperson"/>
                     <group expand="0" string="Extended Filters...">
@@ -72,7 +72,7 @@
                     </group>
                     <group expand="1" string="Group By">
                         <filter string="Salesperson" name="Salesperson" context="{'group_by':'user_id'}" />
-                        <filter string="Sales Team" name="sales_team" context="{'group_by':'team_id'}" groups="base.group_multi_salesteams"/>
+                        <filter string="Sales Channel" name="sales_team" context="{'group_by':'team_id'}" groups="base.group_multi_salesteams"/>
                         <filter string="Customer" name="customer" context="{'group_by':'partner_id'}" />
                         <filter string="Status" name="status" context="{'group_by':'state'}" />
                         <separator/>
@@ -92,7 +92,7 @@
             <field name="context">{}</field>
             <field name="search_view_id" ref="view_report_crm_phonecall_filter"/>
             <field name="view_id"></field>  <!-- force empty -->
-            <field name="help">From this report, you can analyse the performance of your sales team, based on their phone calls. You can group or filter the information according to several criteria and drill down the information, by adding more groups in the report.</field>
+            <field name="help">From this report, you can analyse the performance of your sales channel, based on their phone calls. You can group or filter the information according to several criteria and drill down the information, by adding more groups in the report.</field>
         </record>
 
         <record id="action_report_crm_phonecall_graph" model="ir.actions.act_window.view">

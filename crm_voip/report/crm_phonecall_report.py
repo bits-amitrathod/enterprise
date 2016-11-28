@@ -13,8 +13,8 @@ class CrmPhonecallReport(models.Model):
     partner_id = fields.Many2one('res.partner', 'Contact', readonly=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     duration = fields.Float('Duration', digits=(16, 2), group_operator="avg", readonly=True)
-    team_id = fields.Many2one('crm.team', 'Sales Team', index=True,
-        help="Sales team to which Case belongs to.")
+    team_id = fields.Many2one('crm.team', 'Sales Channel', index=True,
+        help="Sales channel to which Case belongs to.")
     state = fields.Selection([
         ('pending', 'Not Held'),
         ('cancel', 'Cancelled'),

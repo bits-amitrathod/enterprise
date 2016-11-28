@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import crm_team
 import product
 import res_country
 import res_currency

@@ -24,9 +24,9 @@ class CrmPhonecall(models.Model):
     duration = fields.Float('Duration', help="Duration in minutes and seconds.")
     partner_phone = fields.Char('Phone')
     partner_mobile = fields.Char('Mobile')
-    team_id = fields.Many2one('crm.team', 'Sales Team', index=True,
+    team_id = fields.Many2one('crm.team', 'Sales Channel', index=True,
         default=lambda self: self.env['crm.team']._get_default_team_id(self.env.uid),
-        help="Sales team to which Case belongs to.")
+        help="Sales channel to which Case belongs to.")
     in_queue = fields.Boolean('In Call Queue', default=True)
     sequence = fields.Integer('Sequence', index=True,
         help="Gives the sequence order when displaying a list of Phonecalls.")

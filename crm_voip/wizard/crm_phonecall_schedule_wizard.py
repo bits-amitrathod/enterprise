@@ -13,7 +13,7 @@ class CrmSchedulePhonecall(models.TransientModel):
     user_id = fields.Many2one('res.users', "Assign To")
     partner_phone = fields.Char('Phone')
     partner_mobile = fields.Char('Mobile')
-    team_id = fields.Many2one('crm.team', 'Sales Team')
+    team_id = fields.Many2one('crm.team', 'Sales Channel')
     partner_id = fields.Many2one('res.partner', "Partner")
     opportunity_id = fields.Many2one('crm.lead', 'opportunity')
 
