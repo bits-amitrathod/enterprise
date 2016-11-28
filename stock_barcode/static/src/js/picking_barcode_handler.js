@@ -92,7 +92,7 @@ var PickingBarcodeHandler = FormViewBarcodeHandler.extend({
             return self.form_view.save().done(function() {
                 return self.form_view.reload().done(function() {
                     return self.picking_model.call('get_po_to_split_from_barcode', [[self.form_view.datarecord.id], barcode]).done(function(id) {
-                        return self.po_model.call("split_lot", [[id]]).done(function(result) {
+                        return self.po_model.call("action_split_lots", [[id]]).done(function(result) {
                             self.open_wizard(result);
                         });
                     });
