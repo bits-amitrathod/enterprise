@@ -193,19 +193,19 @@ class website_contract(http.Controller):
 
     # 3DS controllers
     # transaction began as s2s but we receive a form reply
-    @http.route(['/my/contract/<int:account_id>/payment/<int:tx_id>/accept/',
-                 '/my/contract/<int:account_id>/payment/<int:tx_id>/decline/',
-                 '/my/contract/<int:account_id>/payment/<int:tx_id>/exception/'], type='http', auth="public", website=True)
-    def payment_accept(self, account_id, tx_id, **kw):
-        account_res = request.env['sale.subscription']
+    @http.route(['/my/contract/<sub_uuid>/payment/<int:tx_id>/accept/',
+                 '/my/contract/<sub_uuid>/payment/<int:tx_id>/decline/',
+                 '/my/contract/<sub_uuid>/payment/<int:tx_id>/exception/'], type='http', auth="public", website=True)
+    def payment_accept(self, sub_uuid, tx_id, **kw):
+        Subscription = request.env['sale.subscription']
         tx_res = request.env['payment.transaction']
 
-        account = account_res.sudo().browse(account_id)
+        subscription = Subscription.sudo().search([('uuid', '=', sub_uuid)])
         tx = tx_res.sudo().browse(tx_id)
 
         get_param = self.payment_succes_msg if tx.state in ['done', 'authorized'] else self.payment_fail_msg
 
-        return request.redirect('/my/contract/%s/%s?%s' % (account.id, account.uuid, get_param))
+        return request.redirect('/my/contract/%s/%s?%s' % (subscription.id, sub_uuid, get_param))
 
     @http.route(['/my/contract/<int:account_id>/change'], type='http', auth="public", website=True)
     def change_contract(self, account_id, uuid=None, **kw):
