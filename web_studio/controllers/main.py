@@ -271,7 +271,6 @@ class WebStudioController(http.Controller):
                 for view_id in action_id.view_ids:
                     if view_id.view_mode in view_modes:
                         view_id.sequence = view_modes.index(view_id.view_mode)
-                        view_xml_id = request.env['ir.model.data'].search([('model', '=', 'ir.actions.act_window.view'), ('res_id', '=', view_id.id)])
                     else:
                         view_id.unlink()
 

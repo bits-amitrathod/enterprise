@@ -19,7 +19,7 @@ class account_analytic_line(models.Model):
         """
         Cleanup in case some xml_ids were created with the wrong module prefix
         """
-        dirty_xml_ids = self.env['ir.model.data'].search([
+        dirty_xml_ids = self.env['ir.model.data'].sudo().search([
             ('module', '=', 'project_timesheet_synchro'),
             ('model', 'in', [
                 'mail.alias',
@@ -29,7 +29,7 @@ class account_analytic_line(models.Model):
                 'account.analytic.line'
             ])
         ])
-        dirty_xml_ids.sudo().write({'module': '__export__'})
+        dirty_xml_ids.write({'module': '__export__'})
         return True
 
     @api.model
