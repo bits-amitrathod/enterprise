@@ -45,13 +45,43 @@
                     margin: 4px 0;
                 }
             }
+            .o_inner_group {
+                border-collapse: separate;
+                border: 10px solid transparent;
+                transition: border-color 0.5s;
+
+                tr:not(.o_web_studio_new_line) {
+                    td {
+                        border: 5px solid transparent;
+                        border-bottom-width: 1px;
+
+                        &.o_td_label {
+                            min-width: 140px;
+                        }
+                    }
+
+                    &.o_clicked {
+                        outline: 2px solid @odoo-brand-optional;
+                    }
+                }
+
+                &.o_clicked{
+                    padding: 5px;
+                    outline: 2px solid @odoo-brand-optional;
+                    border: 5px solid fade(@odoo-brand-optional, 10%);
+
+                    tr:not(.o_web_studio_hovered) {
+                        opacity: 0.5;
+                    }
+                }
+            }
         }
         .o_web_studio_hovered {
             outline: 1px dashed @odoo-brand-optional;
             cursor: pointer;
         }
         .o_clicked {
-            outline: 1px dashed black;
+            outline: 2px solid @odoo-brand-optional;
         }
         .o_web_studio_button_hook {
             width: 48px;
