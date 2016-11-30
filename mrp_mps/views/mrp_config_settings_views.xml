@@ -6,8 +6,11 @@
         <field name="model">mrp.config.settings</field>
         <field name="inherit_id" ref="mrp.view_mrp_config"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='logistics']" position="inside">
-                <field name="manufacturing_period"/>
+            <xpath expr="//div[@id='content_mrp_mps']" position="replace">
+                <div class="mt16" attrs="{'invisible': [('module_mrp_mps','=',False)]}">
+                    <label string="Time Range" for="manufacturing_period" class="o_light_label oe_inline"/>
+                    <field name="manufacturing_period" class="o_light_label" widget="radio"/>
+                </div>
             </xpath>
         </field>
     </record>

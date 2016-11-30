@@ -25,7 +25,7 @@ Quality Control
         'data/quality_data.xml',
         'views/quality_templates.xml',
         'views/quality_views.xml',
-        'views/stock_picking_views.xml'
+        'views/stock_picking_views.xml',
     ],
     'demo': [
         'data/quality_demo.xml'
