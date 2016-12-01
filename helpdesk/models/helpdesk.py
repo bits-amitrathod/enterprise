@@ -2,11 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
-import random
 
 from dateutil import relativedelta
 
-from odoo import api, fields, models, _, tools
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError, AccessError, ValidationError
 
 
@@ -44,7 +43,7 @@ class HelpdeskTeam(models.Model):
              '\tManually: manual\n'
              '\tRandomly: randomly but everyone gets the same amount\n'
              '\tBalanced: to the person with the least amount of open tickets')
-    member_ids = fields.Many2many('res.users', string='Team Members')
+    member_ids = fields.Many2many('res.users', string='Team Members', domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)])
     ticket_ids = fields.One2many('helpdesk.ticket', 'team_id', string='Tickets')
 
     use_alias = fields.Boolean('Email alias')
@@ -107,16 +106,16 @@ class HelpdeskTeam(models.Model):
     @api.model
     def create(self, vals):
         team = super(HelpdeskTeam, self.with_context(mail_create_nolog=True, mail_create_nosubscribe=True)).create(vals)
-        team._check_sla_group()
-        team._check_modules_to_install()
+        team.sudo()._check_sla_group()
+        team.sudo()._check_modules_to_install()
         # If you plan to add something after this, use a new environment. The one above is no longer valid after the modules install.
         return team
 
     @api.multi
     def write(self, vals):
         result = super(HelpdeskTeam, self).write(vals)
-        self._check_sla_group()
-        self._check_modules_to_install()
+        self.sudo()._check_sla_group()
+        self.sudo()._check_modules_to_install()
         # If you plan to add something after this, use a new environment. The one above is no longer valid after the modules install.
         return result
 
@@ -131,6 +130,13 @@ class HelpdeskTeam(models.Model):
         for team in self:
             if team.use_sla and not self.user_has_groups('helpdesk.group_use_sla'):
                 self.env.ref('helpdesk.group_helpdesk_user').write({'implied_ids': [(4, self.env.ref('helpdesk.group_use_sla').id)]})
+            if team.use_sla:
+                self.env['helpdesk.sla'].with_context(active_test=False).search([('team_id', '=', team.id), ('active', '=', False)]).write({'active': True})
+            else:
+                self.env['helpdesk.sla'].search([('team_id', '=', team.id)]).write({'active': False})
+                if not self.search_count([('use_sla', '=', True)]):
+                    self.env.ref('helpdesk.group_helpdesk_user').write({'implied_ids': [(3, self.env.ref('helpdesk.group_use_sla').id)]})
+                    self.env.ref('helpdesk.group_use_sla').write({'users': [(5, 0, 0)]})
 
     @api.multi
     def _check_modules_to_install(self):
@@ -314,12 +320,23 @@ class HelpdeskTeam(models.Model):
     def get_new_user(self):
         self.ensure_one()
         new_user = self.env['res.users']
-        if self.assign_method == 'randomly':
-            new_user = random.choice(self.member_ids)
-        elif self.assign_method == 'balanced':
-            read_group_res = self.env['helpdesk.ticket'].read_group([('stage_id.is_close', '=', False), ('user_id', 'in', self.member_ids.ids)], ['user_id'], ['user_id'])
-            count_dict = dict((data['user_id'][0], data['user_id_count']) for data in read_group_res)
-            new_user = self.env['res.users'].browse(min(count_dict, key=count_dict.get))
+        member_ids = sorted(self.member_ids.ids)
+        if member_ids:
+            if self.assign_method == 'randomly':
+                # randomly means new ticketss get uniformly distributed
+                previous_assigned_user = self.env['helpdesk.ticket'].search([('team_id', '=', self.id)], order='create_date desc', limit=1).user_id
+                # handle the case where the previous_assigned_user has left the team (or there is none).
+                if previous_assigned_user and previous_assigned_user.id in member_ids:
+                    previous_index = member_ids.index(previous_assigned_user.id)
+                    new_user = new_user.browse(member_ids[(previous_index + 1) % len(member_ids)])
+                else:
+                    new_user = new_user.browse(member_ids[0])
+            elif self.assign_method == 'balanced':
+                read_group_res = self.env['helpdesk.ticket'].read_group([('stage_id.is_close', '=', False), ('user_id', 'in', member_ids)], ['user_id'], ['user_id'])
+                # add all the members in case a member has no more open tickets (and thus doesn't appear in the previous read_group)
+                count_dict = dict((m_id, 0) for m_id in member_ids)
+                count_dict.update((data['user_id'][0], data['user_id_count']) for data in read_group_res)
+                new_user = new_user.browse(min(count_dict, key=count_dict.get))
         return new_user
 
 
@@ -337,13 +354,13 @@ class HelpdeskStage(models.Model):
     sequence = fields.Integer('Sequence', default=10)
     is_close = fields.Boolean(
         'Closing Kanban Stage',
-        help='Tickets in this stage are considered as done. This is used notably when'
+        help='Tickets in this stage are considered as done. This is used notably when '
              'computing SLAs and KPIs on tickets.')
     fold = fields.Boolean(
         'Folded', help='Folded in kanban view')
     team_ids = fields.Many2many(
         'helpdesk.team', relation='team_stage_rel', string='Team',
-        default=_get_default_team_ids, groups="base.group_no_one",
+        default=_get_default_team_ids,
         help='Specific team that uses this stage. Other teams will not be able to see or use this stage.')
     template_id = fields.Many2one(
         'mail.template', 'Automated Answer Email Template',
@@ -389,15 +406,29 @@ class HelpdeskSLA(models.Model):
     ticket_type_id = fields.Many2one(
         'helpdesk.ticket.type', "Ticket Type",
         help="Only apply the SLA to a specific ticket type. If left empty it will apply to all types.")
-    stage_id = fields.Many2one('helpdesk.stage', 'Stage', required=True)
+    stage_id = fields.Many2one(
+        'helpdesk.stage', 'Target Stage', required=True,
+        help='Minimum stage a ticket needs to reach in order to satisfy this SLA.')
     priority = fields.Selection(
         TICKET_PRIORITY, string='Minimum Priority',
         default='0', required=True,
         help='Tickets under this priority will not be taken into account.')
     company_id = fields.Many2one('res.company', 'Company', related='team_id.company_id', readonly=True, store=True)
-    time_days = fields.Integer('Days', help="Days to reach given stage based on ticket creation date")
-    time_hours = fields.Integer('Hours', help="Hours to reach given stage based on ticket creation date")
-    time_minutes = fields.Integer('Minutes', help="Minutes to reach given stage based on ticket creation date")
+    time_days = fields.Integer('Days', default=0, required=True, help="Days to reach given stage based on ticket creation date")
+    time_hours = fields.Integer('Hours', default=0, required=True, help="Hours to reach given stage based on ticket creation date")
+    time_minutes = fields.Integer('Minutes', default=0, required=True, help="Minutes to reach given stage based on ticket creation date")
+
+    @api.onchange('time_hours')
+    def _onchange_time_hours(self):
+        if self.time_hours >= 24:
+            self.time_days += self.time_hours / 24
+            self.time_hours = self.time_hours % 24
+
+    @api.onchange('time_minutes')
+    def _onchange_time_minutes(self):
+        if self.time_minutes >= 60:
+            self.time_hours += self.time_minutes / 60
+            self.time_minutes = self.time_minutes % 60
 
 
 class HelpdeskTicket(models.Model):
@@ -454,7 +485,7 @@ class HelpdeskTicket(models.Model):
              "* Normal is the default situation\n"
              "* Blocked indicates something is preventing the progress of this issue\n"
              "* Ready for next stage indicates the issue is ready to be pulled to the next stage")
-    user_id = fields.Many2one('res.users', string='Assigned to', track_visibility='onchange')
+    user_id = fields.Many2one('res.users', string='Assigned to', track_visibility='onchange', domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)])
     partner_id = fields.Many2one('res.partner', string='Customer')
     partner_tickets = fields.Integer('Number of tickets from the same partner', compute='_compute_partner_tickets')
 
@@ -488,11 +519,11 @@ class HelpdeskTicket(models.Model):
     @api.onchange('team_id')
     def _onchange_team_id(self):
         if self.team_id:
-            udpate_vals = self._onchange_team_get_values(self.team_id)
+            update_vals = self._onchange_team_get_values(self.team_id)
             if not self.user_id:
-                self.user_id = udpate_vals['user_id']
+                self.user_id = update_vals['user_id']
             if not self.stage_id or self.stage_id not in self.team_id.stage_ids:
-                self.stage_id = udpate_vals['stage_id']
+                self.stage_id = update_vals['stage_id']
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -550,7 +581,7 @@ class HelpdeskTicket(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('team_id'):
-            vals.update(self._onchange_team_get_values(self.env['helpdesk.team'].browse(vals['team_id'])))
+            vals.update(item for item in self._onchange_team_get_values(self.env['helpdesk.team'].browse(vals['team_id'])).items() if item[0] not in vals)
 
         # context: no_log, because subtype already handle this
         ticket = super(HelpdeskTicket, self.with_context(mail_create_nolog=True)).create(vals)
