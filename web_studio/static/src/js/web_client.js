@@ -10,7 +10,7 @@ var bus = require('web_studio.bus');
 
 var _t = core._t;
 
-if (!session.is_admin) {
+if (!session.is_system) {
     // Studio is only available for the Administrator, so display a notification
     // if another user tries to access it through the url
     WebClient.include({

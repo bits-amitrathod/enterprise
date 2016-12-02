@@ -10,7 +10,7 @@ var bus = require('web_studio.bus');
 
 var QWeb = core.qweb;
 
-if (!session.is_admin) {
+if (!session.is_system) {
     return;
 }
 

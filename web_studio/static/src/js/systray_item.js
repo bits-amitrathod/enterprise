@@ -11,7 +11,7 @@ var Widget = require('web.Widget');
  * Instantiate this widget iff user is admin
  */
 
-if (!session.is_admin) {
+if (!session.is_system) {
     return;
 }
 
