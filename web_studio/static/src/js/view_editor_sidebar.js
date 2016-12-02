@@ -55,6 +55,7 @@ return Widget.extend(FieldManagerMixin, {
         this.field_widgets = Object.keys(field_registry.map).sort();
         this.model = model;
         this.fields = fields;
+        this.show_invisible = false;
     },
     renderElement: function() {
         this._super();
@@ -177,7 +178,8 @@ return Widget.extend(FieldManagerMixin, {
         this.trigger_up('open_defaults');
     },
     toggle_form_invisible: function(ev) {
-        this.trigger_up('toggle_form_invisible', ev);
+        this.show_invisible = !!$(ev.currentTarget).is(":checked");
+        this.trigger_up('toggle_form_invisible', {show_invisible : this.show_invisible});
     },
     change_view: function(ev) {
         var $input = $(ev.currentTarget);

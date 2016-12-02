@@ -272,10 +272,7 @@ return Widget.extend({
         });
     },
     toggle_form_invisible: function (event) {
-        var options = {
-            show_invisible: !!$(event.data.currentTarget).is(":checked"),
-        };
-        this.render_content(true, options);
+        this.render_content(true, {show_invisible: event.data.show_invisible});
     },
     open_xml_editor: function () {
         var self = this;
@@ -506,6 +503,7 @@ return Widget.extend({
     },
     unselect_element: function() {
         if (this.editor && this.editor._reset_clicked_style) {
+            this.editor.selected_node_id = false;
             this.editor._reset_clicked_style(); // FIXME: this function should be written in an AbstractEditor
         }
     },
