@@ -136,8 +136,8 @@ return Widget.extend(FieldManagerMixin, {
 
         // Existing Fields
         var FormComponent = form_component_widget_registry.get('existing_field');
-        form_widgets = _.map(this.fields, function(field, field_name) {
-            return new FormComponent(self, field_name, field.string, field.type);
+        form_widgets = _.map(this.fields, function(field) {
+            return new FormComponent(self, field.name, field.string, field.type);
         });
         $sidebar_content.append(this._render_widgets_components(form_widgets, 'Existing Fields'));
     },

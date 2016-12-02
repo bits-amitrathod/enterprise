@@ -162,8 +162,7 @@ return Widget.extend({
         ).then(function (demo_data, fields) {
             self.demo_data = demo_data;
             self.fields = fields;
-            // Fields not already in view
-            var fields_not_in_view = _.omit(self.fields, Object.keys(self.fields_view.fields));
+            var fields_not_in_view = self.get_fields_not_in_view();
             self.sidebar = new ViewEditorSidebar(self, self.view_type, self.view_attrs, self.model, fields_not_in_view);
         });
     },
@@ -174,6 +173,17 @@ return Widget.extend({
         return $.when(this._super(), this.render_content()).then(function () {
             return self.sidebar.prependTo(self.$el);
         });
+    },
+
+    get_fields_not_in_view: function() {
+        // Remove fields that are already in the view
+        var fields_not_in_view = _.omit(this.fields, Object.keys(this.fields_view.fields));
+        // Convert dict to array
+        var list = _.map(fields_not_in_view, function(dict, key) {
+            return _.extend({name: key}, dict);
+        });
+        // Sort by field_description (alphabetically)
+        return _.sortBy(list, 'string');
     },
     get_fields: function() {
         return data_manager.load_fields(this.dataset);
@@ -220,9 +230,6 @@ return Widget.extend({
             if (replace || !this.editor) {
                 var Editor = Editors[this.view_type];
                 editor = new Editor(this, this.fields_view.arch, this.fields_view.fields, this.demo_data, field_registry, options);
-                // Update fields and render the sidebar
-                var fields_not_in_view = _.omit(this.fields, Object.keys(this.fields_view.fields));
-                this.sidebar.update_fields(fields_not_in_view);
             }
         } else {
             var Renderer = Renderers[this.view_type];
@@ -498,6 +505,10 @@ return Widget.extend({
             return self.load_demo_data().then(function(demo_data) {
                 self.demo_data = demo_data;
                 self.render_content(true);
+                // fields and fields_view has been updated.
+                // So first we have to calculate which fields are in the view or not.
+                // Then we want to update sidebar who displays "existing fields"
+                self.sidebar.update_fields(self.get_fields_not_in_view());
             });
         });
     },
