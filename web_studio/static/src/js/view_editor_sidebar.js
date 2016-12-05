@@ -58,10 +58,14 @@ return Widget.extend(FieldManagerMixin, {
         this.show_invisible = false;
     },
     renderElement: function() {
+        var self = this;
         this._super();
 
         if (this.mode === 'new') {
             this._append_widgets_components();
+            this.$('.o_web_studio_component').on("drag", _.throttle(function(event, ui) {
+                self.trigger_up('drag_component', {pageX: event.pageX, pageY: event.pageY, $helper: ui.helper});
+            }, 200));
         } else if (this.mode === 'properties') {
             this._append_widgets_many2many_groups();
         }

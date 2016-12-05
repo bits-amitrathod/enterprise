@@ -118,6 +118,7 @@ return Widget.extend({
         'open_view_form': 'open_view_form',
         'open_defaults': 'open_defaults',
         'open_field_form': 'open_field_form',
+        'drag_component' : 'show_nearest_hook',
     },
 
     init: function (parent, model, fields_view, view_type, dataset, options) {
@@ -346,6 +347,10 @@ return Widget.extend({
                     });
                 }
         });
+    },
+    show_nearest_hook: function (event) {
+        var is_nearest_hook = this.editor.highlight_nearest_hook(event.data.pageX, event.data.pageY);
+        event.data.$helper.toggleClass('ui-draggable-helper-ready', is_nearest_hook);
     },
     update_view: function(event) {
         var structure = event.data.structure;

@@ -23,6 +23,7 @@ function _is_handled(event) {
 }
 
 var FormEditor =  FormRenderer.extend({
+    nearest_hook_tolerance: 50,
     className: FormRenderer.prototype.className + ' o_web_studio_form_view_editor',
     events: _.extend({}, FormRenderer.prototype.events, {
         'click .o_web_studio_add_chatter': function() {
@@ -49,12 +50,36 @@ var FormEditor =  FormRenderer.extend({
         this.chatter_allowed = options.chatter_allowed;
         this.silent = false;
         this.node_id = 1;
+        this.hook_nodes = {};
     },
     _render: function() {
         var self = this;
         this.has_chatter = false;
         this.has_follower_field = false;
         this.has_message_field = false;
+
+        this.$el.droppable({
+            accept: ".o_web_studio_component",
+            drop: function(event, ui) {
+                var $hook = self.$('.o_web_studio_nearest_hook');
+                if ($hook.length) {
+                    var hook_id = $hook.data('hook_id');
+                    var hook = self.hook_nodes[hook_id];
+
+                    var values = {
+                        type: 'add',
+                        structure: ui.draggable.data('structure'),
+                        field_description: ui.draggable.data('field_description'),
+                        node: hook.node,
+                        new_attrs: ui.draggable.data('new_attrs'),
+                        position: hook.position,
+                    };
+                    ui.helper.removeClass('ui-draggable-helper-ready');
+                    self.trigger_up('on_hook_selected');
+                    self.trigger_up('view_change', values);
+                }
+            },
+        });
 
         return this._super.apply(this, arguments).then(function() {
             // Add chatter hook
@@ -101,9 +126,9 @@ var FormEditor =  FormRenderer.extend({
     _render_tag_group: function(node) {
         var $result = this._super.apply(this, arguments);
         // Add hook after this group
-        var studioNewLine = new FormEditorHook(this, node);
-        studioNewLine.appendTo($('<div>')); // start the widget
-        return $result.add(studioNewLine.$el);
+        var formEditorHook = this._render_hook(node, 'after');
+        formEditorHook.appendTo($('<div>')); // start the widget
+        return $result.add(formEditorHook.$el);
     },
     _render_inner_group: function(node) {
         var self = this;
@@ -119,16 +144,16 @@ var FormEditor =  FormRenderer.extend({
         this._set_style_events($result);
         // Add hook only for groups that have not yet content.
         if (!node.children.length) {
-            var formEditorHook = new FormEditorHook(this, node, 'inside');
+            var formEditorHook = this._render_hook(node, 'inside');
             formEditorHook.appendTo($result);
             this._set_style_events($result);
         }
         return $result;
     },
     _render_adding_content_line: function (node) {
-        var studioNewLine = new FormEditorHook(this, node);
-        studioNewLine.appendTo($('<div>')); // start the widget
-        return studioNewLine.$el;
+        var formEditorHook = this._render_hook(node, 'after');
+        formEditorHook.appendTo($('<div>')); // start the widget
+        return formEditorHook.$el;
     },
     _render_inner_field: function(node) {
         var $result = this._super.apply(this, arguments);
@@ -174,11 +199,11 @@ var FormEditor =  FormRenderer.extend({
         this._set_style_events($result);
         return $result;
     },
-    _render_tab_page: function(page) {
+    _render_tab_page: function(node) {
         var $result = this._super.apply(this, arguments);
         // Add hook only for pages that have not yet content.
         if (!$result.children().length) {
-            var formEditorHook = new FormEditorHook(this, page, 'inside');
+            var formEditorHook = this._render_hook(node, 'inside');
             formEditorHook.appendTo($result);
         }
         return $result;
@@ -255,6 +280,29 @@ var FormEditor =  FormRenderer.extend({
     },
     _reset_clicked_style: function() {
         this.$('.o_clicked').removeClass('o_clicked');
+    },
+    _render_hook: function(node, position) {
+        var hook_id = _.uniqueId();
+        this.hook_nodes[hook_id] = {
+            node: node,
+            position: position,
+        };
+        return new FormEditorHook(this, node.tag, position, hook_id);
+    },
+    highlight_nearest_hook: function(pageX, pageY) {
+        this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
+        var $nearest_form_hook = this.$('.o_web_studio_hook')
+            .touching({
+                x: pageX - this.nearest_hook_tolerance,
+                y: pageY - this.nearest_hook_tolerance,
+                w: this.nearest_hook_tolerance*2,
+                h: this.nearest_hook_tolerance*2})
+            .nearest({x: pageX, y: pageY}).eq(0);
+        if ($nearest_form_hook.length) {
+            $nearest_form_hook.addClass('o_web_studio_nearest_hook');
+            return true;
+        }
+        return false;
     },
     get_local_state: function() {
         var state = this._super.apply(this, arguments);

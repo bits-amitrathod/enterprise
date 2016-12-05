@@ -4,9 +4,10 @@ odoo.define('web_studio.ListEditor', function (require) {
 var ListRenderer = require('web.BasicListRenderer');
 
 return ListRenderer.extend({
+    nearest_hook_tolerance: 50,
     className: ListRenderer.prototype.className + ' o_web_studio_list_view_editor',
     events: _.extend({}, ListRenderer.prototype.events, {
-        'click th:not(.o_web_studio_new_column), td:not(.o_web_studio_new_column)': 'on_existing_column',
+        'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': 'on_existing_column',
     }),
 
     init: function(parent, arch, fields, state, widgets_registry, options) {
@@ -24,52 +25,36 @@ return ListRenderer.extend({
         var self = this;
         var def = this._super.apply(this, arguments);
 
-        this.$('.o_web_studio_new_column').droppable({
+        this.$el.droppable({
             accept: ".o_web_studio_component",
             drop: function(event, ui) {
-                var $el = $(event.target);
-                var position = $el.closest('table').find('th').eq($el.index()).data('position') || 'after';
-                var hooked_field_index = position === 'before' && $el.index() + 1 || $el.index() - 1;
-                var field_name = $el.closest('table').find('th').eq(hooked_field_index).data('name');
-                var node = _.find(self.columns, function (column) {
-                    return column.attrs.name === field_name;
-                });
-                self.selected_node_id = false;
+                var $hook = self.$('.o_web_studio_nearest_hook');
+                if ($hook.length) {
+                    var position = $hook.closest('table').find('th').eq($hook.index()).data('position') || 'after';
+                    var hooked_field_index = position === 'before' && $hook.index() + 1 || $hook.index() - 1;
+                    var field_name = $hook.closest('table').find('th').eq(hooked_field_index).data('name');
+                    var node = _.find(self.columns, function (column) {
+                        return column.attrs.name === field_name;
+                    });
+                    self.selected_node_id = false;
 
-                var values = {
-                    type: 'add',
-                    structure: ui.draggable.data('structure'),
-                    field_description: ui.draggable.data('field_description'),
-                    node: node,
-                    new_attrs: ui.draggable.data('new_attrs'),
-                    position: position,
-                };
-                ui.helper.removeClass('ui-draggable-helper-ready');
-                self.trigger_up('on_hook_selected');
-                self.trigger_up('view_change', values);
+                    var values = {
+                        type: 'add',
+                        structure: ui.draggable.data('structure'),
+                        field_description: ui.draggable.data('field_description'),
+                        node: node,
+                        new_attrs: ui.draggable.data('new_attrs'),
+                        position: position,
+                    };
+                    ui.helper.removeClass('ui-draggable-helper-ready');
+                    self.trigger_up('on_hook_selected');
+                    self.trigger_up('view_change', values);
+                }
             },
-            over: function(event, ui) {
-                var $el = $(event.target);
-                // show "+" on th
-                $el.closest('table')
-                    .find('th')
-                    .eq($el.index())
-                    .addClass('o_web_studio_hovered');
-                $el.closest('table')
-                    .find('tr')
-                    .children(':nth-child(' + ($el.index() + 1) + ')')
-                    .addClass('o_web_studio_hovered');
-
-                ui.helper.addClass('ui-draggable-helper-ready');
-            },
-            out: function(event, ui) {
-                ui.helper.removeClass('ui-draggable-helper-ready');
-                self.$el.find('.o_web_studio_hovered').removeClass('o_web_studio_hovered');
-            }
         });
 
         // HOVER
-        this.$('th, td').not('.o_web_studio_new_column').hover(function(ev) {
+        this.$('th, td').not('.o_web_studio_hook').hover(function(ev) {
             var $el = $(ev.currentTarget);
             self.$('.o_hover').removeClass('o_hover');
 
@@ -89,10 +74,6 @@ return ListRenderer.extend({
             self.$('.o_clicked').removeClass('o_clicked');
 
             $el.closest('table')
-                .find('th')
-                .eq($el.index())
-                .addClass('o_clicked');
-            $el.closest('table')
                 .find('tr')
                 .children(':nth-child(' + ($el.index() + 1) + ')')
                 .addClass('o_clicked');
@@ -106,7 +87,7 @@ return ListRenderer.extend({
         var self = this;
         _.each($header.find('th'), function(th, index) {
             var $new_th = $('<th>')
-                .addClass('o_web_studio_new_column')
+                .addClass('o_web_studio_hook')
                 .append(
                     $('<i>').addClass('fa fa-plus')
             );
@@ -115,7 +96,7 @@ return ListRenderer.extend({
             // Insert a hook before the first column
             if (index === 0) {
                 var $new_th_before = $('<th>')
-                    .addClass('o_web_studio_new_column')
+                    .addClass('o_web_studio_hook')
                     .data('position', 'before')
                     .append(
                         $('<i>').addClass('fa fa-plus')
@@ -139,13 +120,13 @@ return ListRenderer.extend({
         var $row = this._super.apply(this, arguments);
         _.each($row.find('td'), function(td, index) {
             $('<td>')
-                .addClass('o_web_studio_new_column')
+                .addClass('o_web_studio_hook')
                 .insertAfter($(td));
 
             // Insert a hook before the first column
             if (index === 0) {
                 $('<td>')
-                    .addClass('o_web_studio_new_column')
+                    .addClass('o_web_studio_hook')
                     .insertBefore($(td));
 
             }
@@ -157,13 +138,13 @@ return ListRenderer.extend({
         var $row = this._super.apply(this, arguments);
         _.each($row.find('td'), function(td, index) {
             $('<td>')
-                .addClass('o_web_studio_new_column')
+                .addClass('o_web_studio_hook')
                 .insertAfter($(td));
 
             // Insert a hook before the first column
             if (index === 0) {
                 $('<td>')
-                    .addClass('o_web_studio_new_column')
+                    .addClass('o_web_studio_hook')
                     .insertBefore($(td));
 
             }
@@ -175,13 +156,13 @@ return ListRenderer.extend({
         var $footer = this._super.apply(this, arguments);
         _.each($footer.find('td'), function(td, index) {
             $('<td>')
-                .addClass('o_web_studio_new_column')
+                .addClass('o_web_studio_hook')
                 .insertAfter($(td));
 
             // Insert a hook before the first column
             if (index === 0) {
                 $('<td>')
-                    .addClass('o_web_studio_new_column')
+                    .addClass('o_web_studio_hook')
                     .insertBefore($(td));
 
             }
@@ -189,7 +170,24 @@ return ListRenderer.extend({
         return $footer;
 
     },
-
+    highlight_nearest_hook: function(pageX, pageY) {
+        this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
+        var $nearest_list_hook = this.$('.o_web_studio_hook')
+            .touching({
+                x: pageX - this.nearest_hook_tolerance,
+                y: pageY - this.nearest_hook_tolerance,
+                w: this.nearest_hook_tolerance*2,
+                h: this.nearest_hook_tolerance*2})
+            .nearest({x: pageX, y: pageY}).eq(0);
+        if ($nearest_list_hook.length) {
+            $nearest_list_hook.closest('table')
+                .find('tr')
+                .children(':nth-child(' + ($nearest_list_hook.index() + 1) + ')')
+                .addClass('o_web_studio_nearest_hook');
+            return true;
+        }
+        return false;
+    },
     on_existing_column: function(ev) {
         var $el = $(ev.currentTarget);
         var $selected_column = $el.closest('table').find('th').eq($el.index());

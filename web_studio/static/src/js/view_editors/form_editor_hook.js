@@ -4,20 +4,22 @@ odoo.define('web_studio.FormEditorHook', function (require) {
 var Widget = require('web.Widget');
 
 var FormEditorHook = Widget.extend({
-    className: 'o_web_studio_new_line',
+    className: 'o_web_studio_hook',
 
-    init: function(parent, node, position) {
+    init: function(parent, tag, position, hook_id) {
         this._super.apply(this, arguments);
-        this.node = node;
+        this.tag = tag;
         this.position = position;
-        if (this.node.tag === 'field' || (this.node.tag === 'group' && position === 'inside')) {
+        this.hook_id = hook_id;
+        if (this.tag === 'field' || (this.tag === 'group' && position === 'inside')) {
             this.tagName = 'tr';
         }
     },
     start: function() {
-        var self = this;
+        this.$el.data('hook_id', this.hook_id);
+
         var $content;
-        switch (this.node.tag) {
+        switch (this.tag) {
             case 'field':
                 $content = $('<td colspan="2">').append(this._render_span());
                 break;
@@ -35,34 +37,10 @@ var FormEditorHook = Widget.extend({
         }
         this.$el.append($content);
 
-        this.$el.droppable({
-            accept: ".o_web_studio_component",
-            hoverClass : "o_web_studio_hovered",
-            drop: function(event, ui) {
-                var values = {
-                    type: 'add',
-                    structure: ui.draggable.data('structure'),
-                    field_description: ui.draggable.data('field_description'),
-                    node: self.node,
-                    new_attrs: ui.draggable.data('new_attrs'),
-                    position: self.position,
-                };
-                ui.helper.removeClass('ui-draggable-helper-ready');
-                self.trigger_up('on_hook_selected');
-                self.trigger_up('view_change', values);
-            },
-            over: function(event, ui) {
-                ui.helper.addClass('ui-draggable-helper-ready');
-            },
-            out: function(event, ui) {
-                ui.helper.removeClass('ui-draggable-helper-ready');
-            }
-        });
-
         return this._super.apply(this, arguments);
     },
     _render_span: function() {
-        return $('<span>').addClass('o_web_studio_new_line_separator');
+        return $('<span>').addClass('o_web_studio_hook_separator');
     },
 });
 
