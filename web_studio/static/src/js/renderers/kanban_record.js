@@ -3,16 +3,16 @@ odoo.define('web.KanbanRecord', function (require) {
 
 var core = require('web.core');
 var data = require('web.data');
+var field_registry = require('web.field_registry');
+var field_utils = require('web.field_utils');
 var formats = require('web.formats');
 var framework = require('web.framework');
-var kanban_widgets = require('web.kanban_widgets');
 var session = require('web.session');
 var time = require('web.time');
 var utils = require('web.utils');
 var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
-var fields_registry = kanban_widgets.registry;
 
 var KanbanRecord = Widget.extend({
     template: 'KanbanView.record',
@@ -32,6 +32,7 @@ var KanbanRecord = Widget.extend({
         this.fields = state.fields;
         this.record_data = state.data;
         this.relational_data = state.relational_data;
+        this.options = options;
         this.editable = options.editable;
         this.deletable = options.deletable;
         this.draggable = options.draggable;
@@ -57,11 +58,13 @@ var KanbanRecord = Widget.extend({
     start: function() {
         this.add_widgets();
         this.render_m2m_tags();
+        this.attach_tooltip();
         return this._super.apply(this, arguments);
     },
 
     init_content: function (state) {
         var self = this;
+        this.state = state;
         this.id = state.res_id;
         this.db_id = state.id;
         this.values = {};
@@ -83,6 +86,7 @@ var KanbanRecord = Widget.extend({
                 qweb_context[p] = _.bind(this[p], this);
             }
         }
+        this.qweb_context = qweb_context;
         this.content = this.qweb.render('kanban-box', qweb_context);
     },
 
@@ -90,10 +94,12 @@ var KanbanRecord = Widget.extend({
         var self = this;
         this.$("field").each(function() {
             var $field = $(this);
-            var field = self.record[$field.attr("name")];
-            var type = $field.attr("widget") || field.type;
-            var Widget = fields_registry.get(type);
-            var widget = new Widget(self, field, $field, self.record_data, self.relational_data);
+            var field_name = $field.attr("name");
+            var field = self.record[field_name];
+            var field_widget = $field.attr("widget");
+            var widget_keys = (field_widget ? [field_widget] : []).concat(['kanban.' + field.type, field.type]);
+            var Widget = field_registry.get_any(widget_keys);
+            var widget = new Widget(self, field_name, self.state, self.options);
             widget.replace($field);
             self.sub_widgets.push(widget);
         });
@@ -106,7 +112,7 @@ var KanbanRecord = Widget.extend({
             var rel_ids = self.record[field_name].raw_value;
             var $m2m_tags = self.$('.o_form_field_many2manytags[name=' + field_name + ']');
             _.each(rel_ids, function (id) {
-                var m2m = _.findWhere(values, {id: id});
+                var m2m = _.findWhere(values.data, {res_id: id}).data;
                 if (typeof m2m.color !== 'undefined' && m2m.color !== 10) { // 10th color is invisible
                     $('<span>')
                         .addClass('o_tag o_tag_color_' + m2m.color)
@@ -122,14 +128,23 @@ var KanbanRecord = Widget.extend({
     transform_record: function(record) {
         var self = this;
         var new_record = {};
-        _.each(_.extend(_.object(_.keys(this.fields), []), record), function(value, name) {
+        _.each(Object.keys(this.state.fields), function(name) {
+            var value = record[name];
             var r = _.clone(self.fields[name] || {});
+
             if ((r.type === 'date' || r.type === 'datetime') && value) {
                 r.raw_value = time.auto_str_to_date(value);
             } else {
                 r.raw_value = value;
             }
-            r.value = formats.format_value(value, r);
+
+            if (r.type) {
+                var formatter = field_utils['format_' + r.type];
+                r.value = formatter(value, self.fields[name], record, self.state);
+            } else {
+                r.value = value;
+            }
+
             new_record[name] = r;
         });
         return new_record;
@@ -142,6 +157,21 @@ var KanbanRecord = Widget.extend({
         this.renderElement();
         this.add_widgets();
         this.render_m2m_tags();
+        this.attach_tooltip();
+    },
+
+    attach_tooltip: function () {
+        var self = this;
+        this.$('[tooltip]').each(function () {
+            var $el = $(this);
+            var tooltip = $el.attr('tooltip');
+            if (tooltip) {
+                $el.tooltip({
+                    'html': true,
+                    'title': self.qweb.render(tooltip, self.qweb_context)
+                });
+            }
+        });
     },
 
     kanban_image: function(model, field, id, cache, options) {
@@ -199,14 +229,15 @@ var KanbanRecord = Widget.extend({
                 if (elem === ev.currentTarget) {
                     ischild = false;
                 }
+                var test_event = events && events.click && (events.click.length > 1 || events.click[0].namespace !== "tooltip");
                 if (ischild) {
                     children.push(elem);
-                    if (events && events.click) {
+                    if (test_event) {
                         // do not trigger global click if one child has a click event registered
                         trigger = false;
                     }
                 }
-                if (trigger && events && events.click) {
+                if (trigger && test_event) {
                     _.each(events.click, function(click_event) {
                         if (click_event.selector) {
                             // For each parent of original target, check if a

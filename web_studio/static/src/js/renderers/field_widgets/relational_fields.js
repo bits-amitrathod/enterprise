@@ -530,6 +530,19 @@ var ListFieldMany2One = FieldMany2One.extend({
     },
 });
 
+var KanbanFieldMany2One = AbstractRelationalField.extend({
+    tagName: 'span',
+    init: function() {
+        this._super.apply(this, arguments);
+        this.m2o_value = field_utils.format_many2one(this.value, this.field, this.record_data, {
+            relational_data: this.record.relational_data,
+        });
+    },
+    render: function() {
+        this.$el.text(this.m2o_value);
+    },
+});
+
 var FormFieldMany2One = FieldMany2One.extend({
     events: _.extend({}, FieldMany2One.prototype.events, {
         'click': function(event) {
@@ -747,6 +760,7 @@ return {
     FieldMany2One: FieldMany2One,
     FormFieldMany2One: FormFieldMany2One,
     ListFieldMany2One: ListFieldMany2One,
+    KanbanFieldMany2One: KanbanFieldMany2One,
     FieldOne2Many: FieldOne2Many,
 };
 

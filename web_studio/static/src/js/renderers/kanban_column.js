@@ -107,22 +107,17 @@ var KanbanColumn = Widget.extend({
                 update: function (event, ui) {
                     var record = ui.item.data('record');
                     var index = self.records.indexOf(record);
-                    var test2 = $.contains(self.$el[0], record.$el[0]);
                     record.$el.removeAttr('style');  // jqueryui sortable add display:block inline
-                    if (index >= 0 && test2) {
-                        // resequencing records
-                        self.trigger_up('kanban_column_resequence', {ids: self.get_ids()});
-                    } else if (index >= 0 && !test2) {
-                        // removing record from this column
-                        self.records.splice(self.records.indexOf(record), 1);
+                    ui.item.addClass('o_updating');
+                    if (index >= 0) {
+                        if ($.contains(self.$el[0], record.$el[0])) {
+                            // resequencing records
+                            self.trigger_up('kanban_column_resequence', {ids: self.get_ids()});
+                        }
                     } else {
                         // adding record to this column
-                        self.records.push(record);
-                        record.setParent(self);
-                        ui.item.addClass('o_updating');
                         self.trigger_up('kanban_column_add_record', {record: record, ids: self.get_ids()});
                     }
-                    self.update_column();
                 }
             });
         }
@@ -170,12 +165,7 @@ var KanbanColumn = Widget.extend({
         this.$header.find('.o-kanban-count').text(this.records.length);
 
         this.$el.toggleClass('o_column_folded', this.folded);
-        var tooltip;
-        if (this.remaining) {
-            tooltip = this.records.length + '/' + this.size + _t(' records');
-        } else {
-            tooltip = this.records.length + _t(' records');
-        }
+        var tooltip = this.size + _t(' records');
         tooltip = '<p>' + tooltip + '</p>' + this.tooltip_info;
         this.$header.tooltip({html: true}).attr('data-original-title', tooltip);
         if (!this.remaining) {

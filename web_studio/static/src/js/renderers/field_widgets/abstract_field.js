@@ -71,7 +71,7 @@ return Widget.extend({
 
         // Widget can often be configured in the 'options' attribute in the
         // xml 'field' tag.  These options are saved (and evaled) in node_options
-        this.node_options = pyeval.py_eval(this.field.__attrs.options || '{}');
+        this.node_options = pyeval.py_eval(this.field.__attrs.options || '{}', this.record_data);
 
         // local_id is the id corresponding to the current record in the model.
         // Its intended use is to be able to tag any messages going upstream,
