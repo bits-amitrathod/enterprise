@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': "Studio",
+    'summary': "Easily create and customize your applications",
     'description': """
 Studio - Customize Odoo
 =======================
