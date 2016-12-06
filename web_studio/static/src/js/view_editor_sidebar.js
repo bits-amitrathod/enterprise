@@ -49,7 +49,7 @@ return Widget.extend(FieldManagerMixin, {
         FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
         this.debug = core.debug;
-        this.mode = 'new';
+        this.mode = _.contains(['form', 'list'], view_type) ? 'new' : 'view';
         this.view_type = view_type;
         this.view_attrs = view_attrs || {};
         this.field_widgets = Object.keys(field_registry.map).sort();
