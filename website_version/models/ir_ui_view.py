@@ -110,14 +110,3 @@ class view(models.Model):
             all_records = self.with_context(ctx).search([('key', '=', view.key)])
             for v in all_records:
                 v.write({'active': not v.active})
-
-    @api.model
-    def customize_template_get(self, key, full=False, bundles=False, **kw):
-        result = super(view, self).customize_template_get(key, full=full, bundles=bundles, **kw)
-        check = []
-        res = []
-        for data in result:
-            if data['name'] not in check:
-                check.append(data['name'])
-                res.append(data)
-        return res
