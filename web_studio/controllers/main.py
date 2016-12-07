@@ -375,7 +375,7 @@ class WebStudioController(http.Controller):
             if view.model:
                 try:
                     fields_view = request.env[view.model].with_context({'studio': True}).fields_view_get(view.id, view.type)
-                    return fields_view
+                    return {'fields_view': fields_view}
                 except Exception:
                     return False
 
