@@ -17,8 +17,8 @@ var dialing_panel = null;
 
 var _t = core._t;
 var QWeb = core.qweb;
-var HEIGHT_OPEN = '400px';
-var HEIGHT_FOLDED = '28px';
+var HEIGHT_OPEN = '450px';
+var HEIGHT_FOLDED = '0px';
 
 // As voip is not supported on mobile devices, we want to keep the standard phone widget
 if (config.device.size_class <= config.device.SIZES.XS) {
@@ -107,9 +107,9 @@ var PhonecallWidget = Widget.extend({
             }else if(state === 'pending' && !this.$('.o_dial_state_icon_pending').length){
                 this.$('.o_dial_status_span')
                     .append('<i class="fa fa-stack o_dial_state_icon" style="width:13px; height:15px;line-height: 13px;">'+
-                            '<i class="fa fa-phone fa-stack-1x o_dial_state_icon text-muted"></i>'+
+                            '<i class="fa fa-phone fa-stack-1x o_dial_state_icon text-muted"' + 'style="color: LightCoral;"></i>'+
                             '<i class="fa fa-times fa-stack-1x o_dial_state_icon"'+
-                            'style="color: LightCoral;font-size: 8px;left: 4px;position: relative;bottom: 4px;"></i>'+
+                            'style="color: LightCoral;font-size: 8px;left: 4px;position: relative;bottom: 6px;"></i>'+
                             '</i>');
                 this.$('.o_dial_icon_inCall').remove();
                 if(this.$('.o_dial_state_icon_done').length){
@@ -209,7 +209,7 @@ var DialingPanel = Widget.extend({
     template: "crm_voip.DialingPanel",
     events:{
         "keyup .o_dial_searchbox": "input_change",
-        "click .o_dial_title": "toggle_fold",
+        "click .o_dial_fold": "toggle_fold",
         "click .o_dial_close_icon": function(ev){ev.preventDefault();this.toggle_display();},
         "click .o_dial_call_button":  "call_button",
         "click .o_dial_refresh_icon": function(ev){ev.preventDefault();this.search_phonecalls_status(true);},
@@ -308,6 +308,13 @@ var DialingPanel = Widget.extend({
         this.$el.animate({
             height: this.folded ? HEIGHT_FOLDED : HEIGHT_OPEN
         });
+        if (this.folded) {
+            this.$el.find('.o_dial_fold > i').addClass('fa-angle-up');
+            this.$el.find('.o_dial_fold > i').removeClass('fa-angle-down');
+        } else {
+            this.$el.find('.o_dial_fold > i').removeClass('fa-angle-up');
+            this.$el.find('.o_dial_fold > i').addClass('fa-angle-down');
+        }
     },
 
     toggle_fold: function (fold) {
@@ -389,10 +396,11 @@ var DialingPanel = Widget.extend({
     },
 
     sip_ringing: function(){
-        this.$big_call_button.html(_t("Calling..."));
+        this.$big_call_button.html('<i class="fa fa-phone"></i>' + '<i class="fa fa-rss"></i>');
         this.$hangup_button.removeAttr('disabled');
         this.widgets[this.current_phonecall].set_state('in_call');
     },
+
 
     sip_accepted: function(){
         new Model("crm.phonecall").call("init_call", [this.current_phonecall]);
@@ -401,13 +409,13 @@ var DialingPanel = Widget.extend({
 
     sip_incoming_call: function(){
         this.in_call = true;
-        this.$big_call_button.html(_t("Calling..."));
+        this.$big_call_button.html('<i class="fa fa-phone"></i>' + '<i class="fa fa-rss"></i>');
         this.$hangup_transfer_buttons.removeAttr('disabled');
     },
 
     sip_end_incoming_call: function(){
         this.in_call = false;
-        this.$big_call_button.html(_t("Call"));
+        this.$big_call_button.html('<i class="fa fa-phone"></i>');
         this.$hangup_transfer_buttons.attr('disabled','disabled');
     },
 
@@ -418,7 +426,7 @@ var DialingPanel = Widget.extend({
         if(this.in_automatic_mode){
             this.next_call();
         }else{
-            this.$big_call_button.html(_t("Call"));
+            this.$big_call_button.html('<i class="fa fa-phone"></i>');
             this.$hangup_transfer_buttons.attr('disabled','disabled');
             this.$(".popover").remove();
         }
@@ -435,7 +443,7 @@ var DialingPanel = Widget.extend({
         if(this.in_automatic_mode){
             this.next_call();
         }else{
-            this.$big_call_button.html(_t("Call"));
+            this.$big_call_button.html('<i class="fa fa-phone"></i>');
             this.$hangup_transfer_buttons.attr('disabled','disabled');
             this.$(".popover").remove();
         }
@@ -443,7 +451,7 @@ var DialingPanel = Widget.extend({
 
     sip_bye: function(){
         this.in_call = false;
-        this.$big_call_button.html(_t("Call"));
+        this.$big_call_button.html('<i class="fa fa-phone"></i>');
         this.$hangup_transfer_buttons.attr('disabled','disabled');
         this.$(".popover").remove();
         new Model("crm.phonecall")
@@ -460,7 +468,7 @@ var DialingPanel = Widget.extend({
     sip_error: function(message, temporary){
         var self = this;
         this.in_call = false;
-        this.$big_call_button.html(_t("Call"));
+        this.$big_call_button.html('<i class="fa fa-phone"></i>');
         this.$hangup_transfer_buttons.attr('disabled','disabled');
         this.$(".popover").remove();
         if(temporary){
@@ -570,7 +578,7 @@ var DialingPanel = Widget.extend({
             this.$hangup_transfer_buttons.attr('disabled','disabled');
             this.$(".popover").remove();
         }else{
-            this.$big_call_button.html(_t("Calling..."));
+            this.$big_call_button.html('<i class="fa fa-phone"></i>' + '<br/>' + _t("Calling..."));
         }
     },
 

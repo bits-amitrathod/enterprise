@@ -19,21 +19,23 @@
     min-width: 300px;
 }
 
+@o-mid-gray: darken(@gray-lighter, 30%);
+
 /* Dialing Panel */
 @o-dial-panel-bg: white;
-@o-dial-panel-width: 235px;
+@o-dial-panel-width: 300px;
+
 .o_dial {
     .o-flex-display();
     .o-flex-flow(column, nowrap);
+    .box-shadow(4px 0 17px -2px rgba(0,0,0,0.42));
     position: fixed;
     width: @o-dial-panel-width;
     max-width: 100%;
-    height: 400px;
+    height: 450px;
     max-height: 100%;
     font-size: 12px;
     background-color: @o-dial-panel-bg;
-    border: 1px solid gray;
-    border-radius: 3px;
     z-index: 3;
 
     @media (max-width: @screen-xs-max) {
@@ -48,57 +50,72 @@
         display: none;
     }
 
-    .o_dial_header {
-        .o-flex-display();
-        .o-flex(0, 0, auto);
-        color: white;
+    .o_dial_fold {
+        cursor: pointer;
         background-color: @odoo-brand-primary;
-        padding: 5px;
+        color: #fff;
+        padding-right: 10px;
 
-        @media (max-width: @screen-xs-max) {
-            height: @navbar-height;
-            .o_dial_title, .o_dial_header_icon {
-                font-size: 22px;
-            }
-        }
-
-        .o_dial_title {
-            cursor: pointer;
-            .o-flex(1, 1, auto);
-            .o-text-overflow();
-        }
-
-        .o_dial_header_icon {
-            color: white;
-            padding: 3px;
-            &:hover {
-                background-color: darken(@odoo-brand-primary, 10%);
-            }
+        @media (min-width: @screen-sm-min) {
+            position: absolute;
+            top: -32px;
+            border-top-right-radius: 10px;
+            width: 60px;
+            padding-right: 0;
         }
     }
 
-    .o_dial_search_input{
-        .o-flex-display();
+    :focus {
+        outline: none;
+    }
+
+    button[disabled] {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    .popover {
+        border: none;
+
+        .popover-title {
+            background-color: @odoo-brand-primary;
+            color: #fff;
+            border-radius: 0;
+        }
+    }
+
+    .o_dial_search_input, .o_dial_keypad_input_div {
         .o-flex(0, 0, auto);
+        border-bottom: 1px solid @o-mid-gray;
         padding: 5px;
-        border-bottom-color: rgb(207, 207, 207);
-        border-bottom-style: solid;
-        border-bottom-width: 1px;
-        > span {
-            .o-flex(0, 0, auto);
+        position: relative;
+
+        input {
+            font-size: 25px;
+            font-weight: 200;
+            border: none;
+            width: 85%;
+            float: left;
         }
-        > input {
-            margin-left: 5px;
-            height: 20px;
-            .o-flex(1, 1, 100%);
-        }
+
+        .fa {
+            cursor: pointer;
+            font-size: 20px;
+            position: absolute;
+            top: calc(50% - 20px);
+            right: 20px;
+        } 
     }
-    .o_dial_display_pannel{
+
+    .o_dial_display_pannel, .o_dial_keypad {
         .o-flex(1, 1, auto);
         .o-flex-display();
         .o-flex-flow(column, nowrap);
+    } 
 
-        .o_dial_phonecalls{
+    .o_dial_display_pannel{
+
+        .o_dial_phonecalls {
             .o-flex(1, 1, auto);
             overflow-y: scroll;
             overflow-x: hidden;
@@ -106,15 +123,15 @@
 
         .o_dial_phonecall {
             position: relative;
-            padding: 2px 6px;
+            padding: 10px 20px;
             cursor: pointer;
             font-size: 13px;
-            margin-bottom: 3px;
             width: 100%;
+            border-bottom: 1px solid @gray-lighter;
         }
 
-        .o_dial_phonecall:hover {
-          background: #e4dada;
+        .o_dial_phonecall:hover, .o_dial_selected_phonecall {
+          background: lighten(@brand-primary, 50%);
         }
 
         .o_dial_phonecall:hover .o_dial_state_icon{
@@ -129,20 +146,18 @@
             display: inline-block;
         }
 
-        .o_dial_selected_phonecall {
-            background-color: #e4dada;
-        }
-
         .o_dial_phonecall_clip {
             display: inline-block;
-            width: 26px;
-            height: 26px;
-            margin-right: 4px;
+            width: 35px;
+            height: 35px;
+            margin-right: 10px;
         }
 
         .o_dial_phonecall_avatar {
             max-width: 100%;
             max-height: 100%;
+            border-radius: 50%;
+            border: 1px solid @o-mid-gray;
         }
 
         .o_dial_phonecall_partner_name {
@@ -153,29 +168,43 @@
             position: relative;
         }
 
+        .fa-check {
+            color: @odoo-brand-optional;
+        }
+
         .o_dial_buttons{
-            .o-flex(0, 0, 100%);
+            .o-flex(0, 0, auto);
             .o-flex-display();
             .o-flex-flow(row, wrap);
 
             .o_dial_split_call_button{
-                .o-flex(0,0,100%);
                 .o-flex-display();
-                padding: 2px;
 
                 .o_dial_big_call_button{
                     .o-flex(1,1,auto);
+                    padding: 2px;
+                    position: relative;
+
+                    .fa-rss {
+                        font-size: 14px;
+                        position: absolute;
+                        right: 20px;
+                        top: 5px;
+                    }
                 }
 
-                .o_o_call_dropdown{
+                .o_call_dropdown{
                     .o-flex(0,0,auto);
+                    position: absolute;
+                    top: 6px;
+                    right: 2px;
                 }
             }
 
             .o_dial_stop_autocall_button{
-                .o-flex(0,0,100%);
+                .o-flex(1,1,auto);
                 display: none;
-                margin: 2px;
+                color: LightCoral;
             }
 
             .o_dial_50_button{
@@ -189,51 +218,66 @@
         }
     }
 
-    .o_dial_keypad{
-        .o-flex(1, 1, auto);
+    .o_dial_keypad_buttons, .o_dial_main_buttons {
+
+        .o_dial_keypad_button{
+            float: left;
+            margin: 1px;
+            width: 32%;
+            font-weight: 100;
+            line-height: 1;
+        }
+
+        button {
+            border: none;
+            background: transparent;
+        }
+    }
+
+    .o_dial_keypad_buttons{
+        .o-flex(2, 1, auto);
+
+        .o_dial_keypad_button {
+            padding: 15px;
+            font-size: 45px;
+        }
+
+        .o_dial_keypad_button_small {
+            font-size: 20px;
+            color: @o-mid-gray;
+            padding: 0;
+
+            .feature {
+                font-size: 10px;
+                display: block;
+            }
+        }
+
+        .o_dial_hangup_button {
+            color: LightCoral;
+            font-size: 35px;
+        }
+    }
+
+    .o_dial_main_buttons {
+        background-color: @gray-lighter;
+        border-top: 1px solid @o-mid-gray;
         .o-flex-display();
-        .o-flex-flow(column, nowrap);
 
-        .o_dial_keypad_input_div{
-            .o-flex(0, 0, auto);
-            width: 100%;
-            position: relative;
-            text-align: center;
-
-            .o_dial_keypad_input{
-                width: 98%;
-                border: none;
-            }
-
-            .o_dial_keypad_backspace{
-                cursor: pointer;
-                font-size: 14px;
-                position: absolute;
-                top: 5px;
-                right: 10px;
-                .user-select(none);
-                @media (max-width: @screen-xs-max) {
-                    right: 25px;
-                }
-            }
+        .o_dial_keypad_button .fa {
+            font-size: xx-large;
         }
 
-        .o_dial_keypad_buttons{
-            .o-flex(2, 1, auto);
-
-            .o_dial_keypad_button{
-                float: left;
-                margin: 1px;
-                width: 32%;
-                height: 76px;
-                font-size: xx-large;
-            }
+        .o_dial_keypad_call_button .fa, .o_dial_big_call_button .fa, .o_dial_stop_autocall_button .fa {
+            font-size: 50px;
         }
 
-        .o_dial_keypad_call_button{
-            margin: 2px;
-            width: 98%;
-            .o-flex(1, 0, auto);
+        .o_dial_keypad_call_button .fa, .o_dial_big_call_button .fa {
+            color: @odoo-brand-optional;
+        }
+
+        .o_dial_keypad_button:first-child .fa, .o_dial_keypad_button:last-child .fa {
+            color: @o-mid-gray;
         }
     }
 }

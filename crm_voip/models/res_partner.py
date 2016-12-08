@@ -11,7 +11,7 @@ class ResPartner(models.Model):
     def create_call_in_queue(self, number):
         self.ensure_one()
         phonecall = self.env['crm.phonecall'].create({
-            'name': 'Call for ' + self.name,
+            'name': self.phone,
             'duration': 0,
             'user_id': self.env.user.id,
             'partner_id': self.id,
