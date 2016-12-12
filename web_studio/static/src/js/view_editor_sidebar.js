@@ -43,10 +43,10 @@ return Widget.extend(FieldManagerMixin, {
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
         'change .o_display_chatter input[data-type="email_alias"]': 'change_email_alias',
-        'click .o_web_studio_attrs': '_show_required_attrs',
+        'click .o_web_studio_attrs': 'show_required_attrs',
     },
 
-    init: function (parent, view_type, view_attrs, model, fields) {
+    init: function (parent, view_type, view_attrs, model, fields, fields_not_in_view) {
         FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
         this.debug = core.debug;
@@ -55,8 +55,14 @@ return Widget.extend(FieldManagerMixin, {
         this.view_attrs = view_attrs || {};
         this.field_widgets = Object.keys(field_registry.map).sort();
         this.model = model;
+
         this.fields = fields;
+        this.computed_ordered_fields();
+
+        this.fields_not_in_view = fields_not_in_view;
         this.show_invisible = false;
+
+        this.GROUPABLE_TYPES = ['many2one', 'char', 'boolean', 'selection', 'date', 'datetime'];
     },
     renderElement: function() {
         var self = this;
@@ -100,9 +106,19 @@ return Widget.extend(FieldManagerMixin, {
         this.renderElement();
         this.$el.scrollTop(scrollTop);
     },
-    update_fields: function(fields) {
+    update: function(fields, fields_not_in_view, view_attrs) {
         this.fields = fields;
+        this.computed_ordered_fields();
+        this.fields_not_in_view = fields_not_in_view;
+        this.view_attrs = view_attrs;
         this.render();
+    },
+    computed_ordered_fields: function() {
+        // sortBy returns a list so the key (field_name) will be lost but we need it.
+        _.each(this.fields, function(element, key) {
+            element.key = key;
+        });
+        this.orderered_fields = _.sortBy(this.fields, 'string');
     },
     compute_field_attrs: function() {
         /* Compute field attributes.
@@ -141,7 +157,7 @@ return Widget.extend(FieldManagerMixin, {
 
         // Existing Fields
         var FormComponent = form_component_widget_registry.get('existing_field');
-        form_widgets = _.map(this.fields, function(field) {
+        form_widgets = _.map(this.fields_not_in_view, function(field) {
             return new FormComponent(self, field.name, field.string, field.type);
         });
         $sidebar_content.append(this._render_widgets_components(form_widgets, 'Existing Fields'));
@@ -192,7 +208,11 @@ return Widget.extend(FieldManagerMixin, {
         if (attribute) {
             var new_attrs = {};
             if ($input.attr('type') === 'checkbox') {
-                new_attrs[attribute] = $input.is(':checked') === true ? '': 'false';
+                if (($input.is(':checked') && !$input.data('inverse')) || (!$input.is(':checked') && $input.data('inverse'))) {
+                    new_attrs[attribute] = $input.data('leave-empty') === 'checked' ? '': 'true';
+                } else {
+                    new_attrs[attribute] = $input.data('leave-empty') === 'unchecked' ? '': 'false';
+                }
             } else {
                 new_attrs[attribute] = $input.val();
             }
@@ -209,7 +229,7 @@ return Widget.extend(FieldManagerMixin, {
         if (attribute) {
             var new_attrs = {};
             if ($input.attr('type') === 'checkbox') {
-                new_attrs[attribute] = $input.is(':checked') === true ? 'True': 'False';
+                new_attrs[attribute] = $input.is(':checked') ? 'True': 'False';
             } else {
                 new_attrs[attribute] = $input.val();
             }
@@ -277,14 +297,17 @@ return Widget.extend(FieldManagerMixin, {
             }
         });
     },
-    _show_required_attrs: function(ev) {
+    show_required_attrs: function(ev) {
         ev.preventDefault();
         var modifier = ev.currentTarget.dataset.type;
         var $content = $('<div>')
             .append($('<p>').html(_.str.sprintf(_t('The property < %s > of this field will be different from one record to another depending on the following custom domain.<br/>If there is no domain, the property is applied globally to the view'), modifier)))
             .append($('<p>').text(JSON.stringify(this.modifiers[modifier])));
         new Dialog(this, {title: _t("Attrs Domain"), $content: $content.html()}).open();
-    }
+    },
+    is_true: function(value) {
+        return value !== 'false' && value !== 'False';
+    },
 });
 
 });
