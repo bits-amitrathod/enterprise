@@ -39,7 +39,7 @@ class View(models.Model):
         group_2 = E.group(name=str(uuid.uuid4())[:6], string='Right Title')
         group = E.group(group_1, group_2, name=str(uuid.uuid4())[:6])
         form = E.form(E.sheet(group, string=model._description))
-        arch = etree.tostring(form, encoding='utf-8')
+        arch = etree.tostring(form, encoding='utf-8', pretty_print=True)
 
         self.create({
             'type': 'form',
