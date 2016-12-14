@@ -76,7 +76,10 @@ class WebStudioController(http.Controller):
             'views': [[False, 'list'], [False, 'form']],
             'target': 'current',
             'domain': [],
-            'context': {'search_default_model_id': model.model},  # model_id is a Selection on ir.filters
+            'context': {  # model_id is a Selection on ir.filters
+                'default_model_id': model.model,
+                'search_default_model_id': model.model
+            },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new filter.
             </p>
