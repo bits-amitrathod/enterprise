@@ -1,7 +1,24 @@
 // ===========   Colours      ===========
-@o-studio-bg-light: #EAEAEA;
-@o-studio-bg-medium: #333941;
-@o-studio-bg-dark: #262C34;
+@o-web-studio-color-danger: #e6586c;
+@o-web-studio-color-warning: #f0ad4e;
+@o-web-studio-color-success: #40ad67;
+@o-web-studio-color-info: #6999a8;
+
+@o-web-studio-bg-light: #EAEAEA;
+@o-web-studio-bg-medium: #3a3f46;
+@o-web-studio-bg-dark: #262C34;
+@o-web-studio-bg-darker: darken(@o-web-studio-bg-dark, 2%);
+
+@o-web-studio-text-light: @o-web-studio-bg-light;
+@o-web-studio-text-inactive: darken(@o-web-studio-text-light, 20%);
+@o-web-studio-text-disabled: gray;
+
+// ===========   Layout      ===========
+@o-web-studio-menu-height: @odoo-navbar-height;
+
+// ===========   Menu      ===========
+@o-web-studio-menu-item-border-width: 3px;
+
 
 .o_web_studio_client_action {
     .o-position-absolute(0, 0, 0, 0);
@@ -11,17 +28,13 @@
 // Dialog
 .o_web_client.o_in_studio .modal {
     .btn-primary {
-        background-color: @o-studio-bg-medium;
-        border: 1px solid @o-studio-bg-light;
-        color: @o-studio-bg-light;
+        background-color: @odoo-brand-optional;
     }
     .btn-danger {
-        background-color: @o-studio-bg-medium;
-        border: 1px solid @o-studio-bg-light;
-        color: red;
+        background-color: @o-web-studio-color-danger;
     }
     .btn-default {
-        color: @o-studio-bg-medium;
+        color: @o-web-studio-bg-medium;
     }
     .o_form_field_many2one {
         width: 100%;

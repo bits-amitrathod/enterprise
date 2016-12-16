@@ -34,6 +34,7 @@ var SubMenu = Widget.extend({
         bus.on('redo_not_available', this, this.toggle_redo.bind(this, false));
 
         bus.on('edition_mode_entered', this, function(view_type) {
+            this.$('.o_menu_sections li a.active').removeClass('active');
             self.add_breadcrumb_view_type(view_type);
             self.render_breadcrumb();
         });
@@ -90,34 +91,10 @@ var SubMenu = Widget.extend({
         bus.trigger('redo_clicked');
     },
     toggle_undo: function(display) {
-        if (display && !this.undo_displayed) {
-            var $undo_div = $('<div>')
-                .addClass('o_web_studio_undo')
-                .html($('<button>')
-                    .addClass('btn btn-default')
-                    .text(_t('Undo'))
-            );
-            $undo_div.appendTo(this.$el);
-            this.undo_displayed = true;
-        } else if (!display) {
-            this.$('.o_web_studio_undo').remove();
-            this.undo_displayed = false;
-        }
+        this.$('.o_web_studio_undo').toggleClass('o_web_studio_active', display);
     },
     toggle_redo: function(display) {
-        if (display && !this.redo_displayed) {
-            var $undo_div = $('<div>')
-                .addClass('o_web_studio_redo')
-                .html($('<button>')
-                    .addClass('btn btn-default')
-                    .text(_t('Redo'))
-            );
-            $undo_div.appendTo(this.$el);
-            this.redo_displayed = true;
-        } else if (!display) {
-            this.$('.o_web_studio_redo').remove();
-            this.redo_displayed = false;
-        }
+        this.$('.o_web_studio_redo').toggleClass('o_web_studio_active', display);
     },
     render_breadcrumb: function () {
         var self = this;

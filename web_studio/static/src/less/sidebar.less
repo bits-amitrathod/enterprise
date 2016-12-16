@@ -1,22 +1,22 @@
 .o_web_studio_client_action .o_web_studio_sidebar {
     color: white;
-    background-color: @o-studio-bg-medium;
+    background-color: @o-web-studio-bg-medium;
 
     .o_web_studio_sidebar_header {
         .clearfix();
         cursor: pointer;
         margin-bottom: 15px;
         padding: 0px;
-        background-color: @o-studio-bg-dark;
+        background-color: @o-web-studio-bg-dark;
 
         > div {
             width: percentage(1/3);
             float: left;
             text-align: center;
             padding: 14px 0;
-            color: @o-studio-bg-light;
-            background-color: @o-studio-bg-dark;
-            box-shadow: inset 1px 0 0 @o-studio-bg-medium;
+            color: @o-web-studio-bg-light;
+            background-color: @o-web-studio-bg-dark;
+            box-shadow: inset 1px 0 0 @o-web-studio-bg-medium;
 
             &.inactive {
                 color: grey;
@@ -24,11 +24,11 @@
             }
             &.actif, &:first-child:last-child {
                 cursor: default;
-                background-color: @o-studio-bg-medium;
+                background-color: @o-web-studio-bg-medium;
             }
             &:not(.inactive):not(.actif):hover {
                 color: white;
-                background-color: fade(@o-studio-bg-medium, 50%);
+                background-color: fade(@o-web-studio-bg-medium, 50%);
             }
         }
     }
@@ -50,11 +50,11 @@
             }
 
             input, select, textarea {
-                background-color: @o-studio-bg-medium;
-                color: @o-studio-bg-light;
+                background-color: @o-web-studio-bg-medium;
+                color: @o-web-studio-bg-light;
                 border-color: grey;
                 &:focus {
-                    border-color: @o-studio-bg-light;
+                    border-color: @o-web-studio-bg-light;
                 }
                 &[type=text] {
                     margin-bottom: 6px;
@@ -64,7 +64,7 @@
                     float: right;
                 }
                 > option {
-                    color: @o-studio-bg-light;
+                    color: @o-web-studio-bg-light;
                 }
             }
             .o_form_field {
@@ -72,9 +72,9 @@
             }
 
             > button {
-                border: 1px solid @o-studio-bg-light;
-                background-color: @o-studio-bg-medium;
-                color: @o-studio-bg-light;
+                border: 1px solid @o-web-studio-bg-light;
+                background-color: @o-web-studio-bg-medium;
+                color: @o-web-studio-bg-light;
             }
         }
         .o_web_studio_field_type_container {
@@ -93,8 +93,8 @@
             padding: 5px;
             cursor: pointer;
             box-shadow: 0 1px 0 black;
-            background-color: @o-studio-bg-light;
-            color: @o-studio-bg-dark;
+            background-color: @o-web-studio-bg-light;
+            color: @o-web-studio-bg-dark;
             &:hover {
                 background-color: white;
             }

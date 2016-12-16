@@ -26,16 +26,21 @@
 
 <div t-name="web_studio.Menu" class="o_web_studio_menu">
     <div class="o_web_studio_breadcrumb"/>
+
     <ul class="o_menu_sections">
-        <li><a href="#" class="active" data-toggle="collapse" role="button" aria-expanded="true" data-name="views">Views</a></li>
-        <li t-if="widget.multi_lang">
-            <a href="#" data-toggle="collapse" aria-expanded="true" data-name="translations">Translations</a>
-        </li>
-        <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="automations">Automations</a></li>
-        <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="reports">Reporting</a></li>
-        <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="acl">Access Controls</a></li>
-        <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="filters">Filter Rules</a></li>
+      <li><a href="#" data-toggle="collapse" role="button" aria-expanded="true" data-name="views">Views</a></li>
+      <li t-if="widget.multi_lang">
+        <a href="#" data-toggle="collapse" aria-expanded="true" data-name="translations">Translations</a>
+      </li>
+      <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="automations">Automations</a></li>
+      <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="reports">Reports</a></li>
+      <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="acl">Access Controls</a></li>
+      <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="filters">Filter Rules</a></li>
     </ul>
+
+    <div class="o_web_studio_redo"><button class="btn btn-sm"><i class="fa fa-repeat"/><span>Redo</span></button></div>
+    <div class="o_web_studio_undo"><button class="btn btn-sm"><i class="fa fa-undo"/><span>Undo</span></button></div>
+
 </div>
 
 </templates>
