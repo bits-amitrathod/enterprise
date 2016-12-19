@@ -43,9 +43,13 @@ var ActionEditor = Widget.extend({
                 can_be_disabled: view_type !== 'search' || false,
             });
             if (_.contains(['form', 'search'], view_type)) {
-                view.appendTo(self.$('.o_web_studio_view_category[name="special"]'));
-            } else {
-                view.appendTo(self.$('.o_web_studio_view_category[name="default"]'));
+                view.appendTo(self.$('.o_web_studio_view_category[name="general"]'));
+            } else if (_.contains(['list', 'kanban', 'grid'], view_type)) {
+                view.appendTo(self.$('.o_web_studio_view_category[name="multiple"]'));
+            } else if (_.contains(['graph', 'pivot'], view_type)) {
+                view.appendTo(self.$('.o_web_studio_view_category[name="reporting"]'));
+            } else if (_.contains(['calendar', 'gantt'], view_type)) {
+                view.appendTo(self.$('.o_web_studio_view_category[name="timeline"]'));
             }
         });
 
