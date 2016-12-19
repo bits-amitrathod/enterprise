@@ -43,8 +43,8 @@ var EditMenuDialog = Dialog.extend({
     init: function(parent, menu_data, current_primary_menu) {
         var options = {
             title: _t('Edit Menu'),
-            subtitle: _t('Drag a menu to the right to create a sub-menu'),
             size: 'medium',
+            dialogClass: 'o_web_studio_edit_menu_modal',
             buttons: [
                 {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.save, this)},
                 {text: _t("Cancel"), close: true},
@@ -60,6 +60,7 @@ var EditMenuDialog = Dialog.extend({
     },
 
     start: function () {
+        var self = this;
 
         this.$('.oe_menu_editor').nestedSortable({
             listType: 'ul',
@@ -170,15 +171,16 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
         };
         FieldManagerMixin.init.call(this);
         this._super(parent, options);
-
-        var self = this;
-        this.opened().then(function () {
-            // focus on input
-            self.$el.find('input[name="name"]').focus();
-        });
     },
     start: function() {
         var self = this;
+
+        this.opened().then(function () {
+            self.$modal.addClass('o_web_studio_add_menu_modal');
+            // focus on input
+            self.$el.find('input[name="name"]').focus();
+        });
+
         return this._super.apply(this, arguments).then(function() {
             var record_id = self.datamodel.make_record('ir.actions.act_window', [{
                 name: 'model',
