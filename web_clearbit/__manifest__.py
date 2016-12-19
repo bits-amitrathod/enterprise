@@ -6,7 +6,6 @@
     'description': "Integrate Clearbit API to get company logo",
     'depends': ['web', 'base_setup'],
     'data': [
-        'views/res_config_views.xml',
         'views/res_partner_views.xml',
         'views/web_clearbit_templates.xml'
     ],

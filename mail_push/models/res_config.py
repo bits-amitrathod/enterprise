@@ -5,6 +5,7 @@ from openerp import models, fields, api
 class FcmResConfig(models.TransientModel):
     _inherit = 'base.config.settings'
 
+    default_mail_push_notification = fields.Boolean('Notifications', default_model='base.config.settings')
     fcm_api_key = fields.Char('Server API Key')
     fcm_project_id = fields.Char('Sender ID')
 

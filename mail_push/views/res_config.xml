@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="inherited_view_general_configuration" model="ir.ui.view">
-        <field name="name">inherited_view_general_configuration</field>
+    <record id="base_config_settings_view_form_inherit_mail_push" model="ir.ui.view">
+        <field name="name">base.config.settings.inherit.mail.push</field>
         <field name="model">base.config.settings</field>
         <field name="type">form</field>
-        <field name="inherit_id" ref="base_setup.view_general_configuration"/>
+        <field name="inherit_id" ref="base_setup.base_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='google']" position="before">
-                <group string="Google Firebase Push Notification" name="firebase">
-                    <field name="fcm_api_key" />
-                    <field name="fcm_project_id" />
-                    <label string=""/>
-                    <a href="https://developers.google.com/mobile/add?platform=android&amp;cntapi=gcm&amp;cntapp=OdooNotifications&amp;cntpkg=com.odoo.mobile" target="new">
-                        Generate API and Sender ID
-                    </a>
-
-                </group>
-            </xpath>
+            <div id="emails" position="after">
+                <h2>Mobile App</h2>
+                 <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                         <div class="o_setting_left_pane">
+                            <field name="default_mail_push_notification"/>
+                         </div>
+                         <div class="o_setting_right_pane">
+                            <label for="default_mail_push_notification"/>
+                            <div class="text-muted">
+                                 Get notifications on Android phones
+                            </div>
+                            <div attrs="{'invisible': [('default_mail_push_notification','=',False)]}">
+                                <div class="mt16 row">
+                                    <label class="col-xs-3 col-md-3 o_light_label" string="API Key" for="fcm_api_key"/>
+                                    <field name="fcm_api_key"/>
+                                    <label class="col-xs-3 col-md-3 o_light_label" for="fcm_project_id"/>
+                                    <field name="fcm_project_id"/>
+                                </div>
+                                <div>
+                                    <a href="https://developers.google.com/mobile/add?platform=android&amp;cntapi=gcm&amp;cntapp=OdooNotifications&amp;cntpkg=com.odoo.mobile" target="_blank" class="oe-link"><i class="fa fa-fw fa-arrow-right"/>Generate API and Sender ID</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </field>
     </record>
 </odoo>
