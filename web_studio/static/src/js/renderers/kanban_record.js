@@ -57,7 +57,6 @@ var KanbanRecord = Widget.extend({
 
     start: function() {
         this.add_widgets();
-        this.render_m2m_tags();
         this.attach_tooltip();
         return this._super.apply(this, arguments);
     },
@@ -103,24 +102,6 @@ var KanbanRecord = Widget.extend({
             widget.replace($field);
             self.sub_widgets.push(widget);
         });
-    },
-
-    render_m2m_tags: function () {
-        var self = this;
-        _.each(this.relational_data, function (values, field_name) {
-            if (self.fields[field_name].type !== 'many2many') { return; }
-            var rel_ids = self.record[field_name].raw_value;
-            var $m2m_tags = self.$('.o_form_field_many2manytags[name=' + field_name + ']');
-            _.each(rel_ids, function (id) {
-                var m2m = _.findWhere(values.data, {res_id: id}).data;
-                if (typeof m2m.color !== 'undefined' && m2m.color !== 10) { // 10th color is invisible
-                    $('<span>')
-                        .addClass('o_tag o_tag_color_' + m2m.color)
-                        .attr('title', _.str.escapeHTML(m2m.name))
-                        .appendTo($m2m_tags);
-                }
-            });
-        });
         // We use boostrap tooltips for better and faster display
         this.$('span.o_tag').tooltip({delay: {'show': 50}});
     },
@@ -156,7 +137,6 @@ var KanbanRecord = Widget.extend({
         this.init_content(record);
         this.renderElement();
         this.add_widgets();
-        this.render_m2m_tags();
         this.attach_tooltip();
     },
 

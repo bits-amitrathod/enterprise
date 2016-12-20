@@ -47,11 +47,14 @@ function transform_qweb_template(node, fields) {
     switch (node.tag) {
         case 'field':
             var ftype = fields[node.attrs.name].type;
-            ftype = node.attrs.widget ? node.attrs.widget : ftype;
+
             if (ftype === 'many2many') {
-                node.tag = 'div';
-                node.attrs['class'] = (node.attrs['class'] || '') + ' oe_form_field o_form_field_many2manytags o_kanban_tags';
-            } else if (field_registry.contains(ftype)) {
+                node.attrs.widget = 'kanban.many2many_tags';
+            }
+
+            ftype = node.attrs.widget ? node.attrs.widget : ftype;
+
+            if (field_registry.contains(ftype)) {
                 // do nothing, the kanban record will handle it
             } else {
                 node.tag = qweb.prefix;
