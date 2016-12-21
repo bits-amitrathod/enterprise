@@ -45,6 +45,9 @@
         <field name="max_weight">70</field>
     </record>
 
+    <!-- These credentials work only if the shipper is located
+         in the USA; else this module must be tested with
+         the client's credentials -->
     <record id="delivery_carrier_dhl_dom" model="delivery.carrier">
         <field name="name">DHL USA</field>
         <field name="product_sale_ok" eval="False"/>
