@@ -22,19 +22,8 @@
                 </div>
               </div>
             </group>
-
-            <group attrs="{'invisible': [('opportunity_name', '=', 'No opportunity linked')]}">
-              <label for="next_activity_id"/>
-              <div class="o_row">
-                <field name="next_activity_id"
-                  options="{'no_create': True, 'no_open': True}"/>
-                <field name="new_date_action" attrs="{'invisible': [('next_activity_id', '=', False)]}" placeholder="Choose a date..."/>
-              </div>
-              <div class="o_row">
-                <field name="new_title_action" placeholder="e.g. Discuss proposal"
-                  attrs="{'invisible': [('next_activity_id', '=', False)]}"/>
-              </div>
-            </group>
+          </group>
+          <group>
             <group>
               <label for="reschedule_option"/>
               <div>

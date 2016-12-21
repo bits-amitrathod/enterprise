@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 
 class HrAppraisal(models.Model):
     _name = "hr.appraisal"
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Employee Appraisal"
     _order = 'date_close, date_final_interview'
     _rec_name = 'employee_id'

@@ -142,8 +142,8 @@ class CrmPhonecall(models.Model):
                 "opportunity_id": self.opportunity_id.id,
                 "opportunity_priority": self.opportunity_id.priority,
                 "opportunity_planned_revenue": self.opportunity_id.planned_revenue,
-                "opportunity_title_action": self.opportunity_id.title_action,
-                "opportunity_date_action": self.opportunity_id.date_action,
+                "opportunity_title_action": self.opportunity_id.activity_summary,
+                "opportunity_date_action": self.opportunity_id.activity_date_deadline,
                 "opportunity_company_currency": self.opportunity_id.company_currency.id,
                 "opportunity_probability": self.opportunity_id.probability,
                 "max_priority": self.opportunity_id._fields['priority'].selection[-1][0]}
