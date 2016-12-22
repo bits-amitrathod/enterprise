@@ -132,6 +132,7 @@ var FormEditor =  FormRenderer.extend({
     },
     _render_inner_group: function(node) {
         var self = this;
+        var formEditorHook;
         var $result = this._super.apply(this, arguments);
         // Add click event to see group properties in sidebar
         $result.attr('data-node-id', this.node_id++);
@@ -142,16 +143,29 @@ var FormEditor =  FormRenderer.extend({
             }
         });
         this._set_style_events($result);
-        // Add hook only for groups that have not yet content.
+        // Add hook for groups that have not yet content.
         if (!node.children.length) {
-            var formEditorHook = this._render_hook(node, 'inside');
+            formEditorHook = this._render_hook(node, 'inside', 'tr');
             formEditorHook.appendTo($result);
             this._set_style_events($result);
+        } else {
+            // Add hook before the first node in a group.
+            formEditorHook = this._render_hook(node.children[0], 'before', 'tr');
+            formEditorHook.appendTo($('<div>')); // start the widget
+            $result.find("tr").first().before(formEditorHook.$el);
+        }
+        return $result;
+    },
+    _render_inner_group_label: function ($result, label, linked_node) {
+        $result = this._super.apply(this, arguments);
+        if (linked_node) {
+            var formEditorHook = this._render_hook(linked_node, 'after', 'tr');
+            formEditorHook.appendTo($result);
         }
         return $result;
     },
     _render_adding_content_line: function (node) {
-        var formEditorHook = this._render_hook(node, 'after');
+        var formEditorHook = this._render_hook(node, 'after', 'tr');
         formEditorHook.appendTo($('<div>')); // start the widget
         return formEditorHook.$el;
     },
@@ -281,13 +295,13 @@ var FormEditor =  FormRenderer.extend({
     _reset_clicked_style: function() {
         this.$('.o_clicked').removeClass('o_clicked');
     },
-    _render_hook: function(node, position) {
+    _render_hook: function(node, position, tagName) {
         var hook_id = _.uniqueId();
         this.hook_nodes[hook_id] = {
             node: node,
             position: position,
         };
-        return new FormEditorHook(this, node.tag, position, hook_id);
+        return new FormEditorHook(this, position, hook_id, tagName);
     },
     highlight_nearest_hook: function(pageX, pageY) {
         this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
