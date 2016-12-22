@@ -110,14 +110,14 @@
     <field name="name">Forecast by user</field>
     <field name="res_model">project.forecast</field>
     <field name="view_mode">gantt,tree,form,pivot</field>
-    <field name="context">{'group_by': ['user_id', 'project_id'],}</field>
+    <field name="context">{'group_by': ['user_id', 'project_id'], 'search_default_group_by_user_id': 1,}</field>
   </record>
 
   <record id="project_forecast_action_by_project" model="ir.actions.act_window">
     <field name="name">Forecast by project</field>
     <field name="res_model">project.forecast</field>
     <field name="view_mode">gantt,tree,form,pivot</field>
-    <field name="context">{'group_by': ['project_id', 'user_id'],}</field>
+    <field name="context">{'group_by': ['project_id', 'user_id'], 'search_default_group_by_project_id': 1,}</field>
   </record>
 
   <record id="project_forecast_action_report_activities" model="ir.actions.act_window">
