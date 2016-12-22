@@ -88,7 +88,7 @@ class TestSubscriptionCommon(common.TransactionCase):
             'recurring_rule_type': 'yearly',
             'subscription_template_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_base.id})],
             'subscription_template_option_ids': [(0, 0, {'product_id': self.product_opt.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_base.id})],
-            'tag_ids': [(4, self.master_tag.id, False)],
+            'tag_id': self.master_tag.id,
         })
         self.subscription_tmpl_2 = Template.create({
             'name': 'TestSubscriptionTemplate2',
@@ -96,12 +96,12 @@ class TestSubscriptionCommon(common.TransactionCase):
             'subscription_template_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_big.id}),
                                            (0, 0, {'product_id': self.product2.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_big.id})],
             'subscription_template_option_ids': [(0, 0, {'product_id': self.product_opt.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_big.id})],
-            'tag_ids': [(4, self.master_tag.id, False)],
+            'tag_id': self.master_tag.id,
         })
         self.subscription_tmpl_3 = Template.create({
             'name': 'TestSubscriptionTemplate3',
             'user_selectable': False,
-            'tag_ids': [(4, self.master_tag.id, False)],
+            'tag_id': self.master_tag.id,
         })
         self.subscription = Subscription.create({
             'name': 'TestSubscription',

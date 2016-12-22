@@ -19,21 +19,6 @@
         </field>
     </record>
 
-    <record id="action_subscription_sales_all" model="ir.actions.act_window">
-        <field name="name">Sales Documents</field>
-        <field name="res_model">sale.order</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="sale_order_view_tree_subscription"/>
-        <field name="domain">[('subscription_id', '=', active_id)]</field>
-        <field name="context">{'create':False}</field>
-        <field name="help" type="html">
-          <p>
-            You will find here all the quotations and sales orders related to this subscription.
-          </p>
-        </field>
-    </record>
-
     <record model="ir.ui.view" id="wizard_form_view">
         <field name="name">wizard.form</field>
         <field name="model">sale.subscription.wizard</field>
@@ -104,14 +89,10 @@
                 <field name="partial_invoice"/>
                 <field name="color"/>
                 <field name="subscription_count"/>
-                <field name="tag_ids"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
                             <div class="o_subscription_kanban_main">
-                                <div>
-                                    <field name="tag_ids"/>
-                                </div>
                                 <div class="o_kanban_card_content o_visible">
                                     <div class="o_kanban_primary_left">
                                         <div class="o_primary">
@@ -215,16 +196,13 @@
                 <field name="payment_token_id"/>
             </xpath>
             <xpath expr="//div[@class='oe_button_box']/button[1]" position="before">
-                <button class="oe_stat_button o_open_subscription" name="open_website_url"
-                    type="object" icon="fa-globe" string="View Subscription"/>
-                <button class="oe_stat_button" name="%(action_subscription_sales_all)d" type="action" icon="fa-credit-card">
+                <button class="oe_stat_button" name="action_open_sales" type="object" icon="fa-credit-card">
                     <field name="sale_order_count" widget="statinfo" string="Sales"/>
                 </button>
             </xpath>
-            <xpath expr="//field[@name='recurring_invoice_line_ids']" position="before">
-                <button string="&#8658; Upsell" class="oe_link oe_right" 
-                        help="Add an option directly or create a sales order with prorated discount for the current invoicing period (options are added on confirmation)" 
-                        name="%(wizard_action)d" type="action"/>
+            <xpath expr="//header" position="inside">
+                <button string="Upsell" help="Add an option directly or create a sale order with prorated discount for the current invoicing period (options are added on confirmation)" name="%(wizard_action)d" type="action" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                <button name="open_website_url" type="object" string="Online Preview"/>
             </xpath>
         </field>
     </record>
@@ -234,18 +212,7 @@
         <field name="model">sale.subscription.template</field>
         <field name="inherit_id" ref="sale_subscription.sale_subscription_template_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='website_subscription']" position="inside">
-                <field name="user_closable"/>
-                <field name="payment_mandatory"/>
-                <field name="partial_invoice"/>
-                <field name="tag_ids" string="Plan Change Tags" widget="many2many_tags"
-                       help="When a customer wants to change his subscription plan, he has the choice between all the recurring subscriptions with the same tags."/>
-            </xpath>
-            <xpath expr="//div[@class='oe_button_box']/button[1]" position="before">
-                <button class="oe_stat_button" name="open_website_url"
-                type="object" icon="fa-globe" string="View Template"/>
-            </xpath>
-            <xpath expr="//notebook/page[@id='lines']" position="after">
+            <xpath expr="//notebook" position="inside">
                 <page string="Option Lines">
                     <div>
                         <field name="subscription_template_option_ids" on_write="on_add_set_optional">
@@ -259,29 +226,20 @@
                         </field>
                     </div>
                 </page>
-            </xpath>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_sale_quote_template_form">
-        <field name="name">sale.quote.template.form</field>
-        <field name="model">sale.quote.template</field>
-        <field name="inherit_id" ref="website_quote.view_sale_quote_template_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='mail_template_id']" position="after">
-                <field name="subscription_template" />
-            </xpath>
-        </field>
-    </record>
-
-    <record id="sale_order_form_quote_inherit_website_subscription" model="ir.ui.view">
-        <field name="name">sale.order.form.quote.inherit</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="website_quote.sale_order_form_quote"/>
-        <field name="arch" type="xml">
-            <xpath expr="//div[field[@name='template_id']]" position="after">
-                <field name="subscription_template" options="{'no_create': True, 'no_open': True}"
-                       attrs="{'readonly': ['|', ('template_id', '!=', False), ('state', 'not in', ['draft', 'sent'])]}"/>
+                <page string="Subscription" name="subscription">
+                    <group>
+                        <group string="Online Management">
+                            <field name="user_closable"/>
+                            <field name="payment_mandatory"/>
+                            <field name="partial_invoice"/>
+                            <field name="tag_id" string="Category"/>
+                        </group>
+                        <group string="Accounting">
+                            <field name="journal_id"/>
+                            <field name="template_asset_category_id" string="Deferred Revenue Type" context="{'default_type':'sale'}"/>
+                        </group>
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>

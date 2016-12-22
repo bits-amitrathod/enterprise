@@ -35,7 +35,7 @@ class SaleSubscription(models.Model):
     close_reason_id = fields.Many2one("sale.subscription.close.reason", string="Close Reason", track_visibility='onchange')
     template_id = fields.Many2one('sale.subscription.template', string='Subscription Template', required=True, track_visibility='onchange')
     description = fields.Text()
-    user_id = fields.Many2one('res.users', string='Sales Rep', track_visibility='onchange')
+    user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange')
     invoice_count = fields.Integer(compute='_compute_invoice_count')
     country_id = fields.Many2one('res.country', related='analytic_account_id.partner_id.country_id', store=True)
     industry_id = fields.Many2one('res.partner.industry', related='analytic_account_id.partner_id.industry_id', store=True)
@@ -99,12 +99,12 @@ class SaleSubscription(models.Model):
             # note that this property is not always set, hence the getattr
             if not getattr(self, '_origin', self.browse()) and not isinstance(self.id, int):
                 invoice_line_ids = []
-                for line in self.template_id.subscription_template_line_ids:
-                    product = line.product_id.with_context(
+                for product_line in self.template_id.product_line_ids:
+                    product = product_line.with_context(
                         lang=self.partner_id.lang,
                         partner=self.partner_id.id,
                         pricelist=self.pricelist_id.id,
-                        uom=line.uom_id.id
+                        uom=product_line.uom_id.id
                     )
                     name = product.name_get()[0][1]
                     if product.description_sale:
@@ -126,7 +126,16 @@ class SaleSubscription(models.Model):
         vals['code'] = vals.get('code') or self.env.context.get('default_code') or self.env['ir.sequence'].next_by_code('sale.subscription') or 'New'
         if vals.get('name', 'New') == 'New':
             vals['name'] = vals['code']
-        return super(SaleSubscription, self).create(vals)
+        subscription = super(SaleSubscription, self).create(vals)
+        if subscription.partner_id:
+            subscription.message_subscribe(subscription.partner_id.ids)
+        return subscription
+
+    @api.multi
+    def write(self, vals):
+        if vals.get('partner_id'):
+            self.message_subscribe([vals['partner_id']])
+        return super(SaleSubscription, self).write(vals)
 
     @api.multi
     def name_get(self):
@@ -139,7 +148,7 @@ class SaleSubscription(models.Model):
     @api.multi
     def action_subscription_invoice(self):
         analytic_ids = [sub.analytic_account_id.id for sub in self]
-        orders = self.env['sale.order'].search_read(domain=[('subscription_id', 'in', self.ids)], fields=['name'])
+        orders = self.env['sale.order'].search_read(domain=[('order_line.subscription_id', 'in', self.ids)], fields=['name'])
         order_names = [order['name'] for order in orders]
         invoices = self.env['account.invoice'].search([('invoice_line_ids.account_analytic_id', 'in', analytic_ids),
                                                        ('origin', 'in', self.mapped('code') + order_names)])
@@ -315,6 +324,7 @@ class SaleSubscription(models.Model):
                 order_lines.append((0, 0, {
                     'product_id': line.product_id.id,
                     'name': line.product_id.product_tmpl_id.name,
+                    'subscription_id': subscription.id,
                     'product_uom': line.uom_id.id,
                     'product_uom_qty': line.quantity,
                     'price_unit': line.price_unit,
@@ -455,10 +465,17 @@ class SaleSubscriptionTemplate(models.Model):
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
-    subscription_template_line_ids = fields.One2many('sale.subscription.template.line', 'subscription_template_id', string="Subscription Template Lines", copy=True)
+    product_line_ids = fields.One2many('product.product', 'subscription_template_id', copy=True)
     journal_id = fields.Many2one('account.journal', string="Accounting Journal", domain="[('type', '=', 'sale')]", company_dependent=True,
                                  help="If set, subscriptions with this template will invoice in this journal; "
                                       "otherwise the sales journal with the lowest sequence is used.")
+    product_count = fields.Integer(compute='_compute_product_count')
+
+    def _compute_product_count(self):
+        product_data = self.env['product.template'].sudo().read_group([('subscription_template_id', 'in', self.ids)], ['subscription_template_id'], ['subscription_template_id'])
+        result = dict((data['subscription_template_id'][0], data['subscription_template_id_count']) for data in product_data)
+        for template in self:
+            template.product_count = result.get(template.id, 0)
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
@@ -478,40 +495,3 @@ class SaleSubscriptionTemplate(models.Model):
             name = '%s - %s' % (sub.code, sub.name) if sub.code else sub.name
             res.append((sub.id, name))
         return res
-
-
-class SaleSubscriptionTemplateLine(models.Model):
-    _name = "sale.subscription.template.line"
-    _description = "Subscription Template Line"
-
-    product_id = fields.Many2one('product.product', string="Product", required=True, domain="[('recurring_invoice', '=', True)]")
-    name = fields.Char(string='Description', required=True)
-    subscription_template_id = fields.Many2one('sale.subscription.template', string="Template", required=True, ondelete="cascade")
-    uom_id = fields.Many2one('product.uom', string="Unit of Measure", required=True)
-    quantity = fields.Float(required=True, default=1.0)
-    price = fields.Float(compute='_compute_price')
-
-    @api.onchange('product_id')
-    def onchange_product_id(self):
-        domain = {}
-        if not self.product_id:
-            domain['uom_id'] = []
-        else:
-            name = self.product_id.display_name
-            if self.product_id.description_sale:
-                name += '\n' + self.product_id.description_sale
-            self.name = name
-
-            if not self.uom_id:
-                self.uom_id = self.product_id.uom_id.id
-            domain['uom_id'] = [('category_id', '=', self.product_id.uom_id.category_id.id)]
-
-        return {'domain': domain}
-
-    def _compute_price(self):
-        pricelist = self.env['product.pricelist'].browse(self._context.get('pricelist_id'))
-        for line in self:
-            if not pricelist:
-                line.price = 0.0
-            else:
-                line.price = pricelist.with_context(uom=line.uom_id.id).price_get(line.product_id.id, line.quantity)[pricelist.id]

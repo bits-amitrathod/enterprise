@@ -6,7 +6,7 @@ import time
 import traceback
 import uuid
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.osv.query import Query
 
@@ -29,18 +29,27 @@ class SaleSubscription(models.Model):
     sale_order_count = fields.Integer(compute='_compute_sale_order_count')
 
     def _compute_sale_order_count(self):
-        sale_order_data = self.env['sale.order'].read_group(domain=[('project_id', 'in', self.mapped('analytic_account_id').ids),
-                                                                    ('subscription_management', '!=', False),
-                                                                    ('state', 'in', ['draft', 'sent', 'sale', 'done'])],
-                                                            fields=['project_id'],
-                                                            groupby=['project_id'])
-        mapped_data = dict([(m['project_id'][0], m['project_id_count']) for m in sale_order_data])
-        for sub in self:
-            sub.sale_order_count = mapped_data.get(sub.analytic_account_id.id, 0)
+        order_count = len(self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)]))
+        for subscription in self:
+            subscription.sale_order_count = order_count
 
     _sql_constraints = [
         ('uuid_uniq', 'unique (uuid)', """UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be unique!"""),
     ]
+
+    @api.multi
+    def action_open_sales(self):
+        self.ensure_one()
+        sales = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)])
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "views": [[self.env.ref('website_subscription.sale_order_view_tree_subscription').id, "tree"],
+                      [self.env.ref('sale.view_order_form').id, "form"]],
+            "domain": [["id", "in", sales.ids]],
+            "context": {"create": False},
+            "name": _("Sales Orders"),
+        }
 
     @api.model_cr_context
     def _init_column(self, column_name):
@@ -117,9 +126,9 @@ class SaleSubscription(models.Model):
             - recurring_inactive_lines = all the template_id's options that are not set on the subscription
         """
         for account in self:
-            account.recurring_mandatory_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id in [inv_line.product_id for inv_line in account.sudo().template_id.subscription_template_line_ids])
+            account.recurring_mandatory_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id.id in [product_line.id for product_line in account.sudo().template_id.product_line_ids])
             account.recurring_option_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id in [line.product_id for line in account.sudo().template_id.subscription_template_option_ids])
-            account.recurring_custom_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id not in [opt_line.product_id for opt_line in account.sudo().template_id.subscription_template_option_ids]+[inv_line.product_id for inv_line in account.sudo().template_id.subscription_template_line_ids])
+            account.recurring_custom_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id.id not in [opt_line.product_id.id for opt_line in account.sudo().template_id.subscription_template_option_ids]+[product_line.id for product_line in account.sudo().template_id.product_line_ids])
             account.recurring_inactive_lines = account.sudo().template_id.subscription_template_option_ids.filtered(lambda r: r.product_id not in [line.product_id for line in account.recurring_invoice_line_ids] and r.portal_access != 'invisible')
 
     def partial_invoice_line(self, sale_order, option_line, refund=False, date_from=False):
@@ -131,6 +140,7 @@ class SaleSubscription(models.Model):
         values = {
             'order_id': sale_order.id,
             'product_id': option_line.product_id.id,
+            'subscription_id': self.id,
             'product_uom_qty': option_line.quantity,
             'product_uom': option_line.uom_id.id,
             'discount': (1 - self.partial_recurring_invoice_ratio(date_from=date_from)) * 100,
@@ -344,7 +354,7 @@ class SaleSubscriptionTemplate(models.Model):
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
     subscription_template_option_ids = fields.One2many('sale.subscription.template.option', inverse_name='subscription_template_id', string='Optional Lines', copy=True, oldname='option_invoice_line_ids')
     partial_invoice = fields.Boolean(string="Prorated Invoice", help="If set, option upgrades are invoiced for the remainder of the current invoicing period.")
-    tag_ids = fields.Many2many('account.analytic.tag', 'sale_subscription_template_tag_rel', 'template_id', 'tag_id', string='Tags')
+    tag_id = fields.Many2one('account.analytic.tag', string='Tags', oldname='tag_ids')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
 
@@ -358,10 +368,11 @@ class SaleSubscriptionTemplate(models.Model):
 
 
 class SaleSusbcriptionOption(models.Model):
-    _inherit = "sale.subscription.template.line"
     _name = "sale.subscription.template.option"
     _description = "Subscription Template Option"
 
+    name = fields.Char(string='Description', required=True)
+    subscription_template_id = fields.Many2one('sale.subscription.template', string="Template", required=True, ondelete="cascade")
     portal_access = fields.Selection(
         string='Portal Access',
         selection=[
@@ -376,6 +387,10 @@ class SaleSusbcriptionOption(models.Model):
              "Upgrade and Downgrade: The customer can add or remove this option himself\n"
              "Invisible: The customer doesn't see the option; however it gets carried away when switching subscription template")
     is_authorized = fields.Boolean(compute="_compute_is_authorized", search="_search_is_authorized")
+    product_id = fields.Many2one('product.product', string="Product", required=True, domain="[('recurring_invoice', '=', True)]")
+    uom_id = fields.Many2one('product.uom', string="Unit of Measure", required=True)
+    quantity = fields.Float(required=True, default=1.0)
+    price = fields.Float(compute='_compute_price')
 
     @api.constrains('product_id', 'subscription_template_id')
     def _check_unicity(self):
@@ -409,6 +424,32 @@ class SaleSusbcriptionOption(models.Model):
 
         op = 'in' if (operator == '=' and value) or (operator != '=' and not value) else 'not in'
         return [('id', op, ids)]
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        domain = {}
+        if not self.product_id:
+            domain['uom_id'] = []
+        else:
+            name = self.product_id.display_name
+            if self.product_id.description_sale:
+                name += '\n' + self.product_id.description_sale
+            self.name = name
+
+            if not self.uom_id:
+                self.uom_id = self.product_id.uom_id.id
+            domain['uom_id'] = [('category_id', '=', self.product_id.uom_id.category_id.id)]
+
+        return {'domain': domain}
+
+    def _compute_price(self):
+        pricelist = self.env['product.pricelist'].browse(self._context.get('pricelist_id'))
+        for line in self:
+            if not pricelist:
+                line.price = 0.0
+            else:
+                line.price = pricelist.with_context(uom=line.uom_id.id).price_get(line.product_id.id, line.quantity)[pricelist.id]
+
 
 
 class SaleSubscriptionLine(models.Model):

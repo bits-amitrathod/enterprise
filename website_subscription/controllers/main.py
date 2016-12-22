@@ -106,6 +106,7 @@ class website_subscription(http.Controller):
         part_pms = account.partner_id.payment_token_ids
         inactive_options = account.sudo().recurring_inactive_lines
         display_close = account.template_id.sudo().user_closable and account.state != 'close'
+        is_follower = request.env.user.partner_id.id in [follower.partner_id.id for follower in account.message_follower_ids]
         active_plan = account.template_id.sudo()
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
         if account.recurring_rule_type != 'weekly':
@@ -119,6 +120,7 @@ class website_subscription(http.Controller):
             'account': account,
             'template': account.template_id.sudo(),
             'display_close': display_close,
+            'is_follower': is_follower,
             'close_reasons': request.env['sale.subscription.close.reason'].search([]),
             'missing_periods': missing_periods,
             'inactive_options': inactive_options,
@@ -233,7 +235,7 @@ class website_subscription(http.Controller):
             account = account_res.browse(account_id)
         new_option_id = int(kw.get('new_option_id'))
         new_option = option_res.sudo().browse(new_option_id)
-        pricelist = request.website.get_current_pricelist()
+        pricelist = account.pricelist_id.sudo()
         price = new_option.with_context(pricelist_id=pricelist.id).price
         if not price or not price * account.partial_recurring_invoice_ratio() or not account.template_id.partial_invoice:
             account.sudo().add_option(new_option_id)

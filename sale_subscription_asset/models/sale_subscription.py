@@ -57,7 +57,7 @@ class SaleOrderLine(models.Model):
         """
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         if self.product_id.recurring_invoice:
-            asset_category = self.order_id.subscription_id.template_id.template_asset_category_id
+            asset_category = self.subscription_id.template_id.template_asset_category_id
             if asset_category:
                 account = self.order_id.fiscal_position_id.map_account(asset_category.account_asset_id)
                 res['asset_category_id'] = asset_category.id
