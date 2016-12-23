@@ -275,6 +275,11 @@ class StockPicking(models.Model):
                     if self._check_destination_location(location):
                         return
 
+            product_packaging = self.env['product.packaging'].search([('barcode', '=', product_barcode)], limit=1)
+            if product_packaging.product_id:
+                if self._check_product(product_packaging.product_id,product_packaging.qty):
+                    return
+
         return {'warning': {
             'title': _('Wrong barcode'),
             'message': _('The barcode "%(barcode)s" doesn\'t correspond to a proper product, package or location.') % {'barcode': barcode}
