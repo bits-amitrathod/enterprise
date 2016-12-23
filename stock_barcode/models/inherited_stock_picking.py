@@ -221,6 +221,11 @@ class StockPicking(models.Model):
                 if self._check_product(product):
                     return
 
+            product_packaging = self.env['product.packaging'].search([('barcode', '=', barcode)], limit=1)
+            if product_packaging.product_id:
+                if self._check_product(product_packaging.product_id,product_packaging.qty):
+                    return
+
             # Logic for packages in source location
             if self.pack_operation_pack_ids:
                 package_source = self.env['stock.quant.package'].search([('name', '=', barcode), ('location_id', 'child_of', self.location_id.id)], limit=1)
