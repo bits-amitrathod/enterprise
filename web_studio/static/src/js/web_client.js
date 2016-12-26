@@ -81,12 +81,17 @@ WebClient.include({
 
     on_new_app_created: function(ev) {
         var self = this;
-
-        this.toggle_studio_mode().then(function() {
-            self.instanciate_menu_widgets().then(function() {
-                self.on_app_clicked({data: {menu_id: ev.data.menu_id, action_id: ev.data.action_id}});
-                self.menu.toggle_mode(false);  // display app switcher button
-           });
+        this.instanciate_menu_widgets().then(function() {
+            self.on_app_clicked({
+                data: {
+                    menu_id: ev.data.menu_id,
+                    action_id: ev.data.action_id,
+                    options: {
+                        active_view: 'form',
+                    }
+                }
+            });
+            self.menu.toggle_mode(false);  // display app switcher button
         });
     },
 
@@ -219,7 +224,7 @@ WebClient.include({
             var index = action.widget.dataset.index;
             this.studio_ids = action.widget.dataset.ids;
             this.studio_id = index ? this.studio_ids[index] : (this.studio_ids[0] || false);
-            action_options.active_view = action.get_active_view();
+            action_options.active_view = options.active_view || action.get_active_view();
             action_options.action = action.action_descr;
             def = session.rpc('/web_studio/chatter_allowed', {
                 model: action_options.action.res_model,
@@ -339,7 +344,7 @@ WebClient.include({
         if (this.studio_on) {
             core.bus.trigger('change_menu_section', ev.data.menu_id);
             // load the action before toggle the appswitcher
-            return this._open_navigated_action_in_studio()
+            return this._open_navigated_action_in_studio(ev.data.options)
                 .then(this.toggle_app_switcher.bind(this, false));
         } else {
             return this._super.apply(this, arguments);
@@ -358,14 +363,14 @@ WebClient.include({
         this.studio_action_manager.inner_widget = last_action && last_action.widget;
         $.bbq.pushState(state, 2);
     },
-    _open_navigated_action_in_studio: function() {
+    _open_navigated_action_in_studio: function(options) {
         var action = this.studio_action_manager.get_inner_action();
         if (!this._is_studio_editable(action)) {
             this.do_warn("Studio", _t("This action is not editable by Studio"));
             return $.Deferred().reject();
         }
         bus.trigger('action_changed', action.action_descr);
-        return this.open_studio('main', { action: action });
+        return this.open_studio('main', _.extend(options || {}, { action: action }));
     },
 
     toggle_app_switcher: function (display) {
