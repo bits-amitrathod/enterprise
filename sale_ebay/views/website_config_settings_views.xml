@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="website_config_settings_view_form" model="ir.ui.view">
+        <field name="name">website.config.settings.form.inherit.ebay</field>
+        <field name="model">website.config.settings</field>
+        <field name="inherit_id" ref="website_sale.website_config_settings_view_form_inherit_website_sale"/>
+        <field name="arch" type="xml">
+            <div id="msg_ebay_install_setting" position="replace">
+                <div class="mt16">
+                    <button type="action" name="%(sales_team.action_sale_config)d" string="Configure eBay" class="btn-link" icon="fa-arrow-right"/>
+                </div>
+            </div>
+    	</field>
+	</record>
+
+</odoo>
