@@ -18,17 +18,16 @@
         <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
         <field name="model">helpdesk.team</field>
         <field name="arch" type="xml">
-            <xpath expr="//h1[@id='name']" position="inside">
-                    <button class="oe_stat_button oe_inline pull-right" name="website_publish_button" type="object" icon="fa-globe" attrs="{'invisible': [('use_website_helpdesk_form', '=', False), ('use_website_helpdesk_forum', '=', False), ('use_website_helpdesk_slides', '=', False)]}" style="font-size:.5em">
-                        <field name="website_published" widget="website_button"/>
-                    </button>
+            <xpath expr="//div[@id='title']" position="before">
+                <button class="oe_stat_button oe_inline pull-right" name="website_publish_button" type="object" icon="fa-globe" attrs="{'invisible': [('use_website_helpdesk_form', '=', False), ('use_website_helpdesk_forum', '=', False), ('use_website_helpdesk_slides', '=', False)]}">
+                    <field name="website_published" widget="website_button"/>
+                </button>
             </xpath>
             <xpath expr="//div[@id='use_website_helpdesk_rating']" position="replace">
-                <hr class="mt8 mb8"/>
-                <div class="text-warning mb4" attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','!=',False)]}">
+                <div class="text-warning mb4 mt16" attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','!=',False)]}">
                     Save this page to activate the feature
                 </div>
-                <div attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','=',False)]}">
+                <div attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','=',False)]}" class="mt16">
                     View this teams ratings this page:<br/>
                     ⇒ <field name="website_rating_url" readonly="1" class="oe_inline" widget="url"/>
                 </div>
