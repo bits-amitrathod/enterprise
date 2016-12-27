@@ -110,8 +110,15 @@ class MrpEcoStage(models.Model):
     _order = "sequence, id"
     _fold_name = 'folded'
 
+    @api.model
+    def _get_sequence(self):
+        others = self.search([('sequence','<>',False)], order='sequence desc', limit=1)
+        if others:
+            return (others[0].sequence or 0) + 1
+        return 1
+
     name = fields.Char('Name', required=True)
-    sequence = fields.Integer('Sequence', default=0)
+    sequence = fields.Integer('Sequence', default=_get_sequence)
     folded = fields.Boolean('Folded in kanban view')
     allow_apply_change = fields.Boolean('Final Stage')
     type_id = fields.Many2one('mrp.eco.type', 'Type', required=True, default=lambda self: self.env['mrp.eco.type'].search([], limit=1))
@@ -360,18 +367,21 @@ class MrpEco(models.Model):
     @api.multi
     def write(self, vals):
         if vals.get('stage_id'):
-            if any(not eco.allow_change_stage for eco in self):
-                raise UserError(_('You cannot change the stage, as approvals are still required.'))
-            new_stage = self.env['mrp.eco.stage'].browse(vals['stage_id'])
-            minimal_sequence = min(self.mapped('stage_id').mapped('sequence'))
-            has_blocking_stages = self.env['mrp.eco.stage'].search_count([
-                ('sequence', '>=', minimal_sequence),
-                ('sequence', '<=', new_stage.sequence),
-                ('type_id', 'in', self.mapped('type_id').ids),
-                ('id', 'not in', self.mapped('stage_id').ids + [vals['stage_id']]),
-                ('is_blocking', '=', True)])
-            if has_blocking_stages:
-                raise UserError(_('You cannot change the stage, as approvals are required in the process.'))
+            newstage = self.env['mrp.eco.stage'].browse(vals['stage_id'])
+            # raise exception only if we increase the stage, not on decrease
+            if self.stage_id and ((newstage.sequence, newstage.id) > (self.stage_id.sequence, self.stage_id.id)):
+                if any(not eco.allow_change_stage for eco in self):
+                    raise UserError(_('You cannot change the stage, as approvals are still required.'))
+                new_stage = self.env['mrp.eco.stage'].browse(vals['stage_id'])
+                minimal_sequence = min(self.mapped('stage_id').mapped('sequence'))
+                has_blocking_stages = self.env['mrp.eco.stage'].search_count([
+                    ('sequence', '>=', minimal_sequence),
+                    ('sequence', '<=', new_stage.sequence),
+                    ('type_id', 'in', self.mapped('type_id').ids),
+                    ('id', 'not in', self.mapped('stage_id').ids + [vals['stage_id']]),
+                    ('is_blocking', '=', True)])
+                if has_blocking_stages:
+                    raise UserError(_('You cannot change the stage, as approvals are required in the process.'))
         res = super(MrpEco, self).write(vals)
         if vals.get('stage_id'):
             self._create_approvals()
