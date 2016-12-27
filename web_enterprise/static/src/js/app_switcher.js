@@ -168,7 +168,11 @@ var AppSwitcher = Widget.extend({
     update: function(data) {
         var self = this;
         if (data.search) {
-            var options = {extract: function(el) { return el.label; }};
+            var options = {
+                extract: function(el) {
+                    return el.label.split('/').reverse().join('/');
+                }
+            };
             var search_results = fuzzy.filter(data.search, this.menu_data, options);
             var results = _.map(search_results, function (result) {
                 return self.menu_data[result.index];
