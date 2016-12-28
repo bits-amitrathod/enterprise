@@ -35,9 +35,8 @@ FIELDS_TO_EXPORT = {
         'report_type'
     ],
     'ir.actions.server': [
-        'action_id', 'child_ids', 'code', 'condition', 'crud_model_id', 'help', 'link_field_id',
-        'link_new_record', 'model_id', 'name', 'sequence', 'state', 'use_create',
-        'use_write', 'write_expression',
+        'action_id', 'child_ids', 'code', 'crud_model_id', 'help', 'link_field_id',
+        'model_id', 'name', 'sequence', 'state'
     ],
     'ir.filters': [
         'action_id', 'active', 'context', 'domain', 'is_default', 'model_id', 'name', 'sort'
@@ -75,7 +74,7 @@ FIELDS_TO_EXPORT = {
 FIELDS_NOT_TO_EXPORT = {
     'base.action.rule': ['act_followers', 'act_user_id', 'trg_date_calendar_id'],
     'ir.actions.report.xml': ['ir_values_id'],
-    'ir.actions.server': ['fields_lines', 'menu_ir_values_id', 'ref_object'],
+    'ir.actions.server': ['channel_ids', 'fields_lines', 'menu_ir_values_id', 'partner_ids'],
     'ir.filter': ['user_id'],
     'mail.template': ['attachment_ids', 'mail_server_id', 'ref_ir_value'],
     'res.groups': ['category_id', 'users'],
