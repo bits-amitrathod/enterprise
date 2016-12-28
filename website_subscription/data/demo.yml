@@ -33,8 +33,8 @@
                 'account_depreciation_expense_id': expense_account.id,
             }
             self._update('account.asset.category', 'website_subscription', vals, 'website_subscription_asset_month')
-            self._update('sale.subscription.template', 'website_subscription', {'template_asset_category_id': ref('website_subscription.website_subscription_asset_year')}, 'odoo_yearly')
-            self._update('sale.subscription.template', 'website_subscription', {'template_asset_category_id': ref('website_subscription.website_subscription_asset_month')}, 'odoo_monthly')
+            self._update('sale.subscription.template', 'website_subscription', {'template_asset_category_id': ref('website_subscription.website_subscription_asset_year')}, xml_id='sale_subscription.odoo_yearly')
+            self._update('sale.subscription.template', 'website_subscription', {'template_asset_category_id': ref('website_subscription.website_subscription_asset_month')}, xml_id='sale_subscription.odoo_monthly')
             self._update('sale.subscription', 'website_subscription', {'asset_category_id': ref('website_subscription.website_subscription_asset_month')}, 'subscription_portal_21')
 
 -

@@ -30,5 +30,8 @@ Features:
         'data/sale_subscription_data.xml',
         'report/sale_subscription_report_view.xml',
     ],
+    'demo': [
+        'data/sale_subscription_demo.xml'
+    ],
     'license': 'OEEL-1',
 }
