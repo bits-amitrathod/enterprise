@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding='UTF-8'?>
 <odoo>
     <record model="ir.cron" id="account_analytic_cron">
-        <field name="name">Subscriptions Expiration</field>
+        <field name="name">Sale Contract: subscriptions expiration</field>
+        <field name="model_id" ref="sale_contract.model_sale_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_account_analytic_account()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">weeks</field>
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
-        <field name="model" eval="'sale.subscription'"/>
-        <field name="function" eval="'cron_account_analytic_account'"/>
-        <field name="args" eval="'()'" />
     </record>
 
     <record model="ir.cron" id="account_analytic_cron_for_invoice">
-       <field name="name">Generate Recurring Invoices and Payments for Subscription Contracts</field>
-       <field name="interval_number">1</field>
-       <field name="interval_type">days</field>
-       <field name="numbercall">-1</field>
-       <field name="model" eval="'sale.subscription'"/>
-       <field name="function" eval="'_cron_recurring_create_invoice'"/>
-       <field name="args" eval="'()'"/>
+        <field name="name">Sale Contract: generate recurring invoices and payments</field>
+        <field name="model_id" ref="sale_contract.model_sale_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_recurring_create_invoice()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
     </record>
     
     <!-- Standard Closing Reason -->
