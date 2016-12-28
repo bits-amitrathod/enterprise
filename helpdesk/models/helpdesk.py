@@ -5,7 +5,7 @@ import datetime
 
 from dateutil import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, AccessError, ValidationError
 
 
@@ -664,10 +664,28 @@ class HelpdeskTicket(models.Model):
             pass
         return recipients
 
+    @api.multi
+    def _ticket_email_split(self, msg):
+        email_list = tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or ''))
+        # check left-part is not already an alias
+        return filter(lambda x: x.split('@')[0] not in self.mapped('team_id.alias_name'), email_list)
+
     @api.model
     def message_new(self, msg, custom_values=None):
         values = dict(custom_values or {}, partner_email=msg.get('from'), partner_id=msg.get('author_id'))
-        return super(HelpdeskTicket, self).message_new(msg, custom_values=values)
+        ticket_id = super(HelpdeskTicket, self).message_new(msg, custom_values=values)
+        ticket = self.browse(ticket_id)
+        partner_ids = filter(None, ticket._find_partner_from_emails(self._ticket_email_split(msg)))
+        if partner_ids:
+            ticket.message_subscribe(partner_ids)
+        return ticket_id
+
+    @api.multi
+    def message_update(self, msg, update_vals=None):
+        partner_ids = filter(None, self._find_partner_from_emails(self.email_split(msg)))
+        if partner_ids:
+            self.message_subscribe(partner_ids)
+        return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)
 
     @api.multi
     def _track_template(self, tracking):
