@@ -4,6 +4,6 @@
 from odoo import models
 
 
-class BaseActionRule(models.Model):
-    _name = 'base.action.rule'
-    _inherit = ['studio.mixin', 'base.action.rule']
+class BaseAutomation(models.Model):
+    _name = 'base.automation'
+    _inherit = ['studio.mixin', 'base.automation']
