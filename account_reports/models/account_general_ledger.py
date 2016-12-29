@@ -4,41 +4,53 @@
 from odoo import models, fields, api, _
 from odoo.tools.misc import formatLang
 from datetime import datetime, timedelta
-
+from odoo.addons.web.controllers.main import clean_action
 
 class report_account_general_ledger(models.AbstractModel):
     _name = "account.general.ledger"
     _description = "General Ledger Report"
+    _inherit = "account.report"
 
-    def _format(self, value, currency=False):
-        if self.env.context.get('no_format'):
-            return value
-        currency_id = currency or self.env.user.company_id.currency_id
-        if currency_id.is_zero(value):
-            # don't print -0.0 in reports
-            value = abs(value)
-        res = formatLang(self.env, value, currency_obj=currency_id)
-        return res
+    filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
+    filter_cash_basis = False
+    filter_all_entries = False
+    filter_journals = []
+    filter_analytic = True
 
     @api.model
-    def get_lines(self, context_id, line_id=None):
-        if type(context_id) == int:
-            context_id = self.env['account.context.general.ledger'].search([['id', '=', context_id]])
-        new_context = dict(self.env.context)
-        new_context.update({
-            'date_from': context_id.date_from,
-            'date_to': context_id.date_to,
-            'state': context_id.all_entries and 'all' or 'posted',
-            'cash_basis': context_id.cash_basis,
-            'context_id': context_id,
-            'company_ids': context_id.company_ids.ids,
-            'journal_ids': context_id.journal_ids.ids,
-            'analytic_account_ids': context_id.analytic_account_ids,
-            'analytic_tag_ids': context_id.analytic_tag_ids,
-        })
-        return self.with_context(new_context)._lines(line_id)
+    def get_options(self, previous_options=None):
+        self.filter_journals = self.get_journals()
+        return super(report_account_general_ledger, self).get_options(previous_options)
 
-    def do_query_unaffected_earnings(self, line_id):
+    def get_templates(self):
+        templates = super(report_account_general_ledger, self).get_templates()
+        templates['main_template'] = 'account_reports.template_general_ledger_report'
+        templates['line_template'] = 'account_reports.line_template_general_ledger_report'
+        return templates
+
+    def get_columns_name(self, options):
+        return [{'name': ''},
+                {'name': _("Date"), 'class': 'date'}, 
+                {'name': _("Communication")}, 
+                {'name': _("Partner")}, 
+                {'name': _("Currency"), 'class': 'number'}, 
+                {'name': _("Debit"), 'class': 'number'}, 
+                {'name': _("Credit"), 'class': 'number'}, 
+                {'name': _("Balance"), 'class': 'number'}]
+
+    def open_journal_entries(self, options, params):
+        action = self.env.ref('account.action_move_select').read()[0]
+        action = clean_action(action)
+        ctx = self.env.context.copy()
+        active_id = int(params.get('id').split('_')[1])
+        ctx.update({
+            'search_default_dummy_account_id': [active_id],
+            'active_id': active_id,
+            })
+        action['context'] = ctx
+        return action
+
+    def do_query_unaffected_earnings(self, options, line_id):
         ''' Compute the sum of ending balances for all accounts that are of a type that does not bring forward the balance in new fiscal years.
             This is needed to balance the trial balance and the general ledger reports (to have total credit = total debit)
         '''
@@ -48,7 +60,7 @@ class report_account_general_ledger(models.AbstractModel):
                COALESCE(SUM("account_move_line".amount_currency), 0),
                COALESCE(SUM("account_move_line".debit), 0),
                COALESCE(SUM("account_move_line".credit), 0)'''
-        if self.env.context.get('cash_basis'):
+        if options.get('cash_basis'):
             select = select.replace('debit', 'debit_cash_basis').replace('credit', 'credit_cash_basis')
         select += " FROM %s WHERE %s"
         tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=[('user_type_id.include_initial_balance', '=', False)])
@@ -57,9 +69,9 @@ class report_account_general_ledger(models.AbstractModel):
         res = self.env.cr.fetchone()
         return {'balance': res[0], 'amount_currency': res[1], 'debit': res[2], 'credit': res[3]}
 
-    def do_query(self, line_id):
+    def do_query(self, options, line_id):
         select = ',COALESCE(SUM(\"account_move_line\".debit-\"account_move_line\".credit), 0),SUM(\"account_move_line\".amount_currency),SUM(\"account_move_line\".debit),SUM(\"account_move_line\".credit)'
-        if self.env.context.get('cash_basis'):
+        if options.get('cash_basis'):
             select = select.replace('debit', 'debit_cash_basis').replace('credit', 'credit_cash_basis')
         sql = "SELECT \"account_move_line\".account_id%s FROM %s WHERE %s%s GROUP BY \"account_move_line\".account_id"
         tables, where_clause, where_params = self.env['account.move.line']._query_get()
@@ -82,17 +94,17 @@ class report_account_general_ledger(models.AbstractModel):
         ) for k in results])
         return results
 
-    def group_by_account_id(self, line_id):
+    def group_by_account_id(self, options, line_id):
         accounts = {}
-        results = self.do_query(line_id)
+        results = self.do_query(options, line_id)
         initial_bal_date_to = datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d") + timedelta(days=-1)
-        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime('%Y-%m-%d')).do_query(line_id)
+        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime('%Y-%m-%d')).do_query(options, line_id)
         unaffected_earnings_xml_ref = self.env.ref('account.data_unaffected_earnings')
         unaffected_earnings_line = True  # used to make sure that we add the unaffected earning initial balance only once
         if unaffected_earnings_xml_ref:
             #compute the benefit/loss of last year to add in the initial balance of the current year earnings account
             last_day_previous_fy = self.env.user.company_id.compute_fiscalyear_dates(datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d"))['date_from'] + timedelta(days=-1)
-            unaffected_earnings_results = self.with_context(date_to=last_day_previous_fy.strftime('%Y-%m-%d'), date_from=False).do_query_unaffected_earnings(line_id)
+            unaffected_earnings_results = self.with_context(date_to=last_day_previous_fy.strftime('%Y-%m-%d'), date_from=False).do_query_unaffected_earnings(options, line_id)
             unaffected_earnings_line = False
         context = self.env.context
         base_domain = [('date', '<=', context['date_to']), ('company_id', 'in', context['company_ids'])]
@@ -135,7 +147,7 @@ class report_account_general_ledger(models.AbstractModel):
                 accounts[unaffected_earnings_account[0]]['lines'] = []
         return accounts
 
-    def _get_taxes(self):
+    def _get_taxes(self, journal):
         tables, where_clause, where_params = self.env['account.move.line']._query_get()
         query = """
             SELECT rel.account_tax_id, SUM("account_move_line".balance) AS base_amount
@@ -158,7 +170,7 @@ class report_account_general_ledger(models.AbstractModel):
                 'base_amount': base_amounts[tax.id],
                 'tax_amount': self.env.cr.fetchone()[0] or 0.0,
             }
-            if self.env.context['context_id'].journal_ids[0].type == 'sale':
+            if journal.get('type') == 'sale':
                 #sales operation are credits
                 res[tax]['base_amount'] = res[tax]['base_amount'] * -1
                 res[tax]['tax_amount'] = res[tax]['tax_amount'] * -1
@@ -171,41 +183,41 @@ class report_account_general_ledger(models.AbstractModel):
         return self.env.cr.dictfetchone()
 
     @api.model
-    def _lines(self, line_id=None):
+    def get_lines(self, options, line_id=None):
         lines = []
         context = self.env.context
-        company_id = context.get('company_id') or self.env.user.company_id
-        grouped_accounts = self.with_context(date_from_aml=context['date_from'], date_from=context['date_from'] and company_id.compute_fiscalyear_dates(datetime.strptime(context['date_from'], "%Y-%m-%d"))['date_from'] or None).group_by_account_id(line_id)  # Aml go back to the beginning of the user chosen range but the amount on the account line should go back to either the beginning of the fy or the beginning of times depending on the account
+        company_id = self.env.user.company_id
+        dt_from = options['date'].get('date_from')
+        line_id = line_id and int(line_id.split('_')[1]) or None
+        # Aml go back to the beginning of the user chosen range but the amount on the account line should go back to either the beginning of the fy or the beginning of times depending on the account
+        grouped_accounts = self.with_context(date_from_aml=dt_from, date_from=dt_from and company_id.compute_fiscalyear_dates(datetime.strptime(dt_from, "%Y-%m-%d"))['date_from'] or None).group_by_account_id(options, line_id)
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
-        unfold_all = context.get('print_mode') and not context['context_id']['unfolded_accounts']
+        unfold_all = context.get('print_mode') and len(options.get('unfolded_lines')) == 0
         for account in sorted_accounts:
             debit = grouped_accounts[account]['debit']
             credit = grouped_accounts[account]['credit']
             balance = grouped_accounts[account]['balance']
-            amount_currency = '' if not account.currency_id else self._format(grouped_accounts[account]['amount_currency'], currency=account.currency_id)
+            amount_currency = '' if not account.currency_id else self.format_value(grouped_accounts[account]['amount_currency'], currency=account.currency_id)
             lines.append({
-                'id': account.id,
-                'type': 'line',
+                'id': 'account_%s' % (account.id,),
                 'name': account.code + " " + account.name,
-                'footnotes': self.env.context['context_id']._get_footnotes('line', account.id),
-                'columns': [amount_currency, self._format(debit), self._format(credit), self._format(balance)],
+                'columns': [{'name': v} for v in [amount_currency, self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
                 'level': 2,
                 'unfoldable': True,
-                'unfolded': account in context['context_id']['unfolded_accounts'] or unfold_all,
+                'unfolded': 'account_%s' % (account.id,) in options.get('unfolded_lines') or unfold_all,
                 'colspan': 4,
             })
-            if account in context['context_id']['unfolded_accounts'] or unfold_all:
+            if 'account_%s' % (account.id,) in options.get('unfolded_lines') or unfold_all:
                 initial_debit = grouped_accounts[account]['initial_bal']['debit']
                 initial_credit = grouped_accounts[account]['initial_bal']['credit']
                 initial_balance = grouped_accounts[account]['initial_bal']['balance']
-                initial_currency = '' if not account.currency_id else self._format(grouped_accounts[account]['initial_bal']['amount_currency'], currency=account.currency_id)
+                initial_currency = '' if not account.currency_id else self.format_value(grouped_accounts[account]['initial_bal']['amount_currency'], currency=account.currency_id)
                 domain_lines = [{
-                    'id': account.id,
-                    'type': 'initial_balance',
+                    'id': 'initial_%s' % (account.id,),
+                    'class': 'o_account_reports_initial_balance',
                     'name': _('Initial Balance'),
-                    'footnotes': self.env.context['context_id']._get_footnotes('initial_balance', account.id),
-                    'columns': ['', '', '', initial_currency, self._format(initial_debit), self._format(initial_credit), self._format(initial_balance)],
-                    'level': 1,
+                    'parent_id': 'account_%s' % (account.id,),
+                    'columns': [{'name': v} for v in ['', '', '', initial_currency, self.format_value(initial_debit), self.format_value(initial_credit), self.format_value(initial_balance)]],
                 }]
                 progress = initial_balance
                 amls = grouped_accounts[account]['lines']
@@ -215,7 +227,7 @@ class report_account_general_ledger(models.AbstractModel):
                     too_many = True
                 used_currency = self.env.user.company_id.currency_id
                 for line in amls:
-                    if self.env.context['cash_basis']:
+                    if options.get('cash_basis'):
                         line_debit = line.debit_cash_basis
                         line_credit = line.credit_cash_basis
                     else:
@@ -224,7 +236,7 @@ class report_account_general_ledger(models.AbstractModel):
                     line_debit = line.company_id.currency_id.compute(line_debit, used_currency)
                     line_credit = line.company_id.currency_id.compute(line_credit, used_currency)
                     progress = progress + line_debit - line_credit
-                    currency = "" if not line.currency_id else self._format(line.amount_currency, currency=line.currency_id)
+                    currency = "" if not line.currency_id else self.format_value(line.amount_currency, currency=line.currency_id)
                     name = []
                     name = line.name and line.name or ''
                     if line.ref:
@@ -234,124 +246,81 @@ class report_account_general_ledger(models.AbstractModel):
                     partner_name = line.partner_id.name
                     if partner_name and len(partner_name) > 35:
                         partner_name = partner_name[:32] + "..."
+                    caret_type = 'account.move'
+                    if line.invoice_id:
+                        caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'
+                    elif line.payment_id:
+                        caret_type = 'account.payment'
                     domain_lines.append({
                         'id': line.id,
-                        'type': 'move_line_id',
-                        'move_id': line.move_id.id,
-                        'action': line.get_model_id_and_name(),
+                        'caret_options': caret_type,
+                        'parent_id': 'account_%s' % (account.id,),
                         'name': line.move_id.name if line.move_id.name else '/',
-                        'footnotes': self.env.context['context_id']._get_footnotes('move_line_id', line.id),
-                        'columns': [line.date, name, partner_name, currency,
-                                    line_debit != 0 and self._format(line_debit) or '',
-                                    line_credit != 0 and self._format(line_credit) or '',
-                                    self._format(progress)],
+                        'columns': [{'name': v} for v in [line.date, name, partner_name, currency,
+                                    line_debit != 0 and self.format_value(line_debit) or '',
+                                    line_credit != 0 and self.format_value(line_credit) or '',
+                                    self.format_value(progress)]],
                         'level': 1,
                     })
                 domain_lines.append({
-                    'id': account.id,
-                    'type': 'o_account_reports_domain_total',
+                    'id': 'total_' + str(account.id),
+                    'class': 'o_account_reports_domain_total',
+                    'parent_id': 'account_%s' % (account.id,),
                     'name': _('Total '),
-                    'footnotes': self.env.context['context_id']._get_footnotes('o_account_reports_domain_total', account.id),
-                    'columns': ['', '', '', amount_currency, self._format(debit), self._format(credit), self._format(balance)],
-                    'level': 1,
+                    'columns': [{'name': v} for v in ['', '', '', amount_currency, self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
                 })
                 if too_many:
                     domain_lines.append({
-                        'id': account.id,
-                        'type': 'too_many',
+                        'id': 'too_many' + str(account.id),
+                        'parent_id': 'account_%s' % (account.id,),
                         'name': _('There are more than 80 items in this list, click here to see all of them'),
-                        'footnotes': {},
-                        'colspan': 8,
-                        'columns': [],
-                        'level': 3,
+                        'colspan': 7,
+                        'columns': [{}],
+                        'action': 'view_too_many',
+                        'action_id': 'account,%s' % (account.id,),
                     })
                 lines += domain_lines
 
-        if len(context['context_id'].journal_ids) == 1 and context['context_id'].journal_ids.type in ['sale', 'purchase'] and not line_id:
+        journals = [j for j in options.get('journals') if j.get('selected')]
+        if len(journals) == 1 and journals[0].get('type') in ['sale', 'purchase'] and not line_id:
             total = self._get_journal_total()
             lines.append({
                 'id': 0,
-                'type': 'total',
+                'class': 'total',
                 'name': _('Total'),
-                'footnotes': {},
-                'columns': ['', '', '', '', self._format(total['debit']), self._format(total['credit']), self._format(total['balance'])],
+                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(total['debit']), self.format_value(total['credit']), self.format_value(total['balance'])]],
                 'level': 1,
                 'unfoldable': False,
                 'unfolded': False,
             })
             lines.append({
                 'id': 0,
-                'type': 'line',
                 'name': _('Tax Declaration'),
-                'footnotes': {},
-                'columns': ['', '', '', '', '', '', ''],
+                'columns': [{'name': v} for v in ['', '', '', '', '', '', '']],
                 'level': 1,
                 'unfoldable': False,
                 'unfolded': False,
             })
             lines.append({
                 'id': 0,
-                'type': 'line',
                 'name': _('Name'),
-                'footnotes': {},
-                'columns': ['', '', '', '', _('Base Amount'), _('Tax Amount'), ''],
+                'columns': [{'name': v} for v in ['', '', '', '', _('Base Amount'), _('Tax Amount'), '']],
                 'level': 2,
                 'unfoldable': False,
                 'unfolded': False,
             })
-            for tax, values in self._get_taxes().items():
+            for tax, values in self._get_taxes(journals[0]).items():
                 lines.append({
-                    'id': tax.id,
+                    'id': '%s_tax' % (tax.id,),
                     'name': tax.name + ' (' + str(tax.amount) + ')',
-                    'type': 'tax_id',
-                    'footnotes': self.env.context['context_id']._get_footnotes('tax_id', tax.id),
+                    'caret_options': 'account.tax',
                     'unfoldable': False,
-                    'columns': ['', '', '', '', values['base_amount'], values['tax_amount'], ''],
+                    'columns': [{'name': v} for v in ['', '', '', '', values['base_amount'], values['tax_amount'], '']],
                     'level': 1,
                 })
 
         return lines
 
     @api.model
-    def get_title(self):
+    def get_report_name(self):
         return _("General Ledger")
-
-    @api.model
-    def get_name(self):
-        return 'general_ledger'
-
-    @api.model
-    def get_report_type(self):
-        return self.env.ref('account_reports.account_report_type_general_ledger')
-
-    def get_template(self):
-        return 'account_reports.report_financial'
-
-
-class account_context_general_ledger(models.TransientModel):
-    _name = "account.context.general.ledger"
-    _description = "A particular context for the general ledger"
-    _inherit = "account.report.context.common"
-
-    fold_field = 'unfolded_accounts'
-    unfolded_accounts = fields.Many2many('account.account', 'context_to_account', string='Unfolded lines')
-    journal_ids = fields.Many2many('account.journal', relation='account_report_gl_journals')
-    available_journal_ids = fields.Many2many('account.journal', relation='account_report_gl_available_journal', default=lambda s: [(6, 0, s.env['account.journal'].search([]).ids)])
-
-    @api.multi
-    def get_available_journal_ids_names_and_codes(self):
-        return [[c.id, c.name, c.code] for c in self.available_journal_ids]
-
-    @api.model
-    def get_available_journals(self):
-        return self.env.user.journal_ids
-
-    def get_report_obj(self):
-        return self.env['account.general.ledger']
-
-    def get_columns_names(self):
-        return [_("Date"), _("Communication"), _("Partner"), _("Currency"), _("Debit"), _("Credit"), _("Balance")]
-
-    @api.multi
-    def get_columns_types(self):
-        return ["date", "text", "text", "number", "number", "number", "number"]

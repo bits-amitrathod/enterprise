@@ -18,14 +18,14 @@
 
         <record id="action_account_report_partner_vat_listing" model="ir.actions.client">
             <field name="name">Partner VAT Listing</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/l10n_be_partner_vat_listing/1', 'model': 'l10n.be.report.partner.vat.listing'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'l10n.be.report.partner.vat.listing'}" />
         </record>
 
         <record id="action_account_report_partner_vat_intra" model="ir.actions.client">
             <field name="name">Partner VAT Intra</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/l10n_be_partner_vat_intra/1', 'model': 'l10n.be.report.partner.vat.intra'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'l10n.be.report.partner.vat.intra'}" />
         </record>
 
         <menuitem id="menu_action_account_report_partner_vat_listing" name="Partner VAT Listing" action="action_account_report_partner_vat_listing" parent="l10n_be.account_reports_be_statements_menu"/>

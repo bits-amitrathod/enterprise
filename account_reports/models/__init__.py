@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import account_report_context_common
+import account_report
 import account_bank_reconciliation_report
 import account_financial_report
 import account_followup_report
@@ -13,5 +13,4 @@ import account_move_line
 import account_report_coa
 import account_aged_partner_balance
 import account_partner_ledger
-import account_report_type
 import account_config_settings

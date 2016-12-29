@@ -60,13 +60,12 @@ class ResPartner(models.Model):
         self.ensure_one()
         ctx = self.env.context.copy()
         ctx.update({
-            'url': '/account_reports/followup_report/', 
-            'addActiveId': True, 
             'model': 'account.followup.report', 
             'lang': self.lang,
         })
         return {
                 'type': 'ir.actions.client',
-                'tag': 'account_report_followup_generic',
+                'tag': 'account_report_followup',
                 'context': ctx,
+                'options': {'partner_id': self.id},
             }

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+import copy
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.misc import formatLang
@@ -14,34 +14,61 @@ from odoo.osv import expression
 class ReportAccountFinancialReport(models.Model):
     _name = "account.financial.html.report"
     _description = "Account Report"
+    _inherit = "account.report"
 
     name = fields.Char(translate=True)
     debit_credit = fields.Boolean('Show Credit and Debit Columns')
     line_ids = fields.One2many('account.financial.html.report.line', 'financial_report_id', string='Lines')
-    report_type = fields.Selection([('date_range', 'Based on date ranges'),
-                                    ('no_date_range', 'Based on a single date'),
-                                    ('date_range_cash', 'Bases on date ranges and cash basis method'),
-                                    ('date_range_analytic', 'Based on date ranges with the analytic filter'),
-                                    ('no_date_range_analytic', 'Based on a single date with the analytic filter')],
-                                   string='Analysis Periods', default=False, required=True,
-                                   help='For report like the balance sheet that do not work with date ranges')
+    date_range = fields.Boolean('Based on date ranges', default=True, help='specify if the report use date_range or single date')
+    comparison = fields.Boolean('Allow comparison', default=True, help='display the comparison filter')
+    cash_basis = fields.Boolean('Use cash basis', help='if true, report will always use cash basis, if false, user can choose from filter inside the report')
+    analytic = fields.Boolean('Allow analytic filter', help='display the analytic filter')
     company_id = fields.Many2one('res.company', string='Company')
     menuitem_created = fields.Boolean("Menu Has Been Created", default=False)
     parent_id = fields.Many2one('ir.ui.menu')
     tax_report = fields.Boolean('Tax Report', help="Set to True to automatically filter out journal items that have the boolean field 'tax_exigible' set to False")
 
+    def get_columns_name(self, options):
+        columns = [{'name': ''}]
+        if self.debit_credit and not options.get('comparison', {}).get('periods', False):
+            columns += [{'name': _('Debit'), 'class': 'number'}, {'name': _('Credit'), 'class': 'number'}]
+        dt_to = options['date'].get('date_to') or options['date'].get('date')
+        columns += [{'name': self.format_date(dt_to, options['date'].get('date_from', False), options), 'class': 'number'}]
+        if options.get('comparison') and options['comparison'].get('periods'):
+            for period in options['comparison']['periods']:
+                columns += [{'name': period.get('string'), 'class': 'number'}]
+            if options['comparison'].get('number_period') == 1:
+                columns += [{'name': '%', 'class': 'number'}]
+        return columns
+
+    @api.model
+    def get_options(self, previous_options=None):
+        if self.date_range:
+            self.filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_year'}
+            if self.comparison:
+                self.filter_comparison = {'date_from': '', 'date_to': '', 'filter': 'no_comparison', 'number_period': 1}
+        else:
+            self.filter_date = {'date': '', 'filter': 'today'}
+            if self.comparison:
+                self.filter_comparison = {'date': '', 'filter': 'no_comparison', 'number_period': 1}
+        self.filter_cash_basis = False
+        if self.cash_basis:
+            self.filter_cash_basis = None
+        self.filter_all_entries = False
+        self.filter_analytic = True if self.analytic else None
+        return super(ReportAccountFinancialReport, self).get_options(previous_options)
+
     def create_action_and_menu(self, parent_id):
         client_action = self.env['ir.actions.client'].create({
-            'name': self.get_title(),
-            'tag': 'account_report_generic',
+            'name': self.get_report_name(),
+            'tag': 'account_report',
             'context': {
-                'url': '/account_reports/output_format/financial_report/' + str(self.id),
                 'model': 'account.financial.html.report',
                 'id': self.id,
             },
         })
         self.env['ir.ui.menu'].create({
-            'name': self.get_title(),
+            'name': self.get_report_name(),
             'parent_id': parent_id or self.env['ir.model.data'].xmlid_to_res_id('account.menu_finance_reports'),
             'action': 'ir.actions.client,%s' % (client_action.id,),
         })
@@ -58,42 +85,25 @@ class ReportAccountFinancialReport(models.Model):
         return res
 
     @api.multi
-    def get_lines(self, context_id, line_id=None):
-        if isinstance(context_id, int):
-            context_id = self.env['account.financial.html.report.context'].browse(context_id)
+    def get_lines(self, options, line_id=None):
         line_obj = self.line_ids
         if line_id:
             line_obj = self.env['account.financial.html.report.line'].search([('id', '=', line_id)])
-        if context_id.comparison:
-            line_obj = line_obj.with_context(periods=context_id.get_cmp_periods())
+        if options.get('comparison') and options.get('comparison').get('periods'):
+            line_obj = line_obj.with_context(periods=options['comparison']['periods'])
         used_currency = self.env.user.company_id.currency_id
         currency_table = {}
         for company in self.env['res.company'].search([]):
             if company.currency_id != used_currency:
                 currency_table[company.currency_id.id] = used_currency.rate / company.currency_id.rate
-        linesDicts = [{} for _ in context_id.get_periods()]
+        linesDicts = [{} for _ in range(0, len(options.get('comparison', {}).get('periods', [])) + 2)]
         res = line_obj.with_context(
-            state=context_id.all_entries and 'all' or 'posted',
-            cash_basis=self.report_type == 'date_range_cash' or context_id.cash_basis,
-            company_ids=context_id.company_ids.ids,
-            context=context_id,
-            analytic_account_ids=context_id.analytic_account_ids,
-            analytic_tag_ids=context_id.analytic_tag_ids
-        ).get_lines(self, context_id, currency_table, linesDicts)
+            cash_basis=options.get('cash_basis') or self.cash_basis,
+        ).get_lines(self, currency_table, options, linesDicts)
         return res
 
-    def get_title(self):
+    def get_report_name(self):
         return self.name
-
-    def get_name(self):
-        return 'financial_report'
-
-    @api.multi
-    def get_report_type(self):
-        return self.env.ref('account_reports.account_report_type_' + self.report_type)
-
-    def get_template(self):
-        return 'account_reports.report_financial'
 
 
 class AccountFinancialReportLine(models.Model):
@@ -337,13 +347,16 @@ class AccountFinancialReportLine(models.Model):
             return value
         if self.figure_type == 'float':
             currency_id = self.env.user.company_id.currency_id
-            if currency_id.is_zero(value):
+            if currency_id.is_zero(value['name']):
                 # don't print -0.0 in reports
-                value = abs(value)
-            return formatLang(self.env, value, currency_obj=currency_id)
+                value['name'] = abs(value['name'])
+            value['name'] = formatLang(self.env, value['name'], currency_obj=currency_id)
+            return value
         if self.figure_type == 'percents':
-            return str(round(value * 100, 1)) + '%'
-        return round(value, 1)
+            value['name'] = str(round(value['name'] * 100, 1)) + '%'
+            return value
+        value['name'] = round(value['name'], 1)
+        return value
 
     def _get_gb_name(self, gb_id):
         if self.groupby and self.env['account.move.line']._fields[self.groupby].relational:
@@ -355,11 +368,11 @@ class AccountFinancialReportLine(models.Model):
         if comp != 0:
             res = round((balance - comp) / comp * 100, 1)
             if (res > 0) != self.green_on_positive:
-                return (str(res) + '%', 'color: red;')
+                return {'name': str(res) + '%', 'class': 'number color-red'}
             else:
-                return (str(res) + '%', 'color: green;')
+                return {'name': str(res) + '%', 'class': 'number color-green'}
         else:
-            return 'n/a'
+            return {'name': 'n/a'}
 
     def _split_formulas(self):
         result = {}
@@ -370,7 +383,7 @@ class AccountFinancialReportLine(models.Model):
                 result.update({column: formula})
         return result
 
-    def _eval_formula(self, financial_report, debit_credit, context, currency_table, linesDict):
+    def _eval_formula(self, financial_report, debit_credit, currency_table, linesDict):
         debit_credit = debit_credit and financial_report.debit_credit
         formulas = self._split_formulas()
         if self.code and self.code in linesDict:
@@ -438,49 +451,45 @@ class AccountFinancialReportLine(models.Model):
         line1 = {
             'id': line['id'],
             'name': line['name'],
-            'type': 'line',
             'level': line['level'],
-            'footnotes': line['footnotes'],
-            'columns': [''] * len(line['columns']),
+            'columns': [{'name': ''}] * len(line['columns']),
             'unfoldable': line['unfoldable'],
             'unfolded': line['unfolded'],
         }
         line2 = {
             'id': line['id'],
             'name': _('Total') + ' ' + line['name'],
-            'type': 'total',
+            'class': 'total',
             'level': line['level'] + 1,
-            'footnotes': self.env.context['context']._get_footnotes('total', line['id']),
             'columns': line['columns'],
-            'unfoldable': False,
         }
         return [line1, line2]
 
     @api.multi
-    def get_lines(self, financial_report, context, currency_table, linesDicts):
+    def get_lines(self, financial_report, currency_table, options, linesDicts):
         final_result_table = []
-        comparison_table = context.get_periods()
+        comparison_table = [options.get('date')]
+        comparison_table += options.get('comparison') and options['comparison'].get('periods', []) or []
         currency_precision = self.env.user.company_id.currency_id.rounding
         # build comparison table
-
         for line in self:
             res = []
             debit_credit = len(comparison_table) == 1
             domain_ids = {'line'}
             k = 0
             for period in comparison_table:
-                period_from = period[0]
-                period_to = period[1]
+                period_from = period.get('date_from', False)
+                period_to = period.get('date_to', False) or period.get('date', False)
                 strict_range = False
                 if line.special_date_changer == 'from_beginning':
                     period_from = False
                 if line.special_date_changer == 'to_beginning_of_period':
-                    date_tmp = datetime.strptime(period[0], "%Y-%m-%d") - relativedelta(days=1)
+                    date_tmp = datetime.strptime(period_from, "%Y-%m-%d") - relativedelta(days=1)
                     period_to = date_tmp.strftime('%Y-%m-%d')
                     period_from = False
                 if line.special_date_changer == 'strict_range':
                     strict_range = True
-                r = line.with_context(date_from=period_from, date_to=period_to, strict_range=strict_range)._eval_formula(financial_report, debit_credit, context, currency_table, linesDicts[k])
+                r = line.with_context(date_from=period_from, date_to=period_to, strict_range=strict_range)._eval_formula(financial_report, debit_credit, currency_table, linesDicts[k])
                 debit_credit = False
                 res.append(r)
                 domain_ids.update(set(r.keys()))
@@ -493,19 +502,17 @@ class AccountFinancialReportLine(models.Model):
             vals = {
                 'id': line.id,
                 'name': line.name,
-                'type': 'line',
                 'level': line.level,
-                'footnotes': context._get_footnotes('line', line.id),
-                'columns': res['line'],
+                'columns': [{'name': l} for l in res['line']],
                 'unfoldable': len(domain_ids) > 1 and line.show_domain != 'always',
-                'unfolded': line in context.unfolded_lines or line.show_domain == 'always',
+                'unfolded': line.id in options.get('unfolded_lines', []) or line.show_domain == 'always',
             }
             if line.action_id:
                 vals['action_id'] = line.action_id.id
             domain_ids.remove('line')
             lines = [vals]
             groupby = line.groupby or 'aml'
-            if line in context.unfolded_lines or line.show_domain == 'always':
+            if line.id in options.get('unfolded_lines', []) or line.show_domain == 'always':
                 if line.groupby:
                     domain_ids = sorted(list(domain_ids), key=lambda k: line._get_gb_name(k))
                 for domain_id in domain_ids:
@@ -514,35 +521,34 @@ class AccountFinancialReportLine(models.Model):
                         'id': domain_id,
                         'name': name and len(name) >= 45 and name[0:40] + '...' or name,
                         'level': 1,
-                        'type': groupby,
-                        'footnotes': context._get_footnotes(groupby, domain_id),
-                        'columns': res[domain_id],
+                        'parent_id': line.id,
+                        'columns': [{'name': l} for l in res[domain_id]],
+                        'caret_options': groupby == 'account_id' and 'account.account' or groupby,
                     }
                     if line.financial_report_id.name == 'Aged Receivable':
                         vals['trust'] = self.env['res.partner'].browse([domain_id]).trust
                     lines.append(vals)
                 if domain_ids:
                     lines.append({
-                        'id': line.id,
+                        'id': 'total_'+str(line.id),
                         'name': _('Total') + ' ' + line.name,
-                        'type': 'o_account_reports_domain_total',
-                        'level': 1,
-                        'footnotes': context._get_footnotes('o_account_reports_domain_total', line.id),
-                        'columns': list(lines[0]['columns']),
+                        'class': 'o_account_reports_domain_total',
+                        'parent_id': line.id,
+                        'columns': copy.deepcopy(lines[0]['columns']),
                     })
 
             for vals in lines:
                 if len(comparison_table) == 2:
-                    vals['columns'].append(line._build_cmp(vals['columns'][0], vals['columns'][1]))
+                    vals['columns'].append(line._build_cmp(vals['columns'][0]['name'], vals['columns'][1]['name']))
                     for i in [0, 1]:
                         vals['columns'][i] = line._format(vals['columns'][i])
                 else:
                     vals['columns'] = map(line._format, vals['columns'])
                 if not line.formulas:
-                    vals['columns'] = ['' for k in vals['columns']]
+                    vals['columns'] = [{'name': ''} for k in vals['columns']]
 
             if len(lines) == 1:
-                new_lines = line.children_ids.get_lines(financial_report, context, currency_table, linesDicts)
+                new_lines = line.children_ids.get_lines(financial_report, currency_table, options, linesDicts)
                 if new_lines and line.level > 0 and line.formulas:
                     divided_lines = self._divide_line(lines[0])
                     result = [divided_lines[0]] + new_lines + [divided_lines[1]]
@@ -558,21 +564,6 @@ class AccountFinancialReportLine(models.Model):
             final_result_table += result
 
         return final_result_table
-
-
-class AccountFinancialReportXMLExport(models.AbstractModel):
-    _name = "account.financial.html.report.xml.export"
-    _description = "All the xml exports available for the financial reports"
-
-    @api.model
-    def is_xml_export_available(self, report_obj):
-        return False
-
-    def check(self, report_name, report_id=None):
-        return True
-
-    def do_xml_export(self, context_id):
-        return ''
 
 
 class FormulaLine(object):
@@ -659,49 +650,6 @@ class FormulaContext(dict):
             self.linesDict[item] = res
             return res
         return super(FormulaContext, self).__getitem__(item)
-
-
-class AccountFinancialReportContext(models.TransientModel):
-    _name = "account.financial.html.report.context"
-    _description = "A particular context for a financial report"
-    _inherit = "account.report.context.common"
-
-    def get_report_obj(self):
-        return self.report_id
-
-    fold_field = 'unfolded_lines'
-    report_id = fields.Many2one('account.financial.html.report', 'Linked financial report', help='Only if financial report')
-    unfolded_lines = fields.Many2many('account.financial.html.report.line', 'context_to_line', string='Unfolded lines')
-
-    def get_balance_date(self):
-        if self.report_id.report_type == 'no_date_range':
-            return self.get_full_date_names(self.date_to)
-        return self.get_full_date_names(self.date_to, self.date_from)
-
-    def get_columns_names(self):
-        columns = []
-        if self.report_id.debit_credit and not self.comparison:
-            columns += [_('Debit'), _('Credit')]
-        columns += [self.get_balance_date()]
-        if self.comparison:
-            if self.periods_number == 1 or self.date_filter_cmp == 'custom':
-                columns += [self.get_cmp_date(), '%']
-            else:
-                columns += self.get_cmp_periods(display=True)
-        return columns
-
-    @api.multi
-    def get_columns_types(self):
-        types = []
-        if self.report_id.debit_credit and not self.comparison:
-            types += ['number', 'number']
-        types += ['number']
-        if self.comparison:
-            if self.periods_number == 1 or self.date_filter_cmp == 'custom':
-                types += ['number', 'number']
-            else:
-                types += (['number'] * self.periods_number)
-        return types
 
 
 class IrModuleModule(models.Model):

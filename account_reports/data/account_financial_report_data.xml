@@ -2,47 +2,6 @@
 <odoo>
     <data>
 
-<!--         <template inherit_id="web_editor.snippet_options">
-            <xpath expr="." position="inside">
-                <div data-js='many2many' data-selector=".oe-account-reports-many2many-tags" />
-            </xpath>
-        </template> -->
-
-        <record id="account_report_type_no_date_range" model="account.report.type">
-            <field name="date_range" eval="False" />
-        </record>
-
-        <record id="account_report_type_date_range" model="account.report.type">
-        </record>
-
-        <record id="account_report_type_no_date_range_analytic" model="account.report.type">
-            <field name="date_range" eval="False" />
-            <field name="analytic" eval="True" />
-        </record>
-
-        <record id="account_report_type_date_range_analytic" model="account.report.type">
-            <field name="analytic" eval="True" />
-        </record>
-
-        <record id="account_report_type_date_range_cash" model="account.report.type">
-            <field name="cash_basis" eval="True" />
-        </record>
-
-        <record id="account_report_type_nothing" model="account.report.type">
-            <field name="date_range" eval="False" />
-            <field name="comparison" eval="False" />
-            <field name="extra_options" eval="False" />
-        </record>
-
-        <record id="account_report_type_date_range_no_comparison" model="account.report.type">
-            <field name="comparison" eval="False" />
-        </record>
-
-        <record id="account_report_type_general_ledger" model="account.report.type">
-            <field name="comparison" eval="False" />
-            <field name="analytic" eval="True" />
-        </record>
-
         <menuitem id="account_reports_legal_statements_menu" name="Legal Statements" parent="account.menu_finance_reports" sequence="1" groups="account.group_account_user"/>
         <menuitem id="account_reports_business_statements_menu" name="Business Statements" parent="account.menu_finance_reports" sequence="2" groups="account.group_account_user"/>
 
@@ -57,7 +16,7 @@
         <record id="account_financial_report_profitandloss0" model="account.financial.html.report">
             <field name="name">Profit and Loss</field>
             <field name="debit_credit" eval="False"/>
-            <field name="report_type">date_range_analytic</field>
+            <field name="analytic" eval="True"/>
             <field name='parent_id' ref='account_reports_legal_statements_menu'/>
         </record>
         <record id="account_financial_report_detailed_net_profit0" model="account.financial.html.report.line">
@@ -168,7 +127,8 @@
         <record id="account_financial_report_balancesheet0" model="account.financial.html.report">
             <field name="name">Balance Sheet</field>
             <field name="debit_credit" eval="False"/>
-            <field name="report_type">no_date_range_analytic</field>
+            <field name="date_range" eval="False"/>
+            <field name="analytic" eval="True"/>
             <field name='parent_id' ref='account_reports_legal_statements_menu'/>
         </record>
         <record id="account_financial_report_total_assets0" model="account.financial.html.report.line">
@@ -340,7 +300,7 @@
 
         <record id="account_financial_report_cashsummary0" model="account.financial.html.report">
             <field name="name">Cash Flow Statement</field>
-            <field name="report_type">date_range_cash</field>
+            <field name="cash_basis" eval="True"/>
             <field name='parent_id' ref='account_reports_legal_statements_menu'/>
         </record>
         <record id="account_financial_report_cashsummary_net_increase0" model="account.financial.html.report.line">
@@ -547,7 +507,6 @@
 
         <record id="account_financial_report_executivesummary0" model="account.financial.html.report">
             <field name="name">Executive Summary</field>
-            <field name="report_type">date_range</field>
             <field name='parent_id' ref='account_reports_business_statements_menu'/>
         </record>
         <record id="account_financial_report_executivesummary_cash0" model="account.financial.html.report.line">
@@ -743,73 +702,68 @@
 
         <record id="action_account_report_pnl" model="ir.actions.client">
             <field name="name">Profit And Loss</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/financial_report/' + str(ref('account_financial_report_profitandloss0')), 'model': 'account.financial.html.report', 'id': ref('account_financial_report_profitandloss0')}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.financial.html.report', 'id': ref('account_financial_report_profitandloss0')}" />
         </record>
         <record id="action_account_report_bs" model="ir.actions.client">
             <field name="name">Balance Sheet</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/financial_report/' + str(ref('account_financial_report_balancesheet0')), 'model': 'account.financial.html.report', 'id': ref('account_financial_report_balancesheet0')}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.financial.html.report', 'id': ref('account_financial_report_balancesheet0')}" />
         </record>
         <record id="action_account_report_cs" model="ir.actions.client">
             <field name="name">Cash Flow Statement</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/financial_report/' + str(ref('account_financial_report_cashsummary0')), 'model': 'account.financial.html.report', 'id': ref('account_financial_report_cashsummary0')}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.financial.html.report', 'id': ref('account_financial_report_cashsummary0')}" />
         </record>
         <record id="action_account_report_gt" model="ir.actions.client">
             <field name="name">Generic Tax Report</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/generic_tax_report/1', 'model': 'account.generic.tax.report'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.generic.tax.report'}" />
         </record>
         <record id="action_account_report_bank_reconciliation" model="ir.actions.client">
             <field name="name">Bank Reconciliation</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/bank_reconciliation/1', 'model': 'account.bank.reconciliation.report'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.bank.reconciliation.report'}" />
         </record>
         <record id="action_account_report_bank_reconciliation_with_journal" model="ir.actions.client">
             <field name="name">Bank Reconciliation</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/bank_reconciliation/1', 'addUrl': '?journal_id=', 'addActiveId': True, 'model': 'account.bank.reconciliation.report'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.bank.reconciliation.report'}" />
         </record>
         <record id="action_account_report_general_ledger" model="ir.actions.client">
             <field name="name">General Ledger</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/general_ledger/1', 'model': 'account.general.ledger'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.general.ledger'}" />
         </record>
         <record id="action_account_report_ar" model="ir.actions.client">
             <field name="name">Aged Receivable</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/aged_receivable/1', 'model': 'account.aged.receivable'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.aged.receivable'}" />
         </record>
         <record id="action_account_report_ap" model="ir.actions.client">
             <field name="name">Aged Payable</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/aged_payable/1', 'model': 'account.aged.payable'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.aged.payable'}" />
         </record>
         <record id="action_account_followup_all" model="ir.actions.client">
             <field name="name">Customers Statement</field>
-            <field name="tag">account_report_followup_generic</field>
-            <field name="context" eval="{'url': '/account_reports/followup_report/', 'model': 'account.followup.report', 'followup_all': True}" />
+            <field name="tag">account_report_followup</field>
+            <field name="context" eval="{'model': 'account.followup.report.all'}" />
         </record>
         <record id="action_account_followup" model="ir.actions.client">
             <field name="name">Customers Statement</field>
-            <field name="tag">account_report_followup_generic</field>
-            <field name="context" eval="{'url': '/account_reports/followup_report/', 'addActiveId': True, 'model': 'account.followup.report'}" />
-        </record>
-        <record id="action_account_general_ledger_force_account" model="ir.actions.client">
-            <field name="name">General Ledger</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/general_ledger/1', 'force_account': True, 'addActiveId': True, 'model': 'account.general.ledger'}" />
+            <field name="tag">account_report_followup</field>
+            <field name="context" eval="{'model': 'account.followup.report'}" />
         </record>
         <record id="action_account_report_coa" model="ir.actions.client">
             <field name="name">Trial Balance</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/coa/1', 'model': 'account.coa.report'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.coa.report'}" />
         </record>
         <record id="action_account_report_partner_ledger" model="ir.actions.client">
             <field name="name">Partner Ledger</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/partner_ledger/1', 'model': 'account.partner.ledger'}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.partner.ledger'}" />
         </record>
         <menuitem id="menu_action_followups" name="Customers Statement" action="action_account_followup_all" parent="account.menu_finance_receivables" sequence="30" groups="account.group_account_user"/>
         <menuitem id="menu_action_account_report_gt" name="Tax Report" action="action_account_report_gt" parent="account_reports_legal_statements_menu"/>
@@ -834,10 +788,8 @@
 
         <template id="account_reports_backend" inherit_id="web.assets_backend" active="True">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/account_reports/static/src/js/account_reports_widgets.js"></script>
-                <script type="text/javascript" src="/account_reports/static/src/js/account_reports_followup_widgets.js"></script>
-                <script type="text/javascript" src="/account_reports/static/src/js/account_reports_backend.js"></script>
-                <script type="text/javascript" src="/account_reports/static/src/js/account_reports_followup_backend.js"></script>
+                <script type="text/javascript" src="/account_reports/static/src/js/account_reports.js"></script>
+                <script type="text/javascript" src="/account_reports/static/src/js/account_reports_followup.js"></script>
                 <link rel="stylesheet" href="/account_reports/static/src/less/account_financial_report.less" />
             </xpath>
         </template>

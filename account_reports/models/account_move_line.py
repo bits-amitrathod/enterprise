@@ -13,18 +13,6 @@ class AccountMoveLine(models.Model):
     next_action_date = fields.Date('Next Action Date', help="Date where the next action should be taken for a receivable item. Usually, automatically set when sending reminders through the customer statement.")
 
     @api.multi
-    def get_model_id_and_name(self):
-        """Function used to display the right action on journal items on dropdown lists, in reports like general ledger"""
-        if self.statement_id:
-            return ['account.bank.statement', self.statement_id.id, _('View Bank Statement'), False]
-        if self.payment_id:
-            return ['account.payment', self.payment_id.id, _('View Payment'), False]
-        if self.invoice_id:
-            view_id = self.invoice_id.get_formview_id()
-            return ['account.invoice', self.invoice_id.id, _('View Invoice'), view_id]
-        return ['account.move', self.move_id.id, _('View Move'), False]
-
-    @api.multi
     def write_blocked(self, blocked):
         """ This function is used to change the 'blocked' status of an aml.
             You need to be able to change it even if the aml is locked by the lock date

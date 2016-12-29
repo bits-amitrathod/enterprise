@@ -193,7 +193,6 @@ class res_partner(models.Model):
 
         if batch:
             return to_delete
-        self.env['account.report.context.followup'].search([('partner_id', 'in', to_delete.ids)]).unlink()
         return
 
     payment_responsible_id = fields.Many2one('res.users', ondelete='set null', string='Follow-up Responsible',

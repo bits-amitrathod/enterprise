@@ -14,7 +14,10 @@
                         </div>
                         <group>
                             <group>
-                                <field name="report_type"/>
+                                <field name="date_range"/>
+                                <field name="comparison"/>
+                                <field name="cash_basis"/>
+                                <field name="analytic"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
                             </group>
                             <group>
@@ -36,25 +39,12 @@
                 </tree>
             </field>
         </record>
-        <record id="view_account_financial_report_search" model="ir.ui.view">
-            <field name="name">account.financial.html.report.search</field>
-            <field name="model">account.financial.html.report</field>
-            <field name="arch" type="xml">
-                <search string="Account Report">
-                    <field name="name" string="Account Report"/>
-                    <group expand="0" string="Group By">
-                        <filter string="Report Type" context="{'group_by':'report_type'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
         <record id="action_account_financial_report_tree" model="ir.actions.act_window">
             <field name="name">Financial Reports</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">account.financial.html.report</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="view_account_financial_report_search"/>
             <field name="view_id" ref="view_account_financial_report_tree"/>
         </record>
         <menuitem id="menu_account_financial_reports_tree" name="Financial Reports" parent="account.account_management_menu" action="action_account_financial_report_tree" groups="base.group_no_one"/>

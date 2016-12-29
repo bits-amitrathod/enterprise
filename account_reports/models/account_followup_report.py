@@ -7,17 +7,41 @@ from odoo.tools.misc import formatLang, ustr
 from odoo.tools.translate import _
 import time
 from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT
+from odoo.exceptions import UserError
 import math
+import json
 
+class AccountReportFollowupManager(models.Model):
+    _inherit = 'account.report.manager'
+
+    partner_id = fields.Many2one('res.partner')
 
 class report_account_followup_report(models.AbstractModel):
     _name = "account.followup.report"
     _description = "Followup Report"
+    _inherit = 'account.report'
 
-    @api.model
-    def get_lines(self, context_id, line_id=None, public=False):
+    filter_partner_id = False
+
+    def get_columns_name(self, options):
+        headers = [{}, 
+                {'name': _(' Date '), 'class': 'date', 'style': 'text-align:center;'}, 
+                {'name': _(' Due Date '), 'class': 'date', 'style': 'text-align:center;'}, 
+                {'name': _('Communication'), 'style': 'text-align:right;'}, 
+                {'name': _(' Expected Date '), 'class': 'date'}, 
+                {'name': _(' Excluded '), 'class': 'date'}, 
+                {'name': _(' Total Due '), 'class': 'number', 'style': 'text-align:right;'}
+                ]
+        if self.env.context.get('print_mode'):
+            headers = headers[:4] + headers[6:]
+        return headers
+
+    def get_lines(self, options, line_id=None):
         # Get date format for the lang
-        lang_code = context_id.partner_id.lang or self.env.user.lang or 'en_US'
+        partner = options.get('partner_id') and self.env['res.partner'].browse(options['partner_id']) or False
+        if not partner:
+            return []
+        lang_code = partner.lang or self.env.user.lang or 'en_US'
         lang_ids = self.env['res.lang'].search([('code', '=', lang_code)], limit=1)
         date_format = lang_ids.date_format or DEFAULT_SERVER_DATE_FORMAT
 
@@ -29,8 +53,8 @@ class report_account_followup_report(models.AbstractModel):
         res = {}
         today = datetime.today().strftime('%Y-%m-%d')
         line_num = 0
-        for l in context_id.partner_id.unreconciled_aml_ids:
-            if public and l.blocked:
+        for l in partner.unreconciled_aml_ids:
+            if self.env.context.get('print_mode') and l.blocked:
                 continue
             currency = l.currency_id or l.company_id.currency_id
             if currency not in res:
@@ -49,350 +73,216 @@ class report_account_followup_report(models.AbstractModel):
                 if is_overdue or is_payment:
                     total_issued += not aml.blocked and amount or 0
                 if is_overdue:
-                    date_due = (date_due, 'color: red;')
+                    date_due = {'name': date_due, 'class': 'color-red date'}
                 if is_payment:
                     date_due = ''
-                amount = formatLang(self.env, amount, currency_obj=currency).replace(' ', '&nbsp;')
+                amount = formatLang(self.env, amount, currency_obj=currency)
+                amount = amount.replace(' ', '&nbsp;') if self.env.context.get('mail') else amount
                 line_num += 1
+                columns = [formatLangDate(aml.date), date_due, aml.invoice_id.reference, aml.expected_pay_date and aml.expected_pay_date +' '+ aml.internal_note or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
+                if self.env.context.get('print_mode'):
+                    columns = columns[:3]+columns[5:]
                 lines.append({
                     'id': aml.id,
                     'name': aml.move_id.name,
-                    'action': aml.get_model_id_and_name(),
+                    'caret_options': 'followup',
                     'move_id': aml.move_id.id,
                     'type': is_payment and 'payment' or 'unreconciled_aml',
-                    'footnotes': {},
                     'unfoldable': False,
-                    'columns': [formatLangDate(aml.date), date_due, aml.invoice_id.reference] + (not public and [aml.expected_pay_date and (aml.expected_pay_date, aml.internal_note) or ('', ''), aml.blocked] or []) + [amount],
-                    'blocked': aml.blocked,
+                    'columns': [type(v) == dict and v or {'name': v} for v in columns],
                 })
-            total = formatLang(self.env, total, currency_obj=currency).replace(' ', '&nbsp;')
+            total = formatLang(self.env, total, currency_obj=currency)
+            total = total.replace(' ', '&nbsp;') if self.env.context.get('mail') else total
             line_num += 1
             lines.append({
                 'id': line_num,
                 'name': '',
-                'type': 'total',
-                'footnotes': {},
+                'class': 'total',
                 'unfoldable': False,
                 'level': 0,
-                'columns': (not public and ['', ''] or []) + ['', '', total >= 0 and _('Total Due') or ''] + [total],
+                'columns': [{'name': v} for v in ['']*(2 if self.env.context.get('print_mode') else 4) + [total >= 0 and _('Total Due') or '', total]],
             })
             if total_issued > 0:
-                total_issued = formatLang(self.env, total_issued, currency_obj=currency).replace(' ', '&nbsp;')
+                total_issued = formatLang(self.env, total_issued, currency_obj=currency)
+                total_issued = total_issued.replace(' ', '&nbsp;') if self.env.context.get('mail') else total_issued
                 line_num += 1
                 lines.append({
                     'id': line_num,
                     'name': '',
-                    'type': 'total',
-                    'footnotes': {},
+                    'class': 'total',
                     'unfoldable': False,
                     'level': 0,
-                    'columns': (not public and ['', ''] or []) + ['', '', _('Total Overdue')] + [total_issued],
+                    'columns': [{'name': v} for v in ['']*(2 if self.env.context.get('print_mode') else 4) + [_('Total Overdue'), total_issued]],
                 })
         return lines
 
-    @api.model
-    def get_title(self):
+    def open_partner_form(self, options, params):
+        return {'type': 'ir.actions.act_window',
+                'res_model': 'res.partner',
+                'res_id': int(params.get('activeId')),
+                'views': [[False, 'form']],
+                'target': 'current',
+            }
+
+    def get_default_summary(self, options):
+        return self.env.user.company_id.overdue_msg and self.env.user.company_id.overdue_msg.replace('\n', '<br />') or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
+
+    def get_report_manager(self, options):
+        domain = [('report_name', '=', self._name), ('partner_id', '=', options.get('partner_id'))]
+        selected_companies = []
+        if options.get('multi_company'):
+            selected_companies = [c['id'] for c in options['multi_company'] if c.get('selected')]
+        if len(selected_companies) == 1:
+            domain += [('company_id', '=', selected_companies[0])]
+        existing_manager = self.env['account.report.manager'].search(domain, limit=1)
+        if not existing_manager:
+            existing_manager = self.env['account.report.manager'].create({'report_name': self._name, 
+                                                                        'company_id': selected_companies and selected_companies[0] or False, 
+                                                                        'partner_id': options.get('partner_id'), 
+                                                                        'summary': self.get_default_summary(options)})
+        return existing_manager
+
+    @api.multi
+    def get_html(self, options, line_id=None, additional_context=None):
+        if additional_context == None:
+            additional_context = {}
+        partner = self.env['res.partner'].browse(options['partner_id'])
+        additional_context['partner'] = partner
+        additional_context['invoice_address_id'] = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice'])
+        additional_context['today'] = fields.date.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
+        return super(report_account_followup_report, self).get_html(options, line_id=line_id, additional_context=additional_context)
+
+    def get_pdf(self, options, minimal_layout=True):
+        return super(report_account_followup_report, self).get_pdf(options, minimal_layout=False)
+
+    def get_report_name(self):
         return _('Followup Report')
 
-    @api.model
-    def get_name(self):
-        return 'followup_report'
+    def get_reports_buttons(self):
+        return []
+
+    def get_report_value(self, partner, options):
+        options['partner_id'] = partner.id
+        return {'name': self.get_report_name(), 'summary': self.get_report_manager(options).summary, 'company_name': self.env.user.company_id.name}
+
+    def get_templates(self):
+        templates = super(report_account_followup_report, self).get_templates()
+        templates['main_template'] = 'account_reports.template_followup_report'
+        templates['line_template'] = 'account_reports.line_template_followup_report'
+        if self.env.context.get('print_mode') and not self.env.context.get('mail'):
+            templates['main_template'] = 'account_reports.report_followup_letter'
+        return templates
+
+    def get_history(self, partner):
+        return self.env['mail.message'].search([('subtype_id', '=', self.env.ref('account_reports.followup_logged_action').id), ('id', 'in', partner.message_ids.ids)], limit=5)
 
     @api.model
-    def get_report_type(self):
-        return self.env.ref('account_reports.account_report_type_nothing')
+    def change_next_action(self, partner_id, date, note):
+        partner = self.env['res.partner'].browse(partner_id)
+        partner.write({'payment_next_action': note, 'payment_next_action_date': date})
+        msg = _('Next action date: ') + date + '.\n' + note
+        partner.message_post(body=msg, subtype='account_reports.followup_logged_action')
+        return True
 
-    @api.model
-    def get_template(self):
-        return 'account_reports.report_followup'
-
-
-class account_report_context_followup_all(models.TransientModel):
-    _name = "account.report.context.followup.all"
-    _description = "A progress bar for followup reports"
-
-    PAGER_SIZE = 15
-
-    @api.depends('valuenow', 'valuemax')
-    def _compute_percentage(self):
-        for progressbar in self:
-            if progressbar.valuemax > 0:
-                progressbar.percentage = 100 * progressbar.valuenow / progressbar.valuemax
-
-    @api.depends('valuenow')  # Doesn't directly depend on valuenow but when valuenow is updated it means that this should change
-    def _compute_pages(self):
-        for context in self:
-            partners = self.env['res.partner'].get_partners_in_need_of_action() - context.skipped_partners_ids
-            context.last_page = math.ceil(float(len(partners)) / float(self.PAGER_SIZE))
-
-    valuenow = fields.Integer('current amount of invoices done', default=0)
-    valuemax = fields.Integer('total amount of invoices to do')
-    percentage = fields.Integer(compute='_compute_percentage')
-    started = fields.Datetime('Starting time', default=lambda self: fields.datetime.now())
-    partner_filter = fields.Selection([('all', 'All partners with overdue invoices'), ('action', 'All partners in need of action')], string='Partner Filter', default='action')
-    skipped_partners_ids = fields.Many2many('res.partner', 'account_fup_report_skipped_partners', string='Skipped partners')
-    last_page = fields.Integer('number of pages', compute='_compute_pages')
-
-    def skip_partner(self, partners):
-        self.write({'skipped_partners_ids': [(6, 0, partners.ids + self.skipped_partners_ids.ids)]})
-        self.write({'valuenow': self.valuenow + len(partners)})
-
-    def get_total_time(self):
-        delta = fields.datetime.now() - datetime.strptime(self.started, tools.DEFAULT_SERVER_DATETIME_FORMAT)
-        return delta.seconds
-
-    def get_time_per_report(self):
-        return round(self.get_total_time() / self.valuemax, 2)
-
-    def get_alerts(self):
-        alerts = []
-        if self.valuemax > 4 and self.valuemax / 2 == self.valuenow:
-            alerts.append({
-                'title': _('Halfway through!'),
-                'message': _('The first half took you %ss.') % str(self.get_total_time()),
-            })
-        if self.valuemax > 50 and round(self.valuemax * 0.9) == self.valuenow:
-            alerts.append({
-                'title': _('10% remaining!'),
-                'message': _("Hang in there, you're nearly done."),
-            })
-        return alerts
-
-    def _get_html_get_partners(self):
-        return self.env['res.partner'].get_partners_in_need_of_action() - self.skipped_partners_ids
-
-    def _get_html_partner_done(self, given_context, partners):
-        partners = partners.sorted(key=lambda x: x.name)
-        context_obj = self.env['account.report.context.followup']
-        emails_not_sent = context_obj.browse()
-        processed_partners = False
-        if given_context['partner_done'] == 'all':
-            if 'email_context_list' in given_context:
-                email_context_list = given_context['email_context_list']
-                email_contexts = context_obj.browse(email_context_list)
-                for email_context in email_contexts:
-                    if not email_context.send_email():
-                        emails_not_sent = emails_not_sent | email_context
-            partners_done = partners[((given_context['page'] - 1) * self.PAGER_SIZE):(given_context['page'] * self.PAGER_SIZE)] - emails_not_sent.partner_id
-            processed_partners = partners_done.update_next_action(batch=True)
-            self.write({'valuenow': min(self.valuemax, self.valuenow + len(partners_done))})
-            partners = partners - partners_done
-        else:
-            self.write({'valuenow': self.valuenow + 1})
-        return [partners, emails_not_sent, processed_partners]
-
-    def _get_html_create_context(self, partner):
-        return self.env['account.report.context.followup'].with_context(lang=partner.lang).create({'partner_id': partner.id})
-
-    def _get_html_build_rcontext(self, reports, emails_not_sent, given_context):
-        all_partners_done = given_context.get('partner_done') and (self.valuenow == self.valuemax or given_context['partner_done'] == 'all')
-        return {
-            'reports': not all_partners_done and reports or [],
-            'report': self.env['account.followup.report'],
-            'mode': 'display',
-            'emails_not_sent': emails_not_sent,
-            'context_all': self,
-            'all_partners_done': all_partners_done,
-            'just_arrived': 'partner_done' not in given_context and 'partner_skipped' not in given_context,
-            'time': time,
-            'today': datetime.today().strftime('%Y-%m-%d'),
-            'res_company': self.env.user.company_id,
-            'page': given_context.get('page')
-        }
-
-    @api.multi
-    def get_html(self, given_context=None):
-        if given_context is None:
-            given_context = {}
-        context_obj = self.env['account.report.context.followup']
-        report_obj = self.env['account.followup.report']
-        reports = []
-        emails_not_sent = context_obj.browse()
-        processed_partners = False  # The partners that have been processed and for who the context should be deleted
-        if 'partner_skipped' in given_context:
-            self.skip_partner(self.env['res.partner'].browse(int(given_context['partner_skipped'])))
-        partners = self._get_html_get_partners()
-        if 'partner_filter' in given_context:
-            self.write({'partner_filter': given_context['partner_filter']})
-        if 'partner_done' in given_context and 'partner_filter' not in given_context:
-            try:
-                self.write({'skipped_partners_ids': [(4, int(given_context['partner_done']))]})
-            except ValueError:
-                pass
-            [partners, emails_not_sent, processed_partners] = self._get_html_partner_done(given_context, partners)
-        if self.valuemax != self.valuenow + len(partners):
-            self.write({'valuemax': self.valuenow + len(partners)})
-        if self.partner_filter == 'all':
-            partners = self.env['res.partner'].get_partners_in_need_of_action(overdue_only=True)
-        partners = partners.sorted(key=lambda x: x.name)
-        for partner in partners[((given_context['page'] - 1) * self.PAGER_SIZE):(given_context['page'] * self.PAGER_SIZE)]:
-            context_id = context_obj.search([('partner_id', '=', partner.id)], limit=1)
-            if not context_id:
-                context_id = self._get_html_create_context(partner)
-            lines = report_obj.with_context(lang=partner.lang).get_lines(context_id)
-            reports.append({
-                'context': context_id.with_context(lang=partner.lang),
-                'lines': lines,
-            })
-        rcontext = self._get_html_build_rcontext(reports, emails_not_sent, given_context)
-        res = self.env['ir.model.data'].xmlid_to_object('account_reports.report_followup_all').render(rcontext)
-        if processed_partners:
-            self.env['account.report.context.followup'].search([('partner_id', 'in', processed_partners.ids)]).unlink()
-        return res
-
-
-class account_report_context_followup(models.TransientModel):
-    _name = "account.report.context.followup"
-    _description = "A particular context for the followup report"
-    _inherit = "account.report.context.common"
-
-    @api.depends('partner_id')
-    @api.one
-    def _get_invoice_address(self):
-        if self.partner_id:
-            self.invoice_address_id = self.partner_id.address_get(['invoice'])['invoice']
-        else:
-            self.invoice_address_id = False
-
-    footnotes = fields.Many2many('account.report.footnote', 'account_context_footnote_followup', string='Footnotes')
-    partner_id = fields.Many2one('res.partner', string='Partner')
-    invoice_address_id = fields.Many2one('res.partner', compute='_get_invoice_address', string='Invoice Address')
-    summary = fields.Char(default=lambda s: s.env.user.company_id.overdue_msg and s.env.user.company_id.overdue_msg.replace('\n', '<br />') or s.env['res.company'].default_get(['overdue_msg'])['overdue_msg'])
-
-    @api.multi
-    def change_next_action(self, date, note):
-        self.partner_id.write({'payment_next_action': note, 'payment_next_action_date': date})
-        if self.partner_id.payment_next_action_date != fields.Date.context_today(self):
-            msg = _('Next action date: ') + self.partner_id.payment_next_action_date + '.\n' + note
-        else:
-            msg = note
-        self.partner_id.message_post(body=msg, subtype='account_reports.followup_logged_action')
-
-    @api.multi
-    def add_footnote(self, type, target_id, column, number, text):
-        footnote = self.env['account.report.footnote'].create(
-            {'type': type, 'target_id': target_id, 'column': column, 'number': number, 'text': text}
-        )
-        self.write({'footnotes': [(4, footnote.id)]})
-
-    @api.model
-    def get_partners(self):
-        return self.env['res.partner'].search([])
-
-    @api.multi
-    def edit_footnote(self, number, text):
-        footnote = self.footnotes.filtered(lambda s: s.number == number)
-        footnote.write({'text': text})
-
-    @api.multi
-    def remove_footnote(self, number):
-        footnotes = self.footnotes.filtered(lambda s: s.number == number)
-        self.write({'footnotes': [(3, footnotes.id)]})
-
-    def get_report_obj(self):
-        return self.env['account.followup.report']
-
-    def get_columns_names(self):
-        if self.env.context.get('public'):
-            return [_(' Date '), _(' Due Date '), _('Communication'), _(' Total Due ')]
-        return [_(' Date '), _(' Due Date '), _('Communication'), _(' Expected Date '), _(' Excluded '), _(' Total Due ')]
-
-    @api.multi
-    def get_columns_types(self):
-        if self.env.context.get('public'):
-            return ['date', 'date', 'text', 'number']
-        return ['date', 'date', 'text', 'date', 'checkbox', 'number']
-
-    def _get_summary(self, column_number):
-        if column_number in (1,3):
-            return 'o_followup_letter_display_none'
-        return ''
-
-    def get_pdf(self, log=False):
-        bodies = []
-        headers = []
-        footers = []
-        for context in self:
-            context = context.with_context(lang=context.partner_id.lang)
-            report_obj = context.get_report_obj()
-            lines = report_obj.get_lines(context, public=True)
-            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-            rcontext = {
-                'context': context,
-                'report': report_obj,
-                'lines': lines,
-                'mode': 'print',
-                'base_url': base_url,
-                'css': '',
-                'o': self.env.user,
-                'today': context._formatLangDate(datetime.today()),
-                'company': self.env.user.company_id,
-                'res_company': self.env.user.company_id,
-            }
-            html = context.env['ir.ui.view'].render_template(report_obj.get_template() + '_letter', rcontext)
-            bodies.append((0, html))
-            header = self.env['ir.ui.view'].render_template("report.external_layout_header", rcontext)
-            rcontext['body'] = header
-            header = self.env['ir.ui.view'].render_template("report.minimal_layout", rcontext)
-            footer = self.env['ir.ui.view'].render_template("report.external_layout_footer", rcontext)
-            rcontext['body'] = footer
-            rcontext['subst'] = True
-            footer = self.env['ir.ui.view'].render_template("report.minimal_layout", rcontext)
-            headers.append(header)
-            footers.append(footer)
-            if log:
-                msg = _('Sent a followup letter')
-                context.partner_id.message_post(body=msg, subtype='account_reports.followup_logged_action')
-
-        return self.env['report']._run_wkhtmltopdf(headers, footers, bodies, False, self.env.user.company_id.paperformat_id)
-
-    def _get_email_sent_log(self):
+    def get_post_message(self, options):
         return _('Sent a followup email')
 
-    @api.multi
-    def send_email(self):
-        email = self.env['res.partner'].browse(self.partner_id.address_get(['invoice'])['invoice']).email
+    @api.model
+    def send_email(self, options):
+        partner = self.env['res.partner'].browse(options.get('partner_id'))
+        email = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice']).email
         if email and email.strip():
+            body_html = self.with_context(print_mode=True, mail=True).get_html(options)
             email = self.env['mail.mail'].create({
-                'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + self.partner_id.name,
-                'body_html': append_content_to_html(self.with_context(public=True, mode='print').get_html(), self.env.user.signature, plaintext=False),
+                'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,
+                'body_html': append_content_to_html(body_html, self.env.user.signature, plaintext=False),
                 'email_from': self.env.user.email or '',
                 'email_to': email,
             })
-            msg = self._get_email_sent_log()
-            msg += '<br>' + ustr(self.with_context(public=True, mode='print').get_html())
-            self.partner_id.message_post(body=msg, subtype='account_reports.followup_logged_action')
+            msg = self.get_post_message(options)
+            msg += '<br>' + body_html.decode('utf-8')
+            partner.message_post(body=msg, subtype='account_reports.followup_logged_action')
             return True
-        return False
+        raise UserError(_('Could not send mail to partner because it does not have any email address defined'))
 
-    def get_history(self):
-        return self.env['mail.message'].search([('subtype_id', '=', self.env.ref('account_reports.followup_logged_action').id), ('id', 'in', self.partner_id.message_ids.ids)], limit=5)
+    def print_followup(self, options, params):
+        partner_id = params.get('partner')
+        options['partner_id'] = partner_id
+        return {
+                'type': 'ir_actions_account_report_download',
+                'data': {'model': 'account.followup.report',
+                         'options': json.dumps(options),
+                         'output_format': 'pdf',
+                         }
+                }
+
+
+class account_report_followup_all(models.AbstractModel):
+    _name = "account.followup.report.all"
+    _description = "A progress bar for followup reports"
+    _inherit = 'account.followup.report'
+
+    PAGER_SIZE = 15
+
+    filter_type_followup = 'action' #all or actions (need of actions)
+    filter_skipped_partners = []
+    filter_partners_to_show = []
+    filter_pager = 1
+    filter_total_pager = 1
+    filter_progressbar = [0,0,0]
+
+    def get_options(self, previous_options):
+        options = super(account_report_followup_all, self).get_options(previous_options)
+        options = self.compute_pages(options)
+        return options
+
+    def get_templates(self):
+        templates = super(report_account_followup_report, self).get_templates()
+        if self.env.context.get('print_mode') and not self.env.context.get('mail'):
+            templates['main_template'] = 'account_reports.report_followup_letter'
+        elif self.env.context.get('print_mode'):
+            templates['main_template'] = 'account_reports.template_followup_report'
+        else:
+            templates['main_template'] = 'account_reports.report_followup_all'
+            
+        templates['line_template'] = 'account_reports.line_template_followup_report'
+        templates['search_template'] = 'account_reports.followup_search_template'
+        return templates
+
+    def get_lines(self, options, line_id=None):
+        lines = []
+        if self.env.context.get('print_mode'):
+            return super(account_report_followup_all, self).get_lines(options, line_id=line_id)
+        for partner_id in options.get('partners_to_show'):
+            options['partner_id'] = partner_id
+            lines.append(super(account_report_followup_all, self).get_lines(options, line_id=line_id))
+        return lines
+
+    def get_partners_in_need_of_action(self, options):
+        overdue_only = options.get('type_followup') == 'all'
+        return self.env['res.partner'].get_partners_in_need_of_action(overdue_only=overdue_only)
+
+    def compute_pages(self, options):
+        partner_in_need_of_action = self.get_partners_in_need_of_action(options)
+        skipped_partners = self.env['res.partner'].browse(options.get('skipped_partners'))
+        total_partners_to_do = (partner_in_need_of_action - skipped_partners).ids
+        if options.get('pager')*self.PAGER_SIZE >= len(total_partners_to_do) and options.get('pager') > 1:
+            options['pager'] = options['pager'] - 1
+        options['total_pager'] = 1+ (len(total_partners_to_do)/self.PAGER_SIZE)
+        max_index = min(len(total_partners_to_do), options['pager']*self.PAGER_SIZE)
+        options['partners_to_show'] = total_partners_to_do[(options['pager']-1)*self.PAGER_SIZE:max_index]
+        options['progressbar'][1] = len(total_partners_to_do)
+        options['progressbar'][2] = 100 * options['progressbar'][0] / (options['progressbar'][1] or 1)
+        return options
 
     @api.multi
-    def to_auto(self):
-        self.partner_id.write({'payment_next_action_date': datetime.today().strftime('%Y-%m-%d')})
-        self.unlink()
-
-    @api.multi
-    def get_html(self, given_context=None):
-        if given_context is None:
-            given_context = {}
-        lines = self.env['account.followup.report'].with_context(lang=self.partner_id.lang).get_lines(self, public=self.env.context.get('public', False))
-        rcontext = {
-            'context': self.with_context(lang=self.partner_id.lang),
-            'report': self.env['account.followup.report'].with_context(lang=self.partner_id.lang),
-            'lines': lines,
-            'mode': self.env.context.get('mode', 'display'),
-            'time': time,
-            'today': datetime.today().strftime('%Y-%m-%d'),
-            'res_company': self.env['res.users'].browse(self.env.uid).company_id,
-        }
-        return self.env['ir.model.data'].xmlid_to_object('account_reports.report_followup').render(rcontext)
-
-    def _formatLangDate(self, date):
-        # Get date format for the lang
-        lang_code = self.partner_id.lang or self.env.user.lang or 'en_US'
-        lang_ids = self.env['res.lang'].search([('code', '=', lang_code)], limit=1)
-        date_format = lang_ids.date_format or DEFAULT_SERVER_DATE_FORMAT
-
-        return date.strftime(date_format)
+    def get_report_informations(self, options):
+        informations = super(account_report_followup_all, self).get_report_informations(options)
+        # build table of manager_id, partner_id
+        map_partner_manager = {}
+        options = informations['options']
+        for partner_id in options.get('partners_to_show'):
+            options['partner_id'] = partner_id
+            map_partner_manager[partner_id] = self.get_report_manager(options).id
+        informations['map_partner_manager'] = map_partner_manager
+        return informations

@@ -1,21 +1,27 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import time
 from odoo import api, models, _
 from odoo.tools.misc import formatLang
+from odoo.exceptions import UserError
 
 
 class ReportL10nBePartnerVatIntra(models.AbstractModel):
     _name = "l10n.be.report.partner.vat.intra"
     _description = "Partner VAT Intra"
+    _inherit = 'account.report'
+
+    filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
 
     @api.model
-    def get_lines(self, context_id, line_id=None, get_xml_data=False):
+    def get_lines(self, options, line_id=None):
         lines = []
         seq = amount_sum = 0
         company_clause = 'AND FALSE'
-        if context_id.company_ids.ids:
-            company_ids = '(' + ','.join(map(str, context_id.company_ids.ids)) + ')'
+        context = self.env.context
+        if context.get('company_ids'):
+            company_ids = '(' + ','.join(map(str, context['company_ids'])) + ')'
             company_clause = 'AND l.company_id IN ' + company_ids
         tag_ids = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in ['l10n_be.tax_tag_44', 'l10n_be.tax_tag_46L', 'l10n_be.tax_tag_46T']]
         self.env.cr.execute('''SELECT p.name As partner_name, l.partner_id AS partner_id, p.vat AS vat,
@@ -28,7 +34,7 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
                        AND l.date >= '%s'
                        AND l.date <= '%s'
                        %s
-                      GROUP BY p.name, l.partner_id, p.vat, intra_code''' % (tuple(tag_ids), context_id.date_from, context_id.date_to, company_clause))
+                      GROUP BY p.name, l.partner_id, p.vat, intra_code''' % (tuple(tag_ids), context.get('date_from'), context.get('date_to'), company_clause))
 
         p_count = 0
 
@@ -45,53 +51,132 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
                 [intra_code, code] = row['intra_code'] == tag_ids[0] and ['44', 'S'] or (row['intra_code'] == tag_ids[1] and ['46L', 'L'] or (row['intra_code'] == tag_ids[2] and ['46T', 'T'] or ['', '']))
 
                 columns = [row['vat'].replace(' ', '').upper(), code, intra_code, amt]
-                if not self.env.context.get('no_format', False):
+                if not context.get('no_format', False):
                     currency_id = self.env.user.company_id.currency_id
                     columns[3] = formatLang(self.env, columns[3], currency_obj=currency_id)
 
                 lines.append({
                     'id': row['partner_id'],
-                    'type': 'partner_id',
+                    # 'type': 'partner_id',
+                    'caret_options': 'res.partner',
                     'name': row['partner_name'],
-                    'footnotes': context_id._get_footnotes('partner_id', row['partner_id']),
-                    'columns': columns,
-                    'level': 2,
+                    'columns': [{'name': v } for v in columns],
+                    # 'level': 2,
                     'unfoldable': False,
                     'unfolded': False,
                 })
 
-        if get_xml_data:
+        if context.get('get_xml_data'):
             return {'lines': lines, 'clientnbr': str(seq), 'amountsum': round(amount_sum, 2), 'partner_wo_vat': p_count}
         return lines
 
-    @api.model
-    def get_title(self):
+    def get_report_name(self):
         return _('Partner VAT Intra')
 
-    @api.model
-    def get_name(self):
-        return 'l10n_be_partner_vat_intra'
+    def get_columns_name(self, options):
+        return [{}, {'name': _('VAT Number')}, {'name': _('Code')}, {'name': _('Intra Code')}, {'name': _('Amount'), 'class': 'number'}]
 
-    @api.model
-    def get_report_type(self):
-        return self.env.ref('account_reports.account_report_type_date_range_no_comparison')
+    def get_reports_buttons(self):
+        buttons = super(ReportL10nBePartnerVatIntra, self).get_reports_buttons()
+        buttons += [{'name': _('Export (XML)'), 'action': 'print_xml'}]
+        return buttons
 
-    @api.model
-    def get_template(self):
-        return 'account_reports.report_financial'
+    def get_xml(self, options):
+        # Check
+        company = self.env.user.company_id
+        company_vat = company.partner_id.vat
+        if not company_vat:
+            raise UserError(_('No VAT number associated with your company.'))
+        default_address = company.partner_id.address_get()
+        address = default_address.get('invoice', company.partner_id)
+        if not address.email:
+            raise UserError(_('No email address associated with the company.'))
+        if not address.phone:
+            raise UserError(_('No phone associated with the company.'))
 
+        # Generate xml
+        post_code = street = city = country = data_clientinfo = ''
+        company_vat = company_vat.replace(' ', '').upper()
+        issued_by = company_vat[:2]
 
-class ReportL10nBePartnerVatIntraContext(models.TransientModel):
-    _name = "l10n.be.partner.vat.intra.context"
-    _description = "A particular context for the partner VAT Intra report"
-    _inherit = "account.report.context.common"
+        seq_declarantnum = self.env['ir.sequence'].get('declarantnum')
+        dnum = company_vat[2:] + seq_declarantnum[-4:]
 
-    def get_report_obj(self):
-        return self.env['l10n.be.report.partner.vat.intra']
+        addr = company.partner_id.address_get(['invoice'])
+        if addr.get('invoice', False):
+            ads = self.env['res.partner'].browse([addr['invoice']])[0]
+            phone = ads.phone and ads.phone.replace(' ', '') or ''
+            email = ads.email or ''
+            city = ads.city or ''
+            post_code = ads.zip or ''
+            if not city:
+                city = ''
+            if ads.street:
+                street = ads.street
+            if ads.street2:
+                street += ' ' + ads.street2
+            if ads.country_id:
+                country = ads.country_id.code
 
-    def get_columns_names(self):
-        return [_('VAT Number'), _('Code'), _('Intra Code'), _('Amount')]
+        if not country:
+            country = company_vat[:2]
 
-    @api.multi
-    def get_columns_types(self):
-        return ['text', 'text', 'text', 'number']
+        date_from = options['date'].get('date_from')[0:7] + '-01'
+        date_to = options['date'].get('date_from')[0:7] + '-31'
+        ctx = self.set_context(options)
+        ctx.update({'no_format': True, 'date_from': date_from, 'date_to': date_to, 'get_xml_data': True})
+        xml_data = self.with_context(ctx).get_lines(options)
+        xml_data.update({
+            'company_name': company.name,
+            'company_vat': company_vat,
+            'vatnum': company_vat[2:],
+            'sender_date': str(time.strftime('%Y-%m-%d')),
+            'street': street,
+            'city': city,
+            'post_code': post_code,
+            'country': country,
+            'email': email,
+            'phone': phone.replace('/', '').replace('.', '').replace('(', '').replace(')', '').replace(' ', ''),
+            'year': options['date'].get('date_from')[0:4],
+            'month': options['date'].get('date_from')[5:7],
+            'comments': self.get_report_manager(options).summary or '',
+            'issued_by': issued_by,
+            'dnum': dnum,
+        })
+
+        data_head = """<?xml version="1.0" encoding="ISO-8859-1"?>
+<ns2:IntraConsignment xmlns="http://www.minfin.fgov.be/InputCommon" xmlns:ns2="http://www.minfin.fgov.be/IntraConsignment" IntraListingsNbr="1">
+    <ns2:Representative>
+        <RepresentativeID identificationType="NVAT" issuedBy="%(issued_by)s">%(vatnum)s</RepresentativeID>
+        <Name>%(company_name)s</Name>
+        <Street>%(street)s</Street>
+        <PostCode>%(post_code)s</PostCode>
+        <City>%(city)s</City>
+        <CountryCode>%(country)s</CountryCode>
+        <EmailAddress>%(email)s</EmailAddress>
+        <Phone>%(phone)s</Phone>
+    </ns2:Representative>""" % (xml_data)
+        data_comp_period = '\n\t\t<ns2:Declarant>\n\t\t\t<VATNumber>%(vatnum)s</VATNumber>\n\t\t\t<Name>%(company_name)s</Name>\n\t\t\t<Street>%(street)s</Street>\n\t\t\t<PostCode>%(post_code)s</PostCode>\n\t\t\t<City>%(city)s</City>\n\t\t\t<CountryCode>%(country)s</CountryCode>\n\t\t\t<EmailAddress>%(email)s</EmailAddress>\n\t\t\t<Phone>%(phone)s</Phone>\n\t\t</ns2:Declarant>' % (xml_data)
+        data_comp_period += '\n\t\t<ns2:Period>\n\t\t\t<ns2:Month>%(month)s</ns2:Month> \n\t\t\t<ns2:Year>%(year)s</ns2:Year>\n\t\t</ns2:Period>' % (xml_data)
+        data_clientinfo = ''
+        seq = 0
+        for line in xml_data['lines']:
+            seq += 1
+            vat = line['columns'][0].get('name', False)
+            if not vat:
+                raise UserError(_('No vat number defined for %s.') % line['name'])
+            client = {
+                'partner_name': line['name'],
+                'vatnum': vat[2:].replace(' ', '').upper(),
+                'vat': vat,
+                'country': vat[:2],
+                'amount': line['columns'][3].get('name', 0.0),
+                'intra_code': line['columns'][2].get('name', ''),
+                'code': line['columns'][1].get('name', ''),
+                'seq': seq,
+            }
+            data_clientinfo += '\n\t\t<ns2:IntraClient SequenceNumber="%(seq)s">\n\t\t\t<ns2:CompanyVATNumber issuedBy="%(country)s">%(vatnum)s</ns2:CompanyVATNumber>\n\t\t\t<ns2:Code>%(code)s</ns2:Code>\n\t\t\t<ns2:Amount>%(amount).2f</ns2:Amount>\n\t\t</ns2:IntraClient>' % (client)
+
+        data_decl = '\n\t<ns2:IntraListing SequenceNumber="1" ClientsNbr="%(clientnbr)s" DeclarantReference="%(dnum)s" AmountSum="%(amountsum).2f">' % (xml_data)
+
+        return data_head + data_decl + data_comp_period + data_clientinfo + '\n\t\t</ns2:IntraListing>\n</ns2:IntraConsignment>' % (xml_data)

@@ -7,7 +7,7 @@
         <record id="account_financial_report_be_balancesheet0" model="account.financial.html.report">
             <field name="name">Bilan</field>
             <field name="debit_credit" eval="True"/>
-            <field name="report_type">no_date_range</field>
+            <field name="date_range" eval="False" />
             <field name='parent_id' ref='l10n_be.account_reports_be_statements_menu'/>
         </record>
 
@@ -672,14 +672,13 @@
         <record id="account_financial_report_be_profitandloss0" model="account.financial.html.report">
             <field name="name">Compte de résultats</field>
             <field name="debit_credit" eval="False"/>
-            <field name="report_type">date_range</field>
             <field name='parent_id' ref='l10n_be.account_reports_be_statements_menu'/>
         </record>
 
         <record id="action_account_report_bepnl" model="ir.actions.client">
             <field name="name">Compte des résultats</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/financial_report/'+str(ref('account_financial_report_be_profitandloss0')), 'model': 'account.financial.html.report', 'id': ref('account_financial_report_be_profitandloss0')}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.financial.html.report', 'id': ref('account_financial_report_be_profitandloss0')}" />
         </record>
         <record id="account_financial_be_current_year_earnings0" model="account.financial.html.report.line">
             <field name="action_id" ref='action_account_report_bepnl' />
@@ -952,7 +951,6 @@
 
         <record id="account_financial_report_l10n_be_tva0" model="account.financial.html.report">
             <field name="name">Déclaration périodique à la TVA</field>
-            <field name="report_type">date_range</field>
             <field name='parent_id' ref='l10n_be.account_reports_be_statements_menu'/>
             <field name="tax_report" eval="1"/>
         </record>
@@ -960,8 +958,8 @@
         <!-- Action used in views/l10n_be_vat_statement_views -->
         <record id="action_account_report_l10n_be_vat" model="ir.actions.client">
             <field name="name">Déclaration périodique à la TVA</field>
-            <field name="tag">account_report_generic</field>
-            <field name="context" eval="{'url': '/account_reports/output_format/financial_report/' + str(ref('account_financial_report_l10n_be_tva0')), 'model': 'account.financial.html.report', 'id': ref('account_financial_report_l10n_be_tva0')}" />
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.financial.html.report', 'id': ref('account_financial_report_l10n_be_tva0')}" />
         </record>
 
         <record id="account_financial_report_l10n_be_tva_operations0" model="account.financial.html.report.line">
