@@ -11,5 +11,6 @@
         'views/delivery_usps_view.xml',
         'views/delivery_usps_template.xml',
         'views/sale_config_settings_views.xml',
+        'views/stock_config_settings_views.xml',
     ],
 }
