@@ -258,7 +258,7 @@ class AccountBankStatement(models.Model):
         if all_statement == 0 and end_amount - total != 0 and balance_start == None:
             lines.append((0, 0, {
                 'date': datetime.datetime.now(),
-                'name': _("Opening statement : first synchronization"),
+                'name': _("Opening statement: first synchronization"),
                 'amount': end_amount - total,
             }))
             total = end_amount
