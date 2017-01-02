@@ -55,7 +55,7 @@ class SaleSubscription(models.Model):
         for sub in self:
             sub.invoice_count = len(filter(lambda d: d['account_analytic_id'][0] == sub.analytic_account_id.id, invoice_line_data))
 
-    @api.depends('recurring_invoice_line_ids')
+    @api.depends('recurring_invoice_line_ids', 'recurring_invoice_line_ids.quantity', 'recurring_invoice_line_ids.price_subtotal')
     def _compute_recurring_total(self):
         for account in self:
             account.recurring_total = sum(line.price_subtotal for line in account.recurring_invoice_line_ids)
@@ -67,7 +67,9 @@ class SaleSubscription(models.Model):
     @api.onchange('template_id')
     def on_change_template(self):
         if self.template_id:
-            if not self.ids:
+            # Check if record is a new record or exists in db by checking its _origin
+            # note that this property is not always set, hence the getattr
+            if not getattr(self, '_origin', self.browse()) and not isinstance(self.id, int):
                 invoice_line_ids = []
                 for line in self.template_id.subscription_template_line_ids:
                     product = line.product_id.with_context(
@@ -299,6 +301,7 @@ class SaleSubscription(models.Model):
                 'subscription_management': 'renew',
                 'note': contract.description,
                 'fiscal_position_id': fpos_id,
+                'user_id': contract.user_id.id,
             }
         return res
 
@@ -363,7 +366,8 @@ class SaleSubscriptionLine(models.Model):
     @api.depends('price_unit', 'quantity', 'discount', 'analytic_account_id.pricelist_id')
     def _compute_price_subtotal(self):
         for line in self:
-            line.price_subtotal = line.quantity * line.price_unit * (100.0 - line.discount) / 100.0
+            price = self.env['account.tax']._fix_tax_included_price(line.price_unit, line.product_id.taxes_id, [])
+            line.price_subtotal = line.quantity * price * (100.0 - line.discount) / 100.0
             if line.analytic_account_id.pricelist_id:
                 line.price_subtotal = line.analytic_account_id.pricelist_id.currency_id.round(line.price_subtotal)
 
@@ -437,8 +441,12 @@ class SaleSubscriptionTemplate(models.Model):
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
+        # positive and negative operators behave differently
+        if operator in ('=', 'ilike', '=ilike', 'like', '=like'):
+            domain = ['|', ('code', operator, name), ('name', operator, name)]
+        else:
+            domain = ['&', ('code', operator, name), ('name', operator, name)]
         args = args or []
-        domain = ['|', ('code', operator, name), ('name', operator, name)]
         rec = self.search(domain + args, limit=limit)
         return rec.name_get()
 
