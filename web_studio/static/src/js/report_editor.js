@@ -4,6 +4,7 @@ odoo.define('web_studio.ReportEditor', function (require) {
 var ReportAction = require('report.client_action');
 var core = require('web.core');
 var customize = require('web_studio.customize');
+var Model = require('web.Model');
 var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');
 var XMLEditor = require('web_studio.XMLEditor');
 
@@ -11,6 +12,7 @@ var ReportEditor = ReportAction.extend({
 
     template: 'web_studio.report_editor',
     custom_events: {
+        'studio_edit_report': 'edit_report',
         'open_report_form': 'open_report_form',
         'open_xml_editor': 'open_xml_editor',
         'close_xml_editor': 'close_xml_editor',
@@ -34,13 +36,27 @@ var ReportEditor = ReportAction.extend({
         this.res_id = action.id;
         this._super.apply(this, arguments);
     },
+    willStart: function() {
+        var self = this;
+
+        return this._super.apply(this, arguments).then(function() {
+            return new Model('ir.actions.report.xml').call('read', [[self.res_id]]).then(function (report) {
+                self.sidebar = new ReportEditorSidebar(self, report[0]);
+            });
+        });
+    },
     start: function() {
         var self = this;
-        this.sidebar = new ReportEditorSidebar(this);
 
         return this._super.apply(this, arguments).then(function() {
             return self.sidebar.prependTo(self.$el);
         });
+    },
+    edit_report: function (event) {
+        var args = event.data.args;
+        if (!args) { return; }
+
+        customize.edit_report(event.data.report, args);
     },
     open_report_form: function() {
         this.do_action({

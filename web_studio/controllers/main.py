@@ -3,7 +3,7 @@
 
 from lxml import etree
 from StringIO import StringIO
-from odoo import http, _
+from odoo import http, models, _
 from odoo.http import content_disposition, request
 from odoo.exceptions import UserError, AccessError
 from odoo.addons.web_studio.controllers import export
@@ -233,6 +233,201 @@ class WebStudioController(http.Controller):
             'action_id': action.id,
         }
 
+    def create_blank_report(self):
+        arch = etree.fromstring("""
+            <t t-name="report_blank">
+                <t t-call="report.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-call="report.external_layout">
+                            <div class="page"/>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        """)
+        return etree.tostring(arch, encoding='utf-8', pretty_print=True)
+    
+    def create_business_report(self, model_name):
+        def add_column_field(arch, hook, index, one2many_field_id):
+            added_nodes_in_table[hook] = True
+            column_tr_node_th = arch.find(".//table/thead/tr[1]/th[" + str(index) + "]")
+            column_tr_node_th.text = one2many_field_id.field_description
+            column_tr_node_td = arch.find(".//table/tbody/tr[1]/td[" + str(index) + "]")
+            column_tr_node_td_content = etree.fromstring("""
+                <span><t t-esc="line.%(field_name)s"/></span>
+            """ % {'field_name': one2many_field_id.name})
+            etree_remove_content_node(column_tr_node_td)
+            column_tr_node_td.append(column_tr_node_td_content)
+
+        def etree_remove_content_node(node_element):
+            node_element.text = None
+            for child in list(node_element):
+                node_element.remove(child)
+
+        mail_thread_fields = request.env['mail.thread'].fields_get().keys()
+        mail_activity_mixin_fields = request.env['mail.activity.mixin'].fields_get().keys()
+        whitelisted_fields = models.MAGIC_COLUMNS + ['display_name']
+        blacklisted_fields = set(mail_thread_fields + mail_activity_mixin_fields + ['__last_update']) - set(whitelisted_fields)
+
+        # Create view
+        arch = etree.fromstring("""
+            <t t-name="web_studio.report_business">
+                <t t-call="report.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-call="report.external_layout">
+                            <div class="page">
+                                <div class="row">
+                                    <div name="address" class="col-xs-5 col-xs-offset-7"/>
+                                </div>
+                                <h2 name="title"/>
+                                <div class="row mt32 mb32">
+                                    <div name="date" class="col-xs-3">
+                                        <strong>Subtitle 1:</strong>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <strong>Subtitle 2:</strong>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <strong>Subtitle 3:</strong>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <strong>Subtitle 4:</strong>
+                                    </div>
+                                </div>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Column 1</th>
+                                            <th class="text-right">Column 2</th>
+                                            <th class="text-right">Column 3</th>
+                                            <th class="text-right">Column 4</th>
+                                            <th class="text-right">Column 5</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="lines_tbody">
+                                        <tr t-foreach="range(0, 3)" t-as="line">
+                                            <td></td>
+                                            <td class="text-right"></td>
+                                            <td class="text-right"></td>
+                                            <td class="text-right"></td>
+                                            <td class="text-right"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p name="note">
+                                    <strong>Note:</strong>
+                                </p>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        """)
+
+        added_nodes = {
+            'address': False,
+            'title': False,
+            'date': False,
+            'table': False,
+            'note': False,
+        }
+        fields = request.env[model_name].fields_get()
+        for field_name in fields:
+            field_id = request.env['ir.model.fields'].search([('model', '=', model_name), ('name', '=', field_name)])
+            if field_id.name not in blacklisted_fields:
+                if not added_nodes['address'] and field_id.ttype == 'many2one' and field_id.relation == 'res.partner':
+                    added_nodes['address'] = True
+                    # Add address
+                    address_node = etree.fromstring("""
+                        <div t-field="doc.%(field_name_address)s" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                    """ % {'field_name_address': field_id.name})
+                    arch.find(".//div[@name='address']").append(address_node)
+                elif not added_nodes['title'] and field_id.name in ['name', 'x_name']:
+                    added_nodes['title'] = True
+                    # Add title
+                    title_node = etree.fromstring("""
+                        <strong><t t-esc="doc.name"/></strong>
+                    """)
+                    arch.find(".//h2[@name='title']").append(title_node)
+                elif not added_nodes['date'] and field_id.ttype in ['date', 'datetime']:
+                    added_nodes['date'] = True
+                    # Add date
+                    date_node = etree.fromstring("""
+                        <strong>%(field_description_date)s: <t t-esc="doc.%(field_name_date)s"/></strong>
+                    """ % {'field_name_date': field_id.name, 'field_description_date': field_id.field_description})
+                    old_date_node = arch.find(".//div[@name='date']")
+                    etree_remove_content_node(old_date_node)
+                    old_date_node.append(date_node)
+                elif not added_nodes['note'] and field_id.ttype == 'html':
+                    added_nodes['note'] = True
+                    # Add note
+                    date_node = etree.fromstring("""
+                        <strong>Note: <t t-esc="doc.%(field_name_note)s"/></strong>
+                    """ % {'field_name_note': field_id.name})
+                    old_note_node = arch.find(".//p[@name='note']")
+                    etree_remove_content_node(old_note_node)
+                    old_note_node.append(date_node)
+                elif not added_nodes['table'] and field_id.ttype == 'one2many':
+                    added_nodes['table'] = True
+                    added_nodes_in_table = {
+                        'name': False,
+                        'description':  False,
+                        'quantity': False,
+                        'price': False,
+                        'total': False,
+                    }
+                    one2many_fields = request.env[field_id.relation].fields_get()
+                    for one2many_field in one2many_fields:
+                        one2many_field_id = request.env['ir.model.fields'].search([('model', '=', field_id.relation), ('name', '=', one2many_field)])
+                        if one2many_field_id.name not in blacklisted_fields:
+                            # Edit table
+                            column_1_tr_node_tbody = arch.find(".//table/tbody/tr[1]")
+                            column_1_tr_node_tbody.attrib['t-foreach'] = 'doc.' + field_id.name
+                            if not added_nodes_in_table['name'] and one2many_field_id.ttype == 'char':
+                                add_column_field(arch, 'name', 1, one2many_field_id)
+                            elif not added_nodes_in_table['description'] and one2many_field_id.ttype == 'text':
+                                add_column_field(arch, 'description', 2, one2many_field_id)
+                            elif not added_nodes_in_table['quantity'] and one2many_field_id.ttype in ['integer', 'float']:
+                                add_column_field(arch, 'quantity', 3, one2many_field_id)
+                            elif not added_nodes_in_table['price'] and one2many_field_id.ttype == 'float':
+                                add_column_field(arch, 'price', 4, one2many_field_id)
+                            elif not added_nodes_in_table['total'] and one2many_field_id.ttype == 'monetary':
+                                add_column_field(arch, 'total', 5, one2many_field_id)
+        return etree.tostring(arch, encoding='utf-8', pretty_print=True)
+
+    @http.route('/web_studio/create_new_report', type='json', auth='user')
+    def create_new_report(self, name, model_name, template_name):
+        if template_name == 'report_business':
+            arch = self.create_business_report(model_name)
+        else:
+            arch = self.create_blank_report()
+
+        view = request.env['ir.ui.view'].create({
+            'name': 'report',
+            'type': 'qweb',
+            'arch': arch,
+        })
+        # FIXME: When website is installed, we need to set key as xmlid to search on a valid domain
+        # See '_view_obj' in 'website/model/ir.ui.view'
+        new_view_xml_id = view.get_external_id()[view.id]
+        view.name = new_view_xml_id
+        view.key = new_view_xml_id
+        # Create report
+        report = request.env['ir.actions.report.xml'].create({
+            'name': name,
+            'model': model_name,
+            'report_type': 'qweb-pdf',
+            'report_name': view.name,
+            'print_report_name': "'" + str(name) + "'",
+        })
+        # Add in the print menu (ir_values_id field)
+        report.create_action()
+
+        return {
+            'id': report.id,
+        }
+
     @http.route('/web_studio/set_background_image', type='json', auth='user')
     def set_background_image(self, attachment_id):
         attachment = request.env['ir.attachment'].browse(attachment_id)
@@ -389,6 +584,22 @@ class WebStudioController(http.Controller):
         if field_created:
             result['fields'] = ViewModel.fields_get()
         return result
+
+    @http.route('/web_studio/edit_report', type='json', auth='user')
+    def edit_report(self, report_id, values):
+        report = request.env['ir.actions.report.xml'].browse(report_id)
+        if report:
+            if 'groups_id' in values:
+                values['groups_id'] = [(6, 0, values['groups_id'])]
+            if 'ir_values_id' in values:
+                if values['ir_values_id']:
+                    # Avoid to create duplicates contextual action (ir.values)
+                    if not report.ir_values_id:
+                        report.create_action()
+                else:
+                    report.unlink_action()
+                values.pop('ir_values_id')
+            report.write(values)
 
     @http.route('/web_studio/edit_view_arch', type='json', auth='user')
     def edit_view_arch(self, view_id, view_arch):

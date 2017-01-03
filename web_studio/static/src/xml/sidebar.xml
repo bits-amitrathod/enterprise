@@ -46,15 +46,45 @@
 
 <div t-name="web_studio.ReportEditorSidebar" class="o_web_studio_sidebar">
     <!-- Header -->
-    <div class="o_web_studio_sidebar_header">
-        <div class="actif">
-            <i class="fa fa-television" aria-hidden="true"/> Report
-        </div>
-    </div>
+    <div class="o_web_studio_sidebar_header"/>
 
     <!-- Content -->
-    <div class="o_web_studio_sidebar_content" t-if="widget.debug">
-        <t t-call="web_studio.Sidebar.Toolbox">
+    <div class="o_web_studio_sidebar_content">
+        <div class="o_web_studio_sidebar_text">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" data-type="attributes"
+                t-att-value="widget.report.name"/>
+        </div>
+        <div class="o_web_studio_sidebar_text">
+            <label for="print_report_name">Printed Report Name</label>
+            <input id="print_report_name" name="print_report_name" type="text" data-type="attributes"
+                t-att-value="widget.report.print_report_name"/>
+        </div>
+        <div class="o_web_studio_sidebar_tags">
+            <label for="paperformat_id">Paper format</label>
+            <div class="o_paperformat_id"/>
+        </div>
+        <div class="o_web_studio_sidebar_checkbox">
+            <div class="o_checkbox">
+                <input id="ir_values_id" name="ir_values_id" type="checkbox"
+                    t-att-checked="widget.report.ir_values_id ? 'checked' : undefined"/>
+                <span/>
+            </div>
+            <label for="ir_values_id">Add in the print menu</label>
+        </div>
+        <div class="o_web_studio_sidebar_checkbox">
+            <div class="o_checkbox">
+                <input id="attachment_use" name="attachment_use" type="checkbox"
+                    t-att-checked="widget.report.attachment_use ? 'checked' : undefined"/>
+                <span/>
+            </div>
+            <label for="attachment_use">Reload from attachment</label>
+        </div>
+        <div class="o_web_studio_sidebar_tags">
+            <label for="groups">Limit visibility to groups</label>
+            <div class="o_groups"/>
+        </div>
+        <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
             <t t-call="web_studio.Sidebar.Parameters"/>
             <t t-call="web_studio.Sidebar.XMLEditor"/>
         </t>

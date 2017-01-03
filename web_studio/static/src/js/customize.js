@@ -33,6 +33,15 @@ return {
         });
     },
 
+    create_new_report: function(name, model_name, template_name) {
+        return ajax.jsonRpc('/web_studio/create_new_report', 'call', {
+            name: name,
+            model_name: model_name,
+            template_name: template_name,
+            context: session.user_context,
+        });
+    },
+
     set_background_image: function(attachment_id) {
         return ajax.jsonRpc('/web_studio/set_background_image', 'call', {
             attachment_id: attachment_id,
@@ -60,6 +69,14 @@ return {
             }
         }).fail(def.reject.bind(def));
         return def;
+    },
+
+    edit_report: function(report, values) {
+        return ajax.jsonRpc('/web_studio/edit_report', 'call', {
+            report_id: report.id,
+            values: values,
+            context: session.user_context,
+        });
     },
 
     set_another_view: function(action_id, view_mode, view_id) {
