@@ -1,5 +1,5 @@
 import studio_mixin
-import base_action_rule
+import base_automation
 import mail_template
 import ir_actions_act_window
 import ir_actions_report_xml

@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <odoo>
-
     <data noupdate="1">
+
         <!-- Scheduler for Lead Scoring and Assignation -->
         <record forcecreate="True" id="ir_cron_lead_assign" model="ir.cron">
-            <field name="name">Lead Assignation</field>
-            <field eval="False" name="active" />
+            <field name="name">Crm Score: lead assignation</field>
+            <field name="model_id" ref="crm.model_crm_team"/>
+            <field name="state">code</field>
+            <field name="code">model.direct_assign_leads()</field>
+            <field eval="False" name="active"/>
             <field name="user_id" ref="base.user_root" />
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
-            <field name="model" eval="'crm.team'"/>
-            <field name="function" eval="'direct_assign_leads'"/>
-            <field name="args">()</field>
         </record>
 
         <!-- Scheduler for Lead Scoring -->
         <record forcecreate="True" id="ir_cron_lead_scoring" model="ir.cron">
-            <field name="name">Lead Scoring </field>
+            <field name="name">Crm Score: lead scoring </field>
+            <field name="model_id" ref="model_website_crm_score"/>
+            <field name="state">code</field>
+            <field name="code">model.assign_scores_to_leads()</field>
             <field eval="False" name="active" />
             <field name="user_id" ref="base.user_root" />
             <field name="interval_number">1</field>
             <field name="interval_type">hours</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False" />
-            <field name="model" eval="'website.crm.score'" />
-            <field name="function" eval="'assign_scores_to_leads'"/>
-            <field name="args">()</field>
         </record>
     </data>
     <data>
 
         <record id="action_score_now" model="ir.actions.server">
-            <field name="name">Apply marked scores</field>
+            <field name="name">Crm Score: Apply marked scores</field>
             <field name="model_id" ref="model_website_crm_score"/>
             <field name="state">code</field>
             <field name="code">records.assign_scores_to_leads()</field>

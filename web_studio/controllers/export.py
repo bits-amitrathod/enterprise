@@ -16,14 +16,14 @@ from odoo.tools import topological_sort
 MODELS_TO_EXPORT = [
     'res.groups', 'ir.model', 'ir.model.fields', 'ir.ui.view', 'ir.actions.act_window',
     'ir.actions.report.xml', 'mail.template', 'ir.actions.server', 'ir.ui.menu',
-    'ir.filters', 'base.action.rule', 'ir.model.access', 'ir.rule',
+    'ir.filters', 'base.automation', 'ir.model.access', 'ir.rule',
 ]
 # list of fields to export by model
 FIELDS_TO_EXPORT = {
-    'base.action.rule': [
-        'active', 'filter_domain', 'filter_id', 'filter_pre_domain', 'filter_pre_id',
+    'base.automation': [
+        'action_server_id', 'active', 'filter_domain', 'filter_id', 'filter_pre_domain', 'filter_pre_id',
         'filter_pre_id', 'kind', 'last_run', 'model_id', 'name', 'on_change_fields', 'sequence',
-        'server_action_ids', 'trg_date_id', 'trg_date_range', 'trg_date_range_type'
+        'trg_date_id', 'trg_date_range', 'trg_date_range_type'
     ],
     'ir.actions.act_window': [
         'auto_search', 'context', 'domain', 'filter', 'groups_id', 'help', 'limit', 'multi', 'name',
@@ -35,9 +35,8 @@ FIELDS_TO_EXPORT = {
         'report_type'
     ],
     'ir.actions.server': [
-        'action_id', 'child_ids', 'code', 'condition', 'crud_model_id', 'help', 'link_field_id',
-        'link_new_record', 'model_id', 'name', 'sequence', 'state', 'use_create',
-        'use_write', 'write_expression',
+        'action_id', 'child_ids', 'code', 'crud_model_id', 'help', 'link_field_id',
+        'model_id', 'name', 'sequence', 'state'
     ],
     'ir.filters': [
         'action_id', 'active', 'context', 'domain', 'is_default', 'model_id', 'name', 'sort'
@@ -73,9 +72,9 @@ FIELDS_TO_EXPORT = {
 }
 # list of relational fields to NOT export, by model
 FIELDS_NOT_TO_EXPORT = {
-    'base.action.rule': ['act_followers', 'act_user_id', 'trg_date_calendar_id'],
+    'base.automation': ['trg_date_calendar_id'],
     'ir.actions.report.xml': ['ir_values_id'],
-    'ir.actions.server': ['fields_lines', 'menu_ir_values_id', 'ref_object'],
+    'ir.actions.server': ['channel_ids', 'fields_lines', 'menu_ir_values_id', 'partner_ids'],
     'ir.filter': ['user_id'],
     'mail.template': ['attachment_ids', 'mail_server_id', 'ref_ir_value'],
     'res.groups': ['category_id', 'users'],

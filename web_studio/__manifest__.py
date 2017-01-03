@@ -18,7 +18,7 @@ Note: Only the admin user is allowed to make those customizations.
     'category': 'Technical Settings',
     'version': '1.0',
     'depends': [
-        'base_action_rule',
+        'base_automation',
         'base_import_module',
         'grid',
         'mail',
