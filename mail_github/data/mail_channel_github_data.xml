@@ -43,14 +43,14 @@
 						</div>
 					</t>
 
-					<t t-if="payload['action'] in ['create', 'detele', 'update']">
+					<t t-if="payload['action'] in ['create', 'delete', 'update']">
 						<t t-if="payload['action'] == 'create'">
 							<a t-att-href="sender['url']" target="_blank"><t t-esc="sender['login']"/> </a> created a new <t t-esc="payload['object_label']"/> on repository <a t-att-href="repository['url']"><t t-esc="repository_id.name"/></a>.
 						</t>
 						<t t-if="payload['action'] == 'delete'">
 							<a t-att-href="sender['url']" target="_blank"><t t-esc="sender['login']"/></a> remove the following <t t-esc="payload['object_label']"/> on repository <a t-att-href="repository['url']"><t t-esc="repository_id.name"/></a> :
 						</t>
-						<t t-if="payload['action'] == 'delete'">
+						<t t-if="payload['action'] == 'update'">
 							<a t-att-href="sender['url']" target="_blank"><t t-esc="sender['login']"/> </a> modified the following <t t-esc="payload['object_label']"/> on repository <a t-att-href="repository['url']"><t t-esc="repository_id.name"/></a> :
 						</t>
 
