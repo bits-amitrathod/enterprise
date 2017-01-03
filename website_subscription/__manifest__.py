@@ -15,7 +15,6 @@ Features:
         'sale_subscription',
         'website_sale',
         'website_portal',
-        'website_quote',
         'website_payment',
         'sale_subscription_dashboard',
     ],

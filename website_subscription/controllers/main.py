@@ -9,7 +9,6 @@ from odoo.tools import pycompat
 from odoo.tools.translate import _
 
 from odoo.addons.website_portal.controllers.main import website_account, get_records_pager
-from odoo.addons.website_quote.controllers.main import sale_quote
 
 
 class website_account(website_account):
@@ -331,20 +330,3 @@ class website_subscription(http.Controller):
             'action': action
         }
         return request.render('website_subscription.preview_template', values)
-
-
-class sale_quote_subscription(sale_quote):
-    @http.route([
-        "/quote/<int:order_id>",
-        "/quote/<int:order_id>/<token>"
-    ], type='http', auth="public", website=True)
-    def view(self, order_id, pdf=None, token=None, message=False, **kw):
-        response = super(sale_quote_subscription, self).view(order_id, pdf, token, message, **kw)
-        if 'quotation' in response.qcontext:  # check if token identification was ok in super
-            order = response.qcontext['quotation']
-            recurring_products = True in [line.product_id.recurring_invoice for line in order.sudo().order_line]
-            tx_type = order._get_payment_type()
-            # re-render the payment buttons with the proper tx_type if recurring products
-            if 'acquirers' in response.qcontext and tx_type != 'form':
-                response.qcontext['recurring_products'] = recurring_products
-        return response
