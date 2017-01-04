@@ -25,7 +25,7 @@
 <template id="filter_info_template">
     <div class="row print_only" style='margin-top: 20px; margin-bottom: 20px;'>
         <div class="col-xs-4">
-            <t t-if="options.get('date',{}).get('string')"><t t-raw="options['date']['string']"/></t>
+            <t t-if="options.get('date') and options['date'].get('string')"><t t-raw="options['date']['string']"/></t>
         </div>
         <div class="col-xs-4">
             <t t-if="options.get('cash_basis')">Cash Basis</t><t t-if="options.get('cash_basis') == False">Accrual Basis</t><br/>

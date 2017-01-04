@@ -48,6 +48,16 @@ class FinancialReportController(http.Controller):
                         ('Content-Length', len(content))
                     ]
                 )
+            if output_format == 'txt':
+                content = report_obj.get_txt(options)
+                response = request.make_response(
+                    content,
+                    headers=[
+                        ('Content-Type', 'text/plain'),
+                        ('Content-Disposition', 'attachment; filename=' + report_name + '.txt;'),
+                        ('Content-Length', len(content))
+                    ]
+                )
             response.set_cookie('fileToken', token)
             return response
         except Exception, e:

@@ -2,12 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import copy
 import xlsxwriter
-import calendar
 import json
 import StringIO
 import logging
-from odoo import models, fields, api, _, osv
-from odoo.exceptions import Warning
+from odoo import models, fields, api, _
 from datetime import timedelta, datetime, date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from babel.dates import get_quarter_names
@@ -63,10 +61,13 @@ class AccountReport(models.AbstractModel):
         if self.env.user.id in group_multi_company.users.ids:
             # We have a user with multi-company
             options['multi_company'] = [{'id': c.id, 'name': c.name, 'selected': True if c.id == self.env.user.company_id else False} for c in self.env.user.company_ids]
+        if options.get('journals'):
+            options['journals'] = self.get_journals()
+
         options['unfolded_lines'] = []
         # Merge old options with default from this report
         for key, value in options.items():
-            if key in previous_options and value != None and previous_options[key] != None:
+            if key in previous_options and value is not None and previous_options[key] is not None:
                 # special case handler for date and comparison as from one report to another, they can have either a date range or single date
                 if key == 'date' or key == 'comparison':
                     if key == 'comparison':
@@ -75,11 +76,11 @@ class AccountReport(models.AbstractModel):
                     if previous_options[key].get('filter', 'custom') != 'custom':
                         # just copy filter and let the system compute the correct date from it
                         options[key]['filter'] = previous_options[key]['filter']
-                    elif value.get('date_from') != None and not previous_options[key].get('date_from'):
+                    elif value.get('date_from') is not None and not previous_options[key].get('date_from'):
                         company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.strptime(previous_options[key]['date'], DEFAULT_SERVER_DATE_FORMAT))
                         options[key]['date_from'] = company_fiscalyear_dates['date_from'].strftime(DEFAULT_SERVER_DATE_FORMAT)
                         options[key]['date_to'] = previous_options[key]['date']
-                    elif value.get('date') != None and not previous_options[key].get('date'):
+                    elif value.get('date') is not None and not previous_options[key].get('date'):
                         options[key]['date'] = previous_options[key]['date_to']
                     else:
                         options[key] = previous_options[key]
@@ -94,6 +95,7 @@ class AccountReport(models.AbstractModel):
             self.filter_analytic = self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids and True or None
             self.filter_analytic_tags = [] if self.filter_analytic else None
             self.filter_analytic_accounts = [] if self.filter_analytic else None
+
         return self._build_options(previous_options)
 
     #TO BE OVERWRITTEN
@@ -232,7 +234,7 @@ class AccountReport(models.AbstractModel):
             ctx['date_from'] = options['date']['date_from']
         if options.get('date'):
             ctx['date_to'] = options['date'].get('date_to') or options['date'].get('date')
-        if options.get('all_entries') != None:
+        if options.get('all_entries') is not None:
             ctx['state'] = options.get('all_entries') and 'all' or 'posted'
         if options.get('journals'):
             ctx['journal_ids'] = [j.get('id') for j in options.get('journals') if j.get('selected')]
@@ -252,14 +254,14 @@ class AccountReport(models.AbstractModel):
         '''
         return a dictionary of informations that will be needed by the js widget, manager_id, footnotes, html of report and searchview, ...
         '''
-        options = self.get_options(options);
+        options = self.get_options(options)
         # apply date and date_comparison filter
         options = self.apply_date_filter(options)
         options = self.apply_cmp_filter(options)
 
         searchview_dict = {'options': options, 'context': self.env.context}
         # Check if report needs analytic
-        if options.get('analytic') != None:
+        if options.get('analytic') is not None:
             searchview_dict['analytic_accounts'] = self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids and [(t.id, t.name) for t in self.env['account.analytic.account'].search([])] or False
             searchview_dict['analytic_tags'] = self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids and [(t.id, t.name) for t in self.env['account.analytic.tag'].search([])] or False
         report_manager = self.get_report_manager(options)
@@ -289,7 +291,7 @@ class AccountReport(models.AbstractModel):
         lines = self.with_context(self.set_context(options)).get_lines(options, line_id=line_id)
         footnotes_to_render = []
         if self.env.context.get('print_mode', False):
-            # we are in print mode, so compute footnote number and include them in lines values, otherwise, let the js compute the number correctly as 
+            # we are in print mode, so compute footnote number and include them in lines values, otherwise, let the js compute the number correctly as
             # we don't know all the visible lines.
             footnotes = dict([(str(f.line), f) for f in report_manager.footnotes_ids])
             number = 0
@@ -300,7 +302,6 @@ class AccountReport(models.AbstractModel):
                     line['footnote'] = str(number)
                     footnotes_to_render.append({'id': f.id, 'number': number, 'text': f.text})
 
-
         rcontext = {'report': report,
                     'lines': {'columns_header': self.get_columns_name(options), 'lines': lines},
                     'options': options,
@@ -310,7 +311,7 @@ class AccountReport(models.AbstractModel):
         if additional_context and type(additional_context) == dict:
             rcontext.update(additional_context)
         render_template = templates.get('main_template', 'account_reports.main_template')
-        if line_id != None:
+        if line_id is not None:
             render_template = templates.get('line_template', 'account_reports.line_template')
         html = self.env['ir.ui.view'].render_template(
             render_template,
@@ -388,7 +389,7 @@ class AccountReport(models.AbstractModel):
         if not options_filter:
             return options
         today = date.today()
-        dt_from = options['date'].get('date_from') != None and today or False
+        dt_from = options['date'].get('date_from') is not None and today or False
         if options_filter == 'custom':
             dt_from = options['date'].get('date_from', False)
             dt_to = options['date'].get('date_to', False) or options['date'].get('date', False)
@@ -403,8 +404,8 @@ class AccountReport(models.AbstractModel):
             dt_to = (today.replace(day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
         elif options_filter == 'this_quarter':
             quarter = (today.month - 1) / 3 + 1
-            dt_to = (today.replace(month=quarter*3, day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
-            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month-3, year=dt_to.year) or False
+            dt_to = (today.replace(month=quarter * 3, day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
+            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 3, year=dt_to.year) or False
         elif options_filter == 'this_year':
             company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now())
             dt_from = dt_from and company_fiscalyear_dates['date_from'] or False
@@ -414,11 +415,11 @@ class AccountReport(models.AbstractModel):
             dt_from = dt_from and dt_to.replace(day=1) or False
         elif options_filter == 'last_quarter':
             quarter = (today.month - 1) / 3 + 1
-            quarter = quarter-1 if quarter > 1 else 4
-            dt_to = (today.replace(month=quarter*3, day=1, year=today.year if quarter!= 4 else today.year-1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
-            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month-3, year=dt_to.year) or False
+            quarter = quarter - 1 if quarter > 1 else 4
+            dt_to = (today.replace(month=quarter * 3, day=1, year=today.year if quarter != 4 else today.year - 1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
+            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 3, year=dt_to.year) or False
         elif options_filter == 'last_year':
-            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now().replace(year=today.year-1))
+            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now().replace(year=today.year - 1))
             dt_from = dt_from and company_fiscalyear_dates['date_from'] or False
             dt_to = company_fiscalyear_dates['date_to']
         if dt_from:
@@ -433,7 +434,6 @@ class AccountReport(models.AbstractModel):
         if not options.get('comparison'):
             return options
         options['comparison']['periods'] = []
-        periods = []
         cmp_filter = options['comparison'].get('filter')
         if not cmp_filter:
             return options
@@ -472,15 +472,15 @@ class AccountReport(models.AbstractModel):
                         dt_from = dt_from and (dt_from - timedelta(days=1)).replace(day=1) or dt_from
                         dt_to = dt_to.replace(day=1) - timedelta(days=1)
                     elif options_filter in ('this_quarter', 'last_quarter'):
-                        dt_to = dt_to.replace(month=(dt_to.month+10)%12, day=1) - timedelta(days=1)
-                        dt_from = dt_from and dt_from.replace(month=dt_to.month-2, year=dt_to.year) or dt_from
+                        dt_to = dt_to.replace(month=(dt_to.month + 10) % 12, day=1) - timedelta(days=1)
+                        dt_from = dt_from and dt_from.replace(month=dt_to.month - 2, year=dt_to.year) or dt_from
                     elif options_filter == 'custom':
                         if not dt_from:
                             dt_to = dt_to.replace(day=1) - timedelta(days=1)
                         else:
                             previous_dt_to = dt_to
                             dt_to = dt_from - timedelta(days=1)
-                            dt_from = dt_from - timedelta(days=(previous_dt_to-dt_from).days + 1)
+                            dt_from = dt_from - timedelta(days=(previous_dt_to - dt_from).days + 1)
                 display_value = self.format_date(dt_to, dt_from, options)
 
                 if dt_from:
@@ -534,8 +534,8 @@ class AccountReport(models.AbstractModel):
             values=dict(rcontext),
         )
         body_html = self.with_context(print_mode=True).get_html(options)
-        
-        body = body.replace('<body class="o_account_reports_body_print">', '<body class="o_account_reports_body_print">'+body_html)
+
+        body = body.replace('<body class="o_account_reports_body_print">', '<body class="o_account_reports_body_print">' + body_html)
         if minimal_layout:
             header = self.env['report'].render("report.internal_layout", values=rcontext,)
             footer = ''
@@ -658,15 +658,15 @@ class AccountReport(models.AbstractModel):
                 # if isinstance(lines[y]['columns'][x - 1], tuple):
                     # lines[y]['columns'][x - 1] = lines[y]['columns'][x - 1][0]
                 if x < len(lines[y]['columns']):
-                    sheet.write(y + y_offset, x+lines[y].get('colspan', 1)-1, lines[y]['columns'][x - 1].get('name', ''), style)
+                    sheet.write(y + y_offset, x + lines[y].get('colspan', 1) - 1, lines[y]['columns'][x - 1].get('name', ''), style)
                 else:
-                    sheet.write(y + y_offset, x+lines[y].get('colspan', 1)-1, lines[y]['columns'][x - 1].get('name', ''), style_right)
+                    sheet.write(y + y_offset, x + lines[y].get('colspan', 1) - 1, lines[y]['columns'][x - 1].get('name', ''), style_right)
             if 'total' in lines[y].get('class', '') or lines[y].get('level') == 0:
                 for x in xrange(0, len(lines[0]['columns']) + 1):
                     sheet.write(y + 1 + y_offset, x, None, upper_line_style)
                 y_offset += 1
         if lines:
-            for x in xrange(0, max_width+1):
+            for x in xrange(0, max_width + 1):
                 sheet.write(len(lines) + y_offset, x, None, upper_line_style)
 
         workbook.close()
@@ -685,4 +685,17 @@ class AccountReport(models.AbstractModel):
                 }
 
     def get_xml(self, options):
+        return False
+
+    def print_txt(self, options):
+        return {
+                'type': 'ir_actions_account_report_download',
+                'data': {'model': self.env.context.get('model'),
+                         'options': json.dumps(options),
+                         'output_format': 'txt',
+                         'financial_id': self.env.context.get('id'),
+                         }
+                }
+
+    def get_txt(self, options):
         return False

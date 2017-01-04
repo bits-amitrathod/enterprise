@@ -14,13 +14,8 @@ class report_account_general_ledger(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
     filter_cash_basis = False
     filter_all_entries = False
-    filter_journals = []
+    filter_journals = True
     filter_analytic = True
-
-    @api.model
-    def get_options(self, previous_options=None):
-        self.filter_journals = self.get_journals()
-        return super(report_account_general_ledger, self).get_options(previous_options)
 
     def get_templates(self):
         templates = super(report_account_general_ledger, self).get_templates()
@@ -210,7 +205,7 @@ class report_account_general_ledger(models.AbstractModel):
             #use query_get + with statement instead of a search in order to work in cash basis too
             if not context.get('print_mode'):
                 #  fetch the 81 first amls. The report only displays the first 80 amls. We will use the 81st to know if there are more than 80 in which case a link to the list view must be displayed.
-                aml_ids = self._do_query(account_id, group_by_account=False, limit=81)
+                aml_ids = self._do_query(options, account_id, group_by_account=False, limit=81)
                 aml_ids = [x[0] for x in aml_ids]
 
                 accounts[account]['lines'] = self.env['account.move.line'].browse(aml_ids)
