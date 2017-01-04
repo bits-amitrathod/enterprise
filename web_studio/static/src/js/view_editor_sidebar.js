@@ -3,9 +3,11 @@ odoo.define('web_studio.ViewEditorSidebar', function (require) {
 
 var core = require('web.core');
 var Dialog = require('web.Dialog');
+var DomainSelectorDialog = require("web.DomainSelectorDialog");
+var domainUtils = require("web.domainUtils");
 var field_registry = require('web.field_registry');
-var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
+var session = require("web.session");
 var Widget = require('web.Widget');
 var FieldManagerMixin = require('web_studio.FieldManagerMixin');
 var view_components = require('web_studio.view_components');
@@ -38,12 +40,13 @@ return Widget.extend(FieldManagerMixin, {
         'click .o_web_studio_remove': 'remove_element',
         'change .o_display_view input, .o_display_view select': 'change_view',
         'change .o_display_field input[data-type="attributes"], .o_display_field select': 'change_element',
+        'focus .o_display_field input[data-type="attributes"][name="domain"]': 'open_domain_editor',
         'change .o_display_field input[data-type="default_value"]': 'change_default_value',
         'change .o_display_page input': 'change_element',
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
         'change .o_display_chatter input[data-type="email_alias"]': 'change_email_alias',
-        'click .o_web_studio_attrs': 'show_required_attrs',
+        'click .o_web_studio_attrs': 'show_attrs_domain',
     },
 
     init: function (parent, view_type, view_attrs, model, fields, fields_not_in_view) {
@@ -297,16 +300,36 @@ return Widget.extend(FieldManagerMixin, {
             }
         });
     },
-    show_required_attrs: function(ev) {
+    show_attrs_domain: function (ev) {
         ev.preventDefault();
         var modifier = ev.currentTarget.dataset.type;
-        var $content = $('<div>')
-            .append($('<p>').html(_.str.sprintf(_t('The property < %s > of this field will be different from one record to another depending on the following custom domain.<br/>If there is no domain, the property is applied globally to the view'), modifier)))
-            .append($('<p>').text(JSON.stringify(this.modifiers[modifier])));
-        new Dialog(this, {title: _t("Attrs Domain"), $content: $content.html()}).open();
+
+        new DomainSelectorDialog(this, this.model, this.modifiers[modifier], {
+            readonly: true,
+            debugMode: session.debug,
+            $content: $(_.str.sprintf(
+                _t("<div><p>The property <strong>%s</strong> of this field will be different from one record to another depending on the following custom domain.<br/>If there is no domain, the property is applied globally to the view</p></div>"),
+                modifier
+            )),
+        }).open();
+    },
+    open_domain_editor: function (ev) {
+        ev.preventDefault();
+        var $input = $(ev.currentTarget);
+
+        var dialog = new DomainSelectorDialog(this, this.model, $input.val(), {
+            readonly: false,
+            debugMode: session.debug,
+        }).open();
+        dialog.on("domain_selected", this, function (e) {
+            $input.val(domainUtils.domainToString(e.data.domain)).change();
+        });
     },
     is_true: function(value) {
         return value !== 'false' && value !== 'False';
+    },
+    domain_to_str: function (domain) {
+        return domainUtils.domainToString(domain);
     },
 });
 
