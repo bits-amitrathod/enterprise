@@ -87,18 +87,17 @@ return Widget.extend(FieldManagerMixin, {
         this.attrs = this.node.attrs;
 
         if (options && options.node) {
-            this.tag = this.element = options.node.tag || 'div';
+            this.element = options.node.tag || 'div';
         }
 
         if (options && options.field) {
             this.default_value = options.default_value;
             this.attrs = options.field.__attrs;
-            this.tag = this.element = 'field';
+            this.element = 'field';
             this.field_parameters = options.field;
             this.modifiers = JSON.parse(options.field.__attrs.modifiers);
             this.compute_field_attrs();
         } else if (options && options.node.attrs.class === 'oe_chatter') {
-            this.tag = 'div';
             this.element = 'chatter';
             this.email_alias = options.email_alias;
         }
@@ -281,26 +280,14 @@ return Widget.extend(FieldManagerMixin, {
     },
     remove_element: function() {
         var self = this;
-        var attrs;
-        var message;
-
-        if (this.element === 'chatter') {
-            attrs = { 'class': 'oe_chatter' };
-            message = _t('Are you sure you want to remove the chatter from the view?');
-        } else {
-            attrs = _.pick(this.attrs, 'name');
-            message = _.str.sprintf(_t('Are you sure you want to remove this %s form the view?'), this.tag);
-        }
+        var message = _.str.sprintf(_t('Are you sure you want to remove this %s from the view?'), this.element);
 
         Dialog.confirm(this, message, {
             confirm_callback: function() {
                 self.trigger_up('view_change', {
                     type: 'remove',
                     structure: 'remove',
-                    node: {
-                        tag: self.tag,
-                        attrs: attrs,
-                    },
+                    node: self.node,
                 });
                 self.toggle_mode('view');
             }
