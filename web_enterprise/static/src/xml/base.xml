@@ -22,8 +22,12 @@
             t-att-data-action-id="app.action"
             t-att-data-menu-xmlid="app.xmlid"
             t-att-href="app.href ? app.href : ('#menu_id='+app.id+'&amp;action_id='+app.action)">
-            <img t-if="app.web_icon_data" class="o_app_icon" t-att-src="app.web_icon_data"/>
-            <t t-if="!app.web_icon_data" t-raw="app.web_icon"/>
+            <div t-if="app.web_icon_data" class="o_app_icon"
+                t-attf-style="background-image: url('#{app.web_icon_data}');"/>
+            <div t-else="" class="o_app_icon"
+                t-attf-style="background-color: #{app.web_icon.background};">
+                <i t-att-class="app.web_icon.class" t-attf-style="color: #{app.web_icon.color};"/>
+            </div>
             <div class="o_caption"><t t-esc="app.label"/></div>
           </a>
         </t>

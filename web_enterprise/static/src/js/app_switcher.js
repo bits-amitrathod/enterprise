@@ -67,18 +67,14 @@ var AppSwitcher = Widget.extend({
             };
             if (!menu_item.parent_id) {
                 if (menu_item.web_icon_data) {
-                    item.web_icon_data = 'data:image/png;base64,' + menu_item.web_icon_data;
+                    item.web_icon_data = ('data:image/png;base64,' + menu_item.web_icon_data).replace(/\s/g, "");
                 } else if (item.web_icon) {
                     var icon_data = item.web_icon.split(',');
-                    var $icon = $('<div>')
-                        .addClass('o_app_icon')
-                        .css('background-color', icon_data[2])
-                        .append(
-                            $('<i>')
-                                .addClass(icon_data[0])
-                                .css('color', icon_data[1])
-                        );
-                    item.web_icon = $icon[0].outerHTML;
+                    item.web_icon = {
+                        class: icon_data[0],
+                        color: icon_data[1],
+                        background: icon_data[2],
+                    };
                 } else {
                     item.web_icon_data = '/web_enterprise/static/src/img/default_icon_app.png';
                 }
