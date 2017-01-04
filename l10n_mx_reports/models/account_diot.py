@@ -152,9 +152,9 @@ class MxReportPartnerLedger(models.AbstractModel):
                     })
                 continue
             p_columns = [
-                partner.type_of_third or '', partner.type_of_operation or '',
+                partner.l10n_mx_type_of_third or '', partner.l10n_mx_type_of_operation or '',
                 partner.vat or '', partner.country_id.code or '',
-                partner.nationality or '']
+                partner.l10n_mx_nationality or '']
             partner_data = grouped_partners[partner]
             total_tax16 = 0
             total_tax0 = 0
