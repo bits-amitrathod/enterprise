@@ -128,6 +128,12 @@ var KanbanRecord = Widget.extend({
 
             new_record[name] = r;
         });
+        // TODO: remove this after the new views as we will have id in fields
+        new_record.id = {
+            value: this.record_data.id,
+            raw_value: this.record_data.id,
+            __attrs: {},
+        };
         return new_record;
     },
 
