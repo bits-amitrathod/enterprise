@@ -12,12 +12,12 @@ class FcmResConfig(models.TransientModel):
     @api.multi
     def set_fcm_api_key(self):
         fcm_api_key = self[0].fcm_api_key or ''
-        self.env['ir.config_parameter'].set_param('fcm_api_key', fcm_api_key,  groups=['base.group_system'])
+        self.env['ir.config_parameter'].set_param('fcm_api_key', fcm_api_key)
 
     @api.multi
     def set_fcm_project_id(self):
         fcm_project_id = self[0].fcm_project_id or ''
-        self.env['ir.config_parameter'].set_param('fcm_project_id', fcm_project_id, groups=['base.group_system'])
+        self.env['ir.config_parameter'].set_param('fcm_project_id', fcm_project_id)
 
     @api.multi
     def get_default_fcm_credentials(self, fields=None):
