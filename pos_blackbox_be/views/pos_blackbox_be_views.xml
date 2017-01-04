@@ -173,7 +173,7 @@
         </record>
 
         <!-- include vat number in report -->
-        <template id="include_vat_number" inherit_id="report.external_layout_header">
+        <template id="include_vat_number" inherit_id="report.report_template_default">
             <xpath expr="//div[@name='company_address']" position="after">
                 <div class="col-xs-9" name="company_address">
                     VAT: <t t-esc="company.vat"/>
@@ -570,17 +570,12 @@
             </xpath>
         </template>
 
-        <template id="include_vat_notice_report_external_header" inherit_id="report.external_layout_header">
-            <xpath expr="//div[@class='row']" position="replace">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
-                    </div>
-                    <div class="col-xs-5 text-center" style="margin-top:20px;">
-                        <strong>THIS IS NOT A VALID VAT TICKET</strong>
-                    </div>
-                    <div class="col-xs-4 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
+        <template id="include_vat_notice_report_external_header" inherit_id="report.report_template_default">
+            <xpath expr="//div[@name='moto']" position="replace">
+                <div class="col-xs-5 text-center" style="margin-top:20px;">
+                    <strong>THIS IS NOT A VALID VAT TICKET</strong>
                 </div>
+                <div class="col-xs-4 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
             </xpath>
         </template>
 
