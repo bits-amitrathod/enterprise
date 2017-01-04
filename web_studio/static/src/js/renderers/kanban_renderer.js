@@ -227,9 +227,6 @@ return AbstractRenderer.extend({
         this.widgets.splice(this.widgets.indexOf(widget), 1);
         widget.destroy();
     },
-    get_local_state: function() {
-        return {};
-    },
 });
 
 });

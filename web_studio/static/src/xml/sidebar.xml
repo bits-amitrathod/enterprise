@@ -94,7 +94,7 @@
 <div t-name="web_studio.ViewEditorSidebar" class="o_web_studio_sidebar">
     <!-- Header -->
     <div class="o_web_studio_sidebar_header">
-        <div t-attf-class="o_web_studio_new #{_.contains(['form', 'list', 'kanban'], widget.view_type)  ? (widget.mode === 'new' ? 'actif' : '') : 'inactive'}">
+        <div t-attf-class="o_web_studio_new #{_.contains(['form', 'list', 'kanban', 'search'], widget.view_type)  ? (widget.mode === 'new' ? 'actif' : '') : 'inactive'}">
             <i class="fa fa-plus" aria-hidden="true"/> Add
         </div>
         <div name="view" t-attf-class="o_web_studio_view #{widget.mode === 'view' ? 'actif' : ''}">
@@ -331,7 +331,12 @@
     </div>
     <t t-if="widget.mode === 'properties'">
         <div t-if="widget.element === 'field'" class="o_web_studio_sidebar_content o_display_field">
-            <t t-call="web_studio.ViewEditorSidebar.field"/>
+            <t t-if="widget.view_type == 'search'">
+                <t t-call="web_studio.ViewEditorSidebar.autocompletion_field"/>
+            </t>
+            <t t-else="1">
+                <t t-call="web_studio.ViewEditorSidebar.field"/>
+            </t>
         </div>
         <div t-if="widget.element === 'page'" class="o_web_studio_sidebar_content o_display_page">
             <t t-call="web_studio.ViewEditorSidebar.page"/>
@@ -347,6 +352,19 @@
         </div>
         <div t-if="widget.element === 'div'" class="o_web_studio_sidebar_content o_display_div">
             <t t-call="web_studio.ViewEditorSidebar.div"/>
+        </div>
+        <div t-if="widget.element ==='filter'" class="o_web_studio_sidebar_content o_display_filter">
+            <t t-if="widget.attrs.is_group_by === true">
+                <t t-call="web_studio.ViewEditorSidebar.group_by"/>
+            </t>
+            <t t-else="1">
+                <t t-call="web_studio.ViewEditorSidebar.filter"/>
+            </t>
+        </div>
+        <div t-if="widget.element ==='separator'" class="o_web_studio_sidebar_content o_display_filter_separator">
+            <t t-call="web_studio.Sidebar.Toolbox">
+                <t t-call="web_studio.Sidebar.Remove"/>
+            </t>
         </div>
     </t>
 </div>
@@ -459,6 +477,16 @@
     </t>
 </t>
 
+<!-- FieldEditor for the SearchView-->
+<t t-name="web_studio.ViewEditorSidebar.autocompletion_field">
+    <div>
+        <label for="string">Label</label>
+        <input id="string" name="string" type="text" data-type="attributes"
+            t-att-value="widget.attrs.string"/>
+    </div>
+    <t t-call="web_studio.Sidebar.Remove"/>
+</t>
+
 <!-- PageEditor -->
 <t t-name="web_studio.ViewEditorSidebar.page">
     <div class="o_web_studio_sidebar_text">
@@ -477,6 +505,21 @@
         <label for="string">Label Text</label>
         <input id="string" name="string" type="text"
             t-att-value="widget.attrs.string"/>
+    </div>
+    <t t-call="web_studio.Sidebar.Toolbox">
+        <t t-call="web_studio.Sidebar.Remove"/>
+    </t>
+</t>
+
+<!-- FilterEditor -->
+<t t-name="web_studio.ViewEditorSidebar.filter">
+    <div class="o_web_studio_sidebar_text">
+        <label for="string">Label Text</label>
+        <input id="string" name="string" type="text"
+            t-att-value="widget.attrs.string"/>
+        <label for="domain">Filter Domain</label>
+        <input id="domain" name="domain" type="text"
+            t-att-value="widget.attrs.domain" readonly="readonly"/>
     </div>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Remove"/>
@@ -514,6 +557,15 @@
     </t>
 </t>
 
+<!-- SearchViewFilterEditor -->
+<t t-name="web_studio.ViewEditorSidebar.group_by">
+    <div class="o_web_studio_sidebar_text">
+        <label for="string">Label</label>
+        <input id="string" name="string" type="text" data-type="attributes"
+            t-att-value="widget.attrs.string"/>
+    </div>
+    <t t-call="web_studio.Sidebar.Remove"/>
+</t>
 
 <div t-name="web_studio.NewFieldDialog" class="o_web_studio_field_dialog_form">
     <t t-if="widget.ttype === 'selection'">

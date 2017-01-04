@@ -86,6 +86,7 @@ return Widget.extend({
     // position
     get_local_state: function() {
         // to be implemented by actual renderer
+        return {};
     },
     // this method is used after an update (and may also be used after a new renderer
     // is instantiated).  For example, opening a new record in a form view is
@@ -93,6 +94,25 @@ return Widget.extend({
     // be maintained if possible.
     set_local_state: function(local_state) {
         // to be implemented by actual renderer
+    },
+    // Function setting the node style in each editor view
+    _set_style_events: function($el) {
+        var self = this;
+        $el.click(function() {
+            self._reset_clicked_style();
+            $(this).addClass('o_clicked');
+        })
+        .mouseover(function(event) {
+            $(this).addClass('o_web_studio_hovered');
+            event.stopPropagation();
+        })
+        .mouseout(function(event) {
+            $(this).removeClass('o_web_studio_hovered');
+            event.stopPropagation();
+        });
+    },
+    _reset_clicked_style: function() {
+        this.$('.o_clicked').removeClass('o_clicked');
     },
 });
 

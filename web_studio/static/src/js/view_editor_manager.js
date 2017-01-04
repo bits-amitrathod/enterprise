@@ -16,6 +16,7 @@ var customize = require('web_studio.customize');
 var FormRenderer = require('web.FormRenderer');
 var KanbanRenderer = require('web.KanbanRenderer');
 var ListRenderer = require('web.BasicListRenderer');
+var SearchRenderer = require('web_studio.SearchRenderer');
 
 var CalendarEditor = require('web_studio.CalendarEditor');
 var FormEditor = require('web_studio.FormEditor');
@@ -44,7 +45,7 @@ var Renderers = {
     graph: GraphEditor,
     calendar: CalendarEditor,
     gantt: GanttEditor,
-    search: SearchEditor,
+    search: SearchRenderer,
 };
 
 var Editors = {
@@ -142,6 +143,7 @@ return Widget.extend({
             'group': ['name'],
             'div': ['class'],
             'button': ['name'],
+            'filter': ['name'],
         };
         this.ids = options.ids || [];
         this.res_id = options.res_id;
@@ -203,8 +205,6 @@ return Widget.extend({
                 var res_id = data.data[0] && data.data[0].res_id || false;
                 return datamodel.load(self.model, {id: res_id, fields: fields});
             });
-        } else if (this.view_type === 'search') {
-            return;
         } else {
             def = datamodel.load(this.model, {
                 fields: fields,
@@ -354,7 +354,7 @@ return Widget.extend({
         });
     },
     show_nearest_hook: function (event) {
-        var is_nearest_hook = this.editor.highlight_nearest_hook(event.data.pageX, event.data.pageY);
+        var is_nearest_hook = this.editor.highlight_nearest_hook(event.data.$helper, event.data.position);
         event.data.$helper.toggleClass('ui-draggable-helper-ready', is_nearest_hook);
     },
     update_view: function(event) {
@@ -412,6 +412,12 @@ return Widget.extend({
                 break;
             case 'edit_attributes':
                 this._edit_attributes_element(type, node, xpath_info, new_attrs);
+                break;
+            case 'filter':
+                this._add_filter(type, node, xpath_info, position, new_attrs);
+                break;
+            case 'separator':
+                this._add_separator(type, node, xpath_info, position);
                 break;
         }
     },
@@ -671,8 +677,9 @@ return Widget.extend({
         // We want to check if the parent of the node if not empty
         // If the parent contains only the node we want to delete
         // We will delete the parent instead of the node
+        // Check if there are other cases than 'group' where it is wanted
         var parent_node = find_parent(this.fields_view.arch, node);
-        if (parent_node.children.length === 1) {
+        if (node.tag === 'group' && parent_node.children.length === 1) {
             node = parent_node;
         }
 
@@ -707,6 +714,38 @@ return Widget.extend({
             position: 'attributes',
             node: node,
             new_attrs: new_attrs,
+        });
+    },
+    _add_filter: function(type, node, xpath_info, position, new_attrs) {
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+            position: position,
+            node: {
+                tag: 'filter',
+                attrs: new_attrs,
+            },
+        });
+    },
+    _add_separator: function (type, node, xpath_info, position) {
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+            position: position,
+            node: {
+                tag: 'separator',
+                attrs: {
+                    name: 'studio_separator_' + utils.randomString(5),
+                },
+            },
         });
     },
     destroy: function() {

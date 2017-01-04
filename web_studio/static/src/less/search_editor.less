@@ -1,0 +1,45 @@
+.o_web_studio_client_action {
+    .o_web_studio_view_editor .o_web_studio_view_renderer .o_search_view {
+        &.o_web_studio_search_view_editor {
+            // Workaround Chrome bug: set width at 99% to avoid the overlap between the editor view and the scrollbar
+            width: 99%;
+            .o-flex-display();
+            > div {
+                .o-flex(1, 1, auto);
+                margin: 10px;
+            }
+            .o_web_studio_hovered {
+                outline: 1px dashed @odoo-brand-optional;
+                cursor: pointer;
+            }
+            .o_clicked {
+                outline: 2px solid @odoo-brand-optional;
+            }
+            .o_web_studio_hook {
+                :first-child {
+                    line-height: 0px;
+                }
+                > td {
+                    padding: 0;
+                }
+                span.o_web_studio_hook_separator {
+                    display: block;
+                    position: relative;
+                    padding: 4px 0;
+                    border: 0px dashed transparent;
+                    .o-transition(all, 0.2s, 0s, cubic-bezier(0.215, 0.610, 0.355, 1.000));
+                }
+            }
+            .o_web_studio_hook.o_web_studio_nearest_hook {
+                cursor: pointer !important;
+                outline: none;
+                span.o_web_studio_hook_separator {
+                    background-color: fade(@odoo-brand-optional, 2%);
+                    border: 1px dashed fade(@odoo-brand-optional, 50%);
+                    padding: 20px;
+                    margin: 4px 0;
+                }
+            }
+        }
+    }
+}

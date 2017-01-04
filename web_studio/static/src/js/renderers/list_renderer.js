@@ -97,9 +97,6 @@ return AbstractRenderer.extend({
         this.relational_data = relational_data;
         return this._super(data);
     },
-    get_local_state: function() {
-        return {};
-    },
     _render: function() {
         var self = this;
         var $table = $('<table>').addClass('o_list_view table table-condensed table-striped');

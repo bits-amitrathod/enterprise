@@ -48,6 +48,18 @@ var GroupComponent = AbstractComponent.extend({
     ttype: 'columns',
     className: 'o_web_studio_field_columns',
 });
+var FilterComponent = AbstractComponent.extend({
+    structure: 'filter',
+    label: 'Filter',
+    ttype: 'filter',
+    className: 'o_web_studio_filter',
+});
+var FilterSeparatorComponent = AbstractComponent.extend({
+    structure: 'separator',
+    label: 'Separator',
+    ttype: 'separator',
+    className: 'o_web_studio_filter_separator',
+});
 var AbstractNewFieldComponent = AbstractComponent.extend({
     structure: 'field',
     ttype: false,
@@ -134,17 +146,22 @@ var Many2oneFieldComponent = AbstractNewFieldComponent.extend({
 });
 
 var ExistingFieldComponent = AbstractComponent.extend({
-    init: function(parent, name, field_description, ttype) {
+    init: function(parent, name, field_description, ttype, store) {
         this._super(parent);
         this.structure = 'field';
         this.label = field_description;
         this.description = name;
         this.className = 'o_web_studio_field_' + ttype;
+        this.ttype = ttype;
+        this.store = store;
     },
 
     start: function() {
         this.$el.data('new_attrs',{
             name: this.description,
+            label: this.label,
+            ttype: this.ttype,
+            store: this.store ? "true":"false",
         });
         return this._super();
     },
@@ -181,6 +198,10 @@ form_component_widget_registry
     .add('form_components', [
         NotebookComponent,
         GroupComponent,
+    ])
+    .add('search_components', [
+        FilterComponent,
+        FilterSeparatorComponent,
     ])
     .add('new_field', [
         CharFieldComponent,

@@ -277,24 +277,6 @@ var FormEditor =  FormRenderer.extend({
             this._set_style_events($el);
         }
     },
-    _set_style_events: function($el) {
-        var self = this;
-        $el.click(function() {
-            self._reset_clicked_style();
-            $(this).addClass('o_clicked');
-        })
-        .mouseover(function(event) {
-            $(this).addClass('o_web_studio_hovered');
-            event.stopPropagation();
-        })
-        .mouseout(function(event) {
-            $(this).removeClass('o_web_studio_hovered');
-            event.stopPropagation();
-        });
-    },
-    _reset_clicked_style: function() {
-        this.$('.o_clicked').removeClass('o_clicked');
-    },
     _render_hook: function(node, position, tagName) {
         var hook_id = _.uniqueId();
         this.hook_nodes[hook_id] = {
@@ -303,15 +285,15 @@ var FormEditor =  FormRenderer.extend({
         };
         return new FormEditorHook(this, position, hook_id, tagName);
     },
-    highlight_nearest_hook: function(pageX, pageY) {
+    highlight_nearest_hook: function($helper, position) {
         this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
         var $nearest_form_hook = this.$('.o_web_studio_hook')
             .touching({
-                x: pageX - this.nearest_hook_tolerance,
-                y: pageY - this.nearest_hook_tolerance,
+                x: position.pageX - this.nearest_hook_tolerance,
+                y: position.pageY - this.nearest_hook_tolerance,
                 w: this.nearest_hook_tolerance*2,
                 h: this.nearest_hook_tolerance*2})
-            .nearest({x: pageX, y: pageY}).eq(0);
+            .nearest({x: position.pageX, y: position.pageY}).eq(0);
         if ($nearest_form_hook.length) {
             $nearest_form_hook.addClass('o_web_studio_nearest_hook');
             return true;

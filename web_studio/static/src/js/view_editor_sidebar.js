@@ -11,6 +11,7 @@ var session = require("web.session");
 var Widget = require('web.Widget');
 var FieldManagerMixin = require('web_studio.FieldManagerMixin');
 var view_components = require('web_studio.view_components');
+var session = require('web.session');
 
 var form_component_widget_registry = view_components.registry;
 var _t = core._t;
@@ -45,15 +46,17 @@ return Widget.extend(FieldManagerMixin, {
         'change .o_display_page input': 'change_element',
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
+        'change .o_display_filter input': 'change_element',
         'change .o_display_chatter input[data-type="email_alias"]': 'change_email_alias',
         'click .o_web_studio_attrs': 'show_attrs_domain',
+        'focus .o_display_filter input#domain': 'open_domain_editor',
     },
 
     init: function (parent, view_type, view_attrs, model, fields, fields_not_in_view) {
         FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
         this.debug = core.debug;
-        this.mode = _.contains(['form', 'list'], view_type) ? 'new' : 'view';
+        this.mode = _.contains(['form', 'list', 'search'], view_type) ? 'new' : 'view';
         this.view_type = view_type;
         this.view_attrs = view_attrs || {};
         this.field_widgets = Object.keys(field_registry.map).sort();
@@ -74,7 +77,7 @@ return Widget.extend(FieldManagerMixin, {
         if (this.mode === 'new') {
             this._append_widgets_components();
             this.$('.o_web_studio_component').on("drag", _.throttle(function(event, ui) {
-                self.trigger_up('drag_component', {pageX: event.pageX, pageY: event.pageY, $helper: ui.helper});
+                self.trigger_up('drag_component', {position: {pageX: event.pageX, pageY: event.pageY}, $helper: ui.helper});
             }, 200));
         } else if (this.mode === 'properties') {
             this._append_widgets_many2many_groups();
@@ -147,7 +150,7 @@ return Widget.extend(FieldManagerMixin, {
         var $sidebar_content = this.$('.o_web_studio_sidebar_content');
 
         // Components
-        if (_.contains(['form'], this.view_type)) {
+        if (_.contains(['form', 'search'], this.view_type)) {
             widget_classes = form_component_widget_registry.get(this.view_type + '_components');
             form_widgets = widget_classes.map(function(FormComponent) {
                 return new FormComponent(self);
@@ -165,9 +168,19 @@ return Widget.extend(FieldManagerMixin, {
 
         // Existing Fields
         var FormComponent = form_component_widget_registry.get('existing_field');
-        form_widgets = _.map(this.fields_not_in_view, function(field) {
-            return new FormComponent(self, field.name, field.string, field.type);
-        });
+        // TODO we allow to add the same field in the search_view
+        // since it is possible to add a field in the autocompletion fields and the group_by
+        // Maybe we should make a verification if the field is in both autocompeltion fields and group_by
+        // and then not allow to add it
+        if (this.view_type === 'search') {
+            form_widgets = _.map(this.fields, function(field) {
+                return new FormComponent(self, field.key, field.string, field.type, field.store);
+            });
+        } else {
+            form_widgets = _.map(this.fields_not_in_view, function(field) {
+                return new FormComponent(self, field.name, field.string, field.type);
+            });
+        }
         $sidebar_content.append(this._render_widgets_components(form_widgets, 'Existing Fields'));
     },
     _append_widgets_many2many_groups: function() {

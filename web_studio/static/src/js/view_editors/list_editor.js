@@ -170,15 +170,15 @@ return ListRenderer.extend({
         return $footer;
 
     },
-    highlight_nearest_hook: function(pageX, pageY) {
+    highlight_nearest_hook: function($helper, position) {
         this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
         var $nearest_list_hook = this.$('.o_web_studio_hook')
             .touching({
-                x: pageX - this.nearest_hook_tolerance,
-                y: pageY - this.nearest_hook_tolerance,
+                x: position.pageX - this.nearest_hook_tolerance,
+                y: position.pageY - this.nearest_hook_tolerance,
                 w: this.nearest_hook_tolerance*2,
                 h: this.nearest_hook_tolerance*2})
-            .nearest({x: pageX, y: pageY}).eq(0);
+            .nearest({x: position.pageX, y: position.pageY}).eq(0);
         if ($nearest_list_hook.length) {
             $nearest_list_hook.closest('table')
                 .find('tr')
