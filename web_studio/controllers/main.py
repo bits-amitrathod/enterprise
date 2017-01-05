@@ -57,7 +57,7 @@ class WebStudioController(http.Controller):
         return {
             'name': _('Automated Actions'),
             'type': 'ir.actions.act_window',
-            'res_model': 'base.action.rule',
+            'res_model': 'base.automation',
             'views': [[False, 'list'], [False, 'form']],
             'target': 'current',
             'domain': [],
