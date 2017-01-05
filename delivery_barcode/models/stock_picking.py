@@ -15,5 +15,5 @@ class StockPicking(models.Model):
     def _compute_delivery_packaging(self):
         for picking in self:
             picking.delivery_packaging_ids = self.env['product.packaging'].search(
-                [('package_carrier_type', '=', self.carrier_id.delivery_type)]
+                [('package_carrier_type', '=', picking.carrier_id.delivery_type)]
             )
