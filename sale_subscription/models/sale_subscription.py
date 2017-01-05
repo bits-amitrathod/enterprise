@@ -54,17 +54,9 @@ class SaleSubscription(models.Model):
         return super(SaleSubscription, self)._track_subtype(init_values)
 
     def _compute_invoice_count(self):
-        orders = self.env['sale.order'].search_read(domain=[('subscription_id', 'in', self.ids)], fields=['name'])
-        order_names = [order['name'] for order in orders]
-        invoice_line_data = self.env['account.invoice.line'].read_group(
-            domain=[('account_analytic_id', 'in', self.mapped('analytic_account_id').ids),
-                    ('invoice_id.origin', 'in', self.mapped('code') + order_names),
-                    ('invoice_id.state', 'in', ['draft', 'open', 'paid'])],
-            fields=["account_analytic_id", "invoice_id"],
-            groupby=["account_analytic_id", "invoice_id"],
-            lazy=False)
-        for sub in self:
-            sub.invoice_count = sum(d['account_analytic_id'][0] == sub.analytic_account_id.id for d in invoice_line_data)
+        Invoice = self.env['account.invoice']
+        for subscription in self:
+            subscription.invoice_count = Invoice.search_count([('invoice_line_ids.subscription_id', '=', subscription.id)])
 
     @api.depends('recurring_invoice_line_ids', 'recurring_invoice_line_ids.quantity', 'recurring_invoice_line_ids.price_subtotal')
     def _compute_recurring_total(self):
@@ -147,19 +139,14 @@ class SaleSubscription(models.Model):
 
     @api.multi
     def action_subscription_invoice(self):
-        analytic_ids = [sub.analytic_account_id.id for sub in self]
-        orders = self.env['sale.order'].search_read(domain=[('order_line.subscription_id', 'in', self.ids)], fields=['name'])
-        order_names = [order['name'] for order in orders]
-        invoices = self.env['account.invoice'].search([('invoice_line_ids.account_analytic_id', 'in', analytic_ids),
-                                                       ('origin', 'in', self.mapped('code') + order_names)])
+        invoices = self.env['account.invoice'].search([('invoice_line_ids.subscription_id', 'in', self.ids)])
         return {
             "type": "ir.actions.act_window",
             "res_model": "account.invoice",
-            "views": [[self.env.ref('account.invoice_tree').id, "tree"],
-                      [self.env.ref('account.invoice_form').id, "form"]],
+            'view_mode': 'tree,form',
             "domain": [["id", "in", invoices.ids]],
             "context": {"create": False},
-            "name": "Invoices",
+            "name": _("Invoices"),
         }
 
     @api.model

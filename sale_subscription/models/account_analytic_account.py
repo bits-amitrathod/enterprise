@@ -35,3 +35,9 @@ class AccountAnalyticAccount(models.Model):
             result['views'] = [(False, "form")]
             result['res_id'] = subscription_ids[0]
         return result
+
+
+class AccountInvoiceLine(models.Model):
+    _inherit = "account.invoice.line"
+
+    subscription_id = fields.Many2one('sale.subscription')

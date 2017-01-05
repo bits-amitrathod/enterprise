@@ -15,4 +15,15 @@
             </xpath>
         </field>
     </record>
+
+    <record id="account_invoice_line_form_subscription_view" model="ir.ui.view">
+        <field name="name">account.invoice.line.form.inherit</field>
+        <field name="model">account.invoice.line</field>
+        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='account_id']" position="after">
+                <field name="subscription_id"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
