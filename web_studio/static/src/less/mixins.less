@@ -22,21 +22,13 @@
             color: @label-color-hover;
         }
     }
-    > .o_web_studio_checkbox_inactive {
-        .o_checkbox {
-            input {
-                cursor: not-allowed;
-            }
-            span {
-                background-image: url('/web_studio/static/src/img/ui/checkbox_indeterminate.svg');
-            }
+    .o_checkbox {
+        > input:checked + span {
+            background-image: url('/web_studio/static/src/img/ui/checkbox_active.svg');
         }
-        label {
-            cursor: not-allowed;
+        &.o_web_studio_checkbox_inactive > input + span {
+            background-image: url('/web_studio/static/src/img/ui/checkbox_indeterminate.svg');
         }
-    }
-    input:checked + span {
-        background-image: url('/web_studio/static/src/img/ui/checkbox_active.svg');
     }
 }
 

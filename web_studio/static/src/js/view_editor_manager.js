@@ -166,7 +166,7 @@ return Widget.extend({
             self.demo_data = demo_data;
             self.fields = fields;
             var fields_not_in_view = self.get_fields_not_in_view();
-            self.sidebar = new ViewEditorSidebar(self, self.view_type, self.view_attrs, self.model, fields, fields_not_in_view);
+            self.sidebar = new ViewEditorSidebar(self, self.view_type, self.view_attrs, self.model, fields, fields_not_in_view, self.fields_view.fields);
         });
     },
     start: function () {
@@ -533,7 +533,7 @@ return Widget.extend({
                 // fields and fields_view has been updated.
                 // So first we have to calculate which fields are in the view or not.
                 // Then we want to update sidebar who displays "existing fields"
-                self.sidebar.update(self.fields, self.get_fields_not_in_view(), self.fields_view.arch.attrs);
+                self.sidebar.update(self.fields, self.get_fields_not_in_view(), self.fields_view.fields, self.fields_view.arch.attrs);
             });
         });
     },

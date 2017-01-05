@@ -47,11 +47,11 @@ return Widget.extend(FieldManagerMixin, {
         'change .o_display_button input': 'change_element',
         'change .o_display_filter input': 'change_element',
         'change .o_display_chatter input[data-type="email_alias"]': 'change_email_alias',
-        'click .o_web_studio_attrs': 'show_attrs_domain',
+        'click .o_web_studio_attrs': 'edit_attrs_domain',
         'focus .o_display_filter input#domain': 'open_domain_editor',
     },
 
-    init: function (parent, view_type, view_attrs, model, fields, fields_not_in_view) {
+    init: function (parent, view_type, view_attrs, model, fields, fields_not_in_view, fields_in_view) {
         FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
         this.debug = core.debug;
@@ -65,6 +65,7 @@ return Widget.extend(FieldManagerMixin, {
         this.computed_ordered_fields();
 
         this.fields_not_in_view = fields_not_in_view;
+        this.fields_in_view = fields_in_view;
         this.show_invisible = false;
 
         this.GROUPABLE_TYPES = ['many2one', 'char', 'boolean', 'selection', 'date', 'datetime'];
@@ -114,10 +115,11 @@ return Widget.extend(FieldManagerMixin, {
         this.renderElement();
         this.$el.scrollTop(scrollTop);
     },
-    update: function(fields, fields_not_in_view, view_attrs) {
+    update: function (fields, fields_not_in_view, fields_in_view, view_attrs) {
         this.fields = fields;
         this.computed_ordered_fields();
         this.fields_not_in_view = fields_not_in_view;
+        this.fields_in_view = fields_in_view;
         this.view_attrs = view_attrs;
         this.render();
     },
@@ -245,10 +247,16 @@ return Widget.extend(FieldManagerMixin, {
         if (attribute) {
             var new_attrs = {};
             if ($input.attr('type') === 'checkbox') {
-                if ($input.is(':checked')) {
-                    new_attrs[attribute] = $input.data('leave-empty') === 'checked' ? '': 'True';
+                if (!_.contains(["invisible", "required", "readonly"], attribute)) {
+                    if ($input.is(':checked')) {
+                        new_attrs[attribute] = $input.data('leave-empty') === 'checked' ? '': 'True';
+                    } else {
+                        new_attrs[attribute] = $input.data('leave-empty') === 'unchecked' ? '': 'False';
+                    }
                 } else {
-                    new_attrs[attribute] = $input.data('leave-empty') === 'unchecked' ? '': 'False';
+                    var newModifiers = _.extend({}, this.modifiers);
+                    newModifiers[attribute] = $input.is(':checked');
+                    new_attrs = this._get_new_attributes_from_modifiers(newModifiers);
                 }
             } else {
                 new_attrs[attribute] = $input.val();
@@ -305,18 +313,31 @@ return Widget.extend(FieldManagerMixin, {
             }
         });
     },
-    show_attrs_domain: function (ev) {
+    edit_attrs_domain: function (ev) {
         ev.preventDefault();
         var modifier = ev.currentTarget.dataset.type;
 
-        new DomainSelectorDialog(this, this.model, this.modifiers[modifier], {
-            readonly: true,
+        var dialog = new DomainSelectorDialog(this, this.model, _.isArray(this.modifiers[modifier]) ? this.modifiers[modifier] : [], {
+            readonly: false,
+            fields: this.fields_in_view,
+            followRelations: false,
             debugMode: session.debug,
             $content: $(_.str.sprintf(
                 _t("<div><p>The property <strong>%s</strong> of this field will be different from one record to another depending on the following custom domain.<br/>If there is no domain, the property is applied globally to the view</p></div>"),
                 modifier
             )),
         }).open();
+        dialog.on("domain_selected", this, function (e) {
+            var newModifiers = _.extend({}, this.modifiers);
+            newModifiers[modifier] = e.data.domain;
+            var new_attrs = this._get_new_attributes_from_modifiers(newModifiers);
+            this.trigger_up('view_change', {
+                type: 'attributes',
+                structure: 'edit_attributes',
+                node: this.node,
+                new_attrs: new_attrs,
+            });
+        });
     },
     open_domain_editor: function (ev) {
         ev.preventDefault();
@@ -336,6 +357,22 @@ return Widget.extend(FieldManagerMixin, {
     domain_to_str: function (domain) {
         return domainUtils.domainToString(domain);
     },
+    _get_new_attributes_from_modifiers: function (modifiers) {
+        var newAttributes = {};
+        var attrs = [];
+        _.each(modifiers, function (value, key) {
+            if (value === true || _.isEqual(value, [])) { // modifier always applied, use modifier attribute
+                newAttributes[key] = "1";
+            } else { // modifier not applied or under certain condition, remove modifier attribute and use attrs if any
+                newAttributes[key] = "";
+                if (value !== false) {
+                    attrs.push(_.str.sprintf("\"%s\": %s", key, domainUtils.domainToString(value)));
+                }
+            }
+        });
+        newAttributes.attrs = _.str.sprintf("{%s}", attrs.join(", "));
+        return newAttributes;
+    }
 });
 
 });
