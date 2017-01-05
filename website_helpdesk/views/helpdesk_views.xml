@@ -18,18 +18,20 @@
         <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
         <field name="model">helpdesk.team</field>
         <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="description" placeholder="Description on the website page..."/>
+            </field>
             <xpath expr="//div[@id='title']" position="before">
                 <button class="oe_stat_button oe_inline pull-right" name="website_publish_button" type="object" icon="fa-globe" attrs="{'invisible': [('use_website_helpdesk_form', '=', False), ('use_website_helpdesk_forum', '=', False), ('use_website_helpdesk_slides', '=', False)]}">
                     <field name="website_published" widget="website_button"/>
                 </button>
             </xpath>
             <xpath expr="//div[@id='use_website_helpdesk_rating']" position="replace">
-                <div class="text-warning mb4 mt16" attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','!=',False)]}">
-                    Save this page to activate the feature
-                </div>
                 <div attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','=',False)]}" class="mt16">
                     View this teams ratings this page:<br/>
-                    ⇒ <field name="website_rating_url" readonly="1" class="oe_inline" widget="url"/>
+                    <a type="button" class="btn-link" target="_blank"><i class="fa fa-fw fa-arrow-right"/>
+                        <field name="website_rating_url" readonly="1" class="oe_inline" widget="url"/>
+                    </a>
                 </div>
             </xpath>
         </field>

@@ -48,6 +48,33 @@
             </field>
     </record>
 
+    <record id="helpdesk_team_action_settings" model="ir.actions.server">
+        <field name="name">Helpdesk: Teams Settings</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_team"/>
+        <field name="code">
+            action = model.action_open_helpdesk_teams()
+        </field>
+    </record>
+
+    <record id="helpdesk_team_action" model="ir.actions.act_window">
+        <field name="name">Helpdesk Teams</field>
+        <field name="res_model">helpdesk.team</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new ticket team.
+          </p><p>
+            Teams allows to organize tickets.
+          </p>
+        </field>
+    </record>
+
+    <record id="helpdesk_team_action_form" model="ir.actions.act_window">
+        <field name="name">Helpdesk Teams</field>
+        <field name="res_model">helpdesk.team</field>
+        <field name="view_mode">form</field>
+    </record>
+
     <record id="helpdesk_team_view_form" model="ir.ui.view">
         <field name="name">helpdesk.team.form</field>
         <field name="model">helpdesk.team</field>
@@ -58,28 +85,28 @@
                         <label for="name" class="oe_edit_only"/>
                         <h1 id="name"><field name="name" placeholder="Helpdesk Team..."/></h1>
                     </div>
-                    <field name="description" placeholder="Public Description..."/>
+                    <div>
+                        <button type="action" name="%(helpdesk_team_action_form)d" string="Create new Helpdesk Teams" class="btn-link" icon="fa-arrow-right"/>
+                    </div>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <h2>Productivity</h2>
                     <div class="row mt16 o_settings_container" id="productivity">
                         <div class="col-md-6 o_setting_box">
-                            <div class="o_setting_left_pane"/>
                             <div class="o_setting_right_pane">
                                 <label for="member_ids"/>
                                 <div class="text-muted">
-                                    Keep empty for everyone to see this team.
+                                    Keep empty for everyone to see this team
                                 </div>
                                 <div>
                                     <field name="member_ids" widget="many2many_tags" class="mt16"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 o_setting_box">
-                            <div class="o_setting_left_pane"/>
+                        <div class="col-md-6 o_setting_box" title="With random assignation, every user gets the same number of tickets. With balanced assignation, tickets are assigned to the user with the least amount of open tickets.">
                             <div class="o_setting_right_pane">
                                 <label for="assign_method"/>
                                 <div class="text-muted">
-                                    How to assign newly created tickets to the right person.
+                                    How to assign newly created tickets to the right person
                                 </div>
                                 <div>
                                     <field name="assign_method" class="mt16"/>
@@ -96,7 +123,7 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_alias"/>
                                 <div class="text-muted">
-                                    Incoming emails create tickets.
+                                    Incoming emails create tickets
                                 </div>
                                 <div attrs="{'invisible': [('use_alias','=',False)]}" class="mt16">
                                     <group class="oe_edit_only" attrs="{'invisible': [('alias_domain', '=', False)]}">
@@ -109,7 +136,7 @@
                                         <strong>
                                             <field name="alias_id" class="oe_read_only" required="False"/>
                                         </strong>
-                                        to create tickets.
+                                        to create tickets
                                     </p>
                                     <p attrs="{'invisible': [('alias_domain', '!=', False)]}">
                                         <a type="action" name="%(base_setup.action_general_configuration)d"><i class="fa fa-arrow-right"/> Configure domain name</a>
@@ -124,11 +151,11 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_website_helpdesk_livechat"/>
                                 <div class="text-muted">
-                                    Get in touch with you website visitors.
+                                    Get in touch with you website visitors
                                 </div>
                                 <div id="im_livechat" attrs="{'invisible': [('use_website_helpdesk_livechat','=',False)]}">
                                     <div class="text-warning mb4 mt16">
-                                        Save this page and refresh to activate the feature
+                                        Save this page and refresh to activate the feature.
                                     </div>
                                 </div>
                             </div>
@@ -142,11 +169,11 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_website_helpdesk_form"/>
                                 <div class="text-muted">
-                                    Submit tickets with an online form.
+                                    Submit tickets with an online form
                                 </div>
                                 <div id='website_form' attrs="{'invisible': [('use_website_helpdesk_form','=',False)]}">
                                     <div class="text-warning mb4 mt16">
-                                        Save this page and refresh to activate the feature
+                                        Save this page and refresh to activate the feature.
                                     </div>
                                 </div>
                             </div>
@@ -158,12 +185,12 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_api"/>
                                 <div class="text-muted">
-                                    Connect third party application and create tickets using web services.
+                                    Connect third party application and create tickets using web services
                                 </div>
                                 <div attrs="{'invisible': [('use_api','=',False)]}" class="mt16">
                                     <!-- TODO: write a dedicated doc on how to create helpdesk tickets -->
-                                    <a href="https://www.odoo.com/documentation/9.0/api_integration.html" target="_blank" class="mt16">
-                                        ⇒ View documentation
+                                    <a href="https://www.odoo.com/documentation/9.0/api_integration.html" target="_blank">
+                                        <i class="fa fa-arrow-right"></i> View documentation
                                     </a>
                                 </div>
                             </div>
@@ -178,10 +205,10 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_sla"/>
                                 <div class="text-muted">
-                                    Set up your Service Level Agreements to track performance.
+                                    Set up your Service Level Agreements to track performance
                                 </div>
-                                <div attrs="{'invisible': [('use_sla','=',False)]}">
-                                    <button name="%(helpdesk_sla_action)d" type="action" string="Configure SLA Policies" class="btn-link mt16"/>
+                                <div attrs="{'invisible': [('use_sla','=',False)]}" class="mt16">
+                                    <button name="%(helpdesk_sla_action)d" type="action" string="Configure SLA Policies" icon="fa-arrow-right" class="btn-link"/>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +219,7 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_rating"/>
                                 <div class="text-muted">
-                                    Allow your customers to easily rate your services.
+                                    Allow your customers to easily rate your services
                                 </div>
                                 <div id="use_rating" attrs="{'invisible': [('use_rating', '=', False)]}">
                                     <field name="percentage_satisfaction" invisible="1"/>
@@ -209,11 +236,11 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_website_helpdesk_rating"/>
                                 <div class="text-muted">
-                                    Publish this team's ratings on your website.
+                                    Publish this team's ratings on your website
                                 </div>
                                 <div id="use_website_helpdesk_rating" attrs="{'invisible': [('use_website_helpdesk_rating', '=', False)]}">
                                     <div class="text-warning mb4 mt16">
-                                        Save this page and refresh to activate the feature
+                                        Save this page and refresh to activate the feature.
                                     </div>
                                 </div>
                             </div>
@@ -228,11 +255,11 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_website_helpdesk_forum"/>
                                 <div class="text-muted">
-                                    Question and answer section on your website.
+                                    Question and answer section on your website
                                 </div>
                                 <div id="use_website_helpdesk_forum" attrs="{'invisible': [('use_website_helpdesk_forum', '=', False)]}">
                                     <div class="text-warning mb4 mt16">
-                                        Save this page and refresh to activate the feature
+                                        Save this page and refresh to activate the feature.
                                     </div>
                                 </div>
                             </div>
@@ -244,11 +271,11 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_website_helpdesk_slides"/>
                                 <div class="text-muted">
-                                    Share presentation and videos, and organize into courses.
+                                    Share presentation and videos, and organize into courses
                                 </div>
                                 <div id="use_website_helpdesk_slides" attrs="{'invisible': [('use_website_helpdesk_slides', '=', False)]}">
                                     <div class="text-warning mb4 mt16" id="o_slide_option">
-                                        Save this page and refresh to activate the feature
+                                        Save this page and refresh to activate the feature.
                                     </div>
                                 </div>
                             </div>
@@ -262,23 +289,8 @@
         </field>
     </record>
 
-    <record id="helpdesk_team_action" model="ir.actions.act_window">
-        <field name="name">Helpdesk Teams</field>
-        <field name="res_model">helpdesk.team</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="context">{}</field>
-        <field name="help" type="html">
-          <p class="oe_view_nocontent_create">
-            Click to create a new ticket team.
-          </p><p>
-            Teams allows to organize tickets.
-          </p>
-        </field>
-    </record>
-
-    <menuitem id="helpdesk_team_menu" action="helpdesk_team_action"
-        sequence="1" parent="helpdesk.helpdesk_menu_config"
+    <menuitem id="helpdesk_team_menu" name="Settings" action="helpdesk_team_action_settings"
+        sequence="0" parent="helpdesk.helpdesk_menu_config"
         groups="helpdesk.group_helpdesk_manager"/>
 
     <record id="helpdesk_team_view_kanban" model="ir.ui.view" >

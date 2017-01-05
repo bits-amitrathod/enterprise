@@ -7,12 +7,11 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@id='website_form']" position="replace">
                 <div id='website_form' attrs="{'invisible': [('use_website_helpdesk_form','=',False)]}">
-                    <div class="text-warning mb4 mt16" attrs="{'invisible': ['|', ('use_website_helpdesk_form', '=', False), ('feature_form_url','!=',False)]}">
-                        Save this page to activate the feature
-                    </div>
                     <div attrs="{'invisible': ['|', ('use_website_helpdesk_form', '=', False), ('feature_form_url','=',False)]}" class="mt16">
                         Submit an issue using this page:<br/>
-                        ⇒ <field name="feature_form_url" readonly="1" class="oe_inline" widget="url"/>
+                        <a type="button" class="btn-link" target="_blank"><i class="fa fa-fw fa-arrow-right"/>
+                            <field name="feature_form_url" readonly="1" class="oe_inline" widget="url"/>
+                        </a>
                     </div>
                 </div>
             </xpath>

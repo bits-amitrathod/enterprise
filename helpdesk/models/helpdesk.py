@@ -125,6 +125,24 @@ class HelpdeskTeam(models.Model):
         stages.unlink()
         return super(HelpdeskTeam, self).unlink()
 
+    @api.model
+    def action_open_helpdesk_teams(self):
+        team_count = self.search_count([])
+        values = {
+            'name': _('Helpdesk Teams'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'helpdesk.team',
+        }
+        if team_count <= 1:
+            values.update({
+                'view_mode': 'form',
+                'res_id': self.search([], limit=1).id,
+                'flags': {'initial_mode': 'edit'}
+            })
+        return values
+
     @api.multi
     def _check_sla_group(self):
         for team in self:
