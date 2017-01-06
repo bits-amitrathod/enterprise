@@ -24,7 +24,7 @@
                     t-att-rfc="supplier.vat"
                     t-att-nombre="supplier.name">
                     <cfdi:DomicilioFiscal
-                        t-att-calle="supplier.street"
+                        t-att-calle="supplier.street_name"
                         t-att-noExterior="supplier.street_number"
                         t-att-noInterior="supplier.street_number2"
                         t-att-colonia="supplier.l10n_mx_edi_colony"
@@ -37,7 +37,7 @@
                         Regimen="fiscal_position"/>
                     <t t-if="issued">
                         <cfdi:ExpedidoEn
-                        t-att-calle="issued.street"
+                        t-att-calle="issued.street_name"
                         t-att-noExterior="issued.street_number"
                         t-att-noInterior="issued.street_number2"
                         t-att-colonia="issued.l10n_mx_edi_colony"
@@ -53,7 +53,7 @@
                     t-att-nombre="customer.name">
                     <t t-if="show_domicile(customer)">
                     <cfdi:Domicilio
-                        t-att-calle="customer.street"
+                        t-att-calle="customer.street_name"
                         t-att-noExterior="customer.street_number"
                         t-att-noInterior="customer.street_number2"
                         t-att-colonia="customer.l10n_mx_edi_colony"

@@ -559,7 +559,7 @@ class AccountInvoice(models.Model):
             'customer': self.partner_id.commercial_partner_id,
             'number': self.number,
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
-            'payment_method': self.l10n_mx_edi_payment_method_id.name,
+            'payment_method': self.l10n_mx_edi_payment_method_id.code,
 
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
             'amount_untaxed': '%0.*f' % (precision_digits, self.amount_untaxed),
@@ -572,7 +572,7 @@ class AccountInvoice(models.Model):
         if len(self.payment_term_id.line_ids) > 1:
             values['payment_policy'] = 'Pago en parcialidades'
         else:
-            values['payment_policy'] = 'Pago en una sola exhibicion'
+            values['payment_policy'] = 'Pago en una sola exhibición'
 
         values['domicile'] = '%s %s, %s' % (
                 self.company_id.city,
