@@ -143,24 +143,24 @@ class MrpEco(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char('Reference', copy=False, required=True)
-    user_id = fields.Many2one('res.users', 'Responsible', default=lambda self: self.env.user)
+    user_id = fields.Many2one('res.users', 'Responsible', default=lambda self: self.env.user, track_visibility='onchange')
     type_id = fields.Many2one('mrp.eco.type', 'Type', required=True)
     stage_id = fields.Many2one(
         'mrp.eco.stage', 'Stage', copy=False, domain="[('type_id', '=', type_id)]",
-        group_expand='_read_group_stage_ids',
+        group_expand='_read_group_stage_ids', track_visibility='onchange',
         default=lambda self: self.env['mrp.eco.stage'].search([('type_id', '=', self._context.get('default_type_id'))], limit=1))
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.user.company_id)
     tag_ids = fields.Many2many('mrp.eco.tag', string='Tags')
     priority = fields.Selection([
         ('0', 'Normal'),
-        ('1', 'High')], string='Priority',
+        ('1', 'High')], string='Priority', track_visibility='onchange',
         index=True)
     note = fields.Text('Note')
     effectivity = fields.Selection([
         ('asap', 'As soon as possible'),
         ('date', 'At Date')], string='Effectivity',  # Is this English ?
         default='asap', required=True)  # TDE: usefull ?
-    effectivity_date = fields.Datetime('Effectivity Date')
+    effectivity_date = fields.Datetime('Effectivity Date', track_visibility='onchange')
     approval_ids = fields.One2many('mrp.eco.approval', 'eco_id', 'Approvals')
 
     state = fields.Selection([
