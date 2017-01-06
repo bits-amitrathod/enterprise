@@ -22,7 +22,7 @@
                 <button class="oe_stat_button" name="%(mrp_eco_action_product_tmpl)d" type="action" icon="fa-wrench" attrs="{'invisible': [('eco_count', '=', 0)]}" groups="mrp_plm.group_plm_user">
                     <field string="ECOs" name="eco_count" widget="statinfo" />
                 </button>
-                <button class="oe_stat_button" name="action_see_attachments" type="object" icon="fa-book">
+                <button class="oe_stat_button" name="action_see_attachments" attrs="{'invisible': [('sale_ok','=',False)]}" type="object" icon="fa-book">
                     <field string="Attachments" name="template_attachment_count" widget="statinfo"/>
                 </button>
             </button>

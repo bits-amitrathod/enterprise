@@ -16,11 +16,15 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='sale']" position="inside">
-                <group>
+            <label for="sale_ok" position="after">
+                <div>
                     <field name="recurring_invoice"/>
-                </group>
-            </xpath>
+                    <label for="recurring_invoice"/>
+                </div>
+            </label>
+            <page name="sales" position="attributes">
+                <attribute name="attrs">{'invisible': [('sale_ok', '=', False), ('recurring_invoice', '=', False)]}</attribute>
+            </page>
         </field>
     </record>
 
