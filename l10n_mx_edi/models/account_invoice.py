@@ -535,7 +535,6 @@ class AccountInvoice(models.Model):
                 self.company_id.country_id.name
             )
 
-        values['rfc'] = lambda p: p.vat[2:].replace(' ', '')
         values['subtotal_wo_discount'] = lambda l: l.quantity * l.price_unit
 
         values['taxes'] = self._l10n_mx_edi_create_taxes_cfdi_values()

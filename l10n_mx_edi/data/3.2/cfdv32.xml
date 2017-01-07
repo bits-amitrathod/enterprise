@@ -21,7 +21,7 @@
                 t-att-NumCtaPago="account_4num"
                 t-att-LugarExpedicion="domicile">
                 <cfdi:Emisor
-                    t-att-rfc="rfc(supplier)"
+                    t-att-rfc="supplier.vat"
                     t-att-nombre="supplier.name">
                     <cfdi:DomicilioFiscal
                         t-att-calle="supplier.street"
@@ -49,7 +49,7 @@
                     </t>
                 </cfdi:Emisor>
                 <cfdi:Receptor
-                    t-att-rfc="rfc(customer)"
+                    t-att-rfc="customer.vat"
                     t-att-nombre="customer.name">
                     <cfdi:Domicilio
                         t-att-calle="customer.street"
