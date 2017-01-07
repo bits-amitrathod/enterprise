@@ -560,12 +560,17 @@ class AccountInvoice(models.Model):
             'number': self.number,
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
-
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
             'amount_untaxed': '%0.*f' % (precision_digits, self.amount_untaxed),
             'get_customer_rfc': self.get_customer_rfc,
             'show_domicile': self.show_domicile,
         }
+
+        currency_model_ctx = self.env['res.currency'].with_context(
+            company_id=self.company_id.id, date=self.date_invoice)
+        # NOTE: We are not supporting company.currency != MXN
+        values['rate'] = currency_model_ctx._get_conversion_rate(
+            self.currency_id, self.company_id.currency_id)
 
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
 

@@ -9,6 +9,7 @@
                 version="3.2"
                 sello=""
                 t-att-folio="number"
+                t-att-TipoCambio="rate"
                 t-att-fecha="date"
                 t-att-certificado="certificate"
                 t-att-formaDePago="payment_policy"
@@ -33,8 +34,7 @@
                         t-att-estado="supplier.state_id.name"
                         t-att-pais="supplier.country_id.name"
                         t-att-codigoPostal="supplier.zip"/>
-                    <cfdi:RegimenFiscal
-                        Regimen="fiscal_position"/>
+                    <cfdi:RegimenFiscal t-att-Regimen="fiscal_position"/>
                     <t t-if="issued">
                         <cfdi:ExpedidoEn
                         t-att-calle="issued.street_name"
