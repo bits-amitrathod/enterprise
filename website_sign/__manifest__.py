@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Digital Signatures',
+    'name': 'Sign',
     'version': '1.0',
     'category': 'Document Management',
     'summary': "Send documents to sign online, receive and archive filled copies (esign)",
