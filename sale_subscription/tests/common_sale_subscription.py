@@ -12,16 +12,49 @@ class TestSubscriptionCommon(AccountingTestCase):
         Product = self.env['product.product']
         ProductTmpl = self.env['product.template']
 
+        # Test Subscription Template
+        self.subscription_tmpl = SubTemplate.create({
+            'name': 'TestSubscriptionTemplate',
+        })
+        self.subscription_tmpl_2 = SubTemplate.create({
+            'name': 'TestSubscriptionTemplate2',
+        })
+
         # Test products
         self.product_tmpl = ProductTmpl.create({
             'name': 'TestProduct',
             'type': 'service',
             'recurring_invoice': True,
+            'subscription_template_id': self.subscription_tmpl.id,
             'uom_id': self.ref('product.product_uom_unit'),
         })
         self.product = Product.create({
             'product_tmpl_id': self.product_tmpl.id,
             'price': 50.0
+        })
+
+        self.product_tmpl_2 = ProductTmpl.create({
+            'name': 'TestProduct2',
+            'type': 'service',
+            'recurring_invoice': True,
+            'subscription_template_id': self.subscription_tmpl_2.id,
+            'uom_id': self.ref('product.product_uom_unit'),
+        })
+        self.product2 = Product.create({
+            'product_tmpl_id': self.product_tmpl_2.id,
+            'price': 20.0
+        })
+
+        self.product_tmpl_3 = ProductTmpl.create({
+            'name': 'TestProduct3',
+            'type': 'service',
+            'recurring_invoice': True,
+            'subscription_template_id': self.subscription_tmpl_2.id,
+            'uom_id': self.ref('product.product_uom_unit'),
+        })
+        self.product3 = Product.create({
+            'product_tmpl_id': self.product_tmpl_3.id,
+            'price': 15.0
         })
 
         # Test user
@@ -35,10 +68,6 @@ class TestSubscriptionCommon(AccountingTestCase):
         })
 
         # Test Subscription
-        self.subscription_tmpl = SubTemplate.create({
-            'name': 'TestSubscriptionTemplate',
-            'subscription_template_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'uom_id': self.product_tmpl.uom_id.id})],
-        })
         self.subscription = Subscription.create({
             'name': 'TestSubscription',
             'state': 'open',
@@ -48,10 +77,24 @@ class TestSubscriptionCommon(AccountingTestCase):
         })
         self.sale_order = SaleOrder.create({
             'name': 'TestSO',
-            'project_id': self.subscription.analytic_account_id.id,
             'partner_id': self.user_portal.partner_id.id,
             'partner_invoice_id': self.user_portal.partner_id.id,
             'partner_shipping_id': self.user_portal.partner_id.id,
-            'order_line': [(0, 0, {'name': self.product.name, 'product_id': self.product.id, 'product_uom_qty': 2, 'product_uom': self.product.uom_id.id, 'price_unit': self.product.list_price})],
+            'order_line': [(0, 0, {'name': self.product.name, 'product_id': self.product.id, 'subscription_id': self.subscription.id,'product_uom_qty': 2, 'product_uom': self.product.uom_id.id, 'price_unit': self.product.list_price})],
             'pricelist_id': self.ref('product.list0'),
+        })
+        self.sale_order_2 = SaleOrder.create({
+            'name': 'TestSO2',
+            'partner_id': self.user_portal.partner_id.id,
+            'order_line': [(0, 0, {'name': self.product.name, 'product_id': self.product.id, 'product_uom_qty': 1.0, 'product_uom': self.product.uom_id.id, 'price_unit': self.product.list_price})]
+        })
+        self.sale_order_3 = SaleOrder.create({
+            'name': 'TestSO3',
+            'partner_id': self.user_portal.partner_id.id,
+            'order_line': [(0, 0, {'name': self.product.name, 'product_id': self.product.id, 'product_uom_qty': 1.0, 'product_uom': self.product.uom_id.id, 'price_unit': self.product.list_price, }), (0, 0, {'name': self.product2.name, 'product_id': self.product2.id, 'product_uom_qty': 1.0, 'product_uom': self.product2.uom_id.id, 'price_unit': self.product2.list_price})],
+        })
+        self.sale_order_4 = SaleOrder.create({
+            'name': 'TestSO4',
+            'partner_id': self.user_portal.partner_id.id,
+            'order_line': [(0, 0, {'name': self.product2.name, 'product_id': self.product2.id, 'product_uom_qty': 1.0, 'product_uom': self.product2.uom_id.id, 'price_unit': self.product2.list_price}), (0, 0, {'name': self.product3.name, 'product_id': self.product3.id, 'product_uom_qty': 1.0, 'product_uom': self.product3.uom_id.id, 'price_unit': self.product3.list_price})],
         })

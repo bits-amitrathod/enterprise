@@ -402,7 +402,7 @@ class SaleSusbcriptionOption(models.Model):
     @api.depends('portal_access')
     def _compute_is_authorized(self):
         for option in self:
-            option.is_authorized = bool(self.env['sale.subscription'].search_count([('template_id', '=', option.analytic_account_id.id)]))
+            option.is_authorized = bool(self.env['sale.subscription'].search_count([('template_id', '=', option.subscription_template_id.id)]))
 
     def _search_is_authorized(self, operator, value):
         if operator not in ('=', '!=', '<>'):

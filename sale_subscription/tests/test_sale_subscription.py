@@ -23,7 +23,7 @@ class TestSubscription(TestSubscriptionCommon):
                              })
         temp.update({'template_id': self.subscription_tmpl.id})
         temp.on_change_template()
-        self.assertTrue(temp.recurring_invoice_line_ids.name, 'sale_subscription: recurring_invoice_line_ids not copied on new cached sale.subscription record')
+        self.assertTrue(temp.mapped('recurring_invoice_line_ids').mapped('name'), 'sale_subscription: recurring_invoice_line_ids not copied on new cached sale.subscription record')
 
     @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
     def test_sale_order(self):
@@ -33,6 +33,23 @@ class TestSubscription(TestSubscriptionCommon):
         self.assertEqual(self.sale_order.state, 'done', 'sale_subscription: so state should be after confirmation done when there is a subscription')
         self.assertEqual(self.sale_order.subscription_management, 'upsell', 'sale_subscription: so should be set to "upsell" if not specified otherwise')
 
+    def test_sub_creation(self):
+        """ Test multiple subscription creation from single SO"""
+        # Test subscription creation on SO confirm
+        self.sale_order_2.action_confirm()
+        self.assertEqual(len(self.sale_order_2.order_line.mapped('subscription_id')), 1, 'sale_subscription: subscription should be created on SO confirmation')
+        self.assertEqual(self.sale_order_2.subscription_management, 'create', 'sale_subscription: subscription creation should set the SO to "create"')
+
+        # Two product with different subscription template
+        self.sale_order_3.action_confirm()
+        self.assertEqual(len(self.sale_order_3.order_line.mapped('subscription_id')), 2, 'sale_subscription: Two different subscription should be created on SO confirmation')
+        self.assertEqual(self.sale_order_3.subscription_management, 'create', 'sale_subscription: subscription creation should set the SO to "create"')
+
+        # Two product with same subscription template
+        self.sale_order_4.action_confirm()
+        self.assertEqual(len(self.sale_order_4.order_line.mapped('subscription_id')), 1, 'sale_subscription: One subscription should be created on SO confirmation')
+        self.assertEqual(self.sale_order_4.subscription_management, 'create', 'sale_subscription: subscription creation should set the SO to "create"')
+
     def test_renewal(self):
         """ Test subscription renewal """
         res = self.subscription.prepare_renewal_order()
@@ -40,18 +57,10 @@ class TestSubscription(TestSubscriptionCommon):
         renewal_so = self.env['sale.order'].browse(renewal_so_id)
         self.assertTrue(renewal_so.subscription_management == 'renew', 'sale_subscription: renewal quotation generation is wrong')
         self.subscription.write({'recurring_invoice_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'price_unit': 50, 'uom_id': self.product.uom_id.id})]})
-        renewal_so.write({'order_line': [(0, 0, {'product_id': self.product.id, 'name': 'TestRenewalLine', 'product_uom': self.product.uom_id.id})]})
+        renewal_so.write({'order_line': [(0, 0, {'product_id': self.product.id, 'subscription_id': self.subscription.id, 'name': 'TestRenewalLine', 'product_uom': self.product.uom_id.id})]})
         renewal_so.action_confirm()
-        lines = [line.name for line in self.subscription.recurring_invoice_line_ids]
+        lines = [line.name for line in self.subscription.mapped('recurring_invoice_line_ids')]
         self.assertTrue('TestRecurringLine' not in lines, 'sale_subscription: old line still present after renewal quotation confirmation')
         self.assertTrue('TestRenewalLine' in lines, 'sale_subscription: new line not present after renewal quotation confirmation')
         self.assertEqual(renewal_so.state, 'done', 'sale_subscription: so state should be after confirmation done when there is a subscription')
         self.assertEqual(renewal_so.subscription_management, 'renew', 'sale_subscription: so should be set to "renew" in the renewal process')
-
-    def test_so_search(self):
-        """ Test SO search overrides """
-        SaleOrder = self.env['sale.order']
-        self.assertNotIn(SaleOrder.search([('subscription_id', '=', False)]), self.sale_order)
-        self.assertIn(self.sale_order, SaleOrder.search([('subscription_id', '!=', False)]))
-        self.assertEqual(SaleOrder.search([('subscription_id', 'ilike', self.subscription.code)]), self.sale_order)
-        self.assertEqual(SaleOrder.search([('subscription_id', '=', self.subscription.id)]), self.sale_order)
