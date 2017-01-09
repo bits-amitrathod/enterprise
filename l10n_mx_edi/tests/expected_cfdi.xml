@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd"
@@ -9,22 +9,20 @@
     noCertificado="20001000000200001437"
     sello=""
     fecha=""
-    folio=""
-    formaDePago="Pago en una sola exhibici&#243;n"
+    folio="999"
+    formaDePago="Pago en una sola exhibición"
     metodoDePago="01"
-    serie="MX-INV"
     tipoDeComprobante="ingreso"
     Moneda="USD"
-    TipoCambio="1.0"
-    descuento="0.0"
+    TipoCambio="21.0"
     subTotal="450.00"
     total="477.00">
     <cfdi:Emisor nombre="YourCompany" rfc="AAA010101AAA">
         <cfdi:RegimenFiscal Regimen="Personas morales del r&#233;gimen general"/>
         <cfdi:DomicilioFiscal
-            calle="Company Street"
+            calle="Company Street Juan &amp; José &amp; &quot;Niño&quot;"
             noExterior="Company Internal Number"
-            noInterior="Company Internal Number 2"
+            noInterior="Company Internal Number # 2"
             colonia="Company Colony"
             localidad="Company Locality"
             municipio="Company City"
@@ -32,17 +30,17 @@
             pais="Mexico"
             codigoPostal="37200"/>
         <cfdi:ExpedidoEn
-            calle="Tu Calle"
-            noExterior="Tu num exterior"
-            noInterior="Tu num interior"
-            colonia="Tu Colonia"
-            localidad="Tu localidad"
-            municipio="Ciudad Obreg&#243;n"
-            estado="Sonora"
+            calle="Company Street Juan &amp; José &amp; &quot;Niño&quot;"
+            noExterior="Company Internal Number"
+            noInterior="Company Internal Number # 2"
+            colonia="Company Colony"
+            localidad="Company Locality"
+            municipio="Company City"
+            estado="Jalisco"
             pais="Mexico"
-            codigoPostal="10000"/>
+            codigoPostal="37200"/>
     </cfdi:Emisor>
-    <cfdi:Receptor nombre="Agrolait" rfc="XXX010101XXX">
+    <cfdi:Receptor nombre="Agrolait" rfc="XEXX010101000">
         <cfdi:Domicilio
             calle="rue de Namur"
             noExterior="69"
@@ -70,10 +68,6 @@
                 importe="72.0"
                 impuesto="IVA"
                 tasa="16.0"/>
-            <cfdi:Traslado
-                importe="0.0"
-                impuesto="IVA"
-                tasa="0.0"/>
         </cfdi:Traslados>
     </cfdi:Impuestos>
     <cfdi:Complemento>
