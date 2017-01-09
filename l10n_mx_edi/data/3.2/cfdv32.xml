@@ -49,8 +49,9 @@
                     </t>
                 </cfdi:Emisor>
                 <cfdi:Receptor
-                    t-att-rfc="customer.vat"
+                    t-att-rfc="get_customer_rfc(customer)"
                     t-att-nombre="customer.name">
+                    <t t-if="show_domicile(customer)">
                     <cfdi:Domicilio
                         t-att-calle="customer.street"
                         t-att-noExterior="customer.street_number"
@@ -61,6 +62,7 @@
                         t-att-estado="customer.state_id.name"
                         t-att-pais="customer.country_id.name"
                         t-att-codigoPostal="customer.zip"/>
+                    </t>
                 </cfdi:Receptor>
                 <cfdi:Conceptos>
                     <t t-foreach="record.invoice_line_ids" t-as="line">

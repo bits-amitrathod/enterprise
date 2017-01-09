@@ -502,6 +502,49 @@ class AccountInvoice(models.Model):
                 values['withholding'].append(tax_dict)
         return values
 
+    @api.model
+    def get_customer_rfc(self, customer):
+        """In Mexico depending of some cases the vat (rfc) is not mandatory to be recorded in customers, only for those
+        cases instead try to force the record values and make documentation, given a customer the system will propose
+        properly a vat (rfc) in order to generate properly the xml following this law:
+
+        http://www.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/cfdi/PyRFactElect.pdf.
+
+        :param customer:
+        :return:
+        """
+        rfc = customer.vat
+
+        if (customer.country_id == self.env.ref('base.mx') or not customer.country_id) and not customer.vat:
+            # Following Question 4 in legal Document.
+            rfc = 'XAXX010101000'
+
+        if customer.country_id and customer.country_id != self.env.ref('base.mx'):
+            # Following Question 5 in legal Document.
+            rfc = 'XEXX010101000'
+
+        # otherwise it returns what customer says and if False xml validation will be solving other cases.
+        return rfc
+
+    @api.model
+    def show_domicile(self, customer):
+        """Tell if the Domicile is necessary to be shown in a customer address to avoid force the user load this
+        optional values in a customer, if at least one of the necessary fields is loaded then simply show it.
+        """
+        address_fields = ['street_name',
+                          'street_number',
+                          'street_number2',
+                          'l10n_mx_edi_colony',
+                          'l10n_mx_edi_locality',
+                          'city',
+                          'state_id',
+                          'country_id',
+                          'zip']
+        for field in address_fields:
+            if getattr(customer, field):
+                return True
+        return False
+
     @api.multi
     def _l10n_mx_edi_create_cfdi_values(self):
         '''Create the values to fill the CFDI template.
@@ -520,6 +563,8 @@ class AccountInvoice(models.Model):
 
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
             'amount_untaxed': '%0.*f' % (precision_digits, self.amount_untaxed),
+            'get_customer_rfc': self.get_customer_rfc,
+            'show_domicile': self.show_domicile,
         }
 
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
