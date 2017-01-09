@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.tools.xml_utils import check_with_xsd
-from odoo.tools.misc import file_open
-
 import base64
-
-from lxml.objectify import fromstring
-
-from lxml import etree
-from suds.client import Client
 from itertools import groupby
 
-from . import certificate
+from lxml import etree
+from lxml.objectify import fromstring
+from suds.client import Client
 
+from odoo import _, api, fields, models
+from odoo.tools.misc import file_open
+from odoo.tools.xml_utils import check_with_xsd
+
+from . import certificate
 
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
 CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
@@ -26,9 +24,10 @@ CFDI_SAT_QR_STATE = {
     'Vigente': 'valid',
 }
 
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # Helpers
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+
 
 def create_list_html(array):
     '''Convert an array of string to a html list
@@ -39,6 +38,7 @@ def create_list_html(array):
     for item in array:
         msg += '<li>' + item + '</li>'
     return '<ul>' + msg + '</ul>'
+
 
 class AccountInvoice(models.Model):
     _name = 'account.invoice'
@@ -103,9 +103,9 @@ class AccountInvoice(models.Model):
             self.l10n_mx_edi_partner_bank_id = self.commercial_partner_id.bank_ids[0].id
         return res
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # PAC related methods
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     @api.model
     def l10n_mx_edi_get_service_client(self, service_type, company_id=None):
@@ -171,12 +171,12 @@ class AccountInvoice(models.Model):
     @api.multi
     def _l10n_mx_edi_get_cfdi_values(self):
         '''Create values that will be used as parameters to request the PAC sign/cancel services.
-        These values may be the 'uuid', 'supplier_rfc', 'customer_rfc', 'total', 'certificate_id', 'cfdi' 
+        These values may be the 'uuid', 'supplier_rfc', 'customer_rfc', 'total', 'certificate_id', 'cfdi'
         '''
         self.ensure_one()
         values = {}
         domain = [
-            ('res_id','=', self.id),
+            ('res_id', '=', self.id),
             ('res_model', '=', self._name),
             ('name', '=', self.l10n_mx_edi_cfdi_name)]
         attachment_id = self.env['ir.attachment'].search(domain, limit=1)
@@ -248,7 +248,7 @@ class AccountInvoice(models.Model):
         if xml_signed:
             # Update the content of the attachment
             domain = [
-                ('res_id','=', self.id),
+                ('res_id', '=', self.id),
                 ('res_model', '=', self._name),
                 ('name', '=', self.l10n_mx_edi_cfdi_name)]
             attachment_id = self.env['ir.attachment'].search(domain, limit=1)
@@ -327,9 +327,9 @@ class AccountInvoice(models.Model):
             ('id', 'in', self.ids)])
         records._l10n_mx_edi_call_service('cancel')
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # PAC service methods
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     @api.model
     def _l10n_mx_edi_solfact_infos(self, company_id, service_type):
@@ -475,9 +475,9 @@ class AccountInvoice(models.Model):
         msg = code != 201 and code != 202 and "Cancelling get an error"
         self._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Account invoice methods
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     @api.multi
     def _l10n_mx_edi_create_taxes_cfdi_values(self):
@@ -580,10 +580,10 @@ class AccountInvoice(models.Model):
             values['payment_policy'] = 'Pago en una sola exhibición'
 
         values['domicile'] = '%s %s, %s' % (
-                self.company_id.city,
-                self.company_id.state_id.name,
-                self.company_id.country_id.name
-            )
+            self.company_id.city,
+            self.company_id.state_id.name,
+            self.company_id.country_id.name,
+        )
 
         values['subtotal_wo_discount'] = lambda l: l.quantity * l.price_unit
 
@@ -744,7 +744,6 @@ class AccountInvoice(models.Model):
         if not attachment:
             return False
         return base64.decodestring(attachment.datas)
-
 
     @staticmethod
     def _l10n_mx_edi_get_xml_tfd(xml):

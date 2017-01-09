@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
-
-import logging
 import base64
-import tempfile
+import logging
 import os
 import ssl
-
+import tempfile
 from contextlib import closing
+from datetime import datetime
+
 from OpenSSL import crypto
 from pytz import timezone
-from datetime import datetime
+
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
@@ -20,12 +20,14 @@ _logger = logging.getLogger(__name__)
 CER_TO_PEM_CMD = 'openssl x509 -in %s -inform der -outform pem -out %s'
 KEY_TO_PEM_CMD = 'openssl pkcs8 -in %s -inform der -outform pem -out %s -passin file:%s'
 
+
 def unlink_temporary_files(temporary_files):
     for temporary_file in temporary_files:
         try:
             os.unlink(temporary_file)
         except (OSError, IOError):
-            _logger.error('Error when trying to remove file %s' % temporary_file)
+            _logger.error('Error when trying to remove file %s', temporary_file)
+
 
 def convert_cer_to_pem(cer):
     cer_file_fd, cer_file_path = tempfile.mkstemp(suffix='.cer', prefix='edi.mx.tmp.')
@@ -39,6 +41,7 @@ def convert_cer_to_pem(cer):
 
     unlink_temporary_files([cer_file_path, cerpem_file_path])
     return cer_pem
+
 
 def convert_key_cer_to_pem(key, password):
     key_file_fd, key_file_path = tempfile.mkstemp(suffix='.key', prefix='edi.mx.tmp.')
@@ -55,6 +58,7 @@ def convert_key_cer_to_pem(key, password):
 
     unlink_temporary_files([key_file_path, keypem_file_path, pwd_file_path])
     return key_pem
+
 
 def str_to_datetime(dt_str, tz=timezone('America/Mexico_City')):
     return tz.localize(fields.Datetime.from_string(dt_str))
@@ -96,7 +100,7 @@ class Certificate(models.Model):
 
     @api.multi
     def get_data(self):
-        '''Return the content (b64 encoded) and the certificate decrypted 
+        '''Return the content (b64 encoded) and the certificate decrypted
         '''
         self.ensure_one()
         cer = base64.decodestring(self.content)
@@ -167,6 +171,6 @@ class Certificate(models.Model):
             try:
                 key = base64.decodestring(record.key)
                 key_pem = convert_key_cer_to_pem(key, record.password)
-                private_key = crypto.load_privatekey(crypto.FILETYPE_PEM, key_pem)
+                crypto.load_privatekey(crypto.FILETYPE_PEM, key_pem)
             except Exception as e:
                 raise ValidationError(_('The certificate key and/or password is/are invalid.'))
