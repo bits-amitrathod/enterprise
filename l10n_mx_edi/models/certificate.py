@@ -7,7 +7,6 @@ import logging
 import base64
 import tempfile
 import os
-import pytz
 import ssl
 
 from contextlib import closing
@@ -111,11 +110,8 @@ class Certificate(models.Model):
     def get_mx_current_datetime(self):
         '''Get the current datetime with the Mexican timezone.
         '''
-        default_tz = self._context.get('tz')
-        default_tz = timezone(default_tz) if default_tz else pytz.UTC
         mexican_tz = timezone('America/Mexico_City')
-        current_dt = default_tz.localize(datetime.now())
-        mexican_dt = current_dt.astimezone(mexican_tz)
+        mexican_dt = datetime.now(mexican_tz)
         return mexican_dt
 
     @api.multi
