@@ -6,6 +6,8 @@ from odoo.tools.misc import file_open
 
 import base64
 
+from lxml.objectify import fromstring
+
 from lxml import etree
 from suds.client import Client
 from itertools import groupby
@@ -16,6 +18,13 @@ from . import certificate
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
 CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
 CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal_3_2.xslt'
+# Mapped from original SAT state to l10n_mx_edi_sat_status selection value
+# https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl
+CFDI_SAT_QR_STATE = {
+    'No Encontrado': 'not_found',
+    'Cancelado': 'cancelled',
+    'Vigente': 'valid',
+}
 
 #---------------------------------------------------------------------------
 # Helpers
@@ -49,15 +58,18 @@ class AccountInvoice(models.Model):
         copy=False)
     l10n_mx_edi_sat_status = fields.Selection(
         selection=[
-            ('undefined', 'Undefined'),
-            ('not_available', 'Not available'),
-            ('available', 'Available')
+            ('none', 'State not defined'),
+            ('undefined', 'Not Synced Yet'),
+            ('not_found', 'Not Found'),
+            ('cancelled', 'Cancelled'),
+            ('valid', 'Valid'),
         ],
         string='SAT status',
         help='Refers to the status of the invoice inside the SAT system.',
         readonly=True,
         copy=False,
         required=True,
+        track_visibility='onchange',
         default='undefined')
     l10n_mx_edi_cfdi_name = fields.Char(
         string='CFDI name',
@@ -306,7 +318,7 @@ class AccountInvoice(models.Model):
         for record in records:
             if record.l10n_mx_edi_pac_status in ['to_sign', 'retry']:
                 record.l10n_mx_edi_pac_status = 'cancelled'
-                record.message_post(body=_('The cancel service has been called with success') % 'cancel', 
+                record.message_post(body=_('The cancel service has been called with success'),
                     subtype='account.mt_invoice_validated')
             else:
                 record.l10n_mx_edi_pac_status = 'to_cancel'
@@ -673,42 +685,70 @@ class AccountInvoice(models.Model):
                 record._l10n_mx_edi_retry()
 
     @api.multi
+    def l10n_mx_edi_xml_signed(self):
+        domain = [
+            ('res_id', '=', self.id),
+            ('res_model', '=', self._name),
+            ('name', '=', self.l10n_mx_edi_cfdi_name)]
+        # TODO: this is necessary to make it a little bit more complex when workflow open-cancel-open comes in.
+        attachment = self.env['ir.attachment'].search(domain, limit=1)
+        if not attachment:
+            return False
+        return base64.decodestring(attachment.datas)
+
+
+    @staticmethod
+    def _l10n_mx_edi_get_xml_tfd(xml):
+        """Get "timbre fiscal digital (tfd)" node and get value from a xml objectify
+        returns tfd lxml node.
+        """
+        attribute = 'tfd:TimbreFiscalDigital[1]'
+        namespace = {'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital'}
+        node = xml.Complemento.xpath(attribute, namespaces=namespace)
+        return node[0] if node else None
+
+    @staticmethod
+    def _l10n_mx_edi_validate_xml_sat(emitter, receiver, amount, uuid):
+        """Validate a given set of parameters which are frequently inside an Valid (or cancelled) CFDI document in the
+        SAT service for mexican CFDI documents.
+
+        :param emitter: Emitter vat
+        :param receiver: Receiver vat
+        :param amount: Amount total of the document
+        :param uuid: UUID identifier of the document
+        :type emitter: str
+        :type receiver: str
+        :type amount: type description
+        :type uuid: type description
+        :return: result[0] status, result[1] error message if necessary
+        :rtype: tuple
+        """
+        url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
+        parameters = '"?re=%s&rr=%s&tt=%s&id=%s' % (emitter, receiver, amount, uuid)
+        try:
+            return Client(url).service.Consulta(parameters).Estado, False
+        except Exception as e:
+            return False, e
+
+    @api.multi
     def l10n_mx_edi_update_sat_status(self):
-        '''Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
-        '''
-        client_values = self.l10n_mx_edi_get_service_client('sat_inv')
-        error = client_values.pop('error', None)
-        if error:
-            error_msg = _('Errors while requesting the SAT')
-            for record in self:
-                record.message_post(
-                    body=error_msg + create_list_html([error]),
-                    subtype='account.mt_invoice_validated')
-            return
-        client = client_values['client']
-        error_resp = _('The SAT service failed to be requested')
-        error_msg = _('The SAT service has responded: %s')
-        for record in self:
-            if (record.company_id.country_id == self.env.ref('base.mx') and record.l10n_mx_edi_pac_status == 'signed' and
-            not record.l10n_mx_edi_sat_status == 'available'):
-                values = record._l10n_mx_edi_get_cfdi_values()
-                arg = '"?re=%s&rr=%s&tt=%s&id=%s' % (
-                    values['supplier_rfc'], values['customer_rfc'], values['total'], values['uuid'])
-                response_values = record.l10n_mx_edi_get_service_response('Consulta', [arg], client)
-                error = response_values.pop('error', None)
-                response = response_values.pop('response', None)
-                if error:
-                    record.message_post(
-                        body=error_resp + create_list_html([error]),
-                        subtype='account.mt_invoice_validated')
-                    continue
-                msg = response.CodigoEstatus
-                #TODO get availability from response
-                available = False
-                if available:
-                    record.l10n_mx_edi_sat_status = 'available'
-                else:
-                    record.l10n_mx_edi_sat_status = 'not_available'
-                    record.message_post(
-                        body=error_msg % msg,
-                        subtype='account.mt_invoice_validated')
+        """Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
+        """
+        for inv in self:
+            signed = inv.l10n_mx_edi_xml_signed()
+            if not signed or self.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
+                continue
+            xml = fromstring(signed)
+            xml_tfd_node = self._l10n_mx_edi_get_xml_tfd(xml)
+            uuid = xml_tfd_node.attrib.get('UUID')
+            result_sat = self._l10n_mx_edi_validate_xml_sat(xml.Emisor.get('rfc', ''),
+                                                            xml.Receptor.get('rfc', ''),
+                                                            xml.get('total'), uuid)
+            if not result_sat[1]:
+                sat_state = result_sat[0].__repr__()
+                inv.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(sat_state, 'none')
+            else:
+                message = '<b>%s</b></br><p>%s</p>' % (_('SAT checking process (errored) Not updated</br>'),
+                                         result_sat[1].message or result_sat[1].reason.__repr__())
+                inv.message_post(body=message,
+                                 subtype='account.mt_invoice_validated')
