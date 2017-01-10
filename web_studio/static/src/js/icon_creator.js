@@ -123,7 +123,7 @@ return Widget.extend({
 
         var self = this;
         new Model('ir.attachment').call('read', [[this.uploaded_attachment_id], ['datas']]).then(function (res) {
-            self.uploaded_image = res[0].datas;
+            self.uploaded_image = ('data:image/png;base64,' + res[0].datas).replace(/\s/g, '');
             self.renderElement();
         });
     },

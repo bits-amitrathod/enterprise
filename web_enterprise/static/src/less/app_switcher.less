@@ -22,7 +22,6 @@
             .user-select(none);
 
             .o_app {
-                padding: 10px 0;
                 background: transparent;
                 border: 1px solid transparent;
                 border-radius: 6%;
@@ -32,35 +31,15 @@
                 .o-transition(all, 0.3s);
 
                 .o_app_icon {
-                    width: 80%;
-                    max-width: 70px;
                     border-radius: 6%;
                     .o-transition(all, 0.1s);
                     box-shadow: 0 6px 15px fade(black, 5%);
                     -webkit-filter: grayscale(25%);
                     filter: grayscale(25%);
-                }
 
-                div.o_app_icon { // studio
-                    margin: auto;
-                    position: relative;
-                    overflow: hidden;
-
-                    &:before { // so that the div is the same size as images
-                        content: "";
-                        display: block;
-                        padding-top: 100%;
-                    }
-
-                    > i.fa {
-                        .o-position-absolute(27%, 0, auto, 0);
-                        font-size: 36px;
-
-                        @media screen and (max-width: 408px) { // where icons start to shrink
-                            font-size: 30px; // on old browser, optimized for mobile range
-                            font-size: 8.826vw; // ~36px at 408px
-                        }
-                    }
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: cover;
                 }
 
                 .o_caption {

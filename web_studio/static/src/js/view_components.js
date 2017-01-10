@@ -48,7 +48,11 @@ var GroupComponent = AbstractComponent.extend({
     ttype: 'columns',
     className: 'o_web_studio_field_columns',
 });
-
+var SeparatorComponent = AbstractComponent.extend({
+    structure: 'separator',
+    label: 'Line Break',
+    className: 'o_web_studio_field_separator',
+});
 var AbstractNewFieldComponent = AbstractComponent.extend({
     structure: 'field',
     ttype: false,
@@ -171,11 +175,20 @@ var TagWidgetComponent = AbstractNewWidgetComponent.extend({
     className: 'o_web_studio_field_tags',
     attrs: {widget: 'many2many_tags'},
 });
+var PriorityWidgetComponent = AbstractNewWidgetComponent.extend({
+    ttype: 'selection',
+    label: 'Priority',
+    className: 'o_web_studio_field_priority',
+    attrs: {widget: 'priority'},
+});
 var form_component_widget_registry = new Registry();
 form_component_widget_registry
-    .add('components', [
+    .add('form_components', [
         NotebookComponent,
         GroupComponent,
+    ])
+    .add('kanban_components', [
+        SeparatorComponent,
     ])
     .add('new_field', [
         CharFieldComponent,
@@ -194,6 +207,7 @@ form_component_widget_registry
         Many2manyFieldComponent,
         ImageWidgetComponent,
         TagWidgetComponent,
+        PriorityWidgetComponent,
     ])
     .add('existing_field', ExistingFieldComponent);
 

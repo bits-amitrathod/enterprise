@@ -57,7 +57,7 @@ class WebStudioController(http.Controller):
         return {
             'name': _('Automated Actions'),
             'type': 'ir.actions.act_window',
-            'res_model': 'base.action.rule',
+            'res_model': 'base.automation',
             'views': [[False, 'list'], [False, 'form']],
             'target': 'current',
             'domain': [],
@@ -673,6 +673,155 @@ class WebStudioController(http.Controller):
         chatter_node.append(follower_node)
         chatter_node.append(thread_node)
         xpath_node.append(chatter_node)
+
+    def _operation_kanban_dropdown(self, arch, operation, model):
+        """ Insert a dropdown and its corresponding needs in an kanban view arch.
+            Implied modifications:
+                - create an integer field x_color in the model if it doesn't exist
+                - add the field x_color in the view
+                - add a dropdown section in the view
+                - modify the kanban class to use `oe_kanban_color_`
+        """
+        model_id = request.env['ir.model'].search([('model', '=', model)])
+        if not model_id:
+            return
+
+        if not request.env['ir.model.fields'].search([('model_id', '=', model_id.id), ('name', '=', 'x_color'), ('ttype', '=', 'integer')]):
+            # create a field x_color if it doesn't exist in the model
+            request.env['ir.model.fields'].create({
+                'model': model,
+                'model_id': model_id.id,
+                'name': 'x_color',
+                'field_description': 'Color',
+                'ttype': 'integer',
+            })
+
+        # add field x_color at the beginning
+        etree.SubElement(arch, 'xpath', {
+            'expr': 'templates',
+            'position': 'before',
+        }).append(etree.Element('field', {'name': 'x_color'}))
+
+        # add the dropdown before the rest
+        dropdown_node = etree.fromstring("""
+            <div class="o_dropdown_kanban dropdown">
+                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                    <span class="fa fa-bars fa-lg"/>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><ul class="oe_kanban_colorpicker" data-field="x_color"/></li>
+                </ul>
+            </div>
+        """)
+        etree.SubElement(arch, 'xpath', {
+            'expr': '//div/*[1]',
+            'position': 'before',
+        }).append(dropdown_node)
+
+        # set the corresponding class on the kanban record
+        xpath_node = etree.SubElement(arch, 'xpath', {
+            'expr': '//div',
+            'position': 'attributes',
+        })
+        xml_node = xpath_node.find('attribute[@name="%s"]' % ('t-attf-class'))
+        new_class = 'oe_kanban_color_#{kanban_getcolor(record.x_color.raw_value)} oe_kanban_card oe_kanban_global_click'
+        if xml_node is None:
+            xml_node = etree.Element('attribute', {'name': 't-attf-class'})
+            xml_node.text = new_class
+            xpath_node.insert(0, xml_node)
+        else:
+            xml_node.text = new_class
+
+    def _operation_kanban_image(self, arch, operation, model):
+        """ Insert a image and its corresponding needs in an kanban view arch
+            Implied modifications:
+                - add the field in the view
+                - add a section (kanban_right) in the view
+                - add the field with `kanban_image` in this section
+        """
+        model_id = request.env['ir.model'].search([('model', '=', model)])
+        if not model_id:
+            raise UserError(_('The model %s does not exist.' % model))
+
+        if not operation.get('field'):
+            raise UserError(_('Please specify a field.'))
+
+        field_id = request.env['ir.model.fields'].search([
+            ('model', '=', model),
+            ('name', '=', operation['field'])
+        ])
+        if not field_id:
+            raise UserError(_('The field %s does not exist.' % operation['field']))
+
+        # add field at the beginning
+        etree.SubElement(arch, 'xpath', {
+            'expr': 'templates',
+            'position': 'before',
+        }).append(etree.Element('field', {'name': field_id.name}))
+
+        # add the image inside the view
+        etree.SubElement(arch, 'xpath', {
+            'expr': '//div',
+            'position': 'inside',
+        }).append(
+            etree.fromstring("""
+                <div class="oe_kanban_bottom_right">
+                    <img
+                        t-att-src="kanban_image('%(model)s', 'image_small', record.%(field)s.raw_value)"
+                        t-att-title="record.%(field)s.value"
+                        width="24" height="24" class="oe_kanban_avatar pull-right"
+                    />
+                </div>
+            """ % {'model': field_id.relation, 'field': field_id.name})
+        )
+
+    def _operation_kanban_priority(self, arch, operation, model):
+        """ Insert a priority and its corresponding needs in an kanban view arch
+            Implied modifications:
+                - create a selection field x_priority in the model if it doesn't exist
+                - add a section (kanban_left) in the view
+                - add the field x_priority with the widget priority in this section
+        """
+        model_id = request.env['ir.model'].search([('model', '=', model)])
+        if not model_id:
+            raise UserError(_('The model %s does not exist.' % model))
+
+        if operation.get('field'):
+            field_id = request.env['ir.model.fields'].search([
+                ('model', '=', model),
+                ('name', '=', operation['field'])
+            ])
+            if not field_id:
+                raise UserError(_('The field %s does not exist.' % operation['field']))
+
+        else:
+            field_id = request.env['ir.model.fields'].search([
+                ('model_id', '=', model_id.id),
+                ('name', '=', 'x_priority'),
+                ('ttype', '=', 'selection')
+            ])
+            # create a field selection x_priority if it doesn't exist in the model
+            if not field_id:
+                field_id = request.env['ir.model.fields'].create({
+                    'model': model,
+                    'model_id': model_id.id,
+                    'name': 'x_priority',
+                    'field_description': 'Priority',
+                    'ttype': 'selection',
+                    'selection': "[('0', 'Low'), ('1', 'Normal'), ('2', 'High')]",
+                })
+
+        # add priority inside the view
+        etree.SubElement(arch, 'xpath', {
+            'expr': '//div',
+            'position': 'inside',
+        }).append(
+            etree.fromstring("""
+                <div class="oe_kanban_bottom_left">
+                    <field name="%s" widget="priority"/>
+                </div>
+            """ % (field_id.name))
+        )
 
     @http.route('/web_studio/get_email_alias', type='json', auth='user')
     def get_email_alias(self, model_name):

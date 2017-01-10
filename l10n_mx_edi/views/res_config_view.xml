@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_config_settings_account_mx_inherit" model="ir.ui.view">
+        <field name="name">account.config.settings.form.inherit</field>
+        <field name="model">account.config.settings</field>
+        <field name="inherit_id" ref="account.account_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <h2>Electronic invoicing (MX)</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box" title="The parameters to configure the MX PAC.">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label string='MX PAC'/>
+                            <div class="text-muted">
+                                Configure the Authorized Certification Provider (PAC).
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="PAC" for="l10n_mx_edi_pac" class="col-md-3 o_light_label"/>
+                                    <field name="l10n_mx_edi_pac"/>
+                                </div>
+                                <div class="row">
+                                    <label string="PAC username" for="l10n_mx_edi_pac_username" class="col-md-3 o_light_label"/>
+                                    <field name="l10n_mx_edi_pac_username"/>
+                                </div>
+                                <div class="row">
+                                    <label string="PAC password" for="l10n_mx_edi_pac_password" class="col-md-3 o_light_label"/>
+                                    <field name="l10n_mx_edi_pac_password" password="True"/>
+                                </div>
+                                <div class="row">
+                                    <label for="l10n_mx_edi_pac_test_env" class="col-md-3 o_light_label"/>
+                                    <field name="l10n_mx_edi_pac_test_env" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box" title="The parameters to configure the MX certificate.">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label string='MX Certificates'/>
+                            <div class="text-muted">
+                                Configure your SAT certificates.
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <field name="l10n_mx_edi_certificate_ids"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

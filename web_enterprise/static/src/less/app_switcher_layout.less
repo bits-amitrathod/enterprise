@@ -13,7 +13,7 @@
         .o-flex(1, 0, auto);
         width: 100%;
         max-width: @screen-sm-min;
-        
+
         .o_apps {
             .o-flex(0, 0, auto);
             width: 100%;
@@ -27,6 +27,31 @@
                 @media (max-width: @screen-xs-max) {
                     width: 22%; // +3% margin = 4 apps per line
                 }
+                padding: 10px 0;
+
+                .o_app_icon {
+                    position: relative;
+                    width: 80%;
+                    max-width: 70px;
+                    overflow: hidden;
+                    margin: auto;
+
+                    &:before { // so that the div is a square
+                        content: "";
+                        display: block;
+                        padding-top: 100%;
+                    }
+
+                    > i.fa { // studio
+                        .o-position-absolute(27%, 0, auto, 0);
+                        font-size: 36px;
+
+                        @media screen and (max-width: 408px) { // where icons start to shrink
+                            font-size: 30px; // on old browser, optimized for mobile range
+                            font-size: 8.826vw; // ~36px at 408px
+                        }
+                    }
+                }
             }
         }
         .o_menuitems {
@@ -38,7 +63,7 @@
                     padding: 6px;
                 }
             }
-            
+
         }
         .o_no_results {
             .o-flex(1, 0, auto);

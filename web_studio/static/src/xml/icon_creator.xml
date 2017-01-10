@@ -3,9 +3,8 @@
 
 <div t-name="web_studio.IconCreator" class="o_web_studio_icon_creator">
     <t t-if="widget.uploaded">
-        <div class="o_web_studio_uploaded_image">
-            <img t-att-src='"data:image/png;base64, " + widget.uploaded_image' alt="Uploaded image"/>
-        </div>
+        <div class="o_web_studio_uploaded_image"
+            t-attf-style="background-image: url('#{widget.uploaded_image}');"/>
         <div class="o_web_studio_upload">
             <a href="#" class="btn btn-secondary js_discard_upload">Discard Upload</a>
         </div>

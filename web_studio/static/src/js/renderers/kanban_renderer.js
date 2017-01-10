@@ -3,16 +3,15 @@ odoo.define('web.KanbanRenderer', function (require) {
 
 var AbstractRenderer = require('web.AbstractRenderer');
 var core = require('web.core');
+var field_registry = require('web.field_registry');
 var KanbanColumn = require('web.KanbanColumn');
 var KanbanRecord = require('web.KanbanRecord');
 var quick_create = require('web.kanban_quick_create');
-var kanban_widgets = require('web.kanban_widgets');
 var QWeb = require('web.QWeb');
 var session = require('web.session');
 var utils = require('web.utils');
 
 var ColumnQuickCreate = quick_create.ColumnQuickCreate;
-var fields_registry = kanban_widgets.registry;
 
 var qweb = core.qweb;
 
@@ -48,11 +47,14 @@ function transform_qweb_template(node, fields) {
     switch (node.tag) {
         case 'field':
             var ftype = fields[node.attrs.name].type;
-            ftype = node.attrs.widget ? node.attrs.widget : ftype;
+
             if (ftype === 'many2many') {
-                node.tag = 'div';
-                node.attrs['class'] = (node.attrs['class'] || '') + ' oe_form_field o_form_field_many2manytags o_kanban_tags';
-            } else if (fields_registry.contains(ftype)) {
+                node.attrs.widget = 'kanban.many2many_tags';
+            }
+
+            ftype = node.attrs.widget ? node.attrs.widget : ftype;
+
+            if (field_registry.contains(ftype)) {
                 // do nothing, the kanban record will handle it
             } else {
                 node.tag = qweb.prefix;
@@ -77,7 +79,15 @@ function transform_qweb_template(node, fields) {
                 } else {
                     node.attrs.type = 'button';
                 }
-                node.attrs['class'] = (node.attrs['class'] || '') + ' oe_kanban_action oe_kanban_action_' + node.tag;
+
+                var action_classes = " oe_kanban_action oe_kanban_action_" + node.tag;
+                if (node.attrs['t-attf-class']) {
+                    node.attrs['t-attf-class'] += action_classes;
+                } else if (node.attrs['t-att-class']) {
+                    node.attrs['t-att-class'] += " + '" + action_classes + "'";
+                } else {
+                    node.attrs['class'] = (node.attrs['class'] || '') + action_classes;
+                }
             }
             break;
     }
@@ -90,7 +100,7 @@ function transform_qweb_template(node, fields) {
 
 return AbstractRenderer.extend({
     className: "o_kanban_view",
-    init: function (parent, arch, fields, data, widgets_registry, record_options, column_options) {
+    init: function (parent, arch, fields, state, widgets_registry, options) {
         this._super.apply(this, arguments);
 
         this.qweb = new QWeb(session.debug, {_s: session.origin});
@@ -98,16 +108,37 @@ return AbstractRenderer.extend({
         transform_qweb_template(templates, fields);
         this.qweb.add_template(utils.json_node_to_xml(templates));
 
-        this.record_options = _.extend({}, record_options, { qweb: this.qweb });
-        this.column_options = _.extend({}, column_options, { qweb: this.qweb });
+        this.record_options = _.extend({}, options.record_options, { qweb: this.qweb });
+        this.column_options = _.extend({}, options.column_options, { qweb: this.qweb });
     },
     update: function (state, fields) {
         this.fields = fields;
         return this._super(state);
     },
-    update_column: function (column, data, record_options) {
+    update_record: function(record_state) {
+        var is_grouped = !!this.state.grouped_by.length;
+        var record;
+
+        if (is_grouped) {
+            // if grouped, this.widgets are kanban columns
+            // so we need to find the kanban record inside
+            _.each(this.widgets, function(widget) {
+                record = record || _.findWhere(widget.records, {db_id: record_state.id});
+            });
+        } else {
+            record = _.findWhere(this.widgets, {db_id: record_state.id});
+        }
+
+        if (record) {
+            record.update(record_state);
+        }
+    },
+    update_column: function (column_db_id, data, record_options) {
+        var column = _.findWhere(this.widgets, {db_id: column_db_id});
+        this.widgets.splice(_.indexOf(this.widgets, column), 1); // remove column from widgets' list
         record_options = _.extend({}, record_options, { qweb: this.qweb });
         var new_column = new KanbanColumn(this, data, this.column_options, record_options);
+        this.widgets.push(new_column);
         return new_column.insertAfter(column.$el).then(column.destroy.bind(column));
     },
     _render: function () {
@@ -132,7 +163,9 @@ return AbstractRenderer.extend({
             self.widgets.push(kanban_record);
             kanban_record.appendTo(fragment);
         });
-
+        this._render_ghost_divs(fragment);
+    },
+    _render_ghost_divs: function (fragment) {
         // add empty invisible divs to make sure that all kanban records are left aligned
         for (var i = 0, ghost_div; i < 6; i++) {
             ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
@@ -141,7 +174,7 @@ return AbstractRenderer.extend({
     },
     _render_grouped: function (fragment) {
         var self = this;
-        var group_by_field_attrs = this.fields[this.state.grouped_by[0]];
+        var group_by_field_attrs = this.state.fields[this.state.grouped_by[0]];
         // Deactivate the drag'n'drop if the grouped_by field:
         // - is a date or datetime since we group by month or
         // - is readonly
@@ -204,7 +237,10 @@ return AbstractRenderer.extend({
     remove_widget: function (widget) {
         this.widgets.splice(this.widgets.indexOf(widget), 1);
         widget.destroy();
-    }
+    },
+    get_local_state: function() {
+        return {};
+    },
 });
 
 });
