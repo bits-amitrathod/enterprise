@@ -10,6 +10,9 @@ from lxml import etree
 from suds.client import Client
 from itertools import groupby
 
+from . import certificate
+
+
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
 CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
 CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal_3_2.xslt'
@@ -365,7 +368,9 @@ class AccountInvoice(models.Model):
         values = self._l10n_mx_edi_get_cfdi_values()
         uuids = [values['uuid']]
         certificate_id = values['certificate_id']
-        params = [username, password, uuids, certificate_id.content, certificate_id.key, certificate_id.password]
+        cer_pem = base64.encodestring(certificate.convert_cer_to_pem(base64.decodestring(certificate_id.content)))
+        key_pem = base64.encodestring(certificate.convert_key_cer_to_pem(base64.decodestring(certificate_id.key), certificate_id.password))
+        params = [username, password, uuids, cer_pem, key_pem, certificate_id.password]
         response_values = self.l10n_mx_edi_get_service_response(service, params, client)
         error = response_values.pop('error', None)
         response = response_values.pop('response', None)
@@ -436,7 +441,9 @@ class AccountInvoice(models.Model):
         invoices_list.uuids.string = [values['uuid']]
         company_id = self.company_id
         certificate_id = values['certificate_id']
-        params = [invoices_list, username, password, company_id.vat, certificate_id.content, certificate_id.key]
+        cer_pem = base64.encodestring(certificate.convert_cer_to_pem(base64.decodestring(certificate_id.content)))
+        key_pem = base64.encodestring(certificate.convert_key_cer_to_pem(base64.decodestring(certificate_id.key), certificate_id.password))
+        params = [invoices_list, username, password, company_id.vat, cer_pem, key_pem]
         response_values = self.l10n_mx_edi_get_service_response(service, params, client)
         error = response_values.pop('error', None)
         response = response_values.pop('response', None)
@@ -451,7 +458,7 @@ class AccountInvoice(models.Model):
                 body=_('The cancel service requested failed') + create_list_html([error]),
                 subtype='account.mt_invoice_validated')
             return
-        code = getattr(response.Folios[0].Folio, 'EstatusUUID', None)
+        code = getattr(response.Folios[0][0], 'EstatusUUID', None)
         cancelled = code == '201' or code == '202'  # cancelled or previously cancelled
         msg = code != 201 and code != 202 and "Cancelling get an error"
         self._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
