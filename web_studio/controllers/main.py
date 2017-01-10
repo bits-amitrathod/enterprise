@@ -542,7 +542,7 @@ class WebStudioController(http.Controller):
         arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
 
         for op in operations:
-            # Call the right operation handler
+            # create a new field if it does not exist
             if 'node' in op:
                 if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
                     # Check if field exists before creation
@@ -552,6 +552,12 @@ class WebStudioController(http.Controller):
                         field_created = True
                     op['node']['attrs']['name'] = field.name
 
+            # set a more specific xpath (with templates//) for the kanban view
+            if view.type == 'kanban':
+                if op.get('target') and op['target'].get('tag') == 'field':
+                    op['target']['tag'] = 'templates//field'
+
+            # call the right operation handler
             getattr(self, '_operation_%s' % (op['type']))(arch, op, view.model)
 
         # Save or create changes into studio view, identifiable by xmlid
