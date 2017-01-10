@@ -421,7 +421,7 @@ class AccountInvoice(models.Model):
             msg = getattr(response.Incidencias[0][0], 'MensajeIncidencia', None)
         xml_signed = getattr(response, 'xml', None)
         if xml_signed:
-            xml_signed = xml_signed.encode('ascii', 'xmlcharrefreplace').encode('base64')
+            xml_signed = xml_signed.encode('utf-8').encode('base64')
         self._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
 
     @api.multi
