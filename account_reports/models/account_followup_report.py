@@ -79,7 +79,7 @@ class report_account_followup_report(models.AbstractModel):
                 amount = formatLang(self.env, amount, currency_obj=currency)
                 amount = amount.replace(' ', '&nbsp;') if self.env.context.get('mail') else amount
                 line_num += 1
-                columns = [formatLangDate(aml.date), date_due, aml.invoice_id.reference, aml.expected_pay_date and aml.expected_pay_date +' '+ aml.internal_note or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
+                columns = [formatLangDate(aml.date), date_due, aml.invoice_id.name or aml.name, aml.expected_pay_date and aml.expected_pay_date +' '+ aml.internal_note or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
                 if self.env.context.get('print_mode'):
                     columns = columns[:3]+columns[5:]
                 lines.append({
