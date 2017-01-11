@@ -377,9 +377,7 @@ var GridView = View.extend({
             for (var i = 0; i < group_fields.length; i++) {
                 var row_field = group_fields[i];
                 var value = rows[row_index].values[row_field];
-                if (value) {
-                    row_values.push(value);
-                }
+                row_values.push(value);
             }
             var row_key = _(row_values).map(function (v) {
                 return v[0]
@@ -388,7 +386,9 @@ var GridView = View.extend({
             return h('tr', {key: row_key}, [
                 h('th', {attrs: {colspan: 2}}, [
                     h('div', _(row_values).map(function (v) {
-                        return h('div', {attrs: {title: v[1]}}, v[1]);
+                        var label = v ? v[1] : _t('Unknown');
+                        var klass = v ? '' : 'o_grid_text_muted';
+                        return h('div', {attrs: {title: label, class: klass}}, label);
                     }))
                 ])
             ].concat(_(row).map(function (cell, cell_index) {
