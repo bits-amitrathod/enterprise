@@ -76,7 +76,7 @@ class ProjectForecast(models.Model):
         stop = fields.Datetime.from_string(self.end_date)
         calendar = self.mapped('user_id.resource_ids.calendar_id')
         if calendar:
-            hours = calendar[0].get_working_hours(start, stop)
+            hours = calendar[0].get_work_hours_count(start, stop)
             if hours == 0:
                 raise UserError(_("You cannot set a user with no working time."))
             self.time = self.resource_hours * 100.0 / hours
