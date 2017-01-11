@@ -9,7 +9,7 @@ from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
 
-from odoo.addons.website_portal.controllers.main import website_account
+from odoo.addons.website_portal.controllers.main import website_account, get_record_pager
 from odoo.addons.website_form.controllers.main import WebsiteForm
 
 
@@ -54,6 +54,8 @@ class website_account(website_account):
         )
 
         tickets = request.env['helpdesk.ticket'].sudo().search(domain, order=order, limit=self._items_per_page, offset=pager['offset'])
+        request.session['my_tickets_history'] = tickets.ids[:100]
+
         values.update({
             'date': date_begin,
             'tickets': tickets,
@@ -98,7 +100,10 @@ class WebsiteForm(WebsiteForm):
             Ticket = request.env['helpdesk.ticket'].browse(ticket_id)
         if not Ticket:
             return request.render('website.404')
-        return request.render("website_helpdesk.tickets_followup", {'ticket': Ticket})
+        values = {'ticket': Ticket}
+        history = request.session.get('my_tickets_history', [])
+        values.update(get_record_pager(history, ticket_id, '/helpdesk/ticket/%d'))
+        return request.render("website_helpdesk.tickets_followup", values)
 
     @http.route('/website_form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True)
     def website_form(self, model_name, **kwargs):

@@ -7,7 +7,7 @@ from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
 
-from odoo.addons.website_portal.controllers.main import website_account
+from odoo.addons.website_portal.controllers.main import website_account, get_records_pager
 from odoo.addons.website_quote.controllers.main import sale_quote
 
 
@@ -73,6 +73,8 @@ class website_account(website_account):
         )
 
         accounts = SaleSubscription.search(domain, order=order, limit=self._items_per_page, offset=pager['offset'])
+        request.session['my_contracts_history'] = accounts.ids[:100]
+
         values.update({
             'accounts': accounts,
             'page_name': 'contract',
@@ -92,7 +94,6 @@ class website_contract(http.Controller):
     @http.route(['/my/contract/<int:account_id>/',
                  '/my/contract/<int:account_id>/<string:uuid>'], type='http', auth="public", website=True)
     def contract(self, account_id, uuid='', message='', message_class='', **kw):
-        request.env['res.users'].browse(request.uid).has_group('sales_team.group_sale_salesman')
         account_res = request.env['sale.subscription']
         template_res = request.env['sale.subscription.template']
         if uuid:
@@ -151,6 +152,8 @@ class website_contract(http.Controller):
         render_context = dict(values.items() + render_context.items())
         for acquirer in acquirers:
             acquirer.form = acquirer.sudo()._registration_render(account.partner_id.id, render_context)
+        history = request.session.get('my_contracts_history', [])
+        values.update(get_records_pager(history, account))
         return request.render("website_contract.contract", values)
 
     payment_succes_msg = 'message=Thank you, your payment has been validated.&message_class=alert-success'
