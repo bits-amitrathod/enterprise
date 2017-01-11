@@ -70,26 +70,6 @@ var GridView = View.extend({
     view_type: 'grid',
     add_label: _lt("Add a Line"),
     events: {
-        "click .o_grid_button_add": function(event) {
-            var _this = this;
-            event.preventDefault();
-
-            var ctx = pyeval.eval('context', _this._model.context());
-            var form_context = this.get_full_context({'view_grid_add_line': true});
-            var formDescription = _this.ViewManager.views.form;
-            var p = new form_common.FormViewDialog(this, {
-                res_model: _this._model.name,
-                res_id: false,
-                // TODO: document quick_create_view (?) context key
-                view_id: ctx['quick_create_view'] || (formDescription && formDescription.view_id) || false,
-                context: form_context,
-                title: _this.add_label,
-                disable_multiple_selection: true,
-            }).open();
-            p.on('create_completed', this, function () {
-                _this._fetch();
-            });
-        },
         'keydown .o_grid_input': function (e) {
             // suppress [return]
             switch (e.which) {
@@ -308,11 +288,7 @@ var GridView = View.extend({
                 ]),
                 h('tfoot', [
                     h('tr', [
-                        h('td.o_grid_add_line', _this.is_action_enabled('create') ? [
-                            h('button.btn.btn-sm.btn-primary.o_grid_button_add', {
-                                attrs: {type: 'button'}
-                            }, _this.add_label.toString())
-                        ] : []),
+                        h('td.o_grid_add_line', []),
                         h('td', totals ? _t("Total") : [])
                     ].concat(
                         _(columns).map(function (column, column_index) {
@@ -704,12 +680,35 @@ var GridView = View.extend({
             this.proxy('_fetch') // on_close
         );
     },
+    onclick_add_line: function(event) {
+        var _this = this;
+        event.preventDefault();
+
+        var ctx = pyeval.eval('context', _this._model.context());
+        var form_context = _this.get_full_context();
+        var formDescription = _this.ViewManager.views.form;
+        var p = new form_common.FormViewDialog(this, {
+            res_model: _this._model.name,
+            res_id: false,
+            // TODO: document quick_create_view (?) context key
+            view_id: ctx['quick_create_view'] || (formDescription && formDescription.view_id) || false,
+            context: form_context,
+            title: _this.add_label,
+            disable_multiple_selection: true,
+        }).open();
+        p.on('create_completed', this, function () {
+            _this._fetch();
+        });
+    },
 });
 core.view_registry.add('grid', GridView);
 
 var Arrows = Widget.extend({
     template: 'grid.GridArrows',
     events: {
+        'click .o_grid_button_add': function (e) {
+            this.getParent().onclick_add_line(e);
+        },
         'click .grid_arrow_previous': function (e) {
             e.stopPropagation();
             this.getParent().set('pagination_context', this.get('prev'));
@@ -753,6 +752,7 @@ var Arrows = Widget.extend({
         this.on('change:next', this, function (_, change) {
             this.$('.grid_arrow_next').toggleClass('hidden', !change.newValue);
         });
+        this.allow_create = this.getParent().is_action_enabled('create');
     },
     start: function () {
         var first_range = this._ranges[0];
