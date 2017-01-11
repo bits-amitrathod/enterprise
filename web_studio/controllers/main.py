@@ -927,6 +927,8 @@ class WebStudioController(http.Controller):
                     <span class="fa fa-bars fa-lg"/>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
+                    <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
                     <li><ul class="oe_kanban_colorpicker" data-field="%(field)s"/></li>
                 </ul>
             </div>
