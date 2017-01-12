@@ -42,7 +42,11 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
                 type: 'many2one',
                 domain: [['relation', '=', this.model], ['ttype', '=', 'many2one']],
             }]);
-            this.many2one_field = new Many2one(this, 'field', this.datamodel.get(record_id), options);
+            var record = this.datamodel.get(record_id);
+            // it's not possible to create an new many2one field for another model directly from here
+            record.fields.field.__attrs.can_create = false;
+
+            this.many2one_field = new Many2one(this, 'field', record, options);
             this.many2one_field.appendTo(this.$('.o_many2one_field'));
         } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
             record_id = this.datamodel.make_record('ir.model', [{
