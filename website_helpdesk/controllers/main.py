@@ -9,8 +9,9 @@ from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
 
-from odoo.addons.website_portal.controllers.main import website_account, get_record_pager
+from odoo.addons.website_portal.controllers.main import website_account, get_records_pager
 from odoo.addons.website_form.controllers.main import WebsiteForm
+from odoo.osv.expression import OR
 
 
 class website_account(website_account):
@@ -23,14 +24,20 @@ class website_account(website_account):
         return response
 
     @http.route(['/my/tickets', '/my/tickets/page/<int:page>'], type='http', auth="user", website=True)
-    def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
+    def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, search=None, search_in='content', **kw):
         values = self._prepare_portal_layout_values()
         user = request.env.user
         domain = ['|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id)]
 
         searchbar_sortings = {
             'date': {'label': _('Newest'), 'order': 'create_date desc'},
-            'name': {'label': _('Name'), 'order': 'name'},
+            'name': {'label': _('Subject'), 'order': 'name'},
+        }
+        searchbar_inputs = {
+            'content': {'input': 'content', 'label': _('Search <span class="nolabel"> (in Content)</span>')},
+            'message': {'input': 'message', 'label': _('Search in Messages')},
+            'customer': {'input': 'customer', 'label': _('Search in Customer')},
+            'all': {'input': 'all', 'label': _('Search in All')},
         }
 
         # default sort by value
@@ -42,6 +49,17 @@ class website_account(website_account):
         archive_groups = self._get_archive_groups('helpdesk.ticket', domain)
         if date_begin and date_end:
             domain += [('create_date', '>', date_begin), ('create_date', '<=', date_end)]
+
+        # search
+        if search and search_in:
+            search_domain = []
+            if search_in in ('content', 'all'):
+                search_domain = OR([search_domain, ['|', ('name', 'ilike', search), ('description', 'ilike', search)]])
+            if search_in in ('customer', 'all'):
+                search_domain = OR([search_domain, [('partner_id', 'ilike', search)]])
+            if search_in in ('message', 'all'):
+                search_domain = OR([search_domain, [('message_ids.body', 'ilike', search)]])
+            domain += search_domain
 
         # pager
         tickets_count = request.env['helpdesk.ticket'].search_count(domain)
@@ -64,7 +82,10 @@ class website_account(website_account):
             'pager': pager,
             'archive_groups': archive_groups,
             'searchbar_sortings': searchbar_sortings,
+            'searchbar_inputs': searchbar_inputs,
             'sortby': sortby,
+            'search_in': search_in,
+            'search': search,
         })
         return request.render("website_helpdesk.portal_helpdesk_ticket", values)
 
@@ -102,7 +123,7 @@ class WebsiteForm(WebsiteForm):
             return request.render('website.404')
         values = {'ticket': Ticket}
         history = request.session.get('my_tickets_history', [])
-        values.update(get_record_pager(history, ticket_id, '/helpdesk/ticket/%d'))
+        values.update(get_records_pager(history, Ticket))
         return request.render("website_helpdesk.tickets_followup", values)
 
     @http.route('/website_form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True)

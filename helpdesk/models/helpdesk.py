@@ -8,7 +8,6 @@ from dateutil import relativedelta
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, AccessError, ValidationError
 
-
 TICKET_PRIORITY = [
     ('0', 'All'),
     ('1', 'Low priority'),
@@ -527,6 +526,12 @@ class HelpdeskTicket(models.Model):
     deadline = fields.Datetime(string='Deadline', compute='_compute_sla', store=True)
     sla_active = fields.Boolean(string='SLA active', compute='_compute_sla_fail', store=True)
     sla_fail = fields.Boolean(string='Failed SLA Policy', compute='_compute_sla_fail', store=True)
+
+    website_url = fields.Char('Website URL', compute='_compute_website_url', help='The full URL to access the document through the website.')
+
+    def _compute_website_url(self):
+        for hd in self:
+            hd.website_url = '/helpdesk/ticket/%s' % hd.id
 
     def _onchange_team_get_values(self, team):
         return {
