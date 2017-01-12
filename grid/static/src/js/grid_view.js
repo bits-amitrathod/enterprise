@@ -559,7 +559,8 @@ var GridView = View.extend({
                     var r0 = results[0];
                     _this._navigation.set({
                         prev: r0 && r0.prev,
-                        next: r0 && r0.next
+                        next: r0 && r0.next,
+                        initial: r0 && r0.initial,
                     });
                     _this.set('grid_data', results);
                 });
@@ -574,7 +575,9 @@ var GridView = View.extend({
                 context: _this.get_full_context(),
             }).then(function (results) {
                 _this._navigation.set({
-                    prev: results.prev, next: results.next,
+                    prev: results.prev,
+                    next: results.next,
+                    initial: results.initial,
                 });
                 _this.set('grid_data', results);
             });
@@ -717,6 +720,10 @@ var Arrows = Widget.extend({
             e.stopPropagation();
             this.getParent().set('pagination_context', this.get('next'));
         },
+        'click .grid_button_initial': function (e) {
+            e.stopPropagation();
+            this.getParent().set('pagination_context', this.get('initial'));
+        },
         'click .grid_arrow_range': function (e) {
             e.stopPropagation();
             var $target = $(e.target);
@@ -751,6 +758,9 @@ var Arrows = Widget.extend({
         });
         this.on('change:next', this, function (_, change) {
             this.$('.grid_arrow_next').toggleClass('hidden', !change.newValue);
+        });
+        this.on('change:initial', this, function (_, change) {
+            this.$('.grid_button_initial').toggleClass('hidden', !change.newValue);
         });
         this.allow_create = this.getParent().is_action_enabled('create');
     },
