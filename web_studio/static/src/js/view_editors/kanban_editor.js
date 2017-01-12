@@ -58,17 +58,21 @@ return KanbanRenderer.extend({
         this._render_ghost_divs(fragment);
     },
     highlight_nearest_hook: function(pageX, pageY) {
-        return this.kanban_record.highlight_nearest_hook(pageX, pageY);
+        if (this.kanban_record) {
+            return this.kanban_record.highlight_nearest_hook(pageX, pageY);
+        }
     },
     get_local_state: function() {
         var state = this._super.apply(this, arguments);
-        if (this.kanban_record.selected_node_id) {
+        if (this.kanban_record && this.kanban_record.selected_node_id) {
             state.selected_node_id = this.kanban_record.selected_node_id;
         }
         return state;
     },
     set_local_state: function(state) {
-        this.kanban_record.set_local_state(state);
+        if (this.kanban_record) {
+            this.kanban_record.set_local_state(state);
+        }
     },
 });
 
