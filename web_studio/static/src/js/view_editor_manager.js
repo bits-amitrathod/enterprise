@@ -320,6 +320,7 @@ return Widget.extend({
             target: 'current',
             views: [[false, 'list'], [false, 'form']],
             domain: [['model', '=', this.model], ['key', '=', 'default']],
+            keep_state: true,
         });
     },
     open_view_form: function() {
@@ -329,6 +330,7 @@ return Widget.extend({
             res_id: this.view_id,
             views: [[false, 'form']],
             target: 'current',
+            keep_state: true,
         });
     },
     open_field_form: function(event) {
@@ -346,6 +348,7 @@ return Widget.extend({
                         res_id: res_id,
                         views: [[false, 'form']],
                         target: 'current',
+                        keep_state: true,
                     });
                 }
         });

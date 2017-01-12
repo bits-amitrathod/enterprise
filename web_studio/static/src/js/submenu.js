@@ -58,7 +58,7 @@ var SubMenu = Widget.extend({
         // do the corresponding action
         var title = $menu.text();
         if ($menu.data('name') === 'views') {
-            return this.replace_action('web_studio.action_web_studio_main', title, {
+            return this.replace_action('action_web_studio_main', title, {
                 action: this.action,
                 clear_breadcrumbs: true,
             });
@@ -69,6 +69,7 @@ var SubMenu = Widget.extend({
                 model: this.action.res_model,
                 view_id: this.action.view_id[0],
             }).then(function (result) {
+                result.keep_state = true;
                 return self.replace_action(result, title, {replace_last_action: true});
             });
         }

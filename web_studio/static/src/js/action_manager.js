@@ -38,6 +38,16 @@ ActionManager.include({
         action_stack = action_stack && _.reject(action_stack, {keep_alive: true});
         this._super(action_stack);
     },
+
+    do_push_state: function () {
+        if (this.inner_action) {
+            var inner_action_descr = this.inner_action.get_action_descr();
+            if (inner_action_descr.keep_state) {
+                return;
+            }
+        }
+        this._super.apply(this, arguments);
+    },
 });
 
 });
