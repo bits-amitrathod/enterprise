@@ -532,9 +532,12 @@ return Widget.extend({
         });
     },
     unselect_element: function() {
-        if (this.editor && this.editor._reset_clicked_style) {
+        if (this.editor) {
             this.editor.selected_node_id = false;
-            this.editor._reset_clicked_style(); // FIXME: this function should be written in an AbstractEditor
+            if (this.editor._reset_clicked_style) {
+                // FIXME: this function should be written in an AbstractEditor
+                this.editor._reset_clicked_style();
+            }
         }
     },
     _add_element: function(type, node, xpath_info, position, tag) {
@@ -681,6 +684,7 @@ return Widget.extend({
                 xpath_info: xpath_info,
             },
         });
+        this.unselect_element();
     },
     _edit_view_attributes: function(type, new_attrs) {
         this.do({
