@@ -34,11 +34,17 @@ class View(models.Model):
     def create_simplified_form_view(self, res_model):
         model = self.env[res_model]
         rec_name = model._rec_name_fallback()
-        field = E.field(name=rec_name, required='1')
-        group_1 = E.group(field, name=str(uuid.uuid4())[:6], string='Left Title')
-        group_2 = E.group(name=str(uuid.uuid4())[:6], string='Right Title')
+        title = etree.fromstring("""
+            <div class="oe_title">
+                <h1>
+                    <field name="%(field_name)s" required="1"/>
+                </h1>
+            </div>
+        """ % {'field_name': rec_name})
+        group_1 = E.group(name=str(uuid.uuid4())[:6])
+        group_2 = E.group(name=str(uuid.uuid4())[:6])
         group = E.group(group_1, group_2, name=str(uuid.uuid4())[:6])
-        form = E.form(E.sheet(group, string=model._description))
+        form = E.form(E.sheet(title, group, string=model._description))
         arch = etree.tostring(form, encoding='utf-8', pretty_print=True)
 
         self.create({
