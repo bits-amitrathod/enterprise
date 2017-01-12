@@ -226,7 +226,7 @@ return Widget.extend({
         var renderer_scrolltop = this.$renderer_container.scrollTop();
         var local_state = this.editor ? this.editor.get_local_state() : false;
 
-        options = _.extend({}, options, {chatter_allowed: this.chatter_allowed});
+        options = _.extend({}, options, {chatter_allowed: this.chatter_allowed}, {show_invisible: this.sidebar.show_invisible});
         if (this.mode === 'edition') {
             if (replace || !this.editor) {
                 var Editor = Editors[this.view_type];
