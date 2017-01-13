@@ -128,7 +128,7 @@ var AppCreator = Widget.extend(FieldManagerMixin, {
             this.$left.append($app_form);
 
             // focus on input
-            this.$('input[name="name"]').focus();
+            this.$('input[name="app_name"]').focus();
 
             // toggle button if the form is ready
             this.$('input').on('change keyup input paste', _.bind(this._check_fields, this));
