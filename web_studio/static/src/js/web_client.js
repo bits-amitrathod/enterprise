@@ -312,7 +312,11 @@ WebClient.include({
         if (action && action.action_descr.xml_id) {
             var descr = action.action_descr;
             if (descr.type === 'ir.actions.act_window') {
-                return true;
+                // we don't want to edit Settings as it is a special case of form view
+                // this is a heuristic to determine if the action is Settings
+                if (descr.res_model && descr.res_model.indexOf('settings') === -1) {
+                    return true;
+                }
             }
         }
         return false;
