@@ -123,6 +123,15 @@ var FormEditor =  FormRenderer.extend({
         this._process_field(node, $el);
         return $el;
     },
+    _render_field_widget: function(node) {
+        var widget = this._super.apply(this, arguments);
+        // make empty widgets appear if there is no label
+        if (widget.$el.hasClass('o_form_field_empty') && (!node.has_label || node.attrs.nolabel)) {
+            widget.$el.removeClass('o_form_field_empty').addClass('o_web_studio_widget_empty');
+            widget.$el.text(widget.string);
+        }
+        return widget;
+    },
     _render_tag_group: function(node) {
         var $result = this._super.apply(this, arguments);
         // Add hook after this group
@@ -159,6 +168,8 @@ var FormEditor =  FormRenderer.extend({
     _render_inner_group_label: function ($result, label, linked_node) {
         $result = this._super.apply(this, arguments);
         if (linked_node) {
+            // We have to know if this field has a label or not.
+            linked_node.has_label = true;
             var formEditorHook = this._render_hook(linked_node, 'after', 'tr');
             formEditorHook.appendTo($result);
         }
@@ -170,6 +181,8 @@ var FormEditor =  FormRenderer.extend({
         return formEditorHook.$el;
     },
     _render_inner_field: function(node) {
+        // We have to know if this field has a label or not.
+        node.has_label = true;
         var $result = this._super.apply(this, arguments);
 
         // Add hook only if field is visible
