@@ -20,7 +20,8 @@
     <field name="arch" type="xml">
         <form string="Forecast Form">
             <sheet string="Project Forecast">
-                <div class="oe_button_box" name="button_box">
+                <div class="oe_button_box" name="button_box"
+                        invisible="context.get('view_grid_add_line')">
                     <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
                         <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
                     </button>
@@ -28,8 +29,12 @@
                 <group>
                     <group>
                         <field name="user_id"/>
-                        <field name="project_id" domain="[('allow_forecast', '=', True)]"/>
-                        <field name="task_id"/>
+                        <field name="project_id"
+                            domain="[('allow_forecast', '=', True)]"
+                            context="{'default_allow_forecast': True}"/>
+                        <field name="task_id"
+                            context="{'default_project_id': project_id,
+                                      'default_user_id': user_id}"/>
                     </group>
                     <group>
                         <field name="start_date"/>

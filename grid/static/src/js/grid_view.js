@@ -75,7 +75,7 @@ var GridView = View.extend({
             event.preventDefault();
 
             var ctx = pyeval.eval('context', _this._model.context());
-            var form_context = _this.get_full_context();
+            var form_context = this.get_full_context({'view_grid_add_line': true});
             var formDescription = _this.ViewManager.views.form;
             var p = new form_common.FormViewDialog(this, {
                 res_model: _this._model.name,
