@@ -551,6 +551,8 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         precision_digits = self.env['decimal.precision'].precision_get('Account')
+        amount_untaxed = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit))
+        amount_discount = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit * l.discount / 100.0))
         values = {
             'record': self,
             'currency_name': self.currency_id.name,
@@ -561,7 +563,8 @@ class AccountInvoice(models.Model):
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
-            'amount_untaxed': '%0.*f' % (precision_digits, self.amount_untaxed),
+            'amount_untaxed': '%0.*f' % (precision_digits, amount_untaxed),
+            'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
             'get_customer_rfc': self.get_customer_rfc,
             'show_domicile': self.show_domicile,
         }
