@@ -169,10 +169,11 @@ var KanbanRecordEditor = KanbanRecord.extend({
         widget.undelegateEvents();
 
         // make empty widgets appear
-        if (!widget.value) {
-            widget.value = widget.string;
-            widget.$el.addClass('o_web_studio_widget_empty');
-            widget.render();
+        if (!widget.value && widget.value !== 0) {
+            widget.$el = $('<span>', {
+                text: widget.string,
+                class: 'o_web_studio_widget_empty',
+            });
         }
         widget.$el.attr('data-node-id', this.node_id++);
 
@@ -201,7 +202,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
 
         var field = this.record[field_name];
         // make empty widgets appear
-        if (!field.value) {
+        if (!field.value && field.value !== 0) {
             $field.text(field.__attrs.string || field.string);
             $field.addClass('o_web_studio_widget_empty');
         }
