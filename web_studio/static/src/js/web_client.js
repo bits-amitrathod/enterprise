@@ -238,6 +238,13 @@ WebClient.include({
     },
 
     do_action: function(action, options) {
+
+        if (this.studio_on && action.target === 'new') {
+            // TODO: what if we modify target = 'curent' to modify it?
+            this.do_warn("Studio", _t("Wizards are not editable with Studio."));
+            return $.Deferred().reject();
+        }
+
         if (this.studio_on && action.xml_id) {
             // we are navigating inside Studio so the studio action manager is used
             return this.studio_action_manager.do_action.apply(this, arguments);
