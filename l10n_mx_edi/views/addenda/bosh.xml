@@ -13,22 +13,22 @@
                             <elemento>
                                 <etiqueta>OC</etiqueta>
                                 <descripcion>Orden de Compra</descripcion>
-                                <valor t-raw="elements[0]"></valor>
+                                <valor t-raw="str(elements[0])"></valor>
                             </elemento>
                             <elemento>
                                 <etiqueta>CP</etiqueta>
                                 <descripcion>Codigo Planta</descripcion>
-                                <valor t-raw="elements[1]"></valor>
+                                <valor t-raw="str(elements[1])"></valor>
                             </elemento>
                             <elemento t-if="len(elements)>=3">
                                 <etiqueta>NC</etiqueta>
                                 <descripcion>NOMBRE DEL REQUISITOR</descripcion>
-                                <valor t-raw="elements[2]"></valor>
+                                <valor t-raw="str(elements[2])"></valor>
                             </elemento>
                             <elemento t-if="len(elements)>=4">
                                 <etiqueta>CC</etiqueta>
                                 <descripcion>CENTRO DE COSTOS</descripcion>
-                                <valor t-raw="elements[3]"></valor>
+                                <valor t-raw="str(elements[3])"></valor>
                             </elemento>
                         </elementos>
                     </EDICOM_GENERICA>

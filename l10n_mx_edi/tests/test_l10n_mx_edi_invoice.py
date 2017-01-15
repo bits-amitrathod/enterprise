@@ -206,7 +206,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             '<ADDENDA10 xmlns:cfdi="http://www.sat.gob.mx/cfd/3" '
             'DEPTID="DEPTID" VERSION="VERSION" BUYER="BUYER" VENDOR_ID="VENDOR_ID" POID="POID" PODATE="PODATE" '
             'EMAIL="%s"/>' % invoice.company_id.partner_id.email)
-        xml_addenda = xml.Addenda.xpath('ADDENDA10')[0]
+        xml_addenda = xml.Addenda.xpath('//ADDENDA10')[0]
         self.assertEqualXML(xml_addenda, xml_expected)
 
     def test_l10n_mx_edi_invoice_basic_33(self):

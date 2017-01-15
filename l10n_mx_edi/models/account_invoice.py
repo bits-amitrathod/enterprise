@@ -503,6 +503,8 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         if xml_signed:
+            # Post append addenda
+            xml_signed = self.l10n_mx_edi_append_addenda(xml_signed)
             body_msg = _('The sign service has been called with success')
             # Update the pac status
             self.l10n_mx_edi_pac_status = 'signed'
@@ -758,10 +760,6 @@ class AccountInvoice(models.Model):
         return values
 
     @api.multi
-    def l10n_mx_edi_get_addenda(self, values):
-        return self.partner_id.commercial_partner_id.l10n_mx_edi_addenda.render(values=values)
-
-    @api.multi
     def get_cfdi_related(self):
         """To node CfdiRelacionados get documents related with that invoice
         Considered:
@@ -785,6 +783,28 @@ class AccountInvoice(models.Model):
             'cfdi_related_type': relation_type,
             'cfdi_related': cfdi_related,
             }
+
+    def l10n_mx_edi_append_addenda(self, xml_signed):
+        self.ensure_one()
+        addenda = (
+            self.partner_id.l10n_mx_edi_addenda or
+            self.partner_id.commercial_partner_id.l10n_mx_edi_addenda)
+        if not addenda:
+            return xml_signed
+        values = {
+            'record': self,
+        }
+        tree = fromstring(base64.decodestring(xml_signed))
+        addenda_node = tree.Addenda if hasattr(
+            tree, 'Addenda') else etree.Element(etree.QName(
+                'http://www.sat.gob.mx/cfd/3', 'Addenda'))
+        addenda_node.append(fromstring(addenda.render(values=values)))
+        tree.append(addenda_node)
+        self.message_post(
+            body=_('Addenda has been added in the CFDI with success'),
+            subtype='account.mt_invoice_validated')
+        return base64.encodestring(etree.tostring(
+            tree, pretty_print=True, xml_declaration=True, encoding='UTF-8'))
 
     @api.multi
     def _l10n_mx_edi_create_cfdi(self):
@@ -826,7 +846,6 @@ class AccountInvoice(models.Model):
         # Create the EDI document
         # -----------------------
         version = self.l10n_mx_edi_get_pac_version()
-        parser = etree.XMLParser(remove_blank_text=True)
 
         # -Compute certificate data
         values['date'] = datetime.combine(
@@ -867,11 +886,6 @@ class AccountInvoice(models.Model):
             except Exception as e:
                 return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}
 
-        # Post append addenda
-        if self.partner_id.commercial_partner_id.l10n_mx_edi_addenda:
-            cfdi_addenda_node = tree.find(".//{http://www.sat.gob.mx/cfd/3}Addenda")
-            addenda_node = etree.fromstring(self.l10n_mx_edi_get_addenda(values), parser=parser)
-            cfdi_addenda_node.extend(addenda_node)
         return {'cfdi': etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8')}
 
     @api.multi
