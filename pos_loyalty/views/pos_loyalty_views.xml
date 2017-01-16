@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-        <record id="view_pos_config_form" model="ir.ui.view">
-            <field name="name">pos.config.form.inherit</field>
-            <field name="model">pos.config</field>
-            <field name="inherit_id" ref="point_of_sale.view_pos_config_form" />
-            <field name="arch" type="xml">
-                <group name="receipt" position="after">
-                    <group string="Loyalty Program">
-                        <group>
-                            <field name="loyalty_id" />
-                        </group>
-                    </group>
-                </group>
-            </field>
-        </record>
-
         <record id="view_partner_property_form" model="ir.ui.view">
             <field name="name">res.partner.form.inherit</field>
             <field name="model">res.partner</field>
@@ -202,12 +187,5 @@
                 </p>
             </field>
         </record>
-
-        <menuitem
-            parent="point_of_sale.pos_config_menu_catalog"
-            action="action_loyalty_program_form"
-            id="menu_loyalty_program"
-            sequence="30"
-            groups="point_of_sale.group_pos_manager" />
 
 </odoo>

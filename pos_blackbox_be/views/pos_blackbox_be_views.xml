@@ -244,10 +244,10 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_config_form">
-            <field name="name">pos.config.form.view</field>
+        <record id="pos_config_view_form_inherit_blackbox_be" model="ir.ui.view">
+            <field name="name">pos.config.form.inherit.blackbox.be</field>
             <field name="model">pos.config</field>
-            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
             <field name="arch" type="xml">
                 <field name="proxy_ip" position="after">
                     <field name="blackbox_pos_production_id"/>
