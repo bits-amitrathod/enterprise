@@ -12,6 +12,7 @@ var crash_manager = require('web.crash_manager');
 var ActionManager = require('web.ActionManager');
 
 var QWeb = core.qweb;
+var _t = core._t;
 
 
 var accountReportsWidget = Widget.extend(ControlPanelMixin, {
@@ -149,18 +150,25 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         // click event
         this.$searchview_buttons.find('.js_account_report_date_filter').click(function (event) {
             self.report_options.date.filter = $(this).data('filter');
+            var error = false;
             if ($(this).data('filter') === 'custom') {
                 var date_from = self.$searchview_buttons.find('.o_datepicker_input[name="date_from"]');
-                var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to"]')
+                var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to"]');
                 if (date_from.length > 0){
+                    error = date_from.val() === "" || date_to.val() === "";
                     self.report_options.date.date_from = self.format_date(new moment(date_from.val(), 'L'));
                     self.report_options.date.date_to = self.format_date(new moment(date_to.val(), 'L'));
                 }
                 else {
+                    error = date_to.val() === "";
                     self.report_options.date.date = self.format_date(new moment(date_to.val(), 'L'));
                 }
             }
-            self.reload();
+            if (error) {
+                crash_manager.show_warning({data: {message: _t('Date cannot be empty')}});
+            } else {
+                self.reload();
+            }
         });
         this.$searchview_buttons.find('.js_account_report_bool_filter').click(function (event) {
             var option_value = $(this).data('filter');
