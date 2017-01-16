@@ -1,22 +1,33 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.tools.xml_utils import check_with_xsd
-from odoo.tools.misc import file_open
-
 import base64
+from itertools import groupby
 
 from lxml import etree
+from lxml.objectify import fromstring
 from suds.client import Client
-from itertools import groupby
+
+from odoo import _, api, fields, models
+from odoo.tools.misc import file_open
+from odoo.tools.xml_utils import check_with_xsd
+
+from . import certificate
 
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
 CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
 CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal_3_2.xslt'
+# Mapped from original SAT state to l10n_mx_edi_sat_status selection value
+# https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl
+CFDI_SAT_QR_STATE = {
+    'No Encontrado': 'not_found',
+    'Cancelado': 'cancelled',
+    'Vigente': 'valid',
+}
 
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # Helpers
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+
 
 def create_list_html(array):
     '''Convert an array of string to a html list
@@ -27,6 +38,7 @@ def create_list_html(array):
     for item in array:
         msg += '<li>' + item + '</li>'
     return '<ul>' + msg + '</ul>'
+
 
 class AccountInvoice(models.Model):
     _name = 'account.invoice'
@@ -46,15 +58,18 @@ class AccountInvoice(models.Model):
         copy=False)
     l10n_mx_edi_sat_status = fields.Selection(
         selection=[
-            ('undefined', 'Undefined'),
-            ('not_available', 'Not available'),
-            ('available', 'Available')
+            ('none', 'State not defined'),
+            ('undefined', 'Not Synced Yet'),
+            ('not_found', 'Not Found'),
+            ('cancelled', 'Cancelled'),
+            ('valid', 'Valid'),
         ],
         string='SAT status',
         help='Refers to the status of the invoice inside the SAT system.',
         readonly=True,
         copy=False,
         required=True,
+        track_visibility='onchange',
         default='undefined')
     l10n_mx_edi_cfdi_name = fields.Char(
         string='CFDI name',
@@ -88,9 +103,9 @@ class AccountInvoice(models.Model):
             self.l10n_mx_edi_partner_bank_id = self.commercial_partner_id.bank_ids[0].id
         return res
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # PAC related methods
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     @api.model
     def l10n_mx_edi_get_service_client(self, service_type, company_id=None):
@@ -156,12 +171,12 @@ class AccountInvoice(models.Model):
     @api.multi
     def _l10n_mx_edi_get_cfdi_values(self):
         '''Create values that will be used as parameters to request the PAC sign/cancel services.
-        These values may be the 'uuid', 'supplier_rfc', 'customer_rfc', 'total', 'certificate_id', 'cfdi' 
+        These values may be the 'uuid', 'supplier_rfc', 'customer_rfc', 'total', 'certificate_id', 'cfdi'
         '''
         self.ensure_one()
         values = {}
         domain = [
-            ('res_id','=', self.id),
+            ('res_id', '=', self.id),
             ('res_model', '=', self._name),
             ('name', '=', self.l10n_mx_edi_cfdi_name)]
         attachment_id = self.env['ir.attachment'].search(domain, limit=1)
@@ -233,7 +248,7 @@ class AccountInvoice(models.Model):
         if xml_signed:
             # Update the content of the attachment
             domain = [
-                ('res_id','=', self.id),
+                ('res_id', '=', self.id),
                 ('res_model', '=', self._name),
                 ('name', '=', self.l10n_mx_edi_cfdi_name)]
             attachment_id = self.env['ir.attachment'].search(domain, limit=1)
@@ -303,7 +318,7 @@ class AccountInvoice(models.Model):
         for record in records:
             if record.l10n_mx_edi_pac_status in ['to_sign', 'retry']:
                 record.l10n_mx_edi_pac_status = 'cancelled'
-                record.message_post(body=_('The cancel service has been called with success') % 'cancel', 
+                record.message_post(body=_('The cancel service has been called with success'),
                     subtype='account.mt_invoice_validated')
             else:
                 record.l10n_mx_edi_pac_status = 'to_cancel'
@@ -312,9 +327,9 @@ class AccountInvoice(models.Model):
             ('id', 'in', self.ids)])
         records._l10n_mx_edi_call_service('cancel')
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # PAC service methods
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     @api.model
     def _l10n_mx_edi_solfact_infos(self, company_id, service_type):
@@ -365,7 +380,9 @@ class AccountInvoice(models.Model):
         values = self._l10n_mx_edi_get_cfdi_values()
         uuids = [values['uuid']]
         certificate_id = values['certificate_id']
-        params = [username, password, uuids, certificate_id.content, certificate_id.key, certificate_id.password]
+        cer_pem = base64.encodestring(certificate.convert_cer_to_pem(base64.decodestring(certificate_id.content)))
+        key_pem = base64.encodestring(certificate.convert_key_cer_to_pem(base64.decodestring(certificate_id.key), certificate_id.password))
+        params = [username, password, uuids, cer_pem, key_pem, certificate_id.password]
         response_values = self.l10n_mx_edi_get_service_response(service, params, client)
         error = response_values.pop('error', None)
         response = response_values.pop('response', None)
@@ -421,7 +438,7 @@ class AccountInvoice(models.Model):
             msg = getattr(response.Incidencias[0][0], 'MensajeIncidencia', None)
         xml_signed = getattr(response, 'xml', None)
         if xml_signed:
-            xml_signed = xml_signed.encode('ascii', 'xmlcharrefreplace').encode('base64')
+            xml_signed = xml_signed.encode('utf-8').encode('base64')
         self._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
 
     @api.multi
@@ -436,7 +453,9 @@ class AccountInvoice(models.Model):
         invoices_list.uuids.string = [values['uuid']]
         company_id = self.company_id
         certificate_id = values['certificate_id']
-        params = [invoices_list, username, password, company_id.vat, certificate_id.content, certificate_id.key]
+        cer_pem = base64.encodestring(certificate.convert_cer_to_pem(base64.decodestring(certificate_id.content)))
+        key_pem = base64.encodestring(certificate.convert_key_cer_to_pem(base64.decodestring(certificate_id.key), certificate_id.password))
+        params = [invoices_list, username, password, company_id.vat, cer_pem, key_pem]
         response_values = self.l10n_mx_edi_get_service_response(service, params, client)
         error = response_values.pop('error', None)
         response = response_values.pop('response', None)
@@ -451,14 +470,14 @@ class AccountInvoice(models.Model):
                 body=_('The cancel service requested failed') + create_list_html([error]),
                 subtype='account.mt_invoice_validated')
             return
-        code = getattr(response.Folios[0].Folio, 'EstatusUUID', None)
+        code = getattr(response.Folios[0][0], 'EstatusUUID', None)
         cancelled = code == '201' or code == '202'  # cancelled or previously cancelled
         msg = code != 201 and code != 202 and "Cancelling get an error"
         self._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Account invoice methods
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     @api.multi
     def _l10n_mx_edi_create_taxes_cfdi_values(self):
@@ -483,6 +502,49 @@ class AccountInvoice(models.Model):
                 values['withholding'].append(tax_dict)
         return values
 
+    @api.model
+    def get_customer_rfc(self, customer):
+        """In Mexico depending of some cases the vat (rfc) is not mandatory to be recorded in customers, only for those
+        cases instead try to force the record values and make documentation, given a customer the system will propose
+        properly a vat (rfc) in order to generate properly the xml following this law:
+
+        http://www.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/cfdi/PyRFactElect.pdf.
+
+        :param customer:
+        :return:
+        """
+        rfc = customer.vat
+
+        if (customer.country_id == self.env.ref('base.mx') or not customer.country_id) and not customer.vat:
+            # Following Question 4 in legal Document.
+            rfc = 'XAXX010101000'
+
+        if customer.country_id and customer.country_id != self.env.ref('base.mx'):
+            # Following Question 5 in legal Document.
+            rfc = 'XEXX010101000'
+
+        # otherwise it returns what customer says and if False xml validation will be solving other cases.
+        return rfc
+
+    @api.model
+    def show_domicile(self, customer):
+        """Tell if the Domicile is necessary to be shown in a customer address to avoid force the user load this
+        optional values in a customer, if at least one of the necessary fields is loaded then simply show it.
+        """
+        address_fields = ['street_name',
+                          'street_number',
+                          'street_number2',
+                          'l10n_mx_edi_colony',
+                          'l10n_mx_edi_locality',
+                          'city',
+                          'state_id',
+                          'country_id',
+                          'zip']
+        for field in address_fields:
+            if getattr(customer, field):
+                return True
+        return False
+
     @api.multi
     def _l10n_mx_edi_create_cfdi_values(self):
         '''Create the values to fill the CFDI template.
@@ -497,26 +559,32 @@ class AccountInvoice(models.Model):
             'customer': self.partner_id.commercial_partner_id,
             'number': self.number,
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
-            'payment_method': self.l10n_mx_edi_payment_method_id.name,
-
+            'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
             'amount_untaxed': '%0.*f' % (precision_digits, self.amount_untaxed),
+            'get_customer_rfc': self.get_customer_rfc,
+            'show_domicile': self.show_domicile,
         }
+
+        currency_model_ctx = self.env['res.currency'].with_context(
+            company_id=self.company_id.id, date=self.date_invoice)
+        # NOTE: We are not supporting company.currency != MXN
+        values['rate'] = currency_model_ctx._get_conversion_rate(
+            self.currency_id, self.company_id.currency_id)
 
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
 
         if len(self.payment_term_id.line_ids) > 1:
             values['payment_policy'] = 'Pago en parcialidades'
         else:
-            values['payment_policy'] = 'Pago en una sola exhibicion'
+            values['payment_policy'] = 'Pago en una sola exhibición'
 
         values['domicile'] = '%s %s, %s' % (
-                self.company_id.city,
-                self.company_id.state_id.name,
-                self.company_id.country_id.name
-            )
+            self.company_id.city,
+            self.company_id.state_id.name,
+            self.company_id.country_id.name,
+        )
 
-        values['rfc'] = lambda p: p.vat[2:].replace(' ', '')
         values['subtotal_wo_discount'] = lambda l: l.quantity * l.price_unit
 
         values['taxes'] = self._l10n_mx_edi_create_taxes_cfdi_values()
@@ -666,42 +734,69 @@ class AccountInvoice(models.Model):
                 record._l10n_mx_edi_retry()
 
     @api.multi
+    def l10n_mx_edi_xml_signed(self):
+        domain = [
+            ('res_id', '=', self.id),
+            ('res_model', '=', self._name),
+            ('name', '=', self.l10n_mx_edi_cfdi_name)]
+        # TODO: this is necessary to make it a little bit more complex when workflow open-cancel-open comes in.
+        attachment = self.env['ir.attachment'].search(domain, limit=1)
+        if not attachment:
+            return False
+        return base64.decodestring(attachment.datas)
+
+    @staticmethod
+    def _l10n_mx_edi_get_xml_tfd(xml):
+        """Get "timbre fiscal digital (tfd)" node and get value from a xml objectify
+        returns tfd lxml node.
+        """
+        attribute = 'tfd:TimbreFiscalDigital[1]'
+        namespace = {'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital'}
+        node = xml.Complemento.xpath(attribute, namespaces=namespace)
+        return node[0] if node else None
+
+    @staticmethod
+    def _l10n_mx_edi_validate_xml_sat(emitter, receiver, amount, uuid):
+        """Validate a given set of parameters which are frequently inside an Valid (or cancelled) CFDI document in the
+        SAT service for mexican CFDI documents.
+
+        :param emitter: Emitter vat
+        :param receiver: Receiver vat
+        :param amount: Amount total of the document
+        :param uuid: UUID identifier of the document
+        :type emitter: str
+        :type receiver: str
+        :type amount: type description
+        :type uuid: type description
+        :return: result[0] status, result[1] error message if necessary
+        :rtype: tuple
+        """
+        url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
+        parameters = '"?re=%s&rr=%s&tt=%s&id=%s' % (emitter, receiver, amount, uuid)
+        try:
+            return Client(url).service.Consulta(parameters).Estado, False
+        except Exception as e:
+            return False, e
+
+    @api.multi
     def l10n_mx_edi_update_sat_status(self):
-        '''Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
-        '''
-        client_values = self.l10n_mx_edi_get_service_client('sat_inv')
-        error = client_values.pop('error', None)
-        if error:
-            error_msg = _('Errors while requesting the SAT')
-            for record in self:
-                record.message_post(
-                    body=error_msg + create_list_html([error]),
-                    subtype='account.mt_invoice_validated')
-            return
-        client = client_values['client']
-        error_resp = _('The SAT service failed to be requested')
-        error_msg = _('The SAT service has responded: %s')
-        for record in self:
-            if (record.company_id.country_id == self.env.ref('base.mx') and record.l10n_mx_edi_pac_status == 'signed' and
-            not record.l10n_mx_edi_sat_status == 'available'):
-                values = record._l10n_mx_edi_get_cfdi_values()
-                arg = '"?re=%s&rr=%s&tt=%s&id=%s' % (
-                    values['supplier_rfc'], values['customer_rfc'], values['total'], values['uuid'])
-                response_values = record.l10n_mx_edi_get_service_response('Consulta', [arg], client)
-                error = response_values.pop('error', None)
-                response = response_values.pop('response', None)
-                if error:
-                    record.message_post(
-                        body=error_resp + create_list_html([error]),
-                        subtype='account.mt_invoice_validated')
-                    continue
-                msg = response.CodigoEstatus
-                #TODO get availability from response
-                available = False
-                if available:
-                    record.l10n_mx_edi_sat_status = 'available'
-                else:
-                    record.l10n_mx_edi_sat_status = 'not_available'
-                    record.message_post(
-                        body=error_msg % msg,
-                        subtype='account.mt_invoice_validated')
+        """Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
+        """
+        for inv in self:
+            signed = inv.l10n_mx_edi_xml_signed()
+            if not signed or self.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
+                continue
+            xml = fromstring(signed)
+            xml_tfd_node = self._l10n_mx_edi_get_xml_tfd(xml)
+            uuid = xml_tfd_node.attrib.get('UUID')
+            result_sat = self._l10n_mx_edi_validate_xml_sat(xml.Emisor.get('rfc', ''),
+                                                            xml.Receptor.get('rfc', ''),
+                                                            xml.get('total'), uuid)
+            if not result_sat[1]:
+                sat_state = result_sat[0].__repr__()
+                inv.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(sat_state, 'none')
+            else:
+                message = '<b>%s</b></br><p>%s</p>' % (_('SAT checking process (errored) Not updated</br>'),
+                                         result_sat[1].message or result_sat[1].reason.__repr__())
+                inv.message_post(body=message,
+                                 subtype='account.mt_invoice_validated')

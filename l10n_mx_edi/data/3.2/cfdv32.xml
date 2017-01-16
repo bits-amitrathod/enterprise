@@ -9,6 +9,7 @@
                 version="3.2"
                 sello=""
                 t-att-folio="number"
+                t-att-TipoCambio="rate"
                 t-att-fecha="date"
                 t-att-certificado="certificate"
                 t-att-formaDePago="payment_policy"
@@ -21,10 +22,10 @@
                 t-att-NumCtaPago="account_4num"
                 t-att-LugarExpedicion="domicile">
                 <cfdi:Emisor
-                    t-att-rfc="rfc(supplier)"
+                    t-att-rfc="supplier.vat"
                     t-att-nombre="supplier.name">
                     <cfdi:DomicilioFiscal
-                        t-att-calle="supplier.street"
+                        t-att-calle="supplier.street_name"
                         t-att-noExterior="supplier.street_number"
                         t-att-noInterior="supplier.street_number2"
                         t-att-colonia="supplier.l10n_mx_edi_colony"
@@ -33,11 +34,9 @@
                         t-att-estado="supplier.state_id.name"
                         t-att-pais="supplier.country_id.name"
                         t-att-codigoPostal="supplier.zip"/>
-                    <cfdi:RegimenFiscal
-                        Regimen="fiscal_position"/>
                     <t t-if="issued">
                         <cfdi:ExpedidoEn
-                        t-att-calle="issued.street"
+                        t-att-calle="issued.street_name"
                         t-att-noExterior="issued.street_number"
                         t-att-noInterior="issued.street_number2"
                         t-att-colonia="issued.l10n_mx_edi_colony"
@@ -47,12 +46,14 @@
                         t-att-pais="issued.country_id.name"
                         t-att-codigoPostal="issued.zip"/>
                     </t>
+                    <cfdi:RegimenFiscal t-att-Regimen="fiscal_position"/>
                 </cfdi:Emisor>
                 <cfdi:Receptor
-                    t-att-rfc="rfc(customer)"
+                    t-att-rfc="get_customer_rfc(customer)"
                     t-att-nombre="customer.name">
+                    <t t-if="show_domicile(customer)">
                     <cfdi:Domicilio
-                        t-att-calle="customer.street"
+                        t-att-calle="customer.street_name"
                         t-att-noExterior="customer.street_number"
                         t-att-noInterior="customer.street_number2"
                         t-att-colonia="customer.l10n_mx_edi_colony"
@@ -61,6 +62,7 @@
                         t-att-estado="customer.state_id.name"
                         t-att-pais="customer.country_id.name"
                         t-att-codigoPostal="customer.zip"/>
+                    </t>
                 </cfdi:Receptor>
                 <cfdi:Conceptos>
                     <t t-foreach="record.invoice_line_ids" t-as="line">

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import fields, models
+
 
 class IrView(models.Model):
     _inherit = 'ir.ui.view'
