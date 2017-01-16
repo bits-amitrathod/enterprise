@@ -17,6 +17,7 @@ var QWeb = core.qweb;
 // Note: the followers widget is moved inside the chatter for layout purposes
 // -----------------------------------------------------------------------------
 var Followers = AbstractField.extend({
+    supported_field_types: ['one2many'],
     template: 'mail.Followers',
 
     events: {

@@ -9,6 +9,7 @@ var _t = core._t;
 
 
 var FieldPad = AbstractField.extend({
+    supported_field_types: ['char'],
     template: 'NewFieldPad',
     content: "",
     events: {

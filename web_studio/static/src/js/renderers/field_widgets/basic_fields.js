@@ -79,10 +79,12 @@ var InputField = AbstractField.extend({
 });
 
 var FieldChar = InputField.extend({
+    supported_field_types: ['char', 'text'],
     tagName: 'span',
 });
 
 var FieldDate = InputField.extend({
+    supported_field_types: ['date', 'datetime'],
     className: "o_form_field_date",
     tagName: "span",
     render_edit: function() {
@@ -105,12 +107,14 @@ var FieldDate = InputField.extend({
 });
 
 var FieldDateTime = FieldDate.extend({
+    supported_field_types: ['datetime'],
     build_datepicker_widget: function() {
         return new datepicker.DateTimeWidget(this);
     },
 });
 
 var FieldMonetary = InputField.extend({
+    supported_field_types: ['float', 'monetary'],
     className: 'o_list_number',
     // FieldMonetary overrides format_value to ensure that the format_monetary
     // method is used.  This allows this widget to be used with other field
@@ -124,6 +128,7 @@ var FieldMonetary = InputField.extend({
 });
 
 var FieldSelection = AbstractField.extend({
+    supported_field_types: ['selection', 'many2one'],
     template: 'NewFieldSelection',
     events: _.extend({}, AbstractField.prototype.events, {
         'input': function() {
@@ -168,6 +173,7 @@ var FieldSelection = AbstractField.extend({
 });
 
 var FieldRadio = FieldSelection.extend({
+    supported_field_types: ['selection', 'many2one'],
     template: 'NewFieldRadio',
     events: _.extend({}, AbstractField.prototype.events, {
         'click input': function(event) {
@@ -194,6 +200,7 @@ var FieldRadio = FieldSelection.extend({
 });
 
 var FieldBoolean = AbstractField.extend({
+    supported_field_types: ['boolean'],
     className: 'o_field_boolean',
     events: _.extend({}, AbstractField.prototype.events, {
         change: function() {
@@ -245,12 +252,14 @@ var FieldBoolean = AbstractField.extend({
 });
 
 var FieldInteger = InputField.extend({
+    supported_field_types: ['integer'],
     is_set: function() {
         return this.value !== false;
     },
 });
 
 var FieldFloat = InputField.extend({
+    supported_field_types: ['float'],
     render_readonly: function() {
         var precision;
         var value = this.value;
@@ -271,6 +280,7 @@ var FieldFloat = InputField.extend({
 });
 
 var FieldFloatTime = FieldFloat.extend({
+    supported_field_types: ['float'],
     format_value: function(value) {
         var pattern = '%02d:%02d';
         if (value < 0) {
@@ -302,6 +312,7 @@ var FieldFloatTime = FieldFloat.extend({
 });
 
 var FieldText = AbstractField.extend({
+    supported_field_types: ['text'],
     events: _.extend({}, AbstractField.prototype.events, {
         'input': function() {
             this.set_value(this.$el.val());
@@ -333,6 +344,7 @@ var FieldText = AbstractField.extend({
 });
 
 var FieldHtml = InputField.extend({
+    supported_field_types: ['html'],
     text_to_html: function (text) {
         var value = text || "";
         if (value.match(/^\s*$/)) {
@@ -350,6 +362,7 @@ var FieldHtml = InputField.extend({
 
 // for integer fields
 var HandleWidget = AbstractField.extend({
+    supported_field_types: ['integer'],
     tagName: 'span',
     className: 'o_row_handle fa fa-arrows ui-sortable-handle',
     description: "",
@@ -359,6 +372,7 @@ var HandleWidget = AbstractField.extend({
 });
 
 var EmailWidget = InputField.extend({
+    supported_field_types: ['char'],
     prefix: 'mailto',
     init: function() {
         this._super.apply(this, arguments);
@@ -372,6 +386,7 @@ var EmailWidget = InputField.extend({
 });
 
 var UrlWidget = InputField.extend({
+    supported_field_types: ['char'],
     init: function() {
         this._super.apply(this, arguments);
         this.tagName = this.mode === 'readonly' ? 'a' : 'input';
@@ -491,6 +506,7 @@ var AbstractFieldBinary = AbstractField.extend({
 });
 
 var FieldBinaryImage = AbstractFieldBinary.extend({
+    supported_field_types: ['binary'],
     template: 'NewFieldBinaryImage',
     placeholder: "/web/static/src/img/placeholder.png",
     events: _.extend({}, AbstractFieldBinary.prototype.events, {
@@ -536,6 +552,7 @@ var FieldBinaryImage = AbstractFieldBinary.extend({
 });
 
 var FieldBinaryFile = AbstractFieldBinary.extend({
+    supported_field_types: ['binary'],
     template: 'NewFieldBinaryFile',
     events: _.extend({}, AbstractFieldBinary.prototype.events, {
         'click': function(event) {
@@ -582,6 +599,7 @@ var FieldBinaryFile = AbstractFieldBinary.extend({
 });
 
 var PriorityWidget = AbstractField.extend({
+    supported_field_types: ['integer'],
     className: "o_priority",
     events: {
         'mouseover > a': function(e) {
@@ -687,6 +705,7 @@ var KanbanStateWidget = AbstractField.extend({
 });
 
 var StatusBar = AbstractField.extend({
+    supported_field_types: ['selection', 'many2one'],
     template: "NewFieldStatus",
     className: 'o_statusbar_status',
     events: {
@@ -732,6 +751,7 @@ var StatusBar = AbstractField.extend({
 });
 
 var FieldBooleanButton = AbstractField.extend({
+    supported_field_types: ['boolean'],
     className: 'o_stat_info',
     render: function() {
         this.$el.empty();
@@ -765,6 +785,7 @@ var FieldBooleanButton = AbstractField.extend({
 });
 
 var FieldID = InputField.extend({
+    supported_field_types: ['integer'],
     init: function() {
         this._super.apply(this, arguments);
         this.mode = 'readonly';
@@ -772,6 +793,7 @@ var FieldID = InputField.extend({
 });
 
 var StatInfo = AbstractField.extend({
+    supported_field_types: ['integer', 'float'],
     render: function() {
         var options = {
             value: this.value || 0,
@@ -792,6 +814,7 @@ var StatInfo = AbstractField.extend({
 });
 
 var FieldPercentPie = AbstractField.extend({
+    supported_field_types: ['integer'],
     template: 'FieldPercentPie',
     start: function() {
         this.$left_mask = this.$('.o_mask').first();
@@ -818,6 +841,7 @@ var FieldPercentPie = AbstractField.extend({
 });
 
 var FieldProgressBar = AbstractField.extend({
+    supported_field_types: ['integer', 'float'],
     start: function() {
         if(this.progressbar) {
             this.progressbar.destroy();
@@ -850,6 +874,7 @@ var FieldProgressBar = AbstractField.extend({
     switching between a green bullet / gray bullet.
 */
 var FieldToggleBoolean = AbstractField.extend({
+    supported_field_types: ['boolean'],
     template: "toggle_button",
     events: {
         'click': 'set_toggle_button'

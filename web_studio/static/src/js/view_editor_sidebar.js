@@ -56,7 +56,6 @@ return Widget.extend(FieldManagerMixin, {
         this.mode = _.contains(['form', 'list'], view_type) ? 'new' : 'view';
         this.view_type = view_type;
         this.view_attrs = view_attrs || {};
-        this.field_widgets = Object.keys(field_registry.map).sort();
         this.model = model;
 
         this.fields = fields;
@@ -94,6 +93,19 @@ return Widget.extend(FieldManagerMixin, {
             // deep copy of field because the object is modified
             // in this widget and this shouldn't impact it
             var field = jQuery.extend(true, {}, options.field);
+
+            // field_registry contains all widgets
+            // We want to filter these widgets based on field types
+            this.field_widgets = _.chain(field_registry.map)
+                .pairs()
+                .filter(function(arr) {
+                    return _.contains(arr[1].prototype.supported_field_types, field.type) && !arr[0].includes('.');
+                })
+                .map(function(array) {
+                    return array[0];
+                })
+                .sortBy()
+                .value();
 
             this.default_value = options.default_value;
             this.attrs = field.__attrs;

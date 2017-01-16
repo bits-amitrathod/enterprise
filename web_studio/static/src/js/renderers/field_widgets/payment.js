@@ -10,6 +10,7 @@ var QWeb = core.qweb;
 
 
 var ShowPaymentLineWidget = AbstractField.extend({
+    supported_field_types: ['text'],
     render: function() {
         var self = this;
         var info = JSON.parse(this.value);
