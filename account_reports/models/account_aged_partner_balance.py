@@ -11,6 +11,7 @@ class report_account_aged_partner(models.AbstractModel):
     _inherit = 'account.report'
 
     filter_date = {'date': '', 'filter': 'today'}
+    filter_unfold_all = False
 
     def get_columns_name(self, options):
         columns = [{}]

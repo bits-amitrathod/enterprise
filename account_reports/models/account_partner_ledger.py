@@ -15,6 +15,7 @@ class ReportPartnerLedger(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
     filter_cash_basis = False
     filter_all_entries = False
+    filter_unfold_all = False
     filter_account_type = [{'id': 'receivable', 'name': _('Receivable'), 'selected': False}, {'id': 'payable', 'name': _('Payable'), 'selected': False}] 
     #TODO add support for partner_id
 

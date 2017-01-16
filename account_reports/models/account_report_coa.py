@@ -15,6 +15,7 @@ class report_account_coa(models.AbstractModel):
     filter_cash_basis = False
     filter_all_entries = False
     filter_hierarchy = False
+    filter_unfold_all = None
 
     def get_templates(self):
         templates = super(report_account_coa, self).get_templates()

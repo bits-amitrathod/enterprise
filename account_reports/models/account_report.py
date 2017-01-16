@@ -39,14 +39,13 @@ class AccountReportFootnote(models.Model):
 class AccountReport(models.AbstractModel):
     _name = 'account.report'
 
-    # AUTHORIZED_FILTERS = ['date', 'comparison', 'cash_basis', 'all_entries', 'hierarchy_3', 'journals', 'analytic', 'account_type', 'multi_company']
-
     filter_date = None
     filter_cash_basis = None
     filter_all_entries = None
     filter_comparison = None
     filter_journals = None
     filter_analytic = None
+    filter_unfold_all = None
 
     def _build_options(self, previous_options=None):
         if not previous_options:
@@ -132,6 +131,7 @@ class AccountReport(models.AbstractModel):
             if action.tag == 'account_report':
                 action = action.read()[0]
                 options['unfolded_lines'] = []
+                options['unfold_all'] = False
                 action.update({'options': options, 'ignore_session': 'read'})
                 return action
         return action_id
@@ -214,6 +214,7 @@ class AccountReport(models.AbstractModel):
         ctx.pop('id', '')
         action = self.env.ref('account_reports.action_account_report_general_ledger').read()[0]
         options['unfolded_lines'] = ['account_%s' % (params.get('id', ''),)]
+        options['unfold_all'] = False
         ctx.update({'model': 'account.general.ledger'})
         action.update({'options': options, 'context': ctx, 'ignore_session': 'read'})
         return action

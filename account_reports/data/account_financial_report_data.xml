@@ -17,6 +17,7 @@
             <field name="name">Profit and Loss</field>
             <field name="debit_credit" eval="False"/>
             <field name="analytic" eval="True"/>
+            <field name="unfold_all_filter" eval="True"/>
             <field name='parent_id' ref='account_reports_legal_statements_menu'/>
         </record>
         <record id="account_financial_report_detailed_net_profit0" model="account.financial.html.report.line">
@@ -129,6 +130,7 @@
             <field name="debit_credit" eval="False"/>
             <field name="date_range" eval="False"/>
             <field name="analytic" eval="True"/>
+            <field name="unfold_all_filter" eval="True"/>
             <field name='parent_id' ref='account_reports_legal_statements_menu'/>
         </record>
         <record id="account_financial_report_total_assets0" model="account.financial.html.report.line">
@@ -301,6 +303,7 @@
         <record id="account_financial_report_cashsummary0" model="account.financial.html.report">
             <field name="name">Cash Flow Statement</field>
             <field name="cash_basis" eval="True"/>
+            <field name="unfold_all_filter" eval="True"/>
             <field name='parent_id' ref='account_reports_legal_statements_menu'/>
         </record>
         <record id="account_financial_report_cashsummary_net_increase0" model="account.financial.html.report.line">

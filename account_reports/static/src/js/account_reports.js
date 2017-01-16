@@ -173,6 +173,9 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         this.$searchview_buttons.find('.js_account_report_bool_filter').click(function (event) {
             var option_value = $(this).data('filter');
             self.report_options[option_value] = !self.report_options[option_value];
+            if (option_value === 'unfold_all') {
+                self.unfold_all(self.report_options[option_value]);
+            }
             self.reload();
         });
         this.$searchview_buttons.find('.js_account_report_choice_filter').click(function (event) {
@@ -381,6 +384,16 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         else {
             return new Model(this.report_model).call('get_html', [self.financial_id, self.report_options, line.data('id')], {context: self.odoo_context}).then(function(result){
                 $(line).parent('tr').replaceWith(result);
+            });
+        }
+    },
+    unfold_all: function(bool) {
+        var self = this;
+        var lines = this.$el.find('.js_account_report_foldable');
+        self.report_options.unfolded_lines = [];
+        if (bool) {
+            _.each(lines, function(el) {
+                self.report_options.unfolded_lines.push($(el).data('id'));
             });
         }
     },

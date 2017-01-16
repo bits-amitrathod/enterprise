@@ -16,6 +16,7 @@ class report_account_general_ledger(models.AbstractModel):
     filter_all_entries = False
     filter_journals = True
     filter_analytic = True
+    filter_unfold_all = False
 
     def get_templates(self):
         templates = super(report_account_general_ledger, self).get_templates()

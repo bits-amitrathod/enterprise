@@ -23,6 +23,7 @@ class ReportAccountFinancialReport(models.Model):
     comparison = fields.Boolean('Allow comparison', default=True, help='display the comparison filter')
     cash_basis = fields.Boolean('Use cash basis', help='if true, report will always use cash basis, if false, user can choose from filter inside the report')
     analytic = fields.Boolean('Allow analytic filter', help='display the analytic filter')
+    unfold_all_filter = fields.Boolean('Show unfold all filter', help='display the unfold all options in report')
     company_id = fields.Many2one('res.company', string='Company')
     menuitem_created = fields.Boolean("Menu Has Been Created", default=False)
     parent_id = fields.Many2one('ir.ui.menu')
@@ -54,6 +55,8 @@ class ReportAccountFinancialReport(models.Model):
         self.filter_cash_basis = False
         if self.cash_basis:
             self.filter_cash_basis = None
+        if self.unfold_all_filter:
+            self.filter_unfold_all = False
         self.filter_all_entries = False
         self.filter_analytic = True if self.analytic else None
         return super(ReportAccountFinancialReport, self).get_options(previous_options)
