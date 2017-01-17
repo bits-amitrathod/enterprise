@@ -53,6 +53,10 @@ var KanbanRecordEditor = KanbanRecord.extend({
     },
     start: function() {
         this.undelegateEvents();
+        this.$el.click(function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+        });
         return this._super.apply(this, arguments);
     },
     add_fields: function() {
