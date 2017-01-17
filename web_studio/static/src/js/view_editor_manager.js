@@ -208,7 +208,7 @@ return Widget.extend({
         } else {
             def = datamodel.load(this.model, {
                 fields: fields,
-                domain: [['id', 'in', this.ids]],
+                domain: this.ids.length ? [['id', 'in', this.ids]] : [],
                 grouped_by: [],
                 limit: 20,
                 many2manys: [], // fixme: find many2manys
