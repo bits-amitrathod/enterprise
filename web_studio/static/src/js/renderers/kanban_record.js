@@ -13,6 +13,7 @@ var utils = require('web.utils');
 var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
+var _t = core._t;
 
 var KanbanRecord = Widget.extend({
     template: 'KanbanView.record',
@@ -97,9 +98,16 @@ var KanbanRecord = Widget.extend({
             var field_name = $field.attr("name");
             var field_widget = $field.attr("widget");
             if (field_widget) {
-                var widget = self.add_widget($field, field_name, field_widget);
-                self.sub_widgets.push(widget);
-                self._set_field_display(widget.$el, field_name);
+                if (field_registry.get(field_widget)) {
+                    var widget = self.add_widget($field, field_name, field_widget);
+                    self.sub_widgets.push(widget);
+                    self._set_field_display(widget.$el, field_name);
+                } else {
+                    // the widget is not implemented
+                    $field.replaceWith($('<span>', {
+                        text: _.str.sprintf(_t('[No widget %s]'), field_widget),
+                    }));
+                }
             } else {
                 var $result = self.add_field($field, field_name);
                 self._set_field_display($result, field_name);
