@@ -67,6 +67,7 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
             values.relation_field_id = this.many2one_field.value;
         } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
             values.relation_id = this.many2one_model.value;
+            values.field_description = this.many2one_model.m2o_value;
         } else if (this.ttype === 'selection') {
             var selection_list = _.map(this.$('#selectionItems').val().split("\n"),function(value) {
                 value = value.trim();
