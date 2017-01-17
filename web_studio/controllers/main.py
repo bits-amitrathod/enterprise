@@ -930,9 +930,9 @@ class WebStudioController(http.Controller):
 
         # From this point, the model is either a custom model or inherits from mail.thread
         model = request.env['ir.model'].search([('model', '=', operation['model'])])
-        if model.state == 'manual' and not model.mail_thread:
+        if model.state == 'manual' and not model.is_mail_thread:
             # Activate mail.thread inheritance on the custom model
-            model.write({'mail_thread': True})
+            model.write({'is_mail_thread': True})
 
         # Remove message_ids and message_follower_ids if already defined in form view
         if operation['remove_message_ids']:
