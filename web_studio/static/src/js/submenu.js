@@ -72,7 +72,7 @@ var SubMenu = Widget.extend({
             }).then(function (result) {
                 result.keep_state = true;
                 return self.replace_action(result, title, {
-                    replace_last_action: true,
+                    clear_breadcrumbs: true,
                     disable_edition: true,
                 });
             });
