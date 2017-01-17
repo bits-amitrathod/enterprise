@@ -215,6 +215,7 @@ WebClient.include({
         var action = options.action;
         var action_options = {
             clear_breadcrumbs: true,
+            disable_edition: true,
         };
         var def;
         this.studio_on = true;
@@ -245,7 +246,10 @@ WebClient.include({
             return $.Deferred().reject();
         }
 
-        if (this.studio_on && action.xml_id) {
+        // the option `disable_edition` can be used to tell the webclient that
+        // the action is not a navigation we want to navigation in Studio with, but
+        // it's an action we want to open normally (because it is used by Studio).
+        if (this.studio_on && !options.disable_edition) {
             // we are navigating inside Studio so the studio action manager is used
             return this.studio_action_manager.do_action.apply(this, arguments);
         }
