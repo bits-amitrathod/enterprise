@@ -569,11 +569,10 @@ class AccountInvoice(models.Model):
             'show_domicile': self.show_domicile,
         }
 
-        currency_model_ctx = self.env['res.currency'].with_context(
-            company_id=self.company_id.id, date=self.date_invoice)
-        # NOTE: We are not supporting company.currency != MXN
-        values['rate'] = currency_model_ctx._get_conversion_rate(
-            self.currency_id, self.company_id.currency_id)
+        ctx = dict(company_id=self.company_id.id, date=self.date_invoice)
+        mxn = self.env.ref('base.MXN').with_context(ctx)
+        invoice_currency = self.currency_id.with_context(ctx)
+        values['rate'] = '%0.*f' % (precision_digits, invoice_currency.compute(1, mxn))
 
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
 

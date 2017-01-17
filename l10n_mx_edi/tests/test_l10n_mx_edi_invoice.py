@@ -156,18 +156,18 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         self.set_currency_rates(mxn_rate=1, usd_rate=1/usd_rate)
         values = invoice._l10n_mx_edi_create_cfdi_values()
-        self.assertEqual(values['rate'], usd_rate)
+        self.assertEqual(float(values['rate']), usd_rate)
 
         # -----------------------
         # Testing company.mxn.rate=value and invoice.usd.rate=1
         # -----------------------
         self.set_currency_rates(mxn_rate=usd_rate, usd_rate=1)
         values = invoice._l10n_mx_edi_create_cfdi_values()
-        self.assertEqual(values['rate'], usd_rate)
+        self.assertEqual(float(values['rate']), usd_rate)
 
         # -----------------------
         # Testing using MXN currency for invoice and company
         # -----------------------
         invoice.currency_id = self.mxn.id
         values = invoice._l10n_mx_edi_create_cfdi_values()
-        self.assertEqual(values['rate'], 1)
+        self.assertEqual(float(values['rate']), 1)
