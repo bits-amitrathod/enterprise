@@ -46,7 +46,10 @@ class WebStudioController(http.Controller):
             'views': [[False, 'list'], [False, 'form']],
             'target': 'current',
             'domain': [],
-            'context': {'search_default_model_id': model.id},
+            'context': {
+                'default_model_id': model.id,
+                'search_default_model_id': model.id,
+            },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new access control list.
             </p>
@@ -61,7 +64,10 @@ class WebStudioController(http.Controller):
             'views': [[False, 'list'], [False, 'form']],
             'target': 'current',
             'domain': [],
-            'context': {'search_default_model_id': model.id},
+            'context': {
+                'default_model_id': model.id,
+                'search_default_model_id': model.id,
+            },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new automated action.
             </p>
@@ -70,7 +76,7 @@ class WebStudioController(http.Controller):
 
     def _get_studio_action_filters(self, model, **kwargs):
         return {
-            'name': _('Search Filters'),
+            'name': _('Filter Rules'),
             'type': 'ir.actions.act_window',
             'res_model': 'ir.filters',
             'views': [[False, 'list'], [False, 'form']],
@@ -78,7 +84,7 @@ class WebStudioController(http.Controller):
             'domain': [],
             'context': {  # model_id is a Selection on ir.filters
                 'default_model_id': model.model,
-                'search_default_model_id': model.model
+                'search_default_model_id': model.model,
             },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new filter.
@@ -94,7 +100,10 @@ class WebStudioController(http.Controller):
             'views': [[False, 'kanban'], [False, 'form']],
             'target': 'current',
             'domain': [],
-            'context': {'search_default_model': model.model},
+            'context': {
+                'default_model': model.model,
+                'search_default_model': model.model,
+            },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new report.
             </p>
