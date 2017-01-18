@@ -5,6 +5,7 @@ import xlsxwriter
 import json
 import StringIO
 import logging
+import lxml.html
 from odoo import models, fields, api, _
 from datetime import timedelta, datetime, date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -540,17 +541,32 @@ class AccountReport(models.AbstractModel):
             header = self.env['report'].render("report.internal_layout", values=rcontext,)
             footer = ''
             spec_paperformat_args = {'data-report-margin-top': 10, 'data-report-header-spacing': 10}
+            header = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=header),)
         else:
             rcontext.update({
                     'css': '',
                     'o': self.env.user,
                     'res_company': self.env.user.company_id,
                 })
-            header = self.env['report'].render("report.external_layout_header", values=rcontext,)
-            footer = self.env['report'].render("report.external_layout_footer", values=rcontext,)
-            footer = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=footer),)
+            header = self.env['report'].render("report.external_layout", values=rcontext,)
             spec_paperformat_args = {}
-        header = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=header),)
+            # parse header as new header contains header, body and footer
+            try:
+                root = lxml.html.fromstring(header)
+                match_klass = "//div[contains(concat(' ', normalize-space(@class), ' '), ' {} ')]"
+
+                for node in root.xpath(match_klass.format('header')):
+                    headers = lxml.html.tostring(node)
+                    headers = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=headers),)
+
+                for node in root.xpath(match_klass.format('footer')):
+                    footer = lxml.html.tostring(node)
+                    footer = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=footer),)
+
+            except lxml.etree.XMLSyntaxError:
+                headers = header
+                footer = ''
+            header = headers
 
         landscape = False
         if len(self.with_context(print_mode=True).get_columns_name(options)) > 5:

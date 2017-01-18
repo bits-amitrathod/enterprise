@@ -25,13 +25,8 @@ class account_report_followup(models.AbstractModel):
         if options.get('partner_id') and options.get('partner_followup_level') and options['partner_followup_level'].get(options.get('partner_id')):
             followup_line = self.env['account_followup.followup.line'].browse(options['partner_followup_level'][options['partner_id']][0])
             return followup_line
-        # elif options.get('partner_id') and options.get('partner_followup_level'):
-            # return False
         else:
             return False
-            # partners_data = self.env['res.partner'].get_partners_in_need_of_action_and_update()
-            # options['partner_followup_level'] = partners_data
-            # return self.get_followup_line(options)
 
     def get_default_summary(self, options):
         followup_line = self.get_followup_line(options)
@@ -39,7 +34,7 @@ class account_report_followup(models.AbstractModel):
             partner = self.env['res.partner'].browse(options['partner_id'])
             summary = followup_line.description.replace('\n', '<br />')
             try:
-                formatted_summary = summary % {'partner_name': partner.name,
+                summary = summary % {'partner_name': partner.name,
                                                'date': time.strftime('%Y-%m-%d'),
                                                'user_signature': self.env.user.signature or '',
                                                'company_name': partner.parent_id.name}
