@@ -7,7 +7,7 @@
     'sequence': 58,
     'summary': 'Ticketing, Support, Livechat',
     'depends': [
-        'helpdesk',
+        'website_helpdesk',
         'website_livechat',
     ],
     'description': """
