@@ -716,7 +716,7 @@ class HelpdeskTicket(models.Model):
         self.ensure_one()
         if not self.user_id:
             take_action = self._notification_link_helper('assign')
-            helpdesk_actions = [{'url': take_action, 'title': _('I take it')}]
+            helpdesk_actions = [{'url': take_action, 'title': _('Assign to me')}]
         else:
             helpdesk_actions = []
 
