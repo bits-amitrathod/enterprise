@@ -91,11 +91,15 @@ return Widget.extend(FieldManagerMixin, {
         }
 
         if (options && options.field) {
+            // deep copy of field because the object is modified
+            // in this widget and this shouldn't impact it
+            var field = jQuery.extend(true, {}, options.field);
+
             this.default_value = options.default_value;
-            this.attrs = options.field.__attrs;
+            this.attrs = field.__attrs;
             this.element = 'field';
-            this.field_parameters = options.field;
-            this.modifiers = JSON.parse(options.field.__attrs.modifiers);
+            this.field_parameters = field;
+            this.modifiers = JSON.parse(field.__attrs.modifiers);
             this.compute_field_attrs();
         } else if (options && options.node.attrs.class === 'oe_chatter') {
             this.element = 'chatter';
