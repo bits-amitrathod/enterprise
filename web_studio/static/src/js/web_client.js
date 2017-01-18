@@ -217,7 +217,7 @@ WebClient.include({
             clear_breadcrumbs: true,
             disable_edition: true,
         };
-        var def;
+        var defs = [];
         this.studio_on = true;
         this.edited_action = action;
         if (action) {
@@ -225,13 +225,18 @@ WebClient.include({
             var index = action.widget.dataset.index;
             this.studio_ids = action.widget.dataset.ids;
             this.studio_id = index ? this.studio_ids[index] : (this.studio_ids[0] || false);
-            action_options.active_view = options.active_view || action.get_active_view();
+            if (options.active_view) {
+                action_options.active_view = options.active_view;
+                defs.push(action.widget.switch_mode(options.active_view));
+            } else {
+                action_options.active_view = action.get_active_view();
+            }
             action_options.action = action.action_descr;
-            def = session.rpc('/web_studio/chatter_allowed', {
+            defs.push(session.rpc('/web_studio/chatter_allowed', {
                 model: action_options.action.res_model,
-            });
+            }));
         }
-        return $.when(def).then(function(chatter_allowed) {
+        return $.when(defs).then(function(chatter_allowed) {
             self.studio_chatter_allowed = chatter_allowed;
             // grep: action_web_studio_app_creator, action_web_studio_main
             return self.do_action('action_web_studio_' + mode, action_options);
