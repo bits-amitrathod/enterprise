@@ -11,7 +11,7 @@ from datetime import datetime
 from OpenSSL import crypto
 from pytz import timezone
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, tools
 from odoo.exceptions import ValidationError
 from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -98,13 +98,26 @@ class Certificate(models.Model):
         help='The date on which the certificate expires',
         readonly=True)
 
+    @api.model
+    @tools.ormcache('cer')
+    def get_cer_pem(self, cer):
+        cer = base64.decodestring(cer)
+        cer_pem = convert_cer_to_pem(cer)
+        return cer_pem
+
+    @api.model
+    @tools.ormcache('key', 'password')
+    def get_key_pem(self, key, password):
+        key = base64.decodestring(key)
+        key_pem = convert_key_cer_to_pem(key, password)
+        return key_pem
+
     @api.multi
     def get_data(self):
         '''Return the content (b64 encoded) and the certificate decrypted
         '''
         self.ensure_one()
-        cer = base64.decodestring(self.content)
-        cer_pem = convert_cer_to_pem(cer)
+        cer_pem = self.get_cer_pem(self.content)
         certificate = crypto.load_certificate(crypto.FILETYPE_PEM, cer_pem)
         for to_del in ['\n', ssl.PEM_HEADER, ssl.PEM_FOOTER]:
             cer_pem = cer_pem.replace(to_del, '')
@@ -135,8 +148,7 @@ class Certificate(models.Model):
         '''Encrypt the cadena using the private key.
         '''
         self.ensure_one()
-        key = base64.decodestring(self.key)
-        key_pem = convert_key_cer_to_pem(key, self.password)
+        key_pem = self.get_key_pem(self.key, self.password)
         private_key = crypto.load_privatekey(crypto.FILETYPE_PEM, key_pem)
         cadena_crypted = crypto.sign(private_key, cadena, 'sha1')
         return base64.encodestring(cadena_crypted).replace('\n', '').replace('\r', '')
@@ -169,8 +181,25 @@ class Certificate(models.Model):
                 raise ValidationError(_('The certificate is expired since %s') % record.date_end)
             # Check the pair key/password
             try:
-                key = base64.decodestring(record.key)
-                key_pem = convert_key_cer_to_pem(key, record.password)
+                key_pem = self.get_key_pem(record.key, record.password)
                 crypto.load_privatekey(crypto.FILETYPE_PEM, key_pem)
             except Exception as e:
                 raise ValidationError(_('The certificate key and/or password is/are invalid.'))
+
+    @api.model
+    def create(self, data):
+        res = super(Certificate, self).create(data)
+        self.clear_caches()
+        return res
+
+    @api.multi
+    def write(self, data):
+        res = super(Certificate, self).write(data)
+        self.clear_caches()
+        return res
+
+    @api.multi
+    def unlink(self):
+        res = super(Certificate, self).unlink()
+        self.clear_caches()
+        return res
