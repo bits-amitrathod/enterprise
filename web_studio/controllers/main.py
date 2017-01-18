@@ -669,7 +669,13 @@ class WebStudioController(http.Controller):
             expr = ''.join(['/%s[%s]' % (parent['tag'], parent['indice']) for parent in node.get('xpath_info')])
         else:
             # Format of expr is //tag[@attr1_name=attr1_value][@attr2_name=attr2_value][...]
-            expr = '//' + node['tag'] + ''.join(['[@%s=\'%s\']' % (k, v) for k, v in node.get('attrs', {}).items()])
+            expr = '//' + node['tag']
+            for k, v in node.get('attrs', {}).items():
+                if k == 'class':
+                    # Special case for classes which usually contain multiple values
+                    expr += '[contains(@%s,\'%s\')]' % (k, v)
+                else:
+                    expr += '[@%s=\'%s\']' % (k, v)
 
         # Special case when we have <label/><div/> instead of <field>
         # TODO: This is very naive, couldn't the js detect such a situation and
