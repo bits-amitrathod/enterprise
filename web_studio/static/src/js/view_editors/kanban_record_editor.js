@@ -100,7 +100,20 @@ var KanbanRecordEditor = KanbanRecord.extend({
         }
 
         // add the dropdown hook
-        if (!this.$('.o_dropdown_kanban').length) {
+        var $dropdown = this.$('.o_dropdown_kanban');
+        if ($dropdown.length) {
+            $dropdown.attr('data-node-id', this.node_id++);
+            // bind handler on dropdown clicked to be able to remove it
+            var node = {
+                tag: 'div',
+                attrs: {class: 'o_dropdown_kanban'},
+            };
+            $dropdown.click(function() {
+                self.selected_node_id = $dropdown.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
+            });
+            this._set_style_events($dropdown);
+        } else {
             var $top_left_hook = $('<div>')
                 .addClass('o_web_studio_add_dropdown o_dropdown_kanban dropdown')
                 .append($('<a>', {
@@ -124,7 +137,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
         }
 
         // add the priority hook
-        if (!this.$('.oe_kanban_bottom_left').length) {
+        if (!this.$('.o_priority').length) {
             var $priority_hook = $('<div>')
                 .addClass('o_web_studio_add_priority oe_kanban_bottom_left')
                 .append($('<span>', {
