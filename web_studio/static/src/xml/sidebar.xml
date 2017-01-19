@@ -384,6 +384,14 @@
             </div>
             <label for="bold">Bold</label>
         </div>
+        <div t-if="widget.view_type === 'kanban'" class="o_web_studio_sidebar_select">
+            <label for="display">Display</label>
+            <select id="display" name="display">
+                <option t-att-selected="!widget.attrs.display ? 'selected' : undefined" value="false">Default</option>
+                <option t-att-selected="widget.attrs.display === 'right' ? 'selected' : undefined" value="right">Pull Right</option>
+                <option t-att-selected="widget.attrs.display === 'full' ? 'selected' : undefined" value="full">Full Width</option>
+            </select>
+        </div>
         <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_checkbox">
             <t t-set="attrs_readonly" t-value="widget.modifiers.readonly and widget.modifiers.readonly !== true" />
             <div t-att-class="attrs_readonly ? 'o_web_studio_checkbox_inactive' : undefined">

@@ -388,9 +388,6 @@ return Widget.extend({
             case 'page':
                 this._add_page(type, node, xpath_info, position);
                 break;
-            case 'separator':
-                this._add_element(type, node, xpath_info, position, 'br');
-                break;
             case 'field':
                 var field_description = event.data.field_description;
                 this._add_field(type, field_description, node, xpath_info, position, new_attrs);

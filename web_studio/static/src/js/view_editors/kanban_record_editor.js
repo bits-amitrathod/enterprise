@@ -39,7 +39,9 @@ var KanbanRecordEditor = KanbanRecord.extend({
                         structure: ui.draggable.data('structure'),
                         field_description: ui.draggable.data('field_description'),
                         node: hook.node,
-                        new_attrs: ui.draggable.data('new_attrs'),
+                        new_attrs: _.defaults(ui.draggable.data('new_attrs'), {
+                            display: 'full',
+                        }),
                         position: hook.position,
                     };
                     ui.helper.removeClass('ui-draggable-helper-ready');
@@ -239,10 +241,6 @@ var KanbanRecordEditor = KanbanRecord.extend({
                 hook_id: hook_id,
             }
         });
-        $hook.append($('<span>', {
-            class: 'o_web_studio_hook_separator',
-        }));
-
         return $hook;
     },
     _set_style_events: function($el) {

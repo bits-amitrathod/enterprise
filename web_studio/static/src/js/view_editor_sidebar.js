@@ -143,7 +143,7 @@ return Widget.extend(FieldManagerMixin, {
         var $sidebar_content = this.$('.o_web_studio_sidebar_content');
 
         // Components
-        if (_.contains(['kanban', 'form'], this.view_type)) {
+        if (_.contains(['form'], this.view_type)) {
             widget_classes = form_component_widget_registry.get(this.view_type + '_components');
             form_widgets = widget_classes.map(function(FormComponent) {
                 return new FormComponent(self);
