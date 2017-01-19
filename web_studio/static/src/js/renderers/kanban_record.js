@@ -99,8 +99,10 @@ var KanbanRecord = Widget.extend({
             if (field_widget) {
                 var widget = self.add_widget($field, field_name, field_widget);
                 self.sub_widgets.push(widget);
+                self._set_field_display(widget.$el, field_name);
             } else {
-                self.add_field($field, field_name);
+                var $result = self.add_field($field, field_name);
+                self._set_field_display($result, field_name);
             }
         });
         // We use boostrap tooltips for better and faster display
@@ -109,8 +111,7 @@ var KanbanRecord = Widget.extend({
 
     add_field: function($field, field_name) {
         var field = this.record[field_name];
-        var tag = field.__attrs.bold ? '<strong>' : '<span>';
-        var $result = $(tag, {
+        var $result = $('<span>', {
             text: field.value,
         });
         $field.replaceWith($result);
@@ -118,14 +119,26 @@ var KanbanRecord = Widget.extend({
     },
 
     add_widget: function ($field, field_name, field_widget) {
-        var field = this.record[field_name];
         var Widget = field_registry.get(field_widget);
         var widget = new Widget(this, field_name, this.state, this.options);
         widget.replace($field);
-        if (field.__attrs.bold) {
-            widget.$el.addClass('o_kanban_bold');
-        }
         return widget;
+    },
+
+    _set_field_display: function($el, field_name) {
+        var field = this.record[field_name];
+
+        // attribute display
+        if (field.__attrs.display === 'right') {
+            $el.addClass('pull-right');
+        } else if (field.__attrs.display === 'full') {
+            $el.addClass('o_text_block');
+        }
+
+        // attribute bold
+        if (field.__attrs.bold) {
+            $el.addClass('o_text_bold');
+        }
     },
 
     transform_record: function(record) {
