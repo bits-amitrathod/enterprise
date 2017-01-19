@@ -903,21 +903,22 @@ class WebStudioController(http.Controller):
         if not model_id:
             return
 
-        if not request.env['ir.model.fields'].search([('model_id', '=', model_id.id), ('name', '=', 'x_color'), ('ttype', '=', 'integer')]):
-            # create a field x_color if it doesn't exist in the model
+        color_field_name = 'x_color'
+        if not request.env['ir.model.fields'].search([('model_id', '=', model_id.id), ('name', '=', color_field_name), ('ttype', '=', 'integer')]):
+            # create a field if it doesn't exist in the model
             request.env['ir.model.fields'].create({
                 'model': model,
                 'model_id': model_id.id,
-                'name': 'x_color',
+                'name': color_field_name,
                 'field_description': 'Color',
                 'ttype': 'integer',
             })
 
-        # add field x_color at the beginning
+        # add the field at the beginning
         etree.SubElement(arch, 'xpath', {
             'expr': 'templates',
             'position': 'before',
-        }).append(etree.Element('field', {'name': 'x_color'}))
+        }).append(etree.Element('field', {'name': color_field_name}))
 
         # add the dropdown before the rest
         dropdown_node = etree.fromstring("""
@@ -926,28 +927,27 @@ class WebStudioController(http.Controller):
                     <span class="fa fa-bars fa-lg"/>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li><ul class="oe_kanban_colorpicker" data-field="x_color"/></li>
+                    <li><ul class="oe_kanban_colorpicker" data-field="%(field)s"/></li>
                 </ul>
             </div>
-        """)
+        """ % {'field': color_field_name})
         etree.SubElement(arch, 'xpath', {
             'expr': '//div/*[1]',
             'position': 'before',
         }).append(dropdown_node)
 
-        # set the corresponding class on the kanban record
+        # set the corresponding color attribute on the kanban record
         xpath_node = etree.SubElement(arch, 'xpath', {
             'expr': '//div',
             'position': 'attributes',
         })
-        xml_node = xpath_node.find('attribute[@name="%s"]' % ('t-attf-class'))
-        new_class = 'oe_kanban_color_#{kanban_getcolor(record.x_color.raw_value)} oe_kanban_card oe_kanban_global_click'
+        xml_node = xpath_node.find('attribute[@name="%s"]' % ('color'))
         if xml_node is None:
-            xml_node = etree.Element('attribute', {'name': 't-attf-class'})
-            xml_node.text = new_class
+            xml_node = etree.Element('attribute', {'name': 'color'})
+            xml_node.text = color_field_name
             xpath_node.insert(0, xml_node)
         else:
-            xml_node.text = new_class
+            xml_node.text = color_field_name
 
     def _operation_kanban_image(self, arch, operation, model):
         """ Insert a image and its corresponding needs in an kanban view arch
