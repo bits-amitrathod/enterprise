@@ -51,7 +51,8 @@ return KanbanRenderer.extend({
         // overwrite this method to use the KanbanRecordEditor
         var self = this;
         _.each(this.state.data, function (record) {
-            self.kanban_record = new KanbanRecordEditor(self, record, self.record_options, self.all_fields);
+            var is_dashboard = self.$el.hasClass('o_kanban_dashboard');
+            self.kanban_record = new KanbanRecordEditor(self, record, self.record_options, self.all_fields, is_dashboard);
             self.widgets.push(self.kanban_record);
             self.kanban_record.appendTo(fragment);
         });

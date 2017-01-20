@@ -10,11 +10,12 @@ var _t = core._t;
 var KanbanRecordEditor = KanbanRecord.extend({
     nearest_hook_tolerance: 50,
 
-    init: function(parent, state, options, all_fields) {
+    init: function(parent, state, options, all_fields, is_dashboard) {
         this._super.apply(this, arguments);
         this.node_id = 1;
         this.hook_nodes = [];
         this.all_fields = all_fields;
+        this.is_dashboard = is_dashboard;
     },
     renderElement: function() {
         var self = this;
@@ -63,7 +64,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
         this._super.apply(this, arguments);
 
         // the layout of the special hooks are broken in the kanban dashboards
-        if (!$('.o_kanban_dashboard').length) {
+        if (!this.is_dashboard) {
             this._add_special_hooks();
         }
     },
