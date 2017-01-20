@@ -161,7 +161,14 @@
         </a>
         <ul class="dropdown-menu o_filters_menu" role="menu">
             <t t-foreach="options['journals']" t-as="j">
-                <li t-att-title="j.get('name')+ '-' + j.get('code')" t-att-data-id="j.get('id')" data-filter="journals" class="js_account_report_choice_filter"><a><t t-esc="j.get('name')"/></a></li>
+                <t t-if="j.get('id') == 'divider'">
+                    <li class="divider"></li>
+                    <li><b style="margin-left: 5px;"><t t-esc="j.get('name')"/></b></li>
+                    <li class="divider"></li>
+                </t>
+                <t t-if="j.get('id') != 'divider'">
+                    <li t-att-title="j.get('name')+ '-' + j.get('code')" t-att-data-id="j.get('id')" data-filter="journals" class="js_account_report_choice_filter"><a><t t-esc="j.get('name')"/></a></li>
+                </t>
             </t>
         </ul>
     </template>

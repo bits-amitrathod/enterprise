@@ -241,8 +241,8 @@ class AccountReport(models.AbstractModel):
             ctx['journal_ids'] = [j.get('id') for j in options.get('journals') if j.get('selected')]
         company_ids = []
         if options.get('multi_company'):
-            company_ids = [c.id for c in options['multi_company'] if c.selected]
-            company_ids = company_ids if len(company_ids) > 0 else [c.id for c in options['multi_company']]
+            company_ids = [c.get('id') for c in options['multi_company'] if c.get('selected')]
+            company_ids = company_ids if len(company_ids) > 0 else [c.get('id') for c in options['multi_company']]
         ctx['company_ids'] = len(company_ids) > 0 and company_ids or [self.env.user.company_id.id]
         if options.get('analytic_accounts'):
             ctx['analytic_account_ids'] = self.env['account.analytic.account'].browse([int(acc) for acc in options['analytic_accounts']])
@@ -349,7 +349,16 @@ class AccountReport(models.AbstractModel):
         return existing_manager
 
     def get_journals(self):
-        return [{'id': c.id, 'name': c.name, 'code': c.code, 'type': c.type, 'selected': False} for c in self.env['account.journal'].search([])]
+        journals_read = self.env['account.journal'].search([('company_id', 'in', self.env.user.company_ids.ids or [self.env.user.company_id.id])], order="company_id, name")
+        journals = []
+        previous_company = False
+        for c in journals_read:
+            if c.company_id != previous_company:
+                journals.append({'id': 'divider', 'name': c.company_id.name})
+                previous_company = c.company_id
+            journals.append({'id': c.id, 'name': c.name, 'code': c.code, 'type': c.type, 'selected': False})
+        return journals
+
 
     def format_value(self, value, currency=False):
         if self.env.context.get('no_format'):
