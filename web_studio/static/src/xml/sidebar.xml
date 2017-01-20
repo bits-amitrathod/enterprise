@@ -185,7 +185,7 @@
                 <div class="o_web_studio_sidebar_select">
                     <label for="date_start">Start Date Field</label>
                     <select id="date_start" name="date_start">
-                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="_.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_start ===  field.key ? 'selected' : undefined" t-att-value="field.key">
+                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="field.store and _.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_start ===  field.key ? 'selected' : undefined" t-att-value="field.key">
                             <t t-esc="field.string"/> <span t-if="widget.debug">(<t t-esc="field.key"/>)</span>
                         </option>
                     </select>
@@ -194,7 +194,7 @@
                     <label for="date_stop">Stop Date Field</label>
                     <select id="date_stop" name="date_stop">
                         <option t-att-selected="widget.view_attrs.date_stop ? undefined : 'selected'"></option>
-                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="_.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_stop ===  field.key ? 'selected' : undefined" t-att-value="field.key">
+                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="field.store and _.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_stop ===  field.key ? 'selected' : undefined" t-att-value="field.key">
                             <t t-esc="field.string"/> <span t-if="widget.debug">(<t t-esc="field.key"/>)</span>
                         </option>
                     </select>
@@ -242,7 +242,7 @@
                 <div class="o_web_studio_sidebar_select">
                     <label for="date_start">Start Date Field</label>
                     <select id="date_start" name="date_start">
-                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="_.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_start ===  field.key ? 'selected' : undefined" t-att-value="field.key">
+                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="field.store and _.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_start ===  field.key ? 'selected' : undefined" t-att-value="field.key">
                             <t t-esc="field.string"/> <span t-if="widget.debug">(<t t-esc="field.key"/>)</span>
                         </option>
                     </select>
@@ -251,7 +251,7 @@
                     <label for="date_stop">Stop Date Field</label>
                     <select id="date_stop" name="date_stop">
                         <option t-att-selected="widget.view_attrs.date_stop ? undefined : 'selected'"></option>
-                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="_.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_stop ===  field.key ? 'selected' : undefined" t-att-value="field.key">
+                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="field.store and _.contains(['date', 'datetime'], field.type)" t-att-selected="widget.view_attrs.date_stop ===  field.key ? 'selected' : undefined" t-att-value="field.key">
                             <t t-esc="field.string"/> <span t-if="widget.debug">(<t t-esc="field.key"/>)</span>
                         </option>
                     </select>
@@ -318,7 +318,6 @@
                     <label for="display_quantity">Display Count</label>
                 </div>
             </t>
-
             <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
                 <t t-call="web_studio.Sidebar.Parameters"/>
                 <t t-call="web_studio.Sidebar.XMLEditor"/>
