@@ -21,6 +21,7 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
+                                    <th>Code</th>
                                     <th>Raw Materials</th>
                                     <th class="text-right">Quantity</th>
                                     <th class="text-right">Unit Cost</th>
@@ -29,6 +30,9 @@
                             </thead>
                             <tbody>
                                 <tr t-foreach="line['raw_material_moves']" t-as="m">
+                                    <td>
+                                        <span t-esc="m['product_id'].default_code or ''"/>
+                                    </td>
                                     <td>
                                         <span t-att-res-id="m['bom_line_id']" res-model="mrp.bom.line" view-type="form" t-esc="m['product_id'].name"/>
                                     </td>
