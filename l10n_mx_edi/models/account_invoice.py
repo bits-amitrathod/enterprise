@@ -6,6 +6,7 @@ from itertools import groupby
 from lxml import etree
 from lxml.objectify import fromstring
 from suds.client import Client
+from werkzeug import url_encode
 
 from odoo import _, api, fields, models
 from odoo.tools.misc import file_open
@@ -774,7 +775,7 @@ class AccountInvoice(models.Model):
         :rtype: tuple
         """
         url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
-        parameters = '"?re=%s&rr=%s&tt=%s&id=%s' % (emitter, receiver, amount, uuid)
+        parameters = url_encode({'re': emitter, 'rr': receiver, 'tt': amount, 'id': uuid})
         try:
             return Client(url).service.Consulta(parameters).Estado, False
         except Exception as e:
