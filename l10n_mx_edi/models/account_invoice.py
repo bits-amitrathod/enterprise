@@ -519,6 +519,9 @@ class AccountInvoice(models.Model):
         if (customer.country_id == self.env.ref('base.mx') or not customer.country_id) and not customer.vat:
             # Following Question 4 in legal Document.
             rfc = 'XAXX010101000'
+            self.message_post(
+                body=_('Using General Public VAT because not vat found'),
+                subtype='account.mt_invoice_validated')
 
         if customer.country_id and customer.country_id != self.env.ref('base.mx'):
             # Following Question 5 in legal Document.
