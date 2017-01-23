@@ -215,8 +215,9 @@ WebClient.include({
         var action = options.action;
         var action_options = {
             clear_breadcrumbs: true,
+            disable_edition: true,
         };
-        var def;
+        var defs = [];
         this.studio_on = true;
         this.edited_action = action;
         if (action) {
@@ -224,13 +225,18 @@ WebClient.include({
             var index = action.widget.dataset.index;
             this.studio_ids = action.widget.dataset.ids;
             this.studio_id = index ? this.studio_ids[index] : (this.studio_ids[0] || false);
-            action_options.active_view = options.active_view || action.get_active_view();
+            if (options.active_view) {
+                action_options.active_view = options.active_view;
+                defs.push(action.widget.switch_mode(options.active_view));
+            } else {
+                action_options.active_view = action.get_active_view();
+            }
             action_options.action = action.action_descr;
-            def = session.rpc('/web_studio/chatter_allowed', {
+            defs.push(session.rpc('/web_studio/chatter_allowed', {
                 model: action_options.action.res_model,
-            });
+            }));
         }
-        return $.when(def).then(function(chatter_allowed) {
+        return $.when(defs).then(function(chatter_allowed) {
             self.studio_chatter_allowed = chatter_allowed;
             // grep: action_web_studio_app_creator, action_web_studio_main
             return self.do_action('action_web_studio_' + mode, action_options);
@@ -238,7 +244,17 @@ WebClient.include({
     },
 
     do_action: function(action, options) {
-        if (this.studio_on && action.xml_id) {
+
+        if (this.studio_on && action.target === 'new') {
+            // TODO: what if we modify target = 'curent' to modify it?
+            this.do_warn("Studio", _t("Wizards are not editable with Studio."));
+            return $.Deferred().reject();
+        }
+
+        // the option `disable_edition` can be used to tell the webclient that
+        // the action is not a navigation we want to navigation in Studio with, but
+        // it's an action we want to open normally (because it is used by Studio).
+        if (this.studio_on && !options.disable_edition) {
             // we are navigating inside Studio so the studio action manager is used
             return this.studio_action_manager.do_action.apply(this, arguments);
         }
@@ -312,7 +328,11 @@ WebClient.include({
         if (action && action.action_descr.xml_id) {
             var descr = action.action_descr;
             if (descr.type === 'ir.actions.act_window') {
-                return true;
+                // we don't want to edit Settings as it is a special case of form view
+                // this is a heuristic to determine if the action is Settings
+                if (descr.res_model && descr.res_model.indexOf('settings') === -1) {
+                    return true;
+                }
             }
         }
         return false;

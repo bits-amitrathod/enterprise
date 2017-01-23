@@ -70,6 +70,14 @@ Menu.include({
         return this._super.apply(this, arguments);
     },
 
+    toggle_mode: function(appswitcher) {
+        this._super.apply(this, arguments);
+
+        if (!appswitcher && this.$app_switcher_menu) {
+            this.$app_switcher_menu.remove();
+        }
+    },
+
     _clean: function () {
         if (this.edit_menu) {
             this.edit_menu.destroy();

@@ -91,11 +91,15 @@ return Widget.extend(FieldManagerMixin, {
         }
 
         if (options && options.field) {
+            // deep copy of field because the object is modified
+            // in this widget and this shouldn't impact it
+            var field = jQuery.extend(true, {}, options.field);
+
             this.default_value = options.default_value;
-            this.attrs = options.field.__attrs;
+            this.attrs = field.__attrs;
             this.element = 'field';
-            this.field_parameters = options.field;
-            this.modifiers = JSON.parse(options.field.__attrs.modifiers);
+            this.field_parameters = field;
+            this.modifiers = JSON.parse(field.__attrs.modifiers);
             this.compute_field_attrs();
         } else if (options && options.node.attrs.class === 'oe_chatter') {
             this.element = 'chatter';
@@ -127,7 +131,7 @@ return Widget.extend(FieldManagerMixin, {
          * These attributes are either taken from modifiers or attrs
          * so attrs store their combinaison.
          */
-        this.attrs.invisible = this.modifiers.invisible;
+        this.attrs.invisible = this.modifiers.invisible || this.modifiers.tree_invisible;
         this.attrs.readonly = this.modifiers.readonly;
         this.attrs.string = this.attrs.string || this.field_parameters.string;
         this.attrs.help = this.attrs.help || this.field_parameters.help;
@@ -143,7 +147,7 @@ return Widget.extend(FieldManagerMixin, {
         var $sidebar_content = this.$('.o_web_studio_sidebar_content');
 
         // Components
-        if (_.contains(['kanban', 'form'], this.view_type)) {
+        if (_.contains(['form'], this.view_type)) {
             widget_classes = form_component_widget_registry.get(this.view_type + '_components');
             form_widgets = widget_classes.map(function(FormComponent) {
                 return new FormComponent(self);

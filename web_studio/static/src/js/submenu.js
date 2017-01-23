@@ -58,9 +58,10 @@ var SubMenu = Widget.extend({
         // do the corresponding action
         var title = $menu.text();
         if ($menu.data('name') === 'views') {
-            return this.replace_action('web_studio.action_web_studio_main', title, {
+            return this.replace_action('action_web_studio_main', title, {
                 action: this.action,
                 clear_breadcrumbs: true,
+                disable_edition: true,
             });
         } else {
             var self = this;
@@ -69,7 +70,11 @@ var SubMenu = Widget.extend({
                 model: this.action.res_model,
                 view_id: this.action.view_id[0],
             }).then(function (result) {
-                return self.replace_action(result, title, {replace_last_action: true});
+                result.keep_state = true;
+                return self.replace_action(result, title, {
+                    clear_breadcrumbs: true,
+                    disable_edition: true,
+                });
             });
         }
     },
@@ -119,6 +124,7 @@ var SubMenu = Widget.extend({
                 self.replace_action(bc.action, bc.title, {
                     action: self.action,
                     clear_breadcrumbs: true,
+                    disable_edition: true,
                 });
             });
         }

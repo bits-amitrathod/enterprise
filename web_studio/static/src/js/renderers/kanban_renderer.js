@@ -3,7 +3,6 @@ odoo.define('web.KanbanRenderer', function (require) {
 
 var AbstractRenderer = require('web.AbstractRenderer');
 var core = require('web.core');
-var field_registry = require('web.field_registry');
 var KanbanColumn = require('web.KanbanColumn');
 var KanbanRecord = require('web.KanbanRecord');
 var quick_create = require('web.kanban_quick_create');
@@ -47,18 +46,8 @@ function transform_qweb_template(node, fields) {
     switch (node.tag) {
         case 'field':
             var ftype = fields[node.attrs.name].type;
-
             if (ftype === 'many2many') {
                 node.attrs.widget = 'kanban.many2many_tags';
-            }
-
-            ftype = node.attrs.widget ? node.attrs.widget : ftype;
-
-            if (field_registry.contains(ftype)) {
-                // do nothing, the kanban record will handle it
-            } else {
-                node.tag = qweb.prefix;
-                node.attrs[qweb.prefix + '-esc'] = 'record.' + node.attrs.name + '.value';
             }
             break;
         case 'button':

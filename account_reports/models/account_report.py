@@ -5,6 +5,7 @@ import xlsxwriter
 import json
 import StringIO
 import logging
+import lxml.html
 from odoo import models, fields, api, _
 from datetime import timedelta, datetime, date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -241,8 +242,8 @@ class AccountReport(models.AbstractModel):
             ctx['journal_ids'] = [j.get('id') for j in options.get('journals') if j.get('selected')]
         company_ids = []
         if options.get('multi_company'):
-            company_ids = [c.id for c in options['multi_company'] if c.selected]
-            company_ids = company_ids if len(company_ids) > 0 else [c.id for c in options['multi_company']]
+            company_ids = [c.get('id') for c in options['multi_company'] if c.get('selected')]
+            company_ids = company_ids if len(company_ids) > 0 else [c.get('id') for c in options['multi_company']]
         ctx['company_ids'] = len(company_ids) > 0 and company_ids or [self.env.user.company_id.id]
         if options.get('analytic_accounts'):
             ctx['analytic_account_ids'] = self.env['account.analytic.account'].browse([int(acc) for acc in options['analytic_accounts']])
@@ -349,7 +350,16 @@ class AccountReport(models.AbstractModel):
         return existing_manager
 
     def get_journals(self):
-        return [{'id': c.id, 'name': c.name, 'code': c.code, 'type': c.type, 'selected': False} for c in self.env['account.journal'].search([])]
+        journals_read = self.env['account.journal'].search([('company_id', 'in', self.env.user.company_ids.ids or [self.env.user.company_id.id])], order="company_id, name")
+        journals = []
+        previous_company = False
+        for c in journals_read:
+            if c.company_id != previous_company:
+                journals.append({'id': 'divider', 'name': c.company_id.name})
+                previous_company = c.company_id
+            journals.append({'id': c.id, 'name': c.name, 'code': c.code, 'type': c.type, 'selected': False})
+        return journals
+
 
     def format_value(self, value, currency=False):
         if self.env.context.get('no_format'):
@@ -406,7 +416,7 @@ class AccountReport(models.AbstractModel):
         elif options_filter == 'this_quarter':
             quarter = (today.month - 1) / 3 + 1
             dt_to = (today.replace(month=quarter * 3, day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
-            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 3, year=dt_to.year) or False
+            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 2, year=dt_to.year) or False
         elif options_filter == 'this_year':
             company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now())
             dt_from = dt_from and company_fiscalyear_dates['date_from'] or False
@@ -541,17 +551,32 @@ class AccountReport(models.AbstractModel):
             header = self.env['report'].render("report.internal_layout", values=rcontext,)
             footer = ''
             spec_paperformat_args = {'data-report-margin-top': 10, 'data-report-header-spacing': 10}
+            header = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=header),)
         else:
             rcontext.update({
                     'css': '',
                     'o': self.env.user,
                     'res_company': self.env.user.company_id,
                 })
-            header = self.env['report'].render("report.external_layout_header", values=rcontext,)
-            footer = self.env['report'].render("report.external_layout_footer", values=rcontext,)
-            footer = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=footer),)
+            header = self.env['report'].render("report.external_layout", values=rcontext,)
             spec_paperformat_args = {}
-        header = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=header),)
+            # parse header as new header contains header, body and footer
+            try:
+                root = lxml.html.fromstring(header)
+                match_klass = "//div[contains(concat(' ', normalize-space(@class), ' '), ' {} ')]"
+
+                for node in root.xpath(match_klass.format('header')):
+                    headers = lxml.html.tostring(node)
+                    headers = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=headers),)
+
+                for node in root.xpath(match_klass.format('footer')):
+                    footer = lxml.html.tostring(node)
+                    footer = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=footer),)
+
+            except lxml.etree.XMLSyntaxError:
+                headers = header
+                footer = ''
+            header = headers
 
         landscape = False
         if len(self.with_context(print_mode=True).get_columns_name(options)) > 5:

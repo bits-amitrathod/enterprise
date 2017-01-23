@@ -63,6 +63,7 @@ var ActionEditor = Widget.extend({
             res_id: this.action.id,
             views: [[false, 'form']],
             target: 'current',
+            keep_state: true,
         });
     },
 });

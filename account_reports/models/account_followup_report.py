@@ -128,15 +128,17 @@ class report_account_followup_report(models.AbstractModel):
         return self.env.user.company_id.overdue_msg and self.env.user.company_id.overdue_msg.replace('\n', '<br />') or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
 
     def get_report_manager(self, options):
-        domain = [('report_name', '=', self._name), ('partner_id', '=', options.get('partner_id'))]
+        domain = [('report_name', '=', 'account.followup.report'), ('partner_id', '=', options.get('partner_id'))]
         selected_companies = []
         if options.get('multi_company'):
             selected_companies = [c['id'] for c in options['multi_company'] if c.get('selected')]
         if len(selected_companies) == 1:
             domain += [('company_id', '=', selected_companies[0])]
         existing_manager = self.env['account.report.manager'].search(domain, limit=1)
+        if existing_manager and not self.env.context.get('keep_summary'):
+            existing_manager.write({'summary': self.get_default_summary(options)})
         if not existing_manager:
-            existing_manager = self.env['account.report.manager'].create({'report_name': self._name, 
+            existing_manager = self.env['account.report.manager'].create({'report_name': 'account.followup.report', 
                                                                         'company_id': selected_companies and selected_companies[0] or False, 
                                                                         'partner_id': options.get('partner_id'), 
                                                                         'summary': self.get_default_summary(options)})
@@ -153,7 +155,7 @@ class report_account_followup_report(models.AbstractModel):
         return super(report_account_followup_report, self).get_html(options, line_id=line_id, additional_context=additional_context)
 
     def get_pdf(self, options, minimal_layout=True):
-        return super(report_account_followup_report, self).get_pdf(options, minimal_layout=False)
+        return super(report_account_followup_report, self.with_context(keep_summary=True)).get_pdf(options, minimal_layout=False)
 
     def get_report_name(self):
         return _('Followup Report')
@@ -192,7 +194,7 @@ class report_account_followup_report(models.AbstractModel):
         partner = self.env['res.partner'].browse(options.get('partner_id'))
         email = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice']).email
         if email and email.strip():
-            body_html = self.with_context(print_mode=True, mail=True).get_html(options)
+            body_html = self.with_context(print_mode=True, mail=True, keep_summary=True).get_html(options)
             email = self.env['mail.mail'].create({
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,
                 'body_html': append_content_to_html(body_html, self.env.user.signature, plaintext=False),

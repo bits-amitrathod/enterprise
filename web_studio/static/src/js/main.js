@@ -44,6 +44,7 @@ var Main = Widget.extend({
     },
 
     start: function () {
+        this.set('title', _t('Studio'));
         // we try to directly edit the active view instead of going to the action editor
         if (this.active_view) {
             return this.edit_view({data: {view_type: this.active_view}});
@@ -141,6 +142,7 @@ var Main = Widget.extend({
             res_model: 'ir.ui.view',
             title: _t('Select a view'),
             disable_multiple_selection: true,
+            no_create: true,
             domain: [
                 ['type', '=', view_mode],
                 ['mode', '=', 'primary'],

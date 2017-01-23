@@ -40,20 +40,15 @@
             }
 
             .o_web_studio_hook {
-                > span.o_web_studio_hook_separator {
-                    padding: 4px 0;
-                    border: 0px dashed transparent;
-                    .o-transition(all, 0.2s, 0s, cubic-bezier(0.215, 0.610, 0.355, 1.000));
-                }
-                &.o_web_studio_nearest_hook {
-                    cursor: pointer;
+                border: 0px dashed transparent;
 
-                    > span.o_web_studio_hook_separator {
-                        background-color: fade(@odoo-brand-optional, 2%);
-                        border: 1px dashed fade(@odoo-brand-optional, 50%);
-                        padding: 4px 50px;
-                        margin: 4px;
-                    }
+                &.o_web_studio_nearest_hook {
+                    display: block;
+                    cursor: pointer;
+                    background-color: fade(@odoo-brand-optional, 2%);
+                    border: 1px dashed fade(@odoo-brand-optional, 50%);
+                    padding: 10px;
+                    margin: 10px 0;
                 }
             }
         }

@@ -26,27 +26,24 @@ var ActionEditorView = Widget.extend({
         this.can_be_disabled = flags.can_be_disabled;
     },
 
-    on_click_thumbnail: function (event) {
-        var view_type = $(event.currentTarget).closest('.o_web_studio_view_type').data("type");
+    on_click_thumbnail: function () {
        if (this.active) {
-            this.trigger_up('studio_edit_view', {view_type: view_type});
+            this.trigger_up('studio_edit_view', {view_type: this.type});
         } else {
-            this.trigger_up('studio_new_view', {view_type: view_type});
+            this.trigger_up('studio_new_view', {view_type: this.type});
         }
     },
 
     set_default_view: function () {
-        var view_type = $(event.currentTarget).closest('.o_web_studio_view_type').data("type");
-        this.trigger_up('studio_default_view', {view_type: view_type});
+        this.trigger_up('studio_default_view', {view_type: this.type});
     },
 
     set_another_view: function () {
         this.trigger_up('studio_set_another_view', {view_mode: this.type});
     },
 
-    disable_view: function (event) {
-        var view_type = $(event.currentTarget).closest('.o_web_studio_view_type').data("type");
-        this.trigger_up('studio_disable_view', {view_type: view_type});
+    disable_view: function () {
+        this.trigger_up('studio_disable_view', {view_type: this.type});
     },
 });
 

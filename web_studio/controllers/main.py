@@ -46,7 +46,10 @@ class WebStudioController(http.Controller):
             'views': [[False, 'list'], [False, 'form']],
             'target': 'current',
             'domain': [],
-            'context': {'search_default_model_id': model.id},
+            'context': {
+                'default_model_id': model.id,
+                'search_default_model_id': model.id,
+            },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new access control list.
             </p>
@@ -61,7 +64,10 @@ class WebStudioController(http.Controller):
             'views': [[False, 'list'], [False, 'form']],
             'target': 'current',
             'domain': [],
-            'context': {'search_default_model_id': model.id},
+            'context': {
+                'default_model_id': model.id,
+                'search_default_model_id': model.id,
+            },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new automated action.
             </p>
@@ -70,7 +76,7 @@ class WebStudioController(http.Controller):
 
     def _get_studio_action_filters(self, model, **kwargs):
         return {
-            'name': _('Search Filters'),
+            'name': _('Filter Rules'),
             'type': 'ir.actions.act_window',
             'res_model': 'ir.filters',
             'views': [[False, 'list'], [False, 'form']],
@@ -78,7 +84,7 @@ class WebStudioController(http.Controller):
             'domain': [],
             'context': {  # model_id is a Selection on ir.filters
                 'default_model_id': model.model,
-                'search_default_model_id': model.model
+                'search_default_model_id': model.model,
             },
             'help': """ <p class="oe_view_nocontent_create">
                 Click to add a new filter.
@@ -94,8 +100,11 @@ class WebStudioController(http.Controller):
             'views': [[False, 'kanban'], [False, 'form']],
             'target': 'current',
             'domain': [],
-            'context': {'search_default_model': model.model},
-            'help': """ <p class="oe_view_nocontent_create">
+            'context': {
+                'default_model': model.model,
+                'search_default_model': model.model,
+            },
+            'help': """ <p class="oe_view_nocontent">
                 Click to add a new report.
             </p>
             """,
@@ -542,7 +551,7 @@ class WebStudioController(http.Controller):
         arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
 
         for op in operations:
-            # Call the right operation handler
+            # create a new field if it does not exist
             if 'node' in op:
                 if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
                     # Check if field exists before creation
@@ -552,6 +561,12 @@ class WebStudioController(http.Controller):
                         field_created = True
                     op['node']['attrs']['name'] = field.name
 
+            # set a more specific xpath (with templates//) for the kanban view
+            if view.type == 'kanban':
+                if op.get('target') and op['target'].get('tag') == 'field':
+                    op['target']['tag'] = 'templates//field'
+
+            # call the right operation handler
             getattr(self, '_operation_%s' % (op['type']))(arch, op, view.model)
 
         # Save or create changes into studio view, identifiable by xmlid
@@ -654,7 +669,13 @@ class WebStudioController(http.Controller):
             expr = ''.join(['/%s[%s]' % (parent['tag'], parent['indice']) for parent in node.get('xpath_info')])
         else:
             # Format of expr is //tag[@attr1_name=attr1_value][@attr2_name=attr2_value][...]
-            expr = '//' + node['tag'] + ''.join(['[@%s=\'%s\']' % (k, v) for k, v in node.get('attrs', {}).items()])
+            expr = '//' + node['tag']
+            for k, v in node.get('attrs', {}).items():
+                if k == 'class':
+                    # Special case for classes which usually contain multiple values
+                    expr += '[contains(@%s,\'%s\')]' % (k, v)
+                else:
+                    expr += '[@%s=\'%s\']' % (k, v)
 
         # Special case when we have <label/><div/> instead of <field>
         # TODO: This is very naive, couldn't the js detect such a situation and
@@ -897,21 +918,22 @@ class WebStudioController(http.Controller):
         if not model_id:
             return
 
-        if not request.env['ir.model.fields'].search([('model_id', '=', model_id.id), ('name', '=', 'x_color'), ('ttype', '=', 'integer')]):
-            # create a field x_color if it doesn't exist in the model
+        color_field_name = 'x_color'
+        if not request.env['ir.model.fields'].search([('model_id', '=', model_id.id), ('name', '=', color_field_name), ('ttype', '=', 'integer')]):
+            # create a field if it doesn't exist in the model
             request.env['ir.model.fields'].create({
                 'model': model,
                 'model_id': model_id.id,
-                'name': 'x_color',
+                'name': color_field_name,
                 'field_description': 'Color',
                 'ttype': 'integer',
             })
 
-        # add field x_color at the beginning
+        # add the field at the beginning
         etree.SubElement(arch, 'xpath', {
             'expr': 'templates',
             'position': 'before',
-        }).append(etree.Element('field', {'name': 'x_color'}))
+        }).append(etree.Element('field', {'name': color_field_name}))
 
         # add the dropdown before the rest
         dropdown_node = etree.fromstring("""
@@ -920,28 +942,29 @@ class WebStudioController(http.Controller):
                     <span class="fa fa-bars fa-lg"/>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li><ul class="oe_kanban_colorpicker" data-field="x_color"/></li>
+                    <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
+                    <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
+                    <li><ul class="oe_kanban_colorpicker" data-field="%(field)s"/></li>
                 </ul>
             </div>
-        """)
+        """ % {'field': color_field_name})
         etree.SubElement(arch, 'xpath', {
             'expr': '//div/*[1]',
             'position': 'before',
         }).append(dropdown_node)
 
-        # set the corresponding class on the kanban record
+        # set the corresponding color attribute on the kanban record
         xpath_node = etree.SubElement(arch, 'xpath', {
             'expr': '//div',
             'position': 'attributes',
         })
-        xml_node = xpath_node.find('attribute[@name="%s"]' % ('t-attf-class'))
-        new_class = 'oe_kanban_color_#{kanban_getcolor(record.x_color.raw_value)} oe_kanban_card oe_kanban_global_click'
+        xml_node = xpath_node.find('attribute[@name="%s"]' % ('color'))
         if xml_node is None:
-            xml_node = etree.Element('attribute', {'name': 't-attf-class'})
-            xml_node.text = new_class
+            xml_node = etree.Element('attribute', {'name': 'color'})
+            xml_node.text = color_field_name
             xpath_node.insert(0, xml_node)
         else:
-            xml_node.text = new_class
+            xml_node.text = color_field_name
 
     def _operation_kanban_image(self, arch, operation, model):
         """ Insert a image and its corresponding needs in an kanban view arch

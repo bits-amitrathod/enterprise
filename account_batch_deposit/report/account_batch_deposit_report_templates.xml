@@ -8,7 +8,7 @@
 </template>
 
 <template id="print_batch_deposit">
-    <t t-call="report.html_container">
+    <t t-call="report.basic_layout">
         <t t-foreach="docs" t-as="o">
             <div t-foreach="pages(o)" t-as="page" class="page page_batch_deposit">
                 <div class="row deposit_details">

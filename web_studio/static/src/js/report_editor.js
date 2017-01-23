@@ -65,6 +65,7 @@ var ReportEditor = ReportAction.extend({
             res_id: this.res_id,
             views: [[false, 'form']],
             target: 'current',
+            keep_state: true,
         });
     },
     open_xml_editor: function () {

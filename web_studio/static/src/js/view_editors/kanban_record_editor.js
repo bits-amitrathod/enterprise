@@ -10,11 +10,12 @@ var _t = core._t;
 var KanbanRecordEditor = KanbanRecord.extend({
     nearest_hook_tolerance: 50,
 
-    init: function(parent, state, options, all_fields) {
+    init: function(parent, state, options, all_fields, is_dashboard) {
         this._super.apply(this, arguments);
         this.node_id = 1;
         this.hook_nodes = [];
         this.all_fields = all_fields;
+        this.is_dashboard = is_dashboard;
     },
     renderElement: function() {
         var self = this;
@@ -39,7 +40,9 @@ var KanbanRecordEditor = KanbanRecord.extend({
                         structure: ui.draggable.data('structure'),
                         field_description: ui.draggable.data('field_description'),
                         node: hook.node,
-                        new_attrs: ui.draggable.data('new_attrs'),
+                        new_attrs: _.defaults(ui.draggable.data('new_attrs'), {
+                            display: 'full',
+                        }),
                         position: hook.position,
                     };
                     ui.helper.removeClass('ui-draggable-helper-ready');
@@ -51,13 +54,17 @@ var KanbanRecordEditor = KanbanRecord.extend({
     },
     start: function() {
         this.undelegateEvents();
+        this.$el.click(function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+        });
         return this._super.apply(this, arguments);
     },
     add_fields: function() {
         this._super.apply(this, arguments);
 
         // the layout of the special hooks are broken in the kanban dashboards
-        if (!$('.o_kanban_dashboard').length) {
+        if (!this.is_dashboard) {
             this._add_special_hooks();
         }
     },
@@ -94,7 +101,20 @@ var KanbanRecordEditor = KanbanRecord.extend({
         }
 
         // add the dropdown hook
-        if (!this.$('.o_dropdown_kanban').length) {
+        var $dropdown = this.$('.o_dropdown_kanban');
+        if ($dropdown.length) {
+            $dropdown.attr('data-node-id', this.node_id++);
+            // bind handler on dropdown clicked to be able to remove it
+            var node = {
+                tag: 'div',
+                attrs: {class: 'o_dropdown_kanban'},
+            };
+            $dropdown.click(function() {
+                self.selected_node_id = $dropdown.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
+            });
+            this._set_style_events($dropdown);
+        } else {
             var $top_left_hook = $('<div>')
                 .addClass('o_web_studio_add_dropdown o_dropdown_kanban dropdown')
                 .append($('<a>', {
@@ -118,7 +138,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
         }
 
         // add the priority hook
-        if (!this.$('.oe_kanban_bottom_left').length) {
+        if (!this.$('.o_priority').length) {
             var $priority_hook = $('<div>')
                 .addClass('o_web_studio_add_priority oe_kanban_bottom_left')
                 .append($('<span>', {
@@ -169,10 +189,11 @@ var KanbanRecordEditor = KanbanRecord.extend({
         widget.undelegateEvents();
 
         // make empty widgets appear
-        if (!widget.value) {
-            widget.value = widget.string;
-            widget.$el.addClass('o_web_studio_widget_empty');
-            widget.render();
+        if (!widget.value && widget.value !== 0) {
+            widget.$el = $('<span>', {
+                text: widget.string,
+                class: 'o_web_studio_widget_empty',
+            });
         }
         widget.$el.attr('data-node-id', this.node_id++);
 
@@ -201,7 +222,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
 
         var field = this.record[field_name];
         // make empty widgets appear
-        if (!field.value) {
+        if (!field.value && field.value !== 0) {
             $field.text(field.__attrs.string || field.string);
             $field.addClass('o_web_studio_widget_empty');
         }
@@ -238,10 +259,6 @@ var KanbanRecordEditor = KanbanRecord.extend({
                 hook_id: hook_id,
             }
         });
-        $hook.append($('<span>', {
-            class: 'o_web_studio_hook_separator',
-        }));
-
         return $hook;
     },
     _set_style_events: function($el) {

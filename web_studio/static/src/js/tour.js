@@ -14,6 +14,7 @@ tour.register('web_studio_appswitcher_background_tour', {
     trigger: '.o_web_studio_navbar_item',
     content: _t('Want to customize the background? Let’s activate <b>Odoo Studio</b>.'),
     position: 'bottom',
+    extra_trigger: '.o_application_switcher',
 }, {
     trigger: '.o_web_studio_appswitcher_menu a',
     content: _t('Click here.'),
@@ -33,7 +34,7 @@ tour.register('web_studio_new_app_tour', {
 },{
     trigger: '.o_web_studio_app_creator_next',
     content: _t('I bet you can <b>build an app</b> in 5 minutes. Ready for the challenge?'),
-    position: 'bottom',
+    position: 'top',
 }, {
     trigger: '.o_web_studio_app_creator_name > input',
     content: _t('How do you want to <b>name</b> your app? Library, Academy, …?'),
@@ -42,7 +43,7 @@ tour.register('web_studio_new_app_tour', {
 }, {
     trigger: '.o_web_studio_selectors .o_web_studio_selector:eq(2)',
     content: _t('Now, customize your icon. Make it yours.'),
-    position: 'right',
+    position: 'top',
 }, {
     trigger: '.o_web_studio_app_creator_next.o_web_studio_create.is_ready',
     content: _t('You are just one click away from <b>generating your first app</b>.'),
@@ -72,14 +73,14 @@ tour.register('web_studio_new_app_tour', {
 }, {
     trigger: '.o_web_studio_field_dialog_form > textarea',
     content: _t("Create your <b>drop down list</b>, one value per line. (e.g.: Romance, Polar, Fantasy, etc.)"),
-    position: 'bottom',
+    position: 'top',
     run: function (actions) {
         actions.auto();
         actions.auto('.modal-footer > button:eq(0)');
     },
 }, {
     trigger: '.o_web_studio_add_chatter',
-    content: _t("Add a <b>chatter widget</b>, to allow discussions on your document: by email or inline."),
+    content: _t("Add a <b>chatter widget</b> to allow discussions on your document: by email or inline."),
     position: 'top',
 }, {
     trigger: '.o_web_studio_form_view_editor .oe_chatter',
@@ -94,11 +95,20 @@ tour.register('web_studio_new_app_tour', {
     content: _t("Let’s check the result. Close Odoo Studio to get an <b>overview of your app</b>."),
     position: 'left',
 }, {
-    trigger: '.o_control_panel .o_cp_buttons button:eq(0)',
+    trigger: '.o_control_panel .o_cp_buttons .o_list_button_add',
     content: _t("Create a new record."),
     position: 'right',
 }, {
+    trigger: 'input.o_form_required',
+    auto: true,
+    position: 'bottom',
+}, {
+    trigger: '.o_control_panel .o_cp_buttons .o_form_button_save',
+    content: _t("Save."),
+    position: 'right',
+},  {
     trigger: '.o_web_studio_navbar_item',
+    extra_trigger: '.o_form_view.o_form_readonly',
     content: _t("Wow, nice! And I’m sure you can make it even better! Use this icon to open <b>Odoo Studio</b> and customize any screen."),
     position: 'bottom',
 }, {

@@ -208,7 +208,7 @@ return Widget.extend({
         } else {
             def = datamodel.load(this.model, {
                 fields: fields,
-                domain: [['id', 'in', this.ids]],
+                domain: this.ids.length ? [['id', 'in', this.ids]] : [],
                 grouped_by: [],
                 limit: 20,
                 many2manys: [], // fixme: find many2manys
@@ -226,7 +226,7 @@ return Widget.extend({
         var renderer_scrolltop = this.$renderer_container.scrollTop();
         var local_state = this.editor ? this.editor.get_local_state() : false;
 
-        options = _.extend({}, options, {chatter_allowed: this.chatter_allowed});
+        options = _.extend({}, options, {chatter_allowed: this.chatter_allowed}, {show_invisible: this.sidebar.show_invisible});
         if (this.mode === 'edition') {
             if (replace || !this.editor) {
                 var Editor = Editors[this.view_type];
@@ -320,6 +320,7 @@ return Widget.extend({
             target: 'current',
             views: [[false, 'list'], [false, 'form']],
             domain: [['model', '=', this.model], ['key', '=', 'default']],
+            keep_state: true,
         });
     },
     open_view_form: function() {
@@ -329,6 +330,7 @@ return Widget.extend({
             res_id: this.view_id,
             views: [[false, 'form']],
             target: 'current',
+            keep_state: true,
         });
     },
     open_field_form: function(event) {
@@ -346,6 +348,7 @@ return Widget.extend({
                         res_id: res_id,
                         views: [[false, 'form']],
                         target: 'current',
+                        keep_state: true,
                     });
                 }
         });
@@ -384,9 +387,6 @@ return Widget.extend({
                 break;
             case 'page':
                 this._add_page(type, node, xpath_info, position);
-                break;
-            case 'separator':
-                this._add_element(type, node, xpath_info, position, 'br');
                 break;
             case 'field':
                 var field_description = event.data.field_description;
@@ -532,9 +532,12 @@ return Widget.extend({
         });
     },
     unselect_element: function() {
-        if (this.editor && this.editor._reset_clicked_style) {
+        if (this.editor) {
             this.editor.selected_node_id = false;
-            this.editor._reset_clicked_style(); // FIXME: this function should be written in an AbstractEditor
+            if (this.editor._reset_clicked_style) {
+                // FIXME: this function should be written in an AbstractEditor
+                this.editor._reset_clicked_style();
+            }
         }
     },
     _add_element: function(type, node, xpath_info, position, tag) {
@@ -681,6 +684,7 @@ return Widget.extend({
                 xpath_info: xpath_info,
             },
         });
+        this.unselect_element();
     },
     _edit_view_attributes: function(type, new_attrs) {
         this.do({

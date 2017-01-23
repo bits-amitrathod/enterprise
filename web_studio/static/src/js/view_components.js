@@ -48,11 +48,6 @@ var GroupComponent = AbstractComponent.extend({
     ttype: 'columns',
     className: 'o_web_studio_field_columns',
 });
-var SeparatorComponent = AbstractComponent.extend({
-    structure: 'separator',
-    label: 'Line Break',
-    className: 'o_web_studio_field_separator',
-});
 var AbstractNewFieldComponent = AbstractComponent.extend({
     structure: 'field',
     ttype: false,
@@ -186,9 +181,6 @@ form_component_widget_registry
     .add('form_components', [
         NotebookComponent,
         GroupComponent,
-    ])
-    .add('kanban_components', [
-        SeparatorComponent,
     ])
     .add('new_field', [
         CharFieldComponent,

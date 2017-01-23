@@ -13,6 +13,7 @@ var utils = require('web.utils');
 var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
+var _t = core._t;
 
 var KanbanRecord = Widget.extend({
     template: 'KanbanView.record',
@@ -47,6 +48,7 @@ var KanbanRecord = Widget.extend({
 
     renderElement: function () {
         this._super();
+        this.setup_color();
         this.setup_color_picker();
         this.$el.addClass('o_kanban_record');
         this.$el.data('record', this);
@@ -96,10 +98,19 @@ var KanbanRecord = Widget.extend({
             var field_name = $field.attr("name");
             var field_widget = $field.attr("widget");
             if (field_widget) {
-                var widget = self.add_widget($field, field_name, field_widget);
-                self.sub_widgets.push(widget);
+                if (field_registry.get(field_widget)) {
+                    var widget = self.add_widget($field, field_name, field_widget);
+                    self.sub_widgets.push(widget);
+                    self._set_field_display(widget.$el, field_name);
+                } else {
+                    // the widget is not implemented
+                    $field.replaceWith($('<span>', {
+                        text: _.str.sprintf(_t('[No widget %s]'), field_widget),
+                    }));
+                }
             } else {
-                self.add_field($field, field_name);
+                var $result = self.add_field($field, field_name);
+                self._set_field_display($result, field_name);
             }
         });
         // We use boostrap tooltips for better and faster display
@@ -108,8 +119,7 @@ var KanbanRecord = Widget.extend({
 
     add_field: function($field, field_name) {
         var field = this.record[field_name];
-        var tag = field.__attrs.bold ? '<strong>' : '<span>';
-        var $result = $(tag, {
+        var $result = $('<span>', {
             text: field.value,
         });
         $field.replaceWith($result);
@@ -117,14 +127,26 @@ var KanbanRecord = Widget.extend({
     },
 
     add_widget: function ($field, field_name, field_widget) {
-        var field = this.record[field_name];
         var Widget = field_registry.get(field_widget);
         var widget = new Widget(this, field_name, this.state, this.options);
         widget.replace($field);
-        if (field.__attrs.bold) {
-            widget.$el.addClass('o_kanban_bold');
-        }
         return widget;
+    },
+
+    _set_field_display: function($el, field_name) {
+        var field = this.record[field_name];
+
+        // attribute display
+        if (field.__attrs.display === 'right') {
+            $el.addClass('pull-right');
+        } else if (field.__attrs.display === 'full') {
+            $el.addClass('o_text_block');
+        }
+
+        // attribute bold
+        if (field.__attrs.bold) {
+            $el.addClass('o_text_bold');
+        }
     },
 
     transform_record: function(record) {
@@ -317,6 +339,17 @@ var KanbanRecord = Widget.extend({
 
     update_record: function (event) {
         this.trigger_up('kanban_record_update', event.data);
+    },
+
+    /*
+     * If an attribute `color` is set on the kanban record,
+     * this will add the corresponding color class.
+     */
+    setup_color: function() {
+        var color_field = this.$el.attr('color');
+        if (color_field && color_field in this.fields) {
+            this.$el.addClass(this.kanban_color(this.values[color_field].value));
+        }
     },
 
     setup_color_picker: function() {
