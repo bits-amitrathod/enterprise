@@ -1,21 +1,31 @@
-odoo.define('website.app_switcher', function(require) {
+odoo.define('website.app_switcher', function (require) {
     'use strict';
 
     var session = require('web.session');
-    var website = require('website.website');
+    var websiteNavbarData = require('website.navbar');
 
-    website.TopBar.include({
-        start: function() {
-            this.$el.one('click', '.o_menu_toggle', function (e) {
-                e.preventDefault();
+    websiteNavbarData.WebsiteNavbar.include({
+        events: _.extend({}, websiteNavbarData.WebsiteNavbar.prototype.events || {}, {
+            'click .o_menu_toggle': '_onMenuToggleClick',
+        }),
 
-                // We add a spinner for the user to understand the loading.
-                $(e.currentTarget).removeClass('fa fa-th').append($('<span/>', {'class': 'fa fa-spin fa-spinner'}));
-                var url = "/web#home";
-                window.location.href = session.debug ? $.param.querystring(url, {debug: session.debug}) : url;
-            });
+        //----------------------------------------------------------------------
+        // Handlers
+        //----------------------------------------------------------------------
 
-            return this._super.apply(this, arguments);
+        /**
+         * Called when the menu toggle is clicked -> redirects to backend
+         *
+         * @private
+         * @param {Event} ev
+         */
+        _onMenuToggleClick: function (ev) {
+            ev.preventDefault();
+
+            // We add a spinner for the user to understand the loading.
+            $(ev.currentTarget).removeClass('fa fa-th').append($('<span/>', {'class': 'fa fa-spin fa-spinner'}));
+            var url = '/web#home';
+            window.location.href = session.debug ? $.param.querystring(url, {debug: session.debug}) : url;
         },
     });
 });

@@ -1,9 +1,10 @@
 odoo.define('website_subscription.website_subscription', function (require) {
     'use strict';
 
-    var website = require('website.website');
+    require('web.dom_ready');
     var ajax = require('web.ajax');
     var core = require('web.core');
+    var Dialog = require('web.Dialog');
     if(!$('.oe_website_contract').length) {
         return $.Deferred().reject("DOM doesn't contain '.js_surveyresult'");
     }
@@ -35,10 +36,9 @@ odoo.define('website_subscription.website_subscription', function (require) {
         }).fail(function(message, data){
           $(self).attr('disabled', false);
           $(self).find('i').remove();
-          $(core.qweb.render('website.error_dialog', {
-              title: core._t('Error'),
-              message: core._t("<p>We are not able to add your payment method at the moment.<br/> Please try again later or contact us.</p>") + (core.debug ? data.data.message : '')
-          })).appendTo("body").modal('show');
+          Dialog.alert(null, core._t("<p>We are not able to add your payment method at the moment.<br/> Please try again later or contact us.</p>") + (core.debug ? data.data.message : ''), {
+            title: core._t('Error'),
+          });
         });
 });
 
@@ -51,6 +51,5 @@ odoo.define('website_subscription.website_subscription', function (require) {
         });
 
         return indexed_array;
-    };
-
+    }
 });

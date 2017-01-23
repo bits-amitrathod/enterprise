@@ -4,14 +4,16 @@ odoo.define('website_version.menu', function (require) {
 var ajax = require('web.ajax');
 var core = require('web.core');
 var Widget = require('web.Widget');
-var base = require('web_editor.base');
+var weContext = require("web_editor.context");
 
 var _t = core._t;
 var qweb = core.qweb;
 
-var _get_context = base.get_context;
-base.get_context = function (dict) {
-    return _.extend({ 'version_id': $("#version-menu-button").data("version_id")|0 }, _get_context(dict));
+var _get_context = weContext.get;
+weContext.get = function (dict) {
+    return _.extend({
+        version_id: $("#version-menu-button").data("version_id")|0
+    }, _get_context(dict));
 };
 
 ajax.loadXML('/website_version/static/src/xml/version_templates.xml', qweb);
@@ -41,7 +43,7 @@ var EditorVersion = Widget.extend({
     },
 
     duplicate_version: function(event) {
-        var version_id = base.get_context().version_id;
+        var version_id = weContext.get().version_id;
         var wizardA = $(qweb.render("website_version.new_version",{'default_name': moment().format('L')}));
         wizardA.appendTo($('body')).modal({"keyboard" :true});
         wizardA.on('click','.o_create', function(){
@@ -110,7 +112,7 @@ var EditorVersion = Widget.extend({
     },
 
     publish_version: function(event) {
-        var version_id = base.get_context().version_id;
+        var version_id = weContext.get().version_id;
         var name = $('#version-menu-button').attr('data-version_name');
         ajax.jsonRpc( '/website_version/diff_version', 'call', { 'version_id':version_id}).then(function (result) {
             var wizardA = $(qweb.render("website_version.publish_message",{message:_.str.sprintf("Publish Version %s", name), list:result}));
@@ -154,7 +156,7 @@ var EditorVersion = Widget.extend({
     },
 
     diff_version: function(event) {
-        var version_id = base.get_context().version_id;
+        var version_id = weContext.get().version_id;
         var name = $('#version-menu-button').data('version_name');
         ajax.jsonRpc( '/website_version/diff_version', 'call', { 'version_id':version_id}).then(function (result) {
             var wizard = $(qweb.render("website_version.diff",{list:result, version_name:name}));
@@ -234,7 +236,7 @@ var EditorVersion = Widget.extend({
                 }
                 else{
                     ajax.jsonRpc( '/website_version/set_google_access', 'call', {'ga_key':ga_key, 'view_id':view_id, 'client_id':client_id, 'client_secret':client_secret}).then(function (result) {
-                        var context = base.get_context();
+                        var context = weContext.get();
                         ajax.jsonRpc( '/website_version/google_access', 'call', {
                             fromurl: window.location.href,
                             local_context: context
@@ -281,7 +283,7 @@ var EditorVersion = Widget.extend({
 
 });
 
-$(document).ready(function() {
+$(function() {
     var version = new EditorVersion();
     version.setElement($("#version-menu"));
     version.start();
