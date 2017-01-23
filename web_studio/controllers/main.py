@@ -104,7 +104,7 @@ class WebStudioController(http.Controller):
                 'default_model': model.model,
                 'search_default_model': model.model,
             },
-            'help': """ <p class="oe_view_nocontent_create">
+            'help': """ <p class="oe_view_nocontent">
                 Click to add a new report.
             </p>
             """,
