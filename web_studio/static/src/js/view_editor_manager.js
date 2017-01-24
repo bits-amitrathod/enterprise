@@ -292,7 +292,10 @@ return Widget.extend({
     open_xml_editor: function () {
         var self = this;
 
-        this.XMLEditor = new XMLEditor(this, this.view_id, {'position': 'left'});
+        this.XMLEditor = new XMLEditor(this, this.view_id, {
+            position: 'left',
+            doNotLoadLess: true,
+        });
         this.mode = 'rendering';
 
         $.when(this.render_content(), this.XMLEditor.prependTo(this.$el)).then(function() {

@@ -76,7 +76,10 @@ var ReportEditor = ReportAction.extend({
     open_xml_editor: function () {
         var self = this;
 
-        this.XMLEditor = new XMLEditor(this, this.view_id, {'position': 'left'});
+        this.XMLEditor = new XMLEditor(this, this.view_id, {
+            position: 'left',
+            doNotLoadLess: true,
+        });
 
         $.when(this.XMLEditor.prependTo(this.$el)).then(function() {
             self.sidebar.$el.detach();

@@ -1,18 +1,13 @@
 odoo.define('web_studio.XMLEditor', function (require) {
 'use strict';
 
-var ViewEditor = require('web_editor.ace');
+var AceEditor = require('web_editor.ace');
 
 /**
  * Extend the default view editor so that views are saved thanks to web studio and not
  * default RPC. Also notifies studio when the editor is closed.
  */
-var XMLEditor = ViewEditor.extend({
-    start: function () {
-        var def = this._super.apply(this, arguments);
-        this.$('#ace-view-list').wrap('<div class="o_web_studio_ace_select"/>');
-        return def;
-    },
+return AceEditor.extend({
     _saveView: function (session) {
         var def = $.Deferred();
 
@@ -26,7 +21,7 @@ var XMLEditor = ViewEditor.extend({
             old_arch: old_arch,
             new_arch: new_arch,
             on_success: function () {
-                self._toggleDirtyInfo(session.id, false);
+                self._toggleDirtyInfo(session.id, "xml", false);
                 view.arch = new_arch;
                 def.resolve();
             },
@@ -39,7 +34,5 @@ var XMLEditor = ViewEditor.extend({
         this._super.apply(this, arguments);
     },
 });
-
-return XMLEditor;
 
 });
