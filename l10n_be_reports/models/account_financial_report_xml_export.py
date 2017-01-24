@@ -1,9 +1,28 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import api, models, _
+from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 import calendar
+import json
 
+class AccountFinancialReportXMLReportExport(models.TransientModel):
+    _name = "account.financial.html.report.export"
+
+    ask_restitution = fields.Boolean()
+    ask_payment = fields.Boolean()
+
+    def print_xml(self):
+        options = self.env.context.get('options')
+        options['ask_restitution'] = self.ask_restitution
+        options['ask_payment'] = self.ask_payment
+        return {
+                'type': 'ir_actions_account_report_download',
+                'data': {'model': self.env.context.get('model'),
+                         'options': json.dumps(options),
+                         'output_format': 'xml',
+                         'financial_id': self.env.context.get('id'),
+                         }
+                }
 
 class AccountFinancialReportXMLExport(models.AbstractModel):
     _inherit = "account.financial.html.report"
@@ -13,6 +32,14 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
         if self.id == self.env['ir.model.data'].xmlid_to_res_id('l10n_be_reports.account_financial_report_l10n_be_tva0'):
             buttons += [{'name': _('Export (XML)'), 'action': 'print_xml'}]
         return buttons
+
+    def print_xml(self, options):
+        # add options to context and return action to open transient model
+        ctx = self.env.context.copy()
+        ctx['options'] = options
+        action = self.env.ref('l10n_be_reports.action_account_financial_report_export').read()[0]
+        action.update({'context': ctx,})
+        return action
 
     def get_xml(self, options):
         # Check
@@ -50,7 +77,7 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
         ctx.update({'no_format': True, 'date_from': date_from, 'date_to': date_to})
         lines = self.with_context(ctx).get_lines(options)
 
-        data = {'client_nihil': False, 'ask_restitution': False, 'ask_payment': False}
+        data = {'client_nihil': False, 'ask_restitution': options.get('ask_restitution', False), 'ask_payment': options.get('ask_payment', False)}
 
         file_data = {
                         'issued_by': issued_by,

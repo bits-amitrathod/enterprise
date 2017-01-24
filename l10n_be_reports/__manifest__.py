@@ -13,6 +13,7 @@
     ],
     'data': [
         'views/l10n_be_vat_statement_views.xml',
+        'views/l10n_be_wizard_xml_export_options_views.xml',
         'data/account_financial_html_report_data.xml',
         'data/account_account_tag_data.xml',
     ],
