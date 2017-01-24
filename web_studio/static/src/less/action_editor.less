@@ -3,23 +3,15 @@
         .o-flex-display();
         .o-flex-flow(row, nowrap);
         .o-justify-content(center);
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: @o-web-studio-bg-light;
+        .o-web-studio-thumbnails-container();
 
         .o_web_studio_sidebar {
             .o-flex(0, 0, @o-web-studio-sidebar-width);
             overflow: auto;
         }
         .o_web_studio_views {
-            padding-top: 20px;
             .o-flex(1, 1, auto);
-            overflow: auto;
-            .o-flex-display();
-            .o-align-content(flex-start);
-            .o-align-items(flex-start);
-            .o-flex-flow(row, wrap);
+            .o-web-studio-thumbnails();
 
             @media screen and (min-width: @screen-md-min) {
                 .o-flex-flow(column, wrap);
@@ -46,26 +38,12 @@
                 }
 
                 .o_web_studio_view_type {
-                    .o-inline-flex-display();
-                    .o-justify-content(center);
-                    .o-align-items(baseline);
-                    float: left;
-                    position: relative;
-                    height: 140px;
-                    width: @o-web-studio-view-type-width;
+                    .o-web-studio-thumbnail();
                     margin-bottom: 20px;
-                    background-color: white;
-                    border: 1px solid white;
-                    border-radius: 2px;
-                    box-shadow: @o-web-studio-shadow-base;
-                    .o-transition(all, .2s);
 
+                    .o-transition(all, .2s);
                     & + .o_web_studio_view_type {
                         margin-left: @grid-gutter-width*0.75
-                    }
-
-                    &:hover{
-                        box-shadow: @o-web-studio-shadow-active;
                     }
 
                     &.open {
@@ -116,19 +94,6 @@
                         }
                     }
 
-                    .o_web_studio_thumbnail {
-                        height: 115px;
-                        width: 100%;
-                        cursor: pointer;
-                        .o-flex-display();
-
-                        img {
-                            width: 60px;
-                            margin: auto;
-                            .o-align-self(center);
-                        }
-                    }
-
                     .o_web_studio_default_view {
                         .o-position-absolute(4px, 3px);
                         font-size: 10px;
@@ -136,14 +101,6 @@
                         .fa-home {
                             color: white;
                         }
-                    }
-
-                    .o_web_studio_name {
-                        .o-position-absolute(@bottom: 10px, @left: 10px);
-                        font-weight: 500;
-                        font-size: 12px;
-                        color: @o-web-studio-text-dark;
-                        text-transform: capitalize;
                     }
 
                     .o_web_studio_more {
