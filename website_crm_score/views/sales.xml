@@ -167,8 +167,11 @@
                     </div>
                     <field name="min_for_assign" class="oe_inline"/>
                 </xpath>
+                <group name="right" position="attributes">
+                    <attribute name="attrs">{'invisible': [('team_type', 'in', ['pos', 'ebay'])]}</attribute>
+                </group>
                 <xpath expr="//page[@name='members']" position="replace">
-                    <page string="Assignation">
+                    <page string="Assignation" attrs="{'invisible': [('team_type', 'in', ['pos', 'ebay'])]}">
                         <field name="team_user_ids" widget="one2many" mode="kanban" context="{'default_team_id':active_id, 'ro_team':True}">
                             <kanban>
                                 <field name="user_id"/>
