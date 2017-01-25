@@ -65,12 +65,9 @@ var SearchRenderer = AbstractRenderer.extend({
         return $new_row;
     },
     _render_separator: function(node) {
-        // TODO change separator style to be more visible
         var $tbody = this.$('.o_web_studio_search_filters tbody');
-        var $new_row = $('<tr>').append(
-            $('<td>').append(
-            $('<span>').text('Separator')
-        ));
+        var $new_row = $('<tr class="o_web_studio_separator">').html('<td><hr/></td>');
+
         $tbody.append($new_row);
         return $new_row;
     },
