@@ -171,3 +171,19 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice.currency_id = self.mxn.id
         values = invoice._l10n_mx_edi_create_cfdi_values()
         self.assertEqual(float(values['rate']), 1)
+
+    def test_addenda(self):
+        invoice = self.create_invoice()
+        addenda_autozone = self.ref('l10n_mx_edi.l10n_mx_edi_addenda_autozone')
+        invoice.partner_id.l10n_mx_edi_addenda = addenda_autozone
+        invoice.message_ids.unlink()
+        invoice.action_invoice_open()
+        self.assertEqual(invoice.state, "open")
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed")
+        xml_str = base64.decodestring(invoice.message_ids[-2].attachment_ids.datas)
+        xml = objectify.fromstring(xml_str)
+        xml_expected = objectify.fromstring(
+            '<ADDENDA10 xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'DEPTID="DEPTID" VERSION="VERSION" BUYER="BUYER" VENDOR_ID="VENDOR_ID" POID="POID" PODATE="PODATE" EMAIL="EMAIL"/>')
+        xml_addenda = xml.Addenda.xpath('ADDENDA10')[0]
+        self.assertEqualXML(xml_addenda, xml_expected)
