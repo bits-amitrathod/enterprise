@@ -19,8 +19,8 @@ class BaseAutomation(models.Model):
         """
         if action.trg_date_calendar_id and action.trg_date_range_type == 'day' and action.trg_date_resource_field_id:
             user = record[action.trg_date_resource_field_id.name]
-            if user.employee_ids and user.employee_ids[0].contract_id and user.employee_ids[0].contract_id.working_hours:
-                calendar = user.employee_ids[0].contract_id.working_hours
+            if user.employee_ids and user.employee_ids[0].contract_id and user.employee_ids[0].contract_id.resource_calendar_id:
+                calendar = user.employee_ids[0].contract_id.resource_calendar_id
                 start_dt = Datetime.from_string(record_dt)
                 resource_id = user.employee_ids[0].resource_id.id
                 return calendar.schedule_days_get_date(action.trg_date_range, day_date=start_dt, compute_leaves=True, resource_id=resource_id)
