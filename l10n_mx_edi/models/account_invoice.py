@@ -6,6 +6,7 @@ from itertools import groupby
 from lxml import etree
 from lxml.objectify import fromstring
 from suds.client import Client
+from werkzeug import url_encode
 
 from odoo import _, api, fields, models
 from odoo.tools.misc import file_open
@@ -551,6 +552,8 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         precision_digits = self.env['decimal.precision'].precision_get('Account')
+        amount_untaxed = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit))
+        amount_discount = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit * l.discount / 100.0))
         values = {
             'record': self,
             'currency_name': self.currency_id.name,
@@ -561,16 +564,16 @@ class AccountInvoice(models.Model):
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
-            'amount_untaxed': '%0.*f' % (precision_digits, self.amount_untaxed),
+            'amount_untaxed': '%0.*f' % (precision_digits, amount_untaxed),
+            'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
             'get_customer_rfc': self.get_customer_rfc,
             'show_domicile': self.show_domicile,
         }
 
-        currency_model_ctx = self.env['res.currency'].with_context(
-            company_id=self.company_id.id, date=self.date_invoice)
-        # NOTE: We are not supporting company.currency != MXN
-        values['rate'] = currency_model_ctx._get_conversion_rate(
-            self.currency_id, self.company_id.currency_id)
+        ctx = dict(company_id=self.company_id.id, date=self.date_invoice)
+        mxn = self.env.ref('base.MXN').with_context(ctx)
+        invoice_currency = self.currency_id.with_context(ctx)
+        values['rate'] = '%0.*f' % (precision_digits, invoice_currency.compute(1, mxn))
 
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
 
@@ -772,7 +775,7 @@ class AccountInvoice(models.Model):
         :rtype: tuple
         """
         url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
-        parameters = '"?re=%s&rr=%s&tt=%s&id=%s' % (emitter, receiver, amount, uuid)
+        parameters = url_encode({'re': emitter, 'rr': receiver, 'tt': amount, 'id': uuid})
         try:
             return Client(url).service.Consulta(parameters).Estado, False
         except Exception as e:

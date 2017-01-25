@@ -133,6 +133,10 @@ class AccountFinancialReportLine(models.Model):
     hide_if_zero = fields.Boolean(default=False)
     action_id = fields.Many2one('ir.actions.actions')
 
+    _sql_constraints = [
+        ('code_uniq', 'unique (code)', "A report line with the same code already exists."),
+    ]
+
     def _query_get_select_sum(self, currency_table):
         """ Little function to help building the SELECT statement when computing the report lines.
 

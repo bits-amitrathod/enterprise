@@ -19,9 +19,9 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             'l10n_mx_edi', 'demo', 'pac_credentials', 'certificate.key')).read()
         self.cert_password = '12345678a'
         self.l10n_mx_edi_basic_configuration()
-        xml_expected = misc.file_open(os.path.join(
+        self.xml_expected_str = misc.file_open(os.path.join(
             'l10n_mx_edi', 'tests', 'expected_cfdi.xml')).read()
-        self.xml_expected = objectify.fromstring(xml_expected)
+        self.xml_expected = objectify.fromstring(self.xml_expected_str)
         self.company_partner = self.env.ref('base.main_partner')
 
     def l10n_mx_edi_basic_configuration(self):
@@ -79,6 +79,30 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqual(xml_attach.splitlines()[0].lower(),
                          '<?xml version="1.0" encoding="utf-8"?>'.lower())
 
+        # ----------------
+        # Testing discount
+        # ----------------
+        invoice_disc = invoice.copy()
+        for line in invoice_disc.invoice_line_ids:
+            line.discount = 10
+            line.price_unit = 500
+        invoice_disc.compute_taxes()
+        invoice_disc.action_invoice_open()
+        self.assertEqual(invoice_disc.state, "open")
+        self.assertEqual(invoice_disc.l10n_mx_edi_pac_status, "signed")
+        xml = self.get_invoice_xml(invoice_disc)
+        xml_expected_disc = objectify.fromstring(self.xml_expected_str)
+        xml_expected_disc.attrib['subTotal'] = '500.00'
+        xml_expected_disc.attrib['descuento'] = '50.00'
+        # 500 - 10% + taxes(16%, -10%)
+        xml_expected_disc.attrib['total'] = '477.00'
+        self.xml_merge_dynamic_items(xml, xml_expected_disc)
+        xml_expected_disc.attrib['folio'] = invoice_disc.number
+        for concepto in xml_expected_disc.Conceptos:
+            concepto.Concepto.attrib['valorUnitario'] = '500.0'
+            concepto.Concepto.attrib['importe'] = '500.0'
+        self.assertEqualXML(xml, xml_expected_disc)
+
         # -----------------------
         # Testing re-sign process (recovery a previous signed xml)
         # -----------------------
@@ -132,18 +156,18 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         self.set_currency_rates(mxn_rate=1, usd_rate=1/usd_rate)
         values = invoice._l10n_mx_edi_create_cfdi_values()
-        self.assertEqual(values['rate'], usd_rate)
+        self.assertEqual(float(values['rate']), usd_rate)
 
         # -----------------------
         # Testing company.mxn.rate=value and invoice.usd.rate=1
         # -----------------------
         self.set_currency_rates(mxn_rate=usd_rate, usd_rate=1)
         values = invoice._l10n_mx_edi_create_cfdi_values()
-        self.assertEqual(values['rate'], usd_rate)
+        self.assertEqual(float(values['rate']), usd_rate)
 
         # -----------------------
         # Testing using MXN currency for invoice and company
         # -----------------------
         invoice.currency_id = self.mxn.id
         values = invoice._l10n_mx_edi_create_cfdi_values()
-        self.assertEqual(values['rate'], 1)
+        self.assertEqual(float(values['rate']), 1)
