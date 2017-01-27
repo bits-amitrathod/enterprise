@@ -491,7 +491,8 @@ class AccountInvoice(models.Model):
         }
         for tax in self.tax_line_ids:
             tax_dict = {
-                'name': (tax.tax_id.description or tax.tax_id.name).upper(),
+                'name': (tax.tax_id.tag_ids[0].name
+                         if tax.tax_id.tag_ids else tax.tax_id.name).upper(),
                 'amount': round(abs(tax.amount or 0.0), 2),
                 'rate': round(abs(tax.tax_id.amount), 2),
             }
