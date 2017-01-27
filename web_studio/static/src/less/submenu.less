@@ -124,5 +124,30 @@
                 }
             }
         }
+
+        .o_web_studio_views_icons {
+            border-left: 1px solid @o-web-studio-bg-dark;
+            padding: 0 @grid-gutter-width*0.5;
+            margin-left: @grid-gutter-width*0.3;
+            height: @o-web-studio-menu-height - @o-web-studio-menu-item-border-width;
+
+            > a {
+                float: left;
+                padding: 0 7px;
+                background-color: transparent;
+                color: @o-web-studio-text-inactive;
+                border-radius: @border-radius-small;
+                line-height: @o-web-studio-menu-height;
+                height: @o-web-studio-menu-height - @o-web-studio-menu-item-border-width;
+
+                &:last-child {
+                    padding-right: 0;
+                }
+        
+                &:hover {
+                    color: @o-web-studio-text-light;
+                }
+            }
+        }
     }
 }

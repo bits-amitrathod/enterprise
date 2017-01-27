@@ -36,6 +36,34 @@
       <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="reports">Reports</a></li>
       <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="acl">Access Controls</a></li>
       <li><a href="#" data-toggle="collapse" aria-expanded="true" data-name="filters">Filter Rules</a></li>
+      <li>
+        <div class="o_web_studio_views_icons">
+          <t t-if="_.contains(widget.active_view_types, 'form')">
+            <a href="#" data-name="form"><i class="fa fa-address-card"/></a>
+          </t>
+          <t t-if="_.contains(widget.active_view_types, 'list')">
+            <a href="#" data-name="list"><i class="fa fa-list-ul"/></a>
+          </t>
+          <t t-if="_.contains(widget.active_view_types, 'kanban')">
+            <a href="#" data-name="kanban"><i class="fa fa-th-large"/></a>
+          </t>
+          <t t-if="_.contains(widget.active_view_types, 'calendar')">
+            <a href="#" data-name="calendar"><i class="fa fa-calendar-o"/></a>
+          </t>
+          <t t-if="_.contains(widget.active_view_types, 'graph')">
+            <a href="#" data-name="graph"><i class="fa fa-bar-chart"/></a>
+          </t>
+          <t t-if="_.contains(widget.active_view_types, 'pivot')">
+            <a href="#" data-name="pivot"><i class="fa fa-table"/></a>
+          </t>
+          <t t-if="_.contains(widget.active_view_types, 'grid')">
+            <a href="#" data-name="grid"><i class="fa fa-th"/></a>
+          </t>
+          <t t-if="_.contains(widget.active_view_types, 'gantt')">
+            <a href="#" data-name="gantt"><i class="fa fa-tasks"/></a>
+          </t>
+        </div>
+      </li>
     </ul>
 
     <div class="o_web_studio_redo"><button class="btn btn-sm"><i class="fa fa-repeat"/><span>Redo</span></button></div>

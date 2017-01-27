@@ -314,7 +314,7 @@ WebClient.include({
 
         // the method is overwritten by the debug manager to update to null if the appswitcher is
         // displayed, but we don't need this in Studio ; we only need to update the action if there is one.
-        if (action && action.action_descr.tag !== 'action_web_studio_main') {
+        if (action && !action.action_descr.keep_state && action.action_descr.tag !== 'action_web_studio_main') {
             this._update_studio_systray(this._is_studio_editable(action));
             this.edited_action = action;
         }

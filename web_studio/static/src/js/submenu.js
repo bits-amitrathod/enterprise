@@ -12,9 +12,10 @@ var _t = core._t;
 var SubMenu = Widget.extend({
     template: 'web_studio.Menu',
     events: {
-        'click .o_menu_sections a': 'on_menu_click',
+        'click .o_menu_sections > li > a': 'on_menu_click',
         'click .o_web_studio_undo': 'on_undo',
         'click .o_web_studio_redo': 'on_redo',
+        'click .o_menu_sections .o_web_studio_views_icons > a': 'on_icon_click',
     },
 
     init: function(parent, action, active_view, options) {
@@ -22,11 +23,12 @@ var SubMenu = Widget.extend({
 
         this._super.apply(this, arguments);
         this.action = action;
+        this.active_view_types = this.action.view_mode.split(',');
         this.studio_actions = [{action: 'action_web_studio_main', title: 'Views'}];
         this.multi_lang = options.multi_lang;
         if (active_view) { this.add_breadcrumb_view_type(active_view); }
 
-        bus.on('action_changed', this, function(new_action) { self.action = new_action; });
+        bus.on('action_changed', this, this._on_action_changed.bind(this));
 
         bus.on('undo_available', this, this.toggle_undo.bind(this, true));
         bus.on('undo_not_available', this, this.toggle_undo.bind(this, false));
@@ -77,6 +79,15 @@ var SubMenu = Widget.extend({
                 });
             });
         }
+    },
+    on_icon_click: function(ev) {
+        ev.preventDefault();
+        return this.replace_action('action_web_studio_main', _t('Views'), {
+            action: this.action,
+            active_view: $(ev.currentTarget).data('name'),
+            clear_breadcrumbs: true,
+            disable_edition: true,
+        });
     },
     add_breadcrumb_view_type: function(view_type) {
         if (this.studio_actions.length === 1) {
@@ -133,6 +144,11 @@ var SubMenu = Widget.extend({
         }
         return $bc;
     },
+    _on_action_changed: function (new_action) {
+        this.action = new_action;
+        this.active_view_types = this.action.view_mode.split(',');
+        this.renderElement();
+    }
 });
 
 return SubMenu;
