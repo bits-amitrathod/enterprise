@@ -41,6 +41,7 @@ return Widget.extend({
         this.fileupload_id = _.uniqueId('o_fileupload');
         $(window).on(this.fileupload_id, this.on_upload_done.bind(this));
 
+        this.mode = 'edit';
         this._super.apply(this, arguments);
     },
     destroy: function() {
@@ -134,6 +135,14 @@ return Widget.extend({
         this.uploaded_attachment_id = false;
         this.renderElement();
         this.update(true);
+    },
+    enable_edit: function() {
+        this.mode = 'edit';
+        this.renderElement();
+    },
+    disable_edit: function() {
+        this.mode = 'readonly';
+        this.renderElement();
     },
 });
 

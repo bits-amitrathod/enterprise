@@ -11,27 +11,31 @@
 
     </t>
     <t t-else="">
-        <h6>Design your Icon</h6>
+        <t t-if="widget.mode === 'edit'">
+            <h6>Design your Icon</h6>
+        </t>
         <div class="o_web_studio_icon">
             <div class="o_app_icon"><i/></div>
         </div>
-        <div class="o_web_studio_selectors">
-            <div class="o_web_studio_selector" data-type="background_color"><span class="o_web_studio_selector_pointer"/></div>
-            <div class="o_web_studio_selector" data-type="color"><span class="o_web_studio_selector_pointer"/></div>
-            <div class="o_web_studio_selector" data-type="icon"><i/><span class="o_web_studio_selector_pointer"/></div>
-        </div>
-        <div class="clearfix"/>
-        <div class="o_web_studio_upload">
-            <span class="text-muted">or</span> <a href="#" class="js_upload">upload it</a>
-            <span class="hide">
-                <t t-call="HiddenInputFile">
-                    <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
-                    <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
-                    <input type="hidden" name="model" value="res.users"/>
-                    <input type="hidden" name="id" t-att-value="widget.user_id"/>
-                </t>
-            </span>
-        </div>
+        <t t-if="widget.mode === 'edit'">
+            <div class="o_web_studio_selectors">
+                <div class="o_web_studio_selector" data-type="background_color"><span class="o_web_studio_selector_pointer"/></div>
+                <div class="o_web_studio_selector" data-type="color"><span class="o_web_studio_selector_pointer"/></div>
+                <div class="o_web_studio_selector" data-type="icon"><i/><span class="o_web_studio_selector_pointer"/></div>
+            </div>
+            <div class="clearfix"/>
+            <div class="o_web_studio_upload">
+                <span class="text-muted">or</span> <a href="#" class="js_upload">upload it</a>
+                <span class="hide">
+                    <t t-call="HiddenInputFile">
+                        <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                        <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                        <input type="hidden" name="model" value="res.users"/>
+                        <input type="hidden" name="id" t-att-value="widget.user_id"/>
+                    </t>
+                </span>
+            </div>
+        </t>
     </t>
 </div>
 

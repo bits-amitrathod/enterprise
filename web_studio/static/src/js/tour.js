@@ -45,6 +45,15 @@ tour.register('web_studio_new_app_tour', {
     content: _t('Now, customize your icon. Make it yours.'),
     position: 'top',
 }, {
+    trigger: '.o_web_studio_app_creator_next.is_ready',
+    content: _t('Go on, you are almost done!'),
+    position: 'top',
+}, {
+    trigger: '.o_web_studio_app_creator_menu > input',
+    content: _t('How do you want to name your first <b>menu</b>? My books, My courses?'),
+    position: 'right',
+    run: 'text ' + utils.randomString(6),
+}, {
     trigger: '.o_web_studio_app_creator_next.o_web_studio_create.is_ready',
     content: _t('You are just one click away from <b>generating your first app</b>.'),
     position: 'bottom',

@@ -28,20 +28,29 @@
     <h3 class="mb32">Create your App</h3>
     <div class="o_web_studio_app_creator_name">
         <label for="app_name">Choose a name</label>
-        <input id="app_name" name="app_name" placeholder="My App" type="text"/>
+        <input id="app_name" name="app_name" placeholder="My App" type="text" t-att-value="widget.app_name"/>
     </div>
+</div>
 
-    <div class="o_web_studio_app_creator_model_choice">
-        <div class="o_checkbox">
-            <input id="model_choice" name="model_choice" type="checkbox"/>
-            <span/>
+<div t-name="web_studio.AppCreator.Menu">
+    <h3 class="mb32">Create your first Menu</h3>
+    <div class="o_web_studio_app_creator_menu">
+        <label for="menu_name">Choose a name</label>
+        <input id="menu_name" name="menu_name" placeholder="My Menu" type="text"/>
+    </div>
+    <t t-if="widget.debug">
+        <div class="o_web_studio_app_creator_model_choice">
+            <div class="o_checkbox">
+                <input id="model_choice" name="model_choice" type="checkbox"/>
+                <span/>
+            </div>
+            <label for="model_choice">Use an existing Model</label>
         </div>
-        <label for="model_choice">Specify a Model</label>
-    </div>
-    <div class="o_web_studio_app_creator_model mt8">
-        <label for="name">Model</label>
-        <div class="js_model"/>
-    </div>
+        <div class="o_web_studio_app_creator_model mt8">
+            <label for="name">Model</label>
+            <div class="js_model"/>
+        </div>
+    </t>
 </div>
 
 <t t-name="web_studio.AppCreator.NewApp">

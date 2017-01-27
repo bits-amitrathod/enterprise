@@ -12,10 +12,11 @@ var session = require('web.session');
 // so, basically all write/update/delete operations made in web_studio.
 
 return {
-    create_new_app: function(name, model_id, icon) {
+    create_new_app: function(name, menu_name, model_id, icon) {
         data_manager.invalidate();
         return ajax.jsonRpc('/web_studio/create_new_menu', 'call', {
             name: name,
+            menu_name: menu_name,
             model_id: model_id,
             is_app: true,
             icon: icon,
@@ -23,10 +24,10 @@ return {
         });
     },
 
-    create_new_menu: function(name, parent_id, model_id) {
+    create_new_menu: function(menu_name, parent_id, model_id) {
         data_manager.invalidate();
         return ajax.jsonRpc('/web_studio/create_new_menu', 'call', {
-            name: name,
+            menu_name: menu_name,
             model_id: model_id,
             parent_id: parent_id,
             context: session.user_context,

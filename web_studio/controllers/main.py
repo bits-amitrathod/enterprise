@@ -164,8 +164,8 @@ class WebStudioController(http.Controller):
         return action
 
     @http.route('/web_studio/create_new_menu', type='json', auth='user')
-    def create_new_menu(self, name, model_id=False, is_app=False, parent_id=None, icon=None):
-        """ Create a new menu @name, linked to a new action associated to the model_id
+    def create_new_menu(self, app_name=False, menu_name=False, model_id=False, is_app=False, parent_id=None, icon=None):
+        """ Create a new menu @menu_name, linked to a new action associated to the model_id
             @param model_id: if not set, the action associated to this menu is the appswitcher
                 except if @is_app is True that will create a new model
             @param is_app: if True, create an extra menu (app, without parent)
@@ -182,12 +182,12 @@ class WebStudioController(http.Controller):
             model = request.env['ir.model'].browse(model_id)
         elif is_app:
             # create a new model
-            model = request.env['ir.model'].studio_name_create(name)
+            model = request.env['ir.model'].studio_name_create(menu_name)
 
         # create the action
         if model:
             action = request.env['ir.actions.act_window'].create({
-                'name': model.name,
+                'name': menu_name,
                 'res_model': model.model,
                 'help': """
                     <p>
@@ -207,9 +207,9 @@ class WebStudioController(http.Controller):
         if is_app:
             # create the menus (app menu + first submenu)
             menu_values = {
-                'name': name,
+                'name': app_name,
                 'child_id': [(0, 0, {
-                    'name': model and model.name or name,
+                    'name': menu_name,
                     'action': action_ref,
                 })]
             }
@@ -232,7 +232,7 @@ class WebStudioController(http.Controller):
         else:
             # create the submenu
             new_menu = request.env['ir.ui.menu'].create({
-                'name': name,
+                'name': menu_name,
                 'action': action_ref,
                 'parent_id': parent_id,
             })

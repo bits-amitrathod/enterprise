@@ -11,7 +11,6 @@ var session = require("web.session");
 var Widget = require('web.Widget');
 var FieldManagerMixin = require('web_studio.FieldManagerMixin');
 var view_components = require('web_studio.view_components');
-var session = require('web.session');
 
 var form_component_widget_registry = view_components.registry;
 var _t = core._t;
@@ -168,10 +167,6 @@ return Widget.extend(FieldManagerMixin, {
 
         // Existing Fields
         var FormComponent = form_component_widget_registry.get('existing_field');
-        // TODO we allow to add the same field in the search_view
-        // since it is possible to add a field in the autocompletion fields and the group_by
-        // Maybe we should make a verification if the field is in both autocompeltion fields and group_by
-        // and then not allow to add it
         if (this.view_type === 'search') {
             form_widgets = _.map(this.fields, function(field) {
                 return new FormComponent(self, field.key, field.string, field.type, field.store);
