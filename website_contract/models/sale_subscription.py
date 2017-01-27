@@ -92,7 +92,7 @@ class SaleSubscription(models.Model):
             'product_id': option.product_id.id,
             'analytic_account_id': self.id,
             'name': option.name,
-            'sold_quantity': option.quantity,
+            'quantity': option.quantity,
             'uom_id': option.uom_id.id,
             'price_unit': self.pricelist_id.with_context({'uom': option.uom_id.id}).get_product_price(option.product_id, 1, False)
         }
@@ -156,7 +156,7 @@ class SaleSubscription(models.Model):
                     'product_id': line.product_id.id,
                     'uom_id': line.uom_id.id,
                     'name': line.name,
-                    'sold_quantity': line.quantity,
+                    'quantity': line.quantity,
                     'price_unit': self.pricelist_id.with_context({'uom': line.uom_id.id}).get_product_price(line.product_id, 1, False),
                     'analytic_account_id': self.id,
                 })]

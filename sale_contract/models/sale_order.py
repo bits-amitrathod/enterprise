@@ -68,18 +68,18 @@ class SaleOrder(models.Model):
                                 for subscr_line in order.subscription_id.recurring_invoice_line_ids:
                                     if subscr_line.product_id == line.product_id and subscr_line.uom_id == line.product_uom:
                                         recurring_line_id = subscr_line.id
-                                        quantity = subscr_line.sold_quantity
+                                        quantity = subscr_line.quantity
                                         break
                             if recurring_line_id:
                                 values['recurring_invoice_line_ids'].append((1, recurring_line_id, {
-                                    'sold_quantity': quantity + line.product_uom_qty,
+                                    'quantity': quantity + line.product_uom_qty,
                                 }))
                             else:
                                 values['recurring_invoice_line_ids'].append((0, 0, {
                                     'product_id': line.product_id.id,
                                     'analytic_account_id': order.subscription_id.id,
                                     'name': line.name,
-                                    'sold_quantity': line.product_uom_qty,
+                                    'quantity': line.product_uom_qty,
                                     'uom_id': line.product_uom.id,
                                     'price_unit': line.price_unit,
                                     'discount': line.discount if line.order_id.subscription_management == 'renew' else False,

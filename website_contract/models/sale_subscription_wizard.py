@@ -52,11 +52,11 @@ class SaleSubscriptionWizard(models.TransientModel):
             rec_line = False
             for account_line in self.subscription_id.recurring_invoice_line_ids:
                 if (line.product_id, line.uom_id) == (account_line.product_id, account_line.uom_id):
-                    rec_line = (1, account_line.id, {'sold_quantity': account_line.sold_quantity + line.quantity})
+                    rec_line = (1, account_line.id, {'quantity': account_line.quantity + line.quantity})
             if not rec_line:
                 rec_line = (0, 0, {'product_id': line.product_id.id,
                                    'name': line.name,
-                                   'sold_quantity': line.quantity,
+                                   'quantity': line.quantity,
                                    'uom_id': line.uom_id.id,
                                    'price_unit': self.subscription_id.pricelist_id.with_context({'uom': line.uom_id.id}).get_product_price(line.product_id, 1, False)
                                    })

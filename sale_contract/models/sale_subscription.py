@@ -111,7 +111,7 @@ class SaleSubscription(models.Model):
                         'product_id': line.product_id.id,
                         'uom_id': line.uom_id.id,
                         'name': line.name,
-                        'actual_quantity': line.quantity,
+                        'quantity': line.quantity,
                         'price_unit': product.price,
                     }))
                 self.recurring_invoice_line_ids = invoice_line_ids
@@ -373,25 +373,11 @@ class SaleSubscriptionLine(models.Model):
     product_id = fields.Many2one('product.product', string='Product', domain="[('recurring_invoice','=',True)]", required=True)
     analytic_account_id = fields.Many2one('sale.subscription', string='Subscription')
     name = fields.Text(string='Description', required=True)
-    quantity = fields.Float(compute='_compute_quantity', inverse='_set_quantity', string='Quantity', store=True,
-                            digits=dp.get_precision('Product Unit of Measure'),
-                            help="Max between actual and sold quantities; this quantity will be invoiced")
-    actual_quantity = fields.Float(help="Quantity actually used by the customer", default=0.0, digits=dp.get_precision('Product Unit of Measure'))
-    sold_quantity = fields.Float(help="Quantity sold to the customer", required=True, default=1, digits=dp.get_precision('Product Unit of Measure'))
+    quantity = fields.Float(string='Quantity', help="Quantity that will be invoiced.", default=1.0)
     uom_id = fields.Many2one('product.uom', string='Unit of Measure', required=True)
     price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
     discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'))
     price_subtotal = fields.Float(compute='_compute_price_subtotal', string='Sub Total', digits=dp.get_precision('Account'))
-
-    @api.depends('sold_quantity', 'actual_quantity')
-    def _compute_quantity(self):
-        for line in self:
-            line.quantity = max(line.sold_quantity, line.actual_quantity)
-
-    @api.multi
-    def _set_quantity(self):
-        for line in self:
-            line.actual_quantity = line.quantity
 
     @api.depends('price_unit', 'quantity', 'discount', 'analytic_account_id.pricelist_id')
     def _compute_price_subtotal(self):

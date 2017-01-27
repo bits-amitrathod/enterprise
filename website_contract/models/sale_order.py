@@ -166,7 +166,7 @@ class sale_order_line(models.Model):
             'product_id': self.product_id.id,
             'analytic_account_id': subscription.id,
             'name': self.name,
-            'sold_quantity': self.product_uom_qty,
+            'quantity': self.product_uom_qty,
             'discount': self.discount,
             'uom_id': self.product_uom.id,
             'price_unit': self.price_unit,
