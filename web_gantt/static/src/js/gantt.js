@@ -56,7 +56,7 @@ var GanttView = View.extend({
         var fields = _.compact(_.map(fields_to_gather, function(key) {
             return self.fields_view.arch.attrs[key] || '';
         }));
-        fields.push("name");
+        fields.push("display_name");
         // consolidation exclude, get the related fields
         if (this.fields_view.arch.attrs.consolidation_exclude) {
             fields = fields.concat(this.fields_view.arch.attrs.consolidation_exclude);
@@ -512,7 +512,7 @@ var GanttView = View.extend({
                 }
 
                 var project_id = _.uniqueId("gantt_project_");
-                var group_name = task.name ? formats.format_value(task.name, self.fields[group_bys[level]]) : "-";
+                var group_name = task.display_name ? formats.format_value(task.display_name, self.fields[group_bys[level]]) : "-";
                 // progress
                 var sum = _.reduce(task.percent, function(acc, num) { return acc+num; }, 0);
                 var progress = sum / task.percent.length / 100 || 0;
@@ -538,7 +538,7 @@ var GanttView = View.extend({
                 // Consolidation
                 gantt_tasks.push({
                     'id': "gantt_task_" + task.id,
-                    'text': task.name,
+                    'text': task.display_name,
                     'active': task.active,
                     'start_date': task.task_start,
                     'duration': gantt.calculateDuration(task.task_start, task.task_stop),
