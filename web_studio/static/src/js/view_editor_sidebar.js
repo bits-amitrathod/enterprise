@@ -107,6 +107,7 @@ return Widget.extend(FieldManagerMixin, {
         } else if (options && options.node.attrs.class === 'oe_chatter') {
             this.element = 'chatter';
             this.email_alias = options.email_alias;
+            this.alias_domain = options.alias_domain;
         }
         this.render();
     },

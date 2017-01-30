@@ -120,9 +120,7 @@ return {
         return ajax.jsonRpc('/web_studio/get_email_alias', 'call', {
             model_name: model_name,
         }).then(function(result) {
-            return {
-                email_alias: result,
-            };
+            return result;
         });
     },
 

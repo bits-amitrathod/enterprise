@@ -526,8 +526,14 @@
 <t t-name="web_studio.ViewEditorSidebar.chatter">
     <div class="o_web_studio_sidebar_text">
         <label for="email_alias">Email Alias</label>
-        <input id="email_alias" name="email_alias" type="text" data-type="email_alias"
-            t-att-value="widget.email_alias"/>
+        <div class="input-group">
+            <input id="email_alias" name="email_alias" type="text" data-type="email_alias"
+                t-att-value="widget.email_alias"/>
+            <div class="input-group-addon">@<t t-if="widget.alias_domain" t-esc="widget.alias_domain"/></div>
+        </div>
+        <div t-if="widget.email_alias and widget.alias_domain" class="mt8">
+            Send a <a t-att-href="'mailto:' + widget.email_alias + '@' + widget.alias_domain + '?subject=test'">test email</a>.
+        </div>
     </div>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Remove"/>

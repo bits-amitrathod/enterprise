@@ -1061,11 +1061,13 @@ class WebStudioController(http.Controller):
     def get_email_alias(self, model_name):
         """ Returns the email alias associated to the model @model_name if both exist
         """
+        result = {'alias_domain': request.env['ir.config_parameter'].get_param('mail.catchall.domain')}
         model = request.env['ir.model'].search([('model', '=', model_name)], limit=1)
         if model:
             email_alias = request.env['mail.alias'].search([('alias_model_id', '=', model.id)], limit=1)
             if email_alias:
-                return email_alias.alias_name
+                result['email_alias'] = email_alias.alias_name
+        return result
 
     @http.route('/web_studio/set_email_alias', type='json', auth='user')
     def set_email_alias(self, model_name, value):
