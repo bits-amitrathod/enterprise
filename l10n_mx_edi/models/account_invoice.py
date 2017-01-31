@@ -520,7 +520,7 @@ class AccountInvoice(models.Model):
             # Following Question 4 in legal Document.
             rfc = 'XAXX010101000'
             self.message_post(
-                body=_('Using General Public VAT because not vat found'),
+                body=_('Using General Public VAT because no vat found'),
                 subtype='account.mt_invoice_validated')
 
         if customer.country_id and customer.country_id != self.env.ref('base.mx'):
