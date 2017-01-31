@@ -16,6 +16,7 @@
                             <group>
                                 <field name="provider_id"/>
                                 <field name="provider_balance" readonly="1"/>
+                                <field name="provider_currency_id" groups="base.group_no_one"/>
                             </group>
                             <group>
                                 <field name="paper_weight"/>
@@ -23,7 +24,6 @@
                                 <field name="report_id" options="{'no_create': True, 'no_open': True}"/>
                             </group>
                             <field name="provider_environment" invisible="1"/>
-                            <field name="currency_id" invisible="1"/>
                         </group>
 
                         <div class="alert alert-danger" attrs="{'invisible':[('error_message','=', False)]}">

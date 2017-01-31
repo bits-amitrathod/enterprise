@@ -20,11 +20,15 @@ class PrintProvider(models.Model):
     def _get_providers(self):
         return []
 
+    def _default_currency_id(self):
+        return self.env.user.company_id.currency_id
 
     name = fields.Char("Name", required=True)
     environment = fields.Selection([('test', 'Test'), ('production', 'Production')], "Environment", default='test')
     provider = fields.Selection(selection='_get_providers', string='Provider', required=True)
     balance = fields.Float("Credit", digits=(16, 2))
+    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=_default_currency_id,
+        help="The currency will be used for amount, balance account, print order price, ...")
 
     @api.multi
     def update_account_data(self):
@@ -56,11 +60,17 @@ class PrintOrder(models.Model):
     def _default_print_provider(self):
         return self.env['ir.values'].get_default('print.order', 'provider_id')
 
+    def _default_currency_id(self):
+        provider_id = self.env['ir.values'].get_default('print.order', 'provider_id')
+        if provider_id:
+            return self.env['print.provider'].browse(provider_id).currency_id.id
+        return False
+
     create_date = fields.Datetime('Creation Date', readonly=True)
     sent_date = fields.Datetime('Sending Date', readonly=True)
-    currency_id = fields.Many2one('res.currency', 'Currency', related="provider_id.currency_id", readonly=True)
+    currency_id = fields.Many2one('res.currency', 'Currency', default=_default_currency_id, readonly=True)
     user_id = fields.Many2one('res.users', 'Author', default=lambda self: self.env.user)
-    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider, readonly=True, states={'draft': [('readonly', False)]})
+    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider) #, readonly=True, states={'draft': [('readonly', False)]})
 
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW', states={'sent': [('readonly', True)]})
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)
@@ -90,6 +100,10 @@ class PrintOrder(models.Model):
     partner_zip = fields.Char('Zip', required=True, states={'sent': [('readonly', True)]})
     partner_city = fields.Char('City', required=True, states={'sent': [('readonly', True)]})
     partner_country_id = fields.Many2one('res.country', 'Country', required=True, states={'sent': [('readonly', True)]})
+
+    @api.onchange('provider_id')
+    def _onchange_provider_id(self):
+        self.currency_id = self.provider_id.currency_id
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -288,7 +302,6 @@ class PrintOrder(models.Model):
         template = self.env['ir.model.data'].xmlid_to_object('print.print_user_notify_failed_email_template')
         for user_id in user_to_notify.keys():
             template.with_context(print_errors=user_to_notify[user_id]).send_mail(user_id, force_send=True)
-
 
 
 class PrintMixin(models.AbstractModel):

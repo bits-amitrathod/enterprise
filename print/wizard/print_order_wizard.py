@@ -12,10 +12,6 @@ class PrintOrderWizard(models.TransientModel):
     _rec_name = 'provider_id'
 
     @api.model
-    def _default_currency(self):
-        return self.env.user.company_id.currency_id
-
-    @api.model
     def _default_print_provider(self):
         return self.env['ir.values'].get_default('print.order', 'provider_id')
 
@@ -51,12 +47,16 @@ class PrintOrderWizard(models.TransientModel):
     provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider)
     provider_balance = fields.Float("Provider Credit", digits=(16, 2), related='provider_id.balance')
     provider_environment = fields.Selection([('test', 'Test'), ('production', 'Production')], "Environment", default=False, related='provider_id.environment')
-    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=_default_currency)
+    provider_currency_id = fields.Many2one('res.currency', 'Currency', related='provider_id.currency_id', oldname="currency_id", readonly=True)
     print_order_line_wizard_ids = fields.One2many('print.order.line.wizard', 'print_order_wizard_id', string='Lines')
 
     res_model = fields.Char('Resource Model')
     error_message = fields.Text("Error", compute='_compute_error_message')
     report_id = fields.Many2one('ir.actions.report.xml', 'Report', domain=lambda self: [('model', '=', self.env.context.get('active_model'))])
+
+    @api.onchange('provider_id')
+    def _onchange_provider_id(self):
+        self.provider_currency_id = self.provider_id.currency_id
 
     @api.one
     @api.depends('print_order_line_wizard_ids')
@@ -84,7 +84,7 @@ class PrintOrderWizard(models.TransientModel):
                     'ink': wizard.ink,
                     'paper_weight': wizard.paper_weight,
                     'provider_id': wizard.provider_id.id,
-                    'currency_id': wizard.currency_id.id,
+                    'currency_id': wizard.provider_currency_id.id,
                     'user_id': self._uid,
                     'res_id': line.res_id,
                     'res_model': line.print_order_wizard_id.res_model,
