@@ -281,6 +281,13 @@ class PrintMixin(models.AbstractModel):
     _description = "Print Mixin (Printable Object)"
 
     print_sent_date = fields.Datetime("Last Postal Sent Date")
+    print_is_sendable = fields.Boolean("Is sendable", compute='_compute_print_is_sendable')
+
+    @api.multi
+    def _compute_print_is_sendable(self):
+        """ Should be override according to its '_name'. """
+        for record in self:
+            record.print_is_sendable = False
 
     def print_validate_sending(self):
         # save sending date

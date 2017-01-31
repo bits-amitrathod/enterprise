@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
 
 
 class PrintOrderWizard(models.TransientModel):
@@ -10,7 +9,7 @@ class PrintOrderWizard(models.TransientModel):
 
     _name = 'print.order.wizard'
     _description = 'Print Order Wizard'
-    _rec_name = 'id'
+    _rec_name = 'provider_id'
 
     @api.model
     def _default_currency(self):
@@ -20,6 +19,30 @@ class PrintOrderWizard(models.TransientModel):
     def _default_print_provider(self):
         return self.env['ir.values'].get_default('print.order', 'provider_id')
 
+    @api.model
+    def default_get(self, fields):
+        result = super(PrintOrderWizard, self).default_get(fields)
+
+        active_ids = self.env.context.get('active_ids', [])
+        active_model = self.env.context.get('active_model', False)
+        result['res_model'] = active_model
+
+        if active_model and active_ids and 'print_order_line_wizard_ids' in fields:
+            line_values = []
+            for record in self.env[active_model].browse(active_ids):
+                line_values.append({
+                    'res_id': record.id,
+                    'res_name': record.display_name,
+                    'res_sendable': record.print_is_sendable,
+                    'partner_id': record.partner_id.id if 'partner_id' in record else False,
+                    'partner_has_address': record.partner_id.has_address if 'partner_id' in record else False,
+                    'last_send_date': record.print_sent_date,
+                })
+            result['print_order_line_wizard_ids'] = [
+                (0, 0, vals) for vals in line_values
+            ]
+        return result
+
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW')
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)
     provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider)
@@ -28,40 +51,20 @@ class PrintOrderWizard(models.TransientModel):
     currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=_default_currency)
     print_order_line_wizard_ids = fields.One2many('print.order.line.wizard', 'print_order_wizard_id', string='Lines')
 
+    res_model = fields.Char('Resource Model')
     error_message = fields.Text("Error", compute='_compute_error_message')
-
-    @api.multi
-    @api.onchange('provider_id')
-    def onchange_print_order_lines(self):
-        active_ids = self.env.context.get('active_ids', [])
-        active_model = self.env.context.get('active_model', False)
-
-        if active_ids and active_model:
-            lines = []
-            WizardLine = self.env['print.order.line.wizard']
-            for rec in self.env[active_model].browse(active_ids):
-                new_line = WizardLine.create({
-                    'print_order_wizard_id': self.id,
-                    'res_id': rec.id,
-                    'res_model': active_model,
-                    'partner_id': rec.partner_id.id,
-                    'last_send_date': rec.print_sent_date,
-                })
-                lines.append(new_line.id)
-            self.print_order_line_wizard_ids = WizardLine.browse(lines)
 
     @api.one
     @api.depends('print_order_line_wizard_ids')
     def _compute_error_message(self):
         message = False
-        unsendable = len(self.print_order_line_wizard_ids.filtered(lambda l: l.state != 'ok'))
+        unsendable = len(self.print_order_line_wizard_ids.filtered(lambda l: not l.partner_has_address or not l.res_sendable))
         if unsendable:
             if len(self.print_order_line_wizard_ids) == 1:
-                current_state = self.print_order_line_wizard_ids[0].state
-                state_selection = dict(self.env['print.order.line.wizard']._default_selection_state())
-                message = _("The document you want to send contains the following mistake : %s") % (state_selection.get(current_state, "Unknow error."),)
+                message = _("The document you want to send contains a mistake.")
             else:
                 message = _("At least one of the document you want to send contains a mistake.")
+            message += _("Please check the document is in a correct state, and that its partner has a correct postal address.")
         self.error_message = message
 
     @api.multi
@@ -74,52 +77,35 @@ class PrintOrderWizard(models.TransientModel):
             wizard.provider_id.check_credit()
             for line in wizard.print_order_line_wizard_ids:
                 PrintOrder.create({
-                    'ink' : wizard.ink,
-                    'paper_weight' : wizard.paper_weight,
-                    'provider_id' : wizard.provider_id.id,
-                    'currency_id' : wizard.currency_id.id,
-                    'user_id' : self._uid,
-                    'res_id' : line.res_id,
-                    'res_model' : line.res_model,
+                    'ink': wizard.ink,
+                    'paper_weight': wizard.paper_weight,
+                    'provider_id': wizard.provider_id.id,
+                    'currency_id': wizard.currency_id.id,
+                    'user_id': self._uid,
+                    'res_id': line.res_id,
+                    'res_model': line.print_order_wizard_id.res_model,
                     # duplicate partner infos
-                    'partner_id' : line.partner_id.id,
-                    'partner_name' : line.partner_id.name,
-                    'partner_street' : line.partner_id.street,
-                    'partner_street2' : line.partner_id.street2,
-                    'partner_state_id' : line.partner_id.state_id.id,
-                    'partner_zip' : line.partner_id.zip,
-                    'partner_city' : line.partner_id.city,
-                    'partner_country_id' : line.partner_id.country_id.id,
+                    'partner_id': line.partner_id.id,
+                    'partner_name': line.partner_id.name,
+                    'partner_street': line.partner_id.street,
+                    'partner_street2': line.partner_id.street2,
+                    'partner_state_id': line.partner_id.state_id.id,
+                    'partner_zip': line.partner_id.zip,
+                    'partner_city': line.partner_id.city,
+                    'partner_country_id': line.partner_id.country_id.id,
                 })
         return {'type': 'ir.actions.act_window_close'}
-
 
 
 class PrintOrderLineWizard(models.TransientModel):
 
     _name = 'print.order.line.wizard'
-    _rec_name = 'id'
-
-    @api.model
-    def _default_selection_state(self):
-        return [('ok', 'Ready to be sent'), ('bad_postal_address', 'Wrong Postal Address'), ('account_invoice_wrong_state', 'Wrong Invoice State')]
-
+    _rec_name = 'res_name'
 
     print_order_wizard_id = fields.Many2one('print.order.wizard', 'Print Order Wizard')
-    res_id = fields.Integer('Resource ID')
-    res_model = fields.Char('Resource Model')
-    partner_id = fields.Many2one('res.partner', 'Recipient partner')
-    last_send_date = fields.Datetime("Last Send Date", default=False)
-
-    state = fields.Selection('_default_selection_state', string='State', compute='_compute_state', store=True)
-
-    @api.one
-    @api.depends('partner_id', 'res_model')
-    def _compute_state(self):
-        state = 'ok'
-        if not self.partner_id.has_address:
-            state = 'bad_postal_address'
-        if self.res_model == 'account.invoice':
-            if self.env['account.invoice'].browse(self.res_id).state != 'open':
-                state = 'account_invoice_wrong_state'
-        self.state = state
+    res_id = fields.Integer('Resource ID', readonly=True)
+    res_name = fields.Char('Document', readonly=True)
+    res_sendable = fields.Boolean('Document sensable', readonly=True)
+    partner_id = fields.Many2one('res.partner', 'Recipient partner', readonly=True)
+    partner_has_address = fields.Boolean("Partner has an addess", readonly=True)
+    last_send_date = fields.Datetime("Last Send Date", readonly=True)

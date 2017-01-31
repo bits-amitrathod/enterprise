@@ -10,6 +10,12 @@ class AccountInvoice(models.Model):
     _name = 'account.invoice'
     _inherit = ['account.invoice', 'print.mixin']
 
+    @api.multi
+    def _compute_print_is_sendable(self):
+        super(AccountInvoice, self)._compute_print_is_sendable()
+        for invoice in self.filtered(lambda rec: rec._name == 'account.invoice'):
+            invoice.print_is_sendable = invoice.state == 'open'
+
     def print_validate_sending(self):
         super(AccountInvoice, self).print_validate_sending()
         PrintOrder = self.env['print.order']
@@ -20,16 +26,15 @@ class AccountInvoice(models.Model):
                 message = _("This invoice was sent by post with the provider %(provider_name)s at the following address. \
                     <br/><br/> %(partner_name)s <br/> %(partner_street)s <br/> %(partner_city)s %(partner_zip)s \
                     <br/>%(partner_country)s" % {
-                        'provider_name' : '<i>%s</i>' % order.provider_id.name,
-                        'partner_name' : order.partner_name,
-                        'partner_street' : order.partner_street,
-                        'partner_city' : order.partner_city,
-                        'partner_zip' : order.partner_zip,
-                        'partner_country' : order.partner_country_id.name
+                        'provider_name': '<i>%s</i>' % order.provider_id.name,
+                        'partner_name': order.partner_name,
+                        'partner_street': order.partner_street,
+                        'partner_city': order.partner_city,
+                        'partner_zip': order.partner_zip,
+                        'partner_country': order.partner_country_id.name
                     })
                 record.sudo(user=order.user_id.id).message_post(body=message)
         # save sending data
         self.write({
-            'sent' : True
+            'sent': True
         })
-
