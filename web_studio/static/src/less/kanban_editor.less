@@ -2,6 +2,15 @@
     .o_web_studio_view_editor .o_web_studio_view_renderer .o_kanban_view {
         .o_kanban_record {
 
+            &.o_kanban_demo {
+                min-height: 70px;
+                opacity: 0.2;
+                padding: 0;
+            }
+            &.o_kanban_ghost {
+                opacity: 0;
+            }
+
             // display the dropdown in kanban editor
             .o_dropdown_kanban {
                 visibility: visible;
@@ -20,11 +29,6 @@
                 > a {
                     color: @odoo-brand-optional;
                 }
-            }
-
-            &.o_kanban_demo {
-                opacity: 0.2;
-                padding: 0;
             }
 
             .o_hovered {
@@ -48,9 +52,12 @@
                 }
             }
         }
+
         .o_kanban_group {
-            .o_kanban_demo {
-                min-height: 100px;
+            background-color: @odoo-webclient-background-color;
+
+            &:nth-child(even) {
+                background-color: darken(@odoo-webclient-background-color, 3%);
             }
         }
     }
