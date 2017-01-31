@@ -86,7 +86,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
                     return;
                 }
                 var dialog = new NewKanbanHelperDialog(self, compatible_fields, false).open();
-                dialog.on('field_clicked', self, function(field_name) {
+                dialog.on('confirm', self, function(field_name) {
                     self.trigger_up('view_change', {
                         type: 'add',
                         structure: 'field',
@@ -148,7 +148,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
             $priority_hook.click(function() {
                 var compatible_fields = _.pick(self.all_fields, function(e) { return e.type === 'selection'; });
                 var dialog = new NewKanbanHelperDialog(self, compatible_fields, true).open();
-                dialog.on('field_clicked', self, function(field) {
+                dialog.on('confirm', self, function(field) {
                     self.trigger_up('view_change', {
                         structure: 'kanban_priority',
                         field: field,
@@ -174,7 +174,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
                     return;
                 }
                 var dialog = new NewKanbanHelperDialog(self, compatible_fields, false).open();
-                dialog.on('field_clicked', self, function(field) {
+                dialog.on('confirm', self, function(field) {
                     self.trigger_up('view_change', {
                         structure: 'kanban_image',
                         field: field,
@@ -305,49 +305,32 @@ var KanbanRecordEditor = KanbanRecord.extend({
 });
 
 var NewKanbanHelperDialog = Dialog.extend({
+    template: 'web_studio.NewKanbanHelperDialog',
     init: function(parent, fields, show_new) {
-        var self = this;
-        var $content = $('<div>', {});
 
-        // add each field
-        var $existing_field = $('<div>');
-        _.each(fields, function(element, key) {
-            var text = element.string;
-            if (core.debug) {
-                text += ' (' + key + ')';
-            }
-            var $field = $('<div>', {
-                class: 'o_web_studio_kanban_helper o_existing',
-                text: text,
-            });
-            $field.appendTo($existing_field);
-            $field.click(function() {
-                self.trigger('field_clicked', key);
-            });
+        this.fields = fields;
+        // sortBy returns a list so the key (field_name) will be lost but we need it
+        _.each(this.fields, function(element, key) {
+            element.key = key;
         });
-        $existing_field.appendTo($content);
+        this.orderered_fields = _.sortBy(this.fields, 'string');
 
-        if (show_new) {
-            // add a 'new field'
-            var $new_field = $('<div>', {
-                class: 'o_web_studio_kanban_helper o_new',
-                text: _t('New Field'),
-            });
-            $new_field.appendTo($content);
-            $new_field.click(function() {
-                self.trigger('field_clicked');
-            });
-        }
+        this.show_new = show_new;
+        this.debug = core.debug;
 
         var options = {
             title: _t('Select a Field'),
-            size: 'small',
-            $content: $content,
             buttons: [
+                {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.confirm, this)},
                 {text: _t("Cancel"), close: true},
             ],
         };
         this._super(parent, options);
+    },
+
+    confirm: function() {
+        var selected_field = this.$('select[name="field"]').val();
+        this.trigger('confirm', selected_field);
     },
 });
 
