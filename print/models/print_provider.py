@@ -53,7 +53,6 @@ class PrintOrder(models.Model):
     _description = 'Print Order'
     _order = 'sent_date desc'
 
-
     def _default_print_provider(self):
         return self.env['ir.values'].get_default('print.order', 'provider_id')
 
@@ -67,6 +66,7 @@ class PrintOrder(models.Model):
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)
     res_id = fields.Integer('Object ID', required=True)
     res_model = fields.Char('Model Name', required=True)
+    report_id = fields.Many2one('ir.actions.report.xml', 'Report')
 
     attachment_id = fields.Many2one('ir.attachment', 'PDF', states={'sent': [('readonly', True)]}, domain=[('mimetype', '=', 'application/pdf')])
     nbr_pages = fields.Integer("Number of Pages", readonly=True, default=0)
@@ -101,6 +101,12 @@ class PrintOrder(models.Model):
         self.partner_city = self.partner_id.city
         self.partner_country_id = self.partner_id.country_id
 
+    @api.onchange('res_model')
+    def _onchange_res_model(self):
+        if self.res_model:
+            return {'domain': {'report_id': [('model', '=', self.res_model)]}}
+        return {}
+
     # --------------------------------------------------
     # Actions
     # --------------------------------------------------
@@ -128,7 +134,6 @@ class PrintOrder(models.Model):
             if hasattr(records, '_%s_action_compute_price' % provider_name):
                 getattr(records, '_%s_action_compute_price' % provider_name)()
 
-
     # --------------------------------------------------
     # Business Methods
     # --------------------------------------------------
@@ -151,7 +156,7 @@ class PrintOrder(models.Model):
         Report = self.env['report']
         pages = {}
         for current_order in self:
-            report = ReportXml.search([('model', '=', current_order.res_model)], limit=1)
+            report = current_order.report_id
             if current_order.attachment_id: # compute page number
                 # avoid to recompute the number of page each time for the attachment
                 nbr_pages = pages.get(current_order.attachment_id.id)

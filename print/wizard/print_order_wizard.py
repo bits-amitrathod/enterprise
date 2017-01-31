@@ -26,7 +26,7 @@ class PrintOrderWizard(models.TransientModel):
         active_ids = self.env.context.get('active_ids', [])
         active_model = self.env.context.get('active_model', False)
         result['res_model'] = active_model
-
+        # generate line values
         if active_model and active_ids and 'print_order_line_wizard_ids' in fields:
             line_values = []
             for record in self.env[active_model].browse(active_ids):
@@ -41,6 +41,9 @@ class PrintOrderWizard(models.TransientModel):
             result['print_order_line_wizard_ids'] = [
                 (0, 0, vals) for vals in line_values
             ]
+        # add a default report
+        if active_model and 'report_id' in fields:
+            result['report_id'] = self.env['ir.actions.report.xml'].search([('model', '=', active_model)], limit=1).id
         return result
 
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW')
@@ -53,6 +56,7 @@ class PrintOrderWizard(models.TransientModel):
 
     res_model = fields.Char('Resource Model')
     error_message = fields.Text("Error", compute='_compute_error_message')
+    report_id = fields.Many2one('ir.actions.report.xml', 'Report', domain=lambda self: [('model', '=', self.env.context.get('active_model'))])
 
     @api.one
     @api.depends('print_order_line_wizard_ids')
@@ -84,6 +88,7 @@ class PrintOrderWizard(models.TransientModel):
                     'user_id': self._uid,
                     'res_id': line.res_id,
                     'res_model': line.print_order_wizard_id.res_model,
+                    'report_id': wizard.report_id.id,
                     # duplicate partner infos
                     'partner_id': line.partner_id.id,
                     'partner_name': line.partner_id.name,

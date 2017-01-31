@@ -93,8 +93,9 @@
                                 <field name="currency_id"/>
                             </group>
                             <group string="Document Detail">
-                                <field name="attachment_id"/>
+                                <field name="attachment_id" options="{'no_create': True}"/>
                                 <field name="nbr_pages"/>
+                                <field name="report_id" options="{'no_create': True, 'no_open': True}"/>
                             </group>
                         </group>
                         <notebook>
