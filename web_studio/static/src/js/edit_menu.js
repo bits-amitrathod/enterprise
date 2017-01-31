@@ -190,10 +190,11 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
             }]);
             var options = {
                 mode: 'edit',
-                no_quick_create: true,  // FIXME: enable add option
             };
             var Many2One = relational_fields.FieldMany2One;
             self.many2one = new Many2One(self, 'model', self.datamodel.get(record_id), options);
+            // TODO: temporary hack, will be fixed with the new views
+            self.many2one.node_options.no_create_edit = !core.debug;
             self.many2one.appendTo(self.$('.js_model'));
         });
     },
