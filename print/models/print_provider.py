@@ -91,6 +91,15 @@ class PrintOrder(models.Model):
     partner_city = fields.Char('City', required=True, states={'sent': [('readonly', True)]})
     partner_country_id = fields.Many2one('res.country', 'Country', required=True, states={'sent': [('readonly', True)]})
 
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        self.partner_name = self.partner_id.name
+        self.partner_street = self.partner_id.street
+        self.partner_street2 = self.partner_id.street2
+        self.partner_state_id = self.partner_id.state_id
+        self.partner_zip = self.partner_id.zip
+        self.partner_city = self.partner_id.city
+        self.partner_country_id = self.partner_id.country_id
 
     # --------------------------------------------------
     # Actions
