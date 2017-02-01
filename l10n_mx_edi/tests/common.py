@@ -2,12 +2,10 @@
 
 import time
 
-from lxml import objectify
-
-from odoo.tests.common import TransactionCase
+from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 
 
-class InvoiceTransactionCase(TransactionCase):
+class InvoiceTransactionCase(AccountingTestCase):
     def setUp(self):
         super(InvoiceTransactionCase, self).setUp()
         self.invoice_model = self.env['account.invoice']
@@ -17,12 +15,7 @@ class InvoiceTransactionCase(TransactionCase):
         self.product = self.env.ref("product.product_product_3")
         self.company = self.env.user.company_id
         self.account_settings = self.env['account.config.settings']
-        self.tax_positive = self.tax_model.create({
-            'name': 'IVA16',
-            'description': 'IVA',
-            'amount_type': 'percent',
-            'amount': 16,
-        })
+        self.tax_positive = self.tax_model.search([('name', '=', 'IVA(16%) VENTAS')])[0]
         self.tax_negative = self.tax_model.create({
             'name': 'ISR',
             'amount_type': 'percent',
@@ -72,11 +65,6 @@ class InvoiceTransactionCase(TransactionCase):
             name: invoice_line[name] for name in invoice_line._cache})
         invoice_line_dict['price_unit'] = 450
         self.invoice_line_model.create(invoice_line_dict)
-
-    def get_invoice_xml(self, invoice):
-        xml_str = invoice.l10n_mx_edi_xml_signed()
-        xml = objectify.fromstring(xml_str)
-        return xml
 
     def xml_merge_dynamic_items(self, xml, xml_expected):
         xml_expected.attrib['fecha'] = xml.attrib['fecha']
