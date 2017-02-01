@@ -89,9 +89,11 @@ class AccountInvoice(models.Model):
         'if unkown and the XML will show "Unidentified".',
         default=lambda self: self.env.ref('l10n_mx_edi.payment_method_na',
                                           raise_if_not_found=False))
-    l10n_mx_edi_uuid = fields.Char(string='Fiscal Folio', copy=False, readonly=True,
+    l10n_mx_edi_uuid = fields.Char('Fiscal Folio', copy=False, readonly=True,
+        help='Unused field to remove in master')
+    l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False, readonly=True,
         help='Folio in electronic invoice, is returned by SAT when send to stamp.',
-        compute='_compute_cfdi_values', store=True)
+        compute='_compute_cfdi_values')
     l10n_mx_edi_cfdi = fields.Binary(string='Cfdi content', copy=False, readonly=True,
         help='The cfdi xml content encoded in base64.',
         compute='_compute_cfdi_values')
@@ -282,7 +284,7 @@ class AccountInvoice(models.Model):
         username = pac_info['username']
         password = pac_info['password']
         for inv in self:
-            uuids = [inv.l10n_mx_edi_uuid]
+            uuids = [inv.l10n_mx_edi_cfdi_uuid]
             certificate_id = inv.l10n_mx_edi_cfdi_certificate_id
             cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
             key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))
@@ -349,7 +351,7 @@ class AccountInvoice(models.Model):
         username = pac_info['username']
         password = pac_info['password']
         for inv in self:
-            uuid = inv.l10n_mx_edi_uuid
+            uuid = inv.l10n_mx_edi_cfdi_uuid
             certificate_id = inv.l10n_mx_edi_cfdi_certificate_id
             company_id = self.company_id
             cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
@@ -519,7 +521,7 @@ class AccountInvoice(models.Model):
             # if already signed, extract uuid
             tfd_node = inv.l10n_mx_edi_get_tfd_etree(tree)
             if tfd_node is not None:
-                inv.l10n_mx_edi_uuid = tfd_node.get('UUID')
+                inv.l10n_mx_edi_cfdi_uuid = tfd_node.get('UUID')
             inv.l10n_mx_edi_cfdi_amount = tree.get('total')
             inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
             inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
@@ -753,7 +755,7 @@ class AccountInvoice(models.Model):
             supplier_rfc = inv.l10n_mx_edi_cfdi_supplier_rfc
             customer_rfc = inv.l10n_mx_edi_cfdi_customer_rfc
             total = inv.l10n_mx_edi_cfdi_amount
-            uuid = inv.l10n_mx_edi_uuid
+            uuid = inv.l10n_mx_edi_cfdi_uuid
             params = url_encode({'re': supplier_rfc, 'rr': customer_rfc, 'tt': total, 'id': uuid})
             try:
                 client = Client(url)
