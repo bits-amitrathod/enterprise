@@ -3,6 +3,7 @@ odoo.define('web_studio.ViewEditorManager', function (require) {
 
 var core = require('web.core');
 var data_manager = require('web.data_manager');
+var Dialog = require('web.Dialog');
 var field_registry = require('web.field_registry');
 var form_common = require('web.form_common');
 var Model = require('web.Model');
@@ -621,6 +622,21 @@ return Widget.extend({
                 dialog.on('field_default_values_saved', this, function(values) {
                     def_field_values.resolve(values);
                     dialog.close();
+                });
+            }
+            if (field_description.ttype === 'monetary') {
+                def_field_values = $.Deferred();
+                // Detect currency_id on the current model
+                new Model("ir.model.fields").call("search", [[
+                    ['name', '=', 'currency_id'],
+                    ['model', '=', this.model],
+                    ['relation', '=', 'res.currency'],
+                ]]).then(function(data) {
+                    if (!data.length) {
+                        Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
+                    } else {
+                        def_field_values.resolve();
+                    }
                 });
             }
         }
