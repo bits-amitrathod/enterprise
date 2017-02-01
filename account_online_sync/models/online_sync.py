@@ -265,7 +265,7 @@ class AccountBankStatement(models.Model):
 
         # If there is no new transaction, the bank statement is not created
         if lines:
-            self.create({'journal_id': journal.id, 'line_ids': lines, 'balance_end_real': end_amount if balance_start == None else balance_start + total, 'balance_start': (end_amount - total) if balance_start == None else balance_start})
+            self.create({'name': _('online sync'), 'journal_id': journal.id, 'line_ids': lines, 'balance_end_real': end_amount if balance_start == None else balance_start + total, 'balance_start': (end_amount - total) if balance_start == None else balance_start})
         journal.account_online_journal_id.last_sync = last_date
         return len(lines)
 
