@@ -6,6 +6,7 @@ from itertools import groupby
 from lxml import etree
 from lxml.objectify import fromstring
 from suds.client import Client
+from num2words import num2words
 from werkzeug import url_encode
 
 from odoo import _, api, fields, models, tools
@@ -14,6 +15,7 @@ from odoo.tools.xml_utils import check_with_xsd
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
 CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
 CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal_3_2.xslt'
+CFDI_XSLT_CADENA_TFD = 'l10n_mx_edi/data/xslt/%s/cadenaoriginal_TFD_1_0.xslt'
 # Mapped from original SAT state to l10n_mx_edi_sat_status selection value
 # https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl
 CFDI_SAT_QR_STATE = {
@@ -189,6 +191,19 @@ class AccountInvoice(models.Model):
         return node[0] if node else False
 
     @api.model
+    def _get_l10n_mx_edi_cadena(self):
+        self.ensure_one()
+        #get the xslt path
+        pac_name = self.company_id.l10n_mx_edi_pac
+        version = self.l10n_mx_edi_get_pac_version(pac_name)
+        xslt_path = CFDI_XSLT_CADENA % version
+        #get the cfdi as eTree
+        cfdi = base64.decodestring(self.l10n_mx_edi_cfdi)
+        cfdi = self.l10n_mx_edi_get_xml_etree(cfdi)
+        #return the cadena
+        return self.l10n_mx_edi_generate_cadena(xslt_path, cfdi)
+
+    @api.model
     def l10n_mx_edi_generate_cadena(self, xslt_path, cfdi_as_tree):
         '''Generate the cadena of the cfdi based on an xslt file.
         The cadena is the sequence of data formed with the information contained within the cfdi.
@@ -226,6 +241,34 @@ class AccountInvoice(models.Model):
             if getattr(partner_id, field):
                 return True
         return False
+
+    @api.model
+    def l10n_mx_edi_amount_to_text(self):
+        """Method to transform a float amount to text words
+        E.g. 100 - ONE HUNDRED
+        :returns: Amount transformed to words mexican format for invoices
+        :rtype: str
+        """
+        self.ensure_one()
+        amount = self.amount_total
+        currency = self.currency_id.name
+        partner_lang = self.partner_id.lang
+        if not partner_lang:
+            partner_lang = 'es'
+        currency = currency.upper()
+        lang = (partner_lang + '_').split('_')[0].lower()
+        # M.N. = Moneda Nacional (National Currency)
+        # M.E. = Moneda Extranjera (Foreign Currency)
+        currency_type, currency_mx = (
+            ['M.N.', 'PESOS'] if currency == 'MXN' else ['M.E.', currency])
+        # Split integer and decimal part
+        amount_i, amount_d = divmod(amount, 1)
+        amount_d = round(amount_d, 2)
+        amount_d = int(amount_d * 100)
+        words = num2words(amount_i, lang=lang).upper()
+        invoice_words = '%(words)s %(curr_mx)s %(amount_d)02d/100 %(curr_t)s' % dict(
+            words=words, curr_mx=currency_mx, amount_d=amount_d, curr_t=currency_type)
+        return invoice_words
 
     @api.multi
     def l10n_mx_edi_is_required(self):
@@ -382,7 +425,6 @@ class AccountInvoice(models.Model):
     def _l10n_mx_edi_call_service(self, service_type):
         '''Call the right method according to the pac_name, it's info returned by the '_l10n_mx_edi_%s_info' % pac_name'
         method and the service_type passed as parameter.
-
         :param service_type: sign or cancel
         '''
         # Regroup the invoices by company (= by pac)
