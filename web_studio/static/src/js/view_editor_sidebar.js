@@ -117,7 +117,6 @@ return Widget.extend(FieldManagerMixin, {
         this.computed_ordered_fields();
         this.fields_not_in_view = fields_not_in_view;
         this.view_attrs = view_attrs;
-        this.render();
     },
     computed_ordered_fields: function() {
         // sortBy returns a list so the key (field_name) will be lost but we need it.

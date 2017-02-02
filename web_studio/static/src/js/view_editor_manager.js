@@ -222,6 +222,7 @@ return Widget.extend({
     },
     render_content: function (replace, options) {
         var self = this;
+        var old_editor;
         var editor;
         var def;
         var renderer_scrolltop = this.$renderer_container.scrollTop();
@@ -239,15 +240,13 @@ return Widget.extend({
         }
 
         if (this.editor) {
-            this.editor.destroy();
+            old_editor = this.editor;
         }
         if (editor) {
             this.editor = editor;
             try {
                 // Starting renderers is synchronous, but it's not the case for old views
-                def = this.editor.appendTo(this.$renderer_container).then(function() {
-                    self.$renderer_container.scrollTop(renderer_scrolltop); // restore scroll position
-                });
+                def = this.editor.appendTo($('<div>'));
             } catch(e) {
                 this.do_warn(_t("Error"), _t("The requested change caused an error in the view.  It could be because a field was deleted, but still used somewhere else."));
                 this.undo(true);
@@ -255,6 +254,13 @@ return Widget.extend({
         }
 
         return $.when(def).then(function() {
+            // As the old views rendering is not synchronous, it's destroyed after the new is ready.
+            // This could be simplified once all the new renderers are merged.
+            if (old_editor) {
+                old_editor.destroy();
+            }
+            self.editor.$el.appendTo(self.$renderer_container);
+            self.$renderer_container.scrollTop(renderer_scrolltop); // restore scroll position
             if (local_state) {
                 self.editor.set_local_state(local_state);
             }
