@@ -10,6 +10,7 @@ var session = require('web.session');
 var framework = require('web.framework');
 var crash_manager = require('web.crash_manager');
 var ActionManager = require('web.ActionManager');
+var datepicker = require('web.datepicker');
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -108,18 +109,20 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         // bind searchview buttons/filter to the correct actions
         var $datetimepickers = this.$searchview_buttons.find('.js_account_reports_datetimepicker');
         var options = { // Set the options for the datetimepickers
-            language : moment.locale(),
+            locale : moment.locale(),
             format : 'L',
             icons: {
                 date: "fa fa-calendar",
             },
-            pickTime: false,
         };
         // attach datepicker
         $datetimepickers.each(function () {
             $(this).datetimepicker(options);
+            var dt = new datepicker.DateWidget(options);
+            dt.replace($(this));
+            dt.$el.find('input').attr('name', $(this).find('input').attr('name'));
             if($(this).data('default-value')) { // Set its default value if there is one
-                $(this).data("DateTimePicker").setValue(moment($(this).data('default-value')));
+                dt.set_value(moment($(this).data('default-value')));
             }
         });
         // format date that needs to be show in user lang
