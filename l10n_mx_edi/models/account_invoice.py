@@ -8,11 +8,8 @@ from lxml.objectify import fromstring
 from suds.client import Client
 from werkzeug import url_encode
 
-from odoo import _, api, fields, models
-from odoo.tools.misc import file_open
+from odoo import _, api, fields, models, tools
 from odoo.tools.xml_utils import check_with_xsd
-
-from . import certificate
 
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
 CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
@@ -31,7 +28,9 @@ CFDI_SAT_QR_STATE = {
 
 
 def create_list_html(array):
-    '''Convert an array of string to a html list
+    '''Convert an array of string to a html list.
+    :param array: A list of strings
+    :return: an empty string if not array, an html list otherwise.
     '''
     if not array:
         return ''
@@ -72,8 +71,7 @@ class AccountInvoice(models.Model):
         required=True,
         track_visibility='onchange',
         default='undefined')
-    l10n_mx_edi_cfdi_name = fields.Char(
-        string='CFDI name',
+    l10n_mx_edi_cfdi_name = fields.Char(string='CFDI name', copy=False, readonly=True,
         help='The attachment name of the CFDI.')
     l10n_mx_edi_partner_bank_id = fields.Many2one('res.partner.bank',
         string='Partner bank',
@@ -82,8 +80,7 @@ class AccountInvoice(models.Model):
         domain="[('partner_id', '=', partner_id)]",
         help='The bank account the client will pay from. Leave empty if '
         'unkown and the XML will show "Unidentified".')
-    l10n_mx_edi_payment_method_id = fields.Many2one(
-        'l10n_mx_edi.payment.method',
+    l10n_mx_edi_payment_method_id = fields.Many2one('l10n_mx_edi.payment.method',
         string='Payment Method',
         readonly=True,
         states={'draft': [('readonly', False)]},
@@ -92,190 +89,352 @@ class AccountInvoice(models.Model):
         'if unkown and the XML will show "Unidentified".',
         default=lambda self: self.env.ref('l10n_mx_edi.payment_method_na',
                                           raise_if_not_found=False))
-    l10n_mx_edi_uuid = fields.Char('Fiscal Folio', copy=False, index=True, readonly=True,
-        help='Folio in electronic invoice, is returned by SAT when send to stamp.')
-
-    @api.onchange('partner_id', 'company_id')
-    def _onchange_partner_id(self):
-        '''Set the payment bank account on the invoice as the first of the selected partner.
-        '''
-        res = super(AccountInvoice, self)._onchange_partner_id()
-        if self.commercial_partner_id.bank_ids:
-            self.l10n_mx_edi_partner_bank_id = self.commercial_partner_id.bank_ids[0].id
-        return res
+    l10n_mx_edi_uuid = fields.Char(string='Fiscal Folio', copy=False, readonly=True,
+        help='Folio in electronic invoice, is returned by SAT when send to stamp.',
+        compute='_compute_cfdi_values', store=True)
+    l10n_mx_edi_cfdi = fields.Binary(string='Cfdi content', copy=False, readonly=True,
+        help='The cfdi xml content encoded in base64.',
+        compute='_compute_cfdi_values')
+    l10n_mx_edi_cfdi_supplier_rfc = fields.Char(string='Supplier RFC', copy=False, readonly=True,
+        help='The supplier tax identification number.',
+        compute='_compute_cfdi_values')
+    l10n_mx_edi_cfdi_customer_rfc = fields.Char(string='Customer RFC', copy=False, readonly=True,
+        help='The customer tax identification number.',
+        compute='_compute_cfdi_values')
+    l10n_mx_edi_cfdi_amount = fields.Monetary(string='Total Amount', copy=False, readonly=True,
+        help='The total amount reported on the cfdi.',
+        compute='_compute_cfdi_values')
+    l10n_mx_edi_cfdi_certificate_id = fields.Many2one('l10n_mx_edi.certificate',
+        string='Certificate', copy=False, readonly=True,
+        help='The certificate used during the generation of the cfdi.',
+        compute='_compute_cfdi_values')
 
     # -------------------------------------------------------------------------
-    # PAC related methods
+    # HELPERS
     # -------------------------------------------------------------------------
 
     @api.model
-    def l10n_mx_edi_get_service_client(self, service_type, company_id=None):
-        '''Try to call the PAC as suds client. This method is usefull to handle several errors
-        during the process. The returned values contains the client, the username, the password and
-        the 'multi' boolean (in case we want to send several invoices by a single batch).
-        :service_type: 'sign', 'cancel' or 'sat_inv'
-        :company_id: the company_id containing the pac
-        '''
-        sat_flag = service_type == 'sat_inv'
-        if sat_flag:
-            infos = {'url': 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'}
-        else:
-            if not company_id:
-                company_id = self.env.user.company_id
-            pac_name = company_id.l10n_mx_edi_pac
-            if not pac_name:
-                return {'error': _('No PAC specified')}
-            infos_func = '_l10n_mx_edi_%s_infos' % pac_name
-            if not hasattr(self, infos_func):
-                return {'error': _('Method %s not found') % infos_func}
-            infos = getattr(self, infos_func)(company_id, service_type)
-        url = infos.pop('url', None)
-        username = infos.pop('username', None)
-        password = infos.pop('password', None)
-        multi = infos.pop('multi', False)
-        error = infos.pop('error', None)
-        if error:
-            return {'error': error}
-        try:
-            client = Client(url, timeout=20)
-            return {'client': client, 'username': username, 'password': password, 'multi': multi}
-        except Exception as e:
-            return {'error': _('Failed to call the suds client: %s' % str(e))}
+    def l10n_mx_edi_get_customer_rfc(self):
+        '''In Mexico depending of some cases the vat (rfc) is not mandatory to be recorded in customers, only for those
+        cases instead try to force the record values and make documentation, given a customer the system will propose
+        properly a vat (rfc) in order to generate properly the xml following this law:
 
-    @api.model
-    def l10n_mx_edi_get_service_response(self, service, params, client):
-        '''Try to get the response from a suds client.
-        :service - the service name to call
-        :params - an array of parameters to call the service
-        :client - an suds client
+        http://www.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/cfdi/PyRFactElect.pdf.
 
-        The returned value is a dictionnary containing 'response' or 'error'.
-        '''
-        if not hasattr(client.service, service):
-            return {'error': _('Service %s not found') % service}
-        service_func = getattr(client.service, service)
-        try:
-            return {'response': service_func(*params)}
-        except Exception as e:
-            return {'error': _('Failed to process the response: %s' % str(e))}
-
-    @api.multi
-    def l10n_mx_edi_get_pac_version(self, pac_name):
-        '''Returns the cfdi version of the pac but looking for a method named
-        '_l10n_mx_edi_%s_version' % pac_name. By default, the version is 3.2.
-        '''
-        version_func = '_l10n_mx_edi_%s_version' % pac_name
-        if not hasattr(self, version_func):
-            return 3.2
-        return getattr(self, version_func)()
-
-    @api.multi
-    def _l10n_mx_edi_get_cfdi_values(self):
-        '''Create values that will be used as parameters to request the PAC sign/cancel services.
-        These values may be the 'uuid', 'supplier_rfc', 'customer_rfc', 'total', 'certificate_id', 'cfdi'
+        :return: XEXX010101000, XAXX010101000 or the customer vat depending of the country
         '''
         self.ensure_one()
-        values = {}
+        partner_id = self.partner_id.commercial_partner_id
+        if partner_id.country_id and partner_id.country_id != self.env.ref('base.mx'):
+            # Following Question 5 in legal Document.
+            return 'XEXX010101000'
+        if (partner_id.country_id == self.env.ref('base.mx') or not partner_id.country_id) and not partner_id.vat:
+            self.message_post(
+                body=_('Using General Public VAT because no vat found'),
+                subtype='account.mt_invoice_validated')
+            # Following Question 4 in legal Document.
+            return 'XAXX010101000'
+        # otherwise it returns what customer says and if False xml validation will be solving other cases.
+        return partner_id.vat
+
+    @api.model
+    def l10n_mx_edi_retrieve_attachments(self):
+        '''Retrieve all the cfdi attachments generated for this invoice.
+
+        :return: An ir.attachment recordset
+        '''
+        self.ensure_one()
+        if not self.l10n_mx_edi_cfdi_name:
+            return []
         domain = [
             ('res_id', '=', self.id),
             ('res_model', '=', self._name),
             ('name', '=', self.l10n_mx_edi_cfdi_name)]
-        attachment_id = self.env['ir.attachment'].search(domain, limit=1)
-        if attachment_id:
-            xml = base64.decodestring(attachment_id.datas)
-            tree = etree.fromstring(xml)
-            node_sup = tree.find('.//{http://www.sat.gob.mx/cfd/3}Emisor')
-            node_cus = tree.find('.//{http://www.sat.gob.mx/cfd/3}Receptor')
-            node_uuid = tree.find('.//{http://www.sat.gob.mx/TimbreFiscalDigital}TimbreFiscalDigital')
-            if node_uuid is not None:
-                values['uuid'] = node_uuid.attrib['UUID']
-            values['supplier_rfc'] = node_sup.attrib['rfc']
-            values['customer_rfc'] = node_cus.attrib['rfc']
-            values['total'] = tree.attrib['total']
-            cer_domain = [('serial_number', '=', tree.attrib['noCertificado'])]
-            values['certificate_id'] = self.env['l10n_mx_edi.certificate'].sudo().search(cer_domain, limit=1)
-            xml = etree.tostring(tree)
-            values['cfdi'] = base64.encodestring(xml)
-        return values
+        return self.env['ir.attachment'].search(domain)
+
+    @api.model
+    def l10n_mx_edi_retrieve_last_attachment(self):
+        attachment_ids = self.l10n_mx_edi_retrieve_attachments()
+        return attachment_ids and attachment_ids[-1] or None
+
+    @api.model
+    def l10n_mx_edi_get_xml_etree(self, cfdi=None):
+        '''Get an objectified tree representing the cfdi.
+        If the cfdi is not specified, retrieve it from the attachment.
+
+        :param cfdi: The cfdi as string
+        :return: An objectified tree
+        '''
+        #TODO helper which is not of too much help and should be removed
+        self.ensure_one()
+        if cfdi is None:
+            cfdi = base64.decodestring(self.l10n_mx_edi_cfdi)
+        return fromstring(cfdi)
+
+    @api.model
+    def l10n_mx_edi_get_tfd_etree(self, cfdi):
+        '''Get the TimbreFiscalDigital node from the cfdi.
+
+        :param cfdi: The cfdi as etree
+        :return: the TimbreFiscalDigital node
+        '''
+        self.ensure_one()
+        if not hasattr(cfdi, 'Complemento'):
+            return None
+        attribute = 'tfd:TimbreFiscalDigital[1]'
+        namespace = {'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital'}
+        node = cfdi.Complemento.xpath(attribute, namespaces=namespace)
+        return node[0] if node else False
+
+    @api.model
+    def l10n_mx_edi_generate_cadena(self, xslt_path, cfdi_as_tree):
+        '''Generate the cadena of the cfdi based on an xslt file.
+        The cadena is the sequence of data formed with the information contained within the cfdi.
+        This can be encoded with the certificate to create the digital seal.
+        Since the cadena is generated with the invoice data, any change in it will be noticed resulting in a different
+        cadena and so, ensure the invoice has not been modified.
+
+        :param xslt_path: The path to the xslt file.
+        :param cfdi_as_tree: The cfdi converted as a tree
+        :return: A string computed with the invoice data called the cadena
+        '''
+        self.ensure_one()
+        xslt_root = etree.parse(tools.file_open(xslt_path))
+        return str(etree.XSLT(xslt_root)(cfdi_as_tree))
+
+    @api.model
+    def l10n_mx_edi_is_customer_address_required(self):
+        '''Look in the customer address to know if enough address information can be found to justify the creation
+         of an address block in the xml.
+
+        :return: True if at least one required field is found.
+        '''
+        self.ensure_one()
+        partner_id = self.partner_id.commercial_partner_id
+        address_fields = ['street_name',
+                          'street_number',
+                          'street_number2',
+                          'l10n_mx_edi_colony',
+                          'l10n_mx_edi_locality',
+                          'city',
+                          'state_id',
+                          'country_id',
+                          'zip']
+        for field in address_fields:
+            if getattr(partner_id, field):
+                return True
+        return False
+
+    @api.multi
+    def l10n_mx_edi_is_required(self):
+        self.ensure_one()
+        return (self.type in ('out_invoice', 'out_refund') and
+                self.company_id.country_id == self.env.ref('base.mx'))
+
+    @api.multi
+    def l10n_mx_edi_log_error(self, message):
+        self.ensure_one()
+        self.message_post(body=_('Error during the process: %s') % message, subtype='account.mt_invoice_validated')
+
+    # -------------------------------------------------------------------------
+    # SAT/PAC service methods
+    # -------------------------------------------------------------------------
+
+    @api.model
+    def _l10n_mx_edi_solfact_info(self, company_id, service_type):
+        test = company_id.l10n_mx_edi_pac_test_env
+        username = company_id.l10n_mx_edi_pac_username
+        password = company_id.l10n_mx_edi_pac_password
+        url = 'https://testing.solucionfactible.com/ws/services/Timbrado?wsdl'\
+            if test else 'https://solucionfactible.com/ws/services/Timbrado?wsdl'
+        return {
+            'url': url,
+            'multi': False,  # TODO: implement multi
+            'username': 'testing@solucionfactible.com' if test else username,
+            'password': 'timbrado.SF.16672' if test else password,
+        }
+
+    @api.multi
+    def _l10n_mx_edi_solfact_sign(self, pac_info):
+        '''SIGN for Solucion Factible.
+        '''
+        url = pac_info['url']
+        username = pac_info['username']
+        password = pac_info['password']
+        for inv in self:
+            cfdi = inv.l10n_mx_edi_cfdi
+            try:
+                client = Client(url, timeout=20)
+                response = client.service.timbrar(username, password, cfdi, False)
+            except Exception as e:
+                inv.l10n_mx_edi_log_error(e.message)
+                continue
+            msg = getattr(response.resultados[0], 'mensaje', None)
+            code = getattr(response.resultados[0], 'status', None)
+            xml_signed = getattr(response.resultados[0], 'cfdiTimbrado', None)
+            inv._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
+
+    @api.multi
+    def _l10n_mx_edi_solfact_cancel(self, pac_info):
+        '''CANCEL for Solucion Factible.
+        '''
+        url = pac_info['url']
+        username = pac_info['username']
+        password = pac_info['password']
+        for inv in self:
+            uuids = [inv.l10n_mx_edi_uuid]
+            certificate_id = inv.l10n_mx_edi_cfdi_certificate_id
+            cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
+            key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))
+            key_password = certificate_id.password
+            try:
+                client = Client(url, timeout=20)
+                response = client.service.cancelar(username, password, uuids, cer_pem, key_pem, key_password)
+            except Exception as e:
+                inv.l10n_mx_edi_log_error(e.message)
+                continue
+            msg = getattr(response.resultados[0], 'mensaje', None)
+            code = getattr(response.resultados[0], 'statusUUID', None)
+            cancelled = code == '201' or code == '202'
+            inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
+
+    @api.multi
+    def _l10n_mx_edi_finkok_info(self, company_id, service_type):
+        test = company_id.l10n_mx_edi_pac_test_env
+        username = company_id.l10n_mx_edi_pac_username
+        password = company_id.l10n_mx_edi_pac_password
+        if service_type == 'sign':
+            url = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'\
+                if test else 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'
+        else:
+            url = 'http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl'\
+                if test else 'http://facturacion.finkok.com/servicios/soap/cancel.wsdl'
+        return {
+            'url': url,
+            'multi': False,  # TODO: implement multi
+            'username': 'cfdi@vauxoo.com' if test else username,
+            'password': 'vAux00__' if test else password,
+        }
+
+    @api.multi
+    def _l10n_mx_edi_finkok_sign(self, pac_info):
+        '''SIGN for Finkok.
+        '''
+        url = pac_info['url']
+        username = pac_info['username']
+        password = pac_info['password']
+        for inv in self:
+            cfdi = [inv.l10n_mx_edi_cfdi]
+            try:
+                client = Client(url, timeout=20)
+                response = client.service.stamp(cfdi, username, password)
+            except Exception as e:
+                inv.l10n_mx_edi_log_error(e.message)
+                continue
+            code = 0
+            msg = None
+            if response.Incidencias:
+                code = getattr(response.Incidencias[0][0], 'CodigoError', None)
+                msg = getattr(response.Incidencias[0][0], 'MensajeIncidencia', None)
+            xml_signed = getattr(response, 'xml', None)
+            if xml_signed:
+                xml_signed = xml_signed.encode('utf-8').encode('base64')
+            inv._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
+
+    @api.multi
+    def _l10n_mx_edi_finkok_cancel(self, pac_info):
+        '''CANCEL for Finkok.
+        '''
+        url = pac_info['url']
+        username = pac_info['username']
+        password = pac_info['password']
+        for inv in self:
+            uuid = inv.l10n_mx_edi_uuid
+            certificate_id = inv.l10n_mx_edi_cfdi_certificate_id
+            company_id = self.company_id
+            cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
+            key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))
+            try:
+                client = Client(url, timeout=20)
+                invoices_list = client.factory.create("UUIDS")
+                invoices_list.uuids.string = [uuid]
+                response = client.service.cancel(invoices_list, username, password, company_id.vat, cer_pem, key_pem)
+            except Exception as e:
+                inv.l10n_mx_edi_log_error(e.message)
+                continue
+            if not hasattr(response, 'Folios'):
+                msg = _('A delay of 2 hours has to be respected before to cancel')
+            else:
+                code = getattr(response.Folios[0][0], 'EstatusUUID', None)
+                cancelled = code == '201' or code == '202'  # cancelled or previously cancelled
+                msg = code != 201 and code != 202 and "Cancelling get an error"
+            inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
+
+    @api.multi
+    def l10n_mx_edi_get_pac_version(self, pac_name):
+        '''Returns the cfdi version of the pac. By default, the version is 3.2.
+        '''
+        return "3.2"
 
     @api.multi
     def _l10n_mx_edi_call_service(self, service_type):
-        '''Generic method that contains the logic to call and process a service from the PACs.
+        '''Call the right method according to the pac_name, it's info returned by the '_l10n_mx_edi_%s_info' % pac_name'
+        method and the service_type passed as parameter.
+
+        :param service_type: sign or cancel
         '''
-        error_msg = _('Errors while requesting the PAC')
         # Regroup the invoices by company (= by pac)
         comp_x_records = groupby(self, lambda r: r.company_id)
-        for company, records in comp_x_records:
-            pac_name = company.l10n_mx_edi_pac
+        for company_id, records in comp_x_records:
+            pac_name = company_id.l10n_mx_edi_pac
             if not pac_name:
                 continue
+            # Get the informations about the pac
+            pac_info_func = '_l10n_mx_edi_%s_info' % pac_name
             service_func = '_l10n_mx_edi_%s_%s' % (pac_name, service_type)
-            # Check if a method is found for this pair service/pac
-            if not hasattr(self, service_func):
-                for record in records:
-                    record.message_post(
-                        body=error_msg + create_list_html([_('Methods %s not found') % service_func]),
-                        subtype='account.mt_invoice_validated')
-                continue
-            # Create the client
-            client_values = self.l10n_mx_edi_get_service_client(service_type, company)
-            error = client_values.pop('error', None)
-            if error:
-                for record in records:
-                    record.message_post(
-                        body=error_msg + create_list_html([error]),
-                        subtype='account.mt_invoice_validated')
-                continue
-            client = client_values['client']
-            multi = client_values['multi']
-            username = client_values['username']
-            password = client_values['password']
-            # If multi is set to true, the method is called with the whole subset.
-            # else, we process the service for each record
+            pac_info = getattr(self, pac_info_func)(company_id, service_type)
+            # Call the service with invoices one by one or all together according to the 'multi' value.
+            multi = pac_info.pop('multi', False)
             if multi:
-                getattr(records, service_func)(username, password, client)
+                # rebuild the recordset
+                records = self.env['account.invoice'].search(
+                    [('id', 'in', self.ids), ('company_id', '=', company_id.id)])
+                getattr(records, service_func)(pac_info)
             else:
                 for record in records:
-                    getattr(record, service_func)(username, password, client)
+                    getattr(record, service_func)(pac_info)
 
     @api.multi
-    def _l10n_mx_edi_post_sign_process(self, xml_signed, code, msg):
+    def _l10n_mx_edi_post_sign_process(self, xml_signed, code=None, msg=None):
         '''Post process the results of the sign service.
-        :xml_signed: the xml signed datas codified in base64
-        :code: an eventual error code
-        :msg: an eventual error msg
+
+        :param xml_signed: the xml signed datas codified in base64
+        :param code: an eventual error code
+        :param msg: an eventual error msg
         '''
         self.ensure_one()
         if xml_signed:
+            body_msg = _('The sign service has been called with success')
+            # Update the pac status
+            self.l10n_mx_edi_pac_status = 'signed'
+            self.l10n_mx_edi_cfdi = xml_signed
             # Update the content of the attachment
-            domain = [
-                ('res_id', '=', self.id),
-                ('res_model', '=', self._name),
-                ('name', '=', self.l10n_mx_edi_cfdi_name)]
-            attachment_id = self.env['ir.attachment'].search(domain, limit=1)
+            attachment_id = self.l10n_mx_edi_retrieve_last_attachment()
             attachment_id.write({
                 'datas': xml_signed,
                 'mimetype': 'application/xml'
             })
-            # Store the uuid on the invoice
-            tree = etree.fromstring(base64.decodestring(xml_signed))
-            node_uuid = tree.find('.//{http://www.sat.gob.mx/TimbreFiscalDigital}TimbreFiscalDigital')
-            self.l10n_mx_edi_uuid = node_uuid.attrib['UUID']
-            # Update the pac status
-            self.l10n_mx_edi_pac_status = 'signed'
-            msg = create_list_html([_('The content of the attachment has been updated')])
-            self.message_post(body=_('The sign service has been called with success') + msg,
-                subtype='account.mt_invoice_validated')
+            post_msg = [_('The content of the attachment has been updated')]
         else:
-            if msg:
-                if code:
-                    code = int(code)
-                    msg = _('Code %d: %s') % (code, msg)
-                msg = create_list_html([msg])
-            else:
-                msg = ''
-            self.message_post(body=_('The sign service requested failed') + msg,
-                subtype='account.mt_invoice_validated')
+            body_msg = _('The sign service requested failed')
+            post_msg = []
+        if code:
+            post_msg.extend([_('Code: ') + str(code)])
+        if msg:
+            post_msg.extend([_('Message: ') + msg])
+        self.message_post(
+            body=body_msg + create_list_html(post_msg),
+            subtype='account.mt_invoice_validated')
 
     @api.multi
     def _l10n_mx_edi_sign(self):
@@ -287,27 +446,28 @@ class AccountInvoice(models.Model):
         records._l10n_mx_edi_call_service('sign')
 
     @api.multi
-    def _l10n_mx_edi_post_cancel_process(self, cancelled, code, msg):
+    def _l10n_mx_edi_post_cancel_process(self, cancelled, code=None, msg=None):
         '''Post process the results of the cancel service.
-        :cancelled: is the cancel has been done with success
-        :code: an eventual error code
-        :msg: an eventual error msg
+
+        :param cancelled: is the cancel has been done with success
+        :param code: an eventual error code
+        :param msg: an eventual error msg
         '''
+
         self.ensure_one()
         if cancelled:
+            body_msg = _('The cancel service has been called with success')
             self.l10n_mx_edi_pac_status = 'cancelled'
-            self.message_post(body=_('The cancel service has been called with success'),
-                subtype='account.mt_invoice_validated')
         else:
-            if msg:
-                if code:
-                    code = int(code)
-                    msg = _('Code %d: %s') % (code, msg)
-                msg = create_list_html([msg])
-            else:
-                msg = ''
-            self.message_post(body=_('The cancel service requested failed') + msg,
-                subtype='account.mt_invoice_validated')
+            body_msg = _('The cancel service requested failed')
+        post_msg = []
+        if code:
+            post_msg.extend([_('Code: ') + str(code)])
+        if msg:
+            post_msg.extend([_('Message: ') + msg])
+        self.message_post(
+            body=body_msg + create_list_html(post_msg),
+            subtype='account.mt_invoice_validated')
 
     @api.multi
     def _l10n_mx_edi_cancel(self):
@@ -329,159 +489,47 @@ class AccountInvoice(models.Model):
         records._l10n_mx_edi_call_service('cancel')
 
     # -------------------------------------------------------------------------
-    # PAC service methods
-    # -------------------------------------------------------------------------
-
-    @api.model
-    def _l10n_mx_edi_solfact_infos(self, company_id, service_type):
-        '''Request the informations related to the PAC in order to call its services.
-        The service type can be 'sign' or 'cancel' and is required to return the right url.
-        '''
-        test = company_id.l10n_mx_edi_pac_test_env
-        username = company_id.l10n_mx_edi_pac_username
-        password = company_id.l10n_mx_edi_pac_password
-        url = 'https://testing.solucionfactible.com/ws/services/Timbrado?wsdl'\
-            if test else 'https://solucionfactible.com/ws/services/Timbrado?wsdl'
-        return {
-            'url': url,
-            'multi': False,  # TODO: implement multi
-            'username': 'testing@solucionfactible.com' if test else username,
-            'password': 'timbrado.SF.16672' if test else password,
-        }
-
-    @api.multi
-    def _l10n_mx_edi_solfact_sign(self, username, password, client):
-        '''SIGN for Solucion Factible.
-        '''
-        # TODO: Do it on multi
-        self.ensure_one()
-        service = 'timbrar'
-        values = self._l10n_mx_edi_get_cfdi_values()
-        params = [username, password, values['cfdi'], False]
-        response_values = self.l10n_mx_edi_get_service_response(service, params, client)
-        error = response_values.pop('error', None)
-        response = response_values.pop('response', None)
-        if error:
-            self.message_post(
-                body=_('The sign service requested failed') + create_list_html([error]),
-                subtype='account.mt_invoice_validated')
-            return
-        code = getattr(response.resultados[0], 'status', None)
-        msg = getattr(response.resultados[0], 'mensaje', None)
-        xml_signed = getattr(response.resultados[0], 'cfdiTimbrado', None)
-        self._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
-
-    @api.multi
-    def _l10n_mx_edi_solfact_cancel(self, username, password, client):
-        '''CANCEL for Solucion Factible.
-        '''
-        # TODO: Do it on multi
-        self.ensure_one()
-        service = 'cancelar'
-        values = self._l10n_mx_edi_get_cfdi_values()
-        uuids = [values['uuid']]
-        certificate_id = values['certificate_id']
-        cer_pem = base64.encodestring(certificate.convert_cer_to_pem(base64.decodestring(certificate_id.content)))
-        key_pem = base64.encodestring(certificate.convert_key_cer_to_pem(base64.decodestring(certificate_id.key), certificate_id.password))
-        params = [username, password, uuids, cer_pem, key_pem, certificate_id.password]
-        response_values = self.l10n_mx_edi_get_service_response(service, params, client)
-        error = response_values.pop('error', None)
-        response = response_values.pop('response', None)
-        if error:
-            self.message_post(
-                body=_('The cancel service requested failed') + create_list_html([error]),
-                subtype='account.mt_invoice_validated')
-            return
-        code = getattr(response.resultados[0], 'statusUUID', None)
-        msg = getattr(response.resultados[0], 'mensaje', None)
-        cancelled = code == '201' or code == '202'
-        self._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
-
-    @api.multi
-    def _l10n_mx_edi_finkok_infos(self, company_id, service_type):
-        test = company_id.l10n_mx_edi_pac_test_env
-        username = company_id.l10n_mx_edi_pac_username
-        password = company_id.l10n_mx_edi_pac_password
-        if service_type == 'sign':
-            url = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'\
-                if test else 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'
-        else:
-            url = 'http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl'\
-                if test else 'http://facturacion.finkok.com/servicios/soap/cancel.wsdl'
-        return {
-            'url': url,
-            'multi': False,  # TODO: implement multi
-            'username': 'cfdi@vauxoo.com' if test else username,
-            'password': 'vAux00__' if test else password,
-        }
-
-    @api.multi
-    def _l10n_mx_edi_finkok_sign(self, username, password, client):
-        '''SIGN for Finkok.
-        '''
-        # TODO: Do it on multi
-        self.ensure_one()
-        service = 'stamp'
-        values = self._l10n_mx_edi_get_cfdi_values()
-        params = [[values['cfdi']], username, password]
-        response_values = self.l10n_mx_edi_get_service_response(service, params, client)
-        error = response_values.pop('error', None)
-        response = response_values.pop('response', None)
-        if error:
-            self.message_post(
-                body=_('The cancel service requested failed') + create_list_html([error]),
-                subtype='account.mt_invoice_validated')
-            return
-        msg = ''
-        code = 0
-        if response.Incidencias:
-            code = getattr(response.Incidencias[0][0], 'CodigoError', None)
-            msg = getattr(response.Incidencias[0][0], 'MensajeIncidencia', None)
-        xml_signed = getattr(response, 'xml', None)
-        if xml_signed:
-            xml_signed = xml_signed.encode('utf-8').encode('base64')
-        self._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
-
-    @api.multi
-    def _l10n_mx_edi_finkok_cancel(self, username, password, client):
-        '''CANCEL for Finkok.
-        '''
-        # TODO: Do it on multi
-        self.ensure_one()
-        service = 'cancel'
-        values = self._l10n_mx_edi_get_cfdi_values()
-        invoices_list = client.factory.create("UUIDS")
-        invoices_list.uuids.string = [values['uuid']]
-        company_id = self.company_id
-        certificate_id = values['certificate_id']
-        cer_pem = base64.encodestring(certificate.convert_cer_to_pem(base64.decodestring(certificate_id.content)))
-        key_pem = base64.encodestring(certificate.convert_key_cer_to_pem(base64.decodestring(certificate_id.key), certificate_id.password))
-        params = [invoices_list, username, password, company_id.vat, cer_pem, key_pem]
-        response_values = self.l10n_mx_edi_get_service_response(service, params, client)
-        error = response_values.pop('error', None)
-        response = response_values.pop('response', None)
-        if error:
-            self.message_post(
-                body=_('The cancel service requested failed') + create_list_html([error]),
-                subtype='account.mt_invoice_validated')
-            return
-        if not hasattr(response, 'Folios'):
-            error = _('A delay of 2 hours has to be respected before to cancel')
-            self.message_post(
-                body=_('The cancel service requested failed') + create_list_html([error]),
-                subtype='account.mt_invoice_validated')
-            return
-        code = getattr(response.Folios[0][0], 'EstatusUUID', None)
-        cancelled = code == '201' or code == '202'  # cancelled or previously cancelled
-        msg = code != 201 and code != 202 and "Cancelling get an error"
-        self._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
-
-    # -------------------------------------------------------------------------
     # Account invoice methods
     # -------------------------------------------------------------------------
 
+    @api.onchange('partner_id', 'company_id')
+    def _onchange_partner_id(self):
+        '''Set the payment bank account on the invoice as the first of the selected partner.
+        '''
+        res = super(AccountInvoice, self)._onchange_partner_id()
+        if self.commercial_partner_id.bank_ids:
+            self.l10n_mx_edi_partner_bank_id = self.commercial_partner_id.bank_ids[0].id
+        return res
+
+    @api.multi
+    @api.depends('l10n_mx_edi_cfdi_name')
+    def _compute_cfdi_values(self):
+        '''Fill the invoice fields from the cfdi values.
+        '''
+        for inv in self:
+            attachment_id = inv.l10n_mx_edi_retrieve_last_attachment()
+            if not attachment_id:
+                continue
+            # At this moment, the attachment contains the file size in its 'datas' field because
+            # to save some memory, the attachment will store its data on the physical disk.
+            # To avoid this problem, we read the 'datas' directly on the disk.
+            datas = attachment_id._file_read(attachment_id.store_fname)
+            inv.l10n_mx_edi_cfdi = datas
+            tree = inv.l10n_mx_edi_get_xml_etree(base64.decodestring(datas))
+            # if already signed, extract uuid
+            tfd_node = inv.l10n_mx_edi_get_tfd_etree(tree)
+            if tfd_node is not None:
+                inv.l10n_mx_edi_uuid = tfd_node.get('UUID')
+            inv.l10n_mx_edi_cfdi_amount = tree.get('total')
+            inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
+            inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
+            inv.l10n_mx_edi_cfdi_certificate_id = self.env['l10n_mx_edi.certificate'].sudo().search(
+                [('serial_number', '=', tree.attrib['noCertificado'])], limit=1)
+
     @api.multi
     def _l10n_mx_edi_create_taxes_cfdi_values(self):
+        '''Create the taxes values to fill the CFDI template.
+        '''
         self.ensure_one()
         values = {
             'total_withhold': 0,
@@ -504,52 +552,6 @@ class AccountInvoice(models.Model):
                 values['withholding'].append(tax_dict)
         return values
 
-    @api.model
-    def get_customer_rfc(self, customer):
-        """In Mexico depending of some cases the vat (rfc) is not mandatory to be recorded in customers, only for those
-        cases instead try to force the record values and make documentation, given a customer the system will propose
-        properly a vat (rfc) in order to generate properly the xml following this law:
-
-        http://www.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/cfdi/PyRFactElect.pdf.
-
-        :param customer:
-        :return:
-        """
-        rfc = customer.vat
-
-        if (customer.country_id == self.env.ref('base.mx') or not customer.country_id) and not customer.vat:
-            # Following Question 4 in legal Document.
-            rfc = 'XAXX010101000'
-            self.message_post(
-                body=_('Using General Public VAT because no vat found'),
-                subtype='account.mt_invoice_validated')
-
-        if customer.country_id and customer.country_id != self.env.ref('base.mx'):
-            # Following Question 5 in legal Document.
-            rfc = 'XEXX010101000'
-
-        # otherwise it returns what customer says and if False xml validation will be solving other cases.
-        return rfc
-
-    @api.model
-    def show_domicile(self, customer):
-        """Tell if the Domicile is necessary to be shown in a customer address to avoid force the user load this
-        optional values in a customer, if at least one of the necessary fields is loaded then simply show it.
-        """
-        address_fields = ['street_name',
-                          'street_number',
-                          'street_number2',
-                          'l10n_mx_edi_colony',
-                          'l10n_mx_edi_locality',
-                          'city',
-                          'state_id',
-                          'country_id',
-                          'zip']
-        for field in address_fields:
-            if getattr(customer, field):
-                return True
-        return False
-
     @api.multi
     def _l10n_mx_edi_create_cfdi_values(self):
         '''Create the values to fill the CFDI template.
@@ -570,8 +572,6 @@ class AccountInvoice(models.Model):
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
             'amount_untaxed': '%0.*f' % (precision_digits, amount_untaxed),
             'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
-            'get_customer_rfc': self.get_customer_rfc,
-            'show_domicile': self.show_domicile,
         }
 
         ctx = dict(company_id=self.company_id.id, date=self.date_invoice)
@@ -655,22 +655,21 @@ class AccountInvoice(models.Model):
         cfdi = cfdi.replace('{http://www.w3.org/2001/XMLSchema-instance}', 'xsi:')
 
         # -Compute cadena
-        tree = etree.fromstring(cfdi, parser=parser)
-        xslt_root = etree.parse(file_open(CFDI_XSLT_CADENA % version))
-        cadena = str(etree.XSLT(xslt_root)(tree))
+        tree = self.l10n_mx_edi_get_xml_etree(cfdi)
+        cadena = self.l10n_mx_edi_generate_cadena(CFDI_XSLT_CADENA % version, tree)
 
         # Post append cadena
         tree.attrib['sello'] = certificate_id.sudo().get_encrypted_cadena(cadena)
 
         # Check with xsd
         try:
-            error_log = check_with_xsd(tree, CFDI_XSD % version)
+            check_with_xsd(tree, CFDI_XSD % version)
         except Exception as e:
             return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}
 
         # Post append addenda
         if self.partner_id.l10n_mx_edi_addenda:
-            cfdi_addenda_node = tree.find(".//{http://www.sat.gob.mx/cfd/3}Addenda")
+            cfdi_addenda_node = tree.Addenda
             addenda_tree = etree.fromstring(self.partner_id.l10n_mx_edi_addenda.arch, parser=parser)
             addenda_str = qweb.render(addenda_tree, values=values)
             addenda_node = etree.fromstring(addenda_str, parser=parser)
@@ -682,32 +681,34 @@ class AccountInvoice(models.Model):
     def _l10n_mx_edi_retry(self):
         '''Try to generate the cfdi attachment and then, sign it.
         '''
-        for record in self:
-            cfdi_values = record._l10n_mx_edi_create_cfdi()
+        for inv in self:
+            cfdi_values = inv._l10n_mx_edi_create_cfdi()
             error = cfdi_values.pop('error', None)
             cfdi = cfdi_values.pop('cfdi', None)
             if error:
                 # cfdi failed to be generated
-                record.l10n_mx_edi_pac_status = 'retry'
-                record.message_post(body=error, subtype='account.mt_invoice_validated')
-            else:
-                # cfdi has been successfully generated
-                record.l10n_mx_edi_pac_status = 'to_sign'
-                filename = record.l10n_mx_edi_cfdi_name
-                attachment_id = self.env['ir.attachment'].create({
-                    'name': filename,
-                    'res_id': record.id,
-                    'res_model': unicode(record._name),
-                    'datas': base64.encodestring(cfdi),
-                    'datas_fname': filename,
-                    'type': 'binary',
-                    'description': 'Mexican invoice',
-                    })
-                record.message_post(
-                    body=_('CFDI document generated (may be not signed)'),
-                    attachment_ids=[attachment_id.id],
-                    subtype='account.mt_invoice_validated')
-                record._l10n_mx_edi_sign()
+                inv.l10n_mx_edi_pac_status = 'retry'
+                inv.message_post(body=error, subtype='account.mt_invoice_validated')
+                continue
+            # cfdi has been successfully generated
+            inv.l10n_mx_edi_pac_status = 'to_sign'
+            filename = ('%s-MX-Invoice-2.1.xml' % inv.number).replace('/', '')
+            ctx = self.env.context.copy()
+            ctx.pop('default_type', False)
+            inv.l10n_mx_edi_cfdi_name = filename
+            attachment_id = self.env['ir.attachment'].with_context(ctx).create({
+                'name': filename,
+                'res_id': inv.id,
+                'res_model': inv._name,
+                'datas': base64.encodestring(cfdi),
+                'datas_fname': filename,
+                'description': 'Mexican invoice',
+                })
+            inv.message_post(
+                body=_('CFDI document generated (may be not signed)'),
+                attachment_ids=[attachment_id.id],
+                subtype='account.mt_invoice_validated')
+            inv._l10n_mx_edi_sign()
 
     @api.multi
     def invoice_validate(self):
@@ -721,7 +722,8 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def action_invoice_cancel(self):
-        '''Cancel the cfdi attachments for mexican companies when cancelled.'''
+        '''Cancel the cfdi attachments for mexican companies when cancelled.
+        '''
         result = super(AccountInvoice, self).action_invoice_cancel()
         for record in self:
             if record.company_id.country_id == self.env.ref('base.mx'):
@@ -741,69 +743,22 @@ class AccountInvoice(models.Model):
                 record._l10n_mx_edi_retry()
 
     @api.multi
-    def l10n_mx_edi_xml_signed(self):
-        domain = [
-            ('res_id', '=', self.id),
-            ('res_model', '=', self._name),
-            ('name', '=', self.l10n_mx_edi_cfdi_name)]
-        # TODO: this is necessary to make it a little bit more complex when workflow open-cancel-open comes in.
-        attachment = self.env['ir.attachment'].search(domain, limit=1)
-        if not attachment:
-            return False
-        return base64.decodestring(attachment.datas)
-
-    @staticmethod
-    def _l10n_mx_edi_get_xml_tfd(xml):
-        """Get "timbre fiscal digital (tfd)" node and get value from a xml objectify
-        returns tfd lxml node.
-        """
-        attribute = 'tfd:TimbreFiscalDigital[1]'
-        namespace = {'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital'}
-        node = xml.Complemento.xpath(attribute, namespaces=namespace)
-        return node[0] if node else None
-
-    @staticmethod
-    def _l10n_mx_edi_validate_xml_sat(emitter, receiver, amount, uuid):
-        """Validate a given set of parameters which are frequently inside an Valid (or cancelled) CFDI document in the
-        SAT service for mexican CFDI documents.
-
-        :param emitter: Emitter vat
-        :param receiver: Receiver vat
-        :param amount: Amount total of the document
-        :param uuid: UUID identifier of the document
-        :type emitter: str
-        :type receiver: str
-        :type amount: type description
-        :type uuid: type description
-        :return: result[0] status, result[1] error message if necessary
-        :rtype: tuple
-        """
-        url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
-        parameters = url_encode({'re': emitter, 'rr': receiver, 'tt': amount, 'id': uuid})
-        try:
-            return Client(url).service.Consulta(parameters).Estado, False
-        except Exception as e:
-            return False, e
-
-    @api.multi
     def l10n_mx_edi_update_sat_status(self):
-        """Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
-        """
+        '''Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
+        '''
+        url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
         for inv in self:
-            signed = inv.l10n_mx_edi_xml_signed()
-            if not signed or self.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
+            if self.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
                 continue
-            xml = fromstring(signed)
-            xml_tfd_node = self._l10n_mx_edi_get_xml_tfd(xml)
-            uuid = xml_tfd_node.attrib.get('UUID')
-            result_sat = self._l10n_mx_edi_validate_xml_sat(xml.Emisor.get('rfc', ''),
-                                                            xml.Receptor.get('rfc', ''),
-                                                            xml.get('total'), uuid)
-            if not result_sat[1]:
-                sat_state = result_sat[0].__repr__()
-                inv.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(sat_state, 'none')
-            else:
-                message = '<b>%s</b></br><p>%s</p>' % (_('SAT checking process (errored) Not updated</br>'),
-                                         result_sat[1].message or result_sat[1].reason.__repr__())
-                inv.message_post(body=message,
-                                 subtype='account.mt_invoice_validated')
+            supplier_rfc = inv.l10n_mx_edi_cfdi_supplier_rfc
+            customer_rfc = inv.l10n_mx_edi_cfdi_customer_rfc
+            total = inv.l10n_mx_edi_cfdi_amount
+            uuid = inv.l10n_mx_edi_uuid
+            params = url_encode({'re': supplier_rfc, 'rr': customer_rfc, 'tt': total, 'id': uuid})
+            try:
+                client = Client(url)
+                response = client.service.Consulta(params).Estado
+            except Exception as e:
+                inv.l10n_mx_edi_log_error(e.message or e.reason.__repr__())
+                continue
+            inv.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(response.__repr__(), 'none')

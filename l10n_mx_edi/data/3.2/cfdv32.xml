@@ -37,22 +37,22 @@
                         t-att-codigoPostal="supplier.zip"/>
                     <t t-if="issued">
                         <cfdi:ExpedidoEn
-                        t-att-calle="issued.street_name"
-                        t-att-noExterior="issued.street_number"
-                        t-att-noInterior="issued.street_number2"
-                        t-att-colonia="issued.l10n_mx_edi_colony"
-                        t-att-localidad="issued.l10n_mx_edi_locality"
-                        t-att-municipio="issued.city"
-                        t-att-estado="issued.state_id.name"
-                        t-att-pais="issued.country_id.name"
-                        t-att-codigoPostal="issued.zip"/>
+                            t-att-calle="issued.street_name"
+                            t-att-noExterior="issued.street_number"
+                            t-att-noInterior="issued.street_number2"
+                            t-att-colonia="issued.l10n_mx_edi_colony"
+                            t-att-localidad="issued.l10n_mx_edi_locality"
+                            t-att-municipio="issued.city"
+                            t-att-estado="issued.state_id.name"
+                            t-att-pais="issued.country_id.name"
+                            t-att-codigoPostal="issued.zip"/>
                     </t>
                     <cfdi:RegimenFiscal t-att-Regimen="fiscal_position"/>
                 </cfdi:Emisor>
                 <cfdi:Receptor
-                    t-att-rfc="get_customer_rfc(customer)"
+                    t-att-rfc="record.l10n_mx_edi_get_customer_rfc()"
                     t-att-nombre="customer.name">
-                    <t t-if="show_domicile(customer)">
+                    <t t-if="record.l10n_mx_edi_is_customer_address_required()">
                     <cfdi:Domicilio
                         t-att-calle="customer.street_name"
                         t-att-noExterior="customer.street_number"

@@ -53,15 +53,6 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         }).execute()
         self.set_currency_rates(mxn_rate=21, usd_rate=1)
 
-    def get_xml_attach(self, invoice, limit=1):
-        # TODO: Create a method to get XML attachment from account.invoice
-        domain = [
-            ('res_id', '=', invoice.id),
-            ('res_model', '=', invoice._name),
-            ('name', '=', invoice.l10n_mx_edi_cfdi_name)]
-        xml_attach = self.env['ir.attachment'].search(domain, limit=limit)
-        return xml_attach
-
     def test_l10n_mx_edi_invoice_basic(self):
         # -----------------------
         # Testing sign process
@@ -72,10 +63,10 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed")
-        xml = self.get_invoice_xml(invoice)
+        xml = invoice.l10n_mx_edi_get_xml_etree()
         self.xml_merge_dynamic_items(xml, self.xml_expected)
         self.assertEqualXML(xml, self.xml_expected)
-        xml_attach = base64.decodestring(self.get_xml_attach(invoice).datas)
+        xml_attach = base64.decodestring(invoice.l10n_mx_edi_cfdi)
         self.assertEqual(xml_attach.splitlines()[0].lower(),
                          '<?xml version="1.0" encoding="utf-8"?>'.lower())
 
@@ -90,7 +81,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice_disc.action_invoice_open()
         self.assertEqual(invoice_disc.state, "open")
         self.assertEqual(invoice_disc.l10n_mx_edi_pac_status, "signed")
-        xml = self.get_invoice_xml(invoice_disc)
+        xml = invoice_disc.l10n_mx_edi_get_xml_etree()
         xml_expected_disc = objectify.fromstring(self.xml_expected_str)
         xml_expected_disc.attrib['subTotal'] = '500.00'
         xml_expected_disc.attrib['descuento'] = '50.00'
@@ -110,7 +101,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "retry")
         invoice.l10n_mx_edi_update_pac_status()
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed")
-        xml_attachs = self.get_xml_attach(invoice, limit=None)
+        xml_attachs = invoice.l10n_mx_edi_retrieve_attachments()
         self.assertEqual(len(xml_attachs), 2)
         xml_1 = objectify.fromstring(base64.decodestring(xml_attachs[0].datas))
         xml_2 = objectify.fromstring(base64.decodestring(xml_attachs[1].datas))
@@ -133,12 +124,12 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertNotEqual(invoice.l10n_mx_edi_sat_status, "cancelled")
 
         # Use a real UUID cancelled
-        xml_tfd = invoice._l10n_mx_edi_get_xml_tfd(xml)
+        xml_tfd = invoice.l10n_mx_edi_get_tfd_etree(xml)
         xml_tfd.attrib['UUID'] = '0F481E0F-47A5-4647-B06B-8B471671F377'
         xml.Emisor.attrib['rfc'] = 'VAU111017CG9'
         xml.Receptor.attrib['rfc'] = 'IAL691030TK3'
         xml.attrib['total'] = '1.16'
-        xml_attach = self.get_xml_attach(invoice)
+        xml_attach = invoice.l10n_mx_edi_retrieve_last_attachment()
         xml_attach.datas = base64.encodestring(etree.tostring(xml))
         invoice.l10n_mx_edi_update_sat_status()
         self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled")
