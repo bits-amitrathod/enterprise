@@ -430,6 +430,13 @@
             <input id="help" name="help" type="text" data-type="attributes"
                 t-att-value="widget.attrs.help"/>
         </div>
+        <t t-if="widget.attrs.related">
+            <div class="o_web_studio_sidebar_text">
+                <label for="related">Related Field</label>
+                <input id="related" name="related" type="text" readonly="readonly"
+                    t-att-value="widget.attrs.related"/>
+            </div>
+        </t>
         <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_text">
             <label for="placeholder">Placeholder</label>
             <input id="placeholder" name="placeholder" type="text" placeholder="Placeholder Text" data-type="attributes"
@@ -574,7 +581,7 @@
         <textarea name="selectionItems" id="selectionItems" rows='4' placeholder="Value A&#10;Value B&#10;Value C"></textarea>
     </t>
     <t t-else="">
-        <t t-if="widget.ttype === 'one2many'">
+        <t t-if="_.contains(['one2many', 'related'], widget.ttype)">
             <label>Select a related field:</label>
             <span class="o_many2one_field"/>
         </t>

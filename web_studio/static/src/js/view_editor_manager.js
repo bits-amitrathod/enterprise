@@ -631,9 +631,9 @@ return Widget.extend({
             field_description.model_name = this.model;
             // Fields with requirements
             // Open Dialog to precise the required fields for this field.
-            if (_.contains(['selection', 'one2many', 'many2one', 'many2many'], field_description.ttype)) {
+            if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.ttype)) {
                 def_field_values = $.Deferred();
-                var dialog = new NewFieldDialog(this, this.model, field_description.ttype).open();
+                var dialog = new NewFieldDialog(this, this.model, field_description.ttype, this.fields).open();
                 dialog.on('field_default_values_saved', this, function(values) {
                     def_field_values.resolve(values);
                     dialog.close();
@@ -659,7 +659,7 @@ return Widget.extend({
                 });
             }
         }
-        // When the field is created, close the dialog and update the view
+        // When the field values is selected, close the dialog and update the view
         $.when(def_field_values).then(function(values) {
             self.do({
                 type: type,

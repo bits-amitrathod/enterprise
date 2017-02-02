@@ -155,6 +155,7 @@ return Widget.extend(FieldManagerMixin, {
         this.attrs.required = this.field_parameters.required || this.modifiers.required;
         this.attrs.domain = this.attrs.domain || this.field_parameters.domain;
         this.attrs.context = this.attrs.context || this.field_parameters.context;
+        this.attrs.related = this.field_parameters.related ? this.field_parameters.related.join('.'): false;
     },
     _append_widgets_components: function() {
         var self = this;

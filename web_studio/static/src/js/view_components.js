@@ -193,6 +193,11 @@ var PriorityWidgetComponent = AbstractNewWidgetComponent.extend({
     className: 'o_web_studio_field_priority',
     attrs: {widget: 'priority'},
 });
+var RelatedFieldComponent = AbstractNewFieldComponent.extend({
+    ttype: 'related',
+    label: 'Related Field',
+    className: 'o_web_studio_field_related',
+});
 var form_component_widget_registry = new Registry();
 form_component_widget_registry
     .add('form_components', [
@@ -221,6 +226,7 @@ form_component_widget_registry
         ImageWidgetComponent,
         TagWidgetComponent,
         PriorityWidgetComponent,
+        RelatedFieldComponent,
     ])
     .add('existing_field', ExistingFieldComponent);
 
