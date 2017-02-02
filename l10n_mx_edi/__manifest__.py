@@ -30,6 +30,7 @@ This module allows the creation of the EDI documents and the communication with 
     ],
     'demo': [
         'demo/ir_ui_views.xml',
+        'demo/l10n_mx_edi_demo.xml',
     ],
     'installable': True,
     'auto_install': False,
