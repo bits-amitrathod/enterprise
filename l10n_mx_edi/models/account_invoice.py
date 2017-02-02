@@ -2,11 +2,17 @@
 
 import base64
 from itertools import groupby
+import logging
 
 from lxml import etree
 from lxml.objectify import fromstring
 from suds.client import Client
-from num2words import num2words
+try:
+    from num2words import num2words
+except ImportError:
+    logging.getLogger(__name__).warning("The num2words python library is not installed, l10n_mx_edi features won't be fully available.")
+    num2words = None
+
 from werkzeug import url_encode
 
 from odoo import _, api, fields, models, tools
@@ -249,6 +255,9 @@ class AccountInvoice(models.Model):
         :returns: Amount transformed to words mexican format for invoices
         :rtype: str
         """
+        if num2words is None:
+            logging.getLogger(__name__).warning("The library 'num2words' is missing, cannot render textual amounts.")
+            return ""
         self.ensure_one()
         amount = self.amount_total
         currency = self.currency_id.name
