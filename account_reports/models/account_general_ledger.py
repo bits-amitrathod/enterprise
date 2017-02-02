@@ -305,7 +305,7 @@ class report_account_general_ledger(models.AbstractModel):
                 amls = grouped_accounts[account]['lines']
                 too_many = False
                 if len(amls) > 80 and not context.get('print_mode'):
-                    amls = amls[-80:]
+                    amls = amls[:80]
                     too_many = True
                 used_currency = self.env.user.company_id.currency_id
                 for line in amls:
@@ -323,10 +323,10 @@ class report_account_general_ledger(models.AbstractModel):
                     name = line.name and line.name or ''
                     if line.ref:
                         name = name and name + ' - ' + line.ref or line.ref
-                    if len(name) > 35:
+                    if len(name) > 35 and not self.env.context.get('no_format'):
                         name = name[:32] + "..."
                     partner_name = line.partner_id.name
-                    if partner_name and len(partner_name) > 35:
+                    if partner_name and len(partner_name) > 35  and not self.env.context.get('no_format'):
                         partner_name = partner_name[:32] + "..."
                     caret_type = 'account.move'
                     if line.invoice_id:
