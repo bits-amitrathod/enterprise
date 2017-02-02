@@ -33,6 +33,9 @@ class InvoiceTransactionCase(AccountingTestCase):
         self.rate_model = self.env['res.currency.rate']
         self.mxn = self.env.ref('base.MXN')
         self.usd = self.env.ref('base.USD')
+        self.ova = self.env['account.account'].search([
+            ('user_type_id', '=', self.env.ref(
+                'account.data_account_type_current_assets').id)], limit=1)
 
     def set_currency_rates(self, mxn_rate, usd_rate):
         self.mxn.rate_ids = self.rate_model.create({
@@ -52,6 +55,14 @@ class InvoiceTransactionCase(AccountingTestCase):
         })
         self.create_invoice_line(invoice)
         invoice.compute_taxes()
+        # I manually assign a tax on invoice
+        self.env['account.invoice.tax'].create({
+            'name': 'Test Tax for Customer Invoice',
+            'manual': 1,
+            'amount': 0,
+            'account_id': self.ova.id,
+            'invoice_id': invoice.id,
+        })
         return invoice
 
     def create_invoice_line(self, invoice_id):

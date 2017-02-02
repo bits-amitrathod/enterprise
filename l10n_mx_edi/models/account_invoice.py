@@ -590,7 +590,7 @@ class AccountInvoice(models.Model):
             'withholding': [],
             'transferred': [],
         }
-        for tax in self.tax_line_ids:
+        for tax in self.tax_line_ids.filtered('tax_id'):
             tax_dict = {
                 'name': (tax.tax_id.tag_ids[0].name
                          if tax.tax_id.tag_ids else tax.tax_id.name).upper(),
