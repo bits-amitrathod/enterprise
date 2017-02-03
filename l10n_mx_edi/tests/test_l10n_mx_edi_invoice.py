@@ -59,7 +59,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         invoice = self.create_invoice()
         invoice.journal_id.l10n_mx_address_issued_id = self.company_partner.id
-        invoice.move_name = '999'
+        invoice.move_name = 'INV/2017/999'
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
@@ -90,7 +90,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # 500 - 10% + taxes(16%, -10%)
         xml_expected_disc.attrib['total'] = '477.00'
         self.xml_merge_dynamic_items(xml, xml_expected_disc)
-        xml_expected_disc.attrib['folio'] = invoice_disc.number
+        xml_expected_disc.attrib['folio'] =  xml.attrib['folio']
+        xml_expected_disc.attrib['serie'] = xml.attrib['serie']
         for concepto in xml_expected_disc.Conceptos:
             concepto.Concepto.attrib['valorUnitario'] = '500.0'
             concepto.Concepto.attrib['importe'] = '500.0'

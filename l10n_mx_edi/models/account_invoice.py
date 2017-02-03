@@ -3,6 +3,7 @@
 import base64
 from itertools import groupby
 import logging
+import re
 
 from lxml import etree
 from lxml.objectify import fromstring
@@ -605,6 +606,16 @@ class AccountInvoice(models.Model):
                 values['withholding'].append(tax_dict)
         return values
 
+    @staticmethod
+    def _l10n_mx_get_serie_and_folio(number):
+        values = {'serie': None, 'folio': None}
+        number_matchs = [rn for rn in re.finditer('\d+', number or '')]
+        if number_matchs:
+            last_number_match = number_matchs[-1]
+            values['serie'] = number[:last_number_match.start()] or None
+            values['folio'] = last_number_match.group().lstrip('0') or None
+        return values
+
     @api.multi
     def _l10n_mx_edi_create_cfdi_values(self):
         '''Create the values to fill the CFDI template.
@@ -619,7 +630,6 @@ class AccountInvoice(models.Model):
             'supplier': self.company_id.partner_id.commercial_partner_id,
             'issued': self.journal_id.l10n_mx_address_issued_id,
             'customer': self.partner_id.commercial_partner_id,
-            'number': self.number,
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
@@ -627,6 +637,7 @@ class AccountInvoice(models.Model):
             'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
         }
 
+        values.update(self._l10n_mx_get_serie_and_folio(self.number))
         ctx = dict(company_id=self.company_id.id, date=self.date_invoice)
         mxn = self.env.ref('base.MXN').with_context(ctx)
         invoice_currency = self.currency_id.with_context(ctx)
