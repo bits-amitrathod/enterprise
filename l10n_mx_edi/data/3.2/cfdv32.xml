@@ -72,7 +72,7 @@
                             t-att-cantidad="line.quantity"
                             t-att-descripcion="line.name.replace('\n', ',')"
                             t-att-importe="subtotal_wo_discount(line)"
-                            t-att-noIdentificacion="line.product_id.default_code or 'S\N'"
+                            t-att-noIdentificacion="line.product_id.default_code"
                             t-att-unidad="line.uom_id.name or 'NA'"
                             t-att-valorUnitario="line.price_unit"/>
                     </t>

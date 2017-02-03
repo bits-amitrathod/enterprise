@@ -166,7 +166,7 @@ class AccountInvoice(models.Model):
     @api.model
     def l10n_mx_edi_retrieve_last_attachment(self):
         attachment_ids = self.l10n_mx_edi_retrieve_attachments()
-        return attachment_ids and attachment_ids[-1] or None
+        return attachment_ids and attachment_ids[0] or None
 
     @api.model
     def l10n_mx_edi_get_xml_etree(self, cfdi=None):
@@ -756,7 +756,8 @@ class AccountInvoice(models.Model):
                 continue
             # cfdi has been successfully generated
             inv.l10n_mx_edi_pac_status = 'to_sign'
-            filename = ('%s-MX-Invoice-2.1.xml' % inv.number).replace('/', '')
+            filename = ('%s-%s-MX-Invoice-3-2.xml' % (
+                inv.journal_id.code, inv.number)).replace('/', '')
             ctx = self.env.context.copy()
             ctx.pop('default_type', False)
             inv.l10n_mx_edi_cfdi_name = filename
@@ -780,7 +781,8 @@ class AccountInvoice(models.Model):
         result = super(AccountInvoice, self).invoice_validate()
         for record in self:
             if record.company_id.country_id == self.env.ref('base.mx'):
-                record.l10n_mx_edi_cfdi_name = ('%s-MX-Invoice-2.1.xml' % self.number).replace('/', '')
+                record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-3-2.xml' % (
+                    self.journal_id.code, self.number)).replace('/', '')
                 record._l10n_mx_edi_retry()
         return result
 
