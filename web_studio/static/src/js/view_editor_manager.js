@@ -629,6 +629,9 @@ return Widget.extend({
                     def_field_values.resolve(values);
                     dialog.close();
                 });
+                dialog.on('closed', this, function() {
+                    def_field_values.reject();
+                });
             }
             if (field_description.ttype === 'monetary') {
                 def_field_values = $.Deferred();
@@ -640,6 +643,7 @@ return Widget.extend({
                 ]]).then(function(data) {
                     if (!data.length) {
                         Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
+                        def_field_values.reject();
                     } else {
                         def_field_values.resolve();
                     }
@@ -662,6 +666,8 @@ return Widget.extend({
                     field_description: _.extend(field_description, values),
                 },
             });
+        }).fail(function() {
+            self.render_content(true);
         });
     },
     _add_chatter: function(data) {
