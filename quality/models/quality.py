@@ -8,6 +8,7 @@ import random
 from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import odoo.addons.decimal_precision as dp
+from math import sqrt
 
 
 class QualityPoint(models.Model):
@@ -47,6 +48,7 @@ class QualityPoint(models.Model):
     user_id = fields.Many2one('res.users', 'Responsible')
     active = fields.Boolean(default=True)
     check_count = fields.Integer(compute="_compute_check_count")
+    check_ids = fields.One2many('quality.check', 'point_id')
     test_type = fields.Selection([
         ('passfail', 'Pass - Fail'),
         ('measure', 'Measure')], string="Test Type",
@@ -58,6 +60,33 @@ class QualityPoint(models.Model):
     norm_unit = fields.Char('Unit of Measure', default=lambda self: 'mm')  # TDE RENAME ?
     note = fields.Html('Note')
     reason = fields.Html('Note')
+    average = fields.Float(compute="_compute_standard_deviation_and_average")
+    standard_deviation = fields.Float(compute="_compute_standard_deviation_and_average")
+
+    def _compute_standard_deviation_and_average(self):
+        # The variance and mean are computed by the Welford’s method and used the Bessel's
+        # correction because are working on a sample.
+        points = self.filtered(lambda x: x.test_type == 'measure')
+        for point in points:
+            mean = 0.0
+            s = 0.0
+            n = 0
+            for check in point.check_ids:
+                n += 1
+                delta = check.measure - mean
+                mean += delta / n
+                delta2 = check.measure - mean
+                s += delta * delta2
+
+            if n > 1:
+                point.average = mean
+                point.standard_deviation = sqrt( s / ( n - 1))
+            elif n == 1:
+                point.average = mean
+                point.standard_deviation = 0.0
+            else:
+                point.average = 0.0
+                point.standard_deviation = 0.0
 
     def _compute_check_count(self):
         check_data = self.env['quality.check'].read_group([('point_id', 'in', self.ids)], ['point_id'], ['point_id'])
