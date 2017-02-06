@@ -9,13 +9,30 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     check_ids = fields.One2many('quality.check', 'picking_id', 'Checks')
-    check_todo = fields.Boolean('Pending checks', compute='_compute_check_todo')
+    quality_check_todo = fields.Boolean('Pending checks', compute='_compute_check')
+    quality_check_fail = fields.Boolean(compute='_compute_check')
+    quality_alert_ids = fields.One2many('quality.alert', 'picking_id', 'Alerts')
+    quality_alert_count = fields.Integer(compute='_compute_quality_alert_count')
 
-    @api.one
-    def _compute_check_todo(self):
-        # TDE: measure_success use ?
-        if any(check.quality_state == 'none' for check in self.check_ids):
-            self.check_todo = True
+    @api.multi
+    def _compute_check(self):
+        for picking in self:
+            todo = False
+            fail = False
+            for check in picking.check_ids:
+                if check.quality_state == 'none':
+                    todo = True
+                elif check.quality_state == 'fail':
+                    fail = True
+                if fail and todo:
+                    break
+            picking.quality_check_fail = fail
+            picking.quality_check_todo = todo
+
+    @api.multi
+    def _compute_quality_alert_count(self):
+        for picking in self:
+            picking.quality_alert_count = len(picking.quality_alert_ids)
 
     @api.multi
     def check_quality(self):
@@ -43,3 +60,31 @@ class StockPicking(models.Model):
         if self.mapped('check_ids').filtered(lambda x: x.quality_state == 'none'):
             raise UserError(_('You still need to do the quality checks!'))
         return super(StockPicking, self).do_transfer()
+
+    @api.multi
+    def button_quality_alert(self):
+        self.ensure_one()
+        action = self.env.ref('quality.quality_alert_action_check').read()[0]
+        action['views'] = [(False, 'form')]
+        action['context'] = {
+            'default_product_id': self.product_id.id,
+            'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
+            'default_picking_id': self.id,
+        }
+        return action
+
+    @api.multi
+    def open_quality_alert_picking(self):
+        self.ensure_one()
+        action = self.env.ref('quality.quality_alert_action_check').read()[0]
+        action['context'] = {
+            'default_product_id': self.product_id.id,
+            'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
+            'default_picking_id': self.id,
+        }
+        action['domain'] = [('id', 'in', self.quality_alert_ids.ids)]
+        action['views'] = [(False, 'tree'),(False,'form')]
+        if self.quality_alert_count == 1:
+            action['views'] = [(False, 'form')]
+            action['res_id'] = self.quality_alert_ids.id
+        return action

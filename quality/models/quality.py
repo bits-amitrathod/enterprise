@@ -366,6 +366,7 @@ class QualityAlert(models.Model):
     tag_ids = fields.Many2many('quality.tag', string="Tags")
     date_assign = fields.Datetime('Date Assigned')
     date_close = fields.Datetime('Date Closed')
+    picking_id = fields.Many2one('stock.picking', 'Operation')
     action_corrective = fields.Text('Corrective Action')
     action_preventive = fields.Text('Preventive Action')
     user_id = fields.Many2one('res.users', 'Responsible', track_visibility='onchange', default=lambda self: self.env.user)
