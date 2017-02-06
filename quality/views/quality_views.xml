@@ -645,8 +645,6 @@
                         <button name="action_see_quality_checks" type="object" icon="fa-check" class="oe_stat_button">
                             <field string="Quality Checks" name="check_count" widget="statinfo"/>
                         </button>
-                        <button string="SPC" name="action_see_spc_control" type="object" icon="fa-bars" class="oe_stat_button"
-                                attrs="{'invisible': ['&amp;', ('check_count', '=', 0), ('test_type', '!=', 'measure')]}"/>
                         <button name="action_see_spc_control" type="object" class="oe_stat_button"
                             attrs="{'invisible': ['|', ('check_count', '=', 0), ('test_type', '!=', 'measure')]}">
                             <span class="fa fa-2x" data-icon="&#x2211;" style="padding-left: 10px;"/>

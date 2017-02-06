@@ -113,9 +113,10 @@ class QualityPoint(models.Model):
 
     @api.multi
     def action_see_quality_checks(self):
+        self.ensure_one()
         action = self.env.ref('quality.quality_check_action_main').read()[0]
-        action['domain'] = [('point_id', '=', self.ids[0])]
-        action['context'] = {'default_point_id': self.ids[0]}
+        action['domain'] = [('point_id', '=', self.id)]
+        action['context'] = {'default_point_id': self.id}
         return action
 
     @api.multi
@@ -124,7 +125,7 @@ class QualityPoint(models.Model):
         action = self.env.ref('quality.quality_check_action_spc').read()[0]
         if self.test_type == 'measure':
             action['context'] = {'group_by': ['name', 'point_id'], 'graph_measure': ['measure'], 'graph_mode': 'line'}
-        action['domain'] = [('point_id', '=', self.ids[0])]
+        action['domain'] = [('point_id', '=', self.id), ('quality_state', '!=', 'none')]
         return action
 
     @api.multi
