@@ -15,6 +15,7 @@ class QualityPoint(models.Model):
     _name = "quality.point"
     _description = "Quality Point"
     _inherit = ['mail.thread']
+    _order = "sequence, id"
 
     def __get_default_team_id(self):
         return self.env['quality.alert.team'].search([], limit=1).id
@@ -22,6 +23,7 @@ class QualityPoint(models.Model):
     name = fields.Char(
         'Reference', copy=False, default=lambda self: _('New'),
         readonly=True, required=True)
+    sequence = fields.Integer('Sequence')
     title = fields.Char('Title')
     team_id = fields.Many2one(
         'quality.alert.team', 'Team',
