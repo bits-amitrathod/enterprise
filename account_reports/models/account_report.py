@@ -10,7 +10,7 @@ from odoo import models, fields, api, _
 from datetime import timedelta, datetime, date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from babel.dates import get_quarter_names
-from odoo.tools.misc import formatLang
+from odoo.tools.misc import formatLang, format_date
 from odoo.tools import config
 from odoo.addons.web.controllers.main import clean_action
 _logger = logging.getLogger(__name__)
@@ -373,14 +373,13 @@ class AccountReport(models.AbstractModel):
 
     def format_date(self, dt_to, dt_from, options, dt_filter='date'):
         # previously get_full_date_names
-        convert_date = self.env['ir.qweb.field.date'].value_to_html
         options_filter = options[dt_filter].get('filter', '')
         if type(dt_to) in (str, unicode):
             dt_to = datetime.strptime(dt_to, DEFAULT_SERVER_DATE_FORMAT)
         if dt_from and type(dt_from) in (str, unicode):
             dt_from = datetime.strptime(dt_from, DEFAULT_SERVER_DATE_FORMAT)
         if 'month' in options_filter:
-            return convert_date(dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), {'format': 'MMM YYYY'})
+            return format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), date_format='MMM YYYY')
         if 'quarter' in options_filter:
             quarter = (dt_to.month - 1) / 3 + 1
             return ('%s %s') % (get_quarter_names('abbreviated', locale=self._context.get('lang', 'en_US'))[quarter], dt_to.year)
@@ -390,8 +389,8 @@ class AccountReport(models.AbstractModel):
             else:
                 return '%s - %s' % ((dt_to.year - 1), dt_to.year)
         if not dt_from:
-            return _('As of %s') % (convert_date(dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), None),)
-        return _('From %s <br/> to  %s') % (convert_date(dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT), None), convert_date(dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), None))
+            return _('As of %s') % (format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)),)
+        return _('From %s <br/> to  %s') % (format_date(self.env, dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)), format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
 
     def apply_date_filter(self, options):
         if not options.get('date'):

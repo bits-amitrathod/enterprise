@@ -3,7 +3,7 @@
 
 from odoo import models, fields, api, tools
 from datetime import datetime
-from odoo.tools.misc import formatLang, ustr
+from odoo.tools.misc import formatLang, format_date, ustr
 from odoo.tools.translate import _
 import time
 from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT
@@ -42,12 +42,6 @@ class report_account_followup_report(models.AbstractModel):
         if not partner:
             return []
         lang_code = partner.lang or self.env.user.lang or 'en_US'
-        lang_ids = self.env['res.lang'].search([('code', '=', lang_code)], limit=1)
-        date_format = lang_ids.date_format or DEFAULT_SERVER_DATE_FORMAT
-
-        def formatLangDate(date):
-            date_dt = datetime.strptime(date, DEFAULT_SERVER_DATE_FORMAT)
-            return date_dt.strftime(date_format.encode('utf-8')).decode('utf-8')
 
         lines = []
         res = {}
@@ -66,7 +60,7 @@ class report_account_followup_report(models.AbstractModel):
             aml_recs = sorted(aml_recs, key=lambda aml: aml.blocked)
             for aml in aml_recs:
                 amount = aml.currency_id and aml.amount_residual_currency or aml.amount_residual
-                date_due = formatLangDate(aml.date_maturity or aml.date)
+                date_due = format_date(self.env, aml.date_maturity or aml.date, lang_code=lang_code)
                 total += not aml.blocked and amount or 0
                 is_overdue = today > aml.date_maturity if aml.date_maturity else today > aml.date
                 is_payment = aml.payment_id
@@ -79,7 +73,7 @@ class report_account_followup_report(models.AbstractModel):
                 amount = formatLang(self.env, amount, currency_obj=currency)
                 amount = amount.replace(' ', '&nbsp;') if self.env.context.get('mail') else amount
                 line_num += 1
-                columns = [formatLangDate(aml.date), date_due, aml.invoice_id.name or aml.name, aml.expected_pay_date and aml.expected_pay_date +' '+ aml.internal_note or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
+                columns = [format_date(self.env, aml.date, lang_code=lang_code), date_due, aml.invoice_id.name or aml.name, aml.expected_pay_date and aml.expected_pay_date +' '+ aml.internal_note or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
                 if self.env.context.get('print_mode'):
                     columns = columns[:3]+columns[5:]
                 lines.append({

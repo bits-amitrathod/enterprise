@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from odoo.tools.misc import formatLang
+from odoo.tools.misc import format_date
 from datetime import datetime, timedelta
 from odoo.addons.web.controllers.main import clean_action
 
@@ -339,7 +339,7 @@ class report_account_general_ledger(models.AbstractModel):
                         'caret_options': caret_type,
                         'parent_id': 'account_%s' % (account.id,),
                         'name': line.move_id.name if line.move_id.name else '/',
-                        'columns': [{'name': v} for v in [line.date, name, partner_name, currency,
+                        'columns': [{'name': v} for v in [format_date(self.env, line.date), name, partner_name, currency,
                                     line_debit != 0 and self.format_value(line_debit) or '',
                                     line_credit != 0 and self.format_value(line_credit) or '',
                                     self.format_value(progress)]],
