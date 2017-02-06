@@ -587,6 +587,37 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <!-- QUALITY.TAG -->
+    <record id="quality_tag_view_search" model="ir.ui.view">
+        <field name="name">quality.tag.view.search</field>
+        <field name="model">quality.tag</field>
+        <field name="arch" type="xml">
+            <search string="Tags">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    <record id="quality_tag_view_tree" model="ir.ui.view">
+        <field name="name">quality.tag.view.tree</field>
+        <field name="model">quality.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Tags" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="quality_tag_action" model="ir.actions.act_window">
+        <field name="name">Quality Tags</field>
+        <field name="res_model">quality.tag</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new tag.
+          </p>
+        </field>
+    </record>
+
     <!-- QUALITY.ALERT.STAGE -->
     <record id="quality_alert_stage_view_tree" model="ir.ui.view">
         <field name="name">quality.alert.stage.tree</field>
@@ -797,6 +828,13 @@
         action="quality_alert_stage_action"
         parent="menu_quality_configuration"
         sequence="15"/>
+    <menuitem
+        id="menu_config_quality_tags"
+        name="Quality Tags"
+        groups="base.group_no_one"
+        action="quality_tag_action"
+        parent="menu_quality_configuration"
+        sequence="25"/>
 
     <menuitem
         id="menu_quality_reporting"
