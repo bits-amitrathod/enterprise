@@ -360,7 +360,7 @@ class QualityAlert(models.Model):
     description = fields.Text('Description')
     stage_id = fields.Many2one('quality.alert.stage', 'Stage',
         group_expand='_read_group_stage_ids',
-        default=lambda self: self.env['quality.alert.stage'].search([], limit=1).id)
+        default=lambda self: self.env['quality.alert.stage'].search([], limit=1).id, track_visibility="onchange")
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.user.company_id)
     reason_id = fields.Many2one('quality.reason', 'Root Cause')
     tag_ids = fields.Many2many('quality.tag', string="Tags")
