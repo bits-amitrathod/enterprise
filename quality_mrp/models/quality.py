@@ -14,7 +14,7 @@ class QualityPoint(models.Model):
 class QualityAlert(models.Model):
     _inherit = "quality.alert"
 
-    operation_id = fields.Many2one('mrp.workorder', 'Operation')
+    workorder_id = fields.Many2one('mrp.workorder', 'Operation')
     workcenter_id = fields.Many2one('mrp.workcenter', 'Work Center')
     production_id = fields.Many2one('mrp.production', "Production Order")
 

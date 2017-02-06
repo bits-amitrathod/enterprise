@@ -9,67 +9,70 @@ class MrpProductionWorkcenterLine(models.Model):
     _inherit = "mrp.workorder"
 
     check_ids = fields.One2many('quality.check', 'workorder_id')
-    check_todo = fields.Boolean(compute='_compute_check_todo')
-    alert_count = fields.Integer(compute="_compute_alert_count")
+    quality_check_todo = fields.Boolean(compute='_compute_check')
+    quality_check_fail = fields.Boolean(compute='_compute_check')
+    quality_alert_ids = fields.One2many('quality.alert', 'workorder_id')
+    quality_alert_count = fields.Integer(compute="_compute_quality_alert_count")
 
     @api.multi
-    @api.depends('check_ids.quality_state')
-    def _compute_check_todo(self):
+    def _compute_check(self):
         for workorder in self:
-            if any([(x.quality_state == 'none') for x in workorder.check_ids]):
-                workorder.check_todo = True
+            todo = False
+            fail = False
+            for check in workorder.check_ids:
+                if check.quality_state == 'none':
+                    todo = True
+                elif check.quality_state == 'fail':
+                    fail = True
+                if fail and todo:
+                    break
+            workorder.quality_check_fail = fail
+            workorder.quality_check_todo = todo
 
     @api.multi
-    def _compute_alert_count(self):
-        alert_data = self.env['quality.alert'].read_group([('operation_id', 'in', self.ids)], ['operation_id'], ['operation_id'])
-        result = dict((data['operation_id'][0], data['operation_id_count']) for data in alert_data)
-        for order in self:
-            order.alert_count = result.get(order.id, 0)
+    def _compute_quality_alert_count(self):
+        for workorder in self:
+            workorder.quality_alert_count = len(workorder.quality_alert_ids)
 
     @api.multi
     def open_quality_alert_wo(self):
         self.ensure_one()
-        if self.alert_count == 1:
-            res_id = self.env['quality.alert'].search([('operation_id', '=', self.id)])
-            view = self.env.ref('quality.quality_alert_view_form')
-            return {
-                'name': _('Quality Alerts'),
-                'type': 'ir.actions.act_window',
-                'res_model': 'quality.alert',
-                'views': [(view.id, 'form')],
-                'res_id': res_id.id,
-                'context': {'operation_id': self.ids},
+        action = self.env.ref('quality.quality_alert_action_check').read()[0]
+        action['context'] = {
+            'default_product_id': self.product_id.id,
+            'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
+            'default_workorder_id': self.id,
+            'default_production_id': self.production_id.id,
+            'default_workcenter_id': self.workcenter_id.id,
             }
-        else:
-            action_rec = self.env.ref('quality.quality_alert_action_check')
-            if action_rec:
-                action = action_rec.read([])[0]
-                action['context'] = {'default_operation_id': self.id}
-                action['domain'] = [('operation_id', '=', self.id)]
-                return action
+        action['domain'] = [('id', 'in', self.quality_alert_ids.ids)]
+        action['views'] = [(False, 'tree'),(False,'form')]
+        if self.quality_alert_count == 1:
+            action['views'] = [(False, 'form')]
+            action['res_id'] = self.quality_alert_ids.id
+        return action
 
     @api.multi
     def button_quality_alert(self):
         self.ensure_one()
-        action_rec = self.env.ref('quality.quality_alert_action_team')
-        if action_rec:
-            action = action_rec.read([])[0]
-            action['views'] = [(view_id, mode) for (view_id, mode) in action['views'] if mode == 'form'] or action['views']
-            action['context'] = {
-                'default_product_id': self.product_id.id,
-                'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
-                'default_operation_id': self.id,
-                'company_id': self.production_id.company_id.id
-            }
-            return action
+        action = self.env.ref('quality.quality_alert_action_check').read()[0]
+        action['views'] = [(False, 'form')]
+        action['context'] = {
+            'default_product_id': self.product_id.id,
+            'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
+            'default_workorder_id': self.id,
+            'default_production_id': self.production_id.id,
+            'default_workcenter_id': self.workcenter_id.id,
+        }
+        return action
 
     @api.multi
     def _create_checks(self):
         for wo in self:
             production = wo.production_id
-            points = self.env['quality.point'].search([('workcenter_id', '=', wo.workcenter_id.id), 
+            points = self.env['quality.point'].search([('workcenter_id', '=', wo.workcenter_id.id),
                                                        ('picking_type_id', '=', production.picking_type_id.id),
-                                                       '|', ('product_id', '=', production.product_id.id), 
+                                                       '|', ('product_id', '=', production.product_id.id),
                                                        '&', ('product_id', '=', False), ('product_tmpl_id', '=', production.product_id.product_tmpl_id.id)])
             for point in points:
                 if point.check_execute_now():
