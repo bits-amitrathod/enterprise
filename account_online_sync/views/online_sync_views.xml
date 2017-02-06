@@ -173,11 +173,26 @@
       <field name="inherit_id" ref="account.view_account_journal_form"/>
       <field name="arch" type="xml">
         <xpath expr="//page[@name='bank_account']/group" position="inside">
-          <group string="Online Synchronization">
+          <group string="Online Synchronization" attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}">
             <field name="bank_statement_creation"/>
             <field name="account_online_journal_id" options="{'no_create': True}"/>
             <button string="Configure" type="action" name="%(action_account_online_wizard_form)d" class="btn btn-primary btn-sm"/>
           </group>
+        </xpath>
+      </field>
+    </record>
+
+     <record id="account_bank_journal_form_inherit_online_sync" model="ir.ui.view">
+      <field name="name">account.bank.journal.form.inherit.online.sync</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.view_account_bank_journal_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='bank_source']" position="after">
+          <label for="account_online_journal_id" attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}"/>
+          <div attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}">
+            <field name="account_online_journal_id" options="{'no_create': True}" class="oe_inline"/>
+            <button string="Configure" type="action" name="%(action_account_online_wizard_form)d" class="btn btn-primary btn-sm oe_inline"/>
+          </div>
         </xpath>
       </field>
     </record>
