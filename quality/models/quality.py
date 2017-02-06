@@ -394,6 +394,13 @@ class QualityAlert(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code('quality.alert') or _('New')
         return super(QualityAlert, self).create(vals)
 
+    @api.multi
+    def write(self, vals):
+        res = super(QualityAlert, self).write(vals)
+        if self.stage_id.done and 'stage_id' in vals:
+            self.write({'date_close': fields.Datetime.now()})
+        return res
+
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
         self.product_id = self.product_tmpl_id.product_variant_ids.ids and self.product_tmpl_id.product_variant_ids.ids[0]
