@@ -2,6 +2,9 @@
     .o-flex-display();
     .o-align-items(center);
 
+    // Position relative is necessary to display the datepicker correctly when toggle
+    // Requirement from the library.
+    position: relative;
     > .o_datepicker {
         .o-flex(1, 0, 90px);
         margin: 0 10px;

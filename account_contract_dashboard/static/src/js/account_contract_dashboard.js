@@ -163,10 +163,10 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
         var self = this;
         return $.when(def1, def2).then(function() {
             self.start_picker.on('datetime_changed', self, function() {
-                this.end_picker.picker.setMinDate(moment(this.start_picker.get_value()));
+                this.end_picker.picker.minDate(moment(this.start_picker.get_value()));
             });
             self.end_picker.on('datetime_changed', self, function() {
-                this.start_picker.picker.setMaxDate(moment(this.end_picker.get_value()));
+                this.start_picker.picker.maxDate(moment(this.end_picker.get_value()));
             });
 
             self.start_picker.set_value(self.start_date);
