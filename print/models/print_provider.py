@@ -58,7 +58,7 @@ class PrintOrder(models.Model):
 
     create_date = fields.Datetime('Creation Date', readonly=True)
     sent_date = fields.Datetime('Sending Date', readonly=True)
-    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=lambda self: self.env.user.company_id.currency_id, readonly=True, states={'draft': [('readonly', False)]})
+    currency_id = fields.Many2one('res.currency', 'Currency', related="provider_id.currency_id", readonly=True)
     user_id = fields.Many2one('res.users', 'Author', default=lambda self: self.env.user)
     provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider, readonly=True, states={'draft': [('readonly', False)]})
 
@@ -108,6 +108,29 @@ class PrintOrder(models.Model):
         return {}
 
     # --------------------------------------------------
+    # CRUD
+    # --------------------------------------------------
+    @api.model
+    def create(self, values):
+        if 'attachment_id' in values:
+            values = self._update_count_pages(values)
+        return super(PrintOrder, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        if 'attachment_id' in values:
+            values = self._update_count_pages(values)
+        return super(PrintOrder, self).write(values)
+
+    def _update_count_pages(self, values):
+        attachment = self.env['ir.attachment'].browse(values['attachment_id'])
+        bin_pdf = ''
+        if attachment.datas:
+            bin_pdf = base64.b64decode(attachment.datas)
+        values['nbr_pages'] = self._count_pages_pdf(bin_pdf)
+        return values
+
+    # --------------------------------------------------
     # Actions
     # --------------------------------------------------
     @api.multi
@@ -151,25 +174,12 @@ class PrintOrder(models.Model):
         """ For the given recordset, compute the number of page in the attachment.
             If no attachment, one will be generated with the res_model/res_id
         """
-        Attachment = self.env['ir.attachment']
-        ReportXml = self.env['ir.actions.report.xml']
-        Report = self.env['report']
-        pages = {}
         for current_order in self:
             report = current_order.report_id
-            if current_order.attachment_id: # compute page number
-                # avoid to recompute the number of page each time for the attachment
-                nbr_pages = pages.get(current_order.attachment_id.id)
-                if not nbr_pages:
-                    nbr_pages = current_order._count_pages_pdf(current_order.attachment_id.datas.decode('base64'))
-                    pages[current_order.attachment_id.id] = nbr_pages
-                current_order.write({
-                    'nbr_pages': nbr_pages
-                })
-            elif not current_order.attachment_id and current_order.res_model and current_order.res_id and report: # check report
+            if not current_order.attachment_id and current_order.res_model and current_order.res_id and report:  # check report
                 # browse object and find its pdf (binary content)
                 object_to_print = self.env[current_order.res_model].browse(current_order.res_id)
-                bin_pdf = Report.get_pdf([current_order.res_id], report.report_name)
+                bin_pdf = self.env['report'].get_pdf([current_order.res_id], report.report_name)
 
                 # compute the name of the new attachment
                 filename = False
@@ -187,11 +197,10 @@ class PrintOrder(models.Model):
                     'datas': base64.b64encode(bin_pdf),
                     'datas_fname': filename+'.pdf',
                 }
-                new_attachment = Attachment.create(attachment_value)
+                new_attachment = self.env['ir.attachment'].create(attachment_value)
 
                 # add the new attachment to the print order
                 current_order.write({
-                    'nbr_pages': self._count_pages_pdf(bin_pdf),
                     'attachment_id': new_attachment.id
                 })
             elif not current_order.attachment_id and current_order.res_model and current_order.res_id and not report: # error : no ir.actions.report.xml found for res_model
