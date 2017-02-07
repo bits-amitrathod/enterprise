@@ -118,6 +118,20 @@ var FormEditor =  FormRenderer.extend({
         }
         return $el;
     },
+    _render_tag_sheet: function(node) {
+        var $result = this._super.apply(this, arguments);
+        var formEditorHook = this._render_hook(node, 'inside');
+        formEditorHook.appendTo($result.find('.o_form_sheet'));
+        return $result;
+    },
+    _render_generic_tag: function(node) {
+        var $result = this._super.apply(this, arguments);
+        if (node.attrs.class === 'oe_title') {
+            var formEditorHook = this._render_hook(node, 'after');
+            formEditorHook.appendTo($result);
+        }
+        return $result;
+    },
     _render_tag_field: function(node) {
         var $el = this._super.apply(this, arguments);
         this._process_field(node, $el);
@@ -207,8 +221,10 @@ var FormEditor =  FormRenderer.extend({
                 node: node.children[node.children.length - 1], // Get last page in this notebook
             });
         });
-
         $result.find('ul.nav-tabs').append($addTag);
+
+        var formEditorHook = this._render_hook(node, 'after');
+        formEditorHook.appendTo($result);
         return $result;
     },
     _render_tab_header: function(page) {
