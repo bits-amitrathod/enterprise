@@ -58,9 +58,9 @@ return KanbanRenderer.extend({
         });
         this._render_ghost_divs(fragment);
     },
-    highlight_nearest_hook: function(pageX, pageY) {
+    highlight_nearest_hook: function($helper, position) {
         if (this.kanban_record) {
-            return this.kanban_record.highlight_nearest_hook(pageX, pageY);
+            return this.kanban_record.highlight_nearest_hook($helper, position);
         }
     },
     get_local_state: function() {
