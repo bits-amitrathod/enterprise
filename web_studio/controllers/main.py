@@ -552,7 +552,22 @@ class WebStudioController(http.Controller):
                         field = self.create_new_field(op['node']['field_description'])
                         field_created = True
                     op['node']['attrs']['name'] = field.name
-
+                if op['node'].get('tag') == 'filter' and op['target']['tag'] == 'group' and op['node']['attrs'].get('create_group'):
+                    op['node']['attrs'].pop('create_group')
+                    create_group_op = {
+                        'node': {
+                            'tag': 'group',
+                            'attrs': {
+                                'name': 'studio_group_by',
+                            }
+                        },
+                        'empty': True,
+                        'target': {
+                            'tag': 'search',
+                        },
+                        'position': 'inside',
+                    }
+                    self._operation_add(arch, create_group_op, view.model)
             # set a more specific xpath (with templates//) for the kanban view
             if view.type == 'kanban':
                 if op.get('target') and op['target'].get('tag') == 'field':
@@ -714,10 +729,11 @@ class WebStudioController(http.Controller):
             xml_node_page = etree.Element('page', {'string': 'New Page', 'name': name})
             xml_node.insert(0, xml_node_page)
         elif node['tag'] == 'group':
-            xml_node_page_right = etree.Element('group', {'string': 'Right Title', 'name': node['attrs']['name'] + '_right'})
-            xml_node_page_left = etree.Element('group', {'string': 'Left Title', 'name': node['attrs']['name'] + '_left'})
-            xml_node.insert(0, xml_node_page_right)
-            xml_node.insert(0, xml_node_page_left)
+            if 'empty' not in operation:
+                xml_node_page_right = etree.Element('group', {'string': 'Right Title', 'name': node['attrs']['name'] + '_right'})
+                xml_node_page_left = etree.Element('group', {'string': 'Left Title', 'name': node['attrs']['name'] + '_left'})
+                xml_node.insert(0, xml_node_page_right)
+                xml_node.insert(0, xml_node_page_left)
         elif node['tag'] == 'button':
             # To create a stat button, we need
             #   - a many2one field (1) that points to this model

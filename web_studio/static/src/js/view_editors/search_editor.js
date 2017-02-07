@@ -76,6 +76,12 @@ var SearchEditor = SearchRenderer.extend({
                         if (!new_attrs) {
                             new_attrs = {};
                         }
+                        // There is no element 'group' in the view that can be target
+                        // to add a group_by filter so we add one before the insertion
+                        // of the group_by filter
+                        if (!self.first_group_by) {
+                            new_attrs.create_group = true;
+                        }
                         new_attrs.string = new_attrs.label;
                         new_attrs.context = "{'group_by': '" + new_attrs.name + "'}";
                     }
