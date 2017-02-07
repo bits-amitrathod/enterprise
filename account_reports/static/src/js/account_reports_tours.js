@@ -1,210 +1,206 @@
 odoo.define('account_reports.tour', function (require) {
 'use strict';
 
-var Tour = require('web.Tour');
+var Tour = require('web_tour.tour');
 
-Tour.register({
-    id:   'account_reports_widgets',
-    name: "Tests the filters and other widgets",
-    mode: 'test',
-    path: '/web#action=account_reports.action_account_report_pnl',
-
-    steps: [
+Tour.register('account_reports_widgets', {
+    test: true,
+    url: '/web#action=account_reports.action_account_report_pnl',
+    },
+     [
         {
-            title:      "wait web client",
-            waitFor:    ".breadcrumb",
+            content:    "wait web client",
+            trigger:    ".o_account_reports_body",
+            extra_trigger: ".breadcrumb",
+            run: function() {}
         },
         {
-            title:      "change date filter",
-            element:    ".o_account_reports_date-filter > a"
+            content: "unfold line",
+            trigger: '.js_account_report_foldable:first',
+            run: 'click',
         },
         {
-            title:      "change date filter",
-            element:    ".o_account_reports_one-filter[data-value='last_year'] > a"
+            content: "check that line has been unfolded",
+            trigger: '[data-parent-id]',
         },
         {
-            title:      "wait refresh",
-            waitNot:    ".o_account_reports_date-filter.open",
-            waitFor:    "tr[data-id='1'] span:contains(0.00)"
+            content: 'Open dropdown menu of one of the unfolded line',
+            trigger: '[data-parent-id] .o_account_report_line a:first', 
+            run: 'click',
         },
         {
-            title:      "change comparison filter",
-            element:    ".o_account_reports_date-filter-cmp > a"
+            content: 'click on the annotate action',
+            trigger: '[data-parent-id] .o_account_report_line .o_account_reports_domain_dropdown:first .js_account_reports_add_footnote',
+            run: 'click',
         },
         {
-            title:      "change comparison filter",
-            element:    ".o_account_reports_use-previous-period > a"
+            content: 'insert footnote text',
+            trigger: '.js_account_reports_footnote_note',
+            run: 'text My awesome footnote!'
         },
         {
-            title:      "change comparison filter",
-            element:    '.o_account_reports_previous-period button',
-            onload: function () {
-                $('input[name="periods_number"]').val(3);
-            },
+            content: 'save footnote',
+            trigger: '.modal-footer .btn-primary',
+            run: 'click'
         },
         {
-            title:      "wait refresh",
-            waitNot:    ".o_account_reports_date-filter-cmp.open",
-            waitFor:    "th + th + th + th + th",
+            content: 'wait for footnote to be saved',
+            trigger: '.footnote#footnote1 .text:contains(1. My awesome footnote!)',
+            extra_trigger: '.o_account_reports_footnote_sup a[href="#footnote1"]',
         },
         {
-            title:      "click summary",
-            element:    'input[name="summary"]'
+            content:      "change date filter",
+            trigger:    ".o_account_reports_filter_date > a",
         },
         {
-            title:      "edit summary",
-            element:    'textarea[name="summary"]',
-            sampleText: 'v9 accounting reports are fabulous !'
+            content:      "change date filter",
+            trigger:    ".js_account_report_date_filter[data-filter='last_year'] > a",
+            run: 'click'
         },
         {
-            title:      "save summary",
-            element:    '.o_account_reports_summary button'
+            content:      "wait refresh",
+            trigger:    ".o_account_reports_level2.total:last() .o_account_report_column_value:contains(0.00)"
         },
         {
-            title:      "wait refresh",
-            waitFor:    ".o_account_reports_saved_summary",
+            content:      "change comparison filter",
+            trigger:    ".o_account_reports_filter_date_cmp > a"
         },
-/*        { // PDF printing can't be tested with phantomjs
-            title:      "export pdf",
-            element:    '.o_account-widget-pdf'
-        },*/
+        {
+            content:      "change comparison filter",
+            trigger:    ".js_foldable_trigger[data-filter='previous_period_filter'] > a"
+        },
+        {
+            content:      "change comparison filter",
+            trigger:    ".js_account_report_date_cmp_filter[data-filter='previous_period']",
+            run: 'click',
+        },
+        {
+            content:      "wait refresh, report should have 4 columns",
+            trigger:    "th + th + th + th"
+        },
+        {
+            content:      "click summary",
+            trigger: '.o_account_reports_summary',
+            run: 'click'
+        },
+        {
+            content:      "edit summary",
+            trigger:    'textarea[name="summary"]',
+            run: 'text v9 accounting reports are fabulous !'
+        },
+        {
+            content:      "save summary",
+            trigger:    '.js_account_report_save_summary',
+            run: 'click'
+        },
+        {
+            content:      "wait refresh and check that summary has been saved",
+            trigger:    ".o_account_reports_summary:visible:contains(v9 accounting reports are fabulous !)",
+            run: function(){}
+        },
+        {
+            content:      "change boolean filter",
+            trigger:    ".o_account_reports_filter_bool > a",
+        },
+        {
+            content:      "change cash basis filter",
+            trigger:    ".js_account_report_bool_filter[data-filter='cash_basis'] > a",
+            run: 'click'
+        },
         {
             title:      "export xlsx",
-            element:    '.o_account-widget-xlsx'
-        },
-        {
-            title:      "change bool filter",
-            element:    ".o_account_reports_date-filter-bool > a"
-        },
-        {
-            title:      "change bool filter",
-            element:    '.o_account_reports_one-filter-bool[data-value="all_entries"]'
-        },
-        {
-            title:      "wait refresh",
-            waitNot:    ".o_account_reports_date-filter-bool.open",
-        },
-        {
-            title:      "change date filter",
-            element:    ".o_account_reports_date-filter > a"
-        },
-        {
-            title:      "change date filter",
-            element:    '.o_account_reports_one-filter[data-value="this_month"] > a'
-        },
-        {
-            title:      "wait refresh",
-            waitNot:    ".o_account_reports_date-filter.open",
-        },
-        {
-            title:      "unfold",
-            element:    '.o_account_reports_unfoldable'
-        },
-        {
-            title:      "wait unfolding",
-            waitFor:    'tr.account_id'
-        },
-        {
-            title:      "dropdown",
-            element:    'tr.account_id a[data-toggle="dropdown"]'
-        },
-        {
-            title:      "footnote",
-            waitFor:    'tr.account_id div.dropdown.open',
-            element:    'tr.account_id .o_account_reports_add-footnote'
-        },
-        {
-            title:      "footnote",
-            element:    'textarea.o_account_reports_footnote_note',
-            sampleText: 'You can even add footnotes !'
-        },
-        {
-            title:      "save footnote",
-            element:    'div.modal-footer > button.btn-primary'
-        },
-        {
-            title:      "wait for footnote",
-            waitFor:    'p.footnote'
-        },
-        {
-            title:      "dropdown",
-            element:    'tr.account_id a[data-toggle="dropdown"]'
-        },
-        {
-            title:      "leave",
-            waitFor:    'tr.account_id div.dropdown.open',
-            element:    'tr.account_id .o_account_reports_web_action'
+            trigger:    'button[action="print_xlsx"]',
+            run: 'click'
         },
     ]
-});
+);
 
-Tour.register({
-    id:   'account_followup_reports_widgets',
-    name: "Tests the filters and other widgets for the followups",
-    mode: 'test',
-    path: '/web#action=account_reports.action_account_followup_all',
+Tour.register('account_followup_reports_widgets', {
+    test: true,
+    url: '/web#action=account_reports.action_account_followup_all',
+    },
+     [
+        {
+            content: 'wait for web client',
+            trigger: "#trustDropdown",
+            extra_trigger: ".breadcrumb",
+            run: function() {}
+        },
+        {
+            content: 'click trust ball',
+            trigger: '#trustDropdown',
+            run: 'click'
+        },
+        {
+            content: 'change trust',
+            trigger: '.changeTrust[data-new-trust="good"]',
+            run: 'click'
+        },
+        {
+            content: 'exclude one line',
+            trigger: '.o_account_reports_table tr input[type="checkbox"]:first',
+            run: 'click'
+        },
+        {
+            content: 'ensure that line has been excluded',
+            trigger: '.o_account_reports_table .o_account_followup_blocked',
+            run: function() {}
+        },
+        {
+            content: 'send by mail',
+            trigger: '.followup-email',
+            run: 'click'
+        },
+        {
+            content: 'check that message telling that mail has been sent is shown',
+            trigger: '.alert:contains(The followup report was successfully emailed !)',
+            run: function() {}
+        },
+        {
+            content: 'dismiss alert',
+            trigger: '.alert .close',
+            run: 'click'
+        },
+        {
+            content:      "change filter",
+            trigger:    ".o_account_reports_followup-filter > a",
+        },
+        {
+            content:      "change filter",
+            trigger:    ".js_account_reports_one_choice_filter[data-id='all'] > a",
+            run: 'click'
+        },
+        {
+            content: "open history button",
+            trigger: '#history:visible .dropdown > a',
+            run: 'click'
+        },
+        {
+            content: "Check that sent mail has only 2 invoices",
+            trigger: '.o_account_reports_history li table:first tbody:not(:has(tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(Total))))',
+            extra_trigger: '.o_account_reports_history li table:first tbody:has(tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(Total)))',
+            run: function() {}
+        },
+        {
+            content:      "change filter",
+            trigger:    ".o_account_reports_followup-filter > a",
+        },
+        {
+            content:      "change filter",
+            trigger:    ".js_account_reports_one_choice_filter[data-id='action'] > a",
+            run: 'click'
+        },
+        {
+            content: 'Click the Do it later button',
+            trigger: '.o_account_reports_followup_skip',
+            run: 'click'
+        },
+        {
+            content: 'Check that we have nothing to display',
+            trigger: '.alert-info:contains(No followup to send ! You have skipped 1 partners)'
+        },
 
-    steps: [
-        {
-            title:      "wait web client",
-            waitFor:    ".o_account_reports_page:contains(Agrolait)",
-        },
-        {
-            title:      "click trust ball",
-            waitFor:    ".o_account_reports_page:contains(Agrolait) i.oe-account_followup-trust",
-        },
-        {
-            title:      "change trust",
-            waitFor:    ".o_account_reports_page:contains(Agrolait) a[data-new-trust='good']",
-        },
-        {
-            title:      "click excluded",
-            element:    ".o_account_reports_page:contains(Best Designers) input[name='blocked']",
-        },
-        {
-            title:      "change filter",
-            element:    ".o_account_reports_followup-filter > a",
-        },
-        {
-            title:      "change filter",
-            element:    ".o_account_reports_one-filter[data-value='action'] > a",
-        },
-        {
-            title:      "check change of both excluded and filter change", // The same filter is used as above just to refresh the page and see if best designers disappears as all lines are excluded
-            waitNot:    ".o_account_reports_page:contains(Best Designers)",
-        },
-/*        { // PDF printing can't be tested with phantomjs
-            title:      "print letter",
-            element:    ".o_account_reports_page:contains(Agrolait) button.followup-letter",
-        },*/
-/*        { // Also prints pdf
-            title:      "send email",
-            element:    ".o_account_reports_page:contains(Agrolait) button.followup-email",
-        },
-        {
-            title:      "check email",
-            waitFor:    ".o_account_reports_page:contains(Agrolait) div.alert-info",
-        },*/
-        {
-            title:      "click skip",
-            element:    ".o_account_reports_page:contains(Agrolait) button.o_account_reports_followup_skip",
-        },
-        {
-            title:      "check it disappeared",
-            waitNot:    ".o_account_reports_page:contains(Agrolait)",
-        },
-        {
-            title:      "change filter",
-            element:    ".o_account_reports_followup-filter > a",
-        },
-        {
-            title:      "change filter",
-            element:    ".o_account_reports_one-filter[data-value='all'] > a",
-        },
-        {
-            title:      "check Agrolait is back in after filter change",
-            waitFor:    ".o_account_reports_page:contains(Agrolait)",
-        },
-    ]
-});
+     ]
+);
+
 });
