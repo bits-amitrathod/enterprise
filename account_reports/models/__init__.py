@@ -7,6 +7,7 @@ import account_financial_report
 import account_followup_report
 import account_general_ledger
 import account_generic_tax_report
+import account_consolidated_journals
 import res_partner
 import res_company
 import account_move_line

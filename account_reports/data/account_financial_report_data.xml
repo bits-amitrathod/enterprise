@@ -723,6 +723,11 @@
             <field name="tag">account_report</field>
             <field name="context" eval="{'model': 'account.generic.tax.report'}" />
         </record>
+        <record id="action_account_report_cj" model="ir.actions.client">
+            <field name="name">Consolidated Journals</field>
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.consolidated.journal'}" />
+        </record>
         <record id="action_account_report_bank_reconciliation" model="ir.actions.client">
             <field name="name">Bank Reconciliation</field>
             <field name="tag">account_report</field>
@@ -775,6 +780,7 @@
         <menuitem id="menu_action_account_report_aged_payable" name="Aged Payable" action="action_account_report_ap" parent="account_reports_business_statements_menu"/>
         <menuitem id="menu_action_account_report_coa" name="Trial Balance" action="action_account_report_coa" parent="account_reports_legal_statements_menu"/>
         <menuitem id="menu_action_account_report_partner_ledger" name="Partner Ledger" action="action_account_report_partner_ledger" parent="account_reports_legal_statements_menu"/>
+        <menuitem id="menu_action_account_report_cj" name="Consolidated Journals" action="action_account_report_cj" parent="account_reports_legal_statements_menu"/>
 
         <record id="account_financial_current_year_earnings0" model="account.financial.html.report.line">
             <field name="action_id" ref='action_account_report_pnl' />
