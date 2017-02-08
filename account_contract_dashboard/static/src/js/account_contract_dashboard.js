@@ -1086,11 +1086,17 @@ var account_contract_dashboard_salesman = Widget.extend(ControlPanelMixin, {
     },
 
     set_up_datetimepickers: function() {
+        // TODO needs refactoring
+        // use the Odoo widget date
+        // instead of calling the lib directly
+        // to avoid breaking the code when lib is updated
         this.$searchview.find('.datetime_picker').datetimepicker({
             format: 'YYYY-MM',
             viewMode: 'years',
-            pickTime: false,
-            minViewMode: 'months',
+            icons: {
+                next: 'fa fa-chevron-right',
+                previous: 'fa fa-chevron-left',
+            },
         }).on('dp.change', this.on_update_options);
     },
 
@@ -1241,11 +1247,17 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
     },
 
     set_up_datetimepickers: function() {
+        // TODO needs refactoring
+        // use the Odoo widget date
+        // instead of calling the lib directly
+        // to avoid breaking the code when lib is updated
         this.$searchview.find('.datetime_picker').datetimepicker({
-            format: 'YYYY-MM-DD',
+            format: 'YYYY-MM',
             viewMode: 'years',
-            pickTime: false,
-            minViewMode: 'months',
+            icons: {
+                next: 'fa fa-chevron-right',
+                previous: 'fa fa-chevron-left',
+            },
         }).on('dp.change', this.on_update_options);
     },
 
