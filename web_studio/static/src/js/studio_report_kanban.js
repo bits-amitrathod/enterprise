@@ -70,9 +70,8 @@ var AddReportDialog = Dialog.extend({
     },
     _create_report_from_template: function(event) {
         var self = this;
-        var name = 'x_studio_report_' + utils.randomString(5);
         var template_name = $(event.currentTarget).data('template_name');
-        customize.create_new_report(name, this.model, template_name).then(function(result) {
+        customize.create_new_report(this.model, template_name).then(function(result) {
             self.trigger_up('open_record', {id: result.id});
             self.close();
         });
