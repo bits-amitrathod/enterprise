@@ -225,18 +225,15 @@
         </div>
     </div>
 
-    <div t-name="account_contract_dashboard.salesman_searchview" class="row">
-        <div class="col-xs-6">
-            <input class="datetime_picker" type="text" name="period" t-att-value="period"/>
-        </div>
-        <div class="col-xs-6">
-            <select class="o_salesman_selection" name="salesman">
-                <option></option>
-                <t t-foreach="salesman_ids" t-as="sman">
-                    <option name="salesman" t-att-selected="salesman &amp;&amp; salesman['id'] === sman['id'] ? 'selected' : undefined" t-att-value="sman['id']"><t t-esc="sman['name']"/></option>
-                </t>
-            </select>
-        </div>
+    <div t-name="account_contract_dashboard.salesman_searchview" class="o_datepickers_searchview">
+        <span class="o_datepicker_separator"> to </span>
+        <select class="o_salesman_selection" name="salesman">
+            <option></option>
+            <t t-foreach="salesman_ids" t-as="sman">
+                <option name="salesman" t-att-selected="salesman &amp;&amp; salesman['id'] === sman['id'] ? 'selected' : undefined" t-att-value="sman['id']"><t t-esc="sman['name']"/></option>
+            </t>
+        </select>
+        <button class="btn btn-sm btn-primary o_update_options">Update</button>
     </div>
 
     <!-- 5. Cohort Analysis -->
@@ -266,27 +263,18 @@
         </div>
     </div>
 
-    <div t-name="account_contract_dashboard.cohort_searchview" class="row">
-        <div class="col-xs-4">
-            <b>Start date:</b>
-            <input class="datetime_picker" type="text" name="date_start" t-att-value="widget.date_start"/>
-        </div>
-        <div class="col-xs-4">
-            <b>Cohort Period:</b>
-            <select name="period">
-                <t t-foreach="widget.cohort_periods" t-as="period">
-                    <option name="period" t-att-selected="widget.cohort_period &amp;&amp; widget.cohort_period === period[0] ? 'selected' : undefined" t-att-value="period[0]"><t t-esc="period[1]"/></option>
-                </t>
-            </select>
-        </div>
-        <div class="col-xs-4">
-            <b>Cohort Interest:</b>
-            <select name="interest">
-                <t t-foreach="widget.cohort_interests" t-as="interest">
-                    <option name="interest" t-att-selected="widget.cohort_interest &amp;&amp; widget.cohort_interest === interest[0] ? 'selected' : undefined" t-att-value="interest[0]"><t t-esc="interest[1]"/></option>
-                </t>
-            </select>
-        </div>
+    <div t-name="account_contract_dashboard.cohort_searchview" class="o_datepickers_searchview">
+        <select name="period">
+            <t t-foreach="widget.cohort_periods" t-as="period">
+                <option name="period" t-att-selected="widget.cohort_period &amp;&amp; widget.cohort_period === period[0] ? 'selected' : undefined" t-att-value="period[0]"><t t-esc="period[1]"/></option>
+            </t>
+        </select>
+        <select name="interest">
+            <t t-foreach="widget.cohort_interests" t-as="interest">
+                <option name="interest" t-att-selected="widget.cohort_interest &amp;&amp; widget.cohort_interest === interest[0] ? 'selected' : undefined" t-att-value="interest[0]"><t t-esc="interest[1]"/></option>
+            </t>
+        </select>
+        <button class="btn btn-sm btn-primary o_update_options">Update</button>
     </div>
 
     <!-- Common top bar -->

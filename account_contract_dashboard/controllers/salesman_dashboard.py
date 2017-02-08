@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime, date, timedelta
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from itertools import groupby
 import calendar
@@ -37,18 +37,10 @@ class SalemanDashboard(http.Controller):
         }
 
     @http.route('/account_contract_dashboard/get_values_salesman', type='json', auth='user')
-    def get_values_salesman(self, salesman_id, period=None):
+    def get_values_salesman(self, salesman_id, start_date, end_date):
 
-        # First day of month
-        if period:
-            start_date = datetime.strptime(period, '%Y-%m')
-        else:
-            default_start_date = date.today() - timedelta(days=30)
-            start_date = default_start_date.replace(day=1)
-
-        # Last day of month
-        last_day = calendar.monthrange(start_date.year, start_date.month)[1]
-        end_date = start_date.replace(day=last_day)
+        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
+        end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
 
         contract_modifications = []
 

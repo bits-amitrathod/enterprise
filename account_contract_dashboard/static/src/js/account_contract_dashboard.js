@@ -136,7 +136,7 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
         var def;
         if(!this.$searchview) {
             this.$searchview = $(QWeb.render("account_contract_dashboard.dashboard_option_pickers"));
-            this.$searchview.find('.o_update_options').on('click', this.on_update_options);
+            this.$searchview.on('click', '.o_update_options', this.on_update_options);
             def = this.set_up_datetimepickers();
             this.render_filters();
         }
@@ -163,10 +163,14 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
         var self = this;
         return $.when(def1, def2).then(function() {
             self.start_picker.on('datetime_changed', self, function() {
-                this.end_picker.picker.minDate(moment(this.start_picker.get_value()));
+                if (this.start_picker.get_value()) {
+                    this.end_picker.picker.minDate(moment(this.start_picker.get_value()));
+                }
             });
             self.end_picker.on('datetime_changed', self, function() {
-                this.start_picker.picker.maxDate(moment(this.end_picker.get_value()));
+                if (this.end_picker.get_value()) {
+                    this.start_picker.picker.maxDate(moment(this.end_picker.get_value()));
+                }
             });
 
             self.start_picker.set_value(self.start_date);
@@ -933,16 +937,19 @@ var AccountContractDashboardForecastBox = Widget.extend({
     },
 });
 
-var account_contract_dashboard_salesman = Widget.extend(ControlPanelMixin, {
+var account_contract_dashboard_salesman = account_contract_dashboard_abstract.extend({
 
-    init: function(parent) {
-        this._super(parent);
-        this.period = moment().format('YYYY-MM');
+    init: function() {
+        this._super.apply(this, arguments);
+        this.start_date = moment().startOf('month').format('YYYY-MM-DD');
+        this.end_date = moment().endOf('month').format('YYYY-MM-DD');
+    },
 
-        var self = this;
-        this.fetch_salesmen().done(function() {
-            self.render_dashboard();
-        });
+    willStart: function() {
+        return $.when(
+            this._super.apply(this, arguments),
+            this.fetch_salesmen()
+        );
     },
 
     fetch_salesmen: function() {
@@ -959,7 +966,8 @@ var account_contract_dashboard_salesman = Widget.extend(ControlPanelMixin, {
         this.$el.empty().append(QWeb.render("account_contract_dashboard.salesman", {
             salesman_ids: this.salesman_ids,
             salesman: this.salesman,
-            period: this.period,
+            start_date: this.start_date,
+            end_date: this.end_date,
         }));
 
         this.update_cp();
@@ -974,7 +982,8 @@ var account_contract_dashboard_salesman = Widget.extend(ControlPanelMixin, {
         addLoader(this.$('#mrr_growth_salesman'));
 
         ajax.jsonRpc('/account_contract_dashboard/get_values_salesman', 'call', {
-            'period': this.period,
+            'start_date': this.start_date,
+            'end_date': this.end_date,
             'salesman_id': this.salesman.id,
         }).done(function(result){
             load_chart_mrr_salesman('#mrr_growth_salesman', result);
@@ -1079,37 +1088,21 @@ var account_contract_dashboard_salesman = Widget.extend(ControlPanelMixin, {
     },
 
     on_update_options: function() {
-        this.period = this.$searchview.find('input[name="period"]').val();
+        this.start_date = this.start_picker.get_value() || '0001-02-01';
+        this.end_date = this.end_picker.get_value()  || '9999-12-31';
         var selected_salesman_id = Number(this.$searchview.find('option[name="salesman"]:selected').val());
         this.salesman = _.findWhere(this.salesman_ids, {id: selected_salesman_id});
         this.render_dashboard();
     },
 
-    set_up_datetimepickers: function() {
-        // TODO needs refactoring
-        // use the Odoo widget date
-        // instead of calling the lib directly
-        // to avoid breaking the code when lib is updated
-        this.$searchview.find('.datetime_picker').datetimepicker({
-            format: 'YYYY-MM',
-            viewMode: 'years',
-            icons: {
-                next: 'fa fa-chevron-right',
-                previous: 'fa fa-chevron-left',
-            },
-        }).on('dp.change', this.on_update_options);
-    },
-
     update_cp: function() {
         this.$searchview = $(QWeb.render("account_contract_dashboard.salesman_searchview", {
-            period: this.period,
             salesman_ids: this.salesman_ids,
             salesman: this.salesman,
         }));
+        this.$searchview.on('click', '.o_update_options', this.on_update_options);
 
         this.set_up_datetimepickers();
-        this.$searchview.find('select').on('change', this.on_update_options);
-
         this.update_control_panel({
             cp_content: {
                 $searchview: this.$searchview,
@@ -1217,7 +1210,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
     },
 
     on_update_options: function() {
-        this.date_start = this.$searchview.find('input[name="date_start"]').val();
+        this.date_start = this.date_picker.get_value() || '0001-02-01';
         this.cohort_period = this.$searchview.find('option[name="period"]:selected').val();
         this.cohort_interest = this.$searchview.find('option[name="interest"]:selected').val();
         this.filters.template_ids = this.get_filtered_template_ids();
@@ -1247,30 +1240,20 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
     },
 
     set_up_datetimepickers: function() {
-        // TODO needs refactoring
-        // use the Odoo widget date
-        // instead of calling the lib directly
-        // to avoid breaking the code when lib is updated
-        this.$searchview.find('.datetime_picker').datetimepicker({
-            format: 'YYYY-MM',
+        this.date_picker = new datepicker.DateWidget(this, {
             viewMode: 'years',
-            icons: {
-                next: 'fa fa-chevron-right',
-                previous: 'fa fa-chevron-left',
-            },
-        }).on('dp.change', this.on_update_options);
+        });
+        var self = this;
+        this.date_picker.prependTo(this.$searchview).then(function() {
+            self.date_picker.set_value(self.date_start);
+        });
     },
 
     update_cp: function() {
-        var self = this;
         this.$searchview = $(QWeb.render("account_contract_dashboard.cohort_searchview", {widget: this}));
+        this.$searchview.on('click', '.o_update_options', this.on_update_options);
         this.set_up_datetimepickers();
         this.render_filters();
-
-        this.$searchview.find('select').on('change', this.on_update_options);
-        this.$searchview_buttons.on('click', '.js_tag', function() {
-            self.on_update_options();
-        });
 
         this.update_control_panel({
             cp_content: {
