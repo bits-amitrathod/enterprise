@@ -223,7 +223,7 @@
         <record id="contract_portal_21" model="sale.subscription">
             <field name="name">Odoo SAAS</field>
             <field name="state">open</field>
-            <field name="partner_id" ref="portal.partner_demo_portal"/>
+            <field name="partner_id" ref="base.partner_demo_portal"/>
             <field name="template_id" ref="odoo_monthly"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="user_id" ref="base.user_root"/>
@@ -247,7 +247,7 @@
             </field>
         </record>
     <function model="sale.subscription" name="message_subscribe"
-      eval="[ref('website_contract.contract_portal_21')], [ref('portal.partner_demo_portal')]"/>
+      eval="[ref('website_contract.contract_portal_21')], [ref('base.partner_demo_portal')]"/>
 
         <record id="rec_inv_line_31" model="sale.subscription.line">
             <field name="name">Odoo SAAS
