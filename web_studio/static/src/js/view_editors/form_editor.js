@@ -246,7 +246,7 @@ var FormEditor =  FormRenderer.extend({
         var $result = this._super.apply(this, arguments);
         // Add hook only for pages that have not yet content.
         if (!$result.children().length) {
-            var formEditorHook = this._render_hook(node, 'inside');
+            var formEditorHook = this._render_hook(node, 'inside', 'div', 'page');
             formEditorHook.appendTo($result);
         }
         return $result;
@@ -306,28 +306,47 @@ var FormEditor =  FormRenderer.extend({
             this._set_style_events($el);
         }
     },
-    _render_hook: function(node, position, tagName) {
+    _render_hook: function(node, position, tagName, type) {
         var hook_id = _.uniqueId();
         this.hook_nodes[hook_id] = {
             node: node,
             position: position,
+            type: type,
         };
         return new FormEditorHook(this, position, hook_id, tagName);
     },
     highlight_nearest_hook: function($helper, position) {
+        var self = this;
+
         this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
-        var $nearest_form_hook = this.$('.o_web_studio_hook')
+        var $nearest_form_hooks = this.$('.o_web_studio_hook')
             .touching({
                 x: position.pageX - this.nearest_hook_tolerance,
                 y: position.pageY - this.nearest_hook_tolerance,
                 w: this.nearest_hook_tolerance*2,
                 h: this.nearest_hook_tolerance*2})
-            .nearest({x: position.pageX, y: position.pageY}).eq(0);
-        if ($nearest_form_hook.length) {
-            $nearest_form_hook.addClass('o_web_studio_nearest_hook');
-            return true;
-        }
-        return false;
+            .nearest({x: position.pageX, y: position.pageY});
+
+        var is_nearest_hook = false;
+        $nearest_form_hooks.each(function () {
+            var hook_id = $(this).data('hook_id');
+            var hook = self.hook_nodes[hook_id];
+            if ($($helper.context).data('structure') === 'notebook') {
+                // a notebook cannot be placed inside a page
+                if (hook.type !== 'page') {
+                    is_nearest_hook = true;
+                }
+            } else {
+                is_nearest_hook = true;
+            }
+
+            if (is_nearest_hook) {
+                $(this).addClass('o_web_studio_nearest_hook');
+                return false;
+            }
+        });
+
+        return is_nearest_hook;
     },
     get_local_state: function() {
         var state = this._super.apply(this, arguments);
