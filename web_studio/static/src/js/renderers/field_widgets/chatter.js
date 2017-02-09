@@ -259,6 +259,7 @@ var ChatterComposer = composer.BasicComposer.extend({
 // Document Chatter ('mail_thread' widget)
 // -----------------------------------------------------------------------------
 var Chatter = AbstractField.extend({
+    supported_field_types: ['one2many'],
     template: 'mail.Chatter',
 
     events: {

@@ -34,9 +34,8 @@ return {
         });
     },
 
-    create_new_report: function(name, model_name, template_name) {
+    create_new_report: function(model_name, template_name) {
         return ajax.jsonRpc('/web_studio/create_new_report', 'call', {
-            name: name,
             model_name: model_name,
             template_name: template_name,
             context: session.user_context,
@@ -151,6 +150,7 @@ return {
     },
 
     get_studio_view_arch: function(model, view_type, view_id) {
+        data_manager.invalidate();
         return ajax.jsonRpc('/web_studio/get_studio_view_arch', 'call', {
             model: model,
             view_type: view_type,

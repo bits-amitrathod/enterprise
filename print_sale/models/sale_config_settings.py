@@ -7,4 +7,4 @@ from odoo import fields, models
 class SaleConfiguration(models.TransientModel):
     _inherit = 'sale.config.settings'
 
-    default_print_provider = fields.Many2one('print.provider', string='Default Print Provider', default_model='sale.config.settings')
+    default_print_provider = fields.Many2one('print.provider', string='Default Account', default_model='sale.config.settings')

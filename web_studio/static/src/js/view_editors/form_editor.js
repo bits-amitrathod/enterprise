@@ -118,10 +118,33 @@ var FormEditor =  FormRenderer.extend({
         }
         return $el;
     },
+    _render_tag_sheet: function(node) {
+        var $result = this._super.apply(this, arguments);
+        var formEditorHook = this._render_hook(node, 'inside');
+        formEditorHook.appendTo($result.find('.o_form_sheet'));
+        return $result;
+    },
+    _render_generic_tag: function(node) {
+        var $result = this._super.apply(this, arguments);
+        if (node.attrs.class === 'oe_title') {
+            var formEditorHook = this._render_hook(node, 'after');
+            formEditorHook.appendTo($result);
+        }
+        return $result;
+    },
     _render_tag_field: function(node) {
         var $el = this._super.apply(this, arguments);
         this._process_field(node, $el);
         return $el;
+    },
+    _render_field_widget: function(node) {
+        var widget = this._super.apply(this, arguments);
+        // make empty widgets appear if there is no label
+        if (widget.$el.hasClass('o_form_field_empty') && (!node.has_label || node.attrs.nolabel)) {
+            widget.$el.removeClass('o_form_field_empty').addClass('o_web_studio_widget_empty');
+            widget.$el.text(widget.string);
+        }
+        return widget;
     },
     _render_tag_group: function(node) {
         var $result = this._super.apply(this, arguments);
@@ -159,6 +182,8 @@ var FormEditor =  FormRenderer.extend({
     _render_inner_group_label: function ($result, label, linked_node) {
         $result = this._super.apply(this, arguments);
         if (linked_node) {
+            // We have to know if this field has a label or not.
+            linked_node.has_label = true;
             var formEditorHook = this._render_hook(linked_node, 'after', 'tr');
             formEditorHook.appendTo($result);
         }
@@ -170,6 +195,8 @@ var FormEditor =  FormRenderer.extend({
         return formEditorHook.$el;
     },
     _render_inner_field: function(node) {
+        // We have to know if this field has a label or not.
+        node.has_label = true;
         var $result = this._super.apply(this, arguments);
 
         // Add hook only if field is visible
@@ -194,8 +221,10 @@ var FormEditor =  FormRenderer.extend({
                 node: node.children[node.children.length - 1], // Get last page in this notebook
             });
         });
-
         $result.find('ul.nav-tabs').append($addTag);
+
+        var formEditorHook = this._render_hook(node, 'after');
+        formEditorHook.appendTo($result);
         return $result;
     },
     _render_tab_header: function(page) {

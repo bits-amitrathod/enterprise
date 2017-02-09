@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-6 o_setting_box" attrs="{'invisible': [('module_sale_ebay','=',False)]}">
+                    <div class="col-xs-12 col-md-6 o_setting_box" attrs="{'invisible': ['|', '|', '|', ('ebay_dev_id', '=', False),('ebay_sandbox_token', '=', False),('ebay_sandbox_app_id', '=', False),('ebay_sandbox_cert_id', '=', False),]}">
                         <div class="o_setting_right_pane">
                             <label string="Synchronization"/>
                             <div class="text-muted">

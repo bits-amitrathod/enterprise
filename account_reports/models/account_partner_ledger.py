@@ -130,7 +130,7 @@ class ReportPartnerLedger(models.AbstractModel):
                         line.ref not in ['', '/'] and [line.ref] or [] +
                         line.name not in ['', '/'] and [line.name] or []
                     )
-                    if len(name) > 35:
+                    if len(name) > 35 and not self.env.context.get('no_format'):
                         name = name[:32] + "..."
                     caret_type = 'account.move'
                     if line.invoice_id:

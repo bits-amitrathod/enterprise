@@ -181,6 +181,7 @@ var FieldX2Many = AbstractRelationalField.extend({
 });
 
 var FieldOne2Many = FieldX2Many.extend({
+    supported_field_types: ['one2many'],
     className: 'o_form_field_one2many',
     custom_events: _.extend({}, FieldX2Many.prototype.custom_events, {
         kanban_record_delete: function(event) {
@@ -210,6 +211,7 @@ var FieldOne2Many = FieldX2Many.extend({
 });
 
 var FieldMany2Many = FieldX2Many.extend({
+    supported_field_types: ['many2many'],
     className: 'o_form_field_many2many',
     custom_events: _.extend({}, FieldX2Many.prototype.custom_events, {
         kanban_record_delete: function(event) {
@@ -237,6 +239,7 @@ var FieldMany2Many = FieldX2Many.extend({
 });
 
 var FieldMany2One = AbstractRelationalField.extend({
+    form_component_widget_registry: ['many2one'],
     custom_events: {
         'quick_create': function (event) {
             this.quick_create(event.data.value);
@@ -571,6 +574,7 @@ var FormFieldMany2One = FieldMany2One.extend({
 });
 
 var FieldMany2ManyTags = AbstractRelationalField.extend({
+    supported_field_types: ['many2many'],
     tag_template: "FieldMany2ManyTag",
     className: "o_form_field o_form_field_many2manytags",
     custom_events: {
@@ -740,6 +744,7 @@ var KanbanFieldMany2ManyTags = FieldMany2Many.extend({
 });
 
 var FieldMany2ManyCheckBoxes = AbstractRelationalField.extend({
+    supported_field_types: ['many2many'],
     template: 'NewFieldMany2ManyCheckBoxes',
     events: _.extend({}, AbstractRelationalField.prototype.events, {
         change: function () {

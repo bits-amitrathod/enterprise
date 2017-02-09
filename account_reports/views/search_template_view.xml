@@ -82,7 +82,7 @@
             <li class="divider"></li>
             <li class="js_foldable_trigger o_closed_menu" data-filter='custom_cmp_filter'><a>Custom</a></li>
             <li class="o_foldable_menu o_closed_menu" data-filter='custom_cmp_filter' style='margin-left: 10px; margin-right: 10px;'>
-                <t t-if="options['comparison'].get('date_from')">
+                <t t-if="options['comparison'].get('date_from') != None">
                     <label class="custom-date" for="date_from_cmp">Start Date :</label>
                     <div class="form-group custom-date">
                         <div class='o_datepicker js_account_reports_datetimepicker' t-att-data-default-value="options['comparison']['date_from']">
@@ -91,8 +91,8 @@
                         </div>
                     </div>
                 </t>
-                <label class="custom-date" for="date_to_cmp" t-if="options['comparison'].get('date_to')">End Date :</label>
-                <label class="custom-date" for="date_to_cmp" t-if="options['comparison'].get('date')">Date :</label>
+                <label class="custom-date" for="date_to_cmp" t-if="options['comparison'].get('date_to') != None">End Date :</label>
+                <label class="custom-date" for="date_to_cmp" t-if="options['comparison'].get('date') != None">Date :</label>
                 <div class="form-group custom-date">
                     <div class='o_datepicker js_account_reports_datetimepicker' t-att-data-default-value="options['comparison'].get('date_to') or options['comparison'].get('date')">
                         <input type='text' class="o_datepicker_input" name="date_to_cmp" />

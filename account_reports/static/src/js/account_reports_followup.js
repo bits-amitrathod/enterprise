@@ -102,13 +102,14 @@ var account_report_followup = account_report.extend({
     on_change_blocked: function(e) {
         var checkbox = $(e.target).is(":checked");
         var target_id = $(e.target).parents('tr').find('td[data-id]').data('id');
-        if (checkbox) {
-            $(e.target).parents('tr').attr('bgcolor', 'LightGray');
-        }
-        else {
-            $(e.target).parents('tr').attr('bgcolor', 'white');
-        }
-        return new Model('account.move.line').call('write_blocked', [[parseInt(target_id)], checkbox]); // Write the change in db
+        return new Model('account.move.line').call('write_blocked', [[parseInt(target_id)], checkbox]).then(function(result){
+            if (checkbox) {
+                $(e.target).parents('tr').addClass('o_account_followup_blocked');
+            }
+            else {
+                $(e.target).parents('tr').removeClass('o_account_followup_blocked');
+            }
+        }); // Write the change in db
     },
     // Opens the modal to select a next action
     set_next_action: function(e) {

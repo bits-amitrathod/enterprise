@@ -26,9 +26,11 @@ This module allows the creation of the EDI documents and the communication with 
         'views/certificate_view.xml',
         "views/payment_method_view.xml",
         'views/account_view.xml',
+        "views/l10n_mx_edi_report_invoice.xml",
     ],
     'demo': [
         'demo/ir_ui_views.xml',
+        'demo/l10n_mx_edi_demo.xml',
     ],
     'installable': True,
     'auto_install': False,

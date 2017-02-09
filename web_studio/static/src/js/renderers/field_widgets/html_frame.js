@@ -16,6 +16,7 @@ var QWeb = core.qweb;
 
 
 var FieldTextHtml = AbstractField.extend({
+    supported_field_types: ['html'],
     template: 'NewFieldTextHtml',
     start: function () {
         var self = this;

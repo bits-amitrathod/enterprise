@@ -11,13 +11,12 @@ from datetime import datetime
 from OpenSSL import crypto
 from pytz import timezone
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, tools
 from odoo.exceptions import ValidationError
 from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
 
-CER_TO_PEM_CMD = 'openssl x509 -in %s -inform der -outform pem -out %s'
 KEY_TO_PEM_CMD = 'openssl pkcs8 -in %s -inform der -outform pem -out %s -passin file:%s'
 
 
@@ -29,21 +28,8 @@ def unlink_temporary_files(temporary_files):
             _logger.error('Error when trying to remove file %s', temporary_file)
 
 
-def convert_cer_to_pem(cer):
-    cer_file_fd, cer_file_path = tempfile.mkstemp(suffix='.cer', prefix='edi.mx.tmp.')
-    with closing(os.fdopen(cer_file_fd, 'w')) as cer_file:
-        cer_file.write(cer)
-    cerpem_file_fd, cerpem_file_path = tempfile.mkstemp(suffix='.pem', prefix='edi.mx.tmp.')
-
-    os.popen(CER_TO_PEM_CMD % (cer_file_path, cerpem_file_path))
-    with open(cerpem_file_path, 'r') as f:
-        cer_pem = f.read()
-
-    unlink_temporary_files([cer_file_path, cerpem_file_path])
-    return cer_pem
-
-
 def convert_key_cer_to_pem(key, password):
+    # TODO compute it from a python way
     key_file_fd, key_file_path = tempfile.mkstemp(suffix='.key', prefix='edi.mx.tmp.')
     with closing(os.fdopen(key_file_fd, 'w')) as key_file:
         key_file.write(key)
@@ -99,12 +85,27 @@ class Certificate(models.Model):
         readonly=True)
 
     @api.multi
+    @tools.ormcache('content')
+    def get_pem_cer(self, content):
+        '''Get the current content in PEM format
+        '''
+        self.ensure_one()
+        return ssl.DER_cert_to_PEM_cert(base64.decodestring(content))
+
+    @api.multi
+    @tools.ormcache('key', 'password')
+    def get_pem_key(self, key, password):
+        '''Get the current key in PEM format
+        '''
+        self.ensure_one()
+        return convert_key_cer_to_pem(base64.decodestring(key), password)
+
+    @api.multi
     def get_data(self):
         '''Return the content (b64 encoded) and the certificate decrypted
         '''
         self.ensure_one()
-        cer = base64.decodestring(self.content)
-        cer_pem = convert_cer_to_pem(cer)
+        cer_pem = self.get_pem_cer(self.content)
         certificate = crypto.load_certificate(crypto.FILETYPE_PEM, cer_pem)
         for to_del in ['\n', ssl.PEM_HEADER, ssl.PEM_FOOTER]:
             cer_pem = cer_pem.replace(to_del, '')
@@ -115,8 +116,7 @@ class Certificate(models.Model):
         '''Get the current datetime with the Mexican timezone.
         '''
         mexican_tz = timezone('America/Mexico_City')
-        mexican_dt = datetime.now(mexican_tz)
-        return mexican_dt
+        return datetime.now(mexican_tz)
 
     @api.multi
     def get_valid_certificate(self):
@@ -126,7 +126,7 @@ class Certificate(models.Model):
         for record in self:
             date_start = str_to_datetime(record.date_start)
             date_end = str_to_datetime(record.date_end)
-            if mexican_dt >= date_start and mexican_dt <= date_end:
+            if date_start <= mexican_dt <= date_end:
                 return record
         return None
 
@@ -135,15 +135,14 @@ class Certificate(models.Model):
         '''Encrypt the cadena using the private key.
         '''
         self.ensure_one()
-        key = base64.decodestring(self.key)
-        key_pem = convert_key_cer_to_pem(key, self.password)
+        key_pem = self.get_pem_key(self.key, self.password)
         private_key = crypto.load_privatekey(crypto.FILETYPE_PEM, key_pem)
         cadena_crypted = crypto.sign(private_key, cadena, 'sha1')
         return base64.encodestring(cadena_crypted).replace('\n', '').replace('\r', '')
 
     @api.multi
     @api.constrains('content', 'key', 'password')
-    def _check_date_range(self):
+    def _check_credentials(self):
         '''Check the validity of content/key/password and fill the fields
         with the certificate values.
         '''
@@ -153,13 +152,13 @@ class Certificate(models.Model):
         for record in self:
             # Try to decrypt the certificate
             try:
-                content, certificate = record.get_data()
+                cer_pem, certificate = record.get_data()
                 before = mexican_tz.localize(
                     datetime.strptime(certificate.get_notBefore(), date_format))
                 after = mexican_tz.localize(
                     datetime.strptime(certificate.get_notAfter(), date_format))
                 serial_number = certificate.get_serial_number()
-            except Exception as e:
+            except Exception:
                 raise ValidationError(_('The certificate content is invalid.'))
             # Assign extracted values from the certificate
             record.serial_number = ('%x' % serial_number)[1::2]
@@ -169,8 +168,25 @@ class Certificate(models.Model):
                 raise ValidationError(_('The certificate is expired since %s') % record.date_end)
             # Check the pair key/password
             try:
-                key = base64.decodestring(record.key)
-                key_pem = convert_key_cer_to_pem(key, record.password)
+                key_pem = self.get_pem_key(self.key, self.password)
                 crypto.load_privatekey(crypto.FILETYPE_PEM, key_pem)
-            except Exception as e:
+            except Exception:
                 raise ValidationError(_('The certificate key and/or password is/are invalid.'))
+
+    @api.model
+    def create(self, data):
+        res = super(Certificate, self).create(data)
+        self.clear_caches()
+        return res
+
+    @api.multi
+    def write(self, data):
+        res = super(Certificate, self).write(data)
+        self.clear_caches()
+        return res
+
+    @api.multi
+    def unlink(self):
+        res = super(Certificate, self).unlink()
+        self.clear_caches()
+        return res

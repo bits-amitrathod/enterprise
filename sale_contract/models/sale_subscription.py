@@ -90,6 +90,7 @@ class SaleSubscription(models.Model):
                         'price_unit': product.price,
                     }))
                 self.recurring_invoice_line_ids = invoice_line_ids
+                self.description = self.template_id.description
             self.recurring_interval = self.template_id.recurring_interval
             self.recurring_rule_type = self.template_id.recurring_rule_type
 
@@ -304,6 +305,7 @@ class SaleSubscription(models.Model):
                 'note': contract.description,
                 'fiscal_position_id': fpos_id,
                 'user_id': contract.user_id.id,
+                'payment_term_id': contract.partner_id.property_payment_term_id.id,
             }
         return res
 

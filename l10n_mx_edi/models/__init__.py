@@ -8,3 +8,4 @@ from . import res_config
 from . import res_partner
 from . import payment_method
 from . import account
+from . import mail_template

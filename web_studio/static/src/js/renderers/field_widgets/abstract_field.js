@@ -40,6 +40,8 @@ return Widget.extend({
     // want to apply onchanges for each keypress in an input. Clearly, for most of the
     // other use cases, it is desired to apply onchanges as soon as possible.
     apply_onchange_immediately: true,
+    // the field widget can overrides this property to indicate whichl field types are supported
+    supported_field_types: [],
 
     init: function(parent, name, record, options) {
         this._super(parent);

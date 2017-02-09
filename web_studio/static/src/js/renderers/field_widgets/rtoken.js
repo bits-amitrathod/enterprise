@@ -11,6 +11,7 @@ var _t = core._t;
 
 
 var rtoken = AbstractField.extend({
+    supported_field_types: ['char'],
     template: 'website_version.GoogleAccess',
     start: function() {
       var self = this;

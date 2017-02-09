@@ -448,7 +448,7 @@ class AccountReport(models.AbstractModel):
         if not cmp_filter:
             return options
         if cmp_filter == 'no_comparison':
-            if options['comparison'].get('date_from'):
+            if options['comparison'].get('date_from') != None:
                 options['comparison']['date_from'] = ""
                 options['comparison']['date_to'] = ""
             else:

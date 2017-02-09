@@ -129,7 +129,7 @@ tour.register('web_studio_new_app_tour', {
     content: _t("What about a <b>Kanban view</b>?"),
     position: 'bottom',
 }, {
-    trigger: '.o_web_studio_view_category .o_web_studio_view_type[data-type="kanban"] .o_web_studio_thumbnail',
+    trigger: '.o_web_studio_sidebar .o_web_studio_new',
     content: _t("Now you’re on your own. Enjoy your <b>super power</b>."),
     position: 'bottom',
 }]);

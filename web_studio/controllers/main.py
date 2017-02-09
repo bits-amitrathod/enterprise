@@ -293,24 +293,15 @@ class WebStudioController(http.Controller):
                                     <div name="date" class="col-xs-3">
                                         <strong>Subtitle 1:</strong>
                                     </div>
-                                    <div class="col-xs-3">
-                                        <strong>Subtitle 2:</strong>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <strong>Subtitle 3:</strong>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <strong>Subtitle 4:</strong>
-                                    </div>
                                 </div>
                                 <table class="table table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>Column 1</th>
-                                            <th class="text-right">Column 2</th>
-                                            <th class="text-right">Column 3</th>
-                                            <th class="text-right">Column 4</th>
-                                            <th class="text-right">Column 5</th>
+                                            <th/>
+                                            <th class="text-right"/>
+                                            <th class="text-right"/>
+                                            <th class="text-right"/>
+                                            <th class="text-right"/>
                                         </tr>
                                     </thead>
                                     <tbody class="lines_tbody">
@@ -362,12 +353,12 @@ class WebStudioController(http.Controller):
                 elif not added_nodes['date'] and field_id.ttype in ['date', 'datetime']:
                     added_nodes['date'] = True
                     # Add date
-                    date_node = etree.fromstring("""
-                        <strong>%(field_description_date)s: <t t-esc="doc.%(field_name_date)s"/></strong>
-                    """ % {'field_name_date': field_id.name, 'field_description_date': field_id.field_description})
                     old_date_node = arch.find(".//div[@name='date']")
                     etree_remove_content_node(old_date_node)
-                    old_date_node.append(date_node)
+                    etree.SubElement(old_date_node, 'strong').text = field_id.field_description
+                    etree.SubElement(old_date_node, 'p').append(
+                        etree.Element('t', {'t-esc': 'doc.' + field_id.name})
+                    )
                 elif not added_nodes['note'] and field_id.ttype == 'html':
                     added_nodes['note'] = True
                     # Add note
@@ -406,9 +397,11 @@ class WebStudioController(http.Controller):
         return etree.tostring(arch, encoding='utf-8', pretty_print=True)
 
     @http.route('/web_studio/create_new_report', type='json', auth='user')
-    def create_new_report(self, name, model_name, template_name):
+    def create_new_report(self, model_name, template_name):
+        model = request.env['ir.model'].search([('model', '=', model_name)])
+
         if template_name == 'report_business':
-            arch = self.create_business_report(model_name)
+            arch = self.create_business_report(model.model)
         else:
             arch = self.create_blank_report()
 
@@ -424,11 +417,10 @@ class WebStudioController(http.Controller):
         view.key = new_view_xml_id
         # Create report
         report = request.env['ir.actions.report.xml'].create({
-            'name': name,
-            'model': model_name,
+            'name': _('%s Report' % (model.name)),
+            'model': model.model,
             'report_type': 'qweb-pdf',
             'report_name': view.name,
-            'print_report_name': "'" + str(name) + "'",
         })
         # Add in the print menu (ir_values_id field)
         report.create_action()

@@ -28,14 +28,22 @@ return KanbanRenderer.extend({
         this.$el.empty();
         var fragment = document.createDocumentFragment();
         this._render_ungrouped(fragment);
+
         if (is_grouped) {
             var $group = $('<div>', {class: 'o_kanban_group'});
             $group.append(fragment);
             this.$el.append($group);
+
+            // render a second empty column
+            var fragment_empty = document.createDocumentFragment();
+            this._render_demo_divs(fragment_empty, 7);
+            this._render_ghost_divs(fragment_empty);
+            var $group_empty = $('<div>', {class: 'o_kanban_group'});
+            $group_empty.append(fragment_empty);
+            this.$el.append($group_empty);
         } else {
             this.$el.append(fragment);
         }
-        this.$('.o_kanban_ghost').toggleClass('o_kanban_ghost').toggleClass('o_kanban_demo');
         return $.when();
     },
     _render_empty_editor: function() {
@@ -56,7 +64,14 @@ return KanbanRenderer.extend({
             self.widgets.push(self.kanban_record);
             self.kanban_record.appendTo(fragment);
         });
+        this._render_demo_divs(fragment, 6);
         this._render_ghost_divs(fragment);
+    },
+    _render_demo_divs: function (fragment, nb_divs) {
+        for (var i = 0, demo_div; i < nb_divs; i++) {
+            demo_div = $("<div>").addClass("o_kanban_record o_kanban_demo");
+            demo_div.appendTo(fragment);
+        }
     },
     highlight_nearest_hook: function($helper, position) {
         if (this.kanban_record) {
