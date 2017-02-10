@@ -787,7 +787,7 @@ can no longer be modified. Please create a new line with eg. a negative quantity
             var insz_or_bis_number = this.pos.get_cashier().insz_or_bis_number;
 
             if (! insz_or_bis_number) {
-                throw new Error("FDM error: INSZ or BIS number not set for current cashier.");
+                throw new Error("FDM error: " + _t("INSZ or BIS number not set for current cashier."));
             }
 
             packet.add_field(new FDMPacketField("ticket date", 8, order.blackbox_pos_receipt_time.format("YYYYMMDD")));
