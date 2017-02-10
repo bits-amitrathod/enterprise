@@ -21,7 +21,7 @@ MODELS_TO_EXPORT = [
 # list of fields to export by model
 FIELDS_TO_EXPORT = {
     'base.automation': [
-        'action_server_id', 'active', 'filter_domain', 'filter_id', 'filter_pre_domain', 'filter_pre_id',
+        'action_server_id', 'active', 'filter_domain', 'filter_pre_domain',
         'filter_pre_id', 'kind', 'last_run', 'model_id', 'name', 'on_change_fields', 'sequence',
         'trg_date_id', 'trg_date_range', 'trg_date_range_type'
     ],
