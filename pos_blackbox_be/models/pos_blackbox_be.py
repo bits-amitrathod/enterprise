@@ -598,6 +598,22 @@ class product_template(models.Model):
 
         return super(product_template, self).unlink()
 
+    @api.model
+    def _remove_availibility_all_but_blackbox(self):
+        """ Remove all products from the point of sale that were not create by this module 
+        
+        Useful in demo only.
+        Only a subset of demo products should be displayed for the certification process
+        """
+        blackbox_products = self.env['ir.model.data'].search([
+            ('module', '=', 'pos_blackbox_be'), ('model', '=', 'product.template')
+        ])
+        other_products = self.search([
+            ('id', 'not in', blackbox_products.mapped('res_id')), ('available_in_pos', '=', True)
+        ])
+        return other_products.write({'available_in_pos': False})
+
+
 class module(models.Model):
     _inherit = 'ir.module.module'
 
