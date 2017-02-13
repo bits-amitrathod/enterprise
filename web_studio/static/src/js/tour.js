@@ -54,7 +54,7 @@ tour.register('web_studio_new_app_tour', {
     position: 'bottom',
     run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
 }, {
-    trigger: '.o_web_studio_form_view_editor td.o_td_label:eq(1) label',
+    trigger: '.o_web_studio_form_view_editor td.o_td_label',
     content: _t('To <b>customize a field</b>, click on its <i>label</i>.'),
     position: 'bottom',
 }, {
@@ -94,10 +94,6 @@ tour.register('web_studio_new_app_tour', {
     trigger: '.o_web_studio_leave',
     content: _t("Let’s check the result. Close Odoo Studio to get an <b>overview of your app</b>."),
     position: 'left',
-}, {
-    trigger: '.o_control_panel .o_cp_buttons .o_list_button_add',
-    content: _t("Create a new record."),
-    position: 'right',
 }, {
     trigger: 'input.o_form_required',
     auto: true,
