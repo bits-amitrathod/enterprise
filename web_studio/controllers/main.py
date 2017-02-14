@@ -547,7 +547,10 @@ class WebStudioController(http.Controller):
             if 'node' in op:
                 if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
                     # Check if field exists before creation
-                    field = IrModelFields.search([('name', '=', op['node']['field_description']['name'])], limit=1)
+                    field = IrModelFields.search([
+                        ('name', '=', op['node']['field_description']['name']),
+                        ('model', '=', view.model),
+                    ], limit=1)
                     if not field:
                         field = self.create_new_field(op['node']['field_description'])
                         field_created = True
