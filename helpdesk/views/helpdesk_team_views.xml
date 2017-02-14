@@ -51,6 +51,7 @@
     <record id="helpdesk_team_action_settings" model="ir.actions.server">
         <field name="name">Helpdesk: Teams Settings</field>
         <field name="model_id" ref="helpdesk.model_helpdesk_team"/>
+        <field name="state">code</field>
         <field name="code">
             action = model.action_open_helpdesk_teams()
         </field>
