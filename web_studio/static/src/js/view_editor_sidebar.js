@@ -129,6 +129,11 @@ return Widget.extend(FieldManagerMixin, {
         this.computed_ordered_fields();
         this.fields_not_in_view = fields_not_in_view;
         this.view_attrs = view_attrs;
+        if (this.mode !== 'properties') {
+            var scrolltop = this.$('.o_web_studio_sidebar_content').scrollTop();
+            this.render();
+            this.$('.o_web_studio_sidebar_content').scrollTop(scrolltop);
+        }
     },
     computed_ordered_fields: function() {
         // sortBy returns a list so the key (field_name) will be lost but we need it.

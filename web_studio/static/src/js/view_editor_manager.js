@@ -618,8 +618,12 @@ return Widget.extend({
         // The field doesn't exist: field_description is the definition of the new field.
         // No need to have field_description of an existing field
         if (field_description) {
-            field_description.name = 'x_studio_field_' + utils.randomString(5);
-            field_description.model_name = this.model;
+            // "extend" avoids having the same reference in "this.operations"
+            // We can thus modify it without editing previous existing operations
+            field_description = _.extend({}, field_description, {
+                name: 'x_studio_field_' + utils.randomString(5),
+                model_name: this.model,
+            });
             // Fields with requirements
             // Open Dialog to precise the required fields for this field.
             if (_.contains(['selection', 'one2many', 'many2one', 'many2many'], field_description.ttype)) {
