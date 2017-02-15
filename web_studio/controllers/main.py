@@ -433,7 +433,7 @@ class WebStudioController(http.Controller):
     def set_background_image(self, attachment_id):
         attachment = request.env['ir.attachment'].browse(attachment_id)
         if attachment:
-            request.env.user.company_id.background_image = attachment.datas
+            request.env.user.sudo(request.uid).company_id.background_image = attachment.datas
 
     def create_new_field(self, values):
         """ Create a new field with given values.
