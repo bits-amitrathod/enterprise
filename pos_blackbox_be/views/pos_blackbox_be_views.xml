@@ -171,7 +171,7 @@
         </record>
 
         <!-- include vat number in report -->
-        <template id="include_vat_number" inherit_id="report.report_template_default">
+        <template id="include_vat_number" inherit_id="report.external_layout_boxed">
             <xpath expr="//div[@name='company_address']" position="after">
                 <div class="col-xs-9" name="company_address">
                     VAT: <t t-esc="company.vat"/>
