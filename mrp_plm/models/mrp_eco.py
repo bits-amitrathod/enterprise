@@ -315,7 +315,7 @@ class MrpEco(models.Model):
             self.user_can_reject = eco.id in to_reject_eco_ids
 
     @api.one
-    @api.depends('approval_ids.is_approved', 'approval_ids.is_rejected')
+    @api.depends('stage_id','approval_ids.is_approved', 'approval_ids.is_rejected')
     def _compute_kanban_state(self):
         """ State of ECO is based on the state of approvals for the current stage. """
         approvals = self.approval_ids.filtered(lambda app: app.template_stage_id == self.stage_id)
