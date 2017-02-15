@@ -4,7 +4,7 @@ odoo.define('web_studio.ListEditor', function (require) {
 var ListRenderer = require('web.BasicListRenderer');
 
 return ListRenderer.extend({
-    nearest_hook_tolerance: 50,
+    nearest_hook_tolerance: 200,
     className: ListRenderer.prototype.className + ' o_web_studio_list_view_editor',
     events: _.extend({}, ListRenderer.prototype.events, {
         'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': 'on_existing_column',
