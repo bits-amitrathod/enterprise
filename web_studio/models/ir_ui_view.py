@@ -41,9 +41,10 @@ class View(models.Model):
                 </h1>
             </div>
         """ % {'field_name': rec_name})
-        group_1 = E.group(name=str(uuid.uuid4())[:6])
-        group_2 = E.group(name=str(uuid.uuid4())[:6])
-        group = E.group(group_1, group_2, name=str(uuid.uuid4())[:6])
+        group_name = 'studio_group_' + str(uuid.uuid4())[:6]
+        group_1 = E.group(name=group_name + '_left')
+        group_2 = E.group(name=group_name + '_right')
+        group = E.group(group_1, group_2, name=group_name)
         form = E.form(E.sheet(title, group, string=model._description))
         arch = etree.tostring(form, encoding='utf-8', pretty_print=True)
 

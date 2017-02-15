@@ -720,20 +720,38 @@ class WebStudioController(http.Controller):
         node = operation['node']
         xpath_node = self._get_xpath_node(arch, operation)
 
+        # Take a xml_node and put columns on it:
+        # If the xml_node is not a group, this function will create a group node
+        # to add two columns on it.
+        def add_columns(xml_node, title=False):
+            # Get the random key generated is JS.
+            # Expected value: 'studio_<tag_name>_<random_key>
+            name = 'studio_group_' + xml_node.get('name').split('_')[2]
+
+            if xml_node.tag != 'group':
+                xml_node_group = etree.SubElement(xml_node, 'group', {'name': name})
+            else:
+                xml_node_group = xml_node
+
+            xml_node_page_right = etree.SubElement(xml_node_group, 'group', {'name': name + '_right'})
+            xml_node_page_left = etree.SubElement(xml_node_group, 'group', {'name': name + '_left'})
+            if title:
+                xml_node_page_right.attrib['string'] = _('Right Title')
+                xml_node_page_left.attrib['string'] = _('Left Title')
+
         # Create the actual node inside the xpath. It needs to be the first
         # child of the xpath to respect the order in which they were added.
         xml_node = etree.Element(node['tag'], node.get('attrs'))
         if node['tag'] == 'notebook':
-            # FIXME take the same randomString as parent
             name = 'studio_page_' + node['attrs']['name'].split('_')[2]
             xml_node_page = etree.Element('page', {'string': 'New Page', 'name': name})
+            add_columns(xml_node_page)
             xml_node.insert(0, xml_node_page)
+        elif node['tag'] == 'page':
+            add_columns(xml_node)
         elif node['tag'] == 'group':
             if 'empty' not in operation:
-                xml_node_page_right = etree.Element('group', {'string': 'Right Title', 'name': node['attrs']['name'] + '_right'})
-                xml_node_page_left = etree.Element('group', {'string': 'Left Title', 'name': node['attrs']['name'] + '_left'})
-                xml_node.insert(0, xml_node_page_right)
-                xml_node.insert(0, xml_node_page_left)
+                add_columns(xml_node, title=True)
         elif node['tag'] == 'button':
             # To create a stat button, we need
             #   - a many2one field (1) that points to this model
