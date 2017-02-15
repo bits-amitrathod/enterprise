@@ -26,8 +26,9 @@ var SearchEditor = SearchRenderer.extend({
         this.GROUPABLE_TYPES = ['many2one', 'char', 'boolean', 'selection', 'date', 'datetime'];
     },
     _render: function() {
+        var result = this._super.apply(this, arguments);
         var self = this;
-        this.$el.droppable({
+        this.$('.ui-droppable').droppable({
             accept: ".o_web_studio_component",
             drop: function(event, ui) {
                 var $hook = self.$('.o_web_studio_nearest_hook');
@@ -99,7 +100,6 @@ var SearchEditor = SearchRenderer.extend({
                 }
             },
         });
-        var result = this._super.apply(this, arguments);
         this._add_hook_empty_table();
         return result;
     },
