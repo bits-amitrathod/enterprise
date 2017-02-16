@@ -74,11 +74,6 @@
         </t>
     </template>
 
-    <template id="portal_ticket_message_thread" inherit_id="website_mail.message_thread" primary="True">
-        <xpath expr="//section[@id='discussion']/section[1]" position="replace">
-        </xpath>
-    </template>
-
     <template id="tickets_followup" name="Helpdesk Tickets">
         <t t-call="website.layout">
             <div id="wrap">
@@ -133,17 +128,9 @@
                                 <h4><strong>Message and communication history</strong></h4>
                             </div>
                             <div class="col-md-10 col-md-offset-1 mt16">
-                                <t t-if="ticket.stage_id.is_close">
-                                    <t t-call="website_helpdesk.portal_ticket_message_thread">
-                                        <t t-set="object" t-value="ticket"/>
-                                        <t t-set="chatter_mode" t-value="'json'"/>
-                                    </t>
-                                </t>
-                                <t t-if="not ticket.stage_id.is_close">
-                                    <t t-call="website_mail.message_thread">
-                                        <t t-set="object" t-value="ticket"/>
-                                        <t t-set="chatter_mode" t-value="'json'"/>
-                                    </t>
+                                <t t-call="website_mail.message_thread">
+                                    <t t-set="object" t-value="ticket"/>
+                                    <t t-set="disable_composer" t-value="ticket.stage_id.is_close"/>
                                 </t>
                             </div>
                         </div>
