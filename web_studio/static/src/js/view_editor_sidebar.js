@@ -332,6 +332,7 @@ return Widget.extend(FieldManagerMixin, {
         var dialog = new DomainSelectorDialog(this, this.model, _.isArray(this.modifiers[modifier]) ? this.modifiers[modifier] : [], {
             readonly: false,
             fields: this.fields_in_view,
+            operators: ["=", "!=", "<", ">", "<=", ">=", "in", "not in", "set", "not set"],
             followRelations: false,
             debugMode: session.debug,
             $content: $(_.str.sprintf(
