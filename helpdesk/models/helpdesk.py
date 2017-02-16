@@ -696,12 +696,11 @@ class HelpdeskTicket(models.Model):
     @api.model
     def message_new(self, msg, custom_values=None):
         values = dict(custom_values or {}, partner_email=msg.get('from'), partner_id=msg.get('author_id'))
-        ticket_id = super(HelpdeskTicket, self).message_new(msg, custom_values=values)
-        ticket = self.browse(ticket_id)
+        ticket = super(HelpdeskTicket, self).message_new(msg, custom_values=values)
         partner_ids = filter(None, ticket._find_partner_from_emails(self._ticket_email_split(msg)))
         if partner_ids:
             ticket.message_subscribe(partner_ids)
-        return ticket_id
+        return ticket
 
     @api.multi
     def message_update(self, msg, update_vals=None):
