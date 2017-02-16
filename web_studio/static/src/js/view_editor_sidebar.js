@@ -329,9 +329,21 @@ return Widget.extend(FieldManagerMixin, {
         ev.preventDefault();
         var modifier = ev.currentTarget.dataset.type;
 
+        // Add id to the list of usable fields
+        var fields = this.fields_in_view;
+        if (!fields.id) {
+            fields = _.extend({
+                id: {
+                    searchable: true,
+                    string: "ID",
+                    type: "integer",
+                },
+            }, fields);
+        }
+
         var dialog = new DomainSelectorDialog(this, this.model, _.isArray(this.modifiers[modifier]) ? this.modifiers[modifier] : [], {
             readonly: false,
-            fields: this.fields_in_view,
+            fields: fields,
             operators: ["=", "!=", "<", ">", "<=", ">=", "in", "not in", "set", "not set"],
             followRelations: false,
             debugMode: session.debug,
