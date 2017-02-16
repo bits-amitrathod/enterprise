@@ -10,6 +10,38 @@ var bus = require('web_studio.bus');
 
 var QWeb = core.qweb;
 
+
+/*
+ * Notice:
+ *  some features (like seeing the appswitcher background) are available
+ *  even the user is not a system user, this is why there are two different
+ *  includes in this file.
+ */
+
+AppSwitcher.include({
+    start: function () {
+        this.set_background();
+        return this._super.apply(this, arguments);
+    },
+    process_menu_data: function (menu_data) {
+        this.has_custom_background = menu_data.background_image;
+        return this._super.apply(this, arguments);
+    },
+    set_background: function () {
+        if (this.has_custom_background) {
+            var url = session.url('/web/image', {
+                model: 'res.company',
+                id: session.company_id,
+                field: 'background_image',
+            });
+            this.$el.css({
+                "background-image": "url(" + url + ")",
+                "background-size": "cover",
+            });
+        }
+    },
+});
+
 if (!session.is_system) {
     return;
 }
@@ -24,26 +56,8 @@ AppSwitcher.include({
         },
     }),
     start: function () {
-        this.set_background();
         bus.on('studio_toggled', this, this.toggle_studio_mode);
         return this._super.apply(this, arguments);
-    },
-    process_menu_data: function(menu_data) {
-        this.has_custom_background = menu_data.background_image;
-        return this._super.apply(this, arguments);
-    },
-    set_background: function() {
-        if (this.has_custom_background) {
-            var url = session.url('/web/image', {
-                model: 'res.company',
-                id: session.company_id,
-                field: 'background_image',
-            });
-            this.$el.css({
-                "background-image": "url(" + url + ")",
-                "background-size": "cover",
-            });
-        }
     },
     toggle_studio_mode: function (display) {
         this.in_studio_mode = display;
