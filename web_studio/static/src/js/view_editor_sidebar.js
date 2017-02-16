@@ -330,7 +330,7 @@ return Widget.extend(FieldManagerMixin, {
         ev.preventDefault();
         var $input = $(ev.currentTarget);
 
-        var dialog = new DomainSelectorDialog(this, this.model, $input.val(), {
+        var dialog = new DomainSelectorDialog(this, this.field_parameters.relation, $input.val(), {
             readonly: false,
             debugMode: session.debug,
         }).open();
