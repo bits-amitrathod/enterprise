@@ -10,10 +10,4 @@ odoo.define("website_helpdesk.menu", function (require) {
     }
     $link.first().closest("li").addClass("active");
 
-    // TODO: use pager
-    $('.o_my_show_more').on('click', function(ev) {
-        ev.preventDefault();
-        $(this).parents('table').find(".to_hide").toggleClass('hidden');
-        $(this).find('span').toggleClass('hidden');
-    });
 });
