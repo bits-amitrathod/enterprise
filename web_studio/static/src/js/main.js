@@ -128,10 +128,15 @@ var Main = Widget.extend({
     },
 
     new_view: function (event) {
+        var self = this;
         var view_type = event.data.view_type;
         var view_mode = this.action.view_mode + ',' + view_type;
-
-        this._write_view_mode(view_mode, view_type);
+        customize.add_view_type(this.action, view_type, {view_mode: view_mode}).then(function(result) {
+            self.do_action('action_web_studio_main', {
+                action: result,
+                active_view: view_type,
+            });
+        });
     },
 
     set_another_view: function (event) {
@@ -154,12 +159,11 @@ var Main = Widget.extend({
         }).open();
     },
 
-    _write_view_mode: function(view_mode, view_to_edit) {
+    _write_view_mode: function(view_mode) {
         var self = this;
         return customize.edit_action(this.action, {view_mode: view_mode}).then(function(result) {
             self.do_action('action_web_studio_main', {
                 action: result,
-                active_view: view_to_edit,
             });
         });
     },

@@ -461,6 +461,15 @@ class WebStudioController(http.Controller):
         # Create new field
         return request.env['ir.model.fields'].create(values)
 
+    @http.route('/web_studio/add_view_type', type='json', auth='user')
+    def add_view_type(self, action_type, action_id, res_model, view_type, args):
+        try:
+            request.env[res_model].fields_view_get(view_type=view_type)
+        except UserError as e:
+            return e.name
+        self.edit_action(action_type, action_id, args)
+        return True
+
     @http.route('/web_studio/edit_action', type='json', auth='user')
     def edit_action(self, action_type, action_id, args):
 
@@ -472,16 +481,6 @@ class WebStudioController(http.Controller):
 
             if 'view_mode' in args:
                 args['view_mode'] = args['view_mode'].replace('list', 'tree')  # list is stored as tree in db
-
-                # Check that each views in view_mode exists or try to get default
-                view_ids = request.env['ir.ui.view'].search([('model', '=', action_id.res_model)])
-                view_types = [view_id.type for view_id in view_ids]
-                for view_type in args['view_mode'].split(','):
-                    if view_type not in view_types:
-                        try:
-                            request.env[action_id.res_model].fields_view_get(view_type=view_type)
-                        except UserError as e:
-                            return e.name
 
                 # As view_ids has precedence on view_mode, we need to use them and resequence them
                 view_modes = args['view_mode'].split(',')
@@ -652,6 +651,26 @@ class WebStudioController(http.Controller):
             ('Content-Type', 'application/zip'),
             ('Content-Length', len(content)),
         ], cookies={'fileToken': token})
+
+    @http.route('/web_studio/create_default_view', type='json', auth='user')
+    def create_default_view(self, model, view_type, attrs):
+        attrs['string'] = "Default %s view for %s" % (view_type, model)
+        # The grid view arch has the attributes set as children nodes and not in
+        # the view node
+        if view_type == 'grid':
+            arch = self._get_default_grid_view(attrs)
+        else:
+            arch = self._get_default_view(view_type, attrs)
+        request.env['ir.ui.view'].create({
+            'type': view_type,
+            'model': model,
+            'arch': arch,
+            'name': attrs['string'],
+        })
+
+    def _get_default_view(self, view_type, attrs):
+        arch = etree.Element(view_type, attrs)
+        return etree.tostring(arch, encoding='utf-8', pretty_print=True, method='html')
 
     def _get_or_create_default_view(self, model, view_type, view_id=False):
         View = request.env['ir.ui.view']

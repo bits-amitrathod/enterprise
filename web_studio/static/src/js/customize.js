@@ -6,7 +6,7 @@ var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var studio_bus = require('web_studio.bus');
 var session = require('web.session');
-
+var NewViewDialog = require('web_studio.NewViewDialog');
 
 // this file should regroup all methods required to do a customization,
 // so, basically all write/update/delete operations made in web_studio.
@@ -47,6 +47,46 @@ return {
             attachment_id: attachment_id,
             context: session.user_context,
         });
+    },
+
+    add_view_type: function(action, view_type, args) {
+        var self = this;
+        var def = $.Deferred();
+        ajax.jsonRpc('/web_studio/add_view_type', 'call', {
+            action_type: action.type,
+            action_id: action.id,
+            res_model: action.res_model,
+            view_type: view_type,
+            args: args,
+            context: session.user_context,
+        }).then(function(result) {
+            if (result !== true) {
+                var options = {
+                    action: action,
+                    callback: function(){
+                        self.edit_action(action, args).then(function(result) {
+                            def.resolve(result);
+                        });
+                    },
+                };
+                // TODO find better way to check which view_type is being access
+                if (result.indexOf('gantt') !== -1) {
+                    options.view_type = 'gantt';
+                    new NewViewDialog(this, options).open();
+                } else if (result.indexOf('Calendar') !== -1) {
+                    options.view_type = 'calendar';
+                    new NewViewDialog(this, options).open();
+                } else {
+                    Dialog.alert(this, result);
+                    def.reject();
+                }
+            } else {
+                self._reload_action(action.id)
+                    .then(def.resolve.bind(def))
+                    .fail(def.reject.bind(def));
+            }
+        });
+        return def;
     },
 
     edit_action: function(action, args) {
