@@ -417,10 +417,24 @@ class MrpEco(models.Model):
     def _create_approvals(self):
         for eco in self:
             for approval_template in eco.stage_id.approval_template_ids:
-                self.env['mrp.eco.approval'].create({
-                    'eco_id': eco.id,
-                    'approval_template_id': approval_template.id,
-                })
+                approval = eco.approval_ids.filtered(lambda app: app.approval_template_id == approval_template)
+                if not approval:
+                    self.env['mrp.eco.approval'].create({
+                        'eco_id': eco.id,
+                        'approval_template_id': approval_template.id,
+                    })
+                # If approval already exists update it
+                else:
+                    if approval.status != 'none':
+                        msg = 'Approval: ' + approval.name + ' was ' + approval.status
+                        if (approval.user_id):
+                            msg = msg + ' by ' + approval.user_id.name
+                        msg = msg + '.'
+                        self.message_post(body=msg)
+                        approval.write({
+                            'status': 'none',
+                            'user_id': False,
+                        })
 
     @api.multi
     def approve(self):
