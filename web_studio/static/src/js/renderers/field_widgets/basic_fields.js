@@ -79,7 +79,7 @@ var InputField = AbstractField.extend({
 });
 
 var FieldChar = InputField.extend({
-    supported_field_types: ['char', 'text'],
+    supported_field_types: ['char'],
     tagName: 'span',
 });
 
