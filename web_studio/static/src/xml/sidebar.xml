@@ -378,7 +378,7 @@
             <span/>
         </div>
         <label for="invisible">Invisible</label>
-        <a href="#" data-type="invisible" class="btn btn-sm btn-link o_web_studio_attrs">Customize</a>
+        <a href="#" data-type="invisible" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
     </div>
     <t t-if="widget.modifiers.invisible !== true">
         <t t-if="_.contains(['list', 'form'], widget.view_type)">
@@ -391,7 +391,7 @@
                     <span/>
                 </div>
                 <label for="required">Required</label>
-                <a href="#" data-type="required" class="btn btn-sm btn-link o_web_studio_attrs">Customize</a>
+                <a href="#" data-type="required" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
             </div>
             <div class="clearfix o_web_studio_sidebar_checkbox">
                 <t t-set="attrs_readonly" t-value="widget.modifiers.readonly and widget.modifiers.readonly !== true"/>
@@ -401,7 +401,7 @@
                     <span/>
                 </div>
                 <label for="readonly">Read only</label>
-                <a href="#" data-type="readonly" class="btn btn-sm btn-link o_web_studio_attrs">Customize</a>
+                <a href="#" data-type="readonly" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
             </div>
         </t>
         <div t-if="widget.view_type === 'kanban'" class="o_web_studio_sidebar_checkbox">

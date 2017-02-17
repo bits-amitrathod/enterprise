@@ -98,60 +98,47 @@
         }
 
         .o_web_studio_app_creator_next, .o_app_creator_back {
+            opacity: 0.5;
             text-transform: uppercase;
             background-color: white;
             color: @o-web-studio-text-inactive;
             border: 1px solid @o-web-studio-text-inactive;
-            padding: 6px 40px 7px;
+            padding: 7px 15px;
             font-size: 11px;
             border-radius: 2px;
             font-weight: 500;
-            .o-transition(all, 0.3s);
 
-            &.o_web_studio_create {
-                padding: 7px 15px;
-                position: relative;
-                overflow: hidden;
-                cursor: no-drop;
-                opacity: 0.5;
-                .o-transition(all, 0s);
-
-                > span {
-                    opacity: 0;
-                    color: white;
-                    .o-position-absolute(auto, 42px);
-                    .o-transition(opacity, 0.35s);
-                }
-                &:hover, &:focus {
-                    color: @o-web-studio-text-inactive;
-                    border-color: @o-web-studio-text-inactive;
-                }
-
-                &.is_ready {
-                    opacity: 1;
-                    cursor: pointer;
-                    padding-left: 140px;
-                    background-color: @odoo-brand-optional;
-                    border-color: darken(@odoo-brand-optional, 3%);
-                    color: white;
-                    .o-transition(all, 0.3s);
-                    .transition-property(~'padding background');
-                    > span {
-                        opacity: 1;
-                        .o-transition(opacity, 0.1s);
-                    }
-
-                    &:hover, &:focus {
-                        background-color: lighten(@odoo-brand-optional, 2%);
-                        border-color: @odoo-brand-optional;
-                        color: white;
-                    }
-                }
+            > span {
+                .o-transition(opacity, 0.35s);
+            }
+            &:hover, &:focus {
+                color: @o-web-studio-text-inactive;
+                border-color: @o-web-studio-text-inactive;
             }
 
-            &:hover, &:focus {
-                color: @o-web-studio-bg-medium;
-                border-color: @o-web-studio-bg-medium;
+        }
+        .o_web_studio_app_creator_next {
+            cursor: no-drop;
+            &.is_ready {
+                opacity: 1;
+                cursor: pointer;
+                background-color: @odoo-brand-optional;
+                border-color: darken(@odoo-brand-optional, 3%);
+                color: white;
+                .o-transition(all, 0.3s);
+                .transition-property(~'padding background');
+
+                > span {
+                    opacity: 1;
+                    padding-right: 15px;
+                    .o-transition(opacity, 0.1s);
+                }
+
+                &:hover, &:focus {
+                    background-color: lighten(@odoo-brand-optional, 2%);
+                    border-color: @odoo-brand-optional;
+                    color: white;
+                }
             }
         }
         .o_app_creator_back {

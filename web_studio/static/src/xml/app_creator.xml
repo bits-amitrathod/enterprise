@@ -8,7 +8,9 @@
                 <div class="o_web_studio_app_creator_left_content"/>
                 <div class="o_web_studio_app_creator_buttons">
                     <button type="button" class="btn fa fa-chevron-left o_app_creator_back"/>
-                    <button type="button" class="btn o_web_studio_app_creator_next">NEXT</button>
+                    <button type="button" class="btn o_web_studio_app_creator_next">
+                        <span/><i class="fa fa-chevron-right"/>
+                    </button>
                 </div>
             </div>
             <div class="o_web_studio_app_creator_right">
@@ -27,16 +29,16 @@
 <div t-name="web_studio.AppCreator.Form">
     <h3 class="mb32">Create your App</h3>
     <div class="o_web_studio_app_creator_name">
-        <label for="app_name">Choose a name</label>
-        <input id="app_name" name="app_name" placeholder="My App" type="text" t-att-value="widget.app_name"/>
+        <label for="app_name">Choose an app name</label>
+        <input id="app_name" name="app_name" placeholder="e.g. Real Estate" type="text" t-att-value="widget.app_name"/>
     </div>
 </div>
 
 <div t-name="web_studio.AppCreator.Menu">
     <h3 class="mb32">Create your first Menu</h3>
     <div class="o_web_studio_app_creator_menu">
-        <label for="menu_name">Choose a name</label>
-        <input id="menu_name" name="menu_name" placeholder="My Menu" type="text"/>
+        <label for="menu_name">Choose your first object name</label>
+        <input id="menu_name" name="menu_name" placeholder="e.g. Properties" type="text"/>
     </div>
     <t t-if="widget.debug">
         <div class="o_web_studio_app_creator_model_choice">
