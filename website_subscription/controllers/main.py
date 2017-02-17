@@ -115,11 +115,6 @@ class website_subscription(http.Controller):
             delta = datetime.datetime.today() - datetime.datetime.strptime(account.recurring_next_date, '%Y-%m-%d')
             missing_periods = delta.days / 7
         dummy, action = request.env['ir.model.data'].get_object_reference('sale_subscription', 'sale_subscription_action')
-        account_templates = template_res.sudo().search([
-            ('user_selectable', '=', True),
-            ('id', '!=', active_plan.id),
-            ('tag_ids', 'in', account.sudo().template_id.tag_ids.ids)
-        ])
         values = {
             'account': account,
             'template': account.template_id.sudo(),
@@ -136,7 +131,6 @@ class website_subscription(http.Controller):
             'action': action,
             'message': message,
             'message_class': message_class,
-            'display_change_plan': len(account_templates) > 0,
             'pricelist': account.pricelist_id.sudo(),
         }
         render_context = dict(
@@ -206,46 +200,6 @@ class website_subscription(http.Controller):
         get_param = self.payment_succes_msg if tx.state in ['done', 'authorized'] else self.payment_fail_msg
 
         return request.redirect('/my/subscription/%s/%s?%s' % (subscription.id, sub_uuid, get_param))
-
-    @http.route(['/my/subscription/<int:account_id>/change'], type='http', auth="public", website=True)
-    def change_subscription(self, account_id, uuid=None, **kw):
-        account_res = request.env['sale.subscription']
-        template_res = request.env['sale.subscription.template']
-        account = account_res.sudo().browse(account_id)
-        if uuid != account.uuid:
-            raise NotFound()
-        if account.state == 'close':
-            return request.redirect('/my/subscription/%s' % account_id)
-        if kw.get('new_template_id'):
-            new_template_id = int(kw.get('new_template_id'))
-            periods = {'daily': 'Day(s)', 'weekly': 'Week(s)', 'monthly': 'Month(s)', 'yearly': 'Year(s)'}
-            msg_before = [account.sudo().template_id.name,
-                          str(account.recurring_total),
-                          str(account.recurring_interval) + ' ' + str(periods[account.recurring_rule_type])]
-            account.sudo().change_subscription(new_template_id)
-            msg_after = [account.sudo().template_id.name,
-                         str(account.recurring_total),
-                         str(account.recurring_interval) + ' ' + str(periods[account.recurring_rule_type])]
-            msg_body = request.env['ir.ui.view'].render_template('website_subscription.chatter_change_subscription',
-                                                                 values={'msg_before': msg_before, 'msg_after': msg_after})
-            # price options are about to change and are not propagated to existing sales order: reset the SO
-            order = request.website.sudo().sale_get_order()
-            if order:
-                order.reset_project_id()
-            account.message_post(body=msg_body)
-            return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))
-        account_templates = template_res.sudo().search([
-            ('user_selectable', '=', True),
-            ('tag_ids', 'in', account.template_id.tag_ids.ids)
-        ])
-        values = {
-            'account': account,
-            'pricelist': account.pricelist_id,
-            'active_template': account.template_id,
-            'inactive_templates': account_templates,
-            'user': request.env.user,
-        }
-        return request.render("website_subscription.change_template", values)
 
     @http.route(['/my/subscription/<int:account_id>/close'], type='http', methods=["POST"], auth="public", website=True)
     def close_account(self, account_id, uuid=None, **kw):
@@ -319,14 +273,3 @@ class website_subscription(http.Controller):
         account.sudo().partial_invoice_line(order, new_option)
 
         return request.redirect("/shop/cart")
-
-    @http.route(['/my/template/<int:template_id>'], type='http', auth="user", website=True)
-    def view_template(self, template_id, **kw):
-        template_res = request.env['sale.subscription.template']
-        dummy, action = request.env['ir.model.data'].get_object_reference('sale_subscription', 'sale_subscription_template_action')
-        template = template_res.browse(template_id)
-        values = {
-            'template': template,
-            'action': action
-        }
-        return request.render('website_subscription.preview_template', values)

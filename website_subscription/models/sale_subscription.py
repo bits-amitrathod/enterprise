@@ -109,64 +109,6 @@ class SaleSubscription(models.Model):
                 return True
         return False
 
-    def change_subscription(self, new_template_id):
-        """Change the template of a subscription
-        - add the new template's mandatory lines
-        - remove the old template's mandatory lines
-        - remove lines that are not in the new template options
-        - adapt price of lines that are in the options of both templates
-        - other invoicing lines are left unchanged"""
-        rec_lines_to_remove = []
-        rec_lines_to_add = []
-        rec_lines_to_modify = []
-        modified_products = []
-        new_template = self.env['sale.subscription.template'].browse(new_template_id)
-        new_options = {
-            line.product_id: {
-                'price_unit': self.pricelist_id.with_context({'uom': line.uom_id.id}).get_product_price(line.product_id, 1, False),
-                'uom_id': line.uom_id.id
-            } for line in new_template.subscription_template_option_ids
-        }
-        new_mandatory = {
-            line.product_id: {
-                'price_unit': self.pricelist_id.with_context({'uom': line.uom_id.id}).get_product_price(line.product_id, 1, False),
-                'uom_id': line.uom_id.id
-            } for line in new_template.subscription_template_line_ids
-        }
-        # adapt prices of mandatory lines if products are the same, delete the rest
-        for line in self.recurring_invoice_line_ids:
-            if line.product_id in [tmp_line.product_id for tmp_line in self.template_id.subscription_template_line_ids]:
-                if line.product_id in new_mandatory:
-                    rec_lines_to_modify.append((1, line.id, new_mandatory.get(line.product_id)))
-                    modified_products.append(line.product_id.id)
-                else:
-                    rec_lines_to_remove.append((2, line.id))
-            elif line.product_id in [tmp_option.product_id for tmp_option in self.template_id.subscription_template_option_ids]:
-                # adapt prices of options
-                if line.product_id in new_options:
-                    rec_lines_to_modify.append((1, line.id, new_options.get(line.product_id)))
-                    modified_products.append(line.product_id.id)
-                # remove options in the old template that are not in the new one (i.e. options that do not apply anymore)
-                else:
-                    rec_lines_to_remove.append((2, line.id))
-        # add missing mandatory lines
-        for line in new_template.subscription_template_line_ids:
-            if line.product_id.id not in modified_products and line.product_id not in [cur_line.product_id for cur_line in self.recurring_invoice_line_ids]:
-                rec_lines_to_add = [(0, 0, {
-                    'product_id': line.product_id.id,
-                    'uom_id': line.uom_id.id,
-                    'name': line.name,
-                    'quantity': line.quantity,
-                    'price_unit': self.pricelist_id.with_context({'uom': line.uom_id.id}).get_product_price(line.product_id, 1, False),
-                    'analytic_account_id': self.id,
-                })]
-        values = {
-            'recurring_invoice_line_ids': rec_lines_to_add + rec_lines_to_modify + rec_lines_to_remove,
-        }
-        self.sudo().write(values)
-        self.template_id = new_template
-        self.on_change_template()
-
     def _compute_options(self):
         """ Set fields with filter options:
             - recurring_mandatory_lines = all the recurring lines that are recurring lines on the template
@@ -398,8 +340,6 @@ class SaleSubscription(models.Model):
 class SaleSubscriptionTemplate(models.Model):
     _inherit = "sale.subscription.template"
 
-    plan_description = fields.Html(string='Plan Description', help="Describe this subscription in a few lines", sanitize_attributes=False)
-    user_selectable = fields.Boolean(string='Allow Online Order', default="True", help="""Leave this unchecked if you don't want this subscription template to be available to the customer in the frontend (for a free trial, for example)""")
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
     subscription_template_option_ids = fields.One2many('sale.subscription.template.option', inverse_name='subscription_template_id', string='Optional Lines', copy=True, oldname='option_invoice_line_ids')
@@ -407,19 +347,6 @@ class SaleSubscriptionTemplate(models.Model):
     tag_ids = fields.Many2many('account.analytic.tag', 'sale_subscription_template_tag_rel', 'template_id', 'tag_id', string='Tags')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
-    website_url = fields.Char('Website URL', compute='_website_url', help='The full URL to access the document through the website.')
-
-    def _website_url(self):
-        for account in self:
-            account.website_url = '/my/template/%s' % self.id
-
-    @api.multi
-    def open_website_url(self):
-        return {
-            'type': 'ir.actions.act_url',
-            'url': self.website_url,
-            'target': 'self',
-        }
 
     def _compute_subscription_count(self):
         subscription_data = self.env['sale.subscription'].read_group(domain=[('template_id', 'in', self.ids), ('state', 'in', ['open', 'pending'])],
