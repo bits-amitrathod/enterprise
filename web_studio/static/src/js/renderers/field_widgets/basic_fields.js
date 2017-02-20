@@ -599,7 +599,7 @@ var FieldBinaryFile = AbstractFieldBinary.extend({
 });
 
 var PriorityWidget = AbstractField.extend({
-    supported_field_types: ['integer'],
+    supported_field_types: ['selection'],
     className: "o_priority",
     events: {
         'mouseover > a': function(e) {

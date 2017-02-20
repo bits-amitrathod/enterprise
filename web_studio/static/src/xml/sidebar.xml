@@ -416,7 +416,8 @@
             <input id="help" name="help" type="text" data-type="attributes"
                 t-att-value="widget.attrs.help"/>
         </div>
-        <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_text">
+        <div t-if="(widget.view_type === 'form' or (widget.view_type === 'list' and widget.view_attrs.editable))
+            and widget.has_placeholder" class="o_web_studio_sidebar_text">
             <label for="placeholder">Placeholder</label>
             <input id="placeholder" name="placeholder" type="text" placeholder="Placeholder Text" data-type="attributes"
                 t-att-value="widget.attrs.placeholder"/>
@@ -425,7 +426,7 @@
             <label for="widget">Widget</label>
             <select id="widget" name="widget">
                 <option t-att-selected="widget.attrs.widget ? undefined : 'selected'"></option>
-                <option t-foreach="widget.field_widgets" t-as="w" t-att-selected="widget.attrs.widget ===  w ? 'selected' : undefined">
+                <option t-foreach="widget.field_widgets" t-as="w" t-att-selected="widget.widget_name ===  w ? 'selected' : undefined">
                     <t t-esc="w"/>
                 </option>
             </select>
