@@ -4,7 +4,7 @@ odoo.define('web_studio.ViewEditorSidebar', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var DomainSelectorDialog = require("web.DomainSelectorDialog");
-var domain = require("web.domain");
+var Domain = require("web.Domain");
 var field_registry = require('web.field_registry');
 var relational_fields = require('web.relational_fields');
 var session = require("web.session");
@@ -409,14 +409,14 @@ return Widget.extend(FieldManagerMixin, {
             debugMode: session.debug,
         }).open();
         dialog.on("domain_selected", this, function (e) {
-            $input.val(domain.domainToString(e.data.domain)).change();
+            $input.val(Domain.prototype.arrayToString(e.data.domain)).change();
         });
     },
-    is_true: function(value) {
+    is_true: function (value) {
         return value !== 'false' && value !== 'False';
     },
     domain_to_str: function (domain) {
-        return domain.domainToString(domain);
+        return Domain.prototype.arrayToString(domain);
     },
     _get_new_attributes_from_modifiers: function (modifiers) {
         var newAttributes = {};
@@ -427,7 +427,7 @@ return Widget.extend(FieldManagerMixin, {
             } else { // modifier not applied or under certain condition, remove modifier attribute and use attrs if any
                 newAttributes[key] = "";
                 if (value !== false) {
-                    attrs.push(_.str.sprintf("\"%s\": %s", key, domain.domainToString(value)));
+                    attrs.push(_.str.sprintf("\"%s\": %s", key, Domain.prototype.arrayToString(value)));
                 }
             }
         });
