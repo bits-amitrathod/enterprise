@@ -121,7 +121,8 @@ class MrpEcoStage(models.Model):
     name = fields.Char('Name', required=True)
     sequence = fields.Integer('Sequence', default=_get_sequence)
     folded = fields.Boolean('Folded in kanban view')
-    allow_apply_change = fields.Boolean('Final Stage')
+    allow_apply_change = fields.Boolean(string='Allow to apply changes', help='Allow to apply changes from this stage.')
+    final_stage = fields.Boolean(string='Final Stage', help='Once the changes are applied, the ECOs will be moved to this stage.')
     type_id = fields.Many2one('mrp.eco.type', 'Type', required=True, default=lambda self: self.env['mrp.eco.type'].search([], limit=1))
     approval_template_ids = fields.One2many('mrp.eco.approval.template', 'stage_id', 'Approvals')
     approval_roles = fields.Char('Approval Roles', compute='_compute_approvals', store=True)
@@ -143,6 +144,15 @@ class MrpEco(models.Model):
     _description = 'Engineering Change Order'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    @api.model
+    def _get_type_selection(self):
+        types = [
+            ('product', 'Product Only'),
+            ('bom', 'Bill of Materials')]
+        if self.user_has_groups('mrp.group_mrp_routings'):
+            types += [('routing', 'Routing'), ('both', 'BoM and Routing')]
+        return types
+
     name = fields.Char('Reference', copy=False, required=True)
     user_id = fields.Many2one('res.users', 'Responsible', default=lambda self: self.env.user, track_visibility='onchange')
     type_id = fields.Many2one('mrp.eco.type', 'Type', required=True)
@@ -160,8 +170,8 @@ class MrpEco(models.Model):
     effectivity = fields.Selection([
         ('asap', 'As soon as possible'),
         ('date', 'At Date')], string='Effectivity',  # Is this English ?
-        default='asap', required=True)  # TDE: usefull ?
-    effectivity_date = fields.Datetime('Effectivity Date', track_visibility='onchange')
+        default='asap', required=True, help='Date on which the changes should be applied. For reference only.')
+    effectivity_date = fields.Datetime('Effectivity Date', track_visibility='onchange', help="For reference only.")
     approval_ids = fields.One2many('mrp.eco.approval', 'eco_id', 'Approvals', help='Approvals by stage')
 
     state = fields.Selection([
@@ -186,11 +196,7 @@ class MrpEco(models.Model):
         'Show Apply Change', compute='_compute_allow_apply_change')
 
     product_tmpl_id = fields.Many2one('product.template', "Product")
-    type = fields.Selection([
-        ('product', 'Product Only'),
-        ('bom', 'Bill of Materials'),
-        ('routing', 'Routing'),
-        ('both', 'BoM and Routing')], string='Apply on',
+    type = fields.Selection(selection=_get_type_selection, string='Apply on',
         default='product', required=True)
     bom_id = fields.Many2one(
         'mrp.bom', "Bill of Materials",
@@ -219,6 +225,7 @@ class MrpEco(models.Model):
         'mrp.document', 'Displayed Image',
         domain="[('res_model', '=', 'mrp.eco'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]")
     color = fields.Integer('Color')
+    active = fields.Boolean('Active', default=True, help="If the active field is set to False, it will allow you to hide the engineering change order without removing it.")
 
     @api.multi
     def _compute_attachments(self):
@@ -508,7 +515,11 @@ class MrpEco(models.Model):
                     })
         if self.type in ('product', 'bom', 'both'):
             self.product_tmpl_id.version = self.product_tmpl_id.version + 1
-        self.write({'state': 'done'})
+        vals = {'state': 'done'}
+        stage_id = self.env['mrp.eco.stage'].search([('final_stage', '=', True), ('type_id', '=', self.type_id.id)], limit=1).id
+        if stage_id:
+            vals['stage_id'] = stage_id
+        self.write(vals)
 
     @api.multi
     def action_see_attachments(self):

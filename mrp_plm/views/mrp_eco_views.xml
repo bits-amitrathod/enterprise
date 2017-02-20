@@ -139,7 +139,7 @@
                             <div class="container o_kanban_card_content o_visible">
                                 <div class="row">
                                     <div class="col-xs-6 o_kanban_primary_left">
-                                        <button class="btn btn-primary" name="%(mrp_eco_action)d" type="action" context="{'search_default_confirmed': 1, 'search_default_progress': 1}">
+                                        <button class="btn btn-primary" name="%(mrp_eco_action)d" type="action">
                                             <span><t t-esc="record.nb_ecos.value"/> Engineering Changes</span>
                                         </button>
                                     </div>
@@ -276,6 +276,7 @@
                     <filter name="confirmed" string="To Do" domain="[('state', '=', 'confirmed')]"/>
                     <filter name="progress" string="In Progress" domain="[('state', '=', 'progress')]"/>
                     <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
                     <separator/>
                     <filter name="bomchange" string="BoM" domain="[('type', '!=', 'routing')]"/>
                     <filter name="routingchange" string="Routing" domain="[('type', '!=', 'bom')]"/>
@@ -394,7 +395,7 @@
                 <field name="kanban_state" invisible="1"/>
                 <field name="allow_apply_change" invisible="1"/>
                 <header>
-                    <field name="stage_id" widget="statusbar" clickable="True"/>
+                    <field name="stage_id" widget="statusbar" clickable="True" attrs="{'invisible': [('active', '=', False)]}"/>
                     <button string="Start New Revision" name="action_new_revision" type="object"
                             class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
                     <button string="Approve" name="approve" type="object"
@@ -425,6 +426,9 @@
                                 <span>Rev :<field name="new_routing_revision" readonly="True"/> </span>
                             </div>
                         </div>
+                        </button>
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
                         </button>
                     </div>
                     <div class="oe_title">
@@ -683,6 +687,7 @@
                         <group>
                             <field name="folded"/>
                             <field name="allow_apply_change"/>
+                            <field name="final_stage"/>
                         </group>
                     </group>
                     <h2>Approvals</h2>
