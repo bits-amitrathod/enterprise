@@ -175,46 +175,48 @@
         .o_web_studio_field_type_container {
             .o-flex-display();
             .o-flex-flow(row, wrap);
+            .o-justify-content(space-between);
         }
         .o_web_studio_component {
             .o-text-overflow();
-            width: 49%;
-            max-width: 200px;
-            height: 35px;
-            font-weight: 500;
-            line-height: 2.1;
-            font-size: 0.95em;
-            margin-bottom: 8px;
-            padding: 5px;
-            cursor: pointer;
-            box-shadow: 0 1px 0 black;
+            .size(49%, 32px);
+            position: relative;
+            margin-bottom: 5px;
+            padding: 3px 5px 0 0;
+            max-width: 130px;
+            border-radius: 2px;
             background-color: @o-web-studio-bg-light;
+            box-shadow: 0 1px 1px black;
             color: @o-web-studio-bg-dark;
+            font: bold 11px/2.4 @font-family-serif;
+            cursor: pointer;
             &:hover {
                 background-color: white;
-            }
-            &:nth-child(odd) {
-                margin-right: 2%;
+                &:before {
+                    background: @o-web-studio-bg-light;
+                }
             }
             &.o_web_studio_debug:not(.ui-draggable-helper) {
-                height: 45px;
-                line-height: 1.6;
+                height: 40px;
+                line-height: 1.9;
             }
             .o_web_studio_component_description {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                font-style: italic;
-                font-size: 10px;
-                line-height: 1;
+                .o-text-overflow(block);
+                padding: 2px;
+                background: white;
+                font: bold 10px/1 @o-web-studio-font-family-monospace;
             }
             &:before {
-                opacity: 0.9;
-                margin: 5px 8px 100% 3px;
-                content: "";
-                background-repeat: no-repeat;
+                .size(33px, 150%);
                 display: block;
                 float: left;
+                margin: -3px 5px 0 0;
+                border-right: 1px solid lighten(@o-web-studio-bg-dark, 50%);
+                background-color: darken(@o-web-studio-bg-light, 5%);
+                content: "";
+            }
+            &:after {
+                .o-position-absolute(6px, auto, auto , 7px);
             }
             &.ui-draggable-helper {
                 background-color: white;
