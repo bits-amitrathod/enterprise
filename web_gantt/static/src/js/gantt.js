@@ -512,7 +512,7 @@ var GanttView = View.extend({
                 }
 
                 var project_id = _.uniqueId("gantt_project_");
-                var group_name = task.display_name ? formats.format_value(task.display_name, self.fields[group_bys[level]]) : "-";
+                var group_name = task.name ? formats.format_value(task.name, self.fields[group_bys[level]]) : "-";
                 // progress
                 var sum = _.reduce(task.percent, function(acc, num) { return acc+num; }, 0);
                 var progress = sum / task.percent.length / 100 || 0;
