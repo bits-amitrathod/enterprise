@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="quality.quality_point_view_form"/>
         <field name="arch" type="xml">
             <field name="picking_type_id" position="after">
-                <field name="workcenter_id" attrs="{'invisible': [('code', '!=', 'mrp_operation')]}" groups="mrp.group_mrp_routings"/>
+                <field name="operation_id" attrs="{'invisible': [('code', '!=', 'mrp_operation')]}" groups="mrp.group_mrp_routings" options="{'no_create': True}"/>
                 <field name="code" invisible="1"/>
             </field>
         </field>

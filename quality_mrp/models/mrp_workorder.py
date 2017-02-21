@@ -70,7 +70,7 @@ class MrpProductionWorkcenterLine(models.Model):
     def _create_checks(self):
         for wo in self:
             production = wo.production_id
-            points = self.env['quality.point'].search([('workcenter_id', '=', wo.workcenter_id.id),
+            points = self.env['quality.point'].search([('operation_id', '=', wo.operation_id.id),
                                                        ('picking_type_id', '=', production.picking_type_id.id),
                                                        '|', ('product_id', '=', production.product_id.id),
                                                        '&', ('product_id', '=', False), ('product_tmpl_id', '=', production.product_id.product_tmpl_id.id)])

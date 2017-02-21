@@ -7,8 +7,14 @@ from odoo import api, fields, models, _
 class QualityPoint(models.Model):
     _inherit = "quality.point"
 
-    workcenter_id = fields.Many2one('mrp.workcenter', 'Workcenter')
     code = fields.Selection(related='picking_type_id.code')  # TDE FIXME: necessary ?
+    operation_id = fields.Many2one('mrp.routing.workcenter', 'Step')
+
+    @api.onchange('product_id')
+    def _onchange_product(self):
+        bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', self.product_id.product_tmpl_id.id)])
+        routing_ids = bom_ids.mapped('routing_id.id')
+        return {'domain': {'operation_id': [('routing_id', 'in', routing_ids)]}}
 
 
 class QualityAlert(models.Model):

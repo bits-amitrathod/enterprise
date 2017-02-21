@@ -72,7 +72,7 @@ class MrpProduction(models.Model):
     @api.multi
     def _generate_moves(self):
         for production in self:
-            points = self.env['quality.point'].search([('workcenter_id', '=', False),
+            points = self.env['quality.point'].search([('operation_id', '=', False),
                                                            ('picking_type_id', '=', production.picking_type_id.id),
                                                            '|', ('product_id', '=', production.product_id.id),
                                                            '&', ('product_id', '=', False), ('product_tmpl_id', '=', production.product_id.product_tmpl_id.id)])
