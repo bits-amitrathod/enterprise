@@ -281,7 +281,7 @@
                 <filter string="Archived" domain="[('active','=',False)]" name="archive"/>
                 <separator/>
                 <filter string="Upcoming SLA Fail" domain="[('sla_active', '=', True),('deadline','!=',False),('deadline', '&lt;=', (datetime.date.today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]" name="upcoming_sla_fail" groups="helpdesk.group_use_sla"/>
-                <filter string="SLA Failed" domain="[('sla_fail','&lt;&gt;',False)]" name="sla_failed" groups="helpdesk.group_use_sla"/>
+                <filter string="SLA Failed" domain="[('sla_fail','!=',False)]" name="sla_failed" groups="helpdesk.group_use_sla"/>
                 <group expand="0" string="Group By">
                     <filter string="Assignee" name="assignee" context="{'group_by':'user_id'}"/>
                     <filter string="Team" name="team" context="{'group_by':'team_id'}"/>
@@ -306,7 +306,7 @@
                 <separator/>
                 <filter string="Archived" domain="[('active','=',False)]" name="archive"/>
                 <separator/>
-                <filter string="SLA Failed" domain="[('sla_fail','&lt;&gt;',False)]" groups="helpdesk.group_use_sla"/>
+                <filter string="SLA Failed" domain="[('sla_fail','!=',False)]" groups="helpdesk.group_use_sla"/>
                 <group expand="0" string="Group By">
                   <filter string="Assignee" name="assignee" context="{'group_by':'user_id'}"/>
                   <filter string="Team" name="team" context="{'group_by':'team_id'}"/>
@@ -611,7 +611,7 @@
         <field name="search_view_id" ref="helpdesk_ticket_view_search_analysis_closed"/>
         <field name="domain" eval="[('close_date', '>=', (DateTime.today() - relativedelta(hours=12)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
         <field name="context">{'search_default_my_ticket': True}</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                    eval="[(5, 0, 0),
                           (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_ticket_view_pivot_analysis')}),
                           (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_ticket_view_graph_analysis')})]"/>
@@ -624,7 +624,7 @@
         <field name="view_mode">pivot,graph</field>
         <field name="search_view_id" ref="helpdesk_ticket_view_search_analysis_closed"/>
         <field name="domain" eval="[('close_date', '>=', (DateTime.today() - relativedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
-        <field name="view_ids" 
+        <field name="view_ids"
                    eval="[(5, 0, 0),
                           (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_ticket_view_pivot_analysis')}),
                           (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_ticket_view_graph_analysis')})]"/>
@@ -705,7 +705,7 @@
                 <filter string="Closed Tickets" domain="[('stage_id.is_close','=',True)]" name="is_close"/>
                 <filter string="Archived" domain="[('active','=',False)]" name="archive"/>
                 <separator/>
-                <filter string="SLA Failed" domain="[('sla_fail','&lt;&gt;',False)]" name="sla_failed" groups="helpdesk.group_use_sla"/>
+                <filter string="SLA Failed" domain="[('sla_fail','!=',False)]" name="sla_failed" groups="helpdesk.group_use_sla"/>
                 <filter string="SLA Not Failed" domain="[('sla_fail','=',False)]" name="not_sla_failed" groups="helpdesk.group_use_sla"/>
                 <group expand="0" string="Group By">
                   <filter string="Assignee" name="assignee" context="{'group_by':'user_id'}"/>
@@ -725,7 +725,7 @@
        <field name="res_model">helpdesk.ticket</field>
        <field name="view_type">form</field>
        <field name="view_mode">pivot,graph</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_ticket_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_ticket_view_graph_analysis')})]"/>
@@ -740,7 +740,7 @@
         <field name="res_model">helpdesk.ticket</field>
         <field name="view_type">form</field>
         <field name="view_mode">pivot,graph</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_ticket_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_ticket_view_graph_analysis')})]"/>
@@ -779,7 +779,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">pivot,graph</field>
         <field name="search_view_id" ref="helpdesk_ticket_view_search_analysis"/>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_team_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_team_view_graph_analysis')})]"/>
@@ -792,7 +792,7 @@
         <field name="res_model">helpdesk.ticket</field>
         <field name="view_type">form</field>
         <field name="view_mode">pivot,graph</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_ticket_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_ticket_view_graph_analysis')})]"/>
@@ -806,7 +806,7 @@
         <field name="res_model">helpdesk.ticket</field>
         <field name="view_type">form</field>
         <field name="view_mode">pivot,graph</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_ticket_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_ticket_view_graph_analysis')})]"/>
@@ -823,7 +823,7 @@
         <field name="search_view_id" ref="helpdesk_ticket_view_search_analysis"/>
         <field name="domain">[('stage_id.is_close', '=', False)]</field>
         <field name="context">{'search_default_my_ticket': True, 'pivot_measures': ['close_hours', '__count__']}</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_team_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_team_view_graph_analysis')})]"/>
@@ -837,7 +837,7 @@
         <field name="search_view_id" ref="helpdesk_ticket_view_search_analysis"/>
         <field name="domain">[('stage_id.is_close', '=', False), ('priority', '=', '2')]</field>
         <field name="context">{'search_default_my_ticket': True, 'pivot_measures': ['close_hours', '__count__']}</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_team_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_team_view_graph_analysis')})]"/>
@@ -851,7 +851,7 @@
         <field name="search_view_id" ref="helpdesk_ticket_view_search_analysis"/>
         <field name="domain">[('stage_id.is_close', '=', False), ('priority', '=', '3')]</field>
         <field name="context">{'search_default_my_ticket': True, 'pivot_measures': ['close_hours', '__count__']}</field>
-        <field name="view_ids" 
+        <field name="view_ids"
                eval="[(5, 0, 0),
                       (0, 0, {'view_mode': 'pivot', 'view_id': ref('helpdesk_team_view_pivot_analysis')}),
                       (0, 0, {'view_mode': 'graph', 'view_id': ref('helpdesk_team_view_graph_analysis')})]"/>

@@ -329,7 +329,7 @@
             <field name="code">PRECUS</field>
             <field name="sequence" eval="1"/>
             <field name="parent_id" ref='account_financial_report_cashsummary_operating0'/>
-            <field name="domain" eval="[('journal_id.type', 'in', ['cash', 'bank']), ('account_id.internal_type', '=', 'receivable'), ('reconciled', '&lt;&gt;', True)]" />
+            <field name="domain" eval="[('journal_id.type', 'in', ['cash', 'bank']), ('account_id.internal_type', '=', 'receivable'), ('reconciled', '!=', True)]" />
             <field name="formulas">balance = -sum.amount_residual</field>
             <field name="level" eval="2" />
             <field name="groupby">partner_id</field>
@@ -351,7 +351,7 @@
             <field name="code">PRESUP</field>
             <field name="sequence" eval="3"/>
             <field name="parent_id" ref='account_financial_report_cashsummary_operating0'/>
-            <field name="domain" eval="[('journal_id.type', 'in', ['cash', 'bank']), ('account_id.internal_type', '=', 'payable'), ('reconciled', '&lt;&gt;', True)]" />
+            <field name="domain" eval="[('journal_id.type', 'in', ['cash', 'bank']), ('account_id.internal_type', '=', 'payable'), ('reconciled', '!=', True)]" />
             <field name="formulas">balance = -sum.amount_residual</field>
             <field name="level" eval="2" />
             <field name="groupby">partner_id</field>

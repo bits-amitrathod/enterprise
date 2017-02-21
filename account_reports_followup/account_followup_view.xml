@@ -38,7 +38,7 @@
 
                     <group string="Manual Action" attrs="{'invisible': [('manual_action', '=', False)]}">
                        <field name="manual_action_responsible_id"/>
-                       <field name="manual_action_note" attrs="{'required': [('manual_action', '&lt;&gt;', False)]}"
+                       <field name="manual_action_note" attrs="{'required': [('manual_action', '!=', False)]}"
                             placeholder="e.g. Call the customer, check if it's paid, ..."/>
                     </group>
 
