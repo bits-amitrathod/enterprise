@@ -4,14 +4,14 @@ odoo.define('web_grid.MockServer', function (require) {
 var MockServer = require('web.MockServer');
 
 MockServer.include({
-    _performRpc: function(route, args) {
+    _performRpc: function (route, args) {
         if (args.method === 'read_grid') {
             return this._mockReadGrid(args.model, args.kwargs);
         } else {
             return this._super(route, args);
         }
     },
-    _mockReadGrid: function(model, kwargs) {
+    _mockReadGrid: function (model, kwargs) {
         var self = this;
 
         // various useful dates
@@ -47,7 +47,7 @@ MockServer.include({
             if (moment(recordDate).isBetween(start, end, null, '[]')) {
                 // generate row
                 var values = {};
-                _.each(kwargs.row_fields, function(fieldName) {
+                _.each(kwargs.row_fields, function (fieldName) {
                     var field = self.data[model].fields[fieldName];
                     if (field.type === 'many2one') {
                         var relatedRecord = _.findWhere(self.data[field.relation].records, {id: record[fieldName]});
@@ -62,7 +62,7 @@ MockServer.include({
                 });
 
                 // generate cells
-                var current = start.clone();
+                current = start.clone();
                 var cells = [];
                 for (var j = 0; j < 7; j++) {
                     var isCurrent = moment(recordDate).isSame(current);
@@ -79,7 +79,7 @@ MockServer.include({
             }
         }
 
-        return {
+        return $.when({
             cols: columns,
             rows: rows,
             grid: grid,
@@ -91,7 +91,7 @@ MockServer.include({
                 default_date: nextAnchor,
                 grid_anchor: nextAnchor,
             },
-        };
+        });
     },
 });
 
