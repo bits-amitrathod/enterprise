@@ -26,7 +26,6 @@ var FieldMany2ManyTagsEmail = FieldMany2ManyTags.extend({
             args: [[
                 ["id", "=", id],
                 ["email", "=", false],
-                ["notify_email", "=", 'always']
             ]],
             on_success: function(partner_id) {
                 if (partner_id.length) {
