@@ -1,16 +1,14 @@
 odoo.define('voip.core', function(require) {
 "use strict";
 
-var bus = require('bus.bus').bus;
+var Class = require('web.Class');
 var core = require('web.core');
 var Model = require('web.Model');
-var web_client = require('web.web_client');
-var Class = core.Class;
-var mixins = core.mixins;
+
 var _t = core._t;
 
 var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
-    init: function(parent,options){
+    init: function(parent){
         core.mixins.PropertiesMixin.init.call(this,parent);
         this.onCall = false;
         this.incoming_call = false;
@@ -152,7 +150,7 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
                     remote: this.remote_audio
                 }
             }
-        };    
+        };
         try{
             //Make the call
             this.sip_session = this.ua.invite(this.current_number,call_options);
@@ -265,13 +263,13 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
             this._make_call();
         } else {
             if (SIP.WebRTC.isSupported()) {
-                /*      
-                    WebRTC method to get a media stream      
-                    The callbacks functions are getUserMediaSuccess, when the function succeed      
+                /*
+                    WebRTC method to get a media stream
+                    The callbacks functions are getUserMediaSuccess, when the function succeed
                     and getUserMediaFailure when the function failed
                     The _.bind is used to be ensure that the "this" in the callback function will still be the same
-                    and not become the object "window"        
-                */ 
+                    and not become the object "window"
+                */
                 var mediaConstraints = {
                     audio: true,
                     video: false
