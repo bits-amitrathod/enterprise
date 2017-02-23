@@ -21,8 +21,11 @@
         }
 
         .o_subscription_kanban_manage {
-            .o-position-absolute(@bottom: 0, @left: 0);
-            padding: @odoo-horizontal-padding/2 @odoo-horizontal-padding;
+            .o_kanban_manage_toggle_button {
+                font-size: 18px;
+                .o-position-absolute(@bottom: 0, @left: 0);
+                padding: @odoo-horizontal-padding/2 @odoo-horizontal-padding;
+            }
         }
         .o_kanban_card_manage_pane .o_kanban_card_manage_title {
             margin: 0;
