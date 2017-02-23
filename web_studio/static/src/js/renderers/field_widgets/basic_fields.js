@@ -620,6 +620,9 @@ var PriorityWidget = AbstractField.extend({
             e.stopPropagation();
         },
     },
+    is_set: function() {
+        return true;
+    },
     render_star: function(tag, is_full, tip) {
         return $(tag)
             .attr('title', tip)
@@ -629,10 +632,12 @@ var PriorityWidget = AbstractField.extend({
     },
     render: function() {
         var self = this;
-        var value = parseInt(this.value, 10);
+        var index_value = this.value ? _.findIndex(this.field.selection, function (v) {
+            return v[0] === self.value;
+        }) : 0;
         this.$el.empty();
-        _.each(this.field.selection.slice(1), function(choice) {
-            self.$el.append(self.render_star('<a href="#">', value >= parseInt(choice[0]), choice[1]));
+        _.each(this.field.selection.slice(1), function(choice, index) {
+            self.$el.append(self.render_star('<a href="#">', index_value >= index+1, choice[1]));
         });
     },
 });
