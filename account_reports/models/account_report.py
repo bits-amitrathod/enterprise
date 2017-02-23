@@ -635,7 +635,7 @@ class AccountReport(models.AbstractModel):
 
         x = 0
         for column in self.get_columns_name(options):
-            sheet.write(y_offset, x, column.get('name', '').replace('<br/>', ' '), title_style)
+            sheet.write(y_offset, x, column.get('name', '').replace('<br/>', ' ').replace('&nbsp;', ' '), title_style)
             x += 1
         y_offset += 1
         ctx = self.set_context(options)
