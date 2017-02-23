@@ -10,6 +10,7 @@ var QWeb = core.qweb;
 var FieldMany2Many = relational_fields.FieldMany2Many;
 
 var LunchPreviousOrdersWidget = FieldMany2Many.extend({
+    supported_field_types: [],
     className: 'row o_lunch_last_orders',
     events: {
         'click .o_add_button': 'set_order_line',

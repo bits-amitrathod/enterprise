@@ -84,7 +84,7 @@ var FieldChar = InputField.extend({
 });
 
 var FieldDate = InputField.extend({
-    supported_field_types: ['date', 'datetime'],
+    supported_field_types: ['date'],
     className: "o_form_field_date",
     tagName: "span",
     render_edit: function() {
@@ -785,7 +785,7 @@ var FieldBooleanButton = AbstractField.extend({
 });
 
 var FieldID = InputField.extend({
-    supported_field_types: ['integer'],
+    supported_field_types: ['id'],
     init: function() {
         this._super.apply(this, arguments);
         this.mode = 'readonly';

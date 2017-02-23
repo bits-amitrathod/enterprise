@@ -10,7 +10,6 @@ var _t = core._t;
 
 
 var SetBulletStatus = AbstractField.extend({
-    supported_field_types: ['selection'],
     init: function() {
         this._super.apply(this, arguments);
         this.classes = this.node_options && this.node_options.classes || {};
@@ -28,7 +27,6 @@ var SetBulletStatus = AbstractField.extend({
 });
 
 var TimeCounter = AbstractField.extend({
-    supported_field_types: ['float'],
     start_time_counter: function(){
         var self = this;
         clearTimeout(this.timer);
