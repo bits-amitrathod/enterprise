@@ -3,7 +3,7 @@ odoo.define('web_gantt.GanttRenderer', function (require) {
 
 var AbstractRenderer = require('web.AbstractRenderer');
 var core = require('web.core');
-var formats = require('web.formats');
+var field_utils = require('web.field_utils');
 var time = require('web.time');
 
 var _lt = core._lt;
@@ -169,7 +169,7 @@ return AbstractRenderer.extend({
                     task_stop = moment(task_start).clone().add(1, 'hours');
                 }
             } else { // we assume date_duration is defined
-                var tmp = formats.format_value(task[mapping.date_delay], task.fields[mapping.date_delay]);
+                var tmp = field_utils.format_field(task[mapping.date_delay], task.fields[mapping.date_delay]);
                 if (!tmp) {
                     return false;
                 }
@@ -297,7 +297,8 @@ return AbstractRenderer.extend({
                 }
 
                 var project_id = _.uniqueId("gantt_project_");
-                var group_name = task[mapping.name] ? formats.format_value(task[mapping.name], self.state.fields[grouped_by[level]]) : "-";
+                var group_name = task[mapping.name] ? field_utils.format_field(task[mapping.name], self.state.fields[grouped_by[level]]) : "-";
+
                 // progress
                 var sum = _.reduce(task.percent, function(acc, num) { return acc+num; }, 0);
                 var progress = sum / task.percent.length / 100 || 0;

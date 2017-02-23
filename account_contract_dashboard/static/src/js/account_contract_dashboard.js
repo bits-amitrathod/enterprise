@@ -6,7 +6,7 @@ var ControlPanelMixin = require('web.ControlPanelMixin');
 var core = require('web.core');
 var datepicker = require('web.datepicker');
 var Dialog = require('web.Dialog');
-var formats = require('web.formats');
+var field_utils = require('web.field_utils');
 var session = require('web.session');
 var utils = require('web.utils');
 var web_client = require('web.web_client');
@@ -603,7 +603,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
 
             chart.yAxis
                 .axisLabel('MRR')
-                .tickFormat(function(d) { return formats.format_value(d, { type : 'float' });});
+                .tickFormat(function(d) { return field_utils.format_float(d);});
 
             var svg = d3.select(div_to_display)
                 .append("svg")
@@ -765,7 +765,7 @@ var account_contract_dashboard_forecast = account_contract_dashboard_abstract.ex
                 .rotateLabels(-30);
 
             chart.yAxis
-                .tickFormat(function(d) { return formats.format_value(d, { type : 'float' });});
+                .tickFormat(function(d) { return field_utils.format_float(d);});
 
             var svg = d3.select(div_to_display)
                 .append("svg");
@@ -1429,7 +1429,7 @@ function load_chart(div_to_display, key_name, result, show_legend, show_demo) {
 
         chart.yAxis
             .axisLabel(key_name)
-            .tickFormat(function(d) { return formats.format_value(d, { type : 'float' });});
+            .tickFormat(function(d) { return field_utils.format_float(d);});
 
         var svg = d3.select(div_to_display).append("svg");
         if (show_legend){
