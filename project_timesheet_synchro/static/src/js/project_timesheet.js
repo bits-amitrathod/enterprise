@@ -1,12 +1,12 @@
 odoo.define('project_timeshee.ui', function (require ) {
     "use strict";
 
+    var Context = require('web.Context');
     var core = require('web.core');
     var session = require('web.session');
     var Widget = require('web.Widget');
     var time_module = require('web.time');
     var Model = require('web.Model');
-    var web_data = require('web.data');
     var local_storage = require('web.local_storage');
     var QWeb = core.qweb;
 
@@ -333,7 +333,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                     self.save_user_data();
 
                     //LS => SV sync
-                    var context = new web_data.CompoundContext({default_is_timesheet : true});
+                    var context = new Context({default_is_timesheet : true});
                     // For the aals that need to be synced, update unit_amount with minimal duration or round with time_unit.
                     //This feature is currently enabled. It might need to be moved to the backend.
                     _.each(self.data.account_analytic_lines, function(aal) {
