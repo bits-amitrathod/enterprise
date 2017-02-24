@@ -93,7 +93,7 @@ return ListRenderer.extend({
                     $('<i>').addClass('fa fa-plus')
             );
             $new_th.insertAfter($(th));
-
+            $(th).attr('data-node-id', self.node_id++);
         });
 
         // Insert a hook before the first column
@@ -104,7 +104,6 @@ return ListRenderer.extend({
                 $('<i>').addClass('fa fa-plus')
         );
         $new_th_before.prependTo($header.find('tr'));
-            $(th).attr('data-node-id', self.node_id++);
         return $header;
     },
 
