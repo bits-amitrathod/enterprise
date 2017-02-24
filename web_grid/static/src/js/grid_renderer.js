@@ -286,10 +286,10 @@ return AbstractRenderer.extend({
             return '';
         }
         if (this.cellWidget) {
-            return fieldUtils['format_' + this.cellWidget](value);
+            return fieldUtils.format[this.cellWidget](value);
         }
         var cellField = this.fields[this.state.cellField];
-        return fieldUtils.format_field(value, cellField);
+        return fieldUtils.format[cellField.type](value, cellField);
     },
 });
 

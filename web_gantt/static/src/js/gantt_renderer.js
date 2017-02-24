@@ -149,7 +149,6 @@ return AbstractRenderer.extend({
         var self = this;
 
         var mapping = this.state.mapping;
-        var fold_all = this.state.context.fold_all;
         var grouped_by = this.state.to_grouped_by;
 
         // Prepare the tasks
@@ -169,7 +168,8 @@ return AbstractRenderer.extend({
                     task_stop = moment(task_start).clone().add(1, 'hours');
                 }
             } else { // we assume date_duration is defined
-                var tmp = field_utils.format_field(task[mapping.date_delay], task.fields[mapping.date_delay]);
+                var field = task.fields[mapping.date_delay];
+                var tmp = field_utils.format[field.type](task[mapping.date_delay], field);
                 if (!tmp) {
                     return false;
                 }
@@ -297,8 +297,8 @@ return AbstractRenderer.extend({
                 }
 
                 var project_id = _.uniqueId("gantt_project_");
-                var group_name = task[mapping.name] ? field_utils.format_field(task[mapping.name], self.state.fields[grouped_by[level]]) : "-";
-
+                var field = self.state.fields[grouped_by[level]];
+                var group_name = task[mapping.name] ? field_utils.format[field.type](task[mapping.name], field) : "-";
                 // progress
                 var sum = _.reduce(task.percent, function(acc, num) { return acc+num; }, 0);
                 var progress = sum / task.percent.length / 100 || 0;
