@@ -180,6 +180,16 @@ return Widget.extend({
     get_fields_not_in_view: function() {
         // Remove fields that are already in the view
         var fields_not_in_view = _.omit(this.fields, Object.keys(this.fields_view.fields));
+
+        if (this.view_type === 'kanban') {
+            // as there is no widget image in the kanban field registry in
+            // the old views, we prevent to user to add a binary field in kanban
+            // TODO: remove this with the new views
+            fields_not_in_view = _.omit(fields_not_in_view, function(field) {
+                return field.type === 'binary';
+            });
+        }
+
         // Convert dict to array
         var list = _.map(fields_not_in_view, function(dict, key) {
             return _.extend({name: key}, dict);
