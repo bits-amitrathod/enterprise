@@ -23,7 +23,7 @@
                 <div id="wrap" class="oe_structure oe_empt">
                     <div class="row">
                         <section id="forms">
-                            <form action="/website_form/" method="post" class="s_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data" data-model_name="helpdesk.ticket" data-success_page="/page/website_helpdesk_form.ticket_submited">
+                            <form action="/website_form/" method="post" class="s_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data" data-model_name="helpdesk.ticket" data-success_page="/page/website_helpdesk_form.ticket_submited" data-editable-form="false">
                                 <input type="hidden" name="team_id" t-att-value="team and team.id or False"/>
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 <div class="form-group form-field o_website_form_required">
