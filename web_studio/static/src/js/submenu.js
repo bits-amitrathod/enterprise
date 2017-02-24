@@ -59,21 +59,22 @@ var SubMenu = Widget.extend({
 
         // do the corresponding action
         var title = $menu.text();
-        if ($menu.data('name') === 'views') {
-            return this.replace_action('action_web_studio_main', title, {
+        var name = $menu.data('name');
+        if (name === 'views') {
+            this.replace_action('action_web_studio_main', title, {
                 action: this.action,
                 clear_breadcrumbs: true,
                 disable_edition: true,
             });
-        } else {
+        } else if (_.contains(['automations', 'reports', 'acl', 'filters'], name)){
             var self = this;
-            return ajax.jsonRpc('/web_studio/get_studio_action', 'call', {
-                action_name: $menu.data('name'),
+            ajax.jsonRpc('/web_studio/get_studio_action', 'call', {
+                action_name: name,
                 model: this.action.res_model,
                 view_id: this.action.view_id[0],
             }).then(function (result) {
                 result.keep_state = true;
-                return self.replace_action(result, title, {
+                self.replace_action(result, title, {
                     clear_breadcrumbs: true,
                     disable_edition: true,
                 });
