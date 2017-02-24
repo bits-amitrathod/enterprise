@@ -102,7 +102,7 @@ var KanbanRecord = Widget.extend({
                     var widget = self.add_widget($field, field_name, field_widget);
                     self.sub_widgets.push(widget);
                     self._set_field_display(widget.$el, field_name);
-                } else {
+                } else if (core.debug) {
                     // the widget is not implemented
                     $field.replaceWith($('<span>', {
                         text: _.str.sprintf(_t('[No widget %s]'), field_widget),
