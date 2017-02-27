@@ -11,7 +11,7 @@ var QWeb = core.qweb;
 KanbanRecord.include({
     on_kanban_action_clicked: function(ev) {
         var self = this;
-        if (this.model === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
+        if (this.modelName === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
             ev.preventDefault();
             new Model('ir.attachment').query(['id', 'name'])
                .filter([['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']])

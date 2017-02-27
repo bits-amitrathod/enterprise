@@ -5,7 +5,7 @@ var KanbanRecord = require('web.KanbanRecord');
 
 KanbanRecord.include({
     on_card_clicked: function () {
-        if (this.model === 'stock.picking.type') {
+        if (this.modelName === 'stock.picking.type') {
             this.$('button').first().click();
         } else {
             this._super.apply(this, arguments);

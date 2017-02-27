@@ -2,25 +2,26 @@ odoo.define('website_sign.views_custo', function(require) {
     'use strict';
 
     var core = require('web.core');
-    var KanbanView = require("web.KanbanView");
+    var KanbanController = require("web.KanbanController");
     var KanbanColumn = require("web.KanbanColumn");
     var KanbanRecord = require("web.KanbanRecord");
-    var ListView = require("web.ListView");
+    var ListController = require("web.ListController");
     var Model = require('web.Model');
 
     var _t = core._t;
 
-    KanbanView.include(_make_custo("button.o-kanban-button-new"));
-    ListView.include(_make_custo(".o_list_button_add"));
+    KanbanController.include(_make_custo("button.o-kanban-button-new"));
+    ListController.include(_make_custo(".o_list_button_add"));
 
     KanbanColumn.include({
         start: function () {
             var def = this._super.apply(this, arguments);
-            var parent = this.getParent();
-            if (!parent || parent.model !== "signature.request") return def;
+            if (this.modelName !== "signature.request") {
+                return def;
+            }
 
             var self = this;
-            return $.when(def).done(function () {
+            return def.done(function () {
                 self.$el.sortable("destroy");
             });
         },
@@ -28,7 +29,7 @@ odoo.define('website_sign.views_custo', function(require) {
 
     KanbanRecord.include({
         on_card_clicked: function () {
-            if (this.model === "signature.request" || this.model === "signature.request.template") {
+            if (this.modelName === "signature.request" || this.modelName === "signature.request.template") {
                 var $link = this.$el.find(".o_sign_action_link");
                 if ($link.length) {
                     this.trigger_up('kanban_do_action', $link.data());
@@ -44,9 +45,9 @@ odoo.define('website_sign.views_custo', function(require) {
             renderButtons: function () {
                 this._super.apply(this, arguments);
 
-                if (this.model === "signature.request.template") {
+                if (this.modelName === "signature.request.template") {
                     this._website_sign_upload_file_button();
-                } else if (this.model === "signature.request") {
+                } else if (this.modelName === "signature.request") {
                     this._website_sign_create_request_button();
                 }
             },
