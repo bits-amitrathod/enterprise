@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from datetime import timedelta
 
 
@@ -15,6 +15,18 @@ class ResPartner(models.Model):
                                            help="The date before which no action should be taken.")
     unreconciled_aml_ids = fields.One2many('account.move.line', 'partner_id', domain=[('reconciled', '=', False),
                                            ('account_id.deprecated', '=', False), ('account_id.internal_type', '=', 'receivable')])
+
+    partner_ledger_label = fields.Char(compute='_compute_partner_ledger_label', help='The label to display on partner ledger button, in form view')
+
+    @api.depends('supplier', 'customer')
+    def _compute_partner_ledger_label(self):
+        for record in self:
+            if record.supplier == record.customer:
+                record.partner_ledger_label = _('Partner Ledger')
+            elif record.supplier:
+                record.partner_ledger_label = _('Supplier Ledger')
+            else:
+                record.partner_ledger_label = _('Customer Ledger')
 
     def get_partners_in_need_of_action(self, overdue_only=False):
         result = []
@@ -60,7 +72,7 @@ class ResPartner(models.Model):
         self.ensure_one()
         ctx = self.env.context.copy()
         ctx.update({
-            'model': 'account.followup.report', 
+            'model': 'account.followup.report',
             'lang': self.lang,
         })
         return {
@@ -69,3 +81,9 @@ class ResPartner(models.Model):
                 'context': ctx,
                 'options': {'partner_id': self.id},
             }
+
+    def open_partner_ledger(self):
+        return {'type': 'ir.actions.client',
+            'name': _('Partner Ledger'),
+            'tag': 'account_report',
+            'context': "{'model':'account.partner.ledger'}"}

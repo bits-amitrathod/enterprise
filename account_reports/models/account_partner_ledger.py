@@ -16,7 +16,7 @@ class ReportPartnerLedger(models.AbstractModel):
     filter_cash_basis = False
     filter_all_entries = False
     filter_unfold_all = False
-    filter_account_type = [{'id': 'receivable', 'name': _('Receivable'), 'selected': False}, {'id': 'payable', 'name': _('Payable'), 'selected': False}] 
+    filter_account_type = [{'id': 'receivable', 'name': _('Receivable'), 'selected': False}, {'id': 'payable', 'name': _('Payable'), 'selected': False}]
     #TODO add support for partner_id
 
     def get_templates(self):
@@ -92,9 +92,14 @@ class ReportPartnerLedger(models.AbstractModel):
             line_id = line_id.replace('partner_', '')
         context = self.env.context
         company_id = context.get('company_id') or self.env.user.company_id
+
+        #If a default partner is set, we only want to load the line referring to it.
+        if context.get('default_partner_id'):
+            line_id = context['default_partner_id']
+
         grouped_partners = self.with_context(date_from_aml=context['date_from'], date_from=context['date_from'] and company_id.compute_fiscalyear_dates(datetime.strptime(context['date_from'], DEFAULT_SERVER_DATE_FORMAT))['date_from'] or None).group_by_partner_id(options, line_id)  # Aml go back to the beginning of the user chosen range but the amount on the partner line should go back to either the beginning of the fy or the beginning of times depending on the partner
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name)
-        unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
+        unfold_all = context.get('print_mode') and not options.get('unfolded_lines') or context.get('default_partner_id')
         for partner in sorted_partners:
             debit = grouped_partners[partner]['debit']
             credit = grouped_partners[partner]['credit']
