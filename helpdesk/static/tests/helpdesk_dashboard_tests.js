@@ -67,6 +67,7 @@ QUnit.test('dashboard basic rendering', function(assert) {
         "should have written correct target");
     assert.strictEqual(kanban.$('.o_target_to_set').attr('value'), '12',
         "target's value is 12");
+    kanban.destroy();
 });
 
 QUnit.test('edit the target', function(assert) {
@@ -110,6 +111,7 @@ QUnit.test('edit the target', function(assert) {
 
     assert.strictEqual(kanban.$('.o_target_to_set').text().trim(), "1200",
         "should have correct target");
+    kanban.destroy();
 });
 
 });

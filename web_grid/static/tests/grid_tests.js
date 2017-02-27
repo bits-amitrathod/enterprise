@@ -80,7 +80,6 @@ QUnit.module('Views', {
             data: this.data,
             arch: this.arch,
             currentDate: "2017-01-25",
-            manualDestroy: true,
         });
 
         return concurrency.delay(0).then(function() {
@@ -152,7 +151,6 @@ QUnit.module('Views', {
                     '<field name="unit_amount" type="measure" widget="float_time"/>' +
                 '</grid>',
             currentDate: "2017-02-25",
-            manualDestroy: true,
             viewOptions: {
                 views: [[23, 'form']],
             },
@@ -220,7 +218,6 @@ QUnit.module('Views', {
                     '<field name="unit_amount" type="measure" widget="float_time"/>' +
                 '</grid>',
             currentDate: "2017-02-25",
-            manualDestroy: true,
         });
 
         return concurrency.delay(0).then(function() {
@@ -259,7 +256,6 @@ QUnit.module('Views', {
             data: this.data,
             arch: this.arch,
             currentDate: "2017-01-25",
-            manualDestroy: true,
         });
 
         return concurrency.delay(0).then(function() {

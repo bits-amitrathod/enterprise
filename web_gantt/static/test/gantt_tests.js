@@ -67,6 +67,7 @@ QUnit.module('Views', {
             assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 4,
                 "should now display 4 tasks");
 
+            gantt.destroy();
             done();
         });
     });
@@ -120,6 +121,7 @@ QUnit.module('Views', {
                 "should display the task name in the dom");
 
             assert.strictEqual(self.data.task.records.length, 7, "should have created a task");
+            gantt.destroy();
             done();
         });
     });
