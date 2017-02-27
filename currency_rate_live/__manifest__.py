@@ -12,6 +12,7 @@
     'data': [
         'views/account_config_setting_view.xml',
         'views/service_cron_data.xml',
+        'data/data.xml',
     ],
     'installable': True,
     'auto_install': True,

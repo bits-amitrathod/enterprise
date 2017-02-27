@@ -4,6 +4,7 @@ import datetime
 from lxml import etree
 import json
 from dateutil.relativedelta import relativedelta
+import re
 import requests
 import urllib
 
@@ -22,8 +23,26 @@ class ResCompany(models.Model):
         ('weekly', 'Weekly'),
         ('monthly', 'Monthly')],
         default='manually', string='Interval Unit')
-    currency_provider = fields.Selection([('yahoo', 'Yahoo'), ('ecb', 'European Central Bank')], default='ecb', string='Service Provider')
     currency_next_execution_date = fields.Date(string="Next Execution Date")
+    currency_provider = fields.Selection([('yahoo', 'Yahoo'), ('ecb', 'European Central Bank'), ('fta', 'Federal Tax Administration (Switzerland)')], default='ecb', string='Service Provider')
+
+    @api.model
+    def create(self, vals):
+        ''' Change the default provider depending on the company data.'''
+        if 'country_id' in vals and 'currency_provider' not in vals and self.env['res.country'].browse(vals['country_id']).code.upper() == 'CH':
+            vals['currency_provider'] = 'fta'
+        return super(ResCompany, self).create(vals)
+
+    @api.model
+    def set_special_defaults_on_install(self):
+        ''' At module isntallation, set the default provider depending on the company country.'''
+        all_companies = self.env['res.company'].search([])
+        for company in all_companies:
+            if company.country_id.code == 'CH':
+                # Sets FTA as the default provider for every swiss company that was already installed
+                company.currency_provider = 'fta'
+            else:
+                company.currency_provider = 'ecb'
 
     @api.multi
     def update_currency_rates(self):
@@ -34,9 +53,66 @@ class ResCompany(models.Model):
                 res = company._update_currency_yahoo()
             elif company.currency_provider == 'ecb':
                 res = company._update_currency_ecb()
+            elif company.currency_provider == 'fta':
+                res = company._update_currency_fta()
             if not res:
                 raise UserError(_('Unable to connect to the online exchange rate platform. The web service may be temporary down. Please try again in a moment.'))
 
+    def _update_currency_fta(self):
+        ''' This method is used to update the currency rates using Switzerland's
+        Federal Tax Administration service provider.
+        Rates are given against CHF.
+        '''
+        available_currencies = {}
+        for currency in self.env['res.currency'].search([]):
+            available_currencies[currency.name] = currency
+
+        request_url = 'http://www.afd.admin.ch/publicdb/newdb/mwst_kurse/wechselkurse.php'
+        try:
+            parse_url = requests.request('GET', request_url)
+        except:
+            return False
+
+        xml_tree = etree.fromstring(parse_url.content)
+        rates_dict = self._parse_fta_data(xml_tree, available_currencies)
+
+        for company in self:
+            base_currency = company.currency_id.name
+            base_currency_rate = rates_dict[base_currency]
+
+            for currency, rate in rates_dict.iteritems():
+                company_rate = rate / base_currency_rate
+                self.env['res.currency.rate'].create({'currency_id':available_currencies[currency].id, 'rate':company_rate, 'name':fields.Datetime.now(), 'company_id':company.id})
+
+        return True
+
+    def _parse_fta_data(self, xml_tree, available_currencies):
+        ''' Parses the data returned in xml by FTA servers and returns it in a more
+        Python-usable form.'''
+        rates_dict = {}
+        rates_dict['CHF'] = 1.0
+        data = xml2json_from_elementtree(xml_tree)
+
+        for child_node in data['children']:
+            if child_node['tag'] == 'devise':
+                currency_code = child_node['attrs']['code'].upper()
+
+                if currency_code in available_currencies:
+                    currency_xml = None
+                    rate_xml = None
+
+                    for sub_child in child_node['children']:
+                        if sub_child['tag'] == 'waehrung':
+                            currency_xml = sub_child['children'][0]
+                        elif sub_child['tag'] == 'kurs':
+                            rate_xml = sub_child['children'][0]
+                        if currency_xml and rate_xml:
+                            #avoid iterating for nothing on children
+                            break
+
+                    rates_dict[currency_code] = float(re.search('\d+',currency_xml).group()) / float(rate_xml)
+
+        return rates_dict
 
     def _update_currency_ecb(self):
         ''' This method is used to update the currencies by using ECB service provider.
@@ -124,7 +200,7 @@ class AccountConfigSettings(models.TransientModel):
     _inherit = 'account.config.settings'
 
     currency_interval_unit = fields.Selection(related="company_id.currency_interval_unit",)
-    currency_provider = fields.Selection(related="company_id.currency_provider",)
+    currency_provider = fields.Selection(related="company_id.currency_provider")
     currency_next_execution_date = fields.Date(related="company_id.currency_next_execution_date")
 
     @api.onchange('currency_interval_unit')

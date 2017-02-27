@@ -8,6 +8,7 @@ class CurrencyTestCase(TransactionCase):
     def test_live_currency_update(self):
         company_ecb = self.env['res.company'].create({'name': 'TEST ECB', 'currency_provider': 'ecb'})
         company_yah = self.env['res.company'].create({'name': 'TEST YAH', 'currency_provider': 'yahoo'})
+        company_fta = self.env['res.company'].create({'name': 'TEST FTA', 'currency_provider': 'fta'})
 
         #check the number of rates for USD
         self.currency_usd = self.env.ref('base.USD')
@@ -16,7 +17,8 @@ class CurrencyTestCase(TransactionCase):
         #get the live rate for both companies, each one with a different method
         res_ecb = company_ecb._update_currency_ecb()
         res_yah = company_yah._update_currency_yahoo()
+        res_fta = company_fta._update_currency_fta()
 
         #Check that both company call to company_ecb.update_currency_rates() has created a new rate for the USD (only if the request was a success)
         rates_number_again = len(self.currency_usd.rate_ids)
-        self.assertEqual(rates_number + int(res_ecb) + int(res_yah), rates_number_again)
+        self.assertEqual(rates_number + int(res_ecb) + int(res_yah) + int(res_fta), rates_number_again)
