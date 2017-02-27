@@ -9,20 +9,15 @@ var field_registry = require('web.field_registry');
 var relational_fields = require('web.relational_fields');
 var session = require("web.session");
 var Widget = require('web.Widget');
-var FieldManagerMixin = require('web.FieldManagerMixin');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var view_components = require('web_studio.view_components');
 
 var form_component_widget_registry = view_components.registry;
 var _t = core._t;
 var Many2ManyTags = relational_fields.FieldMany2ManyTags;
 
-return Widget.extend(FieldManagerMixin, {
+return Widget.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.ViewEditorSidebar',
-    custom_events: _.extend({}, FieldManagerMixin.custom_events, {
-        field_changed: function(event) {
-            this.change_field_group(event);
-        },
-    }),
     events: {
         'click .o_web_studio_new:not(.inactive)': function() {
             this.trigger_up('unselect_element');
@@ -51,20 +46,22 @@ return Widget.extend(FieldManagerMixin, {
         'focus .o_display_filter input#domain': 'open_domain_editor',
     },
 
-    init: function (parent, view_type, view_attrs, model, fields, fields_not_in_view, fields_in_view) {
-        FieldManagerMixin.init.call(this);
+    init: function (parent, params) {
+        // params contain view_type, view_attrs, fields, fields_not_in_view, fields_in_view
         this._super.apply(this, arguments);
+        StandaloneFieldManagerMixin.init.call(this);
         this.debug = core.debug;
-        this.mode = _.contains(['form', 'list', 'search'], view_type) ? 'new' : 'view';
-        this.view_type = view_type;
-        this.view_attrs = view_attrs || {};
-        this.model = model;
+        this.view_type = params.view_type;
+        this.mode = _.contains(['form', 'list', 'search'], this.view_type) ? 'new' : 'view';
+        this.view_attrs = params.view_attrs || {};
 
-        this.fields = fields;
+        this.modelName = params.modelName;
+
+        this.fields = params.fields;
         this.computed_ordered_fields();
 
-        this.fields_not_in_view = fields_not_in_view;
-        this.fields_in_view = fields_in_view;
+        this.fields_not_in_view = params.fields_not_in_view;
+        this.fields_in_view = params.fields_in_view;
         this.show_invisible = false;
 
         this.GROUPABLE_TYPES = ['many2one', 'char', 'boolean', 'selection', 'date', 'datetime'];
@@ -223,19 +220,21 @@ return Widget.extend(FieldManagerMixin, {
     },
     _append_widgets_many2many_groups: function() {
         var studio_groups = this.attrs.studio_groups ? JSON.parse(this.attrs.studio_groups) : [];
-        var record_id = this.datamodel.make_record('ir.model.fields', [{
+        var recordID = this.model.makeRecord('ir.model.fields', [{
             name: 'groups',
             relation: 'res.groups',
             relational_value: studio_groups,
             type: 'many2many',
             value: _.pluck(studio_groups, 'id'),
         }]);
-        var many2many_options = {
+        var record = this.model.get(recordID);
+        var options = {
             idForLabel: 'groups',
             mode: 'edit',
-            no_quick_create: true,  // FIXME: enable add option
+            no_quick_create: true,
         };
-        this.many2many = new Many2ManyTags(this, 'groups', this.datamodel.get(record_id), many2many_options);
+        this.many2many = new Many2ManyTags(this, 'groups', record, options);
+        this._registerWidget(recordID, 'groups', this.many2many);
         this.many2many.appendTo(this.$('.o_groups'));
     },
     _render_widgets_components: function (form_widgets, category_name) {
@@ -433,7 +432,16 @@ return Widget.extend(FieldManagerMixin, {
         });
         newAttributes.attrs = _.str.sprintf("{%s}", attrs.join(", "));
         return newAttributes;
-    }
+    },
+
+    /*
+     * Overwrite the method of the StandaloneFieldManagerMixin to call ´_checkFields´ each
+     * time the field widget changes.
+     */
+    _onFieldChanged: function (ev) {
+        StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
+        this.change_field_group(ev);
+    },
 });
 
 });

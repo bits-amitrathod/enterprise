@@ -4,10 +4,11 @@ odoo.define('web_studio.KanbanRecordEditor', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var KanbanRecord = require('web.KanbanRecord');
+var EditorMixin = require('web_studio.EditorMixin');
 
 var _t = core._t;
 
-var KanbanRecordEditor = KanbanRecord.extend({
+var KanbanRecordEditor = KanbanRecord.extend(EditorMixin, {
     nearest_hook_tolerance: 50,
 
     init: function(parent, state, options, all_fields, is_dashboard) {
@@ -113,7 +114,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
                 self.selected_node_id = $dropdown.data('node-id');
                 self.trigger_up('node_clicked', {node: node});
             });
-            this._set_style_events($dropdown);
+            this.setSelectable($dropdown);
         } else {
             var $top_left_hook = $('<div>')
                 .addClass('o_web_studio_add_dropdown o_dropdown_kanban dropdown')
@@ -206,7 +207,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
             self.selected_node_id = widget.$el.data('node-id');
             self.trigger_up('node_clicked', {node: node});
         });
-        this._set_style_events(widget.$el);
+        this.setSelectable(widget.$el);
 
         // insert a hook to add new fields
         var $hook = this._render_hook(node);
@@ -237,7 +238,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
             self.selected_node_id = $field.data('node-id');
             self.trigger_up('node_clicked', {node: node});
         });
-        this._set_style_events($field);
+        this.setSelectable($field);
 
         // insert a hook to add new fields
         var $hook = this._render_hook(node);
@@ -266,26 +267,9 @@ var KanbanRecordEditor = KanbanRecord.extend({
         });
         return $hook;
     },
-    _set_style_events: function($el) {
-        var self = this;
-        $el.click(function() {
-            self._reset_clicked_style();
-            $(this).addClass('o_clicked');
-        })
-        .mouseover(function(event) {
-            $(this).addClass('o_hovered');
-            event.stopPropagation();
-        })
-        .mouseout(function(event) {
-            $(this).removeClass('o_hovered');
-            event.stopPropagation();
-        });
-    },
-    _reset_clicked_style: function() {
-        this.$('.o_clicked').removeClass('o_clicked');
-    },
-    highlight_nearest_hook: function($helper, position) {
-        this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
+    highlightNearestHook: function($helper, position) {
+        EditorMixin.highlightNearestHook.apply(this, arguments);
+
         var $nearest_form_hook = this.$('.o_web_studio_hook')
             .touching({
                 x: position.pageX - this.nearest_hook_tolerance,

@@ -2,10 +2,12 @@ odoo.define('web_studio.studio_report_kanban', function (require) {
 "use strict";
 
 var core = require('web.core');
-var customize = require('web_studio.customize');
 var Dialog = require('web.Dialog');
-var Model = require('web.Model');
 var KanbanView = require('web.KanbanView');
+var Model = require('web.Model');
+var view_registry = require('web.view_registry');
+
+var customize = require('web_studio.customize');
 
 var _t = core._t;
 var utils = require('web_studio.utils');
@@ -87,7 +89,7 @@ var AddReportDialog = Dialog.extend({
     },
 });
 
-core.view_registry.add('studio_report_kanban', StudioReportKanbanView);
+view_registry.add('studio_report_kanban', StudioReportKanbanView);
 
 return StudioReportKanbanView;
 

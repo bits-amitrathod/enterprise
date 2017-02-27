@@ -7,6 +7,7 @@ var FieldManagerMixin = require('web.FieldManagerMixin');
 var form_common = require('web.view_dialogs');
 var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
 
 var customize = require('web_studio.customize');
@@ -160,29 +161,23 @@ var EditMenuDialog = Dialog.extend({
 // to avoid letting the user click on the save menu button
 // before the model is created.
 var EditMenuMany2One = Many2One.extend({
-    custom_events: _.extend({}, Many2One.prototype.custom_events, {
-        name_create: function (event) {
-            // Don't stop the event propagation
-            event.stopped = false;
-            var def = $.Deferred();
-            // Override the on_success and on_fail methods to add a deferred
-            // to trigger up when the creation start and end.
-            var on_success = event.data.on_success;
-            event.data.on_success = function (result) {
-                on_success(result);
-                def.resolve();
-            };
-            var on_fail = event.data.on_fail || function () {};
-            event.data.on_fail = function () {
-                on_fail();
-                def.resolve();
-            };
-            this.trigger_up('edit_menu_disable_save');
-            def.then(this.trigger_up.bind(this, 'edit_menu_enable_save'));
-        },
-    }),
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _quickCreate: function () {
+        this.trigger_up('edit_menu_disable_save');
+        var def = this._super.apply(this, arguments);
+        $.when(def).always(this.trigger_up.bind(this, 'edit_menu_enable_save'));
+
+    },
 });
-var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
+
+var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.EditMenu_new',
     custom_events: _.extend({}, Dialog.prototype.custom_events, FieldManagerMixin.custom_events, {
         edit_menu_disable_save: function () {
@@ -207,8 +202,8 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
                 close: true,
             }],
         };
-        FieldManagerMixin.init.call(this);
         this._super(parent, options);
+        StandaloneFieldManagerMixin.init.call(this);
     },
     start: function() {
         var self = this;
@@ -220,7 +215,7 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
         });
 
         return this._super.apply(this, arguments).then(function() {
-            var record_id = self.datamodel.make_record('ir.actions.act_window', [{
+            var record_id = self.model.makeRecord('ir.actions.act_window', [{
                 name: 'model',
                 relation: 'ir.model',
                 type: 'many2one',

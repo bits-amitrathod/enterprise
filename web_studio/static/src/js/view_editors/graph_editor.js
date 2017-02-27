@@ -1,10 +1,9 @@
 odoo.define('web_studio.GraphEditor', function (require) {
 "use strict";
 
-var OldViewRenderers = require('web_studio.OldViewRenderers');
+var GraphRenderer = require('web.GraphRenderer');
 
-return OldViewRenderers.extend({
-    view_type: 'graph',
+return GraphRenderer.extend({
 });
 
 });

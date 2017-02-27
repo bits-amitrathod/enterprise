@@ -5,12 +5,13 @@ var core = require('web.core');
 var Dialog = require('web.Dialog');
 var relational_fields = require('web.relational_fields');
 
-var FieldManagerMixin = require('web.FieldManagerMixin');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var utils = require('web_studio.utils');
 
+var Many2one = relational_fields.FieldMany2One;
 var _t = core._t;
 
-var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
+var NewButtonBoxDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.NewButtonBoxDialog',
 
     events: {
@@ -18,7 +19,6 @@ var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
     },
 
     init: function(parent, model) {
-        FieldManagerMixin.init.call(this);
         this.model = model;
         this.ICONS = utils.ICONS;
 
@@ -32,6 +32,7 @@ var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
         };
 
         this._super(parent, options);
+        StandaloneFieldManagerMixin.init.call(this);
 
         var self = this;
         this.opened().then(function () {
@@ -40,7 +41,7 @@ var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
         });
     },
     start: function() {
-        var record_id_many2one = this.datamodel.make_record('ir.actions.act_window', [{
+        var recordID = this.model.makeRecord('ir.actions.act_window', [{
             name: 'field',
             relation: 'ir.model.fields',
             type: 'many2one',
@@ -50,8 +51,10 @@ var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
             mode: 'edit',
             no_quick_create: true,
         };
-        var Many2one = relational_fields.FieldMany2One;
-        this.many2one = new Many2one(this, 'field', this.datamodel.get(record_id_many2one), options);
+        var record = this.model.get(recordID);
+        this.many2one = new Many2one(this, 'field', record, options);
+        this._registerWidget(recordID, 'field', this.many2one);
+
         this.many2one.appendTo(this.$('.js_many2one_field'));
         return this._super.apply(this, arguments);
     },

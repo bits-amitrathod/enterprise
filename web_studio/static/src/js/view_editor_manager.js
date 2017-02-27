@@ -1,21 +1,16 @@
 odoo.define('web_studio.ViewEditorManager', function (require) {
 "use strict";
 
+var BasicModel = require('web.BasicModel');
 var concurrency = require("web.concurrency");
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
-var field_registry = require('web.field_registry');
-var Model = require('web.Model');
+var view_registry = require('web.view_registry');
 var Widget = require('web.Widget');
 
 var bus = require('web_studio.bus');
 var customize = require('web_studio.customize');
-
-var FormRenderer = require('web.FormRenderer');
-var KanbanRenderer = require('web.KanbanRenderer');
-var ListRenderer = require('web.BasicListRenderer');
-var SearchRenderer = require('web_studio.SearchRenderer');
 
 var CalendarEditor = require('web_studio.CalendarEditor');
 var FormEditor = require('web_studio.FormEditor');
@@ -34,18 +29,6 @@ var ViewEditorSidebar = require('web_studio.ViewEditorSidebar');
 var XMLEditor = require('web_studio.XMLEditor');
 
 var _t = core._t;
-
-var Renderers = {
-    form: FormRenderer,
-    kanban: KanbanRenderer,
-    list: ListRenderer,
-    grid: GridEditor,
-    pivot: PivotEditor,
-    graph: GraphEditor,
-    calendar: CalendarEditor,
-    gantt: GanttEditor,
-    search: SearchRenderer,
-};
 
 var Editors = {
     form: FormEditor,
@@ -107,7 +90,7 @@ return Widget.extend({
     className: 'o_web_studio_view_editor',
     custom_events: {
         'node_clicked': 'toggle_editor_sidebar',
-        'unselect_element': 'unselect_element',
+        'unselect_element': '_onUnselectElement',
         'view_change': 'update_view',
         'email_alias_change': 'set_email_alias',
         'default_value_change': 'set_default_value',
@@ -121,21 +104,25 @@ return Widget.extend({
         'drag_component' : 'show_nearest_hook',
     },
 
-    init: function (parent, model, fields_view, view_type, dataset, options) {
-        var self = this;
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    init: function (parent, modelName, fieldsView, viewType, options) {
         this._super.apply(this, arguments);
-        this.model = model;
-        this.fields_view = fields_view;
-        this.view_type = view_type;
-        this.dataset = dataset;
-        this.view_id = this.fields_view.view_id;
-        this.view_attrs = this.fields_view.arch.attrs;
+
+        this.modelName = modelName;
+        this.fieldsView = fieldsView;
+        this.viewType = viewType;
+        this.view_id = this.fieldsView.view_id;
+        this.view_attrs = this.fieldsView.arch.attrs;
         this.mode = 'edition';  // the other mode is 'rendering' when using the XML editor
         this.editor = undefined;
+        this.renderer = undefined;
         this.sidebar = undefined;
         this.operations = [];
-        this.operations_undone = [];
-        this.expr_attrs = {
+        this.operationsUndone = [];
+        this.exprAttrs = {
             'field': ['name'],
             'label': ['for'],
             'page': ['name'],
@@ -147,39 +134,40 @@ return Widget.extend({
         this.ids = options.ids || [];
         this.res_id = options.res_id;
         this.chatter_allowed = options.chatter_allowed;
-        this.studio_view_id = options.studio_view_id;
-        this.studio_view_arch = options.studio_view_arch;
+        this.studioViewID = options.studioViewID;
+        this.studioViewArch = options.studioViewArch;
 
         this._apply_changes_mutex = new concurrency.Mutex();
 
         bus.on('undo_clicked', this, this.undo);
         bus.on('redo_clicked', this, this.redo);
     },
-    willStart: function() {
-        var self = this;
-        return $.when(
-            this.load_demo_data(),
-            this.get_fields(),
-            this._super.apply(this, arguments)
-        ).then(function (demo_data, fields) {
-            self.demo_data = demo_data;
-            self.fields = fields;
-            var fields_not_in_view = self.get_fields_not_in_view();
-            self.sidebar = new ViewEditorSidebar(self, self.view_type, self.view_attrs, self.model, fields, fields_not_in_view, self.fields_view.fields);
-        });
-    },
     start: function () {
         var self = this;
-        this.$renderer_container = $('<div>').addClass('o_web_studio_view_renderer');
-        this.$el.append(this.$renderer_container);
-        return $.when(this._super(), this.render_content()).then(function () {
-            return self.sidebar.prependTo(self.$el);
+        return this._super.apply(this, arguments).then(function () {
+            return $.when(
+                self.loadSidebar(),
+                self.loadView()
+            ).then(function (sidebar, editor) {
+                self.sidebar = sidebar;
+                self.sidebar.appendTo(self.$el);
+
+                self.editor = editor;
+                var $editorFragment = $('<div>', {
+                    class: 'o_web_studio_view_renderer',
+                });
+                self.editor.appendTo($editorFragment);
+                $editorFragment.appendTo(self.$el);
+            });
         });
     },
-
+    destroy: function() {
+        bus.trigger('undo_not_available');
+        bus.trigger('redo_not_available');
+    },
     get_fields_not_in_view: function() {
         // Remove fields that are already in the view
-        var fields_not_in_view = _.omit(this.fields, Object.keys(this.fields_view.fields));
+        var fields_not_in_view = _.omit(this.fields, Object.keys(this.fieldsView.fields));
 
         if (this.view_type === 'kanban') {
             // as there is no widget image in the kanban field registry in
@@ -194,88 +182,436 @@ return Widget.extend({
         var list = _.map(fields_not_in_view, function(dict, key) {
             return _.extend({name: key}, dict);
         });
+
         // Sort by field_description (alphabetically)
         return _.sortBy(list, function (field) {
             return field.string.toLowerCase();
         });
     },
-    get_fields: function() {
-        return data_manager.load_fields(this.dataset);
+    loadSidebar: function () {
+        var attrs = {
+            viewType: this.viewType,
+            view_attrs: this.view_attrs,
+            model: this.model,
+            fields: this.fields,
+            fields_not_in_view: this._get_fields_not_in_view(),
+            fields_in_view: this.fieldsView.fields,
+        };
+        return new ViewEditorSidebar(this, attrs);
     },
-    load_demo_data: function() {
-        var self = this;
+    loadView: function () {
+        var params = {
+            modelName: this.modelName,
+            context: {},  // TODO: no idea where to find all the params
+        };
+        var View = view_registry.get(this.viewType);
+        this.view = new View(this.fieldsView.arch, this.fieldsView.fields, params);
         var def;
-        var datamodel = new ViewModel();
-        var fields = this.fields_view.fields;
-
-        if (this.view_type === 'form') {
-            var domain = this.res_id ? [['id', '=', this.res_id]] : [];
-            // FIXME: this is an hack to load an existing record
-            def = datamodel.load(this.model, {domain: domain, limit: 1, fields: {id: {}}}).then(function (result) {
-                var data = datamodel.get(result);
-                var res_id = data.data[0] && data.data[0].res_id || false;
-                return datamodel.load(self.model, {id: res_id, fields: fields});
-            });
+        if (this.mode === 'edition') {
+            var Editor = Editors[this.viewType];
+            def = this.view.createStudioEditor(this, Editor);
         } else {
-            def = datamodel.load(this.model, {
-                fields: fields,
-                domain: this.ids.length ? [['id', 'in', this.ids]] : [],
-                grouped_by: [],
-                limit: 20,
-                many2manys: [], // fixme: find many2manys
-                m2m_context: [], // fixme: find m2m context
-            });
+            def = this.view.createStudioRenderer(this);
         }
-        return def.then(function (db_id) {
-            return datamodel.get(db_id);
-        });
+        return def;
     },
-    render_content: function (replace, options) {
+    updateEditor: function (replace, options) {
         var self = this;
-        var old_editor;
-        var editor;
-        var def;
-        var renderer_scrolltop = this.$renderer_container.scrollTop();
+        var oldEditor;
+        var renderer_scrolltop = this.$el.scrollTop();
         var local_state = this.editor ? this.editor.getLocalState() : false;
 
-        options = _.extend({}, options, {chatter_allowed: this.chatter_allowed}, {show_invisible: this.sidebar.show_invisible});
-        if (this.mode === 'edition') {
-            if (replace || !this.editor) {
-                var Editor = Editors[this.view_type];
-                editor = new Editor(this, this.fields_view.arch, this.fields_view.fields, this.demo_data, field_registry, options);
-            }
-        } else {
-            var Renderer = Renderers[this.view_type];
-            editor = new Renderer(this, this.fields_view.arch, this.fields_view.fields, this.demo_data, field_registry, options);
-        }
+        options = _.extend({}, options, {
+            chatter_allowed: this.chatter_allowed,
+            show_invisible: this.sidebar.show_invisible,
+            arch: this.fieldsView.arch,
+        });
 
-        if (this.editor) {
-            old_editor = this.editor;
-        }
-        if (editor) {
-            this.editor = editor;
+        oldEditor = this.editor;
+        return this.loadView().then(function (editor) {
+            self.editor = editor;
+            var fragment = document.createDocumentFragment();
             try {
-                // Starting renderers is synchronous, but it's not the case for old views
-                def = this.editor.appendTo($('<div>'));
-            } catch(e) {
+                return self.editor.appendTo(fragment).then(function () {
+                    self.$('.o_web_studio_view_renderer').append(fragment);
+
+                    oldEditor.destroy();
+
+                    // restore previous state
+                    self.$el.scrollTop(renderer_scrolltop);
+                    if (local_state) {
+                        self.editor.setLocalState(local_state);
+                    }
+                });
+            } catch (e) {
                 this.trigger_up('studio_error', {error: 'view_rendering'});
                 this.undo(true);
             }
-        }
-
-        return $.when(def).then(function() {
-            // As the old views rendering is not synchronous, it's destroyed after the new is ready.
-            // This could be simplified once all the new renderers are merged.
-            if (old_editor) {
-                old_editor.destroy();
-            }
-            self.editor.$el.appendTo(self.$renderer_container);
-            self.$renderer_container.scrollTop(renderer_scrolltop); // restore scroll position
-            if (local_state) {
-                self.editor.setLocalState(local_state);
-            }
         });
     },
+    do: function(op) {
+        this.operations.push(op);
+        this.operationsUndone = [];
+
+        return this.applyChanges(false, op.type === 'replace_arch');
+    },
+    undo: function(forget) {
+        if (!this.operations.length) {
+            return;
+        }
+        var op = this.operations.pop();
+        if (!forget) {
+            this.operationsUndone.push(op);
+        }
+
+        if (op.type === 'replace_arch') {
+            // as the whole arch has been replace (A -> B),
+            // when undoing it, the operation (B -> A) is added and
+            // removed just after.
+            var undo_op = jQuery.extend(true, {}, op);
+            undo_op.old_arch = op.new_arch;
+            undo_op.new_arch = op.old_arch;
+            this.operations.push(undo_op);
+            return this.applyChanges(true, true);
+        } else {
+            return this.applyChanges(false, false);
+        }
+    },
+    redo: function() {
+        if (!this.operationsUndone.length) {
+            return;
+        }
+        var op = this.operationsUndone.pop();
+        this.operations.push(op);
+
+        return this.applyChanges(false, op.type === 'replace_arch');
+    },
+    updateButtons: function() {
+        // Undo button
+        if (this.operations.length) {
+            bus.trigger('undo_available');
+        } else {
+            bus.trigger('undo_not_available');
+        }
+
+        // Redo button
+        if (this.operationsUndone.length) {
+            bus.trigger('redo_available');
+        } else {
+            bus.trigger('redo_not_available');
+        }
+    },
+    applyChanges: function(remove_last_op, from_xml) {
+        var self = this;
+
+        var last_op = this.operations.slice(-1)[0];
+
+        var def;
+        if (from_xml) {
+            def = this._apply_changes_mutex.exec(customize.edit_view_arch.bind(
+                customize,
+                last_op.view_id,
+                last_op.new_arch
+            )).fail(function() {
+                self.trigger_up('studio_error', {error: 'view_rendering'});
+            });
+        } else {
+            def = this._apply_changes_mutex.exec(customize.edit_view.bind(
+                customize,
+                this.view_id,
+                this.studioViewArch,
+                _.filter(this.operations, function(el) {return el.type !== 'replace_arch'; })
+            ));
+        }
+
+        return def.then(function (result) {
+            if (!result.fieldsView) {
+                self.trigger_up('studio_error', {error: 'wrong_xpath'});
+                return self.undo(true).then(function () {
+                    return $.Deferred().reject(); // indicate that the operation can't be applied
+                });
+            }
+            // "/web_studio/edit_view" returns "fields" only when we created a new field.
+            if (result.fields) {
+                self.fields = result.fields;
+            }
+            self.fieldsView = data_manager._postprocess_fvg(result.fieldsView);
+
+            // As the studio view arch is stored in this widget, if this view
+            // is updated directly with the XML editor, the arch should be updated.
+            // The operations may not have any sense anymore so they are dropped.
+            if (from_xml && last_op.view_id === self.studioViewID) {
+                self.studioViewArch = last_op.new_arch;
+                self.operations = [];
+                self.operationsUndone = [];
+            }
+            if (remove_last_op) { self.operations.pop(); }
+            self.updateButtons();
+
+            return self.updateEditor(true).then(function() {
+                // fields and fieldsView has been updated.
+                // So first we have to calculate which fields are in the view or not.
+                // Then we want to update sidebar who displays "existing fields"
+                self.sidebar.update(self.fields, self._get_fields_not_in_view(), self.fieldsView.fields, self.fieldsView.arch.attrs);
+            });
+        });
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    _add_element: function(type, node, xpath_info, position, tag) {
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.exprAttrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+            position: position,
+            node: {
+                tag: tag,
+                attrs: {
+                    name: 'studio_' + tag + '_' + utils.randomString(5),
+                }
+            },
+        });
+    },
+    _add_button: function(data) {
+        var self = this;
+        var dialog = new NewButtonBoxDialog(this, this.modelName).open();
+        dialog.on('saved', this, function(result) {
+            var def;
+            if (data.add_buttonbox) {
+                this.operations.push({
+                    type: 'buttonbox',
+                });
+            }
+            $.when(def).then(function () {
+                    self.do({
+                    type: data.type,
+                    target: {
+                        tag: 'div',
+                        attrs: {
+                            class: 'oe_button_box',
+                        }
+                    },
+                    position: 'inside',
+                    node: {
+                        tag: 'button',
+                        field: result.field_id,
+                        string: result.string,
+                        attrs: {
+                            class: 'oe_stat_button',
+                            icon: result.icon,
+                        }
+                    },
+                });
+            });
+        });
+    },
+    _add_page: function(type, node, xpath_info, position) {
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.exprAttrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+            position: position,
+            node: {
+                tag: 'page',
+                attrs: {
+                    string: 'New Page',
+                    name: 'studio_page_' + utils.randomString(5),
+                }
+            },
+        });
+    },
+    _add_field: function(type, field_description, node, xpath_info, position, new_attrs) {
+        var self = this;
+        var def_field_values;
+
+        // The field doesn't exist: field_description is the definition of the new field.
+        // No need to have field_description of an existing field
+        if (field_description) {
+            // "extend" avoids having the same reference in "this.operations"
+            // We can thus modify it without editing previous existing operations
+            field_description = _.extend({}, field_description, {
+                name: 'x_studio_field_' + utils.randomString(5),
+                model_name: this.model,
+            });
+            // Fields with requirements
+            // Open Dialog to precise the required fields for this field.
+            if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.ttype)) {
+                def_field_values = $.Deferred();
+                var dialog = new NewFieldDialog(this, this.modelName, field_description.ttype, this.fields).open();
+                dialog.on('field_default_values_saved', this, function(values) {
+                    def_field_values.resolve(values);
+                    dialog.close();
+                });
+                dialog.on('closed', this, function() {
+                    def_field_values.reject();
+                });
+            }
+            if (field_description.ttype === 'monetary') {
+                def_field_values = $.Deferred();
+                // Detect currency_id on the current model
+                new BasicModel("ir.model.fields").call("search", [[
+                    ['name', '=', 'currency_id'],
+                    ['model', '=', this.modelName],
+                    ['relation', '=', 'res.currency'],
+                ]]).then(function(data) {
+                    if (!data.length) {
+                        Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
+                        def_field_values.reject();
+                    } else {
+                        def_field_values.resolve();
+                    }
+                });
+            }
+        }
+        // When the field values is selected, close the dialog and update the view
+        $.when(def_field_values).then(function(values) {
+            self.do({
+                type: type,
+                target: {
+                    tag: node.tag,
+                    attrs: _.pick(node.attrs, self.exprAttrs[node.tag]),
+                    xpath_info: xpath_info,
+                },
+                position: position,
+                node: {
+                    tag: 'field',
+                    attrs: new_attrs,
+                    field_description: _.extend(field_description, values),
+                },
+            });
+        }).fail(function() {
+            self.updateEditor(true);
+        });
+    },
+    _add_chatter: function(data) {
+        this.do({
+            type: 'chatter',
+            model: this.modelName,
+            remove_message_ids: data.remove_message_ids,
+            remove_follower_ids: data.remove_follower_ids,
+        });
+    },
+    _add_kanban_dropdown: function() {
+        this.do({
+            type: 'kanban_dropdown',
+        });
+    },
+    _add_kanban_priority: function(data) {
+        this.do({
+            type: 'kanban_priority',
+            field: data.field,
+        });
+    },
+    _add_kanban_image: function(data) {
+        this.do({
+            type: 'kanban_image',
+            field: data.field,
+        });
+    },
+    _remove_element: function(type, node, xpath_info) {
+        // After the element removal, if the parent doesn't contain any children
+        // anymore, the parent node is also deleted (except if the parent is
+        // the only remaining node)
+        var parent_node = find_parent(this.fields_view.arch, node);
+        var is_root = !find_parent(this.fields_view.arch, parent_node);
+        if (parent_node.children.length === 1 && !is_root) {
+            node = parent_node;
+        }
+
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.exprAttrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+        });
+        this._onUnselectElement();
+    },
+    _edit_view_attributes: function(type, new_attrs) {
+        this.do({
+            type: type,
+            target: {
+                tag: this.viewType === 'list' ? 'tree' : this.viewType,
+            },
+            position: 'attributes',
+            new_attrs: new_attrs,
+        });
+    },
+    _edit_attributes_element: function(type, node, xpath_info, new_attrs) {
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.exprAttrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+            position: 'attributes',
+            node: node,
+            new_attrs: new_attrs,
+        });
+    },
+    _add_filter: function(type, node, xpath_info, position, new_attrs) {
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.exprAttrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+            position: position,
+            node: {
+                tag: 'filter',
+                attrs: new_attrs,
+            },
+        });
+    },
+    _add_separator: function (type, node, xpath_info, position) {
+        this.do({
+            type: type,
+            target: {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, this.exprAttrs[node.tag]),
+                xpath_info: xpath_info,
+            },
+            position: position,
+            node: {
+                tag: 'separator',
+                attrs: {
+                    name: 'studio_separator_' + utils.randomString(5),
+                },
+            },
+        });
+    },
+    _get_fields_not_in_view: function() {
+        // Remove fields that are already in the view
+        var fields_not_in_view = _.omit(this.fields, Object.keys(this.fieldsView.fields));
+        // Convert dict to array
+        var list = _.map(fields_not_in_view, function(dict, key) {
+            return _.extend({name: key}, dict);
+        });
+        // Sort by field_description (alphabetically)
+        return _.sortBy(list, 'string');
+    },
+
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+    _onUnselectElement: function () {
+        this.editor.selected_node_id = false;
+        this.editor.unselectedElements();
+    },
+
     toggle_editor_sidebar: function (event) {
         var node = event.data.node;
         var mode = node.tag;
@@ -283,12 +619,12 @@ return Widget.extend({
         var def;
         var params = {node: node};
         if (mode === 'field') {
-            var field = this.fields_view.fields[node.attrs.name];
+            var field = this.fieldsView.fields[node.attrs.name];
             params.field = field;
-            def = customize.get_default_value(this.model, node.attrs.name);
+            def = customize.get_default_value(this.modelName, node.attrs.name);
         }
         if (mode === 'div' && node.attrs.class === 'oe_chatter') {
-            def = customize.get_email_alias(this.model);
+            def = customize.get_email_alias(this.modelName);
         }
         var self = this;
         $.when(def).then(function(result) {
@@ -297,7 +633,7 @@ return Widget.extend({
         });
     },
     toggle_form_invisible: function (event) {
-        this.render_content(true, {show_invisible: event.data.show_invisible});
+        this.updateEditor(true, {show_invisible: event.data.show_invisible});
     },
     open_xml_editor: function () {
         var self = this;
@@ -305,17 +641,18 @@ return Widget.extend({
         this.XMLEditor = new XMLEditor(this, this.view_id, {
             position: 'left',
             doNotLoadLess: true,
+
         });
         this.mode = 'rendering';
 
-        $.when(this.render_content(), this.XMLEditor.prependTo(this.$el)).then(function() {
+        $.when(this.updateEditor(), this.XMLEditor.prependTo(this.$el)).then(function() {
             self.sidebar.$el.detach();
             $('body').addClass('o_in_studio_xml_editor');
         });
     },
     close_xml_editor: function () {
         this.mode = 'edition';
-        this.render_content(true);
+        this.updateEditor(true);
         this.XMLEditor.destroy();
         this.sidebar.prependTo(this.$el);
         $('body').removeClass('o_in_studio_xml_editor');
@@ -342,7 +679,7 @@ return Widget.extend({
             res_model: 'ir.values',
             target: 'current',
             views: [[false, 'list'], [false, 'form']],
-            domain: [['model', '=', this.model], ['key', '=', 'default']],
+            domain: [['model', '=', this.modelName], ['key', '=', 'default']],
         }, options);
     },
     open_view_form: function() {
@@ -360,9 +697,9 @@ return Widget.extend({
     open_field_form: function(event) {
         var self = this;
         var field_name = event.data.field_name;
-        var Fields = new Model('ir.model.fields');
+        var Fields = new BasicModel('ir.model.fields');
         Fields.query(['id'])
-              .filter([['model', '=', this.model], ['name', '=', field_name]])
+              .filter([['model', '=', this.modelName], ['name', '=', field_name]])
               .all().then(function(result) {
                 var res_id = result && result[0].id;
                 if (res_id) {
@@ -380,7 +717,7 @@ return Widget.extend({
         });
     },
     show_nearest_hook: function (event) {
-        var is_nearest_hook = this.editor.highlight_nearest_hook(event.data.$helper, event.data.position);
+        var is_nearest_hook = this.editor.highlightNearestHook(event.data.$helper, event.data.position);
         event.data.$helper.toggleClass('ui-draggable-helper-ready', is_nearest_hook);
     },
     update_view: function(event) {
@@ -390,8 +727,8 @@ return Widget.extend({
         var new_attrs = event.data.new_attrs || {};
         var position = event.data.position || 'after';
         var xpath_info;
-        if (node && !_.pick(node.attrs, this.expr_attrs[node.tag]).length) {
-            xpath_info = find_parents_positions(this.fields_view.arch, node);
+        if (node && !_.pick(node.attrs, this.exprAttrs[node.tag]).length) {
+            xpath_info = find_parents_positions(this.fieldsView.arch, node);
         }
 
         switch (structure) {
@@ -402,8 +739,11 @@ return Widget.extend({
             case 'group':
                 this._add_element(type, node, xpath_info, position, 'group');
                 break;
+            case 'buttonbox':
+                this._add_buttonbox();
+                break;
             case 'button':
-                this._add_button(event.data);
+                this._add_button(type);
                 break;
             case 'notebook':
                 this._add_element(type, node, xpath_info, position, 'notebook');
@@ -446,7 +786,7 @@ return Widget.extend({
     },
     set_email_alias: function(event) {
         var value = event.data.value;
-        customize.set_email_alias(this.model, value);
+        customize.set_email_alias(this.modelName, value);
     },
     set_default_value: function(event) {
         var data = event.data;
@@ -458,361 +798,6 @@ return Widget.extend({
                 }
             });
     },
-    do: function(op) {
-        this.operations.push(op);
-        this.operations_undone = [];
-
-        return this.apply_changes(false, op.type === 'replace_arch');
-    },
-    undo: function(forget) {
-        if (!this.operations.length) {
-            return;
-        }
-        var op = this.operations.pop();
-        if (!forget) {
-            this.operations_undone.push(op);
-        }
-
-        if (op.type === 'replace_arch') {
-            // as the whole arch has been replace (A -> B),
-            // when undoing it, the operation (B -> A) is added and
-            // removed just after.
-            var undo_op = jQuery.extend(true, {}, op);
-            undo_op.old_arch = op.new_arch;
-            undo_op.new_arch = op.old_arch;
-            this.operations.push(undo_op);
-            return this.apply_changes(true, true);
-        } else {
-            return this.apply_changes(false, false);
-        }
-    },
-    redo: function() {
-        if (!this.operations_undone.length) {
-            return;
-        }
-        var op = this.operations_undone.pop();
-        this.operations.push(op);
-
-        return this.apply_changes(false, op.type === 'replace_arch');
-    },
-    update_buttons: function() {
-        // Undo button
-        if (this.operations.length) {
-            bus.trigger('undo_available');
-        } else {
-            bus.trigger('undo_not_available');
-        }
-
-        // Redo button
-        if (this.operations_undone.length) {
-            bus.trigger('redo_available');
-        } else {
-            bus.trigger('redo_not_available');
-        }
-    },
-    apply_changes: function(remove_last_op, from_xml) {
-        var self = this;
-
-        var last_op = this.operations.slice(-1)[0];
-
-        var def;
-        if (from_xml) {
-            def = this._apply_changes_mutex.exec(customize.edit_view_arch.bind(
-                customize,
-                last_op.view_id,
-                last_op.new_arch
-            )).fail(function() {
-                self.trigger_up('studio_error', {error: 'view_rendering'});
-            });
-        } else {
-            def = this._apply_changes_mutex.exec(customize.edit_view.bind(
-                customize,
-                this.view_id,
-                this.studio_view_arch,
-                _.filter(this.operations, function(el) {return el.type !== 'replace_arch'; })
-            ));
-        }
-
-        return def.then(function (result) {
-            if (!result.fields_view) {
-                self.trigger_up('studio_error', {error: 'wrong_xpath'});
-                return self.undo(true).then(function () {
-                    return $.Deferred().reject(); // indicate that the operation can't be applied
-                });
-            }
-            // "/web_studio/edit_view" returns "fields" only when we created a new field.
-            if (result.fields) {
-                self.fields = result.fields;
-            }
-            self.fields_view = data_manager._postprocess_fvg(result.fields_view);
-
-            // As the studio view arch is stored in this widget, if this view
-            // is updated directly with the XML editor, the arch should be updated.
-            // The operations may not have any sense anymore so they are dropped.
-            if (from_xml && last_op.view_id === self.studio_view_id) {
-                self.studio_view_arch = last_op.new_arch;
-                self.operations = [];
-                self.operations_undone = [];
-            }
-            if (remove_last_op) { self.operations.pop(); }
-            self.update_buttons();
-
-            return self.load_demo_data().then(function(demo_data) {
-                self.demo_data = demo_data;
-                self.render_content(true);
-                // fields and fields_view has been updated.
-                // So first we have to calculate which fields are in the view or not.
-                // Then we want to update sidebar who displays "existing fields"
-                self.sidebar.update(self.fields, self.get_fields_not_in_view(), self.fields_view.fields, self.fields_view.arch.attrs);
-            });
-        });
-    },
-    unselect_element: function() {
-        if (this.editor) {
-            this.editor.selected_node_id = false;
-            if (this.editor._reset_clicked_style) {
-                // FIXME: this function should be written in an AbstractEditor
-                this.editor._reset_clicked_style();
-            }
-        }
-    },
-    _add_element: function(type, node, xpath_info, position, tag) {
-        this.do({
-            type: type,
-            target: {
-                tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
-                xpath_info: xpath_info,
-            },
-            position: position,
-            node: {
-                tag: tag,
-                attrs: {
-                    name: 'studio_' + tag + '_' + utils.randomString(5),
-                }
-            },
-        });
-    },
-    _add_button: function(data) {
-        var self = this;
-        var dialog = new NewButtonBoxDialog(this, this.model).open();
-        dialog.on('saved', this, function(result) {
-            var def;
-            if (data.add_buttonbox) {
-                this.operations.push({
-                    type: 'buttonbox',
-                });
-            }
-            $.when(def).then(function () {
-                    self.do({
-                    type: data.type,
-                    target: {
-                        tag: 'div',
-                        attrs: {
-                            class: 'oe_button_box',
-                        }
-                    },
-                    position: 'inside',
-                    node: {
-                        tag: 'button',
-                        field: result.field_id,
-                        string: result.string,
-                        attrs: {
-                            class: 'oe_stat_button',
-                            icon: result.icon,
-                        }
-                    },
-                });
-            });
-        });
-    },
-    _add_page: function(type, node, xpath_info, position) {
-        this.do({
-            type: type,
-            target: {
-                tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
-                xpath_info: xpath_info,
-            },
-            position: position,
-            node: {
-                tag: 'page',
-                attrs: {
-                    string: 'New Page',
-                    name: 'studio_page_' + utils.randomString(5),
-                }
-            },
-        });
-    },
-    _add_field: function(type, field_description, node, xpath_info, position, new_attrs) {
-        var self = this;
-        var def_field_values;
-
-        // The field doesn't exist: field_description is the definition of the new field.
-        // No need to have field_description of an existing field
-        if (field_description) {
-            // "extend" avoids having the same reference in "this.operations"
-            // We can thus modify it without editing previous existing operations
-            field_description = _.extend({}, field_description, {
-                name: 'x_studio_field_' + utils.randomString(5),
-                model_name: this.model,
-            });
-            // Fields with requirements
-            // Open Dialog to precise the required fields for this field.
-            if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.ttype)) {
-                def_field_values = $.Deferred();
-                var dialog = new NewFieldDialog(this, this.model, field_description.ttype, this.fields).open();
-                dialog.on('field_default_values_saved', this, function(values) {
-                    def_field_values.resolve(values);
-                    dialog.close();
-                });
-                dialog.on('closed', this, function() {
-                    def_field_values.reject();
-                });
-            }
-            if (field_description.ttype === 'monetary') {
-                def_field_values = $.Deferred();
-                // Detect currency_id on the current model
-                new Model("ir.model.fields").call("search", [[
-                    ['name', '=', 'currency_id'],
-                    ['model', '=', this.model],
-                    ['relation', '=', 'res.currency'],
-                ]]).then(function(data) {
-                    if (!data.length) {
-                        Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
-                        def_field_values.reject();
-                    } else {
-                        def_field_values.resolve();
-                    }
-                });
-            }
-        }
-        // When the field values is selected, close the dialog and update the view
-        $.when(def_field_values).then(function(values) {
-            self.do({
-                type: type,
-                target: {
-                    tag: node.tag,
-                    attrs: _.pick(node.attrs, self.expr_attrs[node.tag]),
-                    xpath_info: xpath_info,
-                },
-                position: position,
-                node: {
-                    tag: 'field',
-                    attrs: new_attrs,
-                    field_description: _.extend(field_description, values),
-                },
-            });
-        }).fail(function() {
-            self.render_content(true);
-        });
-    },
-    _add_chatter: function(data) {
-        this.do({
-            type: 'chatter',
-            model: this.model,
-            remove_message_ids: data.remove_message_ids,
-            remove_follower_ids: data.remove_follower_ids,
-        });
-    },
-    _add_kanban_dropdown: function() {
-        this.do({
-            type: 'kanban_dropdown',
-        });
-    },
-    _add_kanban_priority: function(data) {
-        this.do({
-            type: 'kanban_priority',
-            field: data.field,
-        });
-    },
-    _add_kanban_image: function(data) {
-        this.do({
-            type: 'kanban_image',
-            field: data.field,
-        });
-    },
-    _remove_element: function(type, node, xpath_info) {
-        // After the element removal, if the parent doesn't contain any children
-        // anymore, the parent node is also deleted (except if the parent is
-        // the only remaining node)
-        var parent_node = find_parent(this.fields_view.arch, node);
-        var is_root = !find_parent(this.fields_view.arch, parent_node);
-        if (parent_node.children.length === 1 && !is_root) {
-            node = parent_node;
-        }
-
-        this.do({
-            type: type,
-            target: {
-                tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
-                xpath_info: xpath_info,
-            },
-        });
-        this.unselect_element();
-    },
-    _edit_view_attributes: function(type, new_attrs) {
-        this.do({
-            type: type,
-            target: {
-                tag: this.view_type === 'list' ? 'tree' : this.view_type,
-            },
-            position: 'attributes',
-            new_attrs: new_attrs,
-        });
-    },
-    _edit_attributes_element: function(type, node, xpath_info, new_attrs) {
-        this.do({
-            type: type,
-            target: {
-                tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
-                xpath_info: xpath_info,
-            },
-            position: 'attributes',
-            node: node,
-            new_attrs: new_attrs,
-        });
-    },
-    _add_filter: function(type, node, xpath_info, position, new_attrs) {
-        this.do({
-            type: type,
-            target: {
-                tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
-                xpath_info: xpath_info,
-            },
-            position: position,
-            node: {
-                tag: 'filter',
-                attrs: new_attrs,
-            },
-        });
-    },
-    _add_separator: function (type, node, xpath_info, position) {
-        this.do({
-            type: type,
-            target: {
-                tag: node.tag,
-                attrs: _.pick(node.attrs, this.expr_attrs[node.tag]),
-                xpath_info: xpath_info,
-            },
-            position: position,
-            node: {
-                tag: 'separator',
-                attrs: {
-                    name: 'studio_separator_' + utils.randomString(5),
-                },
-            },
-        });
-    },
-    destroy: function() {
-        bus.trigger('undo_not_available');
-        bus.trigger('redo_not_available');
-
-        this._super.apply(this, arguments);
-    }
 });
 
 });

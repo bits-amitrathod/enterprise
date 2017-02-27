@@ -4,13 +4,13 @@ odoo.define('web_studio.NewFieldDialog', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var relational_fields = require('web.relational_fields');
-var FieldManagerMixin = require('web.FieldManagerMixin');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var ModelFieldSelector = require("web.ModelFieldSelector");
 
 var _t = core._t;
 var Many2one = relational_fields.FieldMany2One;
 
-var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
+var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.NewFieldDialog',
 
     init: function (parent, model, ttype, fields) {
@@ -25,11 +25,12 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
                 {text: _t("Cancel"), close: true},
             ],
         };
-        FieldManagerMixin.init.call(this);
         this._super(parent, options);
+        StandaloneFieldManagerMixin.init.call(this);
     },
     start: function() {
-        var record_id;
+        var recordID;
+        var record;
         var options = {
             mode: 'edit',
         };
@@ -37,28 +38,34 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
         this.$modal.addClass('o_web_studio_field_modal');
 
         if (this.ttype === 'one2many') {
-            record_id = this.datamodel.make_record('ir.model.fields', [{
+            recordID = this.model.makeRecord('ir.model.fields', [{
                 name: 'field',
                 relation: 'ir.model.fields',
                 type: 'many2one',
                 domain: [['relation', '=', this.model], ['ttype', '=', 'many2one']],
-            }]);
-            var record = this.datamodel.get(record_id);
-            // it's not possible to create an new many2one field for another model directly from here
-            record.fields.field.__attrs.can_create = false;
-
+            }], {
+                'field': {
+                    // it's not possible to create an new many2one field for
+                    // another model directly from here
+                    can_create: false,
+                }
+            });
+            record = this.model.get(recordID);
             this.many2one_field = new Many2one(this, 'field', record, options);
+            this._registerWidget(recordID, 'field', this.many2one_field);
             // TODO: temporary hack, will be fixed with the new views
             this.many2one_field.nodeOptions.no_create_edit = !core.debug;
             this.many2one_field.appendTo(this.$('.o_many2one_field'));
         } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
-            record_id = this.datamodel.make_record('ir.model', [{
+            recordID = this.model.makeRecord('ir.model', [{
                 name: 'model',
                 relation: 'ir.model',
                 type: 'many2one',
                 domain: [['transient', '=', false], ['abstract', '=', false]]
             }]);
-            this.many2one_model = new Many2one(this, 'model', this.datamodel.get(record_id), options);
+            record = this.model.get(recordID);
+            this.many2one_model = new Many2one(this, 'model', record, options);
+            this._registerWidget(recordID, 'model', this.many2one_model);
             // TODO: temporary hack, will be fixed with the new views
             this.many2one_model.nodeOptions.no_create_edit = !core.debug;
             this.many2one_model.appendTo(this.$('.o_many2one_model'));
@@ -70,8 +77,8 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
             // then we map to set the attribute 'name'
             // because this.fields have field names as keys and not attribute
             var many2one_fields = _.chain(this.fields)
-                .filter(function(f) {return f.type === 'many2one'})
-                .map(function(f){f.name = f.key; return f})
+                .filter(function(f) { return f.type === 'many2one'; })
+                .map(function(f){ f.name = f.key; return f; })
                 .value();
             var field_options = {
                 fields: many2one_fields,
@@ -85,9 +92,9 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
     save: function() {
         var values = {};
         if (this.ttype === 'one2many') {
-            values.relation_field_id = this.many2one_field.value;
+            values.relation_field_id = this.many2one_field.value.res_id;
         } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
-            values.relation_id = this.many2one_model.value;
+            values.relation_id = this.many2one_model.value.res_id;
             values.field_description = this.many2one_model.m2o_value;
         } else if (this.ttype === 'selection') {
             var selection_list = _.map(this.$('#selectionItems').val().split("\n"),function(value) {

@@ -1,10 +1,9 @@
 odoo.define('web_studio.PivotEditor', function (require) {
 "use strict";
 
-var OldViewRenderers = require('web_studio.OldViewRenderers');
+var PivotRenderer = require('web.PivotRenderer');
 
-return OldViewRenderers.extend({
-    view_type: 'pivot',
+return PivotRenderer.extend({
 });
 
 });

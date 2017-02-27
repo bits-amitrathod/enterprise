@@ -5,21 +5,23 @@ var core = require('web.core');
 var DomainSelectorDialog = require("web.DomainSelectorDialog");
 var Domain = require('web.Domain');
 var FormEditorHook = require('web_studio.FormEditorHook');
-var SearchRenderer = require('web_studio.SearchRenderer');
+var SearchView = require('web.SearchView');
 var session = require('web.session');
+
+var EditorMixin = require('web_studio.EditorMixin');
 var utils = require('web_studio.utils');
 
 var _t = core._t;
 
-var SearchEditor = SearchRenderer.extend({
+var SearchEditor = SearchView.extend(EditorMixin, {
     nearest_hook_tolerance: 50,
-    className: SearchRenderer.prototype.className + ' o_web_studio_search_view_editor',
-    custom_events: _.extend({}, SearchRenderer.prototype.custom_events, {
+    className: SearchView.prototype.className + ' o_web_studio_search_view_editor',
+    custom_events: _.extend({}, SearchView.prototype.custom_events, {
         'on_hook_selected': function() {
             this.selected_node_id = false;
         },
     }),
-    init: function(parent, arch, fields, state, widgets_registry, options) {
+    init: function() {
         this._super.apply(this, arguments);
         this.hook_nodes = {};
         this.node_id = 1;
@@ -141,7 +143,7 @@ var SearchEditor = SearchRenderer.extend({
         var formEditorHook = this._render_hook(node, 'after', 'tr', type);
         formEditorHook.appendTo($('<div>')); // start the widget
         $result.after(formEditorHook.$el);
-        this._set_style_events($result);
+        this.setSelectable($result);
         this._render_hook_before_first_child($result, type);
     },
     // Add hook before the first child of a table
@@ -199,8 +201,9 @@ var SearchEditor = SearchRenderer.extend({
     _openDomainDialog: function (model, value, option) {
         return new DomainSelectorDialog(this, model, value, option).open();
     },
-    highlight_nearest_hook: function($helper, position) {
-        this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
+    highlightNearestHook: function($helper, position) {
+        EditorMixin.highlightNearestHook.apply(this, arguments);
+
         var $nearest_form_hook = this.$('.o_web_studio_hook')
             .touching({
                 x: position.pageX - this.nearest_hook_tolerance,

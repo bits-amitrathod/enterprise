@@ -1,18 +1,19 @@
 odoo.define('web_studio.ListEditor', function (require) {
 "use strict";
 
-var ListRenderer = require('web.BasicListRenderer');
+var ListRenderer = require('web.ListRenderer');
+var EditorMixin = require('web_studio.EditorMixin');
 
-return ListRenderer.extend({
+return ListRenderer.extend(EditorMixin, {
     nearest_hook_tolerance: 200,
     className: ListRenderer.prototype.className + ' o_web_studio_list_view_editor',
     events: _.extend({}, ListRenderer.prototype.events, {
         'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': 'on_existing_column',
     }),
 
-    init: function(parent, arch, fields, state, widgets_registry, options) {
+    init: function (parent, state, params) {
         this._super.apply(this, arguments);
-        if (options && options.show_invisible) {
+        if (params.show_invisible) {
             this.invisible_columns = _.difference(this.arch.children, this.columns);
             this.columns = this.arch.children;
         } else {
@@ -176,8 +177,9 @@ return ListRenderer.extend({
         return $footer;
 
     },
-    highlight_nearest_hook: function($helper, position) {
-        this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
+    highlightNearestHook: function($helper, position) {
+        EditorMixin.highlightNearestHook.apply(this, arguments);
+
         var $nearest_list_hook = this.$('.o_web_studio_hook')
             .touching({
                 x: position.pageX - this.nearest_hook_tolerance,

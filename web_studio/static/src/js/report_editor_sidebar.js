@@ -5,12 +5,12 @@ var core = require('web.core');
 var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
-var FieldManagerMixin = require('web.FieldManagerMixin');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 
 
-return Widget.extend(FieldManagerMixin, {
+return Widget.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.ReportEditorSidebar',
-    custom_events: _.extend({}, FieldManagerMixin.custom_events, {
+    custom_events: _.extend({}, StandaloneFieldManagerMixin.custom_events, {
         field_changed: 'field_changed',
     }),
     events: {
@@ -19,8 +19,8 @@ return Widget.extend(FieldManagerMixin, {
         'click .o_web_studio_parameters': 'on_parameters',
     },
     init: function(parent, report) {
-        FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
+        StandaloneFieldManagerMixin.init.call(this);
         this.debug = core.debug;
         this.report = report;
     },
@@ -48,7 +48,7 @@ return Widget.extend(FieldManagerMixin, {
             var options;
             // Add many2many for groups_id
             var groups = self.report.groups_id;
-            record_id = self.datamodel.make_record('ir.model.fields', [{
+            record_id = self.model.makeRecord('ir.model.fields', [{
                 name: 'groups_id',
                 relation: 'res.groups',
                 relational_value: self.groups_info,
@@ -63,7 +63,7 @@ return Widget.extend(FieldManagerMixin, {
             self.many2many = new Many2ManyTags(self, 'groups_id', self.datamodel.get(record_id), options);
             self.many2many.appendTo(self.$('.o_groups'));
             // add many2one for paperformat_id
-            record_id = self.datamodel.make_record('ir.model.fields', [{
+            record_id = self.model.makeRecord('ir.model.fields', [{
                 name: 'paperformat_id',
                 relation: 'report.paperformat',
                 type: 'many2many',

@@ -3,7 +3,6 @@ odoo.define('web_studio.Main', function (require) {
 
 var core = require('web.core');
 var data = require('web.data');
-var data_manager = require('web.data_manager');
 var dom = require('web.dom');
 var form_common = require('web.view_dialogs');
 var Widget = require('web.Widget');
@@ -75,11 +74,9 @@ var Main = Widget.extend({
     edit_view: function (event) {
         var self = this;
         var context = _.extend({}, this.action.context, { studio: true}); // Add studio mode in session context instead?
-        var view_type = event.data.view_type;
-        var dataset = new data.DataSetSearch(this, this.action.res_model, context, this.action.domain);
-
         var options = {};
         var views = this.action.views.slice();
+        var view_type = event.data.view_type;
 
         // search is not in action.view
         options.load_filters = true;
@@ -89,9 +86,12 @@ var Main = Widget.extend({
         var view = _.find(views, function(el) { return el[1] === view_type; });
         var view_id = view && view[0];
 
-        // The default view needs to be created before `load_views` or the renderer will not be aware that a new view exists
+        // TODO: only to generate a context ; should be removed
+        var dataset = new data.DataSet(this, this.action.res_model, context);
+
+        // The default view needs to be created before `loadViews` or the renderer will not be aware that a new view exists
         return customize.get_studio_view_arch(this.action.res_model, view_type, view_id).then(function(studio_view) {
-            return data_manager.load_views(dataset, views, options).then(function (fields_views) { // todo: call with same arguments as ViewManager
+            return self.loadViews(self.action.res_model, dataset.get_context(), views, options).then(function (fields_views) {
                 var options = {
                     ids: self.ids,
                     res_id: self.res_id,
@@ -99,7 +99,7 @@ var Main = Widget.extend({
                     studio_view_id: studio_view.studio_view_id,
                     studio_view_arch: studio_view.studio_view_arch,
                 };
-                self.view_editor = new ViewEditorManager(self, self.action.res_model, fields_views[view_type], view_type, dataset, options);
+                self.view_editor = new ViewEditorManager(self, self.action.res_model, fields_views[view_type], view_type, options);
 
                 var fragment = document.createDocumentFragment();
                 return self.view_editor.appendTo(fragment).then(function () {

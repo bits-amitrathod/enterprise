@@ -1,16 +1,17 @@
 odoo.define('web_studio.ActionEditorSidebar', function (require) {
 "use strict";
 
+var BasicModel = require('web.BasicModel');
 var core = require('web.core');
 var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
 
-var FieldManagerMixin = require('web.FieldManagerMixin');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 
-return Widget.extend(FieldManagerMixin, {
+return Widget.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.ActionEditorSidebar',
-    custom_events: _.extend({}, FieldManagerMixin.custom_events, {
+    custom_events: _.extend({}, StandaloneFieldManagerMixin.custom_events, {
         field_changed: function(event) {
             this.field_changed(event);
         },
@@ -21,8 +22,8 @@ return Widget.extend(FieldManagerMixin, {
     },
 
     init: function (parent, action) {
-        FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
+        StandaloneFieldManagerMixin.init.call(this);
         this.debug = core.debug;
         this.action = action;
         this.action_attrs = {
@@ -54,7 +55,10 @@ return Widget.extend(FieldManagerMixin, {
         return this._super.apply(this, arguments).then(function() {
 
             var groups = self.action.groups_id;
-            var record_id = self.datamodel.make_record('ir.actions.act_window', [{
+            var model = new BasicModel(this, {
+                modelName: 'ir.actions.act_window',
+            });
+            var record_id = model.makeRecord('ir.actions.act_window', [{
                 name: 'groups_id',
                 relation: 'res.groups',
                 relational_value: self.groups_info,
@@ -66,7 +70,7 @@ return Widget.extend(FieldManagerMixin, {
                 no_quick_create: true,  // FIXME: enable add option
             };
             var Many2ManyTags = relational_fields.FieldMany2ManyTags;
-            self.many2many = new Many2ManyTags(self, 'groups_id', self.datamodel.get(record_id), many2many_options);
+            self.many2many = new Many2ManyTags(self, 'groups_id', model.get(record_id), many2many_options);
             self.many2many.appendTo(self.$el.find('.o_groups'));
         });
     },

@@ -1,10 +1,9 @@
 odoo.define('web_studio.GridEditor', function (require) {
 "use strict";
 
-var OldViewRenderers = require('web_studio.OldViewRenderers');
+var GridRenderer = require('web_grid.GridRenderer');
 
-return OldViewRenderers.extend({
-    view_type: 'grid',
+return GridRenderer.extend({
 });
 
 });
