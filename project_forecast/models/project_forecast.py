@@ -70,13 +70,12 @@ class ProjectForecast(models.Model):
         self.exclude = (self.project_id.name == "Leaves")
 
     @api.one
-    @api.depends('resource_hours', 'start_date', 'end_date', 'user_id.resource_ids.calendar_id')
+    @api.depends('resource_hours', 'start_date', 'end_date', 'user_id.resource_calendar_id')
     def _compute_time(self):
         start = fields.Datetime.from_string(self.start_date)
         stop = fields.Datetime.from_string(self.end_date)
-        calendar = self.mapped('user_id.resource_ids.calendar_id')
-        if calendar:
-            hours = calendar[0].get_working_hours(start, stop)
+        if self.user_id.resource_calendar_id:
+            hours = self.user_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
             if hours == 0:
                 raise UserError(_("You cannot set a user with no working time."))
             self.time = self.resource_hours * 100.0 / hours

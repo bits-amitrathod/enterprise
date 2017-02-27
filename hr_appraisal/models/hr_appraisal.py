@@ -115,7 +115,7 @@ class HrAppraisal(models.Model):
                 attendee_ids = [(4, manager.related_partner_id.id) for manager in appraisal.manager_ids if manager.related_partner_id]
                 if appraisal.employee_id.related_partner_id:
                     attendee_ids.append((4, appraisal.employee_id.related_partner_id.id))
-                values['name'] = _('Appraisal Meeting For %s') % appraisal.employee_id.name_related
+                values['name'] = _('Appraisal Meeting For %s') % appraisal.employee_id.name
                 values['allday'] = True
                 values['partner_ids'] = attendee_ids
                 appraisal.meeting_id = CalendarEvent.create(values)

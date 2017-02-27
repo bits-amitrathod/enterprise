@@ -48,19 +48,15 @@ class MrpProduction(models.Model):
                                         ('state', 'in', ('ready', 'pending', 'progress')),
                                         ('date_planned_finished', '>=', start_date.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT))], order='date_planned_start')
                 from_date = start_date
-                intervals = workcenter.calendar_id.attendance_ids and workcenter.calendar_id.interval_get(from_date, workorder.duration_expected / 60.0)
-                if intervals:
-                    to_date = intervals[-1][1]
-                else:
+                to_date = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id.plan_hours(workorder.duration_expected / 60.0, from_date)
+                if not to_date:
                     to_date = from_date + relativedelta(minutes=workorder.duration_expected)
                 # Check interval
                 for wo in wos:
                     if from_date < fields.Datetime.from_string(wo.date_planned_finished) and (to_date > fields.Datetime.from_string(wo.date_planned_start)):
                         from_date = fields.Datetime.from_string(wo.date_planned_finished)
-                        intervals = workcenter.calendar_id.attendance_ids and workcenter.calendar_id.interval_get(from_date, workorder.duration_expected / 60.0)
-                        if intervals:
-                            to_date = intervals[-1][1]
-                        else:
+                        to_date = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id.plan_hours(workorder.duration_expected / 60.0, from_date)
+                        if not to_date:
                             to_date = from_date + relativedelta(minutes=workorder.duration_expected)
                 workorder.write({'date_planned_start': from_date, 'date_planned_finished': to_date})
 
@@ -70,10 +66,8 @@ class MrpProduction(models.Model):
                     qty = min(workorder.operation_id.batch_size, workorder.qty_production)
                     cycle_number = math.ceil(qty / workorder.production_id.product_qty / workcenter.capacity)
                     duration = workcenter.time_start + cycle_number * workorder.operation_id.time_cycle * 100.0 / workcenter.time_efficiency
-                    intervals = workcenter.calendar_id.attendance_ids and workcenter.calendar_id.interval_get(from_date, duration / 60.0)
-                    if intervals:
-                        start_date = intervals[-1][1]
-                    else:
+                    to_date = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id.plan_hours(duration / 60.0, from_date)
+                    if not to_date:
                         start_date = from_date + relativedelta(minutes=duration)
 
     @api.multi
