@@ -1,5 +1,7 @@
 .o_web_studio_client_action {
     .o_web_studio_view_editor .o_web_studio_view_renderer .o_form_view {
+        @-web-studio-form-edition-gap: 10px;
+
         &:not(.o_form_nosheet) {
             padding: 0;
         }
@@ -8,6 +10,11 @@
         }
         .o_form_sheet, .oe_chatter {
             max-width: 100%;
+        }
+        .o_form_sheet > .o_group {
+            margin-left: -@-web-studio-form-edition-gap;
+            margin-right: -@-web-studio-form-edition-gap;
+            width: auto;
         }
         .oe_chatter {
             position: relative;
@@ -43,12 +50,12 @@
             }
             .o_inner_group {
                 border-collapse: separate;
-                border: 10px solid transparent;
+                border: @-web-studio-form-edition-gap solid transparent;
                 transition: border-color 0.5s;
 
                 tr:not(.o_web_studio_new_line) {
                     td {
-                        border: 5px solid transparent;
+                        border: @-web-studio-form-edition-gap*0.5 solid transparent;
                         border-bottom-width: 1px;
 
                         &.o_td_label {
@@ -62,9 +69,9 @@
                 }
 
                 &.o_clicked{
-                    padding: 5px;
+                    padding: @-web-studio-form-edition-gap*0.5;
                     outline: 2px solid @odoo-brand-optional;
-                    border: 5px solid fade(@odoo-brand-optional, 10%);
+                    border: @-web-studio-form-edition-gap*0.5 solid fade(@odoo-brand-optional, 10%);
 
                     tr:not(.o_web_studio_hovered) td > *:not(.o_horizontal_separator) {
                         opacity: 0.5;
