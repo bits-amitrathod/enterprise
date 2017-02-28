@@ -333,6 +333,9 @@ return Widget.extend({
         });
     },
     open_defaults: function() {
+        var options = {
+            keep_state: true,
+        };
         this.do_action({
             name: _t('Default Values'),
             type: 'ir.actions.act_window',
@@ -340,18 +343,19 @@ return Widget.extend({
             target: 'current',
             views: [[false, 'list'], [false, 'form']],
             domain: [['model', '=', this.model], ['key', '=', 'default']],
-            keep_state: true,
-        });
+        }, options);
     },
     open_view_form: function() {
+        var options = {
+            keep_state: true,
+        };
         this.do_action({
             type: 'ir.actions.act_window',
             res_model: 'ir.ui.view',
             res_id: this.view_id,
             views: [[false, 'form']],
             target: 'current',
-            keep_state: true,
-        });
+        }, options);
     },
     open_field_form: function(event) {
         var self = this;
@@ -362,14 +366,16 @@ return Widget.extend({
               .all().then(function(result) {
                 var res_id = result && result[0].id;
                 if (res_id) {
+                    var options = {
+                        keep_state: true,
+                    };
                     self.do_action({
                         type: 'ir.actions.act_window',
                         res_model: 'ir.model.fields',
                         res_id: res_id,
                         views: [[false, 'form']],
                         target: 'current',
-                        keep_state: true,
-                    });
+                    }, options);
                 }
         });
     },

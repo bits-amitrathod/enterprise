@@ -21,6 +21,7 @@ var WebsiteSubMenu = SubMenu.include({
                 action: this.action,
                 clear_breadcrumbs: true,
                 disable_edition: true,
+                keep_state: true,
             });
         }
     },

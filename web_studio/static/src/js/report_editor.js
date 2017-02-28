@@ -64,14 +64,16 @@ var ReportEditor = ReportAction.extend({
         customize.edit_report(event.data.report, args);
     },
     open_report_form: function() {
+        var options = {
+            keep_state: true,
+        };
         this.do_action({
             type: 'ir.actions.act_window',
             res_model: this.res_model,
             res_id: this.res_id,
             views: [[false, 'form']],
             target: 'current',
-            keep_state: true,
-        });
+        }, options);
     },
     open_xml_editor: function () {
         var self = this;

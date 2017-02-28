@@ -57,14 +57,16 @@ var ActionEditor = Widget.extend({
         return this.sidebar.prependTo(this.$el);
     },
     open_action_form: function() {
+        var options = {
+            keep_state: true,
+        };
         this.do_action({
             type: 'ir.actions.act_window',
             res_model: 'ir.actions.act_window',
             res_id: this.action.id,
             views: [[false, 'form']],
             target: 'current',
-            keep_state: true,
-        });
+        }, options);
     },
 });
 

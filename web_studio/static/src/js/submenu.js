@@ -73,10 +73,10 @@ var SubMenu = Widget.extend({
                 model: this.action.res_model,
                 view_id: this.action.view_id[0],
             }).then(function (result) {
-                result.keep_state = true;
                 self.replace_action(result, title, {
                     clear_breadcrumbs: true,
                     disable_edition: true,
+                    keep_state: true,
                 });
             });
         }
