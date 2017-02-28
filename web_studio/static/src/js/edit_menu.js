@@ -5,7 +5,6 @@ var core = require('web.core');
 var Dialog = require('web.Dialog');
 var FieldManagerMixin = require('web.FieldManagerMixin');
 var form_common = require('web.view_dialogs');
-var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
@@ -144,8 +143,7 @@ var EditMenuDialog = Dialog.extend({
 
     save: function () {
         var self = this;
-
-        return new Model('ir.ui.menu').call('customize', [], {to_move: this.to_move, to_delete: this.to_delete})
+        return this.performModelRPC('ir.ui.menu', 'customize', [], {to_move: this.to_move, to_delete: this.to_delete})
             .then(function(){
                 self._reload_menu_data();
                 self.close();

@@ -6,7 +6,6 @@ odoo.define('project_timeshee.ui', function (require ) {
     var session = require('web.session');
     var Widget = require('web.Widget');
     var time_module = require('web.time');
-    var Model = require('web.Model');
     var local_storage = require('web.local_storage');
     var QWeb = core.qweb;
 
@@ -255,8 +254,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             //
             self.clean_xml_ids().always(function() {
 
-                var account_analytic_line_model = new Model("account.analytic.line");
-                account_analytic_line_model.call("export_data_for_ui" , []).then(function(sv_data) {
+                self.performModelRPC("account.analytic.line", "export_data_for_ui" , []).then(function(sv_data) {
                     // SV => LS sync
                     var sv_aals = sv_data.aals.datas;
                     var sv_tasks = sv_data.tasks.datas;
@@ -348,7 +346,8 @@ odoo.define('project_timeshee.ui', function (require ) {
                             }
                         }
                     });
-                    account_analytic_line_model.call("import_ui_data" , [self.data.account_analytic_lines , self.data.tasks, self.data.projects], {context : context}).then(function(sv_response) {
+                    self.performModelRPC("account.analytic.line", "import_ui_data" ,
+                            [self.data.account_analytic_lines , self.data.tasks, self.data.projects], {context : context}).then(function(sv_response) {
                         // The entries that have been removed in the backend must be removed from the LS
                         if (sv_response.projects_to_remove.length) {
                             _.each(sv_response.projects_to_remove, function(project_to_remove_id) {
@@ -541,16 +540,14 @@ odoo.define('project_timeshee.ui', function (require ) {
             if(this.data.data_version === 1) {
                 def.resolve(); // Cleanup has already been performed.
             } else {
-                var account_analytic_line_model = new Model("account.analytic.line");
-                account_analytic_line_model.call("clean_xml_ids" , []).always(function(res) {
+                this.performModelRPC("account.analytic.line", "clean_xml_ids" , []).always(function(res) {
                     if (res === true) {
                         // Everything went fine, any local xml_ids with project_timesheet_synchro can be converted
                         self.process_all_ids(self.convert_module_to_export);
                         self.data.data_version = 1;
                         def.resolve();
                     } else {
-                        var ir_model_data_model = new Model("ir.model.data");
-                        ir_model_data_model.query(['id']).filter([
+                        var domain = [
                             ['module', '=', 'project_timesheet_synchro'],
                             ['model', 'in', [
                                 'mail.alias',
@@ -559,8 +556,9 @@ odoo.define('project_timeshee.ui', function (require ) {
                                 'project.task',
                                 'account.analytic.line'
                             ]]
-                        ]).all().then(function (imds) {
-                            if (imds.length === 0) { // there are no dirty ids on the server
+                        ];
+                        self.performModelRPC("ir.model.data", 'search', [domain]).then(function (ids) {
+                            if (ids.length === 0) { // there are no dirty ids on the server
                                 self.process_all_ids(self.convert_module_to_export);
                                 self.data.data_version = 1;
                                 def.resolve();
@@ -1824,8 +1822,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         },
         willStart: function() {
             var self = this;
-            var db = new Model('openerp.enterprise.database');
-            return db.call('get_instances', [], {}).then(function(res) {
+            return this.performModelRPC('openerp.enterprise.database', 'get_instances', [], {}).then(function(res) {
                 self.instances = {};
                 _.each(res, function(item) {
                     if(item.url){
@@ -1842,8 +1839,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             $('.pt_nav_sync a').addClass('pt_sync_in_progress');
             var url = event.target.dataset.url;
 
-            var token_model = new Model('auth.oauth2.token');
-            token_model.call('get_token', [{client_id: self.instances[url].uuid, scope: "userinfo"}], {}).then(function(res) {
+            this.performModelRPC('auth.oauth2.token', 'get_token', [{client_id: self.instances[url].uuid, scope: "userinfo"}], {}).then(function(res) {
                 var state =  JSON.stringify({
                     'd': self.instances[url].db_name,
                     'p':1, // 1 is the code to use Odoo as provider

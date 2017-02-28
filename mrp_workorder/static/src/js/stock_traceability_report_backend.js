@@ -3,7 +3,6 @@ odoo.define('mrp_workorder.stock_report_generic', function (require) {
 
 var core = require('web.core');
 var Widget = require('web.Widget');
-var Model = require('web.Model');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var session = require('web.session');
 var ReportWidget = require('mrp_workorder.ReportWidget');
@@ -45,14 +44,13 @@ var stock_report_generic = Widget.extend(ControlPanelMixin, {
     },
     start: function() {
         this.set_html();
-        var self = this;
         return this._super();
     },
     // Fetches the html and is previous report.context if any, else create it
     get_html: function() {
         var self = this;
         var defs = [];
-        return new Model('stock.traceability.report').call('get_html', [self.given_context]).then(function (result) {
+        return this.performModelRPC('stock.traceability.report', 'get_html', [self.given_context]).then(function (result) {
             self.html = result.html;
             self.renderButtons();
             defs.push(self.update_cp());

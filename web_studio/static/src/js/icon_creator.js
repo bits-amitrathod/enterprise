@@ -2,7 +2,6 @@ odoo.define('web_studio.IconCreator', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var session = require('web.session');
 var Widget = require('web.Widget');
 
@@ -123,7 +122,7 @@ return Widget.extend({
         this.uploaded_attachment_id = result.id;
 
         var self = this;
-        new Model('ir.attachment').call('read', [[this.uploaded_attachment_id], ['datas']]).then(function (res) {
+        this.performModelRPC('ir.attachment', 'read', [[this.uploaded_attachment_id], ['datas']]).then(function (res) {
             self.uploaded_image = ('data:image/png;base64,' + res[0].datas).replace(/\s/g, '');
             self.renderElement();
         });

@@ -3,7 +3,6 @@ odoo.define('mrp_workorder.ReportWidget', function (require) {
 
 var core = require('web.core');
 var Widget = require('web.Widget');
-var Model = require('web.Model');
 
 var QWeb = core.qweb;
 
@@ -96,7 +95,7 @@ var ReportWidget = Widget.extend({
              'parent_quant': parseInt(parent_quant) || false,
              'level': parseInt(row_level) + 30 || 1
         }
-        new Model('stock.traceability.report').call('get_lines', [parseInt(active_id, 10)], dict).then(function (lines) {// After loading the line
+        this.performModelRPC('stock.traceability.report', 'get_lines', [parseInt(active_id, 10)], dict).then(function (lines) {// After loading the line
             var line;
             for (line in lines) { // Render each line
                 $cursor.after(QWeb.render("report_mrp_line", {l: lines[line]}));

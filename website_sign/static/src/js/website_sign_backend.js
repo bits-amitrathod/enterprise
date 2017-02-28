@@ -6,7 +6,6 @@ odoo.define('website_sign.views_custo', function(require) {
     var KanbanColumn = require("web.KanbanColumn");
     var KanbanRecord = require("web.KanbanRecord");
     var ListController = require("web.ListController");
-    var Model = require('web.Model');
 
     var _t = core._t;
 
@@ -80,8 +79,7 @@ odoo.define('website_sign.views_custo', function(require) {
             var reader = new FileReader();
 
             reader.onload = function(e) {
-                var Template = new Model('signature.request.template');
-                Template.call('upload_template', [f.name, e.target.result])
+                self.performModelRPC('signature.request.template', 'upload_template', [f.name, e.target.result])
                         .then(function(data) {
                             self.do_action({
                                 type: "ir.actions.client",
@@ -119,7 +117,6 @@ odoo.define('website_sign.template', function(require) {
     var core = require('web.core');
     var Dialog = require('web.Dialog');
     var framework = require('web.framework');
-    var Model = require('web.Model');
     var session = require('web.session');
     var Widget = require('web.Widget');
     var PDFIframe = require('website_sign.PDFIframe');
@@ -246,19 +243,12 @@ odoo.define('website_sign.template', function(require) {
         },
 
         willStart: function() {
-            var ResUsers = new Model('res.users');
-            var ResPartners = new Model('res.partner');
-
             var self = this;
-            return $.when(this._super(), ResUsers.query(['partner_id'])
-                                                 .filter([['id', '=', session.uid]])
-                                                 .first()
-                                                 .then(function(user) {
-                                                     return ResPartners.query(['name'])
-                                                                       .filter([['id', '=', user.partner_id[0]]])
-                                                                       .first()
-                                                                       .then(prepare_reference);
-                                                 })
+            return $.when(this._super(),
+                this.performModelRPC('res.users', 'read', [[session.uid], ['partner_id']]).then(function(user) {
+                    return self.performModelRPC('res.partner', 'read', [[user.partner_id[0]], ['name']])
+                              .then(prepare_reference);
+                    })
             );
 
             function prepare_reference(partner) {
@@ -367,7 +357,7 @@ odoo.define('website_sign.template', function(require) {
             var reference = self.$referenceInput.val() || self.$referenceInput.attr('placeholder');
             var message = self.$messageInput.val();
             $.when.apply($, waitFor).then(function(result) {
-                (new Model('signature.request')).call('initialize_new', [
+                self.performModelRPC('signature.request', 'initialize_new', [
                     self.templateID, signers, followers,
                     reference, subject, message
                 ]).then(function(sr) {
@@ -413,8 +403,7 @@ odoo.define('website_sign.template', function(require) {
             var $linkInput = this.$('input').first();
             var linkStart = window.location.href.substr(0, window.location.href.indexOf('/web')) + '/sign/';
 
-            var Templates = new Model('signature.request.template');
-            return $.when(this._super(), Templates.call('share', [this.templateID]).then(function(link) {
+            return $.when(this._super(), this.performModelRPC('signature.request.template', 'share', [this.templateID]).then(function(link) {
                 $linkInput.val((link)? (linkStart + link) : '');
                 $linkInput.parent().toggle(!!link).next().toggle(!link);
             }));
@@ -762,46 +751,36 @@ odoo.define('website_sign.template', function(require) {
         perform_rpc: function() {
             var self = this;
 
-            var IrAttachments = new Model('ir.attachment');
-            var Templates = new Model('signature.request.template');
-            var SignatureItems = new Model('signature.item');
-            var Parties = new Model('signature.item.party');
-            var ItemTypes = new Model('signature.item.type');
+            var defTemplates = this.performModelRPC('signature.request.template', 'read', [[this.templateID]])
+                .then(function prepare_template(template) {
+                    self.signature_request_template = template;
+                    self.has_signature_requests = (template.signature_request_ids.length > 0);
 
-            var defTemplates = Templates.query()
-                                        .filter([['id', '=', this.templateID]])
-                                        .first()
-                                        .then(prepare_template);
+                    var defSignatureItems = self.performModelRPC('signature.item', 'read', [[template.id]])
+                        .then(function(signature_items) {
+                            self.signature_items = signature_items;
+                        });
+                    var defIrAttachments = self.performModelRPC('ir.attachment', 'search',
+                            [[template.attachment_id[0]], ['mimetype', 'name', 'datas_fname']])
+                        .then(function(attachment) {
+                            self.signature_request_template.attachment_id = attachment;
+                            self.isPDF = (attachment.mimetype.indexOf('pdf') > -1);
+                        });
 
-            var defParties = Parties.query()
-                                    .all()
-                                    .then(function(parties) { self.signature_item_parties = parties; });
+                    return $.when(defSignatureItems, defIrAttachments);
+                });
 
-            var defItemTypes = ItemTypes.query()
-                                        .all()
-                                        .then(function(types) { self.signature_item_types = types; });
+            var defParties = this.performModelRPC('signature.item.party', 'search_read')
+                .then(function(parties) {
+                    self.signature_item_parties = parties;
+                });
+
+            var defItemTypes = this.performModelRPC('signature.item.type', 'search_read')
+                .then(function(types) {
+                    self.signature_item_types = types;
+                });
 
             return $.when(defTemplates, defParties, defItemTypes);
-
-            function prepare_template(template) {
-                self.signature_request_template = template;
-                self.has_signature_requests = (template.signature_request_ids.length > 0);
-
-                var defSignatureItems = SignatureItems.query()
-                                                      .filter([['template_id', '=', template.id]])
-                                                      .all()
-                                                      .then(function(signature_items) { self.signature_items = signature_items; });
-
-                var defIrAttachments = IrAttachments.query(['mimetype', 'name', 'datas_fname'])
-                                                    .filter([['id', '=', template.attachment_id[0]]])
-                                                    .first()
-                                                    .then(function(attachment) {
-                                                        self.signature_request_template.attachment_id = attachment;
-                                                        self.isPDF = (attachment.mimetype.indexOf('pdf') > -1);
-                                                    });
-
-                return $.when(defSignatureItems, defIrAttachments);
-            }
         },
 
         start: function() {
@@ -899,30 +878,30 @@ odoo.define('website_sign.template', function(require) {
             var $majInfo = this.$('.o_sign_template_saved_info').first();
 
             var self = this;
-            var Template = new Model('signature.request.template');
-            Template.call('update_from_pdfviewer', [this.templateID, !!duplicate, data, this.$templateNameInput.val() || this.initialTemplateName])
-                    .then(function(templateID) {
-                        if(!templateID) {
-                            Dialog.alert(self, _t('Somebody is already filling a document which uses this template'), {
-                                confirm_callback: function() {
-                                    self.go_back_to_kanban();
-                                },
-                            });
-                        }
+            this.performModelRPC('signature.request.template', 'update_from_pdfviewer',
+                    [this.templateID, !!duplicate, data, this.$templateNameInput.val() || this.initialTemplateName])
+                .then(function(templateID) {
+                    if(!templateID) {
+                        Dialog.alert(self, _t('Somebody is already filling a document which uses this template'), {
+                            confirm_callback: function() {
+                                self.go_back_to_kanban();
+                            },
+                        });
+                    }
 
-                        if(duplicate) {
-                            self.do_action({
-                                type: "ir.actions.client",
-                                tag: 'website_sign.Template',
-                                name: _t("Duplicated Template"),
-                                context: {
-                                    id: templateID,
-                                },
-                            });
-                        } else {
-                            $majInfo.stop().css('opacity', 1).animate({'opacity': 0}, 1500);
-                        }
-                    });
+                    if(duplicate) {
+                        self.do_action({
+                            type: "ir.actions.client",
+                            tag: 'website_sign.Template',
+                            name: _t("Duplicated Template"),
+                            context: {
+                                id: templateID,
+                            },
+                        });
+                    } else {
+                        $majInfo.stop().css('opacity', 1).animate({'opacity': 0}, 1500);
+                    }
+                });
         },
     });
 
@@ -1030,7 +1009,6 @@ odoo.define('website_sign.document_edition', function(require) {
 
     var core = require('web.core');
     var Dialog = require('web.Dialog');
-    var Model = require('web.Model');
     var session = require('web.session');
     var DocumentBackend = require('website_sign.DocumentBackend');
     var website_sign_utils = require('website_sign.utils');
@@ -1041,6 +1019,7 @@ odoo.define('website_sign.document_edition', function(require) {
         template: "website_sign.add_followers_dialog",
 
         init: function(parent, requestID, options) {
+            var self = this;
             options = (options || {});
             options.title = options.title || _t("Send a copy to third parties");
             options.size = options.size || "medium";
@@ -1052,15 +1031,14 @@ odoo.define('website_sign.document_edition', function(require) {
                     var $button = $(e.target);
                     $button.prop('disabled', true);
 
-                    var self = this;
                     website_sign_utils.processPartnersSelection(this.$select).then(function(partners) {
-                        (new Model('signature.request')).call('add_followers', [self.requestID, partners])
-                                                        .then(function() {
-                                                            self.do_notify(_t("Success"), _t("A copy has been sent to the new followers."));
-                                                        })
-                                                        .always(function() {
-                                                            self.close();
-                                                        });
+                        self.performModelRPC('signature.request', 'add_followers', [self.requestID, partners])
+                            .then(function() {
+                                self.do_notify(_t("Success"), _t("A copy has been sent to the new followers."));
+                            })
+                            .always(function() {
+                                self.close();
+                            });
                     });
                 }});
 
@@ -1084,8 +1062,9 @@ odoo.define('website_sign.document_edition', function(require) {
             'click .o_sign_resend_access_button.fa': function(e) {
                 var $envelope = $(e.target);
                 $envelope.removeClass('fa fa-envelope').html('...');
-                (new Model('signature.request.item')).call('resend_access', [parseInt($envelope.parent('.o_sign_signer_status').data('id'))])
-                                                     .then(function() { $envelope.html(_t("Resent !")); });
+                this.performModelRPC('signature.request.item', 'resend_access',
+                        [parseInt($envelope.parent('.o_sign_signer_status').data('id'))])
+                    .then(function() { $envelope.html(_t("Resent !")); });
             },
         },
 
@@ -1123,7 +1102,7 @@ odoo.define('website_sign.document_edition', function(require) {
                 if(this.is_sent) {
                     var $cancelButton = $('<button/>', {html: _t("Cancel Request"), type: "button", 'class': 'btn btn-sm btn-default'});
                     $cancelButton.on('click', function() {
-                        (new Model('signature.request')).call('cancel', [self.documentID]).then(function() {
+                        self.performModelRPC('signature.request', 'cancel', [self.documentID]).then(function() {
                             self.go_back_to_kanban();
                         });
                     });

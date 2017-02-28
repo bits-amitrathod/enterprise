@@ -2,11 +2,7 @@ odoo.define('mrp_barcode.MrpBarcodeHandler', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
-var Dialog = require('web.Dialog');
 var FormViewBarcodeHandler = require('barcodes.FormViewBarcodeHandler');
-
-var _t = core._t;
 
 
 var WorkorderBarcodeHandler = FormViewBarcodeHandler.extend({
@@ -21,7 +17,6 @@ var WorkorderBarcodeHandler = FormViewBarcodeHandler.extend({
     },
     start: function() {
         this._super();
-        this.MrpWorkorder = new Model("mrp.workorder");
         this.form_view.options.disable_autofocus = 'true';
         if (this.form_view_initial_mode) {
             this.form_view.options.initial_mode = this.form_view_initial_mode;

@@ -346,7 +346,6 @@ odoo.define('website_sign.utils', function (require) {
 
     var ajax = require("web.ajax");
     var core = require('web.core');
-    var Model = require('web.Model');
 
     var _t = core._t;
 
@@ -390,7 +389,12 @@ odoo.define('website_sign.utils', function (require) {
                     return false;
                 }
 
-                (new Model('signature.item.party')).call('add', [name]).then(process_party);
+                ajax.rpc('/web/dataset/call_kw/signature.item.party/add', {
+                    model: 'signature.item.party',
+                    method: 'add',
+                    args: [name],
+                    kwargs: {}
+                }).then(process_party);
 
                 function process_party(partyID) {
                     parties[partyID] = {id: partyID, name: name};
@@ -475,10 +479,15 @@ odoo.define('website_sign.utils', function (require) {
                         return ['|', ['email', 'ilike', term], ['name', 'ilike', term]];
                     }).flatten(true).value();
                     domain.unshift(['email', '!=', '']);
-                    return (new Model('res.partner')).query(['name', 'email'])
-                                              .filter(domain)
-                                              .limit(30).offset(30 * (args.data.page - 1))
-                                              .all().done(args.success).fail(args.failure);
+                    ajax.rpc('/web/dataset/call_kw/res.partner/search_read', {
+                        model: 'res.partner',
+                        method: 'search_read',
+                        args: [domain, ['name', 'email']],
+                        kwargs: {
+                            limit: 30,
+                            offset: 30 * (args.data.page - 1)
+                        }
+                    }).done(args.success).fail(args.failure);
                 },
                 results: function(data) {
                     var last_page = data.length !== 30

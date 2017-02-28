@@ -276,7 +276,7 @@ return AbstractRenderer.extend({
     },
     _render_cell_inner: function (formatted_value, is_readonly) {
         if (is_readonly) {
-            return h('div.o_grid_show', formatted_value)
+            return h('div.o_grid_show', formatted_value);
         } else {
             return h('div.o_grid_input', {attrs: {contentEditable: "true"}}, formatted_value);
         }

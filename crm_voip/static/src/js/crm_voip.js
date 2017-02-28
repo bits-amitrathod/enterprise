@@ -5,7 +5,7 @@ var voip_core = require('voip.core');
 var basic_fields = require('web.basic_fields');
 var config = require('web.config');
 var core = require('web.core');
-var Model = require('web.Model');
+var ajax = require('web.ajax');
 var real_session = require('web.session');
 var SystrayMenu = require('web.SystrayMenu');
 var web_client = require('web.web_client');
@@ -121,7 +121,7 @@ var PhonecallWidget = Widget.extend({
     },
 
     schedule_call: function(){
-        new Model("crm.phonecall").call('schedule_another_phonecall', [this.id]).then(function(action){
+        return this.performModelRPC("crm.phonecall", 'schedule_another_phonecall', [this.id]).then(function(action){
             web_client.action_manager.do_action(action);
         });
     },
@@ -168,8 +168,7 @@ var PhonecallWidget = Widget.extend({
         var self = this;
         if(this.opportunity_id){
             //Call of the function xmlid_to_res_model_res_id to get the id of the opportunity's form view and not the lead's form view
-            new Model("ir.model.data")
-            .call("xmlid_to_res_model_res_id",["crm.crm_case_form_view_oppor"])
+            return this.performModelRPC("ir.model.data", "xmlid_to_res_model_res_id", ["crm.crm_case_form_view_oppor"])
             .then(function(data){
                 web_client.action_manager.do_action({
                     type: 'ir.actions.act_window',
@@ -182,8 +181,7 @@ var PhonecallWidget = Widget.extend({
                 });
             });
         }else{
-            var phonecall_model = new Model("crm.phonecall");
-            phonecall_model.call("action_button_to_opportunity", [[this.id]]).then(function(result){
+            return this.performModelRPC("crm.phonecall", "action_button_to_opportunity", [[this.id]]).then(function(result){
                 result.flags= {initial_mode: "edit",};
                 web_client.action_manager.do_action(result);
             });
@@ -370,7 +368,7 @@ var DialingPanel = Widget.extend({
         if(!this.in_call){
             var self = this;
             var number = this.$dial_dial_keypad_input.val();
-            new Model("crm.phonecall").call("get_new_phonecall", [number]).then(
+            return this.performModelRPC("crm.phonecall", "get_new_phonecall", [number]).then(
                 function(result){
                     var phonecall = result.phonecall[0];
                     self.toggle_keypad();
@@ -402,7 +400,7 @@ var DialingPanel = Widget.extend({
 
 
     sip_accepted: function(){
-        new Model("crm.phonecall").call("init_call", [this.current_phonecall]);
+        this.performModelRPC("crm.phonecall", "init_call", [this.current_phonecall]);
         this.$('.o_dial_transfer_button').removeAttr('disabled');
     },
 
@@ -421,7 +419,7 @@ var DialingPanel = Widget.extend({
     sip_cancel: function(){
         this.in_call = false;
         this.widgets[this.current_phonecall].set_state('pending');
-        new Model("crm.phonecall").call("rejected_call",[this.current_phonecall]);
+        this.performModelRPC("crm.phonecall", "rejected_call",[this.current_phonecall]);
         if(this.in_automatic_mode){
             this.next_call();
         }else{
@@ -437,7 +435,7 @@ var DialingPanel = Widget.extend({
 
     sip_rejected: function(){
         this.in_call = false;
-        new Model("crm.phonecall").call("rejected_call",[this.current_phonecall]);
+        this.performModelRPC("crm.phonecall", "rejected_call",[this.current_phonecall]);
         this.widgets[this.current_phonecall].set_state('pending');
         if(this.in_automatic_mode){
             this.next_call();
@@ -453,8 +451,7 @@ var DialingPanel = Widget.extend({
         this.$big_call_button.html('<i class="fa fa-phone"></i>');
         this.$hangup_transfer_buttons.attr('disabled','disabled');
         this.$(".popover").remove();
-        new Model("crm.phonecall")
-            .call("hangup_call", [this.current_phonecall])
+        this.performModelRPC("crm.phonecall", "hangup_call", [this.current_phonecall])
             .then(_.bind(this.hangup_call,this));
     },
 
@@ -478,7 +475,7 @@ var DialingPanel = Widget.extend({
             this.$().block({message: message + '<br/><button type="button" class="btn btn-danger btn-sm btn-configuration">Configuration</button>'});
             this.$('.btn-configuration').on("click",function(){
                 //Call in order to get the id of the user's preference view instead of the user's form view
-                new Model("ir.model.data").call("xmlid_to_res_model_res_id",["base.view_users_form_simple_modif"]).then(function(data){
+                self.performModelRPC("ir.model.data", "xmlid_to_res_model_res_id",["base.view_users_form_simple_modif"]).then(function(data){
                     web_client.action_manager.do_action(
                         {
                             name: "Change My Preferences",
@@ -583,9 +580,8 @@ var DialingPanel = Widget.extend({
 
     //Get the phonecalls and create the widget to put inside the panel
     search_phonecalls_status: function(refresh_by_user) {
-        var self = this;
         //get the phonecalls' information and populate the queue
-        new Model("crm.phonecall").call("get_list").then(_.bind(self.parse_phonecall,self,refresh_by_user));
+        this.performModelRPC("crm.phonecall", "get_list").then(_.bind(this.parse_phonecall,this,refresh_by_user));
     },
 
     parse_phonecall: function(refresh_by_user,result){
@@ -604,7 +600,7 @@ var DialingPanel = Widget.extend({
                 if(phonecall.state !== "done"){
                     self.display_in_queue(phonecall);
                 }else{
-                    new Model("crm.phonecall").call("remove_from_queue",[phonecall.id]);
+                    self.performModelRPC("crm.phonecall", "remove_from_queue",[phonecall.id]);
                 }
             }else{
                 self.display_in_queue(phonecall);
@@ -689,9 +685,8 @@ var DialingPanel = Widget.extend({
 
     //remove the phonecall from the queue
     remove_phonecall: function(phonecall_widget){
-        var phonecall_model = new Model("crm.phonecall");
         var self = this;
-        phonecall_model.call("remove_from_queue", [phonecall_widget.id]).then(function(){
+        return this.performModelRPC("crm.phonecall", "remove_from_queue", [phonecall_widget.id]).then(function(){
             self.search_phonecalls_status();
             self.$(".popover").remove();
         });
@@ -769,9 +764,8 @@ var DialingPanel = Widget.extend({
     },
 
     call_partner: function(number, partner_id){
-        var partner_model = new Model("res.partner");
         var self = this;
-        partner_model.call("create_call_in_queue", [partner_id, number]).then(function(phonecall_id){
+        return this.performModelRPC("res.partner", "create_call_in_queue", [partner_id, number]).then(function(phonecall_id){
             self.current_call_deferred = $.Deferred();
             self.search_phonecalls_status();
             self.current_call_deferred.done(function(){
@@ -784,9 +778,8 @@ var DialingPanel = Widget.extend({
     },
 
     call_opportunity: function(number, opportunity_id){
-        var lead_model = new Model("crm.lead");
         var self = this;
-        lead_model.call("create_call_form_view", [opportunity_id]).then(function(phonecall_id){
+        return this.performModelRPC("crm.lead", "create_call_form_view", [opportunity_id]).then(function(phonecall_id){
             self.current_call_deferred = $.Deferred();
             self.search_phonecalls_status();
             self.current_call_deferred.done(function(){
@@ -830,9 +823,12 @@ var reload_panel = function (parent, action) {
     var params = action.params || {};
     if(params.go_to_opp){
         //Call of the function xmlid_to_res_model_res_id to get the id of the opportunity's form view and not the lead's form view
-        new Model("ir.model.data")
-            .call("xmlid_to_res_model_res_id",["crm.crm_case_form_view_oppor"])
-            .then(function(data){
+        return ajax.rpc('/web/dataset/call_kw/ir.model.data/xmlid_to_res_model_res_id', {
+                model : "ir.model.data",
+                method: "xmlid_to_res_model_res_id",
+                args: ["crm.crm_case_form_view_oppor"],
+                kwargs: {}
+            }).then(function(data){
                 web_client.action_manager.do_action({
                     type: 'ir.actions.act_window',
                     res_model: "crm.lead",
@@ -934,10 +930,10 @@ Phone.include({
 
 WebClient.include({
     show_application: function(){
+        var self = this;
         // To get the formatCurrency function from the server
         return this._super.apply(this, arguments).then(function () {
-            new Model("res.currency")
-                .call("get_format_currencies_js_function")
+            return self.performModelRPC("res.currency", "get_format_currencies_js_function")
                 .then(function(data) {
                     var formatCurrency = new Function("amount, currency_id", data);
                     self.DialingPanel = new DialingPanel(web_client, formatCurrency);

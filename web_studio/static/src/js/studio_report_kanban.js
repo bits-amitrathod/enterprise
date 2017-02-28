@@ -4,13 +4,11 @@ odoo.define('web_studio.studio_report_kanban', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var KanbanView = require('web.KanbanView');
-var Model = require('web.Model');
 var view_registry = require('web.view_registry');
 
 var customize = require('web_studio.customize');
 
 var _t = core._t;
-var utils = require('web_studio.utils');
 
 var reports = [
     {
@@ -37,7 +35,7 @@ var StudioReportKanbanView = KanbanView.extend({
 
     open_record: function(event) {
         var self = this;
-        new Model('ir.actions.report.xml').call('studio_edit', [event.data.id]).then(function(action) {
+        this.performModelRPC('ir.actions.report.xml', 'studio_edit', [event.data.id]).then(function(action) {
             if (action.active_ids.length) {
                 self.do_action(action);
             } else {

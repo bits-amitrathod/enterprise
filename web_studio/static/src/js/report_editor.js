@@ -4,7 +4,6 @@ odoo.define('web_studio.ReportEditor', function (require) {
 var ReportAction = require('report.client_action');
 var core = require('web.core');
 var customize = require('web_studio.customize');
-var Model = require('web.Model');
 var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');
 var XMLEditor = require('web_studio.XMLEditor');
 
@@ -40,7 +39,7 @@ var ReportEditor = ReportAction.extend({
         var self = this;
 
         return this._super.apply(this, arguments).then(function() {
-            return new Model('ir.actions.report.xml').call('read', [[self.res_id]]).then(function (report) {
+            return self.performModelRPC('ir.actions.report.xml', 'read', [[self.res_id]]).then(function (report) {
                 self.sidebar = new ReportEditorSidebar(self, report[0]);
             });
         });

@@ -7,7 +7,6 @@ var config = require('web.config');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var dom = require('web.dom');
-var Model = require('web.DataModel');
 var session = require('web.session');
 
 var AppSwitcher = require('web_enterprise.AppSwitcher');
@@ -70,8 +69,7 @@ return AbstractWebClient.extend({
         });
     },
     load_menus: function () {
-        var Menus = new Model('ir.ui.menu');
-        return Menus.call('load_menus', [core.debug], {context: session.user_context}).then(function(menu_data) {
+        return this.performModelRPC('ir.ui.menu', 'load_menus', [core.debug], {context: session.user_context}).then(function(menu_data) {
             // Compute action_id if not defined on a top menu item
             for (var i = 0; i < menu_data.children.length; i++) {
                 var child = menu_data.children[i];
@@ -103,7 +101,7 @@ return AbstractWebClient.extend({
             // If it is not empty, we trigger a dummy hashchange event so that `self.on_hashchange`
             // will take care of toggling the app switcher and loading the action.
             if (_.isEmpty($.bbq.getState(true))) {
-                return new Model("res.users").call("read", [session.uid, ["action_id"]]).then(function(result) {
+                return self.performModelRPC('res.users', 'read', [session.uid, ["action_id"]]).then(function(result) {
                     var data = result[0];
                     if(data.action_id) {
                         return self.do_action(data.action_id[0]).then(function() {

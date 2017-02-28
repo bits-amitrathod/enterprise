@@ -3,10 +3,8 @@ odoo.define('account_reports.account_report', function (require) {
 
 var core = require('web.core');
 var Widget = require('web.Widget');
-var Model = require('web.Model');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var Dialog = require('web.Dialog');
-var session = require('web.session');
 var framework = require('web.framework');
 var crash_manager = require('web.crash_manager');
 var ActionManager = require('web.ActionManager');
@@ -47,7 +45,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     },
     start: function() {
         var self = this;
-        var extra_info = new Model(self.report_model).call('get_report_informations', [self.financial_id, self.report_options], {context: self.odoo_context}).then(function(result){
+        var extra_info = this.performModelRPC(self.report_model, 'get_report_informations',
+                [self.financial_id, self.report_options], {context: self.odoo_context}).then(function(result){
                 return self.parse_reports_informations(result);
             });
         return $.when(extra_info, this._super.apply(this, arguments)).then(function() {
@@ -88,7 +87,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     },
     reload: function() {
         var self = this;
-        return new Model(this.report_model).call('get_report_informations', [self.financial_id, self.report_options], {context: self.odoo_context}).then(function(result){
+        return this.performModelRPC(this.report_model, 'get_report_informations',
+                [self.financial_id, self.report_options], {context: self.odoo_context}).then(function(result){
             self.parse_reports_informations(result);
             return self.render();
         });
@@ -100,7 +100,6 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         this.update_cp();
     },
     render_template: function() {
-        var self = this;
         this.$el.html(this.main_html);
         this.$el.find('.o_account_reports_summary_edit').hide();
     },
@@ -236,9 +235,10 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         // bind actions
         _.each(this.$buttons.siblings('button'), function(el) {
             $(el).click(function() {
-                return new Model(self.report_model).call($(el).attr('action'), [self.financial_id, self.report_options], {context: self.odoo_context}).then(function(result){
+                return this.performModelRPC(self.report_model, $(el).attr('action'),
+                        [self.financial_id, self.report_options], {context: self.odoo_context}).then(function(result){
                     return self.do_action(result);
-                })
+                });
             });
         });
         return this.$buttons;
@@ -256,7 +256,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     save_summary: function(e) {
         var self = this;
         var text = $(e.target).siblings().val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
-        return new Model('account.report.manager').call('write', [this.report_manager_id, {summary: text}], {context: this.odoo_context}).then(function(result){
+        return this.performModelRPC('account.report.manager', 'write',
+                [this.report_manager_id, {summary: text}], {context: this.odoo_context}).then(function(result){
             self.$el.find('.o_account_reports_summary_edit').hide();
             self.$el.find('.o_account_reports_summary').show();
             if (!text) {
@@ -283,7 +284,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             }
         });
         // Render footnote template
-        return new Model(this.report_model).call('get_html_footnotes', [self.financial_id, footnote_to_render], {context: self.odoo_context}).then(function(result){
+        return this.performModelRPC(this.report_model, 'get_html_footnotes',
+                [self.financial_id, footnote_to_render], {context: self.odoo_context}).then(function(result){
             return self.$el.find('.js_account_report_footnotes').html(result);
         });
     },
@@ -308,7 +310,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                     return self.$el.find('.footnote[data-id="'+existing_footnote[0].id+'"] .o_account_reports_footnote_icons').click();
                 }
                 // replace text of existing footnote 
-                return new Model('account.report.footnote').call('write', [existing_footnote[0].id, {text: footnote_text}], {context: this.odoo_context}).then(function(result){
+                return this.performModelRPC('account.report.footnote', 'write',
+                        [existing_footnote[0].id, {text: footnote_text}], {context: this.odoo_context}).then(function(result){
                     _.each(self.footnotes, function(footnote) {
                         if (footnote.id === existing_footnote[0].id){
                             footnote.text = footnote_text;
@@ -319,7 +322,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             }
             else {
                 // new footnote
-                return new Model('account.report.footnote').call('create', [{line: line_id, text: footnote_text, manager_id: self.report_manager_id}], {context: this.odoo_context}).then(function(result){
+                return this.performModelRPC('account.report.footnote', 'create',
+                        [{line: line_id, text: footnote_text, manager_id: self.report_manager_id}], {context: this.odoo_context}).then(function(result){
                     self.footnotes.push({id: result, line: line_id, text: footnote_text});
                     return self.render_footnotes();
                 });
@@ -330,7 +334,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     delete_footnote: function(e) {
         var self = this;
         var footnote_id = $(e.target).parents('.footnote').data('id');
-        return new Model('account.report.footnote').call('unlink', [footnote_id], {context: this.odoo_context}).then(function(result){
+        return this.performModelRPC('account.report.footnote').call('unlink', [footnote_id], {context: this.odoo_context}).then(function(result){
             // remove footnote from report_information
             self.footnotes = _.filter(self.footnotes, function(element) {
                 return element.id !== footnote_id;
@@ -385,7 +389,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             return true;
         }
         else {
-            return new Model(this.report_model).call('get_html', [self.financial_id, self.report_options, line.data('id')], {context: self.odoo_context}).then(function(result){
+            return this.performModelRPC(this.report_model).call('get_html',
+                    [self.financial_id, self.report_options, line.data('id')], {context: self.odoo_context}).then(function(result){
                 $(line).parent('tr').replaceWith(result);
             });
         }
@@ -407,7 +412,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         var id = $(e.target).parents('td').data('id');
         var params = $(e.target).data();
         if (action) {
-            return new Model(this.report_model).call(action, [this.financial_id, this.report_options, params], {context: this.odoo_context}).then(function(result){
+            return this.performModelRPC(this.report_model).call(action,
+                    [this.financial_id, this.report_options, params], {context: this.odoo_context}).then(function(result){
                 return self.do_action(result);
             });            
         }

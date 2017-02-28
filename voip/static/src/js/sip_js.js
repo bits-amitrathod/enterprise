@@ -3,7 +3,6 @@ odoo.define('voip.core', function(require) {
 
 var Class = require('web.Class');
 var core = require('web.core');
-var Model = require('web.Model');
 
 var _t = core._t;
 
@@ -12,7 +11,7 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
         core.mixins.PropertiesMixin.init.call(this,parent);
         this.onCall = false;
         this.incoming_call = false;
-        new Model("voip.configurator").call("get_pbx_config").then(_.bind(this.init_ua,this));
+        this.performModelRPC("voip.configurator", "get_pbx_config").then(_.bind(this.init_ua,this));
         this.blocked = false;
     },
 

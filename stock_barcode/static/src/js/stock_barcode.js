@@ -2,7 +2,6 @@ odoo.define('stock_barcode.MainMenu', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var Widget = require('web.Widget');
 var Dialog = require('web.Dialog');
 var Session = require('web.session');
@@ -78,8 +77,7 @@ var MainMenu = Widget.extend(BarcodeHandlerMixin, {
 
     open_inventory: function() {
         var self = this;
-        return new Model("stock.inventory")
-            .call("open_new_inventory", [])
+        return this.performModelRPC("stock.inventory", "open_new_inventory", [])
             .then(function(result) {
                 self.do_action(result);
             });

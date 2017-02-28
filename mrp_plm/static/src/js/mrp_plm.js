@@ -1,10 +1,9 @@
 odoo.define('mrp_plm.update_kanban', function (require) {
+"use strict";
+
 
 var core = require('web.core');
-var Model = require('web.Model');
-
 var KanbanRecord = require('web.KanbanRecord');
-
 var QWeb = core.qweb;
 
 
@@ -13,7 +12,7 @@ KanbanRecord.include({
         var self = this;
         if (this.modelName === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
             ev.preventDefault();
-            new Model('ir.attachment').query(['id', 'name'])
+            this.performModelRPC('ir.attachment', ['id', 'name'])
                .filter([['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']])
                .all().then(function (attachment_ids) {
 

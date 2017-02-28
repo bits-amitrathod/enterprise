@@ -2,7 +2,6 @@ odoo.define('account_online_sync.acc_config_widget', function(require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var framework = require('web.framework');
 var Widget = require('web.Widget');
 var QWeb = core.qweb;
@@ -37,7 +36,7 @@ var OnlineSyncAccountInstitutionSelector = Widget.extend({
             //search_allowed is used to prevent doing multiple RPC call during the search time
             self.search_allowed = false;
             framework.blockUI();
-            return new Model('account.online.provider').call('get_institution', [[], self.$('#search_institution').val()]).then(function(result){
+            return this.performModelRPC('account.online.provider', 'get_institution', [[], self.$('#search_institution').val()]).then(function(result){
                 framework.unblockUI();
                 self.institution_list = result;
                 var $inst_list = $(QWeb.render('OnlineSyncInstitutionsList', {institutions: result, length: result.length}));
@@ -57,7 +56,7 @@ var OnlineSyncAccountInstitutionSelector = Widget.extend({
                     self.$el.siblings('.institution_detail').find('.js_choose_institution').click(function(){
                         // Open new client action
                         $(this).parent().find('.btn').toggleClass('disabled');
-                        return new Model('account.online.provider').call('get_login_form', [[self.id], inst[0].id, inst[0].type_provider, self.context]).then(function(result){
+                        return this.performModelRPC('account.online.provider', 'get_login_form', [[self.id], inst[0].id, inst[0].type_provider, self.context]).then(function(result){
                             self.do_action(result);
                         });
 

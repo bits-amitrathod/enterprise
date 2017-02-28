@@ -3,7 +3,6 @@ odoo.define('web_studio.ActionEditorSidebar', function (require) {
 
 var BasicModel = require('web.BasicModel');
 var core = require('web.core');
-var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
 
@@ -39,12 +38,8 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             if (self.action.groups_id.length === 0) { return; }
 
             // many2many field expects to receive: a list of {id, name, display_name}
-            var def = new Model('res.groups')
-                .query(['id', 'name', 'display_name'])
-                .filter([['id', 'in', self.action.groups_id]])
-                .all();
-
-            return def.then(function(result) {
+            self.performModelRPC('res.groups', 'search_read', [[['id', 'in', self.action.groups_id]], ['id', 'name', 'display_name']])
+            .then(function(result) {
                 self.groups_info = result;
             });
         });

@@ -3,7 +3,6 @@ odoo.define('mrp_mps.mrp_mps_report', function (require) {
 
 var core = require('web.core');
 var Widget = require('web.Widget');
-var Model = require('web.Model');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var SearchView = require('web.SearchView');
 var data = require('web.data');
@@ -35,7 +34,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     render_search_view: function(){
         var self = this;
         var defs = [];
-        new Model('ir.model.data').call('get_object_reference', ['product', 'product_template_search_view']).then(function(view_id){
+        this.performModelRPC('ir.model.data', 'get_object_reference', ['product', 'product_template_search_view']).then(function(view_id){
             self.dataset = new data.DataSetSearch(this, 'product.product');
             this.loadFieldView(self.dataset, view_id[1], 'search')
             .then(function (fields_view) {
@@ -71,7 +70,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         if(isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
         } else {
-            return new Model('sale.forecast').call('save_forecast_data', [
+            return this.performModelRPC('sale.forecast', 'save_forecast_data', [
                  parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
                 .then(function() {
                     self.get_html().then(function() {
@@ -93,7 +92,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_generate_procurement: function(e){
         var self = this;
         var target = $(e.target);
-        return new Model('sale.forecast').call('generate_procurement', [parseInt(target.data('product')), 1]).then(function(result){
+        return this.performModelRPC('sale.forecast', 'generate_procurement', [parseInt(target.data('product')), 1]).then(function(result){
             if (result){
                 self.get_html().then(function() {
                     self.re_renderElement();
@@ -104,7 +103,8 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_change_auto_mode: function(e){
         var self = this;
         var target = $(e.target);
-        return new Model('sale.forecast').call('change_forecast_mode', [parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))])
+        return this.performModelRPC('sale.forecast', 'change_forecast_mode',
+            [parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))])
         .then(function(result){
             self.get_html().then(function() {
                 self.re_renderElement();
@@ -126,9 +126,8 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     option_mps_period: function(e){
         var self = this;
         this.period = $(e.target).parent().data('value');
-        var model = new Model('mrp.mps.report');
-        return model.call('search', [[]]).then(function(res){
-                return model.call('write', [res, {'period': self.period}]).done(function(result){
+        return this.performModelRPC('mrp.mps.report', 'search', [[]]).then(function(res){
+                return self.performModelRPC('mrp.mps.report', 'write', [res, {'period': self.period}]).done(function(result){
                 self.get_html().then(function() {
                     self.update_cp();
                     self.re_renderElement();
@@ -138,14 +137,14 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     },
     add_product_wizard: function(e){
         var self = this;
-        return new Model('ir.model.data').call('get_object_reference', ['mrp_mps', 'mrp_mps_report_view_form']).then(function(data){
+        return this.performModelRPC('ir.model.data', 'get_object_reference', ['mrp_mps', 'mrp_mps_report_view_form']).then(function(data){
             return self.do_action({
                 name: _t('Add a Product'),
                 type: 'ir.actions.act_window',
                 res_model: 'mrp.mps.report',
                 views: [[data[1] || false, 'form']],
                 target: 'new',
-            })
+            });
         });
     },
     open_mps_product: function(e){
@@ -159,7 +158,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_open_forecast_wizard: function(e){
         var self = this;
         var product = $(e.target).data('product') || $(e.target).parent().data('product');
-        return new Model('ir.model.data').call('get_object_reference', ['mrp_mps', 'product_product_view_form_mps']).then(function(data){
+        return this.performModelRPC('ir.model.data', 'get_object_reference', ['mrp_mps', 'product_product_view_form_mps']).then(function(data){
             return self.do_action({
                 name: _t('Forecast Product'),
                 type: 'ir.actions.act_window',
@@ -177,13 +176,13 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         if(isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer or Float Value should be valid."));
         } else {
-            return new Model('sale.forecast').call('save_forecast_data', [
+            return this.performModelRPC('sale.forecast', 'save_forecast_data', [
                 parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
                 .done(function(res){
                     self.get_html().then(function() {
                         self.re_renderElement();
                     });
-                })
+                });
         }
     },
     on_search: function (domains) {
@@ -201,7 +200,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_apply: function(e){
         var self = this;
         var product = parseInt($(e.target).data('product'));
-        return new Model('mrp.mps.report').call('update_indirect', [product]).then(function(result){
+        return this.performModelRPC('mrp.mps.report', 'update_indirect', [product]).then(function(result){
             self.get_html().then(function() {
                 self.re_renderElement();
             });
@@ -210,7 +209,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     // Fetches the html and is previous report.context if any, else create it
     get_html: function() {
         var self = this;
-        return new Model('mrp.mps.report').call('get_html', [this.domain]).then(function (result) {
+        return this.performModelRPC('mrp.mps.report', 'get_html', [this.domain]).then(function (result) {
             self.html = result.html;
             self.report_context = result.report_context;
             self.renderButtons();
@@ -250,7 +249,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var self = this;
         this.$buttons = $(QWeb.render("MPS.buttons", {}));
         this.$buttons.on('click', function(){
-            new Model('sale.forecast').call('generate_procurement_all', []).then(function(result){
+            self.performModelRPC('sale.forecast', 'generate_procurement_all', []).then(function(result){
                 self.get_html().then(function() {
                     self.re_renderElement();
                 });

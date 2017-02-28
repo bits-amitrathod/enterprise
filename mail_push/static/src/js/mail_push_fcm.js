@@ -2,8 +2,7 @@ odoo.define('mail_push.fcm', function (require) {
 "use strict";
 
 var mobile = require('web_mobile.rpc');
-var session = require('web.session');
-var Model = require('web.Model');
+var ajax = require('web.ajax');
 
 //Send info only if client is mobile
 if(mobile.methods.getFCMKey){
@@ -11,8 +10,11 @@ if(mobile.methods.getFCMKey){
     if(session_info.fcm_project_id){
         mobile.methods.getFCMKey({'project_id': session_info.fcm_project_id, 'inbox_action': session_info.inbox_action}).then(function(response){
             if(response.success && session_info.device_subscription_ids.indexOf(response.data.subscription_id) == -1){
-                new Model("mail_push.device")
-                    .call("add_device", [response.data.subscription_id, response.data.device_name, 'fcm'])
+                ajax.rpc("/web/dataset/call_kw/mail_push.device/add_device", {
+                    model: "mail_push.device",
+                    method: "add_device",
+                    args: [response.data.subscription_id, response.data.device_name, 'fcm']
+                });
             }
         });
     }

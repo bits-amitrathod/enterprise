@@ -240,7 +240,6 @@ odoo.define('web_enterprise.ExpirationPanel', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var session = require('web.session');
 var utils = require('web.utils');
 var AppSwitcher = require('web_enterprise.AppSwitcher');
@@ -283,15 +282,13 @@ AppSwitcher.include({
     },
     enterprise_check_status: function(ev) {
         ev.preventDefault();
-        var Publisher = new Model('publisher_warranty.contract');
-        var P = new Model('ir.config_parameter');
-        P.call('get_param', ['database.expiration_date']).then(function(old_date) {
+        var self = this;
+        this.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_date']).then(function(old_date) {
             var dbexpiration_date = new moment(old_date);
             var duration = moment.duration(dbexpiration_date.diff(new moment()));
             if (Math.round(duration.asDays()) < 30) {
-                Publisher.call('update_notification', [[]]).then(function() {
-                    $.when(
-                        P.call('get_param', ['database.expiration_date']))
+                self.performModelRPC('publisher_warranty.contract', 'update_notification', [[]]).then(function() {
+                    $.when(self.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_date']))
                     .then(function(dbexpiration_date) {
                         $('.oe_instance_register').hide();
                         $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
@@ -345,24 +342,23 @@ AppSwitcher.include({
     /** Save the registration code then triggers a ping to submit it*/
     enterprise_code_submit: function(ev) {
         ev.preventDefault();
+        var self = this;
         var enterprise_code = $('.database_expiration_panel').find('#enterprise_code').val();
         if (!enterprise_code) {
             var $c = $('#enterprise_code');
             $c.attr('placeholder', $c.attr('title')); // raise attention to input
             return;
         }
-        var P = new Model('ir.config_parameter');
-        var Publisher = new Model('publisher_warranty.contract');
         $.when(
-            P.call('get_param', ['database.expiration_date']),
-            P.call('set_param', ['database.enterprise_code', enterprise_code]))
+            this.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_date']),
+            this.performModelRPC('ir.config_parameter', 'set_param', ['database.enterprise_code', enterprise_code]))
         .then(function(old_date) {
             utils.set_cookie('oe_instance_hide_panel', '', -1);
-            Publisher.call('update_notification', [[]]).then(function() {
+            self.performModelRPC('publisher_warranty.contract', 'update_notification', [[]]).then(function() {
                 $.unblockUI();
                 $.when(
-                    P.call('get_param', ['database.expiration_date']),
-                    P.call('get_param', ['database.expiration_reason']))
+                    self.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_date']),
+                    self.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_reason']))
                 .then(function(dbexpiration_date) {
                     $('.oe_instance_register').hide();
                     $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
@@ -382,22 +378,21 @@ AppSwitcher.include({
     },
     enterprise_buy: function() {
         var limit_date = new moment().subtract(15, 'days').format("YYYY-MM-DD");
-        new Model("res.users").call("search_count", [[["share", "=", false],["login_date", ">=", limit_date]]]).then(function(users) {
+        this.performModelRPC("res.users", "search_count", [[["share", "=", false],["login_date", ">=", limit_date]]]).then(function(users) {
             window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/upgrade", {num_users: users});
         });
     },
     enterprise_renew: function() {
-        var P = new Model('ir.config_parameter');
-        var Publisher = new Model('publisher_warranty.contract');
+        var self = this;
         $.when(
-            P.call('get_param', ['database.expiration_date']))
+            this.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_date']))
         .then(function(old_date) {
             utils.set_cookie('oe_instance_hide_panel', '', -1);
-            Publisher.call('update_notification', [[]]).then(function() {
+            self.performModelRPC('publisher_warranty.contract', 'update_notification', [[]]).then(function() {
                 $.when(
-                    P.call('get_param', ['database.expiration_date']),
-                    P.call('get_param', ['database.expiration_reason']),
-                    P.call('get_param', ['database.enterprise_code']))
+                    self.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_date']),
+                    self.performModelRPC('ir.config_parameter', 'get_param', ['database.expiration_reason']),
+                    self.performModelRPC('ir.config_parameter', 'get_param', ['database.enterprise_code']))
                 .then(function(new_date, dbexpiration_reason, enterprise_code) {
                     var mt_new_date = new moment(new_date);
                     if (new_date != old_date && mt_new_date > new moment()) {
@@ -416,9 +411,10 @@ AppSwitcher.include({
         });
     },
     enterprise_upsell: function() {
+        var self = this;
         var limit_date = new moment().subtract(15, 'days').format("YYYY-MM-DD");
-        new Model('ir.config_parameter').call('get_param', ['database.enterprise_code']).then(function(contract) {
-            new Model("res.users").call("search_count", [[["share", "=", false],["login_date", ">=", limit_date]]]).then(function(users) {
+        this.performModelRPC('ir.config_parameter', 'get_param', ['database.enterprise_code']).then(function(contract) {
+            self.performModelRPC("res.users", "search_count", [[["share", "=", false],["login_date", ">=", limit_date]]]).then(function(users) {
                 var params = contract ? {contract: contract, num_users: users} : {num_users: users};
                 window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/upsell", params);
             });

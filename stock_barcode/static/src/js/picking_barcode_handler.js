@@ -2,7 +2,6 @@ odoo.define('stock_barcode.PickingBarcodeHandler', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var FormViewBarcodeHandler = require('barcodes.FormViewBarcodeHandler');
 
 var _t = core._t;
@@ -22,8 +21,6 @@ var PickingBarcodeHandler = FormViewBarcodeHandler.extend({
 
     start: function() {
         this._super();
-        this.po_model = new Model("stock.pack.operation");
-        this.picking_model = new Model("stock.picking");
         this.map_barcode_method['O-CMD.MAIN-MENU'] = _.bind(this.do_action, this, 'stock_barcode.stock_barcode_action_main_menu', {clear_breadcrumbs: true});
         // FIXME: start is not a reliable place to do this.
         this.form_view.options.disable_autofocus = 'true';
@@ -91,8 +88,8 @@ var PickingBarcodeHandler = FormViewBarcodeHandler.extend({
             var self = this;
             return self.form_view.save().done(function() {
                 return self.form_view.reload().done(function() {
-                    return self.picking_model.call('get_po_to_split_from_barcode', [[self.form_view.datarecord.id], barcode]).done(function(id) {
-                        return self.po_model.call("action_split_lots", [[id]]).done(function(result) {
+                    return self.performModelRPC("stock.picking", 'get_po_to_split_from_barcode', [[self.form_view.datarecord.id], barcode]).done(function(id) {
+                        return self.performModelRPC("stock.pack.operation", "action_split_lots", [[id]]).done(function(result) {
                             self.open_wizard(result);
                         });
                     });

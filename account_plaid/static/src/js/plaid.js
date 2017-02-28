@@ -2,7 +2,6 @@ odoo.define('account_plaid.acc_config_widget', function(require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var framework = require('web.framework');
 var QWeb = core.qweb;
 var Widget = require('web.Widget');
@@ -15,8 +14,8 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = new Model('account.online.provider')
-                .call('plaid_add_update_provider_account', [[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context])
+            var request = this.performModelRPC('account.online.provider', 'plaid_add_update_provider_account',
+                    [[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context])
                 .then(function(result){
                     self.blockUI(false);
                     if (result.account_online_provider_id !== undefined) {
@@ -92,7 +91,8 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         var self = this;
         if (this.resp_json && this.resp_json.action === 'success') {
             if (this.action_end) {
-                return new Model('account.online.provider').call('open_action', [[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context]).then(function(result) {
+                return this.performModelRPC('account.online.provider', 'open_action',
+                        [[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context]).then(function(result) {
                     self.do_action(result);
                 });
             }

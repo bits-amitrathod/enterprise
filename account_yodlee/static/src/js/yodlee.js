@@ -2,7 +2,6 @@ odoo.define('account_yodlee.acc_config_widget', function(require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var framework = require('web.framework');
 var Widget = require('web.Widget');
 
@@ -47,15 +46,14 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = new Model('account.online.provider')
-            .call('yodlee_add_update_provider_account', [[this.id], params, provider_id, provider_name])
+            this.performModelRPC('account.online.provider', 'yodlee_add_update_provider_account', [[this.id], params, provider_id, provider_name])
             .then(function(result){
                 // ProviderAccount has succesfully been created/updated on yodlee and is being refreshed
                 // We need to keep calling the refresh API until it is done to know if we have some error or mfa
                 // (bad credentials, captcha, success)
                 framework.blockUI();
                 self.id = result;
-                return new Model('account.online.provider').call('refresh_status', [[self.id]]).then(function(result) {
+                return self.performModelRPC('account.online.provider', 'refresh_status', [[self.id]]).then(function(result) {
                     self.blockUI(false);
                     self.refresh_info = result;
                     self.renderElement();
@@ -75,7 +73,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
     get_new_captcha: function() {
         var self = this;
         this.blockUI(true);
-        return new Model('account.online.provider').call('manual_sync', [[self.id], false]).then(function(result) {
+        return this.performModelRPC('account.online.provider', 'manual_sync', [[self.id], false]).then(function(result) {
             self.blockUI(false);
             self.refresh_info = result;
             self.renderElement();
@@ -101,7 +99,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
             // We have to show an image, but first we have to convert the binary array into a base64
             _.each(this.refresh_info.providerAccount.loginForm.row, function(row, index){
                 _.each(row.field, function(field, index){
-                    var image = undefined;
+                    var image;
                     if (field.image) {
                         image = "";
                         var image_array = new Uint8Array(field.image);
@@ -154,7 +152,8 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         var fields = {};
         if (this.refresh_info && this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS') {
             if (this.action_end) {
-                return new Model('account.online.provider').call('open_action', [[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context]).then(function(result) {
+                return this.performModelRPC('account.online.provider', 'open_action',
+                        [[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context]).then(function(result) {
                     self.do_action(result);
                 });
             }

@@ -1,7 +1,6 @@
 odoo.define('account_batch_deposit.reconciliation_custom', function (require) {
 "use strict";
 
-var Model = require('web.Model');
 var CrashManager = require('web.CrashManager');
 var widgets = require('account.reconciliation');
 var core = require('web.core');
@@ -23,8 +22,8 @@ widgets.bankStatementReconciliation.include({
 
     updateBatchDeposits: function() {
         var self = this;
-        return new Model("account.bank.statement")
-            .call("get_batch_deposits_data", [self.statement_ids || undefined])
+        return this.performModelRPC("account.bank.statement",
+                "get_batch_deposits_data", [self.statement_ids || undefined])
             .then(function(data) {
                 self.batch_deposits = data;
                 _.each(self.getChildren(), function(child) {
@@ -79,8 +78,7 @@ widgets.bankStatementReconciliationLine.include({
         e.preventDefault();
         var self = this;
         var deposit_id = parseInt(e.currentTarget.dataset.batch_deposit_id);
-        new Model("account.bank.statement.line")
-            .call("get_move_lines_for_reconciliation_widget_by_batch_deposit_id", [this.line_id, deposit_id])
+        this.performModelRPC("account.bank.statement.line", "get_move_lines_for_reconciliation_widget_by_batch_deposit_id", [this.line_id, deposit_id])
             .then(function (deposit_lines) {
                 // Check if some lines are already selected in another reconciliation
                 var lines_selected_here_ids = _.map(self.get("mv_lines_selected"), function(l) { return l.id });
