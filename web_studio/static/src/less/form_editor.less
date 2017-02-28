@@ -6,6 +6,8 @@
             padding: 0;
         }
         .o_form_sheet_bg {
+            .o-flex-display();
+            .o-flex-flow(column, nowrap);
             padding: 16px;
         }
         .o_form_sheet, .oe_chatter {
@@ -19,6 +21,10 @@
             position: relative;
             .o_web_studio_overlay {
                 .o-position-absolute(0, 0, 0, 0);
+                .o-transition(all, 0.2s);
+                &:hover {
+                    background-color: fade(white, 40%);
+                }
             }
         }
 
@@ -111,21 +117,47 @@
             margin-right: 3px;
         }
         .o_web_studio_add_chatter {
-            .o-flex-display();
-            .o-justify-content(center);
-            .o-align-items(center);
-            .container;
-            .user-select(none);
-            margin-top: 10px;
-            height: 60px;
-            max-width: 100%;
+            position: relative;
+            margin: 16px -16px;
             cursor: pointer;
-            background-color: lightgray;
-            color: @odoo-brand-optional;
-            font-weight: bold;
-            opacity: 0.6;
+            color: @o-web-studio-text-light;
+            .o-transition(all, 0.2s);
+            > .o_chatter_topbar {
+                .container;
+                padding: 16px;
+                max-width: 90%;
+                opacity: 0;
+                pointer-events: none;
+                .o-transition(all, 0.2s);
+            }
+            > span {
+                .container;
+                position: relative;
+                max-width: 100%;
+                display: block;
+                .o-transition(width, 0.2s, ease, .1s);
+                > span {
+                    .o-position-absolute(@left:0);
+                    .size(100%, 52px);
+                    padding-top: 16px;
+                    text-align: center;
+                    background: fade(white, 10%);
+                }
+            }
             &:hover {
-                opacity: 1;
+                .o-flex(1, 0, 100%);
+                width: auto;
+                background-color: fade(white, 90%);
+                color: transparent;
+                .o-transition(all, .2s, ease, .2s);
+                > span {
+                    width: 100%;
+                }
+                > .o_chatter_topbar {
+                    .o-transition(all, .8s, ease, .1s);
+                    max-width: 100%;
+                    opacity: 1;
+                }
             }
         }
     }

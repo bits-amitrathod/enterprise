@@ -7,6 +7,7 @@ var FormRenderer = require('web.FormRenderer');
 var EditorMixin = require('web_studio.EditorMixin');
 var FormEditorHook = require('web_studio.FormEditorHook');
 
+var Qweb = core.qweb;
 var _t = core._t;
 
 var FormEditor =  FormRenderer.extend(EditorMixin, {
@@ -183,13 +184,26 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         });
 
         return this._super.apply(this, arguments).then(function () {
-            // Add chatter hook
+            // Add chatter hook + chatter preview
             if (!self.has_chatter && self.chatter_allowed) {
-                var $chatter_hook = $('<div>')
-                    .addClass('o_web_studio_add_chatter')
+                var $chatter_hook = $('<div>').addClass('o_web_studio_add_chatter');
+                // Append non-hover content
+                $chatter_hook.append($('<span>')
                     .append($('<span>', {
                         text: _t('Add Chatter Widget'),
-                    }));
+                    }).prepend($('<i>', {
+                        class: 'fa fa-comments',
+                        style: 'margin-right:10px',
+                    })))
+                );
+                // Append hover content (chatter preview)
+                $chatter_hook.append($(Qweb.render('mail.Chatter')).find('.o_chatter_topbar')
+                    .append($(Qweb.render('mail.Chatter.Buttons', {
+                        new_message_btn: true,
+                        log_note_btn: true,
+                    })))
+                    .append($(Qweb.render('mail.Followers')))
+                );
                 $chatter_hook.insertAfter(self.$('.o_form_sheet'));
             }
             // Add buttonbox hook
