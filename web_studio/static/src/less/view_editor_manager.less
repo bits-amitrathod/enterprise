@@ -14,14 +14,21 @@
                 font-size: x-large;
             }
             .o_web_studio_show_invisible {
-                opacity: 0.8;
+                opacity: 1;
+                outline: 1px solid @o-web-studio-bg-lighter;
                 background: repeating-linear-gradient(
                     45deg,
-                    #F8F8FF,
-                    #F8F8FF 5px,
-                    #DCDCDC 10px,
-                    #DCDCDC 11px
+                    white,
+                    white 5px,
+                    @o-web-studio-bg-lighter 5px,
+                    @o-web-studio-bg-lighter 10px
                 );
+                background-attachment: fixed;
+            }
+            .o_notebook li.o_web_studio_show_invisible {
+                outline: none;
+                border: 1px solid @o-web-studio-bg-lighter;
+                border-bottom-width: 0;
             }
             .o_web_studio_widget_empty {
                 background-color: @o-web-studio-bg-lighter;

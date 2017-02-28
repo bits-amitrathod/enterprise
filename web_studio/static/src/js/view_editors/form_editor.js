@@ -186,8 +186,14 @@ var FormEditor =  FormRenderer.extend({
         node.has_label = true;
         var $result = this._super.apply(this, arguments);
 
-        // Add hook only if field is visible
         if (!$result.find('.o_form_field').is('.o_form_invisible')) {
+            // apply to the entire <tr> o_web_studio_show_invisible
+            // rather then ineer label/input
+            if ($result.find('.o_form_field').hasClass('o_web_studio_show_invisible')) {
+                $result.find('.o_form_field, .o_form_label').removeClass('o_web_studio_show_invisible');
+                $result.addClass('o_web_studio_show_invisible');
+            }
+            // Add hook only if field is visible
             $result = $result.add(this._render_adding_content_line(node));
         }
 
