@@ -1,17 +1,23 @@
 odoo.define('voip.core', function(require) {
 "use strict";
 
+var ajax = require('web.ajax');
 var Class = require('web.Class');
 var core = require('web.core');
 
 var _t = core._t;
 
-var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
-    init: function(parent){
-        core.mixins.PropertiesMixin.init.call(this,parent);
+var UserAgent = Class.extend(core.mixins.PropertiesMixin, {
+    init: function(){
+        core.mixins.PropertiesMixin.init.call(this);
         this.onCall = false;
         this.incoming_call = false;
-        this.performModelRPC("voip.configurator", "get_pbx_config").then(_.bind(this.init_ua,this));
+        ajax.rpc('/web/dataset/call_kw/voip.configurator/get_pbx_config', {
+            model: 'voip.configurator',
+            method: 'get_pbx_config',
+            args: [],
+            kwargs: {},
+        }).then(this.init_ua.bind(this));
         this.blocked = false;
     },
 
