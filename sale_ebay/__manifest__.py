@@ -35,6 +35,7 @@ Key Features
   # always loaded
   'data': [
       'security/ir.model.access.csv',
+      'security/sale_ebay_security.xml',
       'wizard/ebay_link_listing_views.xml',
       'views/product_views.xml',
       'views/sale_config_settings_views.xml',

@@ -88,6 +88,16 @@ class ReportAccountFinancialReport(models.Model):
         return res
 
     @api.multi
+    def unlink(self):
+        for report in self:
+            default_parent_id = self.env['ir.model.data'].xmlid_to_res_id('account.menu_finance_reports')
+            menu = self.env['ir.ui.menu'].search([('parent_id', '=', default_parent_id), ('name', '=', report.name)])
+            if menu:
+                menu.action.unlink()
+                menu.unlink()
+        return super(ReportAccountFinancialReport, self).unlink()
+
+    @api.multi
     def get_lines(self, options, line_id=None):
         line_obj = self.line_ids
         if line_id:
@@ -379,7 +389,7 @@ class AccountFinancialReportLine(models.Model):
             else:
                 return {'name': str(res) + '%', 'class': 'number color-green'}
         else:
-            return {'name': 'n/a'}
+            return {'name': _('n/a')}
 
     def _split_formulas(self):
         result = {}

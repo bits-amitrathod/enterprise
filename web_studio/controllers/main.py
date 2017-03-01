@@ -433,7 +433,7 @@ class WebStudioController(http.Controller):
     def set_background_image(self, attachment_id):
         attachment = request.env['ir.attachment'].browse(attachment_id)
         if attachment:
-            request.env.user.company_id.background_image = attachment.datas
+            request.env.user.sudo(request.uid).company_id.background_image = attachment.datas
 
     def create_new_field(self, values):
         """ Create a new field with given values.
@@ -449,7 +449,7 @@ class WebStudioController(http.Controller):
         # For many2one and many2many fields
         if values.get('relation_id'):
             values.update({
-                'relation': request.env['ir.model'].browse(values['relation_id']).model
+                'relation': request.env['ir.model'].browse(values.pop('relation_id')).model
             })
         # For one2many fields
         if values.get('relation_field_id'):
@@ -546,7 +546,10 @@ class WebStudioController(http.Controller):
             if 'node' in op:
                 if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
                     # Check if field exists before creation
-                    field = IrModelFields.search([('name', '=', op['node']['field_description']['name'])], limit=1)
+                    field = IrModelFields.search([
+                        ('name', '=', op['node']['field_description']['name']),
+                        ('model', '=', view.model),
+                    ], limit=1)
                     if not field:
                         field = self.create_new_field(op['node']['field_description'])
                         field_created = True

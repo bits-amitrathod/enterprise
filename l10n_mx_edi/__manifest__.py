@@ -13,6 +13,9 @@ Allow the user to generate the EDI document for Mexican invoicing.
 This module allows the creation of the EDI documents and the communication with the Mexican certification providers (PACs) to sign/cancel them.
     """,
     'depends': ['account', 'base_vat', 'base_address_extended'],
+    'external_dependencies' : {
+        'python' : ['OpenSSL'],
+    },
     'data': [
         'security/ir.model.access.csv',
         'data/3.2/cfdv32.xml',

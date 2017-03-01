@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_count
 msgid "# Attachments"
@@ -52,7 +53,17 @@ msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:53
+#: code:addons/mrp_plm/models/mrp_eco.py:517
+#, python-format
+msgid "<p class=\"oe_view_nocontent_create\">\n"
+"                        Click to upload files to your ECO, that will be applied to the product later\n"
+"                    </p><p>\n"
+"                        Use this feature to store any files, like drawings or specifications.\n"
+"                    </p>"
+msgstr ""
+
+#. module: mrp_plm
+#: code:addons/mrp_plm/models/product.py:54
 #, python-format
 msgid "<p class=\"oe_view_nocontent_create\">\n"
 "                        Click to upload files to your product.\n"
@@ -84,6 +95,11 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_defaults
 msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_active
+msgid "Active"
 msgstr ""
 
 #. module: mrp_plm
@@ -119,6 +135,7 @@ msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
 msgid "All"
 msgstr ""
 
@@ -153,7 +170,7 @@ msgid "Approval Roles"
 msgstr ""
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9760
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9788
 msgid "Approval Stage"
 msgstr ""
 
@@ -192,6 +209,11 @@ msgid "Approves, but the approval is optional"
 msgstr ""
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
+msgid "Archived"
+msgstr ""
+
+#. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
 msgstr ""
@@ -202,10 +224,12 @@ msgid "At Date"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:45
+#: code:addons/mrp_plm/models/mrp_eco.py:509
+#: code:addons/mrp_plm/models/product.py:46
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_ids
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #, python-format
 msgid "Attachments"
@@ -510,13 +534,13 @@ msgid "Eco"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:479
+#: code:addons/mrp_plm/models/mrp_eco.py:549
 #, python-format
 msgid "Eco BoM"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:491
+#: code:addons/mrp_plm/models/mrp_eco.py:561
 #, python-format
 msgid "Eco Routing"
 msgstr ""
@@ -582,6 +606,11 @@ msgid "Engineering Changes"
 msgstr ""
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_ir_attachment_origin_id
+msgid "Field used in the PLM to handle attachments"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Filters"
 msgstr ""
@@ -642,12 +671,12 @@ msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_approved
-msgid "Is approved"
+msgid "Is Approved"
 msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
-msgid "Is rejected"
+msgid "Is Rejected"
 msgstr ""
 
 #. module: mrp_plm
@@ -733,6 +762,11 @@ msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "My Activities"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
 msgstr ""
 
@@ -792,6 +826,16 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_force_thread_id
 msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_origin_id
+msgid "Original Attachment"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Overdue Activities"
 msgstr ""
 
 #. module: mrp_plm
@@ -869,6 +913,11 @@ msgid "Product  UoM"
 msgstr ""
 
 #. module: mrp_plm
+#: selection:mrp.eco,type:0
+msgid "Product Only"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
 msgid "Product Template"
 msgstr ""
@@ -932,7 +981,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_revision_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_revision_ids
-msgid "Revision ids"
+msgid "Revision"
 msgstr ""
 
 #. module: mrp_plm
@@ -1009,6 +1058,11 @@ msgid "Show Apply Change"
 msgstr ""
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_image_small
 msgid "Small-sized image"
 msgstr ""
@@ -1025,7 +1079,7 @@ msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9817
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9843
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Stage"
 msgstr ""
@@ -1123,11 +1177,21 @@ msgid "To Do"
 msgstr ""
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Today Activities"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_type_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9782
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9810
 msgid "Type"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Upcoming Activities (7 days)"
 msgstr ""
 
 #. module: mrp_plm
@@ -1149,6 +1213,8 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_version
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template_version
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
 msgstr ""
@@ -1189,19 +1255,19 @@ msgid "Work Centers"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:460
+#: code:addons/mrp_plm/models/mrp_eco.py:530
 #, python-format
 msgid "Workorder Messages"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:367
+#: code:addons/mrp_plm/models/mrp_eco.py:384
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:357
+#: code:addons/mrp_plm/models/mrp_eco.py:374
 #, python-format
 msgid "You cannot change the stage, as approvals are still required."
 msgstr ""
@@ -1209,6 +1275,11 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_ir_attachment
+msgid "ir.attachment"
 msgstr ""
 
 #. module: mrp_plm

@@ -239,7 +239,7 @@ var FieldMany2Many = FieldX2Many.extend({
 });
 
 var FieldMany2One = AbstractRelationalField.extend({
-    form_component_widget_registry: ['many2one'],
+    supported_field_types: ['many2one'],
     custom_events: {
         'quick_create': function (event) {
             this.quick_create(event.data.value);

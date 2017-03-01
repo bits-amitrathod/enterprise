@@ -59,10 +59,11 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         invoice = self.create_invoice()
         invoice.journal_id.l10n_mx_address_issued_id = self.company_partner.id
-        invoice.move_name = '999'
+        invoice.move_name = 'INV/2017/999'
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
-        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed")
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
         xml = invoice.l10n_mx_edi_get_xml_etree()
         self.xml_merge_dynamic_items(xml, self.xml_expected)
         self.assertEqualXML(xml, self.xml_expected)
@@ -80,7 +81,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice_disc.compute_taxes()
         invoice_disc.action_invoice_open()
         self.assertEqual(invoice_disc.state, "open")
-        self.assertEqual(invoice_disc.l10n_mx_edi_pac_status, "signed")
+        self.assertEqual(invoice_disc.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
         xml = invoice_disc.l10n_mx_edi_get_xml_etree()
         xml_expected_disc = objectify.fromstring(self.xml_expected_str)
         xml_expected_disc.attrib['subTotal'] = '500.00'
@@ -88,7 +90,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # 500 - 10% + taxes(16%, -10%)
         xml_expected_disc.attrib['total'] = '477.00'
         self.xml_merge_dynamic_items(xml, xml_expected_disc)
-        xml_expected_disc.attrib['folio'] = invoice_disc.number
+        xml_expected_disc.attrib['folio'] =  xml.attrib['folio']
+        xml_expected_disc.attrib['serie'] = xml.attrib['serie']
         for concepto in xml_expected_disc.Conceptos:
             concepto.Concepto.attrib['valorUnitario'] = '500.0'
             concepto.Concepto.attrib['importe'] = '500.0'
@@ -100,7 +103,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice.l10n_mx_edi_pac_status = "retry"
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "retry")
         invoice.l10n_mx_edi_update_pac_status()
-        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed")
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
         xml_attachs = invoice.l10n_mx_edi_retrieve_attachments()
         self.assertEqual(len(xml_attachs), 2)
         xml_1 = objectify.fromstring(base64.decodestring(xml_attachs[0].datas))
@@ -114,7 +118,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice.journal_id.update_posted = True
         invoice.action_invoice_cancel()
         self.assertEqual(invoice.state, "cancel")
-        self.assertEqual(invoice.l10n_mx_edi_pac_status, 'cancelled')
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, 'cancelled',
+                         invoice.message_ids.mapped('body'))
         invoice.l10n_mx_edi_pac_status = "signed"
 
         # -----------------------
@@ -132,7 +137,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         xml_attach = invoice.l10n_mx_edi_retrieve_last_attachment()
         xml_attach.datas = base64.encodestring(etree.tostring(xml))
         invoice.l10n_mx_edi_update_sat_status()
-        self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled")
+        self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled",
+                         invoice.message_ids.mapped('body'))
 
     def test_l10n_mx_edi_invoice_basic_sf(self):
         self.account_settings.create({'l10n_mx_edi_pac': 'solfact'}).execute()
@@ -170,7 +176,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice.message_ids.unlink()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
-        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed")
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
         xml_str = base64.decodestring(invoice.message_ids[-2].attachment_ids.datas)
         xml = objectify.fromstring(xml_str)
         xml_expected = objectify.fromstring(

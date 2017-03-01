@@ -9,7 +9,6 @@ var _t = core._t;
 
 
 var WidgetWebsiteButton = AbstractField.extend({
-    supported_field_types: ['boolean'],
     template: 'WidgetWebsiteButton',
     render: function () {
         this._super.apply(this, arguments);

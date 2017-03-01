@@ -138,7 +138,7 @@ Tour.register('account_followup_reports_widgets', {
         },
         {
             content: 'exclude one line',
-            trigger: '.o_account_reports_table tr input[type="checkbox"]:first',
+            trigger: '.o_account_reports_table tr:not(:has(td.color-red)) input[type="checkbox"]:first',
             run: 'click'
         },
         {

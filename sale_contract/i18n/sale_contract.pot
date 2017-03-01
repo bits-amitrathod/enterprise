@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-29 14:58+0000\n"
-"PO-Revision-Date: 2016-09-29 14:58+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_actual_quantity
-msgid "Actual quantity"
+msgid "Actual Quantity"
 msgstr ""
 
 #. module: sale_contract
@@ -196,7 +196,7 @@ msgstr ""
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
-msgid "Create a sale order that will overwrite this contract when confirmed (renewal quotation)"
+msgid "Create a sales order that will overwrite this contract when confirmed (renewal quotation)"
 msgstr ""
 
 #. module: sale_contract
@@ -340,12 +340,12 @@ msgid "Helps you handle subscriptions and recurring invoicing."
 msgstr ""
 
 #. module: sale_contract
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9158
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9233
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_wizard_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_9166
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_9241
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_line_id
 msgid "ID"
 msgstr ""
@@ -357,7 +357,7 @@ msgstr ""
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_product_template_recurring_invoice
-msgid "If set, confirming a sale order with this product will create a subscription"
+msgid "If set, confirming a sales order with this product will create a subscription"
 msgstr ""
 
 #. module: sale_contract
@@ -378,6 +378,11 @@ msgid "In Progress"
 msgstr ""
 
 #. module: sale_contract
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_invoice_count
+msgid "Invoice Count"
+msgstr ""
+
+#. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_recurring_invoice_line_ids
 msgid "Invoice Lines"
 msgstr ""
@@ -386,11 +391,6 @@ msgstr ""
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_recurring_rule_type
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_template_recurring_rule_type
 msgid "Invoice automatically repeat at specified interval"
-msgstr ""
-
-#. module: sale_contract
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_invoice_count
-msgid "Invoice count"
 msgstr ""
 
 #. module: sale_contract
@@ -445,6 +445,11 @@ msgid "Month(s)"
 msgstr ""
 
 #. module: sale_contract
+#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
+msgid "My Activities"
+msgstr ""
+
+#. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_name
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_name
 msgid "Name"
@@ -470,6 +475,11 @@ msgid "Odoo automatically sets contracts to be renewed in a pending\n"
 msgstr ""
 
 #. module: sale_contract
+#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
+msgid "Overdue Activities"
+msgstr ""
+
+#. module: sale_contract
 #: model:ir.model,name:sale_contract.model_res_partner
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "Partner"
@@ -481,12 +491,7 @@ msgid "Pending contracts"
 msgstr ""
 
 #. module: sale_contract
-#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
-msgid "Plan Change Tags"
-msgstr ""
-
-#. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:172
+#: code:addons/sale_contract/models/sale_subscription.py:181
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
 msgstr ""
@@ -598,7 +603,21 @@ msgstr ""
 
 #. module: sale_contract
 #: model:ir.ui.menu,name:sale_contract.menu_report_product_all
-msgid "Report"
+msgid "Reporting"
+msgstr ""
+
+#. module: sale_contract
+#: model:ir.actions.server,name:sale_contract.account_analytic_cron_for_invoice_ir_actions_server
+#: model:ir.cron,cron_name:sale_contract.account_analytic_cron_for_invoice
+#: model:ir.cron,name:sale_contract.account_analytic_cron_for_invoice
+msgid "Sale Contract: generate recurring invoices and payments"
+msgstr ""
+
+#. module: sale_contract
+#: model:ir.actions.server,name:sale_contract.account_analytic_cron_ir_actions_server
+#: model:ir.cron,cron_name:sale_contract.account_analytic_cron
+#: model:ir.cron,name:sale_contract.account_analytic_cron
+msgid "Sale Contract: subscriptions expiration"
 msgstr ""
 
 #. module: sale_contract
@@ -643,8 +662,13 @@ msgid "Settings"
 msgstr ""
 
 #. module: sale_contract
+#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_sold_quantity
-msgid "Sold quantity"
+msgid "Sold Quantity"
 msgstr ""
 
 #. module: sale_contract
@@ -853,8 +877,8 @@ msgid "The user will have write access to Subscriptions."
 msgstr ""
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_order.py:83
-#: code:addons/sale_contract/models/sale_subscription.py:189
+#: code:addons/sale_contract/models/sale_order.py:100
+#: code:addons/sale_contract/models/sale_subscription.py:198
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
 msgstr ""
@@ -879,6 +903,11 @@ msgid "To Renew"
 msgstr ""
 
 #. module: sale_contract
+#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
+msgid "Today Activities"
+msgstr ""
+
+#. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_price_unit
 msgid "Unit Price"
 msgstr ""
@@ -890,6 +919,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_option_uom_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_wizard_option_uom_id
 msgid "Unit of Measure"
+msgstr ""
+
+#. module: sale_contract
+#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
+msgid "Upcoming Activities (7 days)"
 msgstr ""
 
 #. module: sale_contract
@@ -915,11 +949,6 @@ msgid "Week(s)"
 msgstr ""
 
 #. module: sale_contract
-#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
-msgid "When a customer wants to change his subscription plan, he has the choice between all the recurring contracts with the same tags."
-msgstr ""
-
-#. module: sale_contract
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Year(s)"
 msgstr ""
@@ -932,7 +961,7 @@ msgid "You must define a product for everything you sell, whether it's\n"
 msgstr ""
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:167
+#: code:addons/sale_contract/models/sale_subscription.py:170
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
 msgstr ""

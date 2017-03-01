@@ -704,7 +704,7 @@ class HelpdeskTicket(models.Model):
 
     @api.multi
     def message_update(self, msg, update_vals=None):
-        partner_ids = filter(None, self._find_partner_from_emails(self.email_split(msg)))
+        partner_ids = filter(None, self._find_partner_from_emails(self._ticket_email_split(msg)))
         if partner_ids:
             self.message_subscribe(partner_ids)
         return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)

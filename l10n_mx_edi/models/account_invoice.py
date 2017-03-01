@@ -3,6 +3,7 @@
 import base64
 from itertools import groupby
 import logging
+import re
 
 from lxml import etree
 from lxml.objectify import fromstring
@@ -165,7 +166,7 @@ class AccountInvoice(models.Model):
     @api.model
     def l10n_mx_edi_retrieve_last_attachment(self):
         attachment_ids = self.l10n_mx_edi_retrieve_attachments()
-        return attachment_ids and attachment_ids[-1] or None
+        return attachment_ids and attachment_ids[0] or None
 
     @api.model
     def l10n_mx_edi_get_xml_etree(self, cfdi=None):
@@ -590,7 +591,7 @@ class AccountInvoice(models.Model):
             'withholding': [],
             'transferred': [],
         }
-        for tax in self.tax_line_ids:
+        for tax in self.tax_line_ids.filtered('tax_id'):
             tax_dict = {
                 'name': (tax.tax_id.tag_ids[0].name
                          if tax.tax_id.tag_ids else tax.tax_id.name).upper(),
@@ -603,6 +604,16 @@ class AccountInvoice(models.Model):
             else:
                 values['total_withhold'] += abs(tax.amount or 0.0)
                 values['withholding'].append(tax_dict)
+        return values
+
+    @staticmethod
+    def _l10n_mx_get_serie_and_folio(number):
+        values = {'serie': None, 'folio': None}
+        number_matchs = [rn for rn in re.finditer('\d+', number or '')]
+        if number_matchs:
+            last_number_match = number_matchs[-1]
+            values['serie'] = number[:last_number_match.start()] or None
+            values['folio'] = last_number_match.group().lstrip('0') or None
         return values
 
     @api.multi
@@ -619,7 +630,6 @@ class AccountInvoice(models.Model):
             'supplier': self.company_id.partner_id.commercial_partner_id,
             'issued': self.journal_id.l10n_mx_address_issued_id,
             'customer': self.partner_id.commercial_partner_id,
-            'number': self.number,
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
@@ -627,6 +637,7 @@ class AccountInvoice(models.Model):
             'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
         }
 
+        values.update(self._l10n_mx_get_serie_and_folio(self.number))
         ctx = dict(company_id=self.company_id.id, date=self.date_invoice)
         mxn = self.env.ref('base.MXN').with_context(ctx)
         invoice_currency = self.currency_id.with_context(ctx)
@@ -745,7 +756,8 @@ class AccountInvoice(models.Model):
                 continue
             # cfdi has been successfully generated
             inv.l10n_mx_edi_pac_status = 'to_sign'
-            filename = ('%s-MX-Invoice-2.1.xml' % inv.number).replace('/', '')
+            filename = ('%s-%s-MX-Invoice-3-2.xml' % (
+                inv.journal_id.code, inv.number)).replace('/', '')
             ctx = self.env.context.copy()
             ctx.pop('default_type', False)
             inv.l10n_mx_edi_cfdi_name = filename
@@ -769,7 +781,8 @@ class AccountInvoice(models.Model):
         result = super(AccountInvoice, self).invoice_validate()
         for record in self:
             if record.company_id.country_id == self.env.ref('base.mx'):
-                record.l10n_mx_edi_cfdi_name = ('%s-MX-Invoice-2.1.xml' % self.number).replace('/', '')
+                record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-3-2.xml' % (
+                    self.journal_id.code, self.number)).replace('/', '')
                 record._l10n_mx_edi_retry()
         return result
 

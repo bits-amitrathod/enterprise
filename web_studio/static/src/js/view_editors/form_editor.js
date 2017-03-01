@@ -26,7 +26,9 @@ var FormEditor =  FormRenderer.extend({
     nearest_hook_tolerance: 50,
     className: FormRenderer.prototype.className + ' o_web_studio_form_view_editor',
     events: _.extend({}, FormRenderer.prototype.events, {
-        'click .o_web_studio_add_chatter': function() {
+        'click .o_web_studio_add_chatter': function(event) {
+            // prevent multiple click
+            $(event.currentTarget).css('pointer-events', 'none');
             this.trigger_up('view_change', {
                 structure: 'chatter',
                 remove_follower_ids: this.has_follower_field,

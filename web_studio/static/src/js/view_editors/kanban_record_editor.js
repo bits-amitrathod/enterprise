@@ -189,11 +189,9 @@ var KanbanRecordEditor = KanbanRecord.extend({
         widget.undelegateEvents();
 
         // make empty widgets appear
-        if (!widget.value && widget.value !== 0) {
-            widget.$el = $('<span>', {
-                text: widget.string,
-                class: 'o_web_studio_widget_empty',
-            });
+        if (this._isEmpty(widget.value)) {
+            widget.$el.addClass('o_web_studio_widget_empty');
+            widget.$el.text(widget.string);
         }
         widget.$el.attr('data-node-id', this.node_id++);
 
@@ -222,7 +220,7 @@ var KanbanRecordEditor = KanbanRecord.extend({
 
         var field = this.record[field_name];
         // make empty widgets appear
-        if (!field.value && field.value !== 0) {
+        if (this._isEmpty(field.value)) {
             $field.text(field.__attrs.string || field.string);
             $field.addClass('o_web_studio_widget_empty');
         }
@@ -246,6 +244,13 @@ var KanbanRecordEditor = KanbanRecord.extend({
         $hook.insertAfter($field);
 
         return $field;
+    },
+    _isEmpty: function (value) {
+        if (typeof(value) === 'object') {
+            return _.isEmpty(value);
+        } else {
+            return !value && value !== 0;
+        }
     },
     _render_hook: function(node) {
         var hook_id = _.uniqueId();

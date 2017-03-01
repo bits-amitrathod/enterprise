@@ -182,6 +182,16 @@ return Widget.extend({
     get_fields_not_in_view: function() {
         // Remove fields that are already in the view
         var fields_not_in_view = _.omit(this.fields, Object.keys(this.fields_view.fields));
+
+        if (this.view_type === 'kanban') {
+            // as there is no widget image in the kanban field registry in
+            // the old views, we prevent to user to add a binary field in kanban
+            // TODO: remove this with the new views
+            fields_not_in_view = _.omit(fields_not_in_view, function(field) {
+                return field.type === 'binary';
+            });
+        }
+
         // Convert dict to array
         var list = _.map(fields_not_in_view, function(dict, key) {
             return _.extend({name: key}, dict);
@@ -627,8 +637,12 @@ return Widget.extend({
         // The field doesn't exist: field_description is the definition of the new field.
         // No need to have field_description of an existing field
         if (field_description) {
-            field_description.name = 'x_studio_field_' + utils.randomString(5);
-            field_description.model_name = this.model;
+            // "extend" avoids having the same reference in "this.operations"
+            // We can thus modify it without editing previous existing operations
+            field_description = _.extend({}, field_description, {
+                name: 'x_studio_field_' + utils.randomString(5),
+                model_name: this.model,
+            });
             // Fields with requirements
             // Open Dialog to precise the required fields for this field.
             if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.ttype)) {
@@ -705,12 +719,12 @@ return Widget.extend({
         });
     },
     _remove_element: function(type, node, xpath_info) {
-        // We want to check if the parent of the node if not empty
-        // If the parent contains only the node we want to delete
-        // We will delete the parent instead of the node
-        // Check if there are other cases than 'group' where it is wanted
+        // After the element removal, if the parent doesn't contain any children
+        // anymore, the parent node is also deleted (except if the parent is
+        // the only remaining node)
         var parent_node = find_parent(this.fields_view.arch, node);
-        if (node.tag === 'group' && parent_node.children.length === 1) {
+        var is_root = !find_parent(this.fields_view.arch, parent_node);
+        if (parent_node.children.length === 1 && !is_root) {
             node = parent_node;
         }
 

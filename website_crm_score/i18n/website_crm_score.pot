@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:58+0000\n"
-"PO-Revision-Date: 2016-09-07 09:58+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,16 +18,6 @@ msgstr ""
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_lead_pageviews_count
 msgid "# Page Views"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_supplier_invoice_count
-msgid "# Vendor Bills"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_order_count
-msgid "# of Purchase Order"
 msgstr ""
 
 #. module: website_crm_score
@@ -45,11 +35,6 @@ msgstr ""
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_ir_ui_view_track
 msgid "Allow to specify for one page of the website to be trackable or not"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.actions.server,name:website_crm_score.action_score_now
-msgid "Apply marked scores"
 msgstr ""
 
 #. module: website_crm_score
@@ -73,13 +58,13 @@ msgid "Assigned Leads"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_team_user_leads_count
-msgid "Assigned Leads this last month"
+#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_assigned_leads_count
+msgid "Assigned Leads Count"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_assigned_leads
-msgid "Assigned leads"
+#: model:ir.model.fields,help:website_crm_score.field_team_user_leads_count
+msgid "Assigned Leads this last month"
 msgstr ""
 
 #. module: website_crm_score
@@ -104,6 +89,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_create_date
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_create_date
 msgid "Created on"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.action_score_now
+msgid "Crm Score: Apply marked scores"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.ir_cron_lead_assign_ir_actions_server
+#: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_assign
+#: model:ir.cron,name:website_crm_score.ir_cron_lead_assign
+msgid "Crm Score: lead assignation"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.ir_cron_lead_scoring_ir_actions_server
+#: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_scoring
+#: model:ir.cron,name:website_crm_score.ir_cron_lead_scoring
+msgid "Crm Score: lead scoring "
 msgstr ""
 
 #. module: website_crm_score
@@ -201,6 +205,12 @@ msgid "Leads Assignation"
 msgstr ""
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_leads_count
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_leads_count
+msgid "Leads Count"
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.leads_menu
 msgid "Leads Management"
 msgstr ""
@@ -208,12 +218,6 @@ msgstr ""
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_maximum_user_leads
 msgid "Leads Per Month"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_leads_count
-#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_leads_count
-msgid "Leads count"
 msgstr ""
 
 #. module: website_crm_score
@@ -229,11 +233,6 @@ msgstr ""
 #. module: website_crm_score
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_form
 msgid "Maximum Leads / 30 days"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_warn_msg
-msgid "Message for Purchase Order"
 msgstr ""
 
 #. module: website_crm_score
@@ -279,18 +278,13 @@ msgid "Percentage leads"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_warn
-msgid "Purchase Order"
-msgstr ""
-
-#. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_ratio
 msgid "Ratio"
 msgstr ""
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_rule_type
-msgid "Rule type"
+msgid "Rule Type"
 msgstr ""
 
 #. module: website_crm_score
@@ -309,6 +303,16 @@ msgid "Saleman"
 msgstr ""
 
 #. module: website_crm_score
+#: model:ir.model,name:website_crm_score.model_crm_team
+msgid "Sales Channel"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.act_window,name:website_crm_score.team_action
+msgid "Sales Channels"
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.team_user_action
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_form
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_tree
@@ -318,16 +322,6 @@ msgstr ""
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_res_users_team_user_ids
 msgid "Sales Records"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model,name:website_crm_score.model_crm_team
-msgid "Sales Team"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.actions.act_window,name:website_crm_score.team_action
-msgid "Sales Teams"
 msgstr ""
 
 #. module: website_crm_score
@@ -380,23 +374,8 @@ msgid "Search PageViews"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_res_users_purchase_warn
-msgid "Selecting the \"Warning\" option will notify user with the message, Selecting \"Blocking Message\" will throw an exception with the message and block the flow. The Message has to be written in the next field."
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_property_purchase_currency_id
-msgid "Supplier Currency"
-msgstr ""
-
-#. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.team
 msgid "Teams Assignation"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_res_users_property_purchase_currency_id
-msgid "This currency will be used, instead of the default one, for purchases from the current partner"
 msgstr ""
 
 #. module: website_crm_score
@@ -406,8 +385,6 @@ msgstr ""
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.crm_score_views_action_graph
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_unassigned_leads
-#: model:ir.ui.view,arch_db:website_crm_score.sales_team_form_view_assign
 msgid "Unassigned leads"
 msgstr ""
 

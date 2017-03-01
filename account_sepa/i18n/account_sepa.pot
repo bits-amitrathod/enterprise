@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -77,11 +77,6 @@ msgid "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen
 msgstr ""
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Etherpad lite server. Example: beta.primarypad.com"
-msgstr ""
-
-#. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
 msgid "Filename"
 msgstr ""
@@ -102,13 +97,9 @@ msgid "ID"
 msgstr ""
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
 msgid "Identification"
-msgstr ""
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
-msgid "Identification *"
 msgstr ""
 
 #. module: account_sepa
@@ -125,17 +116,13 @@ msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
-msgid "Is generic"
-msgstr ""
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
-msgid "Issuer"
+msgid "Is Generic"
 msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_issr
-msgid "Issuer *"
+#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
+msgid "Issuer"
 msgstr ""
 
 #. module: account_sepa
@@ -157,6 +144,11 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: account_sepa
+#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
+msgid "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters in length."
 msgstr ""
 
 #. module: account_sepa
@@ -197,8 +189,8 @@ msgid "Register payments on multiple invoices"
 msgstr ""
 
 #. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_account_config_settings_form_inherit_account_sepa
-msgid "SEPA"
+#: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
+msgid "SEPA Credit Transfer"
 msgstr ""
 
 #. module: account_sepa
@@ -208,13 +200,9 @@ msgid "SEPA Credit Transfers to Send"
 msgstr ""
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 msgid "SEPA Pain Version"
-msgstr ""
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
-msgid "SEPA Pain Version *"
 msgstr ""
 
 #. module: account_sepa
@@ -244,7 +232,7 @@ msgid "Technical feature used during the file creation. A SEPA message is said t
 msgstr ""
 
 #. module: account_sepa
-#: code:addons/account_sepa/sepa_credit_transfer.py:350
+#: code:addons/account_sepa/sepa_credit_transfer.py:340
 #, python-format
 msgid "The account %s, linked to partner '%s', is not of type IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
@@ -355,13 +343,9 @@ msgid "Will appear in SEPA payments as the name of the party initiating the paym
 msgstr ""
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
 msgid "Your Company Name"
-msgstr ""
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Your Company Name *"
 msgstr ""
 
 #. module: account_sepa
@@ -373,10 +357,5 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_config_settings
 msgid "account.config.settings"
-msgstr ""
-
-#. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
-msgid "or"
 msgstr ""
 

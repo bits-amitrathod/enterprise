@@ -43,12 +43,12 @@ WebClient.include({
 
     init: function() {
         this._super.apply(this, arguments);
-        this.studio_on = false;
+        this.studio_mode = false;
         this.studio_info_def = null;
         this.studio_action_manager = null;
 
         bus.on('studio_toggled', this, function (mode) {
-            this.studio_on = !!mode;
+            this.studio_mode = mode;
             this.update_context(!!mode);
             this.$el.toggleClass('o_in_studio', !!mode);
         });
@@ -103,8 +103,7 @@ WebClient.include({
         var action = this.edited_action;
         var action_desc = action && action.action_descr || null;
         var active_view = action && action.get_active_view();
-        var mode = this.studio_on && (this.app_switcher_displayed ? 'app_creator' : 'main');
-        return $.when(mode && this.load_studio_info()).then(function(studio_info) {
+        return $.when(this.studio_mode && this.load_studio_info()).then(function(studio_info) {
             return self.instanciate_menu_widgets().then(function() {
                 // reload previous state
                 self.menu.toggle_mode(self.app_switcher_displayed);
@@ -113,9 +112,9 @@ WebClient.include({
                     self.append_app_switcher();
                 }
 
-                self.menu.switch_studio_mode(mode, studio_info, action_desc, active_view);
-                self._update_studio_systray(self.studio_on);
-                self.app_switcher.toggle_studio_mode(self.studio_on);
+                self.menu.switch_studio_mode(self.studio_mode, studio_info, action_desc, active_view);
+                self._update_studio_systray(!!self.studio_mode);
+                self.app_switcher.toggle_studio_mode(!!self.studio_mode);
 
                 if (ev && ev.data.keep_open) {
                     self.menu.edit_menu.on_click(new Event('click'));
@@ -136,17 +135,16 @@ WebClient.include({
     },
 
     toggle_studio_mode: function() {
-        this.studio_on = !this.studio_on;
         var self = this;
+        this.studio_mode = !this.studio_mode && (this.app_switcher_displayed ? 'app_creator' : 'main');
         var action = this.action_manager.get_inner_action();
         var action_desc = action && action.action_descr || null;
         var active_view = action && action.get_active_view();
-        var mode = this.studio_on && (this.app_switcher_displayed ? 'app_creator' : 'main');
 
-        this.update_context(!!mode);
+        this.update_context(!!this.studio_mode);
 
         var defs = [];
-        if (this.studio_on) {
+        if (this.studio_mode) {
             defs.push(this.load_studio_info());
             defs.push(this.set_studio_action_manager());
 
@@ -166,11 +164,11 @@ WebClient.include({
         }
         return $.when.apply($, defs).then(function (studio_info) {
             self.studio_info = studio_info;
-            bus.trigger('studio_toggled', mode, studio_info, action_desc, active_view);
-            if (self.studio_on) {
+            bus.trigger('studio_toggled', self.studio_mode, studio_info, action_desc, active_view);
+            if (self.studio_mode) {
                 self._update_studio_systray(true);
             }
-            if (!self.studio_on && self.app_switcher_displayed) {
+            if (!self.studio_mode && self.app_switcher_displayed) {
                 self.trigger_up('show_app_switcher');
             }
         });
@@ -218,7 +216,7 @@ WebClient.include({
             disable_edition: true,
         };
         var defs = [];
-        this.studio_on = true;
+        this.studio_mode = mode;
         this.edited_action = action;
         if (action) {
             // we are editing an action, not in app creator mode
@@ -245,7 +243,8 @@ WebClient.include({
 
     do_action: function(action, options) {
 
-        if (this.studio_on && action.target === 'new') {
+        if (this.studio_mode === 'main' && action.target === 'new') {
+            // Wizards in the app creator can be opened (ex: Import wizard)
             // TODO: what if we modify target = 'curent' to modify it?
             this.do_warn("Studio", _t("Wizards are not editable with Studio."));
             return $.Deferred().reject();
@@ -254,12 +253,12 @@ WebClient.include({
         // the option `disable_edition` can be used to tell the webclient that
         // the action is not a navigation we want to navigation in Studio with, but
         // it's an action we want to open normally (because it is used by Studio).
-        if (this.studio_on && !options.disable_edition) {
+        if (this.studio_mode && !options.disable_edition) {
             // we are navigating inside Studio so the studio action manager is used
             return this.studio_action_manager.do_action.apply(this, arguments);
         }
 
-        if (this.studio_on) {
+        if (this.studio_mode) {
             // these are options used by Studio main action
             options = options || {};
             options.ids = this.studio_ids;
@@ -272,7 +271,7 @@ WebClient.include({
 
     close_studio: function () {
         this.edited_action = undefined;
-        this.studio_on = false;
+        this.studio_mode = false;
 
         var action = this.action_manager.get_inner_action();
         var action_desc = action && action.action_descr || null;
@@ -303,7 +302,7 @@ WebClient.include({
     },
 
     do_push_state: function (state) {
-        if (this.studio_on && typeof(state.action) === 'string' && state.action.indexOf('action_web_studio_') !== -1) {
+        if (this.studio_mode && typeof(state.action) === 'string' && state.action.indexOf('action_web_studio_') !== -1) {
             return; // keep edited action in url when we enter in studio to allow restoring it on refresh
         }
         return this._super.apply(this, arguments);
@@ -342,7 +341,7 @@ WebClient.include({
     // in another action manager and then open studio with this new action.
     // This allows us to get everything without modifying the dom.
     on_menu_clicked: function () {
-        if (this.studio_on) {
+        if (this.studio_mode) {
             var last_action_stack = this.studio_action_manager.action_stack;
             var last_state = $.bbq.getState(true);
             return this._super.apply(this, arguments)
@@ -352,7 +351,7 @@ WebClient.include({
         return this._super.apply(this, arguments);
     },
     on_app_clicked: function() {
-        if (this.studio_on) {
+        if (this.studio_mode) {
             var last_action_stack = this.studio_action_manager.action_stack;
             var last_state = $.bbq.getState(true);
             return this._super.apply(this, arguments)
@@ -361,7 +360,7 @@ WebClient.include({
         return this._super.apply(this, arguments);
     },
     _on_app_clicked_done: function(ev) {
-        if (this.studio_on) {
+        if (this.studio_mode) {
             core.bus.trigger('change_menu_section', ev.data.menu_id);
             // load the action before toggle the appswitcher
             return this._open_navigated_action_in_studio(ev.data.options)
@@ -399,7 +398,7 @@ WebClient.include({
             this._update_studio_systray(true);
         }
 
-        if (this.studio_on) {
+        if (this.studio_mode) {
             if (display) {
                 bus.trigger('studio_toggled', 'app_creator', this.studio_info);
             } else {

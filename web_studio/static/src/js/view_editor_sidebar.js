@@ -116,6 +116,25 @@ return Widget.extend(FieldManagerMixin, {
             this.field_parameters = field;
             this.modifiers = JSON.parse(field.__attrs.modifiers);
             this.compute_field_attrs();
+
+            // get infos from the widget:
+            // - widget name (to display in the sidebar)
+            // - the possibilty to set a placeholder for this widget
+            // For example: it's not possible to set it on a boolean field.
+            var Widget;
+            if (this.attrs.widget) {
+                this.widget_name = this.attrs.widget;
+                Widget = field_registry.get_any(
+                    [this.view_type + '.' + this.widget_name, this.widget_name]
+                );
+            }
+            if (!Widget && (this.view_type === 'form' || this.view_type === 'list')) {
+                this.widget_name = field.type;
+                Widget = field_registry.get_any(
+                    [this.view_type + '.' + this.widget_name, this.widget_name]
+                );
+            }
+            this.has_placeholder = Widget && Widget.prototype.has_placeholder || false;
         } else if (options && options.node.attrs.class === 'oe_chatter') {
             this.element = 'chatter';
             this.email_alias = options.email_alias;
@@ -134,6 +153,11 @@ return Widget.extend(FieldManagerMixin, {
         this.fields_not_in_view = fields_not_in_view;
         this.fields_in_view = fields_in_view;
         this.view_attrs = view_attrs;
+        if (this.mode !== 'properties') {
+            var scrolltop = this.$('.o_web_studio_sidebar_content').scrollTop();
+            this.render();
+            this.$('.o_web_studio_sidebar_content').scrollTop(scrolltop);
+        }
     },
     computed_ordered_fields: function() {
         // sortBy returns a list so the key (field_name) will be lost but we need it.
@@ -369,7 +393,7 @@ return Widget.extend(FieldManagerMixin, {
         ev.preventDefault();
         var $input = $(ev.currentTarget);
 
-        var dialog = new DomainSelectorDialog(this, this.model, $input.val(), {
+        var dialog = new DomainSelectorDialog(this, this.field_parameters.relation, $input.val(), {
             readonly: false,
             debugMode: session.debug,
         }).open();
