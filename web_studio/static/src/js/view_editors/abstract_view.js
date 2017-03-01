@@ -23,7 +23,7 @@ AbstractView.include({
 
     _createStudioRenderer: function (parent, Renderer) {
         var self = this;
-        var model = this.createModel(parent);
+        var model = this.getModel(parent);
         return $.when(model.load(this.loadParams), this._loadLibs()).then(function (handle) {
             var state = model.get(handle);
             var params = _.extend({}, self.rendererParams, {
