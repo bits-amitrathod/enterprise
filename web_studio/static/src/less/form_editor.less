@@ -66,7 +66,7 @@
                     outline: 2px solid @odoo-brand-optional;
                     border: 5px solid fade(@odoo-brand-optional, 10%);
 
-                    tr:not(.o_web_studio_hovered) {
+                    tr:not(.o_web_studio_hovered) td > *:not(.o_horizontal_separator) {
                         opacity: 0.5;
                     }
                 }
@@ -75,6 +75,10 @@
         .o_form_field_image img {
             width: 100%;
             height: auto;
+            &[src="/web/static/src/img/placeholder.png"] {
+                padding: 9% 24%;
+                background: @o-web-studio-bg-lighter;
+            }
         }
         .o_web_studio_hovered {
             outline: 1px dashed @odoo-brand-optional;
