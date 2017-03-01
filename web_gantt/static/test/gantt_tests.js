@@ -94,7 +94,7 @@ QUnit.module('Views', {
                                     '</form>',
             },
             viewOptions: {
-                initialDate: new Date("4567-4-4 08:00:00"),
+                initialDate: new Date("2156-4-4 08:00:00"),
                 action: {name: "Forecasts"}
             },
             mockRPC: function(route, args) {
