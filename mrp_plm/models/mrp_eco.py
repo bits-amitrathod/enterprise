@@ -18,7 +18,7 @@ class MrpEcoType(models.Model):
     nb_approvals = fields.Integer('Waiting Approvals', compute='_compute_nb')
     nb_approvals_my = fields.Integer('Waiting my Approvals', compute='_compute_nb')
     nb_validation = fields.Integer('To Apply', compute='_compute_nb')
-    color = fields.Integer('Color')
+    color = fields.Integer('Color', default=1)
     stage_ids = fields.One2many('mrp.eco.stage', 'type_id', 'Stages')
 
     @api.one
