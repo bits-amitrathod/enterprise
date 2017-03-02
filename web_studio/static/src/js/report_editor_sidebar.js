@@ -29,10 +29,12 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             if (self.report.groups_id.length === 0) { return; }
 
             // many2many field expects to receive: a list of {id, name, display_name}
-            return self.performModelRPC('res.groups', 'search_read',
-                [[['id', 'in', self.report.groups_id]], ['id', 'name', 'display_name']]).then(function(result) {
-                self.groups_info = result;
-            });
+            return self.rpc('res.groups', 'search_read')
+                .args([[['id', 'in', self.report.groups_id]], ['id', 'name', 'display_name']])
+                .exec()
+                .then(function(result) {
+                    self.groups_info = result;
+                });
         });
     },
     start: function() {

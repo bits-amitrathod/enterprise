@@ -69,22 +69,26 @@ return AbstractWebClient.extend({
         });
     },
     load_menus: function () {
-        return this.performModelRPC('ir.ui.menu', 'load_menus', [core.debug], {context: session.user_context}).then(function(menu_data) {
-            // Compute action_id if not defined on a top menu item
-            for (var i = 0; i < menu_data.children.length; i++) {
-                var child = menu_data.children[i];
-                if (child.action === false) {
-                    while (child.children && child.children.length) {
-                        child = child.children[0];
-                        if (child.action) {
-                            menu_data.children[i].action = child.action;
-                            break;
+        return this.rpc('ir.ui.menu', 'load_menus')
+            .args([core.debug])
+            .withContext(session.user_context)
+            .exec()
+            .then(function(menu_data) {
+                // Compute action_id if not defined on a top menu item
+                for (var i = 0; i < menu_data.children.length; i++) {
+                    var child = menu_data.children[i];
+                    if (child.action === false) {
+                        while (child.children && child.children.length) {
+                            child = child.children[0];
+                            if (child.action) {
+                                menu_data.children[i].action = child.action;
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            return menu_data;
-        });
+                return menu_data;
+            });
     },
     show_application: function () {
         var self = this;
@@ -101,17 +105,20 @@ return AbstractWebClient.extend({
             // If it is not empty, we trigger a dummy hashchange event so that `self.on_hashchange`
             // will take care of toggling the app switcher and loading the action.
             if (_.isEmpty($.bbq.getState(true))) {
-                return self.performModelRPC('res.users', 'read', [session.uid, ["action_id"]]).then(function(result) {
-                    var data = result[0];
-                    if(data.action_id) {
-                        return self.do_action(data.action_id[0]).then(function() {
-                            self.toggle_app_switcher(false);
-                            self.menu.change_menu_section(self.menu.action_id_to_primary_menu_id(data.action_id[0]));
-                        });
-                    } else {
-                        self.toggle_app_switcher(true);
-                    }
-                });
+                return self.rpc('res.users', 'read')
+                    .args([session.uid, ["action_id"]])
+                    .exec()
+                    .then(function(result) {
+                        var data = result[0];
+                        if(data.action_id) {
+                            return self.do_action(data.action_id[0]).then(function() {
+                                self.toggle_app_switcher(false);
+                                self.menu.change_menu_section(self.menu.action_id_to_primary_menu_id(data.action_id[0]));
+                            });
+                        } else {
+                            self.toggle_app_switcher(true);
+                        }
+                    });
             } else {
                 return self.on_hashchange();
             }

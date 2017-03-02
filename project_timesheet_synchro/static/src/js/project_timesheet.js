@@ -254,7 +254,10 @@ odoo.define('project_timeshee.ui', function (require ) {
             //
             self.clean_xml_ids().always(function() {
 
-                self.performModelRPC("account.analytic.line", "export_data_for_ui" , []).then(function(sv_data) {
+                self.rpc("account.analytic.line", "export_data_for_ui")
+                    .args([])
+                    .exec()
+                    .then(function(sv_data) {
                     // SV => LS sync
                     var sv_aals = sv_data.aals.datas;
                     var sv_tasks = sv_data.tasks.datas;
@@ -346,8 +349,11 @@ odoo.define('project_timeshee.ui', function (require ) {
                             }
                         }
                     });
-                    self.performModelRPC("account.analytic.line", "import_ui_data" ,
-                            [self.data.account_analytic_lines , self.data.tasks, self.data.projects], {context : context}).then(function(sv_response) {
+                    self.rpc("account.analytic.line", "import_ui_data")
+                        .args([self.data.account_analytic_lines , self.data.tasks, self.data.projects])
+                        .withContext(context)
+                        .exec()
+                        .then(function(sv_response) {
                         // The entries that have been removed in the backend must be removed from the LS
                         if (sv_response.projects_to_remove.length) {
                             _.each(sv_response.projects_to_remove, function(project_to_remove_id) {
@@ -540,41 +546,47 @@ odoo.define('project_timeshee.ui', function (require ) {
             if(this.data.data_version === 1) {
                 def.resolve(); // Cleanup has already been performed.
             } else {
-                this.performModelRPC("account.analytic.line", "clean_xml_ids" , []).always(function(res) {
-                    if (res === true) {
-                        // Everything went fine, any local xml_ids with project_timesheet_synchro can be converted
-                        self.process_all_ids(self.convert_module_to_export);
-                        self.data.data_version = 1;
-                        def.resolve();
-                    } else {
-                        var domain = [
-                            ['module', '=', 'project_timesheet_synchro'],
-                            ['model', 'in', [
-                                'mail.alias',
-                                'account.analytic.account',
-                                'project.project',
-                                'project.task',
-                                'account.analytic.line'
-                            ]]
-                        ];
-                        self.performModelRPC("ir.model.data", 'search', [domain]).then(function (ids) {
-                            if (ids.length === 0) { // there are no dirty ids on the server
-                                self.process_all_ids(self.convert_module_to_export);
-                                self.data.data_version = 1;
-                                def.resolve();
-                            } else {
-                                // Show a warning to the user, once a day
-                                if (!self.data.warning_date || (self.data.warning_date && moment(self.data.warning_date).diff(new Date(), 'days') !== 0)) {
-                                    alert('The code on your Odoo server is not up to date and an important update has been released. You or your system administrator should consider retrieving it as soon as possible.');
-                                    self.data.warning_date = new Date();
-                                }
-                                def.resolve();
-                            }
-                        }).fail(function (err) {
+                this.rpc("account.analytic.line", "clean_xml_ids")
+                    .args([])
+                    .exec()
+                    .always(function(res) {
+                        if (res === true) {
+                            // Everything went fine, any local xml_ids with project_timesheet_synchro can be converted
+                            self.process_all_ids(self.convert_module_to_export);
+                            self.data.data_version = 1;
                             def.resolve();
-                        });
-                    }
-                });
+                        } else {
+                            var domain = [
+                                ['module', '=', 'project_timesheet_synchro'],
+                                ['model', 'in', [
+                                    'mail.alias',
+                                    'account.analytic.account',
+                                    'project.project',
+                                    'project.task',
+                                    'account.analytic.line'
+                                ]]
+                            ];
+                            self.rpc("ir.model.data", 'search')
+                                .args([domain])
+                                .exec()
+                                .then(function (ids) {
+                                    if (ids.length === 0) { // there are no dirty ids on the server
+                                        self.process_all_ids(self.convert_module_to_export);
+                                        self.data.data_version = 1;
+                                        def.resolve();
+                                    } else {
+                                        // Show a warning to the user, once a day
+                                        if (!self.data.warning_date || (self.data.warning_date && moment(self.data.warning_date).diff(new Date(), 'days') !== 0)) {
+                                            alert('The code on your Odoo server is not up to date and an important update has been released. You or your system administrator should consider retrieving it as soon as possible.');
+                                            self.data.warning_date = new Date();
+                                        }
+                                        def.resolve();
+                                    }
+                                }).fail(function (err) {
+                                    def.resolve();
+                                });
+                        }
+                    });
             }
             return def;
         },
@@ -1822,16 +1834,18 @@ odoo.define('project_timeshee.ui', function (require ) {
         },
         willStart: function() {
             var self = this;
-            return this.performModelRPC('openerp.enterprise.database', 'get_instances', [], {}).then(function(res) {
-                self.instances = {};
-                _.each(res, function(item) {
-                    if(item.url){
-                        self.instances[item.url] = item;
-                    }
+            return this.rpc('openerp.enterprise.database', 'get_instances')
+                .exec()
+                .then(function(res) {
+                    self.instances = {};
+                    _.each(res, function(item) {
+                        if(item.url){
+                            self.instances[item.url] = item;
+                        }
+                    });
+                }).fail(function(res) {
+                    alert('Something went wrong.');
                 });
-            }).fail(function(res) {
-                alert('Something went wrong.');
-            });
         },
 
         db_selected: function(event) {
@@ -1839,42 +1853,45 @@ odoo.define('project_timeshee.ui', function (require ) {
             $('.pt_nav_sync a').addClass('pt_sync_in_progress');
             var url = event.target.dataset.url;
 
-            this.performModelRPC('auth.oauth2.token', 'get_token', [{client_id: self.instances[url].uuid, scope: "userinfo"}], {}).then(function(res) {
-                var state =  JSON.stringify({
-                    'd': self.instances[url].db_name,
-                    'p':1, // 1 is the code to use Odoo as provider
-                });
-                var token = res.access_token;
-                $.ajax({
-                    url : url.concat(
-                        '/auth_oauth/signin',
-                        '?access_token=' + token,
-                        '&scope=userinfo',
-                        '&state=' + state,
-                        '&expires_in=3600',
-                        '&token_type=Bearer'
-                    ),
-                }).then(function(response){
-                    self.server = url;
-                    session.origin = self.server;
-                    session.setup(self.server, {use_cors : true});
-                    session.session_reload().always(function() {
-                        if (session.uid) {
-                            self.getParent().on_successful_login();
-                            local_storage.setItem('pt_current_server', session.origin);
-                            local_storage.setItem('pt_current_user', session.username);
-                        }
-                        else {
-                            alert('Odoo login failed');
-                        }
+            this.rpc('auth.oauth2.token', 'get_token')
+                .args([{client_id: self.instances[url].uuid, scope: "userinfo"}])
+                .exec()
+                .then(function(res) {
+                    var state =  JSON.stringify({
+                        'd': self.instances[url].db_name,
+                        'p':1, // 1 is the code to use Odoo as provider
                     });
-                }).fail(function(res) {
-                    session.origin = url;
-                    session.setup(url, {use_cors : true});
-                    self.getParent().db_list = [url.substring(8, url.length -9)]
-                    self.getParent().show_premise_login_form_screen();
+                    var token = res.access_token;
+                    $.ajax({
+                        url : url.concat(
+                            '/auth_oauth/signin',
+                            '?access_token=' + token,
+                            '&scope=userinfo',
+                            '&state=' + state,
+                            '&expires_in=3600',
+                            '&token_type=Bearer'
+                        ),
+                    }).then(function(response){
+                        self.server = url;
+                        session.origin = self.server;
+                        session.setup(self.server, {use_cors : true});
+                        session.session_reload().always(function() {
+                            if (session.uid) {
+                                self.getParent().on_successful_login();
+                                local_storage.setItem('pt_current_server', session.origin);
+                                local_storage.setItem('pt_current_user', session.username);
+                            }
+                            else {
+                                alert('Odoo login failed');
+                            }
+                        });
+                    }).fail(function(res) {
+                        session.origin = url;
+                        session.setup(url, {use_cors : true});
+                        self.getParent().db_list = [url.substring(8, url.length -9)]
+                        self.getParent().show_premise_login_form_screen();
+                    });
                 });
-            });
         },
     });
 

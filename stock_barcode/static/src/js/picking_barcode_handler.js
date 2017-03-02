@@ -88,11 +88,16 @@ var PickingBarcodeHandler = FormViewBarcodeHandler.extend({
             var self = this;
             return self.form_view.save().done(function() {
                 return self.form_view.reload().done(function() {
-                    return self.performModelRPC("stock.picking", 'get_po_to_split_from_barcode', [[self.form_view.datarecord.id], barcode]).done(function(id) {
-                        return self.performModelRPC("stock.pack.operation", "action_split_lots", [[id]]).done(function(result) {
+                    return self.rpc("stock.picking", 'get_po_to_split_from_barcode')
+                        .args([[self.form_view.datarecord.id], barcode])
+                        .exec()
+                        .then(function(id) {
+                            return self.rpc("stock.pack.operation", "action_split_lots")
+                                .args([[id]])
+                                .exec();
+                        }).done(function(result) {
                             self.open_wizard(result);
                         });
-                    });
                 });
             });
         } else {

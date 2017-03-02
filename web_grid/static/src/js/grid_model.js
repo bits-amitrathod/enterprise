@@ -51,21 +51,24 @@ return AbstractModel.extend({
     // private API
     _fetch: function (rowFields) {
         var self = this;
-        return this.performModelRPC(this.modelName, 'read_grid', [], {
-            row_fields: rowFields,
-            col_field: this.colField,
-            cell_field: this.cellField,
-            domain: this.domain,
-            context: this.context,  // context: _this.get_full_context(),
-            range: this.currentRange,
-        }).then(function (result) {
-            self.gridData = result;
-            self.gridData.groupBy = rowFields;
-            self.gridData.colField = self.colField;
-            self.gridData.cellField = self.cellField;
-            self.gridData.range = self.currentRange.name;
-            self.gridData.context = self.context;
-        });
+        return this.rpc(this.modelName, 'read_grid')
+            .kwargs({
+                row_fields: rowFields,
+                col_field: this.colField,
+                cell_field: this.cellField,
+                domain: this.domain,
+                range: this.currentRange,
+            })
+            .withContext(this.context) // context: _this.get_full_context(),
+            .exec()
+            .then(function (result) {
+                self.gridData = result;
+                self.gridData.groupBy = rowFields;
+                self.gridData.colField = self.colField;
+                self.gridData.cellField = self.cellField;
+                self.gridData.range = self.currentRange.name;
+                self.gridData.context = self.context;
+            });
     },
 });
 

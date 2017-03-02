@@ -35,19 +35,22 @@ var StudioReportKanbanView = KanbanView.extend({
 
     open_record: function(event) {
         var self = this;
-        this.performModelRPC('ir.actions.report.xml', 'studio_edit', [event.data.id]).then(function(action) {
-            if (action.active_ids.length) {
-                self.do_action(action);
-            } else {
-                new Dialog(this, {
-                    size: 'medium',
-                    title: _t('No record to display.'),
-                    $content: $('<div>', {
-                        text: _t("First, quit Odoo Studio to create a new entity. Then, open Odoo Studio to create or edit reports."),
-                    }),
-                }).open();
-            }
-        });
+        this.rpc('ir.actions.report.xml', 'studio_edit')
+            .args([event.data.id])
+            .exec()
+            .then(function(action) {
+                if (action.active_ids.length) {
+                    self.do_action(action);
+                } else {
+                    new Dialog(this, {
+                        size: 'medium',
+                        title: _t('No record to display.'),
+                        $content: $('<div>', {
+                            text: _t("First, quit Odoo Studio to create a new entity. Then, open Odoo Studio to create or edit reports."),
+                        }),
+                    }).open();
+                }
+            });
     },
 });
 

@@ -34,24 +34,27 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     render_search_view: function(){
         var self = this;
         var defs = [];
-        this.performModelRPC('ir.model.data', 'get_object_reference', ['product', 'product_template_search_view']).then(function(view_id){
-            self.dataset = new data.DataSetSearch(this, 'product.product');
-            this.loadFieldView(self.dataset, view_id[1], 'search')
-            .then(function (fields_view) {
-                self.fields_view = fields_view;
-                var options = {
-                    $buttons: $("<div>"),
-                    action: this.action,
-                    disable_groupby: true,
-                };
-                self.searchview = new SearchView(self, self.dataset, self.fields_view, options);
-                self.searchview.on('search_data', self, self.on_search);
-                self.searchview.appendTo($("<div>")).then(function () {
-                    defs.push(self.update_cp());
-                    self.$searchview_buttons = self.searchview.$buttons.contents();
+        this.rpc('ir.model.data', 'get_object_reference')
+            .args(['product', 'product_template_search_view'])
+            .exec()
+            .then(function(view_id){
+                self.dataset = new data.DataSetSearch(this, 'product.product');
+                this.loadFieldView(self.dataset, view_id[1], 'search')
+                .then(function (fields_view) {
+                    self.fields_view = fields_view;
+                    var options = {
+                        $buttons: $("<div>"),
+                        action: this.action,
+                        disable_groupby: true,
+                    };
+                    self.searchview = new SearchView(self, self.dataset, self.fields_view, options);
+                    self.searchview.on('search_data', self, self.on_search);
+                    self.searchview.appendTo($("<div>")).then(function () {
+                        defs.push(self.update_cp());
+                        self.$searchview_buttons = self.searchview.$buttons.contents();
+                    });
                 });
             });
-        });
     },
     willStart: function() {
         return this.get_html();
@@ -70,8 +73,9 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         if(isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
         } else {
-            return this.performModelRPC('sale.forecast', 'save_forecast_data', [
-                 parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
+            return this.rpc('sale.forecast', 'save_forecast_data')
+                .args([parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
+                .exec()
                 .then(function() {
                     self.get_html().then(function() {
                         self.re_renderElement();
@@ -92,24 +96,28 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_generate_procurement: function(e){
         var self = this;
         var target = $(e.target);
-        return this.performModelRPC('sale.forecast', 'generate_procurement', [parseInt(target.data('product')), 1]).then(function(result){
-            if (result){
-                self.get_html().then(function() {
-                    self.re_renderElement();
-                });
-            }
-        });
+        return this.rpc('sale.forecast', 'generate_procurement')
+            .args([parseInt(target.data('product')), 1])
+            .exec()
+            .then(function(result){
+                if (result){
+                    self.get_html().then(function() {
+                        self.re_renderElement();
+                    });
+                }
+            });
     },
     mps_change_auto_mode: function(e){
         var self = this;
         var target = $(e.target);
-        return this.performModelRPC('sale.forecast', 'change_forecast_mode',
-            [parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))])
-        .then(function(result){
-            self.get_html().then(function() {
-                self.re_renderElement();
+        return this.rpc('sale.forecast', 'change_forecast_mode')
+            .args([parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))])
+            .exec()
+            .then(function(result){
+                self.get_html().then(function() {
+                    self.re_renderElement();
+                });
             });
-        });
     },
     mps_show_line: function(e){
         var classes = $(e.target).data('value');
@@ -126,26 +134,35 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     option_mps_period: function(e){
         var self = this;
         this.period = $(e.target).parent().data('value');
-        return this.performModelRPC('mrp.mps.report', 'search', [[]]).then(function(res){
-                return self.performModelRPC('mrp.mps.report', 'write', [res, {'period': self.period}]).done(function(result){
-                self.get_html().then(function() {
-                    self.update_cp();
-                    self.re_renderElement();
-                });
-            });
+        return this.rpc('mrp.mps.report', 'search')
+            .args([[]])
+            .exec()
+            .then(function(res){
+                return self.rpc('mrp.mps.report', 'write')
+                    .args([res, {'period': self.period}])
+                    .exec()
+                    .done(function(result){
+                        self.get_html().then(function() {
+                            self.update_cp();
+                            self.re_renderElement();
+                        });
+                    });
         });
     },
     add_product_wizard: function(e){
         var self = this;
-        return this.performModelRPC('ir.model.data', 'get_object_reference', ['mrp_mps', 'mrp_mps_report_view_form']).then(function(data){
-            return self.do_action({
-                name: _t('Add a Product'),
-                type: 'ir.actions.act_window',
-                res_model: 'mrp.mps.report',
-                views: [[data[1] || false, 'form']],
-                target: 'new',
+        return this.rpc('ir.model.data', 'get_object_reference')
+            .args(['mrp_mps', 'mrp_mps_report_view_form'])
+            .exec()
+            .then(function(data){
+                return self.do_action({
+                    name: _t('Add a Product'),
+                    type: 'ir.actions.act_window',
+                    res_model: 'mrp.mps.report',
+                    views: [[data[1] || false, 'form']],
+                    target: 'new',
+                });
             });
-        });
     },
     open_mps_product: function(e){
         this.do_action({
@@ -158,16 +175,19 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_open_forecast_wizard: function(e){
         var self = this;
         var product = $(e.target).data('product') || $(e.target).parent().data('product');
-        return this.performModelRPC('ir.model.data', 'get_object_reference', ['mrp_mps', 'product_product_view_form_mps']).then(function(data){
-            return self.do_action({
-                name: _t('Forecast Product'),
-                type: 'ir.actions.act_window',
-                res_model: 'product.product',
-                views: [[data[1] || false, 'form']],
-                target: 'new',
-                res_id: product,
+        return this.rpc('ir.model.data', 'get_object_reference')
+            .args(['mrp_mps', 'product_product_view_form_mps'])
+            .exec()
+            .then(function(data){
+                return self.do_action({
+                    name: _t('Forecast Product'),
+                    type: 'ir.actions.act_window',
+                    res_model: 'product.product',
+                    views: [[data[1] || false, 'form']],
+                    target: 'new',
+                    res_id: product,
+                });
             });
-        });
     },
     mps_forecast_save: function(e){
         var self = this;
@@ -176,8 +196,9 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         if(isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer or Float Value should be valid."));
         } else {
-            return this.performModelRPC('sale.forecast', 'save_forecast_data', [
-                parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
+            return this.rpc('sale.forecast', 'save_forecast_data')
+                .args([parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
+                .exec()
                 .done(function(res){
                     self.get_html().then(function() {
                         self.re_renderElement();
@@ -200,20 +221,26 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_apply: function(e){
         var self = this;
         var product = parseInt($(e.target).data('product'));
-        return this.performModelRPC('mrp.mps.report', 'update_indirect', [product]).then(function(result){
-            self.get_html().then(function() {
-                self.re_renderElement();
-            });
+        return this.rpc('mrp.mps.report', 'update_indirect')
+            .args([product])
+            .exec()
+            .then(function(result){
+                self.get_html().then(function() {
+                    self.re_renderElement();
+                });
         });
     },
     // Fetches the html and is previous report.context if any, else create it
     get_html: function() {
         var self = this;
-        return this.performModelRPC('mrp.mps.report', 'get_html', [this.domain]).then(function (result) {
-            self.html = result.html;
-            self.report_context = result.report_context;
-            self.renderButtons();
-        });
+        return this.rpc('mrp.mps.report', 'get_html')
+            .args([this.domain])
+            .exec()
+            .then(function (result) {
+                self.html = result.html;
+                self.report_context = result.report_context;
+                self.renderButtons();
+            });
     },
     // Updates the control panel and render the elements that have yet to be rendered
     update_cp: function() {
@@ -249,11 +276,14 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var self = this;
         this.$buttons = $(QWeb.render("MPS.buttons", {}));
         this.$buttons.on('click', function(){
-            self.performModelRPC('sale.forecast', 'generate_procurement_all', []).then(function(result){
-                self.get_html().then(function() {
-                    self.re_renderElement();
+            self.rpc('sale.forecast', 'generate_procurement_all')
+                .args([])
+                .exec()
+                .then(function(result){
+                    self.get_html().then(function() {
+                        self.re_renderElement();
+                    });
                 });
-            });
         });
         return this.$buttons;
     },

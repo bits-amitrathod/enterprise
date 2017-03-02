@@ -95,13 +95,17 @@ var ReportWidget = Widget.extend({
              'parent_quant': parseInt(parent_quant) || false,
              'level': parseInt(row_level) + 30 || 1
         }
-        this.performModelRPC('stock.traceability.report', 'get_lines', [parseInt(active_id, 10)], dict).then(function (lines) {// After loading the line
-            var line;
-            for (line in lines) { // Render each line
-                $cursor.after(QWeb.render("report_mrp_line", {l: lines[line]}));
-                $cursor = $cursor.next();
-            }
-        });
+        this.rpc('stock.traceability.report', 'get_lines')
+            .args([parseInt(active_id, 10)])
+            .kwargs(dict)
+            .exec()
+            .then(function (lines) {// After loading the line
+                var line;
+                for (line in lines) { // Render each line
+                    $cursor.after(QWeb.render("report_mrp_line", {l: lines[line]}));
+                    $cursor = $cursor.next();
+                }
+            });
         $CurretElement.attr('class', 'o_stock_reports_foldable ' + active_id); // Change the class, and rendering of the unfolded line
         $(e.target).parents('tr').find('span.o_stock_reports_unfoldable').replaceWith(QWeb.render("foldable", {lineId: active_id}));
         $(e.target).parents('tr').toggleClass('o_stock_reports_unfolded');

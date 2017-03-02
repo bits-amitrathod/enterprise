@@ -39,9 +39,12 @@ var ReportEditor = ReportAction.extend({
         var self = this;
 
         return this._super.apply(this, arguments).then(function() {
-            return self.performModelRPC('ir.actions.report.xml', 'read', [[self.res_id]]).then(function (report) {
-                self.sidebar = new ReportEditorSidebar(self, report[0]);
-            });
+            return self.rpc('ir.actions.report.xml', 'read')
+                .args([[self.res_id]])
+                .exec()
+                .then(function (report) {
+                    self.sidebar = new ReportEditorSidebar(self, report[0]);
+                });
         });
     },
     start: function() {

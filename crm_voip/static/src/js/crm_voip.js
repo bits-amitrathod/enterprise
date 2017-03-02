@@ -121,9 +121,12 @@ var PhonecallWidget = Widget.extend({
     },
 
     schedule_call: function(){
-        return this.performModelRPC("crm.phonecall", 'schedule_another_phonecall', [this.id]).then(function(action){
-            web_client.action_manager.do_action(action);
-        });
+        return this.rpc("crm.phonecall", 'schedule_another_phonecall')
+            .args([this.id])
+            .exec()
+            .then(function(action){
+                web_client.action_manager.do_action(action);
+            });
     },
 
     send_email: function(){
@@ -168,23 +171,28 @@ var PhonecallWidget = Widget.extend({
         var self = this;
         if(this.opportunity_id){
             //Call of the function xmlid_to_res_model_res_id to get the id of the opportunity's form view and not the lead's form view
-            return this.performModelRPC("ir.model.data", "xmlid_to_res_model_res_id", ["crm.crm_case_form_view_oppor"])
-            .then(function(data){
-                web_client.action_manager.do_action({
-                    type: 'ir.actions.act_window',
-                    res_model: "crm.lead",
-                    res_id: self.opportunity_id,
-                    views: [[data[1], 'form']],
-                    target: 'current',
-                    context: {},
-                    flags: {initial_mode: "edit",},
+            return this.rpc("ir.model.data", "xmlid_to_res_model_res_id")
+                .args(["crm.crm_case_form_view_oppor"])
+                .exec()
+                .then(function(data){
+                    web_client.action_manager.do_action({
+                        type: 'ir.actions.act_window',
+                        res_model: "crm.lead",
+                        res_id: self.opportunity_id,
+                        views: [[data[1], 'form']],
+                        target: 'current',
+                        context: {},
+                        flags: {initial_mode: "edit",},
+                    });
                 });
-            });
         }else{
-            return this.performModelRPC("crm.phonecall", "action_button_to_opportunity", [[this.id]]).then(function(result){
-                result.flags= {initial_mode: "edit",};
-                web_client.action_manager.do_action(result);
-            });
+            return this.rpc("crm.phonecall", "action_button_to_opportunity")
+                .args([[this.id]])
+                .exec()
+                .then(function(result){
+                    result.flags= {initial_mode: "edit",};
+                    web_client.action_manager.do_action(result);
+                });
         }
     },
 
@@ -368,16 +376,17 @@ var DialingPanel = Widget.extend({
         if(!this.in_call){
             var self = this;
             var number = this.$dial_dial_keypad_input.val();
-            return this.performModelRPC("crm.phonecall", "get_new_phonecall", [number]).then(
-                function(result){
+            return this.rpc("crm.phonecall", "get_new_phonecall")
+                .args([number])
+                .exec()
+                .then(function(result){
                     var phonecall = result.phonecall[0];
                     self.toggle_keypad();
                     self.display_in_queue(phonecall);
                     self.select_call(phonecall.id);
                     self.make_call(phonecall.id);
                     self.$dial_dial_keypad_input.val("");
-
-            });
+                });
         }
     },
 
@@ -400,7 +409,9 @@ var DialingPanel = Widget.extend({
 
 
     sip_accepted: function(){
-        this.performModelRPC("crm.phonecall", "init_call", [this.current_phonecall]);
+        this.rpc("crm.phonecall", "init_call")
+            .args([this.current_phonecall])
+            .exec();
         this.$('.o_dial_transfer_button').removeAttr('disabled');
     },
 
@@ -419,7 +430,9 @@ var DialingPanel = Widget.extend({
     sip_cancel: function(){
         this.in_call = false;
         this.widgets[this.current_phonecall].set_state('pending');
-        this.performModelRPC("crm.phonecall", "rejected_call",[this.current_phonecall]);
+        this.rpc("crm.phonecall", "rejected_call")
+            .args([this.current_phonecall])
+            .exec();
         if(this.in_automatic_mode){
             this.next_call();
         }else{
@@ -435,7 +448,9 @@ var DialingPanel = Widget.extend({
 
     sip_rejected: function(){
         this.in_call = false;
-        this.performModelRPC("crm.phonecall", "rejected_call",[this.current_phonecall]);
+        this.rpc("crm.phonecall", "rejected_call")
+            .args([this.current_phonecall])
+            .exec();
         this.widgets[this.current_phonecall].set_state('pending');
         if(this.in_automatic_mode){
             this.next_call();
@@ -451,7 +466,9 @@ var DialingPanel = Widget.extend({
         this.$big_call_button.html('<i class="fa fa-phone"></i>');
         this.$hangup_transfer_buttons.attr('disabled','disabled');
         this.$(".popover").remove();
-        this.performModelRPC("crm.phonecall", "hangup_call", [this.current_phonecall])
+        this.rpc("crm.phonecall", "hangup_call")
+            .args([this.current_phonecall])
+            .exec()
             .then(_.bind(this.hangup_call,this));
     },
 
@@ -475,19 +492,22 @@ var DialingPanel = Widget.extend({
             this.$().block({message: message + '<br/><button type="button" class="btn btn-danger btn-sm btn-configuration">Configuration</button>'});
             this.$('.btn-configuration').on("click",function(){
                 //Call in order to get the id of the user's preference view instead of the user's form view
-                self.performModelRPC("ir.model.data", "xmlid_to_res_model_res_id",["base.view_users_form_simple_modif"]).then(function(data){
-                    web_client.action_manager.do_action(
-                        {
-                            name: "Change My Preferences",
-                            type: "ir.actions.act_window",
-                            res_model: "res.users",
-                            res_id: real_session.uid,
-                            target: "new",
-                            xml_id: "base.action_res_users_my",
-                            views: [[data[1], 'form']],
-                        }
-                    );
-                });
+                self.rpc("ir.model.data", "xmlid_to_res_model_res_id")
+                    .args(["base.view_users_form_simple_modif"])
+                    .exec()
+                    .then(function(data){
+                        web_client.action_manager.do_action(
+                            {
+                                name: "Change My Preferences",
+                                type: "ir.actions.act_window",
+                                res_model: "res.users",
+                                res_id: real_session.uid,
+                                target: "new",
+                                xml_id: "base.action_res_users_my",
+                                views: [[data[1], 'form']],
+                            }
+                        );
+                    });
             });
         }
     },
@@ -581,7 +601,9 @@ var DialingPanel = Widget.extend({
     //Get the phonecalls and create the widget to put inside the panel
     search_phonecalls_status: function(refresh_by_user) {
         //get the phonecalls' information and populate the queue
-        this.performModelRPC("crm.phonecall", "get_list").then(_.bind(this.parse_phonecall,this,refresh_by_user));
+        this.rpc("crm.phonecall", "get_list")
+            .exec()
+            .then(_.bind(this.parse_phonecall,this,refresh_by_user));
     },
 
     parse_phonecall: function(refresh_by_user,result){
@@ -600,7 +622,9 @@ var DialingPanel = Widget.extend({
                 if(phonecall.state !== "done"){
                     self.display_in_queue(phonecall);
                 }else{
-                    self.performModelRPC("crm.phonecall", "remove_from_queue",[phonecall.id]);
+                    self.rpc("crm.phonecall", "remove_from_queue")
+                        .args([phonecall.id])
+                        .exec();
                 }
             }else{
                 self.display_in_queue(phonecall);
@@ -686,10 +710,13 @@ var DialingPanel = Widget.extend({
     //remove the phonecall from the queue
     remove_phonecall: function(phonecall_widget){
         var self = this;
-        return this.performModelRPC("crm.phonecall", "remove_from_queue", [phonecall_widget.id]).then(function(){
-            self.search_phonecalls_status();
-            self.$(".popover").remove();
-        });
+        return this.rpc("crm.phonecall", "remove_from_queue")
+            .args([phonecall_widget.id])
+            .exec()
+            .then(function(){
+                self.search_phonecalls_status();
+                self.$(".popover").remove();
+            });
     },
 
     //action done when the button "call" is clicked
@@ -765,30 +792,36 @@ var DialingPanel = Widget.extend({
 
     call_partner: function(number, partner_id){
         var self = this;
-        return this.performModelRPC("res.partner", "create_call_in_queue", [partner_id, number]).then(function(phonecall_id){
-            self.current_call_deferred = $.Deferred();
-            self.search_phonecalls_status();
-            self.current_call_deferred.done(function(){
-                self.make_call(phonecall_id);
-                if(!self.shown){
-                    self.toggle_display();
-                }
+        return this.rpc("res.partner", "create_call_in_queue")
+            .args([partner_id, number])
+            .exec()
+            .then(function(phonecall_id){
+                self.current_call_deferred = $.Deferred();
+                self.search_phonecalls_status();
+                self.current_call_deferred.done(function(){
+                    self.make_call(phonecall_id);
+                    if(!self.shown){
+                        self.toggle_display();
+                    }
+                });
             });
-        });
     },
 
     call_opportunity: function(number, opportunity_id){
         var self = this;
-        return this.performModelRPC("crm.lead", "create_call_form_view", [opportunity_id]).then(function(phonecall_id){
-            self.current_call_deferred = $.Deferred();
-            self.search_phonecalls_status();
-            self.current_call_deferred.done(function(){
-                self.make_call(phonecall_id);
-                if(!self.shown){
-                    self.toggle_display();
-                }
+        return this.rpc("crm.lead", "create_call_form_view")
+            .args([opportunity_id])
+            .exec()
+            .then(function(phonecall_id){
+                self.current_call_deferred = $.Deferred();
+                self.search_phonecalls_status();
+                self.current_call_deferred.done(function(){
+                    self.make_call(phonecall_id);
+                    if(!self.shown){
+                        self.toggle_display();
+                    }
+                });
             });
-        });
     },
 });
     
@@ -916,7 +949,8 @@ Phone.include({
                     this._call(phone_number);
                 } else {
                     // get the formatCurrency function from the server
-                    this.performModelRPC('res.currency', 'get_format_currencies_js_function')
+                    this.rpc('res.currency', 'get_format_currencies_js_function')
+                        .exec()
                         .then(function (func) {
                             var formatCurrency = new Function("amount, currency_id", func);
                             self.DialingPanel = new DialingPanel(web_client, formatCurrency);
@@ -933,7 +967,8 @@ WebClient.include({
         var self = this;
         // To get the formatCurrency function from the server
         return this._super.apply(this, arguments).then(function () {
-            return self.performModelRPC("res.currency", "get_format_currencies_js_function")
+            return self.rpc("res.currency", "get_format_currencies_js_function")
+                .exec()
                 .then(function(data) {
                     var formatCurrency = new Function("amount, currency_id", data);
                     self.DialingPanel = new DialingPanel(web_client, formatCurrency);

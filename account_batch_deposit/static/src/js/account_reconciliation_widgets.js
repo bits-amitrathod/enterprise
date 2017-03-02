@@ -22,8 +22,9 @@ widgets.bankStatementReconciliation.include({
 
     updateBatchDeposits: function() {
         var self = this;
-        return this.performModelRPC("account.bank.statement",
-                "get_batch_deposits_data", [self.statement_ids || undefined])
+        return this.rpc("account.bank.statement", "get_batch_deposits_data")
+            .args([self.statement_ids || undefined])
+            .exec()
             .then(function(data) {
                 self.batch_deposits = data;
                 _.each(self.getChildren(), function(child) {
@@ -78,7 +79,9 @@ widgets.bankStatementReconciliationLine.include({
         e.preventDefault();
         var self = this;
         var deposit_id = parseInt(e.currentTarget.dataset.batch_deposit_id);
-        this.performModelRPC("account.bank.statement.line", "get_move_lines_for_reconciliation_widget_by_batch_deposit_id", [this.line_id, deposit_id])
+        this.rpc("account.bank.statement.line", "get_move_lines_for_reconciliation_widget_by_batch_deposit_id")
+            .args([this.line_id, deposit_id])
+            .exec()
             .then(function (deposit_lines) {
                 // Check if some lines are already selected in another reconciliation
                 var lines_selected_here_ids = _.map(self.get("mv_lines_selected"), function(l) { return l.id });

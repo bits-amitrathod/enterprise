@@ -50,12 +50,15 @@ var stock_report_generic = Widget.extend(ControlPanelMixin, {
     get_html: function() {
         var self = this;
         var defs = [];
-        return this.performModelRPC('stock.traceability.report', 'get_html', [self.given_context]).then(function (result) {
-            self.html = result.html;
-            self.renderButtons();
-            defs.push(self.update_cp());
-            return $.when.apply($, defs);
-        });
+        return this.rpc('stock.traceability.report', 'get_html')
+            .args([self.given_context])
+            .exec()
+            .then(function (result) {
+                self.html = result.html;
+                self.renderButtons();
+                defs.push(self.update_cp());
+                return $.when.apply($, defs);
+            });
     },
     // Updates the control panel and render the elements that have yet to be rendered
     update_cp: function() {

@@ -12,9 +12,12 @@ account_report_followup.include({
         var self = this;
         var partner_id = $(e.target).data('partner');
         this.report_options['partner_id'] = partner_id;
-        return this.performModelRPC(this.report_model, 'do_manual_action', [this.report_options]).then(function (result) { // send the email server side
-            self.display_done(e);
-        });
+        return this.rpc(this.report_model, 'do_manual_action')
+            .args([this.report_options])
+            .exec()
+            .then(function (result) { // send the email server side
+                self.display_done(e);
+            });
     },
 });
 });

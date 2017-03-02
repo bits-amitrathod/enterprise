@@ -36,38 +36,43 @@ var OnlineSyncAccountInstitutionSelector = Widget.extend({
             //search_allowed is used to prevent doing multiple RPC call during the search time
             self.search_allowed = false;
             framework.blockUI();
-            return this.performModelRPC('account.online.provider', 'get_institution', [[], self.$('#search_institution').val()]).then(function(result){
-                framework.unblockUI();
-                self.institution_list = result;
-                var $inst_list = $(QWeb.render('OnlineSyncInstitutionsList', {institutions: result, length: result.length}));
-                self.$el.siblings('.institution_result').replaceWith($inst_list);
-                self.$el.siblings('.institution_result').find('#table_institution_result tbody tr').click(function() {
-                    var id = $(this).data('id');
-                    var inst = result.filter(function(o) {return o.id === id});
-                    var $inst_detail = $(QWeb.render('OnlineSyncInstitutionsDetail', {institution: inst[0], show_select_button: self.show_select_button}));
-                    self.$el.siblings('.institution_detail').replaceWith($inst_detail);
-                    self.$el.siblings('.institution_result').hide();
-                    self.$el.siblings('.institution_search').hide();
-                    self.$el.siblings('.institution_detail').find('.js_return_list_institution').click(function(){
-                        self.$el.siblings('.institution_result').show();
-                        self.$el.siblings('.institution_search').show();
-                        self.$el.siblings('.institution_detail').hide();
-                    });
-                    self.$el.siblings('.institution_detail').find('.js_choose_institution').click(function(){
-                        // Open new client action
-                        $(this).parent().find('.btn').toggleClass('disabled');
-                        return this.performModelRPC('account.online.provider', 'get_login_form', [[self.id], inst[0].id, inst[0].type_provider, self.context]).then(function(result){
-                            self.do_action(result);
+            return this.rpc('account.online.provider', 'get_institution')
+                .args([[], self.$('#search_institution').val()])
+                .exec()
+                .then(function(result){
+                    framework.unblockUI();
+                    self.institution_list = result;
+                    var $inst_list = $(QWeb.render('OnlineSyncInstitutionsList', {institutions: result, length: result.length}));
+                    self.$el.siblings('.institution_result').replaceWith($inst_list);
+                    self.$el.siblings('.institution_result').find('#table_institution_result tbody tr').click(function() {
+                        var id = $(this).data('id');
+                        var inst = result.filter(function(o) {return o.id === id});
+                        var $inst_detail = $(QWeb.render('OnlineSyncInstitutionsDetail', {institution: inst[0], show_select_button: self.show_select_button}));
+                        self.$el.siblings('.institution_detail').replaceWith($inst_detail);
+                        self.$el.siblings('.institution_result').hide();
+                        self.$el.siblings('.institution_search').hide();
+                        self.$el.siblings('.institution_detail').find('.js_return_list_institution').click(function(){
+                            self.$el.siblings('.institution_result').show();
+                            self.$el.siblings('.institution_search').show();
+                            self.$el.siblings('.institution_detail').hide();
                         });
-
+                        self.$el.siblings('.institution_detail').find('.js_choose_institution').click(function(){
+                            // Open new client action
+                            $(this).parent().find('.btn').toggleClass('disabled');
+                            return this.rpc('account.online.provider', 'get_login_form')
+                                .args([[self.id], inst[0].id, inst[0].type_provider, self.context])
+                                .exec()
+                                .then(function(result){
+                                    self.do_action(result);
+                                });
+                        });
                     });
+                    self.search_allowed = true;
+                }).fail(function(){
+                    framework.unblockUI();
+                    // If RPC call failed (might be due to error because search string is less than 3 char), unblock search
+                    self.search_allowed = true;
                 });
-                self.search_allowed = true;
-            }).fail(function(){
-                framework.unblockUI();
-                // If RPC call failed (might be due to error because search string is less than 3 char), unblock search
-                self.search_allowed = true;
-            });
         }
     },
 

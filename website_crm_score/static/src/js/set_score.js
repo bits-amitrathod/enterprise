@@ -37,7 +37,9 @@ seo.Configurator.include({
         if (!obj) {
             return $.Deferred().reject();
         } else {
-            return this.performModelRPC(obj.model, 'read', [[obj.id], ['track'], base.get_context()]);
+            return this.rpc(obj.model, 'read')
+                .args([[obj.id], ['track'], base.get_context()])
+                .exec();
         }
     },
     update: function () {
@@ -58,7 +60,9 @@ seo.Configurator.include({
         if (!obj) {
             return $.Deferred().reject();
         } else {
-            return this.performModelRPC(obj.model, 'write', [[obj.id], { track: val }, base.get_context()]);
+            return this.rpc(obj.model, 'write')
+                .args([[obj.id], { track: val }, base.get_context()])
+                .exec();
         }
     },
 });

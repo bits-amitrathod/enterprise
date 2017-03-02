@@ -122,10 +122,13 @@ return Widget.extend({
         this.uploaded_attachment_id = result.id;
 
         var self = this;
-        this.performModelRPC('ir.attachment', 'read', [[this.uploaded_attachment_id], ['datas']]).then(function (res) {
-            self.uploaded_image = ('data:image/png;base64,' + res[0].datas).replace(/\s/g, '');
-            self.renderElement();
-        });
+        this.rpc('ir.attachment', 'read')
+            .args([[this.uploaded_attachment_id], ['datas']])
+            .exec()
+            .then(function (res) {
+                self.uploaded_image = ('data:image/png;base64,' + res[0].datas).replace(/\s/g, '');
+                self.renderElement();
+            });
     },
     on_upload_discarded: function(event) {
         event.preventDefault();

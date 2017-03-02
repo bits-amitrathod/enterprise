@@ -143,7 +143,9 @@ var EditMenuDialog = Dialog.extend({
 
     save: function () {
         var self = this;
-        return this.performModelRPC('ir.ui.menu', 'customize', [], {to_move: this.to_move, to_delete: this.to_delete})
+        return this.rpc('ir.ui.menu', 'customize')
+            .kwargs({to_move: this.to_move, to_delete: this.to_delete})
+            .exec()
             .then(function(){
                 self._reload_menu_data();
                 self.close();

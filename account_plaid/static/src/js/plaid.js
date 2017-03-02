@@ -14,8 +14,9 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = this.performModelRPC('account.online.provider', 'plaid_add_update_provider_account',
-                    [[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context])
+            var request = this.rpc('account.online.provider', 'plaid_add_update_provider_account')
+                .args([[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context])
+                .exec()
                 .then(function(result){
                     self.blockUI(false);
                     if (result.account_online_provider_id !== undefined) {
@@ -91,10 +92,12 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         var self = this;
         if (this.resp_json && this.resp_json.action === 'success') {
             if (this.action_end) {
-                return this.performModelRPC('account.online.provider', 'open_action',
-                        [[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context]).then(function(result) {
-                    self.do_action(result);
-                });
+                return this.rpc('account.online.provider', 'open_action')
+                    .args([[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context])
+                    .exec()
+                    .then(function(result) {
+                        self.do_action(result);
+                    });
             }
             else {
                 var local_dict = {

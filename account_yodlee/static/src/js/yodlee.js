@@ -46,41 +46,49 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            this.performModelRPC('account.online.provider', 'yodlee_add_update_provider_account', [[this.id], params, provider_id, provider_name])
-            .then(function(result){
-                // ProviderAccount has succesfully been created/updated on yodlee and is being refreshed
-                // We need to keep calling the refresh API until it is done to know if we have some error or mfa
-                // (bad credentials, captcha, success)
-                framework.blockUI();
-                self.id = result;
-                return self.performModelRPC('account.online.provider', 'refresh_status', [[self.id]]).then(function(result) {
+            this.rpc('account.online.provider', 'yodlee_add_update_provider_account')
+                .args([[this.id], params, provider_id, provider_name])
+                .exec()
+                .then(function(result){
+                    // ProviderAccount has succesfully been created/updated on yodlee and is being refreshed
+                    // We need to keep calling the refresh API until it is done to know if we have some error or mfa
+                    // (bad credentials, captcha, success)
+                    framework.blockUI();
+                    self.id = result;
+                    return self.rpc('account.online.provider', 'refresh_status')
+                        .args([[self.id]])
+                        .exec()
+                        .then(function(result) {
+                            self.blockUI(false);
+                            self.refresh_info = result;
+                            self.renderElement();
+                        });
+                }).fail(function(result){
+                    // If we have an error and we are in a captcha process, hide continue button and force user to
+                    // ask for a new captcha.
+                    if (self.$('.js_new_captcha').length > 0) {
+                        self.$('.js_process_next_step').addClass('hidden');
+                    }
+                    self.$('.js_wait_updating_account').toggleClass('hidden');
                     self.blockUI(false);
-                    self.refresh_info = result;
-                    self.renderElement();
                 });
-            }).fail(function(result){
-                // If we have an error and we are in a captcha process, hide continue button and force user to
-                // ask for a new captcha.
-                if (self.$('.js_new_captcha').length > 0) {
-                    self.$('.js_process_next_step').addClass('hidden');
-                }
-                self.$('.js_wait_updating_account').toggleClass('hidden');
-                self.blockUI(false);
-            });
         }
     },
 
     get_new_captcha: function() {
         var self = this;
         this.blockUI(true);
-        return this.performModelRPC('account.online.provider', 'manual_sync', [[self.id], false]).then(function(result) {
-            self.blockUI(false);
-            self.refresh_info = result;
-            self.renderElement();
-        }).fail(function(result){
-            self.$('.js_wait_updating_account').toggleClass('hidden');
-            self.blockUI(false);
-        });
+        return this.rpc('account.online.provider', 'manual_sync')
+            .args([[self.id], false])
+            .exec()
+            .then(function(result) {
+                self.blockUI(false);
+                self.refresh_info = result;
+                self.renderElement();
+            }).fail(function(result){
+                self.$('.js_wait_updating_account').toggleClass('hidden');
+                self.blockUI(false);
+            });
     },
 
     blockUI: function(state) {
@@ -152,10 +160,12 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         var fields = {};
         if (this.refresh_info && this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS') {
             if (this.action_end) {
-                return this.performModelRPC('account.online.provider', 'open_action',
-                        [[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context]).then(function(result) {
-                    self.do_action(result);
-                });
+                return this.rpc('account.online.provider', 'open_action')
+                    .args([[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context])
+                    .exec()
+                    .then(function(result) {
+                        self.do_action(result);
+                    });
             }
             else {
                 var local_dict = {

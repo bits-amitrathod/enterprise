@@ -12,9 +12,11 @@ KanbanRecord.include({
         var self = this;
         if (this.modelName === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
             ev.preventDefault();
-            this.performModelRPC('ir.attachment', ['id', 'name'])
-               .filter([['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']])
-               .all().then(function (attachment_ids) {
+            this.rpc('ir.attachment', 'search_read')
+                .withFields(['id', 'name'])
+                .withDomain([['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']])
+                .exec()
+                .then(function (attachment_ids) {
 
                     var $cover_modal = $(QWeb.render("mrp_plm.SetCoverModal", {
                         widget: self,
@@ -32,7 +34,7 @@ KanbanRecord.include({
                         $cover_modal.modal('toggle');
                         $cover_modal.remove();
                     });
-            });
+                });
         } else {
             this._super.apply(this, arguments, ev);
         }
