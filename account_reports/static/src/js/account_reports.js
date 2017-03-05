@@ -241,7 +241,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         // bind actions
         _.each(this.$buttons.siblings('button'), function(el) {
             $(el).click(function() {
-                return this.rpc(self.report_model, $(el).attr('action'))
+                return self.rpc(self.report_model, $(el).attr('action'))
                     .args([self.financial_id, self.report_options])
                     .withContext(self.odoo_context)
                     .exec()
