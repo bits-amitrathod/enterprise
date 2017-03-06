@@ -36,7 +36,7 @@ var OnlineSyncAccountInstitutionSelector = Widget.extend({
             //search_allowed is used to prevent doing multiple RPC call during the search time
             self.search_allowed = false;
             framework.blockUI();
-            return this.rpc('account.online.provider', 'get_institution')
+            return this._rpc('account.online.provider', 'get_institution')
                 .args([[], self.$('#search_institution').val()])
                 .exec()
                 .then(function(result){
@@ -59,7 +59,7 @@ var OnlineSyncAccountInstitutionSelector = Widget.extend({
                         self.$el.siblings('.institution_detail').find('.js_choose_institution').click(function(){
                             // Open new client action
                             $(this).parent().find('.btn').toggleClass('disabled');
-                            return this.rpc('account.online.provider', 'get_login_form')
+                            return this._rpc('account.online.provider', 'get_login_form')
                                 .args([[self.id], inst[0].id, inst[0].type_provider, self.context])
                                 .exec()
                                 .then(function(result){

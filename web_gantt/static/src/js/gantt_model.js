@@ -48,13 +48,13 @@ return AbstractModel.extend({
 
     _load_gantt: function () {
         var self = this;
-        return this.performRPC('/web/dataset/search_read', {
-            model: this.modelName,
-            context: this.gantt.context,
-            domain: this.gantt.domain.concat(this._focus_domain()),
-        }).then(function (data) {
-            self.gantt.data = data.records;
-        });
+        return this._rpc(this.modelName, 'search_read')
+            .withContext(this.gantt.context)
+            .withDomain(this.gantt.domain.concat(this._focus_domain()))
+            .exec()
+            .then(function (data) {
+                self.gantt.data = data.records;
+            });
     },
 
     _focus_domain: function () {

@@ -122,7 +122,7 @@ return Widget.extend({
         this.uploaded_attachment_id = result.id;
 
         var self = this;
-        this.rpc('ir.attachment', 'read')
+        this._rpc('ir.attachment', 'read')
             .args([[this.uploaded_attachment_id], ['datas']])
             .exec()
             .then(function (res) {

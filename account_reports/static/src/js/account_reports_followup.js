@@ -65,7 +65,7 @@ var account_report_followup = account_report.extend({
                 color = 'red';
                 break;
         }
-        return this.rpc('res.partner', 'write')
+        return this._rpc('res.partner', 'write')
             .args([[parseInt(partner_id, 10)], {'trust': newTrust}])
             .exec()
             .then(function () {
@@ -83,7 +83,7 @@ var account_report_followup = account_report.extend({
         var self = this;
         var partner_id = $(e.target).data('partner');
         this.report_options['partner_id'] = partner_id;
-        return this.rpc(this.report_model, 'send_email')
+        return this._rpc(this.report_model, 'send_email')
             .args([this.report_options])
             .exec()
             .then(function (result) { // send the email server side
@@ -97,7 +97,7 @@ var account_report_followup = account_report.extend({
     done_partner: function(e) {
         var partner_id = $(e.target).data("partner");
         var self = this;
-        return this.rpc('res.partner', 'update_next_action')
+        return this._rpc('res.partner', 'update_next_action')
             .args([[parseInt(partner_id)]])
             .exec()
             .then(function () { // Update in db and restart report
@@ -110,7 +110,7 @@ var account_report_followup = account_report.extend({
     on_change_blocked: function(e) {
         var checkbox = $(e.target).is(":checked");
         var target_id = $(e.target).parents('tr').find('td[data-id]').data('id');
-        return this.rpc('account.move.line', 'write_blocked')
+        return this._rpc('account.move.line', 'write_blocked')
             .args([[parseInt(target_id)], checkbox])
             .exec()
             .then(function(result){
@@ -158,7 +158,7 @@ var account_report_followup = account_report.extend({
             if (self.$el.find('.o_account_reports_followup-manual').hasClass('btn-default')){
                 self.toggle_auto_manual(e);
             }
-            return this.rpc(self.report_model, 'change_next_action')
+            return this._rpc(self.report_model, 'change_next_action')
                 .args([parseInt(target_id), date, note])
                 .exec();
         };
@@ -171,7 +171,7 @@ var account_report_followup = account_report.extend({
         }
         if ($(e.target).parents('.o_account_reports_body').find('.o_account_reports_followup-auto:last').hasClass('btn-default')){
             this.toggle_auto_manual(e);
-            return this.rpc(this.report_model, 'change_next_action')
+            return this._rpc(this.report_model, 'change_next_action')
                 .args([parseInt(partner_id), this.format_date(new moment()), ''])
                 .exec();
         }
@@ -189,7 +189,7 @@ var account_report_followup = account_report.extend({
         var save = function () {
             var note = $content.find("#internalNote").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
             var date = paymentDatePicker.get_value();
-            return this.rpc('account.move.line', 'write')
+            return this._rpc('account.move.line', 'write')
                 .args([[parseInt($content.find("#target_id").val())], {expected_pay_date: date, internal_note: note}])
                 .exec()
                 .then(function () {

@@ -69,7 +69,7 @@ return AbstractWebClient.extend({
         });
     },
     load_menus: function () {
-        return this.rpc('ir.ui.menu', 'load_menus')
+        return this._rpc('ir.ui.menu', 'load_menus')
             .args([core.debug])
             .withContext(session.user_context)
             .exec()
@@ -105,7 +105,7 @@ return AbstractWebClient.extend({
             // If it is not empty, we trigger a dummy hashchange event so that `self.on_hashchange`
             // will take care of toggling the app switcher and loading the action.
             if (_.isEmpty($.bbq.getState(true))) {
-                return self.rpc('res.users', 'read')
+                return self._rpc('res.users', 'read')
                     .args([session.uid, ["action_id"]])
                     .exec()
                     .then(function(result) {

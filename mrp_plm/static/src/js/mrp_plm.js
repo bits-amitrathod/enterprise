@@ -12,11 +12,12 @@ KanbanRecord.include({
         var self = this;
         if (this.modelName === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
             ev.preventDefault();
-            this.rpc('ir.attachment', 'search_read')
+            this._rpc('ir.attachment', 'search_read')
                 .withFields(['id', 'name'])
                 .withDomain([['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']])
                 .exec()
-                .then(function (attachment_ids) {
+                .then(function (result) {
+                    var attachment_ids = result.records;
 
                     var $cover_modal = $(QWeb.render("mrp_plm.SetCoverModal", {
                         widget: self,

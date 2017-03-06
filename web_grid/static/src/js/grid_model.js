@@ -51,7 +51,7 @@ return AbstractModel.extend({
     // private API
     _fetch: function (rowFields) {
         var self = this;
-        return this.rpc(this.modelName, 'read_grid')
+        return this._rpc(this.modelName, 'read_grid')
             .kwargs({
                 row_fields: rowFields,
                 col_field: this.colField,

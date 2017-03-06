@@ -14,7 +14,7 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = this.rpc('account.online.provider', 'plaid_add_update_provider_account')
+            var request = this._rpc('account.online.provider', 'plaid_add_update_provider_account')
                 .args([[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context])
                 .exec()
                 .then(function(result){
@@ -92,7 +92,7 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         var self = this;
         if (this.resp_json && this.resp_json.action === 'success') {
             if (this.action_end) {
-                return this.rpc('account.online.provider', 'open_action')
+                return this._rpc('account.online.provider', 'open_action')
                     .args([[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context])
                     .exec()
                     .then(function(result) {

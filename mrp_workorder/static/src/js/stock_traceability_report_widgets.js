@@ -95,7 +95,7 @@ var ReportWidget = Widget.extend({
              'parent_quant': parseInt(parent_quant) || false,
              'level': parseInt(row_level) + 30 || 1
         }
-        this.rpc('stock.traceability.report', 'get_lines')
+        this._rpc('stock.traceability.report', 'get_lines')
             .args([parseInt(active_id, 10)])
             .kwargs(dict)
             .exec()

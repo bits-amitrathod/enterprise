@@ -88,11 +88,11 @@ var PickingBarcodeHandler = FormViewBarcodeHandler.extend({
             var self = this;
             return self.form_view.save().done(function() {
                 return self.form_view.reload().done(function() {
-                    return self.rpc("stock.picking", 'get_po_to_split_from_barcode')
+                    return self._rpc("stock.picking", 'get_po_to_split_from_barcode')
                         .args([[self.form_view.datarecord.id], barcode])
                         .exec()
                         .then(function(id) {
-                            return self.rpc("stock.pack.operation", "action_split_lots")
+                            return self._rpc("stock.pack.operation", "action_split_lots")
                                 .args([[id]])
                                 .exec();
                         }).done(function(result) {

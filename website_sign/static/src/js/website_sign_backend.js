@@ -82,7 +82,7 @@ odoo.define('website_sign.views_custo', function(require) {
             var reader = new FileReader();
 
             reader.onload = function(e) {
-                self.rpc('signature.request.template', 'upload_template')
+                self._rpc('signature.request.template', 'upload_template')
                     .args([f.name, e.target.result])
                     .exec()
                     .then(function(data) {
@@ -250,11 +250,11 @@ odoo.define('website_sign.template', function(require) {
         willStart: function() {
             var self = this;
             return $.when(this._super(),
-                this.rpc('res.users', 'read')
+                this._rpc('res.users', 'read')
                     .args([[session.uid], ['partner_id']])
                     .exec()
                     .then(function(user) {
-                        return self.rpc('res.partner', 'read')
+                        return self._rpc('res.partner', 'read')
                             .args([[user.partner_id[0]], ['name']])
                             .exec()
                             .then(prepare_reference);
@@ -367,7 +367,7 @@ odoo.define('website_sign.template', function(require) {
             var reference = self.$referenceInput.val() || self.$referenceInput.attr('placeholder');
             var message = self.$messageInput.val();
             $.when.apply($, waitFor).then(function(result) {
-                self.rpc('signature.request', 'initialize_new')
+                self._rpc('signature.request', 'initialize_new')
                     .args([self.templateID, signers, followers, reference, subject, message])
                     .exec()
                     .then(function(sr) {
@@ -415,7 +415,7 @@ odoo.define('website_sign.template', function(require) {
 
             return $.when(
                 this._super(),
-                this.rpc('signature.request.template', 'share')
+                this._rpc('signature.request.template', 'share')
                     .args([this.templateID])
                     .exec()
                     .then(function(link) {
@@ -767,20 +767,20 @@ odoo.define('website_sign.template', function(require) {
         perform_rpc: function() {
             var self = this;
 
-            var defTemplates = this.rpc('signature.request.template', 'read')
+            var defTemplates = this._rpc('signature.request.template', 'read')
                 .args([[this.templateID]])
                 .exec()
                 .then(function prepare_template(template) {
                     self.signature_request_template = template;
                     self.has_signature_requests = (template.signature_request_ids.length > 0);
 
-                    var defSignatureItems = self.rpc('signature.item', 'read')
+                    var defSignatureItems = self._rpc('signature.item', 'read')
                         .args([[template.id]])
                         .exec()
                         .then(function(signature_items) {
                             self.signature_items = signature_items;
                         });
-                    var defIrAttachments = self.rpc('ir.attachment', 'search')
+                    var defIrAttachments = self._rpc('ir.attachment', 'search')
                         .args([[template.attachment_id[0]], ['mimetype', 'name', 'datas_fname']])
                         .exec()
                         .then(function(attachment) {
@@ -791,13 +791,13 @@ odoo.define('website_sign.template', function(require) {
                     return $.when(defSignatureItems, defIrAttachments);
                 });
 
-            var defParties = this.rpc('signature.item.party', 'search_read')
+            var defParties = this._rpc('signature.item.party', 'search_read')
                 .exec()
                 .then(function(parties) {
                     self.signature_item_parties = parties;
                 });
 
-            var defItemTypes = this.rpc('signature.item.type', 'search_read')
+            var defItemTypes = this._rpc('signature.item.type', 'search_read')
                 .exec()
                 .then(function(types) {
                     self.signature_item_types = types;
@@ -901,7 +901,7 @@ odoo.define('website_sign.template', function(require) {
             var $majInfo = this.$('.o_sign_template_saved_info').first();
 
             var self = this;
-            this.rpc('signature.request.template', 'update_from_pdfviewer')
+            this._rpc('signature.request.template', 'update_from_pdfviewer')
                 .args([this.templateID, !!duplicate, data, this.$templateNameInput.val() || this.initialTemplateName])
                 .exec()
                 .then(function(templateID) {
@@ -1056,7 +1056,7 @@ odoo.define('website_sign.document_edition', function(require) {
                     $button.prop('disabled', true);
 
                     website_sign_utils.processPartnersSelection(this.$select).then(function(partners) {
-                        self.rpc('signature.request', 'add_followers')
+                        self._rpc('signature.request', 'add_followers')
                             .args([self.requestID, partners])
                             .exec()
                             .then(function() {
@@ -1088,7 +1088,7 @@ odoo.define('website_sign.document_edition', function(require) {
             'click .o_sign_resend_access_button.fa': function(e) {
                 var $envelope = $(e.target);
                 $envelope.removeClass('fa fa-envelope').html('...');
-                this.rpc('signature.request.item', 'resend_access')
+                this._rpc('signature.request.item', 'resend_access')
                     .args([parseInt($envelope.parent('.o_sign_signer_status').data('id'))])
                     .exec()
                     .then(function() { $envelope.html(_t("Resent !")); });
@@ -1129,7 +1129,7 @@ odoo.define('website_sign.document_edition', function(require) {
                 if(this.is_sent) {
                     var $cancelButton = $('<button/>', {html: _t("Cancel Request"), type: "button", 'class': 'btn btn-sm btn-default'});
                     $cancelButton.on('click', function() {
-                        self.rpc('signature.request', 'cancel')
+                        self._rpc('signature.request', 'cancel')
                             .args([self.documentID])
                             .exec()
                             .then(function() {

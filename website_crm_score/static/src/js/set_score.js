@@ -37,7 +37,7 @@ seo.Configurator.include({
         if (!obj) {
             return $.Deferred().reject();
         } else {
-            return this.rpc(obj.model, 'read')
+            return this._rpc(obj.model, 'read')
                 .args([[obj.id], ['track'], base.get_context()])
                 .exec();
         }
@@ -60,7 +60,7 @@ seo.Configurator.include({
         if (!obj) {
             return $.Deferred().reject();
         } else {
-            return this.rpc(obj.model, 'write')
+            return this._rpc(obj.model, 'write')
                 .args([[obj.id], { track: val }, base.get_context()])
                 .exec();
         }

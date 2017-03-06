@@ -283,18 +283,18 @@ AppSwitcher.include({
     enterprise_check_status: function(ev) {
         ev.preventDefault();
         var self = this;
-        this.rpc('ir.config_parameter', 'get_param')
+        this._rpc('ir.config_parameter', 'get_param')
             .args(['database.expiration_date'])
             .exec()
             .then(function(old_date) {
                 var dbexpiration_date = new moment(old_date);
                 var duration = moment.duration(dbexpiration_date.diff(new moment()));
                 if (Math.round(duration.asDays()) < 30) {
-                    self.rpc('publisher_warranty.contract', 'update_notification')
+                    self._rpc('publisher_warranty.contract', 'update_notification')
                         .args([[]])
                         .exec()
                         .then(function() {
-                            $.when(self.rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec())
+                            $.when(self._rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec())
                             .then(function(dbexpiration_date) {
                                 $('.oe_instance_register').hide();
                                 $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
@@ -356,17 +356,17 @@ AppSwitcher.include({
             return;
         }
         $.when(
-            this.rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec(),
-            this.rpc('ir.config_parameter', 'set_param').args(['database.enterprise_code', enterprise_code]).exec())
+            this._rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec(),
+            this._rpc('ir.config_parameter', 'set_param').args(['database.enterprise_code', enterprise_code]).exec())
         .then(function(old_date) {
             utils.set_cookie('oe_instance_hide_panel', '', -1);
-            self.rpc('publisher_warranty.contract', 'update_notification')
+            self._rpc('publisher_warranty.contract', 'update_notification')
                 .args([[]])
                 .exec().then(function() {
                     $.unblockUI();
                     $.when(
-                        self.rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec(),
-                        self.rpc('ir.config_parameter', 'get_param').args(['database.expiration_reason']).exec())
+                        self._rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec(),
+                        self._rpc('ir.config_parameter', 'get_param').args(['database.expiration_reason']).exec())
                     .then(function(dbexpiration_date) {
                         $('.oe_instance_register').hide();
                         $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
@@ -386,7 +386,7 @@ AppSwitcher.include({
     },
     enterprise_buy: function() {
         var limit_date = new moment().subtract(15, 'days').format("YYYY-MM-DD");
-        this.rpc("res.users", "search_count")
+        this._rpc("res.users", "search_count")
             .args([[["share", "=", false],["login_date", ">=", limit_date]]])
             .exec()
             .then(function(users) {
@@ -395,19 +395,19 @@ AppSwitcher.include({
     },
     enterprise_renew: function() {
         var self = this;
-        this.rpc('ir.config_parameter', 'get_param')
+        this._rpc('ir.config_parameter', 'get_param')
             .args(['database.expiration_date'])
             .exec()
             .then(function(old_date) {
                 utils.set_cookie('oe_instance_hide_panel', '', -1);
-                self.rpc('publisher_warranty.contract', 'update_notification')
+                self._rpc('publisher_warranty.contract', 'update_notification')
                     .args([[]])
                     .exec()
                     .then(function() {
                         $.when(
-                            self.rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec(),
-                            self.rpc('ir.config_parameter', 'get_param').args(['database.expiration_reason']).exec(),
-                            self.rpc('ir.config_parameter', 'get_param').args(['database.enterprise_code']).exec()
+                            self._rpc('ir.config_parameter', 'get_param').args(['database.expiration_date']).exec(),
+                            self._rpc('ir.config_parameter', 'get_param').args(['database.expiration_reason']).exec(),
+                            self._rpc('ir.config_parameter', 'get_param').args(['database.enterprise_code']).exec()
                         ).then(function(new_date, dbexpiration_reason, enterprise_code) {
                             var mt_new_date = new moment(new_date);
                             if (new_date != old_date && mt_new_date > new moment()) {
@@ -428,11 +428,11 @@ AppSwitcher.include({
     enterprise_upsell: function() {
         var self = this;
         var limit_date = new moment().subtract(15, 'days').format("YYYY-MM-DD");
-        this.rpc('ir.config_parameter', 'get_param')
+        this._rpc('ir.config_parameter', 'get_param')
             .args(['database.enterprise_code'])
             .exec()
             .then(function(contract) {
-                self.rpc("res.users", "search_count")
+                self._rpc("res.users", "search_count")
                     .args([[["share", "=", false],["login_date", ">=", limit_date]]])
                     .exec()
                     .then(function(users) {

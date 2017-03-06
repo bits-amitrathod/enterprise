@@ -39,7 +39,7 @@ var ReportEditor = ReportAction.extend({
         var self = this;
 
         return this._super.apply(this, arguments).then(function() {
-            return self.rpc('ir.actions.report.xml', 'read')
+            return self._rpc('ir.actions.report.xml', 'read')
                 .args([[self.res_id]])
                 .exec()
                 .then(function (report) {

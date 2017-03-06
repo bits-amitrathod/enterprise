@@ -35,7 +35,7 @@ var StudioReportKanbanView = KanbanView.extend({
 
     open_record: function(event) {
         var self = this;
-        this.rpc('ir.actions.report.xml', 'studio_edit')
+        this._rpc('ir.actions.report.xml', 'studio_edit')
             .args([event.data.id])
             .exec()
             .then(function(action) {

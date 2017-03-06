@@ -46,7 +46,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            this.rpc('account.online.provider', 'yodlee_add_update_provider_account')
+            this._rpc('account.online.provider', 'yodlee_add_update_provider_account')
                 .args([[this.id], params, provider_id, provider_name])
                 .exec()
                 .then(function(result){
@@ -55,7 +55,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
                     // (bad credentials, captcha, success)
                     framework.blockUI();
                     self.id = result;
-                    return self.rpc('account.online.provider', 'refresh_status')
+                    return self._rpc('account.online.provider', 'refresh_status')
                         .args([[self.id]])
                         .exec()
                         .then(function(result) {
@@ -78,7 +78,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
     get_new_captcha: function() {
         var self = this;
         this.blockUI(true);
-        return this.rpc('account.online.provider', 'manual_sync')
+        return this._rpc('account.online.provider', 'manual_sync')
             .args([[self.id], false])
             .exec()
             .then(function(result) {
@@ -160,7 +160,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         var fields = {};
         if (this.refresh_info && this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS') {
             if (this.action_end) {
-                return this.rpc('account.online.provider', 'open_action')
+                return this._rpc('account.online.provider', 'open_action')
                     .args([[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context])
                     .exec()
                     .then(function(result) {

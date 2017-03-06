@@ -22,7 +22,7 @@ widgets.bankStatementReconciliation.include({
 
     updateBatchDeposits: function() {
         var self = this;
-        return this.rpc("account.bank.statement", "get_batch_deposits_data")
+        return this._rpc("account.bank.statement", "get_batch_deposits_data")
             .args([self.statement_ids || undefined])
             .exec()
             .then(function(data) {
@@ -79,7 +79,7 @@ widgets.bankStatementReconciliationLine.include({
         e.preventDefault();
         var self = this;
         var deposit_id = parseInt(e.currentTarget.dataset.batch_deposit_id);
-        this.rpc("account.bank.statement.line", "get_move_lines_for_reconciliation_widget_by_batch_deposit_id")
+        this._rpc("account.bank.statement.line", "get_move_lines_for_reconciliation_widget_by_batch_deposit_id")
             .args([this.line_id, deposit_id])
             .exec()
             .then(function (deposit_lines) {

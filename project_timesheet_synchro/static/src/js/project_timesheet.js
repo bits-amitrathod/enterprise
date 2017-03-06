@@ -254,7 +254,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             //
             self.clean_xml_ids().always(function() {
 
-                self.rpc("account.analytic.line", "export_data_for_ui")
+                self._rpc("account.analytic.line", "export_data_for_ui")
                     .args([])
                     .exec()
                     .then(function(sv_data) {
@@ -349,7 +349,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                             }
                         }
                     });
-                    self.rpc("account.analytic.line", "import_ui_data")
+                    self._rpc("account.analytic.line", "import_ui_data")
                         .args([self.data.account_analytic_lines , self.data.tasks, self.data.projects])
                         .withContext(context)
                         .exec()
@@ -546,7 +546,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             if(this.data.data_version === 1) {
                 def.resolve(); // Cleanup has already been performed.
             } else {
-                this.rpc("account.analytic.line", "clean_xml_ids")
+                this._rpc("account.analytic.line", "clean_xml_ids")
                     .args([])
                     .exec()
                     .always(function(res) {
@@ -566,7 +566,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                                     'account.analytic.line'
                                 ]]
                             ];
-                            self.rpc("ir.model.data", 'search')
+                            self._rpc("ir.model.data", 'search')
                                 .args([domain])
                                 .exec()
                                 .then(function (ids) {
@@ -1834,7 +1834,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         },
         willStart: function() {
             var self = this;
-            return this.rpc('openerp.enterprise.database', 'get_instances')
+            return this._rpc('openerp.enterprise.database', 'get_instances')
                 .exec()
                 .then(function(res) {
                     self.instances = {};
@@ -1853,7 +1853,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             $('.pt_nav_sync a').addClass('pt_sync_in_progress');
             var url = event.target.dataset.url;
 
-            this.rpc('auth.oauth2.token', 'get_token')
+            this._rpc('auth.oauth2.token', 'get_token')
                 .args([{client_id: self.instances[url].uuid, scope: "userinfo"}])
                 .exec()
                 .then(function(res) {
