@@ -36,6 +36,13 @@ class SaleSubscription(models.Model):
     user_id = fields.Many2one('res.users', string='Sales Rep', track_visibility='onchange')
     invoice_count = fields.Integer(compute='_compute_invoice_count')
 
+    @api.model
+    def default_get(self, fields):
+        defaults = super(SaleSubscription, self).default_get(fields)
+        if 'code' in fields:
+            defaults.update(code=self.env['ir.sequence'].next_by_code('sale.subscription') or 'New')
+        return defaults
+
     def _track_subtype(self, init_values):
         self.ensure_one()
         if 'state' in init_values:
@@ -195,7 +202,7 @@ class SaleSubscription(models.Model):
             'fiscal_position_id': fpos_id,
             'payment_term_id': self.partner_id.property_payment_term_id.id,
             'company_id': company.id,
-            'comment': self.description or _("This invoice covers the following period: %s - %s") % (next_date, end_date),
+            'comment': _("This invoice covers the following period: %s - %s") % (next_date, end_date),
             'user_id': self.user_id.id,
         }
 
