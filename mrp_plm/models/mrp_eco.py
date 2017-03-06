@@ -213,7 +213,7 @@ class MrpEco(models.Model):
     attachment_count = fields.Integer('# Attachments', compute='_compute_attachments')
     attachment_ids = fields.One2many(
         'ir.attachment', 'res_id', string='Attachments',
-        auto_join=True, domain=lambda self: [('res_model', '=', self._name), '|', ('active','=',True), ('active','=',False)])
+        auto_join=True, domain=lambda self: [('res_model', '=', self._name)])
     displayed_image_id = fields.Many2one(
         'ir.attachment', 'Displayed Image',
         domain="[('res_model', '=', 'mrp.eco'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]")
@@ -463,11 +463,10 @@ class MrpEco(models.Model):
                 for line in eco.new_bom_id.bom_line_ids:
                     line.operation_id = eco.new_routing_id.operation_ids.filtered(lambda x: x.name == line.operation_id.name).id
             # duplicate all attachment on the product
-            if eco.type in ('bom','both','product'):
-                for attach in self.product_tmpl_id.attachment_ids:
+            if eco.type == 'product':
+                for attach in eco.product_tmpl_id.attachment_ids:
                     attach.copy({'res_model': 'mrp.eco',
-                        'res_id': eco.id, "origin_id": attach.id,
-                        'checksum': attach.checksum, 'file_size': attach.file_size
+                        'res_id': eco.id,
                     })
         self.write({'state': 'progress'})
 
@@ -476,34 +475,19 @@ class MrpEco(models.Model):
         self.ensure_one()
         self.mapped('new_bom_id').apply_new_version()
         self.mapped('new_routing_id').apply_new_version()
-        def key(record):
-            return (record.type, record.store_fname, record.url)
-
-        for attach in self.attachment_ids:
-            name = attach.name
-            if attach.origin_id:
-                name = name + '(v'+str(self.product_tmpl_id.version)+')'
-            if attach.origin_id and key(attach)==key(attach.origin_id):
-                attach.origin_id.write({
-                    'name': attach.active and attach.name or name,
-                    'active': attach.active,
-                    'priority': attach.priority
+        if self.type in ('product', 'bom', 'both'):
+            self.product_tmpl_id.version = self.product_tmpl_id.version + 1
+        if self.type == 'product':
+            self.product_tmpl_id.attachment_ids.unlink()
+            for attach in self.attachment_ids:
+                attach.copy({'res_model': 'product.template',
+                    'res_id': self.product_tmpl_id.id,
                 })
-                continue
-            attach.copy({'res_model': 'product.template', 'res_id': self.product_tmpl_id.id,
-                'name': attach.name, 'checksum': attach.checksum, 'file_size': attach.file_size})
-            if attach.origin_id:
-                attach.origin_id.write({
-                    'active': False,
-                    'name': name
-                })
-
-        self.product_tmpl_id.version = self.product_tmpl_id.version + 1
         self.write({'state': 'done'})
 
     @api.multi
     def action_see_attachments(self):
-        domain = ['&', '&', ('res_model', '=', self._name), ('res_id', '=', self.id), '|', ('active','=',False), ('active','=',True)]
+        domain = ['&', ('res_model', '=', self._name), ('res_id', '=', self.id)]
         attachment_view = self.env.ref('mrp.view_document_file_kanban_mrp')
         return {
             'name': _('Attachments'),

@@ -770,13 +770,17 @@ var FieldBooleanButton = AbstractField.extend({
                 text = this.value ?  _t("Active") : _t("Archived");
                 hover = this.value ? _t("Archive") : _t("Unarchive");
                 break;
-            case "prod_environment":
-                text = this.value ?  _t("Production Environment") : _t("Test Environment");
-                hover = this.value ? _t("Switch to test environment") : _t("Switch to production environment");
-                break;
             default:
-                text = this.value ?  _t("On") : _t("Off");
-                hover = this.value ? _t("Switch Off") : _t("Switch On");
+                var opt_terms = this.node_options.terminology || {};
+                if (typeof opt_terms === 'string') {
+                    opt_terms = {}; //unsupported terminology
+                }
+                text = (this.value ?
+                           (_t(opt_terms.string_true) || _t("On")) :
+                               (_t(opt_terms.string_false) || _t("Off")));
+                hover = (this.value ?
+                            (_t(opt_terms.hover_true) || _t("Switch Off")) :
+                                (_t(opt_terms.hover_false) || _t("Switch On")));
         }
         var val_color = this.value ? 'text-success' : 'text-danger';
         var hover_color = this.value ? 'text-danger' : 'text-success';
