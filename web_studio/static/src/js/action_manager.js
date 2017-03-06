@@ -50,7 +50,7 @@ ActionManager.include({
     },
 
     do_action: function(action, options) {
-        if (_.isObject(action) && 'keep_state' in options) {
+        if (_.isObject(action) && options && 'keep_state' in options) {
             action.keep_state = options.keep_state;
         }
         return this._super.apply(this, arguments);
