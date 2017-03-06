@@ -21,6 +21,7 @@
                                         type="object"
                                         colspan="1"/>
                             </div>
+                            <field name="currency_id" options="{'no_create': True, 'no_open': True}" context="{'active_test': False}"/>
                         </group>
                         <notebook>
                         </notebook>
@@ -93,8 +94,9 @@
                                 <field name="currency_id"/>
                             </group>
                             <group string="Document Detail">
-                                <field name="attachment_id"/>
+                                <field name="attachment_id" options="{'no_create': True}"/>
                                 <field name="nbr_pages"/>
+                                <field name="report_id" options="{'no_create': True, 'no_open': True}"/>
                             </group>
                         </group>
                         <notebook>

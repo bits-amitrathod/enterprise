@@ -15,6 +15,9 @@ _DOCSAWAY_GETSTATION_URL = 'https://www.docsaway.com/app/api/rest/station_finder
 _DOCSAWAY_GETPRICE_URL = 'https://www.docsaway.com/app/api/rest/pricing.json'
 _DOCSAWAY_SENDMAIL_URL = 'https://www.docsaway.com/app/api/rest/mail.json'
 
+# Supported Currency Code
+DOCSAWAY_CURRENCIES_CODE = ['USD', 'AUD', 'CAD', 'EUR', 'INR', 'JPY', 'NZD', 'GBP', 'CHF']
+
 
 class DocsawayException(UserError):
     pass
@@ -34,6 +37,12 @@ class DocsawayProvider(models.Model):
     docsaway_name = fields.Char('Docsaway Name', help="Name of the docsaway account.", readonly=True)
     docsaway_reference = fields.Char('Docsaway Reference', help="Reference code of Docsaway account.", readonly=True)
     docsaway_volume = fields.Integer('Docsaway Volume', help="Number of pages printed by Docsaway.", readonly=True)
+
+    @api.onchange('currency_id')
+    def _onchange_currency_id(self):
+        if self.provider == 'docsaway':
+            return {'domain': {'currency_id': [('name', 'in', DOCSAWAY_CURRENCIES_CODE)]}}
+        return {}
 
     # --------------------------------------------------
     # Methods to be redefined from print.provider, with

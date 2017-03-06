@@ -20,11 +20,15 @@ class PrintProvider(models.Model):
     def _get_providers(self):
         return []
 
+    def _default_currency_id(self):
+        return self.env.user.company_id.currency_id
 
     name = fields.Char("Name", required=True)
     environment = fields.Selection([('test', 'Test'), ('production', 'Production')], "Environment", default='test')
     provider = fields.Selection(selection='_get_providers', string='Provider', required=True)
     balance = fields.Float("Credit", digits=(16, 2))
+    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=_default_currency_id,
+        help="The currency will be used for amount, balance account, print order price, ...")
 
     @api.multi
     def update_account_data(self):
@@ -53,20 +57,26 @@ class PrintOrder(models.Model):
     _description = 'Print Order'
     _order = 'sent_date desc'
 
-
     def _default_print_provider(self):
         return self.env['ir.values'].get_default('print.order', 'provider_id')
 
+    def _default_currency_id(self):
+        provider_id = self.env['ir.values'].get_default('print.order', 'provider_id')
+        if provider_id:
+            return self.env['print.provider'].browse(provider_id).currency_id.id
+        return False
+
     create_date = fields.Datetime('Creation Date', readonly=True)
     sent_date = fields.Datetime('Sending Date', readonly=True)
-    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=lambda self: self.env.user.company_id.currency_id, readonly=True, states={'draft': [('readonly', False)]})
+    currency_id = fields.Many2one('res.currency', 'Currency', default=_default_currency_id, readonly=True)
     user_id = fields.Many2one('res.users', 'Author', default=lambda self: self.env.user)
-    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider, readonly=True, states={'draft': [('readonly', False)]})
+    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider) #, readonly=True, states={'draft': [('readonly', False)]})
 
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW', states={'sent': [('readonly', True)]})
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)
     res_id = fields.Integer('Object ID', required=True)
     res_model = fields.Char('Model Name', required=True)
+    report_id = fields.Many2one('ir.actions.report.xml', 'Report')
 
     attachment_id = fields.Many2one('ir.attachment', 'PDF', states={'sent': [('readonly', True)]}, domain=[('mimetype', '=', 'application/pdf')])
     nbr_pages = fields.Integer("Number of Pages", readonly=True, default=0)
@@ -91,6 +101,48 @@ class PrintOrder(models.Model):
     partner_city = fields.Char('City', required=True, states={'sent': [('readonly', True)]})
     partner_country_id = fields.Many2one('res.country', 'Country', required=True, states={'sent': [('readonly', True)]})
 
+    @api.onchange('provider_id')
+    def _onchange_provider_id(self):
+        self.currency_id = self.provider_id.currency_id
+
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        self.partner_name = self.partner_id.name
+        self.partner_street = self.partner_id.street
+        self.partner_street2 = self.partner_id.street2
+        self.partner_state_id = self.partner_id.state_id
+        self.partner_zip = self.partner_id.zip
+        self.partner_city = self.partner_id.city
+        self.partner_country_id = self.partner_id.country_id
+
+    @api.onchange('res_model')
+    def _onchange_res_model(self):
+        if self.res_model:
+            return {'domain': {'report_id': [('model', '=', self.res_model)]}}
+        return {}
+
+    # --------------------------------------------------
+    # CRUD
+    # --------------------------------------------------
+    @api.model
+    def create(self, values):
+        if 'attachment_id' in values:
+            values = self._update_count_pages(values)
+        return super(PrintOrder, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        if 'attachment_id' in values:
+            values = self._update_count_pages(values)
+        return super(PrintOrder, self).write(values)
+
+    def _update_count_pages(self, values):
+        attachment = self.env['ir.attachment'].browse(values['attachment_id'])
+        bin_pdf = ''
+        if attachment.datas:
+            bin_pdf = base64.b64decode(attachment.datas)
+        values['nbr_pages'] = self._count_pages_pdf(bin_pdf)
+        return values
 
     # --------------------------------------------------
     # Actions
@@ -119,7 +171,6 @@ class PrintOrder(models.Model):
             if hasattr(records, '_%s_action_compute_price' % provider_name):
                 getattr(records, '_%s_action_compute_price' % provider_name)()
 
-
     # --------------------------------------------------
     # Business Methods
     # --------------------------------------------------
@@ -137,25 +188,12 @@ class PrintOrder(models.Model):
         """ For the given recordset, compute the number of page in the attachment.
             If no attachment, one will be generated with the res_model/res_id
         """
-        Attachment = self.env['ir.attachment']
-        ReportXml = self.env['ir.actions.report.xml']
-        Report = self.env['report']
-        pages = {}
         for current_order in self:
-            report = ReportXml.search([('model', '=', current_order.res_model)], limit=1)
-            if current_order.attachment_id: # compute page number
-                # avoid to recompute the number of page each time for the attachment
-                nbr_pages = pages.get(current_order.attachment_id.id)
-                if not nbr_pages:
-                    nbr_pages = current_order._count_pages_pdf(current_order.attachment_id.datas.decode('base64'))
-                    pages[current_order.attachment_id.id] = nbr_pages
-                current_order.write({
-                    'nbr_pages': nbr_pages
-                })
-            elif not current_order.attachment_id and current_order.res_model and current_order.res_id and report: # check report
+            report = current_order.report_id
+            if not current_order.attachment_id and current_order.res_model and current_order.res_id and report:  # check report
                 # browse object and find its pdf (binary content)
                 object_to_print = self.env[current_order.res_model].browse(current_order.res_id)
-                bin_pdf = Report.get_pdf([current_order.res_id], report.report_name)
+                bin_pdf = self.env['report'].get_pdf([current_order.res_id], report.report_name)
 
                 # compute the name of the new attachment
                 filename = False
@@ -173,11 +211,10 @@ class PrintOrder(models.Model):
                     'datas': base64.b64encode(bin_pdf),
                     'datas_fname': filename+'.pdf',
                 }
-                new_attachment = Attachment.create(attachment_value)
+                new_attachment = self.env['ir.attachment'].create(attachment_value)
 
                 # add the new attachment to the print order
                 current_order.write({
-                    'nbr_pages': self._count_pages_pdf(bin_pdf),
                     'attachment_id': new_attachment.id
                 })
             elif not current_order.attachment_id and current_order.res_model and current_order.res_id and not report: # error : no ir.actions.report.xml found for res_model
@@ -267,7 +304,6 @@ class PrintOrder(models.Model):
             template.with_context(print_errors=user_to_notify[user_id]).send_mail(user_id, force_send=True)
 
 
-
 class PrintMixin(models.AbstractModel):
     """ All printable object should inherit of this class. It provides :
         - a fields 'print_sent_date' containing the datetime of the last time a print order
@@ -281,6 +317,13 @@ class PrintMixin(models.AbstractModel):
     _description = "Print Mixin (Printable Object)"
 
     print_sent_date = fields.Datetime("Last Postal Sent Date")
+    print_is_sendable = fields.Boolean("Is sendable", compute='_compute_print_is_sendable')
+
+    @api.multi
+    def _compute_print_is_sendable(self):
+        """ Should be override according to its '_name'. """
+        for record in self:
+            record.print_is_sendable = False
 
     def print_validate_sending(self):
         # save sending date

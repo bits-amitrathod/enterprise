@@ -9,10 +9,6 @@ class PrintDocumentPartnerWizard(models.TransientModel):
     _name = 'print.document.partner.wizard'
 
     @api.model
-    def _default_currency(self):
-        return self.env.user.company_id.currency_id
-
-    @api.model
     def _default_print_provider(self):
         return self.env['ir.values'].get_default('print.order', 'provider_id')
 
@@ -35,14 +31,13 @@ class PrintDocumentPartnerWizard(models.TransientModel):
             res['print_document_partner_line_wizard_ids'] = lines
         return res
 
-
     is_sendable = fields.Boolean(string='Is sendable', readonly=True, compute='_compute_sendable')
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW')
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)
     provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider)
     provider_balance = fields.Float("Provider Credit", digits=(16, 2))
     provider_environment = fields.Selection([('test', 'Test'), ('production', 'Production')], "Environment", default='test')
-    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=_default_currency)
+    provider_currency_id = fields.Many2one('res.currency', 'Currency', required=True, oldname="currency_id")
 
     ir_attachment_ids = fields.Many2many('ir.attachment', string='Documents', domain=[('mimetype', '=', 'application/pdf')])
     print_document_partner_line_wizard_ids = fields.One2many('print.document.partner.line.wizard', 'print_document_partner_wizard_id', string='Lines')
@@ -61,7 +56,6 @@ class PrintDocumentPartnerWizard(models.TransientModel):
         self.provider_balance = self.provider_id.balance
         self.provider_environment = self.provider_id.environment
 
-
     @api.multi
     def action_apply(self):
         Print_order = self.env['print.order']
@@ -77,7 +71,7 @@ class PrintDocumentPartnerWizard(models.TransientModel):
                         'ink' : wizard.ink,
                         'paper_weight' : wizard.paper_weight,
                         'provider_id' : wizard.provider_id.id,
-                        'currency_id' : wizard.currency_id.id,
+                        'currency_id': wizard.provider_currency_id.id,
                         'user_id' : self._uid,
                         'attachment_id' : attachment.id,
                         'res_id' : attachment.id,
@@ -93,7 +87,6 @@ class PrintDocumentPartnerWizard(models.TransientModel):
                         'partner_country_id' : line.partner_id.country_id.id,
                     })
         return {'type': 'ir.actions.act_window_close'}
-
 
 
 class PrintDocumentPartnerLineWizard(models.TransientModel):
