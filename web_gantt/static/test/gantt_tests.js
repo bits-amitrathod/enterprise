@@ -4,7 +4,7 @@ odoo.define('web.gantt_tests', function (require) {
 var GanttView = require('web_gantt.GanttView');
 var testUtils = require('web.test_utils');
 
-var initialDate = new Date("2016-12-12 08:00:00");
+var initialDate = new Date("2016-12-12T08:00:00Z");
 
 var createAsyncView = testUtils.createAsyncView;
 
@@ -94,7 +94,7 @@ QUnit.module('Views', {
                                     '</form>',
             },
             viewOptions: {
-                initialDate: new Date("2156-4-4 08:00:00"),
+                initialDate: new Date("2026-04-04T08:00:00Z"),
                 action: {name: "Forecasts"}
             },
             mockRPC: function(route, args) {
