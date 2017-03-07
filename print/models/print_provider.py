@@ -70,7 +70,7 @@ class PrintOrder(models.Model):
     sent_date = fields.Datetime('Sending Date', readonly=True)
     currency_id = fields.Many2one('res.currency', 'Currency', default=_default_currency_id, readonly=True)
     user_id = fields.Many2one('res.users', 'Author', default=lambda self: self.env.user)
-    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider) #, readonly=True, states={'draft': [('readonly', False)]})
+    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider)
 
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW', states={'sent': [('readonly', True)]})
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)
@@ -107,13 +107,14 @@ class PrintOrder(models.Model):
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
-        self.partner_name = self.partner_id.name
-        self.partner_street = self.partner_id.street
-        self.partner_street2 = self.partner_id.street2
-        self.partner_state_id = self.partner_id.state_id
-        self.partner_zip = self.partner_id.zip
-        self.partner_city = self.partner_id.city
-        self.partner_country_id = self.partner_id.country_id
+        if self.partner_id:
+            self.partner_name = self.partner_id.name
+            self.partner_street = self.partner_id.street
+            self.partner_street2 = self.partner_id.street2
+            self.partner_state_id = self.partner_id.state_id
+            self.partner_zip = self.partner_id.zip
+            self.partner_city = self.partner_id.city
+            self.partner_country_id = self.partner_id.country_id
 
     @api.onchange('res_model')
     def _onchange_res_model(self):
