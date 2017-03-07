@@ -29,9 +29,12 @@ odoo.define('website_sign.views_custo', function(require) {
     KanbanRecord.include({
         on_card_clicked: function () {
             if (this.modelName === "signature.request" || this.modelName === "signature.request.template") {
-                var $link = this.$el.find(".o_sign_action_link");
+                var $link = this.$(".o_sign_action_link");
                 if ($link.length) {
-                    this.trigger_up('kanban_do_action', $link.data());
+                    this.trigger_up('button_clicked', {
+                        attrs: $link.data(),
+                        record: this.state,
+                    });
                     return;
                 }
             }
