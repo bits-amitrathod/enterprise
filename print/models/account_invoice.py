@@ -13,7 +13,7 @@ class AccountInvoice(models.Model):
     @api.multi
     def _compute_print_is_sendable(self):
         super(AccountInvoice, self)._compute_print_is_sendable()
-        for invoice in self.filtered(lambda rec: rec._name == 'account.invoice'):
+        for invoice in self:
             invoice.print_is_sendable = invoice.state == 'open'
 
     def print_validate_sending(self):

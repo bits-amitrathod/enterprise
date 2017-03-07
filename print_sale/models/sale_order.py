@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
     @api.multi
     def _compute_print_is_sendable(self):
         super(SaleOrder, self)._compute_print_is_sendable()
-        for order in self.filtered(lambda rec: rec._name == 'sale.order'):
+        for order in self:
             order.print_is_sendable = order.state in ['draft', 'sent', 'progress', 'manual']
 
     def print_validate_sending(self):
