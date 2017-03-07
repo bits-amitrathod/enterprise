@@ -61,7 +61,7 @@ class AccountReport(models.AbstractModel):
         group_multi_company = self.env['ir.model.data'].xmlid_to_object('base.group_multi_company')
         if self.env.user.id in group_multi_company.users.ids:
             # We have a user with multi-company
-            options['multi_company'] = [{'id': c.id, 'name': c.name, 'selected': True if c.id == self.env.user.company_id else False} for c in self.env.user.company_ids]
+            options['multi_company'] = [{'id': c.id, 'name': c.name, 'selected': True if c.id == self.env.user.company_id.id else False} for c in self.env.user.company_ids]
         if options.get('journals'):
             options['journals'] = self.get_journals()
 
