@@ -26,7 +26,8 @@ An obfuscated and certified version of the pos_blackbox_be may be provided on
 requests for on-premise installations.
 No modified version is certified and supported by Odoo SA.
     """,
-    'depends': ['web', 'point_of_sale', 'pos_restaurant'],
+    'depends': ['pos_restaurant', 'l10n_be', 'web_enterprise'],
+    'excludes': ["pos_reprint", "pos_discount"],
     'website': '',
     'data': [
         'security/pos_blackbox_be_security.xml',
