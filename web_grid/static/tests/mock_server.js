@@ -7,6 +7,18 @@ MockServer.include({
     _performRpc: function (route, args) {
         if (args.method === 'read_grid') {
             return this._mockReadGrid(args.model, args.kwargs);
+        } else if (args.method === 'adjust_grid') {
+            var adjust = args.kwargs.context.grid_adjust;
+            var lines = this._mockSearchRead({
+                model: args.model,
+                domain: adjust.row_domain,
+                fields: [],
+            });
+            var newID = this._mockCopy(args.model, lines.records[0].id);
+            var newRecord = _.findWhere(this.data[args.model].records, {id: newID});
+            newRecord[adjust.cell_field] = adjust.change;
+            newRecord[adjust.column_field] = adjust.column_value.split('/')[0];
+            return $.when({});
         } else {
             return this._super(route, args);
         }
@@ -38,46 +50,64 @@ MockServer.include({
             });
         }
 
-        // compute rows and grid
+        // compute rows
         var rows = [];
-        var grid = [];
-        for (var i = 0; i < this.data[model].records.length; i++) {
-            var record = this.data[model].records[i];
-            var recordDate = record[kwargs.col_field];
-            if (moment(recordDate).isBetween(start, end, null, '[]')) {
-                // generate row
-                var values = {};
-                _.each(kwargs.row_fields, function (fieldName) {
-                    var field = self.data[model].fields[fieldName];
-                    if (field.type === 'many2one') {
-                        var relatedRecord = _.findWhere(self.data[field.relation].records, {id: record[fieldName]});
-                        values[fieldName] = [relatedRecord.id, relatedRecord.display_name];
-                    } else {
-                        values[fieldName] = record[fieldName];
-                    }
-                });
-                rows.push({
-                    domain: [],
+        var domain = [
+            '&',
+            [kwargs.col_field, '>=', start.format('YYYY-MM-DD')],
+            [kwargs.col_field, '<', end.format('YYYY-MM-DD')]
+        ];
+
+        var groups = this._mockReadGroup(model, {
+            domain: domain,
+            fields: [kwargs.cell_field],
+            groupby: [kwargs.row_fields[0]],
+        });
+        _.each(groups, function (group) {
+            var groupValue = {};
+            groupValue[kwargs.row_fields[0]] = group[kwargs.row_fields[0]];
+            var groupDomain = ['&'].concat(domain).concat(group.__domain);
+            var subGroups = self._mockReadGroup(model, {
+                domain: groupDomain,
+                fields: [kwargs.cell_field],
+                groupby: [kwargs.row_fields[1]],
+            });
+            _.each(subGroups, function (subGroup) {
+                var subGroupDomain = ['&'].concat(groupDomain, subGroup.__domain);
+                var values = _.extend({}, groupValue);
+                values[kwargs.row_fields[1]] = subGroup[kwargs.row_fields[1]] || false;
+                rows.unshift({
+                    domain: subGroupDomain,
                     values: values,
                 });
+            });
+        });
 
-                // generate cells
-                current = start.clone();
-                var cells = [];
-                for (var j = 0; j < 7; j++) {
-                    var isCurrent = moment(recordDate).isSame(current);
-                    cells.push({
-                        size: isCurrent ? 1 : 0,
-                        value: isCurrent ? record[kwargs.cell_field] : 0,
-                        is_current: moment(recordDate).isSame(today),
-                        domain: [],
-                    });
-                    current.add(1, "days");
-                }
-                grid.push(cells);
+        // generate cells
+        var grid = [];
+        _.each(rows, function (row) {
+            var cells = [];
+            _.each(columns, function (col) {
+                var cellDomain = ['&'].concat(row.domain).concat(col.domain);
+                var records = self._mockSearchRead({
+                    model: model,
+                    domain: cellDomain,
+                    fields: [kwargs.cell_field],
+                });
+                var value = 0;
+                _.each(records.records, function (rec) {
+                    value += rec[kwargs.cell_field];
+                });
+                cells.push({
+                    size: records.length,
+                    value: value,
+                    is_current: col.is_current,
+                    domain: cellDomain,
+                });
 
-            }
-        }
+            });
+            grid.push(cells);
+        });
 
         return $.when({
             cols: columns,

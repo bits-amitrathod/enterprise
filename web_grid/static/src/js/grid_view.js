@@ -18,12 +18,12 @@ var GridView = AbstractView.extend({
         Controller: GridController,
         Renderer: GridRenderer,
     },
-    init: function(arch, fields, params) {
+    init: function (arch, fields, params) {
         var self = this;
         this._super.apply(this, arguments);
         var rowFields = [];
         var colField, cellField, ranges, cellWidget;
-        _.each(arch.children, function(child) {
+        _.each(arch.children, function (child) {
             if (child.tag === 'field') {
                 if (child.attrs.type === 'row') {
                     rowFields.push(child.attrs.name);
@@ -59,7 +59,7 @@ var GridView = AbstractView.extend({
         // controller
         this.controllerParams.formViewID = false;
         this.controllerParams.listViewID = false;
-        _.each(params.views, function(view) {
+        _.each(params.views, function (view) {
             if (view[1] === 'form') {
                 self.controllerParams.formViewID = view[0];
             }
@@ -71,6 +71,8 @@ var GridView = AbstractView.extend({
         this.controllerParams.navigationButtons = arch.children
             .filter(function (c) { return c.tag === 'button'; })
             .map(function (c) { return c.attrs; });
+        this.controllerParams.adjustment = arch.attrs.adjustment;
+        this.controllerParams.adjustName = arch.attrs.adjust_name;
     },
 
 });
@@ -82,15 +84,6 @@ return GridView;
 
 
 
-//         'keydown .o_grid_input': function (e) {
-//             // suppress [return]
-//             switch (e.which) {
-//             case $.ui.keyCode.ENTER:
-//                 e.preventDefault();
-//                 e.stopPropagation();
-//                 break;
-//             }
-//         },
 //         'blur .o_grid_input': function (e) {
 //             var $target = $(e.target);
 
@@ -317,46 +310,5 @@ return GridView;
 //             var name = arch_f.attrs.name;
 //             return this._make_field(name, arch_f);
 //         }.bind(this));
-//     },
-//     adjust: function (cell, new_value) {
-//         var difference = new_value - cell.value;
-//         // 1e-6 is probably an overkill, but that way milli-values are usable
-//         if (Math.abs(difference) < 1e-6) {
-//             // cell value was set to itself, don't hit the server
-//             return;
-//         }
-//         var def = $.Deferred();
-//         // convert row values to a domain, concat to action domain
-//         var domain = this.get('domain').concat(cell.row.domain);
-
-//         var column_name = this._col_field.name();
-//         var action_data = {
-//             type: this.fields_view.arch.attrs.adjustment,
-//             name: this.fields_view.arch.attrs.adjust_name,
-//             args: JSON.stringify([ // args for type=object
-//                 domain,
-//                 column_name,
-//                 cell.col.values[column_name][0],
-//                 this._cell_field.name(),
-//                 difference
-//             ]),
-//             context: this.get_full_context({
-//                 'grid_adjust': { // context for type=action
-//                     row_domain: domain,
-//                     column_field: column_name,
-//                     column_value: cell.col.values[column_name][0],
-//                     cell_field: this._cell_field.name(),
-//                     change: difference,
-//                 }
-//             })
-//         };
-//         this.trigger_up('execute_action', {
-//             action_data: action_data,
-//             dataset: new data.DataSetStatic(null, this._model.name, {}, []),
-//             on_close: this.proxy('_fetch'),
-//             on_fail: def.resolve.bind(def),
-//             on_success: def.resolve.bind(def),
-//         });
-//         return def;
 //     },
 // });
