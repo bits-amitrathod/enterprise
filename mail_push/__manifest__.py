@@ -13,8 +13,8 @@ for every message in chatter.
     """,
     'depends': ['mail', 'web_mobile'],
     'data': [
-        'views/assets.xml',
-        'views/res_config.xml',
+        'views/mail_push_templates.xml',
+        'views/base_config_settings_views.xml',
         'security/ir.model.access.csv'
     ],
     'installable': True,
