@@ -15,20 +15,6 @@ class MailPushDevice(models.Model):
     service_type = fields.Selection('_default_service_type', 'Notification Service')
 
     @api.model
-    def create(self, values):
-        identity = super(MailPushDevice, self).create(values)
-        body = "<strong>%s</strong> device registered for Mobile notifications" % (identity.name)
-        identity.partner_id.message_post(body=body, subtype="mail.mt_comment")
-        return identity
-
-    @api.multi
-    def unlink(self):
-        for device_identity in self:
-            body = "<strong>%s</strong> device removed for Mobile notifications" % (device_identity.name)
-            device_identity.partner_id.message_post(body=body, subtype="mail.mt_comment")
-        return super(MailPushDevice, self).unlink()
-
-    @api.model
     def add_device(self, subscription_id, device_name, service_type):
         """This method is going to use for adding new device subscription.
 

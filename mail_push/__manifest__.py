@@ -15,7 +15,6 @@ for every message in chatter.
     'data': [
         'views/assets.xml',
         'views/res_config.xml',
-        'views/res_partner.xml',
         'security/ir.model.access.csv'
     ],
     'installable': True,
