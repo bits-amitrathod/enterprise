@@ -437,9 +437,14 @@ return Widget.extend({
         customize.set_email_alias(this.model, value);
     },
     set_default_value: function(event) {
-        var value = event.data.value;
-        var field_name = event.data.field_name;
-        customize.set_default_value(this.model, field_name, value);
+        var data = event.data;
+        return customize
+            .set_default_value(this.model, data.field_name, data.value)
+            .fail(function() {
+                if (data.on_fail) {
+                    data.on_fail();
+                }
+            });
     },
     do: function(op) {
         this.operations.push(op);

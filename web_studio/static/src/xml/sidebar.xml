@@ -443,10 +443,23 @@
                 </option>
             </select>
         </div>
-        <div class="o_web_studio_sidebar_text">
+        <div t-if="!_.contains(widget.NON_DEFAULT_TYPES, widget.field_parameters.type)"
+            t-att-class="widget.field_parameters.type ? 'o_web_studio_sidebar_select' : 'o_web_studio_sidebar_text'">
             <label for="default_value">Default value</label>
-            <input id="default_value" type="text" data-type="default_value"
-                t-att-value="widget.default_value"/>
+            <t t-if="widget.field_parameters.type === 'selection'">
+                <select id="default_value" name="default_value" data-type="default_value">
+                    <option t-att-selected="widget.default_value ? undefined : 'selected'"></option>
+                    <option t-foreach="widget.field_parameters.selection" t-as="item"
+                        t-att-value="item[0]"
+                        t-att-selected="widget.default_value ===  item[0] ? 'selected' : undefined">
+                        <t t-esc="item[1]"/>
+                    </option>
+                </select>
+            </t>
+            <t t-else="">
+                <input id="default_value" type="text" data-type="default_value"
+                    t-att-value="widget.default_value"/>
+            </t>
         </div>
         <t t-if="_.contains(['many2many', 'many2one', 'one2many'], widget.field_parameters.type)">
             <div class="o_web_studio_sidebar_text o_web_studio_sidebar_iscode">

@@ -148,11 +148,19 @@ return {
     },
 
     set_default_value: function(model_name, field_name, value) {
-        return ajax.jsonRpc('/web_studio/set_default_value', 'call', {
+        var def = $.Deferred();
+        var args = {
             model_name: model_name,
             field_name: field_name,
             value: value,
-        });
+        };
+        ajax.jsonRpc('/web_studio/set_default_value', 'call', args)
+            .then(def.resolve.bind(def))
+            .fail(function(result, error) {
+                var alert = Dialog.alert(this, error.data.message);
+                alert.on('closed', null, def.reject.bind(def));
+            });
+        return def;
     },
 
     get_studio_view_arch: function(model, view_type, view_id) {

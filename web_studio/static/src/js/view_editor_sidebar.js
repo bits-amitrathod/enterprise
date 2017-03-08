@@ -41,7 +41,7 @@ return Widget.extend(FieldManagerMixin, {
         'change .o_display_view input, .o_display_view select': 'change_view',
         'change .o_display_field input[data-type="attributes"], .o_display_field select': 'change_element',
         'focus .o_display_field input[data-type="attributes"][name="domain"]': 'open_domain_editor',
-        'change .o_display_field input[data-type="default_value"]': 'change_default_value',
+        'change .o_display_field [data-type="default_value"]': 'change_default_value',
         'change .o_display_page input': 'change_element',
         'change .o_display_group input': 'change_element',
         'change .o_display_button input': 'change_element',
@@ -65,6 +65,8 @@ return Widget.extend(FieldManagerMixin, {
         this.show_invisible = false;
 
         this.GROUPABLE_TYPES = ['many2one', 'char', 'boolean', 'selection', 'date', 'datetime'];
+        // FIXME: At the moment, it's not possible to set default value for these types
+        this.NON_DEFAULT_TYPES = ['many2one', 'many2many', 'one2many', 'binary']
     },
     renderElement: function() {
         var self = this;
@@ -308,12 +310,16 @@ return Widget.extend(FieldManagerMixin, {
         }
     },
     change_default_value: function(ev) {
+        var self = this;
         var $input = $(ev.currentTarget);
         var value = $input.val();
         if (value !== this.default_value) {
             this.trigger_up('default_value_change', {
                 field_name: this.node.attrs.name,
                 value: value,
+                on_fail: function () {
+                    $input.val(self.default_value);
+                }
             });
         }
     },
