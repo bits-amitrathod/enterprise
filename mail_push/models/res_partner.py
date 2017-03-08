@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields
+
+from odoo import fields, models
 
 
 class ResPartner(models.Model):

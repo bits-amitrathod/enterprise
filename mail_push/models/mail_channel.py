@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import json
 import logging
 import re
@@ -8,9 +9,9 @@ import threading
 import requests
 from requests.exceptions import ConnectionError
 
-from openerp import models, api
-from openerp.modules.registry import Registry
-from openerp.addons.mail.models.html2text import html2text
+from odoo import api, models
+from odoo.modules.registry import Registry
+from odoo.addons.mail.models.html2text import html2text
 
 FCM_MESSAGES_LIMIT = 1000
 FCM_END_POINT = "https://fcm.googleapis.com/fcm/send"

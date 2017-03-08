@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+
+from odoo import api, fields, models
 
 
 class MailPushDevice(models.Model):
     _name = 'mail_push.device'
 
-    @api.model
     def _default_service_type(self):
         return [('fcm', 'FCM')]
 

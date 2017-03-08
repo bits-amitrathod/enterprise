@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+
+from odoo import api, fields, models
 
 
 class FcmResConfig(models.TransientModel):
