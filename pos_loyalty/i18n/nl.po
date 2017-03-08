@@ -8,10 +8,10 @@
 # Martin Trigaux <mat@odoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgstr "Product korting"
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_display_name
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_rule_type
@@ -155,6 +155,12 @@ msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: pos_loyalty
+#: model:ir.model.fields,field_description:pos_loyalty.field_pos_order_loyalty_points
+#: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
+msgid "Loyalty Points"
+msgstr "Loyaliteitspunten"
+
+#. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_loyalty_program_id
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_loyalty_program_id
 #: model:ir.model.fields,field_description:pos_loyalty.field_pos_config_loyalty_id
@@ -197,14 +203,8 @@ msgid "Loyalty Rule"
 msgstr "Loyaliteit regel"
 
 #. module: pos_loyalty
-#: model:ir.model.fields,field_description:pos_loyalty.field_pos_order_loyalty_points
-#: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
-msgid "Loyalty points"
-msgstr "Loyaliteitspunten"
-
-#. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_minimum_points
-msgid "Minimum points"
+msgid "Minimum Points"
 msgstr "Minimum punten"
 
 #. module: pos_loyalty
@@ -214,19 +214,33 @@ msgid "Name"
 msgstr "Naam"
 
 #. module: pos_loyalty
+#. openerp-web
+#: code:addons/pos_loyalty/static/src/js/loyalty.js:367
+#, python-format
+msgid "No Rewards Available"
+msgstr "Geen beloningen beschikbaar"
+
+#. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_res_partner
 msgid "Partner"
 msgstr "Relatie"
 
 #. module: pos_loyalty
-#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_product_id
-msgid "Point Product"
-msgstr "Punten product"
+#. openerp-web
+#: code:addons/pos_loyalty/static/src/js/loyalty.js:383
+#, python-format
+msgid "Please select a reward"
+msgstr "Selecteer een beloning"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_cost
-msgid "Point cost"
+msgid "Point Cost"
 msgstr "Puntenkost"
+
+#. module: pos_loyalty
+#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_product_id
+msgid "Point Product"
+msgstr "Punten product"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_pos_order
@@ -308,14 +322,14 @@ msgid "Reward Name"
 msgstr "Naam beloning"
 
 #. module: pos_loyalty
+#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_reward_type
+msgid "Reward Type"
+msgstr ""
+
+#. module: pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_form
 msgid "Reward the customer with gifts or discounts for loyalty points"
 msgstr "Beloon de klant met cadeaus of kortingen voor loyaliteitspunten"
-
-#. module: pos_loyalty
-#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_reward_type
-msgid "Reward type"
-msgstr "Type beloning"
 
 #. module: pos_loyalty
 #. openerp-web
@@ -333,8 +347,8 @@ msgstr "Regelnaam"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_rule_type
-msgid "Rule type"
-msgstr "Regelsoort"
+msgid "Rule Type"
+msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_rule_ids
@@ -469,6 +483,17 @@ msgstr "Het product gebruikt om kortingen toe te passen"
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_reward_reward_type
 msgid "The type of the reward"
 msgstr "het type van de beloning"
+
+#. module: pos_loyalty
+#. openerp-web
+#: code:addons/pos_loyalty/static/src/js/loyalty.js:368
+#, python-format
+msgid ""
+"There are no rewards available for this customer as part of the loyalty "
+"program"
+msgstr ""
+"Er zijn geen beloningen beschikbaar voor deze klant als onderdeel van het "
+"loyaliteitsprograma"
 
 #. module: pos_loyalty
 #. openerp-web

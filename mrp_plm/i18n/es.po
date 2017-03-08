@@ -3,32 +3,33 @@
 # * mrp_plm
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
 # Roberto Lizana <robertolizana@trey.es>, 2016
-# Ana Juaristi <ajuaristio@gmail.com>, 2016
 # José Vicente <txusev@gmail.com>, 2016
-# Ivan Nieto <ivan.n.s@tuta.io>, 2016
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
-# Cristóbal Martí Oliver <info@moblesmarti.com>, 2016
 # oihane <oihanecruce@gmail.com>, 2016
-# David Perez <david@closemarketing.es>, 2016
-# Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
-# Carles Antoli <carlesantoli@hotmail.com>, 2016
 # Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
+# Ana Juaristi <ajuaristio@gmail.com>, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2016
 # Antonio Trueba <atgayol@gmail.com>, 2016
-# Luis Triana <luis.triana@jarsa.com.mx>, 2016
+# Luis M. Triana <luis.triana@jarsa.com.mx>, 2016
 # Sergio Flores <vitavitae1@gmail.com>, 2016
 # Luis Pomar <luis.pomar@gmail.com>, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
 # Alejandro Die Sanchis <marketing@domatix.com>, 2016
+# Ivan Nieto <ivan.n.s@tuta.io>, 2016
+# Cristóbal Martí Oliver <info@moblesmarti.com>, 2016
+# David Perez <david@closemarketing.es>, 2016
+# Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
 # Miguel Orueta <mo@landoo.es>, 2016
+# Luis Martínez Ontalba <luismaront@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Miguel Orueta <mo@landoo.es>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Luis Martínez Ontalba <luismaront@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,6 +38,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_count
 msgid "# Attachments"
@@ -73,7 +75,18 @@ msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:53
+#: code:addons/mrp_plm/models/mrp_eco.py:517
+#, python-format
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                        Click to upload files to your ECO, that will be applied to the product later\n"
+"                    </p><p>\n"
+"                        Use this feature to store any files, like drawings or specifications.\n"
+"                    </p>"
+msgstr ""
+
+#. module: mrp_plm
+#: code:addons/mrp_plm/models/product.py:54
 #, python-format
 msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
@@ -118,6 +131,11 @@ msgstr ""
 " nuevo registro se cree para este seudónimo."
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_active
+msgid "Active"
+msgstr "Activo"
+
+#. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
 #: selection:mrp.eco.routing.change,change_type:0
 msgid "Add"
@@ -150,6 +168,7 @@ msgstr "Modelo con seudónimo"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
 msgid "All"
 msgstr "Todos"
 
@@ -184,7 +203,7 @@ msgid "Approval Roles"
 msgstr "Roles de aprobación"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9760
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9788
 msgid "Approval Stage"
 msgstr "Etapa de aprobación"
 
@@ -222,6 +241,11 @@ msgid "Approves, but the approval is optional"
 msgstr "Aprueba, pero la aprobación es opcional"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
 msgstr "Lo antes posible"
@@ -232,10 +256,12 @@ msgid "At Date"
 msgstr "En fecha"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:45
+#: code:addons/mrp_plm/models/mrp_eco.py:509
+#: code:addons/mrp_plm/models/product.py:46
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_ids
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #, python-format
 msgid "Attachments"
@@ -458,12 +484,12 @@ msgstr "Análisis de ECO"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_ids
 msgid "ECO BoM Changes"
-msgstr "ECO cambios de LdM"
+msgstr "ECO Cambios de LdM"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
 msgid "ECO Material changes"
-msgstr "ECO cambios de materiales"
+msgstr "ECO Cambios de materiales"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_ids
@@ -540,13 +566,13 @@ msgid "Eco"
 msgstr "ECO"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:479
+#: code:addons/mrp_plm/models/mrp_eco.py:549
 #, python-format
 msgid "Eco BoM"
 msgstr "ECO LdM"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:491
+#: code:addons/mrp_plm/models/mrp_eco.py:561
 #, python-format
 msgid "Eco Routing"
 msgstr "ECO Rutas"
@@ -612,6 +638,11 @@ msgid "Engineering Changes"
 msgstr "Cambios de Ingeniería"
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_ir_attachment_origin_id
+msgid "Field used in the PLM to handle attachments"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Filters"
 msgstr "Filtros"
@@ -675,13 +706,13 @@ msgstr "En proceso"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_approved
-msgid "Is approved"
-msgstr "Esta aprobado"
+msgid "Is Approved"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
-msgid "Is rejected"
-msgstr "es rechazado"
+msgid "Is Rejected"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
@@ -766,6 +797,11 @@ msgstr "ECO etiquetas MRP"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "My Activities"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
 msgstr "Mis órdenes de cambio"
 
@@ -832,6 +868,16 @@ msgstr ""
 "Id. opcional de un hilo (registro) al que todos los mensajes entrantes serán"
 " adjuntados, incluso si no fueron respuestas del mismo. Si se establece, se "
 "deshabilitará completamente la creación de nuevos registros."
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_origin_id
+msgid "Original Attachment"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Overdue Activities"
+msgstr "Actividades Atrasadas"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -918,6 +964,11 @@ msgid "Product  UoM"
 msgstr "UdM del producto"
 
 #. module: mrp_plm
+#: selection:mrp.eco,type:0
+msgid "Product Only"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
 msgid "Product Template"
 msgstr "Plantilla de producto"
@@ -961,7 +1012,7 @@ msgstr "Eliminar"
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_reporting
 msgid "Reporting"
-msgstr "Informes"
+msgstr "Informando"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_required_user_ids
@@ -981,8 +1032,8 @@ msgstr "Rev :"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_revision_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_revision_ids
-msgid "Revision ids"
-msgstr "Ids. revisión"
+msgid "Revision"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_name
@@ -1057,6 +1108,11 @@ msgid "Show Apply Change"
 msgstr "Mostrar Aplicar el Cambio"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_image_small
 msgid "Small-sized image"
 msgstr "Imagen de tamaño pequeño"
@@ -1079,7 +1135,7 @@ msgstr "Alguien rechazó este cambio"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9817
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9843
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Stage"
 msgstr "Etapa"
@@ -1205,12 +1261,22 @@ msgid "To Do"
 msgstr "Para ejecutar"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Today Activities"
+msgstr "Actividades de Hoy"
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_type_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9782
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9810
 msgid "Type"
 msgstr "Tipo"
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Upcoming Activities (7 days)"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1231,6 +1297,8 @@ msgstr "Usuarios"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_version
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template_version
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
 msgstr "Versión"
@@ -1271,21 +1339,20 @@ msgid "Work Centers"
 msgstr "Centros de producción"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:460
+#: code:addons/mrp_plm/models/mrp_eco.py:530
 #, python-format
 msgid "Workorder Messages"
 msgstr "Mensajes de la orden de trabajo"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:367
+#: code:addons/mrp_plm/models/mrp_eco.py:384
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
 msgstr ""
-"No se puede cambiar la etapa, ya que se requieren aprobaciones en el "
-"proceso."
+"No puede cambiar la etapa, ya que se requieren aprobaciones en el proceso."
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:357
+#: code:addons/mrp_plm/models/mrp_eco.py:374
 #, python-format
 msgid "You cannot change the stage, as approvals are still required."
 msgstr ""
@@ -1296,6 +1363,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
 msgstr "p.ej. Departamento de Ingeniería"
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.attachment"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval

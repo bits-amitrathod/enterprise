@@ -3,15 +3,16 @@
 # * account_sepa
 # 
 # Translators:
-# Jeffery Chen Fan <jeffery9@gmail.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
 # Ted Wang <feiyuwang2012@gmail.com>, 2016
+# xiaobin wu <bd5dml@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Ted Wang <feiyuwang2012@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: xiaobin wu <bd5dml@gmail.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +41,7 @@ msgstr "取消"
 msgid ""
 "Click on the file to save it somewhere on your computer. Then upload that "
 "file on your bank's homebanking website to order the credit transfer."
-msgstr "点击文件保存在你的计算机上某个地方。然后上传到你的银行的银行网站来信用要求信用转账"
+msgstr "点击文件保存在您的计算机上某个地方。然后上传到您的银行的银行网站来信用要求信用转账"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_company
@@ -85,11 +86,6 @@ msgid ""
 msgstr "全部分配认证 (eg. KBE-BCO or Finanzamt Muenchen IV)"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Etherpad lite server. Example: beta.primarypad.com"
-msgstr "Etherpad lite服务器，例如 beta.primarypad.com"
-
-#. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
 msgid "Filename"
 msgstr "文件名"
@@ -110,14 +106,10 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
 msgid "Identification"
 msgstr "ID"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
-msgid "Identification *"
-msgstr "标识 *"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_orgid_id
@@ -135,18 +127,14 @@ msgstr "为了到处一个SEPA的转账文件.请选择同一家银行的日记�
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
-msgid "Is generic"
-msgstr "是通用的"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
-msgid "Issuer"
-msgstr "发行人"
+msgid "Is Generic"
+msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_issr
-msgid "Issuer *"
-msgstr "发行人 *"
+#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
+msgid "Issuer"
+msgstr "发行人"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
@@ -168,6 +156,13 @@ msgstr "最后更新人"
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
+
+#. module: account_sepa
+#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
+msgid ""
+"Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
+"in length."
+msgstr ""
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -209,9 +204,9 @@ msgid "Register payments on multiple invoices"
 msgstr "登记多张发票的付款"
 
 #. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_account_config_settings_form_inherit_account_sepa
-msgid "SEPA"
-msgstr "SEPA"
+#: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
+msgid "SEPA Credit Transfer"
+msgstr "SEPA 信用转账"
 
 #. module: account_sepa
 #: code:addons/account_sepa/account_journal_dashboard.py:23
@@ -220,14 +215,10 @@ msgid "SEPA Credit Transfers to Send"
 msgstr "SEPA 信用转账发送"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 msgid "SEPA Pain Version"
 msgstr "SEPA格式版本"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
-msgid "SEPA Pain Version *"
-msgstr "SEPA格式版本 *"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
@@ -241,7 +232,7 @@ msgid ""
 "SEPA may be a generic format, some countries differ from the SEPA "
 "recommandations made by the EPC (European Payment Councile) and thus the XML"
 " created need some tweakenings."
-msgstr "SEPA可以是通用格式，一些国家与EPC (欧洲支付系统) 做出的SEPA建议不同，因此创建的XML需要一些改动。"
+msgstr "SEPA可以是通用格式，一些国家与EPC（欧洲支付系统）做出的SEPA建议不同，因此创建的XML需要一些改动。"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_search
@@ -265,7 +256,7 @@ msgstr ""
 "当银行日记账不是以欧元为单位，交易不是以欧元为单位或者没有IBAN认证和银行认证码."
 
 #. module: account_sepa
-#: code:addons/account_sepa/sepa_credit_transfer.py:350
+#: code:addons/account_sepa/sepa_credit_transfer.py:340
 #, python-format
 msgid ""
 "The account %s, linked to partner '%s', is not of type IBAN.\n"
@@ -365,13 +356,13 @@ msgstr ""
 #: code:addons/account_sepa/sepa_credit_transfer.py:121
 #, python-format
 msgid "The transaction %s is instructed in another currency than EUR"
-msgstr "本次交易 ‘％S’ 被指示其他货币不是欧元"
+msgstr "本次交易％S被指示其他货币不是欧元"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:334
 #, python-format
 msgid "There is no Bank Identifier Code recorded for bank account '%s'"
-msgstr "银行账号 '%s' 没有银行识别号码记录"
+msgstr "这个银行账号没有银行认证码 '%s'"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:180
@@ -379,7 +370,7 @@ msgstr "银行账号 '%s' 没有银行识别号码记录"
 msgid ""
 "There is no Bank Identifier Code recorded for bank account '%s' of journal "
 "'%s'"
-msgstr "银行帐号 '%s' 日记账 '%s'没有银行识别号码记录"
+msgstr "银行帐号没有银行认证码记录 '%s' 日记账的 '%s'"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:78
@@ -407,27 +398,18 @@ msgid ""
 msgstr "出现在SEPA支付里作为支付发起方的名称。限70个字符。"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
 msgid "Your Company Name"
 msgstr "公司名称"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Your Company Name *"
-msgstr "你的公司名称*"
-
-#. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:117
 #, python-format
 msgid "Your bank account is not labelled in EUR"
-msgstr "你的银行帐户中未标示欧元"
+msgstr "您的银行帐户中未标示欧元"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_config_settings
 msgid "account.config.settings"
 msgstr "account.config.settings"
-
-#. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
-msgid "or"
-msgstr "或"

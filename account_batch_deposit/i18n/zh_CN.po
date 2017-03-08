@@ -3,27 +3,30 @@
 # * account_batch_deposit
 # 
 # Translators:
-# Jeffery Chenn <jeffery9@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Connie Xiao <connie.xiao@elico-corp.com>, 2016
-# xiaobin wu <bd5dml@gmail.com>, 2016
-# Gary Wei <Gary.wei@elico-corp.com>, 2016
-# waveyeung <waveyeung@qq.com>, 2016
-# 訾明华 <565209960@qq.com>, 2016
-# fausthuang <faust_huang@hotmail.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: fausthuang <faust_huang@hotmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2016\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: account_batch_deposit
+#: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
+msgid "Account: Create Batch Deposit"
+msgstr ""
+
+#. module: account_batch_deposit
+#: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
+msgid "Account: Print Batch Deposits"
+msgstr ""
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_payment.py:42
@@ -36,7 +39,7 @@ msgstr "所有要打印为存款条的付款都应属于同一个日记账。"
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_amount
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
 msgid "Amount"
-msgstr "金额"
+msgstr "总额"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
@@ -61,17 +64,24 @@ msgstr "银行对账单"
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "银行对账单行"
+msgstr "银行对账单明细"
 
 #. module: account_batch_deposit
+#: model:account.payment.method,name:account_batch_deposit.account_payment_method_batch_deposit
 #: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
 #: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.account_journal_dashboard_kanban_view_inherited
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
 msgstr "批量存款"
+
+#. module: account_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
+msgid "Batch Deposit Payment Method Selected"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
@@ -83,16 +93,6 @@ msgstr "批量存款序列"
 #, python-format
 msgid "Batch Deposits Sequence"
 msgstr "批量存款序列"
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
-msgid "Batch deposit id"
-msgstr "批量存款编号"
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
-msgid "Batch deposit payment method selected"
-msgstr "批量存款付款方式已选择"
 
 #. module: account_batch_deposit
 #: model:ir.actions.act_window,help:account_batch_deposit.action_batch_deposit
@@ -107,7 +107,6 @@ msgstr ""
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_journal.py:68
-#: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
 msgstr "创建批量存款"
@@ -124,8 +123,8 @@ msgstr "创建时间"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_currency_id
-msgid "Currency id"
-msgstr "货币id"
+msgid "Currency"
+msgstr "币种"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
@@ -192,7 +191,7 @@ msgstr "备忘录"
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "New"
-msgstr "新建"
+msgstr "新的"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_payment
@@ -218,11 +217,6 @@ msgstr "打印"
 #. module: account_batch_deposit
 #: model:ir.actions.report.xml,name:account_batch_deposit.action_print_batch_deposit
 msgid "Print Batch Deposit"
-msgstr "打印批量存款"
-
-#. module: account_batch_deposit
-#: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
-msgid "Print Batch Deposits"
 msgstr "打印批量存款"
 
 #. module: account_batch_deposit

@@ -8,10 +8,10 @@
 # Oregional <geza.nagy@oregional.hu>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Oregional <geza.nagy@oregional.hu>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Bankszámla"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
 msgid "Cancel"
-msgstr "Érvénytelenít"
+msgstr "Mégse"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -90,11 +90,6 @@ msgstr ""
 " hatóság IV)."
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Etherpad lite server. Example: beta.primarypad.com"
-msgstr "Könnyített Etherpad szerver. Példa: beta.primarypad.com"
-
-#. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
 msgid "Filename"
 msgstr "Fájlnév"
@@ -115,14 +110,10 @@ msgid "ID"
 msgstr "Azonosító ID"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
 msgid "Identification"
 msgstr "Azonosítás"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
-msgid "Identification *"
-msgstr "Azonosítás *"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_orgid_id
@@ -142,18 +133,14 @@ msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
-msgid "Is generic"
+msgid "Is Generic"
 msgstr "Ez általános"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_issr
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
 msgid "Issuer"
 msgstr "Kibocsátó"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_issr
-msgid "Issuer *"
-msgstr "Kibocsátó *"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
@@ -175,6 +162,15 @@ msgstr "Utoljára frissítette"
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_date
 msgid "Last Updated on"
 msgstr "Utoljára frissítve "
+
+#. module: account_sepa
+#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
+msgid ""
+"Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
+"in length."
+msgstr ""
+"Hitelező hivatkozási fél neve. Használati szabály: 70 karakter hosszúra "
+"imitált."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -218,9 +214,9 @@ msgid "Register payments on multiple invoices"
 msgstr " Több számlára történt befizetések rögzítése"
 
 #. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_account_config_settings_form_inherit_account_sepa
-msgid "SEPA"
-msgstr "SEPA"
+#: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
+msgid "SEPA Credit Transfer"
+msgstr "SEPA bevétel jóváírás"
 
 #. module: account_sepa
 #: code:addons/account_sepa/account_journal_dashboard.py:23
@@ -229,14 +225,10 @@ msgid "SEPA Credit Transfers to Send"
 msgstr "SEPA bevétel jóváírás utalás küldésre"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 msgid "SEPA Pain Version"
 msgstr "SEPA Pain Verzió"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
-msgid "SEPA Pain Version *"
-msgstr "SEPA Pain Verzió *"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
@@ -279,7 +271,7 @@ msgstr ""
 "azonosítható az IBAN számla számmal és a banki BIC számmal."
 
 #. module: account_sepa
-#: code:addons/account_sepa/sepa_credit_transfer.py:350
+#: code:addons/account_sepa/sepa_credit_transfer.py:340
 #, python-format
 msgid ""
 "The account %s, linked to partner '%s', is not of type IBAN.\n"
@@ -436,14 +428,10 @@ msgstr ""
 "korlátozva."
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
 msgid "Your Company Name"
 msgstr "Cége neve"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Your Company Name *"
-msgstr "Az ön vállalkozása *"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:117
@@ -455,8 +443,3 @@ msgstr "A bankszámla száma nem EUR  címkéjű"
 #: model:ir.model,name:account_sepa.model_account_config_settings
 msgid "account.config.settings"
 msgstr "account.config.settings"
-
-#. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
-msgid "or"
-msgstr "vagy"

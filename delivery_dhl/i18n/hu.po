@@ -7,10 +7,10 @@
 # Martin Trigaux <mat@odoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:58+0000\n"
-"PO-Revision-Date: 2016-09-19 12:58+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,41 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "0 - Logistics Services"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "1 - Domestic Express 12:00"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "2 - B2C"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "3 - B2C"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "4 - Jetline"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "5 - Sprintline"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "6 - Secureline"
+msgstr ""
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
@@ -33,6 +68,16 @@ msgstr "6X4_PDF"
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "6X4_thermal"
 msgstr "6X4_thermal"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "7 - Express Easy"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "8 - Express Easy"
+msgstr ""
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
@@ -68,6 +113,27 @@ msgstr "8X4_RU_A4_PDF"
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_thermal"
 msgstr "8X4_thermal"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "9 - Europack"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "A - Auto Reversals"
+msgstr ""
+
+#. module: delivery_dhl
+#: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier_website_description
+msgid ""
+"A description of the Product that you want to communicate to your customers."
+" This description will be copied to every Sales Order, Delivery Order and "
+"Customer Invoice/Refund"
+msgstr ""
+"Egy termék leírása, melyről beszélgetést szeretne fojtatni a vásárlókkal.  "
+"Ez a leírás lesz átmásolva minden egyes Vásárlói megrendelésre, szállítási "
+"megbízásra/szállítólevélre és vásárlói számlára/visszatérítésre."
 
 #. module: delivery_dhl
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier_accessory_product_ids
@@ -115,6 +181,16 @@ msgstr "Elérhetőség"
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_availability_warning
 msgid "Availability Warning"
 msgstr "Elérhetőségi figyelmeztetés"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "B - Break Bulk Express"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "C - Medical Express"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_delivery_carrier
@@ -166,12 +242,17 @@ msgid "DHL Default Packaging Type"
 msgstr "DHL alapértelmezett csomag típus"
 
 #. module: delivery_dhl
+#: model:ir.ui.view,arch_db:delivery_dhl.sale_config_settings_view_form_inherit_delivery_dhl
+msgid "DHL Delivery Methods"
+msgstr ""
+
+#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_password
 msgid "DHL Password"
 msgstr "DHL Jelszó"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:373
+#: code:addons/delivery_dhl/models/dhl_request.py:374
 #, python-format
 msgid "DHL Site ID is missing, please modify your delivery method settings."
 msgstr ""
@@ -196,7 +277,7 @@ msgid "DHL USA -> International"
 msgstr "DHL USA -> Nemzetközi"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:377
+#: code:addons/delivery_dhl/models/dhl_request.py:378
 #, python-format
 msgid ""
 "DHL account number is missing, please modify your delivery method settings."
@@ -204,20 +285,20 @@ msgstr ""
 "DHL fiók szám hiányzik, kérem módosítsa a szállítási mód beállításait."
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:375
+#: code:addons/delivery_dhl/models/dhl_request.py:376
 #, python-format
 msgid "DHL password is missing, please modify your delivery method settings."
 msgstr "DHL jelszó hiányzik, kérem módosítsa a szállítási mód beállításait."
 
 #. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_website_description
+msgid "Description for Online Quotations"
+msgstr "Leírás az online árajánlatokhoz"
+
+#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_quote_description
 msgid "Description for the quote"
 msgstr "Leírás az árajánlathoz"
-
-#. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_website_description
-msgid "Description for the website"
-msgstr "Leírás a weboldalhoz"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier_website_sequence
@@ -231,6 +312,11 @@ msgid "Dutiable Material"
 msgstr "Vámköteles anyag"
 
 #. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "E - Express 9:00"
+msgstr ""
+
+#. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_image_format:0
 msgid "EPL2"
 msgstr "EPL2"
@@ -239,6 +325,26 @@ msgstr "EPL2"
 #: selection:delivery.carrier,dhl_region_code:0
 msgid "Europe"
 msgstr "Europa"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "F - Freight Worldwide"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "G - Domestic Economy Select"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "H - Economy Select"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "I - Break Bulk Economy"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_product_image_ids
@@ -252,6 +358,11 @@ msgstr "Inches"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
+msgid "J - Jumbo Box"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
 msgid "K - Express 9:00"
 msgstr "K - Expressz 9:00"
 
@@ -259,6 +370,11 @@ msgstr "K - Expressz 9:00"
 #: selection:delivery.carrier,dhl_package_weight_unit:0
 msgid "Kilograms"
 msgstr "Kilogramm"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "L - Express 10:30"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_image_format
@@ -269,6 +385,11 @@ msgstr "Felirat kép méret"
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_template
 msgid "Label Template"
 msgstr "Felirat sablon"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "M - Express 10:30"
+msgstr ""
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -286,6 +407,16 @@ msgstr "Nincs elérhető szolgáltatás a kiválasztott termékhez"
 #, python-format
 msgid "No shipping available for the selected DHL product"
 msgstr "Nincs elérhető szállítási mód a kiválasztott DHL termékhez"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "O - DOM Express 10:30"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "P - Express Worldwide"
+msgstr ""
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_image_format:0
@@ -308,7 +439,7 @@ msgid "Packaging"
 msgstr "Csomagolás"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:395
+#: code:addons/delivery_dhl/models/dhl_request.py:396
 #, python-format
 msgid "Please provide at least one item to ship."
 msgstr "Kérem válasszon legalább egy szállítandó tételt."
@@ -322,6 +453,16 @@ msgstr "Pounds"
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_product_code
 msgid "Product"
 msgstr "Termék"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "Q - Medical Express"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "R - GlobalMail Business"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_rating_ids
@@ -349,7 +490,12 @@ msgid "Region"
 msgstr "Régió"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/delivery_dhl.py:84
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "S - Same Day"
+msgstr ""
+
+#. module: delivery_dhl
+#: code:addons/delivery_dhl/models/delivery_dhl.py:116
 #, python-format
 msgid "Shipment created into DHL <br/> <b>Tracking Number : </b>%s"
 msgstr "Szállítmány létrehozva az DHL-ben <br/> <b>Követési szám : </b>%s"
@@ -384,7 +530,7 @@ msgid "T - Express 12:00"
 msgstr "T - Expressz 12:00"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:383
+#: code:addons/delivery_dhl/models/dhl_request.py:384
 #, python-format
 msgid ""
 "The address of the custommer is missing or wrong (Missing field(s) :\n"
@@ -394,7 +540,7 @@ msgstr ""
 "%s)"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:391
+#: code:addons/delivery_dhl/models/dhl_request.py:392
 #, python-format
 msgid ""
 "The address of your company warehouse is missing or wrong (Missing field(s) :\n"
@@ -405,7 +551,7 @@ msgstr ""
 "%s)"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:397
+#: code:addons/delivery_dhl/models/dhl_request.py:398
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -419,9 +565,24 @@ msgstr ""
 "A teljes elérési út/URL  a dokumentum weboldalon keresztüli eléréséhez."
 
 #. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "U - Express Worldwide"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "V - Europack"
+msgstr ""
+
+#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_website_published
 msgid "Visible in Website"
 msgstr "Látható a weboldalon"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "W - Economy Select"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_website_message_ids
@@ -469,10 +630,25 @@ msgid "Website public price"
 msgstr "Weboldal nyilvános ár"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/delivery_dhl.py:102
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "X - Express Envelope"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "Y - Express 12:00"
+msgstr ""
+
+#. module: delivery_dhl
+#: code:addons/delivery_dhl/models/delivery_dhl.py:134
 #, python-format
 msgid "You can't cancel DHL shipping without pickup date."
 msgstr "Törölheti az  az üres felvételi dátummal rendelkező DHL szállítást."
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,dhl_product_code:0
+msgid "Z - Destination Charges"
+msgstr ""
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_image_format:0

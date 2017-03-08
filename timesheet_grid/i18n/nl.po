@@ -4,17 +4,17 @@
 # 
 # Translators:
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
 # Eric Geens <ericgeens@yahoo.com>, 2016
-# Cas Vissers <casvissers@brahoo.nl>, 2016
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
+# Cas Vissers <casvissers@brahoo.nl>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,16 +29,10 @@ msgid "All Timesheets"
 msgstr "Alle urenstaten"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:46
+#: code:addons/timesheet_grid/models/models.py:45
 #, python-format
 msgid "All selected timesheets are already validated"
 msgstr "Alle geselecteerde urenstaten zijn al bevestigd"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_allow_timesheets
-#: model:ir.ui.view,arch_db:timesheet_grid.project_view_form_timesheets
-msgid "Allow timesheets"
-msgstr "Urenstaten toestaan"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -70,7 +64,7 @@ msgstr "Aangemaakt op"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
-msgstr "Datum tot wanneer de werknemer zijn urenstaten bevestigd zijn"
+msgstr "Datum tot wanneer de werknemer zijn urenstaten gevalideerd zijn"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_form
@@ -81,7 +75,7 @@ msgstr "Omschrijf uw activiteit"
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_display_name
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee
@@ -157,10 +151,9 @@ msgstr "Mijn urenstaten"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Non Validated"
-msgstr "Niet bevestigd"
+msgstr "Niet gevalideerd"
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_project_project
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Project"
 msgstr "Project"
@@ -169,17 +162,7 @@ msgstr "Project"
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
 msgstr ""
-"Stel in als de kostenplaatsregel een regel van een urenstaat voorstelt."
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_ids
-msgid "Subscriptions"
-msgstr "Abonnementen"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_count
-msgid "Susbcription Count"
-msgstr "Aantal abbonementen"
+"Ingesteld als de analytische lijn een lijn van een urenstaat voorstelt."
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -187,7 +170,7 @@ msgid "Task"
 msgstr "Taak"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:41
+#: code:addons/timesheet_grid/models/models.py:40
 #, python-format
 msgid "There aren't any timesheet to validate"
 msgstr "Er zijn geen urenstaten om goed te keuren."
@@ -217,17 +200,17 @@ msgstr "Urenstaatregels"
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_week
 msgid "Timesheets To Validate"
-msgstr "Te bevestigen urenstaten"
+msgstr "Te valideren urenstaten"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Timesheets validation limit"
-msgstr "Urenstaten bevestigingslimiet"
+msgstr "Urenstaten bevestiging limiet"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
 msgid "To Validate"
-msgstr "Te bevestigen"
+msgstr "Te valideren"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -236,35 +219,35 @@ msgstr "Gebruikers"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validable_ids
-msgid "Validable ids"
-msgstr "Bevestiging ids"
+msgid "Validable"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validate
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_validate
 msgid "Validate"
-msgstr "Bevestig"
+msgstr "Valideer"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 msgid "Validate Timesheets"
-msgstr "Bevestig urenstaten"
+msgstr "Valideer urenstaten"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
+msgid "Validate To"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 msgid "Validate the timesheets of the selected employees up to"
-msgstr "Bevestig de urenstaten van de geselecteerde werknemers tot en met"
+msgstr "Valideer de urenstaten van de geselecteerde werknemers tot en met"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_timesheet_grid_validable_validate
 msgid "Validate this employee's timesheet up to the chosen date"
-msgstr "Bevestig de werknemer zijn urenstaten tot de gekozen datum"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
-msgid "Validate to"
-msgstr "Bevestigtot"
+msgstr "Valideer de werknemer zijn urenstaten tot de gekozen datum"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -274,12 +257,12 @@ msgstr "Goedgekeurd"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_validated
 msgid "Validated line"
-msgstr "Bevestigde regel"
+msgstr "Gevalideerde lijn"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validation_id
-msgid "Validation id"
-msgstr "Validatie id"
+msgid "Validation"
+msgstr "Bevestiging"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid

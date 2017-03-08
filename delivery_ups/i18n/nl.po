@@ -6,10 +6,10 @@
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "Vervoerder"
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_package_dimension_unit:0
 msgid "Centimeters"
-msgstr "Centimeter"
+msgstr "Centimeters"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
@@ -54,7 +54,7 @@ msgid "Packaging"
 msgstr "Verpakking"
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/ups_request.py:207
+#: code:addons/delivery_ups/models/ups_request.py:212
 #, python-format
 msgid "Please provide at least one item to ship."
 msgstr "Voorzie minimaal één item om te verzend aub."
@@ -70,25 +70,25 @@ msgid "SPL"
 msgstr "SPL"
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/delivery_ups.py:175
+#: code:addons/delivery_ups/models/delivery_ups.py:173
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "Levering N° %s werd geannuleerd"
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/delivery_ups.py:139
+#: code:addons/delivery_ups/models/delivery_ups.py:137
 #, python-format
 msgid "Shipment created into UPS <br/> <b>Tracking Number : </b>%s"
 msgstr "Verzending aangemaakt in UPS<br/> <b>Traceernummer:</b> %s"
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/delivery_ups.py:146
+#: code:addons/delivery_ups/models/delivery_ups.py:144
 #, python-format
 msgid "Shipping label for packages"
 msgstr "Verzendlabel voor pakketten"
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/ups_request.py:182
+#: code:addons/delivery_ups/models/ups_request.py:187
 #, python-format
 msgid ""
 "The address of your company is missing or wrong.\n"
@@ -98,7 +98,7 @@ msgstr ""
 "(Mist veld(en): %s)"
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/ups_request.py:192
+#: code:addons/delivery_ups/models/ups_request.py:197
 #, python-format
 msgid ""
 "The address of your warehouse is missing or wrong.\n"
@@ -108,7 +108,7 @@ msgstr ""
 "(Mist veld(en): %s)"
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/ups_request.py:212
+#: code:addons/delivery_ups/models/ups_request.py:217
 #, python-format
 msgid ""
 "The delivery cannot be done because the weight of your product is missing."
@@ -117,7 +117,7 @@ msgstr ""
 "ontbreekt."
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/ups_request.py:209
+#: code:addons/delivery_ups/models/ups_request.py:214
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -127,7 +127,7 @@ msgstr ""
 "ontbreekt."
 
 #. module: delivery_ups
-#: code:addons/delivery_ups/models/ups_request.py:202
+#: code:addons/delivery_ups/models/ups_request.py:207
 #, python-format
 msgid ""
 "The recipient address is missing or wrong.\n"
@@ -171,6 +171,11 @@ msgstr "UPS configuratie"
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_default_packaging_id
 msgid "UPS Default Packaging Type"
 msgstr "UPS standaard verpakkingstype"
+
+#. module: delivery_ups
+#: model:ir.ui.view,arch_db:delivery_ups.sale_config_settings_view_form_inherit_delivery_ups
+msgid "UPS Delivery Methods"
+msgstr ""
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_default_service_type:0
@@ -260,8 +265,8 @@ msgstr "Eenheden voor UPS verpakkingsgrootte"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_package_weight_unit
-msgid "Ups package weight unit"
-msgstr "UPS gewichtseenheid pakket"
+msgid "Ups Package Weight Unit"
+msgstr ""
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0

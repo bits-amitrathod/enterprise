@@ -9,10 +9,10 @@
 # Cas Vissers <casvissers@brahoo.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -153,8 +153,8 @@ msgstr "Controleer"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_count
-msgid "Check count"
-msgstr "Controlepunt"
+msgid "Check Count"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
@@ -245,6 +245,11 @@ msgid "Corrective Actions"
 msgstr "Correctieve acties"
 
 #. module: quality
+#: model:ir.actions.act_window,help:quality.quality_alert_action_check
+msgid "Create Quality Alerts."
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_uid
@@ -299,7 +304,7 @@ msgstr "Standaardwaarden"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Describe the corrective actions you did..."
-msgstr "Beschrijf de corrigerende  acties die u heeft gedaan..."
+msgstr "Beschrijf de corrigerende acties die u heeft gedaan..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
@@ -336,7 +341,7 @@ msgstr "Omschrijving van de issue..."
 #: model:ir.model.fields,field_description:quality.field_quality_reason_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
@@ -484,14 +489,14 @@ msgid "Measure"
 msgstr "Eenheid"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
+msgid "Measure Frequency Unit"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
 msgid "Measure Success"
 msgstr "Meet succes"
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
-msgid "Measure frequency unit"
-msgstr "Meet frequentie unit"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_min
@@ -767,13 +772,6 @@ msgid "Quality Alerts"
 msgstr "Kwaliteitswaarschuwingen"
 
 #. module: quality
-#: model:ir.actions.act_window,help:quality.quality_alert_action_check
-msgid "Quality Alerts can be created. I know this is difficult to believe."
-msgstr ""
-"Kwaliteit waarschuwingen kunnen worden aangemaakt. Ik weet dat dit lastig om"
-" te geloven."
-
-#. module: quality
 #: code:addons/quality/models/quality.py:369
 #: model:ir.model,name:quality.model_quality_check
 #, python-format
@@ -821,7 +819,7 @@ msgstr "Kwaliteitscontrole"
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_point_action
 msgid "Quality Control Points"
-msgstr "Kwaliteits controlepunten"
+msgstr "Kwaliteit controlepunten"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_point_action
@@ -894,7 +892,7 @@ msgstr "Referentie"
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_reporting
 msgid "Reporting"
-msgstr "Rapportages"
+msgstr "Rapportering"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_user_id
@@ -927,7 +925,7 @@ msgid "Settings"
 msgstr "Instellingen"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9329
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9144
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Fase"
@@ -953,7 +951,7 @@ msgid "Tags"
 msgstr "Labels"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9307
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9122
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1053,7 +1051,7 @@ msgstr "Gebruiker"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 msgid "Validate"
-msgstr "Bevestig"
+msgstr "Controleer"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_partner_id
@@ -1071,7 +1069,7 @@ msgid "Week(s)"
 msgstr "Week/weken"
 
 #. module: quality
-#: code:addons/quality/models/stock_move.py:48
+#: code:addons/quality/models/stock_picking.py:44
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "U moet de kwaliteitscontroles nog steeds doen!"
