@@ -10,7 +10,7 @@ QUnit.module('web_studio', {}, function () {
     QUnit.module('app_creator');
 
     QUnit.test('basic stuff', function(assert) {
-        assert.expect(12);
+        assert.expect(11);
 
         var $target = $('#qunit-fixture');
         var app_creator = new AppCreator(null);
@@ -60,11 +60,6 @@ QUnit.module('web_studio', {}, function () {
             app_creator.currentStep,
             3,
             "currentStep should be 3");
-
-        assert.strictEqual(
-            app_creator.$('.o_web_studio_app_creator_next').hasClass('o_web_studio_create'),
-            true,
-            "next button should be different at step 3");
 
         app_creator.$('.o_web_studio_app_creator_next').click();
 
