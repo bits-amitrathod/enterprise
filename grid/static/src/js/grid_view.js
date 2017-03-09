@@ -330,6 +330,7 @@ var GridView = View.extend({
         ].concat(this._empty_warning(empty)));
     },
     _empty_warning: function (empty) {
+        var self = this;
         empty = empty && _.find(this.fields_view.arch.children, function (c) {
             return c.tag === 'empty';
         });
@@ -339,13 +340,22 @@ var GridView = View.extend({
         return h('div.o_grid_nocontent_container', [
                    h('div.oe_view_nocontent oe_edit_only',
                        _(empty.children).map(function (p) {
-                           var data = p.attrs.class
-                                   ? {attrs: {class: p.attrs.class}}
-                                   : {};
-                           return h('p', data, p.children);
+                           return self._convert_to_vnode(p);
                        })
                    )
                ]);
+    },
+    _convert_to_vnode: function(root){
+        var self = this;
+        var data = root.attrs.class
+           ? {attrs: {class: root.attrs.class}}
+           : {};
+        return h(root.tag, {'attrs': root.attrs}, _(root.children).map(function (child) {
+                if(child.tag){
+                    return self._convert_to_vnode(child);
+                }
+                return child; // text node, no tag
+        }));
     },
     _cell_is_readonly: function (cell) {
         return !this._editable_cells || cell.readonly === true;

@@ -26,7 +26,15 @@
                                 <optional>
                                     <attribute name="class"/>
                                 </optional>
-                                <text/>
+                                <interleave>
+                                    <text/>
+                                    <zeroOrMore>
+                                        <ref name="link"/>
+                                    </zeroOrMore>
+                                    <zeroOrMore>
+                                        <ref name="image"/>
+                                    </zeroOrMore>
+                                </interleave>
                             </element>
                         </oneOrMore>
                     </element>
@@ -113,5 +121,35 @@
                 </choice>
             </attribute>
         </optional>
+    </define>
+    <define name="image">
+        <element name="img">
+            <attribute name="src"/>
+            <optional>
+                <attribute name="class"/>
+            </optional>
+            <optional>
+                <attribute name="alt"/>
+            </optional>
+            <optional>
+                <attribute name="style"/>
+            </optional>
+        </element>
+    </define>
+    <define name="link">
+        <element name="a">
+            <attribute name="href"/>
+            <optional>
+                <attribute name="class"/>
+            </optional>
+            <optional>
+                <attribute name="target"/>
+            </optional>
+            <mixed>
+                <zeroOrMore>
+                    <ref name="image"/>
+                </zeroOrMore>
+            </mixed>
+        </element>
     </define>
 </grammar>
