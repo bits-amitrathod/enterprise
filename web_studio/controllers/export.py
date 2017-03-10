@@ -21,9 +21,9 @@ MODELS_TO_EXPORT = [
 # list of fields to export by model
 FIELDS_TO_EXPORT = {
     'base.automation': [
-        'action_server_id', 'active', 'filter_domain', 'filter_id', 'filter_pre_domain', 'filter_pre_id',
-        'filter_pre_id', 'kind', 'last_run', 'model_id', 'name', 'on_change_fields', 'sequence',
-        'trg_date_id', 'trg_date_range', 'trg_date_range_type'
+        'action_server_id', 'active', 'filter_domain', 'filter_id', 'filter_pre_domain',
+        'filter_pre_id', 'last_run', 'on_change_fields', 'trg_date_id', 'trg_date_range',
+        'trg_date_range_type', 'trigger'
     ],
     'ir.actions.act_window': [
         'auto_search', 'context', 'domain', 'filter', 'groups_id', 'help', 'limit', 'multi', 'name',
@@ -35,8 +35,8 @@ FIELDS_TO_EXPORT = {
         'report_type'
     ],
     'ir.actions.server': [
-        'action_id', 'child_ids', 'code', 'crud_model_id', 'help', 'link_field_id',
-        'model_id', 'name', 'sequence', 'state'
+        'child_ids', 'code', 'crud_model_id', 'help', 'link_field_id', 'model_id', 'name',
+        'sequence', 'state'
     ],
     'ir.filters': [
         'action_id', 'active', 'context', 'domain', 'is_default', 'model_id', 'name', 'sort'
