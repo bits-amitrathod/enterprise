@@ -55,10 +55,13 @@ var AppCreator = Widget.extend(FieldManagerMixin, {
             var model_id = model_choice && this.many2one.value;
 
             framework.blockUI();
-            customize.create_new_app(this.app_name, menu_name, model_id, this.icon).then(function(result) {
-                framework.unblockUI();
-                self.trigger_up('new_app_created', result);
-            });
+            customize.create_new_app(this.app_name, menu_name, model_id, this.icon)
+                .then(function(result) {
+                    self.trigger_up('new_app_created', result);
+                })
+                .always(function() {
+                    framework.unblockUI();
+                });
         }
     },
 
