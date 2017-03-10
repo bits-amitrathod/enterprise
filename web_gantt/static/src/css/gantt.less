@@ -125,3 +125,27 @@
 .o_gantt_button_dates {
     display: inline-block;
 }
+
+@media (max-width: @screen-xs-max) {
+    .gantt_grid {
+        width: 40% !important;
+    }
+    .gantt_task {
+        width: 60% !important;
+        overflow-x: scroll !important;
+    }
+    .gantt_hor_scroll {
+        display: none !important;
+    }
+    .gantt_grid_scale, .gantt_grid_head_cell, .gantt_grid_data, .gantt_cell {
+        width: 100% !important;
+    }
+    .dropdown_gantt_content {
+        text-transform:uppercase;
+    }
+    .gantt_tree_content {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 80%;
+    }
+}

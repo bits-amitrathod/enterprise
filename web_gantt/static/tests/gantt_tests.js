@@ -69,7 +69,7 @@ QUnit.module('Views', {
             assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 6,
                 "should display 6 tasks");
 
-            gantt.$buttons.find('.o_gantt_button_scale[value="day"]').trigger('click');
+            gantt.$buttons.find('.o_gantt_button_scale[data-value="day"]').trigger('click');
             assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 3,
                 "should display 3 tasks in day mode");
             assert.strictEqual(gantt.get('title'), "Forecast (12 Dec)", "should have correct title");

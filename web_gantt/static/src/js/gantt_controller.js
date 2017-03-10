@@ -3,6 +3,7 @@ odoo.define('web_gantt.GanttController', function (require) {
 
 var AbstractController = require('web.AbstractController');
 var core = require('web.core');
+var config = require('web.config');
 var Dialog = require('web.Dialog');
 var dialogs = require('web.view_dialogs');
 var time = require('web.time');
@@ -42,10 +43,13 @@ var GanttController = AbstractController.extend({
     renderButtons: function ($node) {
         var self = this;
         if ($node) {
-            this.$buttons = $(qweb.render("GanttView.buttons", {'widget': this}));
+            this.$buttons = $(qweb.render("GanttView.buttons", {'isMobile': config.isMobile}));
             this.$buttons.appendTo($node);
             this.$buttons.find('.o_gantt_button_scale').bind('click', function (event) {
-                return self._setScale(event.target.value);
+                self.$buttons.find('.dropdown_gantt_content').text($(this).text());
+                self.$buttons.find('.o_gantt_button_scale').removeClass('active');
+                self.$buttons.find(this).addClass('active');
+                return self._setScale($(event.target).data('value'));
             });
             this.$buttons.find('.o_gantt_button_left').bind('click', function () {
                 var state = self.model.get();
