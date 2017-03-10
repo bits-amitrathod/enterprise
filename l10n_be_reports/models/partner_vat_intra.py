@@ -121,8 +121,8 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
         if not country:
             country = company_vat[:2]
 
-        date_from = options['date'].get('date_from')[0:7] + '-01'
-        date_to = options['date'].get('date_from')[0:7] + '-31'
+        date_from = options['date'].get('date_from')
+        date_to = options['date'].get('date_to')
         ctx = self.set_context(options)
         ctx.update({'no_format': True, 'date_from': date_from, 'date_to': date_to, 'get_xml_data': True})
         xml_data = self.with_context(ctx).get_lines(options)
