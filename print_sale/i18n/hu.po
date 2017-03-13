@@ -8,10 +8,10 @@
 # Oregional <geza.nagy@oregional.hu>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: Oregional <geza.nagy@oregional.hu>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Fekete & Fehér"
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Cancel"
-msgstr "Érvénytelenít"
+msgstr "Mégse"
 
 #. module: print_sale
 #: selection:print.document.partner.wizard,ink:0
@@ -70,6 +70,11 @@ msgstr "Létrehozás dátuma"
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_currency_id
 msgid "Currency"
 msgstr "Pénznem"
+
+#. module: print_sale
+#: model:ir.model.fields,field_description:print_sale.field_sale_config_settings_default_print_provider
+msgid "Default Account"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_display_name
@@ -213,16 +218,11 @@ msgstr "Teszt üzemmód"
 #: code:addons/print_sale/models/sale_order.py:17
 #, python-format
 msgid ""
-"This sale order was sent by post with the provider %(provider_name)s at the "
-"following address.                     <br/><br/> %(partner_name)s <br/> "
+"This sales order was sent by post with the provider %(provider_name)s at the"
+" following address.                     <br/><br/> %(partner_name)s <br/> "
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
-"Ezt a vásárlói megrendelést a következő szolgáltatóval %(provider_name)s  a "
-"postán küldte a következő címen.                     <br/><br/> "
-"%(partner_name)s <br/> %(partner_street)s <br/> %(partner_city)s "
-"%(partner_zip)s                     "
-"<br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print_sale
 #: code:addons/print_sale/wizard/print_document_partner_wizard.py:73
@@ -233,11 +233,6 @@ msgid ""
 msgstr ""
 "A szolgáltatója hitelező kerete túl kicsi. Kérem, állítsa be a számláját (> "
 "Beállítások > Szolgáltató nyomtatása), és emelje a számláján hitelkeretet."
-
-#. module: print_sale
-#: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
-msgid "or"
-msgstr "vagy"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_line_wizard
@@ -253,3 +248,8 @@ msgstr "print.document.partner.wizard"
 #: model:ir.model,name:print_sale.model_print_order_line_wizard
 msgid "print.order.line.wizard"
 msgstr "print.order.line.wizard"
+
+#. module: print_sale
+#: model:ir.model,name:print_sale.model_sale_config_settings
+msgid "sale.config.settings"
+msgstr "sale.config.settings"

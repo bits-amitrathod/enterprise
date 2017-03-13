@@ -4,15 +4,16 @@
 # 
 # Translators:
 # Martin Trigaux <mat@odoo.com>, 2016
+# grazziano <gra.negocia@gmail.com>, 2016
 # Mateus Lopes <mateus1@gmail.com>, 2016
-# Grazziano Duarte <gra.negocia@gmail.com>, 2016
+# Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:58+0000\n"
-"PO-Revision-Date: 2016-09-19 12:58+0000\n"
-"Last-Translator: Grazziano Duarte <gra.negocia@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,8 +23,6 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line3
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line5
 msgid ""
 "\n"
 "Dear %(partner_name)s,\n"
@@ -117,14 +116,14 @@ msgstr ""
 "<b>%(company_name)s</b>: Nome de usuário da Empresa"
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup
-msgid "A particular context for the followup report"
-msgstr "Um contexto particular para o relatório de acompanhamento"
-
-#. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
+#: model:ir.model,name:account_reports_followup.model_account_followup_report_all
 msgid "A progress bar for followup reports"
 msgstr "Uma barra de progresso para os relatórios de acompanhamento"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "A reminder can be sent as of"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
@@ -173,11 +172,6 @@ msgid "Company Name"
 msgstr "Nome da Empresa"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.view_account_config_settings_inherit
-msgid "Configure your follow-up levels"
-msgstr "Configure o nível de cobrança"
-
-#. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
 msgid "Created by"
@@ -206,12 +200,12 @@ msgid "Display Name"
 msgstr "Nome para Exibição"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Do it Later"
 msgstr "Fazer isso mais tarde"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Done"
 msgstr "Concluído"
 
@@ -254,6 +248,7 @@ msgstr "Nível de Cobrança"
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
 msgid "Follow-up Levels"
 msgstr "Níveis de Cobrança"
 
@@ -267,6 +262,11 @@ msgstr "Responsável pela Cobrança"
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
 msgstr "Passos da Cobrança"
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_account_followup_report
+msgid "Followup Report"
+msgstr "Relatório de Acompanhamento"
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -319,18 +319,13 @@ msgid "Latest Follow-up"
 msgstr "Última Cobrança"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_report_context_followup_level
-msgid "Level"
-msgstr "Nível"
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:62
+#: code:addons/account_reports_followup/account_followup_report.py:53
 #, python-format
 msgid "Level: "
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Log a Note"
 msgstr "Deixar nota"
 
@@ -341,19 +336,20 @@ msgid "Manual Action"
 msgstr "Ação Manual"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:57
+#: code:addons/account_reports_followup/account_followup_report.py:65
 #, python-format
-msgid "Manual action done\n"
-msgstr ""
-
-#. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
-msgid "Minimum days between two follow-ups"
+msgid "Manual action done"
 msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
-msgid "Minimum days between two follow-ups *"
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
+msgid "Minimum days between two follow-ups"
+msgstr "Dias mínimos entre dois seguimentos"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "Minimum spread between two reminders"
 msgstr ""
 
 #. module: account_reports_followup
@@ -363,6 +359,8 @@ msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
 msgstr ""
+"Nenhum acompanhamento é definido para a empresa \"%s\".\n"
+"Defina um."
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
@@ -389,6 +387,11 @@ msgid "Partner entries"
 msgstr "Lançamentos do parceiro"
 
 #. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "Payment Follow-up"
+msgstr "Acompanhamento de Cobranças"
+
+#. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
 msgstr "Acompanhamento dos Pagamentos"
@@ -399,7 +402,7 @@ msgid "Payment Note"
 msgstr "Obs do Pagamento"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Print Letter"
 msgstr "Imprimir Carta"
 
@@ -434,7 +437,7 @@ msgid "Send an Email"
 msgstr "Enviar um E-mail"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Send by email"
 msgstr "Enviar por e-mail"
 
@@ -490,22 +493,14 @@ msgid "Total debit"
 msgstr "Débito Total"
 
 #. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
-msgid "Urging reminder email"
-msgstr ""
-
-#. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
-msgid "Urging reminder letter"
-msgstr ""
-
-#. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
 msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
 msgstr ""
+"Use isso se você quiser ter certeza de que um número mínimo de dias ocorre "
+"entre dois na sequência."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
@@ -555,6 +550,11 @@ msgstr ""
 #: model:ir.model,name:account_reports_followup.model_account_config_settings
 msgid "account.config.settings"
 msgstr "account.config.settings"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "days after the previous reminder"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form

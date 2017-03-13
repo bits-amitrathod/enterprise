@@ -3,14 +3,28 @@
 # * website_sign
 # 
 # Translators:
-# Jeffery Chen Fan <jeffery9@gmail.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
+# fausthuang <faust_huang@hotmail.com>, 2016
+# Siyuan Gu <siyuancn@hotmail.com>, 2016
+# Gary Wei <Gary.wei@elico-corp.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
+# Talway <9010446@qq.com>, 2016
+# liAnGjiA <liangjia@qq.com>, 2016
+# glovebx <ruinning@163.com>, 2016
+# xiaobin wu <bd5dml@gmail.com>, 2016
+# liulixia <liu.lixia@elico-corp.com>, 2016
+# 菜小蛇 <lttlsnk@gmail.com>, 2016
+# waveyeung <waveyeung@qq.com>, 2016
+# Eddie Lim <bhweelim@yahoo.com>, 2016
+# 苏州远鼎 <tiexinliu@126.com>, 2017
+# Xu Lei <xulei8@qq.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:58+0000\n"
-"PO-Revision-Date: 2016-09-07 09:58+0000\n"
-"Last-Translator: Jeffery Chen Fan <jeffery9@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Xu Lei <xulei8@qq.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -129,14 +143,14 @@ msgstr "增加一次"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:709
+#: code:addons/website_sign/static/src/js/website_sign_common.js:652
 #, python-format
 msgid "Adopt Your Signature"
 msgstr "采纳你的签名"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:714
+#: code:addons/website_sign/static/src/js/website_sign_common.js:657
 #, python-format
 msgid "Adopt and Sign"
 msgstr "采用并签字"
@@ -153,7 +167,7 @@ msgstr "存档"
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_search
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_search
 msgid "Archived"
-msgstr "已存档"
+msgstr "已归档"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_template_attachment_id
@@ -188,8 +202,8 @@ msgstr ""
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:237
 #: code:addons/website_sign/static/src/js/website_sign_common.js:282
-#: code:addons/website_sign/static/src/js/website_sign_common.js:717
-#: code:addons/website_sign/static/src/js/website_sign_common.js:972
+#: code:addons/website_sign/static/src/js/website_sign_common.js:660
+#: code:addons/website_sign/static/src/js/website_sign_common.js:915
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
 #, python-format
 msgid "Cancel"
@@ -208,7 +222,7 @@ msgid "Canceled"
 msgstr "已取消"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:365
+#: code:addons/website_sign/models/signature_request.py:368
 #, python-format
 msgid "Canceled."
 msgstr "已取消"
@@ -235,7 +249,7 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:857
+#: code:addons/website_sign/static/src/js/website_sign_common.js:800
 #, python-format
 msgid "Click to start"
 msgstr "单击开始"
@@ -245,6 +259,12 @@ msgstr "单击开始"
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_template_color
 msgid "Color"
 msgstr "颜色"
+
+#. module: website_sign
+#: model:signature.item.party,name:website_sign.signature_item_party_company
+#: model:signature.item.type,name:website_sign.signature_item_type_company
+msgid "Company"
+msgstr "公司"
 
 #. module: website_sign
 #: selection:signature.request.item,state:0
@@ -264,8 +284,8 @@ msgstr "完成的签名"
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:363
-#: code:addons/website_sign/static/src/js/website_sign_common.js:449
-#: code:addons/website_sign/static/src/js/website_sign_common.js:461
+#: code:addons/website_sign/static/src/js/website_sign_common.js:444
+#: code:addons/website_sign/static/src/js/website_sign_common.js:456
 #, python-format
 msgid "Create: \""
 msgstr "创建: \""
@@ -294,11 +314,21 @@ msgid "Created on"
 msgstr "创建时间"
 
 #. module: website_sign
+#: model:signature.item.party,name:website_sign.signature_item_party_customer
+msgid "Customer"
+msgstr "客户"
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:135
 #, python-format
 msgid "Customize Field"
 msgstr "自定义字段"
+
+#. module: website_sign
+#: model:signature.item.type,name:website_sign.signature_item_type_date
+msgid "Date"
+msgstr "日期"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_default_height
@@ -326,7 +356,7 @@ msgstr "数字签名"
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:1066
 #, python-format
 msgid "Discard"
-msgstr "丢弃"
+msgstr "舍弃"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_item_view_form
@@ -451,21 +481,26 @@ msgstr "编辑模板名字"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signer_email
+#: model:signature.item.type,name:website_sign.signature_item_type_email
 msgid "Email"
 msgstr "Email"
 
 #. module: website_sign
+#: model:signature.item.party,name:website_sign.signature_item_party_employee
+msgid "Employee"
+msgstr "员工"
+
+#. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:452
+#: code:addons/website_sign/static/src/js/website_sign_common.js:447
 #, python-format
 msgid "Enter email (and name if you want)"
 msgstr "编辑邮件(包括名字如果你需要)"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:473
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1217
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1260
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1160
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1203
 #, python-format
 msgid "Error"
 msgstr "错误"
@@ -508,7 +543,7 @@ msgstr "文件名"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:950
+#: code:addons/website_sign/static/src/js/website_sign_common.js:893
 #, python-format
 msgid "Final Validation"
 msgstr "最终确认"
@@ -550,11 +585,11 @@ msgstr "历史"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_id
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_party_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id_3491
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id_4117
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_id
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_id
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_id_3460
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_id_4086
 msgid "ID"
 msgstr "ID"
 
@@ -576,6 +611,11 @@ msgstr "信息"
 #: selection:signature.item.type,type:0
 msgid "Initial"
 msgstr "初始"
+
+#. module: website_sign
+#: model:signature.item.type,name:website_sign.signature_item_type_initial
+msgid "Initials"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -668,6 +708,11 @@ msgid "Multiline Text"
 msgstr "多行文字"
 
 #. module: website_sign
+#: model:signature.item.type,name:website_sign.signature_item_type_multiline_text
+msgid "Multiline text"
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:404
 #, python-format
@@ -681,8 +726,9 @@ msgstr "我的文档"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_party_name
+#: model:signature.item.type,name:website_sign.signature_item_type_name
 msgid "Name"
-msgstr "名字"
+msgstr "名称"
 
 #. module: website_sign
 #. openerp-web
@@ -712,8 +758,8 @@ msgstr "新模板"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:467
-#: code:addons/website_sign/static/src/js/website_sign_common.js:476
+#: code:addons/website_sign/static/src/js/website_sign_common.js:462
+#: code:addons/website_sign/static/src/js/website_sign_common.js:466
 #, python-format
 msgid "New: "
 msgstr "新建:"
@@ -744,12 +790,17 @@ msgstr "多方"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_partner_id
 msgid "Partner"
-msgstr "合作伙伴"
+msgstr "业务伙伴"
 
 #. module: website_sign
 #: model:ir.model.fields,help:website_sign.field_signature_item_type_auto_field
 msgid "Partner field to use to auto-complete the fields of this type"
 msgstr "使用自动完成这种类型的字段的业务伙伴字段"
+
+#. module: website_sign
+#: model:signature.item.type,name:website_sign.signature_item_type_phone
+msgid "Phone"
+msgstr "电话"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_placeholder
@@ -759,7 +810,7 @@ msgstr "占位符"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "Please Review And Act On This Document"
-msgstr "请审查并且这个文档上做出相关动作"
+msgstr "请检视并且这个文档上做出相关动作"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_posX
@@ -785,20 +836,27 @@ msgstr "进度"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:65
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:147
 #, python-format
-msgid "Request a Signature"
-msgstr ""
+msgid "Remove"
+msgstr "移除"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_request_item_infos
-msgid "Request item infos"
+msgid "Request Item Infos"
 msgstr ""
+
+#. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:65
+#, python-format
+msgid "Request a Signature"
+msgstr "请求签名"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_required
 msgid "Required"
-msgstr "必须的"
+msgstr "必填"
 
 #. module: website_sign
 #. openerp-web
@@ -822,6 +880,12 @@ msgstr "重发！"
 #, python-format
 msgid "Responsible"
 msgstr "负责人"
+
+#. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_kanban
+#: model:ir.ui.view,arch_db:website_sign.signature_request_view_kanban
+msgid "Restore"
+msgstr "还原"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_role_id
@@ -959,6 +1023,7 @@ msgstr "签署文档"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
+#: model:signature.item.type,name:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
 msgstr "签名"
@@ -1058,7 +1123,7 @@ msgstr "所以你可以关闭窗口等一会回来"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1200
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1143
 #, python-format
 msgid "Some fields have still to be completed !"
 msgstr "有些字段还是需要完成的"
@@ -1072,8 +1137,8 @@ msgstr "有人已经用这个模板填写了文档"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1216
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1259
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1159
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1202
 #, python-format
 msgid "Sorry, an error occured, please try to fill the document again."
 msgstr "抱歉，发生错误，请再次填写该文档"
@@ -1085,7 +1150,7 @@ msgstr "签名字段的特定类型"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1005
+#: code:addons/website_sign/static/src/js/website_sign_common.js:948
 #, python-format
 msgid "Start Using Odoo Sign Now"
 msgstr "现在开始用Odoo签名"
@@ -1094,7 +1159,7 @@ msgstr "现在开始用Odoo签名"
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_state
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_state
 msgid "State"
-msgstr "省/ 州"
+msgstr "状态"
 
 #. module: website_sign
 #. openerp-web
@@ -1125,13 +1190,14 @@ msgid "Template"
 msgstr "模板"
 
 #. module: website_sign
+#: model:signature.item.type,name:website_sign.signature_item_type_text
 #: selection:signature.item.type,type:0
 msgid "Text"
 msgstr "文本"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:999
+#: code:addons/website_sign/static/src/js/website_sign_common.js:942
 #, python-format
 msgid "Thank You !"
 msgstr "感谢你！"
@@ -1196,12 +1262,6 @@ msgid "Type of partner which can access a particular signature field"
 msgstr "合作伙伴的类型，它可以访问特定的签名字段"
 
 #. module: website_sign
-#: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_kanban
-#: model:ir.ui.view,arch_db:website_sign.signature_request_view_kanban
-msgid "Unarchive"
-msgstr "取消存档"
-
-#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:56
 #, python-format
@@ -1216,7 +1276,7 @@ msgstr "上传一个要签名的合同."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:955
+#: code:addons/website_sign/static/src/js/website_sign_common.js:898
 #, python-format
 msgid "Validate & Send"
 msgstr "确认和发送"
@@ -1234,7 +1294,7 @@ msgstr "值"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
 msgid "View"
-msgstr "视图"
+msgstr "查看"
 
 #. module: website_sign
 #. openerp-web
@@ -1242,7 +1302,7 @@ msgstr "视图"
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "View History"
-msgstr "视图历史"
+msgstr "查看历史"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
@@ -1255,14 +1315,14 @@ msgid "Waiting for completion"
 msgstr "等待完成"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:355
+#: code:addons/website_sign/models/signature_request.py:358
 #, python-format
 msgid "Waiting for signatures."
 msgstr "等待签名"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1200
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1143
 #, python-format
 msgid "Warning"
 msgstr "警告"
@@ -1323,7 +1383,7 @@ msgstr "你的名字"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1000
+#: code:addons/website_sign/static/src/js/website_sign_common.js:943
 #, python-format
 msgid "Your signature has been saved."
 msgstr "你的签名已经保存"

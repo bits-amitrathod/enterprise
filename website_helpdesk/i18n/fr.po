@@ -3,21 +3,24 @@
 # * website_helpdesk
 # 
 # Translators:
-# Frédéric LIETART <stuff@thelinuxfr.org>, 2016
-# Olivier Lenoir <olivier.lenoir@free.fr>, 2016
-# Xavier Symons <xsy@openerp.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
-# Miguel Vidali <mvidali129@gmail.com>, 2016
-# Fabri Yohann <psn@fabri.pw>, 2016
-# Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2016
+# Jérémy Donas <LeDistordu@users.noreply.github.com>, 2017
+# Xavier Symons <xsy@openerp.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Frédéric LIETART <stuff@tifred.fr>, 2017
+# Fabri Yohann <psn@fabri.pw>, 2017
+# Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
+# Olivier Lenoir <olivier.lenoir@free.fr>, 2017
+# Xavier Belmere <Info@cartmeleon.com>, 2017
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
+# Jeanjean Noname <monsieur.spock@gmail.com>, 2017
+# Miguel Vidali <mvidali129@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:15+0000\n"
-"PO-Revision-Date: 2016-10-10 09:15+0000\n"
-"Last-Translator: Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Miguel Vidali <mvidali129@gmail.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,12 +41,14 @@ msgstr "<i class=\"fa fa-envelope\"/> Email :"
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.index
 msgid "<i/> Customer Satisfaction Ration:"
-msgstr ""
+msgstr "<i/> Ratio de Satisfaction Client :"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
-msgid "<span>Show more</span><span class=\"hidden\">Show less</span>"
-msgstr "<span>Afficher plus</span><span class=\"hidden\">Afficher moins</span>"
+msgid ""
+"<span class=\"o_my_show_more\">Show more</span><span class=\"o_my_show_less "
+"hidden\">Show less</span>"
+msgstr ""
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.tickets_followup
@@ -78,7 +83,7 @@ msgstr "Mauvais"
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.tickets_followup
 msgid "Current stage of this ticket"
-msgstr ""
+msgstr "Statut de ce ticket"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.team_rating_data
@@ -94,7 +99,7 @@ msgstr "Description"
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.tickets_followup
 msgid "Edit Ticket"
-msgstr ""
+msgstr "Modifier le Ticket"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.team_rating_progress_data
@@ -115,7 +120,7 @@ msgstr "Assistance"
 #: model:ir.model,name:website_helpdesk.model_helpdesk_team
 #: model:ir.ui.view,arch_db:website_helpdesk.team
 msgid "Helpdesk Team"
-msgstr ""
+msgstr "Equipe Helpdesk"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.header_footer_custom
@@ -150,22 +155,34 @@ msgstr "Dernières évaluations"
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.tickets_followup
 msgid "My Tickets"
-msgstr ""
+msgstr "Mes Tickets"
+
+#. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:33
+#, python-format
+msgid "Name"
+msgstr "Nom"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.content_new_team
 msgid "New Team"
-msgstr ""
+msgstr "Nouvelle Equipe"
+
+#. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:32
+#, python-format
+msgid "Newest"
+msgstr "Le plus récent"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.not_published_any_team
 msgid "No teams have been published."
-msgstr ""
+msgstr "Aucune équipe n'a été publiée."
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.helpdesk_team_view_form_inherit_website_helpdesk
 msgid "Save this page to activate the feature"
-msgstr ""
+msgstr "Sauvegarder cette page pour activer la fonction"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_ticket_access_token
@@ -175,17 +192,17 @@ msgstr "Jeton de sécurité"
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
 msgid "Status"
-msgstr "Statut"
+msgstr "État"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.team
 msgid "Submit an Issue"
-msgstr ""
+msgstr "Ouvrir un ticket"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.team
 msgid "Team Settings"
-msgstr ""
+msgstr "Options de l'équipe"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.index
@@ -196,32 +213,32 @@ msgstr "Équipes"
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_my_home_helpdesk_ticket
 msgid "There are currently no Ticket for your account."
-msgstr ""
+msgstr "Il n'y a actuellement aucun ticket."
 
 #. module: website_helpdesk
 #: model:ir.model,name:website_helpdesk.model_helpdesk_ticket
 msgid "Ticket"
-msgstr ""
+msgstr "Ticket"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
 msgid "Ticket Number"
-msgstr ""
+msgstr "Numéro de Ticket"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_my_home_menu_helpdesk
 msgid "Tickets"
-msgstr "Billets"
+msgstr "Tickets"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team_website_rating_url
 msgid "URL to Submit Issue"
-msgstr ""
+msgstr "Lien pour ouvrir un Ticket"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.team
 msgid "View my Issues"
-msgstr ""
+msgstr "Voir mes Tickets"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.helpdesk_team_view_form_inherit_website_helpdesk
@@ -234,4 +251,4 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_my_home_helpdesk_ticket
 msgid "Your Tickets"
-msgstr ""
+msgstr "Vos Tickets"

@@ -3,18 +3,18 @@
 # * mrp_plm
 # 
 # Translators:
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Cas Vissers <casvissers@brahoo.nl>, 2016
 # Stephan Van Dyck <stephan.vandyck@vanroey.be>, 2016
+# Cas Vissers <casvissers@brahoo.nl>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
 # Eric Geens <ericgeens@yahoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_count
 msgid "# Attachments"
@@ -60,7 +61,18 @@ msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:53
+#: code:addons/mrp_plm/models/mrp_eco.py:517
+#, python-format
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                        Click to upload files to your ECO, that will be applied to the product later\n"
+"                    </p><p>\n"
+"                        Use this feature to store any files, like drawings or specifications.\n"
+"                    </p>"
+msgstr ""
+
+#. module: mrp_plm
+#: code:addons/mrp_plm/models/product.py:54
 #, python-format
 msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
@@ -78,7 +90,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "<span>Bill of Material</span><br/>"
-msgstr "<span>Materiaallijst</span><br/>"
+msgstr "<span>Materiaallijst </span><br/>"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
@@ -103,6 +115,11 @@ msgid ""
 msgstr ""
 "Een Python bibliotheek dat zal worden gebruikt om standaardwaarden te bieden"
 " bij het maken van nieuwe records voor deze alias."
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_active
+msgid "Active"
+msgstr "Actief"
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -137,6 +154,7 @@ msgstr "Aliased Model"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
 msgid "All"
 msgstr "Alle"
 
@@ -171,7 +189,7 @@ msgid "Approval Roles"
 msgstr "Goedkeur rollen"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9760
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9788
 msgid "Approval Stage"
 msgstr "Goedkeuring fase"
 
@@ -209,6 +227,11 @@ msgid "Approves, but the approval is optional"
 msgstr "Keurt goed, maar de goedkeuring is optioneel"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
+msgid "Archived"
+msgstr "Gearchiveerd"
+
+#. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
 msgstr "Zo snel mogelijk"
@@ -219,10 +242,12 @@ msgid "At Date"
 msgstr "Op datum"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:45
+#: code:addons/mrp_plm/models/mrp_eco.py:509
+#: code:addons/mrp_plm/models/product.py:46
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_ids
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #, python-format
 msgid "Attachments"
@@ -269,7 +294,7 @@ msgstr "BoM Revisie"
 #. module: mrp_plm
 #: selection:mrp.eco,type:0
 msgid "BoM and Routing"
-msgstr "Materiaallijst en routing"
+msgstr "Materiaallijst en route"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -317,7 +342,7 @@ msgstr "Kleur index"
 #. module: mrp_plm
 #: selection:mrp.eco.approval,status:0
 msgid "Commented"
-msgstr "Opmerking toegevoegd"
+msgstr "Reactie toegevoegd"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
@@ -413,7 +438,7 @@ msgstr "Beschrijving van de wijziging en de reden..."
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_displayed_image_id
@@ -455,7 +480,7 @@ msgstr "ECO materiaal wijzigingen"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_ids
 msgid "ECO Routing Changes"
-msgstr "ECO routing wijzigingen"
+msgstr "ECO route wijzigingen"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_eco_stage_id
@@ -526,21 +551,21 @@ msgid "Eco"
 msgstr "Eco"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:479
+#: code:addons/mrp_plm/models/mrp_eco.py:549
 #, python-format
 msgid "Eco BoM"
 msgstr "Eco materieaallijst"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:491
+#: code:addons/mrp_plm/models/mrp_eco.py:561
 #, python-format
 msgid "Eco Routing"
-msgstr "Eco routing"
+msgstr "Eco Route"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
 msgid "Eco Routing changes"
-msgstr "ECO routing wijzigingen"
+msgstr "ECO route wijzigingen"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -596,6 +621,11 @@ msgstr "Engineering Change Orders"
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
 msgid "Engineering Changes"
 msgstr "Engineering Changes"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_ir_attachment_origin_id
+msgid "Field used in the PLM to handle attachments"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -661,13 +691,13 @@ msgstr "In Behandeling"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_approved
-msgid "Is approved"
-msgstr "Is goedgekeurd"
+msgid "Is Approved"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
-msgid "Is rejected"
-msgstr "Is afgewezen"
+msgid "Is Rejected"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
@@ -752,6 +782,11 @@ msgstr "Productie ECO labels"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "My Activities"
+msgstr "Mijn activiteiten"
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
 msgstr "Mijn verander orders"
 
@@ -770,12 +805,12 @@ msgstr "Naam"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_id
 msgid "New Bill of Materials"
-msgstr "Nieuwe materiaallijst"
+msgstr "Nieuwe matreiaallijst"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_routing_id
 msgid "New Routing"
-msgstr "Nieuwe routing"
+msgstr "Nieuwe route"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_new_time_cycle_manual
@@ -818,6 +853,16 @@ msgstr ""
 "Optionele ID van een thread (record) waaraan alle inkomende berichten worden"
 " gekoppeld, zelfs als hierop niet geantwoord hebben. Indien ingesteld, zal "
 "dit het aanmaken van nieuwe records uitzetten."
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_origin_id
+msgid "Original Attachment"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Overdue Activities"
+msgstr "Activiteiten over tijd"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -871,12 +916,12 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_previous_bom_id
 msgid "Previous BoM"
-msgstr "Vorige materiaallijst"
+msgstr "Vorige matreiaallijst"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_previous_routing_id
 msgid "Previous Routing"
-msgstr "Vorige routing"
+msgstr "Vorige route"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_old_product_qty
@@ -901,6 +946,11 @@ msgstr "Product"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_product_uom_id
 msgid "Product  UoM"
 msgstr "Product maateenheid"
+
+#. module: mrp_plm
+#: selection:mrp.eco,type:0
+msgid "Product Only"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
@@ -946,7 +996,7 @@ msgstr "Verwijderen"
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_reporting
 msgid "Reporting"
-msgstr "Rapportages"
+msgstr "Rapportering"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_required_user_ids
@@ -966,8 +1016,8 @@ msgstr "Rev :"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_revision_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_revision_ids
-msgid "Revision ids"
-msgstr "Revisie ids"
+msgid "Revision"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_name
@@ -979,28 +1029,28 @@ msgstr "Functie"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_id
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,type:0
 msgid "Routing"
-msgstr "Routing"
+msgstr "Productieroute"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Routing Changes"
-msgstr "Routing wijzigingen"
+msgstr "Route wijzigingen"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_routing_revision
 msgid "Routing Revision"
-msgstr "Routing revisie"
+msgstr "Route revisie"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Routing:"
-msgstr "Routing:"
+msgstr "Route:"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_routing
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_routings
 msgid "Routings"
-msgstr "Routings"
+msgstr "Productieroutes"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_search
@@ -1042,6 +1092,11 @@ msgid "Show Apply Change"
 msgstr "Laat pas aan zien"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_image_small
 msgid "Small-sized image"
 msgstr "Kleine afbeelding"
@@ -1064,7 +1119,7 @@ msgstr "Iemand heeft deze wijziging geweigerd"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9817
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9843
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Stage"
 msgstr "Fase"
@@ -1188,12 +1243,22 @@ msgid "To Do"
 msgstr "Te doen"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Today Activities"
+msgstr "Activiteiten van vandaag"
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_type_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9782
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9810
 msgid "Type"
 msgstr "Soort"
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Upcoming Activities (7 days)"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1214,6 +1279,8 @@ msgstr "Gebruikers"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_version
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template_version
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
 msgstr "Versie"
@@ -1246,21 +1313,21 @@ msgstr "Wacht op mijn goedkeuring"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_workcenter_id
 msgid "Work Center"
-msgstr "Bewerking"
+msgstr "Productieplaats"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
 msgid "Work Centers"
-msgstr "Bewerkingen"
+msgstr "Productieplaats"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:460
+#: code:addons/mrp_plm/models/mrp_eco.py:530
 #, python-format
 msgid "Workorder Messages"
 msgstr "Werkopdracht berichten"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:367
+#: code:addons/mrp_plm/models/mrp_eco.py:384
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
 msgstr ""
@@ -1268,7 +1335,7 @@ msgstr ""
 "vereist."
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:357
+#: code:addons/mrp_plm/models/mrp_eco.py:374
 #, python-format
 msgid "You cannot change the stage, as approvals are still required."
 msgstr ""
@@ -1278,6 +1345,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
 msgstr "Bijv. Engineering afdeling"
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.attachment"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval

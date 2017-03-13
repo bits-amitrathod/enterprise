@@ -22,8 +22,8 @@ MODELS_TO_EXPORT = [
 FIELDS_TO_EXPORT = {
     'base.automation': [
         'action_server_id', 'active', 'filter_domain', 'filter_pre_domain',
-        'filter_pre_id', 'kind', 'last_run', 'model_id', 'name', 'on_change_fields', 'sequence',
-        'trg_date_id', 'trg_date_range', 'trg_date_range_type'
+        'filter_pre_id', 'last_run', 'on_change_fields', 'trg_date_id', 'trg_date_range',
+        'trg_date_range_type', 'trigger'
     ],
     'ir.actions.act_window': [
         'auto_search', 'context', 'domain', 'filter', 'groups_id', 'help', 'limit', 'multi', 'name',
@@ -35,8 +35,8 @@ FIELDS_TO_EXPORT = {
         'report_type'
     ],
     'ir.actions.server': [
-        'action_id', 'child_ids', 'code', 'crud_model_id', 'help', 'link_field_id',
-        'model_id', 'name', 'sequence', 'state'
+        'child_ids', 'code', 'crud_model_id', 'help', 'link_field_id', 'model_id', 'name',
+        'sequence', 'state'
     ],
     'ir.filters': [
         'action_id', 'active', 'context', 'domain', 'is_default', 'model_id', 'name', 'sort'
@@ -232,6 +232,15 @@ def get_relations(record, field):
             # The field 'relation_field' on 'ir.model.fields' is of type char,
             # but it refers to another field that must be defined beforehand
             return record.search([('model', '=', record.relation), ('name', '=', record.relation_field)])
+
+    # Fields 'res_model' and 'src_model' on 'ir.actions.act_window' and 'model'
+    # on 'ir.actions.report.xml' are of type char but refer to models that may
+    # be defined in other modules and those modules need to be listed as
+    # dependencies of the exported module
+    if field.model_name == 'ir.actions.act_window' and field.name in ('res_model', 'src_model'):
+        return record.env['ir.model'].search([('model', '=', record[field.name])])
+    if field.model_name == 'ir.actions.report.xml' and field.name == 'model':
+        return record.env['ir.model'].search([('model', '=', record.model)])
 
 
 def generate_record(record, get_xmlid):

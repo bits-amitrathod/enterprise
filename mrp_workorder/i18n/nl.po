@@ -3,17 +3,17 @@
 # * mrp_workorder
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
 # Eric Geens <ericgeens@yahoo.com>, 2016
 # Cas Vissers <casvissers@brahoo.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:15+0000\n"
-"PO-Revision-Date: 2016-10-10 09:15+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "<span class=\"o_stat_text\">Rest</span>"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Block"
-msgstr "Blokkeer"
+msgstr "Blok"
 
 #. module: mrp_workorder
 #: model:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
@@ -65,12 +65,12 @@ msgstr "Huidige hoeveelheid"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_traceability_report_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Done"
-msgstr "Gereed"
+msgstr "Verwerkt"
 
 #. module: mrp_workorder
 #. openerp-web
@@ -136,6 +136,11 @@ msgid "Manufacturing Orders"
 msgstr "Productieorders"
 
 #. module: mrp_workorder
+#: model:ir.actions.server,name:mrp_workorder.production_order_unplan_server_action
+msgid "Mrp: Unplan Production Orders"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 msgid "No operation made on this lot."
 msgstr "Geen bewerkingen op deze partij."
@@ -181,17 +186,17 @@ msgstr "Planning"
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_production
 msgid "Planning by Production"
-msgstr "Planning per productieorder"
+msgstr "Planning per productie"
 
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_workcenter
 msgid "Planning by Workcenter"
-msgstr "Planning per bewerking"
+msgstr "Planning per werkplaats"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Production Workcenter"
-msgstr "Productie bewerking"
+msgstr "Productie werkplaats"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_body_print
@@ -222,7 +227,7 @@ msgstr "Geplande starttdatum"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Scrap"
-msgstr "Afkeuren"
+msgstr "Afgekeurd"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -262,12 +267,7 @@ msgstr "Maateenheid"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_view_form_inherit_planning
 msgid "Unplan"
-msgstr "Planning ongedaan maken"
-
-#. module: mrp_workorder
-#: model:ir.actions.server,name:mrp_workorder.production_order_unplan_server_action
-msgid "Unplan Orders"
-msgstr "Planning orders ongedaan maken"
+msgstr "Onplan"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_form_view_inherit_mrp_workorder
@@ -289,7 +289,7 @@ msgstr "Terug traceren"
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_production_pending
 msgid "Waiting for Material Availability"
-msgstr "Wachten op materiaal beschikbaarheid"
+msgstr "Wachten op matreiaal beschikbaarheid"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet

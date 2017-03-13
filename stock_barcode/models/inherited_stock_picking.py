@@ -45,7 +45,7 @@ class StockPackOperation(models.Model):
                 if lots:
                     self.pack_lot_ids += self.pack_lot_ids.new({'qty': 1.0, 'lot_id': lots[0].id, 'plus_visible': False})
                 else:
-                    # If picking type allows for creating
+                    # If operation type allows for creating
                     if context.get('create_lots'):
                         lot_id = self.env['stock.production.lot'].with_context({'mail_create_nosubscribe': True}).create({'name': barcode, 'product_id': self.product_id.id})
                         self.pack_lot_ids += self.pack_lot_ids.new({'qty': 1.0, 'lot_id': lot_id.id, 'plus_visible': not context.get('serial')})

@@ -8,10 +8,10 @@
 # Martin Trigaux <mat@odoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -21,9 +21,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Create Account &amp; Get Credentials"
+msgstr ""
+
+#. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "API ID"
+msgstr ""
+
+#. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "API KEY"
+msgstr ""
+
+#. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_res_company
 msgid "Companies"
 msgstr "Vállalatok"
+
+#. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "Compute tax rates based on U.S. ZIP codes"
+msgstr ""
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category_create_uid
@@ -36,14 +56,15 @@ msgid "Created on"
 msgstr "Létrehozás dátuma"
 
 #. module: account_taxcloud
-#: model:ir.model.fields,field_description:account_taxcloud.field_res_company_tic_category_id
-msgid "Default TIC Code"
-msgstr "Alapértelmezett TIC kód"
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "Default Category"
+msgstr ""
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_account_config_settings_tic_category_id
-msgid "Default TIC Code *"
-msgstr "Alapértelmezett TIC kód *"
+#: model:ir.model.fields,field_description:account_taxcloud.field_res_company_tic_category_id
+msgid "Default TIC Code"
+msgstr "Alapértelmezett TIC kód"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,help:account_taxcloud.field_account_config_settings_tic_category_id
@@ -54,6 +75,11 @@ msgid ""
 msgstr ""
 "Alapértelmezett AdóFelhő TIC(Adóztatható információs kódok) kódja az "
 "értékesítési adók AdóFelhőből kiválasztásához termék kategóriánként."
+
+#. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "Default TaxCloud category for new products"
+msgstr ""
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category_display_name
@@ -101,12 +127,6 @@ msgid "Product Template"
 msgstr "Terméksablon"
 
 #. module: account_taxcloud
-#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_taxcloud_inherit
-msgid "Sync TaxCloud Category(TIC)"
-msgstr ""
-"AdóFelhő kategória(TIC/Adóztatható információs kódok) szinkronizációja"
-
-#. module: account_taxcloud
 #: model:ir.actions.act_window,name:account_taxcloud.account_taxcloud_tic_category_action
 #: model:ir.ui.menu,name:account_taxcloud.menu_taxcloud_tic_category_action
 msgid "TIC Categories"
@@ -135,11 +155,6 @@ msgid "TIC Description"
 msgstr "Adóztatható információs kódok Leírása"
 
 #. module: account_taxcloud
-#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_taxcloud_inherit
-msgid "TaxCloud"
-msgstr "AdóFelhő"
-
-#. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_account_config_settings_taxcloud_api_id
 msgid "TaxCloud API ID"
 msgstr "AdóFelhő API ID azon."
@@ -150,30 +165,26 @@ msgid "TaxCloud API KEY"
 msgstr "AdóFelhő API KULCS"
 
 #. module: account_taxcloud
-#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_taxcloud_inherit
-msgid "TaxCloud Configuration"
-msgstr "AdóFelhő beállítások"
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "TaxCloud Categories (TIC)"
+msgstr ""
+
+#. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.account_config_settings_view_form_inherit_taxcloud
+msgid "TaxCloud Connection"
+msgstr ""
 
 #. module: account_taxcloud
 #: model:ir.model.fields,help:account_taxcloud.field_product_template_tic_category_id
 msgid ""
 "TaxCloud uses Taxability Information Codes (TIC) to make sure each item in "
 "your catalog is taxed at the right rate (or, for tax-exempt items, not taxed"
-" at all), so it’s important to make sure that each item is assigned a TIC. "
-"If you can’t find the right tax category for an item in your catalog, you "
+" at all), so it's important to make sure that each item is assigned a TIC. "
+"If you can't find the right tax category for an item in your catalog, you "
 "can assign it to the 'General Goods and Services' TIC, 00000. TaxCloud "
 "automatically assigns products to this TIC as a default, so unless you've "
 "changed an item's TIC in the past, it should already be set to 00000."
 msgstr ""
-"AdóFelhő felhasználja az Adóztatható információs kódokat (TIC) biztosítva "
-"minden egyes katalógus tételének a megfelelő adó érték használatát (vagy, az"
-" adó-mentes tételek, ne legyenek adóztatva egyáltalán), ezért szükséges, "
-"hogy meggyőződjön, minden tételt hozzáfűzött a TIC-hez. Ha nem találja a "
-"megfelelő adó kategóriát a katalógus egyes elemeire, hozzárendelheti az "
-"'Általános termékek és szolgáltatásokhoz' TIC, 00000. AdóFelhő automatikusan"
-" kiosztja a terméket ehhez a TIC-hez alapértelmezésben, így, ha nem "
-"változtatja a termék TIC kódját a múltban, már beállításra került mint "
-"00000."
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.product_template_taxcloud_inherit_form

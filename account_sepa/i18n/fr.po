@@ -3,23 +3,22 @@
 # * account_sepa
 # 
 # Translators:
+# Xavier Belmere <Info@cartmeleon.com>, 2016
 # Clo <clo@odoo.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
 # Leo Schmitt <inactive+lschmitt@transifex.com>, 2016
-# Xavier Belmere <Info@cartmeleon.com>, 2016
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2016
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
 # Xavier Symons <xsy@openerp.com>, 2016
 # Fabien Pinckaers <fp@openerp.com>, 2016
 # Richard Mathot <rim@odoo.com>, 2016
-# Olivier Dony <odo@odoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Olivier Dony <odo@odoo.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Richard Mathot <rim@odoo.com>, 2016\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +74,7 @@ msgstr "Créé le"
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr "Afficher le nom"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -94,11 +93,6 @@ msgid ""
 "IV)."
 msgstr ""
 "Entitée qui assigne l'identification (ex: KBE-BCO ou Finanzamt Muenchen IV)."
-
-#. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Etherpad lite server. Example: beta.primarypad.com"
-msgstr "Serveur etherpad lite. Exemple: beta.primarypad.com"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
@@ -121,14 +115,10 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
 msgid "Identification"
 msgstr "Identification"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
-msgid "Identification *"
-msgstr "Identification *"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_orgid_id
@@ -148,18 +138,14 @@ msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
-msgid "Is generic"
-msgstr "Est générique"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
-msgid "Issuer"
-msgstr "Émetteur"
+msgid "Is Generic"
+msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_issr
-msgid "Issuer *"
-msgstr "Émetteur *"
+#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
+msgid "Issuer"
+msgstr "Émetteur"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
@@ -181,6 +167,13 @@ msgstr "Dernière mise à jour par"
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
+
+#. module: account_sepa
+#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
+msgid ""
+"Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
+"in length."
+msgstr ""
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -224,9 +217,9 @@ msgid "Register payments on multiple invoices"
 msgstr "Enregistrez des paiements sur plusieurs factures"
 
 #. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_account_config_settings_form_inherit_account_sepa
-msgid "SEPA"
-msgstr "SEPA"
+#: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
+msgid "SEPA Credit Transfer"
+msgstr "Transfert de crédit SEPA"
 
 #. module: account_sepa
 #: code:addons/account_sepa/account_journal_dashboard.py:23
@@ -235,13 +228,9 @@ msgid "SEPA Credit Transfers to Send"
 msgstr "Transferts SEPA à envoyer"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 msgid "SEPA Pain Version"
-msgstr ""
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
-msgid "SEPA Pain Version *"
 msgstr ""
 
 #. module: account_sepa
@@ -283,7 +272,7 @@ msgstr ""
 "par un compte en banque IBAN et une banque BIC."
 
 #. module: account_sepa
-#: code:addons/account_sepa/sepa_credit_transfer.py:350
+#: code:addons/account_sepa/sepa_credit_transfer.py:340
 #, python-format
 msgid ""
 "The account %s, linked to partner '%s', is not of type IBAN.\n"
@@ -384,7 +373,7 @@ msgstr ""
 #: code:addons/account_sepa/sepa_credit_transfer.py:121
 #, python-format
 msgid "The transaction %s is instructed in another currency than EUR"
-msgstr ""
+msgstr "La transaction %s est instruite dans une autre monnaie que l'euro"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:334
@@ -432,14 +421,10 @@ msgstr ""
 "paiement. Limité à 70 caractères."
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
 msgid "Your Company Name"
 msgstr "Nom de votre société"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Your Company Name *"
-msgstr "Nom de votre société *"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:117
@@ -451,8 +436,3 @@ msgstr "Votre compte en banque n'est pas libellé en EUR"
 #: model:ir.model,name:account_sepa.model_account_config_settings
 msgid "account.config.settings"
 msgstr "account.config.settings"
-
-#. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
-msgid "or"
-msgstr "ou"

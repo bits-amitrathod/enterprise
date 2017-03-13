@@ -715,8 +715,6 @@ class AccountInvoice(models.Model):
 
         # -Compute cfdi
         cfdi = qweb.render(CFDI_TEMPLATE, values=values)
-        # TEMP QWEB FIX
-        cfdi = cfdi.replace('{http://www.w3.org/2001/XMLSchema-instance}', 'xsi:')
 
         # -Compute cadena
         tree = self.l10n_mx_edi_get_xml_etree(cfdi)

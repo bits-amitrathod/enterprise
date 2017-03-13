@@ -3,18 +3,18 @@
 # * website_helpdesk
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Eric Geens <ericgeens@yahoo.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
-# Cas Vissers <casvissers@brahoo.nl>, 2016
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
+# Cas Vissers <casvissers@brahoo.nl>, 2017
+# Eric Geens <ericgeens@yahoo.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:15+0000\n"
-"PO-Revision-Date: 2016-10-10 09:15+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,8 +39,10 @@ msgstr "<i/> Klant tevredenheid ratio:"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
-msgid "<span>Show more</span><span class=\"hidden\">Show less</span>"
-msgstr "<span>Toon meer</span><span class=\"hidden\">Toon minder</span>"
+msgid ""
+"<span class=\"o_my_show_more\">Show more</span><span class=\"o_my_show_less "
+"hidden\">Show less</span>"
+msgstr ""
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.tickets_followup
@@ -150,9 +152,21 @@ msgid "My Tickets"
 msgstr "Mijn tickets"
 
 #. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:33
+#, python-format
+msgid "Name"
+msgstr "Naam"
+
+#. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.content_new_team
 msgid "New Team"
 msgstr "Nieuw team"
+
+#. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:32
+#, python-format
+msgid "Newest"
+msgstr "Nieuwste"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.not_published_any_team
@@ -208,7 +222,7 @@ msgstr "Ticket nummer"
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_my_home_menu_helpdesk
 msgid "Tickets"
-msgstr "Ticketten"
+msgstr "Tickets"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team_website_rating_url

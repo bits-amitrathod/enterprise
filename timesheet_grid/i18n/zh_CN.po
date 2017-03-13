@@ -3,14 +3,21 @@
 # * timesheet_grid
 # 
 # Translators:
-# Jeffery Chen Fan <jeffery9@gmail.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
+# Liping Wang <lynn.config@gmail.com>, 2016
+# Xu Lei <xulei8@qq.com>, 2016
+# liAnGjiA <liangjia@qq.com>, 2016
+# waveyeung <waveyeung@qq.com>, 2016
+# Eddie Lim <bhweelim@yahoo.com>, 2016
+# Maie <m@maie.name>, 2016
 # hman tsao <herman.tsao@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: hman tsao <herman.tsao@gmail.com>, 2016\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -26,16 +33,10 @@ msgid "All Timesheets"
 msgstr "所有时间表"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:46
+#: code:addons/timesheet_grid/models/models.py:45
 #, python-format
 msgid "All selected timesheets are already validated"
 msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_allow_timesheets
-#: model:ir.ui.view,arch_db:timesheet_grid.project_view_form_timesheets
-msgid "Allow timesheets"
-msgstr "启动工时表"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -72,7 +73,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_form
 msgid "Describe your activity"
-msgstr ""
+msgstr "说明你的活动"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_display_name
@@ -133,7 +134,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
 msgid "Month"
-msgstr "月份"
+msgstr "月"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_validation_search
@@ -144,12 +145,12 @@ msgstr "我的团队"
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_current
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_my
 msgid "My Timesheet"
-msgstr "我的工时表"
+msgstr "我的工时单"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "My Timesheets"
-msgstr "我的工时表"
+msgstr "我的工时单"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -157,7 +158,6 @@ msgid "Non Validated"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_project_project
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Project"
 msgstr "项目"
@@ -168,22 +168,12 @@ msgid "Set if this analytic line represents a line of timesheet."
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_ids
-msgid "Subscriptions"
-msgstr "订阅"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_count
-msgid "Susbcription Count"
-msgstr "订阅计数"
-
-#. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Task"
 msgstr "任务"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:41
+#: code:addons/timesheet_grid/models/models.py:40
 #, python-format
 msgid "There aren't any timesheet to validate"
 msgstr ""
@@ -197,33 +187,33 @@ msgstr "花费的时间"
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Timesheet"
-msgstr "工时表"
+msgstr "工时单"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Timesheet Line"
-msgstr "工时表明细"
+msgstr "计工单明细"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_list
 msgid "Timesheet Lines"
-msgstr ""
+msgstr "工时表明细行"
 
 #. module: timesheet_grid
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_week
 msgid "Timesheets To Validate"
-msgstr ""
+msgstr "待验证的工时表"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Timesheets validation limit"
-msgstr ""
+msgstr "工时表验证限制"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
 msgid "To Validate"
-msgstr ""
+msgstr "待验证"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -232,7 +222,7 @@ msgstr "用户"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validable_ids
-msgid "Validable ids"
+msgid "Validable"
 msgstr ""
 
 #. module: timesheet_grid
@@ -245,6 +235,11 @@ msgstr "验证"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 msgid "Validate Timesheets"
+msgstr "验证工时表"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
+msgid "Validate To"
 msgstr ""
 
 #. module: timesheet_grid
@@ -255,11 +250,6 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_timesheet_grid_validable_validate
 msgid "Validate this employee's timesheet up to the chosen date"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
-msgid "Validate to"
 msgstr ""
 
 #. module: timesheet_grid
@@ -274,8 +264,8 @@ msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validation_id
-msgid "Validation id"
-msgstr ""
+msgid "Validation"
+msgstr "验证"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
