@@ -68,3 +68,21 @@ class TestContract(TestContractCommon):
         order.action_confirm()
         self.assertTrue(order.subscription_id, 'website_contract: subscription is not created at so confirmation')
         self.assertEqual(order.subscription_management, 'create', 'website_contract: subscription creation should set the so to "create"')
+
+    def test_recurring_revenue(self):
+        """Test computation of recurring revenue"""
+        eq = lambda x, y, m: self.assertAlmostEqual(x, y, msg=m)
+        # Initial contract is $50/y
+        y_price = 50
+        eq(self.contract.recurring_total, y_price, "unexpected price after setup")
+        eq(self.contract.recurring_monthly, y_price / 12.0, "unexpected MRR")
+        # Switch to $650/month
+        m_price = 650
+        self.contract.change_subscription(self.contract_tmpl_2.id)
+        eq(self.contract.recurring_total, m_price, 'unexpected recurring total')
+        eq(self.contract.recurring_monthly, m_price, 'unexpected MRR')
+        # Change interval to 3 weeks
+        self.contract.template_id.recurring_rule_type = 'weekly'
+        self.contract.template_id.recurring_interval = 3
+        eq(self.contract.recurring_total, m_price, 'total should not change when interval changes')
+        eq(self.contract.recurring_monthly, m_price * (30 / 7.0) / 3, 'unexpected MRR')

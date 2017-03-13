@@ -1128,7 +1128,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
         this.cohort_period = 'month';
         this.cohort_periods = [['day', _t('By Day')], ['week', _t('By Week')], ['month', _t('By Month')], ['year', _t('By Year')]];
         this.cohort_interest = 'number';
-        this.cohort_interests = [['number', _t('Number of Contracts')], ['value', _t('Value of Contracts')]];
+        this.cohort_interests = [['number', _t('Number of Contracts')], ['value', _t('Recurring Revenue (MRR)')]];
         this.filters = {
             'template_ids': [],
             'tag_ids': [],
