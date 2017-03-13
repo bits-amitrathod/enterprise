@@ -4,16 +4,15 @@
 # 
 # Translators:
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
-# Eric Geens <ericgeens@yahoo.com>, 2016
 # Stephan Van Dyck <stephan.vandyck@vanroey.be>, 2016
+# Eric Geens <ericgeens@yahoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Stephan Van Dyck <stephan.vandyck@vanroey.be>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -111,6 +110,11 @@ msgid "FIRST_OVERNIGHT"
 msgstr "FIRST_OVERNIGHT"
 
 #. module: delivery_fedex
+#: model:ir.ui.view,arch_db:delivery_fedex.sale_config_settings_view_form_inherit_delivery_fedex
+msgid "FedEx Delivery Methods"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "FedEx Web Services \"Move to Production\""
 msgstr "FedEx Web Services *Verplaatsen naar productie*"
@@ -125,6 +129,16 @@ msgstr "Fedex configuratie"
 #: model:product.product,name:delivery_fedex.delivery_carrier_fedex_inter_product_product
 msgid "Fedex International"
 msgstr "Fedex internationaal"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
+msgid "Fedex Label Stock Type"
+msgstr ""
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
+msgid "Fedex Service Type"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -143,24 +157,14 @@ msgid "Fedex Website"
 msgstr "Fedex website"
 
 #. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
+msgid "Fedex Weight Unit"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
 msgid "Fedex drop-off type"
 msgstr "Fedex aflevertype"
-
-#. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
-msgid "Fedex label stock type"
-msgstr "Fedex label voorraadsoort"
-
-#. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
-msgid "Fedex service type"
-msgstr "Fedex servicetype"
-
-#. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
-msgid "Fedex weight unit"
-msgstr "Fedex gewichtseenheid"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -308,23 +312,41 @@ msgid "STOCK_4X9_TRAILING_DOC_TAB"
 msgstr "STOCK_4X9_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:333
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+msgid "Saturday Delivery"
+msgstr ""
+
+#. module: delivery_fedex
+#: code:addons/delivery_fedex/models/delivery_fedex.py:340
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "Levering N° %s werd geannuleerd"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:252
-#: code:addons/delivery_fedex/models/delivery_fedex.py:294
+#: code:addons/delivery_fedex/models/delivery_fedex.py:259
+#: code:addons/delivery_fedex/models/delivery_fedex.py:301
 #, python-format
 msgid "Shipment created into Fedex <br/> <b>Tracking Number : </b>%s"
 msgstr "Levering aangemaakt in Fedex <br/> <b>Traceernummer : </b>%s"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:256
+#: code:addons/delivery_fedex/models/delivery_fedex.py:263
 #, python-format
 msgid "Shipping label for package %s"
 msgstr "Verzendlabel voor pakje %s"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+msgid ""
+"Special service:Saturday Delivery, can be requested on following days.\n"
+"                                                                                 Thursday:\n"
+"1.FEDEX_2_DAY.\n"
+"Friday:\n"
+"1.PRIORITY_OVERNIGHT.\n"
+"2.FIRST_OVERNIGHT.\n"
+"                                                                                 3.INTERNATIONAL_PRIORITY.\n"
+"(To Select Countries)"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex

@@ -3,17 +3,17 @@
 # * website_crm_score
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Oregional <geza.nagy@oregional.hu>, 2016
 # krnkris <krnkris@freemail.hu>, 2016
 # Kovács Tibor <kovika@gmail.com>, 2016
+# Oregional <geza.nagy@oregional.hu>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:58+0000\n"
-"PO-Revision-Date: 2016-09-07 09:58+0000\n"
-"Last-Translator: Kovács Tibor <kovika@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,16 +25,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_lead_pageviews_count
 msgid "# Page Views"
 msgstr "# Oldal nézetek"
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_supplier_invoice_count
-msgid "# Vendor Bills"
-msgstr "# Beszállítói számlák"
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_order_count
-msgid "# of Purchase Order"
-msgstr "# Beszerzési megrendelésből"
 
 #. module: website_crm_score
 #. openerp-web
@@ -51,11 +41,6 @@ msgstr "Aktív"
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_ir_ui_view_track
 msgid "Allow to specify for one page of the website to be trackable or not"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.actions.server,name:website_crm_score.action_score_now
-msgid "Apply marked scores"
 msgstr ""
 
 #. module: website_crm_score
@@ -79,13 +64,13 @@ msgid "Assigned Leads"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_team_user_leads_count
-msgid "Assigned Leads this last month"
+#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_assigned_leads_count
+msgid "Assigned Leads Count"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_assigned_leads
-msgid "Assigned leads"
+#: model:ir.model.fields,help:website_crm_score.field_team_user_leads_count
+msgid "Assigned Leads this last month"
 msgstr ""
 
 #. module: website_crm_score
@@ -111,6 +96,25 @@ msgstr "Készítette"
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_create_date
 msgid "Created on"
 msgstr "Létrehozás dátuma"
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.action_score_now
+msgid "Crm Score: Apply marked scores"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.ir_cron_lead_assign_ir_actions_server
+#: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_assign
+#: model:ir.cron,name:website_crm_score.ir_cron_lead_assign
+msgid "Crm Score: lead assignation"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.ir_cron_lead_scoring_ir_actions_server
+#: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_scoring
+#: model:ir.cron,name:website_crm_score.ir_cron_lead_scoring
+msgid "Crm Score: lead scoring "
+msgstr ""
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_crm_lead_assign_date
@@ -208,6 +212,12 @@ msgid "Leads Assignation"
 msgstr ""
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_leads_count
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_leads_count
+msgid "Leads Count"
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.leads_menu
 msgid "Leads Management"
 msgstr ""
@@ -215,12 +225,6 @@ msgstr ""
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_maximum_user_leads
 msgid "Leads Per Month"
-msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_leads_count
-#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_leads_count
-msgid "Leads count"
 msgstr ""
 
 #. module: website_crm_score
@@ -239,11 +243,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_form
 msgid "Maximum Leads / 30 days"
 msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_warn_msg
-msgid "Message for Purchase Order"
-msgstr "Üzenet a beszerzési megrendelésről"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_min_for_assign
@@ -288,19 +287,14 @@ msgid "Percentage leads"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_warn
-msgid "Purchase Order"
-msgstr "Beszerzési megrendelés"
-
-#. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_ratio
 msgid "Ratio"
 msgstr "Arány"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_rule_type
-msgid "Rule type"
-msgstr "Szabály típus"
+msgid "Rule Type"
+msgstr ""
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_running
@@ -315,6 +309,16 @@ msgstr ""
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_user_id
 msgid "Saleman"
+msgstr "Értékesítő"
+
+#. module: website_crm_score
+#: model:ir.model,name:website_crm_score.model_crm_team
+msgid "Sales Channel"
+msgstr "Értékesítési csatorna"
+
+#. module: website_crm_score
+#: model:ir.actions.act_window,name:website_crm_score.team_action
+msgid "Sales Channels"
 msgstr ""
 
 #. module: website_crm_score
@@ -328,16 +332,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_crm_score.field_res_users_team_user_ids
 msgid "Sales Records"
 msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model,name:website_crm_score.model_crm_team
-msgid "Sales Team"
-msgstr "Értékesítési csapat"
-
-#. module: website_crm_score
-#: model:ir.actions.act_window,name:website_crm_score.team_action
-msgid "Sales Teams"
-msgstr "Értékesítési csapatok"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_team_user_ids
@@ -390,34 +384,9 @@ msgid "Search PageViews"
 msgstr ""
 
 #. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_res_users_purchase_warn
-msgid ""
-"Selecting the \"Warning\" option will notify user with the message, "
-"Selecting \"Blocking Message\" will throw an exception with the message and "
-"block the flow. The Message has to be written in the next field."
-msgstr ""
-"A \"Figyelmeztetés\" lehetőség kiválasztása a felhasználót egy üzenettel "
-"értesíti, az \"Üzenet blokkolása\" lehetőség egy kivételt küld az üzenethez "
-"és leblokkolja a folyamatot. Az üzenetet a következő mezőbe kell beírni."
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_property_purchase_currency_id
-msgid "Supplier Currency"
-msgstr "Beszállítói pénznem"
-
-#. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.team
 msgid "Teams Assignation"
 msgstr ""
-
-#. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_res_users_property_purchase_currency_id
-msgid ""
-"This currency will be used, instead of the default one, for purchases from "
-"the current partner"
-msgstr ""
-"A rendszer az alapértelmezett helyett ezt a pénznemet használja az aktuális "
-"partnertől való beszerzéseknél"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_ir_ui_view_track
@@ -426,8 +395,6 @@ msgstr ""
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.crm_score_views_action_graph
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_unassigned_leads
-#: model:ir.ui.view,arch_db:website_crm_score.sales_team_form_view_assign
 msgid "Unassigned leads"
 msgstr ""
 

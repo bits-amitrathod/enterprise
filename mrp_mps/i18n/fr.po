@@ -3,23 +3,22 @@
 # * mrp_mps
 # 
 # Translators:
+# Xavier Belmere <Info@cartmeleon.com>, 2016
 # Fabien Pinckaers <fp@openerp.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
-# Xavier Belmere <Info@cartmeleon.com>, 2016
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
 # ShevAbam <shevabam@gmail.com>, 2016
-# Melanie Bernard <mbe@odoo.com>, 2016
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2016
 # Miguel Vidali <mvidali129@gmail.com>, 2016
-# Olivier Dony <odo@odoo.com>, 2016
+# Melanie Bernard <mbe@odoo.com>, 2016
 # Hubert TETARD <htetard@apik-conseils.com>, 2016
 # Guilhaume Bordiau <github@guilhaume.fr>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Guilhaume Bordiau <github@guilhaume.fr>, 2016\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +74,7 @@ msgstr "Appliquer"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product_apply_active
-msgid "Apply active"
+msgid "Apply Active"
 msgstr ""
 
 #. module: mrp_mps
@@ -98,11 +97,6 @@ msgstr "Sociétés"
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_company_id
 msgid "Company"
 msgstr "Société"
-
-#. module: mrp_mps
-#: model:stock.inventory.line,product_name:mrp_mps.mps_stock_inventory_line_1
-msgid "Computer SC234"
-msgstr "Ordinateur SC234"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_create_uid
@@ -160,7 +154,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_display_name
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr "Afficher le nom"
 
 #. module: mrp_mps
 #: selection:sale.forecast,state:0
@@ -307,11 +301,6 @@ msgid "Monthly"
 msgstr "Mensuel"
 
 #. module: mrp_mps
-#: model:stock.inventory.line,product_name:mrp_mps.mps_stock_inventory_line_0
-msgid "Mouse, Wireless"
-msgstr "Souris, sans fil"
-
-#. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:84
 #, python-format
@@ -392,6 +381,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_state
 msgid "State"
 msgstr "État"
+
+#. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product_tic_category_id
+msgid "TIC Category"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields,help:mrp_mps.field_product_product_tic_category_id
+msgid ""
+"TaxCloud uses Taxability Information Codes (TIC) to make sure each item in "
+"your catalog is taxed at the right rate (or, for tax-exempt items, not taxed"
+" at all), so it's important to make sure that each item is assigned a TIC. "
+"If you can't find the right tax category for an item in your catalog, you "
+"can assign it to the 'General Goods and Services' TIC, 00000. TaxCloud "
+"automatically assigns products to this TIC as a default, so unless you've "
+"changed an item's TIC in the past, it should already be set to 00000."
+msgstr ""
 
 #. module: mrp_mps
 #. openerp-web

@@ -3,26 +3,19 @@
 # * mrp_plm
 # 
 # Translators:
-# Jeffery Chenn <jeffery9@gmail.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
-# Gary Wei <Gary.wei@elico-corp.com>, 2016
-# 大漠 <zhylninc@gmail.com>, 2016
-# xiaobin wu <bd5dml@gmail.com>, 2016
-# waveyeung <waveyeung@qq.com>, 2016
-# liulixia <liu.lixia@elico-corp.com>, 2016
-# Talway <9010446@qq.com>, 2016
-# niulinlnc <admin@niulin.net>, 2016
-# Xu Lei <xulei8@qq.com>, 2016
-# liAnGjiA <liangjia@qq.com>, 2016
-# mrshelly <mrshelly@hotmail.com>, 2016
 # 苏州远鼎 <tiexinliu@126.com>, 2016
+# Ted Wang <feiyuwang2012@gmail.com>, 2016
+# waveyeung <waveyeung@qq.com>, 2017
+# liulixia <liu.lixia@elico-corp.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: 苏州远鼎 <tiexinliu@126.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: liulixia <liu.lixia@elico-corp.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,6 +24,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_count
 msgid "# Attachments"
@@ -64,10 +58,21 @@ msgstr "&times;"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
+msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
+
+#. module: mrp_plm
+#: code:addons/mrp_plm/models/mrp_eco.py:517
+#, python-format
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                        Click to upload files to your ECO, that will be applied to the product later\n"
+"                    </p><p>\n"
+"                        Use this feature to store any files, like drawings or specifications.\n"
+"                    </p>"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:53
+#: code:addons/mrp_plm/models/product.py:54
 #, python-format
 msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
@@ -105,6 +110,11 @@ msgid ""
 msgstr "当创建别名的新记录时，一个Python字典被提供作为默认值"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_active
+msgid "Active"
+msgstr "有效"
+
+#. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
 #: selection:mrp.eco.routing.change,change_type:0
 msgid "Add"
@@ -133,10 +143,11 @@ msgstr "别名网域"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_model_id
 msgid "Aliased Model"
-msgstr "别名模型"
+msgstr "别名的模型"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
 msgid "All"
 msgstr "全部"
 
@@ -171,7 +182,7 @@ msgid "Approval Roles"
 msgstr "审批角色"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9760
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9788
 msgid "Approval Stage"
 msgstr "审批阶段"
 
@@ -209,6 +220,11 @@ msgid "Approves, but the approval is optional"
 msgstr "批准，但审批是可选的"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
+msgid "Archived"
+msgstr "已存档"
+
+#. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
 msgstr "尽快"
@@ -219,10 +235,12 @@ msgid "At Date"
 msgstr "即日"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:45
+#: code:addons/mrp_plm/models/mrp_eco.py:509
+#: code:addons/mrp_plm/models/product.py:46
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_ids
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #, python-format
 msgid "Attachments"
@@ -254,7 +272,7 @@ msgstr "阻塞阶段"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "BoM"
-msgstr "BoM"
+msgstr "物料清单"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -294,7 +312,7 @@ msgstr "变更"
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_tag_action
 msgid "Click to add a new tag."
-msgstr "点击来创建一个新标签"
+msgstr "点击来创建一个新的标签"
 
 #. module: mrp_plm
 #. openerp-web
@@ -428,7 +446,7 @@ msgstr "完成"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
 msgid "Duration"
-msgstr "有效期"
+msgstr "时长"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_eco_id
@@ -501,7 +519,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_eco_ids
 msgid "ECO to be applied"
-msgstr "待启用的 ECO"
+msgstr "待审核的 ECO"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
@@ -525,13 +543,13 @@ msgid "Eco"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:479
+#: code:addons/mrp_plm/models/mrp_eco.py:549
 #, python-format
 msgid "Eco BoM"
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:491
+#: code:addons/mrp_plm/models/mrp_eco.py:561
 #, python-format
 msgid "Eco Routing"
 msgstr "Eco 工艺"
@@ -597,6 +615,11 @@ msgid "Engineering Changes"
 msgstr "工程变更"
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_ir_attachment_origin_id
+msgid "Field used in the PLM to handle attachments"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Filters"
 msgstr "筛选"
@@ -658,13 +681,13 @@ msgstr "进行中"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_approved
-msgid "Is approved"
-msgstr "已批准"
+msgid "Is Approved"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
-msgid "Is rejected"
-msgstr "已拒绝"
+msgid "Is Rejected"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
@@ -749,6 +772,11 @@ msgstr "Mrp Eco标签"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "My Activities"
+msgstr "我的活动"
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
 msgstr "我的变更命令"
 
@@ -762,7 +790,7 @@ msgstr "我的验证"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_name
 msgid "Name"
-msgstr "名字"
+msgstr "名称"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_id
@@ -812,6 +840,16 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr "所有的进来的邮件都将附上一条线索（记录）选配的ID，即使它们不曾回复过它。如果设置了，这个将完全阻止新记录的创建。"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_origin_id
+msgid "Original Attachment"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Overdue Activities"
+msgstr "逾期活动"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -897,6 +935,11 @@ msgid "Product  UoM"
 msgstr "产品UoM"
 
 #. module: mrp_plm
+#: selection:mrp.eco,type:0
+msgid "Product Only"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
 msgid "Product Template"
 msgstr "产品模板"
@@ -960,8 +1003,8 @@ msgstr "Rev :"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_revision_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_revision_ids
-msgid "Revision ids"
-msgstr "修订版ids"
+msgid "Revision"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_name
@@ -973,7 +1016,7 @@ msgstr "角色"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_id
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,type:0
 msgid "Routing"
-msgstr "工艺"
+msgstr "工艺路线"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1036,6 +1079,11 @@ msgid "Show Apply Change"
 msgstr "显示应用变更"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_image_small
 msgid "Small-sized image"
 msgstr "小尺寸图像"
@@ -1055,7 +1103,7 @@ msgstr "有人拒绝了此变更"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9817
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9843
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Stage"
 msgstr "阶段"
@@ -1165,12 +1213,22 @@ msgid "To Do"
 msgstr "待办"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Today Activities"
+msgstr "今天的活动"
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_type_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9782
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9810
 msgid "Type"
 msgstr "类型"
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Upcoming Activities (7 days)"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1191,6 +1249,8 @@ msgstr "用户"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_version
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template_version
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
 msgstr "版本"
@@ -1231,19 +1291,19 @@ msgid "Work Centers"
 msgstr "工作中心"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:460
+#: code:addons/mrp_plm/models/mrp_eco.py:530
 #, python-format
 msgid "Workorder Messages"
 msgstr "工单消息"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:367
+#: code:addons/mrp_plm/models/mrp_eco.py:384
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:357
+#: code:addons/mrp_plm/models/mrp_eco.py:374
 #, python-format
 msgid "You cannot change the stage, as approvals are still required."
 msgstr ""
@@ -1252,6 +1312,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
 msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.attachment"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval

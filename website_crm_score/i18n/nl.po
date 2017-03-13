@@ -4,16 +4,16 @@
 # 
 # Translators:
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
 # Eric Geens <ericgeens@yahoo.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
 # Cas Vissers <casvissers@brahoo.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:58+0000\n"
-"PO-Revision-Date: 2016-09-07 09:58+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -26,16 +26,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_lead_pageviews_count
 msgid "# Page Views"
 msgstr "# Paginaweergaven"
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_supplier_invoice_count
-msgid "# Vendor Bills"
-msgstr "# Leveranciers facturen"
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_order_count
-msgid "# of Purchase Order"
-msgstr "# inkooporders"
 
 #. module: website_crm_score
 #. openerp-web
@@ -55,11 +45,6 @@ msgid "Allow to specify for one page of the website to be trackable or not"
 msgstr ""
 "Sta toe om te specificeren of één pagina van de website traceerbaar is of "
 "niet"
-
-#. module: website_crm_score
-#: model:ir.actions.server,name:website_crm_score.action_score_now
-msgid "Apply marked scores"
-msgstr "Pas gemarkeerde cijfers toe"
 
 #. module: website_crm_score
 #: selection:website.crm.score,rule_type:0
@@ -82,14 +67,14 @@ msgid "Assigned Leads"
 msgstr "Toegewezen leads"
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_assigned_leads_count
+msgid "Assigned Leads Count"
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_team_user_leads_count
 msgid "Assigned Leads this last month"
 msgstr "Toegewezen leads deze laatste maand"
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_assigned_leads
-msgid "Assigned leads"
-msgstr "Toegewezen leads"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_capacity
@@ -116,6 +101,25 @@ msgid "Created on"
 msgstr "Aangemaakt op"
 
 #. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.action_score_now
+msgid "Crm Score: Apply marked scores"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.ir_cron_lead_assign_ir_actions_server
+#: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_assign
+#: model:ir.cron,name:website_crm_score.ir_cron_lead_assign
+msgid "Crm Score: lead assignation"
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.actions.server,name:website_crm_score.ir_cron_lead_scoring_ir_actions_server
+#: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_scoring
+#: model:ir.cron,name:website_crm_score.ir_cron_lead_scoring
+msgid "Crm Score: lead scoring "
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_crm_lead_assign_date
 msgid ""
 "Date when the lead has been assigned via the auto-assignation mechanism"
@@ -132,7 +136,7 @@ msgstr "Verwijder"
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_display_name
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_score_team_domain
@@ -211,6 +215,12 @@ msgid "Leads Assignation"
 msgstr "Lead toewijzing"
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_leads_count
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_leads_count
+msgid "Leads Count"
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.leads_menu
 msgid "Leads Management"
 msgstr "Lead beheer"
@@ -219,12 +229,6 @@ msgstr "Lead beheer"
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_maximum_user_leads
 msgid "Leads Per Month"
 msgstr "Leads per maand"
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_leads_count
-#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_leads_count
-msgid "Leads count"
-msgstr "Leads teller"
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,help:website_crm_score.team_user_action
@@ -245,11 +249,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_form
 msgid "Maximum Leads / 30 days"
 msgstr "Maximaal aantal leads / 30 dagen"
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_warn_msg
-msgid "Message for Purchase Order"
-msgstr "Bericht voor inkooporder"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_min_for_assign
@@ -294,19 +293,14 @@ msgid "Percentage leads"
 msgstr "Percentage leads"
 
 #. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_purchase_warn
-msgid "Purchase Order"
-msgstr "Inkooporder"
-
-#. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_ratio
 msgid "Ratio"
 msgstr "Ratio"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_rule_type
-msgid "Rule type"
-msgstr "Regelsoort"
+msgid "Rule Type"
+msgstr ""
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_running
@@ -324,6 +318,16 @@ msgid "Saleman"
 msgstr "Verkoper"
 
 #. module: website_crm_score
+#: model:ir.model,name:website_crm_score.model_crm_team
+msgid "Sales Channel"
+msgstr "Verkoopkanaal"
+
+#. module: website_crm_score
+#: model:ir.actions.act_window,name:website_crm_score.team_action
+msgid "Sales Channels"
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.team_user_action
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_form
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_tree
@@ -334,16 +338,6 @@ msgstr "Verkoper"
 #: model:ir.model.fields,field_description:website_crm_score.field_res_users_team_user_ids
 msgid "Sales Records"
 msgstr "Verkoop records"
-
-#. module: website_crm_score
-#: model:ir.model,name:website_crm_score.model_crm_team
-msgid "Sales Team"
-msgstr "Verkoopteam"
-
-#. module: website_crm_score
-#: model:ir.actions.act_window,name:website_crm_score.team_action
-msgid "Sales Teams"
-msgstr "Verkoopteams"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_team_user_ids
@@ -401,35 +395,9 @@ msgid "Search PageViews"
 msgstr "Zoek paginaweergaves"
 
 #. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_res_users_purchase_warn
-msgid ""
-"Selecting the \"Warning\" option will notify user with the message, "
-"Selecting \"Blocking Message\" will throw an exception with the message and "
-"block the flow. The Message has to be written in the next field."
-msgstr ""
-"Door de 'Waarschuwingsoptie' te selecteren wordt het bericht naar de "
-"gebruiker gestuurd. Door het 'Blokkerend bericht' te kiezen wordt een fout "
-"gegenereerd met de boodschap en het proces wordt geblokkeerd. Het bericht "
-"moet in het volgende veld worden ingevoerd."
-
-#. module: website_crm_score
-#: model:ir.model.fields,field_description:website_crm_score.field_res_users_property_purchase_currency_id
-msgid "Supplier Currency"
-msgstr "Valuta leverancier"
-
-#. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.team
 msgid "Teams Assignation"
 msgstr "Toewijzing teams"
-
-#. module: website_crm_score
-#: model:ir.model.fields,help:website_crm_score.field_res_users_property_purchase_currency_id
-msgid ""
-"This currency will be used, instead of the default one, for purchases from "
-"the current partner"
-msgstr ""
-"De valuta wordt gebruikt, in plaats van de standaard valuta, voor aankopen "
-"van de huidige relatie"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_ir_ui_view_track
@@ -438,8 +406,6 @@ msgstr "Parallelsessie"
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.crm_score_views_action_graph
-#: model:ir.model.fields,field_description:website_crm_score.field_crm_team_unassigned_leads
-#: model:ir.ui.view,arch_db:website_crm_score.sales_team_form_view_assign
 msgid "Unassigned leads"
 msgstr "Niet toegewezen leads"
 

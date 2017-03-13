@@ -464,7 +464,8 @@ class MrpEco(models.Model):
                     line.operation_id = eco.new_routing_id.operation_ids.filtered(lambda x: x.name == line.operation_id.name).id
             # duplicate all attachment on the product
             if eco.type == 'product':
-                for attach in eco.product_tmpl_id.attachment_ids:
+                attachments = self.env['ir.attachment'].search([('res_model', '=', 'product.template'), ('res_id', '=', eco.product_tmpl_id.id)])
+                for attach in attachments:
                     attach.copy({'res_model': 'mrp.eco',
                         'res_id': eco.id,
                     })
@@ -478,7 +479,7 @@ class MrpEco(models.Model):
         if self.type in ('product', 'bom', 'both'):
             self.product_tmpl_id.version = self.product_tmpl_id.version + 1
         if self.type == 'product':
-            self.product_tmpl_id.attachment_ids.unlink()
+            self.env['ir.attachment'].search([('res_model', '=', 'product.template'), ('res_id', '=', self.product_tmpl_id.id)]).unlink()
             for attach in self.attachment_ids:
                 attach.copy({'res_model': 'product.template',
                     'res_id': self.product_tmpl_id.id,

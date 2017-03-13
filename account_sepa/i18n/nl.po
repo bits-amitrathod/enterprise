@@ -9,10 +9,10 @@
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgstr "Aangemaakt op"
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -90,11 +90,6 @@ msgid ""
 msgstr ""
 "Entiteit die de identificatie toewijst (bijv. KBE-BCO of Finanzamt München "
 "IV)."
-
-#. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Etherpad lite server. Example: beta.primarypad.com"
-msgstr "Etherpad lite server. Bijvoorbeeld: beta.mijnprimairpad.com"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
@@ -117,14 +112,10 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
 msgid "Identification"
 msgstr "Identificatie"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_id
-msgid "Identification *"
-msgstr "Identificatiie *"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_orgid_id
@@ -144,18 +135,14 @@ msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
-msgid "Is generic"
-msgstr "Is algemeen"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
-msgid "Issuer"
-msgstr "Uitgever"
+msgid "Is Generic"
+msgstr ""
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_orgid_issr
-msgid "Issuer *"
-msgstr "Aanvrager *"
+#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
+msgid "Issuer"
+msgstr "Uitgever"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
@@ -177,6 +164,15 @@ msgstr "Laatst bijgewerkt door"
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_date
 msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
+
+#. module: account_sepa
+#: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_initiating_party_name
+msgid ""
+"Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
+"in length."
+msgstr ""
+"Naam van de refererende crediteur. Gebruikersregel: Beperk tot een lengte "
+"van 70 karakters."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -221,9 +217,9 @@ msgid "Register payments on multiple invoices"
 msgstr "Betalingen voor meerdere facturen registreren"
 
 #. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_account_config_settings_form_inherit_account_sepa
-msgid "SEPA"
-msgstr "SEPA"
+#: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
+msgid "SEPA Credit Transfer"
+msgstr "SEPA overschrijving"
 
 #. module: account_sepa
 #: code:addons/account_sepa/account_journal_dashboard.py:23
@@ -232,14 +228,10 @@ msgid "SEPA Credit Transfers to Send"
 msgstr "Te verzenden SEPA-overschrijvingen"
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 msgid "SEPA Pain Version"
 msgstr "SEPA Pain Versie"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
-msgid "SEPA Pain Version *"
-msgstr "SEPA Pain Versie *"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
@@ -283,7 +275,7 @@ msgstr ""
 "worden met een IBAN rekeningnummer en BIC bankcode."
 
 #. module: account_sepa
-#: code:addons/account_sepa/sepa_credit_transfer.py:350
+#: code:addons/account_sepa/sepa_credit_transfer.py:340
 #, python-format
 msgid ""
 "The account %s, linked to partner '%s', is not of type IBAN.\n"
@@ -438,14 +430,10 @@ msgstr ""
 "betaling heeft geïnitieerd. Beperkt tot 70 tekens."
 
 #. module: account_sepa
+#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
 msgid "Your Company Name"
 msgstr "Uw bedrijfsnaam"
-
-#. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_initiating_party_name
-msgid "Your Company Name *"
-msgstr "Uw bedrijfsnaam *"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:117
@@ -457,8 +445,3 @@ msgstr "Uw bankrekening is niet gelabeld in EUR"
 #: model:ir.model,name:account_sepa.model_account_config_settings
 msgid "account.config.settings"
 msgstr "account.config.settings"
-
-#. module: account_sepa
-#: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
-msgid "or"
-msgstr "of"

@@ -2,17 +2,20 @@ odoo.define('web_studio.customize', function(require) {
 "use strict";
 
 var ajax = require('web.ajax');
+var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var studio_bus = require('web_studio.bus');
 var session = require('web.session');
 var NewViewDialog = require('web_studio.NewViewDialog');
+var _t = core._t;
 
 // this file should regroup all methods required to do a customization,
 // so, basically all write/update/delete operations made in web_studio.
 
 return {
     create_new_app: function(app_name, menu_name, model_id, icon) {
+        var self = this;
         data_manager.invalidate();
         return ajax.jsonRpc('/web_studio/create_new_menu', 'call', {
             app_name: app_name,
@@ -21,6 +24,8 @@ return {
             is_app: true,
             icon: icon,
             context: session.user_context,
+        }).fail(function(result, error) {
+            Dialog.alert(self, _t('This model already exists. Please specify another model.'));
         });
     },
 
@@ -100,7 +105,7 @@ return {
             context: session.user_context,
         }).then(function(result) {
             if (result !== true) {
-                Dialog.alert(this, result);
+                Dialog.alert(self, result);
                 def.reject();
             } else {
                 self._reload_action(action.id)

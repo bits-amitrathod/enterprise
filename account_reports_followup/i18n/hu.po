@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Martin Trigaux <mat@odoo.com>, 2016
-# Oregional <geza.nagy@oregional.hu>, 2016
 # krnkris <krnkris@freemail.hu>, 2016
+# Oregional <geza.nagy@oregional.hu>, 2016
 # Kovács Tibor <kovika@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:58+0000\n"
-"PO-Revision-Date: 2016-09-19 12:58+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Kovács Tibor <kovika@gmail.com>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,6 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line3
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line5
 msgid ""
 "\n"
 "Dear %(partner_name)s,\n"
@@ -117,14 +115,14 @@ msgstr ""
 "                                <b>%(company_name)s</b>: Felhasználó vállalatának neve"
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup
-msgid "A particular context for the followup report"
-msgstr "Egy egyedi szövegkörnyezet az emlékeztető jelentéshez"
-
-#. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
+#: model:ir.model,name:account_reports_followup.model_account_followup_report_all
 msgid "A progress bar for followup reports"
 msgstr "Egy haladást mutató grafikon az emlékeztető jelentésekhez"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "A reminder can be sent as of"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
@@ -173,11 +171,6 @@ msgid "Company Name"
 msgstr "Cég neve"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.view_account_config_settings_inherit
-msgid "Configure your follow-up levels"
-msgstr "Állítsa be a nyomonkövetési szintjeit"
-
-#. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
 msgid "Created by"
@@ -206,12 +199,12 @@ msgid "Display Name"
 msgstr "Megjelenített név"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Do it Later"
 msgstr "Végezze később"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Done"
 msgstr "Elvégezve"
 
@@ -254,6 +247,7 @@ msgstr "Fizetési emlékeztető szint"
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
 msgid "Follow-up Levels"
 msgstr "Fizetési-emlékeztető szintek"
 
@@ -267,6 +261,11 @@ msgstr "Fizetési-emlékeztető felelőse"
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
 msgstr "Fizetési-emlékezetető lépései"
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_account_followup_report
+msgid "Followup Report"
+msgstr "Emlékeztető jelentés"
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -319,18 +318,13 @@ msgid "Latest Follow-up"
 msgstr "Legutobbi fizetési emlékeztető"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_report_context_followup_level
-msgid "Level"
-msgstr "Szint"
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:62
+#: code:addons/account_reports_followup/account_followup_report.py:53
 #, python-format
 msgid "Level: "
 msgstr "Szint:"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Log a Note"
 msgstr "Naplózzon egy jegyzetet"
 
@@ -341,20 +335,21 @@ msgid "Manual Action"
 msgstr "Kézi művelet"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:57
+#: code:addons/account_reports_followup/account_followup_report.py:65
 #, python-format
-msgid "Manual action done\n"
-msgstr "Kézzel elvégzett művelet befejezve\n"
+msgid "Manual action done"
+msgstr ""
 
 #. module: account_reports_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr "Minimum napok száma a két követés között"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
-msgid "Minimum days between two follow-ups *"
-msgstr "Minimum napok száma a két emlékeztető között *"
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "Minimum spread between two reminders"
+msgstr ""
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup.py:113
@@ -391,6 +386,11 @@ msgid "Partner entries"
 msgstr "Partner tételek"
 
 #. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "Payment Follow-up"
+msgstr "Fizetés nyomon-követése"
+
+#. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
 msgstr "fizetési-emlékeztetők kifizetése"
@@ -401,7 +401,7 @@ msgid "Payment Note"
 msgstr "Megjegyzés a fizetéshez"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Print Letter"
 msgstr "Levél nyomtatás"
 
@@ -436,7 +436,7 @@ msgid "Send an Email"
 msgstr "Egy E-amil küldése"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Send by email"
 msgstr "Küldés Email-ben"
 
@@ -493,16 +493,6 @@ msgid "Total debit"
 msgstr "Tartozik összesen"
 
 #. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
-msgid "Urging reminder email"
-msgstr "Emlékeztető e-mail sürgetése"
-
-#. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
-msgid "Urging reminder letter"
-msgstr "Emlékeztető levél sürgetése"
-
-#. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
 msgid ""
@@ -557,6 +547,11 @@ msgstr ""
 #: model:ir.model,name:account_reports_followup.model_account_config_settings
 msgid "account.config.settings"
 msgstr "account.config.settings"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "days after the previous reminder"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form

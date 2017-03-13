@@ -4,16 +4,18 @@
 # 
 # Translators:
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Cas Vissers <casvissers@brahoo.nl>, 2016
+# Cas Vissers <casvissers@brahoo.nl>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Stephan Van Dyck <stephan.vandyck@vanroey.be>, 2017
+# Xavier Symons <xsy@openerp.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Xavier Symons <xsy@openerp.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,24 +43,31 @@ msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_number
-msgid "Account number"
+msgid "Account Number"
 msgstr "Rekeningnummer"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_account_online_journal_ids
-msgid "Account online journal ids"
-msgstr "Rekening online dagboek ids"
+msgid "Account Online Journal"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_account_online_provider_id
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_online_provider_id
-msgid "Account online provider id"
-msgstr "Bankrekening online provider id"
+msgid "Account Online Provider"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.actions.server,name:account_online_sync.online_sync_cron_ir_actions_server
+#: model:ir.cron,cron_name:account_online_sync.online_sync_cron
+#: model:ir.cron,name:account_online_sync.online_sync_cron
+msgid "Account: Journal online sync"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_action_required
-msgid "Action required"
-msgstr "Actie benodigd"
+msgid "Action Required"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
@@ -66,7 +75,7 @@ msgid "Additional information"
 msgstr "Aanvullende informatie"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:57
+#: code:addons/account_online_sync/models/online_sync.py:58
 #, python-format
 msgid "An error occurred during online synchronization"
 msgstr "Een fout is opgetreden tijdens de online synchronisatie"
@@ -113,8 +122,8 @@ msgstr "Code om probleem te identificeren"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_company_id
-msgid "Company id"
-msgstr "Bedrijf id"
+msgid "Company"
+msgstr "Bedrijf"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
@@ -123,8 +132,8 @@ msgstr "Configureren"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_count_account_online_journal
-msgid "Count account online journal"
-msgstr "Tel rekening online dagboek"
+msgid "Count Account Online Journal"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_create_uid
@@ -145,7 +154,7 @@ msgstr "Aangemaakt op"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_display_name
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_sync_date
@@ -179,13 +188,9 @@ msgstr "Interface voor online rekening dagboek"
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_journal
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_journal_ids
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_journal_id
 msgid "Journal"
 msgstr "Kasboek"
-
-#. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_journal_id
-msgid "Journal id"
-msgstr "Dagboek id"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal___last_update
@@ -193,6 +198,11 @@ msgstr "Dagboek id"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard___last_update
 msgid "Last Modified on"
 msgstr "Laatst gewijzigd op"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_last_refresh
+msgid "Last Refresh"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_write_uid
@@ -207,11 +217,6 @@ msgstr "Laatst bijgewerkt door"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_write_date
 msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
-
-#. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_last_refresh
-msgid "Last refresh"
-msgstr "Laatste vernieuwing"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_last_sync
@@ -248,7 +253,7 @@ msgstr "Volgende synchronisatie"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_number_added
-msgid "Number added"
+msgid "Number Added"
 msgstr "Nummer toegevoegd"
 
 #. module: account_online_sync
@@ -258,6 +263,7 @@ msgstr "Online rekening"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_bank_statement_line_online_identifier
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_online_identifier
 msgid "Online Identifier"
 msgstr "Online identifier"
 
@@ -285,15 +291,10 @@ msgid "Online account"
 msgstr "Online account"
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_online_identifier
-msgid "Online identifier"
-msgstr "Online identifier"
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:251
+#: code:addons/account_online_sync/models/online_sync.py:261
 #, python-format
-msgid "Opening statement : first synchronization"
-msgstr "Initieel afschrift : eerste synchronisatie"
+msgid "Opening statement: first synchronization"
+msgstr ""
 
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
@@ -307,8 +308,18 @@ msgstr "Problemen tijdens synchronisatie"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_account_identifier
-msgid "Provider account identifier"
-msgstr "Provider account identifier"
+msgid "Provider Account Identifier"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_identifier
+msgid "Provider Identifier"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_type
+msgid "Provider Type"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_provider
@@ -316,19 +327,9 @@ msgid "Provider for online account synchronization"
 msgstr "Provider for online rekening synchronisatie"
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_identifier
-msgid "Provider identifier"
-msgstr "Identifier aanbieder"
-
-#. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_type
-msgid "Provider type"
-msgstr "Soort aanbieder"
-
-#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_status_code
-msgid "Status code"
-msgstr "Status code"
+msgid "Status Code"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_synchronization_status
@@ -347,7 +348,7 @@ msgid "Techhnical message from third party provider that can help debugging"
 msgstr "Technisch bericht van externe provider die kan helpen met debuggen"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:58
+#: code:addons/account_online_sync/models/online_sync.py:59
 #, python-format
 msgid "The following error happened during the synchronization: %s"
 msgstr "De volgende fout is opgetreden tijdens synchronisatie: %s"
@@ -360,7 +361,7 @@ msgstr ""
 "rekening"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:122
+#: code:addons/account_online_sync/models/online_sync.py:126
 #, python-format
 msgid "Unimplemented"
 msgstr "Niet geïmplementeerd"

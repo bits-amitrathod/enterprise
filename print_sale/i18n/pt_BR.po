@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Martin Trigaux <mat@odoo.com>, 2016
-# Grazziano Duarte <gra.negocia@gmail.com>, 2016
+# grazziano <gra.negocia@gmail.com>, 2016
 # Mateus Lopes <mateus1@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: Mateus Lopes <mateus1@gmail.com>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -71,6 +71,11 @@ msgstr "Criado em"
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_currency_id
 msgid "Currency"
 msgstr "Moeda"
+
+#. module: print_sale
+#: model:ir.model.fields,field_description:print_sale.field_sale_config_settings_default_print_provider
+msgid "Default Account"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_display_name
@@ -214,15 +219,11 @@ msgstr "Teste"
 #: code:addons/print_sale/models/sale_order.py:17
 #, python-format
 msgid ""
-"This sale order was sent by post with the provider %(provider_name)s at the "
-"following address.                     <br/><br/> %(partner_name)s <br/> "
+"This sales order was sent by post with the provider %(provider_name)s at the"
+" following address.                     <br/><br/> %(partner_name)s <br/> "
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
-"Esta ordem de venda foi enviado pelo postal com o provedor %(provider_name)s"
-" no seguinte endereço. <br/><br/> %(partner_name)s <br/> %(partner_street)s "
-"<br/> %(partner_city)s %(partner_zip)s                     "
-"<br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print_sale
 #: code:addons/print_sale/wizard/print_document_partner_wizard.py:73
@@ -234,11 +235,6 @@ msgstr ""
 "O seu fornecedor de crédito é muito pequeno. Por favor, configure sua conta "
 "(> Configurações > Fornecedor de Impressão), e coloque um pouco de crédito "
 "em sua conta."
-
-#. module: print_sale
-#: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
-msgid "or"
-msgstr "ou"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_line_wizard
@@ -254,3 +250,8 @@ msgstr "print.document.partner.wizard"
 #: model:ir.model,name:print_sale.model_print_order_line_wizard
 msgid "print.order.line.wizard"
 msgstr "print.order.line.wizard"
+
+#. module: print_sale
+#: model:ir.model,name:print_sale.model_sale_config_settings
+msgid "sale.config.settings"
+msgstr "sale.config.settings"

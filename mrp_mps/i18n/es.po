@@ -4,26 +4,26 @@
 # 
 # Translators:
 # José Vicente <txusev@gmail.com>, 2016
-# Ana Juaristi <ajuaristio@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
 # Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
 # Ivan Nieto <ivan.n.s@tuta.io>, 2016
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
+# Ana Juaristi <ajuaristio@gmail.com>, 2016
 # oihane <oihanecruce@gmail.com>, 2016
 # Carles Antoli <carlesantoli@hotmail.com>, 2016
 # Sergio Flores <vitavitae1@gmail.com>, 2016
 # Antonio Trueba <atgayol@gmail.com>, 2016
 # Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2016
-# Luis Triana <luis.triana@jarsa.com.mx>, 2016
+# Luis M. Triana <luis.triana@jarsa.com.mx>, 2016
 # Miguel Orueta <mo@landoo.es>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Miguel Orueta <mo@landoo.es>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
@@ -40,12 +40,12 @@ msgstr "&lt;&amp;hellip;&lt;"
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"fa fa-fw\">-</span> Demand Forecast"
-msgstr "<span class=\"fa fa-fw\">-</span> Demanda prevista"
+msgstr "<span class=\"fa fa-fw\">-</span> Previsión de la demanda"
 
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"fa fa-fw\">-</span> Indirect Demand"
-msgstr "<span class=\"fa fa-fw\">-</span> Demanda indirecta"
+msgstr "<span class=\"fa fa-fw\">-</span> Indirect Demand"
 
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -81,8 +81,8 @@ msgstr "Aplicar"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product_apply_active
-msgid "Apply active"
-msgstr "Aplicar activo"
+msgid "Apply Active"
+msgstr ""
 
 #. module: mrp_mps
 #: selection:sale.forecast,mode:0
@@ -104,11 +104,6 @@ msgstr "Compañías"
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_company_id
 msgid "Company"
 msgstr "Compañía"
-
-#. module: mrp_mps
-#: model:stock.inventory.line,product_name:mrp_mps.mps_stock_inventory_line_1
-msgid "Computer SC234"
-msgstr "Computer SC234"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_create_uid
@@ -253,7 +248,7 @@ msgstr "Última Aplicació"
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "Launch Procurement"
-msgstr "Lanzar abastecimientos"
+msgstr "Lanzamiento de abastecimientos"
 
 #. module: mrp_mps
 #. openerp-web
@@ -313,11 +308,6 @@ msgstr "Modo"
 #, python-format
 msgid "Monthly"
 msgstr "Mensual"
-
-#. module: mrp_mps
-#: model:stock.inventory.line,product_name:mrp_mps.mps_stock_inventory_line_0
-msgid "Mouse, Wireless"
-msgstr "Ratón inalámbrico"
 
 #. module: mrp_mps
 #. openerp-web
@@ -400,6 +390,23 @@ msgstr "Inicio del inventario"
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_state
 msgid "State"
 msgstr "Estado"
+
+#. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product_tic_category_id
+msgid "TIC Category"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields,help:mrp_mps.field_product_product_tic_category_id
+msgid ""
+"TaxCloud uses Taxability Information Codes (TIC) to make sure each item in "
+"your catalog is taxed at the right rate (or, for tax-exempt items, not taxed"
+" at all), so it's important to make sure that each item is assigned a TIC. "
+"If you can't find the right tax category for an item in your catalog, you "
+"can assign it to the 'General Goods and Services' TIC, 00000. TaxCloud "
+"automatically assigns products to this TIC as a default, so unless you've "
+"changed an item's TIC in the past, it should already be set to 00000."
+msgstr ""
 
 #. module: mrp_mps
 #. openerp-web

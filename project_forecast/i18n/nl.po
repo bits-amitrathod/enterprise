@@ -9,10 +9,10 @@
 # Eric Geens <ericgeens@yahoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:59+0000\n"
-"PO-Revision-Date: 2016-09-19 12:59+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -29,12 +29,13 @@ msgstr "% Tijd"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_view_kanban_inherit_project_forecast
 msgid "<span class=\"o_label\">Forecast</span>"
-msgstr "<span class=\"o_label\">Planning</span>"
+msgstr "<span class=\"o_label\">Prognose</span>"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_view_form_inherit_project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.task_view_form_inherit_project_forecast
 msgid "<span>Forecast</span>"
-msgstr "<span>Planning</span>"
+msgstr "<span>Prognose</span>"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_active
@@ -42,25 +43,15 @@ msgid "Active"
 msgstr "Actief"
 
 #. module: project_forecast
-#: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
-msgid "Activities"
-msgstr "Activiteiten"
-
-#. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_task_allow_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_view_form_inherit_project_forecast
 msgid "Allow Forecast"
-msgstr "Planning toestaan"
+msgstr "Prognose toestaan"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_project_allow_forecast
 msgid "Allow forecast"
-msgstr "Planning toestaan"
-
-#. module: project_forecast
-#: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
-msgid "Archive/Unarchive"
-msgstr "Archiveer/Dearchiveer"
+msgstr "Prognose toestaan"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -91,7 +82,7 @@ msgstr "Antal betaaltokens"
 #: model:ir.ui.view,arch_db:project_forecast.project_view_form_inherit_project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.task_view_form_inherit_project_forecast
 msgid "Create a forecast"
-msgstr "Maak een planning"
+msgstr "Maak een prognose"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_create_uid
@@ -106,7 +97,7 @@ msgstr "Aangemaakt op"
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_effective_hours
@@ -115,7 +106,7 @@ msgstr "Effectieve uren"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_end_date
-msgid "End date"
+msgid "End Date"
 msgstr "Einddatum"
 
 #. module: project_forecast
@@ -124,48 +115,49 @@ msgid "Exclude"
 msgstr "Uitsluiten"
 
 #. module: project_forecast
+#: model:ir.actions.act_window,name:project_forecast.project_forecast_action_from_task
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_project
-#: model:ir.actions.act_window,name:project_forecast.project_forecast_action_report_activities
 #: model:ir.ui.menu,name:project_forecast.project_forecast_menu
 #: model:ir.ui.view,arch_db:project_forecast.project_view_kanban_inherit_project_forecast
 msgid "Forecast"
-msgstr "Planning"
+msgstr "Prognose"
+
+#. module: project_forecast
+#: model:ir.actions.act_window,name:project_forecast.project_forecast_action_report_activities
+#: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
+msgid "Forecast Analysis"
+msgstr ""
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
 msgid "Forecast Form"
-msgstr "Planning formilier"
+msgstr "Prognoseformulier"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_tree
 msgid "Forecast List"
-msgstr "Planninglijst"
+msgstr "Prognoselijst"
 
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_by_project
 msgid "Forecast by project"
-msgstr "Planing per project"
+msgstr "Prognotiseer per project"
 
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_by_user
 msgid "Forecast by user"
-msgstr "Planning per gebruiker"
+msgstr "Prognotiseer per gebruiker"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:121
+#: code:addons/project_forecast/models/project_forecast.py:120
 #, python-format
 msgid "Forecasted time must be positive"
-msgstr "Plantijd moet positief zijn"
+msgstr "Voorspelde tijd moet positief zijn"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "Future"
 msgstr "Toekomst"
-
-#. module: project_forecast
-#: model:ir.actions.server,name:project_forecast.action_generate_forecast
-msgid "Generate Forecast"
-msgstr "Genereer planning"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_pivot
@@ -218,6 +210,21 @@ msgid "Name"
 msgstr "Naam"
 
 #. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_next_action
+msgid "Next Action"
+msgstr "Volgende actie"
+
+#. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_next_action_date
+msgid "Next Action Date"
+msgstr "Datum volgende actie"
+
+#. module: project_forecast
+#: model:ir.model.fields,help:project_forecast.field_res_users_payment_next_action
+msgid "Note regarding the next action."
+msgstr "Opmerking in verband met de volgende actie."
+
+#. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "Past"
 msgstr "Verleden"
@@ -252,16 +259,26 @@ msgstr "Project"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
 msgid "Project Forecast"
-msgstr "Projectplanning"
+msgstr "Project prognose"
+
+#. module: project_forecast
+#: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
+msgid "Project Forecast: Archive/Restore forecasts"
+msgstr ""
+
+#. module: project_forecast
+#: model:ir.actions.server,name:project_forecast.action_generate_forecast
+msgid "Project: Generate Task Forecast"
+msgstr ""
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_res_users_resource_ids
-msgid "Resource ids"
-msgstr "Bron ids"
+msgid "Resource"
+msgstr "Resource"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_start_date
-msgid "Start date"
+msgid "Start Date"
 msgstr "Startdatum"
 
 #. module: project_forecast
@@ -282,7 +299,12 @@ msgid "Task tags"
 msgstr "Taak labels"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:133
+#: model:ir.model.fields,help:project_forecast.field_res_users_payment_next_action_date
+msgid "The date before which no action should be taken."
+msgstr "De datum voor dewelke geen actie ondernomen mag worden."
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:132
 #, python-format
 msgid "The start-date must be lower than end-date."
 msgstr "De startdatum moet voor de einddatum zijn."
@@ -291,13 +313,12 @@ msgstr "De startdatum moet voor de einddatum zijn."
 #: model:ir.model.fields,help:project_forecast.field_project_project_allow_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_task_allow_forecast
 msgid "This feature shows the Forecast link in the kanban view"
-msgstr ""
-"Deze mogelijkheid toont een link naar de planning in de kanban weergave"
+msgstr "Deze mogelijkheid toont de prognoselink in de kanban weergave"
 
 #. module: project_forecast
-#: model:ir.ui.view,arch_db:project_forecast.project_view_form_inherit_project_forecast
-msgid "Time Scheduling"
-msgstr "Tijdsplanning"
+#: model:ir.model.fields,field_description:project_forecast.field_res_users_unreconciled_aml_ids
+msgid "Unreconciled Aml"
+msgstr ""
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_user_id
@@ -311,7 +332,13 @@ msgid "Users"
 msgstr "Gebruikers"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:127
+#: code:addons/project_forecast/models/project_forecast.py:81
+#, python-format
+msgid "You cannot set a user with no working time."
+msgstr ""
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:126
 #, python-format
 msgid "Your task is not in the selected project."
 msgstr "Uw taak is niet in het geselecteerde project."
@@ -322,7 +349,7 @@ msgid "project.forecast"
 msgstr "project.forecast"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:63
+#: code:addons/project_forecast/models/project_forecast.py:60
 #, python-format
 msgid "undefined"
 msgstr "Niet gedefinieerd"

@@ -258,7 +258,7 @@ return Widget.extend({
                 // Starting renderers is synchronous, but it's not the case for old views
                 def = this.editor.appendTo($('<div>'));
             } catch(e) {
-                this.do_warn(_t("Error"), _t("The requested change caused an error in the view.  It could be because a field was deleted, but still used somewhere else."));
+                this.trigger_up('studio_error', {error: 'view_rendering'});
                 this.undo(true);
             }
         }
@@ -519,7 +519,9 @@ return Widget.extend({
                 customize,
                 last_op.view_id,
                 last_op.new_arch
-            ));
+            )).fail(function() {
+                self.trigger_up('studio_error', {error: 'view_rendering'});
+            });
         } else {
             def = this._apply_changes_mutex.exec(customize.edit_view.bind(
                 customize,
@@ -531,7 +533,7 @@ return Widget.extend({
 
         return def.then(function (result) {
             if (!result.fields_view) {
-                self.do_warn(_t("Error"), _t("This operation caused an error, probably because a xpath was broken"));
+                self.trigger_up('studio_error', {error: 'wrong_xpath'});
                 return self.undo(true).then(function () {
                     return $.Deferred().reject(); // indicate that the operation can't be applied
                 });

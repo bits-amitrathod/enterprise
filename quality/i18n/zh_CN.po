@@ -3,14 +3,19 @@
 # * quality
 # 
 # Translators:
-# Jeffery Chen Fan <jeffery9@gmail.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
+# 苏州远鼎 <tiexinliu@126.com>, 2016
+# Ted Wang <feiyuwang2012@gmail.com>, 2016
+# waveyeung <waveyeung@qq.com>, 2017
+# liAnGjiA <liangjia@qq.com>, 2017
+# 卓忆科技 <zhanghao@jointd.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Jeffery Chen Fan <jeffery9@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: 卓忆科技 <zhanghao@jointd.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +42,7 @@ msgstr "% 作业"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -97,7 +102,7 @@ msgstr "警报"
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_ids
 #: model:ir.ui.menu,name:quality.menu_quality_alerts
 msgid "Alerts"
-msgstr "警报"
+msgstr "警告"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_id
@@ -122,7 +127,7 @@ msgstr "别名网域"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_model_id
 msgid "Aliased Model"
-msgstr "别名模型"
+msgstr "别名的模型"
 
 #. module: quality
 #: selection:quality.point,measure_frequency_type:0
@@ -132,7 +137,7 @@ msgstr "所有作业"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_search
 msgid "Archived"
-msgstr "已存档"
+msgstr "已归档"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
@@ -146,8 +151,8 @@ msgstr "检查"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_count
-msgid "Check count"
-msgstr "检查个数"
+msgid "Check Count"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
@@ -238,6 +243,11 @@ msgid "Corrective Actions"
 msgstr "纠正行动"
 
 #. module: quality
+#: model:ir.actions.act_window,help:quality.quality_alert_action_check
+msgid "Create Quality Alerts."
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_uid
@@ -292,22 +302,22 @@ msgstr "默认值"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Describe the corrective actions you did..."
-msgstr "说明你做过的纠正行动..."
+msgstr "描述你做过的纠正行动..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Describe the preventive actions you did..."
-msgstr "说明你做过的预防行动..."
+msgstr "描述你做过的预防行动..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Describe the quality check to do..."
-msgstr "说明要做的质量检查..."
+msgstr "描述要做的质量检查..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Describe why you need to perform this quality check..."
-msgstr "说明为什么你需要执行此质量检查..."
+msgstr "描述为什么你需要执行此质量检查..."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_description
@@ -456,7 +466,7 @@ msgstr "低"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Make Alert"
-msgstr "发出警报"
+msgstr "制造警报"
 
 #. module: quality
 #: model:res.groups,name:quality.group_quality_manager
@@ -475,14 +485,14 @@ msgid "Measure"
 msgstr "测量"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
+msgid "Measure Frequency Unit"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
 msgid "Measure Success"
 msgstr "测量成功"
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
-msgid "Measure frequency unit"
-msgstr "测量频率单位"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_min
@@ -517,7 +527,7 @@ msgstr "我的警报"
 #: model:ir.model.fields,field_description:quality.field_quality_reason_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_name
 msgid "Name"
-msgstr "名字"
+msgstr "名称"
 
 #. module: quality
 #: code:addons/quality/models/quality.py:22
@@ -531,7 +541,7 @@ msgstr "名字"
 #: code:addons/quality/models/quality.py:359
 #, python-format
 msgid "New"
-msgstr "新建"
+msgstr "新的"
 
 #. module: quality
 #: selection:quality.check,measure_success:0
@@ -656,7 +666,7 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
-"政策是通过邮件网关在文档上提交一个消息\n"
+"策略是通过邮件网关在文档上提交一个消息\n"
 "- everyone: 任何人都可以提交\n"
 "- partners: 只有认证过的合作伙伴\n"
 "- followers: 只有相关文件或下列频道成员的跟随者\n"
@@ -687,7 +697,7 @@ msgstr "产品"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_product_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_product_id
 msgid "Product Variant"
-msgstr "产品变型"
+msgstr "产品变体"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
@@ -751,11 +761,6 @@ msgstr ""
 #: model:ir.ui.menu,name:quality.menu_quality_alert_report
 msgid "Quality Alerts"
 msgstr "质量警报"
-
-#. module: quality
-#: model:ir.actions.act_window,help:quality.quality_alert_action_check
-msgid "Quality Alerts can be created. I know this is difficult to believe."
-msgstr ""
 
 #. module: quality
 #: code:addons/quality/models/quality.py:369
@@ -905,7 +910,7 @@ msgid "Settings"
 msgstr "设置"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9329
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9144
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "阶段"
@@ -931,7 +936,7 @@ msgid "Tags"
 msgstr "标签"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9307
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9122
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -977,7 +982,7 @@ msgstr ""
 #. module: quality
 #: model:res.groups,comment:quality.group_quality_manager
 msgid "The quality manager manages the quality process"
-msgstr "质检管理员管理质检过程"
+msgstr "质检经理管理质检过程"
 
 #. module: quality
 #: model:res.groups,comment:quality.group_quality_user
@@ -992,7 +997,7 @@ msgstr "称谓"
 #. module: quality
 #: selection:quality.check,quality_state:0
 msgid "To do"
-msgstr "待办"
+msgstr "待处理"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -1002,7 +1007,7 @@ msgstr "偏差"
 #. module: quality
 #: model:ir.model,name:quality.model_stock_picking
 msgid "Transfer"
-msgstr "调拨"
+msgstr "转账"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_norm_unit
@@ -1041,7 +1046,7 @@ msgid "Week(s)"
 msgstr "周"
 
 #. module: quality
-#: code:addons/quality/models/stock_move.py:48
+#: code:addons/quality/models/stock_picking.py:44
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "你还是需要做质量检查!"

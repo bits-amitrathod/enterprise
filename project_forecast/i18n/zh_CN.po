@@ -3,15 +3,17 @@
 # * project_forecast
 # 
 # Translators:
-# Jeffery Chen Fan <jeffery9@gmail.com>, 2016
-# hman tsao <herman.tsao@gmail.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
+# max_xu <wangzhanwh@163.com>, 2016
+# hman tsao <herman.tsao@gmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:59+0000\n"
-"PO-Revision-Date: 2016-09-19 12:59+0000\n"
-"Last-Translator: hman tsao <herman.tsao@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,6 +33,7 @@ msgstr "<span class=\"o_label\">预测</span>"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_view_form_inherit_project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.task_view_form_inherit_project_forecast
 msgid "<span>Forecast</span>"
 msgstr "<span>预测</span>"
 
@@ -38,11 +41,6 @@ msgstr "<span>预测</span>"
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_active
 msgid "Active"
 msgstr "有效"
-
-#. module: project_forecast
-#: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
-msgid "Activities"
-msgstr "活动"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_task_allow_forecast
@@ -56,24 +54,19 @@ msgid "Allow forecast"
 msgstr "允许预测"
 
 #. module: project_forecast
-#: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
-msgid "Archive/Unarchive"
-msgstr "存档/取消存档"
-
-#. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "Archived"
-msgstr "已存档"
+msgstr "已归档"
 
 #. module: project_forecast
 #: model:ir.ui.menu,name:project_forecast.project_forecast_group_by_project
 msgid "By Project"
-msgstr "项目"
+msgstr "按 项目"
 
 #. module: project_forecast
 #: model:ir.ui.menu,name:project_forecast.project_forecast_group_by_user
 msgid "By User"
-msgstr "用户"
+msgstr "按 用户"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_color
@@ -113,8 +106,8 @@ msgstr "实际时数"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_end_date
-msgid "End date"
-msgstr "终止日期"
+msgid "End Date"
+msgstr "结束日期"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_exclude
@@ -122,12 +115,18 @@ msgid "Exclude"
 msgstr "排除"
 
 #. module: project_forecast
+#: model:ir.actions.act_window,name:project_forecast.project_forecast_action_from_task
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_project
-#: model:ir.actions.act_window,name:project_forecast.project_forecast_action_report_activities
 #: model:ir.ui.menu,name:project_forecast.project_forecast_menu
 #: model:ir.ui.view,arch_db:project_forecast.project_view_kanban_inherit_project_forecast
 msgid "Forecast"
 msgstr "预测"
+
+#. module: project_forecast
+#: model:ir.actions.act_window,name:project_forecast.project_forecast_action_report_activities
+#: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
+msgid "Forecast Analysis"
+msgstr ""
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
@@ -150,7 +149,7 @@ msgid "Forecast by user"
 msgstr "按用户预测"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:121
+#: code:addons/project_forecast/models/project_forecast.py:120
 #, python-format
 msgid "Forecasted time must be positive"
 msgstr "预测的时间必须是正数"
@@ -159,11 +158,6 @@ msgstr "预测的时间必须是正数"
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "Future"
 msgstr "未来"
-
-#. module: project_forecast
-#: model:ir.actions.server,name:project_forecast.action_generate_forecast
-msgid "Generate Forecast"
-msgstr "生成预测"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_pivot
@@ -213,7 +207,22 @@ msgstr "我的项目"
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_name
 msgid "Name"
-msgstr "名字"
+msgstr "名称"
+
+#. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_next_action
+msgid "Next Action"
+msgstr "下一行动"
+
+#. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_next_action_date
+msgid "Next Action Date"
+msgstr "下一行动日期"
+
+#. module: project_forecast
+#: model:ir.model.fields,help:project_forecast.field_res_users_payment_next_action
+msgid "Note regarding the next action."
+msgstr "关于下一行动的说明."
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -253,13 +262,23 @@ msgid "Project Forecast"
 msgstr "项目预测"
 
 #. module: project_forecast
+#: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
+msgid "Project Forecast: Archive/Restore forecasts"
+msgstr ""
+
+#. module: project_forecast
+#: model:ir.actions.server,name:project_forecast.action_generate_forecast
+msgid "Project: Generate Task Forecast"
+msgstr ""
+
+#. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_res_users_resource_ids
-msgid "Resource ids"
-msgstr "资源 ids"
+msgid "Resource"
+msgstr "资源"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_start_date
-msgid "Start date"
+msgid "Start Date"
 msgstr "开始日期"
 
 #. module: project_forecast
@@ -280,7 +299,12 @@ msgid "Task tags"
 msgstr "任务标签"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:133
+#: model:ir.model.fields,help:project_forecast.field_res_users_payment_next_action_date
+msgid "The date before which no action should be taken."
+msgstr "没有采取动作之前的日期"
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:132
 #, python-format
 msgid "The start-date must be lower than end-date."
 msgstr "开始日期必须早于结束日期。"
@@ -292,9 +316,9 @@ msgid "This feature shows the Forecast link in the kanban view"
 msgstr "这个特征在看板视图显示预测链接"
 
 #. module: project_forecast
-#: model:ir.ui.view,arch_db:project_forecast.project_view_form_inherit_project_forecast
-msgid "Time Scheduling"
-msgstr "时间排程"
+#: model:ir.model.fields,field_description:project_forecast.field_res_users_unreconciled_aml_ids
+msgid "Unreconciled Aml"
+msgstr ""
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_user_id
@@ -308,7 +332,13 @@ msgid "Users"
 msgstr "用户"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:127
+#: code:addons/project_forecast/models/project_forecast.py:81
+#, python-format
+msgid "You cannot set a user with no working time."
+msgstr ""
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:126
 #, python-format
 msgid "Your task is not in the selected project."
 msgstr "你的任务不在选定的项目。"
@@ -316,10 +346,10 @@ msgstr "你的任务不在选定的项目。"
 #. module: project_forecast
 #: model:ir.model,name:project_forecast.model_project_forecast
 msgid "project.forecast"
-msgstr "project.forecast"
+msgstr ""
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/models.py:63
+#: code:addons/project_forecast/models/project_forecast.py:60
 #, python-format
 msgid "undefined"
 msgstr "undefined"

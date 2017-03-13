@@ -3,29 +3,31 @@
 # * print
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Cristóbal Martí Oliver <info@moblesmarti.com>, 2016
 # José Vicente <txusev@gmail.com>, 2016
-# Ana Juaristi <ajuaristio@gmail.com>, 2016
-# Alejandro Die Sanchis <marketing@domatix.com>, 2016
 # Sergio Hevia <sah@talleresbernesga.com>, 2016
+# Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
+# Ivan Nieto <ivan.n.s@tuta.io>, 2016
+# Cristóbal Martí Oliver <info@moblesmarti.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
+# Ana Juaristi <ajuaristio@gmail.com>, 2016
+# oihane <oihanecruce@gmail.com>, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2016
+# Alejandro Die Sanchis <marketing@domatix.com>, 2016
 # Jose Manuel <admin@jaboweb.com>, 2016
-# Albert Cabedo GAFIC <albertgafic@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 # Antonio Trueba <atgayol@gmail.com>, 2016
-# Ivan Nieto <ivan.n.s@tuta.io>, 2016
-# oihane <oihanecruce@gmail.com>, 2016
+# Gafic SLP Albert Cabedo (GAFIC, SLP) <albertgafic@gmail.com>, 2016
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
-# Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
-# Carles Antoli <carlesantoli@hotmail.com>, 2016
+# Miguel Orueta <mo@landoo.es>, 2016
+# Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Carles Antoli <carlesantoli@hotmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,7 +86,7 @@ msgstr ""
 "Por favor, recarge su cuenta de proovedor para enviar documentos."
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:63
+#: code:addons/print/wizard/print_order_wizard.py:64
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
 msgstr "Al menos uno de los documentos que desea enviar contiene un error."
@@ -162,11 +164,6 @@ msgstr "Haber"
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_currency_id
 msgid "Currency"
 msgstr "Moneda"
-
-#. module: print
-#: model:ir.model.fields,field_description:print.field_base_config_settings_default_print_provider
-msgid "Default Print Provider"
-msgstr "Impresora predeterminada"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_display_name
@@ -381,6 +378,7 @@ msgstr ""
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
 msgid "Print Order"
 msgstr "Imprimir Pedido"
 
@@ -390,6 +388,7 @@ msgid "Print Order Lines"
 msgstr ""
 
 #. module: print
+#: model:ir.model,name:print.model_print_order_wizard
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
 msgid "Print Order Wizard"
 msgstr "Asistente de impresión de pedido"
@@ -411,8 +410,10 @@ msgid "Print Provider"
 msgstr "Imprimir Proveedor"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
-msgid "Print order ids"
+#: model:ir.actions.server,name:print.ir_cron_print_scheduler_action_ir_actions_server
+#: model:ir.cron,cron_name:print.ir_cron_print_scheduler_action
+#: model:ir.cron,name:print.ir_cron_print_scheduler_action
+msgid "Print: queue manager"
 msgstr ""
 
 #. module: print
@@ -434,7 +435,7 @@ msgstr "Proveedor"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_balance
 msgid "Provider Credit"
-msgstr ""
+msgstr "Crédito del Proveedor"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
@@ -455,7 +456,7 @@ msgstr "Dirección del destinatario"
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
 #: model:ir.model.fields,field_description:print.field_print_order_partner_id
 msgid "Recipient partner"
-msgstr ""
+msgstr "Tercero destinatario"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -567,7 +568,7 @@ msgid ""
 msgstr ""
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:61
+#: code:addons/print/wizard/print_order_wizard.py:62
 #, python-format
 msgid "The document you want to send contains the following mistake : %s"
 msgstr "El documento que desea enviar contiene el siguiente error: %s"
@@ -598,17 +599,6 @@ msgid "Zip"
 msgstr "C.P."
 
 #. module: print
-#: model:ir.model,name:print.model_base_config_settings
-msgid "base.config.settings"
-msgstr "base.config.settings"
-
-#. module: print
-#: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
-#: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
-msgid "or"
-msgstr "o"
-
-#. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard
 msgid "print.order.line.wizard"
 msgstr ""
@@ -617,8 +607,3 @@ msgstr ""
 #: model:ir.model,name:print.model_print_order_sendnow_wizard
 msgid "print.order.sendnow.wizard"
 msgstr ""
-
-#. module: print
-#: model:ir.model,name:print.model_print_order_wizard
-msgid "print.order.wizard"
-msgstr "Wizard.impresión.pedido"

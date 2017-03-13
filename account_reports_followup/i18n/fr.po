@@ -3,26 +3,25 @@
 # * account_reports_followup
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
 # Xavier Belmere <Info@cartmeleon.com>, 2016
 # Clo <clo@odoo.com>, 2016
-# Shark McGnark <peculiarcheese@gmail.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
+# Loic <loic.richard2@gmail.com>, 2016
 # Nancy Bolognesi <nb@microcom.ca>, 2016
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
-# Xavier Symons <xsy@openerp.com>, 2016
+# Shark McGnark <peculiarcheese@gmail.com>, 2016
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2016
 # Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2016
 # Lucas Deliege <lud@odoo.com>, 2016
 # Fabien Pinckaers <fp@openerp.com>, 2016
-# Loic <loic.richard2@gmail.com>, 2016
-# Olivier Dony <odo@odoo.com>, 2016
+# Florian Hatat <mininet@wanadoo.fr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:58+0000\n"
-"PO-Revision-Date: 2016-09-19 12:58+0000\n"
-"Last-Translator: Olivier Dony <odo@odoo.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Florian Hatat <mininet@wanadoo.fr>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,8 +31,6 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line3
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line5
 msgid ""
 "\n"
 "Dear %(partner_name)s,\n"
@@ -126,14 +123,14 @@ msgstr ""
 "                                <b>%(company_name)s</b> : Nom de la société de l'utilisateur"
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup
-msgid "A particular context for the followup report"
-msgstr "Un contexte particulier pour le rapport de suivi"
-
-#. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
+#: model:ir.model,name:account_reports_followup.model_account_followup_report_all
 msgid "A progress bar for followup reports"
 msgstr "Une barre de progression pour le suivi des rapports"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "A reminder can be sent as of"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
@@ -181,11 +178,6 @@ msgid "Company Name"
 msgstr "Nom de la société"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.view_account_config_settings_inherit
-msgid "Configure your follow-up levels"
-msgstr "Configurez vos niveaux de relance."
-
-#. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
 msgid "Created by"
@@ -211,15 +203,15 @@ msgstr "Les jours des niveaux de relance doivent être différents"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_display_name
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr "Afficher le nom"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Do it Later"
 msgstr "Le faire plus tard"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Done"
 msgstr "Fait"
 
@@ -262,6 +254,7 @@ msgstr "Derniere relance"
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
 msgid "Follow-up Levels"
 msgstr "Niveaux de relances"
 
@@ -275,6 +268,11 @@ msgstr "Responsable des relances"
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
 msgstr "Étapes de relance"
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_account_followup_report
+msgid "Followup Report"
+msgstr "Rapport de relance"
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -329,18 +327,13 @@ msgid "Latest Follow-up"
 msgstr "Date de relance"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_report_context_followup_level
-msgid "Level"
-msgstr "Niveau"
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:62
+#: code:addons/account_reports_followup/account_followup_report.py:53
 #, python-format
 msgid "Level: "
-msgstr ""
+msgstr "Grade:"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Log a Note"
 msgstr "Enregistrer une note"
 
@@ -351,19 +344,20 @@ msgid "Manual Action"
 msgstr "Action manuelle"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:57
+#: code:addons/account_reports_followup/account_followup_report.py:65
 #, python-format
-msgid "Manual action done\n"
-msgstr "Action manuelle effectuée\n"
+msgid "Manual action done"
+msgstr ""
 
 #. module: account_reports_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
-msgid "Minimum days between two follow-ups *"
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "Minimum spread between two reminders"
 msgstr ""
 
 #. module: account_reports_followup
@@ -401,6 +395,11 @@ msgid "Partner entries"
 msgstr "Entrées partenaires"
 
 #. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "Payment Follow-up"
+msgstr "Relance de paiement"
+
+#. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
 msgstr "Relances de paiement"
@@ -411,7 +410,7 @@ msgid "Payment Note"
 msgstr "Note de paiement"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Print Letter"
 msgstr "Imprimer la lettre"
 
@@ -446,7 +445,7 @@ msgid "Send an Email"
 msgstr "Envoyer un courriel"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Send by email"
 msgstr "Envoyer par courriel"
 
@@ -499,16 +498,6 @@ msgstr "Total crédit"
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Total debit"
 msgstr "Total débit"
-
-#. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
-msgid "Urging reminder email"
-msgstr "Courriel de rappel"
-
-#. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
-msgid "Urging reminder letter"
-msgstr "Lettre de rappel"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup
@@ -565,6 +554,11 @@ msgstr ""
 #: model:ir.model,name:account_reports_followup.model_account_config_settings
 msgid "account.config.settings"
 msgstr "account.config.settings"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+msgid "days after the previous reminder"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form

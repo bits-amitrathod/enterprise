@@ -9,7 +9,7 @@ class ProductTemplate(models.Model):
     version = fields.Integer('Version', default=1)
     eco_count = fields.Integer('# ECOs',compute='_compute_eco_count')
     eco_ids = fields.One2many('mrp.eco', 'product_tmpl_id', 'ECOs')
-    attachment_count = fields.Integer('# Attachments', compute='_compute_attachments')
+    template_attachment_count = fields.Integer('# Attachments', compute='_compute_attachments')
 
     @api.multi
     def _compute_eco_count(self):
@@ -20,7 +20,7 @@ class ProductTemplate(models.Model):
     def _compute_attachments(self):
         for p in self:
             attachments = self.env['ir.attachment'].search(['&', ('res_model', '=', 'product.template'), ('res_id', '=', self.id)])
-            p.attachment_count = len(attachments)
+            p.template_attachment_count = len(attachments)
 
     @api.multi
     def action_see_attachments(self):

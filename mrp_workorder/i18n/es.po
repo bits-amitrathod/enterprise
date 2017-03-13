@@ -9,18 +9,18 @@
 # Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
-# Carles Antoli <carlesantoli@hotmail.com>, 2016
 # oihane <oihanecruce@gmail.com>, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2016
 # Cristóbal Martí Oliver <info@moblesmarti.com>, 2016
 # Sergio Flores <vitavitae1@gmail.com>, 2016
 # Ivan Nieto <ivan.n.s@tuta.io>, 2016
 # Miguel Orueta <mo@landoo.es>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:15+0000\n"
-"PO-Revision-Date: 2016-10-10 09:15+0000\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
 "Last-Translator: Miguel Orueta <mo@landoo.es>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
@@ -143,6 +143,11 @@ msgid "Manufacturing Orders"
 msgstr "Órdenes de producción"
 
 #. module: mrp_workorder
+#: model:ir.actions.server,name:mrp_workorder.production_order_unplan_server_action
+msgid "Mrp: Unplan Production Orders"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 msgid "No operation made on this lot."
 msgstr "Ninguna operación realizada en este lote."
@@ -157,7 +162,7 @@ msgstr "Órdenes para planificar"
 #: code:addons/mrp_workorder/static/src/xml/stock_traceability_report_backend.xml:6
 #, python-format
 msgid "PRINT"
-msgstr "IMPRIMIR"
+msgstr "PRINT"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_body_print
@@ -273,11 +278,6 @@ msgid "Unplan"
 msgstr "No planificado"
 
 #. module: mrp_workorder
-#: model:ir.actions.server,name:mrp_workorder.production_order_unplan_server_action
-msgid "Unplan Orders"
-msgstr "Ordenes no planificadas"
-
-#. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_form_view_inherit_mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.view_picking_form_inherit_mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.view_production_lot_form_inherit_mrp_workorder
@@ -321,11 +321,11 @@ msgid ""
 "                products are produced."
 msgstr ""
 "Las órdenes de trabajo son la lista de operaciones a realizar para cada\n"
-"                MO. Una vez que inicie la primera orden de trabajo de una\n"
-"                fabricación, la MO es automáticamente marcada como iniciada.\n"
-"                Una vez que termine la última operación de una MO\n"
-"                esta se da automáticamente por realizada y el producto\n"
-"                relacionado como fabricado."
+"                orden de fabricación. Una vez que inicie la primera orden de trabajo de a\n"
+"                manufacturing order, the manufacturing order is automatically\n"
+"                marked as started. Once you finish the latest operation of a\n"
+"                manufacturing order, the MO is automatically done and the related\n"
+"                products are produced."
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_stock_traceability_report

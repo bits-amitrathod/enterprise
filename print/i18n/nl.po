@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
+# Martin Trigaux <mat@odoo.com>, 2016
 # Eric Geens <ericgeens@yahoo.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
 "Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr ""
 " versturen."
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:63
+#: code:addons/print/wizard/print_order_wizard.py:64
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
 msgstr "Minstens één van de documenten die u wilt verzenden bevat een fout."
@@ -96,7 +96,7 @@ msgstr "Annuleer"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_city
 msgid "City"
-msgstr "Plaats"
+msgstr "Gemeente"
 
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
@@ -152,11 +152,6 @@ msgid "Currency"
 msgstr "Valuta"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_base_config_settings_default_print_provider
-msgid "Default Print Provider"
-msgstr "Standaard afdrukprovider"
-
-#. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_display_name
 #: model:ir.model.fields,field_description:print.field_print_order_display_name
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_display_name
@@ -164,7 +159,7 @@ msgstr "Standaard afdrukprovider"
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_display_name
 #: model:ir.model.fields,field_description:print.field_print_provider_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -276,7 +271,7 @@ msgstr "Laatst bijgewerkt op"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
 msgid "Lines"
-msgstr "Regels"
+msgstr "Lijnen"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_res_model
@@ -369,6 +364,7 @@ msgstr "Afdruk Mixin (afdrukbaar object)"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
 msgid "Print Order"
 msgstr "Order afdrukken"
 
@@ -378,6 +374,7 @@ msgid "Print Order Lines"
 msgstr "Orderregels afdrukken"
 
 #. module: print
+#: model:ir.model,name:print.model_print_order_wizard
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
 msgid "Print Order Wizard"
 msgstr "Order afdruk wizard"
@@ -399,9 +396,11 @@ msgid "Print Provider"
 msgstr "Afdrukprovider"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
-msgid "Print order ids"
-msgstr "Order ids afdrukken"
+#: model:ir.actions.server,name:print.ir_cron_print_scheduler_action_ir_actions_server
+#: model:ir.cron,cron_name:print.ir_cron_print_scheduler_action
+#: model:ir.cron,name:print.ir_cron_print_scheduler_action
+msgid "Print: queue manager"
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -545,8 +544,8 @@ msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
 "file, or set up the Object ID and Model Name fields."
 msgstr ""
-"Dit document heeft geen gekoppelde PDF: U moet een bestand bijlage toevoegen"
-" of de velden object ID en model naam opzetten."
+"Dit document heeft geen geassocieerde PDF: U moet een bestand bijlage "
+"toevoegen of de velden object ID en model naam opzetten."
 
 #. module: print
 #: code:addons/print/models/print_provider.py:186
@@ -559,7 +558,7 @@ msgstr ""
 "geen rapport actie (ir.actions.report.xml) voor het model %s."
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:61
+#: code:addons/print/wizard/print_order_wizard.py:62
 #, python-format
 msgid "The document you want to send contains the following mistake : %s"
 msgstr "Het document dat u wilt verzenden bevat volgende fout: %s"
@@ -594,17 +593,6 @@ msgid "Zip"
 msgstr "Postcode"
 
 #. module: print
-#: model:ir.model,name:print.model_base_config_settings
-msgid "base.config.settings"
-msgstr "base.config.settings"
-
-#. module: print
-#: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
-#: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
-msgid "or"
-msgstr "of"
-
-#. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard
 msgid "print.order.line.wizard"
 msgstr "print.order.line.wizard"
@@ -613,8 +601,3 @@ msgstr "print.order.line.wizard"
 #: model:ir.model,name:print.model_print_order_sendnow_wizard
 msgid "print.order.sendnow.wizard"
 msgstr "print.order.sendnow.wizard"
-
-#. module: print
-#: model:ir.model,name:print.model_print_order_wizard
-msgid "print.order.wizard"
-msgstr "print.order.wizard"
