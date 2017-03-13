@@ -70,7 +70,7 @@ class report_account_aged_partner(models.AbstractModel):
                 'id': 0,
                 'name': _('Total'),
                 'class': 'total',
-                'level': 4,
+                'level': 'None',
                 'columns': [{'name': self.format_value(v)} for v in [total[6], total[4], total[3], total[2], total[1], total[0], total[5]]],
             }
             lines.append(total_line)
