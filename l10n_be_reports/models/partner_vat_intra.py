@@ -17,25 +17,27 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
     @api.model
     def get_lines(self, options, line_id=None):
         lines = []
-        seq = amount_sum = 0
-        company_clause = 'AND FALSE'
         context = self.env.context
-        if context.get('company_ids'):
-            company_ids = '(' + ','.join(map(str, context['company_ids'])) + ')'
-            company_clause = 'AND l.company_id IN ' + company_ids
+        if not context.get('company_ids'):
+            return lines
+        seq = amount_sum = 0
         tag_ids = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in ['l10n_be.tax_tag_44', 'l10n_be.tax_tag_46L', 'l10n_be.tax_tag_46T']]
-        self.env.cr.execute('''SELECT p.name As partner_name, l.partner_id AS partner_id, p.vat AS vat,
+        query = """
+            SELECT p.name As partner_name, l.partner_id AS partner_id, p.vat AS vat,
                       tt.account_account_tag_id AS intra_code, SUM(-l.balance) AS amount
                       FROM account_move_line l
                       LEFT JOIN res_partner p ON l.partner_id = p.id
                       LEFT JOIN account_move_line_account_tax_rel amlt ON l.id = amlt.account_move_line_id
                       LEFT JOIN account_tax_account_tag tt on amlt.account_tax_id = tt.account_tax_id
                       WHERE tt.account_account_tag_id IN %s
-                       AND l.date >= '%s'
-                       AND l.date <= '%s'
-                       %s
-                      GROUP BY p.name, l.partner_id, p.vat, intra_code''' % (tuple(tag_ids), context.get('date_from'), context.get('date_to'), company_clause))
-
+                       AND l.date >= %s
+                       AND l.date <= %s
+                       AND l.company_id IN %s
+                      GROUP BY p.name, l.partner_id, p.vat, intra_code
+        """
+        params = (tuple(tag_ids), context.get('date_from'),
+                  context.get('date_to'), tuple(context.get('company_ids')))
+        self.env.cr.execute(query, params)
         p_count = 0
 
         for row in self.env.cr.dictfetchall():
