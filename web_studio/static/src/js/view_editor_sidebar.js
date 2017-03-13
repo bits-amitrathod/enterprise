@@ -373,7 +373,7 @@ return Widget.extend(FieldManagerMixin, {
             followRelations: false,
             debugMode: session.debug,
             $content: $(_.str.sprintf(
-                _t("<div><p>The property <strong>%s</strong> of this field will be different from one record to another depending on the following custom domain.<br/>If there is no domain, the property is applied globally to the view</p></div>"),
+                _t("<div><p>The <strong>%s</strong> property is only applied to records matching this filter.</p></div>"),
                 modifier
             )),
         }).open();
