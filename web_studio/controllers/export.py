@@ -171,6 +171,12 @@ def generate_module(module, data):
             content.append("")
         yield ('warning.txt', "\n".join(content))
 
+    # add 'web_studio' to the list of dependencies of the exported module
+    # because the 'mail_thread' field used to identify models inheriting from
+    # 'mail_thread' is defined in web_studio.
+    # DO NOT FORWARDPORT PAST SAAS-14
+    depends.add('web_studio')
+
     # yield files '__manifest__.py' and '__init__.py'
     yield ('__manifest__.py', """# -*- coding: utf-8 -*-
 {
@@ -232,6 +238,15 @@ def get_relations(record, field):
             # The field 'relation_field' on 'ir.model.fields' is of type char,
             # but it refers to another field that must be defined beforehand
             return record.search([('model', '=', record.relation), ('name', '=', record.relation_field)])
+
+    # Fields 'res_model' and 'src_model' on 'ir.actions.act_window' and 'model'
+    # on 'ir.actions.report.xml' are of type char but refer to models that may
+    # be defined in other modules and those modules need to be listed as
+    # dependencies of the exported module
+    if field.model_name == 'ir.actions.act_window' and field.name in ('res_model', 'src_model'):
+        return record.env['ir.model'].search([('model', '=', record[field.name])])
+    if field.model_name == 'ir.actions.report.xml' and field.name == 'model':
+        return record.env['ir.model'].search([('model', '=', record.model)])
 
 
 def generate_record(record, get_xmlid):

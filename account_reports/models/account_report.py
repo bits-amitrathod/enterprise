@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import calendar
 import copy
 import xlsxwriter
 import json
@@ -475,8 +476,9 @@ class AccountReport(models.AbstractModel):
             display_value = False
             for index in range(0, options['comparison'].get('number_period', 1)):
                 if cmp_filter == 'same_last_year' or options_filter in ('this_year', 'last_year'):
-                    dt_from = dt_from and dt_from.replace(year=dt_from.year - 1) or dt_from
-                    dt_to = dt_to.replace(year=dt_to.year - 1)
+                    ly = lambda d: d - timedelta(days=366 if calendar.isleap(d) else 365)
+                    dt_from = dt_from and ly(dt_from).replace or dt_from
+                    dt_to = ly(dt_to)
                 elif cmp_filter == 'previous_period':
                     if options_filter in ('this_month', 'last_month', 'today'):
                         dt_from = dt_from and (dt_from - timedelta(days=1)).replace(day=1) or dt_from
