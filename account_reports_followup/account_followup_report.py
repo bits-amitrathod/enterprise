@@ -11,9 +11,9 @@ class account_report_followup_all(models.AbstractModel):
     _inherit = "account.followup.report.all"
 
     def get_partners_in_need_of_action(self, options):
+        partners_data = self.env['res.partner'].get_partners_in_need_of_action_and_update()
+        options['partner_followup_level'] = partners_data
         if options.get('type_followup') == 'action':
-            partners_data = self.env['res.partner'].get_partners_in_need_of_action_and_update()
-            options['partner_followup_level'] = partners_data
             return self.env['res.partner'].browse(partners_data.keys())
         return super(account_report_followup_all, self).get_partners_in_need_of_action(options)
 
@@ -24,6 +24,9 @@ class account_report_followup(models.AbstractModel):
     def get_followup_line(self, options):
         if options.get('partner_id') and options.get('partner_followup_level') and options['partner_followup_level'].get(options.get('partner_id')):
             followup_line = self.env['account_followup.followup.line'].browse(options['partner_followup_level'][options['partner_id']][0])
+            return followup_line
+        elif self.env.context.get('followup_line_id'):
+            followup_line = self.env['account_followup.followup.line'].browse(self.env.context.get('followup_line_id'))
             return followup_line
         else:
             return False

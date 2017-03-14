@@ -152,6 +152,13 @@ class report_account_followup_report(models.AbstractModel):
         additional_context['partner'] = partner
         additional_context['invoice_address_id'] = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice'])
         additional_context['today'] = fields.date.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
+        if self.env.context.get('followup_line_id'):
+            report_manager = self.get_report_manager(options)
+            report = {'name': self.get_report_name(),
+                    'summary': report_manager.summary,
+                    'company_name': self.env.user.company_id.name,
+                    'followup_line': self.env['account_followup.followup.line'].browse(self.env.context.get('followup_line_id')),}
+            additional_context['report'] = report
         return super(report_account_followup_report, self).get_html(options, line_id=line_id, additional_context=additional_context)
 
     def get_pdf(self, options, minimal_layout=True):
@@ -266,12 +273,13 @@ class account_report_followup_all(models.AbstractModel):
 
     def compute_pages(self, options):
         partner_in_need_of_action = self.get_partners_in_need_of_action(options)
+        partner_in_need_of_action = partner_in_need_of_action.sorted(key=lambda x: x.name)
         skipped_partners = self.env['res.partner'].browse(options.get('skipped_partners'))
         total_partners_to_do = (partner_in_need_of_action - skipped_partners).ids
-        if options.get('pager')*self.PAGER_SIZE >= len(total_partners_to_do) and options.get('pager') > 1:
-            options['pager'] = options['pager'] - 1
         options['total_pager'] = 1+ (len(total_partners_to_do)/self.PAGER_SIZE)
         max_index = min(len(total_partners_to_do), options['pager']*self.PAGER_SIZE)
+        if options.get('pager') > (options['total_pager']):
+            options['pager'] = options['total_pager']
         options['partners_to_show'] = total_partners_to_do[(options['pager']-1)*self.PAGER_SIZE:max_index]
         options['progressbar'][1] = len(total_partners_to_do)
         options['progressbar'][2] = 100 * options['progressbar'][0] / (options['progressbar'][1] or 1)
