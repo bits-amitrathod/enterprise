@@ -536,7 +536,6 @@ class WebStudioController(http.Controller):
         IrModelFields = request.env['ir.model.fields']
         view = request.env['ir.ui.view'].browse(view_id)
         studio_view = self._get_studio_view(view)
-        ViewModel = request.env[view.model]
         field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
@@ -588,6 +587,8 @@ class WebStudioController(http.Controller):
                 'name': "Odoo Studio: %s customization" % (view.name),
             })
 
+        # the registry has been updated so we take the new one
+        ViewModel = request.env[view.model]
         result = {
             'fields_view': ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type),
         }
