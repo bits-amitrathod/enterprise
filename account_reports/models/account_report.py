@@ -476,8 +476,9 @@ class AccountReport(models.AbstractModel):
             display_value = False
             for index in range(0, options['comparison'].get('number_period', 1)):
                 if cmp_filter == 'same_last_year' or options_filter in ('this_year', 'last_year'):
-                    ly = lambda d: d - timedelta(days=366 if calendar.isleap(d) else 365)
-                    dt_from = dt_from and ly(dt_from).replace or dt_from
+                    ly = lambda d: d - timedelta(days=366 if calendar.isleap(d.year) else 365)
+                    if dt_from:
+                        dt_from = ly(dt_from)
                     dt_to = ly(dt_to)
                 elif cmp_filter == 'previous_period':
                     if options_filter in ('this_month', 'last_month', 'today'):
