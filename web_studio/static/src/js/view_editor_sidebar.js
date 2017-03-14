@@ -392,8 +392,10 @@ return Widget.extend(FieldManagerMixin, {
     open_domain_editor: function (ev) {
         ev.preventDefault();
         var $input = $(ev.currentTarget);
-
-        var dialog = new DomainSelectorDialog(this, this.field_parameters.relation, $input.val(), {
+        // If we want to edit a filter domain, we don't have a specific
+        // field to work on but we want a domain on the current model.
+        var model = this.node.tag === 'filter' ? this.model : this.fields_parameters.relation;
+        var dialog = new DomainSelectorDialog(this, model, $input.val(), {
             readonly: false,
             debugMode: session.debug,
         }).open();
