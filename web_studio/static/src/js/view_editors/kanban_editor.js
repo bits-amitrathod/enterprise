@@ -36,7 +36,7 @@ return KanbanRenderer.extend({
 
         this.$el.empty();
         var fragment = document.createDocumentFragment();
-        this._render_ungrouped(fragment);
+        this._renderUngrouped(fragment);
 
         if (is_grouped) {
             var $group = $('<div>', {class: 'o_kanban_group'});
@@ -46,7 +46,7 @@ return KanbanRenderer.extend({
             // render a second empty column
             var fragment_empty = document.createDocumentFragment();
             this._render_demo_divs(fragment_empty, 7);
-            this._render_ghost_divs(fragment_empty);
+            this._renderGhostDivs(fragment_empty, 6);
             var $group_empty = $('<div>', {class: 'o_kanban_group'});
             $group_empty.append(fragment_empty);
             this.$el.append($group_empty);
@@ -55,7 +55,7 @@ return KanbanRenderer.extend({
         }
         return $.when();
     },
-    _render_ungrouped: function(fragment) {
+    _renderUngrouped: function(fragment) {
         // overwrite this method to use the KanbanRecordEditor
         var self = this;
         _.each(this.state.data, function (record) {
@@ -65,7 +65,7 @@ return KanbanRenderer.extend({
             self.kanban_record.appendTo(fragment);
         });
         this._render_demo_divs(fragment, 6);
-        this._render_ghost_divs(fragment);
+        this._renderGhostDivs(fragment, 6);
     },
     _render_demo_divs: function (fragment, nb_divs) {
         for (var i = 0, demo_div; i < nb_divs; i++) {
