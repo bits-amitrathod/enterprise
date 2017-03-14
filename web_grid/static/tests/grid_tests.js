@@ -316,12 +316,30 @@ QUnit.module('Views', {
             $input.click();
             $input.focus();
             var selection = window.getSelection();
-            assert.strictEqual($input[0], selection.focusNode.parentNode,
+            assert.strictEqual($(selection.focusNode).closest(".o_grid_input")[0], $input[0],
                 "the text in the cell is focused");
             assert.strictEqual(selection.anchorOffset, 0,
                 "selection starts at index 0");
-            assert.strictEqual(selection.focusOffset, 5,
-                "selection ends at index 5 (so the 00:00 text is selected");
+            /**
+             * The next assertion is browser dependent. Indeed Firefox and
+             * Chrome implement two working `window.getSelection` but with
+             * different return results.
+             *
+             * On Chrome, selecting the whole content of a node with an unique
+             * text node thanks to the `Range.selectNodeContents` function
+             * creates a Range element whose reference is the text node and the
+             * selection end value is the text node length.
+             * On Firefox, doing the same operation creates a Range element
+             * whose reference is the parent node and the selection end value
+             * is 1 (saying that one whole text node is selected).
+             *
+             * Note that the test could just check that the selection end is
+             * greater than 1 (checking that something is selected), but this
+             * problem was worth mentioning and the test is maybe more correct
+             * and explicit this way.
+             */
+            assert.strictEqual(selection.focusOffset, selection.focusNode === $input[0] ? 1 : 5,
+                "selection ends at the text end (so the 00:00 text is selected)");
 
             $input.text('abc');
             $input.focusout();
