@@ -54,7 +54,7 @@
             <script type="text/javascript" src="/web_enterprise/static/src/js/control_panel.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/view_manager.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/views/form_view.js"></script>
-            <script type="text/javascript" src="/web_enterprise/static/src/js/views/form_widgets.js"></script>
+            <script type="text/javascript" src="/web_enterprise/static/src/js/views/upgrade_fields.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/widgets/debug_manager.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/widgets/user_menu.js"></script>
 
@@ -67,6 +67,12 @@
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/list_view.less"/>
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/touch_device.less"/>
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/keyboard.less"/>
+        </xpath>
+    </template>
+
+    <template id="qunit_suite" name="enterprise_tests" inherit_id="web.qunit_suite">
+        <xpath expr="//t[@t-set='head']" position="inside">
+            <script type="text/javascript" src="/web_enterprise/static/tests/upgrade_fields_tests.js"></script>
         </xpath>
     </template>
 
