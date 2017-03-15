@@ -99,7 +99,7 @@ return Widget.extend(FieldManagerMixin, {
             this.field_widgets = _.chain(field_registry.map)
                 .pairs()
                 .filter(function(arr) {
-                    return _.contains(arr[1].prototype.supported_field_types, field.type) && !arr[0].includes('.');
+                    return _.contains(arr[1].prototype.supported_field_types, field.type) && arr[0].indexOf('.') < 0;
                 })
                 .map(function(array) {
                     return array[0];
