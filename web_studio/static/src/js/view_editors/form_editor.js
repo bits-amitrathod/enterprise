@@ -21,11 +21,6 @@ var FormEditor =  FormRenderer.extend({
                 remove_message_ids: this.has_message_field,
             });
         },
-        'click .o_web_studio_buttonbox_hook': function() {
-            this.trigger_up('view_change', {
-                structure: 'buttonbox',
-            });
-        }
     }),
     custom_events: _.extend({}, FormRenderer.prototype.custom_events, {
         'on_hook_selected': function() {
@@ -81,12 +76,20 @@ var FormEditor =  FormRenderer.extend({
             }
             // Add buttonbox hook
             if (!self.$('.oe_button_box').length) {
-                var $buttonbox_hook = $('<div>')
-                    .addClass('o_web_studio_buttonbox_hook oe_button_box')
-                    .append($('<span>', {
-                        text: _t('Add a Button Box'),
-                    }));
-                self.$('.o_form_sheet').prepend($buttonbox_hook);
+                var $buttonbox_hook = $('<button>')
+                    .addClass('btn btn-sm oe_stat_button o_web_studio_button_hook')
+                    .click(function(event) {
+                        event.preventDefault();
+                        self.trigger_up('view_change', {
+                            type: 'add',
+                            add_buttonbox: true,
+                            structure: 'button',
+                        });
+                    });
+                var $buttonbox = $('<div>')
+                    .addClass('oe_button_box')
+                    .append($buttonbox_hook);
+                self.$('.o_form_sheet').prepend($buttonbox);
             }
         });
     },

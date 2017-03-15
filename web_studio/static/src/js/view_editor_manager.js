@@ -402,11 +402,8 @@ return Widget.extend({
             case 'group':
                 this._add_element(type, node, xpath_info, position, 'group');
                 break;
-            case 'buttonbox':
-                this._add_buttonbox();
-                break;
             case 'button':
-                this._add_button(type);
+                this._add_button(event.data);
                 break;
             case 'notebook':
                 this._add_element(type, node, xpath_info, position, 'notebook');
@@ -591,32 +588,36 @@ return Widget.extend({
             },
         });
     },
-    _add_buttonbox: function() {
-        this.do({
-            type: 'buttonbox',
-        });
-    },
-    _add_button: function(type) {
+    _add_button: function(data) {
+        var self = this;
         var dialog = new NewButtonBoxDialog(this, this.model).open();
         dialog.on('saved', this, function(result) {
-            this.do({
-                type: type,
-                target: {
-                    tag: 'div',
-                    attrs: {
-                        class: 'oe_button_box',
-                    }
-                },
-                position: 'inside',
-                node: {
-                    tag: 'button',
-                    field: result.field_id,
-                    string: result.string,
-                    attrs: {
-                        class: 'oe_stat_button',
-                        icon: result.icon,
-                    }
-                },
+            var def;
+            if (data.add_buttonbox) {
+                this.operations.push({
+                    type: 'buttonbox',
+                });
+            }
+            $.when(def).then(function () {
+                    self.do({
+                    type: data.type,
+                    target: {
+                        tag: 'div',
+                        attrs: {
+                            class: 'oe_button_box',
+                        }
+                    },
+                    position: 'inside',
+                    node: {
+                        tag: 'button',
+                        field: result.field_id,
+                        string: result.string,
+                        attrs: {
+                            class: 'oe_stat_button',
+                            icon: result.icon,
+                        }
+                    },
+                });
             });
         });
     },
