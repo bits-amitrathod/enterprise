@@ -1,11 +1,9 @@
 odoo.define('web_studio.KanbanEditor', function (require) {
 "use strict";
 
-var core = require('web.core');
 var KanbanRecordEditor = require('web_studio.KanbanRecordEditor');
 var KanbanRenderer = require('web.KanbanRenderer');
-
-var _t = core._t;
+var ViewModel = require('web.ViewModel');
 
 return KanbanRenderer.extend({
     className: KanbanRenderer.prototype.className + ' o_web_studio_kanban_view_editor',
@@ -16,11 +14,22 @@ return KanbanRenderer.extend({
         this.state.data = this.state.data.slice(0, 1);
         this.all_fields = parent.fields;
     },
+    willStart: function () {
+        var self = this;
+        return this._super.apply(this, arguments).then(function () {
+            if (self.state.data.length === 0) {
+                // add an empty record to be able to edit something
+                var datamodel = new ViewModel();
+                return datamodel.make_record_with_defaults(
+                    self.state.model,
+                    self.fields
+                ).then(function (record_id){
+                    self.state.data.push(datamodel.get(record_id));
+                });
+            }
+        });
+    },
     _render: function () {
-        if (this.state.data.length === 0) {
-            return this._render_empty_editor();
-        }
-
         var is_grouped = !!this.arch.attrs.default_group_by;
         this.$el.toggleClass('o_kanban_grouped', is_grouped);
         this.$el.toggleClass('o_kanban_ungrouped', !is_grouped);
@@ -44,15 +53,6 @@ return KanbanRenderer.extend({
         } else {
             this.$el.append(fragment);
         }
-        return $.when();
-    },
-    _render_empty_editor: function() {
-        var style = {
-            color: 'white',
-            fontSize: '24px',
-        };
-        var $message = $('<div>').css(style).text(_t('No records to display'));
-        this.$el.html($message);
         return $.when();
     },
     _render_ungrouped: function(fragment) {
