@@ -122,7 +122,7 @@ var BooleanFieldComponent = AbstractNewFieldComponent.extend({
 });
 var SelectionFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'selection',
-    label: _t('Select'),
+    label: _t('Selection'),
     className: 'o_web_studio_field_selection',
 });
 var BinaryFieldComponent = AbstractNewFieldComponent.extend({
