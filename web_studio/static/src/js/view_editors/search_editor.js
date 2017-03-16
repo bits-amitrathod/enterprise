@@ -128,7 +128,7 @@ var SearchEditor = SearchView.extend(EditorMixin, {
                 tag: 'group',
             };
         }
-        var formEditorHook = this._render_hook(node, 'inside', 'tr', type);
+        var formEditorHook = this._renderHook(node, 'inside', 'tr', type);
         formEditorHook.appendTo($('<div>')); // start the widget
         $parent.append(formEditorHook.$el);
     },
@@ -140,19 +140,19 @@ var SearchEditor = SearchView.extend(EditorMixin, {
             self.trigger_up('node_clicked', {node: node});
         });
         // Add hook after this field
-        var formEditorHook = this._render_hook(node, 'after', 'tr', type);
+        var formEditorHook = this._renderHook(node, 'after', 'tr', type);
         formEditorHook.appendTo($('<div>')); // start the widget
         $result.after(formEditorHook.$el);
         this.setSelectable($result);
-        this._render_hook_before_first_child($result, type);
+        this._renderHook_before_first_child($result, type);
     },
     // Add hook before the first child of a table
     _add_hook_before_first_child: function($result, first_child, type) {
-        var formEditorHook = this._render_hook(first_child, 'before', 'tr', type);
+        var formEditorHook = this._renderHook(first_child, 'before', 'tr', type);
         formEditorHook.appendTo($('<div>')); // start the widget
         $result.before(formEditorHook.$el);
     },
-    _render_hook_before_first_child: function($result, type) {
+    _renderHook_before_first_child: function($result, type) {
         if (type === 'field' && this.first_field && this.first_field !== 'done') {
             this._add_hook_before_first_child($result, this.first_field, 'field');
             this.first_field = 'done';
@@ -189,7 +189,7 @@ var SearchEditor = SearchView.extend(EditorMixin, {
         this._prepare_editable_search_node(node, $result, 'group_by');
         return $result;
     },
-    _render_hook: function(node, position, tag_name, type) {
+    _renderHook: function(node, position, tag_name, type) {
         var hook_id = _.uniqueId();
         this.hook_nodes[hook_id] = {
             node: node,
@@ -238,7 +238,7 @@ var SearchEditor = SearchView.extend(EditorMixin, {
     },
 
     getLocalState: function() {
-        var state = this._super.apply(this, arguments);
+        var state = EditorMixin.getLocalState.apply(this, arguments);
         if (this.selected_node_id) {
             state.selected_node_id = this.selected_node_id;
         }

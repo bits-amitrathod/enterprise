@@ -6,8 +6,8 @@
         <div class="o_web_studio_select">
             <label for="date_start">Start Date Field</label>
             <select name="date_start" t-att-data-field="'date_start'">
-                <option t-foreach="widget.date_fields" t-as="field" t-att-value="field.key">
-                    <t t-esc="field.string"/><span t-if="widget.debug"> (<t t-esc="field.key"/>)</span>
+                <option t-foreach="widget.date_fields" t-as="field" t-att-value="field.name">
+                    <t t-esc="field.string"/><span t-if="widget.debug"> (<t t-esc="field.name"/>)</span>
                 </option>
             </select>
         </div>
@@ -15,8 +15,8 @@
             <label for="date_stop">Stop Date Field</label>
             <select name="date_stop" t-att-data-field="'date_stop'">
                 <option/>
-                <option t-foreach="widget.date_fields" t-as="field" t-att-value="field.key">
-                    <t t-esc="field.string"/><span t-if="widget.debug"> (<t t-esc="field.key"/>)</span>
+                <option t-foreach="widget.date_fields" t-as="field" t-att-value="field.name">
+                    <t t-esc="field.string"/><span t-if="widget.debug"> (<t t-esc="field.name"/>)</span>
                 </option>
             </select>
         </div>

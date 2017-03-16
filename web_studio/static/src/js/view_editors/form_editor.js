@@ -19,7 +19,10 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         'on_hook_selected': '_onSelectedHook',
     }),
     /**
-     * @override
+     * @constructor
+     * @param {Object} params
+     * @param {Boolean} params.show_invisible
+     * @param {Boolean} params.chatter_allowed
      */
     init: function (parent, state, params) {
         this._super.apply(this, arguments);
@@ -34,14 +37,20 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     // Public
     //--------------------------------------------------------------------------
 
-    getLocalState: function() {
-        var state = this._super.apply(this, arguments);
+    /**
+     * @override
+     */
+    getLocalState: function () {
+        var state = EditorMixin.getLocalState.apply(this, arguments);
         if (this.selected_node_id) {
             state.selected_node_id = this.selected_node_id;
         }
         return state;
     },
-    highlightNearestHook: function($helper, position) {
+    /**
+     * @override
+     */
+    highlightNearestHook: function ($helper, position) {
         var self = this;
         EditorMixin.highlightNearestHook.apply(this, arguments);
 
@@ -74,7 +83,10 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
 
         return is_nearest_hook;
     },
-    setLocalState: function(state) {
+    /**
+     * @override
+     */
+    setLocalState: function (state) {
         this.silent = true;
         this._super.apply(this, arguments);
         this.unselectedElements();
@@ -91,7 +103,53 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     // Private
     //--------------------------------------------------------------------------
 
-    _render: function() {
+    /**
+     * @override
+     * @private
+     */
+    _evaluateModifiers: function () {
+        this._super.apply(this, arguments);
+        if (this.show_invisible) {
+            _.each(this.nodeModifiers, function (d) {
+                if (d.$el.hasClass('o_form_invisible')) {
+                    d.$el
+                        .removeClass('o_form_invisible')
+                        .addClass('o_web_studio_show_invisible');
+                }
+            });
+        }
+    },
+    /**
+     * Process a field node, in particular, bind an click handler on $el to edit
+     * its field attributes.
+     *
+     * @private
+     * @param {Object} node
+     * @param {JQuery} $el
+     */
+    _processField: function (node, $el) {
+        var self = this;
+        // detect presence of mail fields
+        if (node.attrs.name === "message_ids") {
+            this.has_message_field = true;
+        } else if (node.attrs.name === "message_follower_ids") {
+            this.has_follower_field = true;
+        } else {
+            $el.attr('data-node-id', this.node_id++);
+            $el.click(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                self.selected_node_id = $el.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
+            });
+            this.setSelectable($el);
+        }
+    },
+    /**
+     * @override
+     * @private
+     */
+    _render: function () {
         var self = this;
         this.has_chatter = false;
         this.has_follower_field = false;
@@ -99,7 +157,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
 
         this.$el.droppable({
             accept: ".o_web_studio_component",
-            drop: function(event, ui) {
+            drop: function (event, ui) {
                 var $hook = self.$('.o_web_studio_nearest_hook');
                 if ($hook.length) {
                     var hook_id = $hook.data('hook_id');
@@ -120,7 +178,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             },
         });
 
-        return this._super.apply(this, arguments).then(function() {
+        return this._super.apply(this, arguments).then(function () {
             // Add chatter hook
             if (!self.has_chatter && self.chatter_allowed) {
                 var $chatter_hook = $('<div>')
@@ -149,164 +207,24 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             }
         });
     },
-    _renderNode: function(node) {
-        var self = this;
-        var $el = this._super.apply(this, arguments);
-        if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
-            this.has_chatter = true;
-            this.setSelectable($el);
-            // Put a div in overlay preventing all clicks chatter's elements
-            $el.append($('<div>', { 'class': 'o_web_studio_overlay' }));
-            $el.attr('data-node-id', this.node_id++);
-            $el.click(function() {
-                self.selected_node_id = $el.data('node-id');
-                self.trigger_up('node_clicked', {node: node});
-            });
-        }
-        return $el;
-    },
-    _renderTagSheet: function(node) {
-        var $result = this._super.apply(this, arguments);
-        var formEditorHook = this._render_hook(node, 'inside');
-        formEditorHook.appendTo($result.find('.o_form_sheet'));
-        return $result;
-    },
-    _renderGenericTag: function(node) {
-        var $result = this._super.apply(this, arguments);
-        if (node.attrs.class === 'oe_title') {
-            var formEditorHook = this._render_hook(node, 'after');
-            formEditorHook.appendTo($result);
-        }
-        return $result;
-    },
-    _renderTagField: function(node) {
-        var $el = this._super.apply(this, arguments);
-        this._process_field(node, $el);
-        return $el;
-    },
-    _renderFieldWidget: function(node) {
-        var widget = this._super.apply(this, arguments);
-        // make empty widgets appear if there is no label
-        if (widget.$el.hasClass('o_form_field_empty') && (!node.has_label || node.attrs.nolabel)) {
-            widget.$el.removeClass('o_form_field_empty').addClass('o_web_studio_widget_empty');
-            widget.$el.text(widget.string);
-        }
-        return widget;
-    },
-    _renderTagGroup: function(node) {
-        var $result = this._super.apply(this, arguments);
-        // Add hook after this group
-        var formEditorHook = this._render_hook(node, 'after');
-        formEditorHook.appendTo($('<div>')); // start the widget
-        return $result.add(formEditorHook.$el);
-    },
-    _renderInnerGroup: function(node) {
-        var self = this;
-        var formEditorHook;
-        var $result = this._super.apply(this, arguments);
-        // Add click event to see group properties in sidebar
-        $result.attr('data-node-id', this.node_id++);
-        $result.click(function(event) {
-            event.stopPropagation();
-            self.selected_node_id = $result.data('node-id');
-            self.trigger_up('node_clicked', {node: node});
-        });
-        this.setSelectable($result);
-        // Add hook for groups that have not yet content.
-        if (!node.children.length) {
-            formEditorHook = this._render_hook(node, 'inside', 'tr');
-            formEditorHook.appendTo($result);
-            this.setSelectable($result);
-        } else {
-            // Add hook before the first node in a group.
-            formEditorHook = this._render_hook(node.children[0], 'before', 'tr');
-            formEditorHook.appendTo($('<div>')); // start the widget
-            $result.find("tr").first().before(formEditorHook.$el);
-        }
-        return $result;
-    },
-    _renderInnerGroupLabel: function ($result, label, linked_node) {
-        $result = this._super.apply(this, arguments);
-        if (linked_node) {
-            // We have to know if this field has a label or not.
-            linked_node.has_label = true;
-            var formEditorHook = this._render_hook(linked_node, 'after', 'tr');
-            formEditorHook.appendTo($result);
-        }
-        return $result;
-    },
+    /**
+     * @private
+     * @returns {JQuery}
+     */
     _renderAddingContentLine: function (node) {
-        var formEditorHook = this._render_hook(node, 'after', 'tr');
+        var formEditorHook = this._renderHook(node, 'after', 'tr');
         formEditorHook.appendTo($('<div>')); // start the widget
         return formEditorHook.$el;
     },
-    _renderInnerField: function(node) {
-        // We have to know if this field has a label or not.
-        node.has_label = true;
-        var $result = this._super.apply(this, arguments);
-
-        if (!$result.find('.o_form_field').is('.o_form_invisible')) {
-            // apply to the entire <tr> o_web_studio_show_invisible
-            // rather then ineer label/input
-            if ($result.find('.o_form_field').hasClass('o_web_studio_show_invisible')) {
-                $result.find('.o_form_field, .o_form_label').removeClass('o_web_studio_show_invisible');
-                $result.addClass('o_web_studio_show_invisible');
-            }
-            // Add hook only if field is visible
-            $result = $result.add(this._renderAddingContentLine(node));
-        }
-
-        this._process_field(node, $result.find('.o_td_label').parent());
-        return $result;
-    },
-    _renderTagNotebook: function(node) {
-        var self = this;
-        var $result = this._super.apply(this, arguments);
-
-        var $addTag = $('<li>').append('<a href="#"><i class="fa fa-plus-square" aria-hidden="true"></a></i>');
-        $addTag.click(function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            self.trigger_up('view_change', {
-                type: 'add',
-                structure: 'page',
-                node: node.children[node.children.length - 1], // Get last page in this notebook
-            });
-        });
-        $result.find('ul.nav-tabs').append($addTag);
-
-        var formEditorHook = this._render_hook(node, 'after');
-        formEditorHook.appendTo($result);
-        return $result;
-    },
-    _renderTabHeader: function(page) {
-        var self = this;
-        var $result = this._super.apply(this, arguments);
-        $result.attr('data-node-id', this.node_id++);
-        $result.click(function(event) {
-            event.preventDefault();
-            if (!self.silent) {
-                self.selected_node_id = $result.data('node-id');
-                self.trigger_up('node_clicked', {node: page});
-            }
-        });
-        this.setSelectable($result);
-        return $result;
-    },
-    _renderTabPage: function(node) {
-        var $result = this._super.apply(this, arguments);
-        // Add hook only for pages that have not yet content.
-        if (!$result.children().length) {
-            var formEditorHook = this._render_hook(node, 'inside', 'div', 'page');
-            formEditorHook.appendTo($result);
-        }
-        return $result;
-    },
-    _renderButtonBox: function() {
+    /**
+     * @override
+     * @private
+     */
+    _renderButtonBox: function () {
         var self = this;
         var $buttonbox = this._super.apply(this, arguments);
         var $buttonhook = $('<button>').addClass('btn btn-sm oe_stat_button o_web_studio_button_hook');
-        $buttonhook.click(function(event) {
+        $buttonhook.click(function (event) {
             event.preventDefault();
 
             self.trigger_up('view_change', {
@@ -318,11 +236,131 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         $buttonhook.prependTo($buttonbox);
         return $buttonbox;
     },
-    _renderStatButton: function(node) {
+    /**
+     * @override
+     * @private
+     */
+    _renderFieldWidget: function (node) {
+        var widget = this._super.apply(this, arguments);
+        // make empty widgets appear if there is no label
+        if (!widget.isSet() && (!node.has_label || node.attrs.nolabel)) {
+            widget.$el.removeClass('o_form_field_empty').addClass('o_web_studio_widget_empty');
+            widget.$el.text(widget.string);
+        }
+        return widget;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderGenericTag: function (node) {
+        var $result = this._super.apply(this, arguments);
+        if (node.attrs.class === 'oe_title') {
+            var formEditorHook = this._renderHook(node, 'after');
+            formEditorHook.appendTo($result);
+        }
+        return $result;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderInnerGroup: function (node) {
+        var self = this;
+        var formEditorHook;
+        var $result = this._super.apply(this, arguments);
+        // Add click event to see group properties in sidebar
+        $result.attr('data-node-id', this.node_id++);
+        $result.click(function (event) {
+            event.stopPropagation();
+            self.selected_node_id = $result.data('node-id');
+            self.trigger_up('node_clicked', {node: node});
+        });
+        this.setSelectable($result);
+        // Add hook for groups that have not yet content.
+        if (!node.children.length) {
+            formEditorHook = this._renderHook(node, 'inside', 'tr');
+            formEditorHook.appendTo($result);
+            this.setSelectable($result);
+        } else {
+            // Add hook before the first node in a group.
+            formEditorHook = this._renderHook(node.children[0], 'before', 'tr');
+            formEditorHook.appendTo($('<div>')); // start the widget
+            $result.find("tr").first().before(formEditorHook.$el);
+        }
+        return $result;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderInnerGroupLabel: function ($result, label, linked_node) {
+        $result = this._super.apply(this, arguments);
+        if (linked_node) {
+            // We have to know if this field has a label or not.
+            linked_node.has_label = true;
+            var formEditorHook = this._renderHook(linked_node, 'after', 'tr');
+            formEditorHook.appendTo($result);
+        }
+        return $result;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderInnerGroupRow: function (nodes) {
+        for (var i = 0; i < nodes.length; i++) {
+            // we need to know if this field has a label or not
+            nodes[i].has_label = true;
+        }
+        var $result = this._super.apply(this, arguments);
+
+        // put hooks for each node in the group
+        for (var j = 0; j < nodes.length; j++) {
+            var node = nodes[j];
+            if (!$result.find('.o_form_field').is('.o_form_invisible')) {
+                // apply to the entire <tr> o_web_studio_show_invisible
+                // rather then inner label/input
+                if ($result.find('.o_form_field').hasClass('o_web_studio_show_invisible')) {
+                    $result.find('.o_form_field, .o_form_label').removeClass('o_web_studio_show_invisible');
+                    $result.addClass('o_web_studio_show_invisible');
+                }
+                // add hook only if field is visible
+                $result = $result.add(this._renderAddingContentLine(node));
+            }
+            this._processField(node, $result.find('.o_td_label').parent());
+        }
+        return $result;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderNode: function (node) {
+        var self = this;
+        var $el = this._super.apply(this, arguments);
+        if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
+            this.has_chatter = true;
+            this.setSelectable($el);
+            // Put a div in overlay preventing all clicks chatter's elements
+            $el.append($('<div>', { 'class': 'o_web_studio_overlay' }));
+            $el.attr('data-node-id', this.node_id++);
+            $el.click(function () {
+                self.selected_node_id = $el.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
+            });
+        }
+        return $el;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderStatButton: function (node) {
         var self = this;
         var $button = this._super.apply(this, arguments);
         $button.attr('data-node-id', this.node_id++);
-        $button.click(function(ev) {
+        $button.click(function (ev) {
             if (! $(ev.target).closest('.o_form_field').length) {
                 // click on the button and not on the field inside this button
                 self.selected_node_id = $button.data('node-id');
@@ -332,32 +370,100 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         this.setSelectable($button);
         return $button;
     },
-    _handleAttributes: function($el) {
-        this._super.apply(this, arguments);
-        if (this.show_invisible && $el.hasClass('o_form_invisible')) {
-            $el.removeClass('o_form_invisible').addClass('o_web_studio_show_invisible');
-        }
-    },
-    _process_field: function(node, $el) {
+    /**
+     * @override
+     * @private
+     */
+    _renderTabHeader: function (page) {
         var self = this;
-        // detect presence of mail fields
-        if (node.attrs.name === "message_ids") {
-            this.has_message_field = true;
-        } else if (node.attrs.name === "message_follower_ids") {
-            this.has_follower_field = true;
-        } else {
-            // bind handler on field clicked to edit field's attributes
-            $el.attr('data-node-id', this.node_id++);
-            $el.click(function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                self.selected_node_id = $el.data('node-id');
-                self.trigger_up('node_clicked', {node: node});
-            });
-            this.setSelectable($el);
-        }
+        var $result = this._super.apply(this, arguments);
+        $result.attr('data-node-id', this.node_id++);
+        $result.click(function (event) {
+            event.preventDefault();
+            if (!self.silent) {
+                self.selected_node_id = $result.data('node-id');
+                self.trigger_up('node_clicked', {node: page});
+            }
+        });
+        this.setSelectable($result);
+        return $result;
     },
-    _render_hook: function(node, position, tagName, type) {
+    /**
+     * @override
+     * @private
+     */
+    _renderTabPage: function (node) {
+        var $result = this._super.apply(this, arguments);
+        // Add hook only for pages that have not yet content.
+        if (!$result.children().length) {
+            var formEditorHook = this._renderHook(node, 'inside', 'div', 'page');
+            formEditorHook.appendTo($result);
+        }
+        return $result;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderTagField: function (node) {
+        var $el = this._super.apply(this, arguments);
+        this._processField(node, $el);
+        return $el;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderTagGroup: function (node) {
+        var $result = this._super.apply(this, arguments);
+        // Add hook after this group
+        var formEditorHook = this._renderHook(node, 'after');
+        formEditorHook.appendTo($('<div>')); // start the widget
+        return $result.add(formEditorHook.$el);
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderTagNotebook: function (node) {
+        var self = this;
+        var $result = this._super.apply(this, arguments);
+
+        var $addTag = $('<li>').append('<a href="#"><i class="fa fa-plus-square" aria-hidden="true"></a></i>');
+        $addTag.click(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            self.trigger_up('view_change', {
+                type: 'add',
+                structure: 'page',
+                node: node.children[node.children.length - 1], // Get last page in this notebook
+            });
+        });
+        $result.find('ul.nav-tabs').append($addTag);
+
+        var formEditorHook = this._renderHook(node, 'after');
+        formEditorHook.appendTo($result);
+        return $result;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderTagSheet: function (node) {
+        var $result = this._super.apply(this, arguments);
+        var formEditorHook = this._renderHook(node, 'inside');
+        formEditorHook.appendTo($result.find('.o_form_sheet'));
+        return $result;
+    },
+    /**
+     * @private
+     * @param {Object} node
+     * @param {String} position
+     * @param {String} tagName
+     * @param {String} type
+     * @returns {Widget} FormEditorHook
+     */
+    _renderHook: function (node, position, tagName, type) {
         var hook_id = _.uniqueId();
         this.hook_nodes[hook_id] = {
             node: node,
@@ -371,6 +477,9 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     // Handlers
     //--------------------------------------------------------------------------
 
+    /**
+     * @private
+     */
     _onAddChatter: function () {
         // prevent multiple click
         $(event.currentTarget).css('pointer-events', 'none');
@@ -380,11 +489,17 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             remove_message_ids: this.has_message_field,
         });
     },
+    /**
+     * @private
+     */
     _onButtonBoxHook: function () {
         this.trigger_up('view_change', {
             structure: 'buttonbox',
         });
     },
+    /**
+     * @private
+     */
     _onSelectedHook: function () {
         this.selected_node_id = false;
     },

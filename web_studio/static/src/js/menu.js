@@ -17,99 +17,44 @@ var _t = core._t;
 
 Menu.include({
     events: _.extend({}, Menu.prototype.events, {
-        'click .o_web_studio_change_background': function() {
-            var self = this;
-            this.$('input.o_form_input_file').on('change', function() {
-                self.$('form.o_form_binary_form').submit();
-            });
-            this.$('input.o_form_input_file').click();
-        },
-        'click .o_web_studio_export': function(event) {
-            event.preventDefault();
-            // Export all customizations done by Studio in a zip file containing Odoo modules
-            var $export = $(event.currentTarget);
-            $export.addClass('o_disabled'); // disable the export button while it is exporting
-            session.get_file({
-                url: '/web_studio/export',
-                complete: $export.removeClass.bind($export, 'o_disabled'), // re-enable export
-            });
-        },
-        'click .o_web_studio_import': function(event) {
-            event.preventDefault();
-            var self = this;
-            // Open a dialog allowing to import new modules (e.g. exported customizations)
-            this.do_action({
-                name: 'Import modules',
-                res_model: 'base.import.module',
-                views: [[false, 'form']],
-                type: 'ir.actions.act_window',
-                target: 'new',
-                context: {
-                    dialog_size: 'medium',
-                },
-            }, {
-                on_close: function() {
-                    data_manager.invalidate(); // invalidate cache
-                    self.trigger_up('reload_menu_data'); // reload menus
-                },
-            });
-        },
+        'click .o_web_studio_change_background': '_onChangeBackground',
+        'click .o_web_studio_export': '_onExport',
+        'click .o_web_studio_import': '_onImport',
     }),
-
-    init: function() {
+    /**
+     * @override
+     */
+    init: function () {
         this._super.apply(this, arguments);
         bus.on('studio_toggled', this, this.switch_studio_mode.bind(this));
         this.widget = "image";
         this.company_id = session.company_id;
         this.fileupload_id = _.uniqueId('o_fileupload');
-        $(window).on(this.fileupload_id, this.on_background_loaded);
+        $(window).on(this.fileupload_id, this._onBackgroundLoaded);
     },
-
+    /**
+     * @override
+     */
     destroy: function () {
         $(window).off(this.fileupload_id);
         return this._super.apply(this, arguments);
     },
 
-    toggle_mode: function(appswitcher) {
-        this._super.apply(this, arguments);
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
 
-        if (!appswitcher && this.$app_switcher_menu) {
-            this.$app_switcher_menu.remove();
-        }
-    },
-
-    _clean: function () {
-        if (this.edit_menu) {
-            this.edit_menu.destroy();
-            this.edit_menu = undefined;
-        }
-        if (this.studio_menu) {
-            this.studio_menu.destroy();
-            this.studio_menu = undefined;
-        }
-        if (this.$notes) {
-            this.$notes.remove();
-            this.$nodes = undefined;
-        }
-        if (this.$leave_button) {
-            this.$leave_button.remove();
-            this.$leave_button = undefined;
-        }
-        if (this.$app_switcher_menu) {
-            this.$app_switcher_menu.remove();
-            this.$app_switcher_menu = undefined;
-        }
-    },
-
-    /*
-     * Modifies the menu according to the Studio mode (black navbar, leave and notes buttons, etc.)
-     *
-     * @param mode: 'main'/'app_creator' for Studio or false
-     * @param studio_info: dict of studio info (multi_lang, dbuuid) (mandatory if mode)
-     * @param action: edited action (mandatory if mode = 'main')
-     * @param active_view (mandatory if mode = 'main')
+    /**
+     * Modifies the menu according to the Studio mode (black navbar,
+     * leave and notes buttons, etc.)
+     * @param {String} mode - 'main'/'app_creator' for Studio or false
+     * @param {Object} studio_info - mandatory if mode
+     *        - multi_lang
+     *        - dbuuid 
+     * @param {Object} action - edited action, mandatory if mode = 'main'
+     * @param {Object} active_view - mandatory if mode = 'main'
      */
-    switch_studio_mode: function(mode, studio_info, action, active_view) {
+    switch_studio_mode: function (mode, studio_info, action, active_view) {
         var self = this;
         var old_mode = this.studio_mode;
         if (old_mode === mode) {
@@ -136,7 +81,9 @@ Menu.include({
                 }
             } else {
                 // In app switcher
-                this.$app_switcher_menu = $(qweb.render('web_studio.AppSwitcherMenu', {widget: this}));
+                this.$app_switcher_menu = $(qweb.render('web_studio.AppSwitcherMenu', {
+                    widget: this,
+                }));
                 this.$app_switcher_menu.appendTo($main_navbar);
             }
 
@@ -148,7 +95,7 @@ Menu.include({
                     class: 'btn btn-primary',
                     text: _t("Close"),
                 }))
-                .click(function(event) {
+                .click(function (event) {
                     event.preventDefault();
                     self.trigger_up('click_studio_mode');
                 });
@@ -167,20 +114,117 @@ Menu.include({
             this.$detached_systray.prependTo('.o_main_navbar');
         }
     },
+    /**
+     * @override
+     */
+    toggle_mode: function (appswitcher) {
+        this._super.apply(this, arguments);
 
-    on_background_loaded: function(event, result) {
+        if (!appswitcher && this.$app_switcher_menu) {
+            this.$app_switcher_menu.remove();
+        }
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    _clean: function () {
+        if (this.edit_menu) {
+            this.edit_menu.destroy();
+            this.edit_menu = undefined;
+        }
+        if (this.studio_menu) {
+            this.studio_menu.destroy();
+            this.studio_menu = undefined;
+        }
+        if (this.$notes) {
+            this.$notes.remove();
+            this.$nodes = undefined;
+        }
+        if (this.$leave_button) {
+            this.$leave_button.remove();
+            this.$leave_button = undefined;
+        }
+        if (this.$app_switcher_menu) {
+            this.$app_switcher_menu.remove();
+            this.$app_switcher_menu = undefined;
+        }
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @param {Event} event
+     * @param {Object} result
+     */
+    _onBackgroundLoaded: function (event, result) {
         if (result.error || !result.id ) {
             this.do_warn(result.error);
         } else {
             framework.blockUI();
-            customize.set_background_image(result.id)
-                .then(function() {
+            customize.setBackgroundImage(result.id)
+                .then(function () {
                     window.location.reload();
-                }).fail(function() {
+                }).fail(function () {
                     framework.unblockUI();
                 });
 
         }
+    },
+    /**
+     * @private
+     */
+    _onChangeBackground: function () {
+        var self = this;
+        this.$('input.o_form_input_file').on('change', function () {
+            self.$('form.o_form_binary_form').submit();
+        });
+        this.$('input.o_form_input_file').click();
+    },
+    /**
+     * Export all customizations done by Studio in a zip file containing Odoo
+     * modules.
+     *
+     * @param {Event} event
+     */
+    _onExport: function (event) {
+        event.preventDefault();
+        var $export = $(event.currentTarget);
+        // disable the export button while it is exporting
+        $export.addClass('o_disabled');
+        session.get_file({
+            url: '/web_studio/export',
+            // re-enable export
+            complete: $export.removeClass.bind($export, 'o_disabled'),
+        });
+    },
+    /**
+     * Open a dialog allowing to import new modules
+     * (e.g. exported customizations).
+     *
+     * @param {Event} event
+     */
+    _onImport: function (event) {
+        event.preventDefault();
+        var self = this;
+        this.do_action({
+            name: 'Import modules',
+            res_model: 'base.import.module',
+            views: [[false, 'form']],
+            type: 'ir.actions.act_window',
+            target: 'new',
+            context: {
+                dialog_size: 'medium',
+            },
+        }, {
+            on_close: function () {
+                data_manager.invalidate(); // invalidate cache
+                self.trigger_up('reload_menu_data'); // reload menus
+            },
+        });
     },
 });
 

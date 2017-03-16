@@ -23,17 +23,27 @@ var reports = [
     },
 ];
 
+// TODO: this can't work right now
+
 var StudioReportKanbanView = KanbanView.extend({
     custom_events: _.extend({}, KanbanView.prototype.custom_events, {
         open_record: 'open_record',
     }),
-
-    add_record: function() {
+    /**
+     * Do not add a record but open the dialog.
+     *
+     * @override
+     */
+    add_record: function () {
         var model = this.dataset.context.search_default_model;
         new AddReportDialog(this, model).open();
     },
-
-    open_record: function(event) {
+    /**
+     * Do not open the form view but open the Report Editor action.
+     *
+     * @override
+     */
+    open_record: function (event) {
         var self = this;
         this._rpc({
                 model: 'ir.actions.report.xml',
@@ -58,11 +68,15 @@ var StudioReportKanbanView = KanbanView.extend({
 
 var AddReportDialog = Dialog.extend({
     events: {
-        'click .o_web_studio_report_template_item': '_create_report_from_template',
+        'click .o_web_studio_report_template_item': '_onReportTemplate',
     },
-
-    init: function(parent, model) {
-        this.model = model;
+    /**
+     * @constructor
+     * @param {Widget} parent
+     * @param {String} res_model
+     */
+    init: function (parent, res_model) {
+        this.res_model = res_model;
         var options = {
             title: _t("Select a report template"),
             size: 'medium',
@@ -70,22 +84,47 @@ var AddReportDialog = Dialog.extend({
         };
         this._super(parent, options);
     },
-    start: function() {
-        var $message = $('<div>').addClass('o_web_studio_report_template_dialog');
+    /**
+     * @override
+     */
+    start: function () {
+        // TODO: refactor to use a template?
+        var $message = $('<div>', {
+            class: 'o_web_studio_report_template_dialog',
+        });
         _.each(reports, function (report) {
-            $message.append($('<div>').addClass('o_web_studio_report_template_item')
+            $message.append(
+                $('<div>', {
+                    class: 'o_web_studio_report_template_item',
+                })
                 .data("template_name", report.template_name)
-                .append($('<div>').text(report.name))
-                .append($('<span>').addClass('o_web_studio_report_template_description').text(report.description))
+                .append($('<div>', {
+                    text: report.name,
+                }))
+                .append($('<span>', {
+                    class: 'o_web_studio_report_template_description',
+                    text: report.description,
+                }))
             );
         });
         this.$el.append($message);
         return this._super.apply(this, arguments);
     },
-    _create_report_from_template: function(event) {
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * Create a new report.
+     *
+     * @private
+     * @param {Event} event
+     */
+    _onReportTemplate: function (event) {
         var self = this;
         var template_name = $(event.currentTarget).data('template_name');
-        customize.create_new_report(this.model, template_name).then(function(result) {
+        customize.createNewReport(this.res_model, template_name).then(function (result) {
             self.trigger_up('open_record', {id: result.id});
             self.close();
         });

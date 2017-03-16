@@ -9,9 +9,20 @@ AbstractView.include({
     // Public
     //--------------------------------------------------------------------------
 
-    createStudioEditor: function (parent, Editor) {
-        return this._createStudioRenderer(parent, Editor);
+    /**
+     * @param {Widget} parent
+     * @param {Widget} Editor
+     * @param {Object} options
+     * @returns {Widget}
+     */
+    createStudioEditor: function (parent, Editor, options) {
+        return this._createStudioRenderer(parent, Editor, options);
     },
+    /**
+     * @param {Widget} parent
+     * @param {Widget} Editor
+     * @returns {Widget}
+     */
     createStudioRenderer: function (parent) {
         var Renderer = this.config.Renderer;
         return this._createStudioRenderer(parent, Renderer);
@@ -21,16 +32,20 @@ AbstractView.include({
     // Private
     //--------------------------------------------------------------------------
 
-    _createStudioRenderer: function (parent, Renderer) {
+    /**
+     * @param {Widget} parent
+     * @param {Widget} Renderer
+     * @returns {Widget}
+     */
+    _createStudioRenderer: function (parent, Renderer, options) {
         var self = this;
         var model = this.getModel(parent);
-        return $.when(model.load(this.loadParams), this._loadLibs()).then(function (handle) {
+        return $.when(
+            model.load(this.loadParams),
+            this._loadLibs()
+        ).then(function (handle) {
             var state = model.get(handle);
-            var params = _.extend({}, self.rendererParams, {
-                // TODO: depend on each view
-                mode: 'readonly',
-                hasSelectors: false,
-            });
+            var params = _.extend({}, self.rendererParams, options);
             var editor = new Renderer(parent, state, params);
 
             model.setParent(editor);

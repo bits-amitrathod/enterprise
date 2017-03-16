@@ -4,15 +4,22 @@ odoo.define('web_studio.NewFieldDialog', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var relational_fields = require('web.relational_fields');
+var ModelFieldSelector = require('web.ModelFieldSelector');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
-var ModelFieldSelector = require("web.ModelFieldSelector");
 
 var _t = core._t;
 var Many2one = relational_fields.FieldMany2One;
 
+// TODO: refactor this file
+
 var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.NewFieldDialog',
-
+    /**
+     * @constructor
+     * @param {String} model
+     * @param {String} ttype
+     * @param {Object} fields
+     */
     init: function (parent, model, ttype, fields) {
         this.model = model;
         this.ttype = ttype;
@@ -20,14 +27,21 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         var options = {
             title: _t('Add a field'),
             size: 'small',
-            buttons: [
-                {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.save, this)},
-                {text: _t("Cancel"), close: true},
-            ],
+            buttons: [{
+                text: _t("Confirm"),
+                classes: 'btn-primary',
+                click: this._onSave.bind(this)
+            }, {
+                text: _t("Cancel"),
+                close: true
+            }],
         };
         this._super(parent, options);
         StandaloneFieldManagerMixin.init.call(this);
     },
+    /**
+     * @override
+     */
     start: function() {
         var recordID;
         var record;
@@ -84,12 +98,24 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 fields: many2one_fields,
             };
             this.fieldSelector = new ModelFieldSelector(this, this.model, '', field_options);
-            return $.when(this.fieldSelector.appendTo(this.$('.o_many2one_field'), this._super.apply(this, arguments)));
+
+            return $.when(
+                this.fieldSelector.appendTo(this.$('.o_many2one_field'),
+                this._super.apply(this, arguments))
+            );
         }
 
         return this._super.apply(this, arguments);
     },
-    save: function() {
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     */
+    _onSave: function() {
         var values = {};
         if (this.ttype === 'one2many') {
             values.relation_field_id = this.many2one_field.value.res_id;

@@ -17,29 +17,51 @@ if (!session.is_system) {
 
 var SystrayItem = Widget.extend({
     events: {
-        'click': function (event) {
-            event.preventDefault();
-            this.disable();
-            this.trigger_up('click_studio_mode');
-        },
+        'click': '_onClick',
     },
-    sequence: 1, // force this item to be the first one to the left of the UserMenu in the systray
+    // force this item to be the first one to the left of the UserMenu in the
+    // systray
+    sequence: 1,
     template: 'web_studio.SystrayItem',
-
+    /**
+     * @constructor
+     */
     init: function () {
         this._super.apply(this, arguments);
         this.disabled = true;
     },
-    enable: function () {
-        this.disabled = false;
-        this.renderElement();
-    },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * Disable the item.
+     */
     disable: function () {
         this.disabled = true;
         this.renderElement();
     },
-    bump: function () {
-        this.$('img').openerpBounce();
+    /**
+     * Enable the item.
+     */
+    enable: function () {
+        this.disabled = false;
+        this.renderElement();
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {Event} event
+     */
+    _onClick: function (event) {
+        event.preventDefault();
+        this.disable();
+        this.trigger_up('click_studio_mode');
     },
 });
 

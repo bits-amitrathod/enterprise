@@ -83,7 +83,11 @@ var ICONS = [
     'fa fa-briefcase',
 ];
 
-function randomString(string_length) {
+/**
+ * @param {Integer} string_length
+ * @returns {String} A random string with numbers and lower/upper case chars
+ */
+function randomString (string_length) {
     var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var randomstring = '';
     for (var i=0; i<string_length; i++) {

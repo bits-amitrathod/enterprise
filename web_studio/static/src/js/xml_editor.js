@@ -8,6 +8,22 @@ var AceEditor = require('web_editor.ace');
  * default RPC. Also notifies studio when the editor is closed.
  */
 return AceEditor.extend({
+
+    /**
+     * @override
+     */
+    do_hide: function () {
+        this.trigger_up("close_xml_editor");
+        this._super.apply(this, arguments);
+    },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     */
     _saveView: function (session) {
         var def = $.Deferred();
 
@@ -28,10 +44,6 @@ return AceEditor.extend({
         });
 
         return def;
-    },
-    do_hide: function () {
-        this.trigger_up("close_xml_editor");
-        this._super.apply(this, arguments);
     },
 });
 

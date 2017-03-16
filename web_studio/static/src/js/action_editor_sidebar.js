@@ -1,28 +1,27 @@
 odoo.define('web_studio.ActionEditorSidebar', function (require) {
 "use strict";
 
-var BasicModel = require('web.BasicModel');
 var core = require('web.core');
 var relational_fields = require('web.relational_fields');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
 
-var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
+var Many2ManyTags = relational_fields.FieldMany2ManyTags;
 
-return Widget.extend(StandaloneFieldManagerMixin, {
+var ActionEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.ActionEditorSidebar',
-    custom_events: _.extend({}, StandaloneFieldManagerMixin.custom_events, {
-        field_changed: function(event) {
-            this.field_changed(event);
-        },
-    }),
     events: {
-        'change input, textarea': 'change_action',
-        'click .o_web_studio_parameters': 'on_parameters',
+        'change input, textarea': '_onActionChange',
+        'click .o_web_studio_parameters': '_onParameters',
     },
-
+    /**
+     * @constructor
+     * @param {Object} action
+     */
     init: function (parent, action) {
         this._super.apply(this, arguments);
         StandaloneFieldManagerMixin.init.call(this);
+
         this.debug = core.debug;
         this.action = action;
         this.action_attrs = {
@@ -31,10 +30,12 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         };
         this.groups_info = [];
     },
-
-    willStart: function() {
+    /**
+     * @override
+     */
+    willStart: function () {
         var self = this;
-        return this._super.apply(this, arguments).then(function() {
+        return this._super.apply(this, arguments).then(function () {
             if (self.action.groups_id.length === 0) { return; }
 
             // many2many field expects to receive: a list of {id, name, display_name}
@@ -48,34 +49,43 @@ return Widget.extend(StandaloneFieldManagerMixin, {
                 });
         });
     },
-
-    start: function() {
+    /**
+     * @override
+     */
+    start: function () {
         var self = this;
-        return this._super.apply(this, arguments).then(function() {
+        return this._super.apply(this, arguments).then(function () {
 
             var groups = self.action.groups_id;
-            var model = new BasicModel(this, {
-                modelName: 'ir.actions.act_window',
-            });
-            var record_id = model.makeRecord('ir.actions.act_window', [{
+            // TODO: fix many2many
+            var recordID = self.model.makeRecord('ir.actions.act_window', [{
                 name: 'groups_id',
                 relation: 'res.groups',
                 relational_value: self.groups_info,
                 type: 'many2many',
                 value: groups,
             }]);
-            var many2many_options = {
+            var record = self.model.get(recordID);
+            var options = {
                 mode: 'edit',
                 no_quick_create: true,  // FIXME: enable add option
             };
-            var Many2ManyTags = relational_fields.FieldMany2ManyTags;
-            self.many2many = new Many2ManyTags(self, 'groups_id', model.get(record_id), many2many_options);
+            self.many2many = new Many2ManyTags(self, 'groups_id', record, options);
+            self._registerWidget(recordID, 'groups_id', self.many2many);
             self.many2many.appendTo(self.$el.find('.o_groups'));
         });
     },
 
-    change_action: function(ev) {
-        var $input = $(ev.currentTarget);
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {Event} event
+     */
+    _onActionChange: function (event) {
+        var $input = $(event.currentTarget);
         var attribute = $input.attr('name');
         if (attribute) {
             var new_attrs = {};
@@ -84,15 +94,26 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         }
     },
 
-    on_parameters: function() {
-        this.trigger_up('open_action_form');
+    /**
+     * @private
+     */
+    _onParameters: function () {
+        this.trigger_up('parameters_clicked');
     },
 
-    field_changed: function(ev) {
+    /*
+     * @private
+     * @override
+     * @param {Event} event
+     */
+    _onFieldChanged: function (event) {
+        StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
         var args = {};
-        args[ev.data.name] = this.many2many.value;
+        args[event.data.name] = this.many2many.value;
         this.trigger_up('studio_edit_action', {args: args});
     },
 });
+
+return ActionEditorSidebar;
 
 });

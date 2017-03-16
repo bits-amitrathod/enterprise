@@ -10,7 +10,6 @@ var bus = require('web_studio.bus');
 
 var QWeb = core.qweb;
 
-
 /*
  * Notice:
  *  some features (like seeing the appswitcher background) are available
@@ -19,15 +18,30 @@ var QWeb = core.qweb;
  */
 
 AppSwitcher.include({
+    /**
+     * @override
+     */
     start: function () {
-        this.set_background();
+        this.setBackgroundImage();
         return this._super.apply(this, arguments);
     },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @param {Object} menu_data
+     */
     process_menu_data: function (menu_data) {
         this.has_custom_background = menu_data.background_image;
         return this._super.apply(this, arguments);
     },
-    set_background: function () {
+    /**
+     * Put the appswitcher background as the cover of current `$el`.
+     */
+    setBackgroundImage: function () {
         if (this.has_custom_background) {
             var url = session.url('/web/image', {
                 model: 'res.company',
@@ -48,18 +62,24 @@ if (!session.is_system) {
 
 AppSwitcher.include({
     events: _.extend(AppSwitcher.prototype.events, {
-        'click .o_web_studio_new_app': function (event) {
-            event.preventDefault();
-            web_client.open_studio('app_creator').then(function () {
-                core.bus.trigger('toggle_mode', true, false);
-            });
-        },
+        'click .o_web_studio_new_app': '_onNewApp',
     }),
+    /**
+     * @override
+     */
     start: function () {
-        bus.on('studio_toggled', this, this.toggle_studio_mode);
+        bus.on('studio_toggled', this, this.toggleStudioMode);
         return this._super.apply(this, arguments);
     },
-    toggle_studio_mode: function (display) {
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @param {Boolean} display
+     */
+    toggleStudioMode: function (display) {
         this.in_studio_mode = display;
         if (!this.in_DOM) {
             return;
@@ -67,29 +87,53 @@ AppSwitcher.include({
         if (display) {
             this.on_detach_callback();  // de-bind hanlders on appswitcher
             this.in_DOM = true;  // avoid effect of on_detach_callback
-            this.to_studio_mode();
+            this.renderNewApp();
         } else {
             this.$new_app.remove();
             this.on_attach_callback();
         }
     },
-    to_studio_mode: function () {
+    /**
+     * Add the 'New App' icon.
+     */
+    renderNewApp: function () {
         this.state = this.get_initial_state();
         this.render();
         this.$new_app = $(QWeb.render('web_studio.AppCreator.NewApp'));
         this.$new_app.appendTo(this.$('.o_apps'));
     },
+    /**
+     * @override
+     */
     on_attach_callback: function () {
         this.in_DOM = true;
         if (this.in_studio_mode) {
-            this.to_studio_mode();
+            this.renderNewApp();
         } else {
             this._super.apply(this, arguments);
         }
     },
+    /**
+     * @override
+     */
     on_detach_callback: function () {
         this._super.apply(this, arguments);
         this.in_DOM = false;
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {Event} event
+     */
+    _onNewApp: function (event) {
+        event.preventDefault();
+        web_client.openStudio('app_creator').then(function () {
+            core.bus.trigger('toggle_mode', true, false);
+        });
     },
 });
 

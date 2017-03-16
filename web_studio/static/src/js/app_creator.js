@@ -23,10 +23,9 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
         'keyup input': '_onCheckFields',
         'input input': '_onCheckFields',
         'paste input': '_onCheckFields',
-        'focus input.o_web_studio_app_creator_field_warning': '_onInput',
-        'keyup input.o_web_studio_app_creator_field_warning': '_onInput',
+        'focus input.o_web_studio_app_creator_field_warning': '_onWarning',
+        'keyup input.o_web_studio_app_creator_field_warning': '_onWarning',
     },
-
     /**
      * @constructor
      */
@@ -49,7 +48,7 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
     //--------------------------------------------------------------------------
 
     /**
-     * Re-render the widget and update its content according to @currentStep
+     * Re-render the widget and update its content according to @currentStep.
      */
     update: function () {
         this.renderElement();
@@ -63,6 +62,8 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
     /*
      * Check that all the fields in the form are correctly filled, according to
      * the @currentStep. If one isn't, this is emphasized by ´_fieldWarning´.
+     *
+     * @private
      */
     _checkFields: function (field_warning) {
         var ready = false;
@@ -82,7 +83,7 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
             if (field_warning && !menu_name) {
                 this.$('.o_web_studio_app_creator_menu').addClass(warningClass);
             }
-            var model_id = this.many2one.value;
+            var model_id = this.many2one.value && this.many2one.value.res_id;
             var model_choice = this.$('input[name="model_choice"]').is(':checked');
 
             if (field_warning && model_choice && !model_id) {
@@ -109,6 +110,8 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
      *   1) welcome
      *   2) form with the app name
      *   3) form with the menu name and an optional model
+     *
+     * @private
      */
     _update: function () {
         this.$left = this.$('.o_web_studio_app_creator_left_content');
@@ -144,15 +147,10 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
             if (!this.iconCreator) {
                 this.iconCreator = new IconCreator(this, 'edit');
             } else {
-                this.iconCreator.enable_edit();
+                this.iconCreator.enableEdit();
             }
             this.iconCreator.appendTo(this.$right);
 
-            // focus on input
-            this.$('input[name="app_name"]').focus();
-
-            // toggle button if the form is ready
-            this.$('input').on('change keyup input paste', this._onCheckFields.bind(this));
             this._checkFields();
         } else {
             // create a Many2one field widget for the custom model
@@ -170,24 +168,19 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
             this._registerWidget(recordID, 'model', this.many2one);
 
             // add 'Create your first Menu' content
-            var $menuForm= $(QWeb.render('web_studio.AppCreator.Menu', {
+            var $menuForm = $(QWeb.render('web_studio.AppCreator.Menu', {
                 widget: this,
             }));
             this.many2one.appendTo($menuForm.find('.js_model'));
             this.$left.append($menuForm);
-            this.iconCreator.disable_edit();
+            this.iconCreator.disableEdit();
             this.iconCreator.appendTo(this.$right);
 
-            // focus on input
-            this.$('input[name="app_name"]').focus();
-
-            // toggle button if the form is ready
-            this.$('input').on('change keyup input paste', this._onCheckFields.bind(this));
             this._checkFields();
         }
 
         // focus on input
-        this.$('input').focus();
+        this.$('input').first().focus();
     },
 
     //--------------------------------------------------------------------------
@@ -201,14 +194,18 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
         this.currentStep--;
         this.update();
     },
+    /**
+     * @private
+     */
     _onCheckFields: function () {
         this._checkFields(false);
     },
     /*
-     * @private
+     * Override the method of the StandaloneFieldManagerMixin to call
+     * ´_checkFields´ each time the field widget changes.
      *
-     * Overwrite the method of the StandaloneFieldManagerMixin to call ´_checkFields´ each
-     * time the field widget changes.
+     * @private
+     * @override
      */
     _onFieldChanged: function () {
         StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
@@ -216,10 +213,9 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
     },
     /**
      * @private
-     *
      * @param {Event} e
      */
-    _onInput: function (e) {
+    _onWarning: function (e) {
         $(e.currentTarget).removeClass('o_web_studio_app_creator_field_warning');
     },
     /**
@@ -234,18 +230,18 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
 
             // everything is fine, let's save the values before the next step
             this.app_name = this.$('input[name="app_name"]').val();
-            this.icon = this.iconCreator.get_value();
+            this.icon = this.iconCreator.getValue();
             this.currentStep++;
             this.update();
         } else {
             if (!this._checkFields(true)) { return; }
             var menu_name = this.$('input[name="menu_name"]').val();
             var model_choice = this.$('input[name="model_choice"]').is(':checked');
-            var model_id = model_choice && this.many2one.value;
+            var model_id = model_choice && this.many2one.value.res_id;
 
             framework.blockUI();
             customize
-                .create_new_app(this.app_name, menu_name, model_id.res_id, this.icon)
+                .createNewApp(this.app_name, menu_name, model_id, this.icon)
                 .then(this.trigger_up.bind(this, 'new_app_created'))
                 .always(framework.unblockUI.bind(framework));
         }
