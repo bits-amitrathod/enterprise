@@ -57,6 +57,7 @@ return {
     add_view_type: function(action, view_type, args) {
         var self = this;
         var def = $.Deferred();
+        data_manager.invalidate();
         ajax.jsonRpc('/web_studio/add_view_type', 'call', {
             action_type: action.type,
             action_id: action.id,
