@@ -17,7 +17,7 @@ class version(models.Model):
     create_date = fields.Datetime('Create Date')
 
     _sql_constraints = [
-        ('name_uniq', 'unique(name, website_id)', _('You cannot have multiple versions with the same name in the same domain!')),
+        ('name_uniq', 'unique(name, website_id)', 'You cannot have multiple versions with the same name in the same domain!'),
     ]
 
     @api.multi
