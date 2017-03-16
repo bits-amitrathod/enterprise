@@ -19,6 +19,9 @@ var ActionEditor = Widget.extend({
         this.action = action;
         this.active_view_types = active_view_types;
         this.default_view = active_view_types[0];
+        if (action.initial_view_types) {
+            this.active_view_types = action.initial_view_types;
+        }
     },
     start: function () {
         var self = this;

@@ -122,7 +122,7 @@ var Main = Widget.extend({
         view_mode.unshift(view_type);
         view_mode = view_mode.toString();
 
-        this._write_view_mode(view_mode);
+        this._write_view_mode(view_mode, this.action.view_mode);
     },
 
     disable_view: function (event) {
@@ -164,9 +164,12 @@ var Main = Widget.extend({
         }).open();
     },
 
-    _write_view_mode: function(view_mode) {
+    _write_view_mode: function(view_mode, initial_view_mode) {
         var self = this;
         return customize.edit_action(this.action, {view_mode: view_mode}).then(function(result) {
+            if (initial_view_mode) {
+                result.initial_view_types = initial_view_mode.split(',');
+            }
             self.do_action('action_web_studio_main', {
                 action: result,
             });
