@@ -63,6 +63,7 @@ class QualityPoint(models.Model):
     note = fields.Html('Note')
     reason = fields.Html('Note')
     average = fields.Float(compute="_compute_standard_deviation_and_average")
+    failure_message = fields.Html('Failure Message')
     standard_deviation = fields.Float(compute="_compute_standard_deviation_and_average")
 
     def _compute_standard_deviation_and_average(self):
@@ -248,6 +249,10 @@ class QualityCheck(models.Model):
         ('pass', 'Pass'),
         ('fail', 'Fail')], string="Measure Success", compute="_compute_measure_success",
         readonly=True, store=True)
+    failure_message = fields.Html(related='point_id.failure_message', readonly=True)
+    tolerance_min = fields.Float('Min Tolerance', related='point_id.tolerance_min', readonly=True)
+    tolerance_max = fields.Float('Max Tolerance', related='point_id.tolerance_max', readonly=True)
+    warning_message = fields.Text(compute='_compute_warning_message')
 
     @api.multi
     def _compute_alert_count(self):
@@ -255,6 +260,15 @@ class QualityCheck(models.Model):
         alert_result = dict((data['check_id'][0], data['check_id_count']) for data in alert_data)
         for check in self:
             check.alert_count = alert_result.get(check.id, 0)
+
+    @api.one
+    @api.depends('measure_success')
+    def _compute_warning_message(self):
+        if self.measure_success == 'fail':
+            self.warning_message = _('You measured %.2f %s and it should be between %.2f and %.2f %s.') % (
+                self.measure, self.norm_unit, self.point_id.tolerance_min,
+                self.point_id.tolerance_max, self.norm_unit
+            )
 
     @api.one
     @api.depends('measure')
@@ -296,10 +310,34 @@ class QualityCheck(models.Model):
 
     @api.multi
     def do_measure(self):
+        self.ensure_one()
         if self.measure < self.point_id.tolerance_min or self.measure > self.point_id.tolerance_max:
-            return self.do_fail()
+            return {
+                'name': _('Quality Check Failed'),
+                'type': 'ir.actions.act_window',
+                'res_model': 'quality.check',
+                'view_mode': 'form',
+                'view_id': self.env.ref('quality.quality_check_view_form_failure').id,
+                'target': 'new',
+                'res_id': self.id,
+                'context': self.env.context,
+            }
         else:
             return self.do_pass()
+
+    @api.multi
+    def correct_measure(self):
+        self.ensure_one()
+        return {
+            'name': _('Quality Checks'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'quality.check',
+            'view_mode': 'form',
+            'view_id': self.env.ref('quality.quality_check_view_form_small').id,
+            'target': 'new',
+            'res_id': self.id,
+            'context': self.env.context,
+        }
 
     @api.multi
     def do_alert(self):

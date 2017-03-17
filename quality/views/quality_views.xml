@@ -289,6 +289,25 @@
         </field>
     </record>
 
+    <record id="quality_check_view_form_failure" model="ir.ui.view">
+        <field name="name">quality.check.view.form.failure</field>
+        <field name="model">quality.check</field>
+        <field name="arch" type="xml">
+            <form string="Quality Check Failed">
+                <div class="alert alert-warning">
+                    <field name="warning_message"/>
+                </div>
+                <div>
+                    <field name="failure_message"/>
+                </div>
+                <footer>
+                    <button name="correct_measure" type="object" class="btn-primary" string="Correct Measure"/>
+                    <button name="do_fail" type="object" string="Confirm Measure"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
     <record id="quality_check_view_kanban" model="ir.ui.view">
         <field name="name">quality.check.view.kanban</field>
         <field name="model">quality.check</field>
@@ -734,6 +753,9 @@
                         </page>
                         <page string="Reason">
                             <field name="reason" placeholder="Describe why you need to perform this quality check..."/>
+                        </page>
+                        <page string="Message If Failure">
+                            <field name="failure_message"/>
                         </page>
                     </notebook>
                 </sheet>
