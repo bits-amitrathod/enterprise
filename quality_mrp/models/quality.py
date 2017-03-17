@@ -22,7 +22,7 @@ class QualityAlert(models.Model):
     def action_create_message(self):
         self.ensure_one()
         return {
-            'name': _('Workorder Messages'),
+            'name': _('Work Order Messages'),
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'mrp.message',

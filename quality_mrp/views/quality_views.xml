@@ -17,7 +17,7 @@
         <field name="inherit_id" ref="quality.quality_alert_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button name="action_create_message" type="object" string="Create Production Message"
+                <button name="action_create_message" type="object" string="Create Work Order Message"
                             attrs="{'invisible': [('workcenter_id', '=', False)]}"/>
             </xpath>
             <field name="lot_id" position="after">
