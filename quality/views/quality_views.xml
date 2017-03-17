@@ -604,7 +604,7 @@
         <field name="name">Quality Teams</field>
         <field name="res_model">quality.alert.team</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
     </record>
 
     <!-- QUALITY.TAG -->
@@ -650,11 +650,33 @@
         </field>
     </record>
 
+    <record id="view_quality_alert_stage_kanban" model="ir.ui.view">
+        <field name="name">quality.alert.stage.kanban</field>
+        <field name="model">quality.alert.stage</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div>
+                                <strong><field name="name"/></strong>
+                                <span class="pull-right" title="Folded or not?">
+                                    <field name="folded" widget="boolean"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="quality_alert_stage_action" model="ir.actions.act_window">
         <field name="name">Quality Alert Stages</field>
         <field name="res_model">quality.alert.stage</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
         <field name="help" type="html">
             <p>
               Quality Alert stages define the different steps a quality alert should go through.
@@ -684,6 +706,27 @@
                 <field name="product_tmpl_id"/>
                 <field name="picking_type_id"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="view_quality_point_kanban" model="ir.ui.view">
+        <field name="name">quality.point.kanban</field>
+        <field name="model">quality.point</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="product_tmpl_id"/>
+                <field name="picking_type_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div><strong><t t-esc="record.name.value"/></strong></div>
+                            <div><strong>Product :</strong> <t t-esc="record.product_tmpl_id.value"/></div>
+                            <div><strong>Operation :</strong> <t t-esc="record.picking_type_id.value"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -771,7 +814,7 @@
         <field name="name">Quality Control Points</field>
         <field name="res_model">quality.point</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
         <field name="search_view_id" ref="quality_point_view_search"/>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">

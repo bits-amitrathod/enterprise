@@ -105,13 +105,32 @@
             </field>
         </record>
 
+        <record id="view_account_followup_followup_kanban" model="ir.ui.view">
+            <field name="name">account_followup.followup.kanban</field>
+            <field name="model">account_followup.followup</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <strong><i class="fa fa-building" aria-hidden="true"></i> <t t-esc="record.name.value"/></strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <record id="action_account_followup_definition_form" model="ir.actions.act_window">
             <field name="name">Payment Follow-ups</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">account_followup.followup</field>
             <field name="search_view_id" ref="view_account_followup_filter"/>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,kanban,form</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
                 Click to define follow-up levels and their related actions.

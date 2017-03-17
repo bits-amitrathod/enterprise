@@ -229,7 +229,7 @@
         <field name="name">ECO Types</field>
         <field name="res_model">mrp.eco.type</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
         <field name="help" type="html">
             <p>
               Create ECO Types
@@ -647,6 +647,28 @@
         </field>
     </record>
 
+    <record id="view_mrp_eco_stage_kanban" model="ir.ui.view">
+        <field name="name">mrp.eco.stage.kanban</field>
+        <field name="model">mrp.eco.stage</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div>
+                                <strong><field name="name"/></strong>
+                                <span class="pull-right" title="Folded or not?">
+                                    <field name="folded" widget="boolean"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="mrp_eco_stage_view_form" model="ir.ui.view">
         <field name="name">mrp.eco.stage.view.form</field>
         <field name="model">mrp.eco.stage</field>
@@ -681,7 +703,7 @@
         <field name="name">ECO Stages</field>
         <field name="res_model">mrp.eco.stage</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
         <field name="help" type="html">
             <p>
               ECO stages give the different stages for the Engineering Change Orders
