@@ -38,15 +38,17 @@ var SubMenu = Widget.extend({
         bus.on('edition_mode_entered', this, function(view_type) {
             this.$('.o_menu_sections li a.active').removeClass('active');
             self.add_breadcrumb_view_type(view_type);
-            self.render_breadcrumb();
+            self.renderElement();
         });
     },
 
     start: function() {
-        var self = this;
-        this._super.apply(this, arguments).then(function() {
-            self.render_breadcrumb();
-        });
+        this._super.apply(this, arguments);
+    },
+
+    renderElement: function() {
+        this._super.apply(this, arguments);
+        this.render_breadcrumb();
     },
 
     on_menu_click: function(ev) {
@@ -98,7 +100,7 @@ var SubMenu = Widget.extend({
     replace_action: function(action, title, options) {
         this.studio_actions = [{action: action, title: title}];
         this.do_action(action, options);
-        this.render_breadcrumb();
+        this.renderElement();
     },
     on_undo: function() {
         bus.trigger('undo_clicked');
