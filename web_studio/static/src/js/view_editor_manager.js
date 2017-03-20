@@ -195,7 +195,9 @@ return Widget.extend({
             return _.extend({name: key}, dict);
         });
         // Sort by field_description (alphabetically)
-        return _.sortBy(list, 'string');
+        return _.sortBy(list, function (field) {
+            return field.string.toLowerCase();
+        });
     },
     get_fields: function() {
         return data_manager.load_fields(this.dataset);

@@ -161,7 +161,9 @@ return Widget.extend(FieldManagerMixin, {
         _.each(this.fields, function(element, key) {
             element.key = key;
         });
-        this.orderered_fields = _.sortBy(this.fields, 'string');
+        this.orderered_fields = _.sortBy(this.fields, function (field) {
+            return field.string.toLowerCase();
+        });
     },
     compute_field_attrs: function() {
         /* Compute field attributes.
