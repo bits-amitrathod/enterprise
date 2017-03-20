@@ -463,6 +463,7 @@ class WebStudioController(http.Controller):
 
     @http.route('/web_studio/add_view_type', type='json', auth='user')
     def add_view_type(self, action_type, action_id, res_model, view_type, args):
+        view_type = 'tree' if view_type == 'list' else view_type  # list is stored as tree in db
         try:
             request.env[res_model].fields_view_get(view_type=view_type)
         except UserError as e:
