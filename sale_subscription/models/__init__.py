@@ -1,5 +1,6 @@
-from . import sale_subscription
-from . import product
-from . import res_partner
-from . import sale_order
-from . import account_analytic_account
+import sale_subscription
+import product
+import res_partner
+import sale_order
+import account_analytic_account
+import sale_subscription_config
