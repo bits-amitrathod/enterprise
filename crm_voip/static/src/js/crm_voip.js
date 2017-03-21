@@ -923,7 +923,7 @@ Phone.include({
      * @private
      * @returns {boolean} true
      */
-    _can_call: function () {
+    _canCall: function () {
         return true;
     },
 
