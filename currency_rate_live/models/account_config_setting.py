@@ -29,7 +29,7 @@ class ResCompany(models.Model):
     @api.model
     def create(self, vals):
         ''' Change the default provider depending on the company data.'''
-        if 'country_id' in vals and 'currency_provider' not in vals and self.env['res.country'].browse(vals['country_id']).code.upper() == 'CH':
+        if vals.get('country_id') and 'currency_provider' not in vals and self.env['res.country'].browse(vals['country_id']).code.upper() == 'CH':
             vals['currency_provider'] = 'fta'
         return super(ResCompany, self).create(vals)
 
