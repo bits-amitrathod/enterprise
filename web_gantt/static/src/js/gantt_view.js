@@ -37,9 +37,14 @@ var GanttView = AbstractView.extend({
         js_libs: ["/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js"],
         css_libs: ["/web_gantt/static/lib/dhtmlxGantt/codebase/dhtmlxgantt.css"],
     },
-    init: function(arch, fields, params) {
+    /**
+     * @override
+     */
+    init: function (viewInfo, params) {
         this._super.apply(this, arguments);
 
+        var arch = viewInfo.arch;
+        var fields = viewInfo.fields;
         var mapping = {name: 'name'};
 
         // gather the fields to get
