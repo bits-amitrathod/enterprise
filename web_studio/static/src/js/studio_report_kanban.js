@@ -37,7 +37,17 @@ var StudioReportKanbanView = KanbanView.extend({
     open_record: function(event) {
         var self = this;
         new Model('ir.actions.report.xml').call('studio_edit', [event.data.id]).then(function(action) {
-            self.do_action(action);
+            if (action.active_ids.length) {
+                self.do_action(action);
+            } else {
+                new Dialog(this, {
+                    size: 'medium',
+                    title: _t('No record to display.'),
+                    $content: $('<div>', {
+                        text: _t("First, quit Odoo Studio to create a new entity. Then, open Odoo Studio to create or edit reports."),
+                    }),
+                }).open();
+            }
         });
     },
 });
