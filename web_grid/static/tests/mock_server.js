@@ -9,7 +9,7 @@ MockServer.include({
             return this._mockReadGrid(args.model, args.kwargs);
         } else if (args.method === 'adjust_grid') {
             var adjust = args.kwargs.context.grid_adjust;
-            var lines = this._mockSearchRead({
+            var lines = this._mockSearchReadController({
                 model: args.model,
                 domain: adjust.row_domain,
                 fields: [],
@@ -89,7 +89,7 @@ MockServer.include({
             var cells = [];
             _.each(columns, function (col) {
                 var cellDomain = ['&'].concat(row.domain).concat(col.domain);
-                var records = self._mockSearchRead({
+                var records = self._mockSearchReadController({
                     model: model,
                     domain: cellDomain,
                     fields: [kwargs.cell_field],

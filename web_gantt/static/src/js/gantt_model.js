@@ -48,12 +48,16 @@ return AbstractModel.extend({
 
     _load_gantt: function () {
         var self = this;
-        return this._rpc(this.modelName, 'search_read')
-            .withContext(this.gantt.context)
-            .withDomain(this.gantt.domain.concat(this._focus_domain()))
-            .exec()
-            .then(function (data) {
-                self.gantt.data = data.records;
+        var fields = _.keys(this.gantt.fields).concat(this.gantt.to_grouped_by);
+        return this._rpc({
+                model: this.modelName,
+                method: 'search_read',
+                context: this.gantt.context,
+                domain: this.gantt.domain.concat(this._focus_domain()),
+                fields: fields,
+            })
+            .then(function (records) {
+                self.gantt.data = records;
             });
     },
 

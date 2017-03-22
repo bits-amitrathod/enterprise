@@ -94,9 +94,11 @@ var GanttController = AbstractController.extend({
         }
         var task_id = parseInt(task_obj.id.split("gantt_task_").slice(1)[0], 10);
 
-        this._rpc(this.model, 'write')
-            .args([task_id, data])
-            .exec()
+        this._rpc({
+                model: this.model,
+                method: 'write',
+                args: [task_id, data],
+            })
             .then(success, fail);
     },
 

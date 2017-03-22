@@ -77,8 +77,10 @@ var MainMenu = Widget.extend(BarcodeHandlerMixin, {
 
     open_inventory: function() {
         var self = this;
-        return this._rpc("stock.inventory", "open_new_inventory")
-            .exec()
+        return this._rpc({
+                model: 'stock.inventory',
+                method: 'open_new_inventory',
+            })
             .then(function(result) {
                 self.do_action(result);
             });

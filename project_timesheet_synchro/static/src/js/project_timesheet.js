@@ -254,9 +254,11 @@ odoo.define('project_timeshee.ui', function (require ) {
             //
             self.clean_xml_ids().always(function() {
 
-                self._rpc("account.analytic.line", "export_data_for_ui")
-                    .args([])
-                    .exec()
+                self._rpc({
+                        model: 'account.analytic.line',
+                        method: 'export_data_for_ui',
+                        args: [],
+                    })
                     .then(function(sv_data) {
                     // SV => LS sync
                     var sv_aals = sv_data.aals.datas;
@@ -349,10 +351,12 @@ odoo.define('project_timeshee.ui', function (require ) {
                             }
                         }
                     });
-                    self._rpc("account.analytic.line", "import_ui_data")
-                        .args([self.data.account_analytic_lines , self.data.tasks, self.data.projects])
-                        .withContext(context)
-                        .exec()
+                    self._rpc({
+                            model: 'account.analytic.line',
+                            method: 'import_ui_data',
+                            args: [self.data.account_analytic_lines , self.data.tasks, self.data.projects],
+                            context: context,
+                        })
                         .then(function(sv_response) {
                         // The entries that have been removed in the backend must be removed from the LS
                         if (sv_response.projects_to_remove.length) {
@@ -546,9 +550,11 @@ odoo.define('project_timeshee.ui', function (require ) {
             if(this.data.data_version === 1) {
                 def.resolve(); // Cleanup has already been performed.
             } else {
-                this._rpc("account.analytic.line", "clean_xml_ids")
-                    .args([])
-                    .exec()
+                this._rpc({
+                        model: 'account.analytic.line',
+                        method: 'clean_xml_ids',
+                        args: [],
+                    })
                     .always(function(res) {
                         if (res === true) {
                             // Everything went fine, any local xml_ids with project_timesheet_synchro can be converted
@@ -566,9 +572,11 @@ odoo.define('project_timeshee.ui', function (require ) {
                                     'account.analytic.line'
                                 ]]
                             ];
-                            self._rpc("ir.model.data", 'search')
-                                .args([domain])
-                                .exec()
+                            self._rpc({
+                                    model: 'ir.model.data',
+                                    method: 'search',
+                                    args: [domain],
+                                })
                                 .then(function (ids) {
                                     if (ids.length === 0) { // there are no dirty ids on the server
                                         self.process_all_ids(self.convert_module_to_export);
@@ -1834,8 +1842,10 @@ odoo.define('project_timeshee.ui', function (require ) {
         },
         willStart: function() {
             var self = this;
-            return this._rpc('openerp.enterprise.database', 'get_instances')
-                .exec()
+            return this._rpc({
+                    model: 'openerp.enterprise.database',
+                    method: 'get_instances',
+                })
                 .then(function(res) {
                     self.instances = {};
                     _.each(res, function(item) {
@@ -1853,9 +1863,11 @@ odoo.define('project_timeshee.ui', function (require ) {
             $('.pt_nav_sync a').addClass('pt_sync_in_progress');
             var url = event.target.dataset.url;
 
-            this._rpc('auth.oauth2.token', 'get_token')
-                .args([{client_id: self.instances[url].uuid, scope: "userinfo"}])
-                .exec()
+            this._rpc({
+                    model: 'auth.oauth2.token',
+                    method: 'get_token',
+                    args: [{client_id: self.instances[url].uuid, scope: "userinfo"}],
+                })
                 .then(function(res) {
                     var state =  JSON.stringify({
                         'd': self.instances[url].db_name,

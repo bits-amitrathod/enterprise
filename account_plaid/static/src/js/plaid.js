@@ -14,9 +14,11 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = this._rpc('account.online.provider', 'plaid_add_update_provider_account')
-                .args([[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context])
-                .exec()
+            var request = this._rpc({
+                    model: 'account.online.provider',
+                    method: 'plaid_add_update_provider_account',
+                    args: [[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context],
+                })
                 .then(function(result){
                     self.blockUI(false);
                     if (result.account_online_provider_id !== undefined) {
@@ -92,9 +94,11 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         var self = this;
         if (this.resp_json && this.resp_json.action === 'success') {
             if (this.action_end) {
-                return this._rpc('account.online.provider', 'open_action')
-                    .args([[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context])
-                    .exec()
+                return this._rpc({
+                        model: 'account.online.provider',
+                        method: 'open_action',
+                        args: [[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context],
+                    })
                     .then(function(result) {
                         self.do_action(result);
                     });

@@ -46,18 +46,22 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            this._rpc('account.online.provider', 'yodlee_add_update_provider_account')
-                .args([[this.id], params, provider_id, provider_name])
-                .exec()
+            this._rpc({
+                    model: 'account.online.provider',
+                    method: 'yodlee_add_update_provider_account',
+                    args: [[this.id], params, provider_id, provider_name],
+                })
                 .then(function(result){
                     // ProviderAccount has succesfully been created/updated on yodlee and is being refreshed
                     // We need to keep calling the refresh API until it is done to know if we have some error or mfa
                     // (bad credentials, captcha, success)
                     framework.blockUI();
                     self.id = result;
-                    return self._rpc('account.online.provider', 'refresh_status')
-                        .args([[self.id]])
-                        .exec()
+                    return self._rpc({
+                            model: 'account.online.provider',
+                            method: 'refresh_status',
+                            args: [[self.id]],
+                        })
                         .then(function(result) {
                             self.blockUI(false);
                             self.refresh_info = result;
@@ -78,9 +82,11 @@ var YodleeAccountConfigurationWidget = Widget.extend({
     get_new_captcha: function() {
         var self = this;
         this.blockUI(true);
-        return this._rpc('account.online.provider', 'manual_sync')
-            .args([[self.id], false])
-            .exec()
+        return this._rpc({
+                model: 'account.online.provider',
+                method: 'manual_sync',
+                args: [[self.id], false],
+            })
             .then(function(result) {
                 self.blockUI(false);
                 self.refresh_info = result;
@@ -160,9 +166,11 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         var fields = {};
         if (this.refresh_info && this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS') {
             if (this.action_end) {
-                return this._rpc('account.online.provider', 'open_action')
-                    .args([[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context])
-                    .exec()
+                return this._rpc({
+                        model: 'account.online.provider',
+                        method: 'open_action',
+                        args: [[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context],
+                    })
                     .then(function(result) {
                         self.do_action(result);
                     });

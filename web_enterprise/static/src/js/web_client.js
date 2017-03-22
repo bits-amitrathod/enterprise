@@ -69,10 +69,12 @@ return AbstractWebClient.extend({
         });
     },
     load_menus: function () {
-        return this._rpc('ir.ui.menu', 'load_menus')
-            .args([core.debug])
-            .withContext(session.user_context)
-            .exec()
+        return this._rpc({
+                model: 'ir.ui.menu',
+                method: 'load_menus',
+                args: [core.debug],
+                context: session.user_context,
+            })
             .then(function(menu_data) {
                 // Compute action_id if not defined on a top menu item
                 for (var i = 0; i < menu_data.children.length; i++) {
@@ -105,9 +107,11 @@ return AbstractWebClient.extend({
             // If it is not empty, we trigger a dummy hashchange event so that `self.on_hashchange`
             // will take care of toggling the app switcher and loading the action.
             if (_.isEmpty($.bbq.getState(true))) {
-                return self._rpc('res.users', 'read')
-                    .args([session.uid, ["action_id"]])
-                    .exec()
+                return self._rpc({
+                        model: 'res.users',
+                        method: 'read',
+                        args: [session.uid, ["action_id"]],
+                    })
                     .then(function(result) {
                         var data = result[0];
                         if(data.action_id) {

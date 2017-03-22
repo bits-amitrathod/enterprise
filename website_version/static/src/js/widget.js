@@ -25,12 +25,13 @@ var rtoken = AbstractField.extend({
   allow_google: function() {
     var self = this;
     $('button.GoogleAccess').prop('disabled', true);
-    this._rpc('/website_version/google_access')
-        .params({
-            fromurl: window.location.href,
-            local_context: this.getContext(),
+    this._rpc({
+            route: '/website_version/google_access',
+            params: {
+                fromurl: window.location.href,
+                local_context: this.getContext(),
+            },
         })
-        .exec()
         .done(function(o) {
             if (o.status === "need_auth") {
                 alert(_t("You will be redirected to Google to authorize access to your Analytics Account!"));

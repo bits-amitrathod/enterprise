@@ -45,10 +45,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     },
     start: function() {
         var self = this;
-        var extra_info = this._rpc(self.report_model, 'get_report_informations')
-            .args([self.financial_id, self.report_options])
-            .withContext(self.odoo_context)
-            .exec()
+        var extra_info = this._rpc({
+                model: self.report_model,
+                method: 'get_report_informations',
+                args: [self.financial_id, self.report_options],
+                context: self.odoo_context,
+            })
             .then(function(result){
                 return self.parse_reports_informations(result);
             });
@@ -90,10 +92,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     },
     reload: function() {
         var self = this;
-        return this._rpc(this.report_model, 'get_report_informations')
-            .args([self.financial_id, self.report_options])
-            .withContext(self.odoo_context)
-            .exec()
+        return this._rpc({
+                model: this.report_model,
+                method: 'get_report_informations',
+                args: [self.financial_id, self.report_options],
+                context: self.odoo_context,
+            })
             .then(function(result){
                 self.parse_reports_informations(result);
                 return self.render();
@@ -241,10 +245,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         // bind actions
         _.each(this.$buttons.siblings('button'), function(el) {
             $(el).click(function() {
-                return self._rpc(self.report_model, $(el).attr('action'))
-                    .args([self.financial_id, self.report_options])
-                    .withContext(self.odoo_context)
-                    .exec()
+                return self._rpc({
+                        model: self.report_model,
+                        method: $(el).attr('action'),
+                        args: [self.financial_id, self.report_options],
+                        context: self.odoo_context,
+                    })
                     .then(function(result){
                         return self.do_action(result);
                     });
@@ -265,10 +271,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     save_summary: function(e) {
         var self = this;
         var text = $(e.target).siblings().val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
-        return this._rpc('account.report.manager', 'write')
-            .args([this.report_manager_id, {summary: text}])
-            .withContext(this.odoo_context)
-            .exec()
+        return this._rpc({
+                model: 'account.report.manager',
+                method: 'write',
+                args: [this.report_manager_id, {summary: text}],
+                context: this.odoo_context,
+            })
             .then(function(result){
                 self.$el.find('.o_account_reports_summary_edit').hide();
                 self.$el.find('.o_account_reports_summary').show();
@@ -296,10 +304,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             }
         });
         // Render footnote template
-        return this._rpc(this.report_model, 'get_html_footnotes')
-            .args([self.financial_id, footnote_to_render])
-            .withContext(self.odoo_context)
-            .exec()
+        return this._rpc({
+                model: this.report_model,
+                method: 'get_html_footnotes',
+                args: [self.financial_id, footnote_to_render],
+                context: self.odoo_context,
+            })
             .then(function(result){
                 return self.$el.find('.js_account_report_footnotes').html(result);
             });
@@ -325,10 +335,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                     return self.$el.find('.footnote[data-id="'+existing_footnote[0].id+'"] .o_account_reports_footnote_icons').click();
                 }
                 // replace text of existing footnote 
-                return this._rpc('account.report.footnote', 'write')
-                    .args([existing_footnote[0].id, {text: footnote_text}])
-                    .withContext(this.odoo_context)
-                    .exec()
+                return this._rpc({
+                        model: 'account.report.footnote',
+                        method: 'write',
+                        args: [existing_footnote[0].id, {text: footnote_text}],
+                        context: this.odoo_context,
+                    })
                     .then(function(result){
                         _.each(self.footnotes, function(footnote) {
                             if (footnote.id === existing_footnote[0].id){
@@ -340,10 +352,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             }
             else {
                 // new footnote
-                return this._rpc('account.report.footnote', 'create')
-                    .args([{line: line_id, text: footnote_text, manager_id: self.report_manager_id}])
-                    .withContext(this.odoo_context)
-                    .exec()
+                return this._rpc({
+                        model: 'account.report.footnote',
+                        method: 'create',
+                        args: [{line: line_id, text: footnote_text, manager_id: self.report_manager_id}],
+                        context: this.odoo_context,
+                    })
                     .then(function(result){
                         self.footnotes.push({id: result, line: line_id, text: footnote_text});
                         return self.render_footnotes();
@@ -355,10 +369,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     delete_footnote: function(e) {
         var self = this;
         var footnote_id = $(e.target).parents('.footnote').data('id');
-        return this._rpc('account.report.footnote', 'unlink')
-            .args([footnote_id])
-            .withContext(this.odoo_context)
-            .exec()
+        return this._rpc({
+                model: 'account.report.footnote',
+                method: 'unlink',
+                args: [footnote_id],
+                context: this.odoo_context,
+            })
             .then(function(result){
                 // remove footnote from report_information
                 self.footnotes = _.filter(self.footnotes, function(element) {
@@ -414,10 +430,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             return true;
         }
         else {
-            return this._rpc(this.report_model, 'get_html')
-                .args([self.financial_id, self.report_options, line.data('id')])
-                .withContext(self.odoo_context)
-                .exec()
+            return this._rpc({
+                    model: this.report_model,
+                    method: 'get_html',
+                    args: [self.financial_id, self.report_options, line.data('id')],
+                    context: self.odoo_context,
+                })
                 .then(function(result){
                     $(line).parent('tr').replaceWith(result);
                 });
@@ -440,10 +458,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         var id = $(e.target).parents('td').data('id');
         var params = $(e.target).data();
         if (action) {
-            return this._rpc(this.report_model, action)
-                .args([this.financial_id, this.report_options, params])
-                .withContext(this.odoo_context)
-                .exec()
+            return this._rpc({
+                    model: this.report_model,
+                    method: action,
+                    args: [this.financial_id, this.report_options, params],
+                    context: this.odoo_context,
+                })
                 .then(function(result){
                     return self.do_action(result);
                 });

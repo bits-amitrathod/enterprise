@@ -34,9 +34,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     render_search_view: function(){
         var self = this;
         var defs = [];
-        this._rpc('ir.model.data', 'get_object_reference')
-            .args(['product', 'product_template_search_view'])
-            .exec()
+        this._rpc({
+                model: 'ir.model.data',
+                method: 'get_object_reference',
+                args: ['product', 'product_template_search_view'],
+            })
             .then(function(view_id){
                 self.dataset = new data.DataSetSearch(this, 'product.product');
                 this.loadFieldView(self.dataset, view_id[1], 'search')
@@ -73,9 +75,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         if(isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
         } else {
-            return this._rpc('sale.forecast', 'save_forecast_data')
-                .args([parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
-                .exec()
+            return this._rpc({
+                    model: 'sale.forecast',
+                    method: 'save_forecast_data',
+                    args: [parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')],
+                })
                 .then(function() {
                     self.get_html().then(function() {
                         self.re_renderElement();
@@ -96,9 +100,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_generate_procurement: function(e){
         var self = this;
         var target = $(e.target);
-        return this._rpc('sale.forecast', 'generate_procurement')
-            .args([parseInt(target.data('product')), 1])
-            .exec()
+        return this._rpc({
+                model: 'sale.forecast',
+                method: 'generate_procurement',
+                args: [parseInt(target.data('product')), 1],
+            })
             .then(function(result){
                 if (result){
                     self.get_html().then(function() {
@@ -110,9 +116,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_change_auto_mode: function(e){
         var self = this;
         var target = $(e.target);
-        return this._rpc('sale.forecast', 'change_forecast_mode')
-            .args([parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))])
-            .exec()
+        return this._rpc({
+                model: 'sale.forecast',
+                method: 'change_forecast_mode',
+                args: [parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))],
+            })
             .then(function(result){
                 self.get_html().then(function() {
                     self.re_renderElement();
@@ -134,13 +142,17 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     option_mps_period: function(e){
         var self = this;
         this.period = $(e.target).parent().data('value');
-        return this._rpc('mrp.mps.report', 'search')
-            .args([[]])
-            .exec()
+        return this._rpc({
+                model: 'mrp.mps.report',
+                method: 'search',
+                args: [[]],
+            })
             .then(function(res){
-                return self._rpc('mrp.mps.report', 'write')
-                    .args([res, {'period': self.period}])
-                    .exec()
+                return self._rpc({
+                        model: 'mrp.mps.report',
+                        method: 'write',
+                        args: [res, {'period': self.period}],
+                    })
                     .done(function(result){
                         self.get_html().then(function() {
                             self.update_cp();
@@ -151,9 +163,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     },
     add_product_wizard: function(e){
         var self = this;
-        return this._rpc('ir.model.data', 'get_object_reference')
-            .args(['mrp_mps', 'mrp_mps_report_view_form'])
-            .exec()
+        return this._rpc({
+                model: 'ir.model.data',
+                method: 'get_object_reference',
+                args: ['mrp_mps', 'mrp_mps_report_view_form'],
+            })
             .then(function(data){
                 return self.do_action({
                     name: _t('Add a Product'),
@@ -175,9 +189,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_open_forecast_wizard: function(e){
         var self = this;
         var product = $(e.target).data('product') || $(e.target).parent().data('product');
-        return this._rpc('ir.model.data', 'get_object_reference')
-            .args(['mrp_mps', 'product_product_view_form_mps'])
-            .exec()
+        return this._rpc({
+                model: 'ir.model.data',
+                method: 'get_object_reference',
+                args: ['mrp_mps', 'product_product_view_form_mps'],
+            })
             .then(function(data){
                 return self.do_action({
                     name: _t('Forecast Product'),
@@ -196,9 +212,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         if(isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer or Float Value should be valid."));
         } else {
-            return this._rpc('sale.forecast', 'save_forecast_data')
-                .args([parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
-                .exec()
+            return this._rpc({
+                    model: 'sale.forecast',
+                    method: 'save_forecast_data',
+                    args: [parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')],
+                })
                 .done(function(res){
                     self.get_html().then(function() {
                         self.re_renderElement();
@@ -221,9 +239,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_apply: function(e){
         var self = this;
         var product = parseInt($(e.target).data('product'));
-        return this._rpc('mrp.mps.report', 'update_indirect')
-            .args([product])
-            .exec()
+        return this._rpc({
+                model: 'mrp.mps.report',
+                method: 'update_indirect',
+                args: [product],
+            })
             .then(function(result){
                 self.get_html().then(function() {
                     self.re_renderElement();
@@ -233,9 +253,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     // Fetches the html and is previous report.context if any, else create it
     get_html: function() {
         var self = this;
-        return this._rpc('mrp.mps.report', 'get_html')
-            .args([this.domain])
-            .exec()
+        return this._rpc({
+                model: 'mrp.mps.report',
+                method: 'get_html',
+                args: [this.domain],
+            })
             .then(function (result) {
                 self.html = result.html;
                 self.report_context = result.report_context;
@@ -276,9 +298,11 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var self = this;
         this.$buttons = $(QWeb.render("MPS.buttons", {}));
         this.$buttons.on('click', function(){
-            self._rpc('sale.forecast', 'generate_procurement_all')
-                .args([])
-                .exec()
+            self._rpc({
+                    model: 'sale.forecast',
+                    method: 'generate_procurement_all',
+                    args: [],
+                })
                 .then(function(result){
                     self.get_html().then(function() {
                         self.re_renderElement();

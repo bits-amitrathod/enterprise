@@ -82,16 +82,18 @@ return AbstractModel.extend({
      */
     _fetch: function (rowFields) {
         var self = this;
-        return this._rpc(this.modelName, 'read_grid')
-            .kwargs({
-                row_fields: rowFields,
-                col_field: this.colField,
-                cell_field: this.cellField,
-                domain: this.domain,
-                range: this.currentRange,
+        return this._rpc({
+                model: this.modelName,
+                method: 'read_grid',
+                kwargs: {
+                    row_fields: rowFields,
+                    col_field: this.colField,
+                    cell_field: this.cellField,
+                    domain: this.domain,
+                    range: this.currentRange,
+                },
+                context: this.context, // context: _this.get_full_context(),
             })
-            .withContext(this.context) // context: _this.get_full_context(),
-            .exec()
             .then(function (result) {
                 self.gridData = result;
                 self.gridData.groupBy = rowFields;

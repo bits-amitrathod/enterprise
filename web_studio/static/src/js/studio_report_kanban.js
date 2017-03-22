@@ -35,9 +35,11 @@ var StudioReportKanbanView = KanbanView.extend({
 
     open_record: function(event) {
         var self = this;
-        this._rpc('ir.actions.report.xml', 'studio_edit')
-            .args([event.data.id])
-            .exec()
+        this._rpc({
+                model: 'ir.actions.report.xml',
+                method: 'studio_edit',
+                args: [event.data.id],
+            })
             .then(function(action) {
                 if (action.active_ids.length) {
                     self.do_action(action);

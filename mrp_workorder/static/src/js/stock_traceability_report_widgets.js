@@ -77,7 +77,6 @@ var ReportWidget = Widget.extend({
         $(e.target).parents('tr').toggleClass('o_stock_reports_unfolded');
     },
     unfold: function(e) {
-        var self = this;
         var $CurretElement;
         $CurretElement = $(e.target).parents('tr').find('td.o_stock_reports_unfoldable');
         var active_id = $CurretElement.data('id');
@@ -87,18 +86,18 @@ var ReportWidget = Widget.extend({
         var stream = $CurretElement.data('stream');
         var parent_quant = $CurretElement.data('parent_quant');
         var $cursor = $(e.target).parents('tr');
-        var dict = new Object();
-        dict = {
-             'model_id': active_model_id,
-             'model_name': active_model_name,
-             'stream': stream || 'upstream',
-             'parent_quant': parseInt(parent_quant) || false,
-             'level': parseInt(row_level) + 30 || 1
-        }
-        this._rpc('stock.traceability.report', 'get_lines')
-            .args([parseInt(active_id, 10)])
-            .kwargs(dict)
-            .exec()
+        this._rpc({
+                model: 'stock.traceability.report',
+                method: 'get_lines',
+                args: [parseInt(active_id, 10)],
+                kwargs: {
+                    'model_id': active_model_id,
+                    'model_name': active_model_name,
+                    'stream': stream || 'upstream',
+                    'parent_quant': parseInt(parent_quant) || false,
+                    'level': parseInt(row_level) + 30 || 1
+                },
+            })
             .then(function (lines) {// After loading the line
                 var line;
                 for (line in lines) { // Render each line

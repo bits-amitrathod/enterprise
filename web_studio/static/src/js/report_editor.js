@@ -39,9 +39,11 @@ var ReportEditor = ReportAction.extend({
         var self = this;
 
         return this._super.apply(this, arguments).then(function() {
-            return self._rpc('ir.actions.report.xml', 'read')
-                .args([[self.res_id]])
-                .exec()
+            return self._rpc({
+                    model: 'ir.actions.report.xml',
+                    method: 'read',
+                    args: [[self.res_id]],
+                })
                 .then(function (report) {
                     self.sidebar = new ReportEditorSidebar(self, report[0]);
                 });

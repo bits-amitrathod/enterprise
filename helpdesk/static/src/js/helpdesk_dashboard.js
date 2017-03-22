@@ -139,7 +139,10 @@ var HelpdeskDashboardModel = KanbanModel.extend({
      */
     _loadDashboard: function (super_def) {
         var self = this;
-        var dashboard_def = this._rpc('helpdesk.team', 'retrieve_dashboard').exec();
+        var dashboard_def = this._rpc({
+            model: 'helpdesk.team',
+            method: 'retrieve_dashboard',
+        });
         return $.when(super_def, dashboard_def).then(function(id, dashboardValues) {
             var dataPoint = self.localData[id];
             dataPoint.dashboardValues = dashboardValues;
@@ -168,10 +171,11 @@ var HelpdeskDashboardController = KanbanController.extend({
         if (isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
         } else {
-            var args = [target_name, parseInt(target_value)];
-            this._rpc('helpdesk.team', 'modify_target_helpdesk_team_dashboard')
-                .args(args)
-                .exec()
+            this._rpc({
+                    model: 'helpdesk.team',
+                    method: 'modify_target_helpdesk_team_dashboard',
+                    args: [target_name, parseInt(target_value)],
+                })
                 .then(this.reload.bind(this));
         }
     },
@@ -183,8 +187,7 @@ var HelpdeskDashboardController = KanbanController.extend({
         var self = this;
         var action_name = e.data.action_name;
         if (_.contains(['helpdesk_rating_today', 'helpdesk_rating_7days'], action_name)) {
-            return this._rpc(this.model, action_name)
-                .exec()
+            return this._rpc({model: this.model, method: action_name})
                 .then(function (data) {
                     if (data) {
                     return self.do_action(data);

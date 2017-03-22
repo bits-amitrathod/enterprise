@@ -50,9 +50,11 @@ var stock_report_generic = Widget.extend(ControlPanelMixin, {
     get_html: function() {
         var self = this;
         var defs = [];
-        return this._rpc('stock.traceability.report', 'get_html')
-            .args([self.given_context])
-            .exec()
+        return this._rpc({
+                model: 'stock.traceability.report',
+                method: 'get_html',
+                args: [self.given_context],
+            })
             .then(function (result) {
                 self.html = result.html;
                 self.renderButtons();

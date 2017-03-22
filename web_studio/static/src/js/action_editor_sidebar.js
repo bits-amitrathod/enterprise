@@ -38,9 +38,11 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             if (self.action.groups_id.length === 0) { return; }
 
             // many2many field expects to receive: a list of {id, name, display_name}
-            self._rpc('res.groups', 'search_read')
-                .args([[['id', 'in', self.action.groups_id]], ['id', 'name', 'display_name']])
-                .exec()
+            self._rpc({
+                    model: 'res.groups',
+                    method: 'search_read',
+                    args: [[['id', 'in', self.action.groups_id]], ['id', 'name', 'display_name']],
+                })
                 .then(function(result) {
                     self.groups_info = result;
                 });

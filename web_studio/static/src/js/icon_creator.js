@@ -122,9 +122,11 @@ return Widget.extend({
         this.uploaded_attachment_id = result.id;
 
         var self = this;
-        this._rpc('ir.attachment', 'read')
-            .args([[this.uploaded_attachment_id], ['datas']])
-            .exec()
+        this._rpc({
+                model: 'ir.attachment',
+                method: 'read',
+                args: [[this.uploaded_attachment_id], ['datas']],
+            })
             .then(function (res) {
                 self.uploaded_image = ('data:image/png;base64,' + res[0].datas).replace(/\s/g, '');
                 self.renderElement();

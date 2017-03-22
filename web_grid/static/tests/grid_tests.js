@@ -299,9 +299,11 @@ QUnit.module('Views', {
             currentDate: "2017-01-25",
             intercepts: {
                 execute_action: function (event) {
-                    grid._rpc('analytic.line', 'adjust_grid')
-                        .kwargs(event.data.action_data)
-                        .exec()
+                    grid._rpc({
+                            model: 'analytic.line',
+                            method: 'adjust_grid',
+                            kwargs: event.data.action_data,
+                        })
                         .then(event.data.on_success)
                         .fail(event.data.on_fail);
                 },
