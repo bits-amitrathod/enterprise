@@ -4,7 +4,15 @@ odoo.define('stock_barcode.picking_type_kanban', function (require) {
 var KanbanRecord = require('web.KanbanRecord');
 
 KanbanRecord.include({
-    on_card_clicked: function () {
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _openRecord: function () {
         if (this.modelName === 'stock.picking.type') {
             this.$('button').first().click();
         } else {

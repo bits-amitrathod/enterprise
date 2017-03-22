@@ -13,6 +13,9 @@ odoo.define('website_sign.views_custo', function(require) {
     ListController.include(_make_custo(".o_list_button_add"));
 
     KanbanColumn.include({
+        /**
+         * @override
+         */
         start: function () {
             var def = this._super.apply(this, arguments);
             if (this.modelName !== "signature.request") {
@@ -27,7 +30,15 @@ odoo.define('website_sign.views_custo', function(require) {
     });
 
     KanbanRecord.include({
-        on_card_clicked: function () {
+        //--------------------------------------------------------------------------
+        // Private
+        //--------------------------------------------------------------------------
+
+        /**
+         * @override
+         * @private
+         */
+        _openRecord: function () {
             if (this.modelName === "signature.request" || this.modelName === "signature.request.template") {
                 var $link = this.$(".o_sign_action_link");
                 if ($link.length) {

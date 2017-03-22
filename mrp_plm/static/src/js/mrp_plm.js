@@ -8,7 +8,15 @@ var QWeb = core.qweb;
 
 
 KanbanRecord.include({
-    on_kanban_action_clicked: function(ev) {
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _onKanbanActionClicked: function (ev) {
         var self = this;
         if (this.modelName === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
             ev.preventDefault();
@@ -26,19 +34,18 @@ KanbanRecord.include({
 
                     $cover_modal.appendTo($('body'));
                     $cover_modal.modal('toggle');
-                    $cover_modal.on('click', 'img', function(ev){
-                        self.update_record({
-                            data : {
-                                displayed_image_id: $(ev.currentTarget).data('id'),
-                            }
+                    $cover_modal.on('click', 'img', function (ev) {
+                        self._updateRecord({
+                            displayed_image_id: $(ev.currentTarget).data('id'),
                         });
                         $cover_modal.modal('toggle');
                         $cover_modal.remove();
                     });
                 });
         } else {
-            this._super.apply(this, arguments, ev);
+            this._super.apply(this, arguments);
         }
     },
 });
+
 });
