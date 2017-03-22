@@ -18,7 +18,7 @@ class ReportAccountFinancialReport(models.Model):
 
     name = fields.Char(translate=True)
     debit_credit = fields.Boolean('Show Credit and Debit Columns')
-    line_ids = fields.One2many('account.financial.html.report.line', 'financial_report_id', string='Lines', copy=True)
+    line_ids = fields.One2many('account.financial.html.report.line', 'financial_report_id', string='Lines')
     date_range = fields.Boolean('Based on date ranges', default=True, help='specify if the report use date_range or single date')
     comparison = fields.Boolean('Allow comparison', default=True, help='display the comparison filter')
     cash_basis = fields.Boolean('Use cash basis', help='if true, report will always use cash basis, if false, user can choose from filter inside the report')
@@ -128,7 +128,7 @@ class AccountFinancialReportLine(models.Model):
     code = fields.Char('Code')
     financial_report_id = fields.Many2one('account.financial.html.report', 'Financial Report')
     parent_id = fields.Many2one('account.financial.html.report.line', string='Parent')
-    children_ids = fields.One2many('account.financial.html.report.line', 'parent_id', string='Children', copy=True)
+    children_ids = fields.One2many('account.financial.html.report.line', 'parent_id', string='Children')
     sequence = fields.Integer()
 
     domain = fields.Char(default=None)
