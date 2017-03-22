@@ -25,6 +25,7 @@ class ResCompany(models.Model):
         default='manually', string='Interval Unit')
     currency_next_execution_date = fields.Date(string="Next Execution Date")
     currency_provider = fields.Selection([('yahoo', 'Yahoo'), ('ecb', 'European Central Bank'), ('fta', 'Federal Tax Administration (Switzerland)')], default='ecb', string='Service Provider')
+    last_currency_sync_date = fields.Date(string="Last Sync Date", readonly=True)
 
     @api.model
     def create(self, vals):
@@ -57,6 +58,9 @@ class ResCompany(models.Model):
                 res = company._update_currency_fta()
             if not res:
                 raise UserError(_('Unable to connect to the online exchange rate platform. The web service may be temporary down. Please try again in a moment.'))
+            elif company.currency_provider:
+                company.last_currency_sync_date = fields.Date.today()
+
 
     def _update_currency_fta(self):
         ''' This method is used to update the currency rates using Switzerland's
@@ -215,6 +219,7 @@ class AccountConfigSettings(models.TransientModel):
     currency_interval_unit = fields.Selection(related="company_id.currency_interval_unit",)
     currency_provider = fields.Selection(related="company_id.currency_provider")
     currency_next_execution_date = fields.Date(related="company_id.currency_next_execution_date")
+    last_currency_sync_date = fields.Date(related="company_id.last_currency_sync_date")
 
     @api.onchange('currency_interval_unit')
     def onchange_currency_interval_unit(self):
