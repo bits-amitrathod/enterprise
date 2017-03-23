@@ -17,7 +17,9 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='sale']" position="inside">
-                <field name="recurring_invoice"/>
+                <group>
+                    <field name="recurring_invoice"/>
+                </group>
             </xpath>
         </field>
     </record>
