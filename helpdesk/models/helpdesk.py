@@ -797,3 +797,11 @@ class HelpdeskTicket(models.Model):
             else:
                 res[res_id] = super(HelpdeskTicket, self).message_get_reply_to([res_id])[res_id]
         return res
+
+    # Rating Mixin
+
+    def rating_get_parent_model_name(self, vals):
+        return 'helpdesk.team'
+
+    def rating_get_parent_id(self):
+        return self.team_id.id
