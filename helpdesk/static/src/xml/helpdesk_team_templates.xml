@@ -166,10 +166,12 @@
                 <div class="o_welcome_image">
                     <i class="fa fa-smile-o fa-5x"></i>
                 </div>
-                <div class="o_welcome_content">
-                    <h2>Hi there.</h2>
-                    <h4>Ready to boost your customer service?</h4>
+                <div class="o_welcome_content"><br/>
+                    <h4><strong>Ready to boost your customer service?</strong></h4>
                     <h4>This dashboard will activate once you have created your first ticket.</h4>
+                    <t t-if="values['use_alias'] and values['alias_name'] and values['alias_domain']">
+                        <h4>Send an email to <strong><a t-attf-href="mailto:#{values['alias_name']}@#{values['alias_domain']}" class="o_inline_link"><t t-esc="values['alias_name']"/>@<t t-esc="values['alias_domain']"/></a></strong> to create a ticket.</h4>
+                    </t>
                 </div>
             </div>
         </div>

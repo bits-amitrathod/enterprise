@@ -130,7 +130,7 @@
                                     <group class="oe_edit_only" attrs="{'invisible': [('alias_domain', '=', False)]}">
                                         <label for="alias_id" string="Choose an Email:"/>
                                         <div name="edit_alias" style="display: inline;" >
-                                            <field name="alias_name" attrs="{'required': [('use_alias','=',True)]}"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
+                                            <field name="alias_name"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
                                         </div>
                                     </group>
                                     <p class="oe_read_only" attrs="{'invisible': [('alias_domain', '=', False)]}">Send emails to
@@ -303,6 +303,9 @@
                 <field name="name"/>
                 <field name="color"/>
                 <field name="use_alias"/>
+                <field name="alias_name"/>
+                <field name="alias_domain"/>
+                <field name="alias_id"/>
                 <field name="use_rating"/>
                 <field name="percentage_satisfaction" invisible="1"/>
                 <field name="use_sla"/>
@@ -314,7 +317,7 @@
                             <div class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title">
                                     <div class="o_primary"><field name="name"/></div>
-                                    <small t-if="record.use_alias.value"><i class="fa fa-envelope-o"></i>&amp;nbsp; <field name="alias_id"/></small>
+                                    <small t-if="record.use_alias.value and record.alias_name.value and record.alias_domain.value"><i class="fa fa-envelope-o"></i>&amp;nbsp; <t t-esc="record.alias_id.value"/></small>
                                 </div>
                                 <div class="o_kanban_manage_button_section">
                                     <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" /></a>

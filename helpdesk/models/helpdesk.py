@@ -45,7 +45,7 @@ class HelpdeskTeam(models.Model):
     member_ids = fields.Many2many('res.users', string='Team Members', domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)])
     ticket_ids = fields.One2many('helpdesk.ticket', 'team_id', string='Tickets')
 
-    use_alias = fields.Boolean('Email alias')
+    use_alias = fields.Boolean('Email alias', default=True)
     use_website_helpdesk_form = fields.Boolean('Website Form')
     use_website_helpdesk_livechat = fields.Boolean('Live chat',
         help="In Channel: You can create a new ticket by typing /helpdesk [ticket title]. You can search ticket by typing /helpdesk_search [Keyword1],[Keyword2],.")
@@ -97,10 +97,10 @@ class HelpdeskTeam(models.Model):
         if not self.member_ids and self.assign_method != 'manual':
             raise ValidationError(_("You must have team members assigned to change the assignation method."))
 
-    @api.onchange('use_alias')
+    @api.onchange('use_alias', 'name')
     def _onchange_use_alias(self):
-        if not self.alias_name:
-            self.alias_name = self.env['mail.alias']._clean_and_make_unique(self.name) if self.use_alias else False
+        if not self.alias_name and self.name and self.use_alias:
+            self.alias_name = self.env['mail.alias']._clean_and_make_unique(self.name)
 
     @api.model
     def create(self, vals):
@@ -205,6 +205,7 @@ class HelpdeskTeam(models.Model):
             group_fields.insert(1, 'sla_fail')
         HelpdeskTicket = self.env['helpdesk.ticket']
         tickets = HelpdeskTicket.read_group(domain + [('stage_id.is_close', '=', False)], group_fields, group_fields, lazy=False)
+        team = self.env['helpdesk.team'].search([], limit=1, order='id asc')
         result = {
             'helpdesk_target_closed': self.env.user.helpdesk_target_closed,
             'helpdesk_target_rating': self.env.user.helpdesk_target_rating,
@@ -216,7 +217,10 @@ class HelpdeskTeam(models.Model):
             'my_urgent': {'count': 0, 'hours': 0, 'failed': 0},
             'show_demo': not bool(HelpdeskTicket.search([], limit=1)),
             'rating_enable': False,
-            'success_rate_enable': user_uses_sla
+            'success_rate_enable': user_uses_sla,
+            'alias_name': team.alias_name,
+            'alias_domain': team.alias_domain,
+            'use_alias': team.use_alias
         }
 
         def add_to(ticket, key="my_all"):
