@@ -27,8 +27,6 @@ return AbstractWebClient.extend({
         },
     }),
     start: function () {
-        this.$el.toggleClass('o_touch_device', config.device.touch);
-
         core.bus.on('change_menu_section', this, function (menu_id) {
             this.do_push_state(_.extend($.bbq.getState(), {
                 menu_id: menu_id,
