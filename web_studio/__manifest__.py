@@ -22,7 +22,6 @@ Note: Only the admin user is allowed to make those customizations.
         'base_import_module',
         'grid',
         'mail',
-        'portal',
         'report',
         'web',
         'web_calendar',
