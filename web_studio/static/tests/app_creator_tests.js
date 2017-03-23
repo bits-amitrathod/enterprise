@@ -5,9 +5,9 @@ var testUtils = require('web.test_utils');
 
 var AppCreator = require('web_studio.AppCreator');
 
-QUnit.module('web_studio', {}, function () {
+QUnit.module('Studio', {}, function () {
 
-    QUnit.module('app_creator');
+    QUnit.module('AppCreator');
 
     QUnit.test('basic stuff', function(assert) {
         assert.expect(11);
