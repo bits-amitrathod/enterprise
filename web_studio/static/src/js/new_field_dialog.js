@@ -97,7 +97,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             var field_options = {
                 fields: many2one_fields,
             };
-            this.fieldSelector = new ModelFieldSelector(this, this.model, '', field_options);
+            this.fieldSelector = new ModelFieldSelector(this, this.model, [], field_options);
 
             return $.when(
                 this.fieldSelector.appendTo(this.$('.o_many2one_field'),
