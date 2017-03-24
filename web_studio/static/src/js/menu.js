@@ -8,7 +8,6 @@ var Menu = require('web_enterprise.Menu');
 var session = require('web.session');
 
 var bus = require('web_studio.bus');
-var customize = require('web_studio.customize');
 var EditMenu = require('web_studio.EditMenu');
 var SubMenu = require('web_studio.SubMenu');
 
@@ -151,6 +150,20 @@ Menu.include({
             this.$app_switcher_menu = undefined;
         }
     },
+    /**
+     * @private
+     * @param {Integer} attachment_id
+     * @returns {Deferred}
+     */
+    _setBackgroundImage: function (attachment_id) {
+        return this._rpc({
+            route: '/web_studio/set_background_image',
+            params: {
+                attachment_id: attachment_id,
+                context: session.user_context,
+            },
+        });
+    },
 
     //--------------------------------------------------------------------------
     // Handlers
@@ -165,7 +178,7 @@ Menu.include({
             this.do_warn(result.error);
         } else {
             framework.blockUI();
-            customize.setBackgroundImage(result.id)
+            this._setBackgroundImage(result.id)
                 .then(function () {
                     window.location.reload();
                 }).fail(function () {

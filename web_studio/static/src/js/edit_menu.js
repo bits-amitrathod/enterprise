@@ -2,14 +2,14 @@ odoo.define('web_studio.EditMenu', function (require) {
 "use strict";
 
 var core = require('web.core');
+var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var FieldManagerMixin = require('web.FieldManagerMixin');
 var form_common = require('web.view_dialogs');
 var relational_fields = require('web.relational_fields');
+var session = require('web.session');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
-
-var customize = require('web_studio.customize');
 
 var Many2One = relational_fields.FieldMany2One;
 var _t = core._t;
@@ -219,7 +219,6 @@ var EditMenuDialog = Dialog.extend({
      */
     _onSave: function () {
         var self = this;
-        // TODO: create a method in customize.js
         this._rpc({
                 model: 'ir.ui.menu',
                 method: 'customize',
@@ -320,6 +319,30 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     },
 
     //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {String} menu_name
+     * @param {Integer} parent_id
+     * @param {Integer} model_id
+     * @returns {Deferred}
+     */
+    _createNewMenu: function (menu_name, parent_id, model_id) {
+        data_manager.invalidate();
+        return this._rpc({
+            route: '/web_studio/create_new_menu',
+            params: {
+                menu_name: menu_name,
+                model_id: model_id,
+                parent_id: parent_id,
+                context: session.user_context,
+            },
+        });
+    },
+
+    //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
 
@@ -333,7 +356,7 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         var name = this.$el.find('input').first().val();
         var model_id = this.many2one.value && this.many2one.value.res_id;
 
-        var def = customize.createNewMenu(name, this.parent_id, model_id);
+        var def = this._createNewMenu(name, this.parent_id, model_id);
         def.then(function () {
             self.on_saved();
             self.close();

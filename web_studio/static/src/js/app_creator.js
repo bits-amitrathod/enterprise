@@ -2,11 +2,13 @@ odoo.define('web_studio.AppCreator', function (require) {
 "use strict";
 
 var core = require('web.core');
+var data_manager = require('web.data_manager');
+var Dialog = require('web.Dialog');
 var framework = require('web.framework');
 var Widget = require('web.Widget');
 var relational_fields = require('web.relational_fields');
+var session = require('web.session');
 
-var customize = require('web_studio.customize');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var IconCreator = require('web_studio.IconCreator');
 
@@ -103,6 +105,37 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
 
         this.$next.toggleClass('is_ready', ready);
         return ready;
+    },
+    /**
+     * @private
+     * @param {String} app_name
+     * @param {String} menu_name
+     * @param {Integer} model_id
+     * @param {Integer/Array} icon - can either be:
+     *  - the ir.attachment id of the uploaded image
+     *  - if the icon has been created with the IconCreator, an array containing:
+     *      [icon_class, color, background_color]
+     * @returns {Deferred}
+     */
+    _createNewApp: function (app_name, menu_name, model_id, icon) {
+        var self = this;
+        framework.blockUI();
+        return this._rpc({
+            route: '/web_studio/create_new_menu',
+            params: {
+                app_name: app_name,
+                menu_name: menu_name,
+                model_id: model_id,
+                is_app: true,
+                icon: icon,
+                context: session.user_context,
+            },
+        }).then(function (result) {
+            self.trigger_up('new_app_created', result);
+            data_manager.invalidate();
+        }).fail(function () {
+            Dialog.alert(self, _t('This model already exists. Please specify another model.'));
+        }).always(framework.unblockUI.bind(framework));
     },
     /*
      * Update the widget according to the @currentStep
@@ -238,12 +271,7 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
             var menu_name = this.$('input[name="menu_name"]').val();
             var model_choice = this.$('input[name="model_choice"]').is(':checked');
             var model_id = model_choice && this.many2one.value.res_id;
-
-            framework.blockUI();
-            customize
-                .createNewApp(this.app_name, menu_name, model_id, this.icon)
-                .then(this.trigger_up.bind(this, 'new_app_created'))
-                .always(framework.unblockUI.bind(framework));
+            this._createNewApp(this.app_name, menu_name, model_id, this.icon);
         }
     },
 });

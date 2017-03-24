@@ -6,11 +6,11 @@ var concurrency = require('web.concurrency');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
+var session = require('web.session');
 var view_registry = require('web.view_registry');
 var Widget = require('web.Widget');
 
 var bus = require('web_studio.bus');
-var customize = require('web_studio.customize');
 
 var CalendarEditor = require('web_studio.CalendarEditor');
 var FormEditor = require('web_studio.FormEditor');
@@ -147,16 +147,16 @@ var ViewEditorManager = Widget.extend({
 
         var def;
         if (from_xml) {
-            def = this._apply_changes_mutex.exec(customize.editViewArch.bind(
-                customize,
+            def = this._apply_changes_mutex.exec(this._editViewArch.bind(
+                this,
                 last_op.view_id,
                 last_op.new_arch
             )).fail(function () {
                 self.trigger_up('studio_error', {error: 'view_rendering'});
             });
         } else {
-            def = this._apply_changes_mutex.exec(customize.editView.bind(
-                customize,
+            def = this._apply_changes_mutex.exec(this._editView.bind(
+                this,
                 this.view_id,
                 this.studio_view_arch,
                 _.filter(this.operations, function (el) {return el.type !== 'replace_arch'; })
@@ -380,10 +380,10 @@ var ViewEditorManager = Widget.extend({
                 });
 
                 if (node.tag === 'field') {
-                    def = customize.getDefaultValue(this.model_name, node.attrs.name);
+                    def = this._getDefaultValue(this.model_name, node.attrs.name);
                 }
                 if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
-                    def = customize.getEmailAlias(this.model_name);
+                    def = this._getEmailAlias(this.model_name);
                 }
                 break;
         }
@@ -699,6 +699,48 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
+     * The point of this function is to receive a list of customize operations
+     * to do.
+     *
+     * @private
+     * @param {Integer} view_id
+     * @param {String} studio_view_arch
+     * @param {Array} operations
+     * @returns {Deferred}
+     */
+    _editView: function (view_id, studio_view_arch, operations) {
+        data_manager.invalidate();
+        return this._rpc({
+            route: '/web_studio/edit_view',
+            params: {
+                view_id: view_id,
+                studio_view_arch: studio_view_arch,
+                operations: operations,
+                context: session.user_context,
+            },
+        });
+    },
+    /**
+     * This is used when the view is edited with the XML editor: the whole arch
+     * is replaced by a new one.
+     *
+     * @private
+     * @param {Integer} view_id
+     * @param {String} view_arch
+     * @returns {Deferred}
+     */
+    _editViewArch: function (view_id, view_arch) {
+        data_manager.invalidate();
+        return this._rpc({
+            route: '/web_studio/edit_view_arch',
+            params: {
+                view_id: view_id,
+                view_arch: view_arch,
+                context: session.user_context,
+            },
+        });
+    },
+    /**
      * @private
      * @param {String} type
      * @param {Object} new_attrs
@@ -711,6 +753,35 @@ var ViewEditorManager = Widget.extend({
             },
             position: 'attributes',
             new_attrs: new_attrs,
+        });
+    },
+    /**
+     * @private
+     * @param {String} model_name
+     * @param {String} field_name
+     * @returns {Deferred}
+     */
+    _getDefaultValue: function (model_name, field_name) {
+        return this._rpc({
+            route: '/web_studio/get_default_value',
+            params: {
+                model_name: model_name,
+                field_name: field_name,
+            },
+        });
+    },
+    /**
+     * @private
+     * @param {String} model_name
+     * @returns {Deferred}
+     * @returns {Deferred}
+     */
+    _getEmailAlias: function (model_name) {
+        return this._rpc({
+            route: '/web_studio/get_email_alias',
+            params: {
+                model_name: model_name,
+            },
         });
     },
     /**
@@ -738,6 +809,43 @@ var ViewEditorManager = Widget.extend({
             },
         });
         this._onUnselectElement();
+    },
+    /**
+     * @private
+     * @param {String} model_name
+     * @param {String} field_name
+     * @param {*} value
+     * @returns {Deferred}
+     */
+    _setDefaultValue: function (model_name, field_name, value) {
+        var self = this;
+        var def = $.Deferred();
+        var params = {
+            model_name: model_name,
+            field_name: field_name,
+            value: value,
+        };
+        this._rpc({route: '/web_studio/set_default_value', params: params})
+            .fail(function (result, error) {
+                var alert = Dialog.alert(self, error.data.message);
+                alert.on('closed', null, def.reject.bind(def));
+            });
+        return def;
+    },
+    /**
+     * @private
+     * @param {String} model_name
+     * @param {[type]} value
+     * @returns {Deferred}
+     */
+    _setEmailAlias: function (model_name, value) {
+        return this._rpc({
+            route: '/web_studio/set_email_alias',
+            params: {
+                model_name: model_name,
+                value: value,
+            },
+        });
     },
 
 
@@ -772,8 +880,7 @@ var ViewEditorManager = Widget.extend({
      */
     _onDefaultValueChange: function (event) {
         var data = event.data;
-        customize
-            .setDefaultValue(this.model_name, field_name, value)
+        this._setDefaultValue(this.model_name, data.field_name, data.value)
             .fail(function () {
                 if (data.on_fail) {
                     data.on_fail();
@@ -786,7 +893,7 @@ var ViewEditorManager = Widget.extend({
      */
     _onEmailAliasChange: function (event) {
         var value = event.data.value;
-        customize.setEmailAlias(this.model_name, value);
+        this._setEmailAlias(this.model_name, value);
     },
     /**
      * Toggle editor sidebar.

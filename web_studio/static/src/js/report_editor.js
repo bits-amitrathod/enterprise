@@ -3,7 +3,9 @@ odoo.define('web_studio.ReportEditor', function (require) {
 
 var ReportAction = require('report.client_action');
 var core = require('web.core');
-var customize = require('web_studio.customize');
+var data_manager = require('web.data_manager');
+var session = require('web.session');
+
 var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');
 var XMLEditor = require('web_studio.XMLEditor');
 
@@ -75,6 +77,42 @@ var ReportEditor = ReportAction.extend({
 
     /**
      * @private
+     * @param {Object} report
+     * @param {Object} values
+     * @returns {Deferred}
+     */
+    _editReport: function (report, values) {
+        return this._rpc({
+            route: '/web_studio/edit_report',
+            params: {
+                report_id: report.id,
+                values: values,
+                context: session.user_context,
+            },
+        });
+    },
+    /**
+     * This is used when the view is edited with the XML editor: the whole arch
+     * is replaced by a new one.
+     *
+     * @private
+     * @param {Integer} view_id
+     * @param {String} view_arch
+     * @returns {Deferred}
+     */
+    _editViewArch: function (view_id, view_arch) {
+        data_manager.invalidate();
+        return this._rpc({
+            route: '/web_studio/edit_view_arch',
+            params: {
+                view_id: view_id,
+                view_arch: view_arch,
+                context: session.user_context,
+            },
+        });
+    },
+    /**
+     * @private
      * @override
      */
     _update_control_panel_buttons: function () {
@@ -95,7 +133,7 @@ var ReportEditor = ReportAction.extend({
         var args = event.data.args;
         if (!args) { return; }
 
-        customize.editReport(event.data.report, args);
+        this._editReport(event.data.report, args);
     },
     /**
      * @param {OdooEvent} event
@@ -141,7 +179,7 @@ var ReportEditor = ReportAction.extend({
     _onSaveXMLEditor: function (event) {
         var self = this;
 
-        return customize.editViewArch(
+        return this._editViewArch(
             event.data.view_id,
             event.data.new_arch
         ).then(function () {

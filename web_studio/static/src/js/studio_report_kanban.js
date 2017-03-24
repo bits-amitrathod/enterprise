@@ -4,9 +4,8 @@ odoo.define('web_studio.studio_report_kanban', function (require) {
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var KanbanView = require('web.KanbanView');
+var session = require('web.session');
 var view_registry = require('web.view_registry');
-
-var customize = require('web_studio.customize');
 
 var _t = core._t;
 
@@ -112,6 +111,27 @@ var AddReportDialog = Dialog.extend({
     },
 
     //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {String} model_name
+     * @param {String} template_name
+     * @returns {Deferred}
+     */
+    _createNewReport: function (model_name, template_name) {
+        return this._rpc({
+            route: '/web_studio/create_new_report',
+            params: {
+                model_name: model_name,
+                template_name: template_name,
+                context: session.user_context,
+            },
+        });
+    },
+
+    //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
 
@@ -124,7 +144,7 @@ var AddReportDialog = Dialog.extend({
     _onReportTemplate: function (event) {
         var self = this;
         var template_name = $(event.currentTarget).data('template_name');
-        customize.createNewReport(this.res_model, template_name).then(function (result) {
+        this._createNewReport(this.res_model, template_name).then(function (result) {
             self.trigger_up('open_record', {id: result.id});
             self.close();
         });

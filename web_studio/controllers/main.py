@@ -1153,7 +1153,10 @@ class WebStudioController(http.Controller):
     def get_default_value(self, model_name, field_name):
         """ Return the default value associated to the given field. """
         company_id = request.env.user.company_id.id
-        return request.env['ir.values'].get_default(model_name, field_name, company_id=company_id)
+        IrValues = request.env['ir.values']
+        return {
+            'default_value': IrValues.get_default(model_name, field_name, company_id=company_id)
+        }
 
     @http.route('/web_studio/set_default_value', type='json', auth='user')
     def set_default_value(self, model_name, field_name, value):
