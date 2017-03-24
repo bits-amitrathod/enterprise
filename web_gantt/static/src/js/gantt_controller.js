@@ -13,40 +13,47 @@ var qweb = core.qweb;
 
 var GanttController = AbstractController.extend({
     events: {
-        'click .gantt_task_row .gantt_task_cell': 'create_on_click',
+        'click .gantt_task_row .gantt_task_cell': '_onCreateClick',
     },
     custom_events: _.extend({}, AbstractController.prototype.custom_events, {
-        task_changed: 'on_task_changed',
-        task_display: 'on_task_display',
-        task_create: 'on_task_create',
+        task_changed: '_onTaskChanged',
+        task_display: '_onTaskDisplay',
+        task_create: '_onTaskCreate',
     }),
 
-    init: function(parent, model, renderer, params) {
+    init: function (parent, model, renderer, params) {
         this._super.apply(this, arguments);
         this.set('title', params.title);
         this.context = params.context;
     },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
     /**
-     * Render the buttons according to the GanttView.buttons template and add listeners on it.
-     * Set this.$buttons with the produced jQuery element
-     * @param {jQuery} [$node] a jQuery node where the rendered buttons should be inserted
-     * $node may be undefined, in which case they are inserted into this.options.$buttons
+     * Render the buttons according to the GanttView.buttons template and add
+     * listeners on it. Set this.$buttons with the produced jQuery element
+     *
+     * @param {jQuery} [$node] a jQuery node where the rendered buttons should
+     *   be inserted $node may be undefined, in which case they are inserted
+     *   into this.options.$buttons
      */
-    renderButtons: function($node) {
+    renderButtons: function ($node) {
         var self = this;
         if ($node) {
             this.$buttons = $(qweb.render("GanttView.buttons", {'widget': this}));
             this.$buttons.appendTo($node);
             this.$buttons.find('.o_gantt_button_scale').bind('click', function (event) {
-                return self.on_scale(event.target.value);
+                return self._setScale(event.target.value);
             });
             this.$buttons.find('.o_gantt_button_left').bind('click', function () {
                 var state = self.model.get();
-                self.on_focus_date(state.focus_date.subtract(1, state.scale));
+                self._focusDate(state.focus_date.subtract(1, state.scale));
             });
             this.$buttons.find('.o_gantt_button_right').bind('click', function () {
                 var state = self.model.get();
-                self.on_focus_date(state.focus_date.add(1, state.scale));
+                self._focusDate(state.focus_date.add(1, state.scale));
             });
             this.$buttons.find('.o_gantt_button_today').bind('click', function () {
                 self.model.setFocusDate(moment(new Date()));
@@ -55,15 +62,121 @@ var GanttController = AbstractController.extend({
         }
     },
 
-    on_focus_date: function (focus_date) {
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {string} id
+     * @param {Moment} startDate
+     */
+    _createTask: function (id, startDate) {
+        var task = gantt.getTask(id);
+
+        var end_date;
+        switch (this.model.get().scale) {
+            case "day":
+                end_date = startDate.clone().add(4, "hour");
+                break;
+            case "week":
+                end_date = startDate.clone().add(2, "day");
+                break;
+            case "month":
+                end_date = startDate.clone().add(4, "day");
+                break;
+            case "year":
+                end_date = startDate.clone().add(2, "month");
+                break;
+        }
+
+        var context = _.clone(this.context);
+        var get_create = function (item) {
+            if (item.create) {
+                context["default_"+item.create[0]] = item.create[1][0];
+            }
+            if (item.parent) {
+                var parent = gantt.getTask(item.parent);
+                get_create(parent);
+            }
+        };
+        get_create(task);
+
+        context["default_"+this.model.mapping.date_start] = startDate.format("YYYY-MM-DD HH:mm:ss");
+        if(this.model.mapping.date_stop) {
+            context["default_"+this.model.mapping.date_stop] = end_date.format("YYYY-MM-DD HH:mm:ss");
+        } else { // We assume date_delay is given
+            context["default_"+this.model.mapping.date_delay] = gantt.calculateDuration(startDate, end_date);
+        }
+
+        context.id = 0;
+
+        this._displayTask(context);
+    },
+    /**
+     * Dialog to edit/display a task.
+     *
+     * @private
+     * @param {Object} task
+     */
+    _displayTask: function (task) {
+        var task_id = _.isString(task.id) ? parseInt(_.last(task.id.split("_")), 10) : task.id;
+
+        new dialogs.FormViewDialog(this, {
+            res_model: this.modelName,
+            res_id: task_id,
+            context: task,
+            on_saved: this.reload.bind(this)
+        }).open();
+    },
+    /**
+     * @private
+     * @param {Moment} focusDate
+     */
+    _focusDate: function (focusDate) {
         var self = this;
-        this.model.setFocusDate(focus_date);
+        this.model.setFocusDate(focusDate);
+        this.reload().then(function () {
+            self.set({'title': 'Forecast (' + self.model.get().date_display + ')'});
+        });
+    },
+    /**
+     * @private
+     * @param {any} scale
+     */
+    _setScale: function (scale) {
+        var self = this;
+        this.model.setScale(scale);
         this.reload().then(function () {
             self.set({'title': 'Forecast (' + self.model.get().date_display + ')'});
         });
     },
 
-    on_task_changed: function (event) {
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * Handler used when clicking on an empty cell. The behaviour is to create a
+     * new task and apply some default values.
+     *
+     * @private
+     * @param {MouseEvent} event
+     */
+    _onCreateClick: function (event) {
+        var id = event.target.parentElement.attributes.task_id.value;
+        var class_date = _.find(event.target.classList, function (e) {
+            return e.indexOf("date_") > -1;
+        });
+        var start_date = moment(new Date(parseInt(class_date.split("_")[1], 10))).utc();
+
+        this._createTask(id, start_date);
+    },
+    /**
+     * @private
+     * @param {OdooEvent} event
+     */
+    _onTaskChanged: function (event) {
         var task_obj = event.data.task;
         var success = event.data.success;
         var fail = event.data.fail;
@@ -101,94 +214,26 @@ var GanttController = AbstractController.extend({
             })
             .then(success, fail);
     },
-
-    /**
-     * Dialog to edit/display a task.
-     */
-    on_task_display: function (event) {
-        var task = event.data;
-        var task_id = _.isString(task.id) ? parseInt(_.last(task.id.split("_")), 10) : task.id;
-
-        new dialogs.FormViewDialog(this, {
-            res_model: this.modelName,
-            res_id: task_id,
-            context: event.data,
-            on_saved: this.reload.bind(this)
-        }).open();
-    },
-
     /**
      * Dialog to create a task.
+     *
+     * @private
      */
-    on_task_create: function (event) {
+    _onTaskCreate: function () {
         var start_date = moment(new Date()).utc();
-        this._create_task(0, start_date);
+        this._createTask(0, start_date);
     },
-
-    on_scale: function (scale) {
-        var self = this;
-        this.model.setScale(scale);
-        this.reload().then(function () {
-            self.set({'title': 'Forecast (' + self.model.get().date_display + ')'});
-        });
-    },
-
     /**
-     * Handler used when clicking on an empty cell. The behaviour is to create a new task
-     * and apply some default values.
+     * Dialog to edit/display a task.
+     *
+     * @private
+     * @param {OdooEvent} event
      */
-    create_on_click: function (event) {
-        var id = event.target.parentElement.attributes.task_id.value;
-        var class_date = _.find(event.target.classList, function (e) {
-            return e.indexOf("date_") > -1;
-        });
-        var start_date = moment(new Date(parseInt(class_date.split("_")[1], 10))).utc();
-
-        this._create_task(id, start_date);
+    _onTaskDisplay: function (event) {
+        this._displayTask(event.data);
     },
 
-    _create_task: function (id, start_date) {
-        var task = gantt.getTask(id);
 
-        var end_date;
-        switch (this.model.get().scale) {
-            case "day":
-                end_date = start_date.clone().add(4, "hour");
-                break;
-            case "week":
-                end_date = start_date.clone().add(2, "day");
-                break;
-            case "month":
-                end_date = start_date.clone().add(4, "day");
-                break;
-            case "year":
-                end_date = start_date.clone().add(2, "month");
-                break;
-        }
-
-        var context = _.clone(this.context);
-        var get_create = function (item) {
-            if (item.create) {
-                context["default_"+item.create[0]] = item.create[1][0];
-            }
-            if (item.parent) {
-                var parent = gantt.getTask(item.parent);
-                get_create(parent);
-            }
-        };
-        get_create(task);
-
-        context["default_"+this.model.mapping.date_start] = start_date.format("YYYY-MM-DD HH:mm:ss");
-        if(this.model.mapping.date_stop) {
-            context["default_"+this.model.mapping.date_stop] = end_date.format("YYYY-MM-DD HH:mm:ss");
-        } else { // We assume date_delay is given
-            context["default_"+this.model.mapping.date_delay] = gantt.calculateDuration(start_date, end_date);
-        }
-
-        context.id = 0;
-
-        this.on_task_display({data: context});
-    },
 });
 
 return GanttController;

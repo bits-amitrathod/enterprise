@@ -4,19 +4,38 @@ odoo.define('web_gantt.GanttModel', function (require) {
 var AbstractModel = require('web.AbstractModel');
 
 // optional behavior if this model fields is contains in the view
-var fields_optional = [
-    "color",
-    "active",
-];
+// var fields_optional = [
+//     "color",
+//     "active",
+// ];
 
 return AbstractModel.extend({
+
+    /**
+     * @override
+     */
     init: function () {
         this._super.apply(this, arguments);
         this.gantt = null;
     },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @returns {Object}
+     */
     get: function () {
         return _.extend({}, this.gantt);
     },
+    /**
+     * Load gantt data
+     *
+     * @param {Object} params
+     * @returns {Deferred<any>}
+     */
     load: function (params) {
         this.modelName = params.modelName;
         this.mapping = params.mapping;
@@ -29,39 +48,38 @@ return AbstractModel.extend({
             context: params.context,
         };
         this._setFocusDate(params.initialDate, params.scale);
-        return this._load_gantt();
+        return this._loadGantt();
     },
-    _setFocusDate: function (focusDate, scale) {
-        this.gantt.scale = scale;
-        this.gantt.focus_date = focusDate;
-        this.gantt.start_date = focusDate.clone().subtract(1, scale).startOf(scale);
-        this.gantt.to_date = focusDate.clone().add(3, scale).endOf(scale);
-        this.gantt.end_date = this.gantt.to_date.add(1, scale);
-        this.gantt.date_display = this._formatDate(focusDate, scale);
+    /**
+     * Same as 'load'
+     *
+     * @returns {Deferred<any>}
+     */
+    reload: function () {
+        return this._loadGantt();
     },
+    /**
+     * @param {Moment} focusDate
+     */
     setFocusDate: function (focusDate) {
         this._setFocusDate(focusDate, this.gantt.scale);
     },
-    reload: function () {
-        return this._load_gantt();
+    /**
+     * @param {string} scale
+     */
+    setScale: function (scale) {
+        this._setFocusDate(this.gantt.focus_date, scale);
     },
 
-    _load_gantt: function () {
-        var self = this;
-        var fields = _.keys(this.gantt.fields).concat(this.gantt.to_grouped_by);
-        return this._rpc({
-                model: this.modelName,
-                method: 'search_read',
-                context: this.gantt.context,
-                domain: this.gantt.domain.concat(this._focus_domain()),
-                fields: fields,
-            })
-            .then(function (records) {
-                self.gantt.data = records;
-            });
-    },
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
 
-    _focus_domain: function () {
+    /**
+     * @private
+     * @returns [any[]]
+     */
+    _focusDomain: function () {
         var domain = [[this.gantt.mapping.date_start, '<', this.gantt.to_date.locale('en').format("YYYY-MM-DD")]];
         if (this.fields[this.gantt.mapping.date_stop]) {
              domain = domain.concat([
@@ -72,7 +90,12 @@ return AbstractModel.extend({
         }
         return domain;
     },
-
+    /**
+     * @private
+     * @param {any} date
+     * @param {any} scale
+     * @returns {string}
+     */
     _formatDate: function (date, scale) {
         // range date
         // Format to display it
@@ -89,8 +112,36 @@ return AbstractModel.extend({
                 return date.format("YYYY");
         }
     },
-    setScale: function (scale) {
-        this._setFocusDate(this.gantt.focus_date, scale);
+    /**
+     * @private
+     * @returns {Deferred<any>}
+     */
+    _loadGantt: function () {
+        var self = this;
+        var fields = _.keys(this.gantt.fields).concat(this.gantt.to_grouped_by);
+        return this._rpc({
+                model: this.modelName,
+                method: 'search_read',
+                context: this.gantt.context,
+                domain: this.gantt.domain.concat(this._focusDomain()),
+                fields: fields,
+            })
+            .then(function (records) {
+                self.gantt.data = records;
+            });
+    },
+    /**
+     * @private
+     * @param {any} focusDate
+     * @param {string} scale
+     */
+    _setFocusDate: function (focusDate, scale) {
+        this.gantt.scale = scale;
+        this.gantt.focus_date = focusDate;
+        this.gantt.start_date = focusDate.clone().subtract(1, scale).startOf(scale);
+        this.gantt.to_date = focusDate.clone().add(3, scale).endOf(scale);
+        this.gantt.end_date = this.gantt.to_date.add(1, scale);
+        this.gantt.date_display = this._formatDate(focusDate, scale);
     },
 });
 

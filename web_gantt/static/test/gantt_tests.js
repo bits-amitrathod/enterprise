@@ -9,7 +9,7 @@ var initialDate = new Date("2016-12-12T08:00:00Z");
 var createAsyncView = testUtils.createAsyncView;
 
 QUnit.module('Views', {
-    beforeEach: function() {
+    beforeEach: function () {
         this.data = {
             task: {
                 fields: {
@@ -33,7 +33,7 @@ QUnit.module('Views', {
 }, function () {
     QUnit.module('GanttView');
 
-    QUnit.test('simple gantt view', function(assert) {
+    QUnit.test('simple gantt view', function (assert) {
         assert.expect(9);
         var done = assert.async();
 
@@ -46,7 +46,7 @@ QUnit.module('Views', {
                 initialDate: initialDate,
                 action: {name: "Forecasts"}
             },
-        }).then(function(gantt) {
+        }).then(function (gantt) {
             assert.strictEqual(gantt.get('title'), "Forecasts", "should have correct title");
             assert.ok(gantt.$('.gantt_task_scale').length, "should gantt scale part");
             assert.ok(gantt.$('.gantt_data_area').length, "should gantt data part");
@@ -72,7 +72,7 @@ QUnit.module('Views', {
         });
     });
 
-    QUnit.test('create a task', function(assert) {
+    QUnit.test('create a task', function (assert) {
         assert.expect(5);
         var done = assert.async();
 
@@ -97,11 +97,11 @@ QUnit.module('Views', {
                 initialDate: new Date("2026-04-04T08:00:00Z"),
                 action: {name: "Forecasts"}
             },
-            mockRPC: function(route, args) {
+            mockRPC: function (route, args) {
                 rpcCount++;
                 return this._super(route, args);
             },
-        }).then(function(gantt) {
+        }).then(function (gantt) {
 
             // when no tasks are present, the gantt library will add an empty
             // task line

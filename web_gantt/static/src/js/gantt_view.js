@@ -48,7 +48,7 @@ var GanttView = AbstractView.extend({
         var mapping = {name: 'name'};
 
         // gather the fields to get
-        _.each(fields_to_gather, function(field) {
+        _.each(fields_to_gather, function (field) {
             if (arch.attrs[field]) {
                 mapping[field] = arch.attrs[field];
             }
@@ -56,7 +56,7 @@ var GanttView = AbstractView.extend({
 
         // consolidation exclude, get the related fields
         if (arch.attrs.consolidation_exclude) {
-            _.each(arch.attrs.consolidation_exclude, function(field_name) {
+            _.each(arch.attrs.consolidation_exclude, function (field_name) {
                 mapping.consolidation_exclude = field_name;
             });
         }

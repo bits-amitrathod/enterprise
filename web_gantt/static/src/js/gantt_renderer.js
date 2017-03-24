@@ -11,9 +11,13 @@ var _lt = core._lt;
 return AbstractRenderer.extend({
     className: "o_gantt_view",
 
-    init: function(parent, state, params) {
-        var self = this;
+    /**
+     * @overrie
+     */
+    init: function () {
         this._super.apply(this, arguments);
+
+        var self = this;
 
         this.chart_id = _.uniqueId();
         this.gantt_events = [];
@@ -34,15 +38,25 @@ return AbstractRenderer.extend({
             this.consolidation_max = JSON.parse(this.arch.attrs.consolidation_max);
         }
     },
-
-    _render: function () {
-        this._config_gantt();
-        this._render_gantt();
-        return $.when();
+    /**
+     * @override
+     */
+    destroy: function () {
+        while (this.gantt_events.length) {
+            gantt.detachEvent(this.gantt_events.pop());
+        }
+        this._super();
     },
 
-    // configure templates for dhtmlXGantt
-    _config_gantt: function () {
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * configure templates for dhtmlXGantt
+     * @private
+     */
+    _configGantt: function () {
         var self = this;
 
         gantt.config.autosize = "y";
@@ -131,7 +145,7 @@ return AbstractRenderer.extend({
             // consolidation
             if (self.type === "consolidate" || self.type === "planning") {
                 if (task.is_group) {
-                    text = self._consolidation_children(task);
+                    text = self._consolidationChildren(task);
                 } else if (self.state.fields[mapping.consolidation]) {
                     text = task.consolidation + "<span class=\"half_opacity\"> " + self.state.fields[mapping.consolidation].string + "</span>";
                 }
@@ -139,257 +153,13 @@ return AbstractRenderer.extend({
             return text;
         };
     },
-
     /**
-     * Prepare the tasks and group by's to be handled by dhtmlxgantt and render
-     * the view. This function also contains workaround to the fact that
-     * the gantt view cannot be rendered in a documentFragment.
+     * @private
+     * @param {any} tasks
+     * @param {any} grouped_by
+     * @param {any} groups
      */
-    _render_gantt: function () {
-        var self = this;
-
-        var mapping = this.state.mapping;
-        var grouped_by = this.state.to_grouped_by;
-
-        // Prepare the tasks
-        var tasks = _.compact(_.map(this.state.data, function (task) {
-            task = _.clone(task);
-
-            var task_start = time.auto_str_to_date(task[mapping.date_start]);
-            if (!task_start) {
-                return false;
-            }
-
-            var task_stop;
-            var percent;
-            if (task[mapping.date_stop]) {
-                task_stop = time.auto_str_to_date(task[mapping.date_stop]);
-                if (!task_stop) {
-                    task_stop = moment(task_start).clone().add(1, 'hours');
-                }
-            } else { // we assume date_duration is defined
-                var field = task.fields[mapping.date_delay];
-                var tmp = field_utils.format[field.type](task[mapping.date_delay], field);
-                if (!tmp) {
-                    return false;
-                }
-                var m_task_start = moment(task_start).add(tmp, gantt.config.duration_unit);
-                task_stop = m_task_start.toDate();
-            }
-
-            if (_.isNumber(task[mapping.progress])) {
-                percent = task[mapping.progress] || 0;
-            } else {
-                percent = 100;
-            }
-
-            task.task_start = task_start;
-            task.task_stop = task_stop;
-            task.percent = percent;
-
-            // Don't add the task that stops before the min_date
-            // Usefull if the field date_stop is not defined in the gantt view
-            if (self.min_date && task_stop < new Date(self.min_date)) {
-                return false;
-            }
-
-            return task;
-        }));
-
-        // get the groups
-        var split_groups = function(tasks, grouped_by) {
-            if (grouped_by.length === 0) {
-                return tasks;
-            }
-            // Create the group of the first level (with query.group_by())
-            // TODO : this code is duplicate with the group created on the other level
-            var groups = [];
-            for (var g in self.first_groups) {
-                var new_g = {tasks: [], __is_group: true,
-                             group_start: false, group_stop: false, percent: [],
-                             open: true};
-                new_g.name = self.first_groups[g].attributes.value;
-                new_g.create = [_.first(grouped_by), self.first_groups[g].attributes.value];
-                // the group color
-                // var model = self.state.fields[_.first(grouped_by)].relation;
-                // if (model && _.has(color_by_group, model)) {
-                //     new_g.consolidation_color = color_by_group[model][new_g.name[0]];
-                // }
-
-                // folded or not
-                if ((self.fold_last_level && grouped_by.length <= 1) ||
-                    self.state.context.fold_all ||
-                    self.type === 'planning') {
-                    new_g.open = false;
-                }
-
-                groups.push(new_g);
-            }
-            _.each(tasks, function (task) {
-                var group_name = task[_.first(grouped_by)];
-                var group = _.find(groups, function (group) {
-                    return _.isEqual(group.name, group_name);
-                });
-                if (group === undefined) {
-                    // Create the group of the other levels
-                    group = {name:group_name, tasks: [], __is_group: true,
-                             group_start: false, group_stop: false, percent: [],
-                             open: true};
-
-                    // Add the group_by information for creation
-                    group.create = [_.first(grouped_by), task[_.first(grouped_by)]];
-
-                    // folded or not
-                    if ((self.fold_last_level && grouped_by.length <= 1) ||
-                        self.state.context.fold_all ||
-                        self.type === 'planning') {
-                        group.open = false;
-                    }
-
-                    // the group color
-                    // var model = self.state.fields[_.first(grouped_by)].relation;
-                    // if (model && _.has(color_by_group, model)) {
-                    //     group.consolidation_color = color_by_group[model][group_name[0]];
-                    // }
-
-                    groups.push(group);
-                }
-                if (!group.group_start || group.group_start > task.task_start) {
-                    group.group_start = task.task_start;
-                }
-                if (!group.group_stop || group.group_stop < task.task_stop) {
-                    group.group_stop = task.task_stop;
-                }
-                group.percent.push(task.percent);
-                if (self.open_task_id === task.id && self.type !== 'planning') {
-                    group.open = true; // Show the just created task
-                }
-                group.tasks.push(task);
-            });
-            _.each(groups, function (group) {
-                group.tasks = split_groups(group.tasks, _.rest(grouped_by));
-            });
-            return groups;
-        };
-        var groups = split_groups(tasks, grouped_by);
-
-        // If there is no task, add a dummy one
-        if (groups.length === 0) {
-            groups = [{
-                'id': 1,
-                'name': '',
-                'task_start': this.state.focus_date,
-                'task_stop': this.state.focus_date,
-                'duration': 1,
-            }];
-        }
-
-        // Creation of the chart
-        var gantt_tasks = [];
-        var generate_tasks = function(task, level, parent_id) {
-            if ((task.__is_group && !task.group_start) || (!task.__is_group && !task.task_start)) {
-                return;
-            }
-            if (task.__is_group) {
-                // Only add empty group for the first level
-                if (level > 0 && task.tasks.length === 0){
-                    return;
-                }
-
-                var project_id = _.uniqueId("gantt_project_");
-                var field = self.state.fields[grouped_by[level]];
-                var group_name = task[mapping.name] ? field_utils.format[field.type](task[mapping.name], field) : "-";
-                // progress
-                var sum = _.reduce(task.percent, function(acc, num) { return acc+num; }, 0);
-                var progress = sum / task.percent.length / 100 || 0;
-                var t = {
-                    'id': project_id,
-                    'text': group_name,
-                    'is_group': true,
-                    'start_date': task.group_start,
-                    'duration': gantt.calculateDuration(task.group_start, task.group_stop),
-                    'progress': progress,
-                    'create': task.create,
-                    'open': task.open,
-                    'consolidation_color': task.color,
-                    'index': gantt_tasks.length,
-                };
-                if (parent_id) { t.parent = parent_id; }
-                gantt_tasks.push(t);
-                _.each(task.tasks, function(subtask) {
-                    generate_tasks(subtask, level+1, project_id);
-                });
-            }
-            else {
-                // Consolidation
-                gantt_tasks.push({
-                    'id': "gantt_task_" + task.id,
-                    'text': task.display_name,
-                    'active': task.active,
-                    'start_date': task.task_start,
-                    'duration': gantt.calculateDuration(task.task_start, task.task_stop),
-                    'progress': task.percent / 100,
-                    'parent': parent_id,
-                    'consolidation': task[mapping.consolidation],
-                    'consolidation_exclude': self.consolidation_exclude,
-                    'color': task.color,
-                    'index': gantt_tasks.length,
-                });
-            }
-        };
-        _.each(groups, function(group) { generate_tasks(group, 0); });
-
-        this._gantt_container(gantt_tasks);
-        this._configure_gantt_chart(tasks, grouped_by, gantt_tasks);
-    },
-
-    _gantt_container: function (gantt_tasks) {
-        // horrible hack to make sure that something is in the dom with the required id.  The problem is that
-        // the view manager render the view in a document fragment. More explaination : GED
-        var temp_div_with_id;
-        if (this.$div_with_id){
-            temp_div_with_id = this.$div_with_id;
-        }
-        this.$div_with_id = $('<div>').attr('id', this.chart_id);
-        this.$div_with_id.wrap('<div></div>');
-        this.$div = this.$div_with_id.parent();
-        this.$div.prependTo(document.body);
-
-        // Initialize the gantt chart
-        while (this.gantt_events.length) {
-            gantt.detachEvent(this.gantt_events.pop());
-        }
-        this.scale_zoom(this.state.scale);
-        gantt.init(this.chart_id);
-        gantt._click.gantt_row = undefined; // Remove the focus on click
-
-        gantt.clearAll();
-        gantt.showDate(this.state.focus_date);
-        gantt.parse({"data": gantt_tasks});
-        gantt.sort(function (a, b){
-            if (gantt.hasChild(a.id) && !gantt.hasChild(b.id)){
-                return -1;
-            } else if (!gantt.hasChild(a.id) && gantt.hasChild(b.id)) {
-                return 1;
-            } else if (a.index > b.index) {
-                return 1;
-            } else if (a.index < b.index) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
-
-        // End of horrible hack
-        var scroll_state = gantt.getScrollState();
-        this.$el.empty();
-        this.$el.append(this.$div.contents());
-        gantt.scrollTo(scroll_state.x, scroll_state.y);
-        this.$div.remove();
-        if (temp_div_with_id) temp_div_with_id.remove();
-    },
-
-    _configure_gantt_chart: function (tasks, grouped_by, groups) {
+    _configureGanttChart: function (tasks, grouped_by, groups) {
         var self = this;
         this.gantt_events.push(gantt.attachEvent("onTaskClick", function (id, e) {
             // If we are in planning, we want a single click to open the task. If there is more than one task in the clicked range, the bar is unfold
@@ -412,7 +182,7 @@ return AbstractRenderer.extend({
                 if(this.action) {
                     var actual_id = parseInt(id.split("gantt_task_").slice(1)[0]);
                     if(this.relative_field) {
-                        new Model("ir.model.data").call("xmlid_lookup", [this.action]).done(function(result) {
+                        new Model("ir.model.data").call("xmlid_lookup", [this.action]).done(function (result) {
                             var add_context = {};
                             add_context["search_default_" + this.relative_field] = actual_id;
                             self.do_action(result[2], {'additional_context': add_context});
@@ -435,9 +205,9 @@ return AbstractRenderer.extend({
             return true;
         }));
         // Remove double click
-        this.gantt_events.push(gantt.attachEvent("onTaskDblClick", function(){ return false; }));
+        this.gantt_events.push(gantt.attachEvent("onTaskDblClick", function (){ return false; }));
         // Fold and unfold project bar when click on it
-        this.gantt_events.push(gantt.attachEvent("onBeforeTaskSelected", function(id) {
+        this.gantt_events.push(gantt.attachEvent("onBeforeTaskSelected", function (id) {
             if(gantt.getTask(id).is_group){
                 $("[task_id="+id+"] .gantt_tree_icon").click();
                 return false;
@@ -446,7 +216,7 @@ return AbstractRenderer.extend({
         }));
 
         // Drag and drop
-        var update_date_parent = function(id) {
+        var update_date_parent = function (id) {
             // Refresh parent when children are resize
             var start_date, stop_date;
             var clicked_task = gantt.getTask(id);
@@ -456,7 +226,7 @@ return AbstractRenderer.extend({
 
             var parent = gantt.getTask(clicked_task.parent);
 
-            _.each(gantt.getChildren(parent.id), function(task_id){
+            _.each(gantt.getChildren(parent.id), function (task_id){
                 var task_start_date = gantt.getTask(task_id).start_date;
                 var task_stop_date = gantt.getTask(task_id).end_date;
                 if(!start_date) start_date = task_start_date;
@@ -474,7 +244,7 @@ return AbstractRenderer.extend({
          * tasks their current date start/end so that we can restore their state if the drag
          * is not successful.
          */
-        this.gantt_events.push(gantt.attachEvent("onBeforeTaskDrag", function(id, mode, e){
+        this.gantt_events.push(gantt.attachEvent("onBeforeTaskDrag", function (id, mode, e){
             var task = gantt.getTask(id);
             task._original_start_date = task.start_date;
             task._original_end_date = task.end_date;
@@ -484,7 +254,7 @@ return AbstractRenderer.extend({
                 if (attr) {
                     var children = attr.value.split(" ");
                     this.drag_child = children;
-                    _.each(this.drag_child, function(child_id) {
+                    _.each(this.drag_child, function (child_id) {
                         var child = gantt.getTask(child_id);
                         child._original_start_date = child.start_date;
                         child._original_end_date = child.end_date;
@@ -493,7 +263,7 @@ return AbstractRenderer.extend({
             }
             return true;
         }));
-        this.gantt_events.push(gantt.attachEvent("onTaskDrag", function(id, mode, task, original, e){
+        this.gantt_events.push(gantt.attachEvent("onTaskDrag", function (id, mode, task, original, e){
             if(gantt.getTask(id).is_group){
                 // var d is the number of millisecond for one pixel
                 var d;
@@ -508,7 +278,7 @@ return AbstractRenderer.extend({
                 if (task.end_date < original.end_date){ task.end_date = original.end_date; }
 
                 if (this.drag_child){
-                    _.each(this.drag_child, function(child_id){
+                    _.each(this.drag_child, function (child_id){
                         var child = gantt.getTask(child_id);
                         var nstart = +child.start_date + diff;
                         var nstop = +child.end_date + diff;
@@ -533,7 +303,7 @@ return AbstractRenderer.extend({
          * if, for example, constraints defined on the model are not met. In this case, we have to
          * replace the task at its original place.
          */
-        this.gantt_events.push(gantt.attachEvent("onAfterTaskDrag", function(id){
+        this.gantt_events.push(gantt.attachEvent("onAfterTaskDrag", function (id){
             var update_task = function (task_id) {
                 var task = gantt.getTask(task_id);
                 self.trigger_up('task_changed', {
@@ -553,7 +323,7 @@ return AbstractRenderer.extend({
 
             // A group of tasks has been dragged
             if (gantt.getTask(id).is_group && this.drag_child) {
-                _.each(this.drag_child, function(child_id) {
+                _.each(this.drag_child, function (child_id) {
                     update_task(child_id);
                 });
             }
@@ -562,7 +332,7 @@ return AbstractRenderer.extend({
             update_task(id);
         }));
 
-        this.gantt_events.push(gantt.attachEvent("onGanttRender", function() {
+        this.gantt_events.push(gantt.attachEvent("onGanttRender", function () {
             // show the focus date
             if(!self.open_task_id || self.type == 'planning'){
                 gantt.showDate(self.state.focus_date);
@@ -578,64 +348,15 @@ return AbstractRenderer.extend({
             return true;
         }));
     },
-
-    scale_zoom: function (value) {
-        gantt.config.step = 1;
-        gantt.config.min_column_width = 50;
-        gantt.config.scale_height = 50;
-        var today = new Date();
-
-        function css(date) {
-            if(date.getDay() === 0 || date.getDay() === 6) return "weekend_scale";
-            if(date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) return "today";
-        }
-
-        switch (value) {
-            case "day":
-                gantt.templates.scale_cell_class = css;
-                gantt.config.scale_unit = "day";
-                gantt.config.date_scale = "%d %M";
-                gantt.config.subscales = [{unit:"hour", step:1, date:"%H h"}];
-                gantt.config.scale_height = 27;
-                break;
-            case "week":
-                var weekScaleTemplate = function(date){
-                    var dateToStr = gantt.date.date_to_str("%d %M %Y");
-                    var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
-                    return dateToStr(date) + " - " + dateToStr(endDate);
-                };
-                gantt.config.scale_unit = "week";
-                gantt.templates.date_scale = weekScaleTemplate;
-                gantt.config.subscales = [{unit:"day", step:1, date:"%d, %D", css:css}];
-                break;
-            case "month":
-                gantt.config.scale_unit = "month";
-                gantt.config.date_scale = "%F, %Y";
-                gantt.config.subscales = [{unit:"day", step:1, date:"%d", css:css}];
-                gantt.config.min_column_width = 25;
-                break;
-            case "year":
-                gantt.config.scale_unit = "year";
-                gantt.config.date_scale = "%Y";
-                gantt.config.subscales = [{unit:"month", step:1, date:"%M"}];
-                break;
-        }
-    },
-
-    _get_all_children: function (id) {
-        var children = [];
-        gantt.eachTask(function (task) {
-            if (!task.is_group) {
-                children.push(task.id);
-            }
-        }, id);
-        return children;
-    },
-
-    _consolidation_children: function (parent) {
+    /**
+     * @private
+     * @param {any} parent
+     * @returns {string}
+     */
+    _consolidationChildren: function (parent) {
         var self = this;
         var grouped_by = this.state.to_grouped_by;
-        var children = self._get_all_children(parent.id);
+        var children = self._getAllChildren(parent.id);
         var consolidation_max = this.consolidation_max[grouped_by[0]] || false;
 
         // First step : create a list of object for the children. The contains (left, consolidation
@@ -643,7 +364,7 @@ return AbstractRenderer.extend({
         // the number to add or remove, and the color is [color, sequence] from the last group_by
         // with these information.
         var leftParent = gantt.getTaskPosition(parent, parent.start_date, parent.end_date).left;
-        var getTuple = function(acc, task_id) {
+        var getTuple = function (acc, task_id) {
             var task = gantt.getTask(task_id);
             var position = gantt.getTaskPosition(task, task.start_date, task.end_date || task.start_date);
             var left = position.left - leftParent;
@@ -746,12 +467,327 @@ return AbstractRenderer.extend({
         });
         return html;
     },
+    /**
+     * @private
+     * @param {any} ganttTasks
+     */
+    _ganttContainer: function (ganttTasks) {
+        // horrible hack to make sure that something is in the dom with the required id.  The problem is that
+        // the view manager render the view in a document fragment. More explaination : GED
+        var temp_div_with_id;
+        if (this.$div_with_id){
+            temp_div_with_id = this.$div_with_id;
+        }
+        this.$div_with_id = $('<div>').attr('id', this.chart_id);
+        this.$div_with_id.wrap('<div></div>');
+        this.$div = this.$div_with_id.parent();
+        this.$div.prependTo(document.body);
 
-    destroy: function () {
+        // Initialize the gantt chart
         while (this.gantt_events.length) {
             gantt.detachEvent(this.gantt_events.pop());
         }
-        this._super();
+        this._scaleZoom(this.state.scale);
+        gantt.init(this.chart_id);
+        gantt._click.gantt_row = undefined; // Remove the focus on click
+
+        gantt.clearAll();
+        gantt.showDate(this.state.focus_date);
+        gantt.parse({"data": ganttTasks});
+        gantt.sort(function (a, b){
+            if (gantt.hasChild(a.id) && !gantt.hasChild(b.id)){
+                return -1;
+            } else if (!gantt.hasChild(a.id) && gantt.hasChild(b.id)) {
+                return 1;
+            } else if (a.index > b.index) {
+                return 1;
+            } else if (a.index < b.index) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        // End of horrible hack
+        var scroll_state = gantt.getScrollState();
+        this.$el.empty();
+        this.$el.append(this.$div.contents());
+        gantt.scrollTo(scroll_state.x, scroll_state.y);
+        this.$div.remove();
+        if (temp_div_with_id) temp_div_with_id.remove();
+    },
+    /**
+     * @private
+     * @param {any} id
+     * @returns {any}
+     */
+    _getAllChildren: function (id) {
+        var children = [];
+        gantt.eachTask(function (task) {
+            if (!task.is_group) {
+                children.push(task.id);
+            }
+        }, id);
+        return children;
+    },
+    /**
+     * @private
+     * @returns {Deferred}
+     */
+    _render: function () {
+        this._configGantt();
+        this._renderGantt();
+        return $.when();
+    },
+    /**
+     * Prepare the tasks and group by's to be handled by dhtmlxgantt and render
+     * the view. This function also contains workaround to the fact that
+     * the gantt view cannot be rendered in a documentFragment.
+     *
+     * @private
+     */
+    _renderGantt: function () {
+        var self = this;
+
+        var mapping = this.state.mapping;
+        var grouped_by = this.state.to_grouped_by;
+
+        // Prepare the tasks
+        var tasks = _.compact(_.map(this.state.data, function (task) {
+            task = _.clone(task);
+
+            var task_start = time.auto_str_to_date(task[mapping.date_start]);
+            if (!task_start) {
+                return false;
+            }
+
+            var task_stop;
+            var percent;
+            if (task[mapping.date_stop]) {
+                task_stop = time.auto_str_to_date(task[mapping.date_stop]);
+                if (!task_stop) {
+                    task_stop = moment(task_start).clone().add(1, 'hours');
+                }
+            } else { // we assume date_duration is defined
+                var field = task.fields[mapping.date_delay];
+                var tmp = field_utils.format[field.type](task[mapping.date_delay], field);
+                if (!tmp) {
+                    return false;
+                }
+                var m_task_start = moment(task_start).add(tmp, gantt.config.duration_unit);
+                task_stop = m_task_start.toDate();
+            }
+
+            if (_.isNumber(task[mapping.progress])) {
+                percent = task[mapping.progress] || 0;
+            } else {
+                percent = 100;
+            }
+
+            task.task_start = task_start;
+            task.task_stop = task_stop;
+            task.percent = percent;
+
+            // Don't add the task that stops before the min_date
+            // Usefull if the field date_stop is not defined in the gantt view
+            if (self.min_date && task_stop < new Date(self.min_date)) {
+                return false;
+            }
+
+            return task;
+        }));
+
+        // get the groups
+        var split_groups = function (tasks, grouped_by) {
+            if (grouped_by.length === 0) {
+                return tasks;
+            }
+            // Create the group of the first level (with query.group_by())
+            // TODO : this code is duplicate with the group created on the other level
+            var groups = [];
+            for (var g in self.first_groups) {
+                var new_g = {tasks: [], __is_group: true,
+                             group_start: false, group_stop: false, percent: [],
+                             open: true};
+                new_g.name = self.first_groups[g].attributes.value;
+                new_g.create = [_.first(grouped_by), self.first_groups[g].attributes.value];
+                // the group color
+                // var model = self.state.fields[_.first(grouped_by)].relation;
+                // if (model && _.has(color_by_group, model)) {
+                //     new_g.consolidation_color = color_by_group[model][new_g.name[0]];
+                // }
+
+                // folded or not
+                if ((self.fold_last_level && grouped_by.length <= 1) ||
+                    self.state.context.fold_all ||
+                    self.type === 'planning') {
+                    new_g.open = false;
+                }
+
+                groups.push(new_g);
+            }
+            _.each(tasks, function (task) {
+                var group_name = task[_.first(grouped_by)];
+                var group = _.find(groups, function (group) {
+                    return _.isEqual(group.name, group_name);
+                });
+                if (group === undefined) {
+                    // Create the group of the other levels
+                    group = {name:group_name, tasks: [], __is_group: true,
+                             group_start: false, group_stop: false, percent: [],
+                             open: true};
+
+                    // Add the group_by information for creation
+                    group.create = [_.first(grouped_by), task[_.first(grouped_by)]];
+
+                    // folded or not
+                    if ((self.fold_last_level && grouped_by.length <= 1) ||
+                        self.state.context.fold_all ||
+                        self.type === 'planning') {
+                        group.open = false;
+                    }
+
+                    // the group color
+                    // var model = self.state.fields[_.first(grouped_by)].relation;
+                    // if (model && _.has(color_by_group, model)) {
+                    //     group.consolidation_color = color_by_group[model][group_name[0]];
+                    // }
+
+                    groups.push(group);
+                }
+                if (!group.group_start || group.group_start > task.task_start) {
+                    group.group_start = task.task_start;
+                }
+                if (!group.group_stop || group.group_stop < task.task_stop) {
+                    group.group_stop = task.task_stop;
+                }
+                group.percent.push(task.percent);
+                if (self.open_task_id === task.id && self.type !== 'planning') {
+                    group.open = true; // Show the just created task
+                }
+                group.tasks.push(task);
+            });
+            _.each(groups, function (group) {
+                group.tasks = split_groups(group.tasks, _.rest(grouped_by));
+            });
+            return groups;
+        };
+        var groups = split_groups(tasks, grouped_by);
+
+        // If there is no task, add a dummy one
+        if (groups.length === 0) {
+            groups = [{
+                'id': 1,
+                'name': '',
+                'task_start': this.state.focus_date,
+                'task_stop': this.state.focus_date,
+                'duration': 1,
+            }];
+        }
+
+        // Creation of the chart
+        var gantt_tasks = [];
+        var generate_tasks = function (task, level, parent_id) {
+            if ((task.__is_group && !task.group_start) || (!task.__is_group && !task.task_start)) {
+                return;
+            }
+            if (task.__is_group) {
+                // Only add empty group for the first level
+                if (level > 0 && task.tasks.length === 0){
+                    return;
+                }
+
+                var project_id = _.uniqueId("gantt_project_");
+                var field = self.state.fields[grouped_by[level]];
+                var group_name = task[mapping.name] ? field_utils.format[field.type](task[mapping.name], field) : "-";
+                // progress
+                var sum = _.reduce(task.percent, function (acc, num) { return acc+num; }, 0);
+                var progress = sum / task.percent.length / 100 || 0;
+                var t = {
+                    'id': project_id,
+                    'text': group_name,
+                    'is_group': true,
+                    'start_date': task.group_start,
+                    'duration': gantt.calculateDuration(task.group_start, task.group_stop),
+                    'progress': progress,
+                    'create': task.create,
+                    'open': task.open,
+                    'consolidation_color': task.color,
+                    'index': gantt_tasks.length,
+                };
+                if (parent_id) { t.parent = parent_id; }
+                gantt_tasks.push(t);
+                _.each(task.tasks, function (subtask) {
+                    generate_tasks(subtask, level+1, project_id);
+                });
+            }
+            else {
+                // Consolidation
+                gantt_tasks.push({
+                    'id': "gantt_task_" + task.id,
+                    'text': task.display_name,
+                    'active': task.active,
+                    'start_date': task.task_start,
+                    'duration': gantt.calculateDuration(task.task_start, task.task_stop),
+                    'progress': task.percent / 100,
+                    'parent': parent_id,
+                    'consolidation': task[mapping.consolidation],
+                    'consolidation_exclude': self.consolidation_exclude,
+                    'color': task.color,
+                    'index': gantt_tasks.length,
+                });
+            }
+        };
+        _.each(groups, function (group) { generate_tasks(group, 0); });
+
+        this._ganttContainer(gantt_tasks);
+        this._configureGanttChart(tasks, grouped_by, gantt_tasks);
+    },
+    /**
+     * @private
+     * @param {string} value either 'day', 'week', 'month' or 'year
+     */
+    _scaleZoom: function (value) {
+        gantt.config.step = 1;
+        gantt.config.min_column_width = 50;
+        gantt.config.scale_height = 50;
+        var today = new Date();
+
+        function css(date) {
+            if(date.getDay() === 0 || date.getDay() === 6) return "weekend_scale";
+            if(date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) return "today";
+        }
+
+        switch (value) {
+            case "day":
+                gantt.templates.scale_cell_class = css;
+                gantt.config.scale_unit = "day";
+                gantt.config.date_scale = "%d %M";
+                gantt.config.subscales = [{unit:"hour", step:1, date:"%H h"}];
+                gantt.config.scale_height = 27;
+                break;
+            case "week":
+                var weekScaleTemplate = function (date){
+                    var dateToStr = gantt.date.date_to_str("%d %M %Y");
+                    var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+                    return dateToStr(date) + " - " + dateToStr(endDate);
+                };
+                gantt.config.scale_unit = "week";
+                gantt.templates.date_scale = weekScaleTemplate;
+                gantt.config.subscales = [{unit:"day", step:1, date:"%d, %D", css:css}];
+                break;
+            case "month":
+                gantt.config.scale_unit = "month";
+                gantt.config.date_scale = "%F, %Y";
+                gantt.config.subscales = [{unit:"day", step:1, date:"%d", css:css}];
+                gantt.config.min_column_width = 25;
+                break;
+            case "year":
+                gantt.config.scale_unit = "year";
+                gantt.config.date_scale = "%Y";
+                gantt.config.subscales = [{unit:"month", step:1, date:"%M"}];
+                break;
+        }
     },
 });
 
