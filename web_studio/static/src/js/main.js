@@ -112,12 +112,12 @@ var Main = Widget.extend({
                 // TODO find better way to check which view_type is being access
                 if (result.indexOf('gantt') !== -1) {
                     params.view_type = 'gantt';
-                    new NewViewDialog(this, params).open();
+                    new NewViewDialog(self, params).open();
                 } else if (result.indexOf('Calendar') !== -1) {
                     params.view_type = 'calendar';
-                    new NewViewDialog(this, params).open();
+                    new NewViewDialog(self, params).open();
                 } else {
-                    Dialog.alert(this, result);
+                    Dialog.alert(self, result);
                     def.reject();
                 }
             } else {
