@@ -3,14 +3,25 @@
 # * helpdesk
 # 
 # Translators:
-# Эдуард Манятовский <manyatovskiy@gmail.com>, 2016
+# Максим Дронь <dronmax@gmail.com>, 2017
+# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Sergey Vilizhanin <sv@grimmette.ru>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Masha Koc <mariya.kos.ua@gmail.com>, 2017
+# Max Belyanin <maxbelyanin@gmail.com>, 2017
+# Gennady Marchenko <gennadym@gmail.com>, 2017
+# Sergey <naviserg1@gmail.com>, 2017
+# Denis Trepalin <zekarious@gmail.com>, 2017
+# Alex Puchkov <ap@alteco.co>, 2017
+# Amaro Vita <vita.amaro@gmail.com>, 2017
+# Viktor Pogrebniak <vp@aifil.ru>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 13:22+0000\n"
-"PO-Revision-Date: 2016-11-03 13:22+0000\n"
-"Last-Translator: Эдуард Манятовский <manyatovskiy@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Viktor Pogrebniak <vp@aifil.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,11 +48,6 @@ msgstr "${object.display_name}"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_percentage_satisfaction
 msgid "% Happy"
 msgstr "% Счастливы"
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "--&gt; Configure domain name"
-msgstr "--&gt; Настройка доменного имени"
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
@@ -267,9 +273,23 @@ msgstr ""
 "        "
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:58
+#, python-format
+msgid ""
+"<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
+"from here!"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
-msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
+msgstr "<i class=\"fa fa-envelope-o\"/>и "
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -278,8 +298,8 @@ msgstr "<i>Еще нет отзывов клиентов.</i>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
-msgid "<span>Reports</span>"
-msgstr "<span>Отчеты</span>"
+msgid "<span>Reporting</span>"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -331,20 +351,19 @@ msgid "About Team"
 msgstr "О команде"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_payable_id
-msgid "Account Payable"
-msgstr "Счета к оплате"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_receivable_id
-msgid "Account Receivable"
-msgstr "Дебиторская задолженность"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_active
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_active
 msgid "Active"
 msgstr "Активно"
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:64
+#, python-format
+msgid ""
+"Add columns to configure <b>stages for your tickets</b>.<br/><i>e.g. "
+"Awaiting Customer Feedback, Customer Followup, ...</i>"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
@@ -354,17 +373,17 @@ msgstr "Псевдоним контакта безопасности"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_name
 msgid "Alias Name"
-msgstr "Псевдоним"
+msgstr "Название псевдонима"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_domain
 msgid "Alias domain"
-msgstr "Алиас домена"
+msgstr "Псевдоним домена"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_model_id
 msgid "Aliased Model"
-msgstr "Модель алиаса"
+msgstr "Модель пвсевдонима"
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
@@ -402,13 +421,11 @@ msgid "Archived"
 msgstr "Архивировано"
 
 #. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid ""
-"Assign members to this team so that they will see it in their dashboard. If "
-"no members are assigned, everyone will see this team."
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:39
+#, python-format
+msgid "Assign the ticket to someone."
 msgstr ""
-"Назначьте членов этой группы так, что они будут видеть в их панели. Если нет"
-" членов назначенных, каждый будет видеть эту команду."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_assign_method
@@ -474,11 +491,6 @@ msgid "Balanced"
 msgstr "Сбалансировано"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_bank_account_count
-msgid "Bank"
-msgstr "Банк"
-
-#. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
 msgid "Blocked"
 msgstr "Блокировано"
@@ -504,9 +516,32 @@ msgid "Click create a new ticket."
 msgstr "Нажмите создать новый запрос."
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:68
+#, python-format
+msgid "Click here and select \"Helpdesk Teams\" for further configuration."
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.email_template_action_helpdesk
 msgid "Click here to create a new template."
 msgstr "Нажмите здесь, чтобы создать новый шаблон."
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:18
+#, python-format
+msgid "Click here to view this team's tickets."
+msgstr ""
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:52
+#, python-format
+msgid ""
+"Click these cards to open their form view, or <b>drag &amp; drop</b> them "
+"through the different stages of this team."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -584,11 +619,6 @@ msgid "Color Index"
 msgstr "Цветовая палитра"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_ref_company_ids
-msgid "Companies that refers to partner"
-msgstr "Связанные с партнёром организации"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_company_id
@@ -598,7 +628,7 @@ msgstr "Компания"
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_config
 msgid "Configuration"
-msgstr "Настройки"
+msgstr "Настройка"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -612,12 +642,6 @@ msgstr ""
 "Подключение сторонних приложений и создание запросов с помощью веб-служб."
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_contract_ids
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_contracts_count
-msgid "Contracts"
-msgstr "Договоры"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_create_uid
@@ -625,7 +649,7 @@ msgstr "Договоры"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_create_uid
 msgid "Created by"
-msgstr "Создал"
+msgstr "Создано"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_create_date
@@ -635,22 +659,17 @@ msgstr "Создал"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_create_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Создан"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_currency_id
-msgid "Currency"
-msgstr "Валюта"
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:629
+#: code:addons/helpdesk/models/helpdesk.py:660
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_id
 #, python-format
 msgid "Customer"
 msgstr "Заказчик"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:631
+#: code:addons/helpdesk/models/helpdesk.py:662
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_email
 #, python-format
 msgid "Customer Email"
@@ -662,11 +681,6 @@ msgid "Customer Name"
 msgstr "Название заказчика"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_payment_term_id
-msgid "Customer Payment Terms"
-msgstr "Условия оплаты для покупателя"
-
-#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:89
 #, python-format
@@ -674,7 +688,7 @@ msgid "Customer Rating"
 msgstr "Рейтинг клиентов"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:616
+#: code:addons/helpdesk/models/helpdesk.py:647
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
@@ -724,11 +738,6 @@ msgid "Default Values"
 msgstr "Значения по умолчанию"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_trust
-msgid "Degree of trust you have in this debtor"
-msgstr "Степень доверия у вас к этому должнику"
-
-#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Delete"
 msgstr "Удалить"
@@ -756,12 +765,12 @@ msgstr "Описание запроса..."
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_display_name
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_display_name
 msgid "Display Name"
-msgstr "Отображаемое имя"
+msgstr "Отображаемое Имя"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Править"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.action_helpdesk_email_template_tree
@@ -775,6 +784,22 @@ msgid "Email alias"
 msgstr "Алиас электронной почты"
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:29
+#, python-format
+msgid ""
+"Enter a subject or title for this ticket.<br/><i>(e.g. Problem with "
+"installation, Wrong order, Can't understand bill, etc.)</i>"
+msgstr ""
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:34
+#, python-format
+msgid "Enter the customer. Feel free to create it on the fly."
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_sla_fail
 msgid "Failed SLA Policy"
 msgstr "Не удачное СУО политика"
@@ -783,11 +808,6 @@ msgstr "Не удачное СУО политика"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_assign_date
 msgid "First assignation date"
 msgstr "Первая дата назначения"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_position_id
-msgid "Fiscal Position"
-msgstr "Система налогов"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_fold
@@ -829,11 +849,6 @@ msgstr "Связаться с вашими посетителями сайта."
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Group By"
 msgstr "Группировать"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_has_unreconciled_entries
-msgid "Has unreconciled entries"
-msgstr "Имеет несогласованные проводки"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_forum
@@ -888,6 +903,13 @@ msgid "Helpdesk Tickets"
 msgstr "Техподдержка запросов"
 
 #. module: helpdesk
+#: model:ir.actions.server,name:helpdesk.helpdesk_sla_cron_ir_actions_server
+#: model:ir.cron,cron_name:helpdesk.helpdesk_sla_cron
+#: model:ir.cron,name:helpdesk.helpdesk_sla_cron
+msgid "Helpdesk: compute SLAs"
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:170
 #, python-format
@@ -922,7 +944,7 @@ msgid "How to assign newly created tickets to the right person."
 msgstr "Как назначить вновь созданную запрос на правильного человека."
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:670
+#: code:addons/helpdesk/models/helpdesk.py:719
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "I take it"
@@ -936,7 +958,7 @@ msgstr "Я беру это"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_id
 msgid "ID"
-msgstr "ID"
+msgstr "Номер"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_thread_id
@@ -945,7 +967,7 @@ msgid ""
 " creation alias)"
 msgstr ""
 "Идентификатор записи родителя, содержащей алиас (например, проект содержит "
-"алиас для создания записи)"
+"псевдоним для создания записи)"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -968,30 +990,19 @@ msgid "Incoming emails create tickets."
 msgstr "Входящие письма создают запросы."
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_invoice_warn
-msgid "Invoice"
-msgstr "Счет"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_invoice_ids
-msgid "Invoices"
-msgstr "Счета"
-
-#. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_incident
 msgid "Issue"
 msgstr "Вопрос"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_issued_total
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_journal_item_count
-msgid "Journal Items"
-msgstr "Элементы журнала"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_kanban_state
 msgid "Kanban State"
 msgstr "Канбан статус"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Keep empty for everyone to see this team."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla___last_update
@@ -1001,7 +1012,7 @@ msgstr "Канбан статус"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket___last_update
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type___last_update
 msgid "Last Modified on"
-msgstr "Последний раз изменено"
+msgstr "Последнее изменение"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_write_uid
@@ -1021,29 +1032,14 @@ msgstr "Последний раз обновил"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_write_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_write_date
 msgid "Last Updated on"
-msgstr "Последний раз обновлено"
+msgstr "Последнее обновление"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_calendar_last_notif_ack
-msgid "Last notification marked as read from base Calendar"
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:23
+#, python-format
+msgid "Let's create your first ticket."
 msgstr ""
-"Последнее уведомление, отмеченное как прочитанное, из основного Календаря"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_last_time_entries_checked
-msgid ""
-"Last time the invoices & payments matching was performed for this partner. "
-"It is set either if there's not at least an unreconciled debit and an "
-"unreconciled credit or if you click the \"Done\" button."
-msgstr ""
-"Последний раз  было выполнено сопоставление  счетов-фактур и платежей для "
-"данного партнера. Он устанавливается или если нет, по крайней мере, не "
-"согласован дебет и кредит или если вы нажмете кнопку \"Готово\"."
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_last_time_entries_checked
-msgid "Latest Invoices & Payments Matching Date"
-msgstr "Последние Счета & Платежи, Соответствующие Дате"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_livechat
@@ -1066,14 +1062,14 @@ msgid "Manually"
 msgstr "Вручную"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_invoice_warn_msg
-msgid "Message for Invoice"
-msgstr "Сообщение при выставлении счета"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_priority
 msgid "Minimum Priority"
 msgstr "Минимальный приоритет"
+
+#. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_stage_id
+msgid "Minimum stage a ticket needs to reach in order to satisfy this SLA."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_time_minutes
@@ -1133,13 +1129,7 @@ msgstr "Мои срочные запросы"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_name
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_name
 msgid "Name"
-msgstr "Имя"
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:674
-#, python-format
-msgid "New Ticket"
-msgstr "Новый запрос"
+msgstr "Название"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_high_priorities
@@ -1172,7 +1162,7 @@ msgstr "Количество запросов от того же партнер�
 #: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
 #, python-format
 msgid "Only Integer Value should be valid."
-msgstr "Только целое значение должно быть действительным."
+msgstr "Только целочисленное значение."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_ticket_type_id
@@ -1223,7 +1213,7 @@ msgstr "Родительская модель"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr "Parent Record Thread ID"
+msgstr "ID родительской цепочки записей"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_model_id
@@ -1232,14 +1222,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
-"Предок содержит алиас. Модель, содержащая ссылку на алиас - не обязательно "
-"та, на которую ссылается alias_model_id (например, проект (parent_model) и "
+"Предок содержащий алиас. Модель, содержащая ссылку на алиас — не обязательно"
+" та, на которую ссылается alias_model_id (например, проект (parent_model) и "
 "задача (model))"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_debit_limit
-msgid "Payable Limit"
-msgstr "Лимит кредиторской задолженности"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1271,9 +1256,9 @@ msgid ""
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
 "Политики для сообщений в документе с использованием почтового шлюза:\n"
-"- все: каждый может писать\n"
-"- партнёры: только аутентифицированные партнёры;\n"
-"- подписчики: только подписчики соответствующего документа\n"
+"— все: каждый может писать\n"
+"— партнёры: только аутентифицированные партнёры;\n"
+"— подписчики: только подписчики соответствующего документа\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_priority
@@ -1344,8 +1329,13 @@ msgstr "ID цепочки записей"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
-msgid "Reports"
-msgstr "Отчеты"
+msgid "Reporting"
+msgstr "Отчетность"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
+msgid "Restore"
+msgstr "Восстановить"
 
 #. module: helpdesk
 #. openerp-web
@@ -1404,6 +1394,13 @@ msgid "Save this page and refresh to activate the feature"
 msgstr "Сохраните эту страницу и обновить, чтобы активировать функцию"
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:43
+#, python-format
+msgid "Save this ticket and the modifications you've made to it."
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_search
 msgid "Search SLA Policies"
 msgstr "Поиск СУО политики"
@@ -1417,17 +1414,6 @@ msgstr "См. Удовлетворенность клиента"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "See SLAs"
 msgstr "См. СУО"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_invoice_warn
-msgid ""
-"Selecting the \"Warning\" option will notify user with the message, "
-"Selecting \"Blocking Message\" will throw an exception with the message and "
-"block the flow. The Message has to be written in the next field."
-msgstr ""
-"\"Предупреждение\" - сообщить пользователю. \"Блокирующее сообщение\" - "
-"исключительная ситуация, сообщить пользователю и заблокировать рабочий "
-"процесс. Текст сообщения должен быть записан в следующее поле."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1444,7 +1430,7 @@ msgstr "Отправить письма к"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_sequence
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_sequence
 msgid "Sequence"
-msgstr "Последовательность"
+msgstr "Нумерация"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1479,7 +1465,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
-#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_stage_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_stage_id
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_stage_view_tree
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1489,7 +1474,7 @@ msgstr "Этап"
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_stage
 msgid "Stage Changed"
-msgstr "Стадия изменена"
+msgstr "Этап изменён"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_stage_view_form
@@ -1566,10 +1551,10 @@ msgid "Tag"
 msgstr "Тег"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:376 sql_constraint:helpdesk.tag:0
+#: code:addons/helpdesk/models/helpdesk.py:393 sql_constraint:helpdesk.tag:0
 #, python-format
 msgid "Tag name already exists !"
-msgstr "Значение тэга уже существует!"
+msgstr "Такой тег уже существует!"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_tag
@@ -1593,6 +1578,11 @@ msgid "Target Customer Rating"
 msgstr "Целевой рейтинг клиента"
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_stage_id
+msgid "Target Stage"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_helpdesk_target_success
 msgid "Target Success Rate"
 msgstr "Целевой показатель успеха"
@@ -1609,12 +1599,12 @@ msgstr "Целевые запросы закрыть"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Team"
-msgstr "Группа"
+msgstr "Команда"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_member_ids
 msgid "Team Members"
-msgstr "Сотрудники отдела"
+msgstr "Члены команды"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_action
@@ -1627,20 +1617,13 @@ msgid "Templates"
 msgstr "Шаблоны"
 
 #. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_account_position_id
-msgid ""
-"The fiscal position will determine taxes and accounts used for the partner."
-msgstr ""
-"Система налогов будет определять налоги и счета, используемые для партнера."
-
-#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
 msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
-"Модель (тип документа Odoo), которому соответствует этот псевдоним. Любая "
+"Модель (тип документа Odoo) которой соответствует этот псевдоним. Любая "
 "входящая электронная почта, которая не отвечает существующей записи, вызовет"
 " создание новой записи этой модели (например, задача в проекте)"
 
@@ -1666,33 +1649,6 @@ msgstr ""
 " или сделает владельцем администратора."
 
 #. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_has_unreconciled_entries
-msgid ""
-"The partner has at least one unreconciled debit and credit since last time "
-"the invoices & payments matching was performed."
-msgstr ""
-"У партнера есть по крайней мере один невыверенный дебет и кредит с прошлого "
-"раза, когда согласование счет-фактур и платежей были выполнены."
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_account_payable_id
-msgid ""
-"This account will be used instead of the default one as the payable account "
-"for the current partner"
-msgstr ""
-"Этот счет будет использоваться, вместо счета по умолчанию, как кредитовый "
-"для текущего контрагента"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_account_receivable_id
-msgid ""
-"This account will be used instead of the default one as the receivable "
-"account for the current partner"
-msgstr ""
-"Этот счёт будет использоваться вместо счёта по умолчанию в качестве счёта "
-"дебиторской задолженности по текущему партнеру."
-
-#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:172
 #, python-format
@@ -1702,25 +1658,7 @@ msgstr ""
 "запрос."
 
 #. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_supplier_payment_term_id
-msgid ""
-"This payment term will be used instead of the default one for purchase "
-"orders and vendor bills"
-msgstr ""
-"Это условие оплаты будет использоваться вместо установленного по умолчанию "
-"для заказов на покупку и счетов поставщика"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_payment_term_id
-msgid ""
-"This payment term will be used instead of the default one for sale orders "
-"and customer invoices"
-msgstr ""
-"Это условие оплаты будет использоваться, вместо используемого по умолчанию, "
-"для заказов продаж и счетов-фактур покупателей"
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:311
+#: code:addons/helpdesk/models/helpdesk.py:317
 #, python-format
 msgid "This target does not exist."
 msgstr "Эта цель не существует."
@@ -1810,11 +1748,9 @@ msgstr "Поиск запросов"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_is_close
 msgid ""
-"Tickets in this stage are considered as done. This is used notably "
-"whencomputing SLAs and KPIs on tickets."
+"Tickets in this stage are considered as done. This is used notably when "
+"computing SLAs and KPIs on tickets."
 msgstr ""
-"Запросы на этом этапе рассматриваются, как это сделанные. Это используется, "
-"особенно при вычеслении СУО и KPI производительности на билеты."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -1839,31 +1775,6 @@ msgid "Today"
 msgstr "Сегодня"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_total_invoiced
-msgid "Total Invoiced"
-msgstr "Итого по счетам"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_debit
-msgid "Total Payable"
-msgstr "Итого кредиторской задолженности"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_credit
-msgid "Total Receivable"
-msgstr "Итого дебиторской задолженности"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_credit
-msgid "Total amount this customer owes you."
-msgstr "Итоговая сумма долга покупателя перед вами."
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_debit
-msgid "Total amount you have to pay to this vendor."
-msgstr "Итоговая сумма к оплате этому поставщику."
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_twitter
 msgid "Twitter"
 msgstr "Твиттер"
@@ -1874,16 +1785,11 @@ msgid "Type allows to organize tickets."
 msgstr "Тип позволяет организовать запросы."
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:363
+#: code:addons/helpdesk/models/helpdesk.py:380
 #: sql_constraint:helpdesk.ticket.type:0
 #, python-format
 msgid "Type name already exists !"
 msgstr "Имя типа уже существует !"
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
-msgid "Unarchive"
-msgstr "Разархивировать"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_unassigned_tickets
@@ -1917,6 +1823,13 @@ msgid "Urgent ("
 msgstr "Срочные ("
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:48
+#, python-format
+msgid "Use the breadcrumbs to go back to the Kanban view."
+msgstr ""
+
+#. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_user
 msgid "User"
 msgstr "Пользователь"
@@ -1925,16 +1838,6 @@ msgstr "Пользователь"
 #: model:ir.model,name:helpdesk.model_res_users
 msgid "Users"
 msgstr "Пользователи"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_currency_id
-msgid "Utility field to express amount currency"
-msgstr "Служебное поле, чтобы выразить суммы в валюте"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_supplier_payment_term_id
-msgid "Vendor Payment Terms"
-msgstr "Условия оплаты поставщика"
 
 #. module: helpdesk
 #. openerp-web
@@ -1958,6 +1861,15 @@ msgid "View urgent failed tickets"
 msgstr "Просмотр срочных не удавшихся запросов"
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:13
+#, python-format
+msgid ""
+"Want to <b>boost your customer satisfaction</b>?<br/><i>Click Helpdesk to "
+"start.</i>"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_form
 msgid "Website Form"
 msgstr "Веб-сайт форма"
@@ -1972,10 +1884,10 @@ msgstr "Рейтинг веб-сайта"
 #: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
 #, python-format
 msgid "Wrong value entered!"
-msgstr "Введена неправильная величина!"
+msgstr "Неправильная величина!"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:100
+#: code:addons/helpdesk/models/helpdesk.py:99
 #, python-format
 msgid "You must have team members assigned to change the assignation method."
 msgstr ""

@@ -3,23 +3,24 @@
 # * quality
 # 
 # Translators:
-# Karolina Tonković <karolina.tonkovic@storm.hr>, 2016
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2016
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Bole <bole@dajmi5.com>, 2016
-# Mario Jureša <mario.juresa@uvid.hr>, 2016
-# KRISTINA PALAŠ <kristina.palas@storm.hr>, 2016
-# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2016
-# storm_mpildek <matija.pildek@storm.hr>, 2016
-# Marko Carević <marko.carevic@live.com>, 2016
+# Bole <bole@dajmi5.com>, 2017
+# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
+# Tina Milas <tina@uvid.hr>, 2017
+# KRISTINA PALAŠ <kristina.palas@storm.hr>, 2017
+# Mario Jureša <mario.juresa@uvid.hr>, 2017
+# Marko Carević <marko.carevic@live.com>, 2017
+# storm_mpildek <matija.pildek@storm.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Marko Carević <marko.carevic@live.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: storm_mpildek <matija.pildek@storm.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -159,8 +160,8 @@ msgstr "Čekovi"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_count
-msgid "Check count"
-msgstr "Provjeri broj"
+msgid "Check Count"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
@@ -249,6 +250,11 @@ msgstr "Korektivne akcije"
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Corrective Actions"
 msgstr "Korektivne radnje"
+
+#. module: quality
+#: model:ir.actions.act_window,help:quality.quality_alert_action_check
+msgid "Create Quality Alerts."
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
@@ -490,14 +496,14 @@ msgid "Measure"
 msgstr "Mjera"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
+msgid "Measure Frequency Unit"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
 msgid "Measure Success"
 msgstr "Mjerenje uspješno"
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
-msgid "Measure frequency unit"
-msgstr "Jedinica učestalosti mjerenja"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_min
@@ -675,6 +681,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Politika ostavljanja poruka na dokumentu koristeći mailgateway.\n"
+"- svatko: svatko može objaviti poruku\n"
+"- partneri: samo autentificirani partner\n"
+"- pratitelji: samo pratitelji srodne dokumentacije\n"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_preventive
@@ -766,13 +776,6 @@ msgstr ""
 #: model:ir.ui.menu,name:quality.menu_quality_alert_report
 msgid "Quality Alerts"
 msgstr "Upozorenja kvalitete"
-
-#. module: quality
-#: model:ir.actions.act_window,help:quality.quality_alert_action_check
-msgid "Quality Alerts can be created. I know this is difficult to believe."
-msgstr ""
-"Upozorenja kvalitete mogu biti kreirana. Znamo da zvuči nemoguće za "
-"povjerovati."
 
 #. module: quality
 #: code:addons/quality/models/quality.py:369
@@ -922,7 +925,7 @@ msgid "Settings"
 msgstr "Postave"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9329
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9144
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Faza"
@@ -948,7 +951,7 @@ msgid "Tags"
 msgstr "Oznake"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9307
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9122
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1065,7 +1068,7 @@ msgid "Week(s)"
 msgstr "Tjedan(a)"
 
 #. module: quality
-#: code:addons/quality/models/stock_move.py:48
+#: code:addons/quality/models/stock_picking.py:44
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "Još trebate odraditi teestove kavlitete!"

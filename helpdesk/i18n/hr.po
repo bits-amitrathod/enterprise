@@ -3,22 +3,23 @@
 # * helpdesk
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Jasmina Otročak <jasmina@uvid.hr>, 2016
-# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2016
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2016
-# Karolina Tonković <karolina.tonkovic@storm.hr>, 2016
-# KRISTINA PALAŠ <kristina.palas@storm.hr>, 2016
-# Bole <bole@dajmi5.com>, 2016
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2016
-# Davor Bojkić <davor.bojkic@storm.hr>, 2016
+# Bole <bole@dajmi5.com>, 2017
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
+# Tina Milas <tina@uvid.hr>, 2017
+# KRISTINA PALAŠ <kristina.palas@storm.hr>, 2017
+# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017
+# Davor Bojkić <davor.bojkic@storm.hr>, 2017
+# Jasmina Otročak <jasmina@uvid.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 13:22+0000\n"
-"PO-Revision-Date: 2016-11-03 13:22+0000\n"
-"Last-Translator: Davor Bojkić <davor.bojkic@storm.hr>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Jasmina Otročak <jasmina@uvid.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,11 +46,6 @@ msgstr "${object.display_name}"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_percentage_satisfaction
 msgid "% Happy"
 msgstr "% Sretan"
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "--&gt; Configure domain name"
-msgstr ""
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
@@ -171,6 +167,20 @@ msgid ""
 msgstr ""
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:58
+#, python-format
+msgid ""
+"<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
+"from here!"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
@@ -182,8 +192,8 @@ msgstr "<i>Još nema povratnih informacija od korisnika.</i>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
-msgid "<span>Reports</span>"
-msgstr "<span>Izvještaji</span>"
+msgid "<span>Reporting</span>"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -228,20 +238,19 @@ msgid "About Team"
 msgstr "O timu"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_payable_id
-msgid "Account Payable"
-msgstr "Konta obveza"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_receivable_id
-msgid "Account Receivable"
-msgstr "Konto potraživanja"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_active
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_active
 msgid "Active"
 msgstr "Aktivan"
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:64
+#, python-format
+msgid ""
+"Add columns to configure <b>stages for your tickets</b>.<br/><i>e.g. "
+"Awaiting Customer Feedback, Customer Followup, ...</i>"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
@@ -278,7 +287,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Allow your customers to easily rate your services."
-msgstr ""
+msgstr "Omogućite svojim kupcima da lako ocijene Vašu uslugu."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -299,10 +308,10 @@ msgid "Archived"
 msgstr "Arhivirano"
 
 #. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid ""
-"Assign members to this team so that they will see it in their dashboard. If "
-"no members are assigned, everyone will see this team."
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:39
+#, python-format
+msgid "Assign the ticket to someone."
 msgstr ""
 
 #. module: helpdesk
@@ -363,11 +372,6 @@ msgid "Balanced"
 msgstr "Izjednačeno"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_bank_account_count
-msgid "Bank"
-msgstr "Banka"
-
-#. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
 msgid "Blocked"
 msgstr "Blokirano"
@@ -393,9 +397,32 @@ msgid "Click create a new ticket."
 msgstr ""
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:68
+#, python-format
+msgid "Click here and select \"Helpdesk Teams\" for further configuration."
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.email_template_action_helpdesk
 msgid "Click here to create a new template."
 msgstr "Kliknite ovdje za kreiranje novog predloška."
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:18
+#, python-format
+msgid "Click here to view this team's tickets."
+msgstr ""
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:52
+#, python-format
+msgid ""
+"Click these cards to open their form view, or <b>drag &amp; drop</b> them "
+"through the different stages of this team."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -472,11 +499,6 @@ msgid "Color Index"
 msgstr "Indeks boje"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_ref_company_ids
-msgid "Companies that refers to partner"
-msgstr "Tvrtke koje su vezane s partnerom"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_company_id
@@ -499,12 +521,6 @@ msgid "Connect third party application and create tickets using web services."
 msgstr ""
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_contract_ids
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_contracts_count
-msgid "Contracts"
-msgstr "Ugovori"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_create_uid
@@ -525,19 +541,14 @@ msgid "Created on"
 msgstr "Datum kreiranja"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_currency_id
-msgid "Currency"
-msgstr "Valuta"
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:629
+#: code:addons/helpdesk/models/helpdesk.py:660
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_id
 #, python-format
 msgid "Customer"
 msgstr "Kupac"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:631
+#: code:addons/helpdesk/models/helpdesk.py:662
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_email
 #, python-format
 msgid "Customer Email"
@@ -549,11 +560,6 @@ msgid "Customer Name"
 msgstr "Naziv kupca"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_payment_term_id
-msgid "Customer Payment Terms"
-msgstr "Uvijeti plaćanja kupca"
-
-#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:89
 #, python-format
@@ -561,7 +567,7 @@ msgid "Customer Rating"
 msgstr "Ocjene gostiju"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:616
+#: code:addons/helpdesk/models/helpdesk.py:647
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
@@ -611,11 +617,6 @@ msgid "Default Values"
 msgstr "Zadane vrijednosti"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_trust
-msgid "Degree of trust you have in this debtor"
-msgstr "Stupanj povjerenja koji imate prema ovom kupcu"
-
-#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Delete"
 msgstr "Obriši"
@@ -662,6 +663,22 @@ msgid "Email alias"
 msgstr "Email alias"
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:29
+#, python-format
+msgid ""
+"Enter a subject or title for this ticket.<br/><i>(e.g. Problem with "
+"installation, Wrong order, Can't understand bill, etc.)</i>"
+msgstr ""
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:34
+#, python-format
+msgid "Enter the customer. Feel free to create it on the fly."
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_sla_fail
 msgid "Failed SLA Policy"
 msgstr ""
@@ -672,11 +689,6 @@ msgid "First assignation date"
 msgstr "Prvi datum dodjeljivanja"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_position_id
-msgid "Fiscal Position"
-msgstr "Fiskalna pozicija"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_fold
 msgid "Folded"
 msgstr "Omotano"
@@ -684,7 +696,7 @@ msgstr "Omotano"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_fold
 msgid "Folded in kanban view"
-msgstr ""
+msgstr "Zatvoreno u kanban načinu pogleda"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -712,11 +724,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Group By"
 msgstr "Grupiraj po"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_has_unreconciled_entries
-msgid "Has unreconciled entries"
-msgstr "Ima nezatvorenih stavaka"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_forum
@@ -771,6 +778,13 @@ msgid "Helpdesk Tickets"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.actions.server,name:helpdesk.helpdesk_sla_cron_ir_actions_server
+#: model:ir.cron,cron_name:helpdesk.helpdesk_sla_cron
+#: model:ir.cron,name:helpdesk.helpdesk_sla_cron
+msgid "Helpdesk: compute SLAs"
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:170
 #, python-format
@@ -805,11 +819,11 @@ msgid "How to assign newly created tickets to the right person."
 msgstr ""
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:670
+#: code:addons/helpdesk/models/helpdesk.py:719
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "I take it"
-msgstr ""
+msgstr "Uzimam"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_id
@@ -848,30 +862,19 @@ msgid "Incoming emails create tickets."
 msgstr ""
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_invoice_warn
-msgid "Invoice"
-msgstr "Račun"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_invoice_ids
-msgid "Invoices"
-msgstr "Računi"
-
-#. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_incident
 msgid "Issue"
 msgstr "Problem"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_issued_total
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_journal_item_count
-msgid "Journal Items"
-msgstr "Stavke dnevnika"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_kanban_state
 msgid "Kanban State"
 msgstr "Kanban stanje"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Keep empty for everyone to see this team."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla___last_update
@@ -904,24 +907,11 @@ msgid "Last Updated on"
 msgstr "Vrijeme promjene"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_calendar_last_notif_ack
-msgid "Last notification marked as read from base Calendar"
-msgstr "Zadnje upozorenje označeno kao pročitano iz osnovnog kalendara"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_last_time_entries_checked
-msgid ""
-"Last time the invoices & payments matching was performed for this partner. "
-"It is set either if there's not at least an unreconciled debit and an "
-"unreconciled credit or if you click the \"Done\" button."
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:23
+#, python-format
+msgid "Let's create your first ticket."
 msgstr ""
-"Zadnji put kada je saldo ovog partnera zatvaran. Postavlja se kada se "
-"zatvori  saldo partnera ili kada kliknete na gum \"Gotovo\"."
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_last_time_entries_checked
-msgid "Latest Invoices & Payments Matching Date"
-msgstr "Datum zadnjeg zatvaranja stavaka"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_livechat
@@ -944,14 +934,14 @@ msgid "Manually"
 msgstr "Ručno"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_invoice_warn_msg
-msgid "Message for Invoice"
-msgstr "Poruka za račun"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_priority
 msgid "Minimum Priority"
 msgstr "Minimalni prioritet"
+
+#. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_stage_id
+msgid "Minimum stage a ticket needs to reach in order to satisfy this SLA."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_time_minutes
@@ -1012,12 +1002,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_name
 msgid "Name"
 msgstr "Naziv"
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:674
-#, python-format
-msgid "New Ticket"
-msgstr ""
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_high_priorities
@@ -1113,11 +1097,6 @@ msgstr ""
 "zadatka (model))"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_debit_limit
-msgid "Payable Limit"
-msgstr "Limit plaćanja (duga)"
-
-#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Performance"
 msgstr "Izvođenje"
@@ -1146,6 +1125,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Politika ostavljanja poruka na dokumentu koristeći mailgateway.\n"
+"- svatko: svatko može objaviti poruku\n"
+"- partneri: samo autentificirani partner\n"
+"- pratitelji: samo pratitelji srodne dokumentacije\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_priority
@@ -1216,8 +1199,13 @@ msgstr "ID niti zapisa"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
-msgid "Reports"
-msgstr "Izvještaji"
+msgid "Reporting"
+msgstr "Izvještavanje"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
+msgid "Restore"
+msgstr "Obnovi"
 
 #. module: helpdesk
 #. openerp-web
@@ -1276,6 +1264,13 @@ msgid "Save this page and refresh to activate the feature"
 msgstr "Snimite i osvježite stranicu za aktivaciju ove značajke"
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:43
+#, python-format
+msgid "Save this ticket and the modifications you've made to it."
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_search
 msgid "Search SLA Policies"
 msgstr ""
@@ -1289,17 +1284,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "See SLAs"
 msgstr ""
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_invoice_warn
-msgid ""
-"Selecting the \"Warning\" option will notify user with the message, "
-"Selecting \"Blocking Message\" will throw an exception with the message and "
-"block the flow. The Message has to be written in the next field."
-msgstr ""
-"Odabirom opcije \"Upozorenje\" obavijestit ćete korisnika porukom, odabirom "
-"opcije \"Blokiranje poruke\" učinit ćete izuzetak s porukom i blokirati tok."
-" Poruku treba napisati u slijedećem polju."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1349,7 +1333,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
-#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_stage_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_stage_id
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_stage_view_tree
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1432,7 +1415,7 @@ msgid "Tag"
 msgstr "Oznaka"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:376 sql_constraint:helpdesk.tag:0
+#: code:addons/helpdesk/models/helpdesk.py:393 sql_constraint:helpdesk.tag:0
 #, python-format
 msgid "Tag name already exists !"
 msgstr "Naziv oznake već postoji !"
@@ -1456,6 +1439,11 @@ msgstr "Cilj"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_helpdesk_target_rating
 msgid "Target Customer Rating"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_stage_id
+msgid "Target Stage"
 msgstr ""
 
 #. module: helpdesk
@@ -1493,13 +1481,6 @@ msgid "Templates"
 msgstr "Predlošci"
 
 #. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_account_position_id
-msgid ""
-"The fiscal position will determine taxes and accounts used for the partner."
-msgstr ""
-"Fiskalna pozicija će odrediti poreze i konta korištena za ovog partnera."
-
-#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
 msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
@@ -1533,33 +1514,6 @@ msgstr ""
 "pronađe sistemskog korisnika za tu adresu."
 
 #. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_has_unreconciled_entries
-msgid ""
-"The partner has at least one unreconciled debit and credit since last time "
-"the invoices & payments matching was performed."
-msgstr ""
-"Partner ima najmanje jednu stavku za zatvaranje od zadnjeg zatvaranja "
-"stavaka."
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_account_payable_id
-msgid ""
-"This account will be used instead of the default one as the payable account "
-"for the current partner"
-msgstr ""
-"Konto obveza prema dobavljačima za ovog partnera, ako je različit od "
-"uobičajenog"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_account_receivable_id
-msgid ""
-"This account will be used instead of the default one as the receivable "
-"account for the current partner"
-msgstr ""
-"Konto potraživanja od kupaca za ovog partnera, ako je različit od "
-"uobičajenog"
-
-#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:172
 #, python-format
@@ -1567,25 +1521,7 @@ msgid "This dashboard will activate once you have created your first ticket."
 msgstr ""
 
 #. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_supplier_payment_term_id
-msgid ""
-"This payment term will be used instead of the default one for purchase "
-"orders and vendor bills"
-msgstr ""
-"Ovaj uvjet plaćanja će biti korišten umjesto zadanog za nabavne naloge i "
-"ulazne račune."
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_property_payment_term_id
-msgid ""
-"This payment term will be used instead of the default one for sale orders "
-"and customer invoices"
-msgstr ""
-"Ovaj uvjet plaćanja će biti korišten umjesto zadanog za prodajne naloge i "
-"izlazne račune."
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:311
+#: code:addons/helpdesk/models/helpdesk.py:317
 #, python-format
 msgid "This target does not exist."
 msgstr "Ova meta ne postoji."
@@ -1675,8 +1611,8 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_is_close
 msgid ""
-"Tickets in this stage are considered as done. This is used notably "
-"whencomputing SLAs and KPIs on tickets."
+"Tickets in this stage are considered as done. This is used notably when "
+"computing SLAs and KPIs on tickets."
 msgstr ""
 
 #. module: helpdesk
@@ -1702,31 +1638,6 @@ msgid "Today"
 msgstr "Danas"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_total_invoiced
-msgid "Total Invoiced"
-msgstr "Ukupno obračunato"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_debit
-msgid "Total Payable"
-msgstr "Ukupno obaveze"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_credit
-msgid "Total Receivable"
-msgstr "Ukupno potraživanja"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_credit
-msgid "Total amount this customer owes you."
-msgstr "Ukupan iznos dugovanja kupca."
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_debit
-msgid "Total amount you have to pay to this vendor."
-msgstr "Ukupni iznos za uplatu ovom dobavljaču."
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_twitter
 msgid "Twitter"
 msgstr "Twitter"
@@ -1737,16 +1648,11 @@ msgid "Type allows to organize tickets."
 msgstr ""
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:363
+#: code:addons/helpdesk/models/helpdesk.py:380
 #: sql_constraint:helpdesk.ticket.type:0
 #, python-format
 msgid "Type name already exists !"
 msgstr ""
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
-msgid "Unarchive"
-msgstr "Vrati iz arhive"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_unassigned_tickets
@@ -1780,6 +1686,13 @@ msgid "Urgent ("
 msgstr "Hitno ("
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:48
+#, python-format
+msgid "Use the breadcrumbs to go back to the Kanban view."
+msgstr ""
+
+#. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_user
 msgid "User"
 msgstr "Korisnik"
@@ -1788,16 +1701,6 @@ msgstr "Korisnik"
 #: model:ir.model,name:helpdesk.model_res_users
 msgid "Users"
 msgstr "Korisnici"
-
-#. module: helpdesk
-#: model:ir.model.fields,help:helpdesk.field_res_users_currency_id
-msgid "Utility field to express amount currency"
-msgstr "Polje u kojem se vidi iznos u valuti"
-
-#. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_res_users_property_supplier_payment_term_id
-msgid "Vendor Payment Terms"
-msgstr "Uvijeti plaćanja dobavljača"
 
 #. module: helpdesk
 #. openerp-web
@@ -1821,6 +1724,15 @@ msgid "View urgent failed tickets"
 msgstr ""
 
 #. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/js/tour.js:13
+#, python-format
+msgid ""
+"Want to <b>boost your customer satisfaction</b>?<br/><i>Click Helpdesk to "
+"start.</i>"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_form
 msgid "Website Form"
 msgstr ""
@@ -1838,7 +1750,7 @@ msgid "Wrong value entered!"
 msgstr "Unesena pogrešna vrijednost!"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:100
+#: code:addons/helpdesk/models/helpdesk.py:99
 #, python-format
 msgid "You must have team members assigned to change the assignation method."
 msgstr ""
