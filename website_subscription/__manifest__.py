@@ -13,7 +13,6 @@ Features:
         """,
     'depends': [
         'sale_subscription',
-        'website_sale',
         'website_portal',
         'website_payment',
         'sale_subscription_dashboard',
@@ -35,6 +34,5 @@ Features:
         'data/demo.yml',
     ],
     'installable': True,
-    'application': True,
     'license': 'OEEL-1',
 }

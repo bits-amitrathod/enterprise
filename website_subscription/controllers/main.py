@@ -237,11 +237,7 @@ class website_subscription(http.Controller):
         new_option = option_res.sudo().browse(new_option_id)
         pricelist = account.pricelist_id.sudo()
         price = new_option.with_context(pricelist_id=pricelist.id).price
-        if not price or not price * account.partial_recurring_invoice_ratio() or not account.template_id.partial_invoice:
-            account.sudo().add_option(new_option_id)
-            msg_body = request.env['ir.ui.view'].render_template('website_subscription.chatter_add_option',
-                                                                 values={'new_option': new_option, 'price': price})
-            account.message_post(body=msg_body)
+        account_res.set_option(account, new_option, price)
         return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))
 
     @http.route(['/my/subscription/<int:account_id>/remove_option'], type='http', methods=["POST"], auth="public", website=True)
@@ -264,14 +260,3 @@ class website_subscription(http.Controller):
                                                              values={'remove_option': remove_option})
         account.message_post(body=msg_body)
         return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))
-
-    @http.route(['/my/subscription/<int:account_id>/pay_option'], type='http', methods=["POST"], auth="public", website=True)
-    def pay_option(self, account_id, **kw):
-        order = request.website.sale_get_order(force_create=True)
-        order.set_project_id(account_id)
-        new_option_id = int(kw.get('new_option_id'))
-        new_option = request.env['sale.subscription.template.option'].sudo().browse(new_option_id)
-        account = request.env['sale.subscription'].browse(account_id)
-        account.sudo().partial_invoice_line(order, new_option)
-
-        return request.redirect("/shop/cart")

@@ -86,7 +86,6 @@
                 <field name="recurring_interval"/>
                 <field name="payment_mandatory"/>
                 <field name="user_closable"/>
-                <field name="partial_invoice"/>
                 <field name="color"/>
                 <field name="subscription_count"/>
                 <templates>
@@ -101,7 +100,6 @@
                                         <span>Recurrency: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></span>
                                         <span t-if="record.payment_mandatory.value"><i class="fa fa-check" /> Automatic payments</span>
                                         <span t-if="record.user_closable.value"><i class="fa fa-check" /> Closable by customer</span>
-                                        <span t-if="record.partial_invoice.value"><i class="fa fa-check" /> Pro-rated invoices</span>
 
                                     </div>
                                 </div><div class="o_kanban_card_manage_pane o_invisible">
@@ -228,10 +226,9 @@
                 </page>
                 <page string="Subscription" name="subscription">
                     <group>
-                        <group string="Online Management">
+                        <group string="Online Management" id="online_management">
                             <field name="user_closable"/>
                             <field name="payment_mandatory"/>
-                            <field name="partial_invoice"/>
                             <field name="tag_id" string="Category"/>
                         </group>
                         <group string="Accounting">

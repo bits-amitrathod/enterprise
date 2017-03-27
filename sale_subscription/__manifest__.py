@@ -34,5 +34,6 @@ Features:
     'demo': [
         'data/sale_subscription_demo.xml'
     ],
+    'application': True,
     'license': 'OEEL-1',
 }

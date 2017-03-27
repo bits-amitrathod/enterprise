@@ -108,6 +108,14 @@ class SaleSubscription(models.Model):
         self.write({'recurring_invoice_line_ids': [(0, 0, values)]})
         return True
 
+    def set_option(self, subscription, new_option, price):
+        if not price or not price * subscription.partial_recurring_invoice_ratio():
+            subscription.sudo().add_option(new_option.id)
+            msg_body = self.env['ir.ui.view'].render_template('website_subscription.chatter_add_option',
+                                                                 values={'new_option': new_option, 'price': price})
+            subscription.message_post(body=msg_body)
+        return True
+
     def remove_option(self, option_id):
         opt_line = self.env['sale.subscription.template.option'].browse(option_id)
         if not self.template_id or opt_line not in self.template_id.subscription_template_option_ids:
@@ -145,7 +153,6 @@ class SaleSubscription(models.Model):
             'product_uom': option_line.uom_id.id,
             'discount': (1 - self.partial_recurring_invoice_ratio(date_from=date_from)) * 100,
             'price_unit': self.pricelist_id.with_context({'uom': option_line.uom_id.id}).get_product_price(option_line.product_id, 1, False),
-            'force_price': True,
             'name': option_line.name,
         }
         return order_line_obj.create(values)
@@ -353,7 +360,6 @@ class SaleSubscriptionTemplate(models.Model):
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
     subscription_template_option_ids = fields.One2many('sale.subscription.template.option', inverse_name='subscription_template_id', string='Optional Lines', copy=True, oldname='option_invoice_line_ids')
-    partial_invoice = fields.Boolean(string="Prorated Invoice", help="If set, option upgrades are invoiced for the remainder of the current invoicing period.")
     tag_id = fields.Many2one('account.analytic.tag', string='Tags', oldname='tag_ids')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()

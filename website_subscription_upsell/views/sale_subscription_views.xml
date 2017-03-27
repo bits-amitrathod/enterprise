@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sale_subscription_template_view_form_inherit_website_sub_upsell" model="ir.ui.view">
+        <field name="name">sale.subscription.template.form.inherit</field>
+        <field name="model">sale.subscription.template</field>
+        <field name="inherit_id" ref="website_subscription.sale_subscription_template_view_form_inherit_sale_subscription"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='subscription']//field[@name='payment_mandatory']" position="after">
+                <field name="partial_invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_subscription_template_view_kanban_inherit_sub_upsell" model="ir.ui.view">
+        <field name="name">sale.subscription.template.kanban.inherit</field>
+        <field name="model">sale.subscription.template</field>
+        <field name="inherit_id" ref="website_subscription.sale_subscription_template_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="/kanban" position="inside">
+                <field name="partial_invoice"/>
+            </xpath>
+            <xpath expr="//div[contains(@class, 'o_kanban_primary_left')]" position="inside">
+                <span t-if="record.partial_invoice.value"><i class="fa fa-check" /> Pro-rated Upsell</span>
+            </xpath>
+        </field>
+    </record>
+</odoo>
