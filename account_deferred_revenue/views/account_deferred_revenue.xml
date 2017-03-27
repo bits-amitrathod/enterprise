@@ -64,8 +64,8 @@
                     </group>
                     <notebook colspan="4">
                         <page string="Revenue Board">
-                            <field name="depreciation_line_ids" mode="tree" options="{'reload_whole_on_button': true}">
-                                <tree string="Depreciation Lines" decoration-info="(move_check == False)" create="false">
+                            <field name="depreciation_line_ids" mode="tree" options="{'reload_whole_on_button': true}" string="Revenue Lines">
+                                <tree string="Revenue Lines" decoration-info="(move_check == False)" create="false">
                                     <field name="depreciation_date" string="Revenue Date"/>
                                     <field name="depreciated_value" string="Cumulative Revenue" readonly="1"/>
                                     <field name="amount" widget="monetary" string="Revenue"/>
@@ -74,21 +74,21 @@
                                     <field name="move_posted_check" invisible="1"/>
                                     <field name="parent_state" invisible="1"/>
                                 </tree>
-                                <form string="Depreciation Lines">
+                                <form string="Revenue Lines">
                                     <group>
                                         <group>
                                             <field name="parent_state" invisible="1"/>
-                                            <field name="name"/>
+                                            <field name="name" string="Revenue Name"/>
                                             <field name="sequence"/>
-                                            <field name="move_id"/>
+                                            <field name="move_id" string="Revenue Entry"/>
                                             <field name="move_check"/>
                                             <field name="parent_state" invisible="1"/>
                                         </group>
                                         <group>
-                                            <field name="amount" widget="monetary"/>
-                                            <field name="depreciation_date"/>
-                                            <field name="depreciated_value"/>
-                                            <field name="remaining_value"/>
+                                            <field name="amount" widget="monetary" string="Current Revenue"/>
+                                            <field name="depreciation_date" string="Revenue Date"/>
+                                            <field name="depreciated_value" string="Cumulative Revenue"/>
+                                            <field name="remaining_value" string="Next Period Revenue"/>
                                         </group>
                                     </group>
                                 </form>

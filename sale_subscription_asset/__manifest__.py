@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Deferred revenue management for subscriptions',
+    'name': 'Deferred Revenues Management for Subscriptions',
     'version': '1.0',
     'category': 'Sales',
     'description': """

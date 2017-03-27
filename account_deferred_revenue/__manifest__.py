@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Revenue Recognitions Management',
+    'name': 'Deferred Revenues',
     'version': '1.0',
     'depends': ['account_asset'],
     'category': 'Accounting',
