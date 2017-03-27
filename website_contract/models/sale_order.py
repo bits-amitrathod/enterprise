@@ -56,15 +56,8 @@ class SaleOrder(models.Model):
             invoice_line_ids = []
             for line in self.order_line:
                 if line.product_id.recurring_invoice:
-                    invoice_line_ids.append((0, 0, {
-                        'product_id': line.product_id.id,
-                        'analytic_account_id': subscription.id,
-                        'name': line.name,
-                        'sold_quantity': line.product_uom_qty,
-                        'discount': line.discount,
-                        'uom_id': line.product_uom.id,
-                        'price_unit': line.price_unit,
-                    }))
+                    contract_line = line._prepare_contract_line(subscription)
+                    invoice_line_ids.append((0, 0, contract_line))
             if invoice_line_ids:
                 sub_values = {'recurring_invoice_line_ids': invoice_line_ids}
                 subscription.write(sub_values)
@@ -165,3 +158,15 @@ class sale_order_line(models.Model):
     _name = "sale.order.line"
 
     force_price = fields.Boolean('Force price', help='Force a specific price, regardless of any coupons or pricelist change', default=False)
+
+    def _prepare_contract_line(self, subscription):
+        self.ensure_one()
+        return {
+            'product_id': self.product_id.id,
+            'analytic_account_id': subscription.id,
+            'name': self.name,
+            'sold_quantity': self.product_uom_qty,
+            'discount': self.discount,
+            'uom_id': self.product_uom.id,
+            'price_unit': self.price_unit,
+        }
