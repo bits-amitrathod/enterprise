@@ -176,6 +176,8 @@ class MrpEco(models.Model):
     state = fields.Selection([
         ('confirmed', 'To Do'),
         ('progress', 'In Progress'),
+        ('rebase', 'Rebase'),
+        ('conflict', 'Conflict'),
         ('done', 'Done')], string='Status',
         copy=False, default='confirmed', readonly=True, required=True)
     user_can_approve = fields.Boolean(
@@ -212,10 +214,10 @@ class MrpEco(models.Model):
     bom_change_ids = fields.One2many(
         'mrp.eco.bom.change', 'eco_id', string="ECO BoM Changes",
         compute='_compute_bom_change_ids', help='Difference between old BoM and new BoM revision', store=True)
+    bom_rebase_ids = fields.One2many('mrp.eco.bom.change', 'rebase_id', string="BoM Rebase")
     routing_change_ids = fields.One2many(
         'mrp.eco.routing.change', 'eco_id', string="ECO Routing Changes",
         compute='_compute_routing_change_ids', help='Difference between old routing and new routing revision', store=True)
-
     mrp_document_count = fields.Integer('# Attachments', compute='_compute_attachments')
     mrp_document_ids = fields.One2many(
         'mrp.document', 'res_id', string='Attachments',
@@ -225,19 +227,30 @@ class MrpEco(models.Model):
         domain="[('res_model', '=', 'mrp.eco'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]")
     color = fields.Integer('Color')
     active = fields.Boolean('Active', default=True, help="If the active field is set to False, it will allow you to hide the engineering change order without removing it.")
+    current_bom_id = fields.Many2one('mrp.bom', string="New Bom")
+    previous_change_ids = fields.One2many('mrp.eco.bom.change', 'eco_rebase_id', string="Previous ECO Changes", compute='_compute_previous_bom_change', store=True)
 
     @api.multi
     def _compute_attachments(self):
         for p in self:
             p.mrp_document_count = len(p.mrp_document_ids)
 
-    @api.one
-    @api.depends('bom_id.bom_line_ids', 'new_bom_id.bom_line_ids')
-    def _compute_bom_change_ids(self):
+    def _is_conflict(self, new_bom_lines, changes=None):
+        # Find rebase lines having conflict or not.
+        reb_conflicts = self.env['mrp.eco.bom.change']
+        for reb_line in changes:
+            new_line = new_bom_lines.get(reb_line.product_id, None)
+            if new_line and (reb_line.old_operation_id, reb_line.old_uom_id, reb_line.old_product_qty) != (new_line.operation_id, new_line.product_uom_id, new_line.product_qty):
+                reb_conflicts |= reb_line
+        reb_conflicts.write({'conflict': True})
+        return reb_conflicts
+
+    def _get_difference_bom_lines(self, old_bom, new_bom):
+        # Return difference lines from two bill of material.
         new_bom_commands = []
-        old_bom_lines = dict((line.product_id, line) for line in self.bom_id.bom_line_ids)
-        if self.new_bom_id and self.bom_id:
-            for line in self.new_bom_id.bom_line_ids:
+        old_bom_lines = dict((line.product_id, line) for line in old_bom.bom_line_ids)
+        if self.new_bom_id:
+            for line in new_bom.bom_line_ids:
                 old_line = old_bom_lines.pop(line.product_id, None)
                 if old_line and (line.product_uom_id, line.product_qty, line.operation_id) != (old_line.product_uom_id, old_line.product_qty, old_line.operation_id):
                     new_bom_commands += [(0, 0, {
@@ -265,7 +278,75 @@ class MrpEco(models.Model):
                     'old_operation_id': old_line.operation_id.id,
                     'old_product_qty': old_line.product_qty,
                 })]
-        self.bom_change_ids = new_bom_commands
+        return new_bom_commands
+
+    def rebase(self, old_bom_lines, new_bom_lines, rebase_lines):
+        """
+        This method will apply changes in new revision of BoM
+            old_bom_lines : Previous BoM or Old BoM version lines.
+            new_bom_lines : New BoM version lines.
+            rebase_lines  : Changes done in previous version
+        """
+        for reb_line in rebase_lines:
+            new_bom_line = new_bom_lines.get(reb_line.product_id, None)
+            if new_bom_line:
+                if new_bom_line.product_qty + reb_line.upd_product_qty > 0.0:
+                    # Update line if it exist in new bom.
+                    new_bom_line.write({'product_qty': new_bom_line.product_qty + reb_line.upd_product_qty, 'operation_id': reb_line.new_operation_id.id, 'product_uom_id': reb_line.new_uom_id.id})
+                else:
+                    # Unlink lines if old bom removed lines
+                    new_bom_line.unlink()
+            else:
+                # Add bom line in new bom for rebase.
+                old_line = old_bom_lines.get(reb_line.product_id, None)
+                if old_line:
+                    old_line.copy({'bom_id': self.new_bom_id.id})
+        return True
+
+    @api.multi
+    def apply_rebase(self):
+        """ Apply rebase changes in new version of BoM """
+        self.ensure_one()
+        # Rebase logic applied..
+        vals = {'state': 'progress'}
+        if self.bom_rebase_ids:
+            new_bom_lines = dict(((line.product_id), line) for line in self.new_bom_id.bom_line_ids)
+            if self._is_conflict(new_bom_lines, self.bom_rebase_ids):
+                return self.write({'state': 'conflict'})
+            else:
+                old_bom_lines = dict(((line.product_id), line) for line in self.bom_id.bom_line_ids)
+                self.rebase(old_bom_lines, new_bom_lines, self.bom_rebase_ids)
+                # Remove all rebase line of current eco.
+                self.bom_rebase_ids.unlink()
+        if self.previous_change_ids:
+            new_bom_lines = dict(((line.product_id), line) for line in self.new_bom_id.bom_line_ids)
+            if self._is_conflict(new_bom_lines, self.previous_change_ids):
+                return self.write({'state': 'conflict'})
+            else:
+                new_activated_bom_lines = dict(((line.product_id), line) for line in self.current_bom_id.bom_line_ids)
+                self.rebase(new_activated_bom_lines, new_bom_lines, self.previous_change_ids)
+                # Remove all rebase line of current eco.
+                self.previous_change_ids.unlink()
+        if self.current_bom_id:
+            self.new_bom_id.write({'version': self.current_bom_id.version + 1, 'previous_bom_id': self.current_bom_id.id})
+            vals.update({'bom_id': self.current_bom_id.id, 'current_bom_id': False})
+        self.message_post(body=_('Successfully Rebased !'))
+        return self.write(vals)
+
+    @api.multi
+    @api.depends('bom_id.bom_line_ids', 'new_bom_id.bom_line_ids', 'new_bom_id.bom_line_ids.product_qty', 'new_bom_id.bom_line_ids.product_uom_id', 'new_bom_id.bom_line_ids.operation_id')
+    def _compute_bom_change_ids(self):
+        # Compute difference between old bom and new bom revision.
+        for eco in self:
+            eco.bom_change_ids = eco._get_difference_bom_lines(eco.bom_id, eco.new_bom_id)
+
+    @api.multi
+    @api.depends('bom_id.bom_line_ids', 'current_bom_id.bom_line_ids', 'current_bom_id.bom_line_ids.product_qty', 'current_bom_id.bom_line_ids.product_uom_id', 'current_bom_id.bom_line_ids.operation_id')
+    def _compute_previous_bom_change(self):
+        for eco in self:
+            if eco.current_bom_id:
+                # Compute difference between old bom and newly activated bom.
+                eco.previous_change_ids = eco._get_difference_bom_lines(eco.bom_id, eco.current_bom_id)
 
     @api.one
     @api.depends('routing_id.operation_ids', 'new_routing_id.operation_ids')
@@ -467,11 +548,24 @@ class MrpEco(models.Model):
                     })
 
     @api.multi
+    def conflict_resolve(self):
+        self.ensure_one()
+        vals = {'state': 'progress'}
+        if self.current_bom_id:
+            vals.update({'bom_id': self.current_bom_id.id, 'current_bom_id': False})
+        self.write(vals)
+        # Set previous BoM on new revision and change version of BoM.
+        self.new_bom_id.write({'version': self.bom_id.version + 1, 'previous_bom_id': self.bom_id.id})
+        # Remove all rebase lines.
+        rebase_lines = self.bom_rebase_ids + self.previous_change_ids
+        rebase_lines.unlink()
+        return True
+
+    @api.multi
     def action_new_revision(self):
         for eco in self:
             if eco.type in ('bom', 'both'):
                 eco.new_bom_id = eco.bom_id.copy(default={
-                    'name': eco.bom_id.product_tmpl_id.name,
                     'version': eco.bom_id.version + 1,
                     'active': False,
                     'previous_bom_id': eco.bom_id.id,
@@ -490,10 +584,7 @@ class MrpEco(models.Model):
             if eco.type in ('bom', 'both', 'product'):
                 attachments = self.env['mrp.document'].search([('res_model', '=', 'product.template'), ('res_id', '=', eco.product_tmpl_id.id)])
                 for attach in attachments:
-                    attach.copy({
-                        'res_model': 'mrp.eco',
-                        'res_id': eco.id,
-                    })
+                    attach.copy({'res_model': 'mrp.eco', 'res_id': eco.id})
         self.write({'state': 'progress'})
 
     @api.multi
@@ -590,7 +681,9 @@ class MrpEcoBomChange(models.Model):
     _name = 'mrp.eco.bom.change'
     _description = 'ECO Material changes'
 
-    eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade', required=True)
+    eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade')
+    eco_rebase_id = fields.Many2one('mrp.eco', 'Rebase', ondelete='cascade')
+    rebase_id = fields.Many2one('mrp.eco', 'Rebase', ondelete='cascade')
     change_type = fields.Selection([('add', 'Add'), ('remove', 'Remove'), ('update', 'Update')], string='Type', required=True)
     product_id = fields.Many2one('product.product', 'Product', required=True)
     old_uom_id = fields.Many2one('product.uom', 'Previous Product UoM')
@@ -602,6 +695,7 @@ class MrpEcoBomChange(models.Model):
     upd_product_qty = fields.Float('Quantity', compute='_compute_change', store=True)
     uom_change = fields.Char('Unit of Measure', compute='_compute_change')
     operation_change = fields.Char(compute='_compute_change', string='Consumed in Operation')
+    conflict = fields.Boolean()
 
     @api.one
     @api.depends('new_product_qty', 'old_product_qty', 'old_operation_id', 'new_operation_id', 'old_uom_id', 'new_uom_id')

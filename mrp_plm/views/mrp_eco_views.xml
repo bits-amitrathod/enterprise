@@ -275,6 +275,8 @@
                     <separator/>
                     <filter name="confirmed" string="To Do" domain="[('state', '=', 'confirmed')]"/>
                     <filter name="progress" string="In Progress" domain="[('state', '=', 'progress')]"/>
+                    <filter name="rebase" string="Rebase" domain="[('state', '=', 'rebase')]"/>
+                    <filter name="conflict" string="Conflict" domain="[('state', '=', 'conflict')]"/>
                     <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
                     <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
                     <separator/>
@@ -398,6 +400,8 @@
                     <field name="stage_id" widget="statusbar" clickable="True" attrs="{'invisible': [('active', '=', False)]}"/>
                     <button string="Start New Revision" name="action_new_revision" type="object"
                             class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <button string="Apply Rebase" name="apply_rebase" help="Rebase new revision of BoM with previous eco bom and old bom changes." type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'rebase')]}"/>
+                    <button string="Conflict Resolved" name="conflict_resolve" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'conflict')]}" confirm="System will automatically resolved the conflict(s) and apply changes, Are you agree ?"/>
                     <button string="Approve" name="approve" type="object"
                             class="oe_highlight" attrs="{'invisible': [('user_can_approve', '=', False)]}"/>
                     <button string="Reject" name="reject" type="object"
@@ -452,13 +456,14 @@
                             <field name="effectivity_date" attrs="{'invisible': [('effectivity', '=', 'asap')], 'readonly': [('state', '=', 'done')]}"/>
                             <field name="state" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="current_bom_id" invisible="1"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Note">
                             <field name="note" attrs="{'readonly': [('state', '=', 'done')]}" placeholder="Description of the change and its reason ..."/>
                         </page>
-                        <page string="BoM Changes" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type', 'in', ('product','routing'))]}" help="Changes made on the bill of materials">
+                        <page string="BoM Changes" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type', 'in', ('product','routing'))]}" help="Changes made on the new revision bill of materials">
                             <field name="bom_change_ids">
                                 <tree decoration-danger="type=='remove'" decoration-info="type=='add'">
                                     <field name="change_type"/>
@@ -466,6 +471,30 @@
                                     <field name="upd_product_qty"/>
                                     <field name="uom_change" groups="product.group_uom"/>
                                     <field name="operation_change" groups="mrp.group_mrp_routings"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="BoM Rebase" attrs="{'invisible': [('bom_rebase_ids', '=', [])]}">
+                            <field name="bom_rebase_ids" readonly="1" help="Changes made on old bill of materials">
+                                <tree decoration-danger="conflict">
+                                    <field name="change_type"/>
+                                    <field name="product_id"/>
+                                    <field name="upd_product_qty"/>
+                                    <field name="uom_change" groups="product.group_uom"/>
+                                    <field name="operation_change" groups="mrp.group_mrp_routings"/>
+                                    <field name="conflict" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Previous Eco Bom Changes" help="Changes made in previous eco" attrs="{'invisible': [('previous_change_ids', '=', [])]}">
+                            <field name="previous_change_ids" readonly="1">
+                                <tree decoration-danger="conflict">
+                                    <field name="change_type"/>
+                                    <field name="product_id"/>
+                                    <field name="upd_product_qty"/>
+                                    <field name="uom_change" groups="product.group_uom"/>
+                                    <field name="operation_change" groups="mrp.group_mrp_routings"/>
+                                    <field name="conflict" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
