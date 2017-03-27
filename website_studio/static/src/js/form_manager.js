@@ -44,6 +44,7 @@ var FormManager = Widget.extend({
     init: function (parent, context, options) {
         this._super.apply(this, arguments);
         this.action = options.action;
+        this._onClickThumbnail = _.debounce(this._onClickThumbnail, 300, true);
     },
     /**
      * When the form manager is instantiated the willStart method is called
