@@ -97,7 +97,7 @@ var FormManager = Widget.extend({
             .then(function (is_website_designer) {
                 if (is_website_designer) {
                     ajax.jsonRpc('/website_studio/create_form', 'call', {
-                        res_model: this.res_model,
+                        res_model: self.res_model,
                     }).then(function (url) {
                         self._redirectToForm(url);
                     });
