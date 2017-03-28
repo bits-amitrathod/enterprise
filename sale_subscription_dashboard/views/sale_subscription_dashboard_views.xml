@@ -30,26 +30,26 @@
     </record>
 
 
-    <record id="action_contract_dashboard_report_main" model="ir.actions.client">
+    <record id="action_subscription_dashboard_report_main" model="ir.actions.client">
         <field name="name">Revenue KPIs</field>
-        <field name="tag">account_contract_dashboard_main</field>
+        <field name="tag">sale_subscription_dashboard_main</field>
     </record>
-    <record id="action_contract_dashboard_report_cohort" model="ir.actions.client">
+    <record id="action_subscription_dashboard_report_cohort" model="ir.actions.client">
         <field name="name">Cohort Analysis</field>
-        <field name="tag">account_contract_dashboard_cohort</field>
+        <field name="tag">sale_subscription_dashboard_cohort</field>
     </record>
-    <record id="action_contract_dashboard_report_detailed" model="ir.actions.client">
+    <record id="action_subscription_dashboard_report_detailed" model="ir.actions.client">
         <field name="name">Detailed KPI</field>
-        <field name="tag">account_contract_dashboard_detailed</field>
+        <field name="tag">sale_subscription_dashboard_detailed</field>
     </record>
-    <record id="action_contract_dashboard_report_forecast" model="ir.actions.client">
+    <record id="action_subscription_dashboard_report_forecast" model="ir.actions.client">
         <field name="name">Forecasted KPIs</field>
-        <field name="tag">account_contract_dashboard_forecast</field>
+        <field name="tag">sale_subscription_dashboard_forecast</field>
     </record>
 
-    <record id="action_contract_dashboard_report_salesman" model="ir.actions.client">
+    <record id="action_subscription_dashboard_report_salesman" model="ir.actions.client">
         <field name="name">Salesperson Dashboard</field>
-        <field name="tag">account_contract_dashboard_salesman</field>
+        <field name="tag">sale_subscription_dashboard_salesman</field>
     </record>
 
     <record id="action_invoice_line_entries_report" model="ir.actions.act_window">
@@ -62,8 +62,8 @@
         <field name="help">From this view, have an analysis of your different invoice line entries.</field>
     </record>
 
-    <menuitem id="menu_sale_subscription_dashboard" name="Dashboard" sequence="1" parent="sale_contract.menu_sale_subscription_root"/>
-    <menuitem id="menu_action_contract_dashboard_report_main" action="account_contract_dashboard.action_contract_dashboard_report_main" parent="menu_sale_subscription_dashboard" name="Revenue KPIs" groups="sale_contract.group_sale_contract_manager"/>
-    <menuitem id="menu_action_contract_dashboard_report_salesman" action="account_contract_dashboard.action_contract_dashboard_report_salesman" parent="menu_sale_subscription_dashboard" name="Salesperson Dashboard"/>
-    <menuitem id="menu_action_contract_dashboard_report_cohort" action="account_contract_dashboard.action_contract_dashboard_report_cohort" parent="menu_sale_subscription_dashboard" name="Cohort Analysis" groups="sale_contract.group_sale_contract_manager"/>
+    <menuitem id="menu_sale_subscription_dashboard" name="Dashboard" sequence="1" parent="sale_subscription.menu_sale_subscription_root"/>
+    <menuitem id="menu_action_subscription_dashboard_report_main" action="sale_subscription_dashboard.action_subscription_dashboard_report_main" parent="menu_sale_subscription_dashboard" name="Revenue KPIs" groups="sale_subscription.group_sale_subscription_manager"/>
+    <menuitem id="menu_action_subscription_dashboard_report_salesman" action="sale_subscription_dashboard.action_subscription_dashboard_report_salesman" parent="menu_sale_subscription_dashboard" name="Salesperson Dashboard"/>
+    <menuitem id="menu_action_subscription_dashboard_report_cohort" action="sale_subscription_dashboard.action_subscription_dashboard_report_cohort" parent="menu_sale_subscription_dashboard" name="Cohort Analysis" groups="sale_subscription.group_sale_subscription_manager"/>
 </odoo>

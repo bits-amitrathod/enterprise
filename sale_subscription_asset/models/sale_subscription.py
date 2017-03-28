@@ -6,7 +6,7 @@ class SaleSubscription(models.Model):
     _inherit = "sale.subscription"
 
     asset_category_id = fields.Many2one('account.asset.category', 'Deferred Revenue Category',
-                                        help="This asset category will be applied to the lines of the contract's invoices.",
+                                        help="This asset category will be applied to the lines of the subscription's invoices.",
                                         domain="[('type','=','sale')]")
 
     @api.onchange('template_id')

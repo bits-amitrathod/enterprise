@@ -358,7 +358,7 @@ STAT_TYPES = {
         'compute': compute_nrr
     },
     'arpu': {
-        'name': _('Revenue per Contract'),
+        'name': _('Revenue per Subscription'),
         'code': 'arpu',
         'dir': 'up',
         'prior': 4,
@@ -403,7 +403,7 @@ STAT_TYPES = {
         'compute': compute_revenue_churn
     },
     'nb_contracts': {
-        'name': _('Contracts'),
+        'name': _('Subscriptions'),
         'code': 'nb_contracts',
         'dir': 'up',
         'prior': 9,
@@ -421,7 +421,7 @@ FORECAST_STAT_TYPES = {
         'add_symbol': 'currency',
     },
     'contracts_forecast': {
-        'name': _('Forecasted Annual Contracts Growth'),
+        'name': _('Forecasted Annual Subscriptions Growth'),
         'code': 'contracts_forecast',
         'prior': 2,
         'add_symbol': '',

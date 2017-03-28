@@ -8,11 +8,11 @@ class SaleSubscriptionWizard(models.TransientModel):
     def _default_account(self):
         return self.env['sale.subscription'].browse(self._context.get('active_id')).analytic_account_id.id
 
-    def _default_contract(self):
+    def _default_subscription(self):
         return self.env['sale.subscription'].browse(self._context.get('active_id'))
 
     account_id = fields.Many2one('account.analytic.account', string="Analytic Account", required=True, default=_default_account)
-    subscription_id = fields.Many2one('sale.subscription', string="Contract", required=True, default=_default_contract)
+    subscription_id = fields.Many2one('sale.subscription', string="Subscription", required=True, default=_default_subscription)
     option_lines = fields.One2many('sale.subscription.wizard.option', 'wizard_id', string="Options")
     date_from = fields.Date('Discount Date', default=fields.Date.today(),
                             help="The discount applied when creating a sales order will be computed as the ratio between "
@@ -46,7 +46,7 @@ class SaleSubscriptionWizard(models.TransientModel):
             "res_id": order.id,
         }
 
-    def _prepare_contract_lines(self):
+    def _prepare_subscription_lines(self):
         rec_lines = []
         for line in self.option_lines:
             rec_line = False
@@ -65,7 +65,7 @@ class SaleSubscriptionWizard(models.TransientModel):
 
     @api.multi
     def add_lines(self):
-        rec_lines = self._prepare_contract_lines()
+        rec_lines = self._prepare_subscription_lines()
         self.subscription_id.write({'recurring_invoice_line_ids': rec_lines})
 
 

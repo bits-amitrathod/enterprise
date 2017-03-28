@@ -22,15 +22,15 @@ DISPLAY_FORMATS = {
 
 class RevenueKPIsDashboard(http.Controller):
 
-    @http.route('/account_contract_dashboard/fetch_cohort_report', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/fetch_cohort_report', type='json', auth='user')
     def cohort(self, date_start, cohort_period, cohort_interest, filters):
         """
         Get a Cohort Analysis report
 
-        :param date_start: date of the first contract to take into account
+        :param date_start: date of the first subscription to take into account
         :param cohort_period: cohort period. Between 'day','week','month', 'year'
         :param cohort_interest: cohort interest. Could be 'value' or 'number'
-        :param filters: filtering on specific contract templates, tags, companies
+        :param filters: filtering on specific subscription templates, tags, companies
         """
 
         cohort_report = []
@@ -119,7 +119,7 @@ class RevenueKPIsDashboard(http.Controller):
             'currency_id': company_currency_id.id,
         }
 
-    @http.route('/account_contract_dashboard/fetch_data', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/fetch_data', type='json', auth='user')
     def fetch_data(self):
         # context is necessary so _(...) can translate in the appropriate language
         context = request.env.context
@@ -152,7 +152,7 @@ class RevenueKPIsDashboard(http.Controller):
             'has_mrr': bool(request.env['account.invoice.line'].search_count([('asset_start_date', '!=', False)])),
         }
 
-    @http.route('/account_contract_dashboard/companies_check', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/companies_check', type='json', auth='user')
     def companies_check(self, company_ids):
         company_ids = request.env['res.company'].browse(company_ids)
         currency_ids = company_ids.mapped('currency_id')
@@ -174,7 +174,7 @@ class RevenueKPIsDashboard(http.Controller):
             'error_message': message,
         }
 
-    @http.route('/account_contract_dashboard/get_default_values_forecast', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/get_default_values_forecast', type='json', auth='user')
     def get_default_values_forecast(self, forecast_type, end_date, filters):
 
         end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
@@ -201,7 +201,7 @@ class RevenueKPIsDashboard(http.Controller):
             result['linear_growth'] = 0 if arpu == 0 else net_new_mrr/arpu
         return result
 
-    @http.route('/account_contract_dashboard/get_stats_history', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/get_stats_history', type='json', auth='user')
     def get_stats_history(self, stat_type, start_date, end_date, filters):
 
         start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
@@ -218,7 +218,7 @@ class RevenueKPIsDashboard(http.Controller):
 
         return results
 
-    @http.route('/account_contract_dashboard/get_stats_by_plan', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/get_stats_by_plan', type='json', auth='user')
     def get_stats_by_plan(self, stat_type, start_date, end_date, filters):
 
         results = []
@@ -254,7 +254,7 @@ class RevenueKPIsDashboard(http.Controller):
 
         return results
 
-    @http.route('/account_contract_dashboard/compute_graph_mrr_growth', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/compute_graph_mrr_growth', type='json', auth='user')
     def compute_graph_mrr_growth(self, start_date, end_date, filters, points_limit=0):
 
         # By default, points_limit = 0 mean every points
@@ -282,7 +282,7 @@ class RevenueKPIsDashboard(http.Controller):
 
         return results
 
-    @http.route('/account_contract_dashboard/compute_graph_and_stats', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/compute_graph_and_stats', type='json', auth='user')
     def compute_graph_and_stats(self, stat_type, start_date, end_date, filters, points_limit=30):
         """ Returns both the graph and the stats"""
 
@@ -295,7 +295,7 @@ class RevenueKPIsDashboard(http.Controller):
             'stats': stats,
         }
 
-    @http.route('/account_contract_dashboard/compute_graph', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/compute_graph', type='json', auth='user')
     def compute_graph(self, stat_type, start_date, end_date, filters, points_limit=30):
 
         start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
@@ -337,7 +337,7 @@ class RevenueKPIsDashboard(http.Controller):
         }
         return result
 
-    @http.route('/account_contract_dashboard/compute_stat', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/compute_stat', type='json', auth='user')
     def compute_stat(self, stat_type, start_date, end_date, filters):
 
         if isinstance(start_date, (str, unicode)):

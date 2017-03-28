@@ -7,11 +7,11 @@
 
     <!-- Recurrent payment emails -->
     <record id="email_payment_close" model="mail.template">
-        <field name="name">Website Contract: Payment failure</field>
+        <field name="name">Website Subscription: Payment failure</field>
         <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
         <field name="subject">Termination of subscription ${object.code}</field>
         <field name="email_to">${ctx['email_to'] or ''}</field>
-        <field name="model_id" ref="sale_contract.model_sale_subscription"/>
+        <field name="model_id" ref="sale_subscription.model_sale_subscription"/>
         <field name="body_html"><![CDATA[
 <div summary="o_mail_template" style="padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777">
     <table cellspacing="0" cellpadding="0" style="width:600px; border-collapse:collapse; background:inherit; color:inherit">
@@ -75,11 +75,11 @@
     </record>
 
     <record id="email_payment_reminder" model="mail.template">
-        <field name="name">Website Contract: Payment reminder</field>
+        <field name="name">Website Subscription: Payment reminder</field>
         <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
         <field name="subject">Payment reminder for subscription ${object.code}</field>
         <field name="email_to">${ctx['email_to'] or ''}</field>
-        <field name="model_id" ref="sale_contract.model_sale_subscription"/>
+        <field name="model_id" ref="sale_subscription.model_sale_subscription"/>
         <field name="body_html"><![CDATA[
 <div summary="o_mail_template" style="padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777">
     <table cellspacing="0" cellpadding="0" style="width:600px; border-collapse:collapse; background:inherit; color:inherit">
@@ -145,7 +145,7 @@
     </record>
 
     <record id="email_payment_success" model="mail.template">
-        <field name="name">Website Contract: Payment success</field>
+        <field name="name">Website Subscription: Payment success</field>
         <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
         <field name="subject">Invoice for subscription ${ctx.get('code')}</field>
         <field name="email_to">${ctx['email_to'] or ''}</field>
@@ -210,8 +210,8 @@
 </div>]]></field>
     </record>
 
-    <record id="email_contract_open" model="mail.template">
-        <field name="name">Website Contract: Quote Validation</field>
+    <record id="email_subscription_open" model="mail.template">
+        <field name="name">Website Subscription: Quote Validation</field>
         <field name="email_from">${(object.subscription_id.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
         <field name="subject">Your subscription ${object.subscription_id.code} is active!</field>
         <field name="email_to">${ctx.get('email_to') or object.partner_id.email}</field>
@@ -243,9 +243,9 @@
                 <p>Your subscription ${object.subscription_id.name} is active!</p>
 
                 <p>You can view your subscription online by going to our <a style="text-decoration:none; color: #875A7B;" href="/my/home">Online Portal</a> or by following this link
-                <p style="text-align: center;"><a style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px" href="/my/contract/${object.subscription_id.id}/${object.subscription_id.uuid}">View Subscription</a></p>
+                <p style="text-align: center;"><a style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px" href="/my/subscription/${object.subscription_id.id}/${object.subscription_id.uuid}">View Subscription</a></p>
 
-                <p>With this page, you can easily manage your contracts:</p>
+                <p>With this page, you can easily manage your subscriptions:</p>
                 <ul>
                     <li>Add or remove options</li>
                     <li>Change your recurring period from monthly to annually</li>

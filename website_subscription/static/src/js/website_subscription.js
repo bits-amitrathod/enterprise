@@ -1,4 +1,4 @@
-odoo.define('website_contract.website_contract', function (require) {
+odoo.define('website_subscription.website_subscription', function (require) {
     'use strict';
 
     var website = require('website.website');

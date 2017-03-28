@@ -6,17 +6,17 @@
         <field name="model">sale.subscription</field>
         <field name="arch" type="xml">
             <search string="Subscriptions">
-                <field name="name" string="Contract"/>
+                <field name="name" string="Subscription"/>
                 <field name="date"/>
                 <field name="partner_id" operator="child_of"/>
                 <field name="user_id"/>
                 <field name="template_id"/>
                 <field name="code"/>
-                <filter name="new" string="New" domain="[('state','=','draft')]" help="New Contracts"/>
-                <filter name="open" string="In Progress" domain="[('state','=','open')]" help="Contracts in progress"/>
-                <filter name="pending" string="To Renew" domain="[('state','=','pending')]" help="Pending contracts"/>
-                <filter name="closed" string="Closed" domain="[('state','=','close')]" help="Closed contracts"/>
-                <filter name="cancelled" string="Cancelled" domain="[('state','=','cancelled')]" help="Cancelled contracts"/>
+                <filter name="new" string="New" domain="[('state','=','draft')]" help="New Subscriptions"/>
+                <filter name="open" string="In Progress" domain="[('state','=','open')]" help="Subscriptions in progress"/>
+                <filter name="pending" string="To Renew" domain="[('state','=','pending')]" help="Pending subscriptions"/>
+                <filter name="closed" string="Closed" domain="[('state','=','close')]" help="Closed subscriptions"/>
+                <filter name="cancelled" string="Cancelled" domain="[('state','=','cancelled')]" help="Cancelled subscriptions"/>
                 <separator/>
                 <filter
                     string="Expired"
@@ -29,7 +29,7 @@
                     domain="[('date', '!=', False), ('date', '&lt;=', (context_today() + datetime.timedelta(30)).strftime('%%Y-%%m-%%d') )]"
                     help="End date is in the next month" />
                 <separator/>
-                <filter string="Contracts not assigned" name="contracts_not_assigned" help="Contracts that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
+                <filter string="Subscriptions not assigned" name="contracts_not_assigned" help="Subscriptions that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
                 <separator/>
                 <filter string="My Activities" name="activities_my"
                     domain="[('activity_ids.user_id', '=', uid)]"/>
@@ -67,11 +67,11 @@
         <field name="search_view_id" eval='False'/>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
-                Click to create a new contract.
+                Click to create a new subscription.
             </p><p>
-                Use contracts to follow tasks, issues, timesheets or invoicing based on
+                Use subscriptions to follow tasks, issues, timesheets or invoicing based on
                 work done, expenses and/or sales orders. Odoo will automatically manage
-                the alerts for the renewal of the contracts to the right salesperson.
+                the alerts for the renewal of the subscriptions to the right salesperson.
             </p>
         </field>
     </record>
@@ -86,15 +86,15 @@
         <field name="search_view_id" eval='False'/>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
-            Click to define a new contract.
+            Click to define a new subscription.
           </p><p>
-            You will find here the contracts to be renewed because the
+            You will find here the subscriptions to be renewed because the
             end date is passed or the working effort is higher than the
             maximum authorized one.
           </p><p>
-            Odoo automatically sets contracts to be renewed in a pending
+            Odoo automatically sets subscriptions to be renewed in a pending
             state. After the negociation, the salesman should close or renew
-            pending contracts.
+            pending subscriptions.
           </p>
         </field>
     </record>
@@ -131,9 +131,9 @@
                             attrs="{'invisible': [('state','=','open')]}" class="oe_highlight"/>
                     <button name="set_pending" string="To Renew" type="object"
                             attrs="{'invisible': [('state','in',['pending','draft','close','cancel'])]}"/>
-                    <button name="%(sale_contract.sale_subscription_close_reason_wizard_action)d" string="Close Subscription"
+                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Close Subscription"
                             type="action" attrs="{'invisible': [('state','in',['draft','close','cancel'])]}"/>
-                    <button name="%(sale_contract.sale_subscription_close_reason_wizard_action)d" string="Cancel Subscription"
+                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Cancel Subscription"
                             type="action" context="{'cancel':1}"
                             attrs="{'invisible': [('state','in',['cancel','close'])]}"/>
                     <field name="state" widget="statusbar"/>
@@ -178,7 +178,7 @@
                         <page string="Subscription Lines" id="lines">
                             <div>
                                 <button string="&#8658; Renewal Quotation" class="oe_link oe_right"
-                                        help="Create a sales order that will overwrite this contract when confirmed (renewal quotation)"
+                                        help="Create a sales order that will overwrite this subscription when confirmed (renewal quotation)"
                                         name="prepare_renewal_order" type="object" />
                                 <field name="recurring_invoice_line_ids">
                                     <tree editable="bottom">
@@ -294,7 +294,7 @@
                             </div>
                             <field name="journal_id"/>
                         </group>
-                        <group name="website_contract">
+                        <group name="website_subscription">
                         </group>
                     </group>
                     <notebook>
@@ -360,7 +360,7 @@
     </record>
 
     <!-- Menuitems -->
-    <menuitem id="menu_sale_subscription_root" name="Subscriptions" sequence="8" web_icon="sale_contract,static/description/icon.png" groups="sale_contract.group_sale_contract_view"/>
+    <menuitem id="menu_sale_subscription_root" name="Subscriptions" sequence="8" web_icon="sale_subscription,static/description/icon.png" groups="sale_subscription.group_sale_subscription_view"/>
 
     <menuitem id="menu_sale_subscription" name="Subscriptions" parent="menu_sale_subscription_root" sequence="5"/>
     <menuitem action="sale_subscription_action" id="menu_sale_subscription_action" sequence="1" parent="menu_sale_subscription"/>
@@ -369,6 +369,6 @@
     <menuitem action="product_action_subscription" id="menu_sale_subscription_product" sequence="3" parent="menu_sale_subscription"/>
 
     <menuitem id="menu_sale_subscription_config" name="Configuration" sequence="10" parent="menu_sale_subscription_root"/>
-    <menuitem action="sale_subscription_template_action" id="menu_template_of_subscription" parent="menu_sale_subscription" sequence="4" groups="sale_contract.group_sale_contract_manager"/>
+    <menuitem action="sale_subscription_template_action" id="menu_template_of_subscription" parent="menu_sale_subscription" sequence="4" groups="sale_subscription.group_sale_subscription_manager"/>
     <menuitem action="sale_subscription_close_reason_action" id="menu_sale_subscription_lost_reason_action" parent="menu_sale_subscription_config" sequence="10"/>
 </odoo>

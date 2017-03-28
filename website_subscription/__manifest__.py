@@ -1,30 +1,30 @@
 {
-    'name': 'Subscription Management',
+    'name': 'Online Subscriptions',
     'category': 'Website',
     'sequence': 32,
     'summary': 'Subscriptions Management Frontend for your customers',
     'version': '1.0',
     'description': """
-Use this app to manage Subscriptions:
+This module allows your customers to manage their subscriptions.
+
 Features:
-    - Create & edit susbcriptions with sales orders (automatic creation on confirmation)
     - Generate invoice and credit card payments automatically at fixed intervals
-    - Let your customer edit their subscriptions themselves (options, close their contract) with granular control
+    - Let your customer edit their subscriptions themselves (close their subscription, communicate through the chatter) with granular control
         """,
     'depends': [
-        'sale_contract',
+        'sale_subscription',
         'website_sale',
         'website_portal',
         'website_quote',
         'website_payment',
-        'account_contract_dashboard',
+        'sale_subscription_dashboard',
     ],
     'data': [
         'views/sale_subscription_templates.xml',
         'views/sale_subscription_views.xml',
         'views/payment_acquirer_views.xml',
         'security/ir.model.access.csv',
-        'security/portal_contract_security.xml',
+        'security/portal_subscription_security.xml',
         'data/data.xml'
     ],
     'qweb': [

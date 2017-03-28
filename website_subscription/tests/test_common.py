@@ -2,14 +2,14 @@
 from odoo.tests import common
 
 
-class TestContractCommon(common.TransactionCase):
+class TestSubscriptionCommon(common.TransactionCase):
 
     def setUp(self):
-        super(TestContractCommon, self).setUp()
+        super(TestSubscriptionCommon, self).setUp()
 
         self.env.user.company_id.currency_id = self.env.ref('base.EUR')
 
-        Contract = self.env['sale.subscription']
+        Subscription = self.env['sale.subscription']
         Template = self.env['sale.subscription.template']
         Product = self.env['product.product']
         ProductTmpl = self.env['product.template']
@@ -82,34 +82,34 @@ class TestContractCommon(common.TransactionCase):
             'groups_id': [(6, 0, [group_portal_id])]
         })
 
-        # Test Contract
-        self.contract_tmpl_1 = Template.create({
-            'name': 'TestContractTemplate1',
+        # Test Subscription
+        self.subscription_tmpl_1 = Template.create({
+            'name': 'TestSubscriptionTemplate1',
             'recurring_rule_type': 'yearly',
             'subscription_template_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_base.id})],
             'subscription_template_option_ids': [(0, 0, {'product_id': self.product_opt.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_base.id})],
             'tag_ids': [(4, self.master_tag.id, False)],
         })
-        self.contract_tmpl_2 = Template.create({
-            'name': 'TestContractTemplate2',
+        self.subscription_tmpl_2 = Template.create({
+            'name': 'TestSubscriptionTemplate2',
             'recurring_rule_type': 'monthly',
             'subscription_template_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_big.id}),
                                            (0, 0, {'product_id': self.product2.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_big.id})],
             'subscription_template_option_ids': [(0, 0, {'product_id': self.product_opt.id, 'name': 'TestRecurringLine', 'uom_id': self.uom_big.id})],
             'tag_ids': [(4, self.master_tag.id, False)],
         })
-        self.contract_tmpl_3 = Template.create({
-            'name': 'TestContractTemplate3',
+        self.subscription_tmpl_3 = Template.create({
+            'name': 'TestSubscriptionTemplate3',
             'user_selectable': False,
             'tag_ids': [(4, self.master_tag.id, False)],
         })
-        self.contract = Contract.create({
-            'name': 'TestContract',
+        self.subscription = Subscription.create({
+            'name': 'TestSubscription',
             'recurring_rule_type': 'yearly',
             'pricelist_id': self.env.ref('website_sale.list_europe').id,
             'state': 'open',
             'partner_id': self.user_portal.partner_id.id,
-            'template_id': self.contract_tmpl_1.id,
+            'template_id': self.subscription_tmpl_1.id,
             'recurring_invoice_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'price_unit': self.product.list_price, 'uom_id': self.uom_base.id})],
         })
         
@@ -118,5 +118,5 @@ class TestContractCommon(common.TransactionCase):
             'name': 'TestQuoteTemplate',
             'quote_line': [(0, 0, {'product_id': self.product.id, 'name': 'TestProduct', 'price_unit': self.product.list_price, 'product_uom_qty': 1.0, 'product_uom_id': self.uom_base.id})],
             'options': [(0, 0, {'product_id': self.product_opt.id, 'name': 'TestOptionProduct', 'price_unit': self.product.list_price, 'quantity': 1.0, 'uom_id': self.uom_base.id})],
-            'contract_template': self.contract_tmpl_1.id,
+            'subscription_template': self.subscription_tmpl_1.id,
         })

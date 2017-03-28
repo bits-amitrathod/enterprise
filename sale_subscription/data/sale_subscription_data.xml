@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding='UTF-8'?>
 <odoo>
     <record model="ir.cron" id="account_analytic_cron">
-        <field name="name">Sale Contract: subscriptions expiration</field>
-        <field name="model_id" ref="sale_contract.model_sale_subscription"/>
+        <field name="name">Sale Subscription: subscriptions expiration</field>
+        <field name="model_id" ref="sale_subscription.model_sale_subscription"/>
         <field name="state">code</field>
         <field name="code">model.cron_account_analytic_account()</field>
         <field name="interval_number">1</field>
@@ -12,8 +12,8 @@
     </record>
 
     <record model="ir.cron" id="account_analytic_cron_for_invoice">
-        <field name="name">Sale Contract: generate recurring invoices and payments</field>
-        <field name="model_id" ref="sale_contract.model_sale_subscription"/>
+        <field name="name">Sale Subscription: generate recurring invoices and payments</field>
+        <field name="model_id" ref="sale_subscription.model_sale_subscription"/>
         <field name="state">code</field>
         <field name="code">model._cron_recurring_create_invoice()</field>
         <field name="interval_number">1</field>
@@ -23,13 +23,13 @@
     
     <!-- Standard Closing Reason -->
     <record id="close_reason_1" model="sale.subscription.close.reason">
-        <field name="name">Contract is too expensive</field>
+        <field name="name">Subscription is too expensive</field>
     </record>
     <record id="close_reason_2" model="sale.subscription.close.reason">
-        <field name="name">Contract does not meet my requirements</field>
+        <field name="name">Subscription does not meet my requirements</field>
     </record>
     <record id="close_reason_3" model="sale.subscription.close.reason">
-        <field name="name">Contract reached its end date</field>
+        <field name="name">Subscription reached its end date</field>
     </record>
     <record id="close_reason_4" model="sale.subscription.close.reason">
         <field name="name">I don't use it</field>

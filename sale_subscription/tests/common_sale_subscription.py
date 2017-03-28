@@ -2,11 +2,11 @@
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 
 
-class TestContractCommon(AccountingTestCase):
+class TestSubscriptionCommon(AccountingTestCase):
 
     def setUp(self):
-        super(TestContractCommon, self).setUp()
-        Contract = self.env['sale.subscription']
+        super(TestSubscriptionCommon, self).setUp()
+        Subscription = self.env['sale.subscription']
         SubTemplate = self.env['sale.subscription.template']
         SaleOrder = self.env['sale.order']
         Product = self.env['product.product']
@@ -34,21 +34,21 @@ class TestContractCommon(AccountingTestCase):
             'groups_id': [(6, 0, [group_portal_id])]
         })
 
-        # Test Contract
-        self.contract_tmpl = SubTemplate.create({
-            'name': 'TestContractTemplate',
+        # Test Subscription
+        self.subscription_tmpl = SubTemplate.create({
+            'name': 'TestSubscriptionTemplate',
             'subscription_template_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'uom_id': self.product_tmpl.uom_id.id})],
         })
-        self.contract = Contract.create({
-            'name': 'TestContract',
+        self.subscription = Subscription.create({
+            'name': 'TestSubscription',
             'state': 'open',
             'partner_id': self.user_portal.partner_id.id,
             'pricelist_id': self.ref('product.list0'),
-            'template_id': self.contract_tmpl.id,
+            'template_id': self.subscription_tmpl.id,
         })
         self.sale_order = SaleOrder.create({
             'name': 'TestSO',
-            'project_id': self.contract.analytic_account_id.id,
+            'project_id': self.subscription.analytic_account_id.id,
             'partner_id': self.user_portal.partner_id.id,
             'partner_invoice_id': self.user_portal.partner_id.id,
             'partner_shipping_id': self.user_portal.partner_id.id,

@@ -1,4 +1,4 @@
-odoo.define('account_contract_dashboard.dashboard', function (require) {
+odoo.define('sale_subscription_dashboard.dashboard', function (require) {
 'use strict';
 
 var ajax = require('web.ajax');
@@ -29,7 +29,7 @@ because of the calculation and is then rendered separately.
 */
 
 // Abstract widget with common methods
-var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
+var sale_subscription_dashboard_abstract = Widget.extend(ControlPanelMixin, {
 
     start: function() {
         var self = this;
@@ -72,7 +72,7 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
         }
 
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/companies_check', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/companies_check', 'call', {
             'company_ids': company_ids,
         }).done(function (response) {
             if (response.result === true) {
@@ -110,7 +110,7 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
     render_filters: function() {
         this.$searchview_buttons = $();
         if(this.contract_templates.length || this.companies.length || this.tags.length) {
-            this.$searchview_buttons = $(QWeb.render("account_contract_dashboard.dashboard_option_filters", {widget: this}));
+            this.$searchview_buttons = $(QWeb.render("sale_subscription_dashboard.dashboard_option_filters", {widget: this}));
         }
         this.$searchview_buttons.on('click', '.js_tag', function(e) {
             e.preventDefault();
@@ -135,7 +135,7 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
 
         var def;
         if(!this.$searchview) {
-            this.$searchview = $(QWeb.render("account_contract_dashboard.dashboard_option_pickers"));
+            this.$searchview = $(QWeb.render("sale_subscription_dashboard.dashboard_option_pickers"));
             this.$searchview.on('click', '.o_update_options', this.on_update_options);
             def = this.set_up_datetimepickers();
             this.render_filters();
@@ -191,7 +191,7 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
 });
 
 // 1. Main dashboard
-var account_contract_dashboard_main = account_contract_dashboard_abstract.extend({
+var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.extend({
     events: {
         'click .on_stat_box': 'on_stat_box',
         'click .on_forecast_box': 'on_forecast_box',
@@ -234,7 +234,7 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
             if (this.unresolved_defs_vals.length){
                 var stat_boxes = this.$main_dashboard.find('.o_stat_box');
                 _.each(this.unresolved_defs_vals, function(v){
-                    self.defs.push(new AccountContractDashboardStatBox(
+                    self.defs.push(new SaleSubscriptionDashboardStatBox(
                         self,
                         self.start_date,
                         self.end_date,
@@ -254,7 +254,7 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
 
     fetch_data: function() {
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/fetch_data', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/fetch_data', 'call', {
         }).done(function (result) {
             self.stat_types = result.stat_types;
             self.forecast_stat_types = result.forecast_stat_types;
@@ -269,7 +269,7 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
     },
 
     render_dashboard: function() {
-        this.$main_dashboard = $(QWeb.render("account_contract_dashboard.dashboard", {
+        this.$main_dashboard = $(QWeb.render("sale_subscription_dashboard.dashboard", {
             has_mrr: this.has_mrr,
             has_template: this.has_template,
             has_def_revenues: this.has_def_revenues,
@@ -284,7 +284,7 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
         var forecast_boxes = this.$main_dashboard.find('.o_forecast_box');
 
         for (var i=0; i < stat_boxes.length; i++) {
-            this.defs.push(new AccountContractDashboardStatBox(
+            this.defs.push(new SaleSubscriptionDashboardStatBox(
                 this,
                 this.start_date,
                 this.end_date,
@@ -298,7 +298,7 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
         }
 
         for (var j=0; j < forecast_boxes.length; j++) {
-            new AccountContractDashboardForecastBox(
+            new SaleSubscriptionDashboardForecastBox(
                 this,
                 this.end_date,
                 this.filters,
@@ -341,7 +341,7 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
             'currency_id': this.currency_id,
             'push_main_state': true,
         };
-        this.load_action("account_contract_dashboard.action_contract_dashboard_report_detailed", options);
+        this.load_action("sale_subscription_dashboard.action_subscription_dashboard_report_detailed", options);
     },
 
     on_forecast_box: function(ev) {
@@ -358,23 +358,23 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
             'currency_id': this.currency_id,
             'push_main_state': true,
         };
-        this.load_action("account_contract_dashboard.action_contract_dashboard_report_forecast", options);
+        this.load_action("sale_subscription_dashboard.action_subscription_dashboard_report_forecast", options);
     },
 
     on_demo_contracts: function(ev) {
         ev.preventDefault();
-        this.load_action("sale_contract.sale_subscription_action", {});
+        this.load_action("sale_subscription.sale_subscription_action", {});
     },
 
     on_demo_templates: function(ev) {
         ev.preventDefault();
-        this.load_action("sale_contract.sale_subscription_template_action", {});
+        this.load_action("sale_subscription.sale_subscription_template_action", {});
     },
 });
 
 
 // 2. Detailed dashboard
-var account_contract_dashboard_detailed = account_contract_dashboard_abstract.extend({
+var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.extend({
 
     events: {
         'click .o_detailed_analysis': 'on_detailed_analysis',
@@ -401,7 +401,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
     fetch_computed_stat: function() {
 
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/compute_stat', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/compute_stat', 'call', {
             'stat_type': this.selected_stat,
             'start_date': this.start_date.format('YYYY-MM-DD'),
             'end_date': this.end_date.format('YYYY-MM-DD'),
@@ -418,7 +418,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
             this.fetch_computed_stat()
         ).done(function(){
 
-            self.$el.append(QWeb.render("account_contract_dashboard.detailed_dashboard", {
+            self.$el.append(QWeb.render("sale_subscription_dashboard.detailed_dashboard", {
                 selected_stat_values: _.findWhere(self.stat_types, {code: self.selected_stat}),
                 start_date: self.start_date,
                 end_date: self.end_date,
@@ -448,7 +448,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
     render_detailed_dashboard_stats_history: function() {
 
         var self = this;
-        ajax.jsonRpc('/account_contract_dashboard/get_stats_history', 'call', {
+        ajax.jsonRpc('/sale_subscription_dashboard/get_stats_history', 'call', {
             'stat_type': this.selected_stat,
             'start_date': this.start_date.format('YYYY-MM-DD'),
             'end_date': this.end_date.format('YYYY-MM-DD'),
@@ -456,7 +456,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         }).done(function (result) {
             // Rounding of result
             _.map(result, function(v, k, dict) {dict[k] = Math.round(v * 100) / 100;});
-            var html = QWeb.render('account_contract_dashboard.stats_history', {
+            var html = QWeb.render('sale_subscription_dashboard.stats_history', {
                 stats_history: result,
                 stat_type: self.selected_stat,
                 stat_types: self.stat_types,
@@ -474,13 +474,13 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
 
     render_detailed_dashboard_stats_by_plan: function() {
         var self = this;
-        ajax.jsonRpc('/account_contract_dashboard/get_stats_by_plan', 'call', {
+        ajax.jsonRpc('/sale_subscription_dashboard/get_stats_by_plan', 'call', {
             'stat_type': this.selected_stat,
             'start_date': this.start_date.format('YYYY-MM-DD'),
             'end_date': this.end_date.format('YYYY-MM-DD'),
             'filters': this.filters,
         }).done(function (result) {
-            var html = QWeb.render('account_contract_dashboard.stats_by_plan', {
+            var html = QWeb.render('sale_subscription_dashboard.stats_by_plan', {
                 stats_by_plan: result,
                 stat_type: self.selected_stat,
                 stat_types: self.stat_types,
@@ -502,7 +502,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         addLoader(this.$('#stat_chart_div'));
 
         var self = this;
-        ajax.jsonRpc('/account_contract_dashboard/compute_graph', 'call', {
+        ajax.jsonRpc('/sale_subscription_dashboard/compute_graph', 'call', {
             'stat_type': this.selected_stat,
             'start_date': this.start_date.format('YYYY-MM-DD'),
             'end_date': this.end_date.format('YYYY-MM-DD'),
@@ -519,10 +519,10 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         addLoader(this.$('#mrr_growth_chart_div'));
         var self = this;
 
-        ajax.jsonRpc('/account_contract_dashboard/compute_graph_mrr_growth', 'call', {
+        ajax.jsonRpc('/sale_subscription_dashboard/compute_graph_mrr_growth', 'call', {
             'start_date' : this.start_date.format('YYYY-MM-DD'),
             'end_date': this.end_date.format('YYYY-MM-DD'),
-            'points_limit': 30,
+	    'points_limit': 30,
             'filters': this.filters,
         }).done(function(result){
             self.load_chart_mrr_growth_stat('#mrr_growth_chart_div', result);
@@ -542,7 +542,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
                 'search_default_asset_start_date': moment(this.end_date).toDate(),
                 // TODO: add contract_ids as another filter
             };
-            view_xmlid = "account_contract_dashboard.action_invoice_line_entries_report";
+            view_xmlid = "sale_subscription_dashboard.action_invoice_line_entries_report";
         }
         else if (this.selected_stat === 'nrr' || this.selected_stat  === 'net_revenue') {
             // TODO: add filters
@@ -619,7 +619,7 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
 });
 
 // 3. Forecast dashboard
-var account_contract_dashboard_forecast = account_contract_dashboard_abstract.extend({
+var sale_subscription_dashboard_forecast = sale_subscription_dashboard_abstract.extend({
     events: {
         'change .o_forecast_input': 'on_forecast_input',
         'change input.growth_type': 'on_growth_type_change',
@@ -651,7 +651,7 @@ var account_contract_dashboard_forecast = account_contract_dashboard_abstract.ex
     },
 
     render_dashboard: function() {
-        this.$el.append(QWeb.render("account_contract_dashboard.forecast", {
+        this.$el.append(QWeb.render("sale_subscription_dashboard.forecast", {
             start_date: this.start_date,
             end_date: this.end_date,
             values: this.values,
@@ -693,7 +693,7 @@ var account_contract_dashboard_forecast = account_contract_dashboard_abstract.ex
         addLoader(this.$('#forecast_chart_div_mrr, #forecast_chart_div_contracts'));
 
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/get_default_values_forecast', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/get_default_values_forecast', 'call', {
             'forecast_type': forecast_type,
             'end_date': moment().format('YYYY-MM-DD'),
             'filters': this.filters,
@@ -713,7 +713,7 @@ var account_contract_dashboard_forecast = account_contract_dashboard_abstract.ex
         );
         this.load_chart_forecast('#forecast_chart_div_' + chart_type, computed_values);
 
-        var content = QWeb.render('account_contract_dashboard.forecast_summary_' + chart_type, {
+        var content = QWeb.render('sale_subscription_dashboard.forecast_summary_' + chart_type, {
             values: this.values[chart_type],
             computed_value: parseInt(computed_values[computed_values.length - 1][1]),
             currency_id: this.currency_id,
@@ -788,8 +788,8 @@ var account_contract_dashboard_forecast = account_contract_dashboard_abstract.ex
 });
 
 // These are two smalls widgets to display all the stat boxes in the main dashboard
-var AccountContractDashboardStatBox = Widget.extend({
-    template: 'account_contract_dashboard.stat_box_content',
+var SaleSubscriptionDashboardStatBox = Widget.extend({
+    template: 'sale_subscription_dashboard.stat_box_content',
 
     init: function(parent, start_date, end_date, filters, currency_id, stat_types, box_name, stat_type, has_mrr) {
         this._super(parent);
@@ -840,7 +840,7 @@ var AccountContractDashboardStatBox = Widget.extend({
 
     compute_graph: function() {
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/compute_graph_and_stats', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/compute_graph_and_stats', 'call', {
             'stat_type': this.stat_type,
             'start_date' : this.start_date.format('YYYY-MM-DD'),
             'end_date': this.end_date.format('YYYY-MM-DD'),
@@ -864,8 +864,8 @@ var AccountContractDashboardStatBox = Widget.extend({
     },
 });
 
-var AccountContractDashboardForecastBox = Widget.extend({
-    template: 'account_contract_dashboard.forecast_stat_box_content',
+var SaleSubscriptionDashboardForecastBox = Widget.extend({
+    template: 'sale_subscription_dashboard.forecast_stat_box_content',
 
     init: function(parent, end_date, filters, forecast_stat_types, box_name, stat_type, currency_id, has_mrr) {
         this._super(parent);
@@ -910,7 +910,7 @@ var AccountContractDashboardForecastBox = Widget.extend({
     compute_numbers: function() {
 
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/get_default_values_forecast', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/get_default_values_forecast', 'call', {
             'forecast_type': this.stat_type,
             'end_date': this.end_date.format('YYYY-MM-DD'),
             'filters': this.filters,
@@ -937,7 +937,7 @@ var AccountContractDashboardForecastBox = Widget.extend({
     },
 });
 
-var account_contract_dashboard_salesman = account_contract_dashboard_abstract.extend({
+var sale_subscription_dashboard_salesman = sale_subscription_dashboard_abstract.extend({
 
     init: function() {
         this._super.apply(this, arguments);
@@ -954,7 +954,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
 
     fetch_salesmen: function() {
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/fetch_salesmen', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/fetch_salesmen', 'call', {
         }).then(function (result) {
             self.salesman_ids = result.salesman_ids;
             self.salesman = result.default_salesman || {};
@@ -963,7 +963,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
     },
 
     render_dashboard: function() {
-        this.$el.empty().append(QWeb.render("account_contract_dashboard.salesman", {
+        this.$el.empty().append(QWeb.render("sale_subscription_dashboard.salesman", {
             salesman_ids: this.salesman_ids,
             salesman: this.salesman,
             start_date: this.start_date,
@@ -981,7 +981,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
         var self = this;
         addLoader(this.$('#mrr_growth_salesman'));
 
-        ajax.jsonRpc('/account_contract_dashboard/get_values_salesman', 'call', {
+        ajax.jsonRpc('/sale_subscription_dashboard/get_values_salesman', 'call', {
             'start_date': this.start_date.format('YYYY-MM-DD'),
             'end_date': this.end_date.format('YYYY-MM-DD'),
             'salesman_id': this.salesman.id,
@@ -989,7 +989,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
             load_chart_mrr_salesman('#mrr_growth_salesman', result);
             self.$('#mrr_growth_salesman div.o_loader').hide();
 
-            // 1. Contracts modifcations
+            // 1. Subscriptions modifcations
             var ICON_BY_TYPE = {
                 'churn': 'o_red fa fa-remove',
                 'new': 'o_green fa fa-plus',
@@ -1001,7 +1001,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
                 v.class_type = ICON_BY_TYPE[v.type];
             });
 
-            var html_modifications = QWeb.render('account_contract_dashboard.contract_modifications', {
+            var html_modifications = QWeb.render('sale_subscription_dashboard.contract_modifications', {
                 modifications: result.contract_modifications,
                 get_color_class: get_color_class,
                 currency_id: self.currency_id,
@@ -1010,7 +1010,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
             self.$('#contract_modifications').append(html_modifications);
 
             // 2. NRR invoices
-            var html_nrr_invoices = QWeb.render('account_contract_dashboard.nrr_invoices', {
+            var html_nrr_invoices = QWeb.render('sale_subscription_dashboard.nrr_invoices', {
                 invoices: result.nrr_invoices,
                 currency_id: self.currency_id,
                 format_number: self.format_number,
@@ -1018,7 +1018,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
             self.$('#NRR_invoices').append(html_nrr_invoices);
 
             // 3. Summary
-            var html_summary = QWeb.render('account_contract_dashboard.salesman_summary', {
+            var html_summary = QWeb.render('sale_subscription_dashboard.salesman_summary', {
                 mrr: result.net_new,
                 nrr: result.nrr,
                 currency_id: self.currency_id,
@@ -1096,7 +1096,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
     },
 
     update_cp: function() {
-        this.$searchview = $(QWeb.render("account_contract_dashboard.salesman_searchview", {
+        this.$searchview = $(QWeb.render("sale_subscription_dashboard.salesman_searchview", {
             salesman_ids: this.salesman_ids,
             salesman: this.salesman,
         }));
@@ -1114,7 +1114,7 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
 
 
 // Cohort Analysis
-var account_contract_dashboard_cohort = account_contract_dashboard_abstract.extend({
+var sale_subscription_dashboard_cohort = sale_subscription_dashboard_abstract.extend({
 
     events: {
         'click .js_to_subs': 'on_cohort_table',
@@ -1128,7 +1128,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
         this.cohort_period = 'month';
         this.cohort_periods = [['day', _t('By Day')], ['week', _t('By Week')], ['month', _t('By Month')], ['year', _t('By Year')]];
         this.cohort_interest = 'number';
-        this.cohort_interests = [['number', _t('Number of Contracts')], ['value', _t('Recurring Revenue (MRR)')]];
+        this.cohort_interests = [['number', _t('Number of Subscriptions')], ['value', _t('Recurring Revenue (MRR)')]];
         this.filters = {
             'template_ids': [],
             'tag_ids': [],
@@ -1145,7 +1145,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
 
     fetch_cohort_report: function() {
         var self = this;
-        return ajax.jsonRpc('/account_contract_dashboard/fetch_cohort_report', 'call', {
+        return ajax.jsonRpc('/sale_subscription_dashboard/fetch_cohort_report', 'call', {
             'date_start': this.date_start.format('YYYY-MM-DD'),
             'cohort_period': this.cohort_period,
             'cohort_interest': this.cohort_interest,
@@ -1160,7 +1160,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
     },
 
     render_dashboard: function() {
-        this.$el.empty().append(QWeb.render("account_contract_dashboard.cohort_report", {
+        this.$el.empty().append(QWeb.render("sale_subscription_dashboard.cohort_report", {
             cohort_report: this.cohort_report,
             cohort_interest: this.cohort_interest,
             currency_id: this.currency_id,
@@ -1250,7 +1250,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
     },
 
     update_cp: function() {
-        this.$searchview = $(QWeb.render("account_contract_dashboard.cohort_searchview", {widget: this}));
+        this.$searchview = $(QWeb.render("sale_subscription_dashboard.cohort_searchview", {widget: this}));
         this.$searchview.on('click', '.o_update_options', this.on_update_options);
         this.set_up_datetimepickers();
         this.render_filters();
@@ -1471,10 +1471,10 @@ function get_color_class(value, direction) {
 
 // Add client actions
 
-core.action_registry.add('account_contract_dashboard_main', account_contract_dashboard_main);
-core.action_registry.add('account_contract_dashboard_cohort', account_contract_dashboard_cohort);
-core.action_registry.add('account_contract_dashboard_detailed', account_contract_dashboard_detailed);
-core.action_registry.add('account_contract_dashboard_forecast', account_contract_dashboard_forecast);
-core.action_registry.add('account_contract_dashboard_salesman', account_contract_dashboard_salesman);
+core.action_registry.add('sale_subscription_dashboard_main', sale_subscription_dashboard_main);
+core.action_registry.add('sale_subscription_dashboard_cohort', sale_subscription_dashboard_cohort);
+core.action_registry.add('sale_subscription_dashboard_detailed', sale_subscription_dashboard_detailed);
+core.action_registry.add('sale_subscription_dashboard_forecast', sale_subscription_dashboard_forecast);
+core.action_registry.add('sale_subscription_dashboard_salesman', sale_subscription_dashboard_salesman);
 
 });

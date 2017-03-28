@@ -13,7 +13,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 class SalemanDashboard(http.Controller):
 
-    @http.route('/account_contract_dashboard/fetch_salesmen', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/fetch_salesmen', type='json', auth='user')
     def fetch_salesmen(self):
 
         request.cr.execute("""
@@ -36,7 +36,7 @@ class SalemanDashboard(http.Controller):
             'currency_id': request.env.user.company_id.currency_id.id,
         }
 
-    @http.route('/account_contract_dashboard/get_values_salesman', type='json', auth='user')
+    @http.route('/sale_subscription_dashboard/get_values_salesman', type='json', auth='user')
     def get_values_salesman(self, salesman_id, start_date, end_date):
 
         start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
@@ -97,7 +97,7 @@ class SalemanDashboard(http.Controller):
                 'account_analytic_template': self._get_template_name(next_il_id),
             }
 
-            # Was there any invoice_line in the last 30 days for this contract ?
+            # Was there any invoice_line in the last 30 days for this subscription ?
             previous_il_ids = request.env['account.invoice.line'].search([
                 ('asset_end_date', '<=', next_il_id.asset_start_date),
                 ('asset_end_date', '>', (datetime.strptime(next_il_id.asset_start_date, DEFAULT_SERVER_DATE_FORMAT) - relativedelta(months=+1))),
@@ -133,7 +133,7 @@ class SalemanDashboard(http.Controller):
                     ('account_analytic_id', '=', next_il_id.account_analytic_id.id)]
                 )
                 if active_invoice_line_ids:
-                    # If there is already a contract running but we add some products, it should
+                    # If there is already a subscription running but we add some products, it should
                     # be considered as upgrade.
                     # UP ONES
                     new_contract_modification['type'] = 'up'

@@ -14,26 +14,26 @@ from odoo.addons.website_quote.controllers.main import sale_quote
 
 class website_account(website_account):
 
-    def _get_contract_domain(self, partner):
+    def _get_subscription_domain(self, partner):
         return [
             ('partner_id.id', 'in', [partner.id, partner.commercial_partner_id.id]),
             ('state', '!=', 'cancel'),
         ]
 
     def _prepare_portal_layout_values(self):
-        """ Add contract details to main account page """
+        """ Add subscription details to main account page """
         values = super(website_account, self)._prepare_portal_layout_values()
         partner = request.env.user.partner_id
-        values['contract_count'] = request.env['sale.subscription'].search_count(self._get_contract_domain(partner))
+        values['subscription_count'] = request.env['sale.subscription'].search_count(self._get_subscription_domain(partner))
         return values
 
-    @http.route(['/my/contract', '/my/contract/page/<int:page>'], type='http', auth="user", website=True)
-    def my_contract(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):
+    @http.route(['/my/subscription', '/my/subscription/page/<int:page>'], type='http', auth="user", website=True)
+    def my_subscription(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
         SaleSubscription = request.env['sale.subscription']
 
-        domain = self._get_contract_domain(partner)
+        domain = self._get_subscription_domain(partner)
 
         archive_groups = self._get_archive_groups('sale.subscription', domain)
         if date_begin and date_end:
@@ -62,7 +62,7 @@ class website_account(website_account):
         # pager
         account_count = SaleSubscription.search_count(domain)
         pager = request.website.pager(
-            url="/my/contract",
+            url="/my/subscription",
             url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby, 'filterby': filterby},
             total=account_count,
             page=page,
@@ -70,27 +70,27 @@ class website_account(website_account):
         )
 
         accounts = SaleSubscription.search(domain, order=order, limit=self._items_per_page, offset=pager['offset'])
-        request.session['my_contracts_history'] = accounts.ids[:100]
+        request.session['my_subscriptions_history'] = accounts.ids[:100]
 
         values.update({
             'accounts': accounts,
-            'page_name': 'contract',
+            'page_name': 'subscription',
             'pager': pager,
             'archive_groups': archive_groups,
-            'default_url': '/my/contract',
+            'default_url': '/my/subscription',
             'searchbar_sortings': searchbar_sortings,
             'sortby': sortby,
             'searchbar_filters': OrderedDict(sorted(pycompat.items(searchbar_filters))),
             'filterby': filterby,
         })
-        return request.render("website_contract.portal_my_contracts", values)
+        return request.render("website_subscription.portal_my_subscriptions", values)
 
 
-class website_contract(http.Controller):
+class website_subscription(http.Controller):
 
-    @http.route(['/my/contract/<int:account_id>/',
-                 '/my/contract/<int:account_id>/<string:uuid>'], type='http', auth="public", website=True)
-    def contract(self, account_id, uuid='', message='', message_class='', **kw):
+    @http.route(['/my/subscription/<int:account_id>/',
+                 '/my/subscription/<int:account_id>/<string:uuid>'], type='http', auth="public", website=True)
+    def subscription(self, account_id, uuid='', message='', message_class='', **kw):
         account_res = request.env['sale.subscription']
         template_res = request.env['sale.subscription.template']
         if uuid:
@@ -115,7 +115,7 @@ class website_contract(http.Controller):
         else:
             delta = datetime.datetime.today() - datetime.datetime.strptime(account.recurring_next_date, '%Y-%m-%d')
             missing_periods = delta.days / 7
-        dummy, action = request.env['ir.model.data'].get_object_reference('sale_contract', 'sale_subscription_action')
+        dummy, action = request.env['ir.model.data'].get_object_reference('sale_subscription', 'sale_subscription_action')
         account_templates = template_res.sudo().search([
             ('user_selectable', '=', True),
             ('id', '!=', active_plan.id),
@@ -149,15 +149,15 @@ class website_contract(http.Controller):
         )
         for acquirer in acquirers:
             acquirer.form = acquirer.sudo()._registration_render(account.partner_id.id, render_context)
-        history = request.session.get('my_contracts_history', [])
+        history = request.session.get('my_subscriptions_history', [])
         values.update(get_records_pager(history, account))
-        return request.render("website_contract.contract", values)
+        return request.render("website_subscription.subscription", values)
 
     payment_succes_msg = 'message=Thank you, your payment has been validated.&message_class=alert-success'
     payment_fail_msg = 'message=There was an error with your payment, please try with another payment method or contact us.&message_class=alert-danger'
 
-    @http.route(['/my/contract/payment/<int:account_id>/',
-                 '/my/contract/payment/<int:account_id>/<string:uuid>'], type='http', auth="public", methods=['POST'], website=True)
+    @http.route(['/my/subscription/payment/<int:account_id>/',
+                 '/my/subscription/payment/<int:account_id>/<string:uuid>'], type='http', auth="public", methods=['POST'], website=True)
     def payment(self, account_id, uuid=None, **kw):
         account_res = request.env['sale.subscription']
         invoice_res = request.env['account.invoice']
@@ -190,13 +190,13 @@ class website_contract(http.Controller):
             else:
                 new_invoice.unlink()
 
-        return request.redirect('/my/contract/%s/%s?%s' % (account.id, account.uuid, get_param))
+        return request.redirect('/my/subscription/%s/%s?%s' % (account.id, account.uuid, get_param))
 
     # 3DS controllers
     # transaction began as s2s but we receive a form reply
-    @http.route(['/my/contract/<sub_uuid>/payment/<int:tx_id>/accept/',
-                 '/my/contract/<sub_uuid>/payment/<int:tx_id>/decline/',
-                 '/my/contract/<sub_uuid>/payment/<int:tx_id>/exception/'], type='http', auth="public", website=True)
+    @http.route(['/my/subscription/<sub_uuid>/payment/<int:tx_id>/accept/',
+                 '/my/subscription/<sub_uuid>/payment/<int:tx_id>/decline/',
+                 '/my/subscription/<sub_uuid>/payment/<int:tx_id>/exception/'], type='http', auth="public", website=True)
     def payment_accept(self, sub_uuid, tx_id, **kw):
         Subscription = request.env['sale.subscription']
         tx_res = request.env['payment.transaction']
@@ -206,17 +206,17 @@ class website_contract(http.Controller):
 
         get_param = self.payment_succes_msg if tx.state in ['done', 'authorized'] else self.payment_fail_msg
 
-        return request.redirect('/my/contract/%s/%s?%s' % (subscription.id, sub_uuid, get_param))
+        return request.redirect('/my/subscription/%s/%s?%s' % (subscription.id, sub_uuid, get_param))
 
-    @http.route(['/my/contract/<int:account_id>/change'], type='http', auth="public", website=True)
-    def change_contract(self, account_id, uuid=None, **kw):
+    @http.route(['/my/subscription/<int:account_id>/change'], type='http', auth="public", website=True)
+    def change_subscription(self, account_id, uuid=None, **kw):
         account_res = request.env['sale.subscription']
         template_res = request.env['sale.subscription.template']
         account = account_res.sudo().browse(account_id)
         if uuid != account.uuid:
             raise NotFound()
         if account.state == 'close':
-            return request.redirect('/my/contract/%s' % account_id)
+            return request.redirect('/my/subscription/%s' % account_id)
         if kw.get('new_template_id'):
             new_template_id = int(kw.get('new_template_id'))
             periods = {'daily': 'Day(s)', 'weekly': 'Week(s)', 'monthly': 'Month(s)', 'yearly': 'Year(s)'}
@@ -227,14 +227,14 @@ class website_contract(http.Controller):
             msg_after = [account.sudo().template_id.name,
                          str(account.recurring_total),
                          str(account.recurring_interval) + ' ' + str(periods[account.recurring_rule_type])]
-            msg_body = request.env['ir.ui.view'].render_template('website_contract.chatter_change_contract',
+            msg_body = request.env['ir.ui.view'].render_template('website_subscription.chatter_change_subscription',
                                                                  values={'msg_before': msg_before, 'msg_after': msg_after})
             # price options are about to change and are not propagated to existing sales order: reset the SO
             order = request.website.sudo().sale_get_order()
             if order:
                 order.reset_project_id()
             account.message_post(body=msg_body)
-            return request.redirect('/my/contract/%s/%s' % (account.id, account.uuid))
+            return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))
         account_templates = template_res.sudo().search([
             ('user_selectable', '=', True),
             ('tag_ids', 'in', account.template_id.tag_ids.ids)
@@ -246,9 +246,9 @@ class website_contract(http.Controller):
             'inactive_templates': account_templates,
             'user': request.env.user,
         }
-        return request.render("website_contract.change_template", values)
+        return request.render("website_subscription.change_template", values)
 
-    @http.route(['/my/contract/<int:account_id>/close'], type='http', methods=["POST"], auth="public", website=True)
+    @http.route(['/my/subscription/<int:account_id>/close'], type='http', methods=["POST"], auth="public", website=True)
     def close_account(self, account_id, uuid=None, **kw):
         account_res = request.env['sale.subscription']
 
@@ -268,7 +268,7 @@ class website_contract(http.Controller):
             account.date = datetime.date.today().strftime('%Y-%m-%d')
         return request.redirect('/my/home')
 
-    @http.route(['/my/contract/<int:account_id>/add_option'], type='http', methods=["POST"], auth="public", website=True)
+    @http.route(['/my/subscription/<int:account_id>/add_option'], type='http', methods=["POST"], auth="public", website=True)
     def add_option(self, account_id, uuid=None, **kw):
         option_res = request.env['sale.subscription.template.option']
         account_res = request.env['sale.subscription']
@@ -284,12 +284,12 @@ class website_contract(http.Controller):
         price = new_option.with_context(pricelist_id=pricelist.id).price
         if not price or not price * account.partial_recurring_invoice_ratio() or not account.template_id.partial_invoice:
             account.sudo().add_option(new_option_id)
-            msg_body = request.env['ir.ui.view'].render_template('website_contract.chatter_add_option',
+            msg_body = request.env['ir.ui.view'].render_template('website_subscription.chatter_add_option',
                                                                  values={'new_option': new_option, 'price': price})
             account.message_post(body=msg_body)
-        return request.redirect('/my/contract/%s/%s' % (account.id, account.uuid))
+        return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))
 
-    @http.route(['/my/contract/<int:account_id>/remove_option'], type='http', methods=["POST"], auth="public", website=True)
+    @http.route(['/my/subscription/<int:account_id>/remove_option'], type='http', methods=["POST"], auth="public", website=True)
     def remove_option(self, account_id, uuid=None, **kw):
         remove_option_id = int(kw.get('remove_option_id'))
         option_res = request.env['sale.subscription.template.option']
@@ -305,12 +305,12 @@ class website_contract(http.Controller):
         if remove_option.portal_access != "both" and not request.env.user.has_group('sales_team.group_sale_salesman'):
             return request.render("website.403")
         account.sudo().remove_option(remove_option_id)
-        msg_body = request.env['ir.ui.view'].render_template('website_contract.chatter_remove_option',
+        msg_body = request.env['ir.ui.view'].render_template('website_subscription.chatter_remove_option',
                                                              values={'remove_option': remove_option})
         account.message_post(body=msg_body)
-        return request.redirect('/my/contract/%s/%s' % (account.id, account.uuid))
+        return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))
 
-    @http.route(['/my/contract/<int:account_id>/pay_option'], type='http', methods=["POST"], auth="public", website=True)
+    @http.route(['/my/subscription/<int:account_id>/pay_option'], type='http', methods=["POST"], auth="public", website=True)
     def pay_option(self, account_id, **kw):
         order = request.website.sale_get_order(force_create=True)
         order.set_project_id(account_id)
@@ -324,22 +324,22 @@ class website_contract(http.Controller):
     @http.route(['/my/template/<int:template_id>'], type='http', auth="user", website=True)
     def view_template(self, template_id, **kw):
         template_res = request.env['sale.subscription.template']
-        dummy, action = request.env['ir.model.data'].get_object_reference('sale_contract', 'sale_subscription_template_action')
+        dummy, action = request.env['ir.model.data'].get_object_reference('sale_subscription', 'sale_subscription_template_action')
         template = template_res.browse(template_id)
         values = {
             'template': template,
             'action': action
         }
-        return request.render('website_contract.preview_template', values)
+        return request.render('website_subscription.preview_template', values)
 
 
-class sale_quote_contract(sale_quote):
+class sale_quote_subscription(sale_quote):
     @http.route([
         "/quote/<int:order_id>",
         "/quote/<int:order_id>/<token>"
     ], type='http', auth="public", website=True)
     def view(self, order_id, pdf=None, token=None, message=False, **kw):
-        response = super(sale_quote_contract, self).view(order_id, pdf, token, message, **kw)
+        response = super(sale_quote_subscription, self).view(order_id, pdf, token, message, **kw)
         if 'quotation' in response.qcontext:  # check if token identification was ok in super
             order = response.qcontext['quotation']
             recurring_products = True in [line.product_id.recurring_invoice for line in order.sudo().order_line]

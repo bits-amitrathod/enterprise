@@ -49,7 +49,7 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_confirm()
         for order in self:
             if order.subscription_id:
-                # no need for updates if the contract was juste created
+                # no need for updates if the subscription was juste created
                 if not self.env.context.get('no_upsell', dict()).get(order.id):
                     # wipe the subscription clean if needed
                     if order.subscription_management == 'renew':

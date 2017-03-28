@@ -21,7 +21,7 @@
                 'account_depreciation_id': xfa_account.id,
                 'account_depreciation_expense_id': expense_account.id,
             }
-            self._update('account.asset.category', 'website_contract', vals, 'website_contract_asset_year')
+            self._update('account.asset.category', 'website_subscription', vals, 'website_subscription_asset_year')
             vals = {
                 'journal_id': journal.id,
                 'name': 'Odoo Monthly',
@@ -32,15 +32,15 @@
                 'account_depreciation_id': xfa_account.id,
                 'account_depreciation_expense_id': expense_account.id,
             }
-            self._update('account.asset.category', 'website_contract', vals, 'website_contract_asset_month')
-            self._update('sale.subscription.template', 'website_contract', {'template_asset_category_id': ref('website_contract.website_contract_asset_year')}, 'odoo_yearly')
-            self._update('sale.subscription.template', 'website_contract', {'template_asset_category_id': ref('website_contract.website_contract_asset_month')}, 'odoo_monthly')
-            self._update('sale.subscription', 'website_contract', {'asset_category_id': ref('website_contract.website_contract_asset_month')}, 'contract_portal_21')
+            self._update('account.asset.category', 'website_subscription', vals, 'website_subscription_asset_month')
+            self._update('sale.subscription.template', 'website_subscription', {'template_asset_category_id': ref('website_subscription.website_subscription_asset_year')}, 'odoo_yearly')
+            self._update('sale.subscription.template', 'website_subscription', {'template_asset_category_id': ref('website_subscription.website_subscription_asset_month')}, 'odoo_monthly')
+            self._update('sale.subscription', 'website_subscription', {'asset_category_id': ref('website_subscription.website_subscription_asset_month')}, 'subscription_portal_21')
 
 -
     Create an invoice for the dashboard
 -
-    !python {model: sale.subscription, id: website_contract.contract_portal_21} : |
+    !python {model: sale.subscription, id: website_subscription.subscription_portal_21} : |
         company = self.env.user.company_id
         journal = self.env['account.journal'].search([('type', '=', 'general'), ('id', '!=', company.currency_exchange_journal_id.id)])
         if journal and self.invoice_count < 1:

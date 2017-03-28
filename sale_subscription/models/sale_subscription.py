@@ -50,7 +50,7 @@ class SaleSubscription(models.Model):
     def _track_subtype(self, init_values):
         self.ensure_one()
         if 'state' in init_values:
-            return 'sale_contract.subtype_state_change'
+            return 'sale_subscription.subtype_state_change'
         return super(SaleSubscription, self)._track_subtype(init_values)
 
     def _compute_invoice_count(self):
@@ -308,10 +308,10 @@ class SaleSubscription(models.Model):
     @api.multi
     def _prepare_renewal_order_values(self):
         res = dict()
-        for contract in self:
+        for subscription in self:
             order_lines = []
-            fpos_id = self.env['account.fiscal.position'].get_fiscal_position(contract.partner_id.id)
-            for line in contract.recurring_invoice_line_ids:
+            fpos_id = self.env['account.fiscal.position'].get_fiscal_position(subscription.partner_id.id)
+            for line in subscription.recurring_invoice_line_ids:
                 order_lines.append((0, 0, {
                     'product_id': line.product_id.id,
                     'name': line.product_id.product_tmpl_id.name,
@@ -321,20 +321,20 @@ class SaleSubscription(models.Model):
                     'discount': line.discount,
                     'name': line.name,
                 }))
-            addr = contract.partner_id.address_get(['delivery', 'invoice'])
-            res[contract.id] = {
-                'pricelist_id': contract.pricelist_id.id,
-                'partner_id': contract.partner_id.id,
+            addr = subscription.partner_id.address_get(['delivery', 'invoice'])
+            res[subscription.id] = {
+                'pricelist_id': subscription.pricelist_id.id,
+                'partner_id': subscription.partner_id.id,
                 'partner_invoice_id': addr['invoice'],
                 'partner_shipping_id': addr['delivery'],
-                'currency_id': contract.pricelist_id.currency_id.id,
+                'currency_id': subscription.pricelist_id.currency_id.id,
                 'order_line': order_lines,
-                'project_id': contract.analytic_account_id.id,
+                'project_id': subscription.analytic_account_id.id,
                 'subscription_management': 'renew',
-                'note': contract.description,
+                'note': subscription.description,
                 'fiscal_position_id': fpos_id,
-                'user_id': contract.user_id.id,
-                'payment_term_id': contract.partner_id.property_payment_term_id.id,
+                'user_id': subscription.user_id.id,
+                'payment_term_id': subscription.partner_id.property_payment_term_id.id,
             }
         return res
 
@@ -395,15 +395,15 @@ class SaleSubscriptionLine(models.Model):
     @api.onchange('product_id', 'quantity')
     def onchange_product_id(self):
         domain = {}
-        contract = self.analytic_account_id
-        company_id = contract.company_id.id
-        pricelist_id = contract.pricelist_id.id
+        subscription = self.analytic_account_id
+        company_id = subscription.company_id.id
+        pricelist_id = subscription.pricelist_id.id
         context = dict(self.env.context, company_id=company_id, force_company=company_id, pricelist=pricelist_id, quantity=self.quantity)
         if not self.product_id:
             self.price_unit = 0.0
             domain['uom_id'] = []
         else:
-            partner = contract.partner_id.with_context(context)
+            partner = subscription.partner_id.with_context(context)
             if partner.lang:
                 context.update({'lang': partner.lang})
 

@@ -4,7 +4,7 @@
 <!-- LAYOUT TEMPLATES -->
 
     <!-- 1. Main dashboard -->
-    <div t-name="account_contract_dashboard.dashboard" class="container o_account_contract_dashboard">
+    <div t-name="sale_subscription_dashboard.dashboard" class="container o_account_contract_dashboard">
         <div t-if="!has_mrr" class="o_welcome_message box">
             <div class="o_welcome_image"><span class="fa fa-smile-o fa-5x"/></div>
             <div t-if="has_template" class="o_welcome_content">
@@ -45,7 +45,7 @@
     </div>
 
     <!-- 2. Detailed dashboard -->
-    <div t-name="account_contract_dashboard.detailed_dashboard" class="container o_account_contract_dashboard">
+    <div t-name="sale_subscription_dashboard.detailed_dashboard" class="container o_account_contract_dashboard">
         <button t-if="_.contains(['mrr', 'nrr', 'net_revenue'], stat_type)" class="btn btn-primary o_detailed_analysis">Detailed Analysis</button>
 
         <div class="box o_graph_detailed">
@@ -67,7 +67,7 @@
     </div>
 
     <!-- 3. Forecast dashboard -->
-    <div t-name="account_contract_dashboard.forecast" class="container o_account_contract_dashboard">
+    <div t-name="sale_subscription_dashboard.forecast" class="container o_account_contract_dashboard">
         <div class="row box">
             <h3 class="text-center col-sm-12" id="forecast_summary_mrr"/>
             <div class="col-sm-4 o_forecast_options">
@@ -137,20 +137,20 @@
                             <input class="growth_type" name="growth_type_contracts" type="radio" value="exponential" data-type="contracts"> Exponential</input>
                         </td>
                     </tr>
-                        <td>Starting Contract:</td>
+                        <td>Starting Subscription:</td>
                         <td>
                             <div class="input-group">
                                 <input class="form-control o_forecast_input" type="number" data-forecast="contracts" data-type="starting_value" t-att-value="values['contracts']['starting_value']"/>
-                                <span class="input-group-addon">Contracts</span>
+                                <span class="input-group-addon">Subscriptions</span>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>Contracts Growth:</td>
+                        <td>Subscriptions Growth:</td>
                         <td>
                             <div id="linear_growth_contracts" class="input-group">
                                 <input class="form-control o_forecast_input" type="number" data-forecast="contracts" data-type="linear_growth" t-att-value="values['contracts']['linear_growth']"/>
-                                <span class="input-group-addon">Contracts</span>
+                                <span class="input-group-addon">Subscriptions</span>
                             </div>
                             <div id="expon_growth_contracts" style="display: none;" class="input-group">
                                 <input class="form-control o_forecast_input" type="number" data-forecast="contracts" data-type="expon_growth" t-att-value="values['contracts']['expon_growth']"/>
@@ -159,7 +159,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Contracts Churn:</td>
+                        <td>Subscriptions Churn:</td>
                         <td>
                             <div class="input-group">
                                 <input class="form-control o_forecast_input" type="number" data-forecast="contracts" data-type="churn" t-att-value="values['contracts']['churn']"/>
@@ -182,7 +182,7 @@
         </div>
     </div>
 
-    <h3 t-name="account_contract_dashboard.forecast_summary_mrr" class="text-center mt32 mb32" id="forecast_summary_mrr">
+    <h3 t-name="sale_subscription_dashboard.forecast_summary_mrr" class="text-center mt32 mb32" id="forecast_summary_mrr">
         In
         <span class="o_blue"><t t-esc="values['projection_time']"/></span>
         months with
@@ -193,19 +193,19 @@
         <span class="o_green"><t t-esc="format_number(computed_value)"/></span>
     </h3>
 
-    <h3 t-name="account_contract_dashboard.forecast_summary_contracts" class="text-center mt32 mb32" id="forecast_summary_contracts">
+    <h3 t-name="sale_subscription_dashboard.forecast_summary_contracts" class="text-center mt32 mb32" id="forecast_summary_contracts">
         In
         <span class="o_blue"><t t-esc="values['projection_time']"/></span>
         months with
         <span class="o_blue"><t t-esc="values['growth_type'] === 'linear' ? values['linear_growth'] : values['expon_growth'] + '%'"/> <t t-esc="values['growth_type']"/></span>
-        contract growth and
+        subscription growth and
         <span class="o_red"><t t-esc="values['churn'] + '%'"/></span>
-        churn, your contract base will be
+        churn, your subscription base will be
         <span class="o_green"><t t-esc="computed_value"/></span>
     </h3>
 
     <!-- 4. Salesman dashboard -->
-    <div t-name="account_contract_dashboard.salesman" class="container o_account_contract_dashboard o_salesman_dashboard">
+    <div t-name="sale_subscription_dashboard.salesman" class="container o_account_contract_dashboard o_salesman_dashboard">
         <div class="box">
             <h1 t-if="!(salesman &amp;&amp; salesman['name'])">Pick a salesman and a period</h1>
             <h1 t-if="salesman &amp;&amp; salesman['name']">Recurring Revenue Dashboard for <t t-esc="salesman['name']"/></h1>
@@ -215,7 +215,7 @@
                 <div id="mrr_growth_salesman"/>
             </div>
             <div class="box">
-                <h2>List of contract modifications</h2>
+                <h2>List of subscription modifications</h2>
                 <div id="contract_modifications"/>
             </div>
             <div class="box">
@@ -225,7 +225,7 @@
         </div>
     </div>
 
-    <div t-name="account_contract_dashboard.salesman_searchview" class="o_datepickers_searchview">
+    <div t-name="sale_subscription_dashboard.salesman_searchview" class="o_datepickers_searchview">
         <span class="o_datepicker_separator"> to </span>
         <select class="o_salesman_selection" name="salesman">
             <option></option>
@@ -237,13 +237,13 @@
     </div>
 
     <!-- 5. Cohort Analysis -->
-    <div t-name="account_contract_dashboard.cohort_report" class="container o_account_contract_dashboard o_cohort_dashboard">
+    <div t-name="sale_subscription_dashboard.cohort_report" class="container o_account_contract_dashboard o_cohort_dashboard">
         <div class="box">
             <h1 class="page-header">Cohort Analysis</h1>
             <table t-if="cohort_report.length" border="1" class="table table-hover o_cohort_analysis">
                 <tr>
                     <th>Cohort</th>
-                    <th>Contracts</th>
+                    <th>Subscriptions</th>
                     <th t-foreach="_.range(cohort_report[0].values.length)" t-as="period"><t t-esc="period"/></th>
                 </tr>
                 <tr t-foreach="cohort_report" t-as="cohort_row">
@@ -263,7 +263,7 @@
         </div>
     </div>
 
-    <div t-name="account_contract_dashboard.cohort_searchview" class="o_datepickers_searchview">
+    <div t-name="sale_subscription_dashboard.cohort_searchview" class="o_datepickers_searchview">
         <select name="period">
             <t t-foreach="widget.cohort_periods" t-as="period">
                 <option name="period" t-att-selected="widget.cohort_period &amp;&amp; widget.cohort_period === period[0] ? 'selected' : undefined" t-att-value="period[0]"><t t-esc="period[1]"/></option>
@@ -278,13 +278,13 @@
     </div>
 
     <!-- Common top bar -->
-    <div t-name="account_contract_dashboard.dashboard_option_pickers" class="o_datepickers_searchview">
+    <div t-name="sale_subscription_dashboard.dashboard_option_pickers" class="o_datepickers_searchview">
         <span class="o_datepicker_separator"> to </span><button class="btn btn-sm btn-primary o_update_options">Update</button>
     </div>
-    <t t-name="account_contract_dashboard.dashboard_option_filters">
-        <!-- Contracts -->
+    <t t-name="sale_subscription_dashboard.dashboard_option_filters">
+        <!-- Subscriptions -->
         <div t-if="widget.contract_templates &amp;&amp; widget.contract_templates.length > 1" class="o_dropdown dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">Filter on contracts<span class="caret"/></a>
+            <a class="dropdown-toggle" data-toggle="dropdown">Filter on subscriptions<span class="caret"/></a>
             <ul class="dropdown-menu o_filters_menu" role="menu">
                 <li t-foreach="widget.contract_templates" t-as="template">
                     <a href="#" class="o_contract_template_filter js_tag" t-att-data-id="template.id"><t t-esc="template.name"/></a>
@@ -315,11 +315,11 @@
 
 <!-- SPECIFIC TEMPLATES -->
 
-    <div t-name="account_contract_dashboard.stats_by_plan" t-if="stats_by_plan.length" class="box">
+    <div t-name="sale_subscription_dashboard.stats_by_plan" t-if="stats_by_plan.length" class="box">
         <table class="table table-striped">
             <tr>
                 <th>Plan</th>
-                <th># of Contracts</th>
+                <th># of Subscriptions</th>
                 <th t-if="stat_type != 'nb_contracts'"><t t-esc="stat_types[stat_type]['name']"/></th>
                 <th/>
             </tr>
@@ -338,7 +338,7 @@
         </table>
     </div>
 
-    <t t-name="account_contract_dashboard.stats_history">
+    <t t-name="sale_subscription_dashboard.stats_history">
         <div class="col-md-3 text-center">
             <h4 class="text-muted o_small_caps">Current</h4>
             <h2><t t-esc="format_number(value, stat_types[stat_type]['add_symbol'])"/></h2>
@@ -369,7 +369,7 @@
         </div>
     </t>
 
-    <div t-name="account_contract_dashboard.stat_box_content" class="box o_stat_box" t-att-name="widget.box_name" t-att-code="widget.stat_type">
+    <div t-name="sale_subscription_dashboard.stat_box_content" class="box o_stat_box" t-att-name="widget.box_name" t-att-code="widget.stat_type">
         <div style="position: relative;">
             <h2 class="o_stat_box_card_amount">
                 <t t-if="widget.has_mrr" t-esc="widget.format_number(widget.value)"/>
@@ -389,7 +389,7 @@
         </div>
     </div>
 
-    <div t-name="account_contract_dashboard.forecast_stat_box_content" class="box o_forecast_box" t-att-name="widget.box_name" t-att-code="widget.stat_type">
+    <div t-name="sale_subscription_dashboard.forecast_stat_box_content" class="box o_forecast_box" t-att-name="widget.box_name" t-att-code="widget.stat_type">
         <div style="position: relative;">
             <h2 class="o_stat_box_card_amount">
                 <t t-if="widget.has_mrr" t-esc="widget.format_number(widget.value)"/>
@@ -405,7 +405,7 @@
         </div>
     </div>
 
-    <t t-name="account_contract_dashboard.salesman_summary">
+    <t t-name="sale_subscription_dashboard.salesman_summary">
         <div class="col-md-6" style="font-weight: 800;">
             <h3>MRR : <t t-esc="format_number(Math.round(mrr*100)/100)"/></h3>
         </div>
@@ -415,9 +415,9 @@
         </div>
     </t>
 
-    <t t-name="account_contract_dashboard.contract_modifications">
+    <t t-name="sale_subscription_dashboard.contract_modifications">
         <div t-if="!modifications.length">
-            <i>There is no contract modification during this period.</i> 
+            <i>There is no subscription modification during this period.</i> 
         </div>
 
         <div t-if="modifications.length" class="table-responsive"> 
@@ -425,7 +425,7 @@
                 <tr>
                     <th/>
                     <th>Partner</th>
-                    <th>Contract</th>
+                    <th>Subscription</th>
                     <th>Template</th>
                     <th>Previous MRR</th>
                     <th>Current MRR</th>
@@ -442,7 +442,7 @@
         </div>
     </t>
 
-    <t t-name="account_contract_dashboard.nrr_invoices">
+    <t t-name="sale_subscription_dashboard.nrr_invoices">
         <div t-if="!invoices.length">
             <i>There is no NRR invoice during this period.</i> 
         </div>
@@ -451,7 +451,7 @@
             <table style="width: auto;" class="table table-hover">
                 <tr>
                     <th>Partner</th>
-                    <th>Contract</th>
+                    <th>Subscription</th>
                     <th>Template</th>
                     <th>NRR</th>
                 </tr>

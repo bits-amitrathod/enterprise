@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Action Show all sales documents related to a contract -->
+    <!-- Action Show all sales documents related to a subscription -->
     <record id="sale_order_view_tree_subscription" model="ir.ui.view">
         <field name="name">sale.order.list.subscription</field>
         <field name="model">sale.order</field>
@@ -19,7 +19,7 @@
         </field>
     </record>
 
-    <record id="action_contract_sales_all" model="ir.actions.act_window">
+    <record id="action_subscription_sales_all" model="ir.actions.act_window">
         <field name="name">Sales Documents</field>
         <field name="res_model">sale.order</field>
         <field name="view_type">form</field>
@@ -81,11 +81,11 @@
         }
         </field>        <field name="help" type="html">
             <p class="oe_view_nocontent_create">
-                Click to create a new contract.
+                Click to create a new subscription.
             </p><p>
-                Use contracts to follow tasks, issues, timesheets or invoicing based on
+                Use subscriptions to follow tasks, issues, timesheets or invoicing based on
                 work done, expenses and/or sales orders. Odoo will automatically manage
-                the alerts for the renewal of the contracts to the right salesperson.
+                the alerts for the renewal of the subscriptions to the right salesperson.
             </p>
         </field>
     </record>
@@ -159,7 +159,7 @@
         </field>
     </record>
 
-    <record id="sale_contract.sale_subscription_template_action" model="ir.actions.act_window">
+    <record id="sale_subscription.sale_subscription_template_action" model="ir.actions.act_window">
         <field name="view_mode">kanban,tree,form</field>
     </record>
     
@@ -204,23 +204,23 @@
         </field>
     </record>
 
-    <record id="sale_contract.sale_subscription_action" model="ir.actions.act_window">
+    <record id="sale_subscription.sale_subscription_action" model="ir.actions.act_window">
         <field name="view_mode">tree,form,pivot,graph,kanban</field>
     </record>
 
 
-    <record model="ir.ui.view" id="sale_subscription_view_form_inherit_sale_contract">
+    <record model="ir.ui.view" id="sale_subscription_view_form_inherit_sale_subscription">
         <field name="name">sale.subscription.form</field>
         <field name="model">sale.subscription</field>
-        <field name="inherit_id" ref="sale_contract.sale_subscription_view_form"/>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook/page[@id='settings']/group" position="inside">
                 <field name="payment_token_id"/>
             </xpath>
             <xpath expr="//div[@class='oe_button_box']/button[1]" position="before">
                 <button class="oe_stat_button o_open_subscription" name="open_website_url"
-                    type="object" icon="fa-globe" string="View Contract"/>
-                <button class="oe_stat_button" name="%(action_contract_sales_all)d" type="action" icon="fa-credit-card">
+                    type="object" icon="fa-globe" string="View Subscription"/>
+                <button class="oe_stat_button" name="%(action_subscription_sales_all)d" type="action" icon="fa-credit-card">
                     <field name="sale_order_count" widget="statinfo" string="Sales"/>
                 </button>
             </xpath>
@@ -232,18 +232,18 @@
         </field>
     </record>
     
-    <record model="ir.ui.view" id="sale_subscription_template_view_form_inherit_sale_contract">
+    <record model="ir.ui.view" id="sale_subscription_template_view_form_inherit_sale_subscription">
         <field name="name">sale.subscription.template.form</field>
         <field name="model">sale.subscription.template</field>
-        <field name="inherit_id" ref="sale_contract.sale_subscription_template_view_form"/>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_template_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='website_contract']" position="inside">
+            <xpath expr="//group[@name='website_subscription']" position="inside">
                 <field name="user_selectable"/>
                 <field name="user_closable"/>
                 <field name="payment_mandatory"/>
                 <field name="partial_invoice"/>
                 <field name="tag_ids" string="Plan Change Tags" widget="many2many_tags"
-                       help="When a customer wants to change his subscription plan, he has the choice between all the recurring contracts with the same tags."/>
+                       help="When a customer wants to change his subscription plan, he has the choice between all the recurring subscriptions with the same tags."/>
             </xpath>
             <xpath expr="//div[@class='oe_button_box']/button[1]" position="before">
                 <button class="oe_stat_button" name="open_website_url"
@@ -273,18 +273,18 @@
         <field name="inherit_id" ref="website_quote.view_sale_quote_template_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='mail_template_id']" position="after">
-                <field name="contract_template" />
+                <field name="subscription_template" />
             </xpath>
         </field>
     </record>
 
-    <record id="sale_order_form_quote_inherit_website_contract" model="ir.ui.view">
+    <record id="sale_order_form_quote_inherit_website_subscription" model="ir.ui.view">
         <field name="name">sale.order.form.quote.inherit</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="website_quote.sale_order_form_quote"/>
         <field name="arch" type="xml">
             <xpath expr="//div[field[@name='template_id']]" position="after">
-                <field name="contract_template" options="{'no_create': True, 'no_open': True}"
+                <field name="subscription_template" options="{'no_create': True, 'no_open': True}"
                        attrs="{'readonly': ['|', ('template_id', '!=', False), ('state', 'not in', ['draft', 'sent'])]}"/>
             </xpath>
         </field>
