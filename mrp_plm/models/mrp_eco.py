@@ -405,7 +405,7 @@ class MrpEco(models.Model):
         message = super(MrpEco, self).message_post(**kwargs)
         if message.message_type == 'comment' and message.author_id == self.env.user.partner_id:
             for eco in self:
-                for approval in eco.approval_ids.filtered(lambda app: app.template_stage_id == self.stage_id and app.status == 'none'):
+                for approval in eco.approval_ids.filtered(lambda app: app.template_stage_id == self.stage_id and app.status == 'none' and app.approval_template_id.approval_type == 'comment'):
                     if self.env.user in approval.approval_template_id.user_ids:
                         approval.write({
                             'status': 'comment',
