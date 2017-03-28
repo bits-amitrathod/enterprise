@@ -3,16 +3,16 @@
 # * inter_company_rules
 # 
 # Translators:
-# Bole <bole@dajmi5.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
+# Bole <bole@dajmi5.com>, 2017
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Vladimir Olujić <olujic.vladimir@storm.hr>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Vladimir Olujić <olujic.vladimir@storm.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,13 +38,24 @@ msgstr "Automatski generirani Nalog za nabavu"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_generated
-msgid "Auto Generated Sale Order"
-msgstr "Automatski generirani Prodajni nalog"
+msgid "Auto Generated Sales Order"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_auto_validation
+#: model:ir.ui.view,arch_db:inter_company_rules.base_config_settings_view_form_inherit_inter_company_rules
+msgid "Auto-validate Sales/Purchase Orders"
+msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_company
 msgid "Companies"
 msgstr "Tvrtke"
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.base_config_settings_view_form_inherit_inter_company_rules
+msgid "Company"
+msgstr "Tvrtka"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:82
@@ -53,11 +64,6 @@ msgstr "Tvrtke"
 msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
-msgstr ""
-
-#. module: inter_company_rules
-#: selection:base.config.settings,rule_type:0
-msgid "Create Invoice/Refunds when encoding invoice/refunds"
 msgstr ""
 
 #. module: inter_company_rules
@@ -75,13 +81,13 @@ msgstr "Kreiraj naloge za nabavu kad se prodaje ovom poduzeću"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_so_from_po
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_so_from_po
-msgid "Create Sale Orders when buying to this company"
+msgid "Create Sales Orders when buying to this company"
 msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_warehouse_id
 msgid ""
-"Default value to set on Purchase Orders that will be created based on Sale "
+"Default value to set on Purchase Orders that will be created based on Sales "
 "Orders made to this company."
 msgstr ""
 
@@ -109,7 +115,7 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_po_from_so
 msgid ""
-"Generate a Purchase Order when a Sale Order with this company as customer is created.\n"
+"Generate a Purchase Order when a Sales Order with this company as customer is created.\n"
 " The intercompany user must at least be Purchase User."
 msgstr ""
 
@@ -123,7 +129,7 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_so_from_po
 msgid ""
-"Generate a Sale Order when a Purchase Order with this company as vendor is created.\n"
+"Generate a Sales Order when a Purchase Order with this company as vendor is created.\n"
 " The intercompany user must at least be Sale User."
 msgstr ""
 
@@ -181,16 +187,10 @@ msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_rule_type
-msgid "Rule type"
-msgstr "Vrsta pravila"
+msgid "Rule Type"
+msgstr ""
 
 #. module: inter_company_rules
-#: selection:base.config.settings,rule_type:0
-msgid "SO and PO setting for inter company"
-msgstr "Postavke Prodaje i Nabave za inter company"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_auto_validation
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_auto_validation
 msgid "Sale/Purchase Orders Auto Validation"
 msgstr ""
@@ -206,6 +206,16 @@ msgid "Select the type to setup inter company rules in selected company."
 msgstr ""
 
 #. module: inter_company_rules
+#: selection:base.config.settings,rule_type:0
+msgid "Send Invoices & Refunds"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:base.config.settings,rule_type:0
+msgid "Send Sales & Purchase Orders"
+msgstr ""
+
+#. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_invoice_id
 msgid "Source Invoice"
 msgstr "Izvorni račun"
@@ -217,8 +227,8 @@ msgstr "Izvorni nalog za  nabavu"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_sale_order_id
-msgid "Source Sale Order"
-msgstr "Izvorni prodajni nalog"
+msgid "Source Sales Order"
+msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_warehouse_id
@@ -240,8 +250,8 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_validation
 msgid ""
-"When a Sale Order or a Purchase Order is created by a multi company rule for"
-" this company, it will automatically validate it"
+"When a Sales Order or a Purchase Order is created by a multi company rule "
+"for this company, it will automatically validate it"
 msgstr ""
 
 #. module: inter_company_rules
@@ -257,7 +267,7 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot select to create invoices based on other invoices\n"
-"                    simultaneously with another option ('Create Sale Orders when buying to this\n"
+"                    simultaneously with another option ('Create Sales Orders when buying to this\n"
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
 

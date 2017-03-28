@@ -3,21 +3,21 @@
 # * crm_voip
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Bole <bole@dajmi5.com>, 2016
-# Marko Carević <marko.carevic@live.com>, 2016
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2016
-# Karolina Tonković <karolina.tonkovic@storm.hr>, 2016
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2016
-# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2016
-# Davor Bojkić <davor.bojkic@storm.hr>, 2016
+# Bole <bole@dajmi5.com>, 2017
+# Tina Milas <tina@uvid.hr>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
+# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
+# Marko Carević <marko.carevic@live.com>, 2017
+# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Davor Bojkić <davor.bojkic@storm.hr>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,6 +36,13 @@ msgid ""
 "    a new call? </p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p>Poštovani ${object.partner_id.name},</p>\n"
+"\n"
+"<p>Čini se da nas je nešto prekinulo tijekom našeg razgovora o\n"
+"'${object.name}'. Možete li mi reći kad ste dostupni da se dogovorimo\n"
+"za novi poziv? </p>\n"
+"<p>Lijep pozdrav,</p>"
 
 #. module: crm_voip
 #: model:mail.template,body_html:crm_voip.email_template_call_client_notAvailable
@@ -46,9 +53,14 @@ msgid ""
 "    please give me your availability in order to schedule a new call?</p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p>Poštovani ${object.partner_id.name},</p>\n"
+"<p>Pokušao sam Vas nazvati zbog '${object.name}'. Možete li mi,\n"
+"molim Vas, reći kad ste dostupni da se dogovorimo za novi poziv?</p>\n"
+"<p>Lijep pozdrav,</p>"
 
 #. module: crm_voip
-#: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:87
+#: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:78
 #, python-format
 msgid " about %s"
 msgstr "o %s"
@@ -78,10 +90,9 @@ msgid "<span class=\"o_stat_text\">Schedule Call</span>"
 msgstr "<span class=\"o_stat_text\">Zakaži pozivl</span>"
 
 #. module: crm_voip
-#: model:ir.actions.server,name:crm_voip.action_create_call_in_queue
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
 msgid "Add to Call Queue"
-msgstr ""
+msgstr "Dodaj u red čekanja poziva"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_user_id
@@ -90,47 +101,40 @@ msgstr "Dodjeljen"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:111
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:122
 #, python-format
 msgid "Backspace"
-msgstr ""
+msgstr "Natrag"
 
 #. module: crm_voip
 #: model:ir.filters,name:crm_voip.filter_crm_phonecall_sales_team
-msgid "By Sales Team"
-msgstr "Po prodajnom timu"
+msgid "By Sales Channel"
+msgstr ""
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:404
-#: code:addons/crm_voip/static/src/js/crm_voip.js:415
-#: code:addons/crm_voip/static/src/js/crm_voip.js:432
-#: code:addons/crm_voip/static/src/js/crm_voip.js:440
-#: code:addons/crm_voip/static/src/js/crm_voip.js:457
-#: code:addons/crm_voip/static/src/js/crm_voip.js:563
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:83
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:124
+#: code:addons/crm_voip/static/src/js/crm_voip.js:577
 #, python-format
 msgid "Call"
 msgstr "Poziv"
 
 #. module: crm_voip
-#: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:82
-#: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:85
+#: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:73
+#: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:76
 #, python-format
 msgid "Call %s min(s)"
-msgstr ""
+msgstr "Poziv %s min(s)"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:89
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:79
 #, python-format
 msgid "Call All"
 msgstr "Zovi sve"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:90
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:80
 #, python-format
 msgid "Call Next One"
 msgstr "Zovi sljedećeg"
@@ -149,16 +153,14 @@ msgstr "Sažetak poziva"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:867
+#: code:addons/crm_voip/static/src/js/crm_voip.js:886
 #, python-format
 msgid "Calling "
 msgstr "Zovem"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:386
-#: code:addons/crm_voip/static/src/js/crm_voip.js:398
-#: code:addons/crm_voip/static/src/js/crm_voip.js:567
+#: code:addons/crm_voip/static/src/js/crm_voip.js:581
 #, python-format
 msgid "Calling..."
 msgstr "Zovem..."
@@ -166,7 +168,7 @@ msgstr "Zovem..."
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Calls Date by Month"
-msgstr ""
+msgstr "Pozivi po mjesecima"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
@@ -187,28 +189,16 @@ msgid "Cancelled"
 msgstr "Otkazano"
 
 #. module: crm_voip
-#: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
-msgid "Choose a date..."
-msgstr "Odaberite datum...."
-
-#. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.crm_phonecall_view
 msgid "Click to log the summary of a phone call."
-msgstr ""
+msgstr "Kliknite za bilježenje sažetka telefonskog razgovora."
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:463
+#: code:addons/crm_voip/static/src/js/crm_voip.js:477
 #, python-format
 msgid "Click to unblock"
-msgstr ""
-
-#. module: crm_voip
-#. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:74
-#, python-format
-msgid "Close the Panel"
-msgstr ""
+msgstr "Kliknite za odblokiranje"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_company_id
@@ -254,13 +244,18 @@ msgid "Creation Month"
 msgstr "Mjesec kreiranja"
 
 #. module: crm_voip
-#: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_custom_duration
-msgid "Custom Duration"
+#: model:ir.actions.server,name:crm_voip.action_create_call_in_queue
+msgid "Crm Voip: Add to Call Queue"
 msgstr ""
 
 #. module: crm_voip
+#: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_custom_duration
+msgid "Custom Duration"
+msgstr "Uobičajeno trajanje"
+
+#. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:103
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:109
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 #, python-format
 msgid "Customer"
@@ -268,10 +263,10 @@ msgstr "Kupac"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:422
+#: code:addons/crm_voip/static/src/js/crm_voip.js:436
 #, python-format
 msgid "Customer unavailable"
-msgstr ""
+msgstr "Kupac nedostupan"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_date
@@ -298,7 +293,7 @@ msgstr "Opis"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:153
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:172
 #, python-format
 msgid "Description:"
 msgstr "Opis:"
@@ -313,14 +308,7 @@ msgstr "Odbaci"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:5
 #, python-format
 msgid "Display Dialing Panel"
-msgstr ""
-
-#. module: crm_voip
-#. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:68
-#, python-format
-msgid "Display Keypad"
-msgstr ""
+msgstr "Prikaži ploču za biranje"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_display_name
@@ -334,7 +322,7 @@ msgstr "Naziv za prikaz"
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "Don't Reschedule"
-msgstr ""
+msgstr "Nemoj napraviti novi raspored"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_duration
@@ -346,12 +334,12 @@ msgstr "Trajanje"
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_duration
 msgid "Duration in minutes and seconds."
-msgstr ""
+msgstr "Trajanje u minutama i sekundama"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Edit the log"
-msgstr ""
+msgstr "Uredi log"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_email
@@ -360,17 +348,17 @@ msgstr "E-pošta"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:110
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:121
 #, python-format
 msgid "Enter the number..."
-msgstr ""
+msgstr "Unesi broj..."
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:165
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:184
 #, python-format
 msgid "Expected Revenue:"
-msgstr ""
+msgstr "Očekivani prihod:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -380,32 +368,22 @@ msgstr "Prošireni filtri..."
 #. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.action_report_crm_phonecall
 msgid ""
-"From this report, you can analyse the performance of your sales team, based "
-"on their phone calls. You can group or filter the information according to "
-"several criteria and drill down the information, by adding more groups in "
-"the report."
+"From this report, you can analyse the performance of your sales channel, "
+"based on their phone calls. You can group or filter the information "
+"according to several criteria and drill down the information, by adding more"
+" groups in the report."
 msgstr ""
-"Iz ovog izvješća možete analizirati učinkovitost vašeg prodajnog tima na "
-"temelju njihovih telefonskih poziva. Možete grupirati ili filtrirati podatke"
-" prema nekoliko kriterija i drill down, dodavanjem više grupa u izvještaj."
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_sequence
 msgid "Gives the sequence order when displaying a list of Phonecalls."
-msgstr ""
+msgstr "Daje redoslijed kada se prikazuje lista poziva."
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Group By"
 msgstr "Grupiraj po"
-
-#. module: crm_voip
-#. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:94
-#, python-format
-msgid "Hang Up"
-msgstr "Prekini poziv"
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
@@ -425,27 +403,27 @@ msgstr "ID"
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 1 Week"
-msgstr ""
+msgstr "Za 1 tjedan"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 15 Day"
-msgstr ""
+msgstr "Za 15 dana"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 2 Months"
-msgstr ""
+msgstr "Za 2 mjeseca"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_in_automatic_mode
 msgid "In Automatic Mode"
-msgstr ""
+msgstr "U automatskom načinu"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_in_queue
 msgid "In Call Queue"
-msgstr ""
+msgstr "U redu čekanja poziva"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.crm_phonecall_view
@@ -453,11 +431,13 @@ msgid ""
 "In order to follow up on the call, you can trigger a request for\n"
 "          another call, a meeting or an opportunity."
 msgstr ""
+"Kako biste pratili poziv, možete pokrenuti zahtjev za\n"
+"drugi poziv, sastanak ili priliku."
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_lead_in_call_center_queue
 msgid "Is in the Call Queue"
-msgstr ""
+msgstr "Je u redu čekanja poziva"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall___last_update
@@ -494,12 +474,12 @@ msgstr "Potencijal/prilika"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_name
 msgid "Lead/Opportunity name"
-msgstr ""
+msgstr "Naziv potencijala/prilike"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/models/crm_lead.py:86
-#: code:addons/crm_voip/static/src/js/crm_voip.js:500
+#: code:addons/crm_voip/models/crm_lead.py:103
+#: code:addons/crm_voip/static/src/js/crm_voip.js:514
 #, python-format
 msgid "Log a call"
 msgstr "Zabilježi poziv"
@@ -532,8 +512,8 @@ msgstr "Moji pozivi"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
-msgid "My Sales Team(s)"
-msgstr "Moj(i) prodajni tim(ovi)"
+msgid "My Sales Channel(s)"
+msgstr ""
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
@@ -541,33 +521,18 @@ msgid "My Team"
 msgstr "Moj tim"
 
 #. module: crm_voip
-#: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_new_title_action
-msgid "Next Action"
-msgstr "Sljedeća akcija"
-
-#. module: crm_voip
-#: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_new_date_action
-msgid "Next Action Date"
-msgstr "Datum slijedeće akcije"
-
-#. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:159
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:178
 #, python-format
 msgid "Next Action:"
-msgstr ""
-
-#. module: crm_voip
-#: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_next_activity_id
-msgid "Next Activity"
-msgstr "Sljedeća aktivnost"
+msgstr "Sljedeći korak:"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:50
+#: code:addons/crm_voip/static/src/js/crm_voip.js:59
 #, python-format
 msgid "No opportunity linked"
-msgstr ""
+msgstr "Nema povezane prilike"
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
@@ -582,10 +547,13 @@ msgid ""
 "          history of the communication with a customer or to inform another\n"
 "          team member."
 msgstr ""
+"Odoo Vam omogućuje spontano bilježenje ulaznih poziva kako biste\n"
+"mogli pratiti povijest komunikacije s kupcem ili informirati  drugog\n"
+"člana tima."
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:104
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:114
 #, python-format
 msgid "Opportunity"
 msgstr "Prilika"
@@ -606,12 +574,12 @@ msgstr "Partner"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_id
 msgid "Partner id"
-msgstr ""
+msgstr "ID partnera"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_image_small
 msgid "Partner image"
-msgstr ""
+msgstr "Slika partnera"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_phone
@@ -628,12 +596,12 @@ msgstr "Telefonski pozivi"
 #. module: crm_voip
 #: model:ir.filters,name:crm_voip.filter_crm_phonecall_phone_call_to_do
 msgid "Phone Calls To Do"
-msgstr ""
+msgstr "Pozivi za obaviti"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall_report
 msgid "Phone Calls by user and team"
-msgstr ""
+msgstr "Pozivi po korisniku i timu"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_graph
@@ -655,12 +623,12 @@ msgstr "Pozivi u stanju zatvoreno"
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid ""
 "Phone calls which are in to do state and Phone calls which receive no answer"
-msgstr ""
+msgstr "Pozivi koji se trebaju obaviti i pozivi bez odgovora"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Phone calls which receive no answer"
-msgstr ""
+msgstr "Pozivi bez odgovora"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,name:crm_voip.crm_phonecall_view
@@ -674,7 +642,7 @@ msgstr "Tel. pozivi"
 #. module: crm_voip
 #: model:ir.actions.act_window,name:crm_voip.action_report_crm_phonecall
 msgid "Phonecalls Analysis"
-msgstr ""
+msgstr "Analiza poziva"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
@@ -688,10 +656,10 @@ msgstr "Planirani prihod"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:535
+#: code:addons/crm_voip/static/src/js/crm_voip.js:549
 #, python-format
 msgid "Please check if a phone number is given for the current phonecall"
-msgstr ""
+msgstr "Molimo provjerite je li telefonski broj dodijeljen pozivu u tijeku"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_probability
@@ -705,29 +673,28 @@ msgstr "Proizvodnja"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:63
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:71
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:67
 #, python-format
 msgid "Refresh the Panel"
-msgstr ""
+msgstr "Osvježi ploču"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
 msgid "Remove from Call Queue"
-msgstr ""
+msgstr "Ukloni iz reda čekanja poziva"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:45
 #, python-format
 msgid "Remove from the queue"
-msgstr ""
+msgstr "Ukloni s čekanja"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:99
 #, python-format
-msgid "Reschedule Call"
+msgid "Reschedule"
 msgstr ""
 
 #. module: crm_voip
@@ -743,14 +710,14 @@ msgstr "Odgovoran"
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_team_id
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
-msgid "Sales Team"
-msgstr "Prodajni tim"
+msgid "Sales Channel"
+msgstr ""
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_report_team_id
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_team_id
-msgid "Sales team to which Case belongs to."
-msgstr "Prodajni tim kojem slučaj pripada."
+msgid "Sales channel to which Case belongs to."
+msgstr ""
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -765,12 +732,12 @@ msgstr "Spremi"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Save and Open the Opportunity"
-msgstr ""
+msgstr "Spremi i otvori priliku"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_reschedule_option
 msgid "Schedule A New Call"
-msgstr ""
+msgstr "Zakaži novi poziv"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
@@ -785,14 +752,14 @@ msgstr "Zakaži drugi poziv"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
 msgid "Schedule a Call"
-msgstr ""
+msgstr "Zakaži poziv"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:139
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:158
 #, python-format
 msgid "Scheduled Date:"
-msgstr ""
+msgstr "Planirani datum"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -801,10 +768,10 @@ msgstr "Traži"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:64
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:66
 #, python-format
 msgid "Search Phone Calls..."
-msgstr ""
+msgstr "Pretraži pozive..."
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
@@ -813,10 +780,10 @@ msgstr "Traži telefonske pozive"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:100
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:104
 #, python-format
-msgid "Send Email"
-msgstr "Pošalji e-mail"
+msgid "Send mail"
+msgstr "Pošalji mail"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_sequence
@@ -826,25 +793,25 @@ msgstr "Sekvenca"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_show_duration
 msgid "Show Duration"
-msgstr ""
+msgstr "Prikaži trajanje"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_reschedule_date
 msgid "Specific Date"
-msgstr ""
+msgstr "Poseban datum"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:866
+#: code:addons/crm_voip/static/src/js/crm_voip.js:885
 #, python-format
 msgid "Start Calling"
-msgstr ""
+msgstr "Započni poziv"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_start_time
 msgid "Start time"
-msgstr ""
+msgstr "Započni vrijeve"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_state
@@ -855,34 +822,34 @@ msgstr "Status"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:93
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:83
 #, python-format
-msgid "Stop Automatic Call"
-msgstr ""
+msgid "Stop"
+msgstr "Kraj"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_pbx_ip
 msgid "The IP adress of your PBX Server"
-msgstr ""
+msgstr "IP adresa Vašeg PBX Servera"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_wsServer
 msgid "The URL of your WebSocket"
-msgstr ""
+msgstr "URL Vašeg WebSocketa"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:422
+#: code:addons/crm_voip/static/src/js/crm_voip.js:436
 #, python-format
 msgid "The customer is temporary unavailable. Please try later."
-msgstr ""
+msgstr "Kupac je trenutno nedostupan. Molimo pokušajte kasnije."
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:535
+#: code:addons/crm_voip/static/src/js/crm_voip.js:549
 #, python-format
 msgid "The phonecall has no number"
-msgstr ""
+msgstr "Poziv nema broja."
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_state
@@ -891,6 +858,9 @@ msgid ""
 "When the call is over, the status is set to Held.\n"
 "If the call is not applicable anymore, the status can be set to Cancelled."
 msgstr ""
+"Status je postavljen na To Do kad se kreira slučaj.\n"
+"Kad je poziv završen, status je postavljen na Čekanje.\n"
+"Ako se poziv više ne može primijeniti, može se postaviti status Otkazano."
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
@@ -901,7 +871,7 @@ msgstr "Za napraviti"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.crm_phonecall_tree_view
 msgid "To Opportunity"
-msgstr ""
+msgstr "Za priliku"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -910,7 +880,7 @@ msgstr "Za obaviti"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:86
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:76
 #, python-format
 msgid "Toggle Dropdown"
 msgstr "Prebaci padajući"
@@ -922,14 +892,14 @@ msgstr "Sutra"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:95
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:89
 #, python-format
 msgid "Transfer"
 msgstr "Prijenos"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_choice
-msgid "Transfer choice"
+msgid "Transfer Choice"
 msgstr ""
 
 #. module: crm_voip
@@ -939,15 +909,10 @@ msgstr "Nedodjeljen"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/js/crm_voip.js:31
+#: code:addons/crm_voip/static/src/js/crm_voip.js:40
 #, python-format
 msgid "Unknown"
 msgstr "Nepoznato"
-
-#. module: crm_voip
-#: model:ir.ui.view,arch_db:crm_voip.view_voip_config
-msgid "VOIP Configuration"
-msgstr "VOIP postavke"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_transfer_wizard.py:34
@@ -958,7 +923,7 @@ msgstr "Upozorenje"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_wsServer
 msgid "WebSocket"
-msgstr ""
+msgstr "WebSocket"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_transfer_wizard.py:35
@@ -967,10 +932,11 @@ msgid ""
 "Wrong configuration for the call. There is no external phone number "
 "configured"
 msgstr ""
+"Kriva konfiguracija za poziv. Vanjski telefonski broj nije konfiguriran"
 
 #. module: crm_voip
 #. openerp-web
-#: code:addons/crm_voip/static/src/xml/crm_voip.xml:166
+#: code:addons/crm_voip/static/src/xml/crm_voip.xml:185
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 #, python-format
 msgid "at"
@@ -997,20 +963,9 @@ msgid "crm.schedule_phonecall"
 msgstr "crm.schedule_phonecall"
 
 #. module: crm_voip
-#: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
-msgid "e.g. Discuss proposal"
-msgstr "npr. Raspraviti o prijedlogu"
-
-#. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_opportunity_id
 msgid "opportunity"
-msgstr ""
-
-#. module: crm_voip
-#: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
-#: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
-msgid "or"
-msgstr "ili"
+msgstr "prilika"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_sale_config_settings
@@ -1020,24 +975,24 @@ msgstr "sale.config.settings"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
 msgid "transfer Option"
-msgstr ""
+msgstr "Mogućnost prijenosa"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_number
 msgid "transfer To"
-msgstr ""
+msgstr "prijenos u"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
 msgid "transfer the Call"
-msgstr ""
+msgstr "prijenos poziva"
 
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to another External Phone"
-msgstr ""
+msgstr "prijenos na drugi vanjski telefon"
 
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to your external phone"
-msgstr ""
+msgstr "Prijenos na Vaš vanjski telefon"

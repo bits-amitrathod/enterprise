@@ -200,3 +200,19 @@ class res_partner(models.Model):
                                              track_visibility="onchange", copy=False, company_dependent=True)
     payment_note = fields.Text('Customer Payment Promise', help="Payment Note", track_visibility="onchange", copy=False, company_dependent=True)
 
+    @api.multi
+    def open_action_followup(self):
+        self.ensure_one()
+        partners_data = self.get_partners_in_need_of_action_and_update()
+        ctx = self.env.context.copy()
+        ctx.update({
+            'model': 'account.followup.report', 
+            'lang': self.lang,
+            'followup_line_id': partners_data.get(self.id) and partners_data[self.id][0] or False,
+        })
+        return {
+                'type': 'ir.actions.client',
+                'tag': 'account_report_followup',
+                'context': ctx,
+                'options': {'partner_id': self.id},
+            }

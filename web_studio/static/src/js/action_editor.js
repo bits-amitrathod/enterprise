@@ -38,9 +38,9 @@ var ActionEditor = Widget.extend({
                 active: view_type === 'search' || _.contains(self.active_view_types, view_type),  // search is always active
                 default_view: is_default_view,
                 type: view_type,
-                can_default: view_type !== 'search' || false,
+                can_default: !_.contains(['form', 'search'], view_type),
                 can_set_another: true,
-                can_be_disabled: view_type !== 'search' || false,
+                can_be_disabled: view_type !== 'search',
             });
             if (_.contains(['form', 'search'], view_type)) {
                 view.appendTo(self.$('.o_web_studio_view_category[name="general"]'));

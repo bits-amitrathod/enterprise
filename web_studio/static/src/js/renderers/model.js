@@ -729,7 +729,7 @@ var Model = Class.extend({
         if (name_get_ids.length) {
             var field = element.fields[name];
             return this.perform_model_rpc(field.relation, 'name_get', [name_get_ids], {
-                context: this.get_context(field.__attrs.context),
+                context: this.get_context(),
             }).then(function(name_gets) {
                 element.relational_data[name] = element.relational_data[name].concat(name_gets);
             });
