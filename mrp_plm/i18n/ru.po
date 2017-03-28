@@ -3,27 +3,27 @@
 # * mrp_plm
 # 
 # Translators:
-# KingOPl Slav <87slava13@gmail.com>, 2016
-# Максим Дронь <dronmax@gmail.com>, 2016
-# Masha Koc <mariya.kos.ua@gmail.com>, 2016
-# Sergey Vilizhanin <sv@grimmette.ru>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Max Belyanin <maxbelyanin@gmail.com>, 2016
-# Viktor Pogrebniak <vp@aifil.ru>, 2016
-# Denis Trepalin <zekarious@gmail.com>, 2016
-# Sergey <naviserg1@gmail.com>, 2016
-# Alex Puchkov <ap@alteco.co>, 2016
-# Danil Bochevkin <danil.borchevkin@gmail.com>, 2016
-# Amaro Vita <vita.amaro@gmail.com>, 2016
-# Русский «kolobok2048» Ивашка <kolobok2048@gmail.com>, 2016
-# Gennady Marchenko <gennadym@gmail.com>, 2016
+# Максим Дронь <dronmax@gmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Sergey Vilizhanin <sv@grimmette.ru>, 2017
+# Viktor Pogrebniak <vp@aifil.ru>, 2017
+# Masha Koc <mariya.kos.ua@gmail.com>, 2017
+# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Max Belyanin <maxbelyanin@gmail.com>, 2017
+# Denis Trepalin <zekarious@gmail.com>, 2017
+# Sergey <naviserg1@gmail.com>, 2017
+# Gennady Marchenko <gennadym@gmail.com>, 2017
+# Amaro Vita <vita.amaro@gmail.com>, 2017
+# Русский «kolobok2048» Ивашка <kolobok2048@gmail.com>, 2017
+# Alex Puchkov <ap@alteco.co>, 2017
+# KingOPl Slav <87slava13@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Gennady Marchenko <gennadym@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: KingOPl Slav <87slava13@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,6 +32,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_count
 msgid "# Attachments"
@@ -60,7 +61,7 @@ msgstr "и "
 #: code:addons/mrp_plm/static/src/xml/mrp_plm_templates.xml:8
 #, python-format
 msgid "&times;"
-msgstr "&times;"
+msgstr "&раз;"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
@@ -68,7 +69,18 @@ msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr "<i class=\"fa fa-envelope-o\"/>и "
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:53
+#: code:addons/mrp_plm/models/mrp_eco.py:517
+#, python-format
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                        Click to upload files to your ECO, that will be applied to the product later\n"
+"                    </p><p>\n"
+"                        Use this feature to store any files, like drawings or specifications.\n"
+"                    </p>"
+msgstr ""
+
+#. module: mrp_plm
+#: code:addons/mrp_plm/models/product.py:54
 #, python-format
 msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
@@ -91,7 +103,7 @@ msgstr "<span>Ведомость материалов</span><br/>"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
 msgid "<span>New</span>"
-msgstr "<span>Создать</span>"
+msgstr "<span>Новый</span>"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -111,6 +123,11 @@ msgid ""
 msgstr ""
 "Словарь Python, который будет использован для получения значений по "
 "умолчанию при создании записей для этого псевдонима."
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_active
+msgid "Active"
+msgstr "Активно"
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -145,6 +162,7 @@ msgstr "Модель пвсевдонима"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
 msgid "All"
 msgstr "Все"
 
@@ -179,7 +197,7 @@ msgid "Approval Roles"
 msgstr "Роли одобрения"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9760
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9788
 msgid "Approval Stage"
 msgstr "Этапы одобрения"
 
@@ -217,6 +235,11 @@ msgid "Approves, but the approval is optional"
 msgstr "Одобрения (не обязательно)"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
+msgid "Archived"
+msgstr "Архивировано"
+
+#. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
 msgstr "Как можно быстрее"
@@ -227,10 +250,12 @@ msgid "At Date"
 msgstr "На дату"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:45
+#: code:addons/mrp_plm/models/mrp_eco.py:509
+#: code:addons/mrp_plm/models/product.py:46
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_attachment_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_attachment_ids
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #, python-format
 msgid "Attachments"
@@ -239,7 +264,7 @@ msgstr "Вложения"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
 msgid "Bill of Material"
-msgstr "Ведомость материала"
+msgstr "Ведомость материалов"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_bom_action_kanban
@@ -341,7 +366,7 @@ msgstr "Компания"
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_configuration
 msgid "Configuration"
-msgstr "Настройки"
+msgstr "Настройка"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -377,7 +402,7 @@ msgstr "Создать извещение об изменении"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_create_uid
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_create_uid
 msgid "Created by"
-msgstr "Создал"
+msgstr "Создано"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_create_date
@@ -389,7 +414,7 @@ msgstr "Создал"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_create_date
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Создан"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_dashboard
@@ -421,7 +446,7 @@ msgstr "Описание изменения и его причин…"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_display_name
 msgid "Display Name"
-msgstr "Отображаемое имя"
+msgstr "Отображаемое Имя"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_displayed_image_id
@@ -431,7 +456,7 @@ msgstr "Отображаемого изображения"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,state:0
 msgid "Done"
-msgstr "Выполнено"
+msgstr "Сделано"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
@@ -533,13 +558,13 @@ msgid "Eco"
 msgstr "ИИ"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:479
+#: code:addons/mrp_plm/models/mrp_eco.py:549
 #, python-format
 msgid "Eco BoM"
 msgstr "ВМ в ИИ"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:491
+#: code:addons/mrp_plm/models/mrp_eco.py:561
 #, python-format
 msgid "Eco Routing"
 msgstr "Техкарта в ИИ"
@@ -605,6 +630,11 @@ msgid "Engineering Changes"
 msgstr "Инженерные изменения"
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_ir_attachment_origin_id
+msgid "Field used in the PLM to handle attachments"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Filters"
 msgstr "Фильтры"
@@ -644,7 +674,7 @@ msgstr "Высокий"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id
 msgid "ID"
-msgstr "ID"
+msgstr "Номер"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_parent_thread_id
@@ -668,13 +698,13 @@ msgstr "Выполняется"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_approved
-msgid "Is approved"
-msgstr "Одобрено"
+msgid "Is Approved"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
-msgid "Is rejected"
-msgstr "Отклонено"
+msgid "Is Rejected"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
@@ -701,7 +731,7 @@ msgstr "Комплект"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag___last_update
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type___last_update
 msgid "Last Modified on"
-msgstr "Последний раз изменено"
+msgstr "Последнее изменение"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_write_uid
@@ -725,7 +755,7 @@ msgstr "Последний раз обновил"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_write_date
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_write_date
 msgid "Last Updated on"
-msgstr "Последний раз обновлено"
+msgstr "Последнее обновление"
 
 #. module: mrp_plm
 #: model:res.groups,name:mrp_plm.group_plm_manager
@@ -759,6 +789,11 @@ msgstr "Теги ИИ для MRP"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "My Activities"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
 msgstr "Мои извещения о изменениях"
 
@@ -772,7 +807,7 @@ msgstr "Мои проверки"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_name
 msgid "Name"
-msgstr "Имя"
+msgstr "Название"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_id
@@ -808,7 +843,7 @@ msgstr "Ещё нет"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_note
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Note"
-msgstr "Примечание"
+msgstr "Заметка"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_old_time_cycle_manual
@@ -825,6 +860,16 @@ msgstr ""
 "Опциональный номер записи к которой все входящие сообщения будут "
 "присоединены, даже если на них не было ответа. Если установлено, это "
 "отключит создание новых записей полностью."
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_origin_id
+msgid "Original Attachment"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Overdue Activities"
+msgstr "Просроченные мероприятия"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -911,6 +956,11 @@ msgid "Product  UoM"
 msgstr "Ед. изм. продукта"
 
 #. module: mrp_plm
+#: selection:mrp.eco,type:0
+msgid "Product Only"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
 msgid "Product Template"
 msgstr "Шаблон продукта"
@@ -918,7 +968,7 @@ msgstr "Шаблон продукта"
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_products
 msgid "Products"
-msgstr "Продукция"
+msgstr "Продукты"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_upd_product_qty
@@ -974,8 +1024,8 @@ msgstr "Рев.:"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_revision_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_revision_ids
-msgid "Revision ids"
-msgstr "ID ревизии"
+msgid "Revision"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_name
@@ -987,7 +1037,7 @@ msgstr "Роль"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_id
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,type:0
 msgid "Routing"
-msgstr "Техн. маршрут"
+msgstr "Техн. карта"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1020,7 +1070,7 @@ msgstr "Поиск"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_sequence
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_sequence
 msgid "Sequence"
-msgstr "Последовательность"
+msgstr "Нумерация"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -1050,6 +1100,11 @@ msgid "Show Apply Change"
 msgstr "Показать принятые изменения"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_image_small
 msgid "Small-sized image"
 msgstr "Маленькое изображение"
@@ -1072,7 +1127,7 @@ msgstr "Кто-то отклонил это изменение"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9817
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_id_9843
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Stage"
 msgstr "Этап"
@@ -1101,7 +1156,7 @@ msgstr "Статус"
 #. module: mrp_plm
 #: sql_constraint:mrp.eco.tag:0
 msgid "Tag name already exists !"
-msgstr "Имя тега уже существует!"
+msgstr "Такой тег уже существует!"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_ids
@@ -1153,8 +1208,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
-"Наименование псевдонима электронной почты, например, «работа», если вы "
-"хотите получать почту для «jobs@example.odoo.com»"
+"Наименование псевдонима электронной почты, наприм 'вакансии' если вы хотите "
+"получать почту для <jobs@example.odoo.com>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -1192,12 +1247,22 @@ msgid "To Do"
 msgstr "Сделать"
 
 #. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Today Activities"
+msgstr "Сегодняшние мероприятия"
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_change_type
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_type_id
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9782
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id_9810
 msgid "Type"
 msgstr "Тип"
+
+#. module: mrp_plm
+#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "Upcoming Activities (7 days)"
+msgstr ""
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1218,6 +1283,8 @@ msgstr "Пользователи"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_version
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product_version
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template_version
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
 msgstr "Версия"
@@ -1258,19 +1325,19 @@ msgid "Work Centers"
 msgstr "Производственные участки"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:460
+#: code:addons/mrp_plm/models/mrp_eco.py:530
 #, python-format
 msgid "Workorder Messages"
 msgstr "Сообщения производственного задания"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:367
+#: code:addons/mrp_plm/models/mrp_eco.py:384
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
 msgstr "Вы не можете сменить этап, т. к. одобрения требуются в процессе."
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:357
+#: code:addons/mrp_plm/models/mrp_eco.py:374
 #, python-format
 msgid "You cannot change the stage, as approvals are still required."
 msgstr "Вы не можете сменить этап, т. к. одобрения ещё требуются."
@@ -1279,6 +1346,11 @@ msgstr "Вы не можете сменить этап, т. к. одобрени
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
 msgstr "напр. Отдел главного инженера"
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.attachment"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval

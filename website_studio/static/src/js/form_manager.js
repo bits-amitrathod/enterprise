@@ -14,6 +14,8 @@ var core = require('web.core');
 var framework = require('web.framework');
 var Widget = require('web.Widget');
 
+var _t = core._t;
+
 var FormManager = Widget.extend({
     template: 'website_studio.FormManager',
 
@@ -89,11 +91,22 @@ var FormManager = Widget.extend({
      */
     _redirectToNewForm: function () {
         var self = this;
-        ajax.jsonRpc('/website_studio/create_form', 'call', {
-            res_model: this.res_model,
-        }).then(function (url) {
-            self._redirectToForm(url);
-        });
+        this.session
+            .user_has_group('website.group_website_designer')
+            .then(function (is_website_designer) {
+                if (is_website_designer) {
+                    ajax.jsonRpc('/website_studio/create_form', 'call', {
+                        res_model: this.res_model,
+                    }).then(function (url) {
+                        self._redirectToForm(url);
+                    });
+                } else {
+                    var msg = _t("Sorry, only users with the following" +
+                        " access level are currently allowed to do that:" +
+                        " 'Website/Editor and Designer'");
+                    self.do_warn(_t("Error"), msg);
+                }
+            });
     },
 
     //--------------------------------------------------------------------------

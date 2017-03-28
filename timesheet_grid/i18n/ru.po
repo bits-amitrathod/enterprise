@@ -3,21 +3,20 @@
 # * timesheet_grid
 # 
 # Translators:
-# KingOPl Slav <87slava13@gmail.com>, 2016
-# Максим Дронь <dronmax@gmail.com>, 2016
-# Sergey Vilizhanin <sv@grimmette.ru>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Viktor Pogrebniak <vp@aifil.ru>, 2016
-# Max Belyanin <maxbelyanin@gmail.com>, 2016
-# Denis Trepalin <zekarious@gmail.com>, 2016
-# Gennady Marchenko <gennadym@gmail.com>, 2016
+# Максим Дронь <dronmax@gmail.com>, 2017
+# Sergey Vilizhanin <sv@grimmette.ru>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Max Belyanin <maxbelyanin@gmail.com>, 2017
+# Denis Trepalin <zekarious@gmail.com>, 2017
+# Gennady Marchenko <gennadym@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Gennady Marchenko <gennadym@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Gennady Marchenko <gennadym@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,16 +31,10 @@ msgid "All Timesheets"
 msgstr "Все табели"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:46
+#: code:addons/timesheet_grid/models/models.py:45
 #, python-format
 msgid "All selected timesheets are already validated"
 msgstr "Все выбранные табели уже проверены"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_allow_timesheets
-#: model:ir.ui.view,arch_db:timesheet_grid.project_view_form_timesheets
-msgid "Allow timesheets"
-msgstr "Разрешить табели"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -51,7 +44,7 @@ msgstr "Позиция аналитики"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 msgid "Cancel"
-msgstr "Отмена"
+msgstr "Отменить"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
@@ -62,13 +55,13 @@ msgstr "Кликните для добавления проектов и зад�
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_create_uid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_create_uid
 msgid "Created by"
-msgstr "Создал"
+msgstr "Создано"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_create_date
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Создан"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
@@ -84,7 +77,7 @@ msgstr "Опишите мероприятие"
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_display_name
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_display_name
 msgid "Display Name"
-msgstr "Отображаемое имя"
+msgstr "Отображаемое Имя"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee
@@ -101,18 +94,18 @@ msgstr "Группировать"
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_id
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_id
 msgid "ID"
-msgstr "ID"
+msgstr "Номер"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable___last_update
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation___last_update
 msgid "Last Modified on"
-msgstr "Последний раз изменено"
+msgstr "Последнее изменение"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_month
 msgid "Last Month"
-msgstr "Прошлый Месяц"
+msgstr "Прошлый месяц"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_write_uid
@@ -124,7 +117,7 @@ msgstr "Последний раз обновил"
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_write_date
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_write_date
 msgid "Last Updated on"
-msgstr "Последний раз обновлено"
+msgstr "Последнее обновление"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
@@ -163,7 +156,6 @@ msgid "Non Validated"
 msgstr "Не проверенно"
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_project_project
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Project"
 msgstr "Проект"
@@ -174,22 +166,12 @@ msgid "Set if this analytic line represents a line of timesheet."
 msgstr "Укажите, если эта строка аналитики представлена строкой в табеле."
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_ids
-msgid "Subscriptions"
-msgstr "Подписки"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_count
-msgid "Susbcription Count"
-msgstr "Кол-во подписок"
-
-#. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Task"
 msgstr "Задача"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:41
+#: code:addons/timesheet_grid/models/models.py:40
 #, python-format
 msgid "There aren't any timesheet to validate"
 msgstr "Нет ни одного табеля для проверки."
@@ -238,20 +220,25 @@ msgstr "Пользователи"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validable_ids
-msgid "Validable ids"
-msgstr "ID проверяемых"
+msgid "Validable"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validate
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_validate
 msgid "Validate"
-msgstr "Утвердить"
+msgstr "Проверить"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 msgid "Validate Timesheets"
 msgstr "Утвердить табели"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
+msgid "Validate To"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
@@ -262,11 +249,6 @@ msgstr "Утвердить табели выбранного сотрудник�
 #: model:ir.model.fields,help:timesheet_grid.field_timesheet_grid_validable_validate
 msgid "Validate this employee's timesheet up to the chosen date"
 msgstr "Утвердить табель сотрудника до указанной даты"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
-msgid "Validate to"
-msgstr "Проверить до"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -280,8 +262,8 @@ msgstr "Проверенная строка"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validation_id
-msgid "Validation id"
-msgstr "ID проверки"
+msgid "Validation"
+msgstr "Проверка"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid

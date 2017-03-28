@@ -31,6 +31,7 @@ class SaleSubscription(models.Model):
     recurring_interval = fields.Integer(string='Repeat Every', help="Repeat every (Days/Week/Month/Year)", related="template_id.recurring_interval", readonly=1)
     recurring_next_date = fields.Date(string='Date of Next Invoice', default=fields.Date.today, help="The next invoice will be created on this date then the period will be extended.")
     recurring_total = fields.Float(compute='_compute_recurring_total', string="Recurring Price", store=True, track_visibility='onchange')
+    recurring_monthly = fields.Float(compute='_compute_recurring_monthly', string="Monthly Recurring Revenue", store=True)
     close_reason_id = fields.Many2one("sale.subscription.close.reason", string="Close Reason", track_visibility='onchange')
     template_id = fields.Many2one('sale.subscription.template', string='Subscription Template', required=True, track_visibility='onchange')
     description = fields.Text()
@@ -67,6 +68,21 @@ class SaleSubscription(models.Model):
     def _compute_recurring_total(self):
         for account in self:
             account.recurring_total = sum(line.price_subtotal for line in account.recurring_invoice_line_ids)
+
+    @api.depends('recurring_total', 'template_id.recurring_interval', 'template_id.recurring_rule_type')
+    def _compute_recurring_monthly(self):
+        # Generally accepted ratios for monthly reporting
+        interval_factor = {
+            'daily': 30.0,
+            'weekly': 30.0 / 7.0,
+            'monthly': 1.0,
+            'yearly': 1.0 / 12.0,
+        }
+        for sub in self:
+            sub.recurring_monthly = (
+                sub.recurring_total * interval_factor[sub.recurring_rule_type]
+                    / sub.recurring_interval
+            )
 
     @api.onchange('partner_id')
     def onchange_partner_id(self):

@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#    * l10n_mx_reports
+#	* l10n_mx_reports
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-26 16:49+0000\n"
-"PO-Revision-Date: 2016-12-26 16:49+0000\n"
+"POT-Creation-Date: 2017-03-09 20:25+0000\n"
+"PO-Revision-Date: 2017-03-09 20:25+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_mx_reports
-#: selection:res.partner,type_of_operation:0
+#: selection:res.partner,l10n_mx_type_of_operation:0
 msgid " 03 - Provision of Professional Services"
 msgstr " 03 - Prestación de Servicios Profesionales"
 
 #. module: l10n_mx_reports
-#: selection:res.partner,type_of_operation:0
+#: selection:res.partner,l10n_mx_type_of_operation:0
 msgid " 06 - Renting of buildings"
 msgstr " 06 - Arrendamiento de inmuebles"
 
 #. module: l10n_mx_reports
-#: selection:res.partner,type_of_operation:0
+#: selection:res.partner,l10n_mx_type_of_operation:0
 msgid " 85 - Others"
 msgstr " 85 - Otros"
 
@@ -766,127 +766,9 @@ msgid "899 Otras cuentas de orden"
 msgstr "899 Otras cuentas de orden"
 
 #. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_financial_html_report_context
-#: model:ir.model,name:l10n_mx_reports.model_account_report_context_common
-msgid "A particular context for a financial report"
-msgstr "Un contexto particular de un informe financiero"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_context_diot
-msgid "A particular context for the DIOT report"
-msgstr "A particular context for the DIOT report"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_partner_ledger_context
-msgid "A particular context for the Partner Ledger report"
-msgstr "A particular context for the Partner Ledger report"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_context_aged_payable
-msgid "A particular context for the aged payable"
-msgstr "A particular context for the aged payable"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_context_aged_receivable
-msgid "A particular context for the aged receivable"
-msgstr "A particular context for the aged receivable"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_report_context_bank_rec
-msgid "A particular context for the bank reconciliation report"
-msgstr "Un contexto particular para el informe de conciliación bancaria"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_context_coa
-msgid "A particular context for the chart of account"
-msgstr "Un particular contexto para el gráfico de la cuenta"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_report_context_followup
-msgid "A particular context for the followup report"
-msgstr "Un contexto particular para el informe de seguimiento"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_context_general_ledger
-msgid "A particular context for the general ledger"
-msgstr "Un contexto particular para el libro mayor"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_report_context_tax
-msgid "A particular context for the generic tax report"
-msgstr "Un contexto particular para el reporte de impuestos genérico"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_general_ledger.py:49
-#, python-format
-msgid "Acc. Name"
-msgstr "Acc. Name"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_general_ledger.py:49
-#, python-format
-msgid "Acc. Number"
-msgstr "Acc. Number"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_account_type
-msgid "Account type"
-msgstr "Tipo de cuenta"
-
-#. module: l10n_mx_reports
 #: model:ir.model.fields,help:l10n_mx_reports.field_res_country_demonym
 msgid "Adjective for relationship between a person and a country."
-msgstr "Adjective for relationship between a person and a country."
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_financial_html_report_xml_export
-msgid "All the xml exports available for the financial reports"
-msgstr "Todas las exportaciones xml disponibles para los informes financieros"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_analytic
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_analytic
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_analytic
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_analytic
-msgid "Allow analytic accounting"
-msgstr "Allow analytic accounting"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_multi_company
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_multi_company
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_multi_company
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_multi_company
-msgid "Allow multi-company"
-msgstr "Permitir multi-empresa"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_analytic_account_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_analytic_account_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_analytic_account_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_analytic_account_ids
-msgid "Analytic account ids"
-msgstr "Analytic account ids"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_analytic_tag_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_analytic_tag_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_analytic_tag_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_analytic_tag_ids
-msgid "Analytic tag ids"
-msgstr "Analytic tag ids"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_available_company_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_available_company_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_available_company_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_available_company_ids
-msgid "Available company ids"
-msgstr "IDs compañía disponibles"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_available_journal_ids
-msgid "Available journal ids"
-msgstr "Available journal ids"
+msgstr "Adjetivo para la relación entre una persona y un país."
 
 #. module: l10n_mx_reports
 #: model:ir.actions.client,name:l10n_mx_reports.action_coa
@@ -895,56 +777,16 @@ msgid "COA"
 msgstr "COA"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_company_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_company_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_company_ids
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_company_ids
-msgid "Company ids"
-msgstr "IDs Compañía"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:315
+#: code:addons/l10n_mx_reports/models/account_diot.py:26
 #: model:ir.model,name:l10n_mx_reports.model_res_country
 #, python-format
 msgid "Country"
 msgstr "País"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_create_uid
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_create_uid
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_create_uid
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_create_uid
-msgid "Created by"
-msgstr "Creado por"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_create_date
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_create_date
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_create_date
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_create_date
-msgid "Created on"
-msgstr "Creado el"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_general_ledger.py:50
-#: code:addons/l10n_mx_reports/models/trial_balance.py:49
-#: code:addons/l10n_mx_reports/models/trial_balance.py:52
-#: code:addons/l10n_mx_reports/models/trial_balance.py:54
-#, python-format
-msgid "Credit"
-msgstr "Credit"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/tests/test_tax_effectively_paid.py:29
-#, python-format
-msgid "Customer Invoices"
-msgstr "Facturas de cliente"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:280
+#: code:addons/l10n_mx_reports/models/account_diot.py:267
 #: model:ir.actions.client,name:l10n_mx_reports.action_account_report_diot
 #: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_diot
-#: model:ir.ui.view,arch_db:l10n_mx_reports.view_move_line_form_inherit_l10n_mx_base
 #, python-format
 msgid "DIOT"
 msgstr "DIOT"
@@ -955,241 +797,137 @@ msgid "DIOT Information"
 msgstr "Información DIOT"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_general_ledger.py:49
-#, python-format
-msgid "Date"
-msgstr "Date"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_general_ledger.py:50
-#: code:addons/l10n_mx_reports/models/trial_balance.py:49
-#: code:addons/l10n_mx_reports/models/trial_balance.py:52
-#: code:addons/l10n_mx_reports/models/trial_balance.py:54
-#, python-format
-msgid "Debit"
-msgstr "Debit"
-
-#. module: l10n_mx_reports
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_country_demonym
 msgid "Demonym"
-msgstr "Demonym"
+msgstr "Demónimo"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_coa_report_display_name
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_display_name
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_display_name
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_display_name
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_display_name
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_diot_display_name
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_general_ledger_report_display_name
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_trial_balance_report_display_name
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_coa_report_display_name
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_trial_report_display_name
 msgid "Display Name"
 msgstr "Nombre a mostrar"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/coa.py:154
-#, python-format
-msgid "Electronic Accounting COA"
-msgstr "Electronic Accounting COA"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/trial_balance.py:54
-#, python-format
-msgid "End Balance"
-msgstr "End Balance"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:317
+#: code:addons/l10n_mx_reports/models/account_diot.py:31
 #, python-format
 msgid "Exempt"
-msgstr "Exempt"
+msgstr "Exento"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_footnotes
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_footnotes
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_footnotes
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_footnotes
-msgid "Footnotes"
-msgstr "Pies de Páginas"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_general_ledger.py:135
-#: model:ir.actions.client,name:l10n_mx_reports.action_general_ledger
-#: model:ir.ui.menu,name:l10n_mx_reports.menu_acountinge_general_ledger
+#: code:addons/l10n_mx_reports/models/trial_balance.py:41
 #, python-format
-msgid "General Ledger"
-msgstr "Contabilidad General"
+msgid "Export For SAT (XML)"
+msgstr "Exportar para SAT (XML)"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_coa_report_id
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_id
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_id
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_id
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_id
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_diot_id
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_general_ledger_report_id
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_trial_balance_report_id
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_coa_report_id
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_trial_report_id
 msgid "ID"
 msgstr "ID"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:316
+#: code:addons/l10n_mx_reports/models/account_diot.py:29
 #, python-format
 msgid "Importation 16%"
-msgstr "Importation 16%"
+msgstr "Importación 16%"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,help:l10n_mx_reports.field_res_partner_type_of_operation
+#: model:ir.model.fields,help:l10n_mx_reports.field_res_partner_l10n_mx_type_of_operation
 msgid "Indicate the operations type that makes this supplier. Is the second column in DIOT report"
-msgstr "Indicate the operations type that makes this supplier. Is the second column in DIOT report"
+msgstr "Indique el tipo de operaciones que realiza a este proveedor. Es la segunda columna del reporte de DIOT"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,help:l10n_mx_reports.field_res_partner_type_of_third
+#: model:ir.model.fields,help:l10n_mx_reports.field_res_partner_l10n_mx_type_of_third
 msgid "Indicate the type of third that is the supplier. Is the first column in DIOT report."
-msgstr "Indicate the type of third that is the supplier. Is the first column in DIOT report."
+msgstr "Indica el tipo de tercero que es el proveedor. Es la primera columna del reporte de DIOT."
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/trial_balance.py:46
-#, python-format
-msgid "Initial Balance"
-msgstr "Initial Balance"
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner_l10n_mx_nationality
+msgid "L10N Mx Nationality"
+msgstr "Nacionalidad"
 
 #. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_move_line
-msgid "Journal Item"
-msgstr "Apunte contable"
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner_l10n_mx_type_of_operation
+msgid "L10N Mx Type Of Operation"
+msgstr "Tipo de operación"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_journal_ids
-msgid "Journal ids"
-msgstr "Journal ids"
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner_l10n_mx_type_of_third
+msgid "L10N Mx Type Of Third"
+msgstr "Tipo de Tercero"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_coa_report___last_update
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa___last_update
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot___last_update
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger___last_update
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance___last_update
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_diot___last_update
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_general_ledger_report___last_update
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_trial_balance_report___last_update
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_coa_report___last_update
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_trial_report___last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_write_uid
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_write_uid
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_write_uid
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_write_uid
-msgid "Last Updated by"
-msgstr "Última actualización por"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_write_date
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_write_date
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_write_date
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_write_date
-msgid "Last Updated on"
-msgstr "Última actualización el"
+#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_coa_report
+msgid "Mexican Chart of Account Report"
+msgstr "Reporte de la Tabla de Cuentas Mexicana"
 
 #. module: l10n_mx_reports
 #: model:ir.ui.menu,name:l10n_mx_reports.account_reports_legal_mexican_statements_menu
 msgid "Mexican Statements"
-msgstr "Mexican Statements"
+msgstr "Declaraciones de México"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/coa.py:199
-#, python-format
-msgid "Misconfigured Accounts"
-msgstr "Misconfigured Accounts"
+#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_trial_report
+msgid "Mexican Trial Balance Report"
+msgstr "Reporte del Balance de Comprobación de México"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:423
-#, python-format
-msgid "Movements to corroborate the amounts of taxes"
-msgstr "Movements to corroborate the amounts of taxes"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:316
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner_nationality
+#: code:addons/l10n_mx_reports/models/account_diot.py:27
 #, python-format
 msgid "Nationality"
-msgstr "Nationality"
+msgstr "Nacionalidad"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,help:l10n_mx_reports.field_res_partner_nationality
+#: model:ir.model.fields,help:l10n_mx_reports.field_res_partner_l10n_mx_nationality
 msgid "Nationality based in the supplier country. Is the seventh column in DIOT report"
-msgstr "Nationality based in the supplier country. Is the seventh column in DIOT report"
+msgstr "Nacionalidad basada en el país proveedor. Es la séptima columna en el informe DIOT"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/coa.py:44
+#: code:addons/l10n_mx_reports/models/coa.py:36
 #, python-format
 msgid "Nature"
-msgstr "Nature"
+msgstr "Naturaleza"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:317
+#: code:addons/l10n_mx_reports/models/account_diot.py:30
 #, python-format
 msgid "Paid 0%"
-msgstr "Paid 0%"
+msgstr "Pagado 0%"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:316
+#: code:addons/l10n_mx_reports/models/account_diot.py:28
 #, python-format
 msgid "Paid 16%"
-msgstr "Paid 16%"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_account_partial_reconcile
-msgid "Partial Reconcile"
-msgstr "Conciliación parcial"
+msgstr "Pagado 16%"
 
 #. module: l10n_mx_reports
 #: model:ir.model,name:l10n_mx_reports.model_res_partner
 msgid "Partner"
-msgstr "Partner"
+msgstr "Empresa"
 
 #. module: l10n_mx_reports
-#: selection:l10n_mx.account.context.diot,account_type:0
-msgid "Payable Accounts"
-msgstr "Cuentas por Pagar"
-
-#. module: l10n_mx_reports
-#: selection:l10n_mx.account.context.diot,account_type:0
-msgid "Receivable Accounts"
-msgstr "Cuentas por Cobrar"
-
-#. module: l10n_mx_reports
-#: selection:l10n_mx.account.context.diot,account_type:0
-msgid "Receivable and Payable Accounts"
-msgstr "Cuentas por Cobrar y por Pagar"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,help:l10n_mx_reports.field_l10n_mx_account_context_coa_unfolded_financial
-#: model:ir.model.fields,help:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_unfolded_trial
-msgid "Save the unfolded lines."
-msgstr "Save the unfolded lines."
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:408
+#: code:addons/l10n_mx_reports/models/account_diot.py:271
 #, python-format
-msgid "Suppliers without information necessary for DIOT"
-msgstr "Suppliers without information necessary for DIOT"
+msgid "Print DIOT (TXT)"
+msgstr "Imprimir DIOT (TXT)"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:268
+#: code:addons/l10n_mx_reports/models/account_diot.py:256
 #, python-format
 msgid "There are more than 80 items in this list, click here to see all of them"
-msgstr "There are more than 80 items in this list, click here to see all of them"
+msgstr "Hay más de 80 artículos en esta lista, haga clic aquí para verlos todos"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/coa.py:104
-#, python-format
-msgid "This XML could not be generated because some accounts are not correctly configured and can not be added in this report. This accounts are found in the section \"Misconfigured Accounts\", please configure your tag and try generate the report XML again."
-msgstr "This XML could not be generated because some accounts are not correctly configured and can not be added in this report. This accounts are found in the section \"Misconfigured Accounts\", please configure your tag and try generate the report XML again."
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:258
+#: code:addons/l10n_mx_reports/models/account_diot.py:248
 #, python-format
 msgid "Total"
 msgstr "Total"
@@ -1197,86 +935,35 @@ msgstr "Total"
 #. module: l10n_mx_reports
 #: model:ir.ui.menu,name:l10n_mx_reports.menu_action_account_report_diot
 msgid "Transactions with third parties [ DIOT ]"
-msgstr "Transactions with third parties [ DIOT ]"
+msgstr "Transacciones con terceras partes [ DIOT ]"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/trial_balance.py:151
 #: model:ir.actions.client,name:l10n_mx_reports.action_trial_balance
 #: model:ir.ui.menu,name:l10n_mx_reports.menu_trial_balance
-#, python-format
 msgid "Trial Balance"
 msgstr "Balanza de Comprobación"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:315
+#: code:addons/l10n_mx_reports/models/account_diot.py:23
 #, python-format
 msgid "Type of Operation"
-msgstr "Type of Operation"
+msgstr "Tipo de Operación"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:315
+#: code:addons/l10n_mx_reports/models/account_diot.py:24
 #, python-format
 msgid "Type of Third"
-msgstr "Type of Third"
+msgstr "Tipo de Tercero"
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner_type_of_operation
-msgid "Type of operation"
-msgstr "Type of operation"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner_type_of_third
-msgid "Type of third"
-msgstr "Type of third"
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_coa_unfolded_financial
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_diot_unfolded_partners
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_general_ledger_unfolded_moves
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_account_context_trial_balance_unfolded_trial
-msgid "Unfolded lines"
-msgstr "Líneas desplegadas"
-
-#. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:315
+#: code:addons/l10n_mx_reports/models/account_diot.py:25
 #, python-format
 msgid "VAT"
-msgstr "VAT"
+msgstr "RFC"
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:317
+#: code:addons/l10n_mx_reports/models/account_diot.py:32
 #, python-format
 msgid "Withheld"
-msgstr "Withheld"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_coa_report
-msgid "l10n_mx.account.coa.report"
-msgstr "l10n_mx.account.coa.report"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_context_coa
-msgid "l10n_mx.account.context.coa"
-msgstr "l10n_mx.account.context.coa"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_context_general_ledger
-msgid "l10n_mx.account.context.general.ledger"
-msgstr "l10n_mx.account.context.general.ledger"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_context_trial_balance
-msgid "l10n_mx.account.context.trial.balance"
-msgstr "l10n_mx.account.context.trial.balance"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_general_ledger_report
-msgid "l10n_mx.account.general.ledger.report"
-msgstr "l10n_mx.account.general.ledger.report"
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_account_trial_balance_report
-msgid "l10n_mx.account.trial.balance.report"
-msgstr "l10n_mx.account.trial.balance.report"
-
+msgstr "Retenido"
 

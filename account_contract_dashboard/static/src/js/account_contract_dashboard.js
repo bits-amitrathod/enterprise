@@ -1128,7 +1128,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
         this.cohort_period = 'month';
         this.cohort_periods = [['day', _t('By Day')], ['week', _t('By Week')], ['month', _t('By Month')], ['year', _t('By Year')]];
         this.cohort_interest = 'number';
-        this.cohort_interests = [['number', _t('Number of Contracts')], ['value', _t('Value of Contracts')]];
+        this.cohort_interests = [['number', _t('Number of Contracts')], ['value', _t('Recurring Revenue (MRR)')]];
         this.filters = {
             'template_ids': [],
             'tag_ids': [],
@@ -1423,7 +1423,7 @@ function load_chart(div_to_display, key_name, result, show_legend, show_demo) {
 
         var tick_values = getPrunedTickValues(data_chart[0].values, 10);
         chart.xAxis
-            .tickFormat(function(d) { return d3.time.format("%m/%d/%y")(new Date(d)); })
+            .tickFormat(function(d) { return d3.time.format(core._t.database.parameters.date_format)(new Date(d)); })
             .tickValues(_.map(tick_values, function(d) { return getDate(d); }))
             .rotateLabels(-30);
 

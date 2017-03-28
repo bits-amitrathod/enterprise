@@ -228,7 +228,6 @@ var FormEditor =  FormRenderer.extend({
         var $result = this._super.apply(this, arguments);
         $result.attr('data-node-id', this.node_id++);
         $result.click(function(event) {
-            event.stopPropagation();
             event.preventDefault();
             if (!self.silent) {
                 self.selected_node_id = $result.data('node-id');

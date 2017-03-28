@@ -3,18 +3,20 @@
 # * print
 # 
 # Translators:
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2016
-# Karolina Tonković <karolina.tonkovic@storm.hr>, 2016
-# Bole <bole@dajmi5.com>, 2016
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
+# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Bole <bole@dajmi5.com>, 2017
+# Filip Cuk <filipcuk2@gmail.com>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Tina Milas <tina@uvid.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:33+0000\n"
+"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"Last-Translator: Tina Milas <tina@uvid.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +58,7 @@ msgstr ""
 "Molim vas obnovite kreditni račun kako biste mogli poslati dokumente. "
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:63
+#: code:addons/print/wizard/print_order_wizard.py:64
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
 msgstr "Najmanje jedan dokument koji želite poslati sadrži pogrešku."
@@ -134,11 +136,6 @@ msgstr "Potražuje"
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_currency_id
 msgid "Currency"
 msgstr "Valuta"
-
-#. module: print
-#: model:ir.model.fields,field_description:print.field_base_config_settings_default_print_provider
-msgid "Default Print Provider"
-msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_display_name
@@ -353,6 +350,7 @@ msgstr ""
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
 msgid "Print Order"
 msgstr "Ispis naloga"
 
@@ -362,6 +360,7 @@ msgid "Print Order Lines"
 msgstr ""
 
 #. module: print
+#: model:ir.model,name:print.model_print_order_wizard
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
 msgid "Print Order Wizard"
 msgstr "Čarobnjak za ispis naloga"
@@ -383,8 +382,10 @@ msgid "Print Provider"
 msgstr "Davatelj ispisa"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
-msgid "Print order ids"
+#: model:ir.actions.server,name:print.ir_cron_print_scheduler_action_ir_actions_server
+#: model:ir.cron,cron_name:print.ir_cron_print_scheduler_action
+#: model:ir.cron,name:print.ir_cron_print_scheduler_action
+msgid "Print: queue manager"
 msgstr ""
 
 #. module: print
@@ -539,10 +540,10 @@ msgid ""
 msgstr ""
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:61
+#: code:addons/print/wizard/print_order_wizard.py:62
 #, python-format
 msgid "The document you want to send contains the following mistake : %s"
-msgstr ""
+msgstr "Dokument koji želite poslati sadrži ovu pogrešku: %s"
 
 #. module: print
 #: code:addons/print/models/account_invoice.py:20
@@ -570,17 +571,6 @@ msgid "Zip"
 msgstr "Poštanski br."
 
 #. module: print
-#: model:ir.model,name:print.model_base_config_settings
-msgid "base.config.settings"
-msgstr "base.config.settings"
-
-#. module: print
-#: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
-#: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
-msgid "or"
-msgstr "ili"
-
-#. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard
 msgid "print.order.line.wizard"
 msgstr "print.order.line.wizard"
@@ -589,8 +579,3 @@ msgstr "print.order.line.wizard"
 #: model:ir.model,name:print.model_print_order_sendnow_wizard
 msgid "print.order.sendnow.wizard"
 msgstr "print.order.sendnow.wizard"
-
-#. module: print
-#: model:ir.model,name:print.model_print_order_wizard
-msgid "print.order.wizard"
-msgstr "print.order.wizard"

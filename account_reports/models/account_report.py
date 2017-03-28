@@ -561,6 +561,7 @@ class AccountReport(models.AbstractModel):
                     'res_company': self.env.user.company_id,
                 })
             header = self.env['report'].render("report.external_layout", values=rcontext,)
+            header = header.decode('utf-8') # Ensure that headers and footer are correctly encoded
             spec_paperformat_args = {}
             # parse header as new header contains header, body and footer
             try:

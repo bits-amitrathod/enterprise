@@ -36,7 +36,6 @@ class RevenueKPIsDashboard(http.Controller):
         cohort_report = []
         company_currency_id = request.env.user.company_id.currency_id
 
-        subs_fields = ['date_start', 'recurring_total']
         subs_domain = [
             ('state', 'not in', ['draft', 'cancel']),
             ('date_start', '>=', date_start),
@@ -56,7 +55,8 @@ class RevenueKPIsDashboard(http.Controller):
             cohort_date = datetime.strptime(date1, DEFAULT_SERVER_DATE_FORMAT)
 
             if cohort_interest == 'value':
-                starting_value = float(sum([x.currency_id.compute(x.recurring_total, company_currency_id) if x.currency_id else x.recurring_total for x in cohort_subs]))
+                # TODO: value should possibly depend on `cohort_period` rather than be monthly?
+                starting_value = float(sum([x.currency_id.compute(x.recurring_monthly, company_currency_id) if x.currency_id else x.recurring_monthly for x in cohort_subs]))
             else:
                 starting_value = float(len(cohort_subs))
             cohort_line = []
@@ -88,7 +88,8 @@ class RevenueKPIsDashboard(http.Controller):
                 churned_subs = [x for x in cohort_subs if x.date and datetime.strptime(x.date, DEFAULT_SERVER_DATE_FORMAT).strftime(DISPLAY_FORMATS[cohort_period]) == significative_period]
 
                 if cohort_interest == 'value':
-                    churned_value = sum([x.currency_id.compute(x.recurring_total, company_currency_id) if x.currency_id else x.recurring_total for x in churned_subs])
+                    # TODO: value should possibly depend on `cohort_period` rather than be monthly?
+                    churned_value = sum([x.currency_id.compute(x.recurring_monthly, company_currency_id) if x.currency_id else x.recurring_monthly for x in churned_subs])
                 else:
                     churned_value = len(churned_subs)
 

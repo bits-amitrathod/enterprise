@@ -8,11 +8,11 @@ var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
 var Widget = require('web.Widget');
 
+var customize = require('web_studio.customize');
 var FieldManagerMixin = require('web_studio.FieldManagerMixin');
 
-var customize = require('web_studio.customize');
-
 var _t = core._t;
+var Many2One = relational_fields.FieldMany2One;
 
 var EditMenu = Widget.extend({
     template: 'web_studio.EditMenu',
@@ -156,18 +156,56 @@ var EditMenuDialog = Dialog.extend({
     },
 });
 
+// The Many2One field is extended to catch when a model is quick created
+// to avoid letting the user click on the save menu button
+// before the model is created.
+var EditMenuMany2One = Many2One.extend({
+    custom_events: _.extend({}, Many2One.prototype.custom_events, {
+        name_create: function (event) {
+            // Don't stop the event propagation
+            event.stopped = false;
+            var def = $.Deferred();
+            // Override the on_success and on_fail methods to add a deferred
+            // to trigger up when the creation start and end.
+            var on_success = event.data.on_success;
+            event.data.on_success = function (result) {
+                on_success(result);
+                def.resolve();
+            };
+            var on_fail = event.data.on_fail || function () {};
+            event.data.on_fail = function () {
+                on_fail();
+                def.resolve();
+            };
+            this.trigger_up('edit_menu_disable_save');
+            def.then(this.trigger_up.bind(this, 'edit_menu_enable_save'));
+        },
+    }),
+});
 var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
     template: 'web_studio.EditMenu_new',
+    custom_events: _.extend({}, Dialog.prototype.custom_events, FieldManagerMixin.custom_events, {
+        edit_menu_disable_save: function () {
+            this.$footer.find('.confirm_button').attr("disabled", "disabled");
+        },
+        edit_menu_enable_save: function () {
+            this.$footer.find('.confirm_button').removeAttr("disabled");
+        },
+    }),
 
     init: function(parent, parent_id) {
         this.parent_id = parent_id;
         var options = {
             title: _t('Create a new Menu'),
             size: 'small',
-            buttons: [
-                {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.save, this)},
-                {text: _t("Cancel"), close: true},
-            ],
+            buttons: [{
+                text: _t("Confirm"),
+                classes: 'btn-primary confirm_button',
+                click: _.bind(this.save, this),
+            }, {
+                text: _t("Cancel"),
+                close: true,
+            }],
         };
         FieldManagerMixin.init.call(this);
         this._super(parent, options);
@@ -191,8 +229,7 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
             var options = {
                 mode: 'edit',
             };
-            var Many2One = relational_fields.FieldMany2One;
-            self.many2one = new Many2One(self, 'model', self.datamodel.get(record_id), options);
+            self.many2one = new EditMenuMany2One(self, 'model', self.datamodel.get(record_id), options);
             // TODO: temporary hack, will be fixed with the new views
             self.many2one.node_options.no_create_edit = !core.debug;
             self.many2one.appendTo(self.$('.js_model'));

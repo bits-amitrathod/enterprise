@@ -6,9 +6,18 @@ from odoo import api, fields, models
 class FcmResConfig(models.TransientModel):
     _inherit = 'base.config.settings'
 
-    default_mail_push_notification = fields.Boolean('Notifications', default_model='base.config.settings')
+    default_mail_push_notification = fields.Boolean('Notifications')
     fcm_api_key = fields.Char('Server API Key')
     fcm_project_id = fields.Char('Sender ID')
+
+    @api.model
+    def get_default_mail_push_notification(self, fields):
+        default_mail_push_notification = self.env['ir.config_parameter'].sudo().get_param('mail_push.default_mail_push_notification', default=False)
+        return dict(default_mail_push_notification=default_mail_push_notification)
+
+    @api.multi
+    def set_default_mail_push_notification(self):
+        self.env['ir.config_parameter'].sudo().set_param("mail_push.default_mail_push_notification", self.default_mail_push_notification)
 
     @api.multi
     def set_fcm_api_key(self):

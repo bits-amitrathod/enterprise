@@ -36,6 +36,13 @@ return ListRenderer.extend({
                     var node = _.find(self.columns, function (column) {
                         return column.attrs.name === field_name;
                     });
+                    // When there is no column in the list view, the only possible hook is inside <tree>
+                    if (!self.columns.length) {
+                        node = {
+                           tag: 'tree',
+                       };
+                       position = 'inside';
+                    }
                     self.selected_node_id = false;
 
                     var values = {
@@ -213,14 +220,6 @@ return ListRenderer.extend({
             if ($selected_node) {
                 $selected_node.click();
             }
-        }
-
-        // When there is no column in the list view, the only possible hook is inside <tree>
-        if (!this.columns.length) {
-            node = {
-               tag: 'tree',
-           };
-           position = 'inside';
         }
     },
 
