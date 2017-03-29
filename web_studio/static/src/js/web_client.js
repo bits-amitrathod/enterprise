@@ -153,6 +153,9 @@ WebClient.include({
         this.studio_mode = mode;
         this.edited_action = action;
         if (action) {
+            defs.push(session.rpc('/web_studio/chatter_allowed', {
+                model: action.action_descr.res_model,
+            }));
             // we are editing an action, not in app creator mode
             if (options.active_view) {
                 action_options.active_view = options.active_view;
@@ -161,11 +164,8 @@ WebClient.include({
                 action_options.active_view = action.get_active_view();
             }
             action_options.action = action.action_descr;
-            defs.push(session.rpc('/web_studio/chatter_allowed', {
-                model: action.action_descr.res_model,
-            }));
         }
-        return $.when(defs).then(function (chatter_allowed) {
+        return $.when.apply($, defs).then(function (chatter_allowed) {
             self.studio_chatter_allowed = chatter_allowed;
             // grep: action_web_studio_app_creator, action_web_studio_main
             return self.do_action('action_web_studio_' + mode, action_options);
@@ -200,7 +200,7 @@ WebClient.include({
                         return $.when();
                     }
                 }
-                return $.when(defs).then(function () {
+                return $.when.apply($, defs).then(function () {
                     bus.trigger('studio_toggled', studio_mode, studio_info, action_descr, active_view);
                 });
             });
