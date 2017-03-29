@@ -126,7 +126,7 @@ var FieldClearbit = FieldChar.extend({
                     },
                 });
             });
-            this.$el.val(this.format_value(result.name)); // update the input's value directly
+            this.$el.val(this._formatValue(result.name)); // update the input's value directly
             this.remove_dropdown();
         }
     },
