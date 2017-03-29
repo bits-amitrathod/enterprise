@@ -22,38 +22,54 @@ var UserAgent = Class.extend(mixins.PropertiesMixin, {
         this.blocked = false;
     },
 
+    /**
+     * return the ua configuration required.
+     *
+     * @private
+     * @param  {Object} result
+     * @return {Object}
+     */
+    _get_ua: function (result) {
+        return {
+            uri: result.login + '@' + result.pbx_ip,
+            wsServers: result.wsServer || null,
+            authorizationUser: result.login,
+            password: result.password,
+            hackIpInContact: true,
+            log: {builtinEnabled: false},
+        };
+    },
+    create_ua: function (result) {
+        if (!(result.login && result.pbx_ip && result.password)) {
+            this.trigger_error(_t('One or more parameter is missing. Please check your configuration.'));
+            return false;
+        }
+        var ua_config = this._get_ua(result);
+        try {
+            var ua = new SIP.UA(ua_config);
+            return ua;
+        } catch (err) {
+            this.trigger_error(_t('The server configuration could be wrong. Please check your configuration.'));
+        }
+    },
+
     //initialisation of the ua object
     init_ua: function(result){
         this.mode = result.mode;
-        if(this.mode == "prod"){
-            var ua_config = {};
-            if(!(result.login && result.pbx_ip && result.password)){
-                this.trigger_error(_t('One or more parameter is missing. Please check your configuration.'));
+        if (this.mode === "prod") {
+            var self = this;
+            this.ua = this.create_ua(result);
+            if (! this.ua) {
                 return;
             }
-            ua_config = {
-                uri: result.login +'@'+result.pbx_ip,
-                wsServers: result.wsServer || null,
-                authorizationUser: result.login,
-                password: result.password,
-                hackIpInContact: true,
-                log: {builtinEnabled: false},
-            };
             this.always_transfer = result.always_transfer;
             this.external_phone = result.external_phone;
             this.ring_number = result.ring_number;
-            try{
-                var self = this;
-                this.ua = new SIP.UA(ua_config);
-                //catch the error if the ws uri is wrong
-                this.ua.transport.ws.onerror = function(e){
-                    self.trigger_error(_t('The websocket uri could be wrong. Please check your configuration.'));
-                };
-            }catch(err){
-                this.trigger_error(_t('The server configuration could be wrong. Please check your configuration.'));
-                return;
-            }
-            this.ua.on('invite', function (invite_session){
+            // catch the error if the ws uri is wrong
+            this.ua.transport.ws.onerror = function () {
+                self.trigger_error(_t('The websocket uri could be wrong. Please check your configuration.'));
+            };
+            this.ua.on('invite', function (invite_session) {
                 var name = invite_session.remoteIdentity.displayName;
                 var number = invite_session.remoteIdentity.uri.user;
                 var content = _t("From ") + name + ' (' + number + ')';
@@ -61,7 +77,7 @@ var UserAgent = Class.extend(mixins.PropertiesMixin, {
                 self.ringbacktone.currentTime = 0;
                 self.ringbacktone.play();
                 self.notification = self.send_notification(title, content);
-                function reject_invite(ev) {
+                function reject_invite () {
                     if(!self.incoming_call){
                         self.ringbacktone.pause();
                         invite_session.reject();
