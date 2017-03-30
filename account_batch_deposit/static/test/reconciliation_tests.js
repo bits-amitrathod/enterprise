@@ -40,7 +40,7 @@ QUnit.module('account', {
 
         var clientAction = new ReconciliationClientAction.StatementAction(null, this.params.options);
         testUtils.addMockEnvironment(clientAction, {
-            'data': this.params.data,
+            data: this.params.data,
         });
         clientAction.appendTo($('#qunit-fixture'));
 

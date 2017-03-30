@@ -20,7 +20,7 @@ BarcodeMainMenu.include({
         mobile.methods.scanBarcode().then(function(response){
             var barcode = response.data;
             if(barcode){
-                self.on_barcode_scanned(barcode);
+                self._onBarcodeScanned(barcode);
                 mobile.methods.vibrate({'duration': 100});
             }else{
                 mobile.methods.showToast({'message':'Please, Scan again !!'});

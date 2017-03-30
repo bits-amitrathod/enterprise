@@ -3,28 +3,13 @@ odoo.define('event_barcode.EventScanView', function (require) {
 
 var core = require('web.core');
 var Widget = require('web.Widget');
-var Session = require('web.session');
-var Notification = require('web.notification').Notification;
-var NotificationManager = require('web.notification').NotificationManager;
-var BarcodeHandlerMixin = require('barcodes.BarcodeHandlerMixin');
 var time = require('web.time');
 
-var QWeb = core.qweb;
 var _t = core._t;
 
-// Success Notification with thumbs-up icon
-var Success = Notification.extend({
-    template: 'event_barcode_success'
-});
-
-var NotificationSuccess = NotificationManager.extend({
-    success: function(title, text, sticky) {
-        return this.display(new Success(this, title, text, sticky));
-    }
-});
 
 // load widget with main barcode scanning View
-var EventScanView = Widget.extend(BarcodeHandlerMixin, {
+var EventScanView = Widget.extend({
     template: 'event_barcode_template',
     events: {
         'keypress #event_barcode': 'on_manual_scan',
@@ -32,30 +17,30 @@ var EventScanView = Widget.extend(BarcodeHandlerMixin, {
         'click .o_event_info': 'open_event_form',
     },
 
-    init: function(parent, action) {
-        BarcodeHandlerMixin.init.call(this, parent, action);
-        this._super.apply(this, arguments);
-        this.action = action;
-        this.parent = parent;
-    },
     willStart: function() {
         var self = this;
         return this._super().then(function() {
-            return Session.rpc('/event_barcode/event', {
-                event_id: self.action.context.active_id
-            }).then(function(result) {
+            return self._rpc({
+                route: '/event_barcode/event',
+                params: {
+                    event_id: self.action.context.active_id
+                }
+            }).then(function (result) {
                 self.data = self.prepare_data(result);
             });
         });
     },
     start: function() {
         var self = this;
-        this.notification_manager = new NotificationSuccess();
-        this.notification_manager.appendTo(self.parent.$el);
+        core.bus.on('barcode_scanned', this, this._onBarcodeScanned);
         this.updateCount(
             self.$('.o_event_reg_attendee'),
             self.data.count
         );
+    },
+    destroy: function () {
+        core.bus.off('barcode_scanned', this, this._onBarcodeScanned);
+        this._super();
     },
     prepare_data: function(result) {
         var start_date = moment(time.auto_str_to_date(result.start_date));
@@ -69,31 +54,28 @@ var EventScanView = Widget.extend(BarcodeHandlerMixin, {
         if (e.which === 13) { // Enter
             var value = $(e.currentTarget).val().trim();
             if(value) {
-                this.on_barcode_scanned(value);
+                this._onBarcodeScanned(value);
                 $(e.currentTarget).val('');
             } else {
                 this.do_warn(_t('Error'), _t('Invalid user input'));
             }
         }
     },
-    on_attach_callback: function() {
-        this.start_listening();
-    },
-    on_detach_callback: function() {
-        this.stop_listening();
-    },
-    on_barcode_scanned: function(barcode) {
+    _onBarcodeScanned: function(barcode) {
         var self = this;
-        Session.rpc('/event_barcode/register_attendee', {
-             barcode: barcode,
-             event_id: self.action.context.active_id
+        this._rpc({
+            route: '/event_barcode/register_attendee',
+            params: {
+                barcode: barcode,
+                event_id: self.action.context.active_id
+            }
         }).then(function(result) {
             if (result.success) {
                 self.updateCount(
                     self.$('.o_event_reg_attendee'),
                     result.count
                 );
-                self.notification_manager.success(result.success);
+                self.do_notify(result.success, false, false, 'o_event_success');
             } else if (result.warning) {
                 self.do_warn(_("Warning"), result.warning);
             }
@@ -128,10 +110,6 @@ var EventScanView = Widget.extend(BarcodeHandlerMixin, {
 
 core.action_registry.add('even_barcode.scan_view', EventScanView);
 
-return {
-    Success: Success,
-    NotificationSuccess: NotificationSuccess,
-    EventScanView: EventScanView
-};
+return EventScanView;
 
 });
