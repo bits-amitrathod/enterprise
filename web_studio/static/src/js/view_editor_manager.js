@@ -21,6 +21,7 @@ var KanbanEditor = require('web_studio.KanbanEditor');
 var ListEditor = require('web_studio.ListEditor');
 var PivotEditor = require('web_studio.PivotEditor');
 var SearchEditor = require('web_studio.SearchEditor');
+var SearchRenderer = require('web_studio.SearchRenderer');
 
 var NewButtonBoxDialog = require('web_studio.NewButtonBoxDialog');
 var NewFieldDialog = require('web_studio.NewFieldDialog');
@@ -231,14 +232,25 @@ var ViewEditorManager = Widget.extend({
             editor_params.hasSelectors = false;
         }
 
-        var View = view_registry.get(this.view_type);
-        this.view = new View(this.fields_view, this.view_env);
         var def;
-        if (this.mode === 'edition') {
-            var Editor = Editors[this.view_type];
-            def = this.view.createStudioEditor(this, Editor, editor_params);
+        // Different behaviour for the search view because
+        // it's not defined as a "real view", no inherit to abstract view. 
+        // The search view in studio has its own renderer.
+        if (this.view_type === 'search') {
+            if (this.mode === 'edition') {
+                def = $.when(new Editors.search(this, this.fields_view));
+            } else {
+                def = $.when(new SearchRenderer(this, this.fields_view));
+            }
         } else {
-            def = this.view.createStudioRenderer(this);
+            var View = view_registry.get(this.view_type);
+            this.view = new View(this.fields_view, this.view_env);
+            if (this.mode === 'edition') {
+                var Editor = Editors[this.view_type];
+                def = this.view.createStudioEditor(this, Editor, editor_params);
+            } else {
+                def = this.view.createStudioRenderer(this);
+            }
         }
         return def;
     },
@@ -266,6 +278,11 @@ var ViewEditorManager = Widget.extend({
             var fields_not_in_view = _.omit(this.fields, this.editor.state.getFieldNames());
             params.fields_not_in_view = fields_not_in_view;
             params.fields_in_view = fields_in_view;
+        } else if (this.view_type === 'search') {
+            // we return all the model fields since it's possible
+            // to have multiple times the same field defined in the search view.
+            params.fields_not_in_view = this.fields;
+            params.fields_in_view = [];
         }
 
         return new ViewEditorSidebar(this, params);
@@ -372,7 +389,7 @@ var ViewEditorManager = Widget.extend({
                 break;
             case 'properties':
                 var attrs;
-                if (node.tag === 'field') {
+                if (node.tag === 'field' && this.view_type !== 'search') {
                     var viewType = this.editor.state.viewType;
                     attrs = this.editor.state.fieldsInfo[viewType][node.attrs.name];
                 } else {
@@ -1042,7 +1059,7 @@ var ViewEditorManager = Widget.extend({
         var new_attrs = event.data.new_attrs || {};
         var position = event.data.position || 'after';
         var xpath_info;
-        if (node && !_.pick(node.attrs, this.expr_attrs[node.tag])) {
+        if (node && !_.pick(node.attrs, this.expr_attrs[node.tag]).length) {
             xpath_info = findParentsPositions(this.fields_view.arch, node);
         }
 

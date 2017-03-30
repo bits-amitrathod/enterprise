@@ -73,7 +73,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
 
         this.state = params.state || {};
 
-        if (this.state.node && this.state.node.tag === 'field') {
+        if (this.state.node && (this.state.node.tag === 'field' || this.state.node.tag === 'filter')) {
             // deep copy of field because the object is modified
             // in this widget and this shouldn't impact it
             var field = jQuery.extend(true, {}, this.fields[this.state.attrs.name]);
@@ -378,9 +378,10 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     _onDomainEditor: function (ev) {
         ev.preventDefault();
         var $input = $(ev.currentTarget);
+
         // If we want to edit a filter domain, we don't have a specific
         // field to work on but we want a domain on the current model.
-        var model = this.node.tag === 'filter' ? this.model : this.fields_parameters.relation;
+        var model = this.state.node.tag === 'filter' ? this.model_name : this.state.field.relation;
         var dialog = new DomainSelectorDialog(this, model, $input.val(), {
             readonly: false,
             debugMode: session.debug,

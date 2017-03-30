@@ -1,15 +1,26 @@
 odoo.define('web_studio.SearchRenderer', function (require) {
 "use strict";
 
-var AbstractRenderer = require('web.AbstractRenderer');
 var core = require('web.core');
 var session = require('web.session');
+var Widget = require('web.Widget');
 
 var qweb = core.qweb;
 
 
-var SearchRenderer = AbstractRenderer.extend({
+var SearchRenderer = Widget.extend({
     className: "o_search_view",
+    init: function (parent, fields_view) {
+        this._super.apply(this, arguments);
+        this.arch = fields_view.arch;
+        this.fields = fields_view.fields;
+        this.model = fields_view.model;
+    },
+    start: function () {
+        this.$el.addClass(this.arch.attrs.class);
+        this._render();
+        return this._super.apply(this, arguments);
+    },
     _render: function() {
         var self = this;
         this.$el.empty();
@@ -40,7 +51,6 @@ var SearchRenderer = AbstractRenderer.extend({
                 self._process_group_by(node);
             }
         });
-        return this._super.apply(this, arguments);
     },
     _render_field: function(node) {
         var $tbody = this.$('.o_web_studio_search_autocompletion_fields tbody');
@@ -97,6 +107,10 @@ var SearchRenderer = AbstractRenderer.extend({
                 self._render_group_by(node);
             }
         });
+    },
+    setLocalState: function () {
+    },
+    getLocalState: function () {
     },
 });
 

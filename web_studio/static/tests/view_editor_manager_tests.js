@@ -358,6 +358,70 @@ QUnit.module('Studio', {}, function () {
         vem.destroy();
     });
 
+    QUnit.test('empty search editor', function(assert) {
+        assert.expect(6);
+
+        var arch = "<search/>";
+        var vem = createViewEditorManager(arch);
+
+        assert.strictEqual(vem.view_type, 'search',
+            "view type should be search");
+        assert.strictEqual(vem.$('.o_web_studio_search_view_editor').length, 1,
+            "there should be a search editor");
+        assert.strictEqual(vem.$('.o_web_studio_search_autocompletion_fields.table tbody tr.o_web_studio_hook').length, 1,
+            "there should be one hook in the autocompletion fields");
+        assert.strictEqual(vem.$('.o_web_studio_search_filters.table tbody tr.o_web_studio_hook').length, 1,
+            "there should be one hook in the filters");
+        assert.strictEqual(vem.$('.o_web_studio_search_group_by.table tbody tr.o_web_studio_hook').length, 1,
+            "there should be one hook in the group by");
+        assert.strictEqual(vem.$('.o_web_studio_search_view_editor [data-node-id]').length, 0,
+            "there should be no node");
+        vem.destroy();
+    });
+
+    QUnit.test('search editor', function(assert) {
+        assert.expect(9);
+
+        var arch =
+            "<search>" +
+                "<field name='display_name'/>" +
+                "<filter string='My Name' " +
+                    "name='my_name' " +
+                    "domain='[(\"display_name\",\"=\",coucou)]'" +
+                "/>" +
+                "<filter string='My Name2' " +
+                    "name='my_name2' " +
+                    "domain='[(\"display_name\",\"=\",coucou2)]'" +
+                "/>" +
+                "<group expand='0' string='Group By'>" +
+                    "<filter name='groupby_display_name' " +
+                    "domain='[]' context=\"{'group_by':'display_name'}\"/>" +
+                "</group>" +
+            "</search>";
+        var vem = createViewEditorManager(arch);
+
+        assert.strictEqual(vem.view_type, 'search',
+            "view type should be search");
+        assert.strictEqual(vem.$('.o_web_studio_search_view_editor').length, 1,
+            "there should be a search editor");
+        assert.strictEqual(vem.$('.o_web_studio_search_autocompletion_fields.table tbody tr.o_web_studio_hook').length, 2,
+            "there should be two hooks in the autocompletion fields");
+        assert.strictEqual(vem.$('.o_web_studio_search_filters.table tbody tr.o_web_studio_hook').length, 3,
+            "there should be three hook in the filters");
+        assert.strictEqual(vem.$('.o_web_studio_search_group_by.table tbody tr.o_web_studio_hook').length, 2,
+            "there should be two hooks in the group by");
+        assert.strictEqual(vem.$('.o_web_studio_search_autocompletion_fields.table [data-node-id]').length, 1,
+            "there should be 1 node in the autocompletion fields");
+        assert.strictEqual(vem.$('.o_web_studio_search_filters.table [data-node-id]').length, 2,
+            "there should be 2 nodes in the filters");
+        assert.strictEqual(vem.$('.o_web_studio_search_group_by.table [data-node-id]').length, 1,
+            "there should be 1 nodes in the group by");
+        assert.strictEqual(vem.$('.o_web_studio_search_view_editor [data-node-id]').length, 4,
+            "there should be 4 nodes");
+
+        vem.destroy();
+    });
+
     QUnit.test('empty pivot editor', function(assert) {
         assert.expect(3);
 
