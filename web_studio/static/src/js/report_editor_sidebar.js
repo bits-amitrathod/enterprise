@@ -69,7 +69,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             };
             var record1 = self.model.get(recordID1);
             self.many2many = new Many2ManyTags(self, 'groups_id', record1, options1);
-            this._registerWidget(recordID1, 'model', this.many2many);
+            self._registerWidget(recordID1, 'model', self.many2many);
             self.many2many.appendTo(self.$('.o_groups'));
 
             // add many2one for paperformat_id
@@ -84,7 +84,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             };
             var record2 = self.model.get(recordID2);
             self.many2one = new Many2One(self, 'paperformat_id', record2, options2);
-            this._registerWidget(recordID2, 'model', this.many2one);
+            self._registerWidget(recordID2, 'model', self.many2one);
             self.many2one.appendTo(self.$el.find('.o_paperformat_id'));
         });
     },

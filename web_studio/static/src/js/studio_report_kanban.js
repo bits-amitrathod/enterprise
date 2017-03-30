@@ -3,61 +3,64 @@ odoo.define('web_studio.studio_report_kanban', function (require) {
 
 var core = require('web.core');
 var Dialog = require('web.Dialog');
+var KanbanController = require('web.KanbanController');
 var KanbanView = require('web.KanbanView');
 var session = require('web.session');
 var view_registry = require('web.view_registry');
 
 var _t = core._t;
 
-var reports = [
-    {
-        template_name: 'report_business',
-        name: _t("Preview Business Document"),
-        description: _t("(e.g. Sales order)"),
-    },
-    {
-        template_name: 'report_blank',
-        name: _t("Preview Blank Document"),
-        description: _t("(empty report with footer and header)"),
-    },
-];
+var StudioReportKanbanController = KanbanController.extend({
 
-// TODO: this can't work right now
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
 
-var StudioReportKanbanView = KanbanView.extend({
-    custom_events: _.extend({}, KanbanView.prototype.custom_events, {
-        open_record: 'open_record',
-    }),
     /**
      * Do not add a record but open the dialog.
      *
+     * @private
      * @override
      */
-    add_record: function () {
-        var model = this.dataset.context.search_default_model;
-        new AddReportDialog(this, model).open();
+    _onButtonNew: function () {
+        var model = this.initialState.context.search_default_model;
+        new NewReportDialog(this, model).open();
     },
     /**
      * Do not open the form view but open the Report Editor action.
      *
+     * @param {OdooEvent} event
+     * @param {Integer} [event.data.res_id] The record res ID (if it directly
+     *   comes from the server)
+     * @param {number} [event.data.id] The local model ID for the record to be
+     *   opened
+     * @private
      * @override
      */
-    open_record: function (event) {
+    _onOpenRecord: function (event) {
+        event.stopPropagation();
         var self = this;
+        var res_id = event.data.res_id;
+        if (!res_id) {
+            res_id = this.model.get(event.data.id, {raw: true}).res_id;
+        }
         this._rpc({
                 model: 'ir.actions.report.xml',
                 method: 'studio_edit',
-                args: [event.data.id],
+                args: [res_id],
             })
             .then(function(action) {
                 if (action.active_ids.length) {
-                    self.do_action(action);
+                    self.do_action(action, {
+                        keep_state: true,
+                        disable_edition: true,
+                    });
                 } else {
                     new Dialog(this, {
                         size: 'medium',
                         title: _t('No record to display.'),
                         $content: $('<div>', {
-                            text: _t("First, quit Odoo Studio to create a new entity. Then, open Odoo Studio to create or edit reports."),
+                            text: _t("First, quit Odoo Studio to create a new entity. Then, open Odoo Studio to create or edit reports."),
                         }),
                     }).open();
                 }
@@ -65,7 +68,8 @@ var StudioReportKanbanView = KanbanView.extend({
     },
 });
 
-var AddReportDialog = Dialog.extend({
+var NewReportDialog = Dialog.extend({
+    template: 'web_studio.NewReportDialog',
     events: {
         'click .o_web_studio_report_template_item': '_onReportTemplate',
     },
@@ -81,33 +85,18 @@ var AddReportDialog = Dialog.extend({
             size: 'medium',
             buttons: [],
         };
+
+        this.templates = [{
+            name: 'report_business',
+            label: _t("Preview Business Document"),
+            description: _t("(e.g. Sales order)"),
+        }, {
+            name: 'report_blank',
+            label: _t("Preview Blank Document"),
+            description: _t("(empty report with footer and header)"),
+        }];
+
         this._super(parent, options);
-    },
-    /**
-     * @override
-     */
-    start: function () {
-        // TODO: refactor to use a template?
-        var $message = $('<div>', {
-            class: 'o_web_studio_report_template_dialog',
-        });
-        _.each(reports, function (report) {
-            $message.append(
-                $('<div>', {
-                    class: 'o_web_studio_report_template_item',
-                })
-                .data("template_name", report.template_name)
-                .append($('<div>', {
-                    text: report.name,
-                }))
-                .append($('<span>', {
-                    class: 'o_web_studio_report_template_description',
-                    text: report.description,
-                }))
-            );
-        });
-        this.$el.append($message);
-        return this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
@@ -143,12 +132,18 @@ var AddReportDialog = Dialog.extend({
      */
     _onReportTemplate: function (event) {
         var self = this;
-        var template_name = $(event.currentTarget).data('template_name');
+        var template_name = $(event.currentTarget).data('template');
         this._createNewReport(this.res_model, template_name).then(function (result) {
-            self.trigger_up('open_record', {id: result.id});
+            self.trigger_up('open_record', {res_id: result.id});
             self.close();
         });
     },
+});
+
+var StudioReportKanbanView = KanbanView.extend({
+    config: _.extend({}, KanbanView.prototype.config, {
+        Controller: StudioReportKanbanController,
+    }),
 });
 
 view_registry.add('studio_report_kanban', StudioReportKanbanView);
