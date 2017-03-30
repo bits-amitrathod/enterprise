@@ -210,9 +210,9 @@ class HelpdeskTeam(models.Model):
 
         for ticket in tickets:
             add_to(ticket, 'my_all')
-            if ticket['priority'] in ('2'):
+            if ticket['priority'] == '2':
                 add_to(ticket, 'my_high')
-            if ticket['priority'] in ('3'):
+            if ticket['priority'] == '3':
                 add_to(ticket, 'my_urgent')
 
         dt = fields.Date.today()
