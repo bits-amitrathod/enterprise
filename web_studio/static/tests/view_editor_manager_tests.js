@@ -221,6 +221,38 @@ QUnit.module('Studio', {}, function () {
         vem.destroy();
     });
 
+    QUnit.test('invisible form editor', function(assert) {
+        assert.expect(6);
+
+        var arch =
+            "<form>" +
+                "<sheet>" +
+                    "<field name='display_name' invisible='1'/>" +
+                "</sheet>" +
+            "</form>";
+        var vem = createViewEditorManager(arch);
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_form_invisible[data-node-id]').length, 1,
+            "there should be one invisible node");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]:not(.o_form_invisible)').length, 0,
+            "there should be no visible node");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 1,
+            "there should be one hook");
+
+        // click on show invisible
+        vem.$('.o_web_studio_sidebar').find('.o_web_studio_view').click();
+        vem.$('.o_web_studio_sidebar').find('input#show_invisible').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_show_invisible[data-node-id]').length, 1,
+            "there should be one visible node (the invisible one)");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_form_invisible[data-node-id]').length, 0,
+            "there should be no invisible node");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 1,
+            "there should be one hook");
+
+        vem.destroy();
+    });
+
     QUnit.test('empty kanban editor', function(assert) {
         assert.expect(4);
 
