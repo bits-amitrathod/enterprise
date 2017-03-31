@@ -7,7 +7,7 @@
     """,
     'category': 'Project',
     'version': '1.0',
-    'depends': ['project', 'web_grid'],
+    'depends': ['project', 'web_grid', 'hr'],
     'data': [
         'data/project_forecast_data.xml',
         'security/ir.model.access.csv',

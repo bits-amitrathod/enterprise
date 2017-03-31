@@ -54,6 +54,7 @@ class Project(models.Model):
             'domain': [['project_id', '=', self.id]],
             'context': {
                 'default_project_id': self.id,
+                'default_employee_id': self.user_id.employee_ids[0].id,
             }
         }
 
@@ -76,6 +77,6 @@ class Task(models.Model):
             'context': {
                 'default_project_id': self.project_id.id,
                 'default_task_id': self.id,
-                'default_user_id': self.user_id.id,
+                'default_employee_id': self.user_id.employee_ids[0].id,
             }
         }

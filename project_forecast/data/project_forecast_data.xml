@@ -9,10 +9,13 @@ forecast_obj = env['project.forecast']
 tasks = task_obj.browse(context.get('active_ids'))
 forecast_ids = []
 for task in tasks:
+    user_id = task.user_id.id if task.user_id else uid
+    employee_id = env['res.users'].browse(user_id).employee_ids[0].id
     forecast_ids.append(forecast_obj.create({
         'project_id': task.project_id.id,
         'task_id': task.id,
-        'user_id': task.user_id.id if task.user_id else uid
+        'user_id': task.user_id.id if task.user_id else uid,
+        'employee_id': employee_id,
         }).id
       )
 
