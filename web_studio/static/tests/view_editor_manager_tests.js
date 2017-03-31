@@ -243,19 +243,49 @@ QUnit.module('Studio', {}, function () {
     });
 
     QUnit.test('kanban editor', function(assert) {
-        assert.expect(0);
+        assert.expect(13);
 
         var arch =
             "<kanban>" +
                 "<templates>" +
                     "<t t-name='kanban-box'>" +
-                        "<div>" +
+                        "<div class='o_kanban_record'>" +
                             "<field name='display_name'/>" +
                         "</div>" +
                     "</t>" +
                 "</templates>" +
             "</kanban>";
         var vem = createViewEditorManager(arch);
+
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+        assert.ok(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').hasClass('o_web_studio_widget_empty'),
+            "the empty node should have the empty class");
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor .o_web_studio_hook').length, 1,
+            "there should be one hook");
+        assert.strictEqual(vem.$('.o_kanban_record .o_web_studio_add_kanban_tags').length, 1,
+            "there should be the hook for tags");
+        assert.strictEqual(vem.$('.o_kanban_record .o_web_studio_add_dropdown').length, 1,
+            "there should be the hook for dropdown");
+        assert.strictEqual(vem.$('.o_kanban_record .o_web_studio_add_priority').length, 1,
+            "there should be the hook for priority");
+        assert.strictEqual(vem.$('.o_kanban_record .o_web_studio_add_kanban_image').length, 1,
+            "there should be the hook for image");
+
+        vem.$('.o_web_studio_kanban_view_editor [data-node-id]').click();
+
+        assert.ok(vem.$('.o_web_studio_sidebar').find('.o_web_studio_properties').hasClass('active'),
+            "the Properties tab should now be active");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should now display the field properties");
+        assert.ok(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').hasClass('o_clicked'),
+            "the field should have the clicked style");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('select[name="widget"]').val(), "",
+            "the widget in sidebar should be empty");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('select[name="display"]').val(), "false",
+            "the display attribute should be Default");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
+            "the field should have the label Display Name in the sidebar");
 
         vem.destroy();
     });
