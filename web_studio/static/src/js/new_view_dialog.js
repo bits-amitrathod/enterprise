@@ -44,15 +44,16 @@ var NewViewDialog = Dialog.extend({
     willStart: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
-            return self._rpc(self.model, 'fields_get')
-                .exec()
-                .then(function (fields) {
-                    self.fields = _.sortBy(fields, function (field, key) {
-                        field.name = key;
-                        return field.string;
-                    });
-                    self._computeFields();
+            return self._rpc({
+                model: self.model,
+                method: 'fields_get',
+            }).then(function (fields) {
+                self.fields = _.sortBy(fields, function (field, key) {
+                    field.name = key;
+                    return field.string;
                 });
+                self._computeFields();
+            });
         });
     },
     /**
