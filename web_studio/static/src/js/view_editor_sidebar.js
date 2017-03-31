@@ -121,7 +121,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
 
     /**
      * Transform an array domain into its string representation.
-     * 
+     *
      * @param {Array} domain
      * @returns {String}
      */

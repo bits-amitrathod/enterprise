@@ -175,7 +175,7 @@ var ViewEditorManager = Widget.extend({
             result.fields_views = _.mapObject(result.fields_views, data_manager._postprocess_fvg.bind(data_manager));
 
             // "/web_studio/edit_view" returns "fields" only when we created a
-            // new field ; otherwise, use the same ones that shouldn't have changed.       
+            // new field ; otherwise, use the same ones that shouldn't have changed.
             var fields = $.extend(true, {}, result.fields || self.fields);
 
             // add necessary keys on fields_views
@@ -193,7 +193,7 @@ var ViewEditorManager = Widget.extend({
                 self.operations_undone = [];
             }
             if (remove_last_op) { self.operations.pop(); }
-            
+
             // fields and fields_view has been updated so let's update everything
             // (i.e. the sidebar which displays the 'Existing Fields', etc.)
             return self.updateEditor().then(function () {
@@ -325,7 +325,6 @@ var ViewEditorManager = Widget.extend({
                     }
                 });
             } catch (e) {
-                debugger;
                 self.trigger_up('studio_error', {error: 'view_rendering'});
                 self.undo(true);
             }

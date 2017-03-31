@@ -49,7 +49,7 @@ Menu.include({
      * @param {String} mode - 'main'/'app_creator' for Studio or false
      * @param {Object} studio_info - mandatory if mode
      *        - multi_lang
-     *        - dbuuid 
+     *        - dbuuid
      * @param {Object} action - edited action, mandatory if mode = 'main'
      * @param {Object} active_view - mandatory if mode = 'main'
      */

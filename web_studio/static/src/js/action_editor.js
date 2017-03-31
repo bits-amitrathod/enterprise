@@ -85,7 +85,7 @@ var ActionEditor = Widget.extend({
 
     /**
      * Get the view type category.
-     * 
+     *
      * @private
      * @param {string} viewType
      * @returns {string}

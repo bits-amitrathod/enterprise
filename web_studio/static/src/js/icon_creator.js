@@ -67,7 +67,7 @@ var IconCreator = Widget.extend({
     /**
      * @returns {Integer|Array} the icon value, which could either be:
      *  - the ir.attachment id of the uploaded image
-     *  - if the icon has been created, an array containing 
+     *  - if the icon has been created, an array containing
      *      [icon_class, color, background_color]
      */
     getValue: function () {
