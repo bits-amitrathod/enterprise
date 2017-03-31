@@ -23,11 +23,9 @@
             report_type="qweb-html"
             name="mrp_cost_structure"
             file="mrp_cost_structure"
-            />
-        <record id="action_cost_struct_mrp_production" model="ir.actions.report">
-            <field name="paperformat_id" ref="base.paperformat_batch_deposit"/>
-            <field name="print_report_name">'Cost Analysis'+'-'+(object.name)</field>
-        </record>
+            paperformat="base.paperformat_batch_deposit"
+            print_report_name="'Cost Analysis - ' % object.name"
+        />
 
         <record model="ir.ui.view" id="mrp_production_form_inherit_view6">
             <field name="name">mrp.production.form.inherit</field>
@@ -49,10 +47,8 @@
             report_type="qweb-html"
             name="product_template_cost_structure"
             file="product_template_cost_structure"
-            />
-        <record id="action_cost_struct_product_template" model="ir.actions.report">
-            <field name="print_report_name">'Cost Structure Analysis'+'-'+(object.name)</field>
-        </record>
+            print_report_name="'Cost Structure Analysis - %s' % object.name"
+        />
 
         <record id="product_product_inherit_form_view_cost_structure" model="ir.ui.view">
             <field name="name">cost_structure_product_product_inherit</field>
