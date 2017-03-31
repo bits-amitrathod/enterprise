@@ -50,7 +50,7 @@
                 <span t-att-data-active-id="a.get('id')" data-action-name="account_reports.action_account_followup" t-att-class="'o_account_reports_web_action ' + domainClass"><t t-esc="a.get('name')"/><t t-call="account_reports.report_financial_footnote_sup" /></span>
             </a>
             <a t-if="a['type'] == 'too_many' and mode != 'print'">
-                <span t-att-data-active-id="a.get('id')" data-action-name="account.action_move_line_select" t-att-class="'o_account_reports_web_action ' + domainClass"><t t-esc="a.get('name')"/></span>
+                <span t-att-data-action-domain="a.get('domain')" data-res-model="account.move.line" data-action-name="account.action_move_line_select" t-att-class="'o_account_reports_web_action ' + domainClass"><t t-esc="a.get('name')"/></span>
             </a>
             <span t-if="a['type'] == 'partner_id' and mode != 'print' and report.get_title() == 'Aged Payable'" t-att-class="domainClass">
                 <t t-esc="a.get('name')"/><t t-call="account_reports.report_financial_footnote_sup" />
