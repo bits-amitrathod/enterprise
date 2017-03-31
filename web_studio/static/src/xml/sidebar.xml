@@ -456,7 +456,7 @@
             <input id="placeholder" name="placeholder" type="text" placeholder="Placeholder Text" data-type="attributes"
                 t-att-value="widget.state.attrs.placeholder"/>
         </div>
-        <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_select">
+        <div t-if="_.contains(['list', 'form', 'kanban'], widget.view_type)" class="o_web_studio_sidebar_select">
             <label for="widget">Widget</label>
             <select id="widget" name="widget">
                 <option t-att-selected="widget.state.attrs.widget ? undefined : 'selected'"></option>
