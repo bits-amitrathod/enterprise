@@ -26,12 +26,15 @@ return KanbanRenderer.extend(EditorMixin, {
         return this._super.apply(this, arguments).then(function () {
             if (self.state.data.length === 0) {
                 // add an empty record to be able to edit something
-                var datamodel = new BasicModel(self);
-                return datamodel.makeDefaultRecord(self.state.model, {
+                var model = new BasicModel(self);
+                return model.load({
                     fields: self.state.fields,
-                    fieldNames: Object.keys(self.state.fields),
+                    fieldsInfo: self.state.fieldsInfo,
+                    modelName: self.state.model,
+                    type: 'record',
+                    viewType: self.state.viewType,
                 }).then(function (record_id){
-                    self.state.data.push(datamodel.get(record_id));
+                    self.state.data.push(model.get(record_id));
                 });
             }
         });

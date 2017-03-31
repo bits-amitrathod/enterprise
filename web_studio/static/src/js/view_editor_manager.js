@@ -247,8 +247,8 @@ var ViewEditorManager = Widget.extend({
      * @returns {Widget} A ViewEditorSidebar
      */
     instantiateSidebar: function (state) {
-        var fields_in_view = _.pick(this.fields, this.editor.state.fieldNames);
-        var fields_not_in_view = _.omit(this.fields, this.editor.state.fieldNames);
+        var fields_in_view = _.pick(this.fields, this.editor.state.getFieldNames());
+        var fields_not_in_view = _.omit(this.fields, this.editor.state.getFieldNames());
 
         var defaultMode = _.contains(['form', 'list', 'search'], this.view_type) ? 'new' : 'view';
 
@@ -369,7 +369,8 @@ var ViewEditorManager = Widget.extend({
             case 'properties':
                 var attrs;
                 if (node.tag === 'field') {
-                    attrs = this.editor.state.fieldsInfo[node.attrs.name];
+                    var viewType = this.editor.state.viewType;
+                    attrs = this.editor.state.fieldsInfo[viewType][node.attrs.name];
                 } else {
                     attrs = node.attrs;
                 }
