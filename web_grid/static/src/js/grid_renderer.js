@@ -11,6 +11,12 @@ var h = require('snabbdom.h');
 var _t = core._t;
 var _lt = core._lt;
 
+/**
+ * The GridRenderer is the component that will render a grid view (obviously).
+ * However, it is noteworthy to mention that it uses a rendering strategy
+ * unusual in Odoo: it works with an external library, snabbdom, which is a
+ * lightweight virtual dom implementation.
+ */
 return AbstractRenderer.extend({
     add_label: _lt("Add a Line"),
 
@@ -20,9 +26,10 @@ return AbstractRenderer.extend({
     },
 
     /**
-     * @param {any} parent 
-     * @param {any} state 
-     * @param {any} params 
+     * @override
+     * @param {Widget} parent
+     * @param {Object} state
+     * @param {Object} params
      */
     init: function (parent, state, params) {
         this._super.apply(this, arguments);
@@ -32,6 +39,9 @@ return AbstractRenderer.extend({
         this.editableCells = params.editableCells;
         this.cellWidget = params.cellWidget;
     },
+    /**
+     * @override
+     */
     start: function () {
         // this is the vroot, the first patch call will replace the DOM node
         // itself instead of patching it in-place, so we're losing delegated
@@ -47,6 +57,20 @@ return AbstractRenderer.extend({
 
     /**
      * @private
+     * @param {Object} root
+     */
+    _convertToVNode: function (root) {
+        var self = this;
+        return h(root.tag, {'attrs': root.attrs}, _(root.children).map(function (child) {
+                if(child.tag){
+                    return self._convertToVNode(child);
+                 }
+                 return child; // text node, no tag
+         }));
+    },
+    /**
+     * @private
+     * @param {any[]} grid
      * @returns {{super: number, rows: {}, columns: {}}}
      */
     _computeTotals: function (grid) {
@@ -80,7 +104,8 @@ return AbstractRenderer.extend({
     },
     /**
      * @private
-     * @param {any} cell
+     * @param {Object} cell
+     * @param {boolean} cell.readonly
      * @returns {boolean}
      */
     _isCellReadonly: function (cell) {
@@ -191,9 +216,9 @@ return AbstractRenderer.extend({
     },
     /**
      * @private
-     * @param {any} cell 
-     * @param {any} path 
-     * @returns 
+     * @param {Object} cell
+     * @param {any} path
+     * @returns {snabbdom}
      */
     _renderCell: function (cell, path) {
         var is_readonly = this._isCellReadonly(cell);
@@ -219,39 +244,39 @@ return AbstractRenderer.extend({
     },
     /**
      * @private
-     * @param {any} cell_value 
-     * @param {any} is_readonly 
-     * @param {any} classmap 
-     * @param {any} path 
-     * @returns 
+     * @param {any} cell_value
+     * @param {boolean} isReadonly
+     * @param {any} classmap
+     * @param {any} path
+     * @returns {snabbdom}
      */
-    _renderCellContent: function (cell_value, is_readonly, classmap, path) {
+    _renderCellContent: function (cell_value, isReadonly, classmap, path) {
         return h('div', { class: classmap, attrs: {'data-path': path}}, [
             h('i.fa.fa-search-plus.o_grid_cell_information', {
                 attrs: {
                     title: _t("See all the records aggregated in this cell")
                 }
             }, []),
-            this._renderCellInner(cell_value, is_readonly)
+            this._renderCellInner(cell_value, isReadonly)
         ]);
     },
     /**
      * @private
-     * @param {any} formatted_value 
-     * @param {any} is_readonly 
-     * @returns 
+     * @param {string} formattedValue
+     * @param {boolean} isReadonly
+     * @returns {snabbdom}
      */
-    _renderCellInner: function (formatted_value, is_readonly) {
-        if (is_readonly) {
-            return h('div.o_grid_show', formatted_value);
+    _renderCellInner: function (formattedValue, isReadonly) {
+        if (isReadonly) {
+            return h('div.o_grid_show', formattedValue);
         } else {
-            return h('div.o_grid_input', {attrs: {contentEditable: "true"}}, formatted_value);
+            return h('div.o_grid_input', {attrs: {contentEditable: "true"}}, formattedValue);
         }
     },
     /**
      * @private
-     * @param {any} empty 
-     * @returns 
+     * @param {any} empty
+     * @returns {snabbdom}
      */
     _renderEmptyWarning: function (empty) {
         if (!empty || !this.noContentHelper || !this.noContentHelper.children.length || !this.canCreate) {
@@ -259,12 +284,7 @@ return AbstractRenderer.extend({
         }
         return h('div.o_grid_nocontent_container', [
                    h('div.oe_view_nocontent oe_edit_only',
-                       _(this.noContentHelper.children).map(function (p) {
-                           var data = p.attrs.class
-                                   ? {attrs: {class: p.attrs.class}}
-                                   : {};
-                           return h('p', data, p.children);
-                       })
+                       _(this.noContentHelper.children).map(this._convertToVNode.bind(this))
                    )
                ]);
     },
@@ -275,7 +295,7 @@ return AbstractRenderer.extend({
      * @param {Array} path object path to `grid` from the object's grid_data
      * @param {Array} rows list of row keys
      * @param {Object} totals row-keyed totals
-     * @returns {*}
+     * @returns {snabbdom[]}
      */
     _renderGridRows: function (grid, group_fields, path, rows, totals) {
         var self = this;
@@ -284,9 +304,7 @@ return AbstractRenderer.extend({
             for (var i = 0; i < group_fields.length; i++) {
                 var row_field = group_fields[i];
                 var value = rows[row_index].values[row_field];
-                if (value) {
-                    row_values.push(value);
-                }
+                row_values.push(value);
             }
             var row_key = _(row_values).map(function (v) {
                 return v[0];
@@ -295,7 +313,9 @@ return AbstractRenderer.extend({
             return h('tr', {key: row_key}, [
                 h('th', {attrs: {colspan: 2}}, [
                     h('div', _(row_values).map(function (v) {
-                        return h('div', {attrs: {title: v[1]}}, v[1]);
+                        var label = v ? v[1] : _t('Unknown');
+                        var klass = v ? '' : 'o_grid_text_muted';
+                        return h('div', {attrs: {title: label, class: klass}}, label);
                     }))
                 ])
             ].concat(_(row).map(function (cell, cell_index) {
@@ -312,7 +332,8 @@ return AbstractRenderer.extend({
      * @param {Array} columns
      * @param {Object} [totals]
      * @param {Number} [super_total]
-     * @param {Boolean} [empty=false]
+     * @param {boolean} [empty=false]
+     * @returns {snabbdom}
      */
     _renderTable: function (columns, totals, super_total, empty) {
         var self = this;
@@ -334,11 +355,7 @@ return AbstractRenderer.extend({
                 ]),
                 h('tfoot', [
                     h('tr', [
-                        h('td.o_grid_add_line', self.canCreate ? [
-                            h('button.btn.btn-sm.btn-primary.o_grid_button_add', {
-                                attrs: {type: 'button'}
-                            }, self.add_label.toString())
-                        ] : []),
+                        h('td.o_grid_add_line', []),
                         h('td', totals ? _t("Total") : [])
                     ].concat(
                         _(columns).map(function (column, column_index) {

@@ -58,6 +58,7 @@ QUnit.module('Views', {
                             'Click to add projects and tasks' +
                         '</p>' +
                         '<p>you will be able to register your working hours on the given task</p>' +
+                        '<p><a href="some-link"><img src="some-image" alt="alt text"/></a></p>' +
                     '</empty>' +
                 '</grid>';
         this.archs = {
@@ -73,7 +74,7 @@ QUnit.module('Views', {
     QUnit.module('GridView');
 
     QUnit.test('basic grid view', function (assert) {
-        assert.expect(16);
+        assert.expect(17);
         var done = assert.async();
 
         var grid = createView({
@@ -82,6 +83,12 @@ QUnit.module('Views', {
             data: this.data,
             arch: this.arch,
             currentDate: "2017-01-25",
+            mockRPC: function (route) {
+                if (route === 'some-image') {
+                    return $.when();
+                }
+                return this._super.apply(this, arguments);
+            },
         });
 
         return concurrency.delay(0).then(function () {
@@ -119,6 +126,8 @@ QUnit.module('Views', {
         }).then(function () {
             assert.ok(grid.$('.o_grid_nocontent_container p:contains(Click to add projects and tasks)').length,
                 "should have rendered a no content helper");
+            assert.strictEqual(grid.$('.o_grid_nocontent_container p a img').length, 1,
+                "should have rendered a no content helper with an image in a link");
 
             assert.notOk(grid.$('div.o_grid_cell_container').length, "should not have any cell");
 
@@ -128,7 +137,7 @@ QUnit.module('Views', {
                     emptyTd++;
                 }
             });
-            assert.strictEqual(emptyTd, 8, "8 totals cells should be empty");
+            assert.strictEqual(emptyTd, 9, "9 totals cells should be empty");
             grid.destroy();
             done();
         });
@@ -173,7 +182,7 @@ QUnit.module('Views', {
 
             assert.strictEqual(grid.$('div.o_grid_cell_container').length, 0, "should not have any cells");
             assert.notOk($('div.modal').length, "should not have any modal open");
-            grid.$('.o_grid_button_add').click();
+            grid.$buttons.find('.o_grid_button_add').click();
 
             assert.ok($('div.modal').length, "should have opened a modal");
 

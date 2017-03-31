@@ -14,11 +14,13 @@ var GridController = AbstractController.extend({
         'cell_edited': '_onCellEdited',
     }),
     events: {
-        'click .o_grid_button_add': '_onAddLine',
         'click .o_grid_cell_information': '_onClickCellInformation',
         'focus .o_grid_input': '_onGridInputFocus',
     },
 
+    /**
+     * @override
+     */
     init: function (parent, model, renderer, params) {
         this._super.apply(this, arguments);
         this.set('title', params.title);
@@ -33,20 +35,28 @@ var GridController = AbstractController.extend({
         this.listViewID = params.listViewID;
         this.adjustment = params.adjustment;
         this.adjustName = params.adjustName;
+        this.canCreate = params.activeActions.create;
     },
 
     //--------------------------------------------------------------------------
     // Public
     //--------------------------------------------------------------------------
 
+    /**
+     * @override
+     * @param {jQueryElement} $node
+     */
     renderButtons: function ($node) {
         this.$buttons = $(qweb.render('grid.GridArrows', { widget: {
             _ranges: this.ranges,
             _buttons: this.navigationButtons,
+            allowCreate: this.canCreate,
         }}));
         this.$buttons.appendTo($node);
         this._updateButtons();
+        this.$buttons.on('click', '.o_grid_button_add', this._onAddLine.bind(this));
         this.$buttons.on('click', '.grid_arrow_previous', this._onPaginationChange.bind(this, 'prev'));
+        this.$buttons.on('click', '.grid_button_initial', this._onPaginationChange.bind(this, 'initial'));
         this.$buttons.on('click', '.grid_arrow_next', this._onPaginationChange.bind(this, 'next'));
         this.$buttons.on('click', '.grid_arrow_range', this._onRangeChange.bind(this));
         this.$buttons.on('click', '.grid_arrow_button', this._onButtonClicked.bind(this));
@@ -58,11 +68,11 @@ var GridController = AbstractController.extend({
 
     /**
      * @private
-     * @param {any} cell
-     * @param {any} new_value
+     * @param {Object} cell
+     * @param {number} newValue
      */
-    _adjust: function (cell, new_value) {
-        var difference = new_value - cell.value;
+    _adjust: function (cell, newValue) {
+        var difference = newValue - cell.value;
         // 1e-6 is probably an overkill, but that way milli-values are usable
         if (Math.abs(difference) < 1e-6) {
             // cell value was set to itself, don't hit the server
@@ -99,6 +109,7 @@ var GridController = AbstractController.extend({
         });
     },
     /**
+     * @override
      * @private
      * @returns {Deferred}
      */
@@ -218,7 +229,7 @@ var GridController = AbstractController.extend({
     },
     /**
      * @private
-     * @param {string} dir either 'prev' or 'next
+     * @param {string} dir either 'prev', 'initial' or 'next
      */
     _onPaginationChange: function (dir) {
         var state = this.model.get();

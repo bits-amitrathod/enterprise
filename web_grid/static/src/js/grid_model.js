@@ -19,11 +19,17 @@ return AbstractModel.extend({
     //--------------------------------------------------------------------------
 
     /**
+     * @override
      * @returns {Object}
      */
     get: function () {
         return this.gridData;
     },
+    /**
+     * @override
+     * @param {Object} context
+     * @returns {Object}
+     */
     getContext: function (context) {
         return _.extend({}, this.context, context);
         // var c = this._model.context(this.get('context'));
@@ -40,6 +46,7 @@ return AbstractModel.extend({
         // return c;
     },
     /**
+     * @override
      * @param {Object} params
      * @returns {Deferred}
      */
@@ -56,8 +63,9 @@ return AbstractModel.extend({
         return this._fetch(rowFields);
     },
     /**
-     * @param {any} handle 
-     * @param {any} params 
+     * @override
+     * @param {any} handle this parameter is ignored
+     * @param {Object} params
      * @returns {Deferred}
      */
     reload: function (handle, params) {
@@ -77,7 +85,7 @@ return AbstractModel.extend({
 
     /**
      * @private
-     * @param {string[]} rowFields 
+     * @param {string[]} rowFields
      * @returns {Deferred}
      */
     _fetch: function (rowFields) {
