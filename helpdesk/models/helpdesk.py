@@ -729,6 +729,19 @@ class HelpdeskTicket(models.Model):
             self.message_subscribe(partner_ids)
         return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)
 
+    def _message_post_after_hook(self, message):
+        if self.partner_email and not self.partner_id:
+            # we consider that posting a message with a specified recipient (not a follower, a specific one)
+            # on a document without customer means that it was created through the chatter using
+            # suggested recipients. This heuristic allows to avoid ugly hacks in JS.
+            new_partner = message.partner_ids.filtered(lambda partner: partner.email == self.partner_email)
+            if new_partner:
+                self.search([
+                    ('partner_id', '=', False),
+                    ('partner_email', '=', new_partner.email),
+                    ('stage_id.fold', '=', False)]).write({'partner_id': new_partner.id})
+        return super(HelpdeskTicket, self)._message_post_after_hook(message)
+
     @api.multi
     def _track_template(self, tracking):
         res = super(HelpdeskTicket, self)._track_template(tracking)
