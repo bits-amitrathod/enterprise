@@ -247,8 +247,6 @@ var ViewEditorManager = Widget.extend({
      * @returns {Widget} A ViewEditorSidebar
      */
     instantiateSidebar: function (state) {
-        var fields_in_view = _.pick(this.fields, this.editor.state.getFieldNames());
-        var fields_not_in_view = _.omit(this.fields, this.editor.state.getFieldNames());
 
         var defaultMode = _.contains(['form', 'list', 'search'], this.view_type) ? 'new' : 'view';
 
@@ -260,10 +258,16 @@ var ViewEditorManager = Widget.extend({
             view_type: this.view_type,
             model_name: this.model_name,
             fields: this.fields,
-            fields_not_in_view: fields_not_in_view,
-            fields_in_view: fields_in_view,
             state: state,
         };
+
+        if (_.contains(['list', 'form', 'kanban'], this.view_type)) {
+            var fields_in_view = _.pick(this.fields, this.editor.state.getFieldNames());
+            var fields_not_in_view = _.omit(this.fields, this.editor.state.getFieldNames());
+            params.fields_not_in_view = fields_not_in_view;
+            params.fields_in_view = fields_in_view;
+        }
+
         return new ViewEditorSidebar(this, params);
     },
     /**
