@@ -1,15 +1,17 @@
 odoo.define('web_studio.ViewEditorManager_tests', function (require) {
 "use strict";
 
+var concurrency = require('web.concurrency');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
 
-var createViewEditorManager = function (arch) {
+var createViewEditorManager = function (arch, params) {
     var $target = $('#qunit-fixture');
 
+    params = params || {};
     var modelName = 'coucou';
     var widget = new Widget();
-    var data = {
+    var data = params.data || {
         coucou: {
             fields: {
                 display_name: {
@@ -354,6 +356,76 @@ QUnit.module('Studio', {}, function () {
             "the field should have the label Display Name in the sidebar");
 
         vem.destroy();
+    });
+
+    QUnit.test('empty pivot editor', function(assert) {
+        assert.expect(3);
+
+        var arch = "<pivot/>";
+        var vem = createViewEditorManager(arch, {
+            data: {
+                coucou: {
+                    fields: {
+                        display_name: {
+                            string: "Display Name",
+                            type: "char",
+                        },
+                    },
+                    records: [
+                        {
+                            id: 1,
+                            display_name: 'coucou',
+                        }
+                    ],
+                },
+            },
+        });
+
+        assert.strictEqual(vem.view_type, 'pivot',
+            "view type should be pivot");
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_pivot').length, 1,
+            "there should be a pivot renderer");
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer > .o_pivot > table').length, 1,
+            "the table should be the direct child of pivot");
+
+        vem.destroy();
+    });
+
+    QUnit.test('empty graph editor', function(assert) {
+        var done = assert.async();
+        assert.expect(3);
+
+        var arch = "<graph/>";
+        var vem = createViewEditorManager(arch, {
+            data: {
+                coucou: {
+                    fields: {
+                        display_name: {
+                            string: "Display Name",
+                            type: "char",
+                        },
+                    },
+                    records: [
+                        {
+                            id: 1,
+                            display_name: 'coucou',
+                        }
+                    ],
+                },
+            },
+        });
+
+        assert.strictEqual(vem.view_type, 'graph',
+            "view type should be graph");
+        return concurrency.delay(0).then(function () {
+            assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_graph').length, 1,
+                "there should be a graph renderer");
+            assert.strictEqual(vem.$('.o_web_studio_view_renderer > .o_graph > .o_graph_svg_container > svg').length, 1,
+                "the graph should be the direct child of its container");
+            vem.destroy();
+            done();
+        });
+
     });
 });
 
