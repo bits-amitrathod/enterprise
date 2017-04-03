@@ -19,7 +19,7 @@
                 <t t-set="tfd_original_string" t-value="o._get_l10n_mx_edi_cadena()"/>
             </t>
         </xpath>
-        <xpath expr="//div[@name='invoice_address']/span[last()]" position="after">
+        <xpath expr="//div[@name='invoice_address']" position="inside">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <span t-if="o.partner_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc">XML VAT: <span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"></span></span>
             </t>
