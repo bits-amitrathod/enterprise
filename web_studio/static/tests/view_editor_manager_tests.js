@@ -25,6 +25,9 @@ var createViewEditorManager = function (arch) {
             if (route === '/web_studio/get_default_value') {
                 return $.when({});
             }
+            if (route === '/web_studio/get_email_alias') {
+                return $.when({email_alias: 'coucou'});
+            }
             return this._super(route, args);
         },
     });
@@ -249,6 +252,37 @@ QUnit.module('Studio', {}, function () {
             "there should be no invisible node");
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 1,
             "there should be one hook");
+
+        vem.destroy();
+    });
+
+    QUnit.test('form editor - chatter edition', function(assert) {
+        assert.expect(5);
+
+        var arch =
+            "<form>" +
+                "<sheet>" +
+                    "<field name='display_name'/>" +
+                "</sheet>" +
+                "<div class='oe_chatter'/>" +
+            "</form>";
+
+        var vem = createViewEditorManager(arch);
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .oe_chatter[data-node-id]').length, 1,
+            "there should be a chatter node");
+
+        // click on the chatter
+        vem.$('.o_web_studio_form_view_editor .oe_chatter[data-node-id]').click();
+
+        assert.ok(vem.$('.o_web_studio_sidebar .o_web_studio_properties').hasClass('active'),
+            "the Properties tab should now be active");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_chatter').length, 1,
+            "the sidebar should now display the chatter properties");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .oe_chatter[data-node-id]').hasClass('o_clicked'),
+            "the chatter should have the clicked style");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar input[name="email_alias"]').val(), "coucou",
+            "the email alias in sidebar should be fetched");
 
         vem.destroy();
     });

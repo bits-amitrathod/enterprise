@@ -356,14 +356,16 @@
         <div t-if="widget.state.node.tag === 'group'" class="o_web_studio_sidebar_content o_display_group">
             <t t-call="web_studio.ViewEditorSidebar.group"/>
         </div>
-        <div t-if="widget.state.node.tag === 'chatter'" class="o_web_studio_sidebar_content o_display_chatter">
-            <t t-call="web_studio.ViewEditorSidebar.chatter"/>
-        </div>
+        <t t-if="widget.state.node.tag === 'div'">
+            <div t-if="widget.state.node.attrs.class === 'oe_chatter'" class="o_web_studio_sidebar_content o_display_chatter">
+                <t t-call="web_studio.ViewEditorSidebar.chatter"/>
+            </div>
+            <div t-else="" class="o_web_studio_sidebar_content o_display_div">
+                <t t-call="web_studio.ViewEditorSidebar.div"/>
+            </div>
+        </t>
         <div t-if="widget.state.node.tag === 'button'" class="o_web_studio_sidebar_content o_display_button">
             <t t-call="web_studio.ViewEditorSidebar.button"/>
-        </div>
-        <div t-if="widget.state.node.tag === 'div'" class="o_web_studio_sidebar_content o_display_div">
-            <t t-call="web_studio.ViewEditorSidebar.div"/>
         </div>
         <div t-if="widget.state.node.tag ==='filter'" class="o_web_studio_sidebar_content o_display_filter">
             <t t-if="widget.state.attrs.is_group_by === true">

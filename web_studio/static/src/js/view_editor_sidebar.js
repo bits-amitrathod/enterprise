@@ -73,10 +73,6 @@ return Widget.extend(StandaloneFieldManagerMixin, {
 
         this.state = params.state || {};
 
-        if (this.state.node && this.state.attrs.class === 'oe_chatter') {
-           this.state.node.tag = 'chatter';
-        }
-
         if (this.state.node && this.state.node.tag === 'field') {
             // deep copy of field because the object is modified
             // in this widget and this shouldn't impact it
