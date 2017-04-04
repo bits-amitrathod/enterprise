@@ -358,6 +358,7 @@ return AbstractRenderer.extend({
         var grouped_by = this.state.to_grouped_by;
         var children = self._getAllChildren(parent.id);
         var consolidation_max = this.consolidation_max[grouped_by[0]] || false;
+        var mapping = this.state.mapping;
 
         // First step : create a list of object for the children. The contains (left, consolidation
         // value, consolidation color) where left is position in the bar, and consolidation value is

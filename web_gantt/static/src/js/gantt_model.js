@@ -118,13 +118,14 @@ return AbstractModel.extend({
      */
     _loadGantt: function () {
         var self = this;
-        var fields = _.keys(this.gantt.fields).concat(this.gantt.to_grouped_by);
+        var fields = _.values(this.mapping).concat(this.gantt.to_grouped_by);
+        fields.push('display_name');
         return this._rpc({
                 model: this.modelName,
                 method: 'search_read',
                 context: this.gantt.context,
                 domain: this.gantt.domain.concat(this._focusDomain()),
-                fields: fields,
+                fields: _.uniq(fields),
             })
             .then(function (records) {
                 self.gantt.data = records;

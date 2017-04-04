@@ -18,15 +18,29 @@ QUnit.module('Views', {
                     start: {string: "start", type: "datetime"},
                     stop: {string: "stop", type: "datetime"},
                     progress: {string: "progress", type: "int"},
+                    time: {string: "Time", type: "float"},
+                    user_id: {string: "User", type: "many2one", relation: 'user'},
                 },
                 records: [
-                    {id: 1, name: "task 1", start: "2016-12-11 00:00:00", stop: "2016-12-11 00:00:00", progress: 50},
-                    {id: 2, name: "task 2", start: "2016-12-12 10:55:05", stop: "2016-12-12 14:55:05", progress: 30},
-                    {id: 3, name: "task 3", start: "2016-12-12 15:55:05", stop: "2016-12-12 16:55:05", progress: 20},
-                    {id: 4, name: "task 4", start: "2016-12-14 15:55:05", stop: "2016-12-14 18:55:05", progress: 90},
-                    {id: 5, name: "task 5", start: "2016-12-23 15:55:05", stop: "2016-12-26 18:55:05", progress: 10},
-                    {id: 6, name: "task 6", start: "2016-12-28 08:00:00", stop: "2016-12-28 09:00:00", progress: 30},
+                    {id: 1, name: "task 1", start: "2016-12-11 00:00:00", stop: "2016-12-13 00:00:00", progress: 50, time: 174.3, user_id: 3},
+                    {id: 2, name: "task 2", start: "2016-12-12 10:55:05", stop: "2016-12-12 14:55:05", progress: 30, time: 88.4, user_id: 3},
+                    {id: 3, name: "task 3", start: "2016-12-27 15:55:05", stop: "2016-12-29 16:55:05", progress: 20, time: 31.0, user_id: 61},
+                    {id: 4, name: "task 4", start: "2016-12-14 15:55:05", stop: "2016-12-14 18:55:05", progress: 90, time: 99.1, user_id: 3},
+                    {id: 5, name: "task 5", start: "2016-12-23 15:55:05", stop: "2016-12-31 18:55:05", progress: 10, time: 41.1, user_id: 61},
+                    {id: 6, name: "task 6", start: "2016-12-28 08:00:00", stop: "2016-12-31 09:00:00", progress: 30, time: 10.9, user_id: 3},
                 ]
+            },
+            user: {
+                fields: {
+                    name: {string: "Name", type: "char"}
+                },
+                records: [{
+                    id: 3,
+                    name: "jack",
+                }, {
+                    id: 61,
+                    name: "john",
+                }]
             },
         };
     }
@@ -55,8 +69,8 @@ QUnit.module('Views', {
                 "should display 6 tasks");
 
             gantt.$buttons.find('.o_gantt_button_scale[value="day"]').trigger('click');
-            assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 4,
-                "should display 4 tasks in day mode");
+            assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 3,
+                "should display 3 tasks in day mode");
             assert.strictEqual(gantt.get('title'), "Forecast (12 Dec)", "should have correct title");
 
             gantt.$buttons.find('.o_gantt_button_right').trigger('click');
@@ -64,8 +78,8 @@ QUnit.module('Views', {
                 "should now display 3 tasks");
 
             gantt.$buttons.find('.o_gantt_button_left').trigger('click');
-            assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 4,
-                "should now display 4 tasks");
+            assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 3,
+                "should now display 3 tasks");
 
             gantt.destroy();
             done();
@@ -125,5 +139,44 @@ QUnit.module('Views', {
             done();
         });
     });
+
+    QUnit.test('gantt view with consolidation', function (assert) {
+        assert.expect(5);
+        var done = assert.async();
+
+        createAsyncView({
+            View: GanttView,
+            model: 'task',
+            data: this.data,
+            arch: '<gantt type="consolidate" ' +
+                    'date_start="start" date_stop="stop" ' +
+                    'consolidation="time" ' +
+                    'consolidation_max="{&quot;user_id&quot;: 100}">' +
+                '</gantt>',
+            viewOptions: {
+                initialDate: initialDate,
+                action: {name: "Forecasts"},
+                groupBy: ['user_id']
+            },
+            mockRPC: function (route, args) {
+                assert.step(args.method);
+                if (args.method === 'search_read') {
+                    assert.deepEqual(args.args[1], ['name', 'start', 'stop', 'time', 'user_id', 'display_name'],
+                        "should fetch only necessary fields");
+                }
+                return this._super(route, args);
+            },
+        }).then(function (gantt) {
+            assert.strictEqual(gantt.$('.inside_task_bar.o_gantt_color_red[consolidation_ids="gantt_task_1"]').length, 2,
+                "should have 2 task bars for task 1, in red");
+            assert.strictEqual(gantt.$('.inside_task_bar.o_gantt_colorgreen_3[consolidation_ids="gantt_task_5"]').length, 2,
+                "should have 2 task bars for task 5, in green");
+
+            assert.verifySteps(['search_read']);
+            gantt.destroy();
+            done();
+        });
+    });
+
 });
 });
