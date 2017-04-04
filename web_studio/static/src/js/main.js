@@ -177,9 +177,12 @@ var Main = Widget.extend({
             var context = new Context(self.action.context);
             var view_def = self.loadViews(self.action.res_model, context, views, options);
             return view_def.then(function (fields_views) {
+                var view_env = _.defaults({}, self.view_env, {
+                    currentId: self.view_env.ids && self.view_env.ids[0],
+                });
                 var params = {
                     fields_view: fields_views[view_type],
-                    view_env: self.view_env,
+                    view_env: view_env,
                     chatter_allowed: self.chatter_allowed,
                     studio_view_id: studio_view.studio_view_id,
                     studio_view_arch: studio_view.studio_view_arch,
