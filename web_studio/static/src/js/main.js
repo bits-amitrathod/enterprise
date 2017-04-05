@@ -174,7 +174,8 @@ var Main = Widget.extend({
         // renderer will not be aware that a new view exists
         var arch_def = this._getStudioViewArch(this.action.res_model, view_type, view_id);
         return arch_def.then(function (studio_view) {
-            var context = new Context(self.action.context);
+            // add studio in loadViews context to retrieve groups server-side
+            var context = new Context(_.extend({}, self.action.context, {studio: true}));
             var view_def = self.loadViews(self.action.res_model, context, views, options);
             return view_def.then(function (fields_views) {
                 var view_env = _.defaults({}, self.view_env, {
