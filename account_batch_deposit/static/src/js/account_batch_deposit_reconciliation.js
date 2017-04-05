@@ -92,12 +92,10 @@ var Model = {
      * @override
      *
      * @private
-     * @param {string} handle
-     * @param {Object[]}
+     * @param {Object}
      * @returns {Deferred}
      */
-    _formatMoveLine: function (handle, mv_lines) {
-        var line = this.getLine(handle);
+    _computeLine: function (line) {
         if (line.st_line.partner_id) {
             line.relevant_deposits = [];
         } else {
