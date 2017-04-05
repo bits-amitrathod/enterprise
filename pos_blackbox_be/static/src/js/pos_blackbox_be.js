@@ -817,10 +817,14 @@ can no longer be modified. Please create a new line with eg. a negative quantity
             return packet;
         },
 
-        _show_could_not_connect_error: function () {
+        _show_could_not_connect_error: function (reason) {
+            var body = _t("Could not connect to the Fiscal Data Module.");
+            if (reason) {
+                body = body + ' ' + reason;
+            }
             this.pos.gui.show_popup("blocking-error", {
                 'title': _t("Fiscal Data Module error"),
-                'body':  _t("Could not connect to the Fiscal Data Module."),
+                'body':  body,
             });
         },
 
@@ -1066,8 +1070,12 @@ can no longer be modified. Please create a new line with eg. a negative quantity
             var self = this;
             return posmodel_super.connect_to_proxy.apply(this, arguments).then(function () {
                 self.proxy.message('request_serial', {}, {timeout: 5000}).then(function (response) {
-                    if (! response || "BODO002" + response.toUpperCase() != self.config.blackbox_pos_production_id.toUpperCase()) {
-                        self.proxy._show_could_not_connect_error();
+                    if (! response) {
+                        self.proxy._show_could_not_connect_error(_t("Unreachable FDM"));
+                    } else if ("BODO002" + response.toUpperCase() != self.config.blackbox_pos_production_id.toUpperCase()) {
+                        self.proxy._show_could_not_connect_error(
+                            _t("Incorrect PosBox serial")+' '+self.config.blackbox_pos_production_id.toUpperCase()
+                        );
                     } else {
                         self.chrome.ready.then(function () {
                             var current = $(self.chrome.$el).find('.placeholder-posID').text();
