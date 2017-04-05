@@ -88,6 +88,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         move_lines = self.env['account.move.line'].search([('move_id.journal_id', '=', journal_id),
                                                            '|', ('statement_line_id', '=', False), ('statement_line_id.date', '>', self.env.context['date_to']),
                                                            ('user_type_id.type', '=', 'liquidity'),
+                                                           ('full_reconcile_id', '=', False),
                                                            ('date', '<=', self.env.context['date_to']),
                                                            ('company_id', 'in', self.env.context['company_ids'])])
         unrec_tot = 0
