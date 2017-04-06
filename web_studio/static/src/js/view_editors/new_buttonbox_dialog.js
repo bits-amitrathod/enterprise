@@ -49,22 +49,25 @@ var NewButtonBoxDialog = Dialog.extend(StandaloneFieldManagerMixin, {
      * @override
      */
     start: function () {
-        var recordID = this.model.makeRecord('ir.actions.act_window', [{
+        var self = this;
+        var defs = [];
+        defs.push(this._super.apply(this, arguments));
+        defs.push(this.model.makeRecord('ir.actions.act_window', [{
             name: 'field',
             relation: 'ir.model.fields',
             type: 'many2one',
             domain: [['relation', '=', this.model_name], ['ttype', '=', 'many2one']],
-        }]);
-        var options = {
-            mode: 'edit',
-            no_quick_create: true,
-        };
-        var record = this.model.get(recordID);
-        this.many2one = new Many2one(this, 'field', record, options);
-        this._registerWidget(recordID, 'field', this.many2one);
-
-        this.many2one.appendTo(this.$('.js_many2one_field'));
-        return this._super.apply(this, arguments);
+        }]).then(function (recordID) {
+            var options = {
+                mode: 'edit',
+            };
+            var record = self.model.get(recordID);
+            self.many2one = new Many2one(self, 'field', record, options);
+            self.many2one.nodeOptions.no_create = true;
+            self._registerWidget(recordID, 'field', self.many2one);
+            self.many2one.appendTo(self.$('.js_many2one_field'));
+        }));
+        return $.when.apply($, defs);
     },
 
     //--------------------------------------------------------------------------

@@ -16,12 +16,12 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.NewFieldDialog',
     /**
      * @constructor
-     * @param {String} model
+     * @param {String} model_name
      * @param {String} ttype
      * @param {Object} fields
      */
-    init: function (parent, model, ttype, fields) {
-        this.model = model;
+    init: function (parent, model_name, ttype, fields) {
+        this.model_name = model_name;
         this.ttype = ttype;
         this.fields = fields;
         var options = {
@@ -43,7 +43,8 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
      * @override
      */
     start: function() {
-        var recordID;
+        var self = this;
+        var defs = [];
         var record;
         var options = {
             mode: 'edit',
@@ -52,37 +53,35 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         this.$modal.addClass('o_web_studio_field_modal');
 
         if (this.ttype === 'one2many') {
-            recordID = this.model.makeRecord('ir.model.fields', [{
+            defs.push(this.model.makeRecord('ir.model.fields', [{
                 name: 'field',
                 relation: 'ir.model.fields',
                 type: 'many2one',
-                domain: [['relation', '=', this.model], ['ttype', '=', 'many2one']],
+                domain: [['relation', '=', this.model_name], ['ttype', '=', 'many2one']],
             }], {
                 'field': {
-                    // it's not possible to create an new many2one field for
-                    // another model directly from here
                     can_create: false,
                 }
-            });
-            record = this.model.get(recordID);
-            this.many2one_field = new Many2one(this, 'field', record, options);
-            this._registerWidget(recordID, 'field', this.many2one_field);
-            // TODO: temporary hack, will be fixed with the new views
-            this.many2one_field.nodeOptions.no_create_edit = !core.debug;
-            this.many2one_field.appendTo(this.$('.o_many2one_field'));
+            }).then(function (recordID) {
+                record = self.model.get(recordID);
+                self.many2one_field = new Many2one(self, 'field', record, options);
+                self._registerWidget(recordID, 'field', self.many2one_field);
+                self.many2one_field.nodeOptions.no_create_edit = !core.debug;
+                self.many2one_field.appendTo(self.$('.o_many2one_field'));
+            }));
         } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
-            recordID = this.model.makeRecord('ir.model', [{
+            defs.push(this.model.makeRecord('ir.model', [{
                 name: 'model',
                 relation: 'ir.model',
                 type: 'many2one',
                 domain: [['transient', '=', false], ['abstract', '=', false]]
-            }]);
-            record = this.model.get(recordID);
-            this.many2one_model = new Many2one(this, 'model', record, options);
-            this._registerWidget(recordID, 'model', this.many2one_model);
-            // TODO: temporary hack, will be fixed with the new views
-            this.many2one_model.nodeOptions.no_create_edit = !core.debug;
-            this.many2one_model.appendTo(this.$('.o_many2one_model'));
+            }]).then(function (recordID) {
+                record = self.model.get(recordID);
+                self.many2one_model = new Many2one(self, 'model', record, options);
+                self._registerWidget(recordID, 'model', self.many2one_model);
+                self.many2one_model.nodeOptions.no_create_edit = !core.debug;
+                self.many2one_model.appendTo(self.$('.o_many2one_model'));
+            }));
         } else if (this.ttype === 'related') {
             // This restores default modal height (bootstrap) and allows field selector to overflow
             this.$el.css("overflow", "visible").closest(".modal-dialog").css("height", "auto");
@@ -97,15 +96,12 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             var field_options = {
                 fields: many2one_fields,
             };
-            this.fieldSelector = new ModelFieldSelector(this, this.model, [], field_options);
-
-            return $.when(
-                this.fieldSelector.appendTo(this.$('.o_many2one_field'),
-                this._super.apply(this, arguments))
-            );
+            this.fieldSelector = new ModelFieldSelector(this, this.model_name, [], field_options);
+            defs.push(this.fieldSelector.appendTo(this.$('.o_many2one_field')));
         }
 
-        return this._super.apply(this, arguments);
+        defs.push(this._super.apply(this, arguments));
+        return $.when.apply($, defs);
     },
 
     //--------------------------------------------------------------------------

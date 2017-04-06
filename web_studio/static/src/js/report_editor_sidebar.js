@@ -21,7 +21,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @param {Widget} parent
      * @param {Object} report
      */
-    init: function(parent, report) {
+    init: function (parent, report) {
         this._super.apply(this, arguments);
         StandaloneFieldManagerMixin.init.call(this);
         this.debug = core.debug;
@@ -30,63 +30,59 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     /**
      * @override
      */
-    willStart: function() {
+    willStart: function () {
         var self = this;
-        return this._super.apply(this, arguments).then(function() {
-            if (self.report.groups_id.length === 0) {
-                return $.Deferred().resolve();
-            }
-
-            // many2many field expects to receive: a list of {id, name, display_name}
-            return self._rpc({
-                    model: 'res.groups',
-                    method: 'search_read',
-                    args: [[['id', 'in', self.report.groups_id]], ['id', 'name', 'display_name']],
-                })
-                .then(function(result) {
-                    self.groups_info = result;
-                });
+        // make record for the many2many groups
+        var def1 = this.model.makeRecord('ir.model.fields', [{
+            name: 'groups_id',
+            fields: [{
+                name: 'id',
+                type: 'integer',
+            }, {
+                name: 'display_name',
+                type: 'char',
+            }],
+            relation: 'res.groups',
+            type: 'many2many',
+            value: this.report.groups_id,
+        }]).then(function (recordID) {
+            self.groupsHandle = recordID;
         });
+        // load record for the many2one paperformat
+        var def2 = this.model.makeRecord('ir.model.fields', [{
+            name: 'paperformat_id',
+            relation: 'report.paperformat',
+            type: 'many2one',
+            value: this.report.paperformat_id,
+        }]).then(function (recordID) {
+            self.paperformatHandle = recordID;
+        });
+        var def3 = this._super.apply(this, arguments);
+        return $.when(def1, def2, def3);
     },
     /**
      * @override
      */
-    start: function() {
-        var self = this;
-        return this._super.apply(this, arguments).then(function() {
-            // add many2many for groups_id
-            var groups = self.report.groups_id;
-            var recordID1 = self.model.makeRecord('ir.model.fields', [{
-                name: 'groups_id',
-                relation: 'res.groups',
-                relational_value: self.groups_info,
-                type: 'many2many',
-                value: groups,
-            }]);
-            var options1 = {
-                mode: 'edit',
-                no_quick_create: true,  // FIXME: enable add option
-            };
-            var record1 = self.model.get(recordID1);
-            self.many2many = new Many2ManyTags(self, 'groups_id', record1, options1);
-            self._registerWidget(recordID1, 'model', self.many2many);
-            self.many2many.appendTo(self.$('.o_groups'));
-
-            // add many2one for paperformat_id
-            var recordID2 = self.model.makeRecord('ir.model.fields', [{
-                name: 'paperformat_id',
-                relation: 'report.paperformat',
-                type: 'many2many',
-            }]);
-            var options2 = {
-                mode: 'edit',
-                no_quick_create: true,  // FIXME: enable add option
-            };
-            var record2 = self.model.get(recordID2);
-            self.many2one = new Many2One(self, 'paperformat_id', record2, options2);
-            self._registerWidget(recordID2, 'model', self.many2one);
-            self.many2one.appendTo(self.$el.find('.o_paperformat_id'));
+    start: function () {
+        var defs = [];
+        defs.push(this._super.apply(this, arguments));
+        var paperFormatRecord = this.model.get(this.paperformatHandle);
+        var many2one = new Many2One(this, 'paperformat_id', paperFormatRecord, {
+            mode: 'edit',
         });
+        this._registerWidget(this.paperformatHandle, 'paperformat_id', many2one);
+        defs.push(many2one.appendTo(this.$('.o_paperformat_id')));
+        many2one.nodeOptions.no_create = true;
+        this.paperformatMany2one = many2one;
+
+        // append many2many for groups_id
+        var groupsRecord = this.model.get(this.groupsHandle);
+        var many2many = new Many2ManyTags(this, 'groups_id', groupsRecord, {
+            mode: 'edit',
+        });
+        this._registerWidget(this.groupsHandle, 'groups_id', many2many);
+        defs.push(many2many.appendTo(this.$('.o_groups')));
+        return $.when.apply($, defs);
     },
 
     //--------------------------------------------------------------------------
@@ -97,7 +93,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @private
      * @param {Event} ev
      */
-    _onChangeReport: function(ev) {
+    _onChangeReport: function (ev) {
         var $input = $(ev.currentTarget);
         var attribute = $input.attr('name');
         if (attribute) {
@@ -119,13 +115,18 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
 
         var args = {};
-        var field_name = ev.data.name;
+        var field_name = ev.target.name;
+        var record;
         if (field_name === 'groups_id') {
-            args[field_name] = this.many2many.value;
+            record = this.model.get(this.groupsHandle);
+            args[field_name] = record.data.groups_id.res_ids;
         } else if (field_name === 'paperformat_id') {
-            args[field_name] = this.many2one.value.res_id;
+            args[field_name] = this.paperformatMany2one.value.res_id;
         }
-        this.trigger_up('studio_edit_report', {report: this.report, args: args});
+        this.trigger_up('studio_edit_report', {
+            report: this.report,
+            args: args,
+        });
     },
     /**
      * @private

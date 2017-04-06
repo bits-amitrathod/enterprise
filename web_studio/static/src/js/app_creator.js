@@ -187,18 +187,20 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
             this._checkFields();
         } else {
             // create a Many2one field widget for the custom model
-            var recordID = this.model.makeRecord('ir.actions.act_window', [{
+            var self = this;
+            this.model.makeRecord('ir.actions.act_window', [{
                 name: 'model',
                 relation: 'ir.model',
                 type: 'many2one',
                 domain: [['transient', '=', false], ['abstract', '=', false]]
-            }]);
-            var record = this.model.get(recordID);
-            var options = {
-                mode: 'edit',
-            };
-            this.many2one = new FieldMany2One(this, 'model', record, options);
-            this._registerWidget(recordID, 'model', this.many2one);
+            }]).then(function (recordID) {
+                var record = self.model.get(recordID);
+                var options = {
+                    mode: 'edit',
+                };
+                self.many2one = new FieldMany2One(self, 'model', record, options);
+                self._registerWidget(recordID, 'model', self.many2one);
+            });
 
             // add 'Create your first Menu' content
             var $menuForm = $(QWeb.render('web_studio.AppCreator.Menu', {

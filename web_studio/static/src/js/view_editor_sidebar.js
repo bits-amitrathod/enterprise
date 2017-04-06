@@ -108,7 +108,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @override
      */
     start: function () {
-        this._super.apply(this, arguments).then(this._render.bind(this));
+        return this._super.apply(this, arguments).then(this._render.bind(this));
     },
 
     //--------------------------------------------------------------------------
@@ -140,8 +140,9 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @private
      */
     _changeFieldGroup: function () {
+        var record = this.model.get(this.groupsHandle);
         var new_attrs = {};
-        new_attrs.groups = this.many2many.value;
+        new_attrs.groups = record.data.groups.res_ids;
         this.trigger_up('view_change', {
             type: 'attributes',
             structure: 'edit_attributes',
@@ -202,7 +203,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
                 self.trigger_up('drag_component', {position: {pageX: event.pageX, pageY: event.pageY}, $helper: ui.helper});
             }, 200));
         } else if (this.state.mode === 'properties') {
-            this._renderWidgetsM2MGroups();
+            return this._renderWidgetsM2MGroups();
         }
     },
     /**
@@ -280,23 +281,32 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @private
      */
     _renderWidgetsM2MGroups: function () {
-        var studio_groups = this.state.attrs.studio_groups ? JSON.parse(this.state.attrs.studio_groups) : [];
-        var recordID = this.model.makeRecord('ir.model.fields', [{
+        var self = this;
+        var studio_groups = this.state.attrs.studio_groups && JSON.parse(this.state.attrs.studio_groups);
+        return this.model.makeRecord('ir.model.fields', [{
             name: 'groups',
+            fields: [{
+                name: 'id',
+                type: 'integer',
+            }, {
+                name: 'display_name',
+                type: 'char',
+            }],
             relation: 'res.groups',
-            relational_value: studio_groups,
             type: 'many2many',
-            value: _.pluck(studio_groups, 'id'),
-        }]);
-        var record = this.model.get(recordID);
-        var options = {
-            idForLabel: 'groups',
-            mode: 'edit',
-            no_quick_create: true,
-        };
-        this.many2many = new Many2ManyTags(this, 'groups', record, options);
-        this._registerWidget(recordID, 'groups', this.many2many);
-        this.many2many.appendTo(this.$('.o_groups'));
+            value: studio_groups,
+        }]).then(function (recordID) {
+            self.groupsHandle = recordID;
+            var record = self.model.get(self.groupsHandle);
+            var options = {
+                idForLabel: 'groups',
+                mode: 'edit',
+                no_quick_create: true,
+            };
+            var many2many = new Many2ManyTags(self, 'groups', record, options);
+            self._registerWidget(self.groupsHandle, 'groups', many2many);
+            return many2many.appendTo(self.$('.o_groups'));
+        });
     },
 
     //--------------------------------------------------------------------------

@@ -28,52 +28,43 @@ var ActionEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
             name: action.display_name || action.name,
             help: action.help && action.help.replace(/\n\s+/g, '\n') || '',
         };
-        this.groups_info = [];
     },
     /**
      * @override
      */
     willStart: function () {
         var self = this;
-        return this._super.apply(this, arguments).then(function () {
-            if (self.action.groups_id.length === 0) { return; }
-
-            // many2many field expects to receive: a list of {id, name, display_name}
-            self._rpc({
-                    model: 'res.groups',
-                    method: 'search_read',
-                    args: [[['id', 'in', self.action.groups_id]], ['id', 'name', 'display_name']],
-                })
-                .then(function(result) {
-                    self.groups_info = result;
-                });
+        var def1 = this.model.makeRecord('ir.actions.act_window', [{
+            name: 'groups_id',
+            fields: [{
+                name: 'id',
+                type: 'integer',
+            }, {
+                name: 'display_name',
+                type: 'char',
+            }],
+            relation: 'res.groups',
+            type: 'many2many',
+            value: this.action.groups_id,
+        }]).then(function (recordID) {
+            self.groupsHandle = recordID;
         });
+        var def2 = this._super.apply(this, arguments);
+        return $.when(def1, def2);
     },
     /**
      * @override
      */
     start: function () {
-        var self = this;
-        return this._super.apply(this, arguments).then(function () {
-
-            var groups = self.action.groups_id;
-            // TODO: fix many2many
-            var recordID = self.model.makeRecord('ir.actions.act_window', [{
-                name: 'groups_id',
-                relation: 'res.groups',
-                relational_value: self.groups_info,
-                type: 'many2many',
-                value: groups,
-            }]);
-            var record = self.model.get(recordID);
-            var options = {
-                mode: 'edit',
-                no_quick_create: true,  // FIXME: enable add option
-            };
-            self.many2many = new Many2ManyTags(self, 'groups_id', record, options);
-            self._registerWidget(recordID, 'groups_id', self.many2many);
-            self.many2many.appendTo(self.$el.find('.o_groups'));
-        });
+        var def1 = this._super.apply(this, arguments);
+        var record = this.model.get(this.groupsHandle);
+        var options = {
+            mode: 'edit',
+        };
+        var many2many = new Many2ManyTags(this, 'groups_id', record, options);
+        this._registerWidget(this.groupsHandle, 'groups_id', many2many);
+        var def2 = many2many.appendTo(this.$('.o_groups'));
+        return $.when(def1, def2);
     },
 
     //--------------------------------------------------------------------------
@@ -104,12 +95,13 @@ var ActionEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
     /*
      * @private
      * @override
-     * @param {Event} event
      */
-    _onFieldChanged: function (event) {
+    _onFieldChanged: function () {
         StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
-        var args = {};
-        args[event.data.name] = this.many2many.value;
+        var record = this.model.get(this.groupsHandle);
+        var args = {
+            groups_id: record.data.groups_id.res_ids,
+        };
         this.trigger_up('studio_edit_action', {args: args});
     },
 });

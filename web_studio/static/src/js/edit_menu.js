@@ -292,30 +292,31 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
      */
     start: function () {
         var self = this;
-
-        this.opened().then(function () {
+        var defs = [];
+        defs.push(this.opened().then(function () {
             self.$modal.addClass('o_web_studio_add_menu_modal');
             // focus on input
             self.$el.find('input[name="name"]').focus();
-        });
+        }));
 
-        return this._super.apply(this, arguments).then(function () {
-            var recordID = self.model.makeRecord('ir.actions.act_window', [{
-                name: 'model',
-                relation: 'ir.model',
-                type: 'many2one',
-                domain: [['transient', '=', false], ['abstract', '=', false]],
-            }]);
+        defs.push(this._super.apply(this, arguments));
+
+        defs.push(this.model.makeRecord('ir.actions.act_window', [{
+            name: 'model',
+            relation: 'ir.model',
+            type: 'many2one',
+            domain: [['transient', '=', false], ['abstract', '=', false]],
+        }]).then(function (recordID) {
             var options = {
                 mode: 'edit',
             };
             var record = self.model.get(recordID);
             self.many2one = new EditMenuMany2One(self, 'model', record, options);
-            // TODO: temporary hack, will be fixed with the new views
             self.many2one.nodeOptions.no_create_edit = !core.debug;
             self._registerWidget(recordID, 'model', self.many2one);
             self.many2one.appendTo(self.$('.js_model'));
-        });
+        }));
+        return $.when.apply($, defs);
     },
 
     //--------------------------------------------------------------------------
