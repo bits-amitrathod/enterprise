@@ -8,6 +8,11 @@ var Widget = require('web.Widget');
 var createViewEditorManager = function (arch, params) {
     var $target = $('#qunit-fixture');
 
+    // reproduce the DOM environment of Studio
+    var $web_client = $('<div>').addClass('o_web_client o_in_studio').appendTo($target);
+    var $content = $('<div>').addClass('o_content').appendTo($web_client);
+    var $client_action = $('<div>').addClass('o_web_studio_client_action').appendTo($content);
+
     params = params || {};
     var modelName = 'coucou';
     var widget = new Widget();
@@ -53,7 +58,7 @@ var createViewEditorManager = function (arch, params) {
         view_env: env,
 
     });
-    vem.appendTo($target);
+    vem.appendTo($client_action);
     return vem;
 };
 
