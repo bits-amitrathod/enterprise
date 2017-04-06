@@ -6,33 +6,25 @@
         <field name="model">account.config.settings</field>
         <field name="inherit_id" ref="account.account_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@id='rounding_method']" position="after">
-                <div class="col-md-6 o_setting_box">
-                    <div class="o_setting_left_pane"/>
-                    <div class="o_setting_right_pane">
-                        <label string="TaxCloud Connection"/>
-                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
-                        <div class="text-muted">
-                            Compute tax rates based on U.S. ZIP codes
-                        </div>
-                        <div class="content-group">
-                            <div class="row mt16">
-                                <label string="API ID" for="taxcloud_api_id" class="col-md-3 o_light_label"/>
-                                <field name="taxcloud_api_id" class="oe_inline"/>
-                            </div>
-                            <div class="row">
-                                <label string="API KEY" for="taxcloud_api_key" class="col-md-3 o_light_label" />
-                                <field name="taxcloud_api_key" class="oe_inline"/>
-                            </div>
-                            <div attrs="{'invisible': [('taxcloud_api_id', '!=', False), ('taxcloud_api_key', '!=', False)]}">
-                                <a href="https://dev.taxcloud.com/guides/find-your-taxcloud-api-credentials" target="_new"><i class="fa fa-fw fa-arrow-right"></i>Create Account &amp; Get Credentials</a>
-                            </div>
-                        </div>
+            <div name="account_taxcloud_right_pane" position="inside">
+                <div class="content-group" attrs="{'invisible': [('module_account_taxcloud', '=', False)]}">
+                    <div class="row mt16">
+                        <label string="API ID" for="taxcloud_api_id" class="col-md-3 o_light_label"/>
+                        <field name="taxcloud_api_id" class="oe_inline"/>
+                    </div>
+                    <div class="row">
+                        <label string="API KEY" for="taxcloud_api_key" class="col-md-3 o_light_label" />
+                        <field name="taxcloud_api_key" class="oe_inline"/>
+                    </div>
+                    <div attrs="{'invisible': [('taxcloud_api_id', '!=', False), ('taxcloud_api_key', '!=', False)]}">
+                        <a href="https://dev.taxcloud.com/guides/find-your-taxcloud-api-credentials" target="_new"><i class="fa fa-fw fa-arrow-right"></i>Create Account &amp; Get Credentials</a>
                     </div>
                 </div>
+            </div>
+            <xpath expr="//div[@id='taxcloud_settings']" position="after">
                 <div class="col-md-6 o_setting_box">
                     <div class="o_setting_left_pane"/>
-                    <div class="o_setting_right_pane">
+                    <div class="o_setting_right_pane" attrs="{'invisible': [('module_account_taxcloud', '=', False)]}">
                         <label string="TaxCloud Categories (TIC)"/>
                         <div class="text-muted">
                             Default TaxCloud category for new products
