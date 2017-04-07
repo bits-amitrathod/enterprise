@@ -1,4 +1,4 @@
-odoo.define('crm.voip_tests', function(require) {
+odoo.define('crm.voip_tests', function (require) {
 "use strict";
 
 var FormView = require('web.FormView');
@@ -80,7 +80,7 @@ QUnit.module('crm_voip', {
         form.destroy();
     });
 
-    QUnit.test('phone field in editable list view on normal screens', function(assert) {
+    QUnit.test('phone field in editable list view on normal screens', function (assert) {
         assert.expect(10);
 
         var list = createView({
@@ -110,15 +110,15 @@ QUnit.module('crm_voip', {
         // Edit a line and check the result
         var $cell = list.$('tbody td:not(.o_list_record_selector)').first();
         $cell.click();
-        assert.ok($cell.hasClass('o_edit_mode'), 'should be set as edit mode');
+        assert.ok($cell.parent().hasClass('o_selected_row'), 'should be set as edit mode');
         assert.strictEqual($cell.find('input').val(), 'yop',
             'should have the corect value in internal input');
-        $cell.find('input').val('new').trigger('input');;
+        $cell.find('input').val('new').trigger('input');
 
         // save
         list.$buttons.find('.o_list_button_save').click();
         $cell = list.$('tbody td:not(.o_list_record_selector)').first();
-        assert.ok(!$cell.hasClass('o_edit_mode'), 'should not be in edit mode anymore');
+        assert.ok(!$cell.parent().hasClass('o_selected_row'), 'should not be in edit mode anymore');
         assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').first().text(), 'n\u00ADew',
             "value should be properly updated");
         $phoneLink = list.$('a.o_form_uri.o_field_widget.o_text_overflow');

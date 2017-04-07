@@ -107,17 +107,21 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
      * @override
      * @private
      */
-    _evaluateModifiers: function () {
-        this._super.apply(this, arguments);
+    _applyModifiers: function (modifiersData, record, element) {
+        var def = this._super.apply(this, arguments);
+
         if (this.show_invisible) {
-            _.each(this.nodeModifiers, function (d) {
-                if (d.$el.hasClass('o_form_invisible')) {
-                    d.$el
+            var elements = element ? [element] : modifiersData.elements;
+            _.each(elements, function (element) {
+                if (element.$el.hasClass('o_form_invisible')) {
+                    element.$el
                         .removeClass('o_form_invisible')
                         .addClass('o_web_studio_show_invisible');
                 }
             });
         }
+
+        return def;
     },
     /**
      * Process a field node, in particular, bind an click handler on $el to edit
@@ -192,7 +196,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             if (!self.$('.oe_button_box').length) {
                 var $buttonbox_hook = $('<button>')
                     .addClass('btn btn-sm oe_stat_button o_web_studio_button_hook')
-                    .click(function(event) {
+                    .click(function (event) {
                         event.preventDefault();
                         self.trigger_up('view_change', {
                             type: 'add',
