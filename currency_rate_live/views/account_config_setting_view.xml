@@ -9,17 +9,17 @@
             <xpath expr="//div[@id='update_currency_live']" position="after">
                 <div class="row mt16">
                     <label string="Service" for="currency_provider" class="col-md-3 o_light_label"/>
-                    <field name="currency_provider" class="oe_inline"/>
+                    <field name="currency_provider"/>
                 </div>
                 <div class="row">
                     <label string="Interval" for="currency_interval_unit" class="col-md-3 o_light_label"/>
-                    <field name="currency_interval_unit" class="oe_inline"/>
+                    <field name="currency_interval_unit"/>
                 </div>
                 <div class="row">
                     <label string="Next Run" for="currency_next_execution_date" class="col-md-3 o_light_label"/>
-                    <field name="currency_next_execution_date" class="oe_inline"/>
-                    <button name="update_currency_rates" type="object" class="btn-link oe_inline">
-                        <i title="Update now" class="fa fa-lg fa-refresh"></i>
+                    <field name="currency_next_execution_date"/>
+                    <button name="update_currency_rates" type="object" class="btn-link">
+                        <i title="Update now" class="fa fa-fw fa-refresh"></i>
                     </button>
                 </div>
             </xpath>

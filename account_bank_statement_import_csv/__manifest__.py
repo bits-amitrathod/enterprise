@@ -23,5 +23,6 @@ Whenever possible, you should use a more appropriate file format like OFX.
         'views/account_bank_statement_import_templates.xml',
     ],
     'installable': True,
+    'auto_install': True,
     'license': 'OEEL-1',
 }
