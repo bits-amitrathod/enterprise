@@ -365,18 +365,17 @@ var ViewEditorManager = Widget.extend({
 
         // TODO: scroll top is calculated to 'o_web_studio_sidebar_content'
         var scrolltop = this.sidebar.$el.scrollTop();
-        var oldSidebar = this.sidebar;
 
-        var def = [];
+        var def;
 
         var newState;
         if (mode) {
             newState = {
                 mode: mode,
-                show_invisible: oldSidebar.state.show_invisible,
+                show_invisible: this.sidebar.state.show_invisible,
             };
         } else {
-            newState = oldSidebar.state;
+            newState = this.sidebar.state;
         }
 
         switch (mode) {
@@ -411,19 +410,20 @@ var ViewEditorManager = Widget.extend({
 
         return $.when(def).then(function (result) {
             _.extend(newState, result);
-            var newSidebar = self.instantiateSidebar(newState);
-            self.sidebar = newSidebar;
+            self.sidebar.destroy();
+            self.sidebar = self.instantiateSidebar(newState);
 
-            return newSidebar.prependTo(self.$el).then(function () {
-                oldSidebar.destroy();
+            // Note: the sidebar rendering is considered synchronous here.
+            // If this changes, we will need to handle it correctly (to avoid
+            // any flickering) by using a dropmisorder for `def` and put this
+            // handler in a mutex.
+            self.sidebar.prependTo(self.$el);
+            self.sidebar.$el.scrollTop(scrolltop);
 
-                // restore previous state
-                newSidebar.$el.scrollTop(scrolltop);
-
-                if (self.mode === 'rendering') {
-                    newSidebar.$el.detach();
-                }
-            });
+            // the XML editor replaces the sidebar in this case
+            if (self.mode === 'rendering') {
+                self.sidebar.$el.detach();
+            }
         });
     },
     /**
