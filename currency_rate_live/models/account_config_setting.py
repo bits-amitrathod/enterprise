@@ -82,7 +82,7 @@ class ResCompany(models.Model):
 
             for currency, rate in rates_dict.iteritems():
                 company_rate = rate / base_currency_rate
-                self.env['res.currency.rate'].create({'currency_id':available_currencies[currency].id, 'rate':company_rate, 'name':fields.Datetime.now(), 'company_id':company.id})
+                self.env['res.currency.rate'].create({'currency_id':available_currencies[currency].id, 'rate':company_rate, 'name':fields.Date.today(), 'company_id':company.id})
 
         return True
 
@@ -146,7 +146,7 @@ class ResCompany(models.Model):
                 rate = float(rate) / float(base_currency_rate)
                 currency = Currency.search([('name', '=', currency_code)], limit=1)
                 if currency:
-                    CurrencyRate.create({'currency_id': currency.id, 'rate': rate, 'name': fields.Datetime.now(), 'company_id': company.id})
+                    CurrencyRate.create({'currency_id': currency.id, 'rate': rate, 'name': fields.Date.today(), 'company_id': company.id})
         return True
 
     def _update_currency_yahoo(self):
@@ -183,9 +183,9 @@ class ResCompany(models.Model):
                     currency_code = rate['Name'].split('/')[-1]
                     currency = Currency.search([('name', '=', currency_code)], limit=1)
                     if currency:
-                        CurrencyRate.create({'currency_id': currency.id, 'rate': rate['Rate'], 'name': fields.Datetime.now(), 'company_id': company.id})
+                        CurrencyRate.create({'currency_id': currency.id, 'rate': rate['Rate'], 'name': fields.Date.today(), 'company_id': company.id})
             if company.currency_id.rate != 1.0:
-                CurrencyRate.create({'currency_id': company.currency_id.id, 'rate': 1.0, 'name': fields.Datetime.now(), 'company_id': company.id})
+                CurrencyRate.create({'currency_id': company.currency_id.id, 'rate': 1.0, 'name': fields.Date.today(), 'company_id': company.id})
         return True
 
     @api.model
@@ -227,7 +227,7 @@ class AccountConfigSettings(models.TransientModel):
         else:
             self.currency_next_execution_date = False
             return
-        self.currency_next_execution_date = datetime.datetime.now() + next_update
+        self.currency_next_execution_date = datetime.date.today() + next_update
 
     @api.multi
     def update_currency_rates(self):
