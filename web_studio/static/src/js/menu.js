@@ -75,7 +75,7 @@ Menu.include({
                 this.studio_menu.insertAfter($main_navbar);
 
                 if (this.current_primary_menu) {
-                    this.edit_menu = new EditMenu(this, this.menu_data, this.current_primary_menu);
+                    this.edit_menu = new EditMenu.MenuItem(this, this.menu_data, this.current_primary_menu);
                     this.edit_menu.appendTo($main_navbar.find('.o_menu_sections'));
                 }
             } else {

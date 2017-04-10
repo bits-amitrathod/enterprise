@@ -13,10 +13,9 @@ var Widget = require('web.Widget');
 
 var Many2One = relational_fields.FieldMany2One;
 var _t = core._t;
-var Many2One = relational_fields.FieldMany2One;
 
-var EditMenu = Widget.extend({
-    template: 'web_studio.EditMenu',
+var MenuItem = Widget.extend({
+    template: 'web_studio.EditMenu.MenuItem',
     events: {
         'click .o_web_edit_menu': '_onClick',
     },
@@ -252,7 +251,7 @@ var EditMenuMany2One = Many2One.extend({
 });
 
 var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
-    template: 'web_studio.EditMenu_new',
+    template: 'web_studio.EditMenu.Dialog.New',
     custom_events: _.extend({}, Dialog.prototype.custom_events, FieldManagerMixin.custom_events, {
         edit_menu_disable_save: function () {
             this.$footer.find('.confirm_button').attr("disabled", "disabled");
@@ -367,6 +366,9 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
 
 });
 
-return EditMenu;
+return {
+    MenuItem: MenuItem,
+    Dialog: EditMenuDialog,
+};
 
 });
