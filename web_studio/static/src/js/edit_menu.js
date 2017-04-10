@@ -293,11 +293,11 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     start: function () {
         var self = this;
         var defs = [];
-        defs.push(this.opened().then(function () {
+        this.opened().then(function () {
             self.$modal.addClass('o_web_studio_add_menu_modal');
             // focus on input
             self.$el.find('input[name="name"]').focus();
-        }));
+        });
 
         defs.push(this._super.apply(this, arguments));
 
