@@ -29,7 +29,7 @@ Menu.include({
         this.widget = "image";
         this.company_id = session.company_id;
         this.fileupload_id = _.uniqueId('o_fileupload');
-        $(window).on(this.fileupload_id, this._onBackgroundLoaded);
+        $(window).on(this.fileupload_id, this._onBackgroundLoaded.bind(this));
     },
     /**
      * @override
