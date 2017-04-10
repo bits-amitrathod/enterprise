@@ -3,12 +3,6 @@ odoo.define('web_studio.EditorMixin', function() {
 
 return {
     /**
-     * @returns {Object}
-     */
-    getLocalState: function () {
-        return {};
-    },
-    /**
      * Highlight the nearest hook regarding the position and remove the
      * highlighto on other elements.
      *

@@ -41,7 +41,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
      * @override
      */
     getLocalState: function () {
-        var state = EditorMixin.getLocalState.apply(this, arguments);
+        var state = this._super.apply(this, arguments) || {};
         if (this.selected_node_id) {
             state.selected_node_id = this.selected_node_id;
         }
