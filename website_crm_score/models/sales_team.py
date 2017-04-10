@@ -125,7 +125,7 @@ class crm_team(models.Model):
     assigned_leads_count = fields.Integer(compute='_assigned_leads_count')
     capacity = fields.Integer(compute='_capacity')
     team_user_ids = fields.One2many('team.user', 'team_id', string='Salesman')
-    min_for_assign = fields.Integer("Minimum score", help="Minimum score to be automatically assign (>=)", default=0, required=True)
+    min_for_assign = fields.Integer("Minimum score", help="Minimum score to be automatically assign (>=)", default=0, required=True, track_visibility='onchange')
 
     @api.model
     def direct_assign_leads(self, ids=[]):
