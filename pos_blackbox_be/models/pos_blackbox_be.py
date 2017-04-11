@@ -288,10 +288,6 @@ class pos_session(models.Model):
 
         return data
 
-    # @api.multi
-    # def unlink(self):
-    #     import pudb; pu.db
-
     @api.one
     def _compute_forbidden_modules_installed(self):
         ir_module = self.env['ir.module.module'].sudo()
@@ -442,6 +438,16 @@ class pos_order_line_pro_forma(models.Model):
     _inherit = 'pos.order.line'
 
     order_id = fields.Many2one('pos.order_pro_forma')
+
+    @api.model
+    def create(self, values):
+        # the pos.order.line create method consider 'order_id' is a pos.order
+        # override to bypass it and generate a name
+        if values.get('order_id') and not values.get('name'):
+            name = self.env['pos.order_pro_forma'].browse(values['order_id']).name
+            values['name'] = "%s-%s" % (name, values.get('id'))
+        return super(pos_order_line_pro_forma, self).create(values)
+
 
 class pos_order_pro_forma(models.Model):
     _name = 'pos.order_pro_forma'
