@@ -1963,6 +1963,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         template: "premise_login_form_screen",
         events : {
             "click .pt_send_premise_login" : "send_premise_login",
+            "click .show_password": "show_password",
         },
         send_premise_login: function() {
             var self = this;
@@ -1981,6 +1982,11 @@ odoo.define('project_timeshee.ui', function (require ) {
                     alert("Could not login. Please check that the information you entered is correct.");
                 }
             });
+        },
+        show_password: function(ev) {
+            var type = this.$('.pt_premise_password').attr('type') === 'password' ? 'text': 'password';
+            this.$('.pt_premise_password').attr('type', type);
+            $(ev.target).toggleClass('fa-eye-slash');
         },
     });
 
