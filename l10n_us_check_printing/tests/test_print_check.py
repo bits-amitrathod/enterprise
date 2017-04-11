@@ -26,7 +26,6 @@ class TestPrintCheck(AccountingTestCase):
         self.bank_journal = self.env['account.journal'].create({'name': 'Bank', 'type': 'bank', 'code': 'BNK67'})
         self.bank_journal.check_manual_sequencing = True
 
-        self.check_report = print_check.report_print_check(self.env.cr, self.env.uid, 'test', self.env.context)
 
     def create_invoice(self, amount=100, is_refund=False):
         invoice = self.invoice_model.create({
@@ -73,8 +72,8 @@ class TestPrintCheck(AccountingTestCase):
 
         # Check the data generated for the report
         self.env.ref('base.main_company').write({'us_check_multi_stub': True})
-        report_pages = self.check_report.get_pages(payment)
+        report_pages = payment.get_pages()
         self.assertEqual(len(report_pages), int(math.ceil(len(invoices.ids) / print_check.INV_LINES_PER_STUB)))
         self.env.ref('base.main_company').write({'us_check_multi_stub': False})
-        report_pages = self.check_report.get_pages(payment)
+        report_pages = payment.get_pages()
         self.assertEqual(len(report_pages), 1)
