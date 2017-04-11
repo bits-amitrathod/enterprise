@@ -29,7 +29,7 @@ Key Features
   'version': '1.0',
 
   # any module necessary for this one to work correctly
-  'depends': ['base', 'sale', 'stock', 'delivery', 'document'],
+  'depends': ['base', 'sale_management', 'stock', 'delivery', 'document'],
   'external_dependencies': {'python': ['ebaysdk']},
 
   # always loaded

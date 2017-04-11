@@ -10,7 +10,7 @@
     Supported documents are SO, PO and invoices/credit notes.
 ''',
     'depends': [
-        'sale',
+        'sale_management',
         'purchase',
         'sale_stock',
         'sale_order_dates'

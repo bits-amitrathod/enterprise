@@ -5,7 +5,7 @@
     'category': 'Sales',
     'version': '1.0',
     'description': """Print and Send your Sales Order by Post""",
-    'depends': ['print', 'sale'],
+    'depends': ['print', 'sale_management'],
     'data': [
         'wizard/print_document_partner_wizard_views.xml',
         'views/sale_order_views.xml',
