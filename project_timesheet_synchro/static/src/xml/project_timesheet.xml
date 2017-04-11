@@ -439,6 +439,9 @@
                                 <span class="text-muted">
                                     Last sync :  <t t-esc="moment(widget.sync_time).fromNow()"/>
                                 </span>
+                                <span t-if="widget.getParent().sync_fail" class="ml4 text-danger">
+                                    (Last sync was unsuccessful)
+                                </span>
                             </p>
                         </t>
                         <t t-if="!widget.getParent().syncable">

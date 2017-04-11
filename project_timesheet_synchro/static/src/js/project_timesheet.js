@@ -57,6 +57,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             self.session = session; // This makes session accessible in QWEB templates.
             self.syncable = false; // Sync flag. Enabled if the user has a valid session with a server where the appropiate sync module is installed.
             self.sync_in_progress = false;
+            self.sync_fail = false;
 
         },
         /**
@@ -428,6 +429,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                         self.sync_in_progress = false;
                         self.flush_activities(MAX_AGE);
                         self.save_user_data();
+                        self.sync_fail = false;
                         defer.resolve();
                         if (options && options.callback) {
                             options.callback();
@@ -436,6 +438,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                 }).fail(function() {
                     self.$('.pt_nav_sync a').removeClass('pt_sync_in_progress');
                     self.sync_in_progress = false;
+                    self.sync_fail = true;
                     defer.resolve();
                     if (options && options.callback) {
                         options.callback();
