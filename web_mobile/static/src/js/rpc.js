@@ -1,7 +1,7 @@
-odoo.define('web_mobile.rpc', function (require) {
+odoo.define('web_mobile.rpc', function () {
 "use strict";
 
-var available = typeof OdooDeviceUtility != 'undefined';
+var available = typeof OdooDeviceUtility !== 'undefined';
 var DeviceUtility;
 var deferreds = {};
 var methods = {};
@@ -26,21 +26,21 @@ function native_invoke(name, args) {
     var def = $.Deferred();
     var id = _.uniqueId();
     deferreds[id] = {
-        successCallback: function(success) {
+        successCallback: function (success) {
             def.resolve(success);
         },
-        errorCallback: function(error) {
+        errorCallback: function (error) {
             def.reject(error);
         }
     };
     args = JSON.stringify(args);
     DeviceUtility.execute(name, args, id);
     return def;
-};
+}
 
 /**
  * Manages deferred callback from initiate from native mobile
- * 
+ *
  * @param {String} id callback id
  * @param {Object} result
  */
@@ -52,11 +52,11 @@ window.odoo.native_notify = function (id, result) {
             deferreds[id].errorCallback(result);
         }
     }
-}
+};
 
 var plugins = available ? JSON.parse(DeviceUtility.list_plugins()) : [];
-_.each(plugins, function(plugin) {
-    methods[plugin.name] = function(args) {
+_.each(plugins, function (plugin) {
+    methods[plugin.name] = function (args) {
         return native_invoke(plugin.action, args);
     };
 });
