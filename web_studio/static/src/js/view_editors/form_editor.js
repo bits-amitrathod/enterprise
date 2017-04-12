@@ -480,9 +480,9 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     /**
      * @private
      */
-    _onAddChatter: function () {
+    _onAddChatter: function (ev) {
         // prevent multiple click
-        $(event.currentTarget).css('pointer-events', 'none');
+        $(ev.currentTarget).css('pointer-events', 'none');
         this.trigger_up('view_change', {
             structure: 'chatter',
             remove_follower_ids: this.has_follower_field,
