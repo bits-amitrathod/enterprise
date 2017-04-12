@@ -1,133 +1,220 @@
 odoo.define('helpdesk.dashboard', function (require) {
 "use strict";
 
+/**
+ * This file defines the Helpdesk Dashboard view (alongside its renderer, model
+ * and controller), extending the Kanban view.
+ * The Helpdesk Dashboard view is registered to the view registry.
+ * A large part of this code should be extracted in an AbstractDashboard
+ * widget in web, to avoid code duplication (see SalesTeamDashboard).
+ */
+
 var core = require('web.core');
-var formats = require('web.formats');
-var Model = require('web.Model');
-var session = require('web.session');
-var KanbanView = require('web_kanban.KanbanView');
+var KanbanController = require('web.KanbanController');
+var KanbanModel = require('web.KanbanModel');
+var KanbanRenderer = require('web.KanbanRenderer');
+var KanbanView = require('web.KanbanView');
+var view_registry = require('web.view_registry');
 
 var QWeb = core.qweb;
 
 var _t = core._t;
 var _lt = core._lt;
 
-var HelpdeskTeamDashboardView = KanbanView.extend({
-    display_name: _lt('Dashboard'),
-    icon: 'fa-dashboard',
-    view_type: "helpdesk_dashboard",
-    searchview_hidden: true,
-    events: {
-        'click .o_dashboard_action': 'on_dashboard_action_clicked',
-        'click .o_target_to_set': 'on_dashboard_helpdesk_target_clicked',
-    },
+var HelpdeskDashboardRenderer = KanbanRenderer.extend({
+    events: _.extend({}, KanbanRenderer.prototype.events, {
+        'click .o_dashboard_action': '_onDashboardActionClicked',
+        'click .o_target_to_set': '_onDashboardTargetClicked',
+    }),
 
-    fetch_data: function() {
-        return new Model('helpdesk.team')
-            .call('retrieve_dashboard', []);
-    },
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
 
-    render: function() {
-        var super_render = this._super;
-        var self = this;
-
-        return this.fetch_data().then(function(result){
-            self.show_demo = result && result['show_demo'];
-            self.rating_enable = result && result['rating_enable'];
-            self.success_rate_enable = result && result['success_rate_enable'];
-
-            var helpdesk_dashboard = QWeb.render('helpdesk.HelpdeskDashboard', {
-                widget: self,
-                show_demo: self.show_demo,
-                rating_enable: self.rating_enable,
-                success_rate_enable: self.success_rate_enable,
-                values: result,
-            });
-            super_render.call(self);
-            $(helpdesk_dashboard).prependTo(self.$el);
+    /**
+     * Notifies the controller that the target has changed.
+     *
+     * @private
+     * @param {string} target_name the name of the changed target
+     * @param {string} value the new value
+     */
+    _notifyTargetChange: function (target_name, value) {
+        this.trigger_up('dashboard_edit_target', {
+            target_name: target_name,
+            target_value: value,
         });
     },
 
-    on_dashboard_action_clicked: function(ev){
-        ev.preventDefault();
+    /**
+     * @override
+     * @private
+     * @returns {Deferred}
+     */
+    _render: function () {
         var self = this;
-        var $action = $(ev.currentTarget);
-        var action_name = $action.attr('name');
-        var action_extra = $action.data('extra');
-        var additional_context = {}
-
-        if ('helpdesk_rating_today' == action_name || 'helpdesk_rating_7days' == action_name){
-            return new Model(self.model)
-                .call(action_name)
-                .then(function(data) {
-                    if (data){
-                       self.do_action(data, {additional_context: additional_context});
-                    }
-                });
-        }
-
-        new Model("ir.model.data")
-            .call("xmlid_to_res_id", [action_name])
-            .then(function(data) {
-                if (data){
-                   self.do_action(data, {additional_context: additional_context});
-                }
+        return this._super.apply(this, arguments).then(function () {
+            var values = self.state.dashboardValues;
+            var helpdesk_dashboard = QWeb.render('helpdesk.HelpdeskDashboard', {
+                widget: self,
+                show_demo: values.show_demo,
+                rating_enable: values.rating_enable,
+                success_rate_enable: values.success_rate_enable,
+                values: values,
             });
+            self.$el.prepend(helpdesk_dashboard);
+        });
     },
 
-    on_change_helpdesk_input_target: function(e) {
-        var self = this;
-        var $input = $(e.target);
-        var target_name = $input.attr('name');
-        var target_value = $input.val();
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
 
-        if(isNaN(target_value)) {
-            this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
-        } else {
-            this._updated = new Model('helpdesk.team')
-                            .call('modify_target_helpdesk_team_dashboard', [target_name, parseInt(target_value)])
-                            .then(function() {
-                                return self.render();
-                            });
-        }
+    /**
+     * @private
+     * @param {MouseEvent}
+     */
+    _onDashboardActionClicked: function (e) {
+        e.preventDefault();
+        var $action = $(e.currentTarget);
+        this.trigger_up('dashboard_open_action', {
+            action_name: $action.attr('name'),
+        });
     },
-
-    on_dashboard_helpdesk_target_clicked: function(ev){
-        if (this.show_demo) {
-            // The user is not allowed to modify the targets in demo mode
-            return;
-        }
-
+    /**
+     * @private
+     * @param {MouseEvent}
+     */
+    _onDashboardTargetClicked: function (e) {
         var self = this;
-        var $target = $(ev.currentTarget);
+        var $target = $(e.currentTarget);
         var target_name = $target.attr('name');
         var target_value = $target.attr('value');
 
-        var $input = $('<input/>', {type: "text"});
-        $input.attr('name', target_name);
+        var $input = $('<input/>', {type: "text", name: target_name});
         if (target_value) {
             $input.attr('value', target_value);
         }
-        $input.on('keyup input', function(e) {
-            if(e.which === $.ui.keyCode.ENTER) {
-                self.on_change_helpdesk_input_target(e);
+        $input.on('keyup input', function (e) {
+            if (e.which === $.ui.keyCode.ENTER) {
+                self._notifyTargetChange(target_name, $input.val());
             }
         });
-        $input.on('blur', function(e) {
-            self.on_change_helpdesk_input_target(e);
+        $input.on('blur', function () {
+            self._notifyTargetChange(target_name, $input.val());
         });
-
-        $.when(this._updated).then(function() {
-            $input.replaceAll(self.$('.o_target_to_set[name=' + target_name + ']')) // the target may have changed (re-rendering)
-                  .focus()
-                  .select();
-        });
+        $input.replaceAll($target)
+              .focus()
+              .select();
     },
-
 });
 
-core.view_registry.add('helpdesk_dashboard', HelpdeskTeamDashboardView);
+var HelpdeskDashboardModel = KanbanModel.extend({
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
 
-return HelpdeskTeamDashboardView
+    /**
+     * @œverride
+     * @returns {Deferred}
+     */
+    load: function () {
+        return this._loadDashboard(this._super.apply(this, arguments));
+    },
+    /**
+     * @œverride
+     * @returns {Deferred}
+     */
+    reload: function () {
+        return this._loadDashboard(this._super.apply(this, arguments));
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {Deferred} super_def a deferred that resolves with a dataPoint id
+     * @returns {Deferred -> string} resolves to the dataPoint id
+     */
+    _loadDashboard: function (super_def) {
+        var self = this;
+        var dashboard_def = this._rpc({
+            model: 'helpdesk.team',
+            method: 'retrieve_dashboard',
+        });
+        return $.when(super_def, dashboard_def).then(function(id, dashboardValues) {
+            var dataPoint = self.localData[id];
+            dataPoint.dashboardValues = dashboardValues;
+            return id;
+        });
+    },
+});
+
+var HelpdeskDashboardController = KanbanController.extend({
+    custom_events: _.extend({}, KanbanController.prototype.custom_events, {
+        dashboard_open_action: '_onDashboardOpenAction',
+        dashboard_edit_target: '_onDashboardEditTarget',
+    }),
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {OdooEvent} e
+     */
+    _onDashboardEditTarget: function (e) {
+        var target_name = e.data.target_name;
+        var target_value = e.data.target_value;
+        if (isNaN(target_value)) {
+            this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
+        } else {
+            this._rpc({
+                    model: 'helpdesk.team',
+                    method: 'modify_target_helpdesk_team_dashboard',
+                    args: [target_name, parseInt(target_value)],
+                })
+                .then(this.reload.bind(this));
+        }
+    },
+    /**
+     * @private
+     * @param {OdooEvent} e
+     */
+    _onDashboardOpenAction: function (e) {
+        var self = this;
+        var action_name = e.data.action_name;
+        if (_.contains(['helpdesk_rating_today', 'helpdesk_rating_7days'], action_name)) {
+            return this._rpc({model: this.model, method: action_name})
+                .then(function (data) {
+                    if (data) {
+                    return self.do_action(data);
+                    }
+                });
+        }
+        return this.do_action(action_name);
+    },
+});
+
+var HelpdeskDashboardView = KanbanView.extend({
+    config: _.extend({}, KanbanView.prototype.config, {
+        Model: HelpdeskDashboardModel,
+        Renderer: HelpdeskDashboardRenderer,
+        Controller: HelpdeskDashboardController,
+    }),
+    display_name: _lt('Dashboard'),
+    icon: 'fa-dashboard',
+    searchview_hidden: true,
+});
+
+view_registry.add('helpdesk_dashboard', HelpdeskDashboardView);
+
+return {
+    Model: HelpdeskDashboardModel,
+    Renderer: HelpdeskDashboardRenderer,
+    Controller: HelpdeskDashboardController,
+};
 
 });

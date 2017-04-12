@@ -1,6 +1,11 @@
 odoo.define('web_enterprise.UserMenu', function (require) {
 "use strict";
 
+/**
+ * This file includes the UserMenu widget defined in Community to add or
+ * override actions only available in Enterprise.
+ */
+
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var UserMenu = require('web.UserMenu');
@@ -9,10 +14,22 @@ var _t = core._t;
 var QWeb = core.qweb;
 
 UserMenu.include({
-    on_menu_support: function () {
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _onMenuSupport: function () {
         window.open('https://www.odoo.com/help', '_blank');
     },
-    on_menu_shortcuts: function() {
+    /**
+     * @private
+     */
+    _onMenuShortcuts: function() {
         new Dialog(this, {
             size: 'large',
             dialogClass: 'o_act_window',

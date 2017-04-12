@@ -20,14 +20,12 @@ Note: Only the admin user is allowed to make those customizations.
     'depends': [
         'base_automation',
         'base_import_module',
-        'grid',
+        'web_grid',
         'mail',
         'report',
         'web',
-        'web_calendar',
         'web_editor',
         'web_gantt',
-        'web_kanban',
     ],
     'data': [
         'views/web_studio_templates.xml',

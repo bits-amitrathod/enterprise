@@ -1,20 +1,24 @@
 odoo.define('voip.core', function(require) {
 "use strict";
 
-var bus = require('bus.bus').bus;
+var ajax = require('web.ajax');
+var Class = require('web.Class');
 var core = require('web.core');
-var Model = require('web.Model');
-var web_client = require('web.web_client');
-var Class = core.Class;
-var mixins = core.mixins;
+var mixins = require('web.mixins');
+
 var _t = core._t;
 
-var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
-    init: function(parent,options){
-        core.mixins.PropertiesMixin.init.call(this,parent);
+var UserAgent = Class.extend(mixins.PropertiesMixin, {
+    init: function(){
+        mixins.PropertiesMixin.init.call(this);
         this.onCall = false;
         this.incoming_call = false;
-        new Model("voip.configurator").call("get_pbx_config").then(_.bind(this.init_ua,this));
+        ajax.rpc('/web/dataset/call_kw/voip.configurator/get_pbx_config', {
+            model: 'voip.configurator',
+            method: 'get_pbx_config',
+            args: [],
+            kwargs: {},
+        }).then(this.init_ua.bind(this));
         this.blocked = false;
     },
 
@@ -152,7 +156,7 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
                     remote: this.remote_audio
                 }
             }
-        };    
+        };
         try{
             //Make the call
             this.sip_session = this.ua.invite(this.current_number,call_options);
@@ -265,13 +269,13 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
             this._make_call();
         } else {
             if (SIP.WebRTC.isSupported()) {
-                /*      
-                    WebRTC method to get a media stream      
-                    The callbacks functions are getUserMediaSuccess, when the function succeed      
+                /*
+                    WebRTC method to get a media stream
+                    The callbacks functions are getUserMediaSuccess, when the function succeed
                     and getUserMediaFailure when the function failed
                     The _.bind is used to be ensure that the "this" in the callback function will still be the same
-                    and not become the object "window"        
-                */ 
+                    and not become the object "window"
+                */
                 var mediaConstraints = {
                     audio: true,
                     video: false

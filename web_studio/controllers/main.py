@@ -537,7 +537,6 @@ class WebStudioController(http.Controller):
         view = request.env['ir.ui.view'].browse(view_id)
         studio_view = self._get_studio_view(view)
         field_created = False
-
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
 
@@ -604,8 +603,12 @@ class WebStudioController(http.Controller):
 
         # the registry has been updated so we take the new one
         ViewModel = request.env[view.model]
+        fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
+        view_type = 'list' if view.type == 'tree' else view.type
         result = {
-            'fields_view': ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type),
+            'fields_views': {
+                view_type: fields_view,
+            },
         }
         if field_created:
             result['fields'] = ViewModel.fields_get()
@@ -635,9 +638,16 @@ class WebStudioController(http.Controller):
             view.write({'arch': view_arch})
 
             if view.model:
+                ViewModel = request.env[view.model]
                 try:
-                    fields_view = request.env[view.model].with_context({'studio': True}).fields_view_get(view.id, view.type)
-                    return {'fields_view': fields_view}
+                    fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
+                    view_type = 'list' if view.type == 'tree' else view.type
+                    return {
+                        'fields_views': {
+                            view_type: fields_view,
+                        },
+                        'fields': ViewModel.fields_get(),
+                    }
                 except Exception:
                     return False
 
@@ -1143,7 +1153,10 @@ class WebStudioController(http.Controller):
     def get_default_value(self, model_name, field_name):
         """ Return the default value associated to the given field. """
         company_id = request.env.user.company_id.id
-        return request.env['ir.values'].get_default(model_name, field_name, company_id=company_id)
+        IrValues = request.env['ir.values']
+        return {
+            'default_value': IrValues.get_default(model_name, field_name, company_id=company_id)
+        }
 
     @http.route('/web_studio/set_default_value', type='json', auth='user')
     def set_default_value(self, model_name, field_name, value):

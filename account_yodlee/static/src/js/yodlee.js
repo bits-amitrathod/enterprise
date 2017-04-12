@@ -2,13 +2,10 @@ odoo.define('account_yodlee.acc_config_widget', function(require) {
 "use strict";
 
 var core = require('web.core');
-var common = require('web.form_common');
-var Model = require('web.Model');
 var framework = require('web.framework');
 var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
-var _t = core._t;
 
 
 var YodleeAccountConfigurationWidget = Widget.extend({
@@ -49,42 +46,55 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = new Model('account.online.provider')
-            .call('yodlee_add_update_provider_account', [[this.id], params, provider_id, provider_name])
-            .then(function(result){
-                // ProviderAccount has succesfully been created/updated on yodlee and is being refreshed
-                // We need to keep calling the refresh API until it is done to know if we have some error or mfa
-                // (bad credentials, captcha, success)
-                framework.blockUI();
-                self.id = result;
-                return new Model('account.online.provider').call('refresh_status', [[self.id]]).then(function(result) {
+            this._rpc({
+                    model: 'account.online.provider',
+                    method: 'yodlee_add_update_provider_account',
+                    args: [[this.id], params, provider_id, provider_name],
+                })
+                .then(function(result){
+                    // ProviderAccount has succesfully been created/updated on yodlee and is being refreshed
+                    // We need to keep calling the refresh API until it is done to know if we have some error or mfa
+                    // (bad credentials, captcha, success)
+                    framework.blockUI();
+                    self.id = result;
+                    return self._rpc({
+                            model: 'account.online.provider',
+                            method: 'refresh_status',
+                            args: [[self.id]],
+                        })
+                        .then(function(result) {
+                            self.blockUI(false);
+                            self.refresh_info = result;
+                            self.renderElement();
+                        });
+                }).fail(function(result){
+                    // If we have an error and we are in a captcha process, hide continue button and force user to
+                    // ask for a new captcha.
+                    if (self.$('.js_new_captcha').length > 0) {
+                        self.$('.js_process_next_step').addClass('hidden');
+                    }
+                    self.$('.js_wait_updating_account').toggleClass('hidden');
                     self.blockUI(false);
-                    self.refresh_info = result;
-                    self.renderElement();
                 });
-            }).fail(function(result){
-                // If we have an error and we are in a captcha process, hide continue button and force user to
-                // ask for a new captcha.
-                if (self.$('.js_new_captcha').length > 0) {
-                    self.$('.js_process_next_step').addClass('hidden');
-                }
-                self.$('.js_wait_updating_account').toggleClass('hidden');
-                self.blockUI(false);
-            });
         }
     },
 
     get_new_captcha: function() {
         var self = this;
         this.blockUI(true);
-        return new Model('account.online.provider').call('manual_sync', [[self.id], false]).then(function(result) {
-            self.blockUI(false);
-            self.refresh_info = result;
-            self.renderElement();
-        }).fail(function(result){
-            self.$('.js_wait_updating_account').toggleClass('hidden');
-            self.blockUI(false);
-        });
+        return this._rpc({
+                model: 'account.online.provider',
+                method: 'manual_sync',
+                args: [[self.id], false],
+            })
+            .then(function(result) {
+                self.blockUI(false);
+                self.refresh_info = result;
+                self.renderElement();
+            }).fail(function(result){
+                self.$('.js_wait_updating_account').toggleClass('hidden');
+                self.blockUI(false);
+            });
     },
 
     blockUI: function(state) {
@@ -103,7 +113,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
             // We have to show an image, but first we have to convert the binary array into a base64
             _.each(this.refresh_info.providerAccount.loginForm.row, function(row, index){
                 _.each(row.field, function(field, index){
-                    var image = undefined;
+                    var image;
                     if (field.image) {
                         image = "";
                         var image_array = new Uint8Array(field.image);
@@ -156,9 +166,14 @@ var YodleeAccountConfigurationWidget = Widget.extend({
         var fields = {};
         if (this.refresh_info && this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS') {
             if (this.action_end) {
-                return new Model('account.online.provider').call('open_action', [[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context]).then(function(result) {
-                    self.do_action(result);
-                });
+                return this._rpc({
+                        model: 'account.online.provider',
+                        method: 'open_action',
+                        args: [[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context],
+                    })
+                    .then(function(result) {
+                        self.do_action(result);
+                    });
             }
             else {
                 var local_dict = {

@@ -1,14 +1,10 @@
 odoo.define('delivery_barcode.PickingBarcodeHandler', function (require) {
 "use strict";
 
-var core = require('web.core');
-var Model = require('web.Model');
 var StockPickingBarcodeHandler = require('stock_barcode.PickingBarcodeHandler');
 
-var _t = core._t;
 
-
-var PickingBarcodeHandler = StockPickingBarcodeHandler.include({
+StockPickingBarcodeHandler.include({
     pre_onchange_hook: function(barcode) {
         var deferred = $.Deferred();
         var self = this;

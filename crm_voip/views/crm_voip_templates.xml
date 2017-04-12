@@ -8,4 +8,10 @@
         </xpath>
     </template>
 
+    <template id="crm_voip_tests" name="crm_voip tests" inherit_id="web.qunit_suite">
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/crm_voip/static/src/js/crm_voip_tests.js"></script>
+        </xpath>
+    </template>
+
 </odoo>

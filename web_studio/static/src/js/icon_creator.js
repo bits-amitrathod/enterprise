@@ -2,7 +2,6 @@ odoo.define('web_studio.IconCreator', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var session = require('web.session');
 var Widget = require('web.Widget');
 
@@ -10,15 +9,17 @@ var utils = require('web_studio.utils');
 
 var QWeb = core.qweb;
 
-return Widget.extend({
+var IconCreator = Widget.extend({
     template: 'web_studio.IconCreator',
     events: {
-        'click .o_web_studio_selector': 'on_selector',
-        'click .js_upload': 'on_upload_button',
-        'click .js_discard_upload': 'on_upload_discarded',
+        'click .o_web_studio_selector': '_onSelector',
+        'click .js_upload': '_onUploadButton',
+        'click .js_discard_upload': '_onUploadDiscarded',
     },
-
-    init: function() {
+    /**
+     * @constructor
+     */
+    init: function () {
         this.COLORS = utils.COLORS;
         this.BG_COLORS = utils.BG_COLORS;
         this.ICONS = utils.ICONS;
@@ -39,96 +40,165 @@ return Widget.extend({
         this.widget = "image";
         this.user_id = session.uid;
         this.fileupload_id = _.uniqueId('o_fileupload');
-        $(window).on(this.fileupload_id, this.on_upload_done.bind(this));
+        $(window).on(this.fileupload_id, this._onUploadDone.bind(this));
 
         this.mode = 'edit';
         this._super.apply(this, arguments);
     },
-    destroy: function() {
+    /**
+     * @override
+     */
+    start: function () {
+        this.update(true);
+        return this._super.apply(this, arguments);
+    },
+    /**
+     * @override
+     */
+    destroy: function () {
         $(window).off(this.fileupload_id);
         return this._super.apply(this, arguments);
     },
-    /* Returns the value of the icon
 
-     * It can either be:
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @returns {Integer|Array} the icon value, which could either be:
      *  - the ir.attachment id of the uploaded image
-     *  - if the icon has been created, an array containing: [icon_class, color, background_color]
+     *  - if the icon has been created, an array containing
+     *      [icon_class, color, background_color]
      */
-    get_value: function() {
+    getValue: function () {
         if (this.uploaded) {
             return this.uploaded_attachment_id;
         } else {
             return [this.icon_class, this.color, this.background_color];
         }
     },
-    start: function() {
-        this.update(true);
-        return this._super.apply(this, arguments);
+    /**
+     * Render the widget in edit mode.
+     */
+    enableEdit: function () {
+        this.mode = 'edit';
+        this.renderElement();
     },
-    update: function(replace_icon) {
+    /**
+     * Render the widget in readonly mode.
+     */
+    disableEdit: function () {
+        this.mode = 'readonly';
+        this.renderElement();
+    },
+    /**
+     * @param {Boolean} replace_icon
+     */
+    update: function (replace_icon) {
         var self = this;
         this.$('.o_app_icon').css('background-color', this.background_color)
                              .find('i').css('color', this.color);
 
         if (replace_icon) {
-            this.$('.o_app_icon i').fadeOut(50, function() {
+            this.$('.o_app_icon i').fadeOut(50, function () {
                 $(this).attr('class', self.icon_class).fadeIn(800);
             });
         }
 
-        this.$('.o_web_studio_selector[data-type="icon"] i').attr('class', self.icon_class);
-        this.$('.o_web_studio_selector[data-type="background_color"]').css('background-color', this.background_color);
-        this.$('.o_web_studio_selector[data-type="color"]').css('background-color', this.color);
+        this.$('.o_web_studio_selector[data-type="icon"] i').attr(
+            'class', self.icon_class
+        );
+        this.$('.o_web_studio_selector[data-type="background_color"]').css(
+            'background-color', this.background_color
+        );
+        this.$('.o_web_studio_selector[data-type="color"]').css(
+            'background-color', this.color
+        );
     },
-    on_selector: function(ev) {
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {Event} ev
+     */
+    _onSelector: function (ev) {
         var self = this;
-        var selector_type = $(ev.currentTarget).data('type');
+        var $el = $(ev.currentTarget);
+        var selector_type = $el.data('type');
 
         if (!selector_type) { return; }
         if (this.$palette) { this.$palette.remove(); }
 
-        this.$palette = $(QWeb.render(this.PALETTE_TEMPLATES[selector_type], {widget: this}));
-        $(ev.currentTarget).addClass('active').find('.o_web_studio_selector_pointer').before(this.$palette);
-        this.$palette.on('mouseleave', function() {
+        this.$palette = $(QWeb.render(this.PALETTE_TEMPLATES[selector_type], {
+            widget: this,
+        }));
+        $el
+            .addClass('active')
+            .find('.o_web_studio_selector_pointer')
+            .before(this.$palette);
+        this.$palette.on('mouseleave', function () {
             $(this).remove();
-            $(ev.currentTarget).removeClass('active');
+            $el.removeClass('active');
         });
-        this.$palette.find('.o_web_studio_selector').click(function(ev) {
+        this.$palette.find('.o_web_studio_selector').click(function (ev) {
+            $el = $(ev.currentTarget);
             if (selector_type === 'background_color') {
-                self.background_color = $(ev.currentTarget).data('color');
+                self.background_color = $el.data('color');
                 self.update();
             } else if (selector_type === 'color') {
-                self.color = $(ev.currentTarget).data('color');
+                self.color = $el.data('color');
                 self.update();
             } else {
-                self.icon_class = $(ev.currentTarget).children('i').attr('class');
+                self.icon_class = $el.children('i').attr('class');
                 self.update(true);
             }
         });
     },
-    on_upload_button: function(event) {
+    /**
+     * @private
+     * @param {Event} event
+     */
+    _onUploadButton: function (event) {
         event.preventDefault();
 
         var self = this;
-        this.$('input.o_form_input_file').on('change', function() {
+        this.$('input.o_form_input_file').on('change', function () {
             self.$('form.o_form_binary_form').submit();
         });
         this.$('input.o_form_input_file').click();
 
     },
-    on_upload_done: function(event, result) {
+    /**
+     * @private
+     * @param {Event} event
+     * @param {Object} result
+     */
+    _onUploadDone: function (event, result) {
         event.preventDefault();
 
         this.uploaded = true;
         this.uploaded_attachment_id = result.id;
 
         var self = this;
-        new Model('ir.attachment').call('read', [[this.uploaded_attachment_id], ['datas']]).then(function (res) {
-            self.uploaded_image = ('data:image/png;base64,' + res[0].datas).replace(/\s/g, '');
-            self.renderElement();
-        });
+        this._rpc({
+                model: 'ir.attachment',
+                method: 'read',
+                args: [[this.uploaded_attachment_id], ['datas']],
+            })
+            .then(function (res) {
+                var base64 = res[0].datas.replace(/\s/g, '');
+                self.uploaded_image = 'data:image/png;base64,' + base64;
+                self.renderElement();
+            });
     },
-    on_upload_discarded: function(event) {
+    /**
+     * @private
+     * @param {Event} event
+     */
+    _onUploadDiscarded: function (event) {
         event.preventDefault();
 
         this.uploaded = false;
@@ -136,14 +206,8 @@ return Widget.extend({
         this.renderElement();
         this.update(true);
     },
-    enable_edit: function() {
-        this.mode = 'edit';
-        this.renderElement();
-    },
-    disable_edit: function() {
-        this.mode = 'readonly';
-        this.renderElement();
-    },
 });
+
+return IconCreator;
 
 });

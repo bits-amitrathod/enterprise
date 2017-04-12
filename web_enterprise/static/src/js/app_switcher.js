@@ -240,7 +240,6 @@ odoo.define('web_enterprise.ExpirationPanel', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var session = require('web.session');
 var utils = require('web.utils');
 var AppSwitcher = require('web_enterprise.AppSwitcher');
@@ -283,31 +282,43 @@ AppSwitcher.include({
     },
     enterprise_check_status: function(ev) {
         ev.preventDefault();
-        var Publisher = new Model('publisher_warranty.contract');
-        var P = new Model('ir.config_parameter');
-        P.call('get_param', ['database.expiration_date']).then(function(old_date) {
-            var dbexpiration_date = new moment(old_date);
-            var duration = moment.duration(dbexpiration_date.diff(new moment()));
-            if (Math.round(duration.asDays()) < 30) {
-                Publisher.call('update_notification', [[]]).then(function() {
-                    $.when(
-                        P.call('get_param', ['database.expiration_date']))
-                    .then(function(dbexpiration_date) {
-                        $('.oe_instance_register').hide();
-                        $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
-                        if (dbexpiration_date != old_date && new moment(dbexpiration_date) > new moment()) {
-                            $.unblockUI();
-                            $('.oe_instance_hide_panel').show();
-                            $('.database_expiration_panel .alert').addClass('alert-success');
-                            $('.valid_date').html(moment(dbexpiration_date).format('LL'));
-                            $('.oe_subscription_updated').show();
-                        } else {
-                            window.location.reload();
-                        }
-                    });
-                });
-            }
-        });
+        var self = this;
+        this._rpc({
+                model: 'ir.config_parameter',
+                method: 'get_param',
+                args: ['database.expiration_date'],
+            })
+            .then(function(old_date) {
+                var dbexpiration_date = new moment(old_date);
+                var duration = moment.duration(dbexpiration_date.diff(new moment()));
+                if (Math.round(duration.asDays()) < 30) {
+                    self._rpc({
+                            model: 'publisher_warranty.contract',
+                            method: 'update_notification',
+                            args: [[]],
+                        })
+                        .then(function() {
+                            self._rpc({
+                                    model: 'ir.config_parameter',
+                                    method: 'get_param',
+                                    args: ['database.expiration_date']
+                                })
+                                .then(function(dbexpiration_date) {
+                                    $('.oe_instance_register').hide();
+                                    $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
+                                    if (dbexpiration_date != old_date && new moment(dbexpiration_date) > new moment()) {
+                                        $.unblockUI();
+                                        $('.oe_instance_hide_panel').show();
+                                        $('.database_expiration_panel .alert').addClass('alert-success');
+                                        $('.valid_date').html(moment(dbexpiration_date).format('LL'));
+                                        $('.oe_subscription_updated').show();
+                                    } else {
+                                        window.location.reload();
+                                    }
+                                });
+                        });
+                }
+            });
     },
     enterprise_show_panel: function(options) {
         //Show expiration panel 30 days before the expiry
@@ -345,84 +356,127 @@ AppSwitcher.include({
     /** Save the registration code then triggers a ping to submit it*/
     enterprise_code_submit: function(ev) {
         ev.preventDefault();
+        var self = this;
         var enterprise_code = $('.database_expiration_panel').find('#enterprise_code').val();
         if (!enterprise_code) {
             var $c = $('#enterprise_code');
             $c.attr('placeholder', $c.attr('title')); // raise attention to input
             return;
         }
-        var P = new Model('ir.config_parameter');
-        var Publisher = new Model('publisher_warranty.contract');
         $.when(
-            P.call('get_param', ['database.expiration_date']),
-            P.call('set_param', ['database.enterprise_code', enterprise_code]))
-        .then(function(old_date) {
+            this._rpc({
+                    model: 'ir.config_parameter',
+                    method: 'get_param',
+                    args: ['database.expiration_date']
+                }),
+            this._rpc({
+                    model: 'ir.config_parameter',
+                    method: 'set_param',
+                    args: ['database.enterprise_code', enterprise_code]
+                })
+        ).then(function(old_date) {
             utils.set_cookie('oe_instance_hide_panel', '', -1);
-            Publisher.call('update_notification', [[]]).then(function() {
-                $.unblockUI();
-                $.when(
-                    P.call('get_param', ['database.expiration_date']),
-                    P.call('get_param', ['database.expiration_reason']))
-                .then(function(dbexpiration_date) {
-                    $('.oe_instance_register').hide();
-                    $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
-                    if (dbexpiration_date !== old_date) {
-                        $('.oe_instance_hide_panel').show();
-                        $('.database_expiration_panel .alert').addClass('alert-success');
-                        $('.valid_date').html(moment(dbexpiration_date).format('LL'));
-                        $('.oe_instance_success').show();
-                    } else {
-                        $('.database_expiration_panel .alert').addClass('alert-danger');
-                        $('.oe_instance_error, .oe_instance_register_form').show();
-                        $('#confirm_enterprise_code').html('Retry');
-                    }
+            self._rpc({
+                    model: 'publisher_warranty.contract',
+                    method: 'update_notification',
+                    args: [[]],
+                })
+                .then(function() {
+                    $.unblockUI();
+                    $.when(
+                        self._rpc({
+                                model: 'ir.config_parameter',
+                                method: 'get_param',
+                                args: ['database.expiration_date']
+                            }),
+                        self._rpc({
+                                model: 'ir.config_parameter',
+                                method: 'get_param',
+                                args: ['database.expiration_reason']
+                            })
+                    ).then(function(dbexpiration_date) {
+                        $('.oe_instance_register').hide();
+                        $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
+                        if (dbexpiration_date !== old_date) {
+                            $('.oe_instance_hide_panel').show();
+                            $('.database_expiration_panel .alert').addClass('alert-success');
+                            $('.valid_date').html(moment(dbexpiration_date).format('LL'));
+                            $('.oe_instance_success').show();
+                        } else {
+                            $('.database_expiration_panel .alert').addClass('alert-danger');
+                            $('.oe_instance_error, .oe_instance_register_form').show();
+                            $('#confirm_enterprise_code').html('Retry');
+                        }
+                    });
                 });
-            });
         });
     },
     enterprise_buy: function() {
         var limit_date = new moment().subtract(15, 'days').format("YYYY-MM-DD");
-        new Model("res.users").call("search_count", [[["share", "=", false],["login_date", ">=", limit_date]]]).then(function(users) {
-            window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/upgrade", {num_users: users});
-        });
+        this._rpc({
+                model: 'res.users',
+                method: 'search_count',
+                args: [[["share", "=", false],["login_date", ">=", limit_date]]],
+            })
+            .then(function(users) {
+                window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/upgrade", {num_users: users});
+            });
     },
     enterprise_renew: function() {
-        var P = new Model('ir.config_parameter');
-        var Publisher = new Model('publisher_warranty.contract');
-        $.when(
-            P.call('get_param', ['database.expiration_date']))
-        .then(function(old_date) {
-            utils.set_cookie('oe_instance_hide_panel', '', -1);
-            Publisher.call('update_notification', [[]]).then(function() {
-                $.when(
-                    P.call('get_param', ['database.expiration_date']),
-                    P.call('get_param', ['database.expiration_reason']),
-                    P.call('get_param', ['database.enterprise_code']))
-                .then(function(new_date, dbexpiration_reason, enterprise_code) {
-                    var mt_new_date = new moment(new_date);
-                    if (new_date != old_date && mt_new_date > new moment()) {
-                        $.unblockUI();
-                        $('.oe_instance_register').hide();
-                        $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
-                        $('.database_expiration_panel .alert').addClass('alert-success');
-                        $('.valid_date').html(moment(new_date).format('LL'));
-                        $('.oe_instance_success, .oe_instance_hide_panel').show();
-                    } else {
-                            var params = enterprise_code ? {contract: enterprise_code} : {};
-                            window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/renew", params);
-                    }
-                });
+        var self = this;
+        this._rpc({
+                model: 'ir.config_parameter',
+                method: 'get_param',
+                args: ['database.expiration_date'],
+            })
+            .then(function(old_date) {
+                utils.set_cookie('oe_instance_hide_panel', '', -1);
+                self._rpc({
+                        model: 'publisher_warranty.contract',
+                        method: 'update_notification',
+                        args: [[]],
+                    })
+                    .then(function() {
+                        $.when(
+                            self._rpc({model: 'ir.config_parameter', method: 'get_param', args: ['database.expiration_date']}),
+                            self._rpc({model: 'ir.config_parameter', method: 'get_param', args: ['database.expiration_reason']}),
+                            self._rpc({model: 'ir.config_parameter', method: 'get_param', args: ['database.enterprise_code']})
+                        ).then(function(new_date, dbexpiration_reason, enterprise_code) {
+                            var mt_new_date = new moment(new_date);
+                            if (new_date != old_date && mt_new_date > new moment()) {
+                                $.unblockUI();
+                                $('.oe_instance_register').hide();
+                                $('.database_expiration_panel .alert').removeClass('alert-info alert-warning alert-danger');
+                                $('.database_expiration_panel .alert').addClass('alert-success');
+                                $('.valid_date').html(moment(new_date).format('LL'));
+                                $('.oe_instance_success, .oe_instance_hide_panel').show();
+                            } else {
+                                    var params = enterprise_code ? {contract: enterprise_code} : {};
+                                    window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/renew", params);
+                            }
+                        });
+                    });
             });
-        });
     },
     enterprise_upsell: function() {
+        var self = this;
         var limit_date = new moment().subtract(15, 'days').format("YYYY-MM-DD");
-        new Model('ir.config_parameter').call('get_param', ['database.enterprise_code']).then(function(contract) {
-            new Model("res.users").call("search_count", [[["share", "=", false],["login_date", ">=", limit_date]]]).then(function(users) {
-                var params = contract ? {contract: contract, num_users: users} : {num_users: users};
-                window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/upsell", params);
+        this._rpc({
+                model: 'ir.config_parameter',
+                method: 'get_param',
+                args: ['database.enterprise_code'],
+            })
+            .then(function(contract) {
+                self._rpc({
+                        model: 'res.users',
+                        method: 'search_count',
+                        args: [[["share", "=", false],["login_date", ">=", limit_date]]],
+                    })
+                    .then(function(users) {
+                        var params = contract ? {contract: contract, num_users: users} : {num_users: users};
+                        window.location = $.param.querystring("https://www.odoo.com/odoo-enterprise/upsell", params);
+                    });
             });
-        });
     },
 });
 

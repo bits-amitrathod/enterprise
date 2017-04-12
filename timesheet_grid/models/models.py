@@ -2,7 +2,7 @@
 import itertools
 
 from odoo import models, fields, api, _
-from odoo.addons.grid.models import END_OF
+from odoo.addons.web_grid.models import END_OF
 from odoo.exceptions import UserError
 
 

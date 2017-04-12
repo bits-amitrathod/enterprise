@@ -3,7 +3,6 @@ odoo.define('mrp_workorder.ReportWidget', function (require) {
 
 var core = require('web.core');
 var Widget = require('web.Widget');
-var Model = require('web.Model');
 
 var QWeb = core.qweb;
 
@@ -78,7 +77,6 @@ var ReportWidget = Widget.extend({
         $(e.target).parents('tr').toggleClass('o_stock_reports_unfolded');
     },
     unfold: function(e) {
-        var self = this;
         var $CurretElement;
         $CurretElement = $(e.target).parents('tr').find('td.o_stock_reports_unfoldable');
         var active_id = $CurretElement.data('id');
@@ -88,21 +86,25 @@ var ReportWidget = Widget.extend({
         var stream = $CurretElement.data('stream');
         var parent_quant = $CurretElement.data('parent_quant');
         var $cursor = $(e.target).parents('tr');
-        var dict = new Object();
-        dict = {
-             'model_id': active_model_id,
-             'model_name': active_model_name,
-             'stream': stream || 'upstream',
-             'parent_quant': parseInt(parent_quant) || false,
-             'level': parseInt(row_level) + 30 || 1
-        }
-        new Model('stock.traceability.report').call('get_lines', [parseInt(active_id, 10)], dict).then(function (lines) {// After loading the line
-            var line;
-            for (line in lines) { // Render each line
-                $cursor.after(QWeb.render("report_mrp_line", {l: lines[line]}));
-                $cursor = $cursor.next();
-            }
-        });
+        this._rpc({
+                model: 'stock.traceability.report',
+                method: 'get_lines',
+                args: [parseInt(active_id, 10)],
+                kwargs: {
+                    'model_id': active_model_id,
+                    'model_name': active_model_name,
+                    'stream': stream || 'upstream',
+                    'parent_quant': parseInt(parent_quant) || false,
+                    'level': parseInt(row_level) + 30 || 1
+                },
+            })
+            .then(function (lines) {// After loading the line
+                var line;
+                for (line in lines) { // Render each line
+                    $cursor.after(QWeb.render("report_mrp_line", {l: lines[line]}));
+                    $cursor = $cursor.next();
+                }
+            });
         $CurretElement.attr('class', 'o_stock_reports_foldable ' + active_id); // Change the class, and rendering of the unfolded line
         $(e.target).parents('tr').find('span.o_stock_reports_unfoldable').replaceWith(QWeb.render("foldable", {lineId: active_id}));
         $(e.target).parents('tr').toggleClass('o_stock_reports_unfolded');

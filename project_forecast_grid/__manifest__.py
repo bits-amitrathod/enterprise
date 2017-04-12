@@ -8,7 +8,7 @@
 """,
     'category': 'Project',
     'version': '1.0',
-    'depends': ['project_forecast', 'grid'],
+    'depends': ['project_forecast', 'web_grid'],
     'data': [
         'views/project_project_views.xml',
         'views/project_forecast_views.xml',

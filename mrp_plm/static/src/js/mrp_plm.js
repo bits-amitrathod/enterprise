@@ -1,22 +1,32 @@
 odoo.define('mrp_plm.update_kanban', function (require) {
+"use strict";
+
 
 var core = require('web.core');
-var Model = require('web.Model');
-
-var KanbanRecord = require('web_kanban.Record');
-
+var KanbanRecord = require('web.KanbanRecord');
 var QWeb = core.qweb;
 
 
 KanbanRecord.include({
-    on_kanban_action_clicked: function(ev) {
-        var self = this;
-        if (this.model === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
-            ev.preventDefault();
-            new Model('ir.attachment').query(['id', 'name'])
-               .filter([['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']])
-               .all().then(function (attachment_ids) {
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
 
+    /**
+     * @override
+     * @private
+     */
+    _onKanbanActionClicked: function (ev) {
+        var self = this;
+        if (this.modelName === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
+            ev.preventDefault();
+            this._rpc({
+                    model: 'ir.attachment',
+                    method: 'search_read',
+                    fields: ['id', 'name'],
+                    domain: [['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']],
+                })
+                .then(function (attachment_ids) {
                     var $cover_modal = $(QWeb.render("mrp_plm.SetCoverModal", {
                         widget: self,
                         attachment_ids: attachment_ids,
@@ -24,19 +34,18 @@ KanbanRecord.include({
 
                     $cover_modal.appendTo($('body'));
                     $cover_modal.modal('toggle');
-                    $cover_modal.on('click', 'img', function(ev){
-                        self.update_record({
-                            data : {
-                                displayed_image_id: $(ev.currentTarget).data('id'),
-                            }
+                    $cover_modal.on('click', 'img', function (ev) {
+                        self._updateRecord({
+                            displayed_image_id: $(ev.currentTarget).data('id'),
                         });
                         $cover_modal.modal('toggle');
                         $cover_modal.remove();
                     });
-            });
+                });
         } else {
-            this._super.apply(this, arguments, ev);
+            this._super.apply(this, arguments);
         }
     },
 });
+
 });

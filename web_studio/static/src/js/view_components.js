@@ -11,8 +11,10 @@ var AbstractComponent = Widget.extend({
     structure: false,
     label: false,
     description: false,
-
-    start: function() {
+    /**
+     * @override
+     */
+    start: function () {
         this.$el.addClass('o_web_studio_component');
         this.$el.data('structure', this.structure);
         this.$el.text(this.label);
@@ -30,11 +32,11 @@ var AbstractComponent = Widget.extend({
             revert: 'invalid',
             revertDuration: 200,
             refreshPositions: true,
-            start: function(e, ui) {
+            start: function (e, ui) {
                 $(ui.helper).addClass("ui-draggable-helper");
             }
         });
-        return this._super();
+        return this._super.apply(this, arguments);
     },
 });
 
@@ -65,8 +67,10 @@ var FilterSeparatorComponent = AbstractComponent.extend({
 var AbstractNewFieldComponent = AbstractComponent.extend({
     structure: 'field',
     ttype: false,
-
-    start: function() {
+    /**
+     * @override
+     */
+    start: function () {
         this.description = this.ttype;
         this.$el.data('field_description', {
             ttype: this.ttype,
@@ -148,7 +152,15 @@ var Many2oneFieldComponent = AbstractNewFieldComponent.extend({
 });
 
 var ExistingFieldComponent = AbstractComponent.extend({
-    init: function(parent, name, field_description, ttype, store) {
+    /**
+     * @override
+     * @param {Widget} parent
+     * @param {String} name
+     * @param {String} field_description
+     * @param {String} ttype
+     * @param {Boolean} store
+     */
+    init: function (parent, name, field_description, ttype, store) {
         this._super(parent);
         this.structure = 'field';
         this.label = field_description;
@@ -157,24 +169,28 @@ var ExistingFieldComponent = AbstractComponent.extend({
         this.ttype = ttype;
         this.store = store;
     },
-
-    start: function() {
+    /**
+     * @override
+     */
+    start: function () {
         this.$el.data('new_attrs',{
             name: this.description,
             label: this.label,
             ttype: this.ttype,
             store: this.store ? "true":"false",
         });
-        return this._super();
+        return this._super.apply(this, arguments);
     },
 });
 
 var AbstractNewWidgetComponent = AbstractNewFieldComponent.extend({
     attrs: {},
-
-    start: function() {
+    /**
+     * @override
+     */
+    start: function () {
         this.$el.data('new_attrs', this.attrs);
-        return this._super();
+        return this._super.apply(this, arguments);
     },
 });
 var ImageWidgetComponent = AbstractNewWidgetComponent.extend({

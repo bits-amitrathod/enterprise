@@ -6,8 +6,7 @@ var ActionManager = require('web.ActionManager');
 var config = require('web.config');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
-var framework = require('web.framework');
-var Model = require('web.DataModel');
+var dom = require('web.dom');
 var session = require('web.session');
 
 var AppSwitcher = require('web_enterprise.AppSwitcher');
@@ -28,7 +27,6 @@ return AbstractWebClient.extend({
         },
     }),
     start: function () {
-        var self = this;
         this.$el.toggleClass('o_touch_device', config.device.touch);
 
         core.bus.on('change_menu_section', this, function (menu_id) {
@@ -37,10 +35,7 @@ return AbstractWebClient.extend({
             }));
         });
 
-        return this._super.apply(this, arguments).then(function () {
-            // Listen to 'scroll' event in app_switcher and propagate it on main bus
-            self.app_switcher.$el.on('scroll', core.bus.trigger.bind(core.bus, 'scroll'));
-        });
+        return this._super.apply(this, arguments);
     },
     bind_events: function () {
         var self = this;
@@ -74,23 +69,28 @@ return AbstractWebClient.extend({
         });
     },
     load_menus: function () {
-        var Menus = new Model('ir.ui.menu');
-        return Menus.call('load_menus', [core.debug], {context: session.user_context}).then(function(menu_data) {
-            // Compute action_id if not defined on a top menu item
-            for (var i = 0; i < menu_data.children.length; i++) {
-                var child = menu_data.children[i];
-                if (child.action === false) {
-                    while (child.children && child.children.length) {
-                        child = child.children[0];
-                        if (child.action) {
-                            menu_data.children[i].action = child.action;
-                            break;
+        return this._rpc({
+                model: 'ir.ui.menu',
+                method: 'load_menus',
+                args: [core.debug],
+                context: session.user_context,
+            })
+            .then(function(menu_data) {
+                // Compute action_id if not defined on a top menu item
+                for (var i = 0; i < menu_data.children.length; i++) {
+                    var child = menu_data.children[i];
+                    if (child.action === false) {
+                        while (child.children && child.children.length) {
+                            child = child.children[0];
+                            if (child.action) {
+                                menu_data.children[i].action = child.action;
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            return menu_data;
-        });
+                return menu_data;
+            });
     },
     show_application: function () {
         var self = this;
@@ -99,22 +99,30 @@ return AbstractWebClient.extend({
         return this.instanciate_menu_widgets().then(function () {
             $(window).bind('hashchange', self.on_hashchange);
 
+            // Listen to 'scroll' event in app_switcher and propagate it on main bus
+            self.app_switcher.$el.on('scroll', core.bus.trigger.bind(core.bus, 'scroll'));
+
             // If the url's state is empty, we execute the user's home action if there is one (we
             // show the app switcher if not)
             // If it is not empty, we trigger a dummy hashchange event so that `self.on_hashchange`
             // will take care of toggling the app switcher and loading the action.
             if (_.isEmpty($.bbq.getState(true))) {
-                return new Model("res.users").call("read", [session.uid, ["action_id"]]).then(function(result) {
-                    var data = result[0];
-                    if(data.action_id) {
-                        return self.do_action(data.action_id[0]).then(function() {
-                            self.toggle_app_switcher(false);
-                            self.menu.change_menu_section(self.menu.action_id_to_primary_menu_id(data.action_id[0]));
-                        });
-                    } else {
-                        self.toggle_app_switcher(true);
-                    }
-                });
+                return self._rpc({
+                        model: 'res.users',
+                        method: 'read',
+                        args: [session.uid, ["action_id"]],
+                    })
+                    .then(function(result) {
+                        var data = result[0];
+                        if(data.action_id) {
+                            return self.do_action(data.action_id[0]).then(function() {
+                                self.toggle_app_switcher(false);
+                                self.menu.change_menu_section(self.menu.action_id_to_primary_menu_id(data.action_id[0]));
+                            });
+                        } else {
+                            self.toggle_app_switcher(true);
+                        }
+                    });
             } else {
                 return self.on_hashchange();
             }
@@ -281,7 +289,7 @@ return AbstractWebClient.extend({
             var self = this;
             this.clear_uncommitted_changes().then(function() {
                 // Save the current scroll position of the action_manager
-                self.action_manager.set_scrollTop(self.get_scrollTop());
+                self.action_manager.setScrollTop(self.getScrollTop());
 
                 // Detach the web_client contents
                 var $to_detach = self.$el.contents()
@@ -290,7 +298,7 @@ return AbstractWebClient.extend({
                         .not('.o_chat_window')
                         .not('.o_notification_manager');
                 self.web_client_content = document.createDocumentFragment();
-                framework.detach([{widget: self.action_manager}], {$to_detach: $to_detach}).appendTo(self.web_client_content);
+                dom.detach([{widget: self.action_manager}], {$to_detach: $to_detach}).appendTo(self.web_client_content);
 
                 // Attach the app_switcher
                 self.append_app_switcher();
@@ -302,8 +310,8 @@ return AbstractWebClient.extend({
                 self.menu.toggle_mode(true, self.action_manager.get_inner_action() !== null);
             });
         } else {
-            framework.detach([{widget: this.app_switcher}]);
-            framework.append(this.$el, [this.web_client_content], {
+            dom.detach([{widget: this.app_switcher}]);
+            dom.append(this.$el, [this.web_client_content], {
                 in_DOM: true,
                 callbacks: [{widget: this.action_manager}],
             });
@@ -312,7 +320,7 @@ return AbstractWebClient.extend({
         }
     },
     append_app_switcher: function () {
-        framework.append(this.$el, [this.app_switcher.$el], {
+        dom.append(this.$el, [this.app_switcher.$el], {
             in_DOM: true,
             callbacks: [{widget: this.app_switcher}],
         });
@@ -321,7 +329,7 @@ return AbstractWebClient.extend({
     // --------------------------------------------------------------
     // Scrolltop handling
     // --------------------------------------------------------------
-    get_scrollTop: function () {
+    getScrollTop: function () {
         if (config.device.size_class <= config.device.SIZES.XS) {
             return this.el.scrollTop;
         } else {
@@ -339,10 +347,10 @@ return AbstractWebClient.extend({
         var offset = {top: ev.data.offset, left: ev.data.offset_left || 0};
         var xs_device = config.device.size_class <= config.device.SIZES.XS;
         if (!offset.top) {
-            offset = framework.getPosition(document.querySelector(ev.data.selector));
+            offset = dom.getPosition(document.querySelector(ev.data.selector));
             if (!xs_device) {
                 // Substract the position of the action_manager as it is the scrolling part
-                offset.top -= framework.getPosition(this.action_manager.el).top;
+                offset.top -= dom.getPosition(this.action_manager.el).top;
             }
         }
         if (xs_device) {

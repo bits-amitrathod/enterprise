@@ -2,13 +2,9 @@ odoo.define('account_plaid.acc_config_widget', function(require) {
 "use strict";
 
 var core = require('web.core');
-var common = require('web.form_common');
-var Model = require('web.Model');
 var framework = require('web.framework');
-var online_sync = require('account_online_sync.acc_config_widget');
 var QWeb = core.qweb;
 var Widget = require('web.Widget');
-var _t = core._t;
 
 
 var PlaidAccountConfigurationWidget = Widget.extend({
@@ -18,8 +14,11 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         if (this.in_rpc_call === false){
             this.blockUI(true);
             self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = new Model('account.online.provider')
-                .call('plaid_add_update_provider_account', [[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context])
+            var request = this._rpc({
+                    model: 'account.online.provider',
+                    method: 'plaid_add_update_provider_account',
+                    args: [[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context],
+                })
                 .then(function(result){
                     self.blockUI(false);
                     if (result.account_online_provider_id !== undefined) {
@@ -37,7 +36,6 @@ var PlaidAccountConfigurationWidget = Widget.extend({
     },
 
     process_next_step: function() {
-        var self = this;
         var login = this.$('.js_plaid_login').val();
         var password = this.$('.js_plaid_password').val();
         var pin = this.$('.js_plaid_pin').val();
@@ -96,9 +94,14 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         var self = this;
         if (this.resp_json && this.resp_json.action === 'success') {
             if (this.action_end) {
-                return new Model('account.online.provider').call('open_action', [[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context]).then(function(result) {
-                    self.do_action(result);
-                });
+                return this._rpc({
+                        model: 'account.online.provider',
+                        method: 'open_action',
+                        args: [[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context],
+                    })
+                    .then(function(result) {
+                        self.do_action(result);
+                    });
             }
             else {
                 var local_dict = {
@@ -121,7 +124,6 @@ var PlaidAccountConfigurationWidget = Widget.extend({
     },
 
     process_mfa_step: function() {
-        var self = this;
         var params = {'access_token': this.resp_json.access_token, 'options': '{"login_only": true, "list": true}'}
         if ($('input[name="mfa-selection"]').length > 0){
             params['options'] = '{"send_method": {"mask": "'+ $('input[name="mfa-selection"]:checked').attr('mask') +'"}}';

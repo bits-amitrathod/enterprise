@@ -2,66 +2,99 @@ odoo.define('web_studio.EditMenu', function (require) {
 "use strict";
 
 var core = require('web.core');
+var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
-var form_common = require('web.form_common');
-var Model = require('web.Model');
+var FieldManagerMixin = require('web.FieldManagerMixin');
+var form_common = require('web.view_dialogs');
 var relational_fields = require('web.relational_fields');
+var session = require('web.session');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
 
-var customize = require('web_studio.customize');
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
-
-var _t = core._t;
 var Many2One = relational_fields.FieldMany2One;
+var _t = core._t;
 
-var EditMenu = Widget.extend({
-    template: 'web_studio.EditMenu',
+var MenuItem = Widget.extend({
+    template: 'web_studio.EditMenu.MenuItem',
     events: {
-        'click .o_web_edit_menu': 'on_click',
+        'click .o_web_edit_menu': '_onClick',
     },
-
-    init: function(parent, menu_data, current_primary_menu) {
+    /**
+     * @constructor
+     * @param {Widget} parent
+     * @param {Object} menu_data
+     * @param {Integer} current_primary_menu
+     */
+    init: function (parent, menu_data, current_primary_menu) {
         this._super.apply(this, arguments);
         this.menu_data = menu_data;
         this.current_primary_menu = current_primary_menu;
     },
 
-    on_click: function (event) {
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    editMenu: function () {
+        new EditMenuDialog(this, this.menu_data, this.current_primary_menu)
+            .open();
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * Open a dialog to edit the clicked menu.
+     *
+     * @private
+     * @param {Event} event
+     */
+    _onClick: function (event) {
         event.preventDefault();
-        new EditMenuDialog(this, this.menu_data, this.current_primary_menu).open();
+        this.editMenu();
     },
 });
 
 var EditMenuDialog = Dialog.extend({
-    template: 'web_studio.EditMenu_wizard',
+    template: 'web_studio.EditMenu.Dialog',
     events: _.extend({}, Dialog.prototype.events, {
-        'click a.js_add_menu': 'add_menu',
-        'click button.js_edit_menu': 'edit_menu',
-        'click button.js_delete_menu': 'delete_menu',
+        'click a.js_add_menu': '_onAddMenu',
+        'click button.js_edit_menu': '_onEditMenu',
+        'click button.js_delete_menu': '_onDeleteMenu',
     }),
-
-    init: function(parent, menu_data, current_primary_menu) {
+    /**
+     * @constructor
+     * @param {Widget} parent
+     * @param {Object} menu_data
+     * @param {Integer} current_primary_menu
+     */
+    init: function (parent, menu_data, current_primary_menu) {
         var options = {
             title: _t('Edit Menu'),
             size: 'medium',
             dialogClass: 'o_web_studio_edit_menu_modal',
-            buttons: [
-                {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.save, this)},
-                {text: _t("Cancel"), close: true},
-            ],
+            buttons: [{
+                text: _t("Confirm"),
+                classes: 'btn-primary',
+                click: this._onSave.bind(this),
+            }, {
+                text: _t("Cancel"),
+                close: true,
+            }],
         };
         this.current_primary_menu = current_primary_menu;
-        this.roots = this.get_menu_data_filtered(menu_data);
+        this.roots = this.getMenuDataFiltered(menu_data);
 
         this.to_delete = [];
         this.to_move = {};
 
         this._super(parent, options);
     },
-
+    /**
+     * @override
+     */
     start: function () {
-        var self = this;
-
         this.$('.oe_menu_editor').nestedSortable({
             listType: 'ul',
             handle: 'div',
@@ -74,52 +107,31 @@ var EditMenuDialog = Dialog.extend({
             tolerance: 'pointer',
             attribute: 'data-menu-id',
             expression: '()(.+)', // nestedSortable takes the second match of an expression (*sigh*)
-            relocate: this.move_menu.bind(this),
+            relocate: this.moveMenu.bind(this),
         });
 
         return this._super.apply(this, arguments);
     },
 
-    get_menu_data_filtered: function(menu_data) {
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @param {Object} menu_data
+     * @returns {Object}
+     */
+    getMenuDataFiltered: function (menu_data) {
         var self = this;
         var menus = menu_data.children.filter(function (el) {
             return el.id === self.current_primary_menu;
         });
         return menus;
     },
-
-    add_menu: function (ev) {
-        ev.preventDefault();
-
-        var self = this;
-        var form = new NewMenuDialog(this, this.current_primary_menu).open();
-        form.on('record_saved', self, function() {
-            self._reload_menu_data(true);
-        });
-    },
-
-    delete_menu: function (ev) {
-        var $menu = $(ev.currentTarget).closest('[data-menu-id]');
-        var menu_id = $menu.data('menu-id') || 0;
-        if (menu_id) {
-            this.to_delete.push(menu_id);
-        }
-        $menu.remove();
-    },
-
-    edit_menu: function (ev) {
-        var menu_id = $(ev.currentTarget).closest('[data-menu-id]').data('menu-id');
-        var form = new form_common.FormViewDialog(this, {
-            res_model: 'ir.ui.menu',
-            res_id: menu_id,
-        }).open();
-
-        form.on('record_saved', this, function() {
-            this._reload_menu_data(true);
-        });
-    },
-
-    move_menu: function (ev) {
+    /**
+     * @param {Event} ev
+     */
+    moveMenu: function (ev) {
         var self = this;
 
         var $menu = $(ev.toElement).closest('[data-menu-id]');
@@ -131,7 +143,7 @@ var EditMenuDialog = Dialog.extend({
         };
 
         // Resequence siblings
-        _.each($menu.siblings('li'), function(el) {
+        _.each($menu.siblings('li'), function (el) {
             var menu_id = $(el).data('menu-id');
             if (menu_id in self.to_move) {
                 self.to_move[menu_id].sequence = $(el).index();
@@ -141,18 +153,80 @@ var EditMenuDialog = Dialog.extend({
         });
     },
 
-    save: function () {
-        var self = this;
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
 
-        return new Model('ir.ui.menu').call('customize', [], {to_move: this.to_move, to_delete: this.to_delete})
-            .then(function(){
-                self._reload_menu_data();
-                self.close();
-            });
+    /**
+     * @private
+     * @param {Boolean} keep_open
+     */
+    _reloadMenuData: function (keep_open) {
+        this.trigger_up('reload_menu_data', {keep_open: keep_open});
     },
 
-    _reload_menu_data: function(keep_open) {
-        this.trigger_up('reload_menu_data', {keep_open: keep_open});
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {Event} ev
+     */
+    _onAddMenu: function (ev) {
+        ev.preventDefault();
+
+        var self = this;
+        new NewMenuDialog(this, {
+            parent_id: this.current_primary_menu,
+            on_saved: function () {
+                self._reloadMenuData(true);
+            },
+        }).open();
+    },
+    /**
+     * @private
+     * @param {Event} ev
+     */
+    _onDeleteMenu: function (ev) {
+        var $menu = $(ev.currentTarget).closest('[data-menu-id]');
+        var menu_id = $menu.data('menu-id') || 0;
+        if (menu_id) {
+            this.to_delete.push(menu_id);
+        }
+        $menu.remove();
+    },
+    /**
+     * @private
+     * @param {Event} ev
+     */
+    _onEditMenu: function (ev) {
+        var self = this;
+        var menu_id = $(ev.currentTarget).closest('[data-menu-id]').data('menu-id');
+        new form_common.FormViewDialog(this, {
+            res_model: 'ir.ui.menu',
+            res_id: menu_id,
+            on_saved: function () {
+                self._reloadMenuData(true);
+            },
+        }).open();
+    },
+    /**
+     * Save the current changes (in `to_move` and `to_delete`).
+     *
+     * @private
+     */
+    _onSave: function () {
+        var self = this;
+        this._rpc({
+                model: 'ir.ui.menu',
+                method: 'customize',
+                kwargs: {to_move: this.to_move, to_delete: this.to_delete},
+            })
+            .then(function (){
+                self._reloadMenuData();
+                self.close();
+            });
     },
 });
 
@@ -160,30 +234,24 @@ var EditMenuDialog = Dialog.extend({
 // to avoid letting the user click on the save menu button
 // before the model is created.
 var EditMenuMany2One = Many2One.extend({
-    custom_events: _.extend({}, Many2One.prototype.custom_events, {
-        name_create: function (event) {
-            // Don't stop the event propagation
-            event.stopped = false;
-            var def = $.Deferred();
-            // Override the on_success and on_fail methods to add a deferred
-            // to trigger up when the creation start and end.
-            var on_success = event.data.on_success;
-            event.data.on_success = function (result) {
-                on_success(result);
-                def.resolve();
-            };
-            var on_fail = event.data.on_fail || function () {};
-            event.data.on_fail = function () {
-                on_fail();
-                def.resolve();
-            };
-            this.trigger_up('edit_menu_disable_save');
-            def.then(this.trigger_up.bind(this, 'edit_menu_enable_save'));
-        },
-    }),
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _quickCreate: function () {
+        this.trigger_up('edit_menu_disable_save');
+        var def = this._super.apply(this, arguments);
+        $.when(def).always(this.trigger_up.bind(this, 'edit_menu_enable_save'));
+
+    },
 });
-var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
-    template: 'web_studio.EditMenu_new',
+
+var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
+    template: 'web_studio.EditMenu.Dialog.New',
     custom_events: _.extend({}, Dialog.prototype.custom_events, FieldManagerMixin.custom_events, {
         edit_menu_disable_save: function () {
             this.$footer.find('.confirm_button').attr("disabled", "disabled");
@@ -193,63 +261,114 @@ var NewMenuDialog = Dialog.extend(FieldManagerMixin, {
         },
     }),
 
-    init: function(parent, parent_id) {
-        this.parent_id = parent_id;
+    /**
+     * @constructor
+     * @param {Widget} parent
+     * @param {Object} params
+     * @param {Integer} params.parent_id - ID of the parent menu
+     * @param {function} params.on_saved - callback executed after saving
+     */
+    init: function (parent, params) {
+        this.parent_id = params.parent_id;
+        this.on_saved = params.on_saved;
         var options = {
             title: _t('Create a new Menu'),
             size: 'small',
             buttons: [{
                 text: _t("Confirm"),
                 classes: 'btn-primary confirm_button',
-                click: _.bind(this.save, this),
+                click: this._onSave.bind(this)
             }, {
                 text: _t("Cancel"),
-                close: true,
+                close: true
             }],
         };
-        FieldManagerMixin.init.call(this);
         this._super(parent, options);
+        StandaloneFieldManagerMixin.init.call(this);
     },
-    start: function() {
+    /**
+     * @override
+     */
+    start: function () {
         var self = this;
-
+        var defs = [];
         this.opened().then(function () {
             self.$modal.addClass('o_web_studio_add_menu_modal');
             // focus on input
             self.$el.find('input[name="name"]').focus();
         });
 
-        return this._super.apply(this, arguments).then(function() {
-            var record_id = self.datamodel.make_record('ir.actions.act_window', [{
-                name: 'model',
-                relation: 'ir.model',
-                type: 'many2one',
-                domain: [['transient', '=', false], ['abstract', '=', false]],
-            }]);
+        defs.push(this._super.apply(this, arguments));
+
+        defs.push(this.model.makeRecord('ir.actions.act_window', [{
+            name: 'model',
+            relation: 'ir.model',
+            type: 'many2one',
+            domain: [['transient', '=', false], ['abstract', '=', false]],
+        }]).then(function (recordID) {
             var options = {
                 mode: 'edit',
             };
-            self.many2one = new EditMenuMany2One(self, 'model', self.datamodel.get(record_id), options);
-            // TODO: temporary hack, will be fixed with the new views
-            self.many2one.node_options.no_create_edit = !core.debug;
+            var record = self.model.get(recordID);
+            self.many2one = new EditMenuMany2One(self, 'model', record, options);
+            self.many2one.nodeOptions.no_create_edit = !core.debug;
+            self._registerWidget(recordID, 'model', self.many2one);
             self.many2one.appendTo(self.$('.js_model'));
+        }));
+        return $.when.apply($, defs);
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {String} menu_name
+     * @param {Integer} parent_id
+     * @param {Integer} model_id
+     * @returns {Deferred}
+     */
+    _createNewMenu: function (menu_name, parent_id, model_id) {
+        data_manager.invalidate();
+        return this._rpc({
+            route: '/web_studio/create_new_menu',
+            params: {
+                menu_name: menu_name,
+                model_id: model_id,
+                parent_id: parent_id,
+                context: session.user_context,
+            },
         });
     },
-    save: function() {
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * Creates the new menu.
+     *
+     * @private
+     */
+    _onSave: function () {
         var self = this;
-
         var name = this.$el.find('input').first().val();
-        var model_id = this.many2one.value;
+        var model_id = this.many2one.value && this.many2one.value.res_id;
 
-        return customize.create_new_menu(name, this.parent_id, model_id).then(function(){
-                self.trigger('record_saved');
-                self.close();
-            });
+        var def = this._createNewMenu(name, this.parent_id, model_id);
+        def.then(function () {
+            self.on_saved();
+            self.close();
+        });
     },
 
 
 });
 
-return EditMenu;
+return {
+    MenuItem: MenuItem,
+    Dialog: EditMenuDialog,
+};
 
 });

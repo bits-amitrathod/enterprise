@@ -401,7 +401,7 @@
                                     <span class="o_helpdesk_sla_failed pull-right fa fa-times-circle" style="margin: 6px" t-attf-title="Failed SLA: {{record.sla_name.raw_value}}" t-if="record.sla_fail &amp;&amp; record.sla_fail.raw_value"></span>
                                     <div class="pull-right">
                                         <field name="activity_ids" widget="kanban_activity"/>
-                                        <field name="kanban_state" widget="kanban_state_selection" groups="base.group_user"/>
+                                        <field name="kanban_state" widget="state_selection" groups="base.group_user"/>
                                     </div>
                                 </div>
                             </div>
@@ -449,7 +449,7 @@
                             <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
                         </button>
                     </div>
-                    <field name="kanban_state" widget="kanban_state_selection"/>
+                    <field name="kanban_state" widget="state_selection"/>
                     <div class="oe_title">
                         <h1><field name="name" class="field_name" placeholder="Subject..."/></h1>
                         <field name="sla_name" class="label label-danger oe_inline" attrs="{'invisible': [('sla_active','=',False)]}"/>

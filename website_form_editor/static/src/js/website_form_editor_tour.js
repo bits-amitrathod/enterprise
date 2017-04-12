@@ -1,9 +1,10 @@
 odoo.define('website_form_editor.tour', function(require) {
     'use strict';
 
+    var ajax = require('web.ajax');
     var base = require('web_editor.base');
+    var rpc = require('web.rpc');
     var tour = require("web_tour.tour");
-    var Model = require('web.Model');
 
     tour.register("website_form_editor_tour", {
         test: true,
@@ -602,20 +603,18 @@ odoo.define('website_form_editor.tour', function(require) {
             content: "Check mail.mail records have been created",
             trigger: "body",
             run: function () {
-                var mailDef = new Model("mail.mail").call(
-                    "search_read",
-                    [
-                        // TODO: add other fields in domain !
-                        [
+                var mailDef = rpc.query({
+                        model: 'mail.mail',
+                        method: 'search_read',
+                        domain: [
                             ['email_to', '=', 'test@test.test'],
                             ['body_html', 'like', 'A useless message'],
                             ['body_html', 'like', 'Service : Development Service'],
                             ['body_html', 'like', 'State : Belgium'],
                             ['body_html', 'like', 'Products : Xperia,Wiko Stairway']
                         ],
-                        []
-                    ]
-                );
+                        fields: [],
+                    });
                 var success = function(model, data) {
                     if(data.length) {
                         $('body').append('<div id="website_form_editor_success_test_tour_'+model+'"></div>');

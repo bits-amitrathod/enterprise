@@ -5,8 +5,8 @@
     <label for="field">Field</label>
     <select id="field" name="field">
         <option t-if="widget.show_new" class="o_new" value=''>New Field</option>
-        <option t-foreach="widget.orderered_fields" t-as="field" t-att-value="field.key">
-            <t t-esc="field.string"/> <span t-if="widget.debug">(<t t-esc="field.key"/>)</span>
+        <option t-foreach="widget.orderered_fields" t-as="field" t-att-value="field.name">
+            <t t-esc="field.string"/> <span t-if="widget.debug">(<t t-esc="field.name"/>)</span>
         </option>
     </select>
 </div>

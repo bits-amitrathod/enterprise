@@ -2,77 +2,81 @@ odoo.define('web_studio.ActionEditorSidebar', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var relational_fields = require('web.relational_fields');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
 
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var Many2ManyTags = relational_fields.FieldMany2ManyTags;
 
-return Widget.extend(FieldManagerMixin, {
+var ActionEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.ActionEditorSidebar',
-    custom_events: _.extend({}, FieldManagerMixin.custom_events, {
-        field_changed: function(event) {
-            this.field_changed(event);
-        },
-    }),
     events: {
-        'change input, textarea': 'change_action',
-        'click .o_web_studio_parameters': 'on_parameters',
+        'change input, textarea': '_onActionChange',
+        'click .o_web_studio_parameters': '_onParameters',
     },
-
+    /**
+     * @constructor
+     * @param {Object} action
+     */
     init: function (parent, action) {
-        FieldManagerMixin.init.call(this);
         this._super.apply(this, arguments);
+        StandaloneFieldManagerMixin.init.call(this);
+
         this.debug = core.debug;
         this.action = action;
         this.action_attrs = {
             name: action.display_name || action.name,
             help: action.help && action.help.replace(/\n\s+/g, '\n') || '',
         };
-        this.groups_info = [];
     },
-
-    willStart: function() {
+    /**
+     * @override
+     */
+    willStart: function () {
         var self = this;
-        return this._super.apply(this, arguments).then(function() {
-            if (self.action.groups_id.length === 0) { return; }
-
-            // many2many field expects to receive: a list of {id, name, display_name}
-            var def = new Model('res.groups')
-                .query(['id', 'name', 'display_name'])
-                .filter([['id', 'in', self.action.groups_id]])
-                .all();
-
-            return def.then(function(result) {
-                self.groups_info = result;
-            });
+        var def1 = this.model.makeRecord('ir.actions.act_window', [{
+            name: 'groups_id',
+            fields: [{
+                name: 'id',
+                type: 'integer',
+            }, {
+                name: 'display_name',
+                type: 'char',
+            }],
+            relation: 'res.groups',
+            type: 'many2many',
+            value: this.action.groups_id,
+        }]).then(function (recordID) {
+            self.groupsHandle = recordID;
         });
+        var def2 = this._super.apply(this, arguments);
+        return $.when(def1, def2);
+    },
+    /**
+     * @override
+     */
+    start: function () {
+        var def1 = this._super.apply(this, arguments);
+        var record = this.model.get(this.groupsHandle);
+        var options = {
+            mode: 'edit',
+        };
+        var many2many = new Many2ManyTags(this, 'groups_id', record, options);
+        this._registerWidget(this.groupsHandle, 'groups_id', many2many);
+        var def2 = many2many.appendTo(this.$('.o_groups'));
+        return $.when(def1, def2);
     },
 
-    start: function() {
-        var self = this;
-        return this._super.apply(this, arguments).then(function() {
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
 
-            var groups = self.action.groups_id;
-            var record_id = self.datamodel.make_record('ir.actions.act_window', [{
-                name: 'groups_id',
-                relation: 'res.groups',
-                relational_value: self.groups_info,
-                type: 'many2many',
-                value: groups,
-            }]);
-            var many2many_options = {
-                mode: 'edit',
-                no_quick_create: true,  // FIXME: enable add option
-            };
-            var Many2ManyTags = relational_fields.FieldMany2ManyTags;
-            self.many2many = new Many2ManyTags(self, 'groups_id', self.datamodel.get(record_id), many2many_options);
-            self.many2many.appendTo(self.$el.find('.o_groups'));
-        });
-    },
-
-    change_action: function(ev) {
-        var $input = $(ev.currentTarget);
+    /**
+     * @private
+     * @param {Event} event
+     */
+    _onActionChange: function (event) {
+        var $input = $(event.currentTarget);
         var attribute = $input.attr('name');
         if (attribute) {
             var new_attrs = {};
@@ -81,15 +85,27 @@ return Widget.extend(FieldManagerMixin, {
         }
     },
 
-    on_parameters: function() {
-        this.trigger_up('open_action_form');
+    /**
+     * @private
+     */
+    _onParameters: function () {
+        this.trigger_up('parameters_clicked');
     },
 
-    field_changed: function(ev) {
-        var args = {};
-        args[ev.data.name] = this.many2many.value;
+    /*
+     * @private
+     * @override
+     */
+    _onFieldChanged: function () {
+        StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
+        var record = this.model.get(this.groupsHandle);
+        var args = {
+            groups_id: record.data.groups_id.res_ids,
+        };
         this.trigger_up('studio_edit_action', {args: args});
     },
 });
+
+return ActionEditorSidebar;
 
 });

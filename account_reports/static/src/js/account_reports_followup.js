@@ -2,7 +2,6 @@ odoo.define('account_reports.account_report_followup', function (require) {
 'use strict';
 
 var core = require('web.core');
-var Model = require('web.Model');
 var Pager = require('web.Pager');
 var datepicker = require('web.datepicker');
 var Dialog = require('web.Dialog');
@@ -32,12 +31,12 @@ var account_report_followup = account_report.extend({
     },
     render: function() {
         if (this.report_options.partners_to_show){
-            this.render_pager();
+            this.renderPager();
             this.render_searchview();
         }
         this._super();
     },
-    render_pager: function() {
+    renderPager: function() {
         var self = this;
         var pager = new Pager(this, this.report_options.total_pager, this.report_options.pager, 1);
         pager.appendTo($('<div>')); // render the pager
@@ -66,9 +65,14 @@ var account_report_followup = account_report.extend({
                 color = 'red';
                 break;
         }
-        return new Model('res.partner').call('write', [[parseInt(partner_id, 10)], {'trust': newTrust}]).then(function () {
-            $(e.target).parents('span.dropdown').find('i.oe-account_followup-trust').attr('style', 'color: ' + color + '; font-size: 0.8em;');
-        });
+        return this._rpc({
+                model: 'res.partner',
+                method: 'write',
+                args: [[parseInt(partner_id, 10)], {'trust': newTrust}],
+            })
+            .then(function () {
+                $(e.target).parents('span.dropdown').find('i.oe-account_followup-trust').attr('style', 'color: ' + color + '; font-size: 0.8em;');
+            });
     },
     display_done: function(e) {
         $(e.target).parents('.o_account_reports_body').find("div.o_account_reports_page").find(".alert.alert-info.alert-dismissible").remove();
@@ -81,10 +85,15 @@ var account_report_followup = account_report.extend({
         var self = this;
         var partner_id = $(e.target).data('partner');
         this.report_options['partner_id'] = partner_id;
-        return new Model(this.report_model).call('send_email', [this.report_options]).then(function (result) { // send the email server side
-            self.display_done(e);
-            $(e.target).parents("div.o_account_reports_page").prepend(QWeb.render("emailSent")); // If all went well, notify the user
-        });
+        return this._rpc({
+                model: this.report_model,
+                method: 'send_email',
+                args: [this.report_options],
+            })
+            .then(function (result) { // send the email server side
+                self.display_done(e);
+                $(e.target).parents("div.o_account_reports_page").prepend(QWeb.render("emailSent")); // If all went well, notify the user
+            });
     },
     print_pdf: function(e) {
         this.display_done(e);
@@ -92,24 +101,34 @@ var account_report_followup = account_report.extend({
     done_partner: function(e) {
         var partner_id = $(e.target).data("partner");
         var self = this;
-        return new Model('res.partner').call('update_next_action', [[parseInt(partner_id)]]).then(function () { // Update in db and restart report
-            if (self.report_options.progressbar) {
-                self.report_options.progressbar[0] += 1;
-            }
-            self.reload();
-        });
+        return this._rpc({
+                model: 'res.partner',
+                method: 'update_next_action',
+                args: [[parseInt(partner_id)]],
+            })
+            .then(function () { // Update in db and restart report
+                if (self.report_options.progressbar) {
+                    self.report_options.progressbar[0] += 1;
+                }
+                self.reload();
+            });
     },
     on_change_blocked: function(e) {
         var checkbox = $(e.target).is(":checked");
         var target_id = $(e.target).parents('tr').find('td[data-id]').data('id');
-        return new Model('account.move.line').call('write_blocked', [[parseInt(target_id)], checkbox]).then(function(result){
-            if (checkbox) {
-                $(e.target).parents('tr').addClass('o_account_followup_blocked');
-            }
-            else {
-                $(e.target).parents('tr').removeClass('o_account_followup_blocked');
-            }
-        }); // Write the change in db
+        return this._rpc({
+                model: 'account.move.line',
+                method: 'write_blocked',
+                args: [[parseInt(target_id)], checkbox],
+            })
+            .then(function(result){
+                if (checkbox) {
+                    $(e.target).parents('tr').addClass('o_account_followup_blocked');
+                }
+                else {
+                    $(e.target).parents('tr').removeClass('o_account_followup_blocked');
+                }
+            }); // Write the change in db
     },
     // Opens the modal to select a next action
     set_next_action: function(e) {
@@ -137,7 +156,7 @@ var account_report_followup = account_report.extend({
                     break;
             }
             nextActionDatePicker.set_value(dt);
-        }
+        };
         $content.find('.o_account_reports_followup_next_action_date_button').bind('click', changeDate);
         
         var save = function () {
@@ -147,8 +166,12 @@ var account_report_followup = account_report.extend({
             if (self.$el.find('.o_account_reports_followup-manual').hasClass('btn-default')){
                 self.toggle_auto_manual(e);
             }
-            return new Model(self.report_model).call('change_next_action', [parseInt(target_id), date, note])
-        }
+            return this._rpc({
+                model: self.report_model,
+                method: 'change_next_action',
+                args: [parseInt(target_id), date, note],
+            });
+        };
         new Dialog(this, {size: 'medium', $content: $content, buttons: [{text: 'Save', classes: 'btn-primary', close: true, click: save}, {text: 'Cancel', close: true}]}).open();
     },
     enable_auto: function(e) {
@@ -158,7 +181,11 @@ var account_report_followup = account_report.extend({
         }
         if ($(e.target).parents('.o_account_reports_body').find('.o_account_reports_followup-auto:last').hasClass('btn-default')){
             this.toggle_auto_manual(e);
-            return new Model(this.report_model).call('change_next_action', [parseInt(partner_id), this.format_date(new moment()), ''])
+            return this._rpc({
+                model: this.report_model,
+                method: 'change_next_action',
+                args: [parseInt(partner_id), this.format_date(new moment()), ''],
+            });
         }
     },
     toggle_auto_manual: function(e) {
@@ -174,10 +201,15 @@ var account_report_followup = account_report.extend({
         var save = function () {
             var note = $content.find("#internalNote").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
             var date = paymentDatePicker.get_value();
-            return new Model('account.move.line').call('write', [[parseInt($content.find("#target_id").val())], {expected_pay_date: date, internal_note: note}]).then(function () {
-                return self.reload();
-            });
-        }
+            return this._rpc({
+                    model: 'account.move.line',
+                    method: 'write',
+                    args: [[parseInt($content.find("#target_id").val())], {expected_pay_date: date, internal_note: note}],
+                })
+                .then(function () {
+                    return self.reload();
+                });
+        };
         new Dialog(this, {title: 'Odoo', size: 'medium', $content: $content, buttons: [{text: 'Save', classes: 'btn-primary', close: true, click: save}, {text: 'Cancel', close: true}]}).open();
     },
     save_summary: function(e) {

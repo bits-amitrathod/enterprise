@@ -2,37 +2,43 @@ odoo.define('stock_barcode.MainMenu', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var Widget = require('web.Widget');
 var Dialog = require('web.Dialog');
 var Session = require('web.session');
-var BarcodeHandlerMixin = require('barcodes.BarcodeHandlerMixin');
 
 var _t = core._t;
 
-var MainMenu = Widget.extend(BarcodeHandlerMixin, {
+var MainMenu = Widget.extend({
     template: 'main_menu',
 
     events: {
-        "click .button_operations": function(){ this.do_action('stock_barcode.stock_picking_type_action_kanban') },
-        "click .button_inventory": function(){ this.open_inventory() },
+        "click .button_operations": function(){
+            this.do_action('stock_barcode.stock_picking_type_action_kanban');
+        },
+        "click .button_inventory": function(){
+            this.open_inventory();
+        },
     },
 
     init: function(parent, action) {
-        // Note: BarcodeHandlerMixin.init calls this._super.init, so there's no need to do it here.
         // Yet, "_super" must be present in a function for the class mechanism to replace it with the actual parent method.
-        this._super;
-        BarcodeHandlerMixin.init.apply(this, arguments);
+        this._super.apply(this, arguments);
         this.message_demo_barcodes = action.params.message_demo_barcodes;
     },
 
     start: function() {
         var self = this;
+        core.bus.on('barcode_scanned', this, this._onBarcodeScanned);
         return this._super().then(function() {
             if (self.message_demo_barcodes) {
                 self.setup_message_demo_barcodes();
             }
         });
+    },
+
+    destroy: function () {
+        core.bus.off('barcode_scanned', this, this._onBarcodeScanned);
+        this._super();
     },
 
     setup_message_demo_barcodes: function() {
@@ -55,15 +61,7 @@ var MainMenu = Widget.extend(BarcodeHandlerMixin, {
         });
     },
 
-    on_attach_callback: function() {
-        this.start_listening();
-    },
-
-    on_detach_callback: function() {
-        this.stop_listening();
-    },
-
-    on_barcode_scanned: function(barcode) {
+    _onBarcodeScanned: function(barcode) {
         var self = this;
         Session.rpc('/stock_barcode/scan_from_main_menu', {
             barcode: barcode,
@@ -78,8 +76,10 @@ var MainMenu = Widget.extend(BarcodeHandlerMixin, {
 
     open_inventory: function() {
         var self = this;
-        return new Model("stock.inventory")
-            .call("open_new_inventory", [])
+        return this._rpc({
+                model: 'stock.inventory',
+                method: 'open_new_inventory',
+            })
             .then(function(result) {
                 self.do_action(result);
             });

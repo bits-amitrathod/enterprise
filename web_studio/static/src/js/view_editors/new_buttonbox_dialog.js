@@ -5,33 +5,39 @@ var core = require('web.core');
 var Dialog = require('web.Dialog');
 var relational_fields = require('web.relational_fields');
 
-var FieldManagerMixin = require('web_studio.FieldManagerMixin');
+var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var utils = require('web_studio.utils');
 
+var Many2one = relational_fields.FieldMany2One;
 var _t = core._t;
 
-var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
+var NewButtonBoxDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.NewButtonBoxDialog',
-
     events: {
-        'click .o_web_studio_icon_selector': 'on_icon_clicked',
+        'click .o_web_studio_icon_selector': '_on_IconSelector',
     },
-
-    init: function(parent, model) {
-        FieldManagerMixin.init.call(this);
-        this.model = model;
+    /**
+     * @override
+     */
+    init: function (parent, model_name) {
+        this.model_name = model_name;
         this.ICONS = utils.ICONS;
 
         var options = {
             title: _t('Add a Button'),
             size: 'small',
-            buttons: [
-                {text: _t("Confirm"), classes: 'btn-primary', click: _.bind(this.save, this)},
-                {text: _t("Cancel"), close: true},
-            ],
+            buttons: [{
+                text: _t("Confirm"),
+                classes: 'btn-primary',
+                click: this._onConfirm.bind(this)
+            }, {
+                text: _t("Cancel"),
+                close: true
+            }],
         };
 
         this._super(parent, options);
+        StandaloneFieldManagerMixin.init.call(this);
 
         var self = this;
         this.opened().then(function () {
@@ -39,34 +45,42 @@ var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
             self.$el.find('input[name="string"]').focus();
         });
     },
-    start: function() {
-        var record_id_many2one = this.datamodel.make_record('ir.actions.act_window', [{
+    /**
+     * @override
+     */
+    start: function () {
+        var self = this;
+        var defs = [];
+        defs.push(this._super.apply(this, arguments));
+        defs.push(this.model.makeRecord('ir.actions.act_window', [{
             name: 'field',
             relation: 'ir.model.fields',
             type: 'many2one',
-            domain: [['relation', '=', this.model], ['ttype', '=', 'many2one']],
-        }]);
-        var options = {
-            mode: 'edit',
-            no_quick_create: true,
-        };
-        var Many2one = relational_fields.FieldMany2One;
-        this.many2one = new Many2one(this, 'field', this.datamodel.get(record_id_many2one), options);
-        this.many2one.appendTo(this.$('.js_many2one_field'));
-        return this._super.apply(this, arguments);
+            domain: [['relation', '=', this.model_name], ['ttype', '=', 'many2one']],
+        }]).then(function (recordID) {
+            var options = {
+                mode: 'edit',
+            };
+            var record = self.model.get(recordID);
+            self.many2one = new Many2one(self, 'field', record, options);
+            self.many2one.nodeOptions.no_create = true;
+            self._registerWidget(recordID, 'field', self.many2one);
+            self.many2one.appendTo(self.$('.js_many2one_field'));
+        }));
+        return $.when.apply($, defs);
     },
-    on_icon_clicked: function(event) {
-        var $el = $(event.currentTarget);
-        this.$('.o_selected').removeClass('o_selected');
-        $el.addClass('o_selected');
-        var icon = $(event.currentTarget).data('value');
-        // only takes `fa-...` instead of `fa fa-...`
-        this.selected_icon = icon && icon.split(' ')[1];
-    },
-    save: function() {
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     */
+    _onConfirm: function () {
         var string = this.$('input[name="string"]').val() || 'New Button';
         var icon = this.selected_icon || this.ICONS[0].split(' ')[1];
-        var field_id = this.many2one.value;
+        var field_id = this.many2one.value && this.many2one.value.res_id;
         if (!field_id) {
             Dialog.alert(this, _t('Select a related field.'));
             return;
@@ -77,6 +91,18 @@ var NewButtonBoxDialog = Dialog.extend(FieldManagerMixin, {
             icon: icon,
         });
         this.close();
+    },
+    /**
+     * @private
+     * @param {Event} ev
+     */
+    _on_IconSelector: function (ev) {
+        var $el = $(ev.currentTarget);
+        this.$('.o_selected').removeClass('o_selected');
+        $el.addClass('o_selected');
+        var icon = $(ev.currentTarget).data('value');
+        // only takes `fa-...` instead of `fa fa-...`
+        this.selected_icon = icon && icon.split(' ')[1];
     },
 });
 

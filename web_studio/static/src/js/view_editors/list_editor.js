@@ -1,18 +1,21 @@
 odoo.define('web_studio.ListEditor', function (require) {
 "use strict";
 
-var ListRenderer = require('web.BasicListRenderer');
+var ListRenderer = require('web.ListRenderer');
+var EditorMixin = require('web_studio.EditorMixin');
 
-return ListRenderer.extend({
+return ListRenderer.extend(EditorMixin, {
     nearest_hook_tolerance: 200,
     className: ListRenderer.prototype.className + ' o_web_studio_list_view_editor',
     events: _.extend({}, ListRenderer.prototype.events, {
-        'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': 'on_existing_column',
+        'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': '_onExistingColumn',
     }),
-
-    init: function(parent, arch, fields, state, widgets_registry, options) {
+    /**
+     * @constructor
+     */
+    init: function (parent, state, params) {
         this._super.apply(this, arguments);
-        if (options && options.show_invisible) {
+        if (params.show_invisible) {
             this.invisible_columns = _.difference(this.arch.children, this.columns);
             this.columns = this.arch.children;
         } else {
@@ -21,13 +24,69 @@ return ListRenderer.extend({
         this.node_id = 1;
     },
 
-    _render: function() {
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     */
+    getLocalState: function() {
+        var state = this._super.apply(this, arguments) || {};
+        if (this.selected_node_id) {
+            state.selected_node_id = this.selected_node_id;
+        }
+        return state;
+    },
+    /**
+     * @override
+     */
+    highlightNearestHook: function ($helper, position) {
+        EditorMixin.highlightNearestHook.apply(this, arguments);
+
+        var $nearest_list_hook = this.$('.o_web_studio_hook')
+            .touching({
+                x: position.pageX - this.nearest_hook_tolerance,
+                y: position.pageY - this.nearest_hook_tolerance,
+                w: this.nearest_hook_tolerance*2,
+                h: this.nearest_hook_tolerance*2})
+            .nearest({x: position.pageX, y: position.pageY}).eq(0);
+        if ($nearest_list_hook.length) {
+            $nearest_list_hook.closest('table')
+                .find('tr')
+                .children(':nth-child(' + ($nearest_list_hook.index() + 1) + ')')
+                .addClass('o_web_studio_nearest_hook');
+            return true;
+        }
+        return false;
+    },
+    /**
+     * @override
+     */
+    setLocalState: function(state) {
+        if (state.selected_node_id) {
+            var $selected_node = this.$('th[data-node-id="' + state.selected_node_id + '"]');
+            if ($selected_node) {
+                $selected_node.click();
+            }
+        }
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _render: function () {
         var self = this;
         var def = this._super.apply(this, arguments);
 
         this.$el.droppable({
             accept: ".o_web_studio_component",
-            drop: function(event, ui) {
+            drop: function (event, ui) {
                 var $hook = self.$('.o_web_studio_nearest_hook');
                 if ($hook.length) {
                     var position = $hook.closest('table').find('th').eq($hook.index()).data('position') || 'after';
@@ -61,7 +120,7 @@ return ListRenderer.extend({
         });
 
         // HOVER
-        this.$('th, td').not('.o_web_studio_hook').hover(function(ev) {
+        this.$('th, td').not('.o_web_studio_hook').hover(function (ev) {
             var $el = $(ev.currentTarget);
             self.$('.o_hover').removeClass('o_hover');
 
@@ -71,12 +130,12 @@ return ListRenderer.extend({
                 .children(':nth-child(' + ($el.index() + 1) + ')')
                 .addClass('o_hover');
         });
-        this.$('table').mouseleave(function() {
+        this.$('table').mouseleave(function () {
             self.$('.o_hover').removeClass('o_hover');
         });
 
         // CLICK
-        this.$('th, td').click(function(ev) {
+        this.$('th, td').click(function (ev) {
             var $el = $(ev.currentTarget);
             self.$('.o_clicked').removeClass('o_clicked');
 
@@ -88,12 +147,15 @@ return ListRenderer.extend({
 
         return def;
     },
-
-    _render_header: function() {
+    /**
+     * @override
+     * @private
+     */
+    _renderHeader: function () {
         var $header = this._super.apply(this, arguments);
         var self = this;
         // Insert a hook after each th
-        _.each($header.find('th'), function(th) {
+        _.each($header.find('th'), function (th) {
             var $new_th = $('<th>')
                 .addClass('o_web_studio_hook')
                 .append(
@@ -113,20 +175,55 @@ return ListRenderer.extend({
         $new_th_before.prependTo($header.find('tr'));
         return $header;
     },
-
-    _render_header_cell: function(node) {
+    /**
+     * @override
+     * @private
+     */
+    _renderHeaderCell: function (node) {
         var $th = this._super.apply(this, arguments);
         if (_.contains(this.invisible_columns, node)) {
             $th.addClass('o_web_studio_show_invisible');
         }
         return $th;
     },
+    /**
+     * @override
+     * @private
+     */
+    _renderEmptyRow: function () {
+        // render an empty row
+        var $tds = [];
+         _.each(this.columns, function () {
+            $tds.push($('<td>&nbsp;</td>'));
+        });
+        if (this.has_selectors) {
+            $tds.push($('<td>&nbsp;</td>'));
+        }
+        var $row = $('<tr>').append($tds);
 
-    _render_empty_row: function() {
+        // insert a hook after each td
+        _.each($row.find('td'), function (td) {
+            $('<td>')
+                .addClass('o_web_studio_hook')
+                .insertAfter($(td));
+        });
+
+        // insert a hook before the first column
+        $('<td>')
+            .addClass('o_web_studio_hook')
+            .prependTo($row);
+
+        return $row;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderRow: function () {
         var $row = this._super.apply(this, arguments);
 
         // Inser a hook after each td
-        _.each($row.find('td'), function(td) {
+        _.each($row.find('td'), function (td) {
             $('<td>')
                 .addClass('o_web_studio_hook')
                 .insertAfter($(td));
@@ -139,30 +236,15 @@ return ListRenderer.extend({
 
         return $row;
     },
-
-    _render_row: function() {
-        var $row = this._super.apply(this, arguments);
-
-        // Inser a hook after each td
-        _.each($row.find('td'), function(td) {
-            $('<td>')
-                .addClass('o_web_studio_hook')
-                .insertAfter($(td));
-        });
-
-        // Insert a hook before the first column
-        $('<td>')
-            .addClass('o_web_studio_hook')
-            .prependTo($row);
-
-        return $row;
-    },
-
-    _render_footer: function() {
+    /**
+     * @override
+     * @private
+     */
+    _renderFooter: function () {
         var $footer = this._super.apply(this, arguments);
 
         // Insert a hook after each td
-        _.each($footer.find('td'), function(td) {
+        _.each($footer.find('td'), function (td) {
             $('<td>')
                 .addClass('o_web_studio_hook')
                 .insertAfter($(td));
@@ -176,25 +258,16 @@ return ListRenderer.extend({
         return $footer;
 
     },
-    highlight_nearest_hook: function($helper, position) {
-        this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
-        var $nearest_list_hook = this.$('.o_web_studio_hook')
-            .touching({
-                x: position.pageX - this.nearest_hook_tolerance,
-                y: position.pageY - this.nearest_hook_tolerance,
-                w: this.nearest_hook_tolerance*2,
-                h: this.nearest_hook_tolerance*2})
-            .nearest({x: position.pageX, y: position.pageY}).eq(0);
-        if ($nearest_list_hook.length) {
-            $nearest_list_hook.closest('table')
-                .find('tr')
-                .children(':nth-child(' + ($nearest_list_hook.index() + 1) + ')')
-                .addClass('o_web_studio_nearest_hook');
-            return true;
-        }
-        return false;
-    },
-    on_existing_column: function(ev) {
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {Event} ev
+     */
+    _onExistingColumn: function (ev) {
         var $el = $(ev.currentTarget);
         var $selected_column = $el.closest('table').find('th').eq($el.index());
 
@@ -205,24 +278,6 @@ return ListRenderer.extend({
         this.selected_node_id = $selected_column.data('node-id');
         this.trigger_up('node_clicked', {node: node});
     },
-
-    get_local_state: function() {
-        var state = this._super.apply(this, arguments);
-        if (this.selected_node_id) {
-            state.selected_node_id = this.selected_node_id;
-        }
-        return state;
-    },
-
-    set_local_state: function(state) {
-        if (state.selected_node_id) {
-            var $selected_node = this.$('th[data-node-id="' + state.selected_node_id + '"]');
-            if ($selected_node) {
-                $selected_node.click();
-            }
-        }
-    },
-
 });
 
 });
