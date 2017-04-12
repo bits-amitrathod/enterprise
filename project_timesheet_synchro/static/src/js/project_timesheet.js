@@ -974,13 +974,14 @@ odoo.define('project_timeshee.ui', function (require ) {
             });
         },
         stop_timer: function() {
+            var unit_amount = this.hh_mm_to_unit_amount(moment.utc(new Date() - new Date(JSON.parse(local_storage.getItem("pt_start_timer_time")))).format("HH:mm"));
+            this.create_activity(undefined, unit_amount);
+        },
+        clear_timer: function() {
             this.timer_on = false;
             clearInterval(this.timer_start);
-            var unit_amount = this.hh_mm_to_unit_amount(moment.utc(new Date() - new Date(JSON.parse(local_storage.getItem("pt_start_timer_time")))).format("HH:mm"));
             this.current_activity = false;
             local_storage.removeItem("pt_start_timer_time");
-
-            this.create_activity(undefined, unit_amount);
         },
         quick_add_time: function(event) {
             var activity = _.findWhere(this.getParent().data.account_analytic_lines,  {id: event.currentTarget.dataset.activity_id});
@@ -1449,6 +1450,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         // Otherwise, a new activity is created with the appropriate values.
         // The only required field is "project_id".
         save_changes: function() {
+            this.clear_timer();
             var self = this;
             // Validation step
             if (_.isUndefined(this.activity.project_id)) {
@@ -1493,6 +1495,7 @@ odoo.define('project_timeshee.ui', function (require ) {
 
         },
         discard_changes: function() {
+            this.clear_timer();
             core.bus.trigger('change_screen', {
                 id : 'activities',
             });
@@ -1514,6 +1517,7 @@ odoo.define('project_timeshee.ui', function (require ) {
 
         delete_activity: function() {
             var self = this;
+            this.clear_timer();
             if (!_.isUndefined(this.activity.id)) {
                 var aal_to_remove = _.findWhere(this.getParent().data.account_analytic_lines, {id : this.activity.id});
                 aal_to_remove.to_remove = true;
@@ -1523,7 +1527,10 @@ odoo.define('project_timeshee.ui', function (require ) {
             core.bus.trigger('change_screen', {
                 id : 'activities',
             });
-        }
+        },
+        clear_timer: function() {
+            this.getParent().activities_screen.clear_timer();
+        },
     });
 
     var Stats_screen = BasicScreenWidget.extend({
