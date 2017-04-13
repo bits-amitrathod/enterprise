@@ -13,11 +13,11 @@ QUnit.module('Views', {
         this.data = {
             task: {
                 fields: {
-                    id: {string: "ID", type: "int"},
+                    id: {string: "ID", type: "integer"},
                     name: {string: "name", type: "char"},
                     start: {string: "start", type: "datetime"},
                     stop: {string: "stop", type: "datetime"},
-                    progress: {string: "progress", type: "int"},
+                    progress: {string: "progress", type: "integer"},
                     time: {string: "Time", type: "float"},
                     user_id: {string: "User", type: "many2one", relation: 'user'},
                 },
