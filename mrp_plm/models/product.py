@@ -19,7 +19,7 @@ class ProductTemplate(models.Model):
     @api.multi
     def _compute_attachments(self):
         for p in self:
-            attachments = self.env['ir.attachment'].search(['&', ('res_model', '=', 'product.template'), ('res_id', '=', self.id)])
+            attachments = self.env['ir.attachment'].search(['&', ('res_model', '=', 'product.template'), ('res_id', '=', p.id)])
             p.template_attachment_count = len(attachments)
 
     @api.multi
