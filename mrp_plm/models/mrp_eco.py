@@ -315,7 +315,7 @@ class MrpEco(models.Model):
             self.user_can_reject = eco.id in to_reject_eco_ids
 
     @api.one
-    @api.depends('approval_ids.is_approved', 'approval_ids.is_rejected')
+    @api.depends('stage_id','approval_ids.is_approved', 'approval_ids.is_rejected')
     def _compute_kanban_state(self):
         """ State of ECO is based on the state of approvals for the current stage. """
         approvals = self.approval_ids.filtered(lambda app: app.template_stage_id == self.stage_id)
@@ -405,7 +405,7 @@ class MrpEco(models.Model):
         message = super(MrpEco, self).message_post(**kwargs)
         if message.message_type == 'comment' and message.author_id == self.env.user.partner_id:
             for eco in self:
-                for approval in eco.approval_ids.filtered(lambda app: app.template_stage_id == self.stage_id and app.status == 'none'):
+                for approval in eco.approval_ids.filtered(lambda app: app.template_stage_id == self.stage_id and app.status == 'none' and app.approval_template_id.approval_type == 'comment'):
                     if self.env.user in approval.approval_template_id.user_ids:
                         approval.write({
                             'status': 'comment',
@@ -417,10 +417,24 @@ class MrpEco(models.Model):
     def _create_approvals(self):
         for eco in self:
             for approval_template in eco.stage_id.approval_template_ids:
-                self.env['mrp.eco.approval'].create({
-                    'eco_id': eco.id,
-                    'approval_template_id': approval_template.id,
-                })
+                approval = eco.approval_ids.filtered(lambda app: app.approval_template_id == approval_template)
+                if not approval:
+                    self.env['mrp.eco.approval'].create({
+                        'eco_id': eco.id,
+                        'approval_template_id': approval_template.id,
+                    })
+                # If approval already exists update it
+                else:
+                    if approval.status != 'none':
+                        msg = 'Approval: ' + approval.name + ' was ' + approval.status
+                        if (approval.user_id):
+                            msg = msg + ' by ' + approval.user_id.name
+                        msg = msg + '.'
+                        self.message_post(body=msg)
+                        approval.write({
+                            'status': 'none',
+                            'user_id': False,
+                        })
 
     @api.multi
     def approve(self):

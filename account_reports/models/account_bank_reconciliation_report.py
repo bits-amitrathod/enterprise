@@ -62,12 +62,17 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'level': 1,
         }
 
+    def print_pdf(self, options):
+        options['active_id'] = self.env.context.get('active_id')
+        return super(account_bank_reconciliation_report, self).print_pdf(options)
+
+    def print_xlsx(self, options):
+        options['active_id'] = self.env.context.get('active_id')
+        return super(account_bank_reconciliation_report, self).print_xlsx(options)
+
     @api.model
     def get_lines(self, options, line_id=None):
-        if self._context.get('active_model') != 'account.journal' or not self._context.get('active_id'):
-            #TODO: be more robust! must save the journal in some session variable
-            raise
-        journal_id = self._context.get('active_id')
+        journal_id = self._context.get('active_id') or options.get('active_id')
         journal = self.env['account.journal'].browse(journal_id)
         lines = []
         #Start amount
@@ -82,7 +87,8 @@ class account_bank_reconciliation_report(models.AbstractModel):
         # Un-reconcilied bank statement lines
         move_lines = self.env['account.move.line'].search([('move_id.journal_id', '=', journal_id),
                                                            '|', ('statement_line_id', '=', False), ('statement_line_id.date', '>', self.env.context['date_to']),
-                                                           ('user_type_id.type', '!=', 'liquidity'),
+                                                           ('user_type_id.type', '=', 'liquidity'),
+                                                           ('full_reconcile_id', '=', False),
                                                            ('date', '<=', self.env.context['date_to']),
                                                            ('company_id', 'in', self.env.context['company_ids'])])
         unrec_tot = 0
