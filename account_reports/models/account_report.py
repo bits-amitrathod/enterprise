@@ -428,7 +428,7 @@ class AccountReport(models.AbstractModel):
             quarter = (today.month - 1) / 3 + 1
             quarter = quarter - 1 if quarter > 1 else 4
             dt_to = (today.replace(month=quarter * 3, day=1, year=today.year if quarter != 4 else today.year - 1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
-            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 3, year=dt_to.year) or False
+            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 2, year=dt_to.year) or False
         elif options_filter == 'last_year':
             company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now().replace(year=today.year - 1))
             dt_from = dt_from and company_fiscalyear_dates['date_from'] or False

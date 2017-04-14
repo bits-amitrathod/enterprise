@@ -225,7 +225,7 @@ var DialingPanel = Widget.extend({
         "click .o_dial_call_button":  "call_button",
         "click .o_dial_refresh_icon": function(ev){ev.preventDefault();this.search_phonecalls_status(true);},
         "click .o_dial_keypad_icon": function(ev){ev.preventDefault();this.toggle_keypad();},
-        "click .o_dial_keypad_button": function(ev){ev.preventDefault();this.keypad_button(ev.currentTarget.textContent);},
+        "click .O_dial_number": function(ev){ev.preventDefault();this.keypad_button(ev.currentTarget.textContent);},
         "click .o_dial_keypad_backspace": "keypad_backspace",
         "click .o_dial_keypad_call_button": "keypad_call_button",
         "click .o_dial_hangup_button": "hangup_button",

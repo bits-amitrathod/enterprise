@@ -109,6 +109,7 @@ class ReportPartnerLedger(models.AbstractModel):
                 'name': partner.name,
                 'columns': [{'name': v} for v in [self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
                 'level': 2,
+                'trust': partner.trust,
                 'unfoldable': True,
                 'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
                 'colspan': 5,

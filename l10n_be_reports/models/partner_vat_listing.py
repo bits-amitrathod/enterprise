@@ -23,13 +23,14 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
         partner_ids = self.env['res.partner'].search([('vat', 'ilike', 'BE%')]).ids
         if not partner_ids:
             return lines
+
         tag_ids = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in ['l10n_be.tax_tag_00', 'l10n_be.tax_tag_01', 'l10n_be.tax_tag_02', 'l10n_be.tax_tag_03', 'l10n_be.tax_tag_45']]
         tag_ids_2 = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in ['l10n_be.tax_tag_01', 'l10n_be.tax_tag_02', 'l10n_be.tax_tag_03']]
         query = """
             SELECT sub1.partner_id, sub1.name, sub1.vat, sub1.turnover, sub2.vat_amount
             FROM (SELECT l.partner_id, p.name, p.vat, SUM(l.credit - l.debit) as turnover
                   FROM account_move_line l
-                  LEFT JOIN res_partner p ON l.partner_id = p.id
+                  LEFT JOIN res_partner p ON l.partner_id = p.id AND p.customer = true
                   LEFT JOIN account_move_line_account_tax_rel amlt ON l.id = amlt.account_move_line_id
                   LEFT JOIN account_tax_account_tag tt on amlt.account_tax_id = tt.account_tax_id
                   WHERE tt.account_account_tag_id IN %(tags)s
@@ -47,6 +48,7 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
                   AND l2.date <= %(date_to)s
                   AND l2.company_id IN %(company_ids)s
                   GROUP BY l2.partner_id) AS sub2 ON sub1.partner_id = sub2.partner_id
+           WHERE turnover > 250
         """
         params = {
             'tags': tuple(tag_ids),
