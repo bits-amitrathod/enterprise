@@ -476,7 +476,7 @@ ActionManager.include({
         var self = this;
         var c = crash_manager;
         return $.Deferred(function (d) {
-            self.session.get_file({
+            self.getSession().get_file({
                 url: '/account_reports',
                 data: action.data,
                 complete: framework.unblockUI,
