@@ -61,7 +61,7 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
         this.end_date = this.end_picker.get_value()  || '9999-12-31';
         this.filters.template_ids = this.get_filtered_template_ids();
         this.filters.tag_ids = this.get_filtered_tag_ids();
-        
+
         var company_ids = this.get_filtered_company_ids();
 
         if (!company_ids || !company_ids.length) {
@@ -173,8 +173,8 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
                 }
             });
 
-            self.start_picker.set_value(self.start_date);
-            self.end_picker.set_value(self.end_date);
+            self.start_picker.set_value(moment(self.start_date));
+            self.end_picker.set_value(moment(self.end_date));
         });
     },
 
@@ -203,8 +203,8 @@ var account_contract_dashboard_main = account_contract_dashboard_abstract.extend
         this._super(parent);
 
         this.main_dashboard_action_id = context.id;
-        this.start_date = moment().subtract(1, 'M').format('YYYY-MM-DD');
-        this.end_date = moment().format('YYYY-MM-DD');
+        this.start_date = moment().subtract(1, 'M');
+        this.end_date = moment();
 
         this.filters = {
             template_ids: [],
@@ -403,8 +403,8 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         var self = this;
         return ajax.jsonRpc('/account_contract_dashboard/compute_stat', 'call', {
             'stat_type': this.selected_stat,
-            'start_date': this.start_date,
-            'end_date': this.end_date,
+            'start_date': this.start_date.format('YYYY-MM-DD'),
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'filters': this.filters,
         }).done(function (result) {
             self.value = result;
@@ -450,8 +450,8 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         var self = this;
         ajax.jsonRpc('/account_contract_dashboard/get_stats_history', 'call', {
             'stat_type': this.selected_stat,
-            'start_date': this.start_date,
-            'end_date': this.end_date,
+            'start_date': this.start_date.format('YYYY-MM-DD'),
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'filters': this.filters,
         }).done(function (result) {
             // Rounding of result
@@ -476,8 +476,8 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         var self = this;
         ajax.jsonRpc('/account_contract_dashboard/get_stats_by_plan', 'call', {
             'stat_type': this.selected_stat,
-            'start_date': this.start_date,
-            'end_date': this.end_date,
+            'start_date': this.start_date.format('YYYY-MM-DD'),
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'filters': this.filters,
         }).done(function (result) {
             var html = QWeb.render('account_contract_dashboard.stats_by_plan', {
@@ -504,8 +504,8 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         var self = this;
         ajax.jsonRpc('/account_contract_dashboard/compute_graph', 'call', {
             'stat_type': this.selected_stat,
-            'start_date': this.start_date,
-            'end_date': this.end_date,
+            'start_date': this.start_date.format('YYYY-MM-DD'),
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'points_limit': 0,
             'filters': this.filters,
         }).done(function(result){
@@ -520,8 +520,8 @@ var account_contract_dashboard_detailed = account_contract_dashboard_abstract.ex
         var self = this;
 
         ajax.jsonRpc('/account_contract_dashboard/compute_graph_mrr_growth', 'call', {
-            'start_date' : this.start_date,
-            'end_date': this.end_date,
+            'start_date' : this.start_date.format('YYYY-MM-DD'),
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'points_limit': 30,
             'filters': this.filters,
         }).done(function(result){
@@ -842,8 +842,8 @@ var AccountContractDashboardStatBox = Widget.extend({
         var self = this;
         return ajax.jsonRpc('/account_contract_dashboard/compute_graph_and_stats', 'call', {
             'stat_type': this.stat_type,
-            'start_date' : this.start_date,
-            'end_date': this.end_date,
+            'start_date' : this.start_date.format('YYYY-MM-DD'),
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'points_limit': 30,
             'filters': this.filters,
         }).done(function(result){
@@ -912,7 +912,7 @@ var AccountContractDashboardForecastBox = Widget.extend({
         var self = this;
         return ajax.jsonRpc('/account_contract_dashboard/get_default_values_forecast', 'call', {
             'forecast_type': this.stat_type,
-            'end_date': this.end_date,
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'filters': this.filters,
         }).done(function(result){
             self.computed_graph = compute_forecast_values(
@@ -941,8 +941,8 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
 
     init: function() {
         this._super.apply(this, arguments);
-        this.start_date = moment().startOf('month').format('YYYY-MM-DD');
-        this.end_date = moment().endOf('month').format('YYYY-MM-DD');
+        this.start_date = moment().startOf('month');
+        this.end_date = moment().endOf('month');
     },
 
     willStart: function() {
@@ -982,8 +982,8 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
         addLoader(this.$('#mrr_growth_salesman'));
 
         ajax.jsonRpc('/account_contract_dashboard/get_values_salesman', 'call', {
-            'start_date': this.start_date,
-            'end_date': this.end_date,
+            'start_date': this.start_date.format('YYYY-MM-DD'),
+            'end_date': this.end_date.format('YYYY-MM-DD'),
             'salesman_id': this.salesman.id,
         }).done(function(result){
             load_chart_mrr_salesman('#mrr_growth_salesman', result);
@@ -1124,7 +1124,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
         this._super(parent, context);
 
         this.action_id = context.id;
-        this.date_start = moment().startOf('year').format('YYYY-MM-DD');
+        this.date_start = moment().startOf('year');
         this.cohort_period = 'month';
         this.cohort_periods = [['day', _t('By Day')], ['week', _t('By Week')], ['month', _t('By Month')], ['year', _t('By Year')]];
         this.cohort_interest = 'number';
@@ -1146,7 +1146,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
     fetch_cohort_report: function() {
         var self = this;
         return ajax.jsonRpc('/account_contract_dashboard/fetch_cohort_report', 'call', {
-            'date_start': this.date_start,
+            'date_start': this.date_start.format('YYYY-MM-DD'),
             'cohort_period': this.cohort_period,
             'cohort_interest': this.cohort_interest,
             'filters': this.filters,
@@ -1245,7 +1245,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
         });
         var self = this;
         this.date_picker.prependTo(this.$searchview).then(function() {
-            self.date_picker.set_value(self.date_start);
+            self.date_picker.set_value(moment(self.date_start));
         });
     },
 
@@ -1313,7 +1313,7 @@ function compute_forecast_values(starting_value, projection_time, growth_type, c
             cur_value = cur_value*(1-churn/100)*(1+expon_growth/100);
         }
         values.push({
-            '0': cur_date.format('YYYY-MM-DD'),
+            '0': cur_date,
             '1': cur_value,
         });
     }
