@@ -7,11 +7,11 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="button_mrp_workcenter" type="object" class="oe_stat_button"
-                    icon="fa-cogs" string="WorkCenter" attrs="{'invisible': [('workcenter_id', '=', False)]}">
+                    icon="fa-cogs" string="Work Center" attrs="{'invisible': [('workcenter_id', '=', False)]}" groups="mrp.group_mrp_routings">
                 </button>
             </xpath>
             <xpath expr="//field[@name='location']" position="after">
-                <field name="workcenter_id"/>
+                <field name="workcenter_id" groups="mrp.group_mrp_routings"/>
             </xpath>
             <xpath expr="//group[@name='maintenance']" position="after">
                 <group name="statistisc">
@@ -43,8 +43,8 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='maintenance_type']" position="after">
-                <field name="production_id"/>
-                <field name="workorder_id"/>
+                <field name="production_id" options="{'no_create': True, 'no_open': True}"/>
+                <field name="workorder_id" attrs="{'invisible': [('production_id', '=', False)]}" options="{'no_create': True, 'no_open': True}" domain="[('production_id', '=', production_id)]" groups="mrp.group_mrp_routings"/>
                 <!-- <field name="repair_id"/> -->
             </xpath>
             <field name="equipment_id" position="attributes">
