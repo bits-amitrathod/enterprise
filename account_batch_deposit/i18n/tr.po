@@ -3,27 +3,37 @@
 # * account_batch_deposit
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# gezgin biri <gezginbiri@hotmail.com>, 2016
-# Ramiz Deniz Öner <deniz@denizoner.com>, 2016
-# Murat Kaplan <muratk@projetgrup.com>, 2016
-# Ali Zeynel AĞCA <zeynelagca@gmail.com>, 2016
-# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016
-# Azar Huseynli <azerbay1984@gmail.com>, 2016
-# Ediz Duman <neps1192@gmail.com>, 2016
+# Ramiz Deniz Öner <deniz@denizoner.com>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
+# gezgin biri <gezginbiri@hotmail.com>, 2017
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
+# Murat Kaplan <muratk@projetgrup.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
+# Ali Zeynel AĞCA <zeynelagca@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Ediz Duman <neps1192@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Ali Zeynel AĞCA <zeynelagca@gmail.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: account_batch_deposit
+#: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
+msgid "Account: Create Batch Deposit"
+msgstr ""
+
+#. module: account_batch_deposit
+#: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
+msgid "Account: Print Batch Deposits"
+msgstr ""
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_payment.py:42
@@ -64,14 +74,21 @@ msgid "Bank Statement Line"
 msgstr "Banka Hesap Özeti Kalemi"
 
 #. module: account_batch_deposit
+#: model:account.payment.method,name:account_batch_deposit.account_payment_method_batch_deposit
 #: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
 #: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.account_journal_dashboard_kanban_view_inherited
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
 msgstr "Toplu Mevduat"
+
+#. module: account_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
+msgid "Batch Deposit Payment Method Selected"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
@@ -85,16 +102,6 @@ msgid "Batch Deposits Sequence"
 msgstr ""
 
 #. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
-msgid "Batch deposit id"
-msgstr ""
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
-msgid "Batch deposit payment method selected"
-msgstr ""
-
-#. module: account_batch_deposit
 #: model:ir.actions.act_window,help:account_batch_deposit.action_batch_deposit
 msgid ""
 "Batch deposits allows you to group received checks before you deposit them to the bank.\n"
@@ -104,7 +111,6 @@ msgstr ""
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_journal.py:68
-#: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
 msgstr "Toplu Kayıt Oluştur"
@@ -117,12 +123,12 @@ msgstr "Oluşturan"
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturulma zamanı"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_currency_id
-msgid "Currency id"
-msgstr "Para Birimi ID"
+msgid "Currency"
+msgstr "Kur"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
@@ -140,7 +146,7 @@ msgstr "Tarih"
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_display_name
 #: model:ir.model.fields,field_description:account_batch_deposit.field_report_account_batch_deposit_print_batch_deposit_display_name
 msgid "Display Name"
-msgstr "Adı Göstermek"
+msgstr "Ad Görünümü"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
@@ -218,11 +224,6 @@ msgid "Print Batch Deposit"
 msgstr ""
 
 #. module: account_batch_deposit
-#: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
-msgid "Print Batch Deposits"
-msgstr ""
-
-#. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "Printed"
 msgstr "Yazdırıldı"
@@ -230,12 +231,12 @@ msgstr "Yazdırıldı"
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "Reconciled"
-msgstr "Uzlaştırılmış"
+msgstr "Uzlaştırılan"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_name
 msgid "Reference"
-msgstr "Kaynak"
+msgstr "Referans"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
@@ -262,7 +263,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_state
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "State"
-msgstr "İl/Eyalet"
+msgstr "Durumu"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected

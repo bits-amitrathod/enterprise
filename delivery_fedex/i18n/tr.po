@@ -3,18 +3,18 @@
 # * delivery_fedex
 # 
 # Translators:
-# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Ediz Duman <neps1192@gmail.com>, 2016
-# eren b <erenbingol@outlook.com>, 2016
-# Alexander B. <road2monstercat@gmail.com>, 2016
+# Alexander B. <road2monstercat@gmail.com>, 2017
+# eren b <inactive+erenbn@transifex.com>, 2017
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Alexander B. <road2monstercat@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Ediz Duman <neps1192@gmail.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +33,7 @@ msgid ""
 "<br/>According to your needs, you will need to contact different "
 "certifications :"
 msgstr ""
-"<br/>İsteklerine göre,farklı bir sertifikasyon ile temasa geçmelisiniz."
+"<br/>İsteklerine göre,farklı bir sertifikasyon ile temasa geçmelisiniz :"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_account_number
@@ -48,7 +48,7 @@ msgstr "Gelişmis servisler Sertifikasyon Etiketi ile"
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Advanced Services without Label Certification"
-msgstr "Gelişmiş servisler Sertifikasyon etiketi olmadan"
+msgstr "Gelişmiş servisler Sertifikasyon Etiketi olmadan"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_droppoff_type:0
@@ -108,7 +108,12 @@ msgstr "FEDEX_MESAFE"
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
 msgid "FIRST_OVERNIGHT"
-msgstr "BİRGECE"
+msgstr "BİRGECELİK"
+
+#. module: delivery_fedex
+#: model:ir.ui.view,arch_db:delivery_fedex.sale_config_settings_view_form_inherit_delivery_fedex
+msgid "FedEx Delivery Methods"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -127,6 +132,16 @@ msgid "Fedex International"
 msgstr "Fedex Uluslararası"
 
 #. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
+msgid "Fedex Label Stock Type"
+msgstr ""
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
+msgid "Fedex Service Type"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Fedex Tutorial"
 msgstr "Fedex Öğretici"
@@ -140,27 +155,17 @@ msgstr "Fedex ABD"
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Fedex Website"
-msgstr "Web Sitesi"
+msgstr "Fedex Web Sitesi"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
+msgid "Fedex Weight Unit"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
 msgid "Fedex drop-off type"
 msgstr "Fedex teslimat türü"
-
-#. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
-msgid "Fedex label stock type"
-msgstr "Fedex stok etiket türü"
-
-#. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
-msgid "Fedex service type"
-msgstr "Fedex servis türü"
-
-#. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
-msgid "Fedex weight unit"
-msgstr "Fedex agırlık birimi"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -225,7 +230,7 @@ msgstr "KAĞIT_8.5X11_ALT_YARIM_ETİKET"
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
 msgid "PAPER_8.5X11_TOP_HALF_LABEL"
-msgstr "KAĞIT_8.5X11_ÜST_ETİKET"
+msgstr "KAĞIT_8.5X11_ÜST_YARIM_ETİKET"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
@@ -308,14 +313,19 @@ msgid "STOCK_4X9_TRAILING_DOC_TAB"
 msgstr ""
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:333
-#, python-format
-msgid "Shipment N° %s has been cancelled"
-msgstr "Sevkiyat N° %s iptal edildi."
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+msgid "Saturday Delivery"
+msgstr ""
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:252
-#: code:addons/delivery_fedex/models/delivery_fedex.py:294
+#: code:addons/delivery_fedex/models/delivery_fedex.py:340
+#, python-format
+msgid "Shipment N° %s has been cancelled"
+msgstr "Sevkiyat N° %s iptal edildi"
+
+#. module: delivery_fedex
+#: code:addons/delivery_fedex/models/delivery_fedex.py:259
+#: code:addons/delivery_fedex/models/delivery_fedex.py:301
 #, python-format
 msgid "Shipment created into Fedex <br/> <b>Tracking Number : </b>%s"
 msgstr ""
@@ -323,10 +333,23 @@ msgstr ""
 "</b>%s"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:256
+#: code:addons/delivery_fedex/models/delivery_fedex.py:263
 #, python-format
 msgid "Shipping label for package %s"
 msgstr "Paketleme için Nakliyat etiketi %s"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+msgid ""
+"Special service:Saturday Delivery, can be requested on following days.\n"
+"                                                                                 Thursday:\n"
+"1.FEDEX_2_DAY.\n"
+"Friday:\n"
+"1.PRIORITY_OVERNIGHT.\n"
+"2.FIRST_OVERNIGHT.\n"
+"                                                                                 3.INTERNATIONAL_PRIORITY.\n"
+"(To Select Countries)"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex

@@ -3,17 +3,18 @@
 # * currency_rate_live
 # 
 # Translators:
-# Ediz Duman <neps1192@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
-# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016
+# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
+# Ramiz Deniz Öner <deniz@denizoner.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +25,14 @@ msgstr ""
 #. module: currency_rate_live
 #: model:ir.model,name:currency_rate_live.model_res_company
 msgid "Companies"
-msgstr "Şirketler"
+msgstr "Firmalar"
+
+#. module: currency_rate_live
+#: model:ir.actions.server,name:currency_rate_live.ir_cron_currency_update_ir_actions_server
+#: model:ir.cron,cron_name:currency_rate_live.ir_cron_currency_update
+#: model:ir.cron,name:currency_rate_live.ir_cron_currency_update
+msgid "Currency: rate update"
+msgstr ""
 
 #. module: currency_rate_live
 #: selection:res.company,currency_interval_unit:0
@@ -34,18 +42,18 @@ msgstr "Günlük"
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
 msgid "European Central Bank"
-msgstr ""
+msgstr "Avrupa Merkez Bankası"
+
+#. module: currency_rate_live
+#: model:ir.ui.view,arch_db:currency_rate_live.account_config_settings_view_form_inherit_currency_rate_live
+msgid "Interval"
+msgstr "Aralık"
 
 #. module: currency_rate_live
 #: model:ir.model.fields,field_description:currency_rate_live.field_account_config_settings_currency_interval_unit
 #: model:ir.model.fields,field_description:currency_rate_live.field_res_company_currency_interval_unit
 msgid "Interval Unit"
-msgstr "İç Birim"
-
-#. module: currency_rate_live
-#: model:ir.ui.view,arch_db:currency_rate_live.view_account_currency_config_settings_inherit
-msgid "Live Currency Rate"
-msgstr ""
+msgstr "Aralık Birimi"
 
 #. module: currency_rate_live
 #: selection:res.company,currency_interval_unit:0
@@ -64,10 +72,20 @@ msgid "Next Execution Date"
 msgstr "Sonraki Yürütme Tarihi"
 
 #. module: currency_rate_live
+#: model:ir.ui.view,arch_db:currency_rate_live.account_config_settings_view_form_inherit_currency_rate_live
+msgid "Next Run"
+msgstr ""
+
+#. module: currency_rate_live
+#: model:ir.ui.view,arch_db:currency_rate_live.account_config_settings_view_form_inherit_currency_rate_live
+msgid "Service"
+msgstr "Hizmet"
+
+#. module: currency_rate_live
 #: model:ir.model.fields,field_description:currency_rate_live.field_account_config_settings_currency_provider
 #: model:ir.model.fields,field_description:currency_rate_live.field_res_company_currency_provider
 msgid "Service Provider"
-msgstr ""
+msgstr "Servis Sağlayıcı"
 
 #. module: currency_rate_live
 #: code:addons/currency_rate_live/models/account_config_setting.py:38
@@ -76,11 +94,8 @@ msgid ""
 "Unable to connect to the online exchange rate platform. The web service may "
 "be temporary down. Please try again in a moment."
 msgstr ""
-
-#. module: currency_rate_live
-#: model:ir.ui.view,arch_db:currency_rate_live.view_account_currency_config_settings_inherit
-msgid "Update Now"
-msgstr ""
+"Kur sağlatıcı platforma bağlanamıyor. Web servisi geçici süre düşmüş "
+"olabilir. Bir dakika içerisinde lütfen tekrar deneyiniz."
 
 #. module: currency_rate_live
 #: selection:res.company,currency_interval_unit:0
