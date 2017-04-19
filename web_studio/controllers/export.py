@@ -15,7 +15,7 @@ from odoo.tools import topological_sort
 # list of models to export (the order ensures that dependencies are satisfied)
 MODELS_TO_EXPORT = [
     'res.groups', 'ir.model', 'ir.model.fields', 'ir.ui.view', 'ir.actions.act_window',
-    'ir.actions.report.xml', 'mail.template', 'ir.actions.server', 'ir.ui.menu',
+    'ir.actions.report', 'mail.template', 'ir.actions.server', 'ir.ui.menu',
     'ir.filters', 'base.automation', 'ir.model.access', 'ir.rule',
 ]
 # list of fields to export by model
@@ -30,7 +30,7 @@ FIELDS_TO_EXPORT = {
         'res_model', 'search_view_id', 'src_model', 'target', 'type', 'usage', 'view_id',
         'view_ids', 'view_mode', 'view_type'
     ],
-    'ir.actions.report.xml': [
+    'ir.actions.report': [
         'attachment', 'attachment_use', 'groups_id', 'model', 'multi', 'name', 'report_name',
         'report_type'
     ],
@@ -73,7 +73,7 @@ FIELDS_TO_EXPORT = {
 # list of relational fields to NOT export, by model
 FIELDS_NOT_TO_EXPORT = {
     'base.automation': ['trg_date_calendar_id'],
-    'ir.actions.report.xml': ['ir_values_id'],
+    'ir.actions.report': ['ir_values_id'],
     'ir.actions.server': ['channel_ids', 'fields_lines', 'menu_ir_values_id', 'partner_ids'],
     'ir.filter': ['user_id'],
     'mail.template': ['attachment_ids', 'mail_server_id', 'ref_ir_value'],
@@ -234,12 +234,12 @@ def get_relations(record, field):
             return record.search([('model', '=', record.relation), ('name', '=', record.relation_field)])
 
     # Fields 'res_model' and 'src_model' on 'ir.actions.act_window' and 'model'
-    # on 'ir.actions.report.xml' are of type char but refer to models that may
+    # on 'ir.actions.report' are of type char but refer to models that may
     # be defined in other modules and those modules need to be listed as
     # dependencies of the exported module
     if field.model_name == 'ir.actions.act_window' and field.name in ('res_model', 'src_model'):
         return record.env['ir.model'].search([('model', '=', record[field.name])])
-    if field.model_name == 'ir.actions.report.xml' and field.name == 'model':
+    if field.model_name == 'ir.actions.report' and field.name == 'model':
         return record.env['ir.model'].search([('model', '=', record.model)])
 
 

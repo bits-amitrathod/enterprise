@@ -38,7 +38,7 @@ var ReportEditor = ReportAction.extend({
             },
         });
         this.view_id = action.view_id;
-        this.res_model = 'ir.actions.report.xml';
+        this.res_model = 'ir.actions.report';
         this.res_id = action.id;
 
         this._super.apply(this, arguments);
@@ -51,7 +51,7 @@ var ReportEditor = ReportAction.extend({
 
         return this._super.apply(this, arguments).then(function () {
             return self._rpc({
-                    model: 'ir.actions.report.xml',
+                    model: 'ir.actions.report',
                     method: 'read',
                     args: [[self.res_id]],
                 })

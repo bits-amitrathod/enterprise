@@ -39,7 +39,7 @@ class PrintOrderWizard(models.TransientModel):
             ]
         # add a default report
         if active_model and 'report_id' in fields:
-            result['report_id'] = self.env['ir.actions.report.xml'].search([('model', '=', active_model)], limit=1).id
+            result['report_id'] = self.env['ir.actions.report'].search([('model', '=', active_model)], limit=1).id
         return result
 
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW')
@@ -52,7 +52,7 @@ class PrintOrderWizard(models.TransientModel):
 
     res_model = fields.Char('Resource Model')
     error_message = fields.Text("Error", compute='_compute_error_message')
-    report_id = fields.Many2one('ir.actions.report.xml', 'Report', domain=lambda self: [('model', '=', self.env.context.get('active_model'))])
+    report_id = fields.Many2one('ir.actions.report', 'Report', domain=lambda self: [('model', '=', self.env.context.get('active_model'))])
 
     @api.onchange('provider_id')
     def _onchange_provider_id(self):

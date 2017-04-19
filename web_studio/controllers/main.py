@@ -96,7 +96,7 @@ class WebStudioController(http.Controller):
         return {
             'name': _('Reports'),
             'type': 'ir.actions.act_window',
-            'res_model': 'ir.actions.report.xml',
+            'res_model': 'ir.actions.report',
             'views': [[False, 'kanban'], [False, 'form']],
             'target': 'current',
             'domain': [],
@@ -416,7 +416,7 @@ class WebStudioController(http.Controller):
         view.name = new_view_xml_id
         view.key = new_view_xml_id
         # Create report
-        report = request.env['ir.actions.report.xml'].create({
+        report = request.env['ir.actions.report'].create({
             'name': _('%s Report' % (model.name)),
             'model': model.model,
             'report_type': 'qweb-pdf',
@@ -616,7 +616,7 @@ class WebStudioController(http.Controller):
 
     @http.route('/web_studio/edit_report', type='json', auth='user')
     def edit_report(self, report_id, values):
-        report = request.env['ir.actions.report.xml'].browse(report_id)
+        report = request.env['ir.actions.report'].browse(report_id)
         if report:
             if 'groups_id' in values:
                 values['groups_id'] = [(6, 0, values['groups_id'])]

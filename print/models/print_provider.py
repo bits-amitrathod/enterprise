@@ -76,7 +76,7 @@ class PrintOrder(models.Model):
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)
     res_id = fields.Integer('Object ID', required=True)
     res_model = fields.Char('Model Name', required=True)
-    report_id = fields.Many2one('ir.actions.report.xml', 'Report')
+    report_id = fields.Many2one('ir.actions.report', 'Report')
 
     attachment_id = fields.Many2one('ir.attachment', 'PDF', states={'sent': [('readonly', True)]}, domain=[('mimetype', '=', 'application/pdf')])
     nbr_pages = fields.Integer("Number of Pages", readonly=True, default=0)
@@ -218,10 +218,10 @@ class PrintOrder(models.Model):
                 current_order.write({
                     'attachment_id': new_attachment.id
                 })
-            elif not current_order.attachment_id and current_order.res_model and current_order.res_id and not report: # error : no ir.actions.report.xml found for res_model
+            elif not current_order.attachment_id and current_order.res_model and current_order.res_id and not report: # error : no ir.actions.report found for res_model
                 current_order.write({
                     'state': 'error',
-                    'error_message': _('The document you want to print and send is not printable. There is no report action (ir.actions.report.xml) for the model %s.') % (current_order.res_model,)
+                    'error_message': _('The document you want to print and send is not printable. There is no report action (ir.actions.report) for the model %s.') % (current_order.res_model,)
                 })
             else: # error : not attachament can be generate, no attach_id or no res_model/res_id
                 current_order.write({

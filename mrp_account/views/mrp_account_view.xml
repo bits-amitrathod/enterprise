@@ -24,7 +24,7 @@
             name="mrp_cost_structure"
             file="mrp_cost_structure"
             />
-        <record id="action_cost_struct_mrp_production" model="ir.actions.report.xml">
+        <record id="action_cost_struct_mrp_production" model="ir.actions.report">
             <field name="paperformat_id" ref="report.paperformat_batch_deposit"/>
             <field name="print_report_name">'Cost Analysis'+'-'+(object.name)</field>
         </record>
@@ -50,7 +50,7 @@
             name="product_template_cost_structure"
             file="product_template_cost_structure"
             />
-        <record id="action_cost_struct_product_template" model="ir.actions.report.xml">
+        <record id="action_cost_struct_product_template" model="ir.actions.report">
             <field name="print_report_name">'Cost Structure Analysis'+'-'+(object.name)</field>
         </record>
 

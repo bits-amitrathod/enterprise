@@ -26,7 +26,7 @@
             report_type="qweb-pdf"
             attachment_use="True"
             attachment="'check_'+(object.partner_id and object.partner_id.name or 'Internal')+'_'+(object.name)+'_top.pdf'" />
-        <record id="l10n_us_check_printing.action_print_check_top" model="ir.actions.report.xml">
+        <record id="l10n_us_check_printing.action_print_check_top" model="ir.actions.report">
             <field name="paperformat_id" ref="l10n_us_check_printing.paperformat_check_us"/>
             <field name="print_report_name">'check_'+(object.partner_id.name)+'_'+(object.name)+'_top'</field>
         </record>
@@ -39,7 +39,7 @@
             report_type="qweb-pdf"
             attachment_use="True"
             attachment="'check_'+(object.partner_id and object.partner_id.name or 'Internal')+'_'+(object.name)+'_middle.pdf'" />
-        <record id="l10n_us_check_printing.action_print_check_middle" model="ir.actions.report.xml">
+        <record id="l10n_us_check_printing.action_print_check_middle" model="ir.actions.report">
             <field name="paperformat_id" ref="l10n_us_check_printing.paperformat_check_us"/>
             <field name="print_report_name">'check_'+(object.partner_id.name)+'_'+(object.name)+'_middle'</field>
         </record>
@@ -52,7 +52,7 @@
             report_type="qweb-pdf"
             attachment_use="True"
             attachment="'check_'+(object.partner_id and object.partner_id.name or 'Internal')+'_'+(object.name)+'_bottom.pdf'" />
-        <record id="l10n_us_check_printing.action_print_check_bottom" model="ir.actions.report.xml">
+        <record id="l10n_us_check_printing.action_print_check_bottom" model="ir.actions.report">
             <field name="paperformat_id" ref="l10n_us_check_printing.paperformat_check_us"/>
             <field name="print_report_name">'check_'+(object.partner_id.name)+'_'+(object.name)+'_bottom'</field>
         </record>

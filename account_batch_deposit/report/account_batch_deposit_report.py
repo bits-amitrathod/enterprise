@@ -26,7 +26,7 @@ class PrintBatchDeposit(models.AbstractModel):
             'payments': payments,
             'currency': deposit.currency_id,
             'total_amount': deposit.amount,
-            'footer': deposit.journal_id.company_id.rml_footer,
+            'footer': deposit.journal_id.company_id.report_footer,
         } for payments in payment_slices]
 
     @api.model

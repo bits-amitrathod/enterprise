@@ -45,7 +45,7 @@ var StudioReportKanbanController = KanbanController.extend({
             res_id = this.model.get(event.data.id, {raw: true}).res_id;
         }
         this._rpc({
-                model: 'ir.actions.report.xml',
+                model: 'ir.actions.report',
                 method: 'studio_edit',
                 args: [res_id],
             })
