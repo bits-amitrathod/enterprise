@@ -41,7 +41,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
             })
             .then(function(view_id){
                 self.dataset = new data.DataSetSearch(this, 'product.product');
-                this.loadFieldView(self.dataset, view_id[1], 'search')
+                self.loadFieldView(self.dataset, view_id[1], 'search')
                 .then(function (fields_view) {
                     self.fields_view = fields_view;
                     var options = {
