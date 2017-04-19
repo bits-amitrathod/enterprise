@@ -125,7 +125,7 @@ QUnit.module('Studio', {
             "there should be a modal in the dom");
         assert.strictEqual($('.o_web_studio_add_menu_modal input[name="name"]').length, 1,
             "there should be an input for the name in the dialog");
-        assert.strictEqual($('.o_web_studio_add_menu_modal .o_form_field_many2one').length, 1,
+        assert.strictEqual($('.o_web_studio_add_menu_modal .o_field_many2one').length, 1,
             "there should be a many2one for the model in the dialog");
         // close the modal
         $('.o_web_studio_add_menu_modal .btn-default').click();
@@ -135,7 +135,7 @@ QUnit.module('Studio', {
         dialog.$('ul.oe_menu_editor > li > div button.js_edit_menu').click();
         assert.strictEqual($('.o_act_window').length, 1,
             "there should be a act window modal in the dom");
-        assert.strictEqual($('.o_act_window input.o_form_field[name="name"]').val(), "Menu 2",
+        assert.strictEqual($('.o_act_window input.o_field_widget[name="name"]').val(), "Menu 2",
             "the edited menu should be menu 2");
         // close the modal
         $('.o_act_window .o_form_button_cancel').click();

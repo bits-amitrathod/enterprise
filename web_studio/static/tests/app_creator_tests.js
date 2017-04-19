@@ -90,7 +90,7 @@ QUnit.module('Studio', {}, function () {
         app_creator.$('input[name="model_choice"]').click();
 
         assert.strictEqual(
-            app_creator.$('.o_form_field_many2one').length,
+            app_creator.$('.o_field_many2one').length,
             1,
             "there should be a many2one to select a model");
 

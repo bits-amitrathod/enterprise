@@ -51,7 +51,7 @@ QUnit.module('crm_voip', {
             },
         });
 
-        var $phoneLink = form.$('a.o_form_uri.o_form_field.o_text_overflow');
+        var $phoneLink = form.$('a.o_form_uri.o_field_widget.o_text_overflow');
         assert.strictEqual($phoneLink.length, 1,
             "should have a anchor with correct classes");
         assert.strictEqual($phoneLink.text(), 'y\u00ADop',
@@ -61,17 +61,17 @@ QUnit.module('crm_voip', {
 
         // switch to edit mode and check the result
         form.$buttons.find('.o_form_button_edit').click();
-        assert.strictEqual(form.$('input[type="text"].o_form_input.o_form_field').length, 1,
+        assert.strictEqual(form.$('input[type="text"].o_field_widget').length, 1,
             "should have an input for the phone field");
-        assert.strictEqual(form.$('input[type="text"].o_form_input.o_form_field').val(), 'yop',
+        assert.strictEqual(form.$('input[type="text"].o_field_widget').val(), 'yop',
             "input should contain field value in edit mode");
 
         // change value in edit mode
-        form.$('input[type="text"].o_form_input.o_form_field').val('new').trigger('input');
+        form.$('input[type="text"].o_field_widget').val('new').trigger('input');
 
         // save
         form.$buttons.find('.o_form_button_save').click();
-        $phoneLink = form.$('a.o_form_uri.o_form_field.o_text_overflow');
+        $phoneLink = form.$('a.o_form_uri.o_field_widget.o_text_overflow');
         assert.strictEqual($phoneLink.text(), 'n\u00ADew',
             "new value should be displayed properly as text with the skype obfuscation");
         assert.strictEqual($phoneLink.attr('href'), 'tel:new',

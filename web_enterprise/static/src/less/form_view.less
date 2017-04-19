@@ -1,32 +1,91 @@
 .o_form_view {
-    // Sheet
-    .o_form_sheet_bg {
-        background-color: @odoo-webclient-background-color;
-        .o_form_sheet {
-            background-color: @odoo-view-background-color;
+    @media (min-width: @screen-sm-min) {
+        .o-flex-display();
+        .o-flex-flow(column, nowrap);
+        min-height: 100%;
+    }
+
+    &.o_form_nosheet {
+        display: block;
+        .o-webclient-padding(@top: @odoo-sheet-vpadding, @bottom: @odoo-sheet-vpadding);
+
+        .o_form_statusbar {
+            margin: -@odoo-sheet-vpadding -@odoo-horizontal-padding 0 -@odoo-horizontal-padding;
         }
     }
 
-    // Avatar
+    // Sheet
+    .o_form_sheet_bg {
+        .o-flex(1, 0, auto);
+        padding-bottom: 8px; // keep the padding-bottom in mobile to separate chatter from sheet
+        @media (min-width: @screen-sm-min) {
+            padding: 8px 0;
+        }
+        background-color: @odoo-webclient-background-color;
+
+        .o_form_sheet {
+            .container;
+            .o-webclient-padding(@top: 24px, @bottom: 24px);
+            background-color: @odoo-view-background-color;
+
+            // Selection
+            > .o_selection {
+                float: right;
+            }
+        }
+    }
+
+    // Title & avatar
+    .oe_title {
+        @media (max-width: @screen-xxs-max) {
+            word-break: break-all;
+        }
+        @media (min-width: @screen-xs-min) {
+            padding-right: @odoo-innergroup-rpadding;
+        }
+    }
     .oe_avatar {
         float: right;
+        margin-bottom: 10px;
 
         > img {
+            max-width: @odoo-avatar-size;
+            max-height: @odoo-avatar-size;
             vertical-align: top;
             border: 1px solid @odoo-main-color-muted;
+        }
+
+        + .oe_title {
+            padding-right: @odoo-avatar-size + 10;
         }
     }
 
     // Button box
     .oe_button_box {
         position: relative;
+        margin: -@odoo-sheet-vpadding -@odoo-horizontal-padding @odoo-sheet-vpadding -@odoo-horizontal-padding;
+        text-align: right;
         background-color: @odoo-brand-lightsecondary;
 
-        &.o_full .oe_stat_button:not(.o_form_invisible) ~ .oe_stat_button {
+        &.o_full .oe_stat_button:not(.o_invisible_modifier) ~ .oe_stat_button {
             border-left: 1px solid @odoo-webclient-background-color;
         }
         &.o_not_full .oe_stat_button {
             border-left: 1px solid @odoo-webclient-background-color;
+        }
+
+        > .btn.oe_stat_button, > .o_dropdown_more {
+            .o-flex(0, 0, auto);
+            width: percentage(1/3); // Adapt the number of visible buttons for each screen width
+            @media (min-width: @screen-sm-min) {
+                width: percentage(1/5);
+            }
+            @media (min-width: @screen-md-min) {
+                width: percentage(1/7);
+            }
+            @media (min-width: @screen-lg-min) {
+                width: percentage(1/8);
+            }
         }
 
         .btn.oe_stat_button {
@@ -51,7 +110,7 @@
                 width: 30%;
             }
 
-            > .o_form_field_percent_pie {
+            > .o_field_percent_pie {
                 margin-left: @odoo-statbutton-spacing; // To create the button padding left (firefox bug)
             }
 
@@ -94,6 +153,8 @@
         }
 
         > .o_dropdown_more {
+            .o-position-absolute(100%, 0);
+            min-width: 0;
             background-color: @odoo-brand-lightsecondary;
             border: none;
             border-top: 1px solid @odoo-webclient-background-color;
@@ -103,6 +164,7 @@
             > li {
                 padding: 0;
                 > .btn.oe_stat_button {
+                    width: 100%;
                     border: none;
                     border-bottom: 1px solid @odoo-webclient-background-color;
                 }
@@ -112,11 +174,41 @@
 
     // Groups
     .o_group {
-        @media (max-width: @screen-sm-max) {
-            &.o_label_nowrap {
-                .o_form_label {
-                    white-space: normal;
+        // all groups take width 100% in mobile
+        .o-generate-groups(@odoo-form-group-cols);
+        .o-generate-groups(@n, @i: 1) when (@i =< @n) {
+            .o_group_col_@{i} {
+                @media (max-width: @screen-sm-max) {
+                    width: 100%;
                 }
+            }
+            .o-generate-groups(@n, @i + 1);
+        }
+
+        &.o_inner_group {
+            > tbody > tr > td {
+                padding: 0 @odoo-innergroup-rpadding 0 0;
+           }
+            @media (max-width: @screen-xxs-max) { // Not xs max to keep sm layout a bit further
+                .form-break-table();
+            }
+        }
+
+        @media (min-width: @screen-xs-min) {
+            .o_field_widget {
+                &.o_text_overflow {
+                    width: 1px!important; // hack to make the table layout believe it is a small element (so that the table does not grow too much) ...
+                    min-width: 100%;      // ... but in fact it takes the whole table space
+                }
+            }
+
+            .o_form_label {
+                margin-bottom: @odoo-form-spacing-unit;
+            }
+        }
+        @media (max-width: @screen-sm-max) {
+            &.o_label_nowrap .o_form_label {
+                white-space: normal;
             }
         }
         @media (max-width: @screen-xxs-max) {
@@ -136,23 +228,22 @@
             font-size: @odoo-font-size-base-touch;
         }
         @media (max-width: @screen-xxs-max) {
+            margin-top: 3px;
             font-size: @odoo-label-font-size-factor * @odoo-font-size-base-touch;
             font-weight: normal;
             color: @odoo-brand-secondary;
+
+            &.o_form_label_empty {
+                display: none;
+            }
         }
     }
 
-    // All required form fields
-    .o_form_required {
-        &.o_form_input, .o_form_input, &.o_form_textarea, .o_form_textarea {
-            border-width: 2px;
-            border-color: @odoo-main-text-color;
-        }
-    }
-
-    // Dropdowns input carret
-    .o_form_input_dropdown .o_dropdown_button {
-        .o-position-absolute(0, 0);
+    // Chatter
+    .oe_chatter {
+        .o-flex(1000, 0, auto);
+        .o-webclient-padding(@top: 16px, @bottom: 16px);
+        .container;
     }
 
     // Notebooks
@@ -197,7 +288,7 @@
     }
 
     // One2Many List views
-    .o_form_field .o_list_view {
+    .o_field_widget .o_list_view {
         border: none;
 
         > thead {
@@ -210,32 +301,9 @@
             background-color: @odoo-brand-lightsecondary;
         }
     }
-    &.o_form_editable .o_form_field .o_list_view {
-        td.o_readonly {
+    &.o_form_editable .o_field_widget .o_list_view {
+        td.o_readonly_modifier {
             background-color: lightgrey;  // Readonly fields on edit mode
-        }
-    }
-
-    // Percent pie field
-    .o_form_field_percent_pie {
-        @pie-dimension: @odoo-statbutton-height - 2 * @odoo-statbutton-vpadding;
-        @pie-ring-width: 4px;
-
-        .o_pie {
-            width: @pie-dimension;
-            height: @pie-dimension;
-
-            &:after { // Outside pie border to go over border-radius irregularities
-                border: 1px solid @odoo-brand-secondary;
-            }
-
-            .o_pie_value {
-                .o-position-absolute(@pie-ring-width, @pie-ring-width);
-                width: @pie-dimension - 2 * @pie-ring-width;
-                height: @pie-dimension - 2 * @pie-ring-width;
-                border: 1px solid @odoo-brand-secondary;
-                background-color: @odoo-brand-lightsecondary;
-            }
         }
     }
 
@@ -249,6 +317,61 @@
         border-top: 1px solid @odoo-brand-secondary;
         .oe_subtotal_footer_separator {
             border-top: 1px solid @odoo-brand-secondary;
+        }
+    }
+}
+
+.form-break-table() {
+    display: block;
+    margin-bottom: @odoo-form-spacing-unit * 4;
+
+    > tbody {
+        display: block;
+
+        > tr {
+            .o-flex-display();
+            .o-flex-flow(row, wrap);
+
+            > td {
+                .o-flex(1, 0, auto);
+                display: block;
+                max-width: 100%;
+                padding: 0;
+
+                width: auto!important;  // !important is required to override the width computed in JS
+                &.o_td_label {
+                    width: 94%!important; // The label must be on its own line except if the form field is small enough (checkbox)
+                    line-height: @odoo-label-font-size-factor;
+                }
+
+                .o_field_widget {
+                    margin-bottom: @odoo-form-spacing-unit * 2;
+                    &.o_field_boolean {
+                        margin-right: 0;
+                    }
+                }
+
+                .o_input_dropdown {
+                    width: auto;
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}
+
+// Overriden style when form view in modal
+.modal .modal-dialog {
+    .o_form_view {
+        @media (max-width: @screen-sm-max) {
+            .o_group.o_inner_group > tbody > tr > td.o_td_label {
+                min-width: 100px;
+            }
+        }
+    }
+    &.modal-sm .o_form_view {
+        .o_group {
+            .form-break-table();
         }
     }
 }

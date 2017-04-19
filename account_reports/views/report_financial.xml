@@ -127,7 +127,7 @@
                 <i class="fa fa-fw fa-pencil o_account_reports_edit_summary_pencil"></i>
                 <div class="o_account_report_summary" role="alert">
                     <span t-if="report.get('summary')"><t t-raw="report['summary']"/></span>
-                    <span t-if="not report.get('summary')"><input type='text' class="o_form_input o_form_field" name='summary' placeholder='Click to add an introductory explanation' /></span>
+                    <span t-if="not report.get('summary')"><input type='text' class="o_input o_field_widget" name='summary' placeholder='Click to add an introductory explanation' /></span>
                 </div>
             </div>
             <div class="o_account_reports_summary_edit">

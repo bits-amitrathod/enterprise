@@ -1,6 +1,6 @@
-// ------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Checkboxes
-// ------------------------------------------------------------------
+//------------------------------------------------------------------------------
 div.o_checkbox {
     @odoo-checkbox-size: 15px;
 
@@ -42,21 +42,24 @@ div.o_checkbox {
     }
 }
 
-// ------------------------------------------------------------------
-// Inputs and selects
-// ------------------------------------------------------------------
-.o-input() {
+//------------------------------------------------------------------------------
+// Inputs and selects (note: put the o_input class to have the style)
+//------------------------------------------------------------------------------
+[type="text"], [type="password"], [type="number"], textarea, select {
+    width: 100%;
+    display: block;
+    outline: none;
+}
+.o_input {
     border: 1px solid @odoo-form-lightsecondary;
     border-top-style: none;
     border-right-style: none;
     border-left-style: none;
-}
-input[type="text"], input[type="password"], input[type="number"], textarea, select {
-    .o-input();
 
-    width: 100%;
-    outline: none;
-    display: block;
+    .o_input {
+        border: none!important;
+        padding: 0;
+    }
 }
 select { // FIXME buggy 'padding-left'
     cursor: pointer;
@@ -90,9 +93,9 @@ select { // FIXME buggy 'padding-left'
     .o-placeholder();
 }
 
-// ------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Misc.
-// ------------------------------------------------------------------
+//------------------------------------------------------------------------------
 .o_loading {
     background-color: @odoo-brand-primary;
     color: white;

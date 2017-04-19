@@ -47,7 +47,7 @@
                                 <td class="o_mps_visible_procurement">
                                     <span class="fa fa-fw">+</span>
                                     <t t-esc="product[1][0]['route_type']"/>
-                                    <span title="Launch Procurement" class="fa fa-bullseye fa-lg o_mps_generate_procurement text-success o_form_invisible" t-att-data-product="product[0].id"></span>
+                                    <span title="Launch Procurement" class="fa fa-bullseye fa-lg o_mps_generate_procurement text-success o_invisible_modifier" t-att-data-product="product[0].id"></span>
                                     <a class="pull-right text-muted open_forecast_wizard" t-att-data-product="product[0].id" style="cursor:pointer;">
                                         <t t-if="product[0].mps_min_supply or product[0].mps_max_supply">
                                             <span t-esc="(product[0].mps_min_supply % 1) and product[0].mps_min_supply or int(product[0].mps_min_supply)"/>

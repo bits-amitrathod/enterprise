@@ -192,10 +192,10 @@ Menu.include({
      */
     _onChangeBackground: function () {
         var self = this;
-        this.$('input.o_form_input_file').on('change', function () {
+        this.$('input.o_input_file').on('change', function () {
             self.$('form.o_form_binary_form').submit();
         });
-        this.$('input.o_form_input_file').click();
+        this.$('input.o_input_file').click();
     },
     /**
      * Export all customizations done by Studio in a zip file containing Odoo

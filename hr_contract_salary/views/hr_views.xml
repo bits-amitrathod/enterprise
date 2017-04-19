@@ -34,7 +34,7 @@
             </xpath>
             <xpath expr="//button[@name='toggle_active']" position="before">
                 <button name="action_show_proposed_contracts" class="oe_stat_button" icon="fa-book" type="object" help="Proposed Contracts">
-                    <div class="o_form_field o_stat_info">
+                    <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value"><field name="proposed_contracts_count"/></span>
                         <span class="o_stat_text">Contracts</span>
                      </div>
@@ -51,7 +51,7 @@
             <div name="title" position="before">
                 <div class="oe_button_box" name="button_box">
                     <button name="open_signature_requests" type="object" class="oe_stat_button" icon="fa-pencil" attrs="{'invisible': [('signature_request_count', '=', 0)]}">
-                        <div class="o_form_field o_stat_info">
+                        <div class="o_field_widget o_stat_info">
                             <span class="o_stat_value"><field name="signature_request_count"/></span>
                             <span class="o_stat_text">Signature Requests</span>
                         </div>

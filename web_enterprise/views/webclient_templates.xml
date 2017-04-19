@@ -7,22 +7,12 @@
     </template>
 
     <template id="assets_common" name="web_enterprise assets common" inherit_id="web.assets_common">
-        <xpath expr="." position="inside">
+        <xpath expr="//link[last()]" position="after">
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/fonts.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/navbar.less"/>
         </xpath>
     </template>
 
     <template id="assets_backend" name="web_enterprise assets backend" inherit_id="web.assets_backend">
-        <xpath expr="//script[@src='/web/static/src/js/chrome/web_client.js']" position="replace">
-            <script type="text/javascript" src="/web_enterprise/static/src/js/web_client.js"></script>
-        </xpath>
-        <xpath expr="//script[@src='/web/static/src/js/chrome/menu.js']" position="replace">
-            <script type="text/javascript" src="/web_enterprise/static/src/js/menu.js"></script>
-        </xpath>
-        <xpath expr="//script[@src='/web/static/src/js/fields/upgrade_fields.js']" position="replace">
-        </xpath>
-
         <xpath expr="//link[@href='/web/static/src/less/bootstrap_overridden.less']" position="replace">
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/bootstrap_overridden.less"/>
         </xpath>
@@ -35,11 +25,14 @@
         <xpath expr="//link[@href='/web/static/src/less/views_extra.less']" position="replace">
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/views.less"/>
         </xpath>
+        <xpath expr="//link[@href='/web/static/src/less/fields_extra.less']" position="replace">
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/fields.less"/>
+        </xpath>
         <xpath expr="//link[@href='/web/static/src/less/form_view_extra.less']" position="replace">
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/form_view.less"/>
         </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/form_view_layout_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/form_view_layout.less"/>
+        <xpath expr="//link[@href='/web/static/src/less/list_view_extra.less']" position="replace">
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/list_view.less"/>
         </xpath>
         <xpath expr="//link[@href='/web/static/src/less/search_view_extra.less']" position="replace">
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/search_view.less"/>
@@ -47,8 +40,25 @@
         <xpath expr="//link[@href='/web/static/src/less/dropdown_extra.less']" position="replace">
             <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/dropdown.less"/>
         </xpath>
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/app_switcher.less"/>
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/app_switcher_layout.less"/>
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/menu_search.less"/>
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/control_panel_layout.less"/>
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/datepicker.less"/>
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/kanban_view.less"/>
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/touch_device.less"/>
+            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/keyboard.less"/>
+        </xpath>
 
-        <xpath expr="." position="inside">
+        <xpath expr="//script[@src='/web/static/src/js/chrome/web_client.js']" position="replace">
+            <script type="text/javascript" src="/web_enterprise/static/src/js/web_client.js"/>
+        </xpath>
+        <xpath expr="//script[@src='/web/static/src/js/chrome/menu.js']" position="replace">
+            <script type="text/javascript" src="/web_enterprise/static/src/js/menu.js"/>
+        </xpath>
+        <xpath expr="//script[@src='/web/static/src/js/fields/upgrade_fields.js']" position="replace"/>
+        <xpath expr="//script[last()]" position="after">
             <script type="text/javascript" src="/web_enterprise/static/src/js/apps.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/app_switcher.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/control_panel.js"></script>
@@ -59,16 +69,6 @@
             <script type="text/javascript" src="/web_enterprise/static/src/js/views/upgrade_fields.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/widgets/debug_manager.js"></script>
             <script type="text/javascript" src="/web_enterprise/static/src/js/widgets/user_menu.js"></script>
-
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/app_switcher.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/app_switcher_layout.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/menu_search.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/control_panel_layout.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/datepicker.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/kanban_view.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/list_view.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/touch_device.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/keyboard.less"/>
         </xpath>
     </template>
 

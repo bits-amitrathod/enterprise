@@ -188,8 +188,8 @@ QUnit.module('Views', {
 
             // input a project and a task
             for (var i = 0; i< 2; i++) {
-                $('.modal .o_form_field_many2one input').eq(i).click();
-                $('.modal .o_form_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
+                $('.modal .o_field_many2one input').eq(i).click();
+                $('.modal .o_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
             }
 
             // input unit_amount

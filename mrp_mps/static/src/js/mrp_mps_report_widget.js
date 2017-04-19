@@ -90,12 +90,12 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     },
     visible_procurement_button: function(e){
         clearTimeout(this.hover_element);
-        $(e.target).find('.o_mps_generate_procurement').removeClass('o_form_invisible');
+        $(e.target).find('.o_mps_generate_procurement').removeClass('o_invisible_modifier');
     },
     invisible_procurement_button: function(e){
         clearTimeout(this.hover_element);
         this.hover_element = setTimeout(function() {
-            $(e.target).find('.o_mps_generate_procurement').addClass('o_form_invisible');
+            $(e.target).find('.o_mps_generate_procurement').addClass('o_invisible_modifier');
         }, 100);
     },
     mps_generate_procurement: function(e){

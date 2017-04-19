@@ -16,7 +16,7 @@ var FieldChar = basic_fields.FieldChar;
  * "website" and "image" fields of records of this model).
  */
 var FieldClearbit = FieldChar.extend({
-    className: 'o_form_field_clearbit',
+    className: 'o_field_clearbit',
     debounceSuggestions: 400,
 
     events: _.extend({}, FieldChar.prototype.events, {

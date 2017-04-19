@@ -29,12 +29,12 @@ tour.register('helpdesk_tour', {
     content: _t('Enter a subject or title for this ticket.<br/><i>(e.g. Problem with installation, Wrong order, Can\'t understand bill, etc.)</i>'),
     position: 'right',
 }, {
-    trigger: '.o_form_field.field_partner_id',
+    trigger: '.o_field_widget.field_partner_id',
     extra_trigger: '.o_form_editable',
     content: _t('Enter the customer. Feel free to create it on the fly.'),
     position: 'top',
 }, {
-    trigger: '.o_form_field.field_user_id',
+    trigger: '.o_field_widget.field_user_id',
     extra_trigger: '.o_form_editable',
     content: _t('Assign the ticket to someone.'),
     position: 'right',

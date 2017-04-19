@@ -69,7 +69,7 @@
                 <sheet>
                     <div class="oe_button_box">
                         <button name="action_see_check" type="object" attrs="{'invisible': [('check_id', '=', False)]}" class="oe_stat_button" icon="fa-check-square-o">
-                            <div class="o_form_field o_stat_info">
+                            <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_value"><field name="check_id" readonly="1"/></span>
                                 <span class="o_stat_text">Quality Check</span>
                             </div>
@@ -700,11 +700,11 @@
                         <button name="action_see_spc_control" type="object" class="oe_stat_button"
                             attrs="{'invisible': ['|', ('check_count', '=', 0), ('test_type', '!=', 'measure')]}">
                             <span class="fa fa-2x" data-icon="&#x2211;" style="padding-left: 10px;"/>
-                            <div class="o_form_field o_stat_info mr4">
+                            <div class="o_field_widget o_stat_info mr4">
                                 <span class="o_stat_text">AVG:</span>
                                 <span class="o_stat_text">STD:</span>
                             </div>
-                            <div class="o_form_field o_stat_info">
+                            <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_value"><field name="average"/></span>
                                 <span class="o_stat_value"><field name="standard_deviation"/></span>
                             </div>

@@ -88,8 +88,8 @@ QUnit.module('relational_fields', {
             },
         });
 
-        assert.ok(form.$('.o_statusbar_status').hasClass('o_form_field_empty'),
-            'statusbar widget should have class o_form_field_empty');
+        assert.ok(form.$('.o_statusbar_status').hasClass('o_field_empty'),
+            'statusbar widget should have class o_field_empty');
         assert.strictEqual(form.$('.o_statusbar_status').children().length, 2,
             'statusbar widget should have two children');
         assert.strictEqual(form.$('.o_statusbar_status button.dropdown-toggle').length, 1,

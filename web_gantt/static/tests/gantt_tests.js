@@ -145,7 +145,7 @@ QUnit.module('Views', {
 
             // open formViewDialog
             gantt.$('.gantt_cell.gantt_last_cell').click();
-            $('.modal .o_form_field_many2one[name="user_id"] input').click();
+            $('.modal .o_field_many2one[name="user_id"] input').click();
 
             gantt.destroy();
             done();

@@ -147,36 +147,36 @@
 <t t-name="crm_voip_Tooltip">
   <div class="o_crm_voip_popover">
     <div style="font-weight: bold;">
-      <span class="o_form_field o_form_field_char"><t t-esc="partner_name"/></span>
+      <span class="o_field_widget o_field_char"><t t-esc="partner_name"/></span>
     </div>
     <t t-if="display_opp_name">
       <div style="font-weight: bold;">
-        <span class="o_form_field o_form_field_char"><t t-esc="opportunity"/></span>
+        <span class="o_field_widget o_field_char"><t t-esc="opportunity"/></span>
       </div>
     </t>
     <div>
-      <span class="o_form_field o_form_field_char">Scheduled Date: <t t-esc="date"/></span>
+      <span class="o_field_widget o_field_char">Scheduled Date: <t t-esc="date"/></span>
     </div>
     <div style="font-style: italic;">
       <t t-if="phone">
-        <span class="o_form_field o_form_field_char"><t t-esc="phone"/></span><br/>
+        <span class="o_field_widget o_field_char"><t t-esc="phone"/></span><br/>
       </t>
     </div>
     <t t-if="email">
       <div>
-        <span class="o_form_field o_form_field_char"><t t-esc="email"/></span>
+        <span class="o_field_widget o_field_char"><t t-esc="email"/></span>
       </div>
     </t>
     <t t-if="description">
       <div style="margin-top:7px;margin-bottom:7px;">
         <span class=" o_form_label o_align_right"> Description: </span><br/>
-        <span class="o_form_field o_form_field_char"><t t-esc="description"/></span>
+        <span class="o_field_widget o_field_char"><t t-esc="description"/></span>
       </div>
     </t>
     <t t-if="title_action">
       <div style="margin-top:7px;margin-bottom:7px;">
         <span class=" o_form_label o_align_right"> Next Action: </span><br/>
-        <span class="o_form_field o_form_field_char"><t t-esc="title_action"/></span>
+        <span class="o_field_widget o_field_char"><t t-esc="title_action"/></span>
       </div>
     </t>
     <t t-if="planned_revenue">
@@ -201,7 +201,7 @@
 </t>
 
 <t t-name="FieldPhone">
-  <span class="o_form_field o_form_field_email" t-att-style="widget.node.attrs.style">
+  <span class="o_field_widget o_field_email" t-att-style="widget.node.attrs.style">
     <t t-if="widget.get('effective_readonly')">
       <a href="#" class="o_form_uri"/>
     </t>

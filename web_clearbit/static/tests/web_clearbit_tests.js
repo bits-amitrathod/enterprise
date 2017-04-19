@@ -77,38 +77,38 @@ QUnit.module('web_clearbit', {
             },
         });
 
-        var $input = form.$(".o_form_field_clearbit > input:visible");
+        var $input = form.$(".o_field_clearbit > input:visible");
         assert.strictEqual($input.length, 1,
             "there should be an <input/> for the clearbit field");
 
         $input.val("od").trigger("input");
-        var $dropdown = form.$(".o_form_field_clearbit .dropdown-menu:visible");
+        var $dropdown = form.$(".o_field_clearbit .dropdown-menu:visible");
         assert.strictEqual($dropdown.length, 1,
             "there should be an opened dropdown");
         assert.strictEqual($dropdown.children().length, 1,
             "there should be one proposition (Odoo)");
 
         $dropdown.find("a").first().click();
-        $input = form.$(".o_form_field_clearbit > input");
+        $input = form.$(".o_field_clearbit > input");
         assert.strictEqual($input.val(), "Odoo",
             "name value should have been updated to \"Odoo\"");
-        assert.strictEqual(form.$(".o_form_field.o_form_input").val(), "odoo.com",
+        assert.strictEqual(form.$("input.o_field_widget").val(), "odoo.com",
             "website value should have been updated to \"odoo.com\"");
-        assert.strictEqual(form.$(".o_form_field_image img").attr("src"), "#test:data:image/png;base64,odoobase64",
+        assert.strictEqual(form.$(".o_field_image img").attr("src"), "#test:data:image/png;base64,odoobase64",
             "image value should have been updated to \"odoobase64\"");
 
         $input.val("test").trigger("input");
-        $dropdown = form.$(".o_form_field_clearbit .dropdown-menu:visible");
+        $dropdown = form.$(".o_field_clearbit .dropdown-menu:visible");
         assert.strictEqual($dropdown.length, 0,
             "there should not be an opened dropdown when there is no suggestion");
 
         $input.val("oo").trigger("input");
-        $dropdown = form.$(".o_form_field_clearbit .dropdown-menu:visible");
+        $dropdown = form.$(".o_field_clearbit .dropdown-menu:visible");
         assert.strictEqual($dropdown.length, 1,
             "there should be an opened dropdown when typing odoo letters again");
 
         $input.trigger("focusout");
-        $dropdown = form.$(".o_form_field_clearbit .dropdown-menu:visible");
+        $dropdown = form.$(".o_field_clearbit .dropdown-menu:visible");
         assert.strictEqual($dropdown.length, 0,
             "unfocusing the input should close the dropdown");
 

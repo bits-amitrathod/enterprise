@@ -105,7 +105,7 @@ tour.register('web_studio_new_app_tour', {
     content: _t("Let’s check the result. Close Odoo Studio to get an <b>overview of your app</b>."),
     position: 'left',
 }, {
-    trigger: 'input.o_form_required',
+    trigger: 'input.o_required_modifier',
     auto: true,
     position: 'bottom',
 }, {

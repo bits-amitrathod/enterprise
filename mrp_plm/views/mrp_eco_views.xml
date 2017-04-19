@@ -411,7 +411,7 @@
                             <field string="Attachments" name="attachment_count" widget="statinfo"/>
                         </button>
                         <button name="open_new_bom" icon="fa-flask" type="object" attrs="{'invisible': [('new_bom_id', '=', False)]}" class="oe_stat_button">
-                        <div class="o_form_field o_stat_info mr4">
+                        <div class="o_field_widget o_stat_info mr4">
                             <div>
                                 <span>Bill of Materials</span><br/>
                                 <span>Rev :<field name="new_bom_revision" readonly="True"/> </span>
@@ -419,7 +419,7 @@
                         </div>
                         </button>
                         <button name="open_new_routing" icon="fa-cogs" type="object" attrs="{'invisible': [('new_routing_id', '=', False)]}" class="oe_stat_button">
-                        <div class="o_form_field o_stat_info mr4">
+                        <div class="o_field_widget o_stat_info mr4">
                             <div>
                                 <span>Routing</span><br/>
                                 <span>Rev :<field name="new_routing_revision" readonly="True"/> </span>

@@ -24,7 +24,7 @@ Tour.register({
             },
         },
         {
-            waitFor: ".o_form_field:contains('WH/Stock/Shelf 1')",
+            waitFor: ".o_field_widget:contains('WH/Stock/Shelf 1')",
             title:   "Scan a product",
             onload: function() {
                 scan_barcode("054398267125");
@@ -47,7 +47,7 @@ Tour.register({
             },
         },
         {
-            waitFor: ".o_form_field:contains('WH/Stock/Shelf 2')",
+            waitFor: ".o_field_widget:contains('WH/Stock/Shelf 2')",
             title:   "Rescan the same product",
             onload: function() {
                 scan_barcode("054398267125");

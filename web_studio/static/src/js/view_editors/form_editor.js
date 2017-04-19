@@ -113,9 +113,9 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         if (this.show_invisible) {
             var elements = element ? [element] : modifiersData.elements;
             _.each(elements, function (element) {
-                if (element.$el.hasClass('o_form_invisible')) {
+                if (element.$el.hasClass('o_invisible_modifier')) {
                     element.$el
-                        .removeClass('o_form_invisible')
+                        .removeClass('o_invisible_modifier')
                         .addClass('o_web_studio_show_invisible');
                 }
             });
@@ -248,7 +248,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         var widget = this._super.apply(this, arguments);
         // make empty widgets appear if there is no label
         if (!widget.isSet() && (!node.has_label || node.attrs.nolabel)) {
-            widget.$el.removeClass('o_form_field_empty').addClass('o_web_studio_widget_empty');
+            widget.$el.removeClass('o_field_empty').addClass('o_web_studio_widget_empty');
             widget.$el.text(widget.string);
         }
         return widget;
@@ -322,11 +322,11 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         // put hooks for each node in the group
         for (var j = 0; j < nodes.length; j++) {
             var node = nodes[j];
-            if (!$result.find('.o_form_field').is('.o_form_invisible')) {
+            if (!$result.find('.o_field_widget').is('.o_invisible_modifier')) {
                 // apply to the entire <tr> o_web_studio_show_invisible
                 // rather then inner label/input
-                if ($result.find('.o_form_field').hasClass('o_web_studio_show_invisible')) {
-                    $result.find('.o_form_field, .o_form_label').removeClass('o_web_studio_show_invisible');
+                if ($result.find('.o_field_widget').hasClass('o_web_studio_show_invisible')) {
+                    $result.find('.o_field_widget, .o_form_label').removeClass('o_web_studio_show_invisible');
                     $result.addClass('o_web_studio_show_invisible');
                 }
                 // add hook only if field is visible
@@ -365,7 +365,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         var $button = this._super.apply(this, arguments);
         $button.attr('data-node-id', this.node_id++);
         $button.click(function (ev) {
-            if (! $(ev.target).closest('.o_form_field').length) {
+            if (! $(ev.target).closest('.o_field_widget').length) {
                 // click on the button and not on the field inside this button
                 self.selected_node_id = $button.data('node-id');
                 self.trigger_up('node_clicked', {node: node});
