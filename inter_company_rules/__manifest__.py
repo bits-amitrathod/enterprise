@@ -19,14 +19,6 @@
         'views/inter_company_so_po_view.xml',
         'views/res_config_settings_views.xml',
     ],
-    'test': [
-    #TODO: need to move these tests in python test suite (Accounting test case)
-        # 'test/test_intercompany_data.yml',
-        # 'test/inter_company_so_to_po.yml',
-        # 'test/inter_company_po_to_so.yml',
-        # 'test/inter_company_invoice.yml'
-    ],
-    'demo': [],
     'installable': True,
     'auto_install': False,
     'license': 'OEEL-1',
