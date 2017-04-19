@@ -65,18 +65,6 @@
         </field>
     </record>
 
-    <record id="maintenance_request_action_reports" model="ir.actions.act_window">
-        <field name="name">Maintenance Requests</field>
-        <field name="res_model">maintenance.request</field>
-        <field name="view_mode">graph,pivot,kanban,tree,form,calendar</field>
-        <field name="help" type="html">
-            <p>
-                No maintenance request.
-            </p>
-        </field>
-    </record>
-
-
     <menuitem
         id="maintenance.menu_equipment_form"
         name="Equipments"
@@ -95,13 +83,4 @@
         action="maintenance.hr_equipment_action"
         sequence="2"/>
 
-    <menuitem
-        id="maintenance_reporting"
-        name="Reporting"
-        parent="maintenance.menu_maintenance_title"
-        sequence="20"/>
-    <menuitem
-        id="maintenance_request_reporting"
-        action="maintenance_request_action_reports"
-        parent="maintenance_reporting"/>
 </odoo>
