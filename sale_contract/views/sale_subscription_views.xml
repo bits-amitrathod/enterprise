@@ -42,6 +42,9 @@
                 <filter string="Overdue Activities" name="activities_overdue"
                     domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
                     help="Show all records which has next action date is before today"/>
+                <filter string="Upcoming Activities (All)" name="activities_upcoming_all"
+                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+                        ]"/>
                 <group expand="0" string="Group By">
                     <filter string="Status" name="status" domain="[]" context="{'group_by':'state'}"/>
                     <filter string="Account Manager" name="account_manager" domain="[]" context="{'group_by':'user_id'}"/>
