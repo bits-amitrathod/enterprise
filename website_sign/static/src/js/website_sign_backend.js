@@ -272,7 +272,7 @@ odoo.define('website_sign.template', function(require) {
                         return self._rpc({
                                 model: 'res.partner',
                                 method: 'read',
-                                args: [[user.partner_id[0]], ['name']],
+                                args: [[user[0].partner_id[0]], ['name']],
                             })
                             .then(prepare_reference);
                         })
@@ -794,6 +794,7 @@ odoo.define('website_sign.template', function(require) {
                     args: [[this.templateID]],
                 })
                 .then(function prepare_template(template) {
+                    template = template[0];
                     self.signature_request_template = template;
                     self.has_signature_requests = (template.signature_request_ids.length > 0);
 
@@ -803,14 +804,15 @@ odoo.define('website_sign.template', function(require) {
                             args: [[template.id]],
                         })
                         .then(function(signature_items) {
-                            self.signature_items = signature_items;
+                            self.signature_items = signature_items[0];
                         });
                     var defIrAttachments = self._rpc({
                             model: 'ir.attachment',
-                            method: 'search',
+                            method: 'read',
                             args: [[template.attachment_id[0]], ['mimetype', 'name', 'datas_fname']],
                         })
                         .then(function(attachment) {
+                            attachment = attachment[0];
                             self.signature_request_template.attachment_id = attachment;
                             self.isPDF = (attachment.mimetype.indexOf('pdf') > -1);
                         });
