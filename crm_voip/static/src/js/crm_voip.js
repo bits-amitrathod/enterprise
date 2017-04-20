@@ -2,16 +2,16 @@ odoo.define('crm.voip', function(require) {
 "use strict";
 
 var voip_core = require('voip.core');
+var ajax = require('web.ajax');
 var basic_fields = require('web.basic_fields');
 var config = require('web.config');
 var core = require('web.core');
-var ajax = require('web.ajax');
+var fieldUtils = require('web.field_utils');
 var real_session = require('web.session');
 var SystrayMenu = require('web.SystrayMenu');
 var web_client = require('web.web_client');
 var WebClient = require('web.WebClient');
 var Widget = require('web.Widget');
-
 var dialing_panel = null;
 
 var _t = core._t;
@@ -30,7 +30,7 @@ var PhonecallWidget = Widget.extend({
         "click": "select_call",
         "click .o_dial_remove_phonecall": "remove_phonecall"
     },
-    init: function(parent, phonecall, formatCurrency) {
+    init: function(parent, phonecall) {
         this._super(parent);
         this.id = phonecall.id;
         if(phonecall.partner_name){
@@ -45,7 +45,11 @@ var PhonecallWidget = Widget.extend({
         this.opportunity_id = phonecall.opportunity_id;
         this.partner_id = phonecall.partner_id;
         this.opportunity_name = phonecall.opportunity_name;
-        this.opportunity_planned_revenue = formatCurrency(phonecall.opportunity_planned_revenue, phonecall.opportunity_company_currency);
+        this.opportunity_planned_revenue = fieldUtils.format.monetary(
+            phonecall.opportunity_planned_revenue,
+            null,
+            {currency_id: phonecall.opportunity_company_currency}
+        );
         this.partner_phone = phonecall.partner_phone;
         this.description = phonecall.description;
         this.opportunity_probability = phonecall.opportunity_probability;
@@ -237,7 +241,7 @@ var DialingPanel = Widget.extend({
         "click .o_dial_autocall_button": function(ev){ev.preventDefault();this.auto_call_button();},
         "click .o_dial_stop_autocall_button": "stop_automatic_call",
     },
-    init: function(parent, formatCurrency) {
+    init: function(parent) {
         if(dialing_panel){
             return dialing_panel;
         }   
@@ -251,7 +255,6 @@ var DialingPanel = Widget.extend({
         this.folded = false;
         this.optional_buttons_animated = false;
         this.optional_buttons_shown = false;
-        this.formatCurrency = formatCurrency;
         //phonecalls which will be called in automatic mode.
         //To avoid calling already done calls
         this.phonecalls_auto_call = [];
@@ -674,7 +677,7 @@ var DialingPanel = Widget.extend({
     display_in_queue: function(phonecall){
         //Check if the current phonecall is currently done to add the microphone icon
 
-        var widget = new PhonecallWidget(this, phonecall, this.formatCurrency);
+        var widget = new PhonecallWidget(this, phonecall);
         if(this.in_call && phonecall.id === this.current_phonecall){
             widget.set_state('in_call');
         }
@@ -966,23 +969,14 @@ Phone.include({
         var allowed_models = ['res.partner', 'crm.lead'];
         if (this.mode === 'readonly' && _.contains(allowed_models, this.model)) {
             e.preventDefault();
-            var self = this;
             var phone_number = this.value;
 
             if (this.recordData.phone === phone_number || this.recordData.mobile === phone_number) {
                 if (this.DialingPanel) {
                     this._call(phone_number);
                 } else {
-                    // get the formatCurrency function from the server
-                    this._rpc({
-                            model: 'res.currency',
-                            method: 'get_format_currencies_js_function',
-                        })
-                        .then(function (func) {
-                            var formatCurrency = new Function("amount, currency_id", func);
-                            self.DialingPanel = new DialingPanel(web_client, formatCurrency);
-                            self._call(phone_number);
-                        });
+                    this.DialingPanel = new DialingPanel(web_client);
+                    this._call(phone_number);
                 }
             }
         }
@@ -992,16 +986,8 @@ Phone.include({
 WebClient.include({
     show_application: function(){
         var self = this;
-        // To get the formatCurrency function from the server
         return this._super.apply(this, arguments).then(function () {
-            return self._rpc({
-                    model: 'res.currency',
-                    method: 'get_format_currencies_js_function',
-                })
-                .then(function(data) {
-                    var formatCurrency = new Function("amount, currency_id", data);
-                    self.DialingPanel = new DialingPanel(web_client, formatCurrency);
-                });
+            self.DialingPanel = new DialingPanel(web_client);
         });
     },
 });
