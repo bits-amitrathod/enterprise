@@ -83,16 +83,17 @@
     <menuitem id="mrp_production_menu_planning"
         name="Manufacturing Orders"
         sequence="1"
+        groups="mrp.group_mrp_routings"
         parent="mrp.mrp_planning_menu_root"/>
     <menuitem id="menu_mrp_production_plan"
         name="Orders to Plan"
-        sequence="1"
+        sequence="2"
         action="mrp.mrp_production_action_planning"
         parent="mrp_production_menu_planning"
         groups="mrp.group_mrp_routings"/>
     <menuitem id="menu_mrp_production_pending"
         name="Waiting for Material Availability"
-        sequence="2"
+        sequence="1"
         action="mrp.mrp_production_action_waiting"
         parent="mrp_production_menu_planning"/>
 
