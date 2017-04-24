@@ -383,7 +383,7 @@ class AccountReport(models.AbstractModel):
             return format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), date_format='MMM YYYY')
         if 'quarter' in options_filter:
             quarter = (dt_to.month - 1) / 3 + 1
-            return ('%s %s') % (get_quarter_names('abbreviated', locale=self._context.get('lang', 'en_US'))[quarter], dt_to.year)
+            return ('%s %s') % (get_quarter_names('abbreviated', locale=self._context.get('lang') or 'en_US')[quarter], dt_to.year)
         if 'year' in options_filter:
             if self.env.user.company_id.fiscalyear_last_day == 31 and self.env.user.company_id.fiscalyear_last_month == 12:
                 return dt_to.strftime('%Y')
