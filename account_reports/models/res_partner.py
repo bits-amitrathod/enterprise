@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from datetime import timedelta
 
 
@@ -64,6 +64,7 @@ class ResPartner(models.Model):
             'lang': self.lang,
         })
         return {
+                'name': _("Overdue Payments for %s") % self.display_name,
                 'type': 'ir.actions.client',
                 'tag': 'account_report_followup',
                 'context': ctx,
