@@ -63,6 +63,9 @@ var MainMenu = Widget.extend({
 
     _onBarcodeScanned: function(barcode) {
         var self = this;
+        if (!$.contains(document, this.el)) {
+            return;
+        }
         Session.rpc('/stock_barcode/scan_from_main_menu', {
             barcode: barcode,
         }).then(function(result) {

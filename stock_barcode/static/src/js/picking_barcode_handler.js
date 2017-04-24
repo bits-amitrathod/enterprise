@@ -59,6 +59,9 @@ FormController.include({
     },
 
     _barcodePickingAddRecordId: function (barcode, activeBarcode) {
+        if (!activeBarcode.dataPointID) {
+            return $.Deferred().reject();
+        }
         var record = this.model.get(activeBarcode.dataPointID);
         if (record.data.state === 'cancel' || record.data.state === 'done') {
             this.do_warn(_.str.sprintf(_t("Picking %s"), record.data.state),
