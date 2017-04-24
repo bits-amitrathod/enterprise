@@ -9,7 +9,19 @@ var FormController = require('web.FormController');
 var _t = core._t;
 
 FormController.include({
-
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+    /**
+     * Used to find the product who match with the scanned barcode
+     *
+     * @private
+     * @override
+     * @param {Object} record
+     * @param {string} barcode
+     * @param {Object} activeBarcode
+     * @returns {Deferred}
+     */
     _barcodeRecordFilter: function (record, barcode, activeBarcode) {
         if (activeBarcode.widget === 'picking_barcode_handler') {
             return record.data.product_barcode === barcode &&
@@ -20,7 +32,17 @@ FormController.include({
         }
         return this._super.apply(this, arguments);
     },
-
+    /**
+     * Method called when a record is already found
+     *
+     * @private
+     * @override
+     * @param {Object} candidate (already exists in the x2m)
+     * @param {Object} record
+     * @param {string} barcode
+     * @param {Object} activeBarcode
+     * @returns {Deferred}
+     */
     _barcodeSelectedCandidate: function (candidate, record, barcode, activeBarcode) {
         if (activeBarcode.widget === 'picking_barcode_handler') {
             var self = this;
@@ -49,7 +71,16 @@ FormController.include({
         }
         return this._super.apply(this, arguments);
     },
-
+    /**
+     * Method called when no records match
+     *
+     * @private
+     * @override
+     * @param {Object} record
+     * @param {string} barcode
+     * @param {Object} activeBarcode
+     * @returns {Deferred}
+     */
     _barcodeWithoutCandidate: function (record, barcode, activeBarcode) {
         if (activeBarcode.widget === 'picking_barcode_handler') {
             this.do_warn(_t("Can't find the product for this Picking"));
@@ -57,7 +88,15 @@ FormController.include({
         }
         return this._super.apply(this, arguments);
     },
-
+    /**
+     *
+     * @see _barcodeAddX2MQuantity
+     *
+     * @private
+     * @param {string} barcode
+     * @param {Object} activeBarcode
+     * @returns {Deferred}
+     */
     _barcodePickingAddRecordId: function (barcode, activeBarcode) {
         if (!activeBarcode.dataPointID) {
             return $.Deferred().reject();
@@ -68,7 +107,7 @@ FormController.include({
                 _.str.sprintf(_t("The picking is %s and cannot be edited."), record.data.state));
             return $.Deferred().reject();
         }
-        return this._barcode(barcode, activeBarcode);
+        return this._barcodeAddX2MQuantity(barcode, activeBarcode);
     }
 });
 
