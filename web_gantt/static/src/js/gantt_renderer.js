@@ -678,11 +678,11 @@ return AbstractRenderer.extend({
         // If there is no task, add a dummy one
         if (groups.length === 0) {
             groups = [{
-                'id': 1,
-                'name': '',
+                'id': 0,
+                'display_name': '',
                 'task_start': this.state.focus_date,
                 'task_stop': this.state.focus_date,
-                'duration': 1,
+                'percent': 0,
             }];
         }
 
@@ -713,7 +713,7 @@ return AbstractRenderer.extend({
                     'progress': progress,
                     'create': task.create,
                     'open': task.open,
-                    'consolidation_color': task.color,
+                    'consolidation_color': task.color || 0,
                     'index': gantt_tasks.length,
                 };
                 if (parent_id) { t.parent = parent_id; }
@@ -727,14 +727,14 @@ return AbstractRenderer.extend({
                 gantt_tasks.push({
                     'id': "gantt_task_" + task.id,
                     'text': task.display_name,
-                    'active': task.active,
+                    'active': task.active || true,
                     'start_date': task.task_start,
                     'duration': gantt.calculateDuration(task.task_start, task.task_stop),
                     'progress': task.percent / 100,
-                    'parent': parent_id,
-                    'consolidation': task[mapping.consolidation],
-                    'consolidation_exclude': self.consolidation_exclude,
-                    'color': task.color,
+                    'parent': parent_id || 0,
+                    'consolidation': task[mapping.consolidation] || null,
+                    'consolidation_exclude': self.consolidation_exclude || null,
+                    'color': task.color || 0,
                     'index': gantt_tasks.length,
                 });
             }

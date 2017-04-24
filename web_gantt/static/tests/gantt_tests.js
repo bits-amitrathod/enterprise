@@ -20,14 +20,15 @@ QUnit.module('Views', {
                     progress: {string: "progress", type: "integer"},
                     time: {string: "Time", type: "float"},
                     user_id: {string: "User", type: "many2one", relation: 'user'},
+                    active: {string: "active", type: "boolean", default: true},
                 },
                 records: [
-                    {id: 1, name: "task 1", start: "2016-12-11 00:00:00", stop: "2016-12-13 00:00:00", progress: 50, time: 174.3, user_id: 3},
-                    {id: 2, name: "task 2", start: "2016-12-12 10:55:05", stop: "2016-12-12 14:55:05", progress: 30, time: 88.4, user_id: 3},
-                    {id: 3, name: "task 3", start: "2016-12-27 15:55:05", stop: "2016-12-29 16:55:05", progress: 20, time: 31.0, user_id: 61},
-                    {id: 4, name: "task 4", start: "2016-12-14 15:55:05", stop: "2016-12-14 18:55:05", progress: 90, time: 99.1, user_id: 3},
-                    {id: 5, name: "task 5", start: "2016-12-23 15:55:05", stop: "2016-12-31 18:55:05", progress: 10, time: 41.1, user_id: 61},
-                    {id: 6, name: "task 6", start: "2016-12-28 08:00:00", stop: "2016-12-31 09:00:00", progress: 30, time: 10.9, user_id: 3},
+                    {id: 1, name: "task 1", start: "2016-12-11 00:00:00", stop: "2016-12-13 00:00:00", progress: 50, time: 174.3, user_id: 3, active: true},
+                    {id: 2, name: "task 2", start: "2016-12-12 10:55:05", stop: "2016-12-12 14:55:05", progress: 30, time: 88.4, user_id: 3, active: true},
+                    {id: 3, name: "task 3", start: "2016-12-27 15:55:05", stop: "2016-12-29 16:55:05", progress: 20, time: 31.0, user_id: 61, active: true},
+                    {id: 4, name: "task 4", start: "2016-12-14 15:55:05", stop: "2016-12-14 18:55:05", progress: 90, time: 99.1, user_id: 3, active: true},
+                    {id: 5, name: "task 5", start: "2016-12-23 15:55:05", stop: "2016-12-31 18:55:05", progress: 10, time: 41.1, user_id: 61, active: true},
+                    {id: 6, name: "task 6", start: "2016-12-28 08:00:00", stop: "2016-12-31 09:00:00", progress: 30, time: 10.9, user_id: 3, active: true},
                 ]
             },
             user: {
@@ -48,7 +49,7 @@ QUnit.module('Views', {
     QUnit.module('GanttView');
 
     QUnit.test('simple gantt view', function (assert) {
-        assert.expect(9);
+        assert.expect(10);
         var done = assert.async();
 
         createAsyncView({
@@ -81,6 +82,11 @@ QUnit.module('Views', {
             assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 3,
                 "should now display 3 tasks");
 
+            gantt.reload({domain: [['name', 'like', '2']]});
+
+            assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 1,
+                "should apply the the domain filter");
+
             gantt.destroy();
             done();
         });
@@ -99,13 +105,14 @@ QUnit.module('Views', {
             model: 'task',
             data: this.data,
             arch: '<gantt date_start="start" date_stop="stop" progress="progress"></gantt>',
-
             archs: {
-                'task,false,form': '<form string="Task">' +
-                                    '<field name="name"/>' +
-                                    '<field name="start"/>' +
-                                    '<field name="stop"/>' +
-                                    '</form>',
+                'task,false,form':
+                    '<form string="Task">' +
+                        '<field name="name"/>' +
+                        '<field name="start"/>' +
+                        '<field name="stop"/>' +
+                        '<field name="user_id" context="{\'employee_id\': start}"/>' +
+                    '</form>',
             },
             viewOptions: {
                 initialDate: new Date("2026-04-04T08:00:00Z"),
@@ -135,6 +142,11 @@ QUnit.module('Views', {
                 "should display the task name in the dom");
 
             assert.strictEqual(self.data.task.records.length, 7, "should have created a task");
+
+            // open formViewDialog
+            gantt.$('.gantt_cell.gantt_last_cell').click();
+            $('.modal .o_form_field_many2one[name="user_id"] input').click();
+
             gantt.destroy();
             done();
         });

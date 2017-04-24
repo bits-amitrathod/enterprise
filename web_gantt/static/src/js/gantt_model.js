@@ -44,8 +44,8 @@ return AbstractModel.extend({
             fields: this.fields,
             mapping: this.mapping,
             to_grouped_by: params.groupedBy,
-            domain: params.domain,
-            context: params.context,
+            domain: params.domain || [],
+            context: params.context || {},
         };
         this._setFocusDate(params.initialDate, params.scale);
         return this._loadGantt();
@@ -55,7 +55,16 @@ return AbstractModel.extend({
      *
      * @returns {Deferred<any>}
      */
-    reload: function () {
+    reload: function (handle, params) {
+        if (params.domain) {
+            this.gantt.domain = params.domain;
+        }
+        if (params.context) {
+            this.gantt.context = params.context;
+        }
+        if (params.groupBy) {
+            this.gantt.to_grouped_by = params.groupBy;
+        }
         return this._loadGantt();
     },
     /**
