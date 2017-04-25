@@ -12,7 +12,9 @@ var QWeb = core.qweb;
 var _t = core._t;
 
 var mrp_mps_report = Widget.extend(ControlPanelMixin, {
-    // Stores all the parameters of the action.
+    custom_events: {
+        search: '_onSearch',
+    },
     events:{
         'change .o_mps_save_input_text': 'mps_forecast_save',
         'change .o_mps_save_input_supply': 'on_change_quantity',
@@ -50,7 +52,6 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                         disable_groupby: true,
                     };
                     self.searchview = new SearchView(self, self.dataset, self.fields_view, options);
-                    self.searchview.on('search_data', self, self.on_search);
                     self.searchview.appendTo($("<div>")).then(function () {
                         defs.push(self.update_cp());
                         self.$searchview_buttons = self.searchview.$buttons.contents();
@@ -224,18 +225,6 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 });
         }
     },
-    on_search: function (domains) {
-        var self = this;
-        var session = this.getSession();
-        var result = pyeval.eval_domains_and_contexts({
-            contexts: [session.user_context],
-            domains: domains
-        });
-        this.domain = result.domain;
-        this.get_html().then(function() {
-            self.re_renderElement();
-        });
-    },
     mps_apply: function(e){
         var self = this;
         var product = parseInt($(e.target).data('product'));
@@ -310,6 +299,24 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 });
         });
         return this.$buttons;
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {OdooEvent} event
+     */
+    _onSearch: function (event) {
+        var session = this.getSession();
+        var result = pyeval.eval_domains_and_contexts({
+            contexts: [session.user_context],
+            domains: event.datadomains
+        });
+        this.domain = result.domain;
+        this.get_html().then(this.re_renderElement.bind(this));
     },
 });
 
