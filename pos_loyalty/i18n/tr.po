@@ -3,20 +3,20 @@
 # * pos_loyalty
 # 
 # Translators:
-# gezgin biri <gezginbiri@hotmail.com>, 2016
-# Ediz Duman <neps1192@gmail.com>, 2016
-# Murat Kaplan <muratk@projetgrup.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Azar Huseynli <azerbay1984@gmail.com>, 2016
-# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016
-# Ramiz Deniz Öner <deniz@denizoner.com>, 2016
+# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
+# Fırat Kaya <firat.kaya@mechsoft.com.tr>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# gezgin biri <gezginbiri@hotmail.com>, 2017
+# Murat Kaplan <muratk@projetgrup.com>, 2017
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Ramiz Deniz Öner <deniz@denizoner.com>, 2016\n"
+"POT-Creation-Date: 2017-02-15 11:32+0000\n"
+"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"Last-Translator: Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,7 +61,7 @@ msgstr "Oluşturan"
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_create_date
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturulma zamanı"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_cumulative
@@ -84,7 +84,7 @@ msgstr "İndirimli Ürün"
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_display_name
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_display_name
 msgid "Display Name"
-msgstr "Adı Göstermek"
+msgstr "Ad Görünümü"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_rule_type
@@ -156,6 +156,12 @@ msgid "Last Updated on"
 msgstr "Son Güncelleme"
 
 #. module: pos_loyalty
+#: model:ir.model.fields,field_description:pos_loyalty.field_pos_order_loyalty_points
+#: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
+msgid "Loyalty Points"
+msgstr ""
+
+#. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_loyalty_program_id
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_loyalty_program_id
 #: model:ir.model.fields,field_description:pos_loyalty.field_pos_config_loyalty_id
@@ -196,21 +202,22 @@ msgid "Loyalty Rule"
 msgstr ""
 
 #. module: pos_loyalty
-#: model:ir.model.fields,field_description:pos_loyalty.field_pos_order_loyalty_points
-#: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
-msgid "Loyalty points"
-msgstr ""
-
-#. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_minimum_points
-msgid "Minimum points"
+msgid "Minimum Points"
 msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_name
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_name
 msgid "Name"
-msgstr "Adı"
+msgstr "İsim"
+
+#. module: pos_loyalty
+#. openerp-web
+#: code:addons/pos_loyalty/static/src/js/loyalty.js:367
+#, python-format
+msgid "No Rewards Available"
+msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_res_partner
@@ -218,13 +225,20 @@ msgid "Partner"
 msgstr "İş Ortağı"
 
 #. module: pos_loyalty
-#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_product_id
-msgid "Point Product"
+#. openerp-web
+#: code:addons/pos_loyalty/static/src/js/loyalty.js:383
+#, python-format
+msgid "Please select a reward"
 msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_cost
-msgid "Point cost"
+msgid "Point Cost"
+msgstr ""
+
+#. module: pos_loyalty
+#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_product_id
+msgid "Point Product"
 msgstr ""
 
 #. module: pos_loyalty
@@ -307,13 +321,13 @@ msgid "Reward Name"
 msgstr ""
 
 #. module: pos_loyalty
-#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_form
-msgid "Reward the customer with gifts or discounts for loyalty points"
+#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_reward_type
+msgid "Reward Type"
 msgstr ""
 
 #. module: pos_loyalty
-#: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_reward_type
-msgid "Reward type"
+#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_form
+msgid "Reward the customer with gifts or discounts for loyalty points"
 msgstr ""
 
 #. module: pos_loyalty
@@ -332,7 +346,7 @@ msgstr "Kural Adı"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_rule_type
-msgid "Rule type"
+msgid "Rule Type"
 msgstr ""
 
 #. module: pos_loyalty
@@ -456,6 +470,15 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_reward_reward_type
 msgid "The type of the reward"
+msgstr ""
+
+#. module: pos_loyalty
+#. openerp-web
+#: code:addons/pos_loyalty/static/src/js/loyalty.js:368
+#, python-format
+msgid ""
+"There are no rewards available for this customer as part of the loyalty "
+"program"
 msgstr ""
 
 #. module: pos_loyalty

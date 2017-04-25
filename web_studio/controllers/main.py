@@ -900,8 +900,8 @@ class WebStudioController(http.Controller):
             if key == 'string' and operation.get('node', {}).get('tag') == 'field':
                 field_name = operation.get('node', {}).get('attrs', {}).get('name')
                 field_id = request.env['ir.model.fields'].search([('model', '=', model), ('name', '=', field_name)])
-                if field_name.startswith('x_') and field_id:
-                    field_id.field_description = new_attr
+                if field_name.startswith('x_') and field_id and field_id.field_description != new_attr:
+                    field_id.write({'field_description': new_attr})
 
     def _operation_buttonbox(self, arch, operation, model=None):
         studio_view_arch = arch  # The actual arch is the studio view arch

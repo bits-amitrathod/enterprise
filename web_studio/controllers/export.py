@@ -22,7 +22,7 @@ MODELS_TO_EXPORT = [
 FIELDS_TO_EXPORT = {
     'base.automation': [
         'action_server_id', 'active', 'filter_domain', 'filter_pre_domain',
-        'filter_pre_id', 'last_run', 'on_change_fields', 'trg_date_id', 'trg_date_range',
+        'last_run', 'on_change_fields', 'trg_date_id', 'trg_date_range',
         'trg_date_range_type', 'trigger'
     ],
     'ir.actions.act_window': [

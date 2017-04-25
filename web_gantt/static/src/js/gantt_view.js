@@ -3,6 +3,7 @@ odoo.define('web_gantt.GanttView', function (require) {
 
 var AbstractView = require('web.AbstractView');
 var core = require('web.core');
+var session = require('web.session');
 var GanttModel = require('web_gantt.GanttModel');
 var GanttRenderer = require('web_gantt.GanttRenderer');
 var GanttController = require('web_gantt.GanttController');
@@ -27,6 +28,25 @@ var scales = [
     'year'
 ];
 
+// determine locale file to load
+var locales_mapping = {
+    'ar_SY': 'ar', 'ca_ES': 'ca', 'zh_CN': 'cn', 'cs_CZ': 'cs', 'da_DK': 'da',
+    'de_DE': 'de', 'el_GR': 'el', 'es_ES': 'es', 'fi_FI': 'fi', 'fr_FR': 'fr',
+    'he_IL': 'he', 'hu_HU': 'hu', 'id_ID': 'id', 'it_IT': 'it', 'ja_JP': 'jp',
+    'ko_KR': 'kr', 'nl_NL': 'nl', 'nb_NO': 'no', 'pl_PL': 'pl', 'pt_PT': 'pt',
+    'ro_RO': 'ro', 'ru_RU': 'ru', 'sl_SI': 'si', 'sk_SK': 'sk', 'sv_SE': 'sv',
+    'tr_TR': 'tr', 'uk_UA': 'ua',
+    'ar': 'ar', 'ca': 'ca', 'zh': 'cn', 'cs': 'cs', 'da': 'da', 'de': 'de',
+    'el': 'el', 'es': 'es', 'fi': 'fi', 'fr': 'fr', 'he': 'he', 'hu': 'hu',
+    'id': 'id', 'it': 'it', 'ja': 'jp', 'ko': 'kr', 'nl': 'nl', 'nb': 'no',
+    'pl': 'pl', 'pt': 'pt', 'ro': 'ro', 'ru': 'ru', 'sl': 'si', 'sk': 'sk',
+    'sv': 'sv', 'tr': 'tr', 'uk': 'ua',
+};
+var current_locale = session.user_context.lang;
+var current_short_locale = current_locale.split('_')[0];
+var locale_code = locales_mapping[current_locale] || locales_mapping[current_short_locale];
+var locale_suffix = locale_code !== undefined ? '_' + locale_code : '';
+
 var GanttView = AbstractView.extend({
     display_name: _lt('Gantt'),
     icon: 'fa-tasks',
@@ -34,7 +54,10 @@ var GanttView = AbstractView.extend({
         Model: GanttModel,
         Controller: GanttController,
         Renderer: GanttRenderer,
-        js_libs: ["/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js"],
+        js_libs: [
+            "/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js",
+            "/web_gantt/static/lib/dhtmlxGantt/codebase/locale/locale" + locale_suffix + ".js"
+        ],
         css_libs: ["/web_gantt/static/lib/dhtmlxGantt/codebase/dhtmlxgantt.css"],
     },
     /**

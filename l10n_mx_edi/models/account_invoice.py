@@ -350,7 +350,7 @@ class AccountInvoice(models.Model):
                 continue
             msg = getattr(response.resultados[0], 'mensaje', None)
             code = getattr(response.resultados[0], 'statusUUID', None)
-            cancelled = code == '201' or code == '202'
+            cancelled = code in ('201', '202')
             inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
     @api.multi
@@ -409,6 +409,8 @@ class AccountInvoice(models.Model):
             company_id = self.company_id
             cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
             key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))
+            cancelled = False
+            code = False
             try:
                 client = Client(url, timeout=20)
                 invoices_list = client.factory.create("UUIDS")
@@ -421,8 +423,8 @@ class AccountInvoice(models.Model):
                 msg = _('A delay of 2 hours has to be respected before to cancel')
             else:
                 code = getattr(response.Folios[0][0], 'EstatusUUID', None)
-                cancelled = code == '201' or code == '202'  # cancelled or previously cancelled
-                msg = code != 201 and code != 202 and "Cancelling get an error"
+                cancelled = code in ('201', '202')  # cancelled or previously cancelled
+                msg = cancelled and '' or _("Cancelling got an error")
             inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
     @api.multi
