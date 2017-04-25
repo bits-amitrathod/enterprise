@@ -21,7 +21,11 @@ class report_account_aged_partner(models.AbstractModel):
     def get_templates(self):
         templates = super(report_account_aged_partner, self).get_templates()
         templates['main_template'] = 'account_reports.template_aged_partner_balance_report'
-        templates['line_template'] = 'account_reports.template_aged_partner_balance_line_report'
+        try:
+            self.env['ir.ui.view'].get_view_id('account_reports.template_aged_partner_balance_line_report')
+            templates['line_template'] = 'account_reports.template_aged_partner_balance_line_report'
+        except ValueError:
+            pass
         return templates
 
     @api.model

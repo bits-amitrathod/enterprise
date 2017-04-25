@@ -76,6 +76,7 @@ class ResPartner(models.Model):
             'lang': self.lang,
         })
         return {
+                'name': _("Overdue Payments for %s") % self.display_name,
                 'type': 'ir.actions.client',
                 'tag': 'account_report_followup',
                 'context': ctx,
