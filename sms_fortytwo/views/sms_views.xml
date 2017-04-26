@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- SMS Provider Views -->
+    <record id="sms_provider_view_form_fortytwo" model="ir.ui.view">
+        <field name="name">sms.provider.form.fortytwo</field>
+        <field name="model">sms.provider</field>
+        <field name="inherit_id" ref="sms.sms_provider_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='provider']" position="after">
+                <field name="fortytwo_access_key" groups="base.group_system" attrs="{'invisible': [('provider', '!=', 'fortytwo')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
