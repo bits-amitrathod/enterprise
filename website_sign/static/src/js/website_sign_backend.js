@@ -156,9 +156,10 @@ odoo.define('website_sign.template', function(require) {
                 options.buttons.push({text: 'Save', classes: 'btn-primary', close: true, click: function(e) {
                     var resp = parseInt(this.$responsibleSelect.find('select').val());
                     var required = this.$('input[type="checkbox"]').prop('checked');
+                    var name = this.$('#o_sign_name').val();
 
                     this.getParent().currentRole = resp;
-                    this.$currentTarget.data({responsible: resp, required: required}).trigger('itemChange');
+                    this.$currentTarget.data({responsible: resp, required: required, name: name}).trigger('itemChange');
                 }});
                 options.buttons.push({text: _t('Remove'), classes: 'o_sign_delete_field_button btn-link', close: true, click: function(e) {
                     this.$currentTarget.trigger('itemDelete');
@@ -179,6 +180,7 @@ odoo.define('website_sign.template', function(require) {
                 website_sign_utils.setAsResponsibleSelect(self.$responsibleSelect.find('select'), self.$currentTarget.data('responsible'), self.parties);
                 self.$('input[type="checkbox"]').prop('checked', self.$currentTarget.data('required'));
 
+                self.$('#o_sign_name').val(self.$currentTarget.data('name') );
                 self.set_title(self.title, '<span class="fa fa-long-arrow-right"/> ' + self.$currentTarget.prop('title') + ' Field');
             });
         },
@@ -535,7 +537,7 @@ odoo.define('website_sign.template', function(require) {
                             cancel: false,
                             helper: function(e) {
                                 var type = self.types[$(this).data('item-type-id')];
-                                var $signatureItem = self.createSignatureItem(type, true, self.currentRole, 0, 0, type.default_width, type.default_height);
+                                var $signatureItem = self.createSignatureItem(type, true, self.currentRole, 0, 0, type.default_width, type.default_height, '');
 
                                 if(!e.ctrlKey) {
                                     self.$('.o_sign_signature_item').removeClass('ui-selected');
@@ -913,6 +915,7 @@ odoo.define('website_sign.template', function(require) {
                     data[configuration[page][i].data('item-id') || (newId--)] = {
                         'type_id': configuration[page][i].data('type'),
                         'required': configuration[page][i].data('required'),
+                        'name': configuration[page][i].data('name'),
                         'responsible_id': resp,
                         'page': page,
                         'posX': configuration[page][i].data('posx'),
