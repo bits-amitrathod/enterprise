@@ -42,7 +42,7 @@ var locales_mapping = {
     'pl': 'pl', 'pt': 'pt', 'ro': 'ro', 'ru': 'ru', 'sl': 'si', 'sk': 'sk',
     'sv': 'sv', 'tr': 'tr', 'uk': 'ua',
 };
-var current_locale = session.user_context.lang;
+var current_locale = session.user_context.lang || 'en_US';
 var current_short_locale = current_locale.split('_')[0];
 var locale_code = locales_mapping[current_locale] || locales_mapping[current_short_locale];
 var locale_suffix = locale_code !== undefined ? '_' + locale_code : '';
@@ -55,8 +55,8 @@ var GanttView = AbstractView.extend({
         Controller: GanttController,
         Renderer: GanttRenderer,
         js_libs: [
-            "/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js",
-            "/web_gantt/static/lib/dhtmlxGantt/codebase/locale/locale" + locale_suffix + ".js"
+            ["/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js"],
+            ["/web_gantt/static/lib/dhtmlxGantt/codebase/locale/locale" + locale_suffix + ".js"],
         ],
         css_libs: ["/web_gantt/static/lib/dhtmlxGantt/codebase/dhtmlxgantt.css"],
     },
