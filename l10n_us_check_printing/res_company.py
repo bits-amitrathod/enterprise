@@ -10,11 +10,11 @@ class res_company(models.Model):
              "In order to disable the printing feature, select 'None'.",
         selection=[
             ('disabled', 'None'),
-            ('l10n_us_check_printing.print_check_top', 'Check on top'),
-            ('l10n_us_check_printing.print_check_middle', 'Check in middle'),
-            ('l10n_us_check_printing.print_check_bottom', 'Check on bottom')
+            ('l10n_us_check_printing.action_print_check_top', 'Check on top'),
+            ('l10n_us_check_printing.action_print_check_middle', 'Check in middle'),
+            ('l10n_us_check_printing.action_print_check_bottom', 'Check on bottom')
         ],
-        default="l10n_us_check_printing.print_check_top")
+        default="l10n_us_check_printing.action_print_check_top")
 
     us_check_multi_stub = fields.Boolean('Multi-Pages Check Stub',
         help="This option allows you to print check details (stub) on multiple pages if they don't fit on a single page.")

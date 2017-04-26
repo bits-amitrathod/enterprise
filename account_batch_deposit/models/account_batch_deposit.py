@@ -80,4 +80,4 @@ class AccountBatchDeposit(models.Model):
                 continue
             deposit.payment_ids.write({'state': 'sent', 'payment_reference': deposit.name})
             deposit.write({'state': 'sent'})
-        return self.env['report'].get_action(self, 'account_batch_deposit.print_batch_deposit')
+        return self.env.ref('account_batch_deposit.action_print_batch_deposit').report_action(self)

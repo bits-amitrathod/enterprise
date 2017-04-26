@@ -194,7 +194,7 @@ class PrintOrder(models.Model):
             if not current_order.attachment_id and current_order.res_model and current_order.res_id and report:  # check report
                 # browse object and find its pdf (binary content)
                 object_to_print = self.env[current_order.res_model].browse(current_order.res_id)
-                bin_pdf = self.env['report'].get_pdf([current_order.res_id], report.report_name)
+                bin_pdf = report.render_qweb_pdf([current_order.res_id])[0]
 
                 # compute the name of the new attachment
                 filename = False

@@ -171,7 +171,7 @@
         </record>
 
         <!-- include vat number in report -->
-        <template id="include_vat_number" inherit_id="report.external_layout_boxed">
+        <template id="include_vat_number" inherit_id="web.external_layout_boxed">
             <xpath expr="//div[@name='company_address']" position="after">
                 <div class="col-xs-9" name="company_address">
                     VAT: <t t-esc="company.vat"/>
@@ -283,9 +283,9 @@
         </record>
 
         <template id="financial_report_template">
-            <t t-call="report.html_container">
+            <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <t t-call="report.external_layout">
+                    <t t-call="web.external_layout">
                         <div class="page">
                             <strong>THIS IS NOT A VALID VAT TICKET</strong>
                             <t t-if="o.stop_at">
@@ -439,9 +439,9 @@
         </template>
 
         <template id="user_report_template">
-            <t t-call="report.html_container">
+            <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <t t-call="report.external_layout">
+                    <t t-call="web.external_layout">
                         <div class="page">
                             <strong>THIS IS NOT A VALID VAT TICKET</strong>
                             <t t-if="o.stop_at">
@@ -567,7 +567,7 @@
             </xpath>
         </template>
 
-        <template id="include_vat_notice_report_internal" inherit_id="report.internal_layout">
+        <template id="include_vat_notice_report_internal" inherit_id="web.internal_layout">
             <xpath expr="//div[@class='row']" position="before">
                 <div class="row">
                     <div class="col-xs-12 text-center">

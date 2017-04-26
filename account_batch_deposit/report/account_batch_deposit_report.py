@@ -30,14 +30,12 @@ class PrintBatchDeposit(models.AbstractModel):
         } for payments in payment_slices]
 
     @api.model
-    def render_html(self, docids, data=None):
-        report_obj = self.env['report']
+    def get_report_values(self, docids, data=None):
         report_name = 'account_batch_deposit.print_batch_deposit'
-        report = report_obj._get_report_from_name(report_name)
-        docargs = {
+        report = self.env['ir.actions.report']._get_report_from_name(report_name)
+        return {
             'doc_ids': docids,
             'doc_model': report.model,
             'docs': self.env[report.model].browse(docids),
             'pages': self.get_pages,
         }
-        return report_obj.render(report_name, docargs)

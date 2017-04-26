@@ -237,16 +237,15 @@ class MrpStockReport(models.TransientModel):
             values=dict(rcontext, lines=lines, report=self, context=self),
         )
 
-        header = self.env['report'].render(
-            "report.internal_layout",
-            values=rcontext,
-        )
-        header = self.env['report'].render(
-            "report.minimal_layout",
-            values=dict(rcontext, subst=True, body=header),
-        )
+        header = self.env['ir.actions.report'].render_template("web.internal_layout", values=rcontext)
+        header = self.env['ir.actions.report'].render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=header))
         landscape = True
-        return self.env['report']._run_wkhtmltopdf([header], [''], [(0, body)], landscape, self.env.user.company_id.paperformat_id, spec_paperformat_args={'data-report-margin-top': 10, 'data-report-header-spacing': 10})
+
+        return self.env['ir.actions.report']._run_wkhtmltopdf(
+            [self.env['ir.actions.report'].create_wkhtmltopdf_obj(header, body, None)],
+            landscape, self.env.user.company_id.paperformat_id,
+            specific_paperformat_args={'data-report-margin-top': 10, 'data-report-header-spacing': 10}
+        )
 
     def _get_html(self):
         result = {}

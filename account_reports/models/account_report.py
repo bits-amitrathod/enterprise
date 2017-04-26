@@ -14,7 +14,9 @@ from babel.dates import get_quarter_names
 from odoo.tools.misc import formatLang, format_date
 from odoo.tools import config
 from odoo.addons.web.controllers.main import clean_action
+
 _logger = logging.getLogger(__name__)
+
 
 class AccountReportManager(models.Model):
     _name = 'account.report.manager'
@@ -550,17 +552,17 @@ class AccountReport(models.AbstractModel):
 
         body = body.replace('<body class="o_account_reports_body_print">', '<body class="o_account_reports_body_print">' + body_html)
         if minimal_layout:
-            header = self.env['report'].render("report.internal_layout", values=rcontext,)
+            header = self.env['ir.actions.report'].render_template("web.internal_layout", values=rcontext)
             footer = ''
             spec_paperformat_args = {'data-report-margin-top': 10, 'data-report-header-spacing': 10}
-            header = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=header),)
+            header = self.env['ir.actions.report'].render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=header))
         else:
             rcontext.update({
                     'css': '',
                     'o': self.env.user,
                     'res_company': self.env.user.company_id,
                 })
-            header = self.env['report'].render("report.external_layout", values=rcontext,)
+            header = self.env['ir.actions.report'].render_template("web.external_layout", values=rcontext)
             header = header.decode('utf-8') # Ensure that headers and footer are correctly encoded
             spec_paperformat_args = {}
             # parse header as new header contains header, body and footer
@@ -570,11 +572,11 @@ class AccountReport(models.AbstractModel):
 
                 for node in root.xpath(match_klass.format('header')):
                     headers = lxml.html.tostring(node)
-                    headers = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=headers),)
+                    headers = self.env['ir.actions.report'].render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=headers))
 
                 for node in root.xpath(match_klass.format('footer')):
                     footer = lxml.html.tostring(node)
-                    footer = self.env['report'].render("report.minimal_layout", values=dict(rcontext, subst=True, body=footer),)
+                    footer = self.env['ir.actions.report'].render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=footer))
 
             except lxml.etree.XMLSyntaxError:
                 headers = header
@@ -585,7 +587,11 @@ class AccountReport(models.AbstractModel):
         if len(self.with_context(print_mode=True).get_columns_name(options)) > 5:
             landscape = True
 
-        return self.env['report']._run_wkhtmltopdf([header], [footer], [(0, body)], landscape, self.env.user.company_id.paperformat_id, spec_paperformat_args=spec_paperformat_args)
+        return self.env['ir.actions.report']._run_wkhtmltopdf(
+            [self.env['ir.actions.report'].create_wkhtmltopdf_obj(header, body, footer)],
+            landscape, self.env.user.company_id.paperformat_id,
+            specific_paperformat_args=spec_paperformat_args
+        )
 
     def print_xlsx(self, options):
         return {

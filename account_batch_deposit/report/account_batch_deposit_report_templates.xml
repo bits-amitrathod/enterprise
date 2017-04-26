@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-<template id="assets_common" name="account_batch_deposit pdf assets" inherit_id="report.assets_common">
+<template id="assets_common" name="account_batch_deposit pdf assets" inherit_id="web.report_assets_common">
     <xpath expr="." position="inside">
         <link href="/account_batch_deposit/static/src/less/report_batch_deposit.less" rel="stylesheet"/>
     </xpath>
 </template>
 
 <template id="print_batch_deposit">
-    <t t-call="report.basic_layout">
+    <t t-call="web.basic_layout">
         <t t-foreach="docs" t-as="o">
             <div t-foreach="pages(o)" t-as="page" class="page page_batch_deposit">
                 <div class="row deposit_details">

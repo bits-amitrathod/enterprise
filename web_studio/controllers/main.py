@@ -245,9 +245,9 @@ class WebStudioController(http.Controller):
     def create_blank_report(self):
         arch = etree.fromstring("""
             <t t-name="report_blank">
-                <t t-call="report.html_container">
+                <t t-call="web.html_container">
                     <t t-foreach="docs" t-as="doc">
-                        <t t-call="report.external_layout">
+                        <t t-call="web.external_layout">
                             <div class="page"/>
                         </t>
                     </t>
@@ -281,9 +281,9 @@ class WebStudioController(http.Controller):
         # Create view
         arch = etree.fromstring("""
             <t t-name="web_studio.report_business">
-                <t t-call="report.html_container">
+                <t t-call="web.html_container">
                     <t t-foreach="docs" t-as="doc">
-                        <t t-call="report.external_layout">
+                        <t t-call="web.external_layout">
                             <div class="page">
                                 <div class="row">
                                     <div name="address" class="col-xs-5 col-xs-offset-7"/>

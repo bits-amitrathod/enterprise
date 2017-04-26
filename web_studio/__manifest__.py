@@ -22,7 +22,6 @@ Note: Only the admin user is allowed to make those customizations.
         'base_import_module',
         'web_grid',
         'mail',
-        'report',
         'web',
         'web_editor',
         'web_gantt',
