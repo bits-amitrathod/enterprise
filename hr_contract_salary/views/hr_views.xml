@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_job_view_form" model="ir.ui.view">
+        <field name="name">hr.job.form</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='no_of_recruitment']" position="after">
+                <field name="default_contract_id"/>
+                <field name="signature_request_template_id"/>
+                <field name="contract_update_template_id"/>
+            </xpath>
+            <xpath expr="//button[@name='set_open']" position="before">
+                <button string="Configure Package" name="open_package_job" type="object"
+                        class="oe_highlight" attrs="{'invisible': [('default_contract_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_applicant_view_form" model="ir.ui.view">
+        <field name="name">hr.applicant.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="default_contract_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='create_employee_from_applicant']" position="after">
+                <button string="Create Offer" name="create_offer" type="object"
+                        class="oe_highlight" attrs="{'invisible': [('default_contract_id', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='create_employee_from_applicant']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', '|', ('emp_id', '!=', False), ('active', '=', False), ('default_contract_id', '!=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='toggle_active']" position="before">
+                <button name="action_show_proposed_contracts" class="oe_stat_button" icon="fa-book" type="object" help="Proposed Contracts">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value"><field name="proposed_contracts_count"/></span>
+                        <span class="o_stat_text">Contracts</span>
+                     </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_contract_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <div name="title" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="open_signature_requests" type="object" class="oe_stat_button" icon="fa-pencil" attrs="{'invisible': [('signature_request_count', '=', 0)]}">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value"><field name="signature_request_count"/></span>
+                            <span class="o_stat_text">Signature Requests</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <xpath expr="//field[@name='state']" position="before">
+                <button string="Configure Package" name="open_package_contract" type="object" attrs="{'invisible': [('employee_id', '=', False)]}"/>
+                <button string="Send Offer" name="send_offer" type="object" class="oe_highlight" attrs="{'invisible': [('active_employee', '=', True)]}"/>
+                <button string="Send Contract Update Request" name="send_offer" type="object" attrs="{'invisible': [('active_employee', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='type_id']" position="after">
+                <field name="origin_contract_id" attrs="{'invisible': [('origin_contract_id', '=', False)]}"/>
+                <field name="access_token" invisible="1"/>
+                <field name="access_token_consumed" invisible="1"/>
+                <field name="access_token_end_date" invisible="1"/>
+                <field name="signature_request_ids" invisible="1"/>
+                <field name="active_employee" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="action_accept_package" type="object" string="Accept Request" class="oe_highlight" groups="hr.group_hr_manager" attrs="{'invisible': ['|', '|', ('origin_contract_id', '=', False), ('state', '!=', 'draft'), ('signature_request_count', '=', 0)]}"/>
+                <button name="action_refuse_package" type="object" string="Refuse Request" class="oe_highlight" groups="hr.group_hr_manager" attrs="{'invisible': ['|', '|', ('origin_contract_id', '=', False), ('state', '!=', 'draft'), ('signature_request_count', '=', 0)]}"/>
+            </xpath>
+            <group name="duration_group" position="inside">
+                <field name="signature_request_template_id"/>
+            </group>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='work_permit']" position="after">
+                <group string="Education">
+                    <field name="certificate"/>
+                    <field name="study_field"/>
+                    <field name="study_school"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='address_home_id']" position="after">
+                <field name="emergency_contact"/>
+                <field name="emergency_phone"/>
+            </xpath>
+            <xpath expr="//page[@name='personal_information']" position="inside">
+                <group>
+                    <field name="additional_note"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
