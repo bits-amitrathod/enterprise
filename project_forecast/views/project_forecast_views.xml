@@ -253,17 +253,6 @@
         action="action_project_forecast_grid_by_project"
         sequence="10"/>
 
-  <!-- modify the kanban of project -->
-  <record id="project_forecast_action_project" model="ir.actions.act_window">
-    <field name="name">Forecast</field>
-    <field name="res_model">project.forecast</field>
-    <field name="view_mode">grid,gantt,tree,form,pivot</field>
-    <field name="context">{'group_by': ['user_id'],
-    'project_id': active_id,
-    'search_default_project_id': [active_id],
-    'search_default_group_by_user_id': 1}</field>
-  </record>
-
     <record id="project_forecast_action_from_task" model="ir.actions.act_window">
         <field name="name">Forecast</field>
         <field name="res_model">project.forecast</field>

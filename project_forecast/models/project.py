@@ -15,22 +15,6 @@ class Project(models.Model):
         return super(Project, self).write(vals)
 
     @api.multi
-    def create_forecast(self):
-        view_id = self.env.ref('project_forecast.project_forecast_view_form').id
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'project.forecast',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': view_id,
-            'target': 'current',
-            'context': {
-                'default_project_id': self.id,
-                'default_user_id': self.user_id.id,
-            }
-        }
-
-    @api.multi
     def view_monthly_forecast(self):
         self.env.cr.execute("""
             SELECT count(*)
