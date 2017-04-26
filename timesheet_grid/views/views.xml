@@ -132,7 +132,7 @@
                     <filter name="my_team"
                             string="My Team"
                             domain="[('user_id.employee_ids.parent_id.user_id', '=', uid)]"
-                            groups="hr_timesheet.group_hr_timesheet_user"/>
+                            groups="hr_timesheet.group_timesheet_user"/>
                 </xpath>
             </field>
         </record>
@@ -215,24 +215,9 @@
             </field>
         </record>
 
-        <!-- rename My Timesheet menu -->
-        <record id="hr_timesheet.menu_hr_time_tracking" model="ir.ui.menu">
-            <field name="name">Timesheets</field>
-        </record>
-
-        <menuitem name="My Timesheet" id="menu_timesheet_grid_my"
-                  parent="hr_timesheet.menu_hr_time_tracking"
-                  action="action_timesheet_current"
-                  sequence="0"/>
-        <menuitem name="All Timesheets" id="menu_timesheet_grid_all"
-                  parent="hr_timesheet.menu_hr_time_tracking"
-                  groups="hr_timesheet.group_hr_timesheet_user"
-                  action="action_timesheet_all"
-                  sequence="1"/>
-
         <menuitem name="To Validate" id="menu_timesheet_grid_validate"
                   parent="hr_timesheet.timesheet_menu_root"
-                  groups="hr_timesheet.group_hr_timesheet_user"
+                  groups="hr_timesheet.group_timesheet_manager"
                   sequence="10"/>
         <menuitem name="Last Week" id="menu_timesheet_grid_validate_previous_week"
                   parent="menu_timesheet_grid_validate"
