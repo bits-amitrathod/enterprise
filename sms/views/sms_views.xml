@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- SMS Provider Views -->
+    <record id="sms_provider_view_form" model="ir.ui.view">
+        <field name="name">sms.provider.form</field>
+        <field name="model">sms.provider</field>
+        <field name="arch" type="xml">
+            <form string="SMS Provider">
+                <sheet>
+                    <group name="provider_base" string="Provider Information">
+                        <field name="name"/>
+                        <field name="provider"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sms_provider_view_tree" model="ir.ui.view">
+        <field name="name">sms.provider.tree</field>
+        <field name="model">sms.provider</field>
+        <field name="arch" type="xml">
+            <tree string="SMS Provider">
+                <field name="name"/>
+                <field name="provider"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="sms_provider_action" model="ir.actions.act_window">
+        <field name="name">SMS Provider</field>
+        <field name="res_model">sms.provider</field>
+        <field name='view_type'>form</field>
+        <field name='view_mode'>tree,form</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem
+        id="sms_root_menu"
+        name="SMS Mobile"
+        parent="base.menu_custom"
+        sequence="3"/>
+
+    <menuitem
+        id="sms_provider_menu"
+        name="SMS Gateway Providers"
+        parent="sms_root_menu"
+        action="sms_provider_action"
+        sequence="10"/>
+
+</odoo>
