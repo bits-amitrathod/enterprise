@@ -16,7 +16,7 @@
         'views/project_views.xml',
     ],
     'demo': [
-        'demo/project_forecast_demo.xml',
+        'data/project_forecast_demo.xml',
     ],
     'application': True,
     'license': 'OEEL-1',
