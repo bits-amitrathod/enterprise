@@ -68,9 +68,9 @@
                     <attribute name="create">false</attribute>
                     <attribute name="edit">false</attribute>
                 </xpath>
-                <!-- group view by user (only) instead of (project, task) -->
+                <!-- group view by employee (only) instead of (project, task) -->
                 <xpath expr="//field[@name='project_id']" position="attributes">
-                    <attribute name="name">user_id</attribute>
+                    <attribute name="name">employee_id</attribute>
                 </xpath>
                 <xpath expr="//field[@name='task_id']" position="replace"/>
             </field>

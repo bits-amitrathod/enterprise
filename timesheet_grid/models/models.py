@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import itertools
 
 from odoo import models, fields, api, _
 from odoo.addons.web_grid.models import END_OF
@@ -39,7 +38,7 @@ class AnalyticLine(models.Model):
         if not self:
             raise UserError(_("There aren't any timesheet to validate"))
 
-        employees = self.mapped('user_id.employee_ids')
+        employees = self.mapped('employee_id')
         validable_employees = employees.filtered(lambda e: not e.timesheet_validated or e.timesheet_validated < validate_to)
         if not validable_employees:
             raise UserError(_('All selected timesheets are already validated'))
@@ -80,15 +79,13 @@ class AnalyticLine(models.Model):
         })
         return False
     @api.multi
-    @api.depends('date', 'user_id.employee_ids.timesheet_validated')
+    @api.depends('date', 'employee_id.timesheet_validated')
     def _timesheet_line_validated(self):
         for line in self:
             # get most recent validation date on any of the line user's
             # employees
-            validated_to = max(itertools.chain((
-                e.timesheet_validated
-                for e in line.user_id.employee_ids
-            ), [None]))
+            validated_to = line.employee_id.timesheet_validated
+
             if validated_to:
                 line.validated = line.date <= validated_to
             else:
