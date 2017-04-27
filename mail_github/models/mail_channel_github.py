@@ -6,6 +6,7 @@ import hmac
 import random
 
 from odoo import api, fields, models
+from odoo.tools import pycompat
 
 
 def github_tokenize(db_secret, db_uuid):
@@ -19,7 +20,7 @@ class GithubRepository(models.Model):
 
     def _default_secret(self):
         chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-        return ''.join(random.SystemRandom().choice(chars) for i in xrange(20))
+        return ''.join(random.SystemRandom().choice(chars) for _ in pycompat.range(20))
 
     name = fields.Char("Repository name", required=True, help="Complete name of the github repository. e.i.: my-username/my-public-repo")
     github_repository_id = fields.Char("Repository ID")

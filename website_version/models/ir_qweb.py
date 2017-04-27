@@ -7,6 +7,7 @@ Also, adds methods to convert values back to odoo models.
 """
 
 from odoo import models
+from odoo.tools import pycompat
 
 
 class QWeb(models.AbstractModel):
@@ -31,7 +32,7 @@ class QWeb(models.AbstractModel):
                     if version_id:
                         self.context['version_id'] = int(version_id)
 
-            if isinstance(id_or_xml_id, (int, long)):
+            if isinstance(id_or_xml_id, pycompat.integer_types):
                 id_or_xml_id = self.env["ir.ui.view"].browse(id_or_xml_id).key
 
             domain = [('key', '=', id_or_xml_id), '|', ('website_id', '=', website_id), ('website_id', '=', False)]

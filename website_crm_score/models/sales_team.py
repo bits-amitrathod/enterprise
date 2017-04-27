@@ -209,7 +209,7 @@ class crm_team(models.Model):
             i = 0
 
             # statistically select the user that should receive the next lead
-            idx = randint(0, reduce(lambda nbr, x: nbr + x['nbr'], users, 0) - 1)
+            idx = randint(0, sum(u['nbr'] for u in users) - 1)
 
             while idx > users[i]['nbr']:
                 idx -= users[i]['nbr']

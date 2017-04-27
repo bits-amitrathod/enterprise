@@ -9,6 +9,7 @@ from dateutil.relativedelta import relativedelta, MO, SU
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
+from odoo.tools import pycompat
 
 _GRID_TUP = [('grid', "Grid")]
 
@@ -87,7 +88,7 @@ class Base(models.AbstractModel):
                     # generate de novo domain for the cell
                     d = expression.normalize_domain([
                         # TODO: how to convert value out of read to domain section?
-                        (f, '=', v if isinstance(v, (basestring, bool, int, long, float)) else v[0])
+                        (f, '=', v if isinstance(v, (basestring, bool, pycompat.integer_types, float)) else v[0])
                         for f, v in r['values'].iteritems()
                     ])
                     d = expression.AND([d, c['domain'], domain])

@@ -13,6 +13,8 @@ from odoo import api, models
 from odoo.modules.registry import Registry
 from odoo.addons.mail.models.html2text import html2text
 
+from odoo.tools import pycompat
+
 FCM_MESSAGES_LIMIT = 1000
 FCM_END_POINT = "https://fcm.googleapis.com/fcm/send"
 FCM_RETRY_ATTEMPT = 2
@@ -56,7 +58,7 @@ class MailChannel(models.Model):
     def _push_notify_fcm(self, identities, message):
         # Divided into chunks because FCM supports only 1000 users in multi-cast
         message.ensure_one()
-        identities_chunks = [identities[i:i+FCM_MESSAGES_LIMIT] for i in xrange(0, len(identities), FCM_MESSAGES_LIMIT)]
+        identities_chunks = [identities[i:i+FCM_MESSAGES_LIMIT] for i in pycompat.range(0, len(identities), FCM_MESSAGES_LIMIT)]
         payload = self._fcm_prepare_payload(message)
         for identities in identities_chunks:
             subscription_ids = identities.mapped('subscription_id')

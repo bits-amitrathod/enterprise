@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from lxml import etree
 from odoo import tools, fields, models, api
+from odoo.tools import pycompat
+
 
 class Qweb(models.AbstractModel):
 
@@ -76,7 +78,7 @@ class view(models.Model):
 
     @api.model
     def get_view_id(self, xml_id):
-        if self.env.context and 'website_id' in self.env.context and not isinstance(xml_id, (int, long)):
+        if self.env.context and 'website_id' in self.env.context and not isinstance(xml_id, pycompat.integer_types):
             domain = [('key', '=', xml_id), '|', ('website_id', '=', self.env.context['website_id']), ('website_id', '=', False)]
             if 'version_id' in self.env.context:
                 domain += ['|', ('version_id', '=', self.env.context['version_id']), ('version_id', '=', False)]
