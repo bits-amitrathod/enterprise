@@ -137,13 +137,13 @@
     <!-- Configuration -->
 
     <record model="ir.actions.act_window" id="action_account_asset_asset_list_normal_sale">
-        <field name="name">Deferred Revenues Types</field>
+        <field name="name">Deferred Revenue Types</field>
         <field name="res_model">account.asset.category</field>
         <field name="domain">[('type', '=', 'sale')]</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form</field>
         <field name="context">{'default_type': 'sale'}</field>
     </record>
-    <menuitem parent="account.account_management_menu" id="menu_action_account_asset_asset_list_normal_sale" action="action_account_asset_asset_list_normal_sale" sequence="2"/>
+    <menuitem parent="account.account_management_menu" id="menu_action_account_asset_asset_list_normal_sale" action="action_account_asset_asset_list_normal_sale" sequence="5"/>
 
 </odoo>
