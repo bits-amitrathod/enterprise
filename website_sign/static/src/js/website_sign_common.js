@@ -121,7 +121,8 @@ odoo.define('website_sign.PDFIframe', function (require) {
                         parseFloat(el.posY),
                         parseFloat(el.width),
                         parseFloat(el.height),
-                        el.value
+                        el.value,
+                        el.name
                     );
                     $signatureItem.data({itemId: el.id, order: i});
 
@@ -193,7 +194,7 @@ odoo.define('website_sign.PDFIframe', function (require) {
                 placeholder: type['placeholder']
             }));
 
-            return $signatureItem.data({type: type['id'], required: required, responsible: responsible, posx: posX, posy: posY, width: width, height: height})
+            return $signatureItem.data({type: type['id'], required: required, responsible: responsible, posx: posX, posy: posY, width: width, height: height, name:name})
                                  .data('hasValue', !!value);
         },
 
@@ -1004,7 +1005,7 @@ odoo.define('website_sign.document_signing', function(require) {
             this._super.apply(this, arguments);
         },
 
-        createSignatureItem: function(type, required, responsible, posX, posY, width, height, value) {
+        createSignatureItem: function(type, required, responsible, posX, posY, width, height, value, name) {
             var self = this;
             var $signatureItem = this._super.apply(this, arguments);
             var readonly = this.readonlyFields || (responsible > 0 && responsible !== this.role) || !!value;
@@ -1061,6 +1062,8 @@ odoo.define('website_sign.document_signing', function(require) {
                     self.checkSignatureItemsCompletion(self.role);
                     self.signatureItemNav.setTip('next');
                 });
+            } else {
+                $signatureItem.val(value);
             }
 
             return $signatureItem;
@@ -1140,12 +1143,10 @@ odoo.define('website_sign.document_signing', function(require) {
                         if(resp > 0 && resp !== this.iframeWidget.role) {
                             continue;
                         }
-
                         var value = ($elem.val() && $elem.val().trim())? $elem.val() : false;
                         if($elem.data('signature')) {
                             value = $elem.data('signature');
                         }
-
                         if(!value) {
                             if($elem.data('required')) {
                                 this.iframeWidget.checkSignatureItemsCompletion();
@@ -1173,9 +1174,14 @@ odoo.define('website_sign.document_signing', function(require) {
                             });
                         }, 500);
                     }
+                    if (success === true) {
+                        this.iframeWidget.disableItems();
+                        (new (this.get_thankyoudialog_class())(this)).open();
+                    }
+                    if ('url' in success) {
+                        document.location.pathname = success['url'];
+                    }
                 });
-                this.iframeWidget.disableItems();
-                (new (this.get_thankyoudialog_class())(this)).open();
             }
         },
 

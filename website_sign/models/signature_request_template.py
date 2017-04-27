@@ -106,6 +106,7 @@ class SignatureItem(models.Model):
     required = fields.Boolean(default=True)
     responsible_id = fields.Many2one("signature.item.party", string="Responsible")
 
+    name = fields.Char(string="Field Name")
     page = fields.Integer(string="Document Page", required=True, default=1)
     posX = fields.Float(digits=(4, 3), string="Position X", required=True)
     posY = fields.Float(digits=(4, 3), string="Position Y", required=True)
@@ -143,7 +144,7 @@ class SignatureItemType(models.Model):
 class SignatureItemValue(models.Model):
     _name = "signature.item.value"
     _description = "Signature Field Value For Document To Sign"
-    
+
     signature_item_id = fields.Many2one('signature.item', string="Signature Item", required=True, ondelete='cascade')
     signature_request_id = fields.Many2one('signature.request', string="Signature Request", required=True, ondelete='cascade')
 
