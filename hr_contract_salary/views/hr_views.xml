@@ -11,8 +11,8 @@
                 <field name="contract_update_template_id"/>
             </xpath>
             <xpath expr="//button[@name='set_open']" position="before">
-                <button string="Configure Package" name="open_package_job" type="object"
-                        class="oe_highlight" attrs="{'invisible': [('default_contract_id', '=', False)]}"/>
+                <button string="Preview Contract" name="open_package_job" type="object"
+                    attrs="{'invisible': [('default_contract_id', '=', False)]}"/>
             </xpath>
         </field>
     </record>
@@ -47,6 +47,7 @@
         <field name="name">hr.contract.form</field>
         <field name="model">hr.contract</field>
         <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="priority">50</field>
         <field name="arch" type="xml">
             <div name="title" position="before">
                 <div class="oe_button_box" name="button_box">
@@ -59,9 +60,9 @@
                 </div>
             </div>
             <xpath expr="//field[@name='state']" position="before">
-                <button string="Configure Package" name="open_package_contract" type="object" attrs="{'invisible': [('employee_id', '=', False)]}"/>
-                <button string="Send Offer" name="send_offer" type="object" class="oe_highlight" attrs="{'invisible': [('active_employee', '=', True)]}"/>
-                <button string="Send Contract Update Request" name="send_offer" type="object" attrs="{'invisible': [('active_employee', '=', False)]}"/>
+                <button string="Preview Contract" name="open_package_contract" type="object" attrs="{'invisible': [('employee_id', '=', False)]}"/>
+                <button string="Send Offer" name="send_offer" id="send_offer1" type="object" class="oe_highlight" attrs="{'invisible': [('active_employee', '=', True)]}"/>
+                <button string="Send Contract Link" name="send_offer" id="send_offer2" type="object" attrs="{'invisible': [('active_employee', '=', False)]}" class="oe_highlight"/>
             </xpath>
             <xpath expr="//field[@name='type_id']" position="after">
                 <field name="origin_contract_id" attrs="{'invisible': [('origin_contract_id', '=', False)]}"/>
@@ -80,6 +81,73 @@
             </group>
         </field>
     </record>
+
+    <record id="hr_contract_view_form_contract_templates" model="ir.ui.view">
+        <field name="name">hr.contract.form</field>
+        <field name="model">hr.contract</field>
+        <field name="mode">primary</field>
+        <field name="priority">60</field>
+        <field name="inherit_id" ref="hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <page name="other" position="replace"/>
+            <field name="job_id" position="after">
+                <field name="signature_request_template_id"/>
+            </field>
+            <field name="struct_id" position="after">
+                <field name="resource_calendar_id"/>
+            </field>
+            <field name="employee_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//button[@id='send_offer1']" position="replace"/>
+            <xpath expr="//button[@id='send_offer2']" position="replace"/>
+            <xpath expr="//button[@name='open_package_contract']" position="replace"/>
+        </field>
+    </record>
+
+
+    <record id="hr_contract_view_tree_contract_templates" model="ir.ui.view">
+        <field name="name">hr.contract.tree</field>
+        <field name="model">hr.contract</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="replace">
+                <field name="department_id"/>
+            </field>
+            <field name="date_start" position="replace"/>
+            <field name="date_end" position="replace"/>                
+        </field>
+    </record>
+
+    <record id="action_hr_contract_templates" model="ir.actions.act_window">
+        <field name="name">Contract Templates</field>
+        <field name="res_model">hr.contract</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id', '=', False)]</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_contract_view_tree_contract_templates')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('hr_contract_view_form_contract_templates')})]"/>
+        <field name="search_view_id" ref="hr_contract.hr_contract_view_search"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click here to create new contracts.
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="hr_menu_contract_templates"
+        name="Contract Templates"
+        action="action_hr_contract_templates"
+        parent="hr.menu_human_resources_configuration"
+        sequence="10"
+        groups="hr.group_hr_manager"/>
+
 
     <record id="hr_employee_view_form" model="ir.ui.view">
         <field name="name">hr.employee.form</field>

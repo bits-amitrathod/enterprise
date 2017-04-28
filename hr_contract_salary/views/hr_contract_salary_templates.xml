@@ -175,22 +175,26 @@
                                                 <i class="fa fa-1x fa-suitcase fa-fw"/> Holidays
                                             </label>
                                             <div class="col-sm-7">
-                                                <span class="label label-default"><t t-esc="contract.get_attribute('holidays', 'lower_bound')"/></span>
-                                                <input type="range" t-att-value="contract.holidays" t-att-min="contract.get_attribute('holidays', 'lower_bound')" t-att-max="contract.get_attribute('holidays', 'upper_bound')" step="1" list="holidays-range" name="holidays_slider" class="advantage_input hr_cs_control_range"/>
-                                                <span class="label label-default"><t t-esc="contract.get_attribute('holidays', 'upper_bound')"/></span>
-                                                <datalist id="holidays-range">
-                                                    <t t-set="step" t-value="(contract.get_attribute('holidays', 'upper_bound') - contract.get_attribute('holidays', 'lower_bound')) / 10.0"/>
-                                                    <t t-foreach="range(1, 10)" t-as="i">
-                                                        <option><t t-esc="contract.get_attribute('holidays', 'lower_bound') + step * i"/></option>
-                                                    </t>
-                                                </datalist>
-                                                <span class="help-block mt8">The number of days you get depends on your working schedule, the number of days used in your previous job and the number of months worked previously.</span>
-                                                <div name="holidays_20_days" class="mt8">
-                                                    <span class="help-block mt8" name="holidays_20_days" style="display: inline;"> You will receive 20 days of paid leaves. However, if you only use </span>
-                                                    <span class="help-block" style="display: inline;" name="holidays_amount">X</span>
-                                                    <span class="help-block" style="display: inline;"> days by the end of the year, you will receive a compensation of approximately </span>
-                                                    <span class="help-block" style="display: inline;" name="compensation_amount">x</span>
-                                                    <span class="help-block" style="display: inline;"> €.</span><br/>
+                                                <div t-att-class="'hidden' if not contract.holidays_editable else ''">
+                                                    <span class="label label-default"><t t-esc="contract.get_attribute('holidays', 'lower_bound')"/></span>
+                                                    <input type="range" t-att-value="contract.holidays" t-att-min="contract.get_attribute('holidays', 'lower_bound')" t-att-max="contract.get_attribute('holidays', 'upper_bound')" step="1" list="holidays-range" name="holidays_slider" class="advantage_input hr_cs_control_range" t-att-disabled="not contract.holidays_editable"/>
+                                                    <span class="label label-default"><t t-esc="contract.get_attribute('holidays', 'upper_bound')"/></span>
+                                                    <datalist id="holidays-range">
+                                                        <t t-set="step" t-value="(contract.get_attribute('holidays', 'upper_bound') - contract.get_attribute('holidays', 'lower_bound')) / 10.0"/>
+                                                        <t t-foreach="range(1, 10)" t-as="i">
+                                                            <option><t t-esc="contract.get_attribute('holidays', 'lower_bound') + step * i"/></option>
+                                                        </t>
+                                                    </datalist>
+                                                </div>
+                                                <span t-att-class="'help-block mt8' if contract.holidays_editable else 'help-block'">The number of days you get depends on your working schedule, the number of days used in your previous job and the number of months worked previously.</span>
+                                                <div t-att-class="'hidden' if not contract.holidays_editable else ''">
+                                                    <div name="holidays_20_days" class="mt8">
+                                                        <span class="help-block mt8" name="holidays_20_days" style="display: inline;"> You will receive 20 days of paid leaves. However, if you only use </span>
+                                                        <span class="help-block" style="display: inline;" name="holidays_amount">X</span>
+                                                        <span class="help-block" style="display: inline;"> days by the end of the year, you will receive a compensation of approximately </span>
+                                                        <span class="help-block" style="display: inline;" name="compensation_amount">x</span>
+                                                        <span class="help-block" style="display: inline;"> €.</span><br/>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-2">
