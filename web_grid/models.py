@@ -199,7 +199,7 @@ class Base(models.AbstractModel):
                 ],
                 prev=period_prev and {'grid_anchor': period_prev, 'default_%s' % name: period_prev},
                 next=period_next and {'grid_anchor': period_next, 'default_%s' % name: period_next},
-                initial={'grid_anchor': field.to_string(today), 'default_%s' % name: field.to_string(today)},
+                initial=period_prev and period_next and {'grid_anchor': field.to_string(today), 'default_%s' % name: field.to_string(today)},
                 values=[{
                         'values': {
                             name: (
