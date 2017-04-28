@@ -131,7 +131,8 @@
         <field name="model">project.forecast</field>
         <field name="arch" type="xml">
             <grid string="Project Forecast By User">
-                <field name="employee_id" type="row"/>
+                <field name="employee_id" type="row" section="1"/>
+                <field name="project_id" type="row"/>
                 <field name="start_date" type="col">
                     <range name="week" string="Week" span="week" step="day"/>
                     <range name="month" string="Month" span="month" step="day"/>
@@ -146,8 +147,9 @@
         <field name="name">Project Forecast: grid by project</field>
         <field name="model">project.forecast</field>
         <field name="arch" type="xml">
-            <grid string="Project Forecast By User">
-                <field name="project_id" type="row"/>
+            <grid string="Project Forecast By Project">
+                <field name="project_id" type="row" section="1"/>
+                <field name="employee_id" type="row"/>
                 <field name="start_date" type="col">
                     <range name="week" string="Week" span="week" step="day"/>
                     <range name="month" string="Month" span="month" step="day"/>
@@ -185,7 +187,10 @@
         <field name="res_model">project.forecast</field>
         <field name="view_mode">grid</field>
         <field name="view_id" ref="view_project_forecast_grid_by_user"/>
-        <field name="context">{'grid_range': 'year'}</field>
+        <field name="context">{
+          'grid_range': 'year',
+          'search_default_future': 1,
+        }</field>
     </record>
 
     <record id="action_project_forecast_grid_by_project" model="ir.actions.act_window">
@@ -193,7 +198,10 @@
         <field name="res_model">project.forecast</field>
         <field name="view_mode">grid</field>
         <field name="view_id" ref="view_project_forecast_grid_by_project"/>
-        <field name="context">{'grid_range': 'year'}</field>
+        <field name="context">{
+          'grid_range': 'year',
+          'search_default_future': 1,
+        }</field>
     </record>
 
   <record id="project_forecast_server_action_archive" model="ir.actions.server">

@@ -32,7 +32,7 @@ class Project(models.Model):
                     'project_name': self.display_name,
                 }
             )
-
+        context = dict(self.env.context, default_project_id=self.id, default_employee_id=self.user_id.employee_ids[0].id)
         # forecast grid requires start and end dates on the project
         if not (self.date_start and self.date):
             return {
@@ -43,6 +43,7 @@ class Project(models.Model):
                 'res_id': self.id,
                 'view_mode': 'form',
                 'view_id': self.env.ref('project_forecast.view_project_set_dates').id,
+                'context': context,
             }
 
         return {
@@ -52,10 +53,7 @@ class Project(models.Model):
             'view_id': self.env.ref('project_forecast.project_forecast_grid').id,
             'view_mode': 'grid',
             'domain': [['project_id', '=', self.id]],
-            'context': {
-                'default_project_id': self.id,
-                'default_employee_id': self.user_id.employee_ids[0].id,
-            }
+            'context': context,
         }
 
 
