@@ -3,7 +3,7 @@
 import calendar
 import copy
 import json
-import StringIO
+import io
 import logging
 import lxml.html
 import itertools
@@ -710,7 +710,7 @@ class AccountReport(models.AbstractModel):
                 }
 
     def get_xlsx(self, options, response):
-        output = StringIO.StringIO()
+        output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet(self.get_report_name())
 

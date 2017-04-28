@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import io
 from lxml import etree
-from StringIO import StringIO
 from odoo import http, models, _
 from odoo.http import content_disposition, request
 from odoo.exceptions import UserError, AccessError
@@ -558,7 +558,7 @@ class WebStudioController(http.Controller):
         field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
+        arch = etree.parse(io.BytesIO(studio_view_arch), parser).getroot()
         model = view.model
         for op in operations:
             # create a new field if it does not exist
@@ -956,7 +956,7 @@ class WebStudioController(http.Controller):
         # Get the arch of the form view with inherited views applied
         arch = request.env[model].fields_view_get(view_type='form')['arch']
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(StringIO(arch), parser).getroot()
+        arch = etree.parse(io.BytesIO(arch), parser).getroot()
 
         # Create xpath to put the buttonbox as the first child of the sheet
         if arch.find('sheet'):

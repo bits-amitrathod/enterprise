@@ -2,9 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import difflib
+import io
 from lxml import etree
 from lxml.builder import E
-from StringIO import StringIO
 from odoo import models
 import json
 import uuid
@@ -155,9 +155,9 @@ class View(models.Model):
 
         # The parent data tag is missing from read_combined
         new_view_tree = etree.Element('data')
-        new_view_tree.append(etree.parse(StringIO(new_view), parser).getroot())
+        new_view_tree.append(etree.parse(io.StringIO(new_view), parser).getroot())
         old_view_tree = etree.Element('data')
-        old_view_tree.append(etree.parse(StringIO(old_view), parser).getroot())
+        old_view_tree.append(etree.parse(io.StringIO(old_view), parser).getroot())
 
         new_view_arch_string = self._stringify_view(new_view_tree)
         old_view_arch_string = self._stringify_view(old_view_tree)

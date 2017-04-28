@@ -2,9 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
+import io
 
 import dateutil.parser
-import StringIO
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -49,7 +49,7 @@ class AccountBankStatementImport(models.TransientModel):
 
         try:
             file_data = ""
-            for line in StringIO.StringIO(data_file).readlines():
+            for line in io.StringIO(data_file).readlines():
                 file_data += line
             if '\r' in file_data:
                 data_list = file_data.split('\r')

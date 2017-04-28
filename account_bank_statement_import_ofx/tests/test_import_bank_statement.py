@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import base64
 
 from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
@@ -11,7 +12,7 @@ class TestOfxFile(TransactionCase):
     def test_ofx_file_import(self):
         # Get OFX file content
         ofx_file_path = get_module_resource('account_bank_statement_import_ofx', 'test_ofx_file', 'test_ofx.ofx')
-        ofx_file = open(ofx_file_path, 'rb').read().encode('base64')
+        ofx_file = base64.b64encode(open(ofx_file_path, 'rb').read())
 
         # Create a bank account and journal corresponding to the OFX file (same currency and account number)
         bank_journal_id = self.env['account.journal'].create({'name': 'Bank 123456', 'code': 'BNK67', 'type': 'bank',

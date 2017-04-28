@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from collections import OrderedDict
 from contextlib import closing
-from cStringIO import StringIO
+import io
 from lxml import etree
 from lxml.builder import E
 import os.path
@@ -89,7 +89,7 @@ XML_FIELDS = [('ir.ui.view', 'arch')]
 
 def generate_archive(module, data):
     """ Returns a zip file containing the given module with the given data. """
-    with closing(StringIO()) as f:
+    with closing(io.BytesIO()) as f:
         with zipfile.ZipFile(f, 'w') as archive:
             for filename, content in generate_module(module, data):
                 archive.writestr(os.path.join(module.name, filename), content)

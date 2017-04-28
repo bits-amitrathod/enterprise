@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from lxml import etree
-from StringIO import StringIO
+import io
 import re
 
+from lxml import etree
+
 from odoo import models
+from odoo.tools import pycompat
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -13,7 +15,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _check_camt(self, data_file):
         try:
-            root = etree.parse(StringIO(data_file)).getroot()
+            root = etree.parse(io.BytesIO(data_file)).getroot()
         except:
             return None
         if root.tag.find('camt.053'):
@@ -27,7 +29,7 @@ class AccountBankStatementImport(models.TransientModel):
         return super(AccountBankStatementImport, self)._parse_file(data_file)
 
     def _parse_file_camt(self, root):
-        ns = {k or 'ns': v for k, v in root.nsmap.items()}
+        ns = {k or 'ns': v for k, v in pycompat.items(root.nsmap)}
 
         def is_full_of_zeros(strg):
             pattern_zero = re.compile('^0+$')

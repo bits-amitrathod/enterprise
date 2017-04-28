@@ -2,10 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
 import binascii
-try:
-    import cStringIO as StringIO
-except ImportError:
-    import StringIO
+import io
 import PIL.PdfImagePlugin   # activate PDF support in PIL
 from PIL import Image
 import logging
@@ -224,16 +221,16 @@ class UPSRequest():
         return result
 
     def save_label(self, image64, label_file_type='GIF'):
+        img_decoded = base64.decodestring(image64)
         if label_file_type == 'GIF':
             # Label format is GIF, so need to rotate and convert as PDF
-            img_decoded = base64.decodestring(image64)
-            image_string = StringIO.StringIO(img_decoded)
+            image_string = io.BytesIO(img_decoded)
             im = Image.open(image_string)
-            label_result = StringIO.StringIO()
+            label_result = io.BytesIO()
             im.save(label_result, 'pdf')
-            return binascii.a2b_base64(label_result.getvalue().encode('base64'))
+            return label_result.getvalue()
         else:
-            return binascii.a2b_base64(image64)
+            return img_decoded
 
     def set_package_detail(self, client, packages, packaging_type, namespace, ship_from, ship_to, cod_info):
         Packages = []

@@ -2,9 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+import io
 import logging
 import re
-import StringIO
 from xml.etree import ElementTree
 
 try:
@@ -104,7 +104,7 @@ class AccountBankStatementImport(models.TransientModel):
         if OfxParser is None:
             raise UserError(_("The library 'ofxparse' is missing, OFX import cannot proceed."))
 
-        ofx = PatchedOfxParser.parse(StringIO.StringIO(data_file))
+        ofx = PatchedOfxParser.parse(io.BytesIO(data_file))
         vals_bank_statement = []
         account_lst = set()
         currency_lst = set()
