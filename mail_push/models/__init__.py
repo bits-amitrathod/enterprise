@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import ir_http
-import mail_channel
-import mail_push_device
-import base_config_settings
-import res_partner
+from . import ir_http
+from . import mail_channel
+from . import mail_push_device
+from . import base_config_settings
+from . import res_partner

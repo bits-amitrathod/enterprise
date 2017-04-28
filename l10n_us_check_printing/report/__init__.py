@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-import print_check
+from . import print_check

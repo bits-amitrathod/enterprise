@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-import online_sync
+from . import online_sync

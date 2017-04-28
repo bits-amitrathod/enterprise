@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import website_crm_score
-import crm_lead
-import ir
-import sales_team
-import pageview
-import res_users
+from . import website_crm_score
+from . import crm_lead
+from . import ir
+from . import sales_team
+from . import pageview
+from . import res_users

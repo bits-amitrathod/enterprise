@@ -8,7 +8,7 @@ from math import floor
 from odoo import http, _
 from odoo.http import request
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
-from stat_types import STAT_TYPES, FORECAST_STAT_TYPES, compute_mrr_growth_values
+from .stat_types import STAT_TYPES, FORECAST_STAT_TYPES, compute_mrr_growth_values
 
 # We need to use the same formatting as the one in read_group (see models.py)
 DISPLAY_FORMATS = {

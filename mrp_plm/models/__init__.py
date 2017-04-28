@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import mrp_bom
-import mrp_eco
-import mrp_routing
-import product
+from . import mrp_bom
+from . import mrp_eco
+from . import mrp_routing
+from . import product

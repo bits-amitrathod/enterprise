@@ -1,15 +1,15 @@
-import studio_mixin
-import base_automation
-import mail_template
-import ir_actions_act_window
-import ir_actions_report_xml
-import ir_actions_server
-import ir_filters
-import ir_model
-import ir_model_data
-import ir_module_module
-import ir_rule
-import ir_ui_menu
-import ir_ui_view
-import res_groups
-import res_company
+from . import studio_mixin
+from . import base_automation
+from . import mail_template
+from . import ir_actions_act_window
+from . import ir_actions_report_xml
+from . import ir_actions_server
+from . import ir_filters
+from . import ir_model
+from . import ir_model_data
+from . import ir_module_module
+from . import ir_rule
+from . import ir_ui_menu
+from . import ir_ui_view
+from . import res_groups
+from . import res_company

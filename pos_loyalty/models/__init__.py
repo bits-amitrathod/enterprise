@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import pos_loyalty
-import pos_config
-import res_partner
-import pos_order
+from . import pos_loyalty
+from . import pos_config
+from . import res_partner
+from . import pos_order

@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-import print_docsaway_error
+from . import print_docsaway_error
 

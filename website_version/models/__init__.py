@@ -1,7 +1,7 @@
-import ir_ui_view
-import version
-import website
-import experiment
-import ir_qweb
-import ir_http
-import google_management
+from . import ir_ui_view
+from . import version
+from . import website
+from . import experiment
+from . import ir_qweb
+from . import ir_http
+from . import google_management

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import crm_team
-import product
-import res_country
-import res_currency
-import res_partner
-import sale_config_settings
-import sale_ebay
-import stock_picking
+from . import crm_team
+from . import product
+from . import res_country
+from . import res_currency
+from . import res_partner
+from . import sale_config_settings
+from . import sale_ebay
+from . import stock_picking

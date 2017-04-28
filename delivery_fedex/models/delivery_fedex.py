@@ -5,7 +5,7 @@ import logging
 from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError
 
-from fedex_request import FedexRequest
+from .fedex_request import FedexRequest
 
 
 _logger = logging.getLogger(__name__)

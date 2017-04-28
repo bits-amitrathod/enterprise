@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-import print_document_partner_wizard
+from . import print_document_partner_wizard

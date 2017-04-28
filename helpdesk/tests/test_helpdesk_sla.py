@@ -3,7 +3,7 @@
 
 from dateutil.relativedelta import relativedelta
 
-from common import HelpdeskTransactionCase
+from .common import HelpdeskTransactionCase
 from odoo import fields
 
 

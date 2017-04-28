@@ -3,7 +3,7 @@
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
-from taxcloud_request import TaxCloudRequest
+from .taxcloud_request import TaxCloudRequest
 
 class AccountFiscalPosition(models.Model):
     _inherit = 'account.fiscal.position'

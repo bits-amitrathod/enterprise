@@ -4,7 +4,7 @@ from odoo import api, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
-from taxcloud_request import TaxCloudRequest
+from .taxcloud_request import TaxCloudRequest
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import account_fiscal_position
-import account_invoice
-import product
-import res_config
+from . import account_fiscal_position
+from . import account_invoice
+from . import product
+from . import res_config

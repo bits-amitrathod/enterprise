@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
-import print_provider
-import res_partner
-import account_invoice
+from . import print_provider
+from . import res_partner
+from . import account_invoice

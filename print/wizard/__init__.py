@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-import print_order_wizard
-import print_order_sendnow_wizard
+from . import print_order_wizard
+from . import print_order_sendnow_wizard

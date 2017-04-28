@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-import sale_order
-import taxcloud_request
+from . import sale_order
+from . import taxcloud_request

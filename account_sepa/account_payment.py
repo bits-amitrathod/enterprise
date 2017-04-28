@@ -4,7 +4,7 @@ import re
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from sepa_credit_transfer import check_valid_SEPA_str
+from .sepa_credit_transfer import check_valid_SEPA_str
 
 
 class AccountRegisterPayments(models.TransientModel):

@@ -1,2 +1,2 @@
-import test_import_export
-import test_ui
+from . import test_import_export
+from . import test_ui

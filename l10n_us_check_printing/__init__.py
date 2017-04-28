@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import res_company
-import res_config
-import account_payment
+from . import res_company
+from . import res_config
+from . import account_payment
 
-import report
+from . import report

@@ -3,7 +3,7 @@
 from odoo import models, fields, _
 from odoo.exceptions import ValidationError
 
-from ups_request import UPSRequest, Package
+from .ups_request import UPSRequest, Package
 
 
 class ProviderUPS(models.Model):

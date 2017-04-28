@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import account_report
-import account_bank_reconciliation_report
-import account_financial_report
-import account_followup_report
-import account_general_ledger
-import account_generic_tax_report
-import account_consolidated_journals
-import res_partner
-import res_company
-import account_move_line
-import account_report_coa
-import account_aged_partner_balance
-import account_partner_ledger
-import account_config_settings
+from . import account_report
+from . import account_bank_reconciliation_report
+from . import account_financial_report
+from . import account_followup_report
+from . import account_general_ledger
+from . import account_generic_tax_report
+from . import account_consolidated_journals
+from . import res_partner
+from . import res_company
+from . import account_move_line
+from . import account_report_coa
+from . import account_aged_partner_balance
+from . import account_partner_ledger
+from . import account_config_settings

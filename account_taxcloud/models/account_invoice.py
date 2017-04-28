@@ -6,7 +6,7 @@ from odoo import api, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
-from taxcloud_request import TaxCloudRequest
+from .taxcloud_request import TaxCloudRequest
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'

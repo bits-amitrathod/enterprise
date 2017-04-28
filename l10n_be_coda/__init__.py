@@ -3,5 +3,5 @@
 
 # Copyright (c) 2011 Noviat nv/sa (www.noviat.be). All rights reserved.
 
-import models
-import wizard
+from . import models
+from . import wizard

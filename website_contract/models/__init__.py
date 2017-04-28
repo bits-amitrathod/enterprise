@@ -1,5 +1,5 @@
-import sale_subscription
-import sale_subscription_wizard
-import payment_acquirer
-import sale_order
-import sale_quote_template
+from . import sale_subscription
+from . import sale_subscription_wizard
+from . import payment_acquirer
+from . import sale_order
+from . import sale_quote_template

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from dhl_request import DHLProvider
+from .dhl_request import DHLProvider
 
 from odoo import models, fields, _
 

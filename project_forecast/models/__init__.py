@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-import project
-import project_forecast
+from . import project
+from . import project_forecast

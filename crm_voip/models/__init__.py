@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import crm_lead
-import crm_phonecall
-import res_partner
-import sale_config_settings
+from . import crm_lead
+from . import crm_phonecall
+from . import res_partner
+from . import sale_config_settings

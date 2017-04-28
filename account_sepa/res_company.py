@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from sepa_credit_transfer import prepare_SEPA_string
-from sepa_credit_transfer import check_valid_SEPA_str
+from .sepa_credit_transfer import prepare_SEPA_string
+from .sepa_credit_transfer import check_valid_SEPA_str
 
 class ResCompany(models.Model):
     _inherit = "res.company"

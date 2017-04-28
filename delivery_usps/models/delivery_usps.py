@@ -3,7 +3,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
-from usps_request import USPSRequest
+from .usps_request import USPSRequest
 
 
 class ProviderUSPS(models.Model):

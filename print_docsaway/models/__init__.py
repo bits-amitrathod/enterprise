@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import print_docsaway
+from . import print_docsaway
