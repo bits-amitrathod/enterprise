@@ -173,7 +173,7 @@ QUnit.module('Views', {
             mockRPC: function (route, args) {
                 assert.step(args.method);
                 if (args.method === 'search_read') {
-                    assert.deepEqual(args.args[1], ['name', 'start', 'stop', 'time', 'user_id', 'display_name'],
+                    assert.deepEqual(args.kwargs.fields, ['name', 'start', 'stop', 'time', 'user_id', 'display_name'],
                         "should fetch only necessary fields");
                 }
                 return this._super(route, args);
