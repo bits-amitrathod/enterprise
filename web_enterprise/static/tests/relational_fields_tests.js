@@ -71,6 +71,43 @@ QUnit.module('relational_fields', {
 
         form.destroy();
     });
+
+    QUnit.test('statusbar with no status on extra small screens', function (assert) {
+        assert.expect(9);
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<header><field name="trululu" widget="statusbar"/></header>' +
+                '</form>',
+            res_id: 4,
+            config: {
+                isMobile: true,
+            },
+        });
+
+        assert.ok(form.$('.o_statusbar_status').hasClass('o_form_field_empty'),
+            'statusbar widget should have class o_form_field_empty');
+        assert.strictEqual(form.$('.o_statusbar_status').children().length, 2,
+            'statusbar widget should have two children');
+        assert.strictEqual(form.$('.o_statusbar_status button.dropdown-toggle').length, 1,
+            'statusbar widget should have a button');
+        assert.strictEqual(form.$('.o_statusbar_status button.dropdown-toggle').text().trim(), '',
+            'statusbar button has no text');  // Behavior as of saas-15, might be improved
+        assert.strictEqual(form.$('.o_statusbar_status ul').length, 1,
+            'statusbar widget should have a ul');
+        assert.strictEqual(form.$('.o_statusbar_status ul li').length, 3,
+            'statusbar widget dropdown menu should have 3 li');
+        assert.strictEqual(form.$('.o_statusbar_status ul li').eq(0).text().trim(), 'first record',
+            'statusbar widget dropdown first li should display the first record display_name');
+        assert.strictEqual(form.$('.o_statusbar_status ul li').eq(1).text().trim(), 'second record',
+            'statusbar widget dropdown second li should display the second record display_name');
+        assert.strictEqual(form.$('.o_statusbar_status ul li').eq(2).text().trim(), 'aaa',
+            'statusbar widget dropdown three li should display the third record display_name');
+        form.destroy();
+    });
 });
 });
 });

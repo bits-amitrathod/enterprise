@@ -13,7 +13,7 @@
 
 <t t-name="FieldStatus.content.mobile">
     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-        <t t-esc="value"/>
+        <t t-if="status" t-esc="status.display_name"/>
     </button>
     <ul class="dropdown-menu o-status-more" role="menu">
         <li t-foreach="selection" t-as="i">

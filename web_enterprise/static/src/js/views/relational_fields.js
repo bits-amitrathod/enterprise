@@ -25,7 +25,7 @@ FieldStatus.include({
         if (config.isMobile) {
             this.$el.html(qweb.render("FieldStatus.content.mobile", {
                 selection: this.status_information,
-                value: _.findWhere(this.status_information, {selected: true}).display_name,
+                status: _.findWhere(this.status_information, {selected: true}),
                 clickable: !!this.attrs.clickable,
             }));
         } else {
