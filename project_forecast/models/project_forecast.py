@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import date, timedelta
-from dateutil import relativedelta
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import UserError, ValidationError
