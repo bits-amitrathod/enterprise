@@ -17,10 +17,10 @@
 # Viktor Pogrebniak <vp@aifil.ru>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Viktor Pogrebniak <vp@aifil.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -114,81 +114,13 @@ msgid ""
 "        <tbody>\n"
 "            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
 "                <p>This customer survey has been sent because your ticket has been moved to the stage <b>${object.stage_id.name}</b></p>\n"
-"                <p>Email automatically sent by <a href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo Helpdesk</a> for <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
+"                <p>Email automatically sent by <a target=\"_blank\" href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo Helpdesk</a> for <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
 "            </td></tr>\n"
 "        </tbody>\n"
 "    </table>\n"
 "</div>\n"
 "        "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
-"% set access_token = object.rating_get_access_token()\n"
-"    <table style=\"width:600px;margin:5px auto;\">\n"
-"        <tbody>\n"
-"            <tr><td>\n"
-"                <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
-"            </td><td style=\"text-align:right;vertical-align:middle;\">\n"
-"                   Исследование удовлетворенности\n"
-"            </td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"    <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
-"        <tbody>\n"
-"            <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
-"                <p>Здравствуйте,</p>\n"
-"                <p>Пожалуйста, найдите время, чтобы оценить наши услуги, связанные с билетом\"<strong>${object.name}</strong>\"\n"
-"                   назначенного на <strong>${object.rating_get_rated_partner_id().name}</strong>.</p>\n"
-"                <p>Мы ценим Ваш отзыв. Это помогает нам постоянно улучшаться.</p>\n"
-"            </td></tr>\n"
-"            <tr><td style=\"padding:10px 20px\">\n"
-"                <table summary=\"o_mail_notification\" style=\"width:100%;border-top:1px solid #e1e1e1;\">\n"
-"                    <tr>\n"
-"                        <td style=\"text-align:center;\">\n"
-"                            <h2 style=\"font-weight:300;font-size:18px;\">\n"
-"                                Расскажите нам, что вы думаете о нашем сервисе:\n"
-"                            </h2>\n"
-"                            <div style=\"text-color: #888888\">(нажмите на одну из этих смайликов)</div>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <tr>\n"
-"                        <td style=\"padding:10px 10px;\">\n"
-"                            <table style=\"width:100%;text-align:center;\">\n"
-"                                <tr>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/10\">\n"
-"                                            <img alt=\"Удовлетворены\" src=\"/rating/static/src/img/rating_10.png\" title=\"Удовлетворены\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/5\">\n"
-"                                            <img alt=\"Не удовлетворены\" src=\"/rating/static/src/img/rating_5.png\" title=\"Не удовлетворены\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/1\">\n"
-"                                            <img alt=\"Крайне неудовлетворенны\" src=\"/rating/static/src/img/rating_1.png\" title=\"Крайне неудовлетворенны\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                </tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </table>\n"
-"            </td></tr>\n"
-"            <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '') | safe}</td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"    <table style=\"width:600px;margin:auto;text-align:center;font-size:12px;\">\n"
-"        <tbody>\n"
-"            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
-"                <p>Этот опрос клиентов был отправлен, потому что ваш билет был перенесен на этап <b>${object.stage_id.name}</b></p>\n"
-"                <p>Email автоматически отправляется по <a href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo Техническая поддержка</a> for <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
-"            </td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"</div>\n"
-"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
@@ -284,6 +216,11 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "<i class=\"fa fa-arrow-right\"/> View documentation"
 msgstr ""
 
 #. module: helpdesk
@@ -399,8 +336,8 @@ msgstr "Все запросы"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Allow your customers to easily rate your services."
-msgstr "Позвольте вашим клиентам ставить рейтинг вашим услугам."
+msgid "Allow your customers to easily rate your services"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -421,10 +358,21 @@ msgid "Archived"
 msgstr "Архивировано"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
+msgid "Assign To Me"
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:39
 #, python-format
 msgid "Assign the ticket to someone."
+msgstr ""
+
+#. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk.py:744
+#, python-format
+msgid "Assign to me"
 msgstr ""
 
 #. module: helpdesk
@@ -637,9 +585,13 @@ msgstr "Настройка политик СУО"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Connect third party application and create tickets using web services."
+msgid "Connect third party application and create tickets using web services"
 msgstr ""
-"Подключение сторонних приложений и создание запросов с помощью веб-служб."
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Create new Helpdesk Teams"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_create_uid
@@ -662,14 +614,15 @@ msgid "Created on"
 msgstr "Создан"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:660
+#: code:addons/helpdesk/models/helpdesk.py:686
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_id
 #, python-format
 msgid "Customer"
 msgstr "Заказчик"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:662
+#: code:addons/helpdesk/models/helpdesk.py:688
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_email
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_email
 #, python-format
 msgid "Customer Email"
@@ -688,7 +641,7 @@ msgid "Customer Rating"
 msgstr "Рейтинг клиентов"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:647
+#: code:addons/helpdesk/models/helpdesk.py:673
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
@@ -840,8 +793,8 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Get in touch with you website visitors."
-msgstr "Связаться с вашими посетителями сайта."
+msgid "Get in touch with you website visitors"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
@@ -879,8 +832,10 @@ msgid "Helpdesk Team..."
 msgstr "Команда техподдержки..."
 
 #. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk.py:131
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action
-#: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
+#: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action_form
+#, python-format
 msgid "Helpdesk Teams"
 msgstr "Команды техподдержки"
 
@@ -901,6 +856,11 @@ msgstr "Анализ запросов техподдержки"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_pivot_main
 msgid "Helpdesk Tickets"
 msgstr "Техподдержка запросов"
+
+#. module: helpdesk
+#: model:ir.actions.server,name:helpdesk.helpdesk_team_action_settings
+msgid "Helpdesk: Teams Settings"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.actions.server,name:helpdesk.helpdesk_sla_cron_ir_actions_server
@@ -940,15 +900,8 @@ msgstr "Часов, чтобы достичь данной стадии на о�
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "How to assign newly created tickets to the right person."
-msgstr "Как назначить вновь созданную запрос на правильного человека."
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:719
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
-#, python-format
-msgid "I take it"
-msgstr "Я беру это"
+msgid "How to assign newly created tickets to the right person"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_id
@@ -986,8 +939,8 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Incoming emails create tickets."
-msgstr "Входящие письма создают запросы."
+msgid "Incoming emails create tickets"
+msgstr ""
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_incident
@@ -1001,7 +954,7 @@ msgstr "Канбан статус"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Keep empty for everyone to see this team."
+msgid "Keep empty for everyone to see this team"
 msgstr ""
 
 #. module: helpdesk
@@ -1272,13 +1225,8 @@ msgstr "Производительность"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Public Description..."
-msgstr "Публичное описание..."
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Publish this team's ratings on your website."
-msgstr "Публикация рейтинга этой команды на вашем сайте."
+msgid "Publish this team's ratings on your website"
+msgstr ""
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_question
@@ -1287,8 +1235,8 @@ msgstr "Вопрос"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Question and answer section on your website."
-msgstr "Раздел вопросов и ответов на вашем сайте."
+msgid "Question and answer section on your website"
+msgstr ""
 
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
@@ -1390,8 +1338,8 @@ msgstr "Активные СУО"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Save this page and refresh to activate the feature"
-msgstr "Сохраните эту страницу и обновить, чтобы активировать функцию"
+msgid "Save this page and refresh to activate the feature."
+msgstr ""
 
 #. module: helpdesk
 #. openerp-web
@@ -1434,20 +1382,19 @@ msgstr "Нумерация"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Set up your Service Level Agreements to track performance."
+msgid "Set up your Service Level Agreements to track performance"
 msgstr ""
-"Настройка ваших Соглашений об Уровне Обслуживания для отслеживания "
-"производительности."
 
 #. module: helpdesk
+#: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Settings"
 msgstr "Настройки"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Share presentation and videos, and organize into courses."
-msgstr "Делитесь презентациями и видео, и организовывайте в курсы."
+msgid "Share presentation and videos, and organize into courses"
+msgstr ""
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_use_sla
@@ -1523,8 +1470,8 @@ msgstr "Тема"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Submit tickets with an online form."
-msgstr "Отправьте запрос с онлайн формы."
+msgid "Submit tickets with an online form"
+msgstr ""
 
 #. module: helpdesk
 #. openerp-web
@@ -1551,7 +1498,7 @@ msgid "Tag"
 msgstr "Тег"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:393 sql_constraint:helpdesk.tag:0
+#: code:addons/helpdesk/models/helpdesk.py:410 sql_constraint:helpdesk.tag:0
 #, python-format
 msgid "Tag name already exists !"
 msgstr "Такой тег уже существует!"
@@ -1617,6 +1564,11 @@ msgid "Templates"
 msgstr "Шаблоны"
 
 #. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket_website_url
+msgid "The full URL to access the document through the website."
+msgstr "Полный URL, чтобы получить доступ к документу через веб-сайт."
+
+#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
 msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
@@ -1658,7 +1610,7 @@ msgstr ""
 "запрос."
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:317
+#: code:addons/helpdesk/models/helpdesk.py:334
 #, python-format
 msgid "This target does not exist."
 msgstr "Эта цель не существует."
@@ -1785,7 +1737,7 @@ msgid "Type allows to organize tickets."
 msgstr "Тип позволяет организовать запросы."
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:380
+#: code:addons/helpdesk/models/helpdesk.py:397
 #: sql_constraint:helpdesk.ticket.type:0
 #, python-format
 msgid "Type name already exists !"
@@ -1799,6 +1751,11 @@ msgstr "Имя типа уже существует !"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Unassigned Tickets"
 msgstr "Нераспределенные запросы"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Unread Messages"
+msgstr "Непрочитанные Сообщения"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1880,6 +1837,19 @@ msgid "Website Rating"
 msgstr "Рейтинг веб-сайта"
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_website_url
+msgid "Website URL"
+msgstr "URL веб-сайта"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid ""
+"With random assignation, every user gets the same number of tickets. With "
+"balanced assignation, tickets are assigned to the user with the least amount"
+" of open tickets."
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
 #, python-format
@@ -1887,7 +1857,7 @@ msgid "Wrong value entered!"
 msgstr "Неправильная величина!"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:99
+#: code:addons/helpdesk/models/helpdesk.py:98
 #, python-format
 msgid "You must have team members assigned to change the assignation method."
 msgstr ""
@@ -1935,10 +1905,5 @@ msgstr "поиск команды"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "to create tickets."
-msgstr "для создания запроса."
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "⇒ View documentation"
-msgstr "⇒ Просмотреть документацию"
+msgid "to create tickets"
+msgstr ""

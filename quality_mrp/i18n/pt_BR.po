@@ -7,14 +7,14 @@
 # Luiz Carlos de Lima <luiz.carlos@akretion.com.br>, 2016
 # grazziano <gra.negocia@gmail.com>, 2016
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
-# Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2017
+# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
+"Last-Translator: Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,17 +25,19 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
+msgid ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
+msgstr ""
+
+#. module: quality_mrp
+#: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
+#: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Alert</span>"
 msgstr "<span class=\"o_stat_text\">Alerta de Qualidade</span>"
 
 #. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_alert_count
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_alert_count
-msgid "Alert Count"
-msgstr ""
-
-#. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_alert_ids
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_ids
 msgid "Alerts"
 msgstr "Alertas"
 
@@ -43,12 +45,6 @@ msgstr "Alertas"
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_check_ids
 msgid "Check"
 msgstr "Cheque"
-
-#. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_check_todo
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_check_todo
-msgid "Check Todo"
-msgstr ""
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_check_ids
@@ -72,7 +68,7 @@ msgid "Manufacturing Order"
 msgstr "Ordem de Produção"
 
 #. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_operation_id
+#: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_workorder_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_workorder_id
 msgid "Operation"
 msgstr "Operação"
@@ -85,6 +81,7 @@ msgstr "Ordem de Produção"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_alert
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_alert_ids
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workcenter_view_kanban_inherit_quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_tablet_view_form_inherit_quality
@@ -93,16 +90,27 @@ msgid "Quality Alert"
 msgstr "Alerta de Qualidade"
 
 #. module: quality_mrp
-#: code:addons/quality_mrp/models/mrp_production.py:38
-#: code:addons/quality_mrp/models/mrp_workorder.py:36
-#, python-format
-msgid "Quality Alerts"
-msgstr "Alertas de Qualidade"
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_count
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_alert_count
+msgid "Quality Alert Count"
+msgstr ""
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_check
 msgid "Quality Check"
 msgstr "Verificar Qualidade"
+
+#. module: quality_mrp
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_check_fail
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_check_fail
+msgid "Quality Check Fail"
+msgstr ""
+
+#. module: quality_mrp
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_check_todo
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_check_todo
+msgid "Quality Check Todo"
+msgstr ""
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,name:quality_mrp.quality_check_action_mo
@@ -146,8 +154,8 @@ msgid "Workorder Messages"
 msgstr "Mensagens de trabalho"
 
 #. module: quality_mrp
-#: code:addons/quality_mrp/models/mrp_production.py:95
-#: code:addons/quality_mrp/models/mrp_workorder.py:86
+#: code:addons/quality_mrp/models/mrp_production.py:93
+#: code:addons/quality_mrp/models/mrp_workorder.py:89
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "Você ainda precisa fazer os controles de qualidade!"

@@ -9,10 +9,10 @@
 # Cas Vissers <casvissers@brahoo.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -447,10 +447,9 @@ msgstr "Nieuwe voorraad"
 #. module: stock_barcode
 #: code:addons/stock_barcode/controllers/main.py:69
 #, python-format
-msgid "No internal picking type. Please configure one in warehouse settings."
+msgid ""
+"No internal operation type. Please configure one in warehouse settings."
 msgstr ""
-"Geen interne type levering. Configureer er aub één onder de magazijn "
-"instellingen."
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:54
@@ -698,16 +697,16 @@ msgstr ""
 "locatie."
 
 #. module: stock_barcode
+#: model:ir.model,name:stock_barcode.model_stock_picking_type
+msgid "The operation type determines the picking view"
+msgstr ""
+
+#. module: stock_barcode
 #. openerp-web
 #: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:39
 #, python-format
 msgid "The picking is %s and cannot be edited."
 msgstr "De levering is %s en kan niet gewijzigd worden."
-
-#. module: stock_barcode
-#: model:ir.model,name:stock_barcode.model_stock_picking_type
-msgid "The picking type determines the picking view"
-msgstr "De verzamelsoort bepaald de weergave van de levering"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner

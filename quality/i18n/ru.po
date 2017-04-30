@@ -19,10 +19,10 @@
 # Русский «kolobok2048» Ивашка <kolobok2048@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Русский «kolobok2048» Ивашка <kolobok2048@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -62,14 +62,28 @@ msgstr ""
 "'all')]}\">Каждый </span>"
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+msgid ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid ""
+"<span class=\"o_stat_text\">AVG:</span>\n"
+"                                <span class=\"o_stat_text\">STD:</span>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+msgid "<span class=\"o_stat_text\">Quality Alert</span>"
+msgstr "<span class=\"o_stat_text\">Предупреждение о качестве</span>"
+
+#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "<span class=\"o_stat_text\">Quality Check</span>"
 msgstr "<span class=\"o_stat_text\">Проверка качества</span>"
-
-#. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
-msgid "<span>Quality Alerts</span>"
-msgstr "<span>Уведомления о качестве</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -112,6 +126,7 @@ msgstr "Предупреждение(я)"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_ids
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_ids
 #: model:ir.ui.menu,name:quality.menu_quality_alerts
 msgid "Alerts"
 msgstr "Предупреждения"
@@ -152,12 +167,18 @@ msgid "Archived"
 msgstr "Архивировано"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_average
+msgid "Average"
+msgstr "Среднее"
+
+#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 msgid "Cancel"
 msgstr "Отменить"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_check_id
+#: model:ir.model.fields,field_description:quality.field_quality_point_check_ids
 msgid "Check"
 msgstr "Проверка"
 
@@ -190,6 +211,11 @@ msgstr "Выполняется Ы процессе"
 #: model:ir.actions.act_window,help:quality.quality_point_action
 msgid "Click here to add a new Quality Control Points"
 msgstr "Нажмите здесь, чтобы добавить новые контрольные точки качества"
+
+#. module: quality
+#: model:ir.actions.act_window,help:quality.quality_tag_action
+msgid "Click to add a new tag."
+msgstr "Кликните, чтобы создать новый тег."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_color
@@ -546,15 +572,15 @@ msgid "Name"
 msgstr "Название"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:22
-#: code:addons/quality/models/quality.py:79
-#: code:addons/quality/models/quality.py:80
-#: code:addons/quality/models/quality.py:189
-#: code:addons/quality/models/quality.py:243
-#: code:addons/quality/models/quality.py:244
-#: code:addons/quality/models/quality.py:324
-#: code:addons/quality/models/quality.py:358
+#: code:addons/quality/models/quality.py:24
+#: code:addons/quality/models/quality.py:110
+#: code:addons/quality/models/quality.py:111
+#: code:addons/quality/models/quality.py:224
+#: code:addons/quality/models/quality.py:278
+#: code:addons/quality/models/quality.py:279
 #: code:addons/quality/models/quality.py:359
+#: code:addons/quality/models/quality.py:394
+#: code:addons/quality/models/quality.py:395
 #, python-format
 msgid "New"
 msgstr "Новый"
@@ -598,10 +624,16 @@ msgid "Notes"
 msgstr "Заметки"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_picking_id
 #: model:ir.model.fields,field_description:quality.field_quality_check_picking_id
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Operation"
 msgstr "Операция"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
+msgid "Operation Type"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_force_thread_id
@@ -659,7 +691,7 @@ msgid "Passed"
 msgstr "Прошло"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_stock_picking_check_todo
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_todo
 msgid "Pending checks"
 msgstr "Ожидающие проверки"
 
@@ -672,11 +704,6 @@ msgstr "Процент"
 #: selection:quality.point,measure_frequency_type:0
 msgid "Periodically"
 msgstr "Периодически"
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
-msgid "Picking Type"
-msgstr "Тип комплектации"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_contact
@@ -731,10 +758,11 @@ msgid "Quality"
 msgstr "Качество"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:282
-#: code:addons/quality/models/quality.py:295
+#: code:addons/quality/models/quality.py:317
+#: code:addons/quality/models/quality.py:330
 #: model:ir.model,name:quality.model_quality_alert
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_calendar
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 #, python-format
 msgid "Quality Alert"
 msgstr "Предупреждение о качестве"
@@ -744,6 +772,11 @@ msgstr "Предупреждение о качестве"
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_pivot
 msgid "Quality Alert Analysis"
 msgstr "Анализ качества предупреждений"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_count
+msgid "Quality Alert Count"
+msgstr ""
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_alert_stage
@@ -781,11 +814,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:quality.quality_alert_action_team
 #: model:ir.ui.menu,name:quality.menu_quality_alert
 #: model:ir.ui.menu,name:quality.menu_quality_alert_report
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
 msgid "Quality Alerts"
 msgstr "Предупреждения о качестве"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:369
+#: code:addons/quality/models/quality.py:412
 #: model:ir.model,name:quality.model_quality_check
 #, python-format
 msgid "Quality Check"
@@ -796,6 +830,11 @@ msgstr "Проверка качества"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_pivot
 msgid "Quality Check Analysis"
 msgstr "Анализ качества проверки"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_fail
+msgid "Quality Check Fail"
+msgstr ""
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_check_action_main
@@ -868,6 +907,12 @@ msgid "Quality Tag"
 msgstr "Тег качества"
 
 #. module: quality
+#: model:ir.actions.act_window,name:quality.quality_tag_action
+#: model:ir.ui.menu,name:quality.menu_config_quality_tags
+msgid "Quality Tags"
+msgstr ""
+
+#. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_team_action_config
 msgid "Quality Teams"
 msgstr "Команды качества"
@@ -921,13 +966,9 @@ msgid "Root Cause"
 msgstr "Истинная причина"
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_point_view_form
-msgid "SPC"
-msgstr "SPC"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_sequence
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_sequence
+#: model:ir.model.fields,field_description:quality.field_quality_point_sequence
 msgid "Sequence"
 msgstr "Нумерация"
 
@@ -937,10 +978,15 @@ msgid "Settings"
 msgstr "Настройки"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9144
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9387
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Этап"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_standard_deviation
+msgid "Standard Deviation"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -959,11 +1005,13 @@ msgstr "Перемещение запасов"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_tag_ids
+#: model:ir.ui.view,arch_db:quality.quality_tag_view_search
+#: model:ir.ui.view,arch_db:quality.quality_tag_view_tree
 msgid "Tags"
 msgstr "Теги"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9122
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9364
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1079,7 +1127,7 @@ msgid "Week(s)"
 msgstr "Неделя(и)"
 
 #. module: quality
-#: code:addons/quality/models/stock_picking.py:44
+#: code:addons/quality/models/stock_picking.py:61
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "Вам всё ещё нужно проверить качество!"

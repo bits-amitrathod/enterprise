@@ -6,10 +6,10 @@
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -19,24 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: website_sale_coupon
-#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_apply
-msgid "Apply"
-msgstr "Toepassen"
+#: model:ir.ui.view,arch_db:website_sale_coupon.cart_discount
+msgid ""
+"<span class=\"col-xs-6 text-right text-muted\" title=\"Discounted amount\"> "
+"Discount:</span>"
+msgstr ""
+
+#. module: website_sale_coupon
+#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_result
+msgid "<span class=\"pull-left\">Invalid or expired coupon code</span>"
+msgstr ""
 
 #. module: website_sale_coupon
 #: model:ir.ui.menu,name:website_sale_coupon.menu_coupon_type_config
-msgid "Coupon Program"
-msgstr "Kortingsbonnenprogramma"
-
-#. module: website_sale_coupon
 #: model:ir.ui.view,arch_db:website_sale_coupon.website_config_settings_view_form_inherit_website_sale
 msgid "Coupon Programs"
 msgstr "Kortingsbonnenprogramma"
-
-#. module: website_sale_coupon
-#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_apply
-msgid "Have a promo code? Fill in this field and apply."
-msgstr ""
 
 #. module: website_sale_coupon
 #: model:ir.model.fields,field_description:website_sale_coupon.field_sale_coupon_program_is_public_included
@@ -51,21 +49,7 @@ msgid "Is the public user included into the set of autorized customers"
 msgstr ""
 
 #. module: website_sale_coupon
-#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_apply
-msgid "Promo Code"
-msgstr "Promo code"
-
-#. module: website_sale_coupon
-#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_apply
-msgid "Promo Code..."
-msgstr "Promo Code..."
-
-#. module: website_sale_coupon
 #: model:ir.ui.menu,name:website_sale_coupon.menu_promotion_type_config
-msgid "Promotion Program"
-msgstr "Promotieprogramma"
-
-#. module: website_sale_coupon
 #: model:ir.ui.view,arch_db:website_sale_coupon.website_config_settings_view_form_inherit_website_sale
 msgid "Promotion Programs"
 msgstr "Promotieprogramma's"
@@ -86,14 +70,16 @@ msgid "Sales Order"
 msgstr "Verkooporder"
 
 #. module: website_sale_coupon
-#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_apply
+#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_result
 msgid "You have successfully applied coupon:"
 msgstr ""
 
 #. module: website_sale_coupon
-#. openerp-web
-#: code:addons/website_sale_coupon/static/src/js/sale_coupon.js:27
-#, python-format
-msgid ""
-"Your reward <b>%s</b> is available on a next order with this coupon code: %s"
+#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_result
+msgid "Your reward"
+msgstr ""
+
+#. module: website_sale_coupon
+#: model:ir.ui.view,arch_db:website_sale_coupon.sale_coupon_result
+msgid "is available on a next order with this coupon code:"
 msgstr ""

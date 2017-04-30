@@ -6,13 +6,14 @@
 # Jeffery CHEN <jeffery9@gmail.com>, 2016
 # Alex Duan <alex.duan@elico-corp.com>, 2016
 # fausthuang <faust_huang@hotmail.com>, 2017
+# Joray <13637815@qq.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: fausthuang <faust_huang@hotmail.com>, 2017\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
+"Last-Translator: Joray <13637815@qq.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,6 +45,11 @@ msgstr "类别"
 #: model:ir.actions.act_window,help:pos_loyalty.action_loyalty_program_form
 msgid "Click to create a Loyalty Program."
 msgstr "点击创建一个忠诚计划."
+
+#. module: pos_loyalty
+#: model:ir.model,name:pos_loyalty.model_res_partner
+msgid "Contact"
+msgstr "联系人"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_create_uid
@@ -175,6 +181,7 @@ msgstr "忠诚计划名称"
 #. module: pos_loyalty
 #: model:ir.actions.act_window,name:pos_loyalty.action_loyalty_program_form
 #: model:ir.ui.menu,name:pos_loyalty.menu_loyalty_program
+#: model:ir.ui.view,arch_db:pos_loyalty.pos_config_settings_view_form_inherit_pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_tree
 #: model:ir.ui.view,arch_db:pos_loyalty.view_pos_pos_form
 msgid "Loyalty Programs"
@@ -216,11 +223,6 @@ msgid "No Rewards Available"
 msgstr ""
 
 #. module: pos_loyalty
-#: model:ir.model,name:pos_loyalty.model_res_partner
-msgid "Partner"
-msgstr "业务伙伴"
-
-#. module: pos_loyalty
 #. openerp-web
 #: code:addons/pos_loyalty/static/src/js/loyalty.js:383
 #, python-format
@@ -239,8 +241,8 @@ msgstr "积分产品"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_pos_order
-msgid "Point of Sale"
-msgstr "POS"
+msgid "Point of Sale Orders"
+msgstr "POS订单"
 
 #. module: pos_loyalty
 #. openerp-web

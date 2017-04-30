@@ -17,7 +17,7 @@
 # Angel Moya - Domatix <angel.moya@domatix.com>, 2016
 # Ivan Nieto <ivan.n.s@tuta.io>, 2016
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
-# Luis Martínez Ontalba <luismaront@gmail.com>, 2016
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2016
 # Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
 # Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2016
 # Cristian Salamea <ovnicraft@gmail.com>, 2017
@@ -859,12 +859,12 @@ msgstr "Factura"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_success
 msgid "Invoice for subscription ${ctx.get('code')}"
-msgstr ""
+msgstr "Factura de la suscripción ${ctx.get('code')}"
 
 #. module: website_contract
 #: model:mail.template,report_name:website_contract.email_payment_success
 msgid "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
-msgstr ""
+msgstr "Factura_${ctx.get('code')}_${ctx.get('previous_date')}"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_is_authorized
@@ -899,6 +899,8 @@ msgid ""
 "Leave this unchecked if you don't want this contract template to be "
 "available to the customer in the frontend (for a free trial, for example)"
 msgstr ""
+"Dejar sin marcar si no desea que esta plantilla de contrato esté disponible "
+"para el cliente en el frontend (por ejemplo, para una prueba gratuita)"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
@@ -1003,7 +1005,7 @@ msgstr "Transacción de pago"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_reminder
 msgid "Payment reminder for subscription ${object.code}"
-msgstr ""
+msgstr "Recordatorio del pago de la suscripción ${object.code}"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_form_inherit_sale_contract
@@ -1240,7 +1242,7 @@ msgstr "Plantilla"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_close
 msgid "Termination of subscription ${object.code}"
-msgstr ""
+msgstr "Finalización de la suscripción ${object.code}"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1346,6 +1348,9 @@ msgid ""
 "                work done, expenses and/or sales orders. Odoo will automatically manage\n"
 "                the alerts for the renewal of the contracts to the right salesperson."
 msgstr ""
+"Utilice contratos para seguir tareas, incidencias, partes de trabajo o facturación\n"
+"basada en el trabajo realizado, gastos y/o pedidos de venta. Odoo gestionará\n"
+"automáticamente las alertas al vendedor adecuado para la renovación de los contratos "
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract

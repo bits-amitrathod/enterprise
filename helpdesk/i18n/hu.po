@@ -5,14 +5,14 @@
 # Translators:
 # Martin Trigaux <mat@odoo.com>, 2017
 # krnkris <krnkris@freemail.hu>, 2017
-# Oregional <geza.nagy@oregional.hu>, 2017
+# gezza <geza.nagy@oregional.hu>, 2017
 # Kovács Tibor <kovika@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Kovács Tibor <kovika@gmail.com>, 2017\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -106,7 +106,7 @@ msgid ""
 "        <tbody>\n"
 "            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
 "                <p>This customer survey has been sent because your ticket has been moved to the stage <b>${object.stage_id.name}</b></p>\n"
-"                <p>Email automatically sent by <a href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo Helpdesk</a> for <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
+"                <p>Email automatically sent by <a target=\"_blank\" href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo Helpdesk</a> for <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
 "            </td></tr>\n"
 "        </tbody>\n"
 "    </table>\n"
@@ -172,6 +172,11 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "<i class=\"fa fa-arrow-right\"/> View documentation"
 msgstr ""
 
 #. module: helpdesk
@@ -280,7 +285,7 @@ msgstr "Összes szervízjegy"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Allow your customers to easily rate your services."
+msgid "Allow your customers to easily rate your services"
 msgstr ""
 
 #. module: helpdesk
@@ -302,10 +307,21 @@ msgid "Archived"
 msgstr "Archivált"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
+msgid "Assign To Me"
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:39
 #, python-format
 msgid "Assign the ticket to someone."
+msgstr ""
+
+#. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk.py:744
+#, python-format
+msgid "Assign to me"
 msgstr ""
 
 #. module: helpdesk
@@ -511,7 +527,12 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Connect third party application and create tickets using web services."
+msgid "Connect third party application and create tickets using web services"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Create new Helpdesk Teams"
 msgstr ""
 
 #. module: helpdesk
@@ -535,14 +556,15 @@ msgid "Created on"
 msgstr "Létrehozva"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:660
+#: code:addons/helpdesk/models/helpdesk.py:686
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_id
 #, python-format
 msgid "Customer"
 msgstr "Vásárló"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:662
+#: code:addons/helpdesk/models/helpdesk.py:688
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_email
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_email
 #, python-format
 msgid "Customer Email"
@@ -561,7 +583,7 @@ msgid "Customer Rating"
 msgstr "Vásárló értékelés"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:647
+#: code:addons/helpdesk/models/helpdesk.py:673
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
@@ -709,7 +731,7 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Get in touch with you website visitors."
+msgid "Get in touch with you website visitors"
 msgstr ""
 
 #. module: helpdesk
@@ -748,8 +770,10 @@ msgid "Helpdesk Team..."
 msgstr ""
 
 #. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk.py:131
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action
-#: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
+#: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action_form
+#, python-format
 msgid "Helpdesk Teams"
 msgstr ""
 
@@ -769,6 +793,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_graph_main
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_pivot_main
 msgid "Helpdesk Tickets"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.actions.server,name:helpdesk.helpdesk_team_action_settings
+msgid "Helpdesk: Teams Settings"
 msgstr ""
 
 #. module: helpdesk
@@ -809,15 +838,8 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "How to assign newly created tickets to the right person."
+msgid "How to assign newly created tickets to the right person"
 msgstr ""
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:719
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
-#, python-format
-msgid "I take it"
-msgstr "Átveszem"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_id
@@ -852,7 +874,7 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Incoming emails create tickets."
+msgid "Incoming emails create tickets"
 msgstr ""
 
 #. module: helpdesk
@@ -867,7 +889,7 @@ msgstr "Kanban státusz"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Keep empty for everyone to see this team."
+msgid "Keep empty for everyone to see this team"
 msgstr ""
 
 #. module: helpdesk
@@ -1137,12 +1159,7 @@ msgstr "Termelékenység"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Public Description..."
-msgstr ""
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Publish this team's ratings on your website."
+msgid "Publish this team's ratings on your website"
 msgstr ""
 
 #. module: helpdesk
@@ -1152,7 +1169,7 @@ msgstr "Kérdés"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Question and answer section on your website."
+msgid "Question and answer section on your website"
 msgstr ""
 
 #. module: helpdesk
@@ -1255,7 +1272,7 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Save this page and refresh to activate the feature"
+msgid "Save this page and refresh to activate the feature."
 msgstr ""
 
 #. module: helpdesk
@@ -1299,17 +1316,18 @@ msgstr "Sorszám"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Set up your Service Level Agreements to track performance."
+msgid "Set up your Service Level Agreements to track performance"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Settings"
 msgstr "Beállítások"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Share presentation and videos, and organize into courses."
+msgid "Share presentation and videos, and organize into courses"
 msgstr ""
 
 #. module: helpdesk
@@ -1382,7 +1400,7 @@ msgstr "Tárgy..."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Submit tickets with an online form."
+msgid "Submit tickets with an online form"
 msgstr ""
 
 #. module: helpdesk
@@ -1410,7 +1428,7 @@ msgid "Tag"
 msgstr "Címke"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:393 sql_constraint:helpdesk.tag:0
+#: code:addons/helpdesk/models/helpdesk.py:410 sql_constraint:helpdesk.tag:0
 #, python-format
 msgid "Tag name already exists !"
 msgstr "Címke név már létezik!"
@@ -1476,6 +1494,12 @@ msgid "Templates"
 msgstr "Sablonok"
 
 #. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket_website_url
+msgid "The full URL to access the document through the website."
+msgstr ""
+"A teljes elérési út/URL a dokumentum weboldalon keresztüli eléréséhez."
+
+#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
 msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
@@ -1517,7 +1541,7 @@ msgid "This dashboard will activate once you have created your first ticket."
 msgstr ""
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:317
+#: code:addons/helpdesk/models/helpdesk.py:334
 #, python-format
 msgid "This target does not exist."
 msgstr "Ez a cél nem létezik."
@@ -1644,7 +1668,7 @@ msgid "Type allows to organize tickets."
 msgstr ""
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:380
+#: code:addons/helpdesk/models/helpdesk.py:397
 #: sql_constraint:helpdesk.ticket.type:0
 #, python-format
 msgid "Type name already exists !"
@@ -1658,6 +1682,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Unassigned Tickets"
 msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Unread Messages"
+msgstr "Olvasatlan üzenetek"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1739,6 +1768,19 @@ msgid "Website Rating"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_website_url
+msgid "Website URL"
+msgstr "Honlap URL"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid ""
+"With random assignation, every user gets the same number of tickets. With "
+"balanced assignation, tickets are assigned to the user with the least amount"
+" of open tickets."
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
 #, python-format
@@ -1746,7 +1788,7 @@ msgid "Wrong value entered!"
 msgstr "Rossz érték lett megadva!"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:99
+#: code:addons/helpdesk/models/helpdesk.py:98
 #, python-format
 msgid "You must have team members assigned to change the assignation method."
 msgstr ""
@@ -1793,10 +1835,5 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "to create tickets."
-msgstr ""
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "⇒ View documentation"
+msgid "to create tickets"
 msgstr ""

@@ -11,10 +11,10 @@
 # Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Эдуард Манятовский <manyatovskiy@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr ""
 "Пополните счёт провайдера и повторите отправку документов."
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:64
+#: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
 msgstr "Как минимум один из документов на отправку содержит ошибку."
@@ -111,6 +111,11 @@ msgstr "Цвет"
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Compute price"
 msgstr "Рассчитать стоимость"
+
+#. module: print
+#: model:ir.model,name:print.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
@@ -151,7 +156,8 @@ msgstr "Кредит"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_currency_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_currency_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_provider_currency_id
 msgid "Currency"
 msgstr "Валюта"
 
@@ -166,9 +172,19 @@ msgid "Display Name"
 msgstr "Отображаемое Имя"
 
 #. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_name
+msgid "Document"
+msgstr "Документ"
+
+#. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Document Detail"
 msgstr "Подробности документа"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
+msgid "Document sensable"
+msgstr ""
 
 #. module: print
 #: selection:print.order,state:0
@@ -231,6 +247,13 @@ msgstr "Счёт"
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
 msgid "Is address valid"
 msgstr "Это правильный адрес"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
+msgid "Is sendable"
+msgstr "Доступен для отправки"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin___last_update
@@ -335,10 +358,22 @@ msgid "Paper Weight"
 msgstr "Плотность бумаги"
 
 #. module: print
-#: model:ir.model,name:print.model_res_partner
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Partner"
 msgstr "Партнёр"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
+msgid "Partner has an addess"
+msgstr ""
+
+#. module: print
+#: code:addons/print/wizard/print_order_wizard.py:71
+#, python-format
+msgid ""
+"Please check the document is in a correct state, and that its partner has a "
+"correct postal address."
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -449,6 +484,12 @@ msgid "Recipient partner"
 msgstr "Партнёр-получатель "
 
 #. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_report_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
+msgid "Report"
+msgstr "Отчёт"
+
+#. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Reset to Draft"
 msgstr "Переместить в черновики"
@@ -459,7 +500,7 @@ msgid "Resource ID"
 msgstr "ID объекта"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_model
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
 msgid "Resource Model"
 msgstr "Модель ресурса"
 
@@ -510,7 +551,6 @@ msgid "Sent"
 msgstr "Отправлено"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_state
 #: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
 msgid "State"
 msgstr "Регион"
@@ -542,7 +582,15 @@ msgid "Test"
 msgstr "Тест"
 
 #. module: print
-#: code:addons/print/models/print_provider.py:191
+#: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,help:print.field_print_provider_currency_id
+msgid ""
+"The currency will be used for amount, balance account, print order price, "
+"..."
+msgstr ""
+
+#. module: print
+#: code:addons/print/models/print_provider.py:229
 #, python-format
 msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
@@ -552,7 +600,7 @@ msgstr ""
 " указать ID объекта и поля названий модели."
 
 #. module: print
-#: code:addons/print/models/print_provider.py:186
+#: code:addons/print/models/print_provider.py:224
 #, python-format
 msgid ""
 "The document you want to print and send is not printable. There is no report"
@@ -562,13 +610,13 @@ msgstr ""
 "действия отчёта (ir.actions.report.xml) для модели %s."
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:62
+#: code:addons/print/wizard/print_order_wizard.py:68
 #, python-format
-msgid "The document you want to send contains the following mistake : %s"
-msgstr "Документ который вы хотите отправить содержит следующую ошибку: %s"
+msgid "The document you want to send contains a mistake."
+msgstr ""
 
 #. module: print
-#: code:addons/print/models/account_invoice.py:20
+#: code:addons/print/models/account_invoice.py:26
 #, python-format
 msgid ""
 "This invoice was sent by post with the provider %(provider_name)s at the "

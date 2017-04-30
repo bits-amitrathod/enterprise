@@ -7,10 +7,10 @@
 # Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -36,10 +36,8 @@ msgstr ""
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
-msgid ""
-"<span class=\"o_my_show_more\">Show more</span><span class=\"o_my_show_less "
-"hidden\">Show less</span>"
-msgstr ""
+msgid "<span>Show more</span><span class=\"hidden\">Show less</span>"
+msgstr "<span>Mutass többet</span><span class=\"hidden\">Mutass kevesebbet</span>"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.tickets_followup
@@ -86,6 +84,11 @@ msgstr "Vásárlói Elégedettség"
 #: model:ir.ui.view,arch_db:website_helpdesk.team
 msgid "Description"
 msgstr "Leírás"
+
+#. module: website_helpdesk
+#: model:ir.ui.view,arch_db:website_helpdesk.helpdesk_team_view_form_inherit_website_helpdesk
+msgid "Description on the website page..."
+msgstr ""
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.tickets_followup
@@ -149,18 +152,12 @@ msgid "My Tickets"
 msgstr ""
 
 #. module: website_helpdesk
-#: code:addons/website_helpdesk/controllers/main.py:33
-#, python-format
-msgid "Name"
-msgstr "Név"
-
-#. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.content_new_team
 msgid "New Team"
 msgstr ""
 
 #. module: website_helpdesk
-#: code:addons/website_helpdesk/controllers/main.py:32
+#: code:addons/website_helpdesk/controllers/main.py:33
 #, python-format
 msgid "Newest"
 msgstr "Legújabb"
@@ -171,8 +168,27 @@ msgid "No teams have been published."
 msgstr ""
 
 #. module: website_helpdesk
-#: model:ir.ui.view,arch_db:website_helpdesk.helpdesk_team_view_form_inherit_website_helpdesk
-msgid "Save this page to activate the feature"
+#: code:addons/website_helpdesk/controllers/main.py:37
+#, python-format
+msgid "Search <span class=\"nolabel\"> (in Content)</span>"
+msgstr ""
+
+#. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:40
+#, python-format
+msgid "Search in All"
+msgstr ""
+
+#. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:39
+#, python-format
+msgid "Search in Customer"
+msgstr ""
+
+#. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:38
+#, python-format
+msgid "Search in Messages"
 msgstr ""
 
 #. module: website_helpdesk
@@ -184,6 +200,12 @@ msgstr "Biztonsági token"
 #: model:ir.ui.view,arch_db:website_helpdesk.portal_helpdesk_ticket
 msgid "Status"
 msgstr "Állapot"
+
+#. module: website_helpdesk
+#: code:addons/website_helpdesk/controllers/main.py:34
+#, python-format
+msgid "Subject"
+msgstr "Tárgy"
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.team
@@ -233,9 +255,7 @@ msgstr ""
 
 #. module: website_helpdesk
 #: model:ir.ui.view,arch_db:website_helpdesk.helpdesk_team_view_form_inherit_website_helpdesk
-msgid ""
-"View this teams ratings this page:<br/>\n"
-"                    ⇒"
+msgid "View this teams ratings this page:<br/>"
 msgstr ""
 
 #. module: website_helpdesk

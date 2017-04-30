@@ -10,10 +10,10 @@
 # Cas Vissers <casvissers@brahoo.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -176,6 +176,11 @@ msgstr "Bedrijf UOM"
 #: model:ir.ui.menu,name:sale_contract.menu_sale_subscription_config
 msgid "Configuration"
 msgstr "Instellingen"
+
+#. module: sale_contract
+#: model:ir.model,name:sale_contract.model_res_partner
+msgid "Contact"
+msgstr "Contact"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
@@ -354,12 +359,12 @@ msgid "Helps you handle subscriptions and recurring invoicing."
 msgstr "Helpt u abonnementen en herhalende facturen te beheren."
 
 #. module: sale_contract
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9233
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9480
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_wizard_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_9241
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_9488
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_line_id
 msgid "ID"
 msgstr "ID"
@@ -477,6 +482,11 @@ msgid "Month(s)"
 msgstr "Maand(e)"
 
 #. module: sale_contract
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_recurring_monthly
+msgid "Monthly Recurring Revenue"
+msgstr "Maandelijkse herhalende inkomsten"
+
+#. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "My Activities"
 msgstr "Mijn activiteiten"
@@ -516,7 +526,6 @@ msgid "Overdue Activities"
 msgstr "Activiteiten over tijd"
 
 #. module: sale_contract
-#: model:ir.model,name:sale_contract.model_res_partner
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "Partner"
 msgstr "Relatie"
@@ -527,7 +536,7 @@ msgid "Pending contracts"
 msgstr "Contracten in afwachting"
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:181
+#: code:addons/sale_contract/models/sale_subscription.py:205
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
 msgstr "U dient een verkoop dagboek aan te maken voor bedrijf ¨%s¨"
@@ -924,8 +933,8 @@ msgid "The user will have write access to Subscriptions."
 msgstr "De gebruiker heeft schrijfrechten op abonnementen."
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_order.py:100
-#: code:addons/sale_contract/models/sale_subscription.py:198
+#: code:addons/sale_contract/models/sale_order.py:102
+#: code:addons/sale_contract/models/sale_subscription.py:222
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
 msgstr "Deze factuur omvat de volgende periode: %s - %s"
@@ -1019,7 +1028,7 @@ msgstr ""
 "klanten."
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:170
+#: code:addons/sale_contract/models/sale_subscription.py:194
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
 msgstr "U moet eerst een klant selecteren voor abonnement %s"

@@ -13,10 +13,10 @@
 # selim kartal <kartalselim37@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: selim kartal <kartalselim37@gmail.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -78,7 +78,7 @@ msgstr ""
 "lütfen sağlayıcı hesabınızı doldurun."
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:64
+#: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
 msgstr "Göndermek istediğiniz en az bir belgede hata var."
@@ -113,6 +113,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Compute price"
 msgstr "Fiyat hesaplama"
+
+#. module: print
+#: model:ir.model,name:print.model_res_partner
+msgid "Contact"
+msgstr "Kontak"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
@@ -153,7 +158,8 @@ msgstr "Alacak"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_currency_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_currency_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_provider_currency_id
 msgid "Currency"
 msgstr "Kur"
 
@@ -168,8 +174,18 @@ msgid "Display Name"
 msgstr "Ad Görünümü"
 
 #. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_name
+msgid "Document"
+msgstr "Belge"
+
+#. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Document Detail"
+msgstr ""
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
+msgid "Document sensable"
 msgstr ""
 
 #. module: print
@@ -233,6 +249,13 @@ msgstr "Fatura"
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
 msgid "Is address valid"
 msgstr ""
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
+msgid "Is sendable"
+msgstr "Gönderilebilir"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin___last_update
@@ -337,10 +360,22 @@ msgid "Paper Weight"
 msgstr ""
 
 #. module: print
-#: model:ir.model,name:print.model_res_partner
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Partner"
 msgstr "İş Ortağı"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
+msgid "Partner has an addess"
+msgstr ""
+
+#. module: print
+#: code:addons/print/wizard/print_order_wizard.py:71
+#, python-format
+msgid ""
+"Please check the document is in a correct state, and that its partner has a "
+"correct postal address."
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -451,6 +486,12 @@ msgid "Recipient partner"
 msgstr ""
 
 #. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_report_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
+msgid "Report"
+msgstr "Çıktı"
+
+#. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Reset to Draft"
 msgstr "Taslağa Ayarla"
@@ -461,7 +502,7 @@ msgid "Resource ID"
 msgstr "Kaynak ID"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_model
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
 msgid "Resource Model"
 msgstr "Kaynak Model"
 
@@ -512,7 +553,6 @@ msgid "Sent"
 msgstr "Gönderilmiş"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_state
 #: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
 msgid "State"
 msgstr "Durumu"
@@ -544,7 +584,15 @@ msgid "Test"
 msgstr "Test Adı"
 
 #. module: print
-#: code:addons/print/models/print_provider.py:191
+#: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,help:print.field_print_provider_currency_id
+msgid ""
+"The currency will be used for amount, balance account, print order price, "
+"..."
+msgstr ""
+
+#. module: print
+#: code:addons/print/models/print_provider.py:229
 #, python-format
 msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
@@ -552,7 +600,7 @@ msgid ""
 msgstr ""
 
 #. module: print
-#: code:addons/print/models/print_provider.py:186
+#: code:addons/print/models/print_provider.py:224
 #, python-format
 msgid ""
 "The document you want to print and send is not printable. There is no report"
@@ -560,13 +608,13 @@ msgid ""
 msgstr ""
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:62
+#: code:addons/print/wizard/print_order_wizard.py:68
 #, python-format
-msgid "The document you want to send contains the following mistake : %s"
+msgid "The document you want to send contains a mistake."
 msgstr ""
 
 #. module: print
-#: code:addons/print/models/account_invoice.py:20
+#: code:addons/print/models/account_invoice.py:26
 #, python-format
 msgid ""
 "This invoice was sent by post with the provider %(provider_name)s at the "

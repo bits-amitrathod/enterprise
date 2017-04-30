@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Jeffery CHEN <jeffery9@gmail.com>, 2016
+# Luke <cialuo@qq.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,7 +71,7 @@ msgid ""
 msgstr "<b> 信贷错误 :</b> 你的供应商信用账户是负的。请发送文件来补充提供者账户。"
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:64
+#: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
 msgstr "至少有一个你要发出的文档有错误"
@@ -104,6 +106,11 @@ msgstr "颜色"
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Compute price"
 msgstr "计算价格"
+
+#. module: print
+#: model:ir.model,name:print.model_res_partner
+msgid "Contact"
+msgstr "联系人"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
@@ -144,7 +151,8 @@ msgstr "贷方"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_currency_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_currency_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_provider_currency_id
 msgid "Currency"
 msgstr "币种"
 
@@ -159,9 +167,19 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_name
+msgid "Document"
+msgstr "单据"
+
+#. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Document Detail"
 msgstr "文档明细"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
+msgid "Document sensable"
+msgstr ""
 
 #. module: print
 #: selection:print.order,state:0
@@ -224,6 +242,13 @@ msgstr "发票"
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
 msgid "Is address valid"
 msgstr "有效地址"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
+msgid "Is sendable"
+msgstr "可发送"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin___last_update
@@ -328,10 +353,22 @@ msgid "Paper Weight"
 msgstr "纸张重量"
 
 #. module: print
-#: model:ir.model,name:print.model_res_partner
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Partner"
 msgstr "业务伙伴"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
+msgid "Partner has an addess"
+msgstr ""
+
+#. module: print
+#: code:addons/print/wizard/print_order_wizard.py:71
+#, python-format
+msgid ""
+"Please check the document is in a correct state, and that its partner has a "
+"correct postal address."
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -442,6 +479,12 @@ msgid "Recipient partner"
 msgstr "收件人"
 
 #. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_report_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
+msgid "Report"
+msgstr "报表"
+
+#. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Reset to Draft"
 msgstr "重置为草稿"
@@ -452,7 +495,7 @@ msgid "Resource ID"
 msgstr "资源ID"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_model
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
 msgid "Resource Model"
 msgstr "资源模型"
 
@@ -503,7 +546,6 @@ msgid "Sent"
 msgstr "已汇"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_state
 #: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
 msgid "State"
 msgstr "状态"
@@ -535,7 +577,15 @@ msgid "Test"
 msgstr "测试"
 
 #. module: print
-#: code:addons/print/models/print_provider.py:191
+#: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,help:print.field_print_provider_currency_id
+msgid ""
+"The currency will be used for amount, balance account, print order price, "
+"..."
+msgstr ""
+
+#. module: print
+#: code:addons/print/models/print_provider.py:229
 #, python-format
 msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
@@ -543,7 +593,7 @@ msgid ""
 msgstr "这张单子没有相关的PDF:有必须要选定一个附件或者设置对象ID和模型名字字段"
 
 #. module: print
-#: code:addons/print/models/print_provider.py:186
+#: code:addons/print/models/print_provider.py:224
 #, python-format
 msgid ""
 "The document you want to print and send is not printable. There is no report"
@@ -551,13 +601,13 @@ msgid ""
 msgstr "你想要打印并发送的单子不可打印。模型%s没有报表动作（ir.actions.report.xml）"
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:62
+#: code:addons/print/wizard/print_order_wizard.py:68
 #, python-format
-msgid "The document you want to send contains the following mistake : %s"
-msgstr "你想要发送的文档包含以下错误：%s"
+msgid "The document you want to send contains a mistake."
+msgstr ""
 
 #. module: print
-#: code:addons/print/models/account_invoice.py:20
+#: code:addons/print/models/account_invoice.py:26
 #, python-format
 msgid ""
 "This invoice was sent by post with the provider %(provider_name)s at the "

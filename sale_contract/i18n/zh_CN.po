@@ -9,10 +9,10 @@
 # waveyeung <waveyeung@qq.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
 "Last-Translator: waveyeung <waveyeung@qq.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -174,6 +174,11 @@ msgstr "公司的计量单位"
 #: model:ir.ui.menu,name:sale_contract.menu_sale_subscription_config
 msgid "Configuration"
 msgstr "配置"
+
+#. module: sale_contract
+#: model:ir.model,name:sale_contract.model_res_partner
+msgid "Contact"
+msgstr "联系人"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
@@ -349,12 +354,12 @@ msgid "Helps you handle subscriptions and recurring invoicing."
 msgstr "帮你处理订阅和定期开票"
 
 #. module: sale_contract
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9233
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9480
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_wizard_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_9241
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_9488
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_line_id
 msgid "ID"
 msgstr "ID"
@@ -462,6 +467,11 @@ msgid "Month(s)"
 msgstr "月"
 
 #. module: sale_contract
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_recurring_monthly
+msgid "Monthly Recurring Revenue"
+msgstr "每月经常性收入"
+
+#. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "My Activities"
 msgstr "我的活动"
@@ -500,7 +510,6 @@ msgid "Overdue Activities"
 msgstr "逾期活动"
 
 #. module: sale_contract
-#: model:ir.model,name:sale_contract.model_res_partner
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "Partner"
 msgstr "业务伙伴"
@@ -511,7 +520,7 @@ msgid "Pending contracts"
 msgstr "待定的合约"
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:181
+#: code:addons/sale_contract/models/sale_subscription.py:205
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
 msgstr "请给公司\"%s\"定义一个销售日记账"
@@ -901,8 +910,8 @@ msgid "The user will have write access to Subscriptions."
 msgstr ""
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_order.py:100
-#: code:addons/sale_contract/models/sale_subscription.py:198
+#: code:addons/sale_contract/models/sale_order.py:102
+#: code:addons/sale_contract/models/sale_subscription.py:222
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
 msgstr "这张发票覆盖了以下区间： %s - %s"
@@ -990,7 +999,7 @@ msgid ""
 msgstr "你必须定义一个能卖的产品，不管实物，消耗品，或者给客户提供的服务"
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:170
+#: code:addons/sale_contract/models/sale_subscription.py:194
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
 msgstr "你必须首先选择一个订阅的客户 %s!"
