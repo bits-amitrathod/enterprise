@@ -5,6 +5,7 @@ import logging
 import re
 import time
 import threading
+import uuid
 
 import requests
 from requests.exceptions import ConnectionError
@@ -120,6 +121,14 @@ class MailChannel(models.Model):
                         self._fcm_process_canonical(res['canonical'], env)
 
     @api.model
+    def _get_mobile_push_uuid(self):
+        push_uuid = self.env['ir.config_parameter'].sudo().get_param('mobile.uuid')
+        if not push_uuid:
+            push_uuid = str(uuid.uuid4())
+            self.env['ir.config_parameter'].sudo().set_param('mobile.uuid', push_uuid)
+        return push_uuid
+
+    @api.model
     def _fcm_prepare_payload(self, message):
         """Returns dictionary containing message information for mobile device. This info will be delivered
         to mobile device via Google Firebase Cloud Messaging(FCM). And it is having limit of 4000 bytes (4kb)
@@ -128,7 +137,7 @@ class MailChannel(models.Model):
             "author_name": message.author_id.name,
             "model": message.model,
             "res_id": message.res_id,
-            "db_id": self.env['ir.config_parameter'].sudo().get_param('database.uuid')
+            "db_id": self._get_mobile_push_uuid()
         }
         if message.model == 'mail.channel':
             channel = message.channel_ids.filtered(lambda r: r.id == message.res_id)
