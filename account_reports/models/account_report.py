@@ -483,9 +483,9 @@ class AccountReport(models.AbstractModel):
     def format_date(self, dt_to, dt_from, options, dt_filter='date'):
         # previously get_full_date_names
         options_filter = options[dt_filter].get('filter', '')
-        if type(dt_to) in (str, unicode):
+        if isinstance(dt_to, pycompat.string_types):
             dt_to = datetime.strptime(dt_to, DEFAULT_SERVER_DATE_FORMAT)
-        if dt_from and type(dt_from) in (str, unicode):
+        if dt_from and isinstance(dt_from, pycompat.string_types):
             dt_from = datetime.strptime(dt_from, DEFAULT_SERVER_DATE_FORMAT)
         if 'month' in options_filter:
             return format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), date_format='MMM YYYY')

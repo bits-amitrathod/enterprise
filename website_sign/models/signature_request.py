@@ -280,7 +280,7 @@ class SignatureRequest(models.Model):
             self.completed_document = self.template_id.attachment_id.datas
             return
 
-        old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)))
+        old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)), overwriteWarnings=False)
         font = "Helvetica"
         normalFontSize = 0.015
 
@@ -337,7 +337,7 @@ class SignatureRequest(models.Model):
 
         can.save()
 
-        item_pdf = PdfFileReader(packet)
+        item_pdf = PdfFileReader(packet, overwriteWarnings=False)
         new_pdf = PdfFileWriter()
 
         for p in range(0, old_pdf.getNumPages()):

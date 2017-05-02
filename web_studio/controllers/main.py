@@ -447,23 +447,19 @@ class WebStudioController(http.Controller):
         """
         # Get current model
         model = request.env['ir.model'].search([('model', '=', values.pop('model_name'))])
-        values.update({'model_id': model.id})
+        values['model_id'] = model.id
         # For many2one and many2many fields
         if values.get('relation_id'):
-            values.update({
-                'relation': request.env['ir.model'].browse(values.pop('relation_id')).model
-            })
+            values['relation'] = request.env['ir.model'].browse(values.pop('relation_id')).model
         # For one2many fields
         if values.get('relation_field_id'):
             field = request.env['ir.model.fields'].browse(values['relation_field_id'])
-            values.update({
-                'relation': field.model_id.model,
-                'relation_field': field.name,
-            })
+            values.update(
+                relation=field.model_id.model,
+                relation_field=field.name,
+            )
         if values.get('selection'):
-            values.update({
-                'selection': unicode(values.get('selection')),
-            })
+            values['selection'] = pycompat.text_type(values['selection']),
         # Create new field
         return request.env['ir.model.fields'].create(values)
 

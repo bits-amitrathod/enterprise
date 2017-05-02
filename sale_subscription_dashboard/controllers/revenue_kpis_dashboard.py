@@ -340,9 +340,9 @@ class RevenueKPIsDashboard(http.Controller):
     @http.route('/sale_subscription_dashboard/compute_stat', type='json', auth='user')
     def compute_stat(self, stat_type, start_date, end_date, filters):
 
-        if isinstance(start_date, (str, unicode)):
+        if isinstance(start_date, pycompat.string_types):
             start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
-        if isinstance(end_date, (str, unicode)):
+        if isinstance(end_date, pycompat.string_types):
             end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
 
         return STAT_TYPES[stat_type]['compute'](start_date, end_date, filters)

@@ -15,7 +15,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _check_coda(self, data_file):
         # Matches the first 24 characters of a CODA file, as defined by the febelfin specifications
-        return re.match('0{5}\d{9}05[ D] +', data_file) is not None
+        return re.match(b'0{5}\d{9}05[ D] +', data_file) is not None
 
     def _parse_file(self, data_file):
         if not self._check_coda(data_file):
@@ -24,7 +24,7 @@ class AccountBankStatementImport(models.TransientModel):
         def rmspaces(s):
             return " ".join(s.split())
 
-        recordlist = unicode(data_file, 'windows-1252', 'strict').split('\n')
+        recordlist = data_file.decode('windows-1252').split(u'\n')
         statements = []
         globalisation_comm = {}
         for line in recordlist:

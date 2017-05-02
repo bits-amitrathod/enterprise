@@ -300,15 +300,15 @@ class View(models.Model):
 
         Returns the parent_node with the newly-appended node
         """
-        # This doesn't copy the children, but we don't truly
-        # care, since children will be another diff line
-        if isinstance(node.tag, basestring):
+        if node.tag is etree.Comment:
+            # For comments, node.tag is the constructor of Comment nodes
+            elem = parent_node.append(etree.Comment(node.text))
+        else:
+            # This doesn't copy the children, but we don't truly
+            # care, since children will be another diff line
             elem = etree.SubElement(parent_node, node.tag, node.attrib)
             elem.text = node.text
             elem.tail = node.tail
-        else:
-            # For comments, node.tag is the constructor of Comment nodes
-            elem = parent_node.append(node.tag(node.text))
         return elem
 
     def _node_to_xpath(self, target_node):
@@ -410,10 +410,10 @@ class View(models.Model):
         """
         result = ''
         node_string = ancestor + '/'
-        if isinstance(node.tag, basestring):
-            node_string += node.tag
+        if node.tag is etree.Comment:
+            node.string += 'comment'
         else:
-            node_string += 'comment'
+            node_string += node.tag
 
         if node.get('name') and node.get('name').strip():
             node_string += '[@name=%s]' % node.get('name').strip().replace('\n', ' ')
