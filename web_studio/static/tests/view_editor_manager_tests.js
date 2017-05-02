@@ -2,6 +2,7 @@ odoo.define('web_studio.ViewEditorManager_tests', function (require) {
 "use strict";
 
 var concurrency = require('web.concurrency');
+var ListRenderer = require('web.ListRenderer');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
 
@@ -26,18 +27,20 @@ var createViewEditorManager = function (arch, params) {
             },
         },
     };
-    var mockServer = testUtils.addMockEnvironment(widget, {
-        data: data,
-        mockRPC: function(route, args) {
+    var serverParams = {
+        data: data
+    };
+    if (params.mockRPC) {
+        serverParams.mockRPC = params.mockRPC;
+    } else {
+        serverParams.mockRPC = function(route, args) {
             if (route === '/web_studio/get_default_value') {
                 return $.when({});
             }
-            if (route === '/web_studio/get_email_alias') {
-                return $.when({email_alias: 'coucou'});
-            }
             return this._super(route, args);
-        },
-    });
+        };
+    }
+    var mockServer = testUtils.addMockEnvironment(widget, serverParams);
     var fieldsView = mockServer.fieldsViewGet(arch, modelName);
     var env = {
         modelName: modelName,
@@ -47,12 +50,6 @@ var createViewEditorManager = function (arch, params) {
         context: {},
         groupBy: [],
     };
-    // var options = {
-    //     ids: [1],
-    //     res_id: 1,
-    //     studioViewArch: "<data/>",
-    //     studioViewID: 1,
-    // };
     var vem = new ViewEditorManager(widget, {
         fields_view: fieldsView,
         view_env: env,
@@ -274,7 +271,17 @@ QUnit.module('Studio', {}, function () {
                 "<div class='oe_chatter'/>" +
             "</form>";
 
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager(arch, {
+            mockRPC: function(route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/get_email_alias') {
+                    return $.when({email_alias: 'coucou'});
+                }
+                return this._super(route, args);
+            },
+        });
 
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor .oe_chatter[data-node-id]').length, 1,
             "there should be a chatter node");
@@ -494,7 +501,69 @@ QUnit.module('Studio', {}, function () {
             vem.destroy();
             done();
         });
+    });
 
+    QUnit.test('error during tree rendering: undo', function(assert) {
+        assert.expect(4);
+
+        var arch = "<tree><field name='id'/></tree>";
+
+        var fieldsView;
+        var vem = createViewEditorManager(arch, {
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = "<tree><field name='id'/></tree>";
+                    return $.when({
+                        fields_views: {
+                            list: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        testUtils.intercept(vem, 'studio_error', function (event) {
+            assert.strictEqual(event.data.error, 'view_rendering',
+                "should have raised an error");
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // make the rendering crashes only the first time (the operation will
+        // be undone and we will re-render with the old arch the second time)
+        var oldRenderView = ListRenderer.prototype._renderView;
+        var firstExecution = true;
+        ListRenderer.prototype._renderView = function () {
+            if (firstExecution) {
+                firstExecution = false;
+                throw "Error during rendering";
+            } else {
+                return oldRenderView.apply(this, arguments);
+            }
+        };
+
+        // delete a field to generate a view edition
+        vem.$('.o_web_studio_list_view_editor [data-node-id]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        $('.modal-dialog .btn-primary').click();
+
+        assert.strictEqual($('.o_web_studio_view_renderer').length, 1,
+            "there should only be one renderer");
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "the view should be back as normal with 1 field");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should now display the field properties");
+
+        ListRenderer.prototype._renderView = oldRenderView;
+
+        vem.destroy();
     });
 });
 

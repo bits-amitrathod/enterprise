@@ -331,24 +331,26 @@ var ViewEditorManager = Widget.extend({
 
         oldEditor = this.editor;
         return this.instantiateEditor(options).then(function (editor) {
-            self.editor = editor;
+            var def = $.Deferred();
             var fragment = document.createDocumentFragment();
             try {
-                return self.editor.appendTo(fragment).then(function () {
-                    self.$('.o_web_studio_view_renderer').append(fragment);
-
-                    oldEditor.destroy();
-
-                    // restore previous state
-                    self.$el.scrollTop(renderer_scrolltop);
-                    if (local_state) {
-                        self.editor.setLocalState(local_state);
-                    }
-                });
+                def = editor.appendTo(fragment);
             } catch (e) {
                 self.trigger_up('studio_error', {error: 'view_rendering'});
                 self.undo(true);
+                def.reject();
             }
+            return $.when(def).then(function () {
+                self.$('.o_web_studio_view_renderer').append(fragment);
+                self.editor = editor;
+                oldEditor.destroy();
+
+                // restore previous state
+                self.$el.scrollTop(renderer_scrolltop);
+                if (local_state) {
+                    self.editor.setLocalState(local_state);
+                }
+            });
         });
     },
     /**
