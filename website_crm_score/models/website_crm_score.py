@@ -40,12 +40,12 @@ class website_crm_score(models.Model):
             raise Warning('The domain is incorrectly formatted')
 
     name = fields.Char('Name', required=True)
-    rule_type = fields.Selection([('score', 'Scoring'), ('active', 'Archive'), ('unlink', 'Delete')], default='score', required=True,
+    rule_type = fields.Selection([('score', 'Scoring'), ('active', 'Archive'), ('unlink', 'Delete')], default='score', required=True, track_visibility='onchange',
                                  help='Scoring will add a score of `value` for this lead.\n'
                                  'Archive will set active = False on the lead (archived)\n'
                                  'Delete will delete definitively the lead\n\n'
                                  'Actions are done in sql and bypass the access rights and orm mechanism (create `score`, write `active`, unlink `crm_lead`)')
-    value = fields.Float('Value', default=0, required=True)
+    value = fields.Float('Value', default=0, required=True, track_visibility='onchange')
     domain = fields.Char('Domain', track_visibility='onchange', required=True)
     event_based = fields.Boolean(
         'Event-based rule',
@@ -53,10 +53,11 @@ class website_crm_score(models.Model):
              'that have already been checked previously. This option incurs a large '
              'performance penalty, so it should be checked only for rules that depend '
              'on dynamic events',
-        default=False
+        default=False, track_visibility='onchange'
     )
-    running = fields.Boolean('Active', default=True)
+    running = fields.Boolean('Active', default=True, track_visibility='onchange')
     leads_count = fields.Integer(compute='_count_leads')
+    last_run = fields.Datetime('Last run', help='Date from the last scoring on all leads.')
 
     @api.model
     def assign_scores_to_leads(self, ids=False, lead_ids=False):
@@ -64,14 +65,15 @@ class website_crm_score(models.Model):
         domain = [('running', '=', True)]
         if ids:
             domain.append(('id', 'in', ids))
-        scores = self.search_read(domain=domain, fields=['domain', 'rule_type'])
+        scores = self.search(domain)
 
         # Sort rule to unlink before scoring
         priorities = dict(unlink=1, active=2, score=3)
         scores = sorted(scores, key=lambda k: priorities.get(k['rule_type']))
 
         for score in scores:
-            domain = safe_eval(score['domain'], evaluation_context)
+            now = datetime.datetime.now()
+            domain = safe_eval(score.domain, evaluation_context)
 
             # Don't replace the domain with a 'not in' like below... that doesn't make the same thing !!!
             # domain.extend(['|', ('stage_id.on_change', '=', False), ('stage_id.probability', 'not in', [0,100])])
@@ -81,34 +83,34 @@ class website_crm_score(models.Model):
             where_clause, where_params = e.to_sql()
 
             where_clause += """ AND (id NOT IN (SELECT lead_id FROM crm_lead_score_rel WHERE score_id = %s)) """
-            where_params.append(score['id'])
+            where_params.append(score.id)
 
             if not self.event_based and not lead_ids:
-                self._cr.execute('SELECT max(lead_id) FROM crm_lead_score_rel WHERE score_id = %s', (score['id'],))
-                last_id = self._cr.fetchone()[0]
-                if last_id:
+                if score.last_run:
                     # Only check leads that are newer than the last matching lead.
-                    # Could be based on a "last run date" for a more precise optimization
-                    where_clause += """ AND (id > %s) """
-                    where_params.append(last_id)
+                    where_clause += """ AND (create_date > %s) """
+                    where_params.append(score.last_run)
 
             if lead_ids:
                 where_clause += """ AND (id in %s) """
                 where_params.append(tuple(lead_ids))
 
-            if score['rule_type'] == 'score':
+            if score.rule_type == 'score':
                 self._cr.execute("""INSERT INTO crm_lead_score_rel
                                     SELECT crm_lead.id as lead_id, %s as score_id
                                     FROM crm_lead
-                                    WHERE %s RETURNING lead_id""" % (score['id'], where_clause), where_params)
+                                    WHERE %s RETURNING lead_id""" % (score.id, where_clause), where_params)
                 # Force recompute of fields that depends on score_ids
                 returning_ids = [resp[0] for resp in self._cr.fetchall()]
                 leads = self.env["crm.lead"].browse(returning_ids)
                 leads.modified(['score_ids'])
                 leads.recompute()
-            elif score['rule_type'] == 'unlink':
+            elif score.rule_type == 'unlink':
                 self._cr.execute("DELETE FROM crm_lead WHERE %s" % where_clause, where_params)
-            elif score['rule_type'] == 'active':
+            elif score.rule_type == 'active':
                 self._cr.execute("UPDATE crm_lead set active = 'f' WHERE %s" % where_clause, where_params)
+
+            if not (lead_ids or ids):  # if global scoring
+                score.last_run = now
 
         _logger.info('End scoring')
