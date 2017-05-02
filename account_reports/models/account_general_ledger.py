@@ -259,6 +259,7 @@ class report_account_general_ledger(models.AbstractModel):
 
     @api.model
     def get_lines(self, options, line_id=None):
+        format_date = self.env['ir.qweb.field.date'].value_to_html
         lines = []
         context = self.env.context
         company_id = self.env.user.company_id
@@ -331,7 +332,7 @@ class report_account_general_ledger(models.AbstractModel):
                         'caret_options': caret_type,
                         'parent_id': 'account_%s' % (account.id,),
                         'name': line.move_id.name if line.move_id.name else '/',
-                        'columns': [{'name': v} for v in [line.date, name, partner_name, currency,
+                        'columns': [{'name': v} for v in [format_date(line.date), name, partner_name, currency,
                                     line_debit != 0 and self.format_value(line_debit) or '',
                                     line_credit != 0 and self.format_value(line_credit) or '',
                                     self.format_value(progress)]],
