@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-09 14:02+0000\n"
-"PO-Revision-Date: 2017-03-09 14:02+0000\n"
+"POT-Creation-Date: 2017-04-27 20:17+0000\n"
+"PO-Revision-Date: 2017-04-27 20:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,13 +17,43 @@ msgstr ""
 
 #. module: l10n_mx_edi
 #: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
+msgid "<span> | Certification Date:</span>"
+msgstr "<span> | Fecha de certificación:</span>"
+
+#. module: l10n_mx_edi
+#: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
+msgid "<span> | Emission Date:</span>"
+msgstr "<span> | Fecha de Emisión:</span>"
+
+#. module: l10n_mx_edi
+#: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
+msgid "<span> | Expedition place:</span>"
+msgstr "<span> | Lugar de Expedición:</span>"
+
+#. module: l10n_mx_edi
+#: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
+msgid "<span> | Fiscal Folio:</span>"
+msgstr "<span> | Folio Fiscal:</span>"
+
+#. module: l10n_mx_edi
+#: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
+msgid "<span> | Fiscal Regime:</span>"
+msgstr "<span> | Régimen Fiscal:</span>"
+
+#. module: l10n_mx_edi
+#: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
 msgid "<span>Digital stamp SAT</span>"
-msgstr "<span>Sello digital de SAT</span>"
+msgstr "<span>Sello digital del SAT</span>"
 
 #. module: l10n_mx_edi
 #: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
 msgid "<span>Digital stamp of the emitter</span>"
 msgstr "<span>Sello digital del emisor</span>"
+
+#. module: l10n_mx_edi
+#: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
+msgid "<span>Emitter certificate:</span>"
+msgstr "<span>Certificado del emisor:</span>"
 
 #. module: l10n_mx_edi
 #: model:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document_mx
@@ -61,7 +91,7 @@ msgid "<strong>This document is a printed representation of a CFDI</strong>"
 msgstr "<strong>Este documento es una representación impresa de un CFDI</strong>"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:421
+#: code:addons/l10n_mx_edi/models/account_invoice.py:423
 #, python-format
 msgid "A delay of 2 hours has to be respected before to cancel"
 msgstr "Un retraso de 2 horas tiene que ser respetado antes de cancelar"
@@ -73,6 +103,7 @@ msgstr "Se requiere una firma de esta factura, pero no está firmada."
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields,help:l10n_mx_edi.field_res_partner_l10n_mx_edi_addenda
+#: model:ir.model.fields,help:l10n_mx_edi.field_res_users_l10n_mx_edi_addenda
 msgid "A view representing the addenda"
 msgstr "Una vista que representa la addenda"
 
@@ -83,6 +114,7 @@ msgstr "Activo"
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_res_partner_l10n_mx_edi_addenda
+#: model:ir.model.fields,field_description:l10n_mx_edi.field_res_users_l10n_mx_edi_addenda
 #: model:ir.ui.view,arch_db:l10n_mx_edi.res_partner_form_inherit_l10n_mx_edi
 msgid "Addenda"
 msgstr "Addenda"
@@ -113,6 +145,12 @@ msgstr "Nombre del CFDI"
 #: selection:account.invoice,l10n_mx_edi_sat_status:0
 msgid "Cancelled"
 msgstr "Cancelado"
+
+#. module: l10n_mx_edi
+#: code:addons/l10n_mx_edi/models/account_invoice.py:427
+#, python-format
+msgid "Cancelling got an error"
+msgstr "Se produjo un error al cancelar"
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_invoice_l10n_mx_edi_cfdi_certificate_id
@@ -161,14 +199,15 @@ msgid "Code defined by the SAT by this payment method. This value will be set in
 msgstr "Código definido por el SAT para este método de pago. Este valor se asignara en el nodo XML \"metodoDePago\"."
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:486
-#: code:addons/l10n_mx_edi/models/account_invoice.py:519
+#: code:addons/l10n_mx_edi/models/account_invoice.py:488
+#: code:addons/l10n_mx_edi/models/account_invoice.py:521
 #, python-format
 msgid "Code: "
 msgstr "Código: "
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_res_partner_l10n_mx_edi_colony
+#: model:ir.model.fields,field_description:l10n_mx_edi.field_res_users_l10n_mx_edi_colony
 msgid "Colony Name"
 msgstr "Nombre de Colonia"
 
@@ -285,7 +324,6 @@ msgstr "Si este método de pago no es usado por la compañía puede ser desactiv
 msgid "Indicates the way the invoice was/will be paid, where the options could be: Cash, Nominal Check, Credit Card, etc. Leave empty if unkown and the XML will show \"Unidentified\"."
 msgstr "Indica la forma en que se pagó o se pagará la factura, donde las opciones podrían ser: Efectivo, Cheque, Tarjeta de Crédito, etc. Deje vacía si no conoce la forma de pago y el XML mostrará \"No Identificado\"."
 
-
 #. module: l10n_mx_edi
 #: model:ir.model,name:l10n_mx_edi.model_account_invoice
 msgid "Invoice"
@@ -331,6 +369,7 @@ msgstr "Última actualización el"
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_res_partner_l10n_mx_edi_locality
+#: model:ir.model.fields,field_description:l10n_mx_edi.field_res_users_l10n_mx_edi_locality
 msgid "Locality Name"
 msgstr "Nombre de la Localidad"
 
@@ -381,8 +420,8 @@ msgid "MX parameters"
 msgstr "Parámetros MX"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:488
-#: code:addons/l10n_mx_edi/models/account_invoice.py:521
+#: code:addons/l10n_mx_edi/models/account_invoice.py:490
+#: code:addons/l10n_mx_edi/models/account_invoice.py:523
 #, python-format
 msgid "Message: "
 msgstr "Mensaje: "
@@ -393,19 +432,19 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:698
+#: code:addons/l10n_mx_edi/models/account_invoice.py:700
 #, python-format
 msgid "No PAC credentials specified."
 msgstr "No se especificaron credenciales de PAC."
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:700
+#: code:addons/l10n_mx_edi/models/account_invoice.py:702
 #, python-format
 msgid "No PAC specified."
 msgstr "PAC no especificado"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:690
+#: code:addons/l10n_mx_edi/models/account_invoice.py:692
 #, python-format
 msgid "No valid certificate found"
 msgstr "No se ha encontrado ningún certificado válido"
@@ -482,7 +521,7 @@ msgid "Payment method, is found in the SAT catalog."
 msgstr "Método de Pago, se encuentra en el catalogo de SAT."
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:703
+#: code:addons/l10n_mx_edi/models/account_invoice.py:705
 #, python-format
 msgid "Please check your configuration: "
 msgstr "Compruebe su configuración: "
@@ -555,14 +594,14 @@ msgid "The bank account the client will pay from. Leave empty if unkown and the 
 msgstr "La cuenta bancaria con la que el cliente pagará. Deje vacía si no la conoce y el XML mostrará \"No Identificada\"."
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:513
-#: code:addons/l10n_mx_edi/models/account_invoice.py:536
+#: code:addons/l10n_mx_edi/models/account_invoice.py:515
+#: code:addons/l10n_mx_edi/models/account_invoice.py:538
 #, python-format
 msgid "The cancel service has been called with success"
 msgstr "El servicio de cancelación se ha llamado con éxito"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:516
+#: code:addons/l10n_mx_edi/models/account_invoice.py:518
 #, python-format
 msgid "The cancel service requested failed"
 msgstr "El servicio de cancelación solicitado falló"
@@ -602,7 +641,7 @@ msgid "The cfdi xml content encoded in base64."
 msgstr "El contenido xml del cfdi codificado en base64."
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:481
+#: code:addons/l10n_mx_edi/models/account_invoice.py:483
 #, python-format
 msgid "The content of the attachment has been updated"
 msgstr "El contenido del archivo adjunto se ha actualizado"
@@ -644,13 +683,13 @@ msgid "The serial number to add to electronic documents"
 msgstr "El número de serie para agregar a los documentos electrónicos"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:471
+#: code:addons/l10n_mx_edi/models/account_invoice.py:473
 #, python-format
 msgid "The sign service has been called with success"
 msgstr "El servicio de firma ha sido llamado con éxito"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_invoice.py:483
+#: code:addons/l10n_mx_edi/models/account_invoice.py:485
 #, python-format
 msgid "The sign service requested failed"
 msgstr "El servicio de firma solicitado fallo"
@@ -715,7 +754,7 @@ msgstr "Utilizado en entornos de multi sucursales, para indicar la dirección de
 #: code:addons/l10n_mx_edi/models/account_invoice.py:144
 #, python-format
 msgid "Using General Public VAT because no vat found"
-msgstr "Usando RFC Publico porque no se encontró RFC"
+msgstr "Usando RFC Público porque no se encontró RFC"
 
 #. module: l10n_mx_edi
 #: selection:account.invoice,l10n_mx_edi_sat_status:0
