@@ -4,15 +4,14 @@ from odoo.osv import expression
 
 DEFAULT_INVOICED_TIMESHEET = 'all'
 
+
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     @api.multi
     def _compute_analytic(self, domain=None):
-        invoice_approved_only = \
-            'approved' == self.env['ir.config_parameter'].sudo().get_param(
-                'sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
-        if invoice_approved_only:
+        param_invoiced_timesheet = self.env['ir.config_parameter'].sudo().get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
+        if param_invoiced_timesheet == 'approved':
             domain = [
                     '&',
                         ('so_line', 'in', self.ids),
@@ -28,19 +27,20 @@ class SaleOrderLine(models.Model):
         return super(SaleOrderLine, self)._compute_analytic(domain=domain)
 
 
-class Validation(models.TransientModel):
-    _inherit = 'timesheet_grid.validation'
+class ValidationWizard(models.TransientModel):
+    _inherit = 'timesheet.validation'
 
+    # Recompute SO Lines delivered at validation
     @api.multi
-    def validate(self):
+    def action_validate(self):
         # As super will change the "timesheet_validated" field of a
         # "validable_employee", we have to get the min date before
         # calling super().
-        validable_employees = self.validable_ids.filtered('validate').mapped('employee_id')
+        validable_employees = self.validation_line_ids.filtered('validate').mapped('employee_id')
         oldest_last_validation_date = None
         if validable_employees:
             oldest_last_validation_date = min(validable_employees.mapped('timesheet_validated'))
-        res = super(Validation, self).validate()
+        res = super(ValidationWizard, self).action_validate()
 
         # normally this would be done through a computed field, or triggered
         # by the recomputation of self.validated or something, but that does
@@ -55,14 +55,13 @@ class Validation(models.TransientModel):
         # should give the same result as (lines).mapped('user_id')
         domain = expression.AND([
             [('is_timesheet', '=', True)],
-            [('user_id', 'in', validable_employees.mapped('user_id').ids)]
+            [('employee_id', 'in', validable_employees.ids)]
         ])
         if oldest_last_validation_date:
             domain = expression.AND([
                 domain,
-                [('date','>',oldest_last_validation_date)]
+                [('date', '>', oldest_last_validation_date)]
             ])
-
         self.env['account.analytic.line'].search(domain) \
             .mapped('so_line') \
             .sudo() \
@@ -90,5 +89,5 @@ class SaleConfiguration(models.TransientModel):
 
     @api.model
     def get_default_invoiced_timesheet(self, fields):
-        result = self.env['ir.config_parameter'].get_param('sale.invoiced_timesheet') or DEFAULT_INVOICED_TIMESHEET
+        result = self.env['ir.config_parameter'].get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
         return {'invoiced_timesheet': result}

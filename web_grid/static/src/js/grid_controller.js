@@ -125,6 +125,7 @@ var GridController = AbstractController.extend({
             var state = this.model.get();
             this.$buttons.find('.grid_arrow_previous').toggleClass('hidden', !state.prev);
             this.$buttons.find('.grid_arrow_next').toggleClass('hidden', !state.next);
+            this.$buttons.find('.grid_button_initial').toggleClass('hidden', !state.initial);
             this.$buttons.find('.grid_arrow_range[data-name=' + this.currentRange + ']')
                     .addClass('active')
                     .siblings().removeClass('active');
