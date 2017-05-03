@@ -19,6 +19,7 @@
         <field name="model">calendar.appointment.type</field>
         <field name="arch" type="xml">
             <form string="Appointment Type">
+                <field name="website_url" invisible="1"/>
                 <sheet>
                     <div class="oe_button_box" name="button_box" groups="base.group_user">
                         <div name="button_box" position="inside">
@@ -74,6 +75,7 @@
                                 <tree string="Employees">
                                     <field name="name"/>
                                     <field name="resource_calendar_id"/>
+                                    <field name="id" widget="appointment_employee_url" string="Individual Appointment Link" context="{'url': parent.website_url}" readonly="1"/>
                                 </tree>
                             </field>
                         </page>
