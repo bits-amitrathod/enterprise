@@ -19,10 +19,10 @@
         'views/hr_views.xml',
         'views/hr_recruitment_config_settings_views.xml',
         'data/hr_contract_salary_data.xml',
-        'data/hr_contract_salary_demo.xml',
     ],
     'qweb': [
     ],
     'demo': [
+        'data/hr_contract_salary_demo.xml',
     ],
 }
