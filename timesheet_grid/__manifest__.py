@@ -11,8 +11,10 @@
     'version': '1.0',
     'depends': ['web_grid', 'hr_timesheet'],
     'data': [
+        'data/timesheet_data.xml',
         'security/timesheet_security.xml',
         'views/views.xml',
+        'views/res_config_views.xml',
     ],
     'auto_install': True,
 }
