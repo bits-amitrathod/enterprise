@@ -413,7 +413,7 @@ class QualityAlert(models.Model):
         default=lambda x: x.env['quality.alert.team'].search([], limit=1))
     partner_id = fields.Many2one('res.partner', 'Vendor')
     check_id = fields.Many2one('quality.check', 'Check')
-    product_tmpl_id = fields.Many2one('product.template', 'Product', required=True)
+    product_tmpl_id = fields.Many2one('product.template', 'Product')
     product_id = fields.Many2one(
         'product.product', 'Product Variant',
         domain="[('product_tmpl_id', '=', product_tmpl_id)]")
@@ -463,3 +463,14 @@ class QualityAlert(models.Model):
         """
         stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
+
+    @api.model
+    def message_new(self, msg_dict, custom_values=None):
+        """ Override, used with creation by email alias. The purpose of the override is
+        to use the subject for description and not for the name.
+        """
+        # We need to add the name in custom_values or it will use the subject.
+        custom_values['name'] = self.env['ir.sequence'].next_by_code('quality.alert') or _('New')
+        subject = msg_dict.get('subject', ''),
+        custom_values['description'] = subject[0]
+        return super(QualityAlert, self).message_new(msg_dict, custom_values)
