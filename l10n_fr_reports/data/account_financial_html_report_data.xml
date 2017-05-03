@@ -1913,7 +1913,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_01_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_20_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_02')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -1933,7 +1933,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_01_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_8_5')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_04')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -1944,7 +1944,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_01_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_10_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_05')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -1974,7 +1974,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_01_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_5_5')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_08')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
      </record>
@@ -1985,7 +1985,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_01_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_2_1')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_09')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2006,7 +2006,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_10_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_20_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_11')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2026,7 +2026,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_10_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_8_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_13')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2037,7 +2037,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_10_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_10_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_14')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2066,7 +2066,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_10_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_5_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_17')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2077,7 +2077,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_10_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_2_1')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_18')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2099,7 +2099,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_19_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH-20_0'),ref('l10n_fr.tax_ACH-20_0_TTC')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_20')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2128,7 +2128,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_19_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH-8_5'),ref('l10n_fr.tax_ACH-8_5_TTC')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_23')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2139,7 +2139,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_19_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH-10_0'),ref('l10n_fr.tax_ACH-10_0_TTC')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_24')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2168,7 +2168,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_19_fr"/>
         <field name="level" eval="1"/>
-          <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH-5_5'),ref('l10n_fr.tax_ACH-5_5_TTC')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_27')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2179,7 +2179,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_19_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH-2_1'),ref('l10n_fr.tax_ACH-2_1_TTC')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_28')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2200,7 +2200,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_29_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH-20_0'),ref('l10n_fr.tax_ACH-20_0_TTC')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_30')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2220,7 +2220,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_29_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH-8_5'),ref('l10n_fr.tax_ACH-8_5_TTC')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_32')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2231,7 +2231,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_29_fr"/>
         <field name="level" eval="1"/>
-            <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH-10_0'),ref('l10n_fr.tax_ACH-10_0_TTC')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_33')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2260,7 +2260,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_29_fr"/>
         <field name="level" eval="1"/>
-            <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH-5_5'),ref('l10n_fr.tax_ACH-5_5_TTC')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_36')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2272,7 +2272,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_29_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH-2_1'), ref('l10n_fr.tax_ACH-2_1_TTC')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_37')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2293,7 +2293,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_38_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_IMMO_20_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_39')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2314,7 +2314,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_38_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_IMMO_8_5')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_41')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2325,7 +2325,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_38_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_IMMO-10_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_42')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2354,7 +2354,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_38_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_IMMO_5_5')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_45')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2365,7 +2365,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_38_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_IMMO-2_1')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_46')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2386,7 +2386,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_47_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_IMMO_20_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_48')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
    </record>
@@ -2407,7 +2407,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_47_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_IMMO_8_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_50')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
   </record>
@@ -2418,7 +2418,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_47_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_IMMO-10_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_51')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2447,7 +2447,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_47_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_IMMO_5_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_54')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2458,7 +2458,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_47_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_IMMO-2_1')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_55')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2479,7 +2479,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_57_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_20_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_57')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2500,7 +2500,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_57_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_8_5')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_59')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2512,7 +2512,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_57_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_10_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_60')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2541,7 +2541,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_57_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_5_5')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_63')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2551,7 +2551,7 @@
         <field name="code">FRTAX65</field>
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_57_fr"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_2_1')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_64')])]" />
         <field name="level" eval="1"/>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2572,7 +2572,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_66_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_20_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_66')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2592,7 +2592,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_66_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_8_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_68')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2603,7 +2603,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_66_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_10_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_69')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2632,7 +2632,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_66_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_5_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_72')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2643,7 +2643,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_66_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_2_1')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_73')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2727,7 +2727,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_75_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_due_2_1')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_82')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2749,7 +2749,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_84_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_ded_20_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_84')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2769,7 +2769,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_84_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_ded_8_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_86')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2780,7 +2780,7 @@
         <field name="sequence" eval="4"/>
         <field name="parent_id" ref="account_financial_report_line_84_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_ded_10_0')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_87')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2809,7 +2809,7 @@
         <field name="sequence" eval="7"/>
         <field name="parent_id" ref="account_financial_report_line_84_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_ded_5_5')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_90')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2820,7 +2820,7 @@
         <field name="sequence" eval="8"/>
         <field name="parent_id" ref="account_financial_report_line_84_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tax_ACH_UE_ded_2_1')])]" />
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_fr.tag_fr_91')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2842,7 +2842,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_94_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_EXPORT_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_93')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2853,7 +2853,7 @@
         <field name="sequence" eval="2"/>
         <field name="parent_id" ref="account_financial_report_line_94_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_UE_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_94')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2864,7 +2864,7 @@
         <field name="sequence" eval="3"/>
         <field name="parent_id" ref="account_financial_report_line_94_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_EXO_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_95')])]" />
         <field name="formulas">balance = - sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -2885,7 +2885,7 @@
         <field name="sequence" eval="1"/>
         <field name="parent_id" ref="account_financial_report_line_98_fr"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tax_IMPORT_0')])]" />
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_fr.tag_fr_97')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
