@@ -24,7 +24,8 @@ var GanttEditor = require('web_studio.GanttEditor');
 var GraphEditor = require('web_studio.GraphEditor');
 var GridEditor =require('web_studio.GridEditor');
 var KanbanEditor = require('web_studio.KanbanEditor');
-var ListEditor = require('web_studio.ListEditor');
+var ListEditor = require('web_studio.ListEditor'); // Do not forward port after saas-15.
+var TreeEditor = require('web_studio.TreeEditor');
 var PivotEditor = require('web_studio.PivotEditor');
 var SearchEditor = require('web_studio.SearchEditor');
 
@@ -40,6 +41,7 @@ var Renderers = {
     form: FormRenderer,
     kanban: KanbanRenderer,
     list: ListRenderer,
+    tree: TreeEditor,
     grid: GridEditor,
     pivot: PivotEditor,
     graph: GraphEditor,
@@ -52,6 +54,7 @@ var Editors = {
     form: FormEditor,
     kanban: KanbanEditor,
     list: ListEditor,
+    tree: TreeEditor,
     grid: GridEditor,
     pivot: PivotEditor,
     graph: GraphEditor,
