@@ -40,7 +40,6 @@
                         <field name="start_date"/>
                         <field name="end_date"/>
                         <field name="resource_hours" widget="float_time"/>
-                        <field name="effective_hours" widget="float_time"/>
                         <field name="time" string="% Time"/>
                     </group>
                 </group>
@@ -103,8 +102,6 @@
     <field name="arch" type="xml">
       <pivot string="Graph">
         <field name="resource_hours" type="measure"/>
-        <field name="effective_hours" type="measure"/>
-        <field name="percentage_hours" type="measure"/>
       </pivot>
     </field>
   </record>

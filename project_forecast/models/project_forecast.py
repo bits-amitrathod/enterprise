@@ -46,8 +46,6 @@ class ProjectForecast(models.Model):
 
     # resource
     resource_hours = fields.Float(string="Planned hours", default=0)
-    effective_hours = fields.Float(string="Effective hours", compute='_compute_effective_hours', store=True)
-    percentage_hours = fields.Float(string="Progress", compute='_compute_percentage_hours', store=True)
 
     @api.one
     @api.depends('project_id', 'task_id', 'employee_id')
