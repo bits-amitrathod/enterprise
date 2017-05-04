@@ -45,6 +45,9 @@ class TestHelpdeskSLA(HelpdeskTransactionCase):
             ["'" + fields.Datetime.to_string(fields.Datetime.from_string(fields.Datetime.now()) - relativedelta(days=1, hours=1, minutes=2)) + "'", ticket1.id])
         # invalidate the cache and manually run the compute as our cr.execute() bypassed the ORM
         ticket1.invalidate_cache()
+        ticket1.sla_id = False  # the deadline will only be computed if the sla actually changes
+        ticket1._compute_sla()
+        ticket1.sla_id = self.test_sla
         ticket1._compute_sla()
         # helpdesk user closes the ticket
         ticket1.write({'stage_id': self.stage_done.id})
