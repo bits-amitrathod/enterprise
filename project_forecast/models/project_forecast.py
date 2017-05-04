@@ -11,16 +11,21 @@ from odoo.osv import expression
 class ProjectForecast(models.Model):
     _name = 'project.forecast'
 
-    def default_user_id(self):
-        return self.env.context.get('default_user_id', self.env.uid)
+    def _default_employee_id(self):
+        user_id = self.env.context.get('default_user_id', self.env.uid)
+        return self.env['res.users'].browse(user_id).employee_ids[0]
 
     def default_end_date(self):
         return date.today() + timedelta(days=1)
 
+    def _read_group_employee_ids(self, employee, domain, order):
+        group = self.env.ref('project.group_project_user', False) or self.env.ref('base.group_user')
+        return self.env['hr.employee'].search([('user_id', 'in', group.users.ids)])
+
     name = fields.Char(compute='_compute_name')
     active = fields.Boolean(default=True)
-    user_id = fields.Many2one('res.users', string="User", required=True,
-                              group_expand='all_users', default=default_user_id)
+    employee_id = fields.Many2one('hr.employee', "Employee", default=_default_employee_id, required=True, group_expand='_read_group_employee_ids')
+    user_id = fields.Many2one('res.users', string="User", related='employee_id.user_id', store=True, readonly=True)
     project_id = fields.Many2one('project.project', string="Project")
     task_id = fields.Many2one(
         'project.task', string="Task", domain="[('project_id', '=', project_id)]",
@@ -41,17 +46,15 @@ class ProjectForecast(models.Model):
 
     # resource
     resource_hours = fields.Float(string="Planned hours", default=0)
-    effective_hours = fields.Float(string="Effective hours", compute='_compute_effective_hours', store=True)
-    percentage_hours = fields.Float(string="Progress", compute='_compute_percentage_hours', store=True)
 
     @api.one
-    @api.depends('project_id', 'task_id', 'user_id')
+    @api.depends('project_id', 'task_id', 'employee_id')
     def _compute_name(self):
         group = self.env.context.get("group_by", "")
 
         name = []
-        if ("user_id" not in group):
-            name.append(self.user_id.name)
+        if "employee_id" not in group:
+            name.append(self.employee_id.name)
         if ("project_id" not in group and self.project_id):
             name.append(self.project_id.name)
         if ("task_id" not in group and self.task_id):
@@ -73,47 +76,17 @@ class ProjectForecast(models.Model):
         self.exclude = (self.project_id.name == "Leaves")
 
     @api.one
-    @api.depends('resource_hours', 'start_date', 'end_date', 'user_id.resource_calendar_id')
+    @api.depends('resource_hours', 'start_date', 'end_date', 'employee_id.resource_calendar_id')
     def _compute_time(self):
         start = fields.Datetime.from_string(self.start_date)
         stop = fields.Datetime.from_string(self.end_date)
-        if self.user_id.resource_calendar_id:
-            hours = self.user_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
+        if self.employee_id.resource_calendar_id:
+            hours = self.employee_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
             if hours == 0:
                 raise UserError(_("You cannot set a user with no working time."))
             self.time = self.resource_hours * 100.0 / hours
         else:
             self.time = 0
-
-    @api.one
-    @api.depends('task_id', 'user_id', 'start_date', 'end_date', 'project_id.analytic_account_id')
-    def _compute_effective_hours(self):
-        if not self.task_id and not self.project_id:
-            self.effective_hours = 0
-        else:
-            aac_obj = self.env['account.analytic.line']
-            aac_domain = [
-                ('user_id', '=', self.user_id.id),
-                ('date', '>=', self.start_date),
-                ('date', '<=', self.end_date)
-            ]
-            # TODO: move this to a link module. This checks that the project_timesheet module is installed.
-            if self.task_id and hasattr(self.task_id, 'analytic_account_id'):
-                timesheets = aac_obj.search(expression.AND([[('task_id', '=', self.task_id.id)], aac_domain]))
-            elif self.project_id:
-                timesheets = aac_obj.search(expression.AND([[('account_id', '=', self.project_id.analytic_account_id.id)], aac_domain]))
-            else:
-                timesheets = aac_obj.browse()
-
-            self.effective_hours = sum(timesheet.unit_amount for timesheet in timesheets)
-
-    @api.one
-    @api.depends('resource_hours', 'effective_hours')
-    def _compute_percentage_hours(self):
-        if self.resource_hours:
-            self.percentage_hours = self.effective_hours / self.resource_hours
-        else:
-            self.percentage_hours = 0
 
     @api.one
     @api.constrains('resource_hours')
@@ -158,12 +131,6 @@ class ProjectForecast(models.Model):
             end = fields.Date.from_string(self.end_date)
             duration = timedelta(days=1)
             self.start_date = end - duration
-
-    @api.model
-    def all_users(self, users, domain, order):
-        group = self.env.ref('project.group_project_user', False) or \
-                self.env.ref('base.group_user')
-        return group.users.search([('id', 'in', group.users.ids)], order=order)
 
     def _grid_start_of(self, span, step, anchor):
         if span != 'project':

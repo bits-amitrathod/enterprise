@@ -15,6 +15,7 @@
         'security/timesheet_security.xml',
         'views/views.xml',
         'views/res_config_views.xml',
+        'views/timesheet_templates.xml',
     ],
     'auto_install': True,
 }
