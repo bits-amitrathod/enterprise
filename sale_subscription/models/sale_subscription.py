@@ -102,10 +102,10 @@ class SaleSubscription(models.Model):
                     if product.description_sale:
                         name += '\n' + product.description_sale
                     invoice_line_ids.append((0, 0, {
-                        'product_id': line.product_id.id,
-                        'uom_id': line.uom_id.id,
-                        'name': line.name,
-                        'quantity': line.quantity,
+                        'product_id': product_line.product_id.id,
+                        'uom_id': product_line.uom_id.id,
+                        'name': product_line.name,
+                        'quantity': product_line.quantity,
                         'price_unit': product.price,
                     }))
                 self.recurring_invoice_line_ids = invoice_line_ids
@@ -316,7 +316,6 @@ class SaleSubscription(models.Model):
                     'product_uom_qty': line.quantity,
                     'price_unit': line.price_unit,
                     'discount': line.discount,
-                    'name': line.name,
                 }))
             addr = subscription.partner_id.address_get(['delivery', 'invoice'])
             res[subscription.id] = {
@@ -450,7 +449,7 @@ class SaleSubscriptionTemplate(models.Model):
                                             ('monthly', 'Month(s)'), ('yearly', 'Year(s)'), ],
                                            string='Recurrency',
                                            help="Invoice automatically repeat at specified interval",
-                                           default='monthly')
+                                           default='monthly', track_visibility='onchange')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
     product_line_ids = fields.One2many('product.product', 'subscription_template_id', copy=True)
     journal_id = fields.Many2one('account.journal', string="Accounting Journal", domain="[('type', '=', 'sale')]", company_dependent=True,

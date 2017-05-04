@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-import test_common
-import test_website_subscription
+from . import test_common
+from . import test_website_subscription

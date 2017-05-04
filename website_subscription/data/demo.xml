@@ -10,12 +10,12 @@
         <record id="sale_subscription.odoo_monthly" model="sale.subscription.template">
             <field name="user_closable">True</field>
             <field name="payment_mandatory">True</field>
-            <field name="tag_id" ref="odoo_online_tag"/>
+            <field name="tag_ids" eval="[(6,0, (ref('odoo_online_tag'),))]"/>
         </record>
 
         <record id="sale_subscription.odoo_yearly" model="sale.subscription.template">
             <field name="user_closable">True</field>
-            <field name="tag_id" ref="odoo_online_tag"/>
+            <field name="tag_ids" eval="[(6,0, (ref('odoo_online_tag'),))]"/>
         </record>
 
         <!-- Recurring products -->
@@ -187,7 +187,7 @@
             <field name="name">Odoo SAAS
         Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups.</field>
             <field name="analytic_account_id" ref="subscription_portal_21"/>
-            <field name="product_id" ref="odoo_saas"/>
+            <field name="product_id" ref="sale_subscription.odoo_saas"/>
             <field name="quantity">1</field>
             <field name="price_unit">20.0</field>
             <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
@@ -197,7 +197,7 @@
             <field name="name">Customized Module
         Customize a module to better match your business process.</field>
             <field name="analytic_account_id" ref="subscription_portal_21"/>
-            <field name="product_id" ref="odoo_custom_module"/>
+            <field name="product_id" ref="sale_subscription.odoo_custom_module"/>
             <field name="quantity">1</field>
             <field name="price_unit">40.0</field>
             <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>

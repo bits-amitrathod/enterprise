@@ -198,9 +198,12 @@
                     <field name="sale_order_count" widget="statinfo" string="Sales"/>
                 </button>
             </xpath>
+	    <xpath expr="//div[@class='oe_button_box']/button[1]" position="before">
+                <button class="oe_stat_button" name="open_website_url" type="object" icon="fa-globe" string="Online Preview">
+                </button>
+            </xpath>
             <xpath expr="//header" position="inside">
                 <button string="Upsell" help="Add an option directly or create a sale order with prorated discount for the current invoicing period (options are added on confirmation)" name="%(wizard_action)d" type="action" attrs="{'invisible': [('state', '=', 'draft')]}"/>
-                <button name="open_website_url" type="object" string="Online Preview"/>
             </xpath>
         </field>
     </record>
@@ -229,7 +232,7 @@
                         <group string="Online Management" id="online_management">
                             <field name="user_closable"/>
                             <field name="payment_mandatory"/>
-                            <field name="tag_id" string="Category"/>
+                            <field name="tag_ids" string="Category"/>
                         </group>
                         <group string="Accounting">
                             <field name="journal_id"/>

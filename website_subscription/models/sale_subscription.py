@@ -29,7 +29,12 @@ class SaleSubscription(models.Model):
     sale_order_count = fields.Integer(compute='_compute_sale_order_count')
 
     def _compute_sale_order_count(self):
-        order_count = len(self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)]))
+        raw_data = self.env['sale.order.line'].read_group(
+            [('subscription_id', '!=', False)],
+            ['subscription_id', 'order_id'],
+            ['subscription_id', 'order_id'])
+
+        order_count = len([sub for sub in raw_data if sub["subscription_id"][0] in self.ids])
         for subscription in self:
             subscription.sale_order_count = order_count
 
@@ -360,7 +365,8 @@ class SaleSubscriptionTemplate(models.Model):
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
     subscription_template_option_ids = fields.One2many('sale.subscription.template.option', inverse_name='subscription_template_id', string='Optional Lines', copy=True, oldname='option_invoice_line_ids')
-    tag_id = fields.Many2one('account.analytic.tag', string='Tags', oldname='tag_ids')
+    partial_invoice = fields.Boolean(string="Prorated Invoice", help="If set, option upgrades are invoiced for the remainder of the current invoicing period.")
+    tag_ids = fields.Many2many('account.analytic.tag', 'sale_subscription_template_tag_rel', 'template_id', 'tag_id', string='Tags')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
 

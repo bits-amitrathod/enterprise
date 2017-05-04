@@ -141,7 +141,7 @@ class SaleOrderLine(models.Model):
             'product_id': self.product_id.id,
             'analytic_account_id': subscription.id,
             'name': self.name,
-            'sold_quantity': self.product_uom_qty,
+            'quantity': self.product_uom_qty,
             'uom_id': self.product_uom.id,
             'price_unit': self.price_unit,
             'discount': self.discount if self.order_id.subscription_management != 'upsell' else False,
@@ -153,7 +153,7 @@ class SaleOrderLine(models.Model):
         sub_lines = self.subscription_id.recurring_invoice_line_ids.filtered(lambda subscr_line: subscr_line.product_id == self.product_id and subscr_line.uom_id == self.product_uom)
         if sub_lines:
             values['recurring_invoice_line_ids'].append((1, sub_lines.id, {
-                'sold_quantity': sub_lines.sold_quantity + self.product_uom_qty,
+                'quantity': sub_lines.quantity + self.product_uom_qty,
             }))
         else:
             values['recurring_invoice_line_ids'].append(self._prepare_subscription_line_data(self.subscription_id)[0])

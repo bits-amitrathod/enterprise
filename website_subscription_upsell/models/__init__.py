@@ -1,2 +1,3 @@
-import sale_order
-import sale_subscription
+# -*- coding: utf-8 -*-
+from . import sale_order
+from . import sale_subscription

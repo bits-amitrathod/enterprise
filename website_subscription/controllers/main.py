@@ -101,7 +101,10 @@ class website_subscription(http.Controller):
         else:
             account = account_res.browse(account_id)
 
-        acquirers = list(request.env['payment.acquirer'].search([('website_published', '=', True), ('registration_view_template_id', '!=', False)]))
+        acquirers = list(request.env['payment.acquirer'].search([
+            ('website_published', '=', True),
+            ('registration_view_template_id', '!=', False),
+            ('token_implemented', '=', True)]))
         acc_pm = account.payment_token_id
         part_pms = account.partner_id.payment_token_ids
         inactive_options = account.sudo().recurring_inactive_lines
