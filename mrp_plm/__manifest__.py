@@ -21,6 +21,7 @@ Product Life Management
         'security/ir.model.access.csv',
         'data/mrp_data.xml',
         'views/mrp_bom_views.xml',
+        'views/mrp_document_views.xml',
         'views/mrp_eco_templates.xml',
         'views/mrp_eco_views.xml',
         'views/product_views.xml',

@@ -19,7 +19,7 @@ class ProductTemplate(models.Model):
     @api.multi
     def _compute_attachments(self):
         for p in self:
-            attachments = self.env['ir.attachment'].search(['&', ('res_model', '=', 'product.template'), ('res_id', '=', p.id)])
+            attachments = self.env['mrp.document'].search(['&', ('res_model', '=', 'product.template'), ('res_id', '=', p.id)])
             p.template_attachment_count = len(attachments)
 
     @api.multi
@@ -29,7 +29,7 @@ class ProductTemplate(models.Model):
         return {
             'name': _('Attachments'),
             'domain': domain,
-            'res_model': 'ir.attachment',
+            'res_model': 'mrp.document',
             'type': 'ir.actions.act_window',
             'view_id': attachment_view.id,
             'views': [(attachment_view.id, 'kanban'), (False, 'form')],
