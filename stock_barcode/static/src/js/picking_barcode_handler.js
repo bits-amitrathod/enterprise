@@ -98,10 +98,10 @@ FormController.include({
      * @returns {Deferred}
      */
     _barcodePickingAddRecordId: function (barcode, activeBarcode) {
-        if (!activeBarcode.dataPointID) {
+        if (!activeBarcode.handle) {
             return $.Deferred().reject();
         }
-        var record = this.model.get(activeBarcode.dataPointID);
+        var record = this.model.get(activeBarcode.handle);
         if (record.data.state === 'cancel' || record.data.state === 'done') {
             this.do_warn(_.str.sprintf(_t("Picking %s"), record.data.state),
                 _.str.sprintf(_t("The picking is %s and cannot be edited."), record.data.state));
