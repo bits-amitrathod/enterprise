@@ -294,7 +294,7 @@
             <field name="inherit_id" ref="hr_timesheet.hr_employee_view_form_inherit_timesheet"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='timesheet']" position="inside">
-                    <field name="timesheet_validated" groups="hr_timesheet.group_timesheet_manager"/>
+                    <field name="timesheet_validated" groups="base.group_no_one"/>
                     <field name="timesheet_manager_id"/>
                 </xpath>
                 <xpath expr="//group[@name='timesheet']" position="attributes">
