@@ -60,7 +60,7 @@ class TestPrintCheck(AccountingTestCase):
         return self.env['account.payment'].search([], order="id desc", limit=1)
 
     def test_print_check(self):
-        # Make a payment for 10 invoices and 5 refunds
+        # Make a payment for 10 invoices and 5 credit notes
         invoices = self.env['account.invoice']
         for i in range(0,15):
             invoices |= self.create_invoice(is_refund=(i%3 == 0))
