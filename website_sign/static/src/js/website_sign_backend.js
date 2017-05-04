@@ -282,7 +282,7 @@ odoo.define('website_sign.template', function(require) {
 
             function prepare_reference(partner) {
                 self.default_reference = "-";
-                var split = partner.name.split(' ');
+                var split = partner[0].name.split(' ');
                 for(var i = 0 ; i < split.length ; i++) {
                     self.default_reference += split[i][0];
                 }
