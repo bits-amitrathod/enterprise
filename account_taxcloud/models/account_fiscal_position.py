@@ -19,7 +19,7 @@ class AccountFiscalPosition(models.Model):
         AccountTax = self.env['account.tax'].sudo()
         result = AccountTax.browse()
 
-        tic_category = None
+        tic_category = self.env['product.tic.category']
         if partner:
             tic_category = product.tic_category_id
             if not tic_category:
