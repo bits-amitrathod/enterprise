@@ -145,7 +145,7 @@ return Widget.extend({
             'label': ['for'],
             'page': ['name'],
             'group': ['name'],
-            'div': ['class'],
+            'div': ['name'],
             'button': ['name'],
             'filter': ['name'],
         };
