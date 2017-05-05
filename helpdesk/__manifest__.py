@@ -42,6 +42,7 @@ Features:
         'views/helpdesk_team_views.xml',
         'views/helpdesk_templates.xml',
         'views/tour_views.xml',
+        'views/res_partner_views.xml',
     ],
     'qweb': [
         "static/src/xml/helpdesk_team_templates.xml",
