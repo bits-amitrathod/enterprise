@@ -3,6 +3,7 @@ odoo.define('website_calendar.tests', function (require) {
 
 var FormView = require('web.FormView');
 var testUtils = require('web.test_utils');
+var session = require('web.session');
 
 var createView = testUtils.createView;
 
@@ -62,9 +63,9 @@ QUnit.module('website_calendar', {
             model: 'calendar.appointment.type',
         });
 
-        assert.strictEqual(form.$('.o_form_uri').attr('href'),
-            '/website/calendar/schedule-a-demo-1?employee_id=214',
-            'Wrong employee url copied.');
+        var actual = form.$('.o_form_uri').attr('href');
+        var expected = session['web.base.url'] + '/website/calendar/schedule-a-demo-1?employee_id=214';
+        assert.strictEqual(actual, expected, actual + ' != ' + expected);
 
         form.$('.o_website_calendar_copy_icon').click();
         // ensure we didn't open the form view
