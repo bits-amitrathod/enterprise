@@ -782,7 +782,7 @@ class AccountInvoice(models.Model):
         for record in self:
             if record.company_id.country_id == self.env.ref('base.mx'):
                 record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-3-2.xml' % (
-                    self.journal_id.code, self.number)).replace('/', '')
+                    record.journal_id.code, record.number)).replace('/', '')
                 record._l10n_mx_edi_retry()
         return result
 
