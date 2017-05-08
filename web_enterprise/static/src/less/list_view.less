@@ -22,6 +22,9 @@
     // Editable
     //--------------------------------------------------------------------------
     .o_data_row.o_selected_row > .o_data_cell:not(.o_readonly_modifier) {
+        .o_input {
+            border-right: 1px solid #cccccc;
+        }
         &.o_required_modifier .o_input { // the border is 2px so the padding has to be reduce so that no flickering
             padding: 3px;
         }
