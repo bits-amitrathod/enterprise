@@ -17,7 +17,8 @@ This module allows the creation of the EDI documents and the communication with 
         'account_cancel',
         'base_vat',
         'base_address_extended',
-        'document'
+        'document',
+        'base_address_city',
     ],
     'external_dependencies' : {
         'python' : ['OpenSSL'],
