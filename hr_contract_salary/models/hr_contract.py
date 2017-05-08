@@ -19,7 +19,8 @@ class HrContract(models.Model):
     signature_request_ids = fields.Many2many('signature.request', string="Requested Signatures")
     signature_request_count = fields.Integer(compute='_compute_signature_request_count')
     active_employee = fields.Boolean(related='employee_id.active')
-    signature_request_template_id = fields.Many2one('signature.request.template', string="Document Template")
+    signature_request_template_id = fields.Many2one('signature.request.template', string="Document Template",
+        help="Contract template that the employee will have to sign.")
 
     @api.depends('signature_request_ids')
     def _compute_signature_request_count(self):
