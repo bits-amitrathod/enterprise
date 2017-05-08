@@ -128,6 +128,7 @@ var ViewEditorManager = Widget.extend({
     destroy: function () {
         bus.trigger('undo_not_available');
         bus.trigger('redo_not_available');
+        this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
