@@ -26,6 +26,9 @@ var createViewEditorManager = function (params) {
     };
     var mockServer = testUtils.addMockEnvironment(widget, params);
     var fieldsView = mockServer.fieldsViewGet(params.arch, params.model);
+    if (params.viewID) {
+        fieldsView.view_id = params.viewID;
+    }
     var env = {
         modelName: params.model,
         ids: 'res_id' in params ? [params.res_id] : undefined,
@@ -37,7 +40,7 @@ var createViewEditorManager = function (params) {
     var vem = new ViewEditorManager(widget, {
         fields_view: fieldsView,
         view_env: env,
-
+        studio_view_id: params.studioViewID,
     });
     vem.appendTo($client_action);
     return vem;
@@ -687,6 +690,40 @@ QUnit.module('Studio', {
             "there should be one node");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 0,
             "the sidebar should have switched mode");
+
+        vem.destroy();
+    });
+
+    QUnit.test('open XML editor in read-only', function(assert) {
+        assert.expect(1);
+
+        var arch = "<form><sheet><field name='display_name'/></sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_editor/get_assets_editor_resources') {
+                    return $.when({
+                        views: [{
+                            active: true,
+                            arch: arch,
+                            id: 1,
+                            inherit_id: false,
+                        }],
+                        less: [],
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+            viewID: 1,
+        });
+
+        vem.$('.o_web_studio_sidebar_header [name="view"]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_xml_editor').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_form_readonly').length, 1,
+            "the form should be in read-only");
 
         vem.destroy();
     });

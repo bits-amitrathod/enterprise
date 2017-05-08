@@ -222,20 +222,23 @@ var ViewEditorManager = Widget.extend({
      */
     instantiateEditor: function (params) {
         params = params || {};
-        var editor_params = _.defaults(params, {
+        var editorParams = _.defaults(params, {
             mode: 'readonly',
             chatter_allowed: this.chatter_allowed,
             show_invisible: this.sidebar && this.sidebar.state.show_invisible,
             arch: this.fields_view.arch,
         });
+        var rendererParams = {
+            mode: 'readonly',
+        };
 
         if (this.view_type === 'list') {
-            editor_params.hasSelectors = false;
+            editorParams.hasSelectors = false;
         }
 
         var def;
         // Different behaviour for the search view because
-        // it's not defined as a "real view", no inherit to abstract view. 
+        // it's not defined as a "real view", no inherit to abstract view.
         // The search view in studio has its own renderer.
         if (this.view_type === 'search') {
             if (this.mode === 'edition') {
@@ -248,9 +251,9 @@ var ViewEditorManager = Widget.extend({
             this.view = new View(this.fields_view, this.view_env);
             if (this.mode === 'edition') {
                 var Editor = Editors[this.view_type];
-                def = this.view.createStudioEditor(this, Editor, editor_params);
+                def = this.view.createStudioEditor(this, Editor, editorParams);
             } else {
-                def = this.view.createStudioRenderer(this);
+                def = this.view.createStudioRenderer(this, rendererParams);
             }
         }
         return def;

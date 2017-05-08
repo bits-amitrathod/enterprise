@@ -21,11 +21,12 @@ AbstractView.include({
     /**
      * @param {Widget} parent
      * @param {Widget} Editor
+     * @param {Object} options
      * @returns {Widget}
      */
-    createStudioRenderer: function (parent) {
+    createStudioRenderer: function (parent, options) {
         var Renderer = this.config.Renderer;
-        return this._createStudioRenderer(parent, Renderer);
+        return this._createStudioRenderer(parent, Renderer, options);
     },
 
     //--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ AbstractView.include({
     /**
      * @param {Widget} parent
      * @param {Widget} Renderer
+     * @param {Object} options
      * @returns {Widget}
      */
     _createStudioRenderer: function (parent, Renderer, options) {
