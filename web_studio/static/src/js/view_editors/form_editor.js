@@ -127,8 +127,12 @@ var FormEditor =  FormRenderer.extend({
     },
     _render_field_widget: function(node) {
         var widget = this._super.apply(this, arguments);
-        // make empty widgets appear if there is no label
-        if (widget.$el.hasClass('o_form_field_empty') && (!node.has_label || node.attrs.nolabel)) {
+        // 1) make empty widgets appear if there is no label
+        // 2) make x2many widgets appear if there is no specified view
+        // Do not forwardport in saas-16
+        if ((widget.$el.hasClass('o_form_field_empty')
+                || (_.contains(['one2many', 'many2many'], widget.field.type) && !widget.$el.text()))
+            && (!node.has_label || node.attrs.nolabel)) {
             widget.$el.removeClass('o_form_field_empty').addClass('o_web_studio_widget_empty');
             widget.$el.text(widget.string);
         }
