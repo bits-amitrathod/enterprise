@@ -759,7 +759,7 @@ class AccountInvoice(models.Model):
             addenda_node = etree.fromstring(addenda_str, parser=parser)
             cfdi_addenda_node.extend(addenda_node)
 
-        return {'cfdi': etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8')}
+        return {'cfdi': etree.tostring(tree, pretty_print=True, encoding='UTF-8')}
 
     @api.multi
     def _l10n_mx_edi_retry(self):

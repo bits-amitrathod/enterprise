@@ -217,7 +217,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
             for payment in payments_list:
                 PmtInf.append(self._get_CdtTrfTxInf(PmtInfId, payment))
 
-        return etree.tostring(Document, pretty_print=True, xml_declaration=True, encoding='utf-8')
+        return etree.tostring(Document, pretty_print=True, encoding='utf-8')
 
     def _get_CtrlSum(self, payments):
         return str(float_round(sum(payment.amount for payment in payments), 2))
