@@ -89,12 +89,12 @@ class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
     def _check_ofx(self, data_file):
-        if data_file.startswith("OFXHEADER"):
+        if data_file.startswith(b"OFXHEADER"):
             #v1 OFX
             return True
         try:
             #v2 OFX
-            return "<ofx>" in data_file.lower()
+            return b"<ofx>" in data_file.lower()
         except ElementTree.ParseError:
             return False
 
