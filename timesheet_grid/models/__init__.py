@@ -2,3 +2,4 @@
 
 from . import models
 from . import res_config
+from . import hr

@@ -16,6 +16,7 @@
         'views/views.xml',
         'views/res_config_views.xml',
         'views/timesheet_templates.xml',
+        'wizard/timesheet_validation_views.xml',
     ],
     'auto_install': True,
 }
