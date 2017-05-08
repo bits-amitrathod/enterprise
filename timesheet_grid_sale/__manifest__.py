@@ -13,7 +13,9 @@
     'version': '0.1',
 
     'depends': ['sale_timesheet', 'timesheet_grid'],
-    'data': ['data.xml'],
+    'data': [
+        'views/res_config_views.xml'
+    ],
 
     'auto_install': True,
 }
