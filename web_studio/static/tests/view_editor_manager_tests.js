@@ -565,6 +565,84 @@ QUnit.module('Studio', {}, function () {
 
         vem.destroy();
     });
+
+    QUnit.test('add a monetary field without currency_id', function(assert) {
+        assert.expect(3);
+
+        var arch = "<tree><field name='display_name'/></tree>";
+        var vem = createViewEditorManager(arch, {
+            mockRPC: function (route) {
+                if (route === '/web_studio/edit_view') {
+                    assert.ok(false, "should not edit the view");
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'));
+
+        assert.strictEqual($('.modal-body').text(), "This field type cannot be dropped on this model.",
+            "this should trigger an alert");
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should still be one node");
+
+        vem.destroy();
+    });
+
+    QUnit.test('add a monetary field with currency_id', function(assert) {
+        assert.expect(3);
+
+        var arch = "<tree><field name='display_name'/></tree>";
+        var fieldsView;
+        var vem = createViewEditorManager(arch, {
+            data: {
+                coucou: {
+                    fields: {
+                        display_name: {
+                            string: "Display Name",
+                            type: "char"
+                        },
+                        currency_id: {
+                            string: "Currency",
+                            type: 'many2one',
+                            relation: "res.currency",
+                        },
+                    },
+                },
+            },
+            mockRPC: function (route) {
+                if (route === '/web_studio/edit_view') {
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    assert.ok(true, "should edit the view to add the monetary field");
+                    fieldsView.arch = "<tree><field name='display_name'/><field name='currency_id'/></tree>";
+                    return $.when({
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'));
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
+            "there should be two nodes");
+
+        vem.destroy();
+    });
 });
 
 });

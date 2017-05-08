@@ -567,19 +567,19 @@ var ViewEditorManager = Widget.extend({
             }
             if (field_description.ttype === 'monetary') {
                 def_field_values = $.Deferred();
-                // Detect currency_id on the current model
-                new BasicModel("ir.model.fields").call("search", [[
-                    ['name', '=', 'currency_id'],
-                    ['model', '=', this.model_name],
-                    ['relation', '=', 'res.currency'],
-                ]]).then(function (data) {
-                    if (!data.length) {
-                        Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
-                        def_field_values.reject();
-                    } else {
-                        def_field_values.resolve();
-                    }
+                // find currency_id on the current model : a monetary field can
+                // not be added if such a field does not exist on the model
+                var currencyField = _.findWhere(this.fields, {
+                    type: 'many2one',
+                    relation: 'res.currency',
+                    name: 'currency_id',
                 });
+                if (currencyField) {
+                    def_field_values.resolve();
+                } else {
+                    Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
+                    def_field_values.reject();
+                }
             }
         }
         // When the field values is selected, close the dialog and update the view
