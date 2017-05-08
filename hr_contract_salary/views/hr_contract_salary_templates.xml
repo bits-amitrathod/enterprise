@@ -69,17 +69,13 @@
                                                 <div class="col-sm-7 col-sm-offset-3">
                                                     <t t-set='max_unused_cars' t-value="contract.max_unused_cars"/>
                                                     <select name="select_car" class="form-control form-control-primary mt16 mb8 advantage_input">
-                                                        <optgroup label="Available(s) Car(s)">
-                                                            <t t-foreach="available_cars" t-as="car">
-                                                                <option t-att-value="'old-'+str(car.id)" t-att-selected="not contract.new_car and contract.car_id.id == car.id"><t t-esc="car.name"/></option>
-                                                            </t>
-                                                        </optgroup>
+                                                        <t t-foreach="available_cars" t-as="car">
+                                                            <option t-att-value="'old-'+str(car.id)" t-att-selected="not contract.new_car and contract.car_id.id == car.id"><t t-esc="car.name"/></option>
+                                                        </t>
                                                         <t t-if="contract.available_cars_amount &lt; max_unused_cars">
-                                                            <optgroup label="Request a new Car">
                                                             <t t-foreach="can_be_requested_models" t-as="model">
                                                                 <option t-att-value="'new-'+str(model.id)" t-att-selected="contract.new_car and contract.new_car_model_id.id == model.id"><t t-esc="model.name_get()[0][1] + u' \u2022 New'"/></option>
                                                             </t>
-                                                        </optgroup>
                                                         </t>
                                                     </select>
                                                     <!-- <span><t t-esc="contract.available_cars_amount"/></span> -->
