@@ -560,8 +560,8 @@ QUnit.module('Studio', {
             "there should only be one renderer");
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
             "the view should be back as normal with 1 field");
-        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
-            "the sidebar should now display the field properties");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_view').length, 1,
+            "the sidebar should have reset to its default mode");
 
         ListRenderer.prototype._renderView = oldRenderView;
 
@@ -637,6 +637,56 @@ QUnit.module('Studio', {
 
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
             "there should be two nodes");
+
+        vem.destroy();
+    });
+
+    QUnit.test('switch mode after element removal', function(assert) {
+        assert.expect(5);
+
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='id'/><field name='display_name'/></tree>",
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    assert.ok(true, "should edit the view to delete the field");
+                    fieldsView.arch = "<tree><field name='display_name'/></tree>";
+                    return $.when({
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
+            "there should be two nodes");
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        vem.$('.o_web_studio_list_view_editor [data-node-id]:first').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should display the field properties");
+
+        // delete a field
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        $('.modal-dialog .btn-primary').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 0,
+            "the sidebar should have switched mode");
 
         vem.destroy();
     });

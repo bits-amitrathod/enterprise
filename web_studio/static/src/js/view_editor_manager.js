@@ -261,7 +261,7 @@ var ViewEditorManager = Widget.extend({
      */
     instantiateSidebar: function (state) {
 
-        var defaultMode = _.contains(['form', 'list', 'search'], this.view_type) ? 'new' : 'view';
+        var defaultMode = this._getDefaultSidebarMode();
 
         state = _.defaults(state || {}, {
             mode: defaultMode,
@@ -796,6 +796,12 @@ var ViewEditorManager = Widget.extend({
     },
     /**
      * @private
+     */
+    _getDefaultSidebarMode: function () {
+        return _.contains(['form', 'list', 'search'], this.view_type) ? 'new' : 'view';
+    },
+    /**
+     * @private
      * @param {String} model_name
      * @returns {Deferred}
      * @returns {Deferred}
@@ -824,6 +830,8 @@ var ViewEditorManager = Widget.extend({
             node = parent_node;
         }
 
+        this.editor.unselectedElements();
+        this._resetSidebarMode();
         this.do({
             type: type,
             target: {
@@ -832,7 +840,12 @@ var ViewEditorManager = Widget.extend({
                 xpath_info: xpath_info,
             },
         });
-        this._onUnselectElement();
+    },
+    /**
+     * @private
+     */
+    _resetSidebarMode: function () {
+        this.updateSidebar(this._getDefaultSidebarMode());
     },
     /**
      * @private
@@ -1042,13 +1055,12 @@ var ViewEditorManager = Widget.extend({
     _onSidebarTabChanged: function (event) {
 
         this.updateSidebar(event.data.mode);
-        this._onUnselectElement();
+        this.editor.unselectedElements();
     },
     /**
      * @private
      */
     _onUnselectElement: function () {
-        this.editor.selected_node_id = false;
         this.editor.unselectedElements();
     },
     /**

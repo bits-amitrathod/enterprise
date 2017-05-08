@@ -33,6 +33,7 @@ return {
         });
     },
     unselectedElements: function() {
+        this.selected_node_id = false;
         this.$('.o_clicked').removeClass('o_clicked');
     },
 };
