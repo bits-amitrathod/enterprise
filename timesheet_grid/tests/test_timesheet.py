@@ -7,53 +7,14 @@ from dateutil.relativedelta import relativedelta
 from odoo import fields
 
 from odoo.addons.web_grid.models import END_OF
+from odoo.addons.hr_timesheet.tests.test_timesheet import TestTimesheet
 from odoo.exceptions import AccessError
-from odoo.tests.common import TransactionCase
 
 
-class TestTimesheet(TransactionCase):
+class TestTimesheetValidation(TestTimesheet):
 
     def setUp(self):
-        super(TestTimesheet, self).setUp()
-
-        self.project_customer = self.env['project.project'].create({
-            'name': 'Project X',
-            'allow_timesheets': True,
-            'use_tasks': True,
-        })
-        self.task1 = self.env['project.task'].create({
-            'name': 'Task One',
-            'priority': '0',
-            'kanban_state': 'normal',
-            'project_id': self.project_customer.id,
-        })
-        self.task2 = self.env['project.task'].create({
-            'name': 'Task Two',
-            'priority': '1',
-            'kanban_state': 'done',
-            'project_id': self.project_customer.id,
-        })
-        # users
-        self.user_employee = self.env['res.users'].create({
-            'name': 'User Employee',
-            'login': 'user_employee',
-            'groups_id': [(4, self.ref('hr_timesheet.group_hr_timesheet_user'))],
-        })
-        self.user_manager = self.env['res.users'].create({
-            'name': 'User Officer',
-            'login': 'user_manager',
-            'groups_id': [(4, self.ref('hr_timesheet.group_timesheet_manager'))],
-        })
-        # employees
-        self.empl_employee = self.env['hr.employee'].create({
-            'name': 'User Empl Employee',
-            'user_id': self.user_employee.id,
-        })
-        self.empl_manager = self.env['hr.employee'].create({
-            'name': 'User Empl Officer',
-            'user_id': self.user_manager.id,
-        })
-        # timesheets
+        super(TestTimesheetValidation, self).setUp()
         today = fields.Date.today()
         self.timesheet1 = self.env['account.analytic.line'].sudo(self.user_employee.id).create({
             'name': "my timesheet 1",
