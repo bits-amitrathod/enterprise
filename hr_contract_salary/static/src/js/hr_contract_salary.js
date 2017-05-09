@@ -12,6 +12,7 @@ var SalaryPackageWidget = Widget.extend({
     events: {
         "change .advantage_input": "onchange_advantage",
         "change input[name='mobility']": "onchange_mobility",
+        "change input[name='representation_fees_radio']": "onchange_representation_fees",
         "change input[name='fuel_card_slider']": "onchange_fuel_card",
         "input input[name='holidays_slider']": "onchange_holidays",
         "change input[name='mobile']": "onchange_mobile",
@@ -218,6 +219,10 @@ var SalaryPackageWidget = Widget.extend({
         $(".mobility-options#" + transport_mode).removeClass('hidden');
         var fuel_card_div = $("div[name='fuel_card']");
         event.target.value === 'company_car' ? fuel_card_div.removeClass("hidden") : fuel_card_div.addClass("hidden");
+    },
+
+    onchange_representation_fees: function(event) {
+        $("input[name='representation_fees']").val(event.target.value);
     },
 
     onchange_fuel_card: function(event) {

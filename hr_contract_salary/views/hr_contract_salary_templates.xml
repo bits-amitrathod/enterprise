@@ -283,7 +283,23 @@
                                                 <label class="col-sm-3 control-label">
                                                     <i class="fa fa-1x fa-male fa-fw fa-lg"/> Representation Fees
                                                 </label>
+
                                                 <div class="col-sm-7">
+                                                    <label class="hr_cs_control hr_cs_control_radio">0 €
+                                                        <input type="radio" name="representation_fees_radio" value="0.0" t-att-checked="contract.representation_fees == 0.0" class="advantage_input"/>
+                                                        <div class="hr_cs_control_indicator"/>
+                                                    </label>
+                                                    <label class="hr_cs_control hr_cs_control_radio">110 €
+                                                        <input type="radio" name="representation_fees_radio" value="110.0" t-att-checked="contract.representation_fees == 110.0" class="advantage_input"/>
+                                                        <div class="hr_cs_control_indicator"/>
+                                                    </label>
+                                                    <label class="hr_cs_control hr_cs_control_radio">150 €
+                                                        <input type="radio" name="representation_fees_radio" value="150.0" t-att-checked="contract.representation_fees == 150.0" class="advantage_input"/>
+                                                        <div class="hr_cs_control_indicator"/>
+                                                    </label>
+                                                </div>
+
+                                                <div class="col-sm-7 col-sm-offset-3 mt8">
                                                     <span class="help-block">This is a monthly net amount.</span>
                                                 </div>
                                                 <div class="col-sm-2">
