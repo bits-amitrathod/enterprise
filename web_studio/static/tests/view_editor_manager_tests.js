@@ -727,6 +727,32 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.test('new button in buttonbox', function(assert) {
+        assert.expect(4);
+
+        var arch = "<form><sheet><field name='display_name'/></sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+        });
+
+        vem.$('.o_web_studio_form_view_editor .o_web_studio_button_hook').click();
+
+        assert.strictEqual($('.modal:visible').length, 1, "there should be one modal");
+        assert.strictEqual($('.o_web_studio_new_button_dialog').length, 1,
+            "there should be a modal to create a button in the buttonbox");
+        assert.strictEqual($('.o_web_studio_new_button_dialog .o_field_many2one').length, 1,
+            "there should be a many2one for the related field");
+
+        $('.o_web_studio_new_button_dialog .o_field_many2one input').focus();
+        $('.o_web_studio_new_button_dialog .o_field_many2one input').val('test').trigger('keyup').trigger('focusout');
+
+        assert.strictEqual($('.modal:visible').length, 1, "should not display the create modal");
+
+        vem.destroy();
+    });
 });
 
 });

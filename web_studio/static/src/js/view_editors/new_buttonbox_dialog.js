@@ -60,10 +60,13 @@ var NewButtonBoxDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         }]).then(function (recordID) {
             var options = {
                 mode: 'edit',
+                attrs: {
+                    can_create: false,
+                    can_write: false,
+                },
             };
             var record = self.model.get(recordID);
             self.many2one = new Many2one(self, 'field', record, options);
-            self.many2one.nodeOptions.no_create = true;
             self._registerWidget(recordID, 'field', self.many2one);
             self.many2one.appendTo(self.$('.js_many2one_field'));
         }));
