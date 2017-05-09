@@ -12,7 +12,6 @@ var AbstractField = require('web.AbstractField');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var fieldRegistry = require('web.field_registry');
-var session = require('web.session');
 
 var _t = core._t;
 
@@ -33,7 +32,7 @@ var FieldemployeeUrl = AbstractField.extend({
         this._super.apply(this, arguments);
         this.tagName = 'div';
 
-        var base_url = session['web.base.url'];
+        var base_url = this.getSession()['web.base.url'];
         var appt_url = this.record.getContext({fieldName: 'id'}).url;
         this.url = base_url + appt_url.replace("/appointment", "") + '?employee_id=' + this.value;
     },
