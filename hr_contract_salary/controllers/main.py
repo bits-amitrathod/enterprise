@@ -226,7 +226,7 @@ class website_hr_contract_salary(http.Controller):
         elif new_contract.transport_mode == "others":
             transport_advantage = new_contract.others_reimbursed_amount
         else:
-            transport_advantage = 0.0
+            transport_advantage = new_contract.company_car_total_depreciated_cost
 
         thirteen_month_net = payslip.get_salary_line_total('NET')
         double_holidays_net = payslip.get_salary_line_total('NET') * 0.92
