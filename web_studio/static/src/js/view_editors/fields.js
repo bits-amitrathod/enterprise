@@ -7,6 +7,7 @@ var relational_fields = require('web.relational_fields');
 
 var InputField = basic_fields.InputField;
 var FieldText = basic_fields.FieldText;
+var FieldHtml = basic_fields.FieldHtml;
 var FieldMany2ManyTags = relational_fields.FieldMany2ManyTags;
 var FieldMany2One = relational_fields.FieldMany2One;
 
@@ -16,6 +17,10 @@ AbstractField.include({
 });
 InputField.include({
     has_placeholder: true,
+});
+FieldHtml.include({
+    // Do not forwardport in saas-16
+    has_placeholder: false,
 });
 FieldText.include({
     has_placeholder: true,
