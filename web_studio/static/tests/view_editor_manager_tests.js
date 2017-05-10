@@ -753,6 +753,70 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.test('element removal', function(assert) {
+        assert.expect(4);
+
+        var editViewCount = 0;
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+                "<notebook><page><field name='id'/></page></notebook>" +
+            "</sheet></form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    editViewCount++;
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // remove field
+        vem.$('[name="display_name"]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        assert.strictEqual($('.modal-body').text(), "Are you sure you want to remove this field from the view?",
+            "should display the correct message");
+        $('.modal-dialog .btn-primary').click();
+
+        // remove group
+        vem.$('.o_group[data-node-id]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        assert.strictEqual($('.modal-body').text(), "Are you sure you want to remove this group from the view?",
+            "should display the correct message");
+        $('.modal-dialog .btn-primary').click();
+
+        // remove page
+        vem.$('.o_notebook li[data-node-id]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        assert.strictEqual($('.modal-body').text(), "Are you sure you want to remove this page from the view?",
+            "should display the correct message");
+        $('.modal-dialog .btn-primary').click();
+
+        assert.strictEqual(editViewCount, 3,
+            "should have edit the view 3 times");
+
+        vem.destroy();
+    });
 });
 
 });
