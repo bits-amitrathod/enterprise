@@ -7,6 +7,7 @@ odoo.define('project_timeshee.ui', function (require ) {
     var Widget = require('web.Widget');
     var time_module = require('web.time');
     var local_storage = require('web.local_storage');
+    var mixins = require('web.mixins');
     var QWeb = core.qweb;
 
     var MAX_AGE = 21; // Age limit in days for activities before they are removed from the app
@@ -24,10 +25,11 @@ odoo.define('project_timeshee.ui', function (require ) {
     var MODULE_KEY = '__export__.'; // Xml_id prefix.
 
     //Main widget to instantiate the app
-    var ProjectTimesheet = Widget.extend({
+    var ProjectTimesheet = Widget.extend(mixins.ServiceProvider, {
         template: "app",
         init: function(parent) {
             var self = this;
+            mixins.ServiceProvider.init.call(this);
             this._super(parent);
             this.load_template();
 
@@ -57,6 +59,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             self.session = session; // This makes session accessible in QWEB templates.
             self.syncable = false; // Sync flag. Enabled if the user has a valid session with a server where the appropiate sync module is installed.
             self.sync_in_progress = false;
+            self.sync_fail = false;
 
         },
         /**
@@ -428,6 +431,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                         self.sync_in_progress = false;
                         self.flush_activities(MAX_AGE);
                         self.save_user_data();
+                        self.sync_fail = false;
                         defer.resolve();
                         if (options && options.callback) {
                             options.callback();
@@ -436,6 +440,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                 }).fail(function() {
                     self.$('.pt_nav_sync a').removeClass('pt_sync_in_progress');
                     self.sync_in_progress = false;
+                    self.sync_fail = true;
                     defer.resolve();
                     if (options && options.callback) {
                         options.callback();
@@ -971,13 +976,14 @@ odoo.define('project_timeshee.ui', function (require ) {
             });
         },
         stop_timer: function() {
+            var unit_amount = this.hh_mm_to_unit_amount(moment.utc(new Date() - new Date(JSON.parse(local_storage.getItem("pt_start_timer_time")))).format("HH:mm"));
+            this.create_activity(undefined, unit_amount);
+        },
+        clear_timer: function() {
             this.timer_on = false;
             clearInterval(this.timer_start);
-            var unit_amount = this.hh_mm_to_unit_amount(moment.utc(new Date() - new Date(JSON.parse(local_storage.getItem("pt_start_timer_time")))).format("HH:mm"));
             this.current_activity = false;
             local_storage.removeItem("pt_start_timer_time");
-
-            this.create_activity(undefined, unit_amount);
         },
         quick_add_time: function(event) {
             var activity = _.findWhere(this.getParent().data.account_analytic_lines,  {id: event.currentTarget.dataset.activity_id});
@@ -1446,6 +1452,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         // Otherwise, a new activity is created with the appropriate values.
         // The only required field is "project_id".
         save_changes: function() {
+            this.clear_timer();
             var self = this;
             // Validation step
             if (_.isUndefined(this.activity.project_id)) {
@@ -1490,6 +1497,7 @@ odoo.define('project_timeshee.ui', function (require ) {
 
         },
         discard_changes: function() {
+            this.clear_timer();
             core.bus.trigger('change_screen', {
                 id : 'activities',
             });
@@ -1511,6 +1519,7 @@ odoo.define('project_timeshee.ui', function (require ) {
 
         delete_activity: function() {
             var self = this;
+            this.clear_timer();
             if (!_.isUndefined(this.activity.id)) {
                 var aal_to_remove = _.findWhere(this.getParent().data.account_analytic_lines, {id : this.activity.id});
                 aal_to_remove.to_remove = true;
@@ -1520,7 +1529,10 @@ odoo.define('project_timeshee.ui', function (require ) {
             core.bus.trigger('change_screen', {
                 id : 'activities',
             });
-        }
+        },
+        clear_timer: function() {
+            this.getParent().activities_screen.clear_timer();
+        },
     });
 
     var Stats_screen = BasicScreenWidget.extend({
@@ -1963,6 +1975,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         template: "premise_login_form_screen",
         events : {
             "click .pt_send_premise_login" : "send_premise_login",
+            "click .show_password": "show_password",
         },
         send_premise_login: function() {
             var self = this;
@@ -1981,6 +1994,11 @@ odoo.define('project_timeshee.ui', function (require ) {
                     alert("Could not login. Please check that the information you entered is correct.");
                 }
             });
+        },
+        show_password: function(ev) {
+            var type = this.$('.pt_premise_password').attr('type') === 'password' ? 'text': 'password';
+            this.$('.pt_premise_password').attr('type', type);
+            $(ev.target).toggleClass('fa-eye-slash');
         },
     });
 

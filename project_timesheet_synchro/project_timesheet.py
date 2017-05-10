@@ -4,11 +4,8 @@
 from odoo import models, api
 from odoo.exceptions import UserError, AccessError
 
-import time
 import datetime
-from dateutil.relativedelta import relativedelta
 from odoo import tools
-from odoo.tools.translate import _
 
 
 class account_analytic_line(models.Model):
@@ -160,8 +157,9 @@ class account_analytic_line(models.Model):
             SELECT concat(imd.module,'.',imd.name) AS xml_id, t.active
             FROM ir_model_data imd
             JOIN project_task t ON (model='project.task' AND t.id = res_id)
+            JOIN mail_followers mf ON mf.res_id = t.id AND mf.res_model = 'project.task' AND mf.partner_id = %s
             WHERE concat(imd.module,'.',imd.name) = ANY(%s);
-            """, ([x['id'] for x in ls_tasks],))
+            """, (self.env.user.partner_id.id, [x['id'] for x in ls_tasks]))
 
         sv_tasks = {task['xml_id']: task['active'] for task in cr.dictfetchall()}
 
