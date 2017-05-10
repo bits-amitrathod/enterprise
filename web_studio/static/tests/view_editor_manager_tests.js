@@ -817,6 +817,60 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.test('update sidebar after edition', function(assert) {
+        assert.expect(4);
+
+        var editViewCount = 0;
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+                "<notebook><page><field name='id'/></page></notebook>" +
+            "</sheet></form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    editViewCount++;
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        testUtils.intercept(vem, 'node_clicked', function (event) {
+            assert.step(event.data.node.tag);
+        }, true);
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // remove field
+        vem.$('[name="display_name"]').click();
+        vem.$('.o_web_studio_sidebar [name="string"]').focus();
+        vem.$('.o_web_studio_sidebar [name="string"]').val('test').trigger('change');
+
+        assert.strictEqual(editViewCount, 1,
+            "should have edit the view 1 time");
+        assert.verifySteps(['field', 'field'],
+            "should have clicked again on the node after edition to reload the sidebar");
+
+        vem.destroy();
+    });
 });
 
 });

@@ -140,13 +140,13 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             this.has_follower_field = true;
         } else {
             $el.attr('data-node-id', this.node_id++);
+            this.setSelectable($el);
             $el.click(function (event) {
                 event.preventDefault();
                 event.stopPropagation();
                 self.selected_node_id = $el.data('node-id');
                 self.trigger_up('node_clicked', {node: node});
             });
-            this.setSelectable($el);
         }
     },
     /**
@@ -275,12 +275,12 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         var $result = this._super.apply(this, arguments);
         // Add click event to see group properties in sidebar
         $result.attr('data-node-id', this.node_id++);
+        this.setSelectable($result);
         $result.click(function (event) {
             event.stopPropagation();
             self.selected_node_id = $result.data('node-id');
             self.trigger_up('node_clicked', {node: node});
         });
-        this.setSelectable($result);
         // Add hook for groups that have not yet content.
         if (!node.children.length) {
             formEditorHook = this._renderHook(node, 'inside', 'tr');
@@ -364,6 +364,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         var self = this;
         var $button = this._super.apply(this, arguments);
         $button.attr('data-node-id', this.node_id++);
+        this.setSelectable($button);
         $button.click(function (ev) {
             if (! $(ev.target).closest('.o_field_widget').length) {
                 // click on the button and not on the field inside this button
@@ -371,7 +372,6 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 self.trigger_up('node_clicked', {node: node});
             }
         });
-        this.setSelectable($button);
         return $button;
     },
     /**
@@ -382,6 +382,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         var self = this;
         var $result = this._super.apply(this, arguments);
         $result.attr('data-node-id', this.node_id++);
+        this.setSelectable($result);
         $result.click(function (event) {
             event.preventDefault();
             if (!self.silent) {
@@ -389,7 +390,6 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 self.trigger_up('node_clicked', {node: page});
             }
         });
-        this.setSelectable($result);
         return $result;
     },
     /**

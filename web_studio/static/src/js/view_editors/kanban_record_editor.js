@@ -164,11 +164,11 @@ var KanbanRecordEditor = KanbanRecord.extend(EditorMixin, {
                 tag: 'div',
                 attrs: {class: 'o_dropdown_kanban'},
             };
+            this.setSelectable($dropdown);
             $dropdown.click(function () {
                 self.selected_node_id = $dropdown.data('node-id');
                 self.trigger_up('node_clicked', {node: node});
             });
-            this.setSelectable($dropdown);
         } else {
             var $top_left_hook = $('<div>')
                 .addClass('o_web_studio_add_dropdown o_dropdown_kanban dropdown')
@@ -283,13 +283,13 @@ var KanbanRecordEditor = KanbanRecord.extend(EditorMixin, {
             tag: 'field',
             attrs: {name: field_name}
         };
+        this.setSelectable($field);
         $field.click(function (event) {
             event.preventDefault();
             event.stopPropagation();
             self.selected_node_id = $field.data('node-id');
             self.trigger_up('node_clicked', {node: node});
         });
-        this.setSelectable($field);
 
         // insert a hook to add new fields
         var $hook = this._renderHook(node);
@@ -317,13 +317,13 @@ var KanbanRecordEditor = KanbanRecord.extend(EditorMixin, {
             tag: 'field',
             attrs: {name: field_name}
         };
+        this.setSelectable(widget.$el);
         widget.$el.click(function (event) {
             event.preventDefault();
             event.stopPropagation();
             self.selected_node_id = widget.$el.data('node-id');
             self.trigger_up('node_clicked', {node: node});
         });
-        this.setSelectable(widget.$el);
 
         // insert a hook to add new fields
         var $hook = this._renderHook(node);
