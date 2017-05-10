@@ -43,7 +43,7 @@ class account_report_followup(models.AbstractModel):
                                                'company_name': partner.parent_id.name}
             except ValueError as e:
                 message = "An error has occurred while formatting your followup letter/email. (Lang: %s, Followup Level: #%s) \n\nFull error description: %s" \
-                          % (partner.lang, followup_line.id, e.message)
+                          % (partner.lang, followup_line.id, e)
                 raise ValueError(message)
             return summary
         else:
