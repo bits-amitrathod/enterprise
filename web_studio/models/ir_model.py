@@ -6,7 +6,7 @@ import uuid
 import re
 
 from odoo import api, fields, models
-from odoo.tools import ustr
+from odoo.tools import ustr, pycompat
 
 
 def sanitize_for_xmlid(s):
@@ -68,7 +68,7 @@ class IrModel(models.Model):
     def _search_abstract(self, operator, value):
         abstract_models = [
             model._name
-            for model in self.env.itervalues()
+            for model in pycompat.values(self.env)
             if model._abstract
         ]
         dom_operator = 'in' if (operator, value) in [('=', True), ('!=', False)] else 'not in'

@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, api, _, fields
+from odoo.tools import pycompat
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import check_with_xsd
 
@@ -182,7 +183,7 @@ class MxReportAccountTrial(models.AbstractModel):
         ctx['no_format'] = True
         values = self.with_context(ctx).get_bce_dict(options)
         cfdicoa = qweb.render(CFDIBCE_TEMPLATE, values=values)
-        for key, value in MX_NS_REFACTORING.items():
+        for key, value in pycompat.items(MX_NS_REFACTORING):
             cfdicoa = cfdicoa.replace(key, value + ':')
 
         check_with_xsd(cfdicoa, CFDIBCE_XSD % version)

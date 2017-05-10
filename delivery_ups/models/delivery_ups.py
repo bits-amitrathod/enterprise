@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models, fields, _
 from odoo.exceptions import ValidationError
+from odoo.tools import pycompat
 
 from .ups_request import UPSRequest, Package
 
@@ -133,7 +134,7 @@ class ProviderUPS(models.Model):
 
             labels = []
             track_numbers = []
-            for track_number, label_binary_data in result.get('label_binary_data').iteritems():
+            for track_number, label_binary_data in pycompat.items(result.get('label_binary_data')):
                 logmessage = (_("Shipment created into UPS <br/> <b>Tracking Number : </b>%s") % (track_number))
                 picking.message_post(body=logmessage)
                 if self.ups_label_file_type == 'GIF':

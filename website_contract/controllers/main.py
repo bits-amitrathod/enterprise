@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 from werkzeug.exceptions import NotFound
 from odoo import http
 from odoo.http import request
+from odoo.tools import pycompat
 from odoo.tools.translate import _
 
 from odoo.addons.website_portal.controllers.main import website_account, get_records_pager
@@ -79,7 +80,7 @@ class website_account(website_account):
             'default_url': '/my/contract',
             'searchbar_sortings': searchbar_sortings,
             'sortby': sortby,
-            'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
+            'searchbar_filters': OrderedDict(sorted(pycompat.items(searchbar_filters))),
             'filterby': filterby,
         })
         return request.render("website_contract.portal_my_contracts", values)
@@ -139,13 +140,13 @@ class website_contract(http.Controller):
             'display_change_plan': len(account_templates) > 0,
             'pricelist': account.pricelist_id.sudo(),
         }
-        render_context = {
-            'json': True,
-            'submit_class': 'btn btn-primary btn-sm mb8 mt8 pull-right',
-            'submit_txt': 'Pay Subscription',
-            'bootstrap_formatting': True
-        }
-        render_context = dict(values.items() + render_context.items())
+        render_context = dict(
+            values,
+            json=True,
+            submit_class='btn btn-primary btn-sm mb8 mt8 pull-right',
+            submit_txt='Pay Subscription',
+            bootstrap_formatting=True,
+        )
         for acquirer in acquirers:
             acquirer.form = acquirer.sudo()._registration_render(account.partner_id.id, render_context)
         history = request.session.get('my_contracts_history', [])

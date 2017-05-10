@@ -7,7 +7,7 @@ from datetime import datetime, date, timedelta
 from math import floor
 from odoo import http, _
 from odoo.http import request
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
 from .stat_types import STAT_TYPES, FORECAST_STAT_TYPES, compute_mrr_growth_values
 
 # We need to use the same formatting as the one in read_group (see models.py)
@@ -132,7 +132,7 @@ class RevenueKPIsDashboard(http.Controller):
                     'prior': stat['prior'],
                     'add_symbol': stat['add_symbol'],
                 }
-                for key, stat in STAT_TYPES.iteritems()
+                for key, stat in pycompat.items(STAT_TYPES)
             },
             'forecast_stat_types': {
                 key: {
@@ -141,7 +141,7 @@ class RevenueKPIsDashboard(http.Controller):
                     'prior': stat['prior'],
                     'add_symbol': stat['add_symbol'],
                 }
-                for key, stat in FORECAST_STAT_TYPES.iteritems()
+                for key, stat in pycompat.items(FORECAST_STAT_TYPES)
             },
             'currency_id': request.env.user.company_id.currency_id.id,
             'contract_templates': request.env['sale.subscription.template'].search_read([], fields=['name']),

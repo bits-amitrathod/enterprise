@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from odoo.tools.misc import format_date
+from odoo.tools.misc import format_date, pycompat
 from datetime import datetime, timedelta
 from odoo.addons.web.controllers.main import clean_action
 
@@ -191,7 +191,7 @@ class report_account_general_ledger(models.AbstractModel):
             base_domain += ['|', ('analytic_account_id.tag_ids', 'in', context['analytic_tag_ids'].ids), ('analytic_tag_ids', 'in', context['analytic_tag_ids'].ids)]
         if context.get('analytic_account_ids'):
             base_domain += [('analytic_account_id', 'in', context['analytic_account_ids'].ids)]
-        for account_id, result in results.items():
+        for account_id, result in pycompat.items(results):
             domain = list(base_domain)  # copying the base domain
             domain.append(('account_id', '=', account_id))
             account = self.env['account.account'].browse(account_id)
@@ -385,7 +385,7 @@ class report_account_general_ledger(models.AbstractModel):
                 'unfoldable': False,
                 'unfolded': False,
             })
-            for tax, values in self._get_taxes(journals[0]).items():
+            for tax, values in pycompat.items(self._get_taxes(journals[0])):
                 lines.append({
                     'id': '%s_tax' % (tax.id,),
                     'name': tax.name + ' (' + str(tax.amount) + ')',

@@ -28,7 +28,7 @@ class IrUiMenu(models.Model):
             :param to_delete: a list of ids
         """
 
-        for menu in to_move.keys():
+        for menu in to_move:
             menu_id = self.browse(int(menu))
             if 'parent_id' in to_move[menu]:
                 menu_id.parent_id = to_move[menu]['parent_id']

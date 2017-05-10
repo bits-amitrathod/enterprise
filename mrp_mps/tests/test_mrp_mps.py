@@ -4,6 +4,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
+from odoo.tools import pycompat
 from .common import TestMpsCommon
 
 class TestMpsReport(TestMpsCommon):
@@ -64,7 +65,7 @@ class TestMpsReport(TestMpsCommon):
                     ('product_id', '=', product.id)])
                 demand = sum(forecasts.filtered(lambda x: x.mode == 'auto').mapped('forecast_qty'))
                 indirect_total = 0.0
-                for day, qty in indirect.items():
+                for day, qty in pycompat.items(indirect):
                     if (day >= data['date']) and (day < data['date_to']):
                         indirect_total += qty
                 # To supply = product forecasted - initial quantity (available quantity) + forecast demand + indirect quantity.

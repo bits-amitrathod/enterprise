@@ -14,7 +14,7 @@ class account_report_followup_all(models.AbstractModel):
         partners_data = self.env['res.partner'].get_partners_in_need_of_action_and_update()
         options['partner_followup_level'] = partners_data
         if options.get('type_followup') == 'action':
-            return self.env['res.partner'].browse(partners_data.keys())
+            return self.env['res.partner'].browse(partners_data)
         return super(account_report_followup_all, self).get_partners_in_need_of_action(options)
 
 

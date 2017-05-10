@@ -7,6 +7,7 @@ import time
 import threading
 import uuid
 
+import itertools
 import requests
 from requests.exceptions import ConnectionError
 
@@ -59,7 +60,7 @@ class MailChannel(models.Model):
     def _push_notify_fcm(self, identities, message):
         # Divided into chunks because FCM supports only 1000 users in multi-cast
         message.ensure_one()
-        identities_chunks = [identities[i:i+FCM_MESSAGES_LIMIT] for i in pycompat.range(0, len(identities), FCM_MESSAGES_LIMIT)]
+        identities_chunks = [identities[i:i+FCM_MESSAGES_LIMIT] for i in range(0, len(identities), FCM_MESSAGES_LIMIT)]
         payload = self._fcm_prepare_payload(message)
         for identities in identities_chunks:
             subscription_ids = identities.mapped('subscription_id')
@@ -164,7 +165,7 @@ class MailChannel(models.Model):
             for index, result in enumerate(results):
                 error_type = result.get('error')
                 if error_type:
-                    if error_type not in errors.keys():
+                    if error_type not in errors:
                         errors[error_type] = []
                     errors[error_type].append(subscription_ids[index])
                 if result.get('registration_id'):
@@ -196,10 +197,10 @@ class MailChannel(models.Model):
         but it includes the canonical ID in the response. We will delete/replace such token.
         Response Format: {'new_token': 'old_token'}
         """
-        all_subsciptions = canonical.keys() + canonical.values()
+        all_subsciptions = list(itertools.chain(pycompat.keys(canonical), pycompat.values(canonical)))
         subscription_exists = env['mail_push.device'].search([('subscription_id', 'in', all_subsciptions)])
         token_exists = subscription_exists.mapped("subscription_id")
-        for old, new in canonical.items():
+        for old, new in pycompat.items(canonical):
             if old in token_exists and new in token_exists:
                 subscription_exists.filtered(lambda r: r.subscription_id == old).unlink()
             elif old in token_exists and new not in token_exists:

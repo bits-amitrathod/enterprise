@@ -8,7 +8,8 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
 from odoo import api, fields, models, _
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
+
 
 class SignatureRequest(models.Model):
     _name = "signature.request"
@@ -466,7 +467,7 @@ class SignatureRequestItem(models.Model):
             autorizedIDs = set(signerItems.mapped('id'))
             requiredIDs = set(signerItems.filtered('required').mapped('id'))
 
-            itemIDs = set(map(lambda k: int(k), signature.keys()))
+            itemIDs = {int(k) for k in signature}
             if not (itemIDs <= autorizedIDs and requiredIDs <= itemIDs): # Security check
                 return False
 

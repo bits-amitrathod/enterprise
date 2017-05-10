@@ -3,6 +3,8 @@ import re
 import uuid
 
 from odoo import api, fields, models, _
+from odoo.tools import pycompat
+
 
 class SignatureRequestTemplate(models.Model):
     _name = "signature.request.template"
@@ -72,12 +74,16 @@ class SignatureRequestTemplate(models.Model):
         elif name:
             template.attachment_id.name = name
 
-        item_ids = filter(lambda a: a > 0, map(lambda itemId: int(itemId), signature_items.keys()))
+        item_ids = {
+            it
+            for it in pycompat.imap(int, signature_items)
+            if it > 0
+        }
         template.signature_item_ids.filtered(lambda r: r.id not in item_ids).unlink()
         for item in template.signature_item_ids:
             item.write(signature_items.pop(str(item.id)))
         SignatureItem = self.env['signature.item']
-        for item in signature_items.values():
+        for item in pycompat.values(signature_items):
             item['template_id'] = template.id
             SignatureItem.create(item)
 

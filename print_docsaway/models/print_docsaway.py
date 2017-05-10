@@ -388,7 +388,7 @@ class PrintOrder(models.Model):
             })
             provider_balance[order.provider_id.id] = response['transaction']['balance']
         # update balance of providers
-        for provider in self.env['print.provider'].browse(provider_balance.keys()):
+        for provider in self.env['print.provider'].browse(provider_balance):
             provider.write({'balance' : provider_balance[provider.id]})
 
     def _docsaway_action_compute_price(self):

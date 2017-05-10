@@ -40,7 +40,7 @@ class MailThread(models.AbstractModel):
         if not partners:
             partners = self._get_default_sms_recipients()
 
-        mobile_numbers = filter(None, partners.mapped('mobile'))
+        mobile_numbers = [n for n in partners.mapped('mobile') if n]
         if mobile_numbers:
             if provider._send_sms(sms_message, mobile_numbers):
                 mail_message_body = note_msg or _('SMS text message sent: %s') % sms_message

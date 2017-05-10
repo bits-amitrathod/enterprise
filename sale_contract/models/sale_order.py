@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
                     domain=[log_operator, log_operator, ('name', operator, value),
                             ('code', operator, value), ('partner_id.name', operator, value)],
                     fields=['analytic_account_id'])
-                aa_ids = map(lambda s: s['analytic_account_id'][0], sub_data)
+                aa_ids = [s['analytic_account_id'][0] for s in sub_data]
                 search_domain = [('project_id', 'in', aa_ids)]
         return search_domain
 

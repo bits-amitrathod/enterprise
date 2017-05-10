@@ -4,7 +4,7 @@ import copy
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.misc import formatLang
-from odoo.tools import float_is_zero, ustr
+from odoo.tools import float_is_zero, ustr, pycompat
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import ValidationError
@@ -166,19 +166,19 @@ class AccountFinancialReportLine(models.Model):
         '''
         if currency_table:
             select = 'COALESCE(SUM(CASE '
-            for currency_id, rate in currency_table.items():
+            for currency_id, rate in pycompat.items(currency_table):
                 extra_params += [currency_id, rate]
                 select += 'WHEN \"account_move_line\".company_currency_id = %s THEN \"account_move_line\".balance * %s '
             select += 'ELSE \"account_move_line\".balance END), 0) AS balance, COALESCE(SUM(CASE '
-            for currency_id, rate in currency_table.items():
+            for currency_id, rate in pycompat.items(currency_table):
                 extra_params += [currency_id, rate]
                 select += 'WHEN \"account_move_line\".company_currency_id = %s THEN \"account_move_line\".amount_residual * %s '
             select += 'ELSE \"account_move_line\".amount_residual END), 0) AS amount_residual, COALESCE(SUM(CASE '
-            for currency_id, rate in currency_table.items():
+            for currency_id, rate in pycompat.items(currency_table):
                 extra_params += [currency_id, rate]
                 select += 'WHEN \"account_move_line\".company_currency_id = %s THEN \"account_move_line\".debit * %s '
             select += 'ELSE \"account_move_line\".debit END), 0) AS debit, COALESCE(SUM(CASE '
-            for currency_id, rate in currency_table.items():
+            for currency_id, rate in pycompat.items(currency_table):
                 extra_params += [currency_id, rate]
                 select += 'WHEN \"account_move_line\".company_currency_id = %s THEN \"account_move_line\".credit * %s '
             select += 'ELSE \"account_move_line\".credit END), 0) AS credit'
@@ -447,7 +447,7 @@ class AccountFinancialReportLine(models.Model):
                     c['sum'] = FormulaLine(results[key], currency_table, financial_report, type='not_computed')
                     c['sum_if_pos'] = FormulaLine(results[key]['balance'] >= 0.0 and results[key] or {'balance': 0.0}, currency_table, financial_report, type='not_computed')
                     c['sum_if_neg'] = FormulaLine(results[key]['balance'] <= 0.0 and results[key] or {'balance': 0.0}, currency_table, financial_report, type='not_computed')
-                    for col, formula in formulas.items():
+                    for col, formula in pycompat.items(formulas):
                         if col in results[key]:
                             results[key][col] = safe_eval(formula, c, nocopy=True)
             to_del = []
@@ -518,7 +518,7 @@ class AccountFinancialReportLine(models.Model):
                 r = line.with_context(date_from=period_from, date_to=period_to, strict_range=strict_range)._eval_formula(financial_report, debit_credit, currency_table, linesDicts[k])
                 debit_credit = False
                 res.append(r)
-                domain_ids.update(set(r.keys()))
+                domain_ids.update(r)
                 k += 1
             res = self._put_columns_together(res, domain_ids)
             if line.hide_if_zero and all([float_is_zero(k, precision_rounding=currency_precision) for k in res['line']]):
@@ -569,7 +569,7 @@ class AccountFinancialReportLine(models.Model):
                     for i in [0, 1]:
                         vals['columns'][i] = line._format(vals['columns'][i])
                 else:
-                    vals['columns'] = map(line._format, vals['columns'])
+                    vals['columns'] = [line._format(v) for v in vals['columns']]
                 if not line.formulas:
                     vals['columns'] = [{'name': ''} for k in vals['columns']]
 

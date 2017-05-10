@@ -62,7 +62,7 @@ class SaleSubscription(models.Model):
             groupby=["account_analytic_id", "invoice_id"],
             lazy=False)
         for sub in self:
-            sub.invoice_count = len(filter(lambda d: d['account_analytic_id'][0] == sub.analytic_account_id.id, invoice_line_data))
+            sub.invoice_count = sum(d['account_analytic_id'][0] == sub.analytic_account_id.id for d in invoice_line_data)
 
     @api.depends('recurring_invoice_line_ids', 'recurring_invoice_line_ids.quantity', 'recurring_invoice_line_ids.price_subtotal')
     def _compute_recurring_total(self):
@@ -278,7 +278,7 @@ class SaleSubscription(models.Model):
         domain = [('id', 'in', self.ids)] if self.ids else [('recurring_next_date', '<=', current_date), ('state', '=', 'open')]
         sub_data = self.search_read(fields=['id', 'company_id'], domain=domain)
         for company_id in set(data['company_id'][0] for data in sub_data):
-            sub_ids = map(lambda s: s['id'], filter(lambda s: s['company_id'][0] == company_id, sub_data))
+            sub_ids = [s['id'] for s in sub_data if s['company_id'][0] == company_id]
             subs = self.with_context(company_id=company_id, force_company=company_id).browse(sub_ids)
             for sub in subs:
                 try:

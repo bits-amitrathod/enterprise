@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, api
+from odoo.tools import pycompat
 from odoo.tools.translate import _
 from odoo.tools.misc import formatLang
 
@@ -141,7 +142,7 @@ class generic_tax_report(models.AbstractModel):
         lines = []
         types = ['sale', 'purchase']
         groups = dict((tp, {}) for tp in types)
-        for key, tax in taxes.items():
+        for key, tax in pycompat.items(taxes):
             if tax['obj'].type_tax_use == 'none':
                 continue
             if tax['obj'].children_tax_ids:
@@ -163,7 +164,7 @@ class generic_tax_report(models.AbstractModel):
                     'columns': [{} for k in range(0, 2*(period_number+1) or 2)],
                     'level': 1,
                 })
-            for key, tax in sorted(groups[tp].items(), key=lambda k: k[1]['obj'].sequence):
+            for key, tax in sorted(pycompat.items(groups[tp]), key=lambda k: k[1]['obj'].sequence):
                 if tax['show']:
                     columns = []
                     for period in tax['periods']:

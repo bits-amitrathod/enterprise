@@ -69,7 +69,7 @@ class AccountReport(models.AbstractModel):
 
         options['unfolded_lines'] = []
         # Merge old options with default from this report
-        for key, value in options.items():
+        for key, value in pycompat.items(options):
             if key in previous_options and value is not None and previous_options[key] is not None:
                 # special case handler for date and comparison as from one report to another, they can have either a date range or single date
                 if key == 'date' or key == 'comparison':
@@ -323,7 +323,7 @@ class AccountReport(models.AbstractModel):
             values=dict(rcontext),
         )
         if self.env.context.get('print_mode', False):
-            for k,v in self.replace_class().items():
+            for k,v in pycompat.items(self.replace_class()):
                 html = html.replace(k, v)
             # append footnote as well
             html = html.replace('<div class="js_account_report_footnotes"></div>', self.get_html_footnotes(footnotes_to_render))
@@ -504,7 +504,7 @@ class AccountReport(models.AbstractModel):
                     vals = {'date': dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), 'string': display_value}
                 options['comparison']['periods'].append(vals)
         if len(options['comparison'].get('periods', [])) > 0:
-            for k, v in options['comparison']['periods'][0].items():
+            for k, v in pycompat.items(options['comparison']['periods'][0]):
                 if k in ('date', 'date_from', 'date_to', 'string'):
                     options['comparison'][k] = v
         return options
@@ -687,9 +687,9 @@ class AccountReport(models.AbstractModel):
                 style_left = def_style
                 style_right = def_style
             sheet.write(y + y_offset, 0, lines[y]['name'], style_left)
-            for x in pycompat.range(1, max_width - len(lines[y]['columns']) + 1):
+            for x in range(1, max_width - len(lines[y]['columns']) + 1):
                 sheet.write(y + y_offset, x, None, style)
-            for x in pycompat.range(1, len(lines[y]['columns']) + 1):
+            for x in range(1, len(lines[y]['columns']) + 1):
                 # if isinstance(lines[y]['columns'][x - 1], tuple):
                     # lines[y]['columns'][x - 1] = lines[y]['columns'][x - 1][0]
                 if x < len(lines[y]['columns']):
@@ -697,11 +697,11 @@ class AccountReport(models.AbstractModel):
                 else:
                     sheet.write(y + y_offset, x + lines[y].get('colspan', 1) - 1, lines[y]['columns'][x - 1].get('name', ''), style_right)
             if 'total' in lines[y].get('class', '') or lines[y].get('level') == 0:
-                for x in pycompat.range(0, len(lines[0]['columns']) + 1):
+                for x in range(len(lines[0]['columns']) + 1):
                     sheet.write(y + 1 + y_offset, x, None, upper_line_style)
                 y_offset += 1
         if lines:
-            for x in pycompat.range(0, max_width + 1):
+            for x in range(max_width + 1):
                 sheet.write(len(lines) + y_offset, x, None, upper_line_style)
 
         workbook.close()

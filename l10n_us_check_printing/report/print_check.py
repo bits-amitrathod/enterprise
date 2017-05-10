@@ -16,10 +16,10 @@ class report_print_check(models.Model):
     def get_pages(self):
         """ Returns the data structure used by the template : a list of dicts containing what to print on pages.
         """
-        stub_pages = self.make_stub_pages()
+        stub_pages = self.make_stub_pages() or [False]
         multi_stub = self.company_id.us_check_multi_stub
         pages = []
-        for i in range(0, stub_pages != None and len(stub_pages) or 1):
+        for i, p in enumerate(stub_pages):
             pages.append({
                 'sequence_number': self.check_number\
                     if (self.journal_id.check_manual_sequencing and self.check_number != 0)\
@@ -32,7 +32,7 @@ class report_print_check(models.Model):
                 'memo': self.communication,
                 'stub_cropped': not multi_stub and len(self.invoice_ids) > INV_LINES_PER_STUB,
                 # If the payment does not reference an invoice, there is no stub line to display
-                'stub_lines': stub_pages != None and stub_pages[i],
+                'stub_lines': p,
             })
         return pages
 

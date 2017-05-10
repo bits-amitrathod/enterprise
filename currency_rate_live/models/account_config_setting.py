@@ -11,6 +11,7 @@ import urllib
 from odoo import api, fields, models
 from odoo.addons.web.controllers.main import xml2json_from_elementtree
 from odoo.exceptions import UserError
+from odoo.tools import pycompat
 from odoo.tools.translate import _
 
 
@@ -84,7 +85,7 @@ class ResCompany(models.Model):
             base_currency = company.currency_id.name
             base_currency_rate = rates_dict[base_currency]
 
-            for currency, rate in rates_dict.iteritems():
+            for currency, rate in pycompat.items(rates_dict):
                 company_rate = rate / base_currency_rate
                 self.env['res.currency.rate'].create({'currency_id':available_currencies[currency].id, 'rate':company_rate, 'name':fields.Date.today(), 'company_id':company.id})
 

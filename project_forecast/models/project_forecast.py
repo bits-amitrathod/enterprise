@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
+from odoo.tools import pycompat
 
 
 class ProjectForecast(models.Model):
@@ -190,7 +191,7 @@ class ProjectForecast(models.Model):
                 }
             )
 
-        from_, to_ = map(fields.Date.from_string, column_value.split('/'))
+        from_, to_ = pycompat.imap(fields.Date.from_string, column_value.split('/'))
         start = fields.Date.to_string(from_)
         # range is half-open get the actual end date
         end = fields.Date.to_string(to_ - relativedelta(days=1))

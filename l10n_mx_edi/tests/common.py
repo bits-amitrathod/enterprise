@@ -2,6 +2,7 @@
 
 import time
 
+from odoo.tools.pycompat import imap
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 
 
@@ -87,7 +88,7 @@ class InvoiceTransactionCase(AccountingTestCase):
         This method allow us have a precise diff output"""
         def recursive_dict(element):
             return (element.tag,
-                    dict(map(recursive_dict, element.getchildren()),
+                    dict((recursive_dict(e) for e in element.getchildren()),
                          **element.attrib))
         return dict([recursive_dict(xml)])
 

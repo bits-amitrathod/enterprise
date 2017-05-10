@@ -7,6 +7,7 @@ from dateutil import relativedelta
 
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, AccessError, ValidationError
+from odoo.tools import pycompat
 
 TICKET_PRIORITY = [
     ('0', 'All'),
@@ -65,7 +66,7 @@ class HelpdeskTeam(models.Model):
     def _compute_percentage_satisfaction(self):
         for team in self:
             activities = team.ticket_ids.rating_get_grades()
-            total_activity_values = sum(activities.values())
+            total_activity_values = sum(pycompat.values(activities))
             team.percentage_satisfaction = activities['great'] * 100 / total_activity_values if total_activity_values else -1
 
     @api.multi
@@ -264,7 +265,7 @@ class HelpdeskTeam(models.Model):
             tickets = self.env['helpdesk.ticket'].search(domain + [('stage_id.is_close', '=', True), ('close_date', '>=', dt)])
             activity = tickets.rating_get_grades()
             total_rating = self.compute_activity_avg(activity)
-            total_activity_values = sum(activity.values())
+            total_activity_values = sum(pycompat.values(activity))
             team_satisfaction = round((total_rating / total_activity_values if total_activity_values else 0), 2)
             if team_satisfaction:
                 result['today']['rating'] = team_satisfaction
@@ -274,7 +275,7 @@ class HelpdeskTeam(models.Model):
             tickets = self.env['helpdesk.ticket'].search(domain + [('stage_id.is_close', '=', True), ('close_date', '>=', dt)])
             activity = tickets.rating_get_grades()
             total_rating = self.compute_activity_avg(activity)
-            total_activity_values = sum(activity.values())
+            total_activity_values = sum(pycompat.values(activity))
             team_satisfaction_7days = round((total_rating / total_activity_values if total_activity_values else 0), 2)
             if team_satisfaction_7days:
                 result['7days']['rating'] = team_satisfaction_7days
@@ -624,7 +625,7 @@ class HelpdeskTicket(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('team_id'):
-            vals.update(item for item in self._onchange_team_get_values(self.env['helpdesk.team'].browse(vals['team_id'])).items() if item[0] not in vals)
+            vals.update(item for item in pycompat.items(self._onchange_team_get_values(self.env['helpdesk.team'].browse(vals['team_id']))) if item[0] not in vals)
 
         # context: no_log, because subtype already handle this
         ticket = super(HelpdeskTicket, self.with_context(mail_create_nolog=True)).create(vals)
@@ -711,20 +712,23 @@ class HelpdeskTicket(models.Model):
     def _ticket_email_split(self, msg):
         email_list = tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or ''))
         # check left-part is not already an alias
-        return filter(lambda x: x.split('@')[0] not in self.mapped('team_id.alias_name'), email_list)
+        return [
+            x for x in email_list
+            if x.split('@')[0] not in self.mapped('team_id.alias_name')
+        ]
 
     @api.model
     def message_new(self, msg, custom_values=None):
         values = dict(custom_values or {}, partner_email=msg.get('from'), partner_id=msg.get('author_id'))
         ticket = super(HelpdeskTicket, self).message_new(msg, custom_values=values)
-        partner_ids = filter(None, ticket._find_partner_from_emails(self._ticket_email_split(msg)))
+        partner_ids = [x for x in ticket._find_partner_from_emails(self._ticket_email_split(msg)) if x]
         if partner_ids:
             ticket.message_subscribe(partner_ids)
         return ticket
 
     @api.multi
     def message_update(self, msg, update_vals=None):
-        partner_ids = filter(None, self._find_partner_from_emails(self._ticket_email_split(msg)))
+        partner_ids = [x for x in self._find_partner_from_emails(self._ticket_email_split(msg)) if x]
         if partner_ids:
             self.message_subscribe(partner_ids)
         return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)

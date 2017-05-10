@@ -3,7 +3,7 @@
 
 from odoo import models, api, _, fields
 from odoo.tools.misc import formatLang
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
 from datetime import datetime, timedelta
 
 
@@ -72,7 +72,7 @@ class ReportPartnerLedger(models.AbstractModel):
             base_domain.append(('date', '>=', context['date_from_aml']))
         if context['state'] == 'posted':
             base_domain.append(('move_id.state', '=', 'posted'))
-        for partner_id, result in results.items():
+        for partner_id, result in pycompat.items(results):
             domain = list(base_domain)  # copying the base domain
             domain.append(('partner_id', '=', partner_id))
             partner = self.env['res.partner'].browse(partner_id)

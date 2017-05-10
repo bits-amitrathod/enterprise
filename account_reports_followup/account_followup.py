@@ -142,12 +142,12 @@ class res_partner(models.Model):
                 continue
             if date_maturity:
                 if date_maturity <= fups[followup_line_id][0].strftime('%Y-%m-%d'):
-                    if partner_id not in result.keys():
+                    if partner_id not in result:
                         result.update({partner_id: (fups[followup_line_id][1], delay)})
                     elif result[partner_id][1] < delay:
                         result[partner_id] = (fups[followup_line_id][1], delay)
             elif date and date <= fups[followup_line_id][0].strftime('%Y-%m-%d'):
-                if partner_id not in result.keys():
+                if partner_id not in result:
                     result.update({partner_id: (fups[followup_line_id][1], delay)})
                 elif result[partner_id][1] < delay:
                     result[partner_id] = (fups[followup_line_id][1], delay)

@@ -31,7 +31,7 @@ class NewWebsite(models.Model):
             EXP = json.loads(request.httprequest.cookies.get('website_version_experiment'))
         else:
             EXP = request.context.get('website_version_experiment', {})
-            exps = self.env["website_version.experiment"].search([('state', '=', 'running'), ('website_id.id', '=', website.id), ('google_id', 'not in', EXP.keys())])
+            exps = self.env["website_version.experiment"].search([('state', '=', 'running'), ('website_id.id', '=', website.id), ('google_id', 'not in', list(EXP))])
             for exp in exps:
                 result = []
                 pond_sum = 0

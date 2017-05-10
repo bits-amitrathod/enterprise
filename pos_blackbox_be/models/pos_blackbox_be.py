@@ -5,6 +5,7 @@ from odoo import models, fields, api
 from openerp.addons.base.res import res_users as ru
 from odoo.exceptions import UserError
 from odoo.exceptions import ValidationError
+from odoo.tools import pycompat
 from odoo.tools.translate import _
 
 class AccountTax(models.Model):
@@ -72,7 +73,7 @@ class res_users(models.Model):
         log = self.env['pos_blackbox_be.log']
 
         filtered_values = {field: ('********' if field in ru.USER_PRIVATE_FIELDS else value)
-                               for field, value in values.items()}
+                               for field, value in pycompat.items(values)}
         log.create(filtered_values, "create", self._name, values.get('login'))
 
         return super(res_users, self).create(values)
@@ -82,7 +83,7 @@ class res_users(models.Model):
         log = self.env['pos_blackbox_be.log']
 
         filtered_values = {field: ('********' if field in ru.USER_PRIVATE_FIELDS else value)
-                               for field, value in values.items()}
+                               for field, value in pycompat.items(values)}
         for user in self:
             log.create(filtered_values, "modify", user._name, user.login)
 
@@ -241,9 +242,9 @@ class pos_session(models.Model):
                     total_sold_per_category[key] = line.price_subtotal_incl
 
         if group_by_user_id:
-            return total_sold_per_user_per_category.items()
+            return list(pycompat.items(total_sold_per_user_per_category))
         else:
-            return total_sold_per_user_per_category[0].items()
+            return list(pycompat.items(total_sold_per_user_per_category[0]))
 
     def get_user_report_data(self):
         data = {}
@@ -270,7 +271,7 @@ class pos_session(models.Model):
         total_sold_per_category_per_user = self.get_total_sold_per_category(group_by_user_id=True)
 
         for user in total_sold_per_category_per_user:
-            data[user[0]]['revenue_per_category'] = user[1].items()
+            data[user[0]]['revenue_per_category'] = list(pycompat.items(user[1]))
 
         return data
 
@@ -346,7 +347,7 @@ class pos_order(models.Model):
                 white_listed_fields = ['state', 'account_move', 'picking_id',
                                        'invoice_id']
 
-                for field in values.keys():
+                for field in values:
                     if field not in white_listed_fields:
                         raise UserError(_("Modifying registered orders is not allowed."))
 

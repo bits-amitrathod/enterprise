@@ -157,7 +157,10 @@ class crm_team(models.Model):
                 leads.write({'team_id': salesteam['id']})
 
                 # Erase fake/false email
-                spams = map(lambda x: x.id, filter(lambda x: x.email_from and not checkmail(x.email_from), leads))
+                spams = [
+                    x.id for x in leads
+                    if x.email_from and not checkmail(x.email_from)
+                ]
 
                 if spams:
                     self.env["crm.lead"].browse(spams).write({'email_from': False})

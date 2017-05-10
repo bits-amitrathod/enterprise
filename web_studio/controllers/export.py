@@ -9,8 +9,7 @@ import os.path
 import zipfile
 
 from odoo.osv.expression import OR
-from odoo.tools import topological_sort
-
+from odoo.tools import topological_sort, pycompat
 
 # list of models to export (the order ensures that dependencies are satisfied)
 MODELS_TO_EXPORT = [
@@ -313,7 +312,7 @@ def xmlid_getter():
         except KeyError:
             # prefetch when possible
             records = record.browse(record._prefetch[record._name])
-            for rid, val in records.get_external_id().iteritems():
+            for rid, val in pycompat.items(records.get_external_id()):
                 cache[record.browse(rid)] = val
             res = cache[record]
         if check and not res:

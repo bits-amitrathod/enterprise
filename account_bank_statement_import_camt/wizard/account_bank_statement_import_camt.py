@@ -5,6 +5,7 @@ from lxml import etree
 from StringIO import StringIO
 
 from odoo import models
+from odoo.tools import pycompat
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -26,7 +27,7 @@ class AccountBankStatementImport(models.TransientModel):
         return super(AccountBankStatementImport, self)._parse_file(data_file)
 
     def _parse_file_camt(self, root):
-        ns = {k or 'ns': v for k, v in root.nsmap.iteritems()}
+        ns = {k or 'ns': v for k, v in pycompat.items(root.nsmap)}
         statement_list = []
         for statement in root[0].findall('ns:Stmt', ns):
             statement_vals = {}

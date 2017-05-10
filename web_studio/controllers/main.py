@@ -8,6 +8,8 @@ from odoo.http import content_disposition, request
 from odoo.exceptions import UserError, AccessError
 from odoo.addons.web_studio.controllers import export
 
+from odoo.tools import pycompat
+
 
 class WebStudioController(http.Controller):
 
@@ -142,13 +144,13 @@ class WebStudioController(http.Controller):
 
         # insert missing translations of views
         for view in views:
-            for name, fld in view._fields.items():
+            for name, fld in pycompat.items(view._fields):
                 domain += insert_missing(fld, view)
 
         # insert missing translations of model, and extend domain for related fields
         record = request.env[model.model].search([], limit=1)
         if record:
-            for name, fld in record._fields.items():
+            for name, fld in pycompat.items(record._fields):
                 domain += insert_missing(fld, record)
 
         action = {
@@ -273,8 +275,8 @@ class WebStudioController(http.Controller):
             for child in list(node_element):
                 node_element.remove(child)
 
-        mail_thread_fields = request.env['mail.thread'].fields_get().keys()
-        mail_activity_mixin_fields = request.env['mail.activity.mixin'].fields_get().keys()
+        mail_thread_fields = list(request.env['mail.thread'].fields_get())
+        mail_activity_mixin_fields = list(request.env['mail.activity.mixin'].fields_get())
         whitelisted_fields = models.MAGIC_COLUMNS + ['display_name']
         blacklisted_fields = set(mail_thread_fields + mail_activity_mixin_fields + ['__last_update']) - set(whitelisted_fields)
 
@@ -711,7 +713,7 @@ class WebStudioController(http.Controller):
         else:
             # Format of expr is //tag[@attr1_name=attr1_value][@attr2_name=attr2_value][...]
             expr = '//' + node['tag']
-            for k, v in node.get('attrs', {}).items():
+            for k, v in pycompat.items(node.get('attrs', {})):
                 if k == 'class':
                     # Special case for classes which usually contain multiple values
                     expr += '[contains(@%s,\'%s\')]' % (k, v)
@@ -895,7 +897,7 @@ class WebStudioController(http.Controller):
 
         xpath_node = self._get_xpath_node(arch, operation)
 
-        for key, new_attr in new_attrs.iteritems():
+        for key, new_attr in pycompat.items(new_attrs):
             xml_node = xpath_node.find('attribute[@name="%s"]' % (key))
             if xml_node is None:
                 xml_node = etree.Element('attribute', {'name': key})

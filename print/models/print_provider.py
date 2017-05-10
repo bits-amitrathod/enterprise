@@ -301,7 +301,7 @@ class PrintOrder(models.Model):
 
         # send a message to the author of the failed print orders
         template = self.env['ir.model.data'].xmlid_to_object('print.print_user_notify_failed_email_template')
-        for user_id in user_to_notify.keys():
+        for user_id in user_to_notify:
             template.with_context(print_errors=user_to_notify[user_id]).send_mail(user_id, force_send=True)
 
 

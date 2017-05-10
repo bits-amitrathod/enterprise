@@ -91,7 +91,7 @@ class EbayCategory(models.Model):
             response = prod.ebay_execute('GetCategories', call_data)
             categories = response.dict()['CategoryArray']['Category']
             # Delete the eBay categories not existing anymore on eBay
-            category_ids = map(lambda c: c['CategoryID'], categories)
+            category_ids = [c['CategoryID'] for c in categories]
             self.search([
                 ('category_id', 'not in', category_ids),
                 ('category_type', '=', 'ebay'),
@@ -199,7 +199,7 @@ class EbayPolicy(models.Model):
         if not isinstance(policies, list):
             policies = [policies]
         # Delete the policies not existing anymore on eBay
-        policy_ids = map(lambda p: p['ProfileID'], policies)
+        policy_ids = [p['ProfileID'] for p in policies]
         self.search([('policy_id', 'not in', policy_ids)]).unlink()
         for policy in policies:
             record = self.search([('policy_id', '=', policy['ProfileID'])])

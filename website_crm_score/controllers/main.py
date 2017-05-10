@@ -2,7 +2,7 @@
 import json
 from odoo import http, SUPERUSER_ID, fields
 from odoo.http import request
-from odoo.tools import html_escape
+from odoo.tools import html_escape, pycompat
 from odoo.addons.website.controllers.main import Website
 from odoo.addons.website_form.controllers.main import WebsiteForm
 
@@ -80,7 +80,7 @@ class ContactController(WebsiteForm):
 
             # NOTE: the following should be changed when dynamic forms exist
             changed_values = {}
-            for fieldname, fieldvalue in values.items():
+            for fieldname, fieldvalue in pycompat.items(values):
                 if fieldname in lead and fieldvalue:
                     if lead[fieldname] and lead[fieldname] != fieldvalue:
                         changed_values[fieldname] = fieldvalue
@@ -89,7 +89,7 @@ class ContactController(WebsiteForm):
             # Post a message to indicate the updated field (if any)
             if changed_values:
                 body = 'Other value given for field '
-                for fieldname in changed_values.keys():
+                for fieldname in changed_values:
                     body += '<br/><b>%s</b>: <b>%s</b>' % (fieldname, html_escape(changed_values[fieldname]))
                 request.env['crm.lead'].browse(lead_id).sudo().message_post(body=body, subject="Field value changed")
 
@@ -106,7 +106,7 @@ class ContactController(WebsiteForm):
                 score_pageview_ids = []
                 url_list = []
                 pages_viewed = request.session['pages_viewed']
-                for url, date in pages_viewed.iteritems():
+                for url, date in pycompat.items(pages_viewed):
                     vals = {'user_id': request.session.get('uid'), 'url': url, 'view_date': date}
                     score_pageview_ids.append((0, 0, vals))
                     url_list.append(url)

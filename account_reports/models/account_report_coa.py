@@ -4,6 +4,8 @@
 from odoo import models, api, _
 from datetime import datetime
 
+from odoo.tools import pycompat
+
 
 class report_account_coa(models.AbstractModel):
     _name = "account.coa.report"
@@ -74,7 +76,7 @@ class report_account_coa(models.AbstractModel):
                         #format the values computed above
                         cols = [self.format_value(init_bal)]
                         total_periods = 0
-                        for p in total.values():
+                        for p in pycompat.values(total):
                             cols.append(p >= 0 and self.format_value(p) or '')
                             cols.append(p < 0 and self.format_value(-p) or '')
                             total_periods += p
@@ -122,7 +124,7 @@ class report_account_coa(models.AbstractModel):
             if period_number == 0:
                 initial_balances = dict([(k, res[k]['initial_bal']['balance']) for k in res])
             for account in res:
-                if account not in grouped_accounts.keys():
+                if account not in grouped_accounts:
                     grouped_accounts[account] = [{'balance': 0, 'debit': 0, 'credit': 0} for p in comparison_table]
                 grouped_accounts[account][period_number]['balance'] = res[account]['balance'] - res[account]['initial_bal']['balance']
             period_number += 1

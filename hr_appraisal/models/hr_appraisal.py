@@ -221,9 +221,9 @@ class HrAppraisal(models.Model):
             # Update standard results with default results
             result = []
             for state_value, state_name in states:
-                res = filter(lambda x: x['state'] == state_value, read_group_res)
+                res = [x for x in read_group_res if x['state'] == state_value]
                 if not res:
-                    res = filter(lambda x: x['state'] == state_value, read_group_all_states)
+                    res = [x for x in read_group_all_states if x['state'] == state_value]
                 res[0]['state'] = [state_value, state_name]
                 if res[0]['state'][0] == 'done' or res[0]['state'][0] == 'cancel':
                     res[0]['__fold'] = True

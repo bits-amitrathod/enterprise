@@ -281,7 +281,7 @@ class ProductTemplate(models.Model):
         for key in name_values:
             possible_name_values.append({
                 'Name': self._ebay_encode(key),
-                'Value': map(lambda n: self._ebay_encode(n.name), sorted(name_values[key], key=lambda v: v.sequence))
+                'Value': [self._ebay_encode(n.name) for n in sorted(name_values[key], key=lambda v: v.sequence)]
             })
         items['Item']['Variations']['VariationSpecificsSet'] = {
             'NameValueList': possible_name_values
@@ -604,11 +604,11 @@ class ProductTemplate(models.Model):
                     if not isinstance(name_value_list, list):
                         name_value_list = [name_value_list]
                     # get only the item specific in the value list
-                    specs = filter(lambda n: n['Source'] == 'ItemSpecific', name_value_list)
                     attrs = []
                     # get the attribute.value ids in order to get the variant listed on ebay
-                    for spec in specs:
-                        attr = self.env['product.attribute.value'].search([('name', '=', spec['Value'])])
+                    for spec in (n for n in name_value_list if n['Source'] == 'ItemSpecific'):
+                        attr = self.env['product.attribute.value'].search(
+                            [('name', '=', spec['Value'])])
                         attrs.append(('attribute_value_ids', '=', attr.id))
                     variant = self.env['product.product'].search(attrs).filtered(
                         lambda l: l.product_tmpl_id.id == self.id)
