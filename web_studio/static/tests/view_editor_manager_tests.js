@@ -477,6 +477,8 @@ QUnit.module('Studio', {
         assert.strictEqual(vem.$('.o_web_studio_view_renderer > .o_pivot > table').length, 1,
             "the table should be the direct child of pivot");
 
+        vem.$('.o_web_studio_sidebar_header [name="view"]').click();
+
         vem.destroy();
     });
 

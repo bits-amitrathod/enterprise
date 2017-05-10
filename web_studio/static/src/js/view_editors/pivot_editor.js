@@ -3,7 +3,9 @@ odoo.define('web_studio.PivotEditor', function (require) {
 
 var PivotRenderer = require('web.PivotRenderer');
 
-return PivotRenderer.extend({
+var EditorMixin = require('web_studio.EditorMixin');
+
+return PivotRenderer.extend(EditorMixin, {
     /**
      * @override
      */

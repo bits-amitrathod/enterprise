@@ -3,7 +3,9 @@ odoo.define('web_studio.GridEditor', function (require) {
 
 var GridRenderer = require('web_grid.GridRenderer');
 
-return GridRenderer.extend({
+var EditorMixin = require('web_studio.EditorMixin');
+
+return GridRenderer.extend(EditorMixin, {
 });
 
 });

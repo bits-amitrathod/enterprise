@@ -3,7 +3,9 @@ odoo.define('web_studio.CalendarEditor', function (require) {
 
 var CalendarRenderer = require('web.CalendarRenderer');
 
-return CalendarRenderer.extend({
+var EditorMixin = require('web_studio.EditorMixin');
+
+return CalendarRenderer.extend(EditorMixin, {
 });
 
 });

@@ -3,7 +3,9 @@ odoo.define('web_studio.GraphEditor', function (require) {
 
 var GraphRenderer = require('web.GraphRenderer');
 
-return GraphRenderer.extend({
+var EditorMixin = require('web_studio.EditorMixin');
+
+return GraphRenderer.extend(EditorMixin, {
     /**
      * @override
      */
