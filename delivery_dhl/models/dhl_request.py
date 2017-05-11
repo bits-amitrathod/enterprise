@@ -3,9 +3,10 @@
 import binascii
 import time
 from math import ceil
-from urllib2 import Request, urlopen, URLError
 import xml.etree.ElementTree as etree
 import unicodedata
+
+import requests
 
 from odoo import _
 from odoo.exceptions import ValidationError
@@ -189,11 +190,10 @@ class DHLProvider():
 
     def _send_request(self, request_xml):
         try:
-            req = Request(url=self.url,
-                          data=request_xml,
-                          headers={'Content-Type': 'application/xml'})
-            response_text = urlopen(req).read()
-        except URLError:
+            req = requests.post(self.url, data=request_xml, headers={'Content-Type': 'application/xml'})
+            req.raise_for_status()
+            response_text = req.content
+        except IOError:
             raise ValidationError("DHL Server not found. Check your connectivity.")
         root = etree.fromstring(response_text)
         return root

@@ -10,7 +10,6 @@ from PIL import Image
 import logging
 import os
 import re
-from urllib2 import URLError
 
 import suds
 from suds.client import Client
@@ -343,7 +342,7 @@ class UPSRequest():
                 prefix = '/Envelope/Body/Fault'
             return self.get_error_message(e.document.childAtPath(prefix + '/detail/Errors/ErrorDetail/PrimaryErrorCode/Code').getText(),
                                           e.document.childAtPath(prefix + '/detail/Errors/ErrorDetail/PrimaryErrorCode/Description').getText())
-        except URLError as e:
+        except IOError as e:
             return self.get_error_message('0', 'UPS Server Not Found:\n%s' % e)
 
     def send_shipping(self, shipment_info, packages, shipper, ship_from, ship_to, packaging_type, service_type, label_file_type='GIF'):
@@ -450,7 +449,7 @@ class UPSRequest():
                 prefix = '/Envelope/Body/Fault'
             return self.get_error_message(e.document.childAtPath(prefix + '/detail/Errors/ErrorDetail/PrimaryErrorCode/Code').getText(),
                                           e.document.childAtPath(prefix + '/detail/Errors/ErrorDetail/PrimaryErrorCode/Description').getText())
-        except URLError as e:
+        except IOError as e:
             return self.get_error_message('0', 'UPS Server Not Found:\n%s' % e)
 
     def cancel_shipment(self, tracking_number):
@@ -477,5 +476,5 @@ class UPSRequest():
                 prefix = '/Envelope/Body/Fault'
             return self.get_error_message(e.document.childAtPath(prefix + '/detail/Errors/ErrorDetail/PrimaryErrorCode/Code').getText(),
                                           e.document.childAtPath(prefix + '/detail/Errors/ErrorDetail/PrimaryErrorCode/Description').getText())
-        except URLError as e:
+        except IOError as e:
             return self.get_error_message('0', 'UPS Server Not Found:\n%s' % e)

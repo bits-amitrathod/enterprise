@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import json
-import urllib2
 from ssl import SSLError
+
+import requests
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -97,16 +98,14 @@ class DocsawayProvider(models.Model):
         })
 
         # Send JSON object to the Docsaway server
-        req = urllib2.Request(url, json.dumps(request), {'Content-Type': 'application/json'})
         try:
-            f = urllib2.urlopen(req, timeout=15)
+            req = requests.post(url, data=json.dumps(request), headers={'Content-Type': 'application/json'}, timeout=15)
         except SSLError:
             raise DocsawayException(_('Host unreachable.') + ' ' + _('Please try again later.'))
 
-        if f.getcode() != 200:
+        if req.status_code != 200:
             raise DocsawayException(_('Failed request.') + ' ' + _('Please try again later.'))
-        response = json.loads(f.read())
-        f.close()
+        response = req.json()
 
         # DocsAway Request Error
         if response['APIErrorNumber']:

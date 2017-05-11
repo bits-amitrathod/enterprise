@@ -6,7 +6,6 @@ import suds
 import requests
 
 from suds.client import Client
-from urllib2 import URLError
 
 from odoo import modules
 
@@ -111,7 +110,7 @@ class TaxCloudRequest(object):
                 formatted_response['error_message'] = self.response.Messages[0][0].Message
         except suds.WebFault as fault:
             formatted_response['error_message'] = fault
-        except URLError:
+        except IOError:
             formatted_response['error_message'] = "TaxCloud Server Not Found"
 
         return formatted_response
@@ -140,7 +139,7 @@ class TaxCloudRequest(object):
                 formatted_response['error_message'] = response.Messages[0][0].Message
         except suds.WebFault as fault:
             formatted_response['error_message'] = fault
-        except URLError:
+        except IOError:
             formatted_response['error_message'] = "TaxCloud Server Not Found"
         return formatted_response
 
@@ -155,7 +154,7 @@ class TaxCloudRequest(object):
                 formatted_response['error_message'] = self.response.Messages[0][0].Message
         except suds.WebFault as fault:
             formatted_response['error_message'] = fault
-        except URLError:
+        except IOError:
             formatted_response['error_message'] = "TaxCloud Server Not Found"
 
         return formatted_response
