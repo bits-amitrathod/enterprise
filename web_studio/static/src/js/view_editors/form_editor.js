@@ -268,11 +268,31 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     /**
      * @override
      * @private
+     *
+     * FIXME wrong, studio has never been able to handle groups will col > 2...
+     *
      */
     _renderInnerGroup: function (node) {
         var self = this;
         var formEditorHook;
         var $result = this._super.apply(this, arguments);
+        _.each(node.children, function (child) {
+            if (child.tag === 'field') {
+                var $widget = $result.find('[name="' + child.attrs.name + '"]');
+                var $tr = $widget.closest('tr');
+                if (!$widget.is('.o_invisible_modifier')) {
+                    self._renderAddingContentLine(child).insertAfter($tr);
+                    // apply to the entire <tr> o_web_studio_show_invisible
+                    // rather then inner label/input
+                    if ($widget.hasClass('o_web_studio_show_invisible')) {
+                        $widget.removeClass('o_web_studio_show_invisible');
+                        $tr.find('label[for="' + $widget.attr('id') + '"]').removeClass('o_web_studio_show_invisible');
+                        $tr.addClass('o_web_studio_show_invisible');
+                    }
+                }
+                self._processField(child, $tr);
+            }
+        });
         // Add click event to see group properties in sidebar
         $result.attr('data-node-id', this.node_id++);
         this.setSelectable($result);
@@ -298,42 +318,9 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
      * @override
      * @private
      */
-    _renderInnerGroupLabel: function ($result, label, linked_node) {
-        $result = this._super.apply(this, arguments);
-        if (linked_node) {
-            // We have to know if this field has a label or not.
-            linked_node.has_label = true;
-            var formEditorHook = this._renderHook(linked_node, 'after', 'tr');
-            formEditorHook.appendTo($result);
-        }
-        return $result;
-    },
-    /**
-     * @override
-     * @private
-     */
-    _renderInnerGroupRow: function (nodes) {
-        for (var i = 0; i < nodes.length; i++) {
-            // we need to know if this field has a label or not
-            nodes[i].has_label = true;
-        }
+    _renderInnerGroupField: function (node) {
         var $result = this._super.apply(this, arguments);
-
-        // put hooks for each node in the group
-        for (var j = 0; j < nodes.length; j++) {
-            var node = nodes[j];
-            if (!$result.find('.o_field_widget').is('.o_invisible_modifier')) {
-                // apply to the entire <tr> o_web_studio_show_invisible
-                // rather then inner label/input
-                if ($result.find('.o_field_widget').hasClass('o_web_studio_show_invisible')) {
-                    $result.find('.o_field_widget, .o_form_label').removeClass('o_web_studio_show_invisible');
-                    $result.addClass('o_web_studio_show_invisible');
-                }
-                // add hook only if field is visible
-                $result = $result.add(this._renderAddingContentLine(node));
-            }
-            this._processField(node, $result.find('.o_td_label').parent());
-        }
+        node.has_label = (node.attrs.nolabel !== "1");
         return $result;
     },
     /**
@@ -420,6 +407,10 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
      */
     _renderTagGroup: function (node) {
         var $result = this._super.apply(this, arguments);
+        // Studio only allows hooks after outergroups
+        if ($result.is('.o_inner_group')) {
+            return $result;
+        }
         // Add hook after this group
         var formEditorHook = this._renderHook(node, 'after');
         formEditorHook.appendTo($('<div>')); // start the widget
