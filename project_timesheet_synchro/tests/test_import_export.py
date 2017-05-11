@@ -79,21 +79,12 @@ class TestImportExport(common.TransactionCase):
             'name': 'activity description',
         })
 
-        Time_Sheet_Sheet = self.env['hr_timesheet_sheet.sheet']
-        sheet = Time_Sheet_Sheet.create({})
-
-        # Open sheet case
+        # This test can be removed when the format of `export_data_for_ui` will change. Indeed, sheet
+        # state is not supported anymore (since removal of hr_timesheet_sheet module, in saas-17).
+        # The `export_data_for_ui` return the sheet state 'open' as an harcoded value, to not change
+        # returned format values, since it has to be compatible cross version for the sake of the
+        # mobile timesheet app.
         exported_data = AAL.with_context(context).export_data_for_ui()
-
         for exported_aal in exported_data['aals']['datas']:
             if self.env["ir.model.data"].xmlid_to_res_id(exported_aal[0]) == aal.id:
                 self.assertEqual(exported_aal[8], 'open')
-
-        # closed sheet case
-        sheet.state = 'done'
-
-        exported_data = AAL.with_context(context).export_data_for_ui()
-
-        for exported_aal in exported_data['aals']['datas']:
-            if self.env["ir.model.data"].xmlid_to_res_id(exported_aal[0]) == aal.id:
-                self.assertEqual(exported_aal[8], 'closed')

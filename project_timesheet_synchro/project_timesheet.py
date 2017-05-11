@@ -51,11 +51,18 @@ class account_analytic_line(models.Model):
             "date",
             "unit_amount",
             "__last_update",
-            "sheet_id/state",
+            #"sheet_id/state", removed in saas-17
             "project_id/id",
         ]
 
         aals = aal_ids.export_data(aals_fields)
+
+        # /!\ COMPATIBILITY HACK /!\
+        # With hr_timesheet_sheet removal, the sheet concept (and its state) are obsolete. To avoid
+        # changing the return format value for the mobile app (since it has to be compatible cross
+        # version), we hardcored the sheet state as 'open'.
+        for aal_row in aals['datas']:
+            aal_row.insert(8, 'open')
 
         # List comprehension to find the task and project ids used in aals.
         task_ids_list = list(set([int(aals['datas'][x][2]) for x in range(len(aals['datas'])) if len(aals['datas'][x][2]) > 0]))
@@ -97,15 +104,6 @@ class account_analytic_line(models.Model):
         ]
         projects = projects_ids.export_data(projects_fields)
 
-        # Reduces the sheet_id/state to open or closed.
-        # If an aal is not linked to a project, it won't be imported
-        aals_to_return = {'datas': []}
-
-        for aal in aals['datas']:
-            if aal[8] == 'Approved' or aal[8] == 'Waiting Approval':
-                aal[8] = 'closed'
-            else:
-                aal[8] = 'open'
         return {
             'aals': aals,
             'tasks': tasks,
