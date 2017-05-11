@@ -189,7 +189,6 @@ class pos_session(models.Model):
     def _compute_discounts(self):
         self.amount_of_discounts = 0
         self.total_discount = 0
-
         for order in self.order_ids:
             for line in order.lines:
                 if line.discount > 0:
@@ -197,7 +196,7 @@ class pos_session(models.Model):
 
                     original_line_discount = line.discount
                     line.discount = 0
-                    price_without_discount = line._amount_line_all(None, None)[line.id]['price_subtotal_incl']
+                    price_without_discount = line.price_subtotal_incl
                     line.discount = original_line_discount
 
                     self.total_discount += price_without_discount - line.price_subtotal_incl
