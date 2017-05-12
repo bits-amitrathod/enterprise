@@ -9,12 +9,11 @@ import uuid
 
 import itertools
 import requests
+from html2text import html2text
 from requests.exceptions import ConnectionError
 
 from odoo import api, models
 from odoo.modules.registry import Registry
-from odoo.addons.mail.models.html2text import html2text
-
 from odoo.tools import pycompat
 
 FCM_MESSAGES_LIMIT = 1000
