@@ -7,7 +7,6 @@ import suds  # should work with suds or its fork suds-jurko
 
 from datetime import datetime
 from suds.client import Client
-from urllib2 import URLError
 
 
 _logger = logging.getLogger(__name__)
@@ -179,7 +178,7 @@ class FedexRequest():
 
         except suds.WebFault as fault:
             formatted_response['errors_message'] = fault
-        except URLError:
+        except IOError:
             formatted_response['errors_message'] = "Fedex Server Not Found"
 
         return formatted_response
@@ -285,7 +284,7 @@ class FedexRequest():
 
         except suds.WebFault as fault:
             formatted_response['errors_message'] = fault
-        except URLError:
+        except IOError:
             formatted_response['errors_message'] = "Fedex Server Not Found"
 
         return formatted_response
@@ -326,7 +325,7 @@ class FedexRequest():
 
         except suds.WebFault as fault:
             formatted_response['errors_message'] = fault
-        except URLError:
+        except IOError:
             formatted_response['errors_message'] = "Fedex Server Not Found"
 
         return formatted_response

@@ -3,8 +3,9 @@
 import binascii
 import math
 import re
+
+import requests
 from lxml import etree
-from urllib2 import Request, urlopen, URLError, quote
 
 from odoo import _
 from odoo.exceptions import ValidationError
@@ -39,9 +40,9 @@ class USPSRequest():
 
     def __init__(self, prod_environment):
         if not prod_environment:
-            self.url = 'http://testing.shippingapis.com/ShippingAPI.dll?API='
+            self.url = 'http://testing.shippingapis.com/ShippingAPI.dll'
         else:
-            self.url = 'http://production.shippingapis.com/ShippingAPI.dll?API='
+            self.url = 'http://production.shippingapis.com/ShippingAPI.dll'
         self.prod_environment = prod_environment
 
     def check_required_value(self, recipient, delivery_nature, shipper, order=False, picking=False):
@@ -123,12 +124,12 @@ class USPSRequest():
         request_text = carrier.env['ir.qweb'].render('delivery_usps.usps_price_request', request_detail)
         dict_response = {'price': 0.0, 'currency_code': "USD"}
         api = 'RateV4' if carrier.usps_delivery_nature == 'domestic' else 'IntlRateV2'
-        xml = '&XML=%s' % (quote(request_text))
-        full_url = '%s%s%s' % (self.url, api, xml)
 
         try:
-            response_text = urlopen(Request(full_url)).read()
-        except URLError:
+            req = requests.get(self.url, params={'API': api, 'XML': request_text})
+            req.raise_for_status()
+            response_text = req.content
+        except IOError:
             dict_response['error_message'] = 'USPS Server Not Found - Check your connectivity'
             return dict_response
         root = etree.fromstring(response_text)
@@ -235,12 +236,12 @@ class USPSRequest():
         request_text = picking.env['ir.qweb'].render('delivery_usps.usps_shipping_common', ship_detail)
         api = self._api_url(delivery_nature, service)
         dict_response = {'tracking_number': 0.0, 'price': 0.0, 'currency': "USD"}
-        url = 'https://secure.shippingapis.com/ShippingAPI.dll?API='
-        xml = '&XML=%s' % (quote(request_text))
-        full_url = '%s%s%s' % (url, api, xml)
+        url = 'https://secure.shippingapis.com/ShippingAPI.dll'
         try:
-            response_text = urlopen(Request(full_url)).read()
-        except URLError:
+            req = requests.get(url, params={'API': api, 'XML': request_text})
+            req.raise_for_status()
+            response_text = req.content
+        except IOError:
             dict_response['error_message'] = 'USPS Server Not Found - Check your connectivity'
 
         root = etree.fromstring(response_text)

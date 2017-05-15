@@ -3,7 +3,8 @@
 
 import json
 import logging
-import urllib
+
+from werkzeug import urls
 
 from odoo import _
 from odoo import http
@@ -76,7 +77,7 @@ class GithubController(http.Controller):
 
         # Check the signature of the incoming callback
         # Github apparently computes the body as URL-Escaped string (sweet !!)
-        raw_body = "payload=" + urllib.quote_plus(request.httprequest.form['payload'].encode("UTF-8"))
+        raw_body = "payload=" + urls.url_quote_plus(request.httprequest.form['payload'].encode("UTF-8"))
         if headers_data.get('signature'):
             repo_sign = "sha1=" + github_tokenize(repository_target.secret, raw_body)
             if not _consteq(repo_sign, str(headers_data.get('signature'))):

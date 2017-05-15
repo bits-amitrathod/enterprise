@@ -5,8 +5,8 @@ from lxml import etree
 import json
 from dateutil.relativedelta import relativedelta
 import re
+
 import requests
-import urllib
 
 from odoo import api, fields, models
 from odoo.addons.web.controllers.main import xml2json_from_elementtree
@@ -169,9 +169,9 @@ class ResCompany(models.Model):
             yql_query = 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("' + currency_pairs + '")'
             yql_query_url = yql_base_url + "?q=" + yql_query + "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
             try:
-                url = urllib.urlopen(yql_query_url)
-                result = url.read()
-                url.close()
+                url = requests.get(yql_query_url)
+                url.raise_for_status()
+                result = url.content
             except:
                 #connection error, the request wasn't successful
                 return False
