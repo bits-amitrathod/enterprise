@@ -335,7 +335,7 @@ class PrintOrder(models.Model):
             except (DocsawayException, UserError) as e:
                 order.write({
                     'state' : 'error',
-                    'error_message' : e[0],
+                    'error_message' : e.args[0],
                 })
                 continue # skip the current element if exception raised
             order.write({
@@ -373,7 +373,7 @@ class PrintOrder(models.Model):
             except (DocsawayException, UserError) as e:
                 order.write({
                     'state' : 'error',
-                    'error_message' : e[0],
+                    'error_message' : e.args[0],
                     'price' : 0.0,
                 })
                 continue # skip the current element if exception raised

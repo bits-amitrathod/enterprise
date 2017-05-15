@@ -465,7 +465,7 @@ class ProductTemplate(models.Model):
         except UserError, e:
             if auto_commit:
                 self.env.cr.rollback()
-                self.env.user.message_post(body=_("eBay error: Impossible to synchronize the products. \n'%s'") % e[0])
+                self.env.user.message_post(body=_("eBay error: Impossible to synchronize the products. \n'%s'") % e.args[0])
                 self.env.cr.commit()
                 return
             else:
@@ -538,7 +538,7 @@ class ProductTemplate(models.Model):
                 self.env.cr.rollback()
                 self.ebay_listing_status = 'Error'
                 self.message_post(
-                    body=_("eBay error: Impossible to synchronize the products. \n'%s'") % e[0])
+                    body=_("eBay error: Impossible to synchronize the products. \n'%s'") % e.args[0])
                 self.env.cr.commit()
             else:
                 raise e
