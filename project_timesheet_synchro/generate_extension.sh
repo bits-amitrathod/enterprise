@@ -12,27 +12,31 @@ cp manifest.json extension
 
 cp ../web/static/src/js/boot.js extension/static/src/js
 
-[ -d extension/static/src/js/framework ] || mkdir extension/static/src/js/framework
-cp ../web/static/src/js/framework/class.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/translation.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/time.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/ajax.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/widget.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/data.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/session.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/model.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/data_model.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/pyeval.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/utils.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/core.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/mixins.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/registry.js extension/static/src/js/framework
-cp ../web/static/src/js/framework/local_storage.js extension/static/src/js/framework
+[ -d extension/static/src/js/core ] || mkdir extension/static/src/js/core
+cp ../web/static/src/js/core/class.js extension/static/src/js/core
+cp ../web/static/src/js/core/translation.js extension/static/src/js/core
+cp ../web/static/src/js/core/time.js extension/static/src/js/core
+cp ../web/static/src/js/core/ajax.js extension/static/src/js/core
+cp ../web/static/src/js/core/widget.js extension/static/src/js/core
+cp ../web/static/src/js/core/session.js extension/static/src/js/core
+cp ../web/static/src/js/core/pyeval.js extension/static/src/js/core
+cp ../web/static/src/js/core/utils.js extension/static/src/js/core
+cp ../web/static/src/js/core/mixins.js extension/static/src/js/core
+cp ../web/static/src/js/core/registry.js extension/static/src/js/core
+cp ../web/static/src/js/core/local_storage.js extension/static/src/js/core
+cp ../web/static/src/js/core/qweb.js extension/static/src/js/core
+cp ../web/static/src/js/core/bus.js extension/static/src/js/core
+cp ../web/static/src/js/core/rpc.js extension/static/src/js/core
+cp ../web/static/src/js/core/context.js extension/static/src/js/core
+cp ../web/static/src/js/core/concurrency.js extension/static/src/js/core
+cp ../web/static/src/js/core/abstract_service.js extension/static/src/js/core
+
+cp ../web/static/src/js/services/ajax_service.js extension/static/src/js/core
+cp ../web/static/src/js/services/core.js extension/static/src/js/core
 
 cp -r ../web/static/lib/qweb extension/static/lib
 cp -r ../web/static/lib/nvd3 extension/static/lib
 cp -r ../web/static/lib/jquery extension/static/lib
-cp -r ../web/static/lib/jquery.timeago extension/static/lib
 cp -r ../web/static/lib/jquery.ba-bbq extension/static/lib
 cp -r ../web/static/lib/moment extension/static/lib
 cp -r ../web/static/lib/underscore extension/static/lib
