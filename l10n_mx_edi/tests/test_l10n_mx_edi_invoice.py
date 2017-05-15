@@ -29,7 +29,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             'currency_id': self.mxn.id,
         })
         self.company.partner_id.write({
-            'vat': 'AAA010101AAA',
+            'vat': 'ACO560518KW7',
             'country_id': self.env.ref('base.mx').id,
             'state_id': self.env.ref('base.state_mx_jal').id,
             'street_name': 'Company Street Juan & José & "Niño"',
