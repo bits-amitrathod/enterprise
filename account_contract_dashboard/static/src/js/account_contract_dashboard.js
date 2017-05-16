@@ -57,8 +57,8 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
     },
 
     on_update_options: function() {
-        this.start_date = this.start_picker.get_value() || '0001-02-01';
-        this.end_date = this.end_picker.get_value()  || '9999-12-31';
+        this.start_date = this.start_picker.getValue() || '0001-02-01';
+        this.end_date = this.end_picker.getValue()  || '9999-12-31';
         this.filters.template_ids = this.get_filtered_template_ids();
         this.filters.tag_ids = this.get_filtered_tag_ids();
 
@@ -163,18 +163,18 @@ var account_contract_dashboard_abstract = Widget.extend(ControlPanelMixin, {
         var self = this;
         return $.when(def1, def2).then(function() {
             self.start_picker.on('datetime_changed', self, function() {
-                if (this.start_picker.get_value()) {
-                    this.end_picker.picker.minDate(moment(this.start_picker.get_value()));
+                if (this.start_picker.getValue()) {
+                    this.end_picker.picker.minDate(moment(this.start_picker.getValue()));
                 }
             });
             self.end_picker.on('datetime_changed', self, function() {
-                if (this.end_picker.get_value()) {
-                    this.start_picker.picker.maxDate(moment(this.end_picker.get_value()));
+                if (this.end_picker.getValue()) {
+                    this.start_picker.picker.maxDate(moment(this.end_picker.getValue()));
                 }
             });
 
-            self.start_picker.set_value(moment(self.start_date));
-            self.end_picker.set_value(moment(self.end_date));
+            self.start_picker.setValue(moment(self.start_date));
+            self.end_picker.setValue(moment(self.end_date));
         });
     },
 
@@ -1088,8 +1088,8 @@ var account_contract_dashboard_salesman = account_contract_dashboard_abstract.ex
     },
 
     on_update_options: function() {
-        this.start_date = this.start_picker.get_value() || '0001-02-01';
-        this.end_date = this.end_picker.get_value()  || '9999-12-31';
+        this.start_date = this.start_picker.getValue() || '0001-02-01';
+        this.end_date = this.end_picker.getValue()  || '9999-12-31';
         var selected_salesman_id = Number(this.$searchview.find('option[name="salesman"]:selected').val());
         this.salesman = _.findWhere(this.salesman_ids, {id: selected_salesman_id});
         this.render_dashboard();
@@ -1210,7 +1210,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
     },
 
     on_update_options: function() {
-        this.date_start = this.date_picker.get_value() || '0001-02-01';
+        this.date_start = this.date_picker.getValue() || '0001-02-01';
         this.cohort_period = this.$searchview.find('option[name="period"]:selected').val();
         this.cohort_interest = this.$searchview.find('option[name="interest"]:selected').val();
         this.filters.template_ids = this.get_filtered_template_ids();
@@ -1245,7 +1245,7 @@ var account_contract_dashboard_cohort = account_contract_dashboard_abstract.exte
         });
         var self = this;
         this.date_picker.prependTo(this.$searchview).then(function() {
-            self.date_picker.set_value(moment(self.date_start));
+            self.date_picker.setValue(moment(self.date_start));
         });
     },
 

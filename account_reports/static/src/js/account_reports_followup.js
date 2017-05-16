@@ -137,7 +137,7 @@ var account_report_followup = account_report.extend({
         var $content = $(QWeb.render("nextActionForm", {target_id: partner_id}));
         var nextActionDatePicker = new datepicker.DateWidget(this);
         nextActionDatePicker.appendTo($content.find('div.o_account_reports_next_action_date_picker'));
-        nextActionDatePicker.set_value(moment());
+        nextActionDatePicker.setValue(moment());
 
         var changeDate = function (e) {
             var dt = new Date();
@@ -155,13 +155,13 @@ var account_report_followup = account_report.extend({
                     dt.setMonth(dt.getMonth() + 2);
                     break;
             }
-            nextActionDatePicker.set_value(moment(dt));
+            nextActionDatePicker.setValue(moment(dt));
         };
         $content.find('.o_account_reports_followup_next_action_date_button').bind('click', changeDate);
         
         var save = function () {
             var note = $content.find(".o_account_reports_next_action_note").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
-            var date = nextActionDatePicker.get_value();
+            var date = nextActionDatePicker.getValue();
             var target_id = $content.find("#target_id").val();
             if (self.$el.find('.o_account_reports_followup-manual').hasClass('btn-default')){
                 self.toggle_auto_manual(e);

@@ -131,7 +131,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             dt.replace($(this));
             dt.$el.find('input').attr('name', $(this).find('input').attr('name'));
             if($(this).data('default-value')) { // Set its default value if there is one
-                dt.set_value(moment($(this).data('default-value')));
+                dt.setValue(moment($(this).data('default-value')));
             }
         });
         // format date that needs to be show in user lang
