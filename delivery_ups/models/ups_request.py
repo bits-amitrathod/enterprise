@@ -34,16 +34,16 @@ UPS_ERROR_MAP = {
     '110548': "A shipment cannot have a KGS/IN or LBS/CM as its unit of measurements. Configure it from the delivery method.",
     '111057': "This measurement system is not valid for the selected country. Please switch from LBS/IN to KGS/CM (or vice versa). Configure it from the delivery method.",
     '111091': "The selected service is not possible from your warehouse to the recipient address, please choose another service.",
-    '111100': "The service is invalid from the requested warehouse.",
+    '111100': "The selected service is invalid from the requested warehouse, please choose another service.",
     '111107': "Please provide a valid zip code in the warehouse address.",
-    '111210': "The selected service is not possible to the recipient address, please choose available service.",
+    '111210': "The selected service is invalid to the recipient address, please choose another service.",
     '111212': "Please provide a valid package type available for service and selected locations.",
     '111500': "The selected service is not valid with the selected packaging.",
-    '112111': "Please provide a valid shipper number.",
+    '112111': "Please provide a valid shipper number/Carrier Account.",
     '113020': "Please provide a valid zip code in the warehouse address.",
     '113021': "Please provide a valid zip code in the recipient address.",
     '120031': "Exceeds Total Number of allowed pieces per World Wide Express Shipment.",
-    '120100': "Please provide a valid shipper number.",
+    '120100': "Please provide a valid shipper number/Carrier Account.",
     '120102': "Please provide a valid street in shipper's address.",
     '120105': "Please provide a valid city in the shipper's address.",
     '120106': "Please provide a valid state in the shipper's address.",
@@ -54,7 +54,7 @@ UPS_ERROR_MAP = {
     '120114': "Shipper phone extension cannot exceed the length of 4.",
     '120115': "Shipper Phone must be at least 10 alphanumeric characters.",
     '120116': "Shipper phone extension must contain only numbers.",
-    '120122': "Please provide a valid shipper Number.",
+    '120122': "Please provide a valid shipper Number/Carrier Account.",
     '120124': "The requested service is unavailable between the selected locations.",
     '120202': "Please provide a valid street in the recipient address.",
     '120205': "Please provide a valid city in the recipient address.",
@@ -74,7 +74,7 @@ UPS_ERROR_MAP = {
     '120312': "Warehouse PhoneExtension cannot exceed the length of 4.",
     '120313': "Warehouse Phone must be at least 10 alphanumeric characters.",
     '120314': "Warehouse Phone must contain only numbers.",
-    '120412': "Please provide a valid shipper Number.",
+    '120412': "Please provide a valid shipper Number/Carrier Account.",
     '121057': "This measurement system is not valid for the selected country. Please switch from LBS/IN to KGS/CM (or vice versa). Configure it from delivery method",
     '121210': "The requested service is unavailable between the selected locations.",
     '128089': "Access License number is Invalid. Provide a valid number (Length sholuld be 0-35 alphanumeric characters)",
@@ -88,7 +88,7 @@ UPS_ERROR_MAP = {
     '250006': "The maximum number of user access attempts was exceeded. So please try again later",
     '250007': "The UserId is currently locked out; please try again in 24 hours.",
     '250009': "Provided Access License Number not found in the UPS database",
-    '250038': "Please provide a valid shipper number.",
+    '250038': "Please provide a valid shipper number/Carrier Account.",
     '250047': "Access License number is revoked contact UPS to get access.",
     '250052': "Authorization system is currently unavailable , try again later.",
     '250053': "UPS Server Not Found",
@@ -345,7 +345,7 @@ class UPSRequest():
         except IOError as e:
             return self.get_error_message('0', 'UPS Server Not Found:\n%s' % e)
 
-    def send_shipping(self, shipment_info, packages, shipper, ship_from, ship_to, packaging_type, service_type, label_file_type='GIF'):
+    def send_shipping(self, shipment_info, packages, shipper, ship_from, ship_to, packaging_type, service_type, label_file_type='GIF', ups_carrier_account=False):
 
         client = self._set_client(self.ship_wsdl, 'Ship', 'ShipmentRequest')
 
@@ -416,7 +416,14 @@ class UPSRequest():
         payment_info = client.factory.create('ns3:PaymentInformation')
         shipcharge = client.factory.create('ns3:ShipmentCharge')
         shipcharge.Type = '01'
-        shipcharge.BillShipper.AccountNumber = self.shipper_number or ''
+
+        # Bill Recevier 'Bill My Account'
+        if ups_carrier_account:
+            shipcharge.BillReceiver.AccountNumber = ups_carrier_account
+            shipcharge.BillReceiver.Address.PostalCode = ship_to.zip
+        else:
+            shipcharge.BillShipper.AccountNumber = self.shipper_number or ''
+
         payment_info.ShipmentCharge = shipcharge
         shipment.PaymentInformation = payment_info
 

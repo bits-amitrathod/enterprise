@@ -10,6 +10,23 @@ from .ups_request import UPSRequest, Package
 class ProviderUPS(models.Model):
     _inherit = 'delivery.carrier'
 
+    def _get_ups_service_types(self):
+        return [
+            ('03', 'UPS Ground'),
+            ('11', 'UPS Standard'),
+            ('01', 'UPS Next Day'),
+            ('14', 'UPS Next Day AM'),
+            ('13', 'UPS Next Day Air Saver'),
+            ('02', 'UPS 2nd Day'),
+            ('59', 'UPS 2nd Day AM'),
+            ('12', 'UPS 3-day Select'),
+            ('65', 'UPS Saver'),
+            ('07', 'UPS Worldwide Express'),
+            ('08', 'UPS Worldwide Expedited'),
+            ('54', 'UPS Worldwide Express Plus'),
+            ('96', 'UPS Worldwide Express Freight')
+        ]
+
     delivery_type = fields.Selection(selection_add=[('ups', "UPS")])
 
     ups_username = fields.Char(string='UPS Username', groups="base.group_system")
@@ -17,20 +34,7 @@ class ProviderUPS(models.Model):
     ups_shipper_number = fields.Char(string='UPS Shipper Number', groups="base.group_system")
     ups_access_number = fields.Char(string='UPS AccessLicenseNumber', groups="base.group_system")
     ups_default_packaging_id = fields.Many2one('product.packaging', string='UPS Default Packaging Type')
-    ups_default_service_type = fields.Selection([('03', 'UPS Ground'),
-                                                 ('11', 'UPS Standard'),
-                                                 ('01', 'UPS Next Day'),
-                                                 ('14', 'UPS Next Day AM'),
-                                                 ('13', 'UPS Next Day Air Saver'),
-                                                 ('02', 'UPS 2nd Day'),
-                                                 ('59', 'UPS 2nd Day AM'),
-                                                 ('12', 'UPS 3-day Select'),
-                                                 ('65', 'UPS Saver'),
-                                                 ('07', 'UPS Worldwide Express'),
-                                                 ('08', 'UPS Worldwide Expedited'),
-                                                 ('54', 'UPS Worldwide Express Plus'),
-                                                 ('96', 'UPS Worldwide Express Freight')],
-                                               string="UPS Service Type", default='03')
+    ups_default_service_type = fields.Selection(_get_ups_service_types, string="UPS Service Type", default='03')
     ups_package_weight_unit = fields.Selection([('LBS', 'Pounds'), ('KGS', 'Kilograms')], default='LBS')
     ups_package_dimension_unit = fields.Selection([('IN', 'Inches'), ('CM', 'Centimeters')], string="Units for UPS Package Size", default='IN')
     ups_label_file_type = fields.Selection([('GIF', 'PDF'),
@@ -38,52 +42,55 @@ class ProviderUPS(models.Model):
                                             ('EPL', 'EPL'),
                                             ('SPL', 'SPL')],
                                            string="UPS Label File Type", default='GIF', oldname='x_label_file_type')
+    ups_bill_my_account = fields.Boolean(string='Bill My Account', help="When user select Bill my account checkbox,\n"
+                                     "He will be asked to enter account number as bill may account used to charge customer's account")
 
-    def ups_get_shipping_price_from_so(self, orders):
-        res = []
+    def ups_get_shipping_price_from_so(self, order):
         superself = self.sudo()
         srm = UPSRequest(superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
         ResCurrency = self.env['res.currency']
         max_weight = self.ups_default_packaging_id.max_weight
-        for order in orders:
-            packages = []
-            total_qty = 0
-            total_weight = 0
-            for line in order.order_line.filtered(lambda line: not line.is_delivery):
-                total_qty += line.product_uom_qty
-                total_weight += line.product_id.weight * line.product_qty
+        packages = []
+        total_qty = 0
+        total_weight = 0
+        for line in order.order_line.filtered(lambda line: not line.is_delivery):
+            total_qty += line.product_uom_qty
+            total_weight += line.product_id.weight * line.product_qty
 
-            if max_weight and total_weight > max_weight:
-                total_package = int(total_weight / max_weight)
-                last_package_weight = total_weight % max_weight
+        if max_weight and total_weight > max_weight:
+            total_package = int(total_weight / max_weight)
+            last_package_weight = total_weight % max_weight
 
-                for seq in range(total_package):
-                    packages.append(Package(self, max_weight))
-                if last_package_weight:
-                    packages.append(Package(self, last_package_weight))
-            else:
-                packages.append(Package(self, total_weight))
+            for seq in range(total_package):
+                packages.append(Package(self, max_weight))
+            if last_package_weight:
+                packages.append(Package(self, last_package_weight))
+        else:
+            packages.append(Package(self, total_weight))
 
-            shipment_info = {
-                'total_qty': total_qty  # required when service type = 'UPS Worldwide Express Freight'
-            }
-            srm.check_required_value(order.company_id.partner_id, order.warehouse_id.partner_id, order.partner_shipping_id, order=order)
-            result = srm.get_shipping_price(
-                shipment_info=shipment_info, packages=packages, shipper=order.company_id.partner_id, ship_from=order.warehouse_id.partner_id,
-                ship_to=order.partner_shipping_id, packaging_type=self.ups_default_packaging_id.shipper_package_code, service_type=self.ups_default_service_type)
+        shipment_info = {
+            'total_qty': total_qty  # required when service type = 'UPS Worldwide Express Freight'
+        }
+        srm.check_required_value(order.company_id.partner_id, order.warehouse_id.partner_id, order.partner_shipping_id, order=order)
+        ups_service_type = order.ups_service_type or self.ups_default_service_type
+        result = srm.get_shipping_price(
+            shipment_info=shipment_info, packages=packages, shipper=order.company_id.partner_id, ship_from=order.warehouse_id.partner_id,
+            ship_to=order.partner_shipping_id, packaging_type=self.ups_default_packaging_id.shipper_package_code, service_type=ups_service_type)
 
-            if result.get('error_message'):
-                raise ValidationError(result['error_message'])
+        if result.get('error_message'):
+            raise ValidationError(result['error_message'])
 
-            if order.currency_id.name == result['currency_code']:
-                price = float(result['price'])
-            else:
-                quote_currency = ResCurrency.search([('name', '=', result['currency_code'])], limit=1)
-                price = quote_currency.compute(float(result['price']), order.currency_id)
+        if order.currency_id.name == result['currency_code']:
+            price = float(result['price'])
+        else:
+            quote_currency = ResCurrency.search([('name', '=', result['currency_code'])], limit=1)
+            price = quote_currency.compute(float(result['price']), order.currency_id)
 
-            res = res + [price]
+        if self.ups_bill_my_account and order.ups_carrier_account:
+            # Don't show delivery amount, if ups bill my account option is true
+            price = 0.0
 
-        return res
+        return price
 
     def ups_send_shipping(self, pickings):
         res = []
@@ -112,12 +119,14 @@ class ProviderUPS(models.Model):
                 'ilt_monetary_value': '%d' % invoice_line_total,
                 'itl_currency_code': self.env.user.company_id.currency_id.name,
             }
+            ups_service_type = picking.ups_service_type or self.ups_default_service_type
+            ups_carrier_account = picking.ups_carrier_account
             srm.check_required_value(picking.company_id.partner_id, picking.picking_type_id.warehouse_id.partner_id, picking.partner_id, picking=picking)
 
             package_type = picking.package_ids and picking.package_ids[0].packaging_id.shipper_package_code or self.ups_default_packaging_id.shipper_package_code
             result = srm.send_shipping(
                 shipment_info=shipment_info, packages=packages, shipper=picking.company_id.partner_id, ship_from=picking.picking_type_id.warehouse_id.partner_id,
-                ship_to=picking.partner_id, packaging_type=package_type, service_type=self.ups_default_service_type, label_file_type=self.ups_label_file_type)
+                ship_to=picking.partner_id, packaging_type=package_type, service_type=ups_service_type, label_file_type=self.ups_label_file_type, ups_carrier_account=ups_carrier_account)
 
             if result.get('error_message'):
                 raise ValidationError(result['error_message'])

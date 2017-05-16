@@ -21,6 +21,7 @@
                         <group>
                             <field name="ups_package_weight_unit" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
                             <field name="ups_package_dimension_unit" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                            <field name="ups_bill_my_account" attrs="{'invisible': [('delivery_type', '!=', 'ups')]}"/>
                         </group>
                     </group>
                 </page>

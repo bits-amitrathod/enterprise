@@ -11,5 +11,7 @@
         'views/delivery_ups_view.xml',
         'views/sale_config_settings_views.xml',
         'views/stock_config_settings_views.xml',
+        'views/sale_views.xml',
+        'views/stock_picking_views.xml'
     ],
 }
