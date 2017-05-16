@@ -84,26 +84,23 @@ class ProviderUSPS(models.Model):
     usps_redirect_partner_id = fields.Many2one('res.partner', string="Redirect Partner")
     usps_machinable = fields.Boolean(string="Machinable", help="Please check on USPS website to ensure that your package is machinable.")
 
-    def usps_get_shipping_price_from_so(self, orders):
-        res = []
+    def usps_get_shipping_price_from_so(self, order):
         srm = USPSRequest(self.prod_environment)
 
-        for order in orders:
-            srm.check_required_value(order.partner_shipping_id, order.carrier_id.usps_delivery_nature, order.warehouse_id.partner_id, order=order)
+        srm.check_required_value(order.partner_shipping_id, order.carrier_id.usps_delivery_nature, order.warehouse_id.partner_id, order=order)
 
-            quotes = srm.usps_rate_request(order, self)
-            if quotes.get('error_message'):
-                raise ValidationError(quotes['error_message'])
+        quotes = srm.usps_rate_request(order, self)
+        if quotes.get('error_message'):
+            raise ValidationError(quotes['error_message'])
 
-            # USPS always returns prices in USD
-            if order.currency_id.name == 'USD':
-                price = quotes['price']
-            else:
-                quote_currency = self.env['res.currency'].search([('name', '=', 'USD')], limit=1)
-                price = quote_currency.compute(quotes['price'], order.currency_id)
+        # USPS always returns prices in USD
+        if order.currency_id.name == 'USD':
+            price = quotes['price']
+        else:
+            quote_currency = self.env['res.currency'].search([('name', '=', 'USD')], limit=1)
+            price = quote_currency.compute(quotes['price'], order.currency_id)
 
-            res = res + [price]
-        return res
+        return price
 
     def usps_send_shipping(self, pickings):
         res = []

@@ -75,65 +75,62 @@ class ProviderFedex(models.Model):
     def on_change_fedex_service_type(self):
         self.fedex_saturday_delivery = False
 
-    def fedex_get_shipping_price_from_so(self, orders):
-        res = []
+    def fedex_get_shipping_price_from_so(self, order):
         max_weight = _convert_weight(self.fedex_default_packaging_id.max_weight, self.fedex_weight_unit)
-        for order in orders:
-            price = 0.0
+        price = 0.0
 
-            # Estimate weight of the sales order; will be definitely recomputed on the picking field "weight"
-            est_weight_value = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line]) or 0.0
-            weight_value = _convert_weight(est_weight_value, self.fedex_weight_unit)
+        # Estimate weight of the sales order; will be definitely recomputed on the picking field "weight"
+        est_weight_value = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line]) or 0.0
+        weight_value = _convert_weight(est_weight_value, self.fedex_weight_unit)
 
-            # Authentication stuff
-            srm = FedexRequest(request_type="rating", prod_environment=self.prod_environment)
-            superself = self.sudo()
-            srm.web_authentication_detail(superself.fedex_developer_key, superself.fedex_developer_password)
-            srm.client_detail(superself.fedex_account_number, superself.fedex_meter_number)
+        # Authentication stuff
+        srm = FedexRequest(request_type="rating", prod_environment=self.prod_environment)
+        superself = self.sudo()
+        srm.web_authentication_detail(superself.fedex_developer_key, superself.fedex_developer_password)
+        srm.client_detail(superself.fedex_account_number, superself.fedex_meter_number)
 
-            # Build basic rating request and set addresses
-            srm.transaction_detail(order.name)
-            srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, self.fedex_default_packaging_id.shipper_package_code, self.fedex_weight_unit, self.fedex_saturday_delivery)
-            order_currency = order.currency_id
-            srm.set_currency(order_currency.name)
-            srm.set_shipper(order.company_id.partner_id, order.warehouse_id.partner_id)
-            srm.set_recipient(order.partner_id)
+        # Build basic rating request and set addresses
+        srm.transaction_detail(order.name)
+        srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, self.fedex_default_packaging_id.shipper_package_code, self.fedex_weight_unit, self.fedex_saturday_delivery)
+        order_currency = order.currency_id
+        srm.set_currency(order_currency.name)
+        srm.set_shipper(order.company_id.partner_id, order.warehouse_id.partner_id)
+        srm.set_recipient(order.partner_id)
 
-            if max_weight and weight_value > max_weight:
-                total_package = int(weight_value / max_weight)
-                last_package_weight = weight_value % max_weight
+        if max_weight and weight_value > max_weight:
+            total_package = int(weight_value / max_weight)
+            last_package_weight = weight_value % max_weight
 
-                for sequence in range(1, total_package + 1):
-                    srm.add_package(max_weight, sequence_number=sequence, mode='rating')
-                if last_package_weight:
-                    total_package = total_package + 1
-                    srm.add_package(last_package_weight, sequence_number=total_package, mode='rating')
-                srm.set_master_package(weight_value, total_package)
+            for sequence in range(1, total_package + 1):
+                srm.add_package(max_weight, sequence_number=sequence, mode='rating')
+            if last_package_weight:
+                total_package = total_package + 1
+                srm.add_package(last_package_weight, sequence_number=total_package, mode='rating')
+            srm.set_master_package(weight_value, total_package)
+        else:
+            srm.add_package(weight_value, mode='rating')
+            srm.set_master_package(weight_value, 1)
+
+        request = srm.rate()
+
+        warnings = request.get('warnings_message')
+        if warnings:
+            _logger.info(warnings)
+
+        if not request.get('errors_message'):
+            if order_currency.name in request['price']:
+                price = request['price'][order_currency.name]
             else:
-                srm.add_package(weight_value, mode='rating')
-                srm.set_master_package(weight_value, 1)
-
-            request = srm.rate()
-
-            warnings = request.get('warnings_message')
-            if warnings:
-                _logger.info(warnings)
-
-            if not request.get('errors_message'):
-                if order_currency.name in request['price']:
-                    price = request['price'][order_currency.name]
+                _logger.info("Preferred currency has not been found in FedEx response")
+                company_currency = order.company_id.currency_id
+                if company_currency.name in request['price']:
+                    price = company_currency.compute(request['price'][company_currency.name], order_currency)
                 else:
-                    _logger.info("Preferred currency has not been found in FedEx response")
-                    company_currency = order.company_id.currency_id
-                    if company_currency.name in request['price']:
-                        price = company_currency.compute(request['price'][company_currency.name], order_currency)
-                    else:
-                        price = company_currency.compute(request['price']['USD'], order_currency)
-            else:
-                raise ValidationError(request['errors_message'])
+                    price = company_currency.compute(request['price']['USD'], order_currency)
+        else:
+            raise ValidationError(request['errors_message'])
 
-            res = res + [price]
-        return res
+        return price
 
     def fedex_send_shipping(self, pickings):
         res = []
