@@ -19,7 +19,10 @@ class HrApplicant(models.Model):
         name = self.partner_name or self.partner_id.name or self.name or 'new employee'
 
         if not self.partner_id:
-            new_partner = self.env['res.partner'].create({'name': name})
+            new_partner = self.env['res.partner'].create({
+                'name': name,
+                'country_id': self.env.ref('base.be').id,
+            })
             self.partner_id = new_partner
         else:
             new_partner = self.partner_id
@@ -28,6 +31,7 @@ class HrApplicant(models.Model):
             new_employee = self.env['hr.employee'].create({
                 'name': name,
                 'active': False,
+                'country_id': self.env.ref('base.be').id,
                 'address_home_id': new_partner.id,
             })
             self.emp_id = new_employee

@@ -128,6 +128,7 @@ var ViewEditorManager = Widget.extend({
     destroy: function () {
         bus.trigger('undo_not_available');
         bus.trigger('redo_not_available');
+        this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
@@ -221,20 +222,23 @@ var ViewEditorManager = Widget.extend({
      */
     instantiateEditor: function (params) {
         params = params || {};
-        var editor_params = _.defaults(params, {
+        var editorParams = _.defaults(params, {
             mode: 'readonly',
             chatter_allowed: this.chatter_allowed,
             show_invisible: this.sidebar && this.sidebar.state.show_invisible,
             arch: this.fields_view.arch,
         });
+        var rendererParams = {
+            mode: 'readonly',
+        };
 
         if (this.view_type === 'list') {
-            editor_params.hasSelectors = false;
+            editorParams.hasSelectors = false;
         }
 
         var def;
         // Different behaviour for the search view because
-        // it's not defined as a "real view", no inherit to abstract view. 
+        // it's not defined as a "real view", no inherit to abstract view.
         // The search view in studio has its own renderer.
         if (this.view_type === 'search') {
             if (this.mode === 'edition') {
@@ -247,9 +251,9 @@ var ViewEditorManager = Widget.extend({
             this.view = new View(this.fields_view, this.view_env);
             if (this.mode === 'edition') {
                 var Editor = Editors[this.view_type];
-                def = this.view.createStudioEditor(this, Editor, editor_params);
+                def = this.view.createStudioEditor(this, Editor, editorParams);
             } else {
-                def = this.view.createStudioRenderer(this);
+                def = this.view.createStudioRenderer(this, rendererParams);
             }
         }
         return def;
@@ -260,7 +264,7 @@ var ViewEditorManager = Widget.extend({
      */
     instantiateSidebar: function (state) {
 
-        var defaultMode = _.contains(['form', 'list', 'search'], this.view_type) ? 'new' : 'view';
+        var defaultMode = this._getDefaultSidebarMode();
 
         state = _.defaults(state || {}, {
             mode: defaultMode,
@@ -566,19 +570,19 @@ var ViewEditorManager = Widget.extend({
             }
             if (field_description.ttype === 'monetary') {
                 def_field_values = $.Deferred();
-                // Detect currency_id on the current model
-                new BasicModel("ir.model.fields").call("search", [[
-                    ['name', '=', 'currency_id'],
-                    ['model', '=', this.model_name],
-                    ['relation', '=', 'res.currency'],
-                ]]).then(function (data) {
-                    if (!data.length) {
-                        Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
-                        def_field_values.reject();
-                    } else {
-                        def_field_values.resolve();
-                    }
+                // find currency_id on the current model : a monetary field can
+                // not be added if such a field does not exist on the model
+                var currencyField = _.findWhere(this.fields, {
+                    type: 'many2one',
+                    relation: 'res.currency',
+                    name: 'currency_id',
                 });
+                if (currencyField) {
+                    def_field_values.resolve();
+                } else {
+                    Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
+                    def_field_values.reject();
+                }
             }
         }
         // When the field values is selected, close the dialog and update the view
@@ -795,6 +799,12 @@ var ViewEditorManager = Widget.extend({
     },
     /**
      * @private
+     */
+    _getDefaultSidebarMode: function () {
+        return _.contains(['form', 'list', 'search'], this.view_type) ? 'new' : 'view';
+    },
+    /**
+     * @private
      * @param {String} model_name
      * @returns {Deferred}
      * @returns {Deferred}
@@ -823,6 +833,8 @@ var ViewEditorManager = Widget.extend({
             node = parent_node;
         }
 
+        this.editor.unselectedElements();
+        this._resetSidebarMode();
         this.do({
             type: type,
             target: {
@@ -831,7 +843,12 @@ var ViewEditorManager = Widget.extend({
                 xpath_info: xpath_info,
             },
         });
-        this._onUnselectElement();
+    },
+    /**
+     * @private
+     */
+    _resetSidebarMode: function () {
+        this.updateSidebar(this._getDefaultSidebarMode());
     },
     /**
      * @private
@@ -1041,13 +1058,12 @@ var ViewEditorManager = Widget.extend({
     _onSidebarTabChanged: function (event) {
 
         this.updateSidebar(event.data.mode);
-        this._onUnselectElement();
+        this.editor.unselectedElements();
     },
     /**
      * @private
      */
     _onUnselectElement: function () {
-        this.editor.selected_node_id = false;
         this.editor.unselectedElements();
     },
     /**

@@ -6,54 +6,41 @@ var ListRenderer = require('web.ListRenderer');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
 
-var createViewEditorManager = function (arch, params) {
+var createViewEditorManager = function (params) {
     var $target = $('#qunit-fixture');
+    if (params.debug) {
+        $target = $('body');
+    }
 
     // reproduce the DOM environment of Studio
     var $web_client = $('<div>').addClass('o_web_client o_in_studio').appendTo($target);
     var $content = $('<div>').addClass('o_content').appendTo($web_client);
     var $client_action = $('<div>').addClass('o_web_studio_client_action').appendTo($content);
 
-    params = params || {};
-    var modelName = 'coucou';
     var widget = new Widget();
-    var data = params.data || {
-        coucou: {
-            fields: {
-                display_name: {
-                    string: "Display Name",
-                    type: "char"
-                },
-            },
-        },
+    params.mockRPC = params.mockRPC || function(route, args) {
+        if (route === '/web_studio/get_default_value') {
+            return $.when({});
+        }
+        return this._super(route, args);
     };
-    var serverParams = {
-        data: data
-    };
-    if (params.mockRPC) {
-        serverParams.mockRPC = params.mockRPC;
-    } else {
-        serverParams.mockRPC = function(route, args) {
-            if (route === '/web_studio/get_default_value') {
-                return $.when({});
-            }
-            return this._super(route, args);
-        };
+    var mockServer = testUtils.addMockEnvironment(widget, params);
+    var fieldsView = mockServer.fieldsViewGet(params.arch, params.model);
+    if (params.viewID) {
+        fieldsView.view_id = params.viewID;
     }
-    var mockServer = testUtils.addMockEnvironment(widget, serverParams);
-    var fieldsView = mockServer.fieldsViewGet(arch, modelName);
     var env = {
-        modelName: modelName,
-        ids: undefined,
-        currentId: undefined,
-        domain: undefined,
-        context: {},
-        groupBy: [],
+        modelName: params.model,
+        ids: 'res_id' in params ? [params.res_id] : undefined,
+        currentId: 'res_id' in params ? params.res_id : undefined,
+        domain: params.domain || [],
+        context: params.context || {},
+        groupBy: params.groupBy || [],
     };
     var vem = new ViewEditorManager(widget, {
         fields_view: fieldsView,
         view_env: env,
-
+        studio_view_id: params.studioViewID,
     });
     vem.appendTo($client_action);
     return vem;
@@ -61,15 +48,31 @@ var createViewEditorManager = function (arch, params) {
 
 var ViewEditorManager = require('web_studio.ViewEditorManager');
 
-QUnit.module('Studio', {}, function () {
+QUnit.module('Studio', {
+    beforeEach: function () {
+        this.data = {
+            coucou: {
+                fields: {
+                    display_name: {
+                        string: "Display Name",
+                        type: "char"
+                    },
+                },
+            },
+        };
+    }
+}, function () {
 
     QUnit.module('ViewEditorManager');
 
     QUnit.test('list editor sidebar', function(assert) {
         assert.expect(5);
 
-        var arch = "<tree/>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree/>",
+        });
 
         assert.strictEqual(vem.$('.o_web_studio_sidebar').length, 1,
             "there should be a sidebar");
@@ -91,8 +94,11 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('empty list editor', function(assert) {
         assert.expect(5);
 
-        var arch = "<tree/>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree/>",
+        });
 
         assert.strictEqual(vem.view_type, 'list',
             "view type should be list");
@@ -111,11 +117,11 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('list editor', function(assert) {
         assert.expect(3);
 
-        var arch =
-            "<tree>" +
-                "<field name='display_name'/>" +
-            "</tree>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name'/></tree>",
+        });
 
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
             "there should be one node");
@@ -130,11 +136,11 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('invisible list editor', function(assert) {
         assert.expect(4);
 
-        var arch =
-            "<tree>" +
-                "<field name='display_name' invisible='1'/>" +
-            "</tree>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name' invisible='1'/></tree>",
+        });
 
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 0,
             "there should be no node");
@@ -156,11 +162,11 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('list editor field', function(assert) {
         assert.expect(5);
 
-        var arch =
-            "<tree>" +
-                "<field name='display_name'/>" +
-            "</tree>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name'/></tree>",
+        });
 
         // click on the field
         vem.$('.o_web_studio_list_view_editor [data-node-id]').click();
@@ -183,8 +189,11 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('empty form editor', function(assert) {
         assert.expect(4);
 
-        var arch = "<form/>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form/>",
+        });
 
         assert.strictEqual(vem.view_type, 'form',
             "view type should be form");
@@ -201,13 +210,15 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('form editor', function(assert) {
         assert.expect(6);
 
-        var arch =
-            "<form>" +
-                "<sheet>" +
-                    "<field name='display_name'/>" +
-                "</sheet>" +
-            "</form>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<field name='display_name'/>" +
+                    "</sheet>" +
+                "</form>",
+        });
 
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]').length, 1,
             "there should be one node");
@@ -231,13 +242,15 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('invisible form editor', function(assert) {
         assert.expect(6);
 
-        var arch =
-            "<form>" +
-                "<sheet>" +
-                    "<field name='display_name' invisible='1'/>" +
-                "</sheet>" +
-            "</form>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<field name='display_name' invisible='1'/>" +
+                    "</sheet>" +
+                "</form>",
+        });
 
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_invisible_modifier[data-node-id]').length, 1,
             "there should be one invisible node");
@@ -263,15 +276,15 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('form editor - chatter edition', function(assert) {
         assert.expect(5);
 
-        var arch =
-            "<form>" +
-                "<sheet>" +
-                    "<field name='display_name'/>" +
-                "</sheet>" +
-                "<div class='oe_chatter'/>" +
-            "</form>";
-
-        var vem = createViewEditorManager(arch, {
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<field name='display_name'/>" +
+                    "</sheet>" +
+                    "<div class='oe_chatter'/>" +
+                "</form>",
             mockRPC: function(route, args) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
@@ -304,11 +317,13 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('empty kanban editor', function(assert) {
         assert.expect(4);
 
-        var arch =
-            "<kanban>" +
-                "<templates><t t-name='kanban-box'/></templates>" +
-            "</kanban>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<kanban>" +
+                    "<templates><t t-name='kanban-box'/></templates>" +
+                "</kanban>",
+        });
 
         assert.strictEqual(vem.view_type, 'kanban',
             "view type should be kanban");
@@ -325,17 +340,19 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('kanban editor', function(assert) {
         assert.expect(13);
 
-        var arch =
-            "<kanban>" +
-                "<templates>" +
-                    "<t t-name='kanban-box'>" +
-                        "<div class='o_kanban_record'>" +
-                            "<field name='display_name'/>" +
-                        "</div>" +
-                    "</t>" +
-                "</templates>" +
-            "</kanban>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<kanban>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div class='o_kanban_record'>" +
+                                "<field name='display_name'/>" +
+                            "</div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>",
+        });
 
         assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').length, 1,
             "there should be one node");
@@ -373,8 +390,11 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('empty search editor', function(assert) {
         assert.expect(6);
 
-        var arch = "<search/>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<search/>",
+        });
 
         assert.strictEqual(vem.view_type, 'search',
             "view type should be search");
@@ -394,23 +414,25 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('search editor', function(assert) {
         assert.expect(9);
 
-        var arch =
-            "<search>" +
-                "<field name='display_name'/>" +
-                "<filter string='My Name' " +
-                    "name='my_name' " +
-                    "domain='[(\"display_name\",\"=\",coucou)]'" +
-                "/>" +
-                "<filter string='My Name2' " +
-                    "name='my_name2' " +
-                    "domain='[(\"display_name\",\"=\",coucou2)]'" +
-                "/>" +
-                "<group expand='0' string='Group By'>" +
-                    "<filter name='groupby_display_name' " +
-                    "domain='[]' context=\"{'group_by':'display_name'}\"/>" +
-                "</group>" +
-            "</search>";
-        var vem = createViewEditorManager(arch);
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<search>" +
+                    "<field name='display_name'/>" +
+                    "<filter string='My Name' " +
+                        "name='my_name' " +
+                        "domain='[(\"display_name\",\"=\",coucou)]'" +
+                    "/>" +
+                    "<filter string='My Name2' " +
+                        "name='my_name2' " +
+                        "domain='[(\"display_name\",\"=\",coucou2)]'" +
+                    "/>" +
+                    "<group expand='0' string='Group By'>" +
+                        "<filter name='groupby_display_name' " +
+                        "domain='[]' context=\"{'group_by':'display_name'}\"/>" +
+                    "</group>" +
+                "</search>",
+        });
 
         assert.strictEqual(vem.view_type, 'search',
             "view type should be search");
@@ -437,24 +459,15 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('empty pivot editor', function(assert) {
         assert.expect(3);
 
-        var arch = "<pivot/>";
-        var vem = createViewEditorManager(arch, {
-            data: {
-                coucou: {
-                    fields: {
-                        display_name: {
-                            string: "Display Name",
-                            type: "char",
-                        },
-                    },
-                    records: [
-                        {
-                            id: 1,
-                            display_name: 'coucou',
-                        }
-                    ],
-                },
-            },
+        this.data.coucou.records = [{
+            id: 1,
+            display_name: 'coucou',
+        }];
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<pivot/>",
         });
 
         assert.strictEqual(vem.view_type, 'pivot',
@@ -464,6 +477,8 @@ QUnit.module('Studio', {}, function () {
         assert.strictEqual(vem.$('.o_web_studio_view_renderer > .o_pivot > table').length, 1,
             "the table should be the direct child of pivot");
 
+        vem.$('.o_web_studio_sidebar_header [name="view"]').click();
+
         vem.destroy();
     });
 
@@ -471,24 +486,15 @@ QUnit.module('Studio', {}, function () {
         var done = assert.async();
         assert.expect(3);
 
-        var arch = "<graph/>";
-        var vem = createViewEditorManager(arch, {
-            data: {
-                coucou: {
-                    fields: {
-                        display_name: {
-                            string: "Display Name",
-                            type: "char",
-                        },
-                    },
-                    records: [
-                        {
-                            id: 1,
-                            display_name: 'coucou',
-                        }
-                    ],
-                },
-            },
+        this.data.coucou.records = [{
+            id: 1,
+            display_name: 'coucou',
+        }];
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<graph/>",
         });
 
         assert.strictEqual(vem.view_type, 'graph',
@@ -506,10 +512,11 @@ QUnit.module('Studio', {}, function () {
     QUnit.test('error during tree rendering: undo', function(assert) {
         assert.expect(4);
 
-        var arch = "<tree><field name='id'/></tree>";
-
         var fieldsView;
-        var vem = createViewEditorManager(arch, {
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='id'/></tree>",
             mockRPC: function (route) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
@@ -558,10 +565,311 @@ QUnit.module('Studio', {}, function () {
             "there should only be one renderer");
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
             "the view should be back as normal with 1 field");
-        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
-            "the sidebar should now display the field properties");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_view').length, 1,
+            "the sidebar should have reset to its default mode");
 
         ListRenderer.prototype._renderView = oldRenderView;
+
+        vem.destroy();
+    });
+
+    QUnit.test('add a monetary field without currency_id', function(assert) {
+        assert.expect(3);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name'/></tree>",
+            mockRPC: function (route) {
+                if (route === '/web_studio/edit_view') {
+                    assert.ok(false, "should not edit the view");
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'));
+
+        assert.strictEqual($('.modal-body').text(), "This field type cannot be dropped on this model.",
+            "this should trigger an alert");
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should still be one node");
+
+        vem.destroy();
+    });
+
+    QUnit.test('add a monetary field with currency_id', function(assert) {
+        assert.expect(3);
+
+        this.data.coucou.fields.currency_id = {
+            string: "Currency",
+            type: 'many2one',
+            relation: "res.currency",
+        };
+
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name'/></tree>",
+            mockRPC: function (route) {
+                if (route === '/web_studio/edit_view') {
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    assert.ok(true, "should edit the view to add the monetary field");
+                    fieldsView.arch = "<tree><field name='display_name'/><field name='currency_id'/></tree>";
+                    return $.when({
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'));
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
+            "there should be two nodes");
+
+        vem.destroy();
+    });
+
+    QUnit.test('switch mode after element removal', function(assert) {
+        assert.expect(5);
+
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='id'/><field name='display_name'/></tree>",
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    assert.ok(true, "should edit the view to delete the field");
+                    fieldsView.arch = "<tree><field name='display_name'/></tree>";
+                    return $.when({
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
+            "there should be two nodes");
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        vem.$('.o_web_studio_list_view_editor [data-node-id]:first').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should display the field properties");
+
+        // delete a field
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        $('.modal-dialog .btn-primary').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 0,
+            "the sidebar should have switched mode");
+
+        vem.destroy();
+    });
+
+    QUnit.test('open XML editor in read-only', function(assert) {
+        assert.expect(1);
+
+        var arch = "<form><sheet><field name='display_name'/></sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_editor/get_assets_editor_resources') {
+                    return $.when({
+                        views: [{
+                            active: true,
+                            arch: arch,
+                            id: 1,
+                            inherit_id: false,
+                        }],
+                        less: [],
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+            viewID: 1,
+        });
+
+        vem.$('.o_web_studio_sidebar_header [name="view"]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_xml_editor').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_form_readonly').length, 1,
+            "the form should be in read-only");
+
+        vem.destroy();
+    });
+
+    QUnit.test('new button in buttonbox', function(assert) {
+        assert.expect(4);
+
+        var arch = "<form><sheet><field name='display_name'/></sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+        });
+
+        vem.$('.o_web_studio_form_view_editor .o_web_studio_button_hook').click();
+
+        assert.strictEqual($('.modal:visible').length, 1, "there should be one modal");
+        assert.strictEqual($('.o_web_studio_new_button_dialog').length, 1,
+            "there should be a modal to create a button in the buttonbox");
+        assert.strictEqual($('.o_web_studio_new_button_dialog .o_field_many2one').length, 1,
+            "there should be a many2one for the related field");
+
+        $('.o_web_studio_new_button_dialog .o_field_many2one input').focus();
+        $('.o_web_studio_new_button_dialog .o_field_many2one input').val('test').trigger('keyup').trigger('focusout');
+
+        assert.strictEqual($('.modal:visible').length, 1, "should not display the create modal");
+
+        vem.destroy();
+    });
+
+    QUnit.test('element removal', function(assert) {
+        assert.expect(4);
+
+        var editViewCount = 0;
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+                "<notebook><page><field name='id'/></page></notebook>" +
+            "</sheet></form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    editViewCount++;
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // remove field
+        vem.$('[name="display_name"]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        assert.strictEqual($('.modal-body').text(), "Are you sure you want to remove this field from the view?",
+            "should display the correct message");
+        $('.modal-dialog .btn-primary').click();
+
+        // remove group
+        vem.$('.o_group[data-node-id]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        assert.strictEqual($('.modal-body').text(), "Are you sure you want to remove this group from the view?",
+            "should display the correct message");
+        $('.modal-dialog .btn-primary').click();
+
+        // remove page
+        vem.$('.o_notebook li[data-node-id]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        assert.strictEqual($('.modal-body').text(), "Are you sure you want to remove this page from the view?",
+            "should display the correct message");
+        $('.modal-dialog .btn-primary').click();
+
+        assert.strictEqual(editViewCount, 3,
+            "should have edit the view 3 times");
+
+        vem.destroy();
+    });
+
+    QUnit.test('update sidebar after edition', function(assert) {
+        assert.expect(4);
+
+        var editViewCount = 0;
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+                "<notebook><page><field name='id'/></page></notebook>" +
+            "</sheet></form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    editViewCount++;
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        testUtils.intercept(vem, 'node_clicked', function (event) {
+            assert.step(event.data.node.tag);
+        }, true);
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // remove field
+        vem.$('[name="display_name"]').click();
+        vem.$('.o_web_studio_sidebar [name="string"]').focus();
+        vem.$('.o_web_studio_sidebar [name="string"]').val('test').trigger('change');
+
+        assert.strictEqual(editViewCount, 1,
+            "should have edit the view 1 time");
+        assert.verifySteps(['field', 'field'],
+            "should have clicked again on the node after edition to reload the sidebar");
 
         vem.destroy();
     });

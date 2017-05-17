@@ -109,10 +109,26 @@ var HelpdeskDashboardRenderer = KanbanRenderer.extend({
 });
 
 var HelpdeskDashboardModel = KanbanModel.extend({
+    /**
+     * @override
+     */
+    init: function () {
+        this.dashboardValues = {};
+        this._super.apply(this, arguments);
+    },
+
     //--------------------------------------------------------------------------
     // Public
     //--------------------------------------------------------------------------
 
+    /**
+     * @override
+     */
+    get: function (localID) {
+        var result = this._super.apply(this, arguments);
+        result.dashboardValues = this.dashboardValues[localID];
+        return result;
+    },
     /**
      * @œverride
      * @returns {Deferred}
@@ -144,8 +160,7 @@ var HelpdeskDashboardModel = KanbanModel.extend({
             method: 'retrieve_dashboard',
         });
         return $.when(super_def, dashboard_def).then(function(id, dashboardValues) {
-            var dataPoint = self.localData[id];
-            dataPoint.dashboardValues = dashboardValues;
+            self.dashboardValues[id] = dashboardValues;
             return id;
         });
     },

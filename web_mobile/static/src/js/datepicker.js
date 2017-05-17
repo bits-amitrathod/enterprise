@@ -24,7 +24,7 @@ web_datepicker.DateWidget.include({
             if (this.picker) {
                 this.picker.destroy();
             }
-            this.set_readonly(true);
+            this._setReadonly(true);
             this._setupMobilePicker();
         }
     },
@@ -40,10 +40,10 @@ web_datepicker.DateWidget.include({
         var self = this;
         this.$el.on('click', function () {
             mobile.methods.requestDateTimePicker({
-                'value': self.get_value(),
+                'value': self.getValue(),
                 'type': self.type_of_date,
             }).then(function (response) {
-                self.set_value(response.data);
+                self.setValue(response.data);
                 self.commit_value();
             });
         });

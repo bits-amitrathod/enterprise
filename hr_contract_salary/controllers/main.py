@@ -226,12 +226,15 @@ class website_hr_contract_salary(http.Controller):
         elif new_contract.transport_mode == "others":
             transport_advantage = new_contract.others_reimbursed_amount
         else:
-            transport_advantage = 0.0
+            transport_advantage = new_contract.company_car_total_depreciated_cost
+
+        thirteen_month_net = payslip.get_salary_line_total('NET')
+        double_holidays_net = payslip.get_salary_line_total('NET') * 0.92
 
         monthly_nature = round(transport_advantage + new_contract.internet + new_contract.mobile + new_contract.mobile_plus, 2)
         monthly_cash = round(new_contract.commission_on_target + new_contract.meal_voucher_amount + new_contract.representation_fees, 2)
-        yearly_cash = round(new_contract.eco_checks + new_contract.thirteen_month + new_contract.double_holidays, 2)
-        monthly_total = round(monthly_nature + monthly_cash + yearly_cash / 12.0 + result['NET'] - new_contract.representation_fees, 2)
+        yearly_cash = round(new_contract.eco_checks + thirteen_month_net + double_holidays_net, 2)
+        monthly_total = round(monthly_nature + monthly_cash + yearly_cash / 12.0 + payslip.get_salary_line_total('NET') - new_contract.representation_fees, 2)
 
         result.update({
             'monthly_nature': monthly_nature,

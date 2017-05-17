@@ -173,6 +173,7 @@ var SearchEditor = SearchRenderer.extend(EditorMixin, {
     _prepareEditableSearchNode: function (node, $result, type) {
         var self = this;
         $result.attr('data-node-id', this.node_id++);
+        this.setSelectable($result);
         $result.click(function () {
             self.selected_node_id = $result.data('node-id');
             self.trigger_up('node_clicked', {node: node});
@@ -181,7 +182,6 @@ var SearchEditor = SearchRenderer.extend(EditorMixin, {
         var formEditorHook = this._renderHook(node, 'after', 'tr', type);
         formEditorHook.appendTo($('<div>')); // start the widget
         $result.after(formEditorHook.$el);
-        this.setSelectable($result);
         this._renderHookBeforeFirstChild($result, type);
     },
     /**

@@ -82,7 +82,7 @@ QUnit.module('web_enterprise', {
             model: 'partner',
             data: this.data,
             arch: '<form string="Partners">' +
-                    '<header><field name="trululu" widget="FieldStatus"/></header>' +
+                    '<header><field name="trululu" widget="statusbar"/></header>' +
                     '<sheet>' +
                         '<group>' +
                             '<button name="display_name"/>' +

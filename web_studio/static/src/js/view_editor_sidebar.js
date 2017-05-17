@@ -437,7 +437,11 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      */
     _onElementRemoved: function () {
         var self = this;
-        var message = _.str.sprintf(_t('Are you sure you want to remove this %s from the view?'), this.state.element);
+        var elementName = this.state.node.tag;
+        if (elementName === 'div' && this.state.node.attrs.class === 'oe_chatter') {
+            elementName = 'chatter';
+        }
+        var message = _.str.sprintf(_t('Are you sure you want to remove this %s from the view?'), elementName);
 
         Dialog.confirm(this, message, {
             confirm_callback: function () {

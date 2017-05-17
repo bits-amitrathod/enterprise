@@ -12,6 +12,7 @@ var SalaryPackageWidget = Widget.extend({
     events: {
         "change .advantage_input": "onchange_advantage",
         "change input[name='mobility']": "onchange_mobility",
+        "change input[name='representation_fees_radio']": "onchange_representation_fees",
         "change input[name='fuel_card_slider']": "onchange_fuel_card",
         "input input[name='holidays_slider']": "onchange_holidays",
         "change input[name='mobile']": "onchange_mobile",
@@ -147,19 +148,19 @@ var SalaryPackageWidget = Widget.extend({
             $("input[name='wage']").val(data['BASIC']);
             $("input[name='wage_with_holidays']").val(data['wage_with_holidays']);
             $("input[name='SALARY']").val(data['SALARY']);
-            $("input[name='ONSS']").val(data['ONSS']);
+            $("input[name='ONSS']").val(- data['ONSS']);
             $("input[name='GROSS']").val(data['GROSS']);
-            $("input[name='P.P']").val(data['P.P']);
+            $("input[name='P.P']").val(- data['P.P']);
             $("input[name='PP.RED']").val(data['PP.RED']);
-            $("input[name='M.ONSS']").val(data['M.ONSS']);
+            $("input[name='M.ONSS']").val(- data['M.ONSS']);
             $("input[name='EMP.BONUS']").val(data['EMP.BONUS']);
-            $("input[name='MEAL_V_EMP']").val(data['MEAL_V_EMP']);
+            $("input[name='MEAL_V_EMP']").val(- data['MEAL_V_EMP']);
             $("input[name='ATN.CAR.1']").val(- data['ATN.CAR.2']);
             $("input[name='ATN.INT.1']").val(- data['ATN.INT.2']);
             $("input[name='ATN.MOB.1']").val(- data['ATN.MOB.2']);
-            $("input[name='ATN.CAR.2']").val(data['ATN.CAR.2']);
-            $("input[name='ATN.INT.2']").val(data['ATN.INT.2']);
-            $("input[name='ATN.MOB.2']").val(data['ATN.MOB.2']);
+            $("input[name='ATN.CAR.2']").val(- data['ATN.CAR.2']);
+            $("input[name='ATN.INT.2']").val(- data['ATN.INT.2']);
+            $("input[name='ATN.MOB.2']").val(- data['ATN.MOB.2']);
             $("input[name='NET']").val(data['NET']);
             $("input[name='monthly_nature']").val(data['monthly_nature']);
             $("input[name='monthly_cash']").val(data['monthly_cash']);
@@ -218,6 +219,10 @@ var SalaryPackageWidget = Widget.extend({
         $(".mobility-options#" + transport_mode).removeClass('hidden');
         var fuel_card_div = $("div[name='fuel_card']");
         event.target.value === 'company_car' ? fuel_card_div.removeClass("hidden") : fuel_card_div.addClass("hidden");
+    },
+
+    onchange_representation_fees: function(event) {
+        $("input[name='representation_fees']").val(event.target.value);
     },
 
     onchange_fuel_card: function(event) {
