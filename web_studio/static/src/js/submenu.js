@@ -33,9 +33,13 @@ var SubMenu = Widget.extend({
         this.studio_actions = [{action: 'action_web_studio_main', title: 'Views'}];
         this.multi_lang = options.multi_lang;
         if (active_view) {
-            this._addViewType(active_view);
+            var bc_options = {
+                action: 'action_web_studio_main',
+                active_view: active_view,
+                title: active_view.charAt(0).toUpperCase() + active_view.slice(1),
+            };
+            this._addAction(bc_options);
         }
-
         bus.on('action_changed', this, this._onActionChanged.bind(this));
 
         bus.on('undo_available', this, this._onToggleUndo.bind(this, true));
@@ -44,9 +48,23 @@ var SubMenu = Widget.extend({
         bus.on('redo_not_available', this, this._onToggleRedo.bind(this, false));
 
         bus.on('edition_mode_entered', this, function (view_type) {
-            this.$('.o_menu_sections li a.active').removeClass('active');
-            self._addViewType(view_type);
-            self.renderElement();
+            if (self.studio_actions.length === 1) {
+                bc_options = {
+                    action: 'action_web_studio_main',
+                    active_view: view_type,
+                    title: view_type.charAt(0).toUpperCase() + view_type.slice(1),
+                };
+                self._addAction(bc_options);
+            }
+        });
+        bus.on('edition_x2m_entered', this, function (subview_type, x2mEditorPath) {
+            bc_options = {
+                action: 'action_web_studio_main',
+                active_view: subview_type,
+                x2mEditorPath: x2mEditorPath.slice(),
+                title: _t('Subview ') + subview_type,
+            };
+            self._addAction(bc_options);
         });
     },
     /**
@@ -63,14 +81,12 @@ var SubMenu = Widget.extend({
 
     /**
      * @private
-     * @param {String} view_type
+     * @param {Object} options
      */
-    _addViewType: function (view_type) {
-        if (this.studio_actions.length === 1) {
-            this.studio_actions.push({
-                title: view_type.charAt(0).toUpperCase() + view_type.slice(1),
-            });
-        }
+    _addAction: function (options) {
+        this.$('.o_menu_sections li a.active').removeClass('active');
+        this.studio_actions.push(options);
+        this.renderElement();
     },
     /**
      * @private
@@ -97,21 +113,26 @@ var SubMenu = Widget.extend({
     _renderBreadcrumbsLi: function (bc, index, length) {
         var self = this;
         var is_last = (index === length-1);
-        var is_before_last = (index === length-2);
         var li_content = bc.title && _.escape(bc.title.trim());
         var $bc = $('<li>')
             .append(li_content)
             .toggleClass('active', is_last);
         if (!is_last) {
             $bc.click(function () {
-                self._replaceAction(bc.action, bc.title, {
+                var options = {
                     action: self.action,
                     clear_breadcrumbs: true,
                     disable_edition: true,
-                });
+                    index: index,
+                };
+                if (bc.active_view) {
+                    options.active_view = bc.active_view;
+                }
+                if (bc.x2mEditorPath) {
+                    options.x2mEditorPath = bc.x2mEditorPath.slice();
+                }
+                self._replaceAction(bc.action, bc.title, options);
             });
-        }
-        if (is_before_last) {
             $bc.toggleClass('o_back_button');
         }
         return $bc;
@@ -124,7 +145,18 @@ var SubMenu = Widget.extend({
      * @param {Object} options
      */
     _replaceAction: function (action, title, options) {
-        this.studio_actions = [{action: action, title: title}];
+        if (options.active_view) {
+            if (options.index > 1) {
+                this.studio_actions.length = options.index + 1;
+            } else {
+                this.studio_actions = [
+                    {action: 'action_web_studio_main', title: _t('Views')},
+                    {action: action, title: title, active_view: options.active_view},
+                ];
+            }
+        } else {
+            this.studio_actions = [{action: action, title: title}];
+        }
         this.do_action(action, options);
         this.renderElement();
     },
@@ -148,9 +180,10 @@ var SubMenu = Widget.extend({
      */
     _onIcon: function (ev) {
         ev.preventDefault();
-        return this._replaceAction('action_web_studio_main', _t('Views'), {
+        var view_name = $(ev.currentTarget).data('name');
+        return this._replaceAction('action_web_studio_main', view_name, {
             action: this.action,
-            active_view: $(ev.currentTarget).data('name'),
+            active_view: view_name,
             clear_breadcrumbs: true,
             disable_edition: true,
         });

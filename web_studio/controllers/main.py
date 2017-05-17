@@ -528,22 +528,7 @@ class WebStudioController(http.Controller):
         elif studio_view:
             studio_view.unlink()
         elif len(arch):
-            # We have to play with priorities. Consider the following:
-            # View Base: <field name="x"/><field name="y"/>
-            # View Standard inherits Base: <field name="x" position="after"><field name="z"/></field>
-            # View Custo inherits Base: <field name="x" position="after"><field name="x2"/></field>
-            # We want x,x2,z,y, because that's what we did in studio, but the order of xpath
-            # resolution is sequence,name, not sequence,id. Because "Custo" < "Standard", it
-            # would first resolve in x,x2,y, then resolve "Standard" with x,z,x2,y as result.
-            studio_view = request.env['ir.ui.view'].create({
-                'type': view.type,
-                'model': view.model,
-                'inherit_id': view.id,
-                'mode': 'extension',
-                'priority': 99,
-                'arch': arch,
-                'name': self._generate_studio_view_name(view),
-            })
+            self._create_studio_view(view, arch)
 
     def _generate_studio_view_name(self, view):
         return "Odoo Studio: %s customization" % (view.name)
@@ -574,15 +559,16 @@ class WebStudioController(http.Controller):
 
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
-
+        model = view.model
         for op in operations:
             # create a new field if it does not exist
             if 'node' in op:
                 if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
+                    model = op['node']['field_description']['model_name']
                     # Check if field exists before creation
                     field = IrModelFields.search([
                         ('name', '=', op['node']['field_description']['name']),
-                        ('model', '=', view.model),
+                        ('model', '=', model),
                     ], limit=1)
                     if not field:
                         field = self.create_new_field(op['node']['field_description'])
@@ -603,14 +589,14 @@ class WebStudioController(http.Controller):
                         },
                         'position': 'inside',
                     }
-                    self._operation_add(arch, create_group_op, view.model)
+                    self._operation_add(arch, create_group_op, model)
             # set a more specific xpath (with templates//) for the kanban view
             if view.type == 'kanban':
                 if op.get('target') and op['target'].get('tag') == 'field':
                     op['target']['tag'] = 'templates//field'
 
             # call the right operation handler
-            getattr(self, '_operation_%s' % (op['type']))(arch, op, view.model)
+            getattr(self, '_operation_%s' % (op['type']))(arch, op, model)
 
         # Save or create changes into studio view, identifiable by xmlid
         # Example for view id 42 of model crm.lead: web-studio_crm.lead-42
@@ -639,6 +625,24 @@ class WebStudioController(http.Controller):
             result['fields'] = ViewModel.fields_get()
 
         return result
+
+    def _create_studio_view(self, view, arch):
+        # We have to play with priorities. Consider the following:
+        # View Base: <field name="x"/><field name="y"/>
+        # View Standard inherits Base: <field name="x" position="after"><field name="z"/></field>
+        # View Custo inherits Base: <field name="x" position="after"><field name="x2"/></field>
+        # We want x,x2,z,y, because that's what we did in studio, but the order of xpath
+        # resolution is sequence,name, not sequence,id. Because "Custo" < "Standard", it
+        # would first resolve in x,x2,y, then resolve "Standard" with x,z,x2,y as result.
+        return request.env['ir.ui.view'].create({
+            'type': view.type,
+            'model': view.model,
+            'inherit_id': view.id,
+            'mode': 'extension',
+            'priority': 99,
+            'arch': arch,
+            'name': self._generate_studio_view_name(view),
+        })
 
     @http.route('/web_studio/edit_report', type='json', auth='user')
     def edit_report(self, report_id, values):
@@ -750,14 +754,27 @@ class WebStudioController(http.Controller):
             # a view can be composed by some other views where a field with
             # the same name may exist.
             # Here, we want to generate xpath based on the nodes in the parent view only.
-            expr = expr + '[not(ancestor::field)]'
+            if not node.get('subview_xpath'):
+                expr = expr + '[not(ancestor::field)]'
 
         # Special case when we have <label/><div/> instead of <field>
         # TODO: This is very naive, couldn't the js detect such a situation and
         #       tell us to anchor the xpath on another element ?
         if node['tag'] == 'label':
             expr = expr + '/following-sibling::div'
-
+        # If we receive a more specific xpath because we are editing an inline
+        # view, we add it in front of the generated xpath.
+        if node.get('subview_xpath'):
+            xpath = node.get('subview_xpath')
+            if node.get('isSubviewAttr'):
+                expr = xpath
+            # Hack to check if the last subview xpath element is not the same than expr
+            # E.g when we add a field in an empty subview list the expr computed
+            # by studio will be only '/tree' but this is useless since the
+            # subview xpath already specify this element. So in this case,
+            # we don't add the expr computed by studio.
+            elif len(xpath) - len(expr) != xpath.find(expr):
+                expr = xpath + expr
         return expr
 
     # Create a new xpath node based on an operation
@@ -1213,3 +1230,26 @@ class WebStudioController(http.Controller):
                 'name': model.name + ' ' + _('stages'),
             })
         return model_id.id
+
+    @http.route('/web_studio/create_inline_view', type='json', auth='user')
+    def create_inline_view(self, model, view_id, field_name, subview_type):
+        inline_view = request.env[model].load_views([[False, subview_type]])
+        view = request.env['ir.ui.view'].browse(view_id)
+        studio_view = self._get_studio_view(view)
+        if not studio_view:
+            studio_view = self._create_studio_view(view, '<data/>')
+        parser = etree.XMLParser(remove_blank_text=True)
+        arch = etree.parse(StringIO(studio_view.arch_db), parser).getroot()
+        expr = "//field[@name='%s']" % field_name
+        position = 'inside'
+        xpath_node = arch.find('xpath[@expr="%s"][@position="%s"]' % (expr, position))
+        if xpath_node is None:  # bool(node) == False if node has no children
+            xpath_node = etree.SubElement(arch, 'xpath', {
+                'expr': expr,
+                'position': position
+            })
+        view_arch = inline_view['fields_views'][subview_type]['arch']
+        xml_node = etree.fromstring(view_arch)
+        xpath_node.insert(0, xml_node)
+        studio_view.arch_db = etree.tostring(arch, encoding='utf-8', pretty_print=True)
+        return studio_view.arch_db

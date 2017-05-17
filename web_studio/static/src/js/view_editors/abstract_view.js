@@ -56,6 +56,24 @@ AbstractView.include({
             });
         });
     },
+    /**
+     * This override is a hack because when we load the data for a subview in
+     * studio we don't want to display all the record of the list view but only
+     * the one set in the parent record.
+     *
+     * @private
+     * @override
+     */
+    _loadData: function (parent) {
+        if (parent.x2mField) {
+            this.loadParams.static = true;
+        }
+        var result = this._super.apply(this, arguments);
+        if (parent.x2mField) {
+            this.loadParams.static = false;
+        }
+        return result;
+    },
 });
 
 });

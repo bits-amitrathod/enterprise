@@ -158,7 +158,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 event.preventDefault();
                 event.stopPropagation();
                 self.selected_node_id = $el.data('node-id');
-                self.trigger_up('node_clicked', {node: node});
+                self.trigger_up('node_clicked', {node: node, $node:$el});
             });
         }
     },

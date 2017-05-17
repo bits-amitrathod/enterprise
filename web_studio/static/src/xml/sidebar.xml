@@ -341,7 +341,9 @@
             </t>
             <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
                 <t t-call="web_studio.Sidebar.Parameters"/>
-                <t t-call="web_studio.Sidebar.XMLEditor"/>
+                <t t-if="!widget.isEditingX2m">
+                    <t t-call="web_studio.Sidebar.XMLEditor"/>
+                </t>
 
                 <t t-if="_.contains(['list', 'form'], widget.view_type)">
                     <button class="btn btn-sm btn-default o_web_studio_defaults">Default Values</button>

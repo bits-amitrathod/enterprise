@@ -54,6 +54,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @param {Object} params.fields
      * @param {Object} params.fields_in_view
      * @param {Object} params.fields_not_in_view
+     * @param {boolean} params.isEditingX2m
      */
     init: function (parent, params) {
         this._super.apply(this, arguments);
@@ -62,6 +63,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
 
         this.view_type = params.view_type;
         this.model_name = params.model_name;
+        this.isEditingX2m = params.isEditingX2m;
 
         this.fields = params.fields;
         this.orderered_fields = _.sortBy(this.fields, function (field) {

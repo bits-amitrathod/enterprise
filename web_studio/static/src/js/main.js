@@ -40,6 +40,7 @@ var Main = Widget.extend({
      * @param {String} options.active_view
      * @param {Object} options.view_env - view environment
      * @param {Boolean} options.chatter_allowed
+     * @param {Object} options.x2mEditorPath
      */
     init: function (parent, context, options) {
         this._super.apply(this, arguments);
@@ -47,6 +48,11 @@ var Main = Widget.extend({
         this.active_view = options.active_view;
         this.view_env = options.view_env;
         this.chatter_allowed = options.chatter_allowed;
+        // We set the x2mEditorPath since when we click on the studio breadcrumb
+        // a new view_editor_manager is instantiated and then the previous
+        // x2mEditorPath is needed to reload the previous view_editor_manager
+        // state.
+        this.x2mEditorPath = options.x2mEditorPath;
     },
     /**
      * @override
@@ -187,6 +193,7 @@ var Main = Widget.extend({
                     chatter_allowed: self.chatter_allowed,
                     studio_view_id: studio_view.studio_view_id,
                     studio_view_arch: studio_view.studio_view_arch,
+                    x2mEditorPath: self.x2mEditorPath,
                 };
                 self.view_editor = new ViewEditorManager(self, params);
 

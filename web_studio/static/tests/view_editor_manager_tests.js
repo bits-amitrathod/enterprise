@@ -1074,6 +1074,123 @@ QUnit.module('Studio', {
             "The one2many widget should be displayed");
         vem.destroy();
     });
+
+    QUnit.test('edit one2many list view', function(assert) {
+        assert.expect(3);
+
+        var fieldsView;
+        var vem = createViewEditorManager({
+            arch: "<form>" +
+                "<sheet>" +
+                    "<field name='display_name'/>" +
+                    "<field name='product_ids'/>" +
+                "</sheet>" +
+            "</form>",
+            model: "coucou",
+            data: {
+                coucou: {
+                    fields: {
+                        display_name: {
+                            string: "Display Name",
+                            type: "char",
+                        },
+                        product_ids: {
+                            string: "product",
+                            type: "one2many",
+                            relation: "product",
+                        }
+                    },
+                },
+                product: {
+                    fields: {
+                        coucou: {
+                            string: "coucou",
+                            type: "many2one",
+                            retlation: "coucou",
+                        },
+                        display_name: {
+                            string: "Display Name",
+                            type: "char",
+                        },
+                        price: {
+                            string: "Price",
+                            type: "integer",
+                        }
+                    }
+                },
+            },
+            archs: {
+                "product,false,list": '<tree><field name="display_name"/></tree>'
+            },
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    // We need to create the fieldsView here because the fieldsViewGet in studio
+                    // has a specific behaviour so cannot use the mock server fieldsViewGet
+                    assert.ok(true, "should edit the view to add the one2many field");
+                    fieldsView = {};
+                    fieldsView.arch = "<form>" +
+                    "<sheet>" +
+                        "<field name='display_name'/>" +
+                        "<field name='product_ids'>" +
+                            "<tree><field name='coucou'/><field name='display_name'/></tree>" +
+                        "</field>" +
+                    "</sheet>" +
+                    "</form>";
+                    fieldsView.model = "coucou";
+                    fieldsView.fields = {
+                        display_name: {
+                            string: "Display Name",
+                            type: "char",
+                        },
+                        product_ids: {
+                            string: "product",
+                            type: "one2many",
+                            relation: "product",
+                            views: {
+                                list: {
+                                    arch: "<tree><field name='coucou'/><field name='display_name'/></tree>",
+                                    fields: {
+                                        coucou: {
+                                            string: "coucou",
+                                            type: "many2one",
+                                            retlation: "coucou",
+                                        },
+                                        display_name: {
+                                            string: "Display Name",
+                                            type: "char",
+                                        },
+                                        price: {
+                                            string: "Price",
+                                            type: "integer",
+                                        }
+                                    },
+                                },
+                            },
+                        }
+                    };
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        vem.$('.o_web_studio_view_renderer .o_field_one2many').click();
+        $(vem.$('.o_web_studio_view_renderer .o_field_one2many .o_web_studio_editX2Many')[0]).click();
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer thead tr [data-node-id]').length, 1,
+            "there should be 1 nodes in the x2m editor.");
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+        testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields .o_web_studio_field_many2one'), $('.o_web_studio_hook'));
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer thead tr [data-node-id]').length, 2,
+            "there should be 2 nodes after the drag and drop.");
+        vem.destroy();
+    });
 });
 
 });

@@ -9,15 +9,15 @@ return {
      * @param {JQuery} $helper - the helper being dragged
      * @param {Object} position - {pageX: x, pageY: y}
      */
-    highlightNearestHook: function($helper, position) {
+    highlightNearestHook: function ($helper, position) {
         this.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
         // to be implemented by each editor
     },
     /*
-     * Set the style and the corresponding event on a selectable node (fields, 
+     * Set the style and the corresponding event on a selectable node (fields,
      * groups, etc.) of the editor
      */
-    setSelectable: function($el) {
+    setSelectable: function ($el) {
         var self = this;
         $el.click(function() {
             self.unselectedElements();
@@ -32,9 +32,13 @@ return {
             event.stopPropagation();
         });
     },
-    unselectedElements: function() {
+    unselectedElements: function () {
         this.selected_node_id = false;
-        this.$('.o_clicked').removeClass('o_clicked');
+        var $el = this.$('.o_clicked');
+        $el.removeClass('o_clicked');
+        if ($el.find('.blockUI')) {
+            $el.find('.blockUI').parent().unblock();
+        }
     },
 };
 
