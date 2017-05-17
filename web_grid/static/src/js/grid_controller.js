@@ -27,10 +27,7 @@ var GridController = AbstractController.extend({
         this.context = params.context;
         this.navigationButtons = params.navigationButtons;
         this.ranges = params.ranges;
-        // var range_name =
-        //     this.getParent()._model.context().eval()['grid_range']
-        //     || first_range && first_range.name;
-        this.currentRange = this.ranges[0].name;
+        this.currentRange = params.currentRange;
         this.formViewID = params.formViewID;
         this.listViewID = params.listViewID;
         this.adjustment = params.adjustment;
@@ -99,7 +96,7 @@ var GridController = AbstractController.extend({
                     column_value: cell.col.values[state.colField][0],
                     cell_field: state.cellField,
                     change: difference,
-                }
+                },
             }),
         };
         this.trigger_up('execute_action', {
@@ -141,20 +138,18 @@ var GridController = AbstractController.extend({
      * @param {MouseEvent} event
      */
     _onAddLine: function (event) {
-        var self = this;
         event.preventDefault();
 
+        var context = this.model.getContext();
+        var formContext = _.extend({}, context, {view_grid_add_line: true});
         // TODO: document quick_create_view (?) context key
-        // var ctx = pyeval.eval('context', self._model.context());
-        // context: form_context,
-        // var form_context = this.get_full_context({'view_grid_add_line': true});
-        // var formDescription = self.ViewManager.views.form;
-        // var formViewID = ctx['quick_create_view'] || this.formViewID || false;
+        var formViewID = context.quick_create_view || this.formViewID || false;
         new dialogs.FormViewDialog(this, {
-            res_model: self.modelName,
+            res_model: this.modelName,
             res_id: false,
-            view_id: this.formViewID || false,
-            title: self.add_label,
+            context: formContext,
+            view_id: formViewID,
+            title: _t("Add a Line"),
             disable_multiple_selection: true,
             on_saved: this.reload.bind(this),
         }).open();
@@ -176,18 +171,21 @@ var GridController = AbstractController.extend({
      * @param {MouseEvent} e
      */
     _onButtonClicked: function (e) {
+        var self = this;
         e.stopPropagation();
         // TODO: maybe allow opting out of getting ids?
-        // var button = this._buttons[$(e.target).attr('data-index')];
-        // var parent = this.getParent();
-        // var context = parent.get_full_context(button.context);
-        // parent.get_ids().then(function (ids) {
-        //     this.trigger_up('execute_action', {
-        //         action_data: button,
-        //         dataset: new data.DataSetStatic(this, parent._model.name, context, ids),
-        //         on_close: parent.proxy('_fetch'),
-        //     });
-        // }.bind(this));
+        var button = this.navigationButtons[$(e.target).attr('data-index')];
+        var actionData = _.extend(button, {
+            context: this.model.getContext(button.context),
+        });
+        this.model.getIds().then(function (ids) {
+            self.trigger_up('execute_action', {
+                action_data: actionData,
+                model: self.modelName,
+                res_ids: ids,
+                on_closed: self.reload.bind(self),
+            });
+        });
     },
     /**
      * @private
@@ -201,7 +199,8 @@ var GridController = AbstractController.extend({
         var cell = utils.into(state, cell_path);
         var row = utils.into(state, row_path);
 
-        var label = _.map(state.groupBy, function (g) {
+        var groupFields = state.groupBy.slice(_.isArray(state) ? 1 : 0);
+        var label = _.map(groupFields, function (g) {
             return row.values[g][1] || _t('Undefined');
         }).join(': ');
 
@@ -214,7 +213,7 @@ var GridController = AbstractController.extend({
                 [this.formViewID, 'form']
             ],
             domain: cell.domain,
-            context: state.context,
+            context: this.context,
         });
     },
     /**
@@ -241,7 +240,7 @@ var GridController = AbstractController.extend({
      * @param {MouseEvent} e
      */
     _onRangeChange: function (e) {
-        // e.stopPropagation();
+        e.stopPropagation();
         var $target = $(e.target);
         if ($target.hasClass('active')) {
             return;

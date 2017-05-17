@@ -4,9 +4,14 @@ odoo.define('web_grid.MockServer', function (require) {
 var MockServer = require('web.MockServer');
 
 MockServer.include({
+    /**
+     * @override
+     */
     _performRpc: function (route, args) {
         if (args.method === 'read_grid') {
             return this._mockReadGrid(args.model, args.kwargs);
+        } else if (args.method === 'read_grid_domain') {
+            return this._mockReadGridDomain(args.model, args.kwargs);
         } else if (args.method === 'adjust_grid') {
             var adjust = args.kwargs.context.grid_adjust;
             var lines = this._mockSearchReadController({
@@ -23,6 +28,12 @@ MockServer.include({
             return this._super(route, args);
         }
     },
+    /**
+     * @private
+     * @param {string} model
+     * @param {Object} kwargs
+     * @returns {Deferred}
+     */
     _mockReadGrid: function (model, kwargs) {
         var self = this;
 
@@ -56,7 +67,7 @@ MockServer.include({
             '&',
             [kwargs.col_field, '>=', start.format('YYYY-MM-DD')],
             [kwargs.col_field, '<', end.format('YYYY-MM-DD')]
-        ];
+        ].concat(kwargs.domain);
 
         var groups = this._mockReadGroup(model, {
             domain: domain,
@@ -67,20 +78,27 @@ MockServer.include({
             var groupValue = {};
             groupValue[kwargs.row_fields[0]] = group[kwargs.row_fields[0]];
             var groupDomain = ['&'].concat(domain).concat(group.__domain);
-            var subGroups = self._mockReadGroup(model, {
-                domain: groupDomain,
-                fields: [kwargs.cell_field],
-                groupby: [kwargs.row_fields[1]],
-            });
-            _.each(subGroups, function (subGroup) {
-                var subGroupDomain = ['&'].concat(groupDomain, subGroup.__domain);
-                var values = _.extend({}, groupValue);
-                values[kwargs.row_fields[1]] = subGroup[kwargs.row_fields[1]] || false;
-                rows.unshift({
-                    domain: subGroupDomain,
-                    values: values,
+            if (kwargs.row_fields[1]) {
+                var subGroups = self._mockReadGroup(model, {
+                    domain: groupDomain,
+                    fields: [kwargs.cell_field],
+                    groupby: [kwargs.row_fields[1]],
                 });
-            });
+                _.each(subGroups, function (subGroup) {
+                    var subGroupDomain = ['&'].concat(groupDomain, subGroup.__domain);
+                    var values = _.extend({}, groupValue);
+                    values[kwargs.row_fields[1]] = subGroup[kwargs.row_fields[1]] || false;
+                    rows.unshift({
+                        domain: subGroupDomain,
+                        values: values,
+                    });
+                });
+            } else {
+                rows.unshift({
+                    domain: groupDomain,
+                    values: groupValue,
+                });
+            }
         });
 
         // generate cells
@@ -122,6 +140,18 @@ MockServer.include({
                 grid_anchor: nextAnchor,
             },
         });
+    },
+    /**
+     * @TODO: this is not very generic but it works for the tests
+     * @private
+     * @returns {Deferred}
+     */
+    _mockReadGridDomain: function () {
+        return $.when([
+            '&',
+            ['date', '>=', '2017-01-01'],
+            ['date', '<=', '2017-01-31'],
+        ]);
     },
 });
 
