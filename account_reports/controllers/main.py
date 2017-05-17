@@ -60,7 +60,7 @@ class FinancialReportController(http.Controller):
                 )
             response.set_cookie('fileToken', token)
             return response
-        except Exception, e:
+        except Exception as e:
             se = _serialize_exception(e)
             error = {
                 'code': 200,
@@ -68,5 +68,3 @@ class FinancialReportController(http.Controller):
                 'data': se
             }
             return request.make_response(html_escape(json.dumps(error)))
-        else:
-            return request.not_found()

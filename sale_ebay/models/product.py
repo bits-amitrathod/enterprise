@@ -462,7 +462,7 @@ class ProductTemplate(models.Model):
                      }
         try:
             response = self.ebay_execute('GetSellerList', call_data)
-        except UserError, e:
+        except UserError as e:
             if auto_commit:
                 self.env.cr.rollback()
                 self.env.user.message_post(body=_("eBay error: Impossible to synchronize the products. \n'%s'") % e.args[0])
@@ -470,7 +470,7 @@ class ProductTemplate(models.Model):
                 return
             else:
                 raise e
-        except RedirectWarning, e:
+        except RedirectWarning as e:
             if not auto_commit:
                 raise e
             # not configured, ignore
@@ -533,7 +533,7 @@ class ProductTemplate(models.Model):
                                 self.create_sale_order(transaction)
             self.sync_available_qty()
             self.env.cr.commit()
-        except UserError, e:
+        except UserError as e:
             if auto_commit:
                 self.env.cr.rollback()
                 self.ebay_listing_status = 'Error'
@@ -542,7 +542,7 @@ class ProductTemplate(models.Model):
                 self.env.cr.commit()
             else:
                 raise e
-        except RedirectWarning, e:
+        except RedirectWarning as e:
             if not auto_commit:
                 raise e
             # not configured, ignore

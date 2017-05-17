@@ -46,7 +46,7 @@ class EbayCategory(models.Model):
     def _cron_sync(self, auto_commit=False):
         try:
             self.sync_categories()
-        except UserError, e:
+        except UserError as e:
             if auto_commit:
                 self.env.cr.rollback()
                 self.env.user.message_post(
@@ -54,7 +54,7 @@ class EbayCategory(models.Model):
                 self.env.cr.commit()
             else:
                 raise e
-        except RedirectWarning, e:
+        except RedirectWarning as e:
             if not auto_commit:
                 raise e
             # not configured, ignore

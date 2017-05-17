@@ -28,7 +28,7 @@ class StockReportController(http.Controller):
                 )
                 response.set_cookie('fileToken', token)
                 return response
-        except Exception, e:
+        except Exception as e:
             se = _serialize_exception(e)
             error = {
                 'code': 200,

@@ -150,7 +150,7 @@ class MailChannel(models.Model):
             payload['subject'] = message.record_name or message.subject
         payload_length = len(str(payload).encode("utf-8"))
         if payload_length < 4000:
-            body = re.sub(ur'<a(.*?)>', r'<a>', message.body)  # To-Do : Replace this fix
+            body = re.sub(r'<a(.*?)>', r'<a>', message.body)  # To-Do : Replace this fix
             payload['body'] = html2text(body)[:4000-payload_length]
         return payload
 
