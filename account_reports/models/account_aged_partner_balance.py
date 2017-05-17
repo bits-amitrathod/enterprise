@@ -30,6 +30,7 @@ class report_account_aged_partner(models.AbstractModel):
 
     @api.model
     def get_lines(self, options, line_id=None):
+        sign = -1.0 if self.env.context.get('aged_balance') else 1.0
         lines = []
         account_types = [self.env.context.get('account_type')]
         results, total, amls = self.env['report.account.report_agedpartnerbalance']._get_partner_move_lines(account_types, self._context['date_to'], 'posted', 30)
@@ -40,7 +41,7 @@ class report_account_aged_partner(models.AbstractModel):
                 'id': 'partner_%s' % (values['partner_id'],),
                 'name': values['name'],
                 'level': 2,
-                'columns': [{'name': self.format_value(v)} for v in [values['direction'], values['4'], values['3'], values['2'], values['1'], values['0'], values['total']]],
+                'columns': [{'name': self.format_value(sign * v)} for v in [values['direction'], values['4'], values['3'], values['2'], values['1'], values['0'], values['total']]],
                 'trust': values['trust'],
                 'unfoldable': True,
                 'unfolded': 'partner_%s' % (values['partner_id'],) in options.get('unfolded_lines'),
@@ -60,7 +61,7 @@ class report_account_aged_partner(models.AbstractModel):
                         'caret_options': caret_type,
                         'level': 1,
                         'parent_id': 'partner_%s' % (values['partner_id'],),
-                        'columns': [{'name': v} for v in [line['period'] == 6-i and self.format_value(line['amount']) or '' for i in range(7)]],
+                        'columns': [{'name': v} for v in [line['period'] == 6-i and self.format_value(sign * line['amount']) or '' for i in range(7)]],
                     }
                     lines.append(vals)
                 vals = {
@@ -68,7 +69,7 @@ class report_account_aged_partner(models.AbstractModel):
                     'class': 'o_account_reports_domain_total',
                     'name': _('Total '),
                     'parent_id': 'partner_%s' % (values['partner_id'],),
-                    'columns': [{'name': self.format_value(v)} for v in [values['direction'], values['4'], values['3'], values['2'], values['1'], values['0'], values['total']]],
+                    'columns': [{'name': self.format_value(sign * v)} for v in [values['direction'], values['4'], values['3'], values['2'], values['1'], values['0'], values['total']]],
                 }
                 lines.append(vals)
         if total and not line_id:
@@ -77,7 +78,7 @@ class report_account_aged_partner(models.AbstractModel):
                 'name': _('Total'),
                 'class': 'total',
                 'level': 'None',
-                'columns': [{'name': self.format_value(v)} for v in [total[6], total[4], total[3], total[2], total[1], total[0], total[5]]],
+                'columns': [{'name': self.format_value(sign * v)} for v in [total[6], total[4], total[3], total[2], total[1], total[0], total[5]]],
             }
             lines.append(total_line)
         return lines

@@ -779,11 +779,10 @@ class AccountInvoice(models.Model):
     def invoice_validate(self):
         '''Generates the cfdi attachments for mexican companies when validated.'''
         result = super(AccountInvoice, self).invoice_validate()
-        for record in self:
-            if record.company_id.country_id == self.env.ref('base.mx'):
-                record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-3-2.xml' % (
-                    self.journal_id.code, self.number)).replace('/', '')
-                record._l10n_mx_edi_retry()
+        for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
+            record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-3-2.xml' % (
+                record.journal_id.code, record.number)).replace('/', '')
+            record._l10n_mx_edi_retry()
         return result
 
     @api.multi
@@ -791,9 +790,8 @@ class AccountInvoice(models.Model):
         '''Cancel the cfdi attachments for mexican companies when cancelled.
         '''
         result = super(AccountInvoice, self).action_invoice_cancel()
-        for record in self:
-            if record.company_id.country_id == self.env.ref('base.mx'):
-                record._l10n_mx_edi_cancel()
+        for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
+            record._l10n_mx_edi_cancel()
         return result
 
     @api.multi
