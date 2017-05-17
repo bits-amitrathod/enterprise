@@ -14,14 +14,36 @@ class HelpdeskTicket(models.Model):
         'Security Token', copy=False, default=lambda self: str(uuid.uuid4()),
         required=True)
 
+    @api.model_cr_context
+    def _init_column(self, column_name):
+        """ Initialize the value of the given column for existing rows.
+
+            Overridden here because we need to generate different access tokens
+            and by default _init_column calls the default method once and stores
+            its result for every record.
+        """
+        if column_name != 'access_token':
+            super(HelpdeskTicket, self)._init_column(column_name)
+        else:
+            query = """UPDATE %(table_name)s
+                          SET %(column_name)s = md5(md5(random()::varchar || id::varchar) || clock_timestamp()::varchar)::uuid::varchar
+                        WHERE %(column_name)s IS NULL
+                    """ % {'table_name': self._table, 'column_name': column_name}
+            self.env.cr.execute(query)
+
     @api.multi
-    def get_access_action(self):
+    def get_access_action(self, access_uid=None):
         """ Instead of the classic form view, redirect to website for portal users
         that can read the ticket if the team is available on website. """
         self.ensure_one()
-        if self.sudo().team_id.website_published and self.env.user.share:
+        user, record = self.env.user, self
+        if access_uid:
+            user = self.env['res.users'].sudo().browse(access_uid)
+            record = self.sudo(user)
+
+        if self.sudo().team_id.website_published and user.share:
             try:
-                self.check_access_rule('read')
+                record.check_access_rule('read')
             except exceptions.AccessError:
                 pass
             else:
@@ -31,7 +53,7 @@ class HelpdeskTicket(models.Model):
                     'target': 'self',
                     'res_id': self.id,
                 }
-        return super(HelpdeskTicket, self).get_access_action()
+        return super(HelpdeskTicket, self).get_access_action(access_uid)
 
     @api.multi
     def _notification_recipients(self, message, groups):
