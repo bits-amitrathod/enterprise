@@ -90,14 +90,17 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
             values.relation_id = this.many2one_model.value;
             values.field_description = this.many2one_model.m2o_value;
         } else if (this.ttype === 'selection') {
+            values.selection = [];
             var selection_list = _.map(this.$('#selectionItems').val().split("\n"),function(value) {
                 value = value.trim();
                 if (value) {
-                    return "('" + value + "','" + value + "')";
+                    return value;
                 }
             });
             selection_list = _.reject(_.uniq(selection_list), _.isUndefined.bind());
-            values.selection = '[' + selection_list.join() + ']';
+            values.selection = _.map(selection_list, function(value) {
+                return [value, value];
+            });
         } else if (this.ttype === 'related') {
             values.related = this.fieldSelector.chain;
             values.ttype = this.fieldSelector.selectedField.type;

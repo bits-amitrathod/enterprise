@@ -458,6 +458,10 @@ class WebStudioController(http.Controller):
                 'relation': field.model_id.model,
                 'relation_field': field.name,
             })
+        if values.get('selection'):
+            values.update({
+                'selection': unicode(values.get('selection')),
+            })
         # Create new field
         return request.env['ir.model.fields'].create(values)
 

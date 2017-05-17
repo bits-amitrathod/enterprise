@@ -394,10 +394,7 @@ return Widget.extend({
         var node = event.data.node;
         var new_attrs = event.data.new_attrs || {};
         var position = event.data.position || 'after';
-        var xpath_info;
-        if (node && !_.pick(node.attrs, this.expr_attrs[node.tag]).length) {
-            xpath_info = find_parents_positions(this.fields_view.arch, node);
-        }
+        var xpath_info = this._get_xpath_info(node);
 
         switch (structure) {
             case 'text':
@@ -744,6 +741,7 @@ return Widget.extend({
         var is_root = !find_parent(this.fields_view.arch, parent_node);
         if (parent_node.children.length === 1 && !is_root) {
             node = parent_node;
+            xpath_info = this._get_xpath_info(node);
         }
 
         this.do({
@@ -810,6 +808,11 @@ return Widget.extend({
                 },
             },
         });
+    },
+    _get_xpath_info: function(node) {
+        if (node && !_.pick(node.attrs, this.expr_attrs[node.tag]).length) {
+            return find_parents_positions(this.fields_view.arch, node);
+        }
     },
     destroy: function() {
         bus.trigger('undo_not_available');
