@@ -3,7 +3,7 @@
 import binascii
 import time
 from math import ceil
-import xml.etree.ElementTree as etree
+from xml.etree import ElementTree as etree
 import unicodedata
 
 import requests

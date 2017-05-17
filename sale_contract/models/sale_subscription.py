@@ -7,7 +7,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools import format_date
 
-import odoo.addons.decimal_precision as dp
+from odoo.addons import decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
 

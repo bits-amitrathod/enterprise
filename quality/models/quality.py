@@ -7,7 +7,7 @@ import random
 
 from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
-import odoo.addons.decimal_precision as dp
+from odoo.addons import decimal_precision as dp
 from math import sqrt
 
 
