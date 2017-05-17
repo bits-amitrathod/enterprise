@@ -1021,6 +1021,59 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.test('display one2many without inline views', function(assert) {
+        assert.expect(1);
+
+        var vem = createViewEditorManager({
+            arch: "<form>" +
+                "<sheet>" +
+                    "<field name='display_name'/>" +
+                    "<field name='product_ids'/>" +
+                "</sheet>" +
+            "</form>",
+            model: "coucou",
+            data: {
+                coucou: {
+                    fields: {
+                        display_name: {
+                            string: "Display Name",
+                            type: "char",
+                        },
+                        product_ids: {
+                            string: "product",
+                            type: "one2many",
+                            relation: "product",
+                        }
+                    },
+                },
+                product: {
+                    fields: {
+                        coucou: {
+                            string: "coucou_id",
+                            type: "many2one",
+                            retlation: "coucou",
+                        },
+                        display_name: {
+                            string: "Display Name",
+                            type: "char",
+                        },
+                        price: {
+                            string: "Price",
+                            type: "integer",
+                        }
+                    }
+                },
+            },
+            archs: {
+                "product,false,list": '<tree><field name="display_name"/></tree>'
+            },
+        });
+        var $one2many = vem.$('.o_field_one2many.o_field_widget');
+        assert.strictEqual($one2many.children().length, 2,
+            "The one2many widget should be displayed");
+        vem.destroy();
+    });
 });
 
 });

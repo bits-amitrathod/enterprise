@@ -41,17 +41,19 @@ AbstractView.include({
      */
     _createStudioRenderer: function (parent, Renderer, options) {
         var self = this;
-        var model = this.getModel(parent);
-        return $.when(
-            model.load(this.loadParams),
-            this._loadLibs()
-        ).then(function (handle) {
-            var state = model.get(handle);
-            var params = _.extend({}, self.rendererParams, options);
-            var editor = new Renderer(parent, state, params);
+        return this._loadSubviews(parent).then(function () {
+            return $.when(
+                self._loadData(parent),
+                self._loadLibs()
+            ).then(function (handle) {
+                var model = self.getModel();
+                var state = model.get(handle);
+                var params = _.extend({}, self.rendererParams, options);
+                var editor = new Renderer(parent, state, params);
 
-            model.setParent(editor);
-            return editor;
+                model.setParent(editor);
+                return editor;
+            });
         });
     },
 });
