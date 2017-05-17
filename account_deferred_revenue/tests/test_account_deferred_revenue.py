@@ -58,10 +58,10 @@ class TestDeferredRevenue(common.TransactionCase):
         # I check data in move line and installment line.
         first_installment_line = recognition.depreciation_line_ids.sorted(lambda r: r.id)[0]
         first_move = first_installment_line.move_id
-        self.assertEqual(first_installment_line.amount, first_move.amount,
-            'First installment line amount is incorrect.')
-        self.assertEqual(first_installment_line.remaining_value, recognition.value - first_installment_line.amount,
-            'Remaining value is incorrect.')
+        self.assertAlmostEqual(first_installment_line.amount, first_move.amount,
+            msg='First installment line amount is incorrect.')
+        self.assertAlmostEqual(first_installment_line.remaining_value, recognition.value - first_installment_line.amount,
+            msg='Remaining value is incorrect.')
 
         # I check next installment date.
         last_installment_date = datetime.strptime(first_installment_line.depreciation_date, '%Y-%m-%d')
