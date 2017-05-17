@@ -50,7 +50,7 @@ class View(models.Model):
         group_2 = E.group(name=group_name + '_right')
         group = E.group(group_1, group_2, name=group_name)
         form = E.form(E.sheet(title, group, string=model._description))
-        arch = etree.tostring(form, encoding='utf-8', pretty_print=True)
+        arch = etree.tostring(form, encoding='unicode', pretty_print=True)
 
         self.create({
             'type': 'form',
@@ -251,7 +251,7 @@ class View(models.Model):
         if len(xpath):
             arch.append(xpath)
 
-        normalized_arch = etree.tostring(self._indent_tree(arch)) if len(arch) else ''
+        normalized_arch = etree.tostring(self._indent_tree(arch), encoding='unicode') if len(arch) else u''
         return normalized_arch
 
     def _is_compatible(self, xpath, node):

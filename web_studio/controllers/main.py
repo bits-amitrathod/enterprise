@@ -596,7 +596,7 @@ class WebStudioController(http.Controller):
 
         # Save or create changes into studio view, identifiable by xmlid
         # Example for view id 42 of model crm.lead: web-studio_crm.lead-42
-        new_arch = etree.tostring(arch, encoding='utf-8', pretty_print=True)
+        new_arch = etree.tostring(arch, encoding='unicode', pretty_print=True)
         self._set_studio_view(view, new_arch)
 
         # Normalize the view
@@ -711,7 +711,7 @@ class WebStudioController(http.Controller):
 
     def _get_default_view(self, view_type, attrs):
         arch = etree.Element(view_type, attrs)
-        return etree.tostring(arch, encoding='utf-8', pretty_print=True, method='html')
+        return etree.tostring(arch, encoding='unicode', pretty_print=True, method='html')
 
     def _get_or_create_default_view(self, model, view_type, view_id=False):
         View = request.env['ir.ui.view']
