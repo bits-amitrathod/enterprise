@@ -32,6 +32,7 @@ var Menu = Widget.extend({
                 }
             }
         },
+        'click .o_menu_brand': '_onMainMenuClick'
     },
     init: function (parent, menu_data) {
         var self = this;
@@ -211,6 +212,17 @@ var Menu = Widget.extend({
             this.$extraItemsToggle.appendTo(this.$section_placeholder);
         }
     },
+
+    /**
+     * When clicking on the main menu title, we want to open the first action of
+     * the current application
+     *
+     * @private
+     */
+    _onMainMenuClick: function () {
+        var actionID = this.menu_id_to_action_id(this.current_primary_menu);
+        this._trigger_menu_clicked(this.current_primary_menu, actionID);
+    }
 });
 
 return Menu;
