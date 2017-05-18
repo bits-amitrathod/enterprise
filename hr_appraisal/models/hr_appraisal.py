@@ -224,7 +224,7 @@ class HrAppraisal(models.Model):
                 res = filter(lambda x: x['state'] == state_value, read_group_res)
                 if not res:
                     res = filter(lambda x: x['state'] == state_value, read_group_all_states)
-                res[0]['state'] = [state_value, state_name]
+                res[0]['state'] = state_value
                 if res[0]['state'][0] == 'done' or res[0]['state'][0] == 'cancel':
                     res[0]['__fold'] = True
                 result.append(res[0])
