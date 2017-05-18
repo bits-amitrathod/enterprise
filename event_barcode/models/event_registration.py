@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
-import uuid
+import random
 
 from odoo import api, fields, models
+from odoo.tools import pycompat
 
 _logger = logging.getLogger(__name__)
 
@@ -12,16 +13,16 @@ class EventRegistration(models.Model):
 
     @api.model
     def _get_random_token(self):
-        """Generate a 20 char long pseudo-random string of digits
+        """Generate a 20 char long pseudo-random string of digits for barcode
+        generation.
 
-        Used for barcode generation, UUID4 makes the chance of a collision
-        (unicity constraint) highly unlikely.
-        Using the int version is a longer string than hex but generates a more
-        compact barcode when using digits only (Code128C instead of Code128A).
-        Keep only the first 8 bytes as a 16 bytes barcode is not readable by all
-        barcode scanners.
+        A decimal serialisation is longer than a hexadecimal one *but* it
+        generates a more compact barcode (Code128C rather than Code128A).
+
+        Generate 8 bytes (64 bits) barcodes as 16 bytes barcodes are not
+        compatible with all scanners.
          """
-        return str(int(uuid.uuid4().bytes[:8].encode('hex'), 16))
+        return pycompat.text_type(random.getrandbits(64))
 
     barcode = fields.Char(default=_get_random_token, readonly=True, copy=False)
 
