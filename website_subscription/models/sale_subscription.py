@@ -18,43 +18,14 @@ class SaleSubscription(models.Model):
 
     uuid = fields.Char('Account UUID', default=lambda s: uuid.uuid4(), copy=False, required=True)
     website_url = fields.Char('Website URL', compute='_website_url', help='The full URL to access the document through the website.')
-    recurring_mandatory_lines = fields.Many2many('sale.subscription.line', compute="_compute_options")
-    recurring_option_lines = fields.Many2many('sale.subscription.line', compute="_compute_options")
-    recurring_inactive_lines = fields.Many2many('sale.subscription.template.option', compute="_compute_options")
-    recurring_custom_lines = fields.Many2many('sale.subscription.line', compute="_compute_options")
     payment_token_id = fields.Many2one('payment.token', 'Payment Token', help='If not set, the default payment token of the partner will be used.', domain="[('partner_id','=',partner_id)]", oldname='payment_method_id')
     # add tax calculation
     recurring_amount_tax = fields.Float('Taxes', compute="_amount_all")
     recurring_amount_total = fields.Float('Total', compute="_amount_all")
-    sale_order_count = fields.Integer(compute='_compute_sale_order_count')
-
-    def _compute_sale_order_count(self):
-        raw_data = self.env['sale.order.line'].read_group(
-            [('subscription_id', '!=', False)],
-            ['subscription_id', 'order_id'],
-            ['subscription_id', 'order_id'])
-
-        order_count = len([sub for sub in raw_data if sub["subscription_id"][0] in self.ids])
-        for subscription in self:
-            subscription.sale_order_count = order_count
 
     _sql_constraints = [
         ('uuid_uniq', 'unique (uuid)', """UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be unique!"""),
     ]
-
-    @api.multi
-    def action_open_sales(self):
-        self.ensure_one()
-        sales = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)])
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "sale.order",
-            "views": [[self.env.ref('website_subscription.sale_order_view_tree_subscription').id, "tree"],
-                      [self.env.ref('sale.view_order_form').id, "form"]],
-            "domain": [["id", "in", sales.ids]],
-            "context": {"create": False},
-            "name": _("Sales Orders"),
-        }
 
     @api.model_cr_context
     def _init_column(self, column_name):
@@ -99,85 +70,18 @@ class SaleSubscription(models.Model):
         }
 
     def add_option(self, option_id):
-        option = self.env['sale.subscription.template.option'].browse(option_id)
-        if option not in self.template_id.subscription_template_option_ids:
-            return False
-        values = {
-            'product_id': option.product_id.id,
-            'analytic_account_id': self.id,
-            'name': option.name,
-            'quantity': option.quantity,
-            'uom_id': option.uom_id.id,
-            'price_unit': self.pricelist_id.with_context({'uom': option.uom_id.id}).get_product_price(option.product_id, 1, False)
-        }
-        self.write({'recurring_invoice_line_ids': [(0, 0, values)]})
-        return True
+        pass
 
     def set_option(self, subscription, new_option, price):
-        if not price or not price * subscription.partial_recurring_invoice_ratio():
-            subscription.sudo().add_option(new_option.id)
-            msg_body = self.env['ir.ui.view'].render_template('website_subscription.chatter_add_option',
-                                                                 values={'new_option': new_option, 'price': price})
-            subscription.message_post(body=msg_body)
-        return True
+        pass
 
     def remove_option(self, option_id):
-        opt_line = self.env['sale.subscription.template.option'].browse(option_id)
-        if not self.template_id or opt_line not in self.template_id.subscription_template_option_ids:
-            return False
-        for line in self.recurring_invoice_line_ids:
-            if opt_line.product_id == line.product_id:
-                self.write({'recurring_invoice_line_ids': [(2, line.id)]})
-                return True
-        return False
+        pass
 
     def _compute_options(self):
-        """ Set fields with filter options:
-            - recurring_mandatory_lines = all the recurring lines that are recurring lines on the template
-            - recurring_option_lines = all the subscription lines that are option lines on the template
-            - recurring_custom_lines = all the recurring lines that are not part of the template
-            - recurring_inactive_lines = all the template_id's options that are not set on the subscription
-        """
-        for account in self:
-            account.recurring_mandatory_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id.id in [product_line.id for product_line in account.sudo().template_id.product_line_ids])
-            account.recurring_option_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id in [line.product_id for line in account.sudo().template_id.subscription_template_option_ids])
-            account.recurring_custom_lines = account.recurring_invoice_line_ids.filtered(lambda r: r.product_id.id not in [opt_line.product_id.id for opt_line in account.sudo().template_id.subscription_template_option_ids]+[product_line.id for product_line in account.sudo().template_id.product_line_ids])
-            account.recurring_inactive_lines = account.sudo().template_id.subscription_template_option_ids.filtered(lambda r: r.product_id not in [line.product_id for line in account.recurring_invoice_line_ids] and r.portal_access != 'invisible')
+        pass
 
-    def partial_invoice_line(self, sale_order, option_line, refund=False, date_from=False):
-        """ Add an invoice line on the sales order for the specified option and add a discount
-        to take the partial recurring period into account """
-        order_line_obj = self.env['sale.order.line']
-        if option_line.product_id in [line.product_id for line in sale_order.order_line]:
-            return True
-        values = {
-            'order_id': sale_order.id,
-            'product_id': option_line.product_id.id,
-            'subscription_id': self.id,
-            'product_uom_qty': option_line.quantity,
-            'product_uom': option_line.uom_id.id,
-            'discount': (1 - self.partial_recurring_invoice_ratio(date_from=date_from)) * 100,
-            'price_unit': self.pricelist_id.with_context({'uom': option_line.uom_id.id}).get_product_price(option_line.product_id, 1, False),
-            'name': option_line.name,
-        }
-        return order_line_obj.create(values)
-
-    def partial_recurring_invoice_ratio(self, date_from=False):
-        """Computes the ratio of the amount of time remaining in the current invoicing period
-        over the total length of said invoicing period"""
-        if date_from:
-            date = fields.Date.from_string(date_from)
-        else:
-            date = datetime.date.today()
-        periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
-        invoicing_period = relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
-        recurring_next_invoice = fields.Date.from_string(self.recurring_next_date)
-        recurring_last_invoice = recurring_next_invoice - invoicing_period
-        time_to_invoice = recurring_next_invoice - date - datetime.timedelta(days=1)
-        ratio = float(time_to_invoice.days) / float((recurring_next_invoice - recurring_last_invoice).days)
-        return ratio
-
-    # online payments
+       # online payments
     @api.one
     def _do_payment(self, payment_token, invoice, two_steps_sec=True):
         tx_obj = self.env['payment.transaction']
@@ -364,8 +268,6 @@ class SaleSubscriptionTemplate(models.Model):
 
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
-    subscription_template_option_ids = fields.One2many('sale.subscription.template.option', inverse_name='subscription_template_id', string='Optional Lines', copy=True, oldname='option_invoice_line_ids')
-    partial_invoice = fields.Boolean(string="Prorated Invoice", help="If set, option upgrades are invoiced for the remainder of the current invoicing period.")
     tag_ids = fields.Many2many('account.analytic.tag', 'sale_subscription_template_tag_rel', 'template_id', 'tag_id', string='Tags')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
@@ -377,91 +279,6 @@ class SaleSubscriptionTemplate(models.Model):
         mapped_data = dict([(m['template_id'][0], m['template_id_count']) for m in subscription_data])
         for template in self:
             template.subscription_count = mapped_data.get(template.id, 0)
-
-
-class SaleSusbcriptionOption(models.Model):
-    _name = "sale.subscription.template.option"
-    _description = "Subscription Template Option"
-
-    name = fields.Char(string='Description', required=True)
-    subscription_template_id = fields.Many2one('sale.subscription.template', string="Template", required=True, ondelete="cascade")
-    portal_access = fields.Selection(
-        string='Portal Access',
-        selection=[
-            ('invisible', 'Invisible'),
-            ('none', 'Restricted'),
-            ('upgrade', 'Upgrade only'),
-            ('both', 'Upgrade and Downgrade')],
-        required=True,
-        default='none',
-        help="Restricted: The customer must ask a Sales Rep to add or remove this option\n"
-             "Upgrade Only: The customer can add the option himself but must ask to remove it\n"
-             "Upgrade and Downgrade: The customer can add or remove this option himself\n"
-             "Invisible: The customer doesn't see the option; however it gets carried away when switching subscription template")
-    is_authorized = fields.Boolean(compute="_compute_is_authorized", search="_search_is_authorized")
-    product_id = fields.Many2one('product.product', string="Product", required=True, domain="[('recurring_invoice', '=', True)]")
-    uom_id = fields.Many2one('product.uom', string="Unit of Measure", required=True)
-    quantity = fields.Float(required=True, default=1.0)
-    price = fields.Float(compute='_compute_price')
-
-    @api.constrains('product_id', 'subscription_template_id')
-    def _check_unicity(self):
-        for line in self:
-            for opt_line in line.subscription_template_id.subscription_template_option_ids:
-                if line.product_id == opt_line.product_id and line.id != opt_line.id:
-                    raise ValidationError("You cannot use the same product as an option twice for the same subscription template.")
-
-    @api.depends('portal_access')
-    def _compute_is_authorized(self):
-        for option in self:
-            option.is_authorized = bool(self.env['sale.subscription'].search_count([('template_id', '=', option.subscription_template_id.id)]))
-
-    def _search_is_authorized(self, operator, value):
-        if operator not in ('=', '!=', '<>'):
-            raise ValueError('Invalid operator: %s' % (operator,))
-
-        SS = self.env['sale.subscription']
-        tbls = (self._table, SS._table)
-        query = Query(tbls, ["%s.subscription_template_id = %s.template_id" % tbls], [])
-        SS._apply_ir_rules(query)
-
-        from_clause, where_clause, where_clause_params = query.get_sql()
-
-        self.env.cr.execute("""
-            SELECT {self}.id
-              FROM {from_}
-             WHERE {where}
-        """.format(self=self._table, from_=from_clause, where=where_clause), where_clause_params)
-        ids = [i[0] for i in self.env.cr.fetchall()]
-
-        op = 'in' if (operator == '=' and value) or (operator != '=' and not value) else 'not in'
-        return [('id', op, ids)]
-
-    @api.onchange('product_id')
-    def onchange_product_id(self):
-        domain = {}
-        if not self.product_id:
-            domain['uom_id'] = []
-        else:
-            name = self.product_id.display_name
-            if self.product_id.description_sale:
-                name += '\n' + self.product_id.description_sale
-            self.name = name
-
-            if not self.uom_id:
-                self.uom_id = self.product_id.uom_id.id
-            domain['uom_id'] = [('category_id', '=', self.product_id.uom_id.category_id.id)]
-
-        return {'domain': domain}
-
-    def _compute_price(self):
-        pricelist = self.env['product.pricelist'].browse(self._context.get('pricelist_id'))
-        for line in self:
-            if not pricelist:
-                line.price = 0.0
-            else:
-                line.price = pricelist.with_context(uom=line.uom_id.id).price_get(line.product_id.id, line.quantity)[pricelist.id]
-
 
 
 class SaleSubscriptionLine(models.Model):

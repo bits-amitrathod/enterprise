@@ -107,7 +107,6 @@ class website_subscription(http.Controller):
             ('token_implemented', '=', True)]))
         acc_pm = account.payment_token_id
         part_pms = account.partner_id.payment_token_ids
-        inactive_options = account.sudo().recurring_inactive_lines
         display_close = account.template_id.sudo().user_closable and account.state != 'close'
         is_follower = request.env.user.partner_id.id in [follower.partner_id.id for follower in account.message_follower_ids]
         active_plan = account.template_id.sudo()
@@ -126,7 +125,6 @@ class website_subscription(http.Controller):
             'is_follower': is_follower,
             'close_reasons': request.env['sale.subscription.close.reason'].search([]),
             'missing_periods': missing_periods,
-            'inactive_options': inactive_options,
             'payment_mandatory': active_plan.payment_mandatory,
             'user': request.env.user,
             'acquirers': acquirers,
@@ -226,40 +224,3 @@ class website_subscription(http.Controller):
             account.date = datetime.date.today().strftime('%Y-%m-%d')
         return request.redirect('/my/home')
 
-    @http.route(['/my/subscription/<int:account_id>/add_option'], type='http', methods=["POST"], auth="public", website=True)
-    def add_option(self, account_id, uuid=None, **kw):
-        option_res = request.env['sale.subscription.template.option']
-        account_res = request.env['sale.subscription']
-        if uuid:
-            account = account_res.sudo().browse(account_id)
-            if uuid != account.uuid:
-                raise NotFound()
-        else:
-            account = account_res.browse(account_id)
-        new_option_id = int(kw.get('new_option_id'))
-        new_option = option_res.sudo().browse(new_option_id)
-        pricelist = account.pricelist_id.sudo()
-        price = new_option.with_context(pricelist_id=pricelist.id).price
-        account_res.set_option(account, new_option, price)
-        return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))
-
-    @http.route(['/my/subscription/<int:account_id>/remove_option'], type='http', methods=["POST"], auth="public", website=True)
-    def remove_option(self, account_id, uuid=None, **kw):
-        remove_option_id = int(kw.get('remove_option_id'))
-        option_res = request.env['sale.subscription.template.option']
-        account_res = request.env['sale.subscription']
-        if uuid:
-            remove_option = option_res.sudo().browse(remove_option_id)
-            account = account_res.sudo().browse(account_id)
-            if uuid != account.uuid:
-                raise NotFound()
-        else:
-            remove_option = option_res.browse(remove_option_id)
-            account = account_res.browse(account_id)
-        if remove_option.portal_access != "both" and not request.env.user.has_group('sales_team.group_sale_salesman'):
-            return request.render("website.403")
-        account.sudo().remove_option(remove_option_id)
-        msg_body = request.env['ir.ui.view'].render_template('website_subscription.chatter_remove_option',
-                                                             values={'remove_option': remove_option})
-        account.message_post(body=msg_body)
-        return request.redirect('/my/subscription/%s/%s' % (account.id, account.uuid))

@@ -93,66 +93,6 @@
             <field name="uom_po_id" ref="sale_subscription.subscription_uom_year"/>
         </record>
 
-        <record id="opt_inv_line_11" model="sale.subscription.template.option">
-            <field name="name">Customized Module
-        Customize a module to better match your business process.</field>
-            <field name="subscription_template_id" ref="sale_subscription.odoo_monthly"/>
-            <field name="product_id" ref="odoo_custom_module_yearly"/>
-            <field name="quantity">1</field>
-            <field name="uom_id" ref="sale_subscription.subscription_uom_year"/>
-            <field name="portal_access">upgrade</field>
-        </record>
-
-        <record id="opt_inv_line_12" model="sale.subscription.template.option">
-            <field name="name">Customized View
-        Customize one or more views (in a single module) to better suit your needs.</field>
-            <field name="subscription_template_id" ref="sale_subscription.odoo_monthly"/>
-            <field name="product_id" ref="odoo_custom_view_yearly"/>
-            <field name="quantity">1</field>
-            <field name="uom_id" ref="sale_subscription.subscription_uom_year"/>
-            <field name="portal_access">upgrade</field>
-        </record>
-
-        <record id="opt_inv_line_13" model="sale.subscription.template.option">
-            <field name="name">Custom Domain
-        Access your Odoo Instance using your own domain.</field>
-            <field name="subscription_template_id" ref="sale_subscription.odoo_monthly"/>
-            <field name="product_id" ref="odoo_custom_domain_yearly"/>
-            <field name="quantity">1</field>
-            <field name="uom_id" ref="sale_subscription.subscription_uom_year"/>
-            <field name="portal_access">both</field>
-        </record>
-
-        <record id="opt_inv_line_21" model="sale.subscription.template.option">
-            <field name="name">Customized Module
-        Customize a module to better match your business process.</field>
-            <field name="subscription_template_id" ref="sale_subscription.odoo_yearly"/>
-            <field name="product_id" ref="odoo_custom_module"/>
-            <field name="quantity">1</field>
-            <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
-            <field name="portal_access">upgrade</field>
-        </record>
-
-        <record id="opt_inv_line_22" model="sale.subscription.template.option">
-            <field name="name">Customized View
-        Customize one or more views (in a single module) to better suit your needs.</field>
-            <field name="subscription_template_id" ref="sale_subscription.odoo_yearly"/>
-            <field name="product_id" ref="odoo_custom_view"/>
-            <field name="quantity">1</field>
-            <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
-            <field name="portal_access">upgrade</field>
-        </record>
-
-        <record id="opt_inv_line_23" model="sale.subscription.template.option">
-            <field name="name">Custom Domain
-        Access your Odoo Instance using your own domain.</field>
-            <field name="subscription_template_id" ref="sale_subscription.odoo_yearly"/>
-            <field name="product_id" ref="odoo_custom_domain"/>
-            <field name="quantity">1</field>
-            <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
-            <field name="portal_access">both</field>
-        </record>
-
         <!-- Demo Subscription -->
         <record id="subscription_portal_21" model="sale.subscription">
             <field name="name">Odoo SAAS</field>
@@ -190,16 +130,6 @@
             <field name="product_id" ref="sale_subscription.odoo_saas"/>
             <field name="quantity">1</field>
             <field name="price_unit">20.0</field>
-            <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
-        </record>
-
-        <record id="rec_inv_line_32" model="sale.subscription.line">
-            <field name="name">Customized Module
-        Customize a module to better match your business process.</field>
-            <field name="analytic_account_id" ref="subscription_portal_21"/>
-            <field name="product_id" ref="sale_subscription.odoo_custom_module"/>
-            <field name="quantity">1</field>
-            <field name="price_unit">40.0</field>
             <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
         </record>
     </data>

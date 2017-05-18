@@ -12,7 +12,7 @@ class SaleSubscriptionWizard(models.TransientModel):
         return self.env['sale.subscription'].browse(self._context.get('active_id'))
 
     account_id = fields.Many2one('account.analytic.account', string="Analytic Account", required=True, default=_default_account)
-    subscription_id = fields.Many2one('sale.subscription', string="Subscription", required=True, default=_default_subscription)
+    subscription_id = fields.Many2one('sale.subscription', string="Subscription", required=True, default=_default_subscription, ondelete="cascade")
     option_lines = fields.One2many('sale.subscription.wizard.option', 'wizard_id', string="Options")
     date_from = fields.Date('Discount Date', default=fields.Date.today(),
                             help="The discount applied when creating a sales order will be computed as the ratio between "
@@ -71,8 +71,26 @@ class SaleSubscriptionWizard(models.TransientModel):
 
 class SaleSubscriptionWizardOption(models.TransientModel):
     _name = "sale.subscription.wizard.option"
-    _inherit = "sale.subscription.template.option"
 
-    wizard_id = fields.Many2one('sale.subscription.wizard')
-    product_id = fields.Many2one('product.product', domain="[('recurring_invoice', '=', True)]")
-    subscription_template_id = fields.Many2one(required=False)
+    name = fields.Char(string="Description")
+    wizard_id = fields.Many2one('sale.subscription.wizard', required=True, ondelete="cascade")
+    product_id = fields.Many2one('product.product', required=True, domain="[('recurring_invoice', '=', True)]", ondelete="cascade")
+    uom_id = fields.Many2one('product.uom', string="Unit of Measure", required=True, ondelete="cascade")
+    quantity = fields.Float(default=1.0)
+
+    @api.onchange("product_id")
+    def onchange_product_id(self):
+        domain = {}
+        if not self.product_id:
+            domain['uom_id'] = []
+        else:
+            name = self.product_id.display_name
+            if self.product_id.description_sale:
+                name += '\n' + self.product_id.description_sale
+            self.name = name
+
+            if not self.uom_id:
+                self.uom_id = self.product_id.uom_id.id
+            domain['uom_id'] = [('category_id', '=', self.product_id.uom_id.category_id.id)]
+
+        return {'domain': domain}

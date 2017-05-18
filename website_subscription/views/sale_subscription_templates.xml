@@ -13,20 +13,6 @@
       </xpath>
     </template>
 
-
-    <!-- Chatter templates -->
-    <template id="chatter_add_option">
-        <div>Option added by customer</div>
-        <div>&amp;bull; <b>Option</b>: <t t-esc="new_option.product_id.product_tmpl_id.name"/></div>
-        <div>&amp;bull; <b>Price</b>: <t t-esc="price"/></div>
-        <div>&amp;bull; <b>Sales Order</b>: None</div>
-    </template>
-
-    <template id="chatter_remove_option">
-        <div>Option removed by customer</div>
-        <div>&amp;bull; <b>Option</b>: <t t-esc="remove_option.product_id.product_tmpl_id.name"/></div>
-    </template>
-
     <!-- Specific Subscription Page -->
 
     <template id="subscription" name="Subscription">
@@ -105,47 +91,6 @@
                                     <td/>
                                 </tr>
                             </t>
-
-                            <tr t-foreach="account.recurring_mandatory_lines" t-as="line">
-                                <td class="line-description"><span t-field="line.name"/></td>
-                                <td/>
-                                <td><t t-esc="line.quantity"/> <span t-field="line.uom_id" data-oe-readonly="1"/></td>
-                                <td t-if="not line.discount"><span t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                                <td t-if="line.discount">
-                                    <s t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/><br/>
-                                    <div><strong t-esc="line.price_unit*(100.0-line.discount)/100.0" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></div>
-                                </td>
-                                <td><span t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                            </tr>
-                            <tr t-foreach="account.recurring_option_lines" t-as="line">
-                                <td class="line-description"><span t-field="line.name"/></td>
-                                <td>
-                                    <a data-toggle="modal"
-                                       t-attf-data-target="#wc-modal-remove-#{line.get_template_option_line().id}"
-                                       href=""
-                                       t-if="(line.get_template_option_line().portal_access in ['both'] or is_salesman) and account.state!='close'">
-                                        Remove
-                                    </a>
-                                    <t t-call="website_subscription.modal_remove"/>
-                                </td>
-                                <td><t t-esc="line.quantity"/> <span t-field="line.uom_id" data-oe-readonly="1"/></td>
-                                <td t-if="not line.discount"><span t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                                <td t-if="line.discount">
-                                    <s t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/><br/>
-                                    <div><strong t-esc="line.price_unit*(100.0-line.discount)/100.0" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></div>
-                                </td>                                        <td><span t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                            </tr>
-                            <tr t-foreach="account.recurring_custom_lines" t-as="line">
-                                <td class="line-description"><span t-field="line.name"/></td>
-                                <td/>
-                                <td><t t-esc="line.quantity"/> <span t-field="line.uom_id" data-oe-readonly="1"/></td>
-                                <td t-if="not line.discount"><span t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                                <td t-if="line.discount">
-                                    <s t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/><br/>
-                                    <div><strong t-esc="line.price_unit*(100.0-line.discount)/100.0" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></div>
-                                </td>
-                                <td><span t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                            </tr>
                         </tbody>
                     </table>
                     <div t-if="account.state in ['pending','close']" t-attf-class="alert alert-#{'warning' if account.state=='pending' else 'danger'}" role="alert" id="payment_message">
@@ -189,34 +134,6 @@
                             </div>
                         </div>
                     </div>
-                    <t t-if="account.recurring_inactive_lines">
-                        <h3 class="page-header">Additional Services</h3>
-                        <div class="oe_structure"/>
-                        <table class="table table-default table-condensed table-hover" id="wc-option-table">
-                            <thead>
-                                <tr class='active'><th>Name</th><th/><th>Price</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr t-foreach="inactive_options" t-as="line">
-                                    <t t-if="line.portal_access != 'invisible'">
-                                        <td><span t-field="line.name"/></td>
-                                        <td>
-                                            <a data-toggle="modal"
-                                               t-attf-data-target="#wc-modal-add-#{line.id}"
-                                               href=""
-                                               t-if="line.portal_access in ['both', 'upgrade'] and account.state!='close'">
-                                                Add
-                                            </a>
-                                            <t t-call="website_subscription.modal_add"/>
-                                        </td>
-                                        <td>
-                                            <span t-esc="line.with_context(pricelist_id=pricelist.id).price" t-options="{'widget': 'monetary', 'display_currency': pricelist.currency_id}"/> / <span t-field="line.uom_id" data-oe-readonly="1"/>
-                                        </td>
-                                    </t>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </t>
                     <t t-if="account.description">
                         <div class="oe_structure"/>
                         <h3 class="page-header">Terms and conditions</h3>
@@ -325,56 +242,6 @@
                 </div>
             </div>
         </t>
-    </template>
-
-
-    <template id="modal_remove">
-        <div class="modal fade" t-attf-id="wc-modal-remove-#{line.get_template_option_line().id}">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="post" t-attf-action="/my/subscription/#{account.id}/remove_option/?uuid=#{account.uuid}">
-                        <input class="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                        <div class="modal-header">
-                            <h4 class="modal-title">Confirm Option Removal</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>The following option will be removed from your next invoice:</p>
-                            <p class="line-description" t-field="line.name"/>
-                            <input name="remove_option_id" type="hidden" t-att-value="line.get_template_option_line().id" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary contract-submit">Confirm</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <template id="modal_add">
-        <div class="modal fade" t-attf-id="wc-modal-add-#{line.id}">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Confirm Option</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>The following option will be added to your next invoice:</p>
-                        <p class="line-description" t-field="line.name"/>
-                        <t t-set="pricelist" t-value="pricelist"/>
-                    </div>
-                    <div class="modal-footer">
-                        <form method="post" t-attf-action="/my/subscription/#{account.id}/add_option/?uuid=#{account.uuid}" id="not_partial_invoice">
-                            <input class="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <input name="new_option_id" type="hidden" t-att-value="line.id" />
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary contract-submit">Confirm</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </template>
 
     <!-- Modify website_portal templates -->

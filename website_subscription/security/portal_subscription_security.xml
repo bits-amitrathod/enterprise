@@ -31,16 +31,6 @@
         <field name="perm_create" eval="False"/>
         <field name="perm_unlink" eval="False"/>
     </record>
-    <record id="opt_line_portal" model="ir.rule">
-        <field name="name">Option line portal access</field>
-        <field name="model_id" ref="website_subscription.model_sale_subscription_template_option"/>
-        <field name="domain_force">[('is_authorized','=',True)]</field>
-        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
-        <field name="perm_read" eval="True"/>
-        <field name="perm_write" eval="False"/>
-        <field name="perm_create" eval="False"/>
-        <field name="perm_unlink" eval="False"/>
-    </record>
 
     <!-- Public -->
     <record id="subscription_public" model="ir.rule">

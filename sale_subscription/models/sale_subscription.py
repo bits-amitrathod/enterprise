@@ -40,6 +40,37 @@ class SaleSubscription(models.Model):
     country_id = fields.Many2one('res.country', related='analytic_account_id.partner_id.country_id', store=True)
     industry_id = fields.Many2one('res.partner.industry', related='analytic_account_id.partner_id.industry_id', store=True)
 
+    def partial_invoice_line(self, sale_order, option_line, refund=False, date_from=False):
+        """ Add an invoice line on the sales order for the specified option and add a discount
+        to take the partial recurring period into account """
+        order_line_obj = self.env['sale.order.line']
+        values = {
+            'order_id': sale_order.id,
+            'product_id': option_line.product_id.id,
+            'subscription_id': self.id,
+            'product_uom_qty': option_line.quantity,
+            'product_uom': option_line.uom_id.id,
+            'discount': (1 - self.partial_recurring_invoice_ratio(date_from=date_from)) * 100,
+            'price_unit': self.pricelist_id.with_context({'uom': option_line.uom_id.id}).get_product_price(option_line.product_id, 1, False),
+            'name': option_line.name,
+        }
+        return order_line_obj.create(values)
+
+    def partial_recurring_invoice_ratio(self, date_from=False):
+        """Computes the ratio of the amount of time remaining in the current invoicing period
+        over the total length of said invoicing period"""
+        if date_from:
+            date = fields.Date.from_string(date_from)
+        else:
+            date = datetime.date.today()
+        periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
+        invoicing_period = relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
+        recurring_next_invoice = fields.Date.from_string(self.recurring_next_date)
+        recurring_last_invoice = recurring_next_invoice - invoicing_period
+        time_to_invoice = recurring_next_invoice - date - datetime.timedelta(days=1)
+        ratio = float(time_to_invoice.days) / float((recurring_next_invoice - recurring_last_invoice).days)
+        return ratio
+
     @api.model
     def default_get(self, fields):
         defaults = super(SaleSubscription, self).default_get(fields)
@@ -378,6 +409,7 @@ class SaleSubscriptionLine(models.Model):
     price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
     discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'))
     price_subtotal = fields.Float(compute='_compute_price_subtotal', string='Sub Total', digits=dp.get_precision('Account'))
+    subscription_template_id = fields.Many2one('sale.subscription.template', string="Template", required=True, ondelete="cascade")
 
     @api.depends('price_unit', 'quantity', 'discount', 'analytic_account_id.pricelist_id')
     def _compute_price_subtotal(self):
@@ -451,7 +483,7 @@ class SaleSubscriptionTemplate(models.Model):
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly', track_visibility='onchange')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
-    product_line_ids = fields.One2many('product.product', 'subscription_template_id', copy=True)
+    product_line_ids = fields.One2many('sale.subscription.line', 'subscription_template_id', copy=True)
     journal_id = fields.Many2one('account.journal', string="Accounting Journal", domain="[('type', '=', 'sale')]", company_dependent=True,
                                  help="If set, subscriptions with this template will invoice in this journal; "
                                       "otherwise the sales journal with the lowest sequence is used.")

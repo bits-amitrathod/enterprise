@@ -21,7 +21,7 @@
             </tr>
             <tr t-foreach="layout_category['lines']" t-as="line">
                 <t t-if="line.recurring_product">
-                    <t t-call="website_subscription.order_line_row"/>
+                    <t t-call="order_line_row"/>
                 </t>
             </tr>
             <tr t-if="recurring_products_titles" class="active">
@@ -29,7 +29,7 @@
             </tr>
             <tr t-foreach="layout_category['lines']" t-as="line">
                 <t t-if="not line.recurring_product">
-                    <t t-call="website_subscription.order_line_row"/>
+                    <t t-call="order_line_row"/>
                 </t>
             </tr>
         </xpath>
