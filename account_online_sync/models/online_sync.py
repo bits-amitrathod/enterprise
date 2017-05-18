@@ -4,6 +4,7 @@ import datetime
 from odoo import api, fields, models
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
+from odoo.tools import float_is_zero, DEFAULT_SERVER_DATE_FORMAT
 
 """
 This module manage an "online account" for a journal. It can't be used in standalone,
@@ -59,7 +60,7 @@ class ProviderAccount(models.Model):
             message = _('The following error happened during the synchronization: %s' % (message,))
             with self.pool.cursor() as cr:
                 self.with_env(self.env(cr=cr)).message_post(body=message, subject=subject)
-    
+
     """ Methods that need to be override by sub-module"""
 
     @api.multi
@@ -170,6 +171,16 @@ class AccountJournal(models.Model):
     account_online_journal_id = fields.Many2one('account.online.journal', string='Online Account')
     account_online_provider_id = fields.Many2one('account.online.provider', related='account_online_journal_id.account_online_provider_id')
     synchronization_status = fields.Char(related='account_online_provider_id.status')
+    bank_statement_creation = fields.Selection([('none', 'Create one statement per synchronization'),
+                                                ('day', 'Create daily statements'),
+                                                ('week', 'Create weekly statements'),
+                                                ('bimonthly', 'Create bi-monthly statements'),
+                                                ('month', 'Create monthly statements')],
+                                               help="""This field is used for the online synchronization:
+                                                    depending on the option selected, newly fetched transactions
+                                                    will be put inside previous statement or in a new one""",
+                                               default='none',
+                                               string='Creation of bank statement')
 
     @api.one
     def _compute_next_synchronization(self):
@@ -196,7 +207,7 @@ class AccountJournal(models.Model):
         for account in self.search([('account_online_journal_id', '!=', False)]):
             try:
                 account.account_online_provider_id.cron_fetch_online_transactions()
-            except UserError as e:
+            except UserError:
                 continue
 
 
@@ -249,13 +260,10 @@ class AccountBankStatement(models.Model):
             lines.append((0, 0, line))
 
         # Search for previous transaction end amount
-        balance_start = None
         previous_statement = self.search([('journal_id', '=', journal.id)], order="date desc, id desc", limit=1)
-        if previous_statement:
-            balance_start = previous_statement.balance_end_real
         # For first synchronization, an opening bank statement line is created to fill the missing bank statements
         all_statement = self.search_count([('journal_id', '=', journal.id)])
-        if all_statement == 0 and end_amount - total != 0 and balance_start == None:
+        if all_statement == 0 and end_amount - total != 0:
             lines.append((0, 0, {
                 'date': transactions and (transactions[0]['date']) or datetime.datetime.now(),
                 'name': _("Opening statement: first synchronization"),
@@ -265,7 +273,52 @@ class AccountBankStatement(models.Model):
 
         # If there is no new transaction, the bank statement is not created
         if lines:
-            self.create({'name': _('online sync'), 'journal_id': journal.id, 'line_ids': lines, 'balance_end_real': end_amount if balance_start == None else balance_start + total, 'balance_start': (end_amount - total) if balance_start == None else balance_start})
+            to_create = []
+            # Depending on the option selected on the journal, either create a new bank statement or add lines to existing bank statement.
+            previous_amount_to_report = 0
+            for line in lines:
+                create = False
+                if not previous_statement or previous_statement.state == 'confirm':
+                    to_create = lines
+                    break
+                line_date = datetime.datetime.strptime(line[2]['date'], DEFAULT_SERVER_DATE_FORMAT)
+                p_stmt = datetime.datetime.strptime(previous_statement.date, DEFAULT_SERVER_DATE_FORMAT)
+                if journal.bank_statement_creation == 'day' and previous_statement.date != line[2]['date']:
+                    create = True
+                elif journal.bank_statement_creation == 'week' and line_date.isocalendar()[1] != p_stmt.isocalendar()[1]:
+                    create = True
+                elif journal.bank_statement_creation == 'bimensual':
+                    if (line_date.month != p_stmt.month or line_date.year != p_stmt.year):
+                        create = True
+                    elif line_date.day > 15 and p_stmt.day <= 15:
+                        create = True
+                elif journal.bank_statement_creation == 'month' and (line_date.month != p_stmt.month or line_date.year != p_stmt.year):
+                    create = True
+                elif not journal.bank_statement_creation or journal.bank_statement_creation == 'none':
+                    create = True
+
+                if create:
+                    to_create.append(line)
+                else:
+                    previous_amount_to_report += line[2]['amount']
+                    line[2].update({'statement_id': previous_statement.id})
+                    self.env['account.bank.statement.line'].create(line[2])
+
+            if not float_is_zero(previous_amount_to_report, precision_rounding=journal.currency_id.rounding):
+                previous_statement.write({'balance_end_real': previous_statement.balance_end_real + previous_amount_to_report})
+
+            if to_create:
+                balance_start = None
+                if previous_statement:
+                    balance_start = previous_statement.balance_end_real
+                sum_lines = sum([l[2]['amount'] for l in to_create])
+                self.create({'name': _('online sync'),
+                            'journal_id': journal.id,
+                            'line_ids': to_create,
+                            'balance_end_real': end_amount if balance_start is None else balance_start + sum_lines,
+                            'balance_start': (end_amount - total) if balance_start is None else balance_start
+                            })
+
         journal.account_online_journal_id.last_sync = last_date
         return len(lines)
 
