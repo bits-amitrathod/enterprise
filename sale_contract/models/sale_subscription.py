@@ -37,6 +37,8 @@ class SaleSubscription(models.Model):
     description = fields.Text()
     user_id = fields.Many2one('res.users', string='Sales Rep', track_visibility='onchange')
     invoice_count = fields.Integer(compute='_compute_invoice_count')
+    country_id = fields.Many2one('res.country', related='analytic_account_id.partner_id.country_id', store=True)
+    industry_id = fields.Many2one('res.partner.industry', related='analytic_account_id.partner_id.industry_id', store=True)
 
     @api.model
     def default_get(self, fields):
