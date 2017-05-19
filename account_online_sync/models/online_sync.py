@@ -287,7 +287,7 @@ class AccountBankStatement(models.Model):
                     create = True
                 elif journal.bank_statement_creation == 'week' and line_date.isocalendar()[1] != p_stmt.isocalendar()[1]:
                     create = True
-                elif journal.bank_statement_creation == 'bimensual':
+                elif journal.bank_statement_creation == 'bimonthly':
                     if (line_date.month != p_stmt.month or line_date.year != p_stmt.year):
                         create = True
                     elif line_date.day > 15 and p_stmt.day <= 15:

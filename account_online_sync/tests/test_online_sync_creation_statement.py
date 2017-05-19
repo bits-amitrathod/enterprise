@@ -131,7 +131,7 @@ class TestSynchStatementCreation(AccountingTestCase):
         self.delete_bank_statement(created_bnk_stmt)
 
     def test_creation_every_2weeks(self):
-        self.bank_journal.write({'bank_statement_creation': 'bimensual'})
+        self.bank_journal.write({'bank_statement_creation': 'bimonthly'})
         transactions = self.create_transaction('2016-01-01', '2016-01-01')
         # first synchronization, no previous bank statement
         self.bnk_stmt.online_sync_bank_statement(transactions, self.bank_journal)
