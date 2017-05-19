@@ -694,8 +694,9 @@ class AccountReport(models.AbstractModel):
             landscape = True
 
         return self.env['ir.actions.report']._run_wkhtmltopdf(
-            [self.env['ir.actions.report'].create_wkhtmltopdf_obj(header, body, footer)],
-            landscape, self.env.user.company_id.paperformat_id,
+            [body],
+            header=header, footer=footer,
+            landscape=landscape,
             specific_paperformat_args=spec_paperformat_args
         )
 
