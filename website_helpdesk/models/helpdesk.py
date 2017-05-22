@@ -3,8 +3,8 @@
 
 import uuid
 
-from odoo.addons.website.models.website import slug
 from odoo import api, exceptions, fields, models
+from odoo.addons.http_routing.models.ir_http import slug
 
 
 class HelpdeskTicket(models.Model):
