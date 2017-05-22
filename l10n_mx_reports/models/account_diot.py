@@ -127,7 +127,7 @@ class MxReportPartnerLedger(models.AbstractModel):
         # Aml go back to the beginning of the user chosen range but the
         # amount on the partner line should go back to either the beginning of
         # the fy or the beginning of times depending on the partner
-        sorted_partners = sorted(grouped_partners, key=lambda p: p.name)
+        sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
         group_iva = self.env.ref('l10n_mx.tax_group_iva')
         group_ret = self.env.ref('l10n_mx.tax_group_iva_ret')
