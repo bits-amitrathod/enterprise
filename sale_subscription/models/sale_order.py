@@ -69,7 +69,7 @@ class SaleOrder(models.Model):
                 template = subscription_dict['template']
                 lines = subscription_dict['lines']
                 subscr_data = line._prepare_subscription_data(template=template)
-                subscription = order.env['sale.subscription'].create(subscr_data)
+                subscription = order.env['sale.subscription'].sudo().create(subscr_data)
                 for line in lines:
                     subscr_line = line._prepare_subscription_line_data(subscription=subscription)
                     subscription.write({'recurring_invoice_line_ids': subscr_line})

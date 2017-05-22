@@ -7,8 +7,6 @@ from odoo import api, fields, models
 class AccountAnalyticAccount(models.Model):
     _inherit = 'account.analytic.account'
 
-    name = fields.Char(string='Analytic Account', index=True, required=True, track_visibility='onchange', default='New')
-    code = fields.Char(string='Reference', index=True, track_visibility='onchange')
     subscription_ids = fields.One2many('sale.subscription', 'analytic_account_id', string='Subscriptions')
     subscription_count = fields.Integer(compute='_compute_subscription_count', string='Susbcription Count')
 
@@ -35,9 +33,3 @@ class AccountAnalyticAccount(models.Model):
             result['views'] = [(False, "form")]
             result['res_id'] = subscription_ids[0]
         return result
-
-
-class AccountInvoiceLine(models.Model):
-    _inherit = "account.invoice.line"
-
-    subscription_id = fields.Many2one('sale.subscription')

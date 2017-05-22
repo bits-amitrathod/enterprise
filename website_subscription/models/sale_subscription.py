@@ -141,10 +141,12 @@ class SaleSubscription(models.Model):
                       ('state', 'in', ['open', 'pending'])]
             subscriptions = self.search(domain)
         if subscriptions:
-            cr.execute('SELECT a.company_id, array_agg(sub.id) as ids FROM sale_subscription as sub JOIN account_analytic_account as a ON sub.analytic_account_id = a.id WHERE sub.id IN %s GROUP BY a.company_id', (tuple(subscriptions.ids),))
-            for company_id, ids in cr.fetchall():
+            sub_data = subscriptions.read(fields=['id', 'company_id'])
+            for company_id in set(data['company_id'][0] for data in sub_data):
+                sub_ids = [s['id'] for s in sub_data if s['company_id'][0] == company_id]
+                subs = self.with_context(company_id=company_id, force_company=company_id).browse(sub_ids)
                 context_company = dict(self.env.context, company_id=company_id, force_company=company_id)
-                for subscription in self.with_context(context_company).browse(ids):
+                for subscription in subs:
                     cr.commit()
                     # payment + invoice (only by cron)
                     if subscription.template_id.payment_mandatory and subscription.recurring_total and automatic:

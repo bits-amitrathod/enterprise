@@ -16,13 +16,17 @@ _logger = logging.getLogger(__name__)
 class SaleSubscription(models.Model):
     _name = "sale.subscription"
     _description = "Sale Subscription"
-    _inherits = {'account.analytic.account': 'analytic_account_id'}
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    name = fields.Char(required=True, track_visibility="always")
+    code = fields.Char(string="Reference", required=True, track_visibility="onchange", index=True)
     state = fields.Selection([('draft', 'New'), ('open', 'In Progress'), ('pending', 'To Renew'),
                               ('close', 'Closed'), ('cancel', 'Cancelled')],
                              string='Status', required=True, track_visibility='onchange', copy=False, default='draft')
-    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account', required=True, ondelete="cascade", auto_join=True)
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
+    company_id = fields.Many2one('res.company', string="Company", default=lambda s: s.env['res.company']._company_default_get(), required=True)
+    partner_id = fields.Many2one('res.partner', string='Customer', required=True)
+    tag_ids = fields.Many2many('account.analytic.tag', string='Tags')
     date_start = fields.Date(string='Start Date', default=fields.Date.today)
     date = fields.Date(string='End Date', track_visibility='onchange', help="If set in advance, the subscription will be set to pending 1 month before the date and will be closed on the date set in this field.")
     pricelist_id = fields.Many2one('product.pricelist', string='Pricelist', required=True)
@@ -288,6 +292,7 @@ class SaleSubscription(models.Model):
             'uom_id': line.uom_id.id,
             'product_id': line.product_id.id,
             'invoice_line_tax_ids': [(6, 0, tax.ids)],
+            'analytic_tag_ids': [(6, 0, line.analytic_account_id.tag_ids.ids)]
         }
 
     @api.multi

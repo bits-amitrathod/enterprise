@@ -7,6 +7,7 @@ class sale_subscription_report(models.Model):
     _description = "Subscription Statistics"
     _auto = False
 
+    name = fields.Char()
     date_start = fields.Date('Date Start', readonly=True)
     date_end = fields.Date('Date End', readonly=True)
     product_id = fields.Many2one('product.product', 'Product', readonly=True)
@@ -34,6 +35,7 @@ class sale_subscription_report(models.Model):
     def _select(self):
         select_str = """
              SELECT min(l.id) as id,
+                    sub.name as name,
                     l.product_id as product_id,
                     l.uom_id as product_uom,
                     sub.analytic_account_id as analytic_account_id,
@@ -41,9 +43,9 @@ class sale_subscription_report(models.Model):
                     sum(l.quantity) as quantity,
                     sub.date_start as date_start,
                     sub.date as date_end,
-                    a.partner_id as partner_id,
+                    sub.partner_id as partner_id,
                     sub.user_id as user_id,
-                    a.company_id as company_id,
+                    sub.company_id as company_id,
                     sub.state,
                     sub.template_id as template_id,
                     t.categ_id as categ_id,
@@ -60,8 +62,8 @@ class sale_subscription_report(models.Model):
         from_str = """
                 sale_subscription_line l
                       join sale_subscription sub on (l.analytic_account_id=sub.id)
-                      join account_analytic_account a on sub.analytic_account_id=a.id
-                      join res_partner partner on a.partner_id = partner.id
+                      left outer join account_analytic_account a on sub.analytic_account_id=a.id
+                      join res_partner partner on sub.partner_id = partner.id
                         left join product_product p on (l.product_id=p.id)
                             left join product_template t on (p.product_tmpl_id=t.id)
                     left join product_uom u on (u.id=l.uom_id)
@@ -76,12 +78,13 @@ class sale_subscription_report(models.Model):
                     sub.analytic_account_id,
                     sub.date_start,
                     sub.date,
-                    a.partner_id,
+                    sub.partner_id,
                     sub.user_id,
                     recurring_price,
                     quantity,
-                    a.company_id,
+                    sub.company_id,
                     sub.state,
+                    sub.name,
                     sub.template_id,
                     sub.pricelist_id,
                     p.product_tmpl_id,

@@ -5,13 +5,9 @@ from odoo import models, fields, api
 class SaleSubscriptionWizard(models.TransientModel):
     _name = 'sale.subscription.wizard'
 
-    def _default_account(self):
-        return self.env['sale.subscription'].browse(self._context.get('active_id')).analytic_account_id.id
-
     def _default_subscription(self):
         return self.env['sale.subscription'].browse(self._context.get('active_id'))
 
-    account_id = fields.Many2one('account.analytic.account', string="Analytic Account", required=True, default=_default_account)
     subscription_id = fields.Many2one('sale.subscription', string="Subscription", required=True, default=_default_subscription, ondelete="cascade")
     option_lines = fields.One2many('sale.subscription.wizard.option', 'wizard_id', string="Options")
     date_from = fields.Date('Discount Date', default=fields.Date.today(),
@@ -26,7 +22,7 @@ class SaleSubscriptionWizard(models.TransientModel):
         team = self.env['crm.team']._get_default_team_id(user_id=self.subscription_id.user_id.id)
         order = sale_order_obj.create({
             'partner_id': self.subscription_id.partner_id.id,
-            'project_id': self.account_id.id,
+            'project_id': self.subscription_id.analytic_account_id.id,
             'team_id': team and team.id,
             'pricelist_id': self.subscription_id.pricelist_id.id,
             'fiscal_position_id': fpos_id,
