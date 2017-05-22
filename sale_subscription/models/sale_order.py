@@ -109,6 +109,14 @@ class SaleOrderLine(models.Model):
 
     subscription_id = fields.Many2one('sale.subscription', 'Subscription', copy=False)
 
+    def _prepare_invoice_line(self, qty):
+        res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
+        if self.subscription_id:
+            res['subscription_id'] = self.subscription_id.id
+            if self.subscription_id.analytic_account_id:
+                res['account_analytic_id'] = self.subscription_id.analytic_account_id.id
+        return res
+
     def _prepare_subscription_data(self, template):
         self.ensure_one()
         order = self.order_id

@@ -15,9 +15,11 @@ class TestSubscriptionCommon(AccountingTestCase):
         # Test Subscription Template
         self.subscription_tmpl = SubTemplate.create({
             'name': 'TestSubscriptionTemplate',
+            'description': 'Test Subscription Template 1',
         })
         self.subscription_tmpl_2 = SubTemplate.create({
             'name': 'TestSubscriptionTemplate2',
+            'description': 'Test Subscription Template 2',
         })
 
         # Test products

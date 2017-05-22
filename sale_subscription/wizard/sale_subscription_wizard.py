@@ -21,7 +21,6 @@ class SaleSubscriptionWizard(models.TransientModel):
 
     @api.multi
     def create_sale_order(self):
-        template_id = self.env['sale.subscription'].browse(self.env.context.get('active_id')).template_id
         fpos_id = self.env['account.fiscal.position'].get_fiscal_position(self.subscription_id.partner_id.id)
         sale_order_obj = self.env['sale.order']
         team = self.env['crm.team']._get_default_team_id(user_id=self.subscription_id.user_id.id)
@@ -34,9 +33,6 @@ class SaleSubscriptionWizard(models.TransientModel):
             'subscription_management': 'upsell',
         })
         for line in self.option_lines:
-            for option in template_id.subscription_template_option_ids:
-                if line.product_id == option.product_id:
-                    line.name = option.name
             self.subscription_id.partial_invoice_line(order, line, date_from=self.date_from)
         order.order_line._compute_tax_id()
         return {

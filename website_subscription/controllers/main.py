@@ -91,7 +91,6 @@ class website_subscription(http.Controller):
                  '/my/subscription/<int:account_id>/<string:uuid>'], type='http', auth="public", website=True)
     def subscription(self, account_id, uuid='', message='', message_class='', **kw):
         account_res = request.env['sale.subscription']
-        template_res = request.env['sale.subscription.template']
         if uuid:
             account = account_res.sudo().browse(account_id)
             if uuid != account.uuid or account.state == 'cancelled':

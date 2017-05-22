@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
+import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
@@ -39,6 +40,32 @@ class SaleSubscription(models.Model):
     invoice_count = fields.Integer(compute='_compute_invoice_count')
     country_id = fields.Many2one('res.country', related='analytic_account_id.partner_id.country_id', store=True)
     industry_id = fields.Many2one('res.partner.industry', related='analytic_account_id.partner_id.industry_id', store=True)
+    sale_order_count = fields.Integer(compute='_compute_sale_order_count')
+
+    def _compute_sale_order_count(self):
+        raw_data = self.env['sale.order.line'].read_group(
+            [('subscription_id', '!=', False)],
+            ['subscription_id', 'order_id'],
+            ['subscription_id', 'order_id']
+        )
+
+        order_count = len([sub for sub in raw_data if sub["subscription_id"][0] in self.ids])
+        for subscription in self:
+            subscription.sale_order_count = order_count
+
+    @api.multi
+    def action_open_sales(self):
+        self.ensure_one()
+        sales = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)])
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "views": [[self.env.ref('sale_subscription.sale_order_view_tree_subscription').id, "tree"],
+                      [self.env.ref('sale.view_order_form').id, "form"]],
+            "domain": [["id", "in", sales.ids]],
+            "context": {"create": False},
+            "name": _("Sales Orders"),
+        }
 
     def partial_invoice_line(self, sale_order, option_line, refund=False, date_from=False):
         """ Add an invoice line on the sales order for the specified option and add a discount
@@ -121,28 +148,7 @@ class SaleSubscription(models.Model):
             # Check if record is a new record or exists in db by checking its _origin
             # note that this property is not always set, hence the getattr
             if not getattr(self, '_origin', self.browse()) and not isinstance(self.id, int):
-                invoice_line_ids = []
-                for product_line in self.template_id.product_line_ids:
-                    product = product_line.with_context(
-                        lang=self.partner_id.lang,
-                        partner=self.partner_id.id,
-                        pricelist=self.pricelist_id.id,
-                        uom=product_line.uom_id.id
-                    )
-                    name = product.name_get()[0][1]
-                    if product.description_sale:
-                        name += '\n' + product.description_sale
-                    invoice_line_ids.append((0, 0, {
-                        'product_id': product_line.product_id.id,
-                        'uom_id': product_line.uom_id.id,
-                        'name': product_line.name,
-                        'quantity': product_line.quantity,
-                        'price_unit': product.price,
-                    }))
-                self.recurring_invoice_line_ids = invoice_line_ids
                 self.description = self.template_id.description
-            self.recurring_interval = self.template_id.recurring_interval
-            self.recurring_rule_type = self.template_id.recurring_rule_type
 
     @api.model
     def create(self, vals):
@@ -275,6 +281,7 @@ class SaleSubscription(models.Model):
             'name': line.name,
             'account_id': account_id,
             'account_analytic_id': line.analytic_account_id.analytic_account_id.id,
+            'subscription_id': line.analytic_account_id.id,
             'price_unit': line.price_unit or 0.0,
             'discount': line.discount,
             'quantity': line.quantity,
@@ -409,7 +416,6 @@ class SaleSubscriptionLine(models.Model):
     price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
     discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'))
     price_subtotal = fields.Float(compute='_compute_price_subtotal', string='Sub Total', digits=dp.get_precision('Account'))
-    subscription_template_id = fields.Many2one('sale.subscription.template', string="Template", required=True, ondelete="cascade")
 
     @api.depends('price_unit', 'quantity', 'discount', 'analytic_account_id.pricelist_id')
     def _compute_price_subtotal(self):
@@ -483,7 +489,7 @@ class SaleSubscriptionTemplate(models.Model):
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly', track_visibility='onchange')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
-    product_line_ids = fields.One2many('sale.subscription.line', 'subscription_template_id', copy=True)
+    product_ids = fields.One2many('product.template', 'subscription_template_id', copy=True)
     journal_id = fields.Many2one('account.journal', string="Accounting Journal", domain="[('type', '=', 'sale')]", company_dependent=True,
                                  help="If set, subscriptions with this template will invoice in this journal; "
                                       "otherwise the sales journal with the lowest sequence is used.")

@@ -6,9 +6,7 @@ import time
 import traceback
 import uuid
 
-from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
-from odoo.osv.query import Query
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -81,7 +79,7 @@ class SaleSubscription(models.Model):
     def _compute_options(self):
         pass
 
-       # online payments
+    # online payments
     @api.one
     def _do_payment(self, payment_token, invoice, two_steps_sec=True):
         tx_obj = self.env['payment.transaction']

@@ -13,7 +13,7 @@ class TestSubscription(TestSubscriptionCommon):
         # on_change_template on existing record (present in the db)
         self.subscription.template_id = self.subscription_tmpl
         self.subscription.on_change_template()
-        self.assertTrue(len(self.subscription.recurring_invoice_line_ids.ids) == 0, 'sale_subscription: recurring_invoice_line_ids copied on existing sale.subscription record')
+        self.assertFalse(self.subscription.description, 'sale_subscription: recurring_invoice_line_ids copied on existing sale.subscription record')
 
         # on_change_template on cached record (NOT present in the db)
         temp = Subscription.new({'name': 'CachedSubscription',
@@ -23,7 +23,7 @@ class TestSubscription(TestSubscriptionCommon):
                              })
         temp.update({'template_id': self.subscription_tmpl.id})
         temp.on_change_template()
-        self.assertTrue(temp.mapped('recurring_invoice_line_ids').mapped('name'), 'sale_subscription: recurring_invoice_line_ids not copied on new cached sale.subscription record')
+        self.assertTrue(temp.description, 'sale_subscription: description not copied on new cached sale.subscription record')
 
     @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
     def test_sale_order(self):

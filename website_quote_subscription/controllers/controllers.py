@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from odoo import http
 
 # class WebsiteQuoteSubscription(http.Controller):
 #     @http.route('/website_quote_subscription/website_quote_subscription/', auth='public')

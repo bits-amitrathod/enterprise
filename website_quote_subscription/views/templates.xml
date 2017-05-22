@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Modify website_quote templates -->
-    <template id="so_quotation" inherit_id="website_quote.so_quotation">
-        <xpath expr="//div[@id='modalaccept']" position="before">
-            <div class="alert alert-info alert-dismissable" t-if="quotation.project_id and quotation.subscription_id">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
-                <t t-set="subscription" t-value="quotation.subscription_id"/>
-                A subscription is linked to this quotation: <a t-attf-href="/my/subscription/#{subscription.id}/#{subscription.uuid}" t-esc="subscription.name"/>.
-            </div>
-        </xpath>
-    </template>
-
     <template id="subscription_pricing" name="subscription Price" inherit_id="website_quote.pricing">
         <xpath expr="//t[@t-as='line']" position="replace">
             <t t-set="recurring_products" t-value="[line.recurring_product for line in layout_category['lines']]"/>
@@ -21,7 +10,7 @@
             </tr>
             <tr t-foreach="layout_category['lines']" t-as="line">
                 <t t-if="line.recurring_product">
-                    <t t-call="order_line_row"/>
+                    <t t-call="website_quote_subscription.order_line_row"/>
                 </t>
             </tr>
             <tr t-if="recurring_products_titles" class="active">
@@ -29,7 +18,7 @@
             </tr>
             <tr t-foreach="layout_category['lines']" t-as="line">
                 <t t-if="not line.recurring_product">
-                    <t t-call="order_line_row"/>
+                    <t t-call="website_quote_subscription.order_line_row"/>
                 </t>
             </tr>
         </xpath>

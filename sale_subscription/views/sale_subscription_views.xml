@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Action Show all sales documents related to a subscription -->
+    <record id="sale_order_view_tree_subscription" model="ir.ui.view">
+        <field name="name">sale.order.list.subscription</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Orders" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'">
+                <field name="message_needaction" invisible="1"/>
+                <field name="name" string="Order Number"/>
+                <field name="date_order"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="subscription_management"/>
+                <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                <field name="invoice_status"/>
+                <field name="state" invisible="1"/>
+           </tree>
+        </field>
+    </record>
+
     <!-- Subscriptions -->
     <record id="sale_subscription_view_search" model="ir.ui.view">
         <field name="name">sale.subscription.search</field>
@@ -137,6 +156,7 @@
                             type="action" context="{'cancel':1}"
                             attrs="{'invisible': [('state','in',['cancel','close'])]}"/>
                     <button string="Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': [('state', '=', 'draft')]}" />
+                    <button string="Upsell Subscription" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet string="Subscription">
@@ -146,6 +166,12 @@
                             name="action_subscription_invoice"
                             type="object">
                             <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        <button class="oe_stat_button"
+                            icon="fa-credit-card"
+                            name="action_open_sales"
+                            type="object">
+                            <field name="sale_order_count" widget="statinfo" string="Sales"/>
                         </button>
                     </div>
                     <div class="oe_title">

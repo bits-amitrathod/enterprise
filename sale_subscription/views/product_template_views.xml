@@ -16,15 +16,18 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
-            <label for="sale_ok" position="after">
-                <div>
-                    <field name="recurring_invoice"/>
-                    <label for="recurring_invoice"/>
-                </div>
-            </label>
             <page name="sales" position="attributes">
                 <attribute name="attrs">{'invisible': [('sale_ok', '=', False), ('recurring_invoice', '=', False)]}</attribute>
             </page>
+            <page name="sales" position="inside">
+                <group name="subscription">
+                    <group>
+                        <field name="recurring_invoice"/>
+                        <field name="subscription_template_id" class="field_sub_template_id" attrs="{'invisible': [('recurring_invoice', '=', False)]}"/>
+                    </group>
+                </group>
+            </page>
+
         </field>
     </record>
 
