@@ -221,4 +221,22 @@
 </div>
         </field>
     </record>
+
+    <template id="mail_template_ticket_merge">
+        <t t-if="target">
+            <t t-if="len(tickets) == 1"><p>The following ticket has been merged into this one:</p></t>
+            <t t-if="len(tickets) &gt; 1"><p>The following tickets have been merged into this one:</p></t>
+            <ul>
+                <t t-foreach="tickets" t-as="ticket">
+                    <li><a href="#" t-att-data-oe-model="ticket._name" t-att-data-oe-id="ticket.id"><t t-esc="ticket.name"/></a></li>
+                </t>
+            </ul>
+        </t>
+        <t t-if="not target">
+            <p>This ticket has been merged into the following ticket:</p>
+            <ul>
+                <li><a href="#" t-att-data-oe-model="ticket._name" t-att-data-oe-id="ticket.id"><t t-esc="ticket.name"/></a></li>
+            </ul>
+        </t>
+    </template>
 </odoo>
