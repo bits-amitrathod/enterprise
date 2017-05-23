@@ -7,12 +7,6 @@
       </xpath>
     </template>
 
-    <template id="assets_backend" inherit_id="website.assets_backend" name="Website Subscription Backend Assets">
-      <xpath expr="." position="inside">
-          <link rel='stylesheet' href='/website_subscription/static/src/css/sale_subscription_backend.less'/>
-      </xpath>
-    </template>
-
     <!-- Specific Subscription Page -->
 
     <template id="subscription" name="Subscription">
@@ -302,7 +296,7 @@
                                     <span class="label label-default"><i class="fa fa-fw fa-remove"/> Closed</span>
                                 </t>
                             </td>
-                            <td><span t-esc="account.recurring_total" t-options="{'widget': 'monetary', 'display_currency': account.pricelist_id.currency_id}"/></td>
+                            <td><span t-esc="account.recurring_total" t-options="{'widget': 'monetary', 'display_currency': account.currency_id}"/></td>
                         </tr>
                     </t>
                 </table></div>

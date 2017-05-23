@@ -80,11 +80,36 @@
         <field name="name">Subscriptions</field>
         <field name="res_model">sale.subscription</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph</field>
         <field name="context">{}</field>
         <field name="domain">[]</field>
         <field name="search_view_id" eval='False'/>
         <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new subscription.
+            </p>
+            <p>
+                Create subscriptions to manage recurring invoicing &amp; payments. Subscriptions can
+                be either for an undefined or a limited period. In case of a limited period, it will
+                be flagged as to renew one month before the end date.
+            </p>
+            <p>
+                Subscriptions can be automatically generated from sales orders of Sales or eCommerce
+                apps. To do so, set a Subscription Template on your Subscription Products.
+            </p>
+        </field>
+    </record>
+
+    <record id="sale_subscription_action_filtered" model="ir.actions.act_window">
+        <field name="name">Subscriptions</field>
+        <field name="res_model">sale.subscription</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban,pivot,graph</field>
+        <field name="context">{
+            'search_default_template_id': [active_id],
+            'default_template_id': active_id,
+        }
+        </field>        <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to create a new subscription.
             </p><p>
@@ -263,6 +288,61 @@
         </field>
     </record>
 
+    <record id="sale_subscription_template_view_kanban" model="ir.ui.view">
+        <field name="name">sale.subscription.template.kanban</field>
+        <field name="model">sale.subscription.template</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_subscription_kanban">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="recurring_rule_type"/>
+                <field name="recurring_interval"/>
+                <field name="color"/>
+                <field name="subscription_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                            <div class="o_subscription_kanban_main">
+                                <div class="o_kanban_card_content o_visible">
+                                    <div class="o_kanban_primary_left">
+                                        <div class="o_primary">
+                                            <span><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></span>
+                                        </div>
+                                        <span>Recurrency: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></span>
+                                    </div>
+                                </div><div class="o_kanban_card_manage_pane o_invisible">
+                                    <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                        <div>
+                                            <a type="edit">Settings</a>
+                                        </div>
+                                        <div>
+                                            <a name="%(sale_subscription_action_filtered)d" type="action">Subscriptions</a>
+                                        </div>
+                                    </div>
+                                    <div t-if="widget.editable" class="o_subscription_kanban_colorpicker">
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <div class="o_subscription_kanban_manage">
+                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" /></a>
+                                </div>
+                            </div>
+
+                            <div class="o_subscription_kanban_boxes">
+                                <div class="o_subscription_kanban_box">
+                                    <a name="%(sale_subscription_action_filtered)d" type="action">
+                                        <span class="o_value"><t t-esc="record.subscription_count.value"/></span>
+                                        <span class="o_label">Subscriptions</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <!-- Subscriptions templates -->
     <record id="sale_subscription_template_view_list" model="ir.ui.view">
         <field name="name">sale.subscription.template.list</field>
@@ -300,11 +380,13 @@
                             type="action">
                             <field name="product_count" widget="statinfo" string="Products"/>
                         </button>
-                        <button class="oe_inline oe_stat_button" string="Subscriptions"
+                        <button class="oe_stat_button"
                             icon="fa-book"
                             name="%(sale_subscription_action)d"
                             context="{'search_default_template_id': [active_id], 'default_template_id': active_id}"
-                            type="action"/>
+                            type="action">
+                            <field name="subscription_count" widget="statinfo" string="Subscrpitions"/>
+                        </button>
                         <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
                             <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
                         </button>
@@ -326,10 +408,16 @@
                         <group name="website_subscription">
                         </group>
                     </group>
-                    <notebook>
-                    </notebook>
-                    <div>
-                        <field name="description"/>
+                    <group name="config">
+                        <group name="accounting" string="Accounting" groups="account.group_account_user">
+                            <field name="journal_id" options="{'no_create': True}"/>
+                        </group>
+                        <group name="online" string="Online Management" invisible="1">
+                        </group>
+                    </group>
+                    <div name="description">
+                        <label for="description"/>
+                        <field name="description" placeholder="Terms and Conditions"/>
                     </div>
                 </sheet>
                 <div class="oe_chatter">
@@ -340,12 +428,53 @@
         </field>
     </record>
 
+    <record id="sale_subscription_view_kanban" model="ir.ui.view">
+        <field name="name">sale.subscription.kanban</field>
+        <field name="model">sale.subscription</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="code"/>
+                <field name="state"/>
+                <field name="recurring_total"/>
+                <field name="template_id"/>
+                <field name="partner_id"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <strong><span><t t-esc="record.partner_id.value"/></span></strong>
+                                </div>
+                                <div class="col-xs-6 pull-right text-right">
+                                    <strong><field name="recurring_total" widget="monetary"/></strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 text-muted">
+                                    <div><t t-esc="record.code.value"/></div>
+                                    <div><t t-esc="record.template_id.value"/></div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <span class="pull-right text-right">
+                                        <field name="state" widget="label_selection" options="{'classes': {'draft': 'info', 'cancel': 'default',
+                                        'open': 'success', 'close': 'default', 'pending': 'danger'}}"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="sale_subscription_template_action" model="ir.actions.act_window">
         <field name="name">Subscription Templates</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">sale.subscription.template</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click here to create a template of subscription.

@@ -3,16 +3,7 @@
     <template id="assets_backend" name="sale subscription assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/sale_subscription/static/src/js/tour.js"></script>
+            <link rel='stylesheet' href='/sale_subscription/static/src/css/sale_subscription_backend.less'/>
         </xpath>
-    </template>
-
-    <!-- Chatter templates -->
-    <template id="chatter_add_paid_option">
-        <div>New Option added by Sales Order confirmation</div>
-        <div>&amp;bull; <b>Option</b>: <t t-esc="line.product_id.product_tmpl_id.name"/></div>
-        <div>&amp;bull; <b>Sales Order</b>: <t t-esc="line.order_id.name"/></div>
-        <div>&amp;bull; <b>Recurring Price</b>: <t t-esc="line.price_unit"/></div>
-        <div>&amp;bull; <b>Discount (partial invoicing period)</b>: <t t-esc="line.discount"/></div>
-        <div>&amp;bull; <b>Discounted Price</b>: <t t-esc="line.price_subtotal"/></div>
     </template>
 </odoo>

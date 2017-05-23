@@ -268,17 +268,6 @@ class SaleSubscriptionTemplate(models.Model):
 
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
-    tag_ids = fields.Many2many('account.analytic.tag', 'sale_subscription_template_tag_rel', 'template_id', 'tag_id', string='Tags')
-    subscription_count = fields.Integer(compute='_compute_subscription_count')
-    color = fields.Integer()
-
-    def _compute_subscription_count(self):
-        subscription_data = self.env['sale.subscription'].read_group(domain=[('template_id', 'in', self.ids), ('state', 'in', ['open', 'pending'])],
-                                                                     fields=['template_id'],
-                                                                     groupby=['template_id'])
-        mapped_data = dict([(m['template_id'][0], m['template_id_count']) for m in subscription_data])
-        for template in self:
-            template.subscription_count = mapped_data.get(template.id, 0)
 
 
 class SaleSubscriptionLine(models.Model):

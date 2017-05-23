@@ -18,22 +18,22 @@ class SaleOrder(models.Model):
 
     def _compute_subscription_count(self):
         order_line_data = self.env['sale.order.line'].read_group([('subscription_id', '!=', False), ('order_id', 'in', self.ids)], ['subscription_id', 'order_id'], ['subscription_id', 'order_id'])
-        subscription_count =  len([data['subscription_id'][0] for data in order_line_data])
+        subscription_count = len([data['subscription_id'][0] for data in order_line_data])
         for order in self:
             order.subscription_count = subscription_count
 
-    @api.multi
     def action_open_subscriptions(self):
         self.ensure_one()
         subscriptions = self.order_line.mapped('subscription_id')
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "sale.subscription",
-            "view_mode": 'tree,form',
-            "domain": [["id", "in", subscriptions.ids]],
-            "context": {"create": False},
-            "name": _("Subscriptions"),
-        }
+        action = self.env.ref('sale_subscription.sale_subscription_action').read()[0]
+        if len(subscriptions) > 1:
+            action['domain'] = [('id', 'in', subscriptions.ids)]
+        elif len(subscriptions) == 1:
+            action['views'] = [(self.env.ref('sale_subscription.sale_subscription_view_form').id, 'form')]
+            action['res_id'] = subscriptions.ids[0]
+        else:
+            action = {'type': 'ir.actions.act_window_close'}
+        return action
 
     def create_subscription(self):
         """ Create a subscription based on the product's subscription template """

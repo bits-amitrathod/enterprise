@@ -12,6 +12,17 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="sale_subscription_template_view_form_inherit_sale_subscription_asset">
+        <field name="name">sale.subscription.template.form.inherit</field>
+        <field name="model">sale.subscription.template</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_template_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='accounting']" position="inside">
+                <field name="template_asset_category_id" string="Deferred Revenue Type" context="{'default_type':'sale'}"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="sale_subscription_config_settings_view_inherit_sale_sub_asset" model="ir.ui.view">
         <field name="name">sale.subscription.config.settings.form.inherit</field>
         <field name="model">sale.subscription.config.settings</field>

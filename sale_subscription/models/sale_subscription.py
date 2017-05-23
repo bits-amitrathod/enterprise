@@ -65,7 +65,8 @@ class SaleSubscription(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "sale.order",
             "views": [[self.env.ref('sale_subscription.sale_order_view_tree_subscription').id, "tree"],
-                      [self.env.ref('sale.view_order_form').id, "form"]],
+                      [self.env.ref('sale.view_order_form').id, "form"],
+                      [False, "kanban"], [False, "calendar"], [False, "pivot"], [False, "graph"]],
             "domain": [["id", "in", sales.ids]],
             "context": {"create": False},
             "name": _("Sales Orders"),
@@ -178,17 +179,19 @@ class SaleSubscription(models.Model):
             res.append((sub.id, '%s/%s' % (sub.template_id.code, name) if sub.template_id.code else name))
         return res
 
-    @api.multi
     def action_subscription_invoice(self):
+        self.ensure_one()
         invoices = self.env['account.invoice'].search([('invoice_line_ids.subscription_id', 'in', self.ids)])
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "account.invoice",
-            'view_mode': 'tree,form',
-            "domain": [["id", "in", invoices.ids]],
-            "context": {"create": False},
-            "name": _("Invoices"),
-        }
+        action = self.env.ref('account.action_invoice_tree1').read()[0]
+        action["context"] = {"create": False}
+        if len(invoices) > 1:
+            action['domain'] = [('id', 'in', invoices.ids)]
+        elif len(invoices) == 1:
+            action['views'] = [(self.env.ref('account.invoice_form').id, 'form')]
+            action['res_id'] = invoices.ids[0]
+        else:
+            action = {'type': 'ir.actions.act_window_close'}
+        return action
 
     @api.model
     def cron_account_analytic_account(self):
@@ -487,7 +490,7 @@ class SaleSubscriptionTemplate(models.Model):
     active = fields.Boolean(default=True)
     name = fields.Char(required=True)
     code = fields.Char()
-    description = fields.Text(translate=True)
+    description = fields.Text(translate=True, string="Terms and Conditions")
     recurring_rule_type = fields.Selection([('daily', 'Day(s)'), ('weekly', 'Week(s)'),
                                             ('monthly', 'Month(s)'), ('yearly', 'Year(s)'), ],
                                            string='Recurrency',
@@ -498,7 +501,19 @@ class SaleSubscriptionTemplate(models.Model):
     journal_id = fields.Many2one('account.journal', string="Accounting Journal", domain="[('type', '=', 'sale')]", company_dependent=True,
                                  help="If set, subscriptions with this template will invoice in this journal; "
                                       "otherwise the sales journal with the lowest sequence is used.")
+    tag_ids = fields.Many2many('account.analytic.tag', 'sale_subscription_template_tag_rel', 'template_id', 'tag_id', string='Tags')
     product_count = fields.Integer(compute='_compute_product_count')
+    subscription_count = fields.Integer(compute='_compute_subscription_count')
+    color = fields.Integer()
+
+    def _compute_subscription_count(self):
+        subscription_data = self.env['sale.subscription'].read_group(domain=[('template_id', 'in', self.ids), ('state', 'in', ['open', 'pending'])],
+                                                                     fields=['template_id'],
+                                                                     groupby=['template_id'])
+        mapped_data = dict([(m['template_id'][0], m['template_id_count']) for m in subscription_data])
+        for template in self:
+            template.subscription_count = mapped_data.get(template.id, 0)
+
 
     def _compute_product_count(self):
         product_data = self.env['product.template'].sudo().read_group([('subscription_template_id', 'in', self.ids)], ['subscription_template_id'], ['subscription_template_id'])
