@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='group_invoice_lines']" position="after">
-                    <field name="l10n_mx_address_issued_id" attrs="{'invisible':  [('type', '!=', 'sale')]}"/>
+                    <field name="l10n_mx_address_issued_id" attrs="{'invisible':  [('type', '!=', 'sale')]}" context="{'default_type': 'invoice'}"/>
                 </xpath>
             </data>
             </field>
