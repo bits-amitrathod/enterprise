@@ -57,7 +57,6 @@ class SaleSubscription(models.Model):
         for subscription in self:
             subscription.sale_order_count = order_count
 
-    @api.multi
     def action_open_sales(self):
         self.ensure_one()
         sales = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)])
@@ -137,8 +136,8 @@ class SaleSubscription(models.Model):
         }
         for sub in self:
             sub.recurring_monthly = (
-                sub.recurring_total * interval_factor[sub.recurring_rule_type]
-                    / sub.recurring_interval
+                sub.recurring_total * interval_factor[sub.recurring_rule_type] /
+                sub.recurring_interval
             )
 
     @api.onchange('partner_id')
@@ -165,13 +164,11 @@ class SaleSubscription(models.Model):
             subscription.message_subscribe(subscription.partner_id.ids)
         return subscription
 
-    @api.multi
     def write(self, vals):
         if vals.get('partner_id'):
             self.message_subscribe([vals['partner_id']])
         return super(SaleSubscription, self).write(vals)
 
-    @api.multi
     def name_get(self):
         res = []
         for sub in self:
@@ -214,23 +211,18 @@ class SaleSubscription(models.Model):
     def _cron_recurring_create_invoice(self):
         return self._recurring_create_invoice(automatic=True)
 
-    @api.multi
     def set_open(self):
         return self.write({'state': 'open', 'date': False})
 
-    @api.multi
     def set_pending(self):
         return self.write({'state': 'pending'})
 
-    @api.multi
     def set_cancel(self):
         return self.write({'state': 'cancel'})
 
-    @api.multi
     def set_close(self):
         return self.write({'state': 'close', 'date': fields.Date.from_string(fields.Date.today())})
 
-    @api.multi
     def _prepare_invoice_data(self):
         self.ensure_one()
 
@@ -269,7 +261,6 @@ class SaleSubscription(models.Model):
             'user_id': self.user_id.id,
         }
 
-    @api.multi
     def _prepare_invoice_line(self, line, fiscal_position):
         if 'force_company' in self.env.context:
             company = self.env['res.company'].browse(self.env.context['force_company'])
@@ -298,19 +289,16 @@ class SaleSubscription(models.Model):
             'analytic_tag_ids': [(6, 0, line.analytic_account_id.tag_ids.ids)]
         }
 
-    @api.multi
     def _prepare_invoice_lines(self, fiscal_position):
         self.ensure_one()
         fiscal_position = self.env['account.fiscal.position'].browse(fiscal_position)
         return [(0, 0, self._prepare_invoice_line(line, fiscal_position)) for line in self.recurring_invoice_line_ids]
 
-    @api.multi
     def _prepare_invoice(self):
         invoice = self._prepare_invoice_data()
         invoice['invoice_line_ids'] = self._prepare_invoice_lines(invoice['fiscal_position_id'])
         return invoice
 
-    @api.multi
     def recurring_invoice(self):
         self._recurring_create_invoice()
         return self.action_subscription_invoice()
@@ -329,9 +317,9 @@ class SaleSubscription(models.Model):
             for sub in subs:
                 try:
                     invoices.append(AccountInvoice.create(sub._prepare_invoice()))
-                    invoices[-1].message_post_with_view('mail.message_origin_link',
-                     values={'self': invoices[-1], 'origin': sub},
-                     subtype_id=self.env.ref('mail.mt_note').id)
+                    invoices[-1].message_post_with_view(
+                        'mail.message_origin_link', values={'self': invoices[-1], 'origin': sub},
+                        subtype_id=self.env.ref('mail.mt_note').id)
                     invoices[-1].compute_taxes()
                     next_date = fields.Date.from_string(sub.recurring_next_date or current_date)
                     rule, interval = sub.recurring_rule_type, sub.recurring_interval
@@ -347,7 +335,6 @@ class SaleSubscription(models.Model):
                         raise
         return invoices
 
-    @api.multi
     def _prepare_renewal_order_values(self):
         res = dict()
         for subscription in self:
@@ -380,7 +367,6 @@ class SaleSubscription(models.Model):
             }
         return res
 
-    @api.multi
     def prepare_renewal_order(self):
         self.ensure_one()
         values = self._prepare_renewal_order_values()
@@ -393,13 +379,12 @@ class SaleSubscription(models.Model):
             "res_id": order.id,
         }
 
-    @api.multi
     def increment_period(self):
-        for account in self:
-            current_date = account.recurring_next_date or self.default_get(['recurring_next_date'])['recurring_next_date']
+        for subscription in self:
+            current_date = subscription.recurring_next_date or self.default_get(['recurring_next_date'])['recurring_next_date']
             periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
-            new_date = fields.Date.from_string(current_date) + relativedelta(**{periods[account.recurring_rule_type]: account.recurring_interval})
-            account.write({'recurring_next_date': new_date})
+            new_date = fields.Date.from_string(current_date) + relativedelta(**{periods[subscription.recurring_rule_type]: subscription.recurring_interval})
+            subscription.write({'recurring_next_date': new_date})
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
@@ -532,7 +517,6 @@ class SaleSubscriptionTemplate(models.Model):
         rec = self.search(domain + args, limit=limit)
         return rec.name_get()
 
-    @api.multi
     def name_get(self):
         res = []
         for sub in self:

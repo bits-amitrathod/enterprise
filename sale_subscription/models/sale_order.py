@@ -11,18 +11,21 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     subscription_management = fields.Selection(string='Subscription Management', selection=[('create', 'Creation'), ('renew', 'Renewal'), ('upsell', 'Upselling')],
-                                          help="Creation: The Sales Order created the subscription\n"
-                                                "Upselling: The Sales Order added lines to the subscription\n"
-                                                "Renewal: The Sales Order replaced the subscription's content with its own")
+                                               default='create',
+                                               help="Creation: The Sales Order created the subscription\n"
+                                                    "Upselling: The Sales Order added lines to the subscription\n"
+                                                    "Renewal: The Sales Order replaced the subscription's content with its own")
     subscription_count = fields.Integer(compute='_compute_subscription_count')
 
     def _compute_subscription_count(self):
+        """Compute the number of distinct subscriptions linked to the order."""
         order_line_data = self.env['sale.order.line'].read_group([('subscription_id', '!=', False), ('order_id', 'in', self.ids)], ['subscription_id', 'order_id'], ['subscription_id', 'order_id'])
         subscription_count = len([data['subscription_id'][0] for data in order_line_data])
         for order in self:
             order.subscription_count = subscription_count
 
     def action_open_subscriptions(self):
+        """Display the linked subscription and adapt the view to the number of records to display."""
         self.ensure_one()
         subscriptions = self.order_line.mapped('subscription_id')
         action = self.env.ref('sale_subscription.sale_subscription_action').read()[0]
@@ -84,6 +87,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+        """Update and/or create subscriptions on order confirmation."""
         res = super(SaleOrder, self).action_confirm()
         self.create_subscription()
         return res
