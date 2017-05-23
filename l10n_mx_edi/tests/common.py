@@ -39,8 +39,12 @@ class InvoiceTransactionCase(AccountingTestCase):
                 'account.data_account_type_current_assets').id)], limit=1)
 
     def set_currency_rates(self, mxn_rate, usd_rate):
+        self.mxn.rate_ids.filtered(
+            lambda r: r.name == time.strftime('%Y-%m-%d')).unlink()
         self.mxn.rate_ids = self.rate_model.create({
             'rate': mxn_rate, 'name': time.strftime('%Y-%m-%d')})
+        self.usd.rate_ids.filtered(
+            lambda r: r.name == time.strftime('%Y-%m-%d')).unlink()
         self.usd.rate_ids = self.rate_model.create({
             'rate': usd_rate, 'name': time.strftime('%Y-%m-%d')})
 
