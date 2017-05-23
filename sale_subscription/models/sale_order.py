@@ -38,58 +38,88 @@ class SaleOrder(models.Model):
             action = {'type': 'ir.actions.act_window_close'}
         return action
 
-    def create_subscription(self):
-        """ Create a subscription based on the product's subscription template """
-        templates = {}
-        msg_template = self.env.ref('sale_subscription.chatter_add_paid_option')
+    def _prepare_subscription_data(self, template):
+        """Prepare a dictionnary of values to create a subscription from a template."""
+        self.ensure_one()
+        values = {
+            'name': template.name,
+            'state': 'open',
+            'template_id': template.id,
+            'partner_id': self.partner_id.id,
+            'user_id': self.user_id.id,
+            'date_start': fields.Date.today(),
+            'description': self.note or template.description,
+            'pricelist_id': self.pricelist_id.id,
+            'company_id': self.company_id.id,
+            'analytic_account_id': self.project_id.id,
+        }
+        # compute the next date
+        today = datetime.date.today()
+        periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
+        invoicing_period = relativedelta(**{periods[template.recurring_rule_type]: template.recurring_interval})
+        recurring_next_date = today + invoicing_period
+        values['recurring_next_date'] = fields.Date.to_string(recurring_next_date)
+        if 'template_asset_category_id' in template._fields:
+            values['asset_category_id'] = template.with_context(force_company=self.company_id.id).template_asset_category_id.id
+        return values
+
+    def update_existing_subscriptions(self):
+        """
+        Update subscriptions already linked to the order by updating or creating lines.
+
+        :rtype: list(integer)
+        :return: ids of modified subscriptions
+        """
+        res = []
         for order in self:
-            values = {'recurring_invoice_line_ids': []}
-            for line in order.order_line:
-                if line.subscription_id:
-                    # no need for updates if the subscription was juste created
-                    # wipe the subscription clean if needed
-                    if order.subscription_management == 'renew':
-                        to_remove = [(2, subscription_line.id, 0) for subscription_line in line.subscription_id.recurring_invoice_line_ids]
-                        line.subscription_id.write({'recurring_invoice_line_ids': to_remove, 'description': order.note, 'pricelist_id': order.pricelist_id.id})
-                        line.subscription_id.set_open()
-                        line.subscription_id.increment_period()
-                    if not order.subscription_management:
-                        order.subscription_management = 'upsell'
-                    # add new lines or increment quantities on existing lines
-                    line._update_subscription_line_data(values)
-                    msg_body = msg_template.render(values={'line': line})
-                    line.subscription_id.message_post(body=msg_body, author_id=self.env.user.partner_id.id)
-                else:
-                    #make dictionary to get lines of all common template than create subscription based on that.
-                    if line.product_id.recurring_invoice:
-                        if line.product_id.subscription_template_id.id not in templates.keys():
-                            templates[line.product_id.subscription_template_id.id] = {'order': order.id, 'template': line.product_id.subscription_template_id, 'lines': [line]}
+            subscriptions = order.order_line.mapped('subscription_id')
+            if subscriptions and order.subscription_management != 'renew':
+                order.subscription_management = 'upsell'
+            res.append(subscriptions.ids)
+            if order.subscription_management == 'renew':
+                subscriptions.wipe()
+                subscriptions.increment_period()
+            for subscription in subscriptions:
+                subscription_lines = order.order_line.filtered(lambda l: l.subscription_id == subscription)
+                line_values = subscription_lines._update_subscription_line_data(subscription)
+                subscription.write({'recurring_invoice_line_ids': line_values})
+        return res
 
-                        else:
-                            templates[line.product_id.subscription_template_id.id]['lines'].append(line)
+    def create_subscriptions(self):
+        """
+        Create subscriptions based on the products' subscription template.
 
-            for template_id, subscription_dict in templates.items():
-                template = subscription_dict['template']
-                lines = subscription_dict['lines']
-                subscr_data = line._prepare_subscription_data(template=template)
-                subscription = order.env['sale.subscription'].sudo().create(subscr_data)
-                for line in lines:
-                    subscr_line = line._prepare_subscription_line_data(subscription=subscription)
-                    subscription.write({'recurring_invoice_line_ids': subscr_line})
-                    line.subscription_id = subscription.id
-                order.write({
-                    'project_id': subscription.analytic_account_id.id,
-                    'subscription_management': 'create',
-                })
-            if any(order.order_line.filtered(lambda line: line.subscription_id)):
-                order.action_done()
-        return True
+        Create subscriptions based on the templates found on order lines' products. Note that only
+        lines not already linked to a subscription are processed; one subscription is created per
+        distinct subscription template found.
+
+        :rtype: list(integer)
+        :return: ids of newly create subscriptions
+        """
+        res = []
+        for order in self:
+            all_sub_lines = order.order_line.filtered(lambda l: l.product_id.subscription_template_id)
+            to_create = order.order_line.filtered(lambda l: not l.subscription_id).mapped('product_id').mapped('subscription_template_id')
+            # create a subscription for each template with all the necessary lines
+            for template in to_create:
+                values = self._prepare_subscription_data(template)
+                template_lines = all_sub_lines.filtered(lambda l: not l.subscription_id and l.product_id.subscription_template_id == template)
+                values['recurring_invoice_line_ids'] = template_lines._prepare_subscription_line_data()
+                subscription = self.env['sale.subscription'].sudo().create(values)
+                res.append(subscription.id)
+                template_lines.write({'subscription_id': subscription.id})
+                subscription.message_post_with_view(
+                    'mail.message_origin_link', values={'self': subscription, 'origin': order},
+                    subtype_id=self.env.ref('mail.mt_note').id, author_id=self.env.user.partner_id.id
+                )
+        return res
 
     @api.multi
     def action_confirm(self):
         """Update and/or create subscriptions on order confirmation."""
         res = super(SaleOrder, self).action_confirm()
-        self.create_subscription()
+        self.update_existing_subscriptions()
+        self.create_subscriptions()
         return res
 
 
@@ -119,52 +149,29 @@ class SaleOrderLine(models.Model):
                 res['account_analytic_id'] = self.subscription_id.analytic_account_id.id
         return res
 
-    def _prepare_subscription_data(self, template):
-        self.ensure_one()
-        order = self.order_id
-        values = {
-            'name': template.name,
-            'state': 'open',
-            'template_id': template.id,
-            'partner_id': order.partner_id.id,
-            'user_id': order.user_id.id,
-            'date_start': fields.Date.today(),
-            'description': order.note,
-            'pricelist_id': order.pricelist_id.id,
-            'recurring_rule_type': template.recurring_rule_type,
-            'recurring_interval': template.recurring_interval,
-            'company_id': order.company_id.id,
-        }
-        # compute the next date
-        today = datetime.date.today()
-        periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
-        invoicing_period = relativedelta(**{periods[values['recurring_rule_type']]: values['recurring_interval']})
-        recurring_next_date = today + invoicing_period
-        values['recurring_next_date'] = fields.Date.to_string(recurring_next_date)
-        if 'template_asset_category_id' in template._fields:
-            values['asset_category_id'] = template.with_context(force_company=self.company_id.id).template_asset_category_id.id
-        return values
-
-    def _prepare_subscription_line_data(self, subscription):
-        self.ensure_one()
-        values = [(0, 0, {
-            'product_id': self.product_id.id,
-            'analytic_account_id': subscription.id,
-            'name': self.name,
-            'quantity': self.product_uom_qty,
-            'uom_id': self.product_uom.id,
-            'price_unit': self.price_unit,
-            'discount': self.discount if self.order_id.subscription_management != 'upsell' else False,
-        })]
-        return values
-
-    def _update_subscription_line_data(self, values):
-        self.ensure_one()
-        sub_lines = self.subscription_id.recurring_invoice_line_ids.filtered(lambda subscr_line: subscr_line.product_id == self.product_id and subscr_line.uom_id == self.product_uom)
-        if sub_lines:
-            values['recurring_invoice_line_ids'].append((1, sub_lines.id, {
-                'quantity': sub_lines.quantity + self.product_uom_qty,
+    def _prepare_subscription_line_data(self):
+        """Prepare a dictionnary of values to add lines to a subscription."""
+        values = list()
+        for line in self:
+            values.append((0, False, {
+                'product_id': line.product_id.id,
+                'name': line.name,
+                'quantity': line.product_uom_qty,
+                'uom_id': line.product_uom.id,
+                'price_unit': line.price_unit,
+                'discount': line.discount if line.order_id.subscription_management != 'upsell' else False,
             }))
-        else:
-            values['recurring_invoice_line_ids'].append(self._prepare_subscription_line_data(self.subscription_id)[0])
-        return self.subscription_id.write(values)
+        return values
+
+    def _update_subscription_line_data(self, subscription):
+        """Prepare a dictionnary of values to add or update lines on a subscription."""
+        values = list()
+        for line in self:
+            sub_line = subscription.recurring_invoice_line_ids.filtered(lambda l: (l.product_id, l.uom_id) == (line.product_id, line.product_uom))
+            if sub_line:
+                values.append((1, sub_line.id, {
+                    'quantity': sub_line.quantity + line.product_uom_qty,
+                }))
+            else:
+                values.append(line._prepare_subscription_line_data()[0])
+        return values

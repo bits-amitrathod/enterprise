@@ -396,6 +396,12 @@ class SaleSubscription(models.Model):
         rec = self.search(domain + args, limit=limit)
         return rec.name_get()
 
+    def wipe(self):
+        """Wipe a subscription clean by deleting all its lines."""
+        lines = self.mapped('recurring_invoice_line_ids')
+        lines.unlink()
+        return True
+
 
 class SaleSubscriptionLine(models.Model):
     _name = "sale.subscription.line"
@@ -498,7 +504,6 @@ class SaleSubscriptionTemplate(models.Model):
         mapped_data = dict([(m['template_id'][0], m['template_id_count']) for m in subscription_data])
         for template in self:
             template.subscription_count = mapped_data.get(template.id, 0)
-
 
     def _compute_product_count(self):
         product_data = self.env['product.template'].sudo().read_group([('subscription_template_id', 'in', self.ids)], ['subscription_template_id'], ['subscription_template_id'])
