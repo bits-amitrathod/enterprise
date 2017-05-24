@@ -147,7 +147,8 @@ class SaleSubscription(models.Model):
                 subs = self.with_context(company_id=company_id, force_company=company_id).browse(sub_ids)
                 context_company = dict(self.env.context, company_id=company_id, force_company=company_id)
                 for subscription in subs:
-                    cr.commit()
+                    if automatic:
+                        cr.commit()
                     # payment + invoice (only by cron)
                     if subscription.template_id.payment_mandatory and subscription.recurring_total and automatic:
                         try:
