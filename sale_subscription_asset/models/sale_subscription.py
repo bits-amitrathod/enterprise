@@ -11,7 +11,9 @@ class SaleSubscription(models.Model):
 
     @api.onchange('template_id')
     def onchange_template_asset(self):
-        self.asset_category_id = self.template_id.template_asset_category_id.id
+        """Change the asset category to those of the template (company dependent field)."""
+        company_ctx = {'force_company': self.company_id.id, 'company_id': self.company_id.id}
+        self.asset_category_id = self.template_id.with_context(company_ctx).template_asset_category_id.id
 
     def _prepare_invoice_lines(self, fiscal_position_id):
         self.ensure_one()
@@ -36,28 +38,40 @@ class SaleSubscription(models.Model):
 
     @api.onchange('company_id')
     def onchange_company_id(self):
+        """Change the asset category to those for the new company (company dependent field)."""
         if self.template_id.template_asset_category_id:
-            self.asset_category_id = self.template_id.template_asset_category_id.id
+            company_ctx = {'force_company': self.company_id.id, 'company_id': self.company_id.id}
+            self.asset_category_id = self.template_id.with_context(company_ctx).template_asset_category_id.id
+
 
 class SaleSubscriptionTemplate(models.Model):
     _inherit = "sale.subscription.template"
 
     template_asset_category_id = fields.Many2one('account.asset.category', 'Deferred Revenue Category',
-                                        help="This asset category will be set on the subscriptions that have this template.",
-                                        domain="[('type','=','sale')]", company_dependent=True)
+                                                 help="This asset category will be set on the subscriptions that have this template.",
+                                                 domain="[('type','=','sale')]", company_dependent=True)
+
+
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+    def _prepare_subscription_data(self, template):
+        """Add the correct asset category in subscription creation values dictionnary."""
+        res = super(SaleOrder, self)._prepare_subscription_data(template)
+        company_ctx = {'force_company': self.company_id.id, 'company_id': self.company_id.id}
+        res['asset_category_id'] = template.with_context(company_ctx).template_asset_category_id.id
+        return res
 
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    @api.multi
     def _prepare_invoice_line(self, qty):
-        """
-            For recurring products, add the deferred revenue category on the invoice line
-        """
+        """Add the deferred revenue category on the invoice line for subscription products."""
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         if self.product_id.recurring_invoice:
-            asset_category = self.subscription_id.template_id.template_asset_category_id
+            company_ctx = {'force_company': self.company_id.id, 'company_id': self.company_id.id}
+            asset_category = self.subscription_id.template_id.with_context(company_ctx).template_asset_category_id
             if asset_category:
                 account = self.order_id.fiscal_position_id.map_account(asset_category.account_asset_id)
                 res['asset_category_id'] = asset_category.id

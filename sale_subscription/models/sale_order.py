@@ -59,8 +59,6 @@ class SaleOrder(models.Model):
         invoicing_period = relativedelta(**{periods[template.recurring_rule_type]: template.recurring_interval})
         recurring_next_date = today + invoicing_period
         values['recurring_next_date'] = fields.Date.to_string(recurring_next_date)
-        if 'template_asset_category_id' in template._fields:
-            values['asset_category_id'] = template.with_context(force_company=self.company_id.id).template_asset_category_id.id
         return values
 
     def update_existing_subscriptions(self):
