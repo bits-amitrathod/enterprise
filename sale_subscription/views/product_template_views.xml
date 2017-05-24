@@ -18,6 +18,7 @@
         <field name="arch" type="xml">
             <page name="sales" position="attributes">
                 <attribute name="attrs">{'invisible': [('sale_ok', '=', False), ('recurring_invoice', '=', False)]}</attribute>
+                <attribute name="class">page_sales</attribute>
             </page>
             <page name="sales" position="inside">
                 <group name="subscription">

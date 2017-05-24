@@ -402,7 +402,7 @@
                             <label for="recurring_interval" string="Recurrency"/>
                             <div>
                                 <field name="recurring_interval" class="oe_inline"/>
-                                <field name="recurring_rule_type" class="oe_inline"/>
+                                <field name="recurring_rule_type" class="oe_inline field_rule_type"/>
                             </div>
                         </group>
                         <group name="website_subscription">
@@ -515,6 +515,6 @@
     <menuitem action="product_action_subscription" id="menu_sale_subscription_product" sequence="3" parent="menu_sale_subscription"/>
 
     <menuitem id="menu_sale_subscription_config" name="Configuration" sequence="10" parent="menu_sale_subscription_root"/>
-    <menuitem action="sale_subscription_template_action" id="menu_template_of_subscription" parent="menu_sale_subscription_config" sequence="4" groups="sale_subscription.group_sale_subscription_manager"/>
     <menuitem action="sale_subscription_close_reason_action" id="menu_sale_subscription_lost_reason_action" parent="menu_sale_subscription_config" sequence="10"/>
+    <menuitem action="sale_subscription_template_action" id="menu_template_of_subscription" parent="menu_sale_subscription_config" sequence="4" groups="sale_subscription.group_sale_subscription_manager"/>
 </odoo>
