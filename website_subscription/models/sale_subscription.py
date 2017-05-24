@@ -130,7 +130,7 @@ class SaleSubscription(models.Model):
     @api.multi
     def _recurring_create_invoice(self, automatic=False):
         cr = self.env.cr
-        invoice_ids = []
+        invoices = self.env['account.invoice']
         current_date = time.strftime('%Y-%m-%d')
         imd_res = self.env['ir.model.data']
         template_res = self.env['mail.template']
@@ -222,7 +222,7 @@ class SaleSubscription(models.Model):
                                 values = {'self': new_invoice, 'origin': subscription},
                                 subtype_id = self.env.ref('mail.mt_note').id)
                             new_invoice.with_context(context_company).compute_taxes()
-                            invoice_ids.append(new_invoice.id)
+                            invoices += new_invoice
                             next_date = datetime.datetime.strptime(subscription.recurring_next_date or current_date, "%Y-%m-%d")
                             periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
                             invoicing_period = relativedelta(**{periods[subscription.recurring_rule_type]: subscription.recurring_interval})
@@ -236,7 +236,7 @@ class SaleSubscription(models.Model):
                                 _logger.exception('Fail to create recurring invoice for subscription %s', subscription.code)
                             else:
                                 raise
-        return invoice_ids
+        return invoices
 
     def send_success_mail(self, tx, invoice):
         imd_res = self.env['ir.model.data']

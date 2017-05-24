@@ -306,7 +306,7 @@ class SaleSubscription(models.Model):
     @api.returns('account.invoice')
     def _recurring_create_invoice(self, automatic=False):
         AccountInvoice = self.env['account.invoice']
-        invoices = []
+        invoices = AccountInvoice
         current_date = fields.Date.today()
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
         domain = [('id', 'in', self.ids)] if self.ids else [('recurring_next_date', '<=', current_date), ('state', '=', 'open')]
@@ -316,7 +316,7 @@ class SaleSubscription(models.Model):
             subs = self.with_context(company_id=company_id, force_company=company_id).browse(sub_ids)
             for sub in subs:
                 try:
-                    invoices.append(AccountInvoice.create(sub._prepare_invoice()))
+                    invoices += AccountInvoice.create(sub._prepare_invoice())
                     invoices[-1].message_post_with_view(
                         'mail.message_origin_link', values={'self': invoices[-1], 'origin': sub},
                         subtype_id=self.env.ref('mail.mt_note').id)
