@@ -93,7 +93,7 @@ class TestSubscriptionCommon(AccountingTestCase):
             'partner_id': self.user_portal.partner_id.id,
             'partner_invoice_id': self.user_portal.partner_id.id,
             'partner_shipping_id': self.user_portal.partner_id.id,
-            'order_line': [(0, 0, {'name': self.product.name, 'product_id': self.product.id, 'subscription_id': self.subscription.id,'product_uom_qty': 2, 'product_uom': self.product.uom_id.id, 'price_unit': self.product.list_price})],
+            'order_line': [(0, 0, {'name': self.product.name, 'product_id': self.product.id, 'subscription_id': self.subscription.id, 'product_uom_qty': 2, 'product_uom': self.product.uom_id.id, 'price_unit': self.product.list_price})],
             'pricelist_id': self.ref('product.list0'),
         })
         self.sale_order_2 = SaleOrder.create({

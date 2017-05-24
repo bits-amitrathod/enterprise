@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import calendar
+import datetime
+
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
-from odoo.tools import mute_logger
+from odoo.tools import mute_logger, float_utils
 
 
 class TestSubscription(TestSubscriptionCommon):
@@ -61,19 +64,35 @@ class TestSubscription(TestSubscriptionCommon):
         self.assertTrue('TestRenewalLine' in lines, 'sale_subscription: new line not present after renewal quotation confirmation')
         self.assertEqual(renewal_so.subscription_management, 'renew', 'sale_subscription: so should be set to "renew" in the renewal process')
 
+    def test_recurring_revenue(self):
+        """Test computation of recurring revenue"""
+        eq = lambda x, y, m: self.assertAlmostEqual(x, y, msg=m)
+        # Initial subscription is $100/y
+        self.subscription_tmpl.recurring_rule_type = 'yearly'
+        y_price = 100
+        self.sale_order.action_confirm()
+        subscription = self.sale_order.order_line.mapped('subscription_id')
+        eq(subscription.recurring_total, y_price, "unexpected price after setup")
+        eq(subscription.recurring_monthly, y_price / 12.0, "unexpected MRR")
+        # Change interval to 3 weeks
+        subscription.template_id.recurring_rule_type = 'weekly'
+        subscription.template_id.recurring_interval = 3
+        eq(subscription.recurring_total, y_price, 'total should not change when interval changes')
+        eq(subscription.recurring_monthly, y_price * (30 / 7.0) / 3, 'unexpected MRR')
+
+
     def test_analytic_account(self):
         """Analytic accounting flow."""
         # analytic account is copied on order confirmation
-        Invoice = self.env['account.invoice']
         self.sale_order_3.project_id = self.account_1
         self.sale_order_3.action_confirm()
         subscriptions = self.sale_order_3.order_line.mapped('subscription_id')
         for subscription in subscriptions:
             self.assertEqual(self.sale_order_3.project_id, subscription.analytic_account_id)
-            inv = Invoice.browse(subscription._recurring_create_invoice())
+            inv = subscription._recurring_create_invoice()
             # invoice lines have the correct analytic account
             self.assertEqual(inv.invoice_line_ids[0].account_analytic_id, subscription.analytic_account_id)
             subscription.analytic_account_id = self.account_2
             # even if changed after the fact
-            inv = Invoice.browse(subscription._recurring_create_invoice())
+            inv = subscription._recurring_create_invoice()
             self.assertEqual(inv.invoice_line_ids[0].account_analytic_id, subscription.analytic_account_id)
