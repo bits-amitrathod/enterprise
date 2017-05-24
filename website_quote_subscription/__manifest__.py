@@ -2,15 +2,19 @@
 {
     'name': "Online Subscription Quotes",
     'auto-install': True,
-    'depends': ['website_subscription', 'website_quote'],
+    'depends': ['sale_subscription', 'website_quote'],
 
     'summary': """
-        Quotes for your online subscriptions""",
+        Online Quotes for subscriptions products""",
 
-    'description': "",
+    'description': """
+Subscription integration  the Online Quotes
+-------------------------------------------
+
+Categorize the lines per subscription template when an online quote contains subscription products.
+    """,
 
     'data': [
-        'views/views.xml',
         'views/templates.xml',
     ],
     'demo': [

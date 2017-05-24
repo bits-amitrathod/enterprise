@@ -5,16 +5,20 @@
             <t t-set="recurring_products" t-value="[line.recurring_product for line in layout_category['lines']]"/>
             <t t-set="recurring_products_titles"
                t-value="(layout_category_size == 1 and page_size == 1) and True in recurring_products and False in recurring_products"/>
+            <t t-foreach="quotation._split_subscription_lines().items()" t-as="template_content">
+                <t t-set="template" t-value="template_content[0]"/>
+                <t t-set="template_lines" t-value="template_content[1]"/>
+                <tr t-if="recurring_products_titles" class="active">
+                    <td colspan="7">Subscription - <t t-esc="template.name"/></td>
+                </tr>
+                <tr t-foreach="layout_category['lines']" t-as="line">
+                    <t t-if="line in template_lines">
+                        <t t-call="website_quote_subscription.order_line_row"/>
+                    </t>
+                </tr>
+            </t>
             <tr t-if="recurring_products_titles" class="active">
-                <td colspan="7">Subscription</td>
-            </tr>
-            <tr t-foreach="layout_category['lines']" t-as="line">
-                <t t-if="line.recurring_product">
-                    <t t-call="website_quote_subscription.order_line_row"/>
-                </t>
-            </tr>
-            <tr t-if="recurring_products_titles" class="active">
-                <td colspan="7">One-time Fees <small>- These products will not be part of your subscription</small></td>
+                <td colspan="7">One-time Fees <small>- These products will not be part of any subscription</small></td>
             </tr>
             <tr t-foreach="layout_category['lines']" t-as="line">
                 <t t-if="not line.recurring_product">

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
@@ -11,3 +11,9 @@ class SaleOrder(models.Model):
             return 'form_save'
         return super(SaleOrder, self)._get_payment_type()
 
+
+class SaleOrderLine(models.Model):
+    _name = "sale.order.line"
+    _inherit = "sale.order.line"
+
+    recurring_product = fields.Boolean('Recurring Product', related="product_id.recurring_invoice")

@@ -96,20 +96,29 @@ class SaleOrder(models.Model):
         """
         res = []
         for order in self:
-            all_sub_lines = order.order_line.filtered(lambda l: l.product_id.subscription_template_id)
-            to_create = order.order_line.filtered(lambda l: not l.subscription_id).mapped('product_id').mapped('subscription_template_id')
+            to_create = self._split_subscription_lines()
             # create a subscription for each template with all the necessary lines
             for template in to_create:
                 values = self._prepare_subscription_data(template)
-                template_lines = all_sub_lines.filtered(lambda l: not l.subscription_id and l.product_id.subscription_template_id == template)
-                values['recurring_invoice_line_ids'] = template_lines._prepare_subscription_line_data()
+                values['recurring_invoice_line_ids'] = to_create[template]._prepare_subscription_line_data()
                 subscription = self.env['sale.subscription'].sudo().create(values)
                 res.append(subscription.id)
-                template_lines.write({'subscription_id': subscription.id})
+                to_create[template].write({'subscription_id': subscription.id})
                 subscription.message_post_with_view(
                     'mail.message_origin_link', values={'self': subscription, 'origin': order},
                     subtype_id=self.env.ref('mail.mt_note').id, author_id=self.env.user.partner_id.id
                 )
+        return res
+
+    def _split_subscription_lines(self):
+        """Split the order line according to subscription templates that must be created."""
+        self.ensure_one()
+        res = dict()
+        new_sub_lines = self.order_line.filtered(lambda l: not l.subscription_id and l.product_id.subscription_template_id)
+        templates = new_sub_lines.mapped('product_id').mapped('subscription_template_id')
+        for template in templates:
+            lines = self.order_line.filtered(lambda l: l.product_id.subscription_template_id == template)
+            res[template] = lines
         return res
 
     @api.multi
