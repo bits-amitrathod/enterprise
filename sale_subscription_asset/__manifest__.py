@@ -7,7 +7,7 @@
     'description': """
 This module allows you to set a deferred revenue on your subscriptions.
 """,
-    'depends': ['sale_subscription', 'account_asset'],
+    'depends': ['sale_subscription', 'account_deferred_revenue'],
     'data': [
         'views/sale_subscription_views.xml',
     ],

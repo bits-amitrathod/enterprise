@@ -15,7 +15,6 @@ Features:
         'sale_subscription',
         'website_portal',
         'website_payment',
-        'sale_subscription_dashboard',
     ],
     'data': [
         'views/sale_subscription_templates.xml',
