@@ -90,7 +90,6 @@ var ViewEditorManager = Widget.extend({
             'page': ['name'],
             'group': ['name'],
             'div': ['name'],
-            'button': ['name'],
             'filter': ['name'],
         };
         this.view_env = params.view_env;

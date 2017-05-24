@@ -36,6 +36,9 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         'change .o_display_page input':                      '_onElementChanged',
         'change .o_display_group input':                     '_onElementChanged',
         'change .o_display_button input':                    '_onElementChanged',
+        'change .o_display_button select':                   '_onElementChanged',
+        'click .o_display_button .o_img_upload':             '_onUploadRainbowImage',
+        'click .o_display_button .o_img_reset':              '_onRainbowImageReset',
         'change .o_display_filter input':                    '_onElementChanged',
         'change .o_display_chatter input[data-type="email_alias"]': '_onEmailAliasChanged',
         'click .o_web_studio_attrs':                         '_onDomainAttrs',
@@ -103,12 +106,29 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             var Widget = this.state.attrs.Widget;
             this.has_placeholder = Widget && Widget.prototype.has_placeholder || false;
         }
+        // Upload image related stuff
+        if (this.state.node && this.state.node.tag === 'button') {
+            this.is_stat_btn = this.state.node.attrs.class === 'oe_stat_button';
+            if (!this.is_stat_btn) {
+                this.state.node.widget = "image";
+                this.user_id = session.uid;
+                this.fileupload_id = _.uniqueId('o_fileupload');
+                $(window).on(this.fileupload_id, this._onUploadRainbowImageDone.bind(this));
+            }
+        }
     },
     /**
      * @override
      */
     start: function () {
         return this._super.apply(this, arguments).then(this._render.bind(this));
+    },
+    /**
+     * @override
+     */
+    destroy: function () {
+        $(window).off(this.fileupload_id);
+        return this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
@@ -407,9 +427,24 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     _onElementChanged: function (ev) {
         var $input = $(ev.currentTarget);
         var attribute = $input.attr('name');
-        if (attribute) {
+        if (attribute && $input.attr('type') !== 'file') {
             var new_attrs = {};
-            if ($input.attr('type') === 'checkbox') {
+            // rainbow attribute on button needs JSON value, so on change of any rainbow related
+            // attributes, re-form rainbow attribute in required format, excluding falsy/empty
+            // values
+            if (attribute.match('^rainbow')) {
+                if (this.$('input#rainbow').is(':checked')) {
+                    new_attrs.effect = JSON.stringify(_.pick({
+                            message: this.$('input#rainbow_message').val(),
+                            img_url: this.$('input#rainbow_img_url').val(),
+                            fadeout: this.$('select#rainbow_fadeout').val(),
+                        }, _.identity)
+                    );
+                } else {
+                    new_attrs.effect = 'False';
+                }
+            }
+            else if ($input.attr('type') === 'checkbox') {
                 if (!_.contains(["invisible", "required", "readonly"], attribute)) {
                     if ($input.is(':checked')) {
                         new_attrs[attribute] = $input.data('leave-empty') === 'checked' ? '': 'True';
@@ -481,6 +516,13 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     },
     /**
      * @private
+     */
+    _onRainbowImageReset: function () {
+        this.$('input#rainbow_img_url').val('');
+        this.$('input#rainbow_img_url').trigger('change');
+    },
+    /**
+     * @private
      * @param {Event} ev
      */
     _onShowInvisibleToggled: function (ev) {
@@ -495,6 +537,25 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         this.trigger_up('sidebar_tab_changed', {
             mode: mode,
         });
+    },
+    /**
+     * @private
+     */
+    _onUploadRainbowImage: function () {
+        var self = this;
+        this.$('input.o_input_file').on('change', function () {
+            self.$('form.o_form_binary_form').submit();
+        });
+        this.$('input.o_input_file').click();
+    },
+    /**
+     * @private
+     * @param {Event} event
+     * @param {Object} result
+     */
+    _onUploadRainbowImageDone: function (event, result) {
+        this.$('input#rainbow_img_url').val(_.str.sprintf('/web/content/%s', result.id));
+        this.$('input#rainbow_img_url').trigger('change');
     },
     /**
      * @private

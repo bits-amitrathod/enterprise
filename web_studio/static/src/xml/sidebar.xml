@@ -597,11 +597,56 @@
 
 <!-- ButtonEditor -->
 <t t-name="web_studio.ViewEditorSidebar.button">
-    <div  class="o_web_studio_sidebar_text o_web_studio_sidebar_iscode">
+    <div t-if="widget.is_stat_btn" class="o_web_studio_sidebar_text o_web_studio_sidebar_iscode">
         <label>Icon</label>
         <input name="icon" type="text"
             t-att-value="widget.state.attrs.icon"/>
     </div>
+    <t t-else="">
+        <h3>Rainbow Man</h3>
+        <t t-set="rainbow" t-value="widget.state.attrs.effect"/>
+        <div class="o_web_studio_sidebar_checkbox">
+            <div class="o_checkbox">
+                <input id="rainbow" name="rainbow" type="checkbox" t-att-checked="rainbow ? 'checked' : undefined"/>
+                <span/>
+            </div>
+            <label for="rainbow">Rainbow Effect</label>
+        </div>
+        <t t-if="rainbow">
+            <div class="o_web_studio_sidebar_text">
+                <label for="rainbow_message">Message</label>
+                <input id="rainbow_message" name="rainbow_message" type="text" t-att-value="rainbow.message or 'Well Done!'"/>
+            </div>
+            <div class="o_web_studio_sidebar_select">
+                <label for="rainbow_fadeout">Fadeout Speed</label>
+                <select id="rainbow_fadeout" name="rainbow_fadeout">
+                    <option t-att-selected="rainbow.fadeout === 'fast' ? 'selected' : undefined" value="fast">Fast</option>
+                    <option t-att-selected="rainbow.fadeout === 'medium' ? 'selected' : undefined" value="medium">Medium</option>
+                    <option t-att-selected="rainbow.fadeout === 'slow' ? 'selected' : undefined" value="slow">Slow</option>
+                    <option t-att-selected="rainbow.fadeout === 'no' ? 'selected' : undefined" value="no">No</option>
+                </select>
+            </div>
+            <div>
+                <input id="rainbow_img_url" name="rainbow_img_url" type="hidden" t-att-value="rainbow.img_url"/>
+                <div class="mb8 ml64 mr64">
+                    <img t-att-src="rainbow.img_url or '/web/static/src/img/smile.svg'" class="img img-responsive"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-sm btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
+                <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
+            </div>
+            <span class="hide">
+                <t t-call="HiddenInputFile">
+                    <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                    <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                    <input type="hidden" name="model" value="res.users"/>
+                    <input type="hidden" name="id" t-att-value="widget.user_id"/>
+                </t>
+            </span>
+        </t>
+
+    </t>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Remove"/>
     </t>

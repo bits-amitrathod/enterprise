@@ -6,6 +6,7 @@ var FormRenderer = require('web.FormRenderer');
 
 var EditorMixin = require('web_studio.EditorMixin');
 var FormEditorHook = require('web_studio.FormEditorHook');
+var pyeval = require('web.pyeval');
 
 var Qweb = core.qweb;
 var _t = core._t;
@@ -289,6 +290,31 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             formEditorHook.appendTo($result);
         }
         return $result;
+    },
+    /**
+     * @override
+     * @private
+     * @param {Object} node
+     * @returns {jQueryElement}
+     */
+    _renderHeaderButton: function (node) {
+        var self = this;
+        var $button = this._super.apply(this, arguments);
+        var nodeID = this.node_id++;
+        if (node.attrs.type === 'object') {
+            $button.attr('data-node-id', nodeID);
+            this.setSelectable($button);
+            if (node.attrs.effect) {
+                node.attrs.effect = _.defaults(pyeval.py_eval(node.attrs.effect), {
+                    fadeout: 'medium'
+                });
+            }
+            $button.click(function () {
+                self.selected_node_id = nodeID;
+                self.trigger_up('node_clicked', {node: node});
+            });
+        };
+        return $button;
     },
     /**
      * @override
