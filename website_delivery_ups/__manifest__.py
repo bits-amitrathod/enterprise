@@ -10,7 +10,8 @@ This module will give an option of bill my account on ups delivery methods
     'depends': ['delivery_ups', 'website_sale_delivery'],
     'data': [
         'data/payment_acquirer_data.xml',
-        'views/delivery_ups_templates.xml'
+        'views/delivery_ups_templates.xml',
+        'views/res_config_settings_views.xml',
     ],
     'auto_install': True,
 }
