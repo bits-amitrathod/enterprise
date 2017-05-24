@@ -6,6 +6,7 @@ class TestSubscriptionCommon(AccountingTestCase):
 
     def setUp(self):
         super(TestSubscriptionCommon, self).setUp()
+        Analytic = self.env['account.analytic.account']
         Subscription = self.env['sale.subscription']
         SubTemplate = self.env['sale.subscription.template']
         SaleOrder = self.env['sale.order']
@@ -67,6 +68,16 @@ class TestSubscriptionCommon(AccountingTestCase):
             'login': 'Beatrice',
             'email': 'beatrice.employee@example.com',
             'groups_id': [(6, 0, [group_portal_id])]
+        })
+
+        # Test analytic account
+        self.account_1 = Analytic.create({
+            'partner_id': self.user_portal.partner_id.id,
+            'name': 'Test Account 1',
+        })
+        self.account_2 = Analytic.create({
+            'partner_id': self.user_portal.partner_id.id,
+            'name': 'Test Account 2',
         })
 
         # Test Subscription

@@ -17,10 +17,8 @@ class TestSubscription(TestSubscriptionCommon):
 
         # on_change_template on cached record (NOT present in the db)
         temp = Subscription.new({'name': 'CachedSubscription',
-                             'type': 'subscription',
-                             'state': 'open',
-                             'partner_id': self.user_portal.partner_id.id
-                             })
+                                 'state': 'open',
+                                 'partner_id': self.user_portal.partner_id.id})
         temp.update({'template_id': self.subscription_tmpl.id})
         temp.on_change_template()
         self.assertTrue(temp.description, 'sale_subscription: description not copied on new cached sale.subscription record')
@@ -30,7 +28,6 @@ class TestSubscription(TestSubscriptionCommon):
         """ Test sales order line copying for recurring products on confirm"""
         self.sale_order.action_confirm()
         self.assertTrue(len(self.subscription.recurring_invoice_line_ids.ids) == 1, 'sale_subscription: recurring_invoice_line_ids not created when confirming sale_order with recurring_product')
-        self.assertEqual(self.sale_order.state, 'done', 'sale_subscription: so state should be after confirmation done when there is a subscription')
         self.assertEqual(self.sale_order.subscription_management, 'upsell', 'sale_subscription: so should be set to "upsell" if not specified otherwise')
 
     def test_sub_creation(self):
@@ -62,5 +59,21 @@ class TestSubscription(TestSubscriptionCommon):
         lines = [line.name for line in self.subscription.mapped('recurring_invoice_line_ids')]
         self.assertTrue('TestRecurringLine' not in lines, 'sale_subscription: old line still present after renewal quotation confirmation')
         self.assertTrue('TestRenewalLine' in lines, 'sale_subscription: new line not present after renewal quotation confirmation')
-        self.assertEqual(renewal_so.state, 'done', 'sale_subscription: so state should be after confirmation done when there is a subscription')
         self.assertEqual(renewal_so.subscription_management, 'renew', 'sale_subscription: so should be set to "renew" in the renewal process')
+
+    def test_analytic_account(self):
+        """Analytic accounting flow."""
+        # analytic account is copied on order confirmation
+        Invoice = self.env['account.invoice']
+        self.sale_order_3.project_id = self.account_1
+        self.sale_order_3.action_confirm()
+        subscriptions = self.sale_order_3.order_line.mapped('subscription_id')
+        for subscription in subscriptions:
+            self.assertEqual(self.sale_order_3.project_id, subscription.analytic_account_id)
+            inv = Invoice.browse(subscription._recurring_create_invoice())
+            # invoice lines have the correct analytic account
+            self.assertEqual(inv.invoice_line_ids[0].account_analytic_id, subscription.analytic_account_id)
+            subscription.analytic_account_id = self.account_2
+            # even if changed after the fact
+            inv = Invoice.browse(subscription._recurring_create_invoice())
+            self.assertEqual(inv.invoice_line_ids[0].account_analytic_id, subscription.analytic_account_id)
