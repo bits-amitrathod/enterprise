@@ -214,7 +214,7 @@ QUnit.module('Views', {
             assert.strictEqual(grid.$('.o_grid_section:eq(0) th:contains(BS task)').length, 1,
                 "first section should have a row for BS task");
 
-            assert.strictEqual(grid.$('.o_grid_section:eq(0) tr:eq(1) div.o_grid_input:contains(02:30)').length, 1,
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) tr:eq(2) div.o_grid_input:contains(02:30)').length, 1,
                 "should have correctly parsed a float_time for cell without task");
             assert.strictEqual(grid.$('.o_grid_section:eq(0) div.o_grid_input:contains(00:00)').length, 12,
                 "should have correctly parsed another float_time");
@@ -404,7 +404,7 @@ QUnit.module('Views', {
                 var action = event.data.action;
 
                 assert.deepEqual(action.domain, domain, "should trigger a do_action with correct values");
-                assert.strictEqual(action.name, "P1: Undefined",
+                assert.strictEqual(action.name, "P1: BS task",
                     "should have correct action name");
             });
             grid.$('i.o_grid_cell_information').eq(2).click();
