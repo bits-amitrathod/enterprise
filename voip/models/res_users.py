@@ -3,9 +3,11 @@
 
 from odoo import models, fields
 
-# add sip_password to the fields that only users who can modify the user (incl. the user herself) see their real contents
+# Add 'sip_password' field to the private fields.
+# Only users who can modify the res_user (incl. the user himself) see the private fields real content
 from odoo.addons.base.res import res_users
 res_users.USER_PRIVATE_FIELDS.append('sip_password')
+
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
@@ -21,7 +23,7 @@ class ResUsers(models.Model):
             'sip_password',
             'sip_external_phone',
             'sip_always_transfer',
-            'sip_ring_number'
+            'sip_ignore_incoming',
         ]
         # duplicate list to avoid modifying the original reference
         type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
@@ -36,7 +38,5 @@ class ResUsers(models.Model):
     sip_external_phone = fields.Char("Handset Extension", groups="base.group_user")
     sip_always_transfer = fields.Boolean("Always Redirect to Handset", default=False,
                                          groups="base.group_user")
-    sip_ring_number = fields.Integer(
-        "Number of rings", default=6,
-        help="The number of rings before the call is defined as refused by the customer.",
-        groups="base.group_user")
+    sip_ignore_incoming = fields.Boolean("Reject All Incoming Calls", default=False,
+                                         groups="base.group_user")

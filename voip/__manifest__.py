@@ -2,37 +2,34 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': "VOIP Core",
+    'name': "VOIP",
 
     'summary': """
-        Technical core for all the modules using the VOIP system.""",
+        Make Call from all modules using the VOIP system.""",
 
     'description': """
-        Technical core for all the modules using the VOIP system. 
-        Contains the library needed in order to make the VOIP usable by other modules.
+        Allow to make call from next activities or with click-to-dial.
     """,
 
-    'price': 399,
-    'currency': 'EUR',
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml
-    # for the full list
-    'category': 'Hidden',
-    'version': '1.1',
+    'category': 'Sales',
+    'version': '2.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web', 'sales_team'],
+    'depends': ['base', 'mail', 'web', 'phone_validation'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/voip_templates.xml',
+        'views/mail_activity_views.xml',
+        'views/res_config_settings_views.xml',
+        'views/res_partner_views.xml',
         'views/res_users_views.xml',
+        'views/voip_phonecall_views.xml',
+        'views/voip_templates.xml',
+        'wizard/voip_phonecall_transfer_wizard_views.xml',
+        'data/mail_activity_data.xml',
     ],
-    'js': ['static/src/js/*.js'],
-    'css': ['static/src/css/*.css'],
     'qweb': ['static/src/xml/*.xml'],
-    'application' : False,
+    'application': True,
     'license': 'OEEL-1',
 }

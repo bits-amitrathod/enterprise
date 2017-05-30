@@ -12,7 +12,7 @@ VoipUserAgent.include({
     /**
      * @override
      */
-    _get_ua: function (result) {
+    _getUaConfig: function (result) {
         return {
             uri: result.login +'@'+result.pbx_ip,
             wsServers: result.wsServer || null,
