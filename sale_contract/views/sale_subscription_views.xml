@@ -20,14 +20,16 @@
                 <separator/>
                 <filter
                     string="Expired"
+                    name="expired"
                     domain="[('state','in',('open','draft','pending')), '|', ('date', '!=', False), ('date', '&lt;=', time.strftime('%%Y-%%m-%%d'))]"
                     help="End date passed" />
                 <filter
                     string="Expiring soon"
+                    name="expiring_soon"
                     domain="[('date', '!=', False), ('date', '&lt;=', (context_today() + datetime.timedelta(30)).strftime('%%Y-%%m-%%d') )]"
                     help="End date is in the next month" />
                 <separator/>
-                <filter string="Contracts not assigned" help="Contracts that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
+                <filter string="Contracts not assigned" name="contracts_not_assigned" help="Contracts that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
                 <separator/>
                 <filter string="My Activities" name="activities_my"
                     domain="[('activity_ids.user_id', '=', uid)]"/>
@@ -41,13 +43,13 @@
                     domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
                     help="Show all records which has next action date is before today"/>
                 <group expand="0" string="Group By">
-                    <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
-                    <filter string="Account Manager" domain="[]" context="{'group_by':'user_id'}"/>
-                    <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
-                    <filter string="Template" domain="[]" context="{'group_by':'template_id'}"/>
-                    <filter string="Start Month" domain="[]" context="{'group_by' : 'date_start'}" />
-                    <filter string="End Month" domain="[]" context="{'group_by' : 'date'}" />
-                    <filter string="Pricelist" domain="[]" context="{'group_by' : 'pricelist_id'}" />
+                    <filter string="Status" name="status" domain="[]" context="{'group_by':'state'}"/>
+                    <filter string="Account Manager" name="account_manager" domain="[]" context="{'group_by':'user_id'}"/>
+                    <filter string="Partner" name="partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter string="Template" name="template" domain="[]" context="{'group_by':'template_id'}"/>
+                    <filter string="Start Month" name="start_month" domain="[]" context="{'group_by' : 'date_start'}" />
+                    <filter string="End Month" name="end_month" domain="[]" context="{'group_by' : 'date'}" />
+                    <filter string="Pricelist" name="pricelist" domain="[]" context="{'group_by' : 'pricelist_id'}" />
                 </group>
             </search>
         </field>
