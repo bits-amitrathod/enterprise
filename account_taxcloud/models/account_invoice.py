@@ -18,10 +18,13 @@ class AccountInvoice(models.Model):
     @api.multi
     def invoice_validate(self):
         res = True
-        if self.fiscal_position_id.is_taxcloud:
+        if self.fiscal_position_id.is_taxcloud and self.type in ['out_invoice', 'out_refund']:
             res = self.validate_taxes_on_invoice()
         super(AccountInvoice, self).invoice_validate()
         return res
+
+    def _get_partner(self):
+        return self.partner_id
 
     @api.multi
     def validate_taxes_on_invoice(self):
@@ -32,7 +35,7 @@ class AccountInvoice(models.Model):
 
         shipper = self.company_id or self.env.user.company_id
         request.set_location_origin_detail(shipper)
-        request.set_location_destination_detail(self.partner_id)
+        request.set_location_destination_detail(self._get_partner())
 
         request.set_invoice_items_detail(self)
 
@@ -49,7 +52,7 @@ class AccountInvoice(models.Model):
                 tax_rate = 0.0
             else:
                 tax_rate = tax_values[line.id] / line.price_subtotal * 100
-            if float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_rounding=4):
+            if float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=4):
                 raise_warning = True
                 tax = self.env['account.tax'].sudo().search([
                     ('amount', '=', tax_rate),
