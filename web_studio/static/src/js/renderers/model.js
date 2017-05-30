@@ -32,7 +32,7 @@ function get_value(field_name, value, fields) {
         return value;
     }
     if (fields[field_name].type === 'many2one') {
-        return value && value[0];
+        return _.isArray(value) ? value[0] : value;
     }
     return value;
 }
@@ -496,11 +496,13 @@ var Model = Class.extend({
         return !_.isEmpty(this.local_data[id].changes);
     },
     get_context: function(context) {
-        var kwargs = {
-            context: new data.CompoundContext(session.user_context, context)
-        };
-        pyeval.ensure_evaluated([], kwargs);
-        return kwargs.context;
+        var ctx = new data.CompoundContext(session.user_context, context);
+        try {
+            pyeval.ensure_evaluated([], {context: ctx});
+        } catch(e) {
+            ctx = session.user_context;
+        }
+        return ctx;
     },
     _fetch_record: function(record) {
         var self = this;

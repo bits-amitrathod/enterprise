@@ -348,9 +348,11 @@ class AccountInvoice(models.Model):
             except Exception as e:
                 inv.l10n_mx_edi_log_error(e.message)
                 continue
-            msg = getattr(response.resultados[0], 'mensaje', None)
             code = getattr(response.resultados[0], 'statusUUID', None)
-            cancelled = code in ('201', '202')
+            cancelled = code in ('201', '202')  # cancelled or previously cancelled
+            # no show code and response message if cancel was success
+            msg = '' if cancelled else getattr(response.resultados[0], 'mensaje', None)
+            code = '' if cancelled else code
             inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
     @api.multi
@@ -424,7 +426,9 @@ class AccountInvoice(models.Model):
             else:
                 code = getattr(response.Folios[0][0], 'EstatusUUID', None)
                 cancelled = code in ('201', '202')  # cancelled or previously cancelled
-                msg = cancelled and '' or _("Cancelling got an error")
+                # no show code and response message if cancel was success
+                code = '' if cancelled else code
+                msg = '' if cancelled else _("Cancelling got an error")
             inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
     @api.multi

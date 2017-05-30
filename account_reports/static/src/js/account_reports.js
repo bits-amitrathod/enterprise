@@ -40,8 +40,9 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         this.odoo_context = action.context;
         this.report_options = action.options || false;
         this.ignore_session = action.ignore_session;
-        if ((action.ignore_session === 'read' || action.ignore_session === 'both') !== true){
-            this.report_options = JSON.parse(sessionStorage.getItem(this.report_model+this.financial_id)) || this.report_options;
+        if ((action.ignore_session === 'read' || action.ignore_session === 'both') !== true) {
+            var persist_key = 'report:'+this.report_model+':'+this.financial_id+':'+session.company_id;
+            this.report_options = JSON.parse(sessionStorage.getItem(persist_key)) || this.report_options;
         }
         return this._super.apply(this, arguments);
     },
@@ -67,7 +68,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     },
     persist_options: function() {
         if ((this.ignore_session === 'write' || this.ignore_session === 'both') !== true) {
-            sessionStorage.setItem(this.report_model+this.financial_id, JSON.stringify(this.report_options));
+            var persist_key = 'report:'+this.report_model+':'+this.financial_id+':'+session.company_id;
+            sessionStorage.setItem(persist_key, JSON.stringify(this.report_options));
         }
     },
     // We need this method to rerender the control panel when going back in the breadcrumb
