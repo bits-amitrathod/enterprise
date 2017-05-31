@@ -27,6 +27,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
     def l10n_mx_edi_basic_configuration(self):
         self.company.write({
             'currency_id': self.mxn.id,
+            'name': 'YourCompany',
         })
         self.company.partner_id.write({
             'vat': 'ACO560518KW7',
