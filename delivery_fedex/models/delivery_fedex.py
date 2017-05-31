@@ -311,7 +311,7 @@ class ProviderFedex(models.Model):
             # No package #
             ##############
             else:
-                raise ValidationError('No packages for this picking')
+                raise ValidationError(_('No packages for this picking'))
 
         return res
 
