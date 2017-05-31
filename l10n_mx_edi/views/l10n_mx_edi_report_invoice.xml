@@ -84,14 +84,12 @@
                             <span>Extra Info</span>
                         </div>
                         <div class="digital-stamp-content">
-                            <span t-esc="' | '.join([
-                                'Emitter certificate: %s' % xml.get('noCertificado'),
-                                'Expedition place: %s' % xml.get('LugarExpedicion'),
-                                'Fiscal Regime: %s' % xml.Emisor.RegimenFiscal.get('Regimen'),
-                                'Emission Date: %s' % xml.get('fecha', '').replace('T', ' '),
-                                'Certification Date: %s' % tfd.get('FechaTimbrado', '').replace('T', ' '),
-                                'Fiscal Folio: %s' % tfd.get('UUID'),
-                            ])"/>
+                            <span>Emitter certificate:</span> <span t-esc="xml.get('noCertificado')"/>
+                            <span> | Expedition place:</span> <span t-esc="xml.get('LugarExpedicion')"/>
+                            <span> | Fiscal Regime:</span> <span t-esc="xml.Emisor.RegimenFiscal.get('Regimen')"/>
+                            <span> | Emission Date:</span> <span t-esc="xml.get('fecha', '').replace('T', ' ')"/>
+                            <span> | Certification Date:</span> <span t-esc="tfd.get('FechaTimbrado', '').replace('T', ' ')"/>
+                            <span> | Fiscal Folio:</span> <span t-esc="tfd.get('UUID')"/>
                         </div>
                         <div class="digital-stamp-content text-center">
                             <strong>This document is a printed representation of a CFDI</strong>

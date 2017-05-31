@@ -3,9 +3,9 @@
 
 from lxml import etree
 from StringIO import StringIO
+import re
 
 from odoo import models
-from odoo.tools import pycompat
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -27,7 +27,12 @@ class AccountBankStatementImport(models.TransientModel):
         return super(AccountBankStatementImport, self)._parse_file(data_file)
 
     def _parse_file_camt(self, root):
-        ns = {k or 'ns': v for k, v in pycompat.items(root.nsmap)}
+        ns = {k or 'ns': v for k, v in root.nsmap.items()}
+
+        def is_full_of_zeros(strg):
+            pattern_zero = re.compile('^0+$')
+            return bool(pattern_zero.match(strg))
+
         statement_list = []
         for statement in root[0].findall('ns:Stmt', ns):
             statement_vals = {}
@@ -79,7 +84,9 @@ class AccountBankStatementImport(models.TransientModel):
                                       """, namespaces=ns)
                 entry_vals['ref'] = ref and ref[0] or False
                 unique_import_ref = entry.xpath('ns:AcctSvcrRef/text()', namespaces=ns)
-                entry_vals['unique_import_id'] = unique_import_ref and unique_import_ref[0] or statement_vals['name'] + '-' + str(sequence)
+                entry_vals['unique_import_id'] = (unique_import_ref and
+                                                  (unique_import_ref[0] if not is_full_of_zeros(unique_import_ref[0]) else False) or
+                                                  statement_vals['name'] + '-' + str(sequence))
 
                 transactions.append(entry_vals)
             statement_vals['transactions'] = transactions

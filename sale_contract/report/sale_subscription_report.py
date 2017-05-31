@@ -12,6 +12,7 @@ class sale_subscription_report(models.Model):
     product_id = fields.Many2one('product.product', 'Product', readonly=True)
     product_uom = fields.Many2one('product.uom', 'Unit of Measure', readonly=True)
     recurring_price = fields.Float('Recurring price(per period)', readonly=True)
+    quantity = fields.Float('Quantity', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Customer', readonly=True)
     user_id = fields.Many2one('res.users', 'Sales Rep', readonly=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
@@ -26,6 +27,7 @@ class sale_subscription_report(models.Model):
     product_tmpl_id = fields.Many2one('product.template', 'Product Template', readonly=True)
     country_id = fields.Many2one('res.country', 'Country', readonly=True)
     commercial_partner_id = fields.Many2one('res.partner', 'Commercial Partner', readonly=True)
+    industry_id = fields.Many2one('res.partner.industry', 'Sector of Activity', readonly=True)
     analytic_account_id = fields.Many2one('account.analytic.account', 'Analytic Account', readonly=True)
     close_reason_id = fields.Many2one('sale.subscription.close.reason', 'Close Reason', readonly=True)
 
@@ -36,6 +38,7 @@ class sale_subscription_report(models.Model):
                     l.uom_id as product_uom,
                     sub.analytic_account_id as analytic_account_id,
                     (l.price_unit * l.quantity) - (0.01 * l.discount)*(l.price_unit * l.quantity) as recurring_price,
+                    sum(l.quantity) as quantity,
                     sub.date_start as date_start,
                     sub.date as date_end,
                     a.partner_id as partner_id,
@@ -48,6 +51,7 @@ class sale_subscription_report(models.Model):
                     p.product_tmpl_id,
                     partner.country_id as country_id,
                     partner.commercial_partner_id as commercial_partner_id,
+                    partner.industry_id as industry_id,
                     sub.close_reason_id as close_reason_id
         """
         return select_str
@@ -75,6 +79,7 @@ class sale_subscription_report(models.Model):
                     a.partner_id,
                     sub.user_id,
                     recurring_price,
+                    quantity,
                     a.company_id,
                     sub.state,
                     sub.template_id,
@@ -82,6 +87,7 @@ class sale_subscription_report(models.Model):
                     p.product_tmpl_id,
                     partner.country_id,
                     partner.commercial_partner_id,
+                    partner.industry_id,
                     sub.close_reason_id
         """
         return group_by_str

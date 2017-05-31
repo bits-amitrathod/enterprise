@@ -22,7 +22,7 @@ QUnit.module('Views', {
                     {id: 2, project_id: 31, task_id: 1, date: "2017-01-25", unit_amount: 2},
                     {id: 3, project_id: 31, task_id: 1, date: "2017-01-25", unit_amount: 5.5},
                     {id: 4, project_id: 31, task_id: 1, date: "2017-01-30", unit_amount: 10},
-                    {id: 5, project_id: 31, task_id: 12, date: "2017-01-31", unit_amount: 3.5},
+                    {id: 5, project_id: 142, task_id: 12, date: "2017-01-31", unit_amount: 3.5},
                 ]
             },
             project: {
@@ -31,17 +31,18 @@ QUnit.module('Views', {
                 },
                 records: [
                     {id: 31, display_name: "P1"},
-                    {id: 142, display_name: "Webocalypse Now"}
+                    {id: 142, display_name: "Webocalypse Now"},
                 ]
             },
             task: {
                 fields: {
-                    name: {string: "Task Name", type: "char"}
+                    name: {string: "Task Name", type: "char"},
+                    project_id: {string: "Project", type: "many2one", relation: "project"},
                 },
                 records: [
-                    {id: 1, display_name: "BS task"},
-                    {id: 12, display_name: "Another BS task"},
-                    {id: 54, display_name: "yet another task"}
+                    {id: 1, display_name: "BS task", project_id: 31},
+                    {id: 12, display_name: "Another BS task", project_id: 142},
+                    {id: 54, display_name: "yet another task", project_id: 142},
                 ]
             },
         };
@@ -137,11 +138,128 @@ QUnit.module('Views', {
                     emptyTd++;
                 }
             });
-            assert.strictEqual(emptyTd, 9, "9 totals cells should be empty");
+            assert.strictEqual(emptyTd, 8, "8 totals cells should be empty");
             grid.destroy();
             done();
         });
 
+    });
+
+    QUnit.test('basic grouped grid view', function (assert) {
+        assert.expect(33);
+        var done = assert.async();
+        var nbReadGridDomain = 0;
+        var nbReadGroup = 0;
+        var nbReadGrid = 0;
+
+        this.data['analytic.line'].records.push([
+            {id: 6, project_id: 142, task_id: 12, date: "2017-01-31", unit_amount: 3.5},
+        ]);
+
+        this.arch = '<grid string="Timesheet By Project" adjustment="object" adjust_name="adjust_grid">' +
+                '<field name="project_id" type="row" section="1"/>' +
+                '<field name="task_id" type="row"/>' +
+                '<field name="date" type="col">' +
+                    '<range name="week" string="Week" span="week" step="day"/>' +
+                    '<range name="month" string="Month" span="month" step="day"/>' +
+                '</field>'+
+                '<field name="unit_amount" type="measure" widget="float_time"/>' +
+                '<empty>' +
+                    '<p class="oe_view_nocontent_create">' +
+                        'Click to add projects and tasks' +
+                    '</p>' +
+                    '<p>you will be able to register your working hours on the given task</p>' +
+                    '<p><a href="some-link"><img src="some-image" alt="alt text"/></a></p>' +
+                '</empty>' +
+            '</grid>';
+
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: this.arch,
+            currentDate: "2017-01-25",
+            mockRPC: function (route, args) {
+                if (route === 'some-image') {
+                    return $.when();
+                } else if (args.method === 'read_grid_domain') {
+                    nbReadGridDomain++;
+                } else if (args.method === 'read_group') {
+                    assert.strictEqual(args.kwargs.groupby.length, 1,
+                        "should read group on the section (project_id)");
+                    assert.strictEqual(args.kwargs.groupby[0], 'project_id',
+                        "should read group on the section (project_id)");
+                    nbReadGroup++;
+                } else if (args.method === 'read_grid') {
+                    nbReadGrid++;
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        return concurrency.delay(0).then(function () {
+            assert.ok(grid.$('table').length, "should have rendered a table");
+            assert.strictEqual(nbReadGridDomain, 1, "should have read the grid domain");
+            assert.strictEqual(nbReadGridDomain, 1, "should have read group");
+            assert.strictEqual(nbReadGrid, 2, "should have read one grid by group");
+            assert.strictEqual(grid.$('.o_grid_section').length, 2, "should have one section by project");
+
+            // first section
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) th:contains(P1)').length, 1,
+                "first section should be for project P1");
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) div.o_grid_cell_container').length, 14,
+                "first section should have 14 cells");
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) th:contains(Unknown)').length, 1,
+                "first section should have a row without task");
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) th:contains(BS task)').length, 1,
+                "first section should have a row for BS task");
+
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) tr:eq(2) div.o_grid_input:contains(02:30)').length, 1,
+                "should have correctly parsed a float_time for cell without task");
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) div.o_grid_input:contains(00:00)').length, 12,
+                "should have correctly parsed another float_time");
+
+            // second section
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) th:contains(Webocalypse Now)').length, 1,
+                "second section should be for project Webocalypse Now");
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) th:contains(Another BS task)').length, 0,
+                "first section should be empty");
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) div.o_grid_cell_container').length, 0,
+                "second section should be empty");
+
+            assert.ok(grid.$buttons.find('button.grid_arrow_previous').is(':visible'),
+                "previous button should be visible");
+            assert.ok(grid.$buttons.find('button.grid_arrow_range[data-name="week"]').hasClass('active'),
+                "current range is shown as active");
+
+            assert.strictEqual(grid.$('tfoot td:contains(02:30)').length, 1, "should display total in a column");
+            assert.strictEqual(grid.$('tfoot td:contains(00:00)').length, 5, "should display totals, even if 0");
+
+            grid.$buttons.find('button.grid_arrow_next').click();
+            return concurrency.delay(0);
+        }).then(function () {
+            assert.strictEqual(nbReadGridDomain, 2, "should have read the grid domain again");
+            assert.strictEqual(nbReadGridDomain, 2, "should have read group again");
+            assert.strictEqual(nbReadGrid, 4, "should have read one grid by group again");
+
+            assert.ok(grid.$('div.o_grid_cell_container').length, "should not have any cells");
+            assert.ok(grid.$('th:contains(P1)').length,
+                "should have rendered a cell with project name");
+            assert.ok(grid.$('th div:contains(BS task)').length,
+                "should have rendered a cell with task name");
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) th:contains(Another BS task)').length, 1,
+                "first section should have a row for Another BS task");
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) div.o_grid_cell_container').length, 7,
+                "second section should have 7 cells");
+            grid.$buttons.find('button.grid_arrow_next').click();
+
+            return concurrency.delay(0);
+        }).then(function () {
+            assert.strictEqual(grid.$('.o_grid_nocontent_container').length, 0,
+                "should not have rendered a no content helper in grouped");
+            grid.destroy();
+            done();
+        });
     });
 
     QUnit.test('create analytic lines', function (assert) {
@@ -286,7 +404,7 @@ QUnit.module('Views', {
                 var action = event.data.action;
 
                 assert.deepEqual(action.domain, domain, "should trigger a do_action with correct values");
-                assert.strictEqual(action.name, "P1: Undefined",
+                assert.strictEqual(action.name, "P1: BS task",
                     "should have correct action name");
             });
             grid.$('i.o_grid_cell_information').eq(2).click();

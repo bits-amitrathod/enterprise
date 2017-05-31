@@ -37,6 +37,8 @@ class SaleSubscription(models.Model):
     description = fields.Text()
     user_id = fields.Many2one('res.users', string='Sales Rep', track_visibility='onchange')
     invoice_count = fields.Integer(compute='_compute_invoice_count')
+    country_id = fields.Many2one('res.country', related='analytic_account_id.partner_id.country_id', store=True)
+    industry_id = fields.Many2one('res.partner.industry', related='analytic_account_id.partner_id.industry_id', store=True)
 
     @api.model
     def default_get(self, fields):
@@ -207,6 +209,8 @@ class SaleSubscription(models.Model):
             raise UserError(_('Please define a sale journal for the company "%s".') % (company.name or '', ))
 
         next_date = fields.Date.from_string(self.recurring_next_date)
+        if not next_date:
+            raise UserError(_('Please define Date of Next Invoice of "%s".') % (self.display_name,))
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
         end_date = next_date + relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
         end_date = end_date - relativedelta(days=1)     # remove 1 day as normal people thinks in term of inclusive ranges.

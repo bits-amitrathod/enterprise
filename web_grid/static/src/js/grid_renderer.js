@@ -9,7 +9,6 @@ var patch = require('snabbdom.patch');
 var h = require('snabbdom.h');
 
 var _t = core._t;
-var _lt = core._lt;
 
 /**
  * The GridRenderer is the component that will render a grid view (obviously).
@@ -18,7 +17,6 @@ var _lt = core._lt;
  * lightweight virtual dom implementation.
  */
 return AbstractRenderer.extend({
-    add_label: _lt("Add a Line"),
 
     events: {
         'blur .o_grid_input': "_onGridInputBlur",
@@ -61,8 +59,8 @@ return AbstractRenderer.extend({
      */
     _convertToVNode: function (root) {
         var self = this;
-        return h(root.tag, {'attrs': root.attrs}, _(root.children).map(function (child) {
-                if(child.tag){
+        return h(root.tag, {'attrs': root.attrs}, _.map(root.children, function (child) {
+                if (child.tag) {
                     return self._convertToVNode(child);
                  }
                  return child; // text node, no tag
@@ -79,7 +77,6 @@ return AbstractRenderer.extend({
             var row = grid[i];
             for (var j = 0; j < row.length; j++) {
                 var cell = row[j];
-
                 totals.super += cell.value;
                 totals.rows[i] = (totals.rows[i] || 0) + cell.value;
                 totals.columns[j] = (totals.columns[j] || 0) + cell.value;
@@ -109,7 +106,7 @@ return AbstractRenderer.extend({
      * @returns {boolean}
      */
     _isCellReadonly: function (cell) {
-        return !this.editableCells || cell.readonly === true;
+        return !this.editableCells || cell.readonly;
     },
     /**
      * @private
@@ -125,89 +122,32 @@ return AbstractRenderer.extend({
     },
     /**
      * @private
+     * @returns {Deferred}
      */
     _render: function () {
         var self = this;
-        var columns, vnode, grid, totals;
+        var vnode;
 
-        // var grid_data = this.get('grid_data') || {};
-        // if (_.isArray(grid_data)) {
-        //     // array of grid groups
-        //     // get columns (check they're the same in all groups)
-        //     if (!(_.isEmpty(grid_data) || _(grid_data).reduce(function (m, it) {
-        //         return _.isEqual(m.cols, it.cols) && m;
-        //     }))) {
-        //         throw new Error(_t("The sectioned grid view can't handle groups with different columns sets"));
-        //     }
-
-        //     columns = grid_data.length ? grid_data[0].cols : [];
-        //     var super_totals = this._computeTotals(
-        //         _.flatten(_.pluck(grid_data, 'grid'), true));
-        //     vnode = this._renderTable(columns, super_totals.columns);
-        //     var grid_body = vnode.children[0].children;
-        //     for (var n = 0; n < grid_data.length; n++) {
-        //         grid = grid_data[n];
-
-        //         totals = this._computeTotals(grid.grid);
-        //         rows = this._renderGridRows(
-        //             grid.grid || [],
-        //             this.get('groupby').slice(1),
-        //             [n, 'grid'],
-        //             grid.rows || [],
-        //             totals.rows
-        //         );
-        //         grid_body.push(
-        //             h('tbody', {class: {o_grid_section: true}}, [
-        //                 h('tr', [
-        //                     h('th', {attrs: {colspan: 2}}, [
-        //                         (grid.__label || [])[1] || "\u00A0"
-        //                     ])
-        //                 ].concat(
-        //                     _(columns).map(function (column, column_index) {
-        //                         return h('td', {class: {
-        //                             o_grid_current: column.is_current,
-        //                         }}, _this._cell_field.format(
-        //                                 totals.columns[column_index]));
-        //                     }),
-        //                     [h('td.o_grid_total', [
-        //                         _this._cell_field.format(totals.super)
-        //                     ])]
-        //                 ))
-        //             ].concat(rows)
-        //         ));
-        //     }
-        // } else {
-        columns = this.state.cols;
-        var rows = this.state.rows;
-        grid = this.state.grid;
-        var group_fields = this.state.groupBy;
-
-        totals = this._computeTotals(grid);
-        vnode = this._renderTable(columns, totals.columns, totals.super, !grid.length);
-        vnode.children[0].children.push(
-            h('tbody',
-                this._renderGridRows(grid, group_fields, ['grid'], rows, totals.rows)
-                .concat(_(Math.max(5 - rows.length, 0)).times(function () {
-                    return h('tr.o_grid_padding', [
-                        h('th', {attrs: {colspan: '2'}}, "\u00A0")
-                    ].concat(
-                        _(columns).map(function (column) {
-                            return h('td', {class: {o_grid_current: column.is_current}}, []);
-                        }),
-                        [h('td.o_grid_total', [])]
-                    ));
-                }))
-            )
-        );
-        // }
+        if (_.isArray(this.state)) {
+            // array of grid groups
+            // get columns (check they're the same in all groups)
+            if (!(_.isEmpty(this.state) || _.reduce(this.state, function (m, it) {
+                return _.isEqual(m.cols, it.cols) && m;
+            }))) {
+                throw new Error(_t("The sectioned grid view can't handle groups with different columns sets"));
+            }
+            vnode = this._renderGroupedGrid();
+        } else {
+            vnode = this._renderUngroupedGrid();
+        }
 
         this._state = patch(this._state, vnode);
 
-        // need to debounce so grid can render
+        // need to debounce so grid can be rendered
         setTimeout(function () {
-            var row_headers = self.el.querySelectorAll('tbody th:first-child div');
-            for (var k = 0; k < row_headers.length; k++) {
-                var header = row_headers[k];
+            var rowHeaders = self.el.querySelectorAll('tbody th:first-child div');
+            for (var k = 0; k < rowHeaders.length; k++) {
+                var header = rowHeaders[k];
                 if (header.scrollWidth > header.clientWidth) {
                     $(header).addClass('overflow');
                 }
@@ -233,7 +173,7 @@ return AbstractRenderer.extend({
         };
         // merge in class info from the cell
         // classes may be completely absent, _.each treats that as an empty array
-        _(cell.classes).each(function (cls) {
+        _.each(cell.classes, function (cls) {
             // don't allow overwriting initial values
             if (!(cls in classmap)) {
                 classmap[cls] = true;
@@ -286,44 +226,87 @@ return AbstractRenderer.extend({
         }
         return h('div.o_grid_nocontent_container', [
                    h('div.oe_view_nocontent oe_edit_only',
-                       _(this.noContentHelper.children).map(this._convertToVNode.bind(this))
+                       _.map(this.noContentHelper.children, this._convertToVNode.bind(this))
                    )
                ]);
     },
     /**
      * @private
      * @param {Array<Array>} grid actual grid content
-     * @param {Array<String>} group_fields
-     * @param {Array} path object path to `grid` from the object's grid_data
+     * @param {Array<String>} groupFields
+     * @param {Array} path object path to `grid` from the object's state
      * @param {Array} rows list of row keys
      * @param {Object} totals row-keyed totals
      * @returns {snabbdom[]}
      */
-    _renderGridRows: function (grid, group_fields, path, rows, totals) {
+    _renderGridRows: function (grid, groupFields, path, rows, totals) {
         var self = this;
-        return _(grid).map(function (row, row_index) {
-            var row_values = [];
-            for (var i = 0; i < group_fields.length; i++) {
-                var row_field = group_fields[i];
-                var value = rows[row_index].values[row_field];
-                row_values.push(value);
+        return _.map(grid, function (row, rowIndex) {
+            var rowValues = [];
+            for (var i = 0; i < groupFields.length; i++) {
+                var row_field = groupFields[i];
+                var value = rows[rowIndex].values[row_field];
+                rowValues.push(value);
             }
-            var row_key = _(row_values).map(function (v) {
+            var rowKey = _.map(rowValues, function (v) {
                 return v[0];
             }).join('|');
 
-            return h('tr', {key: row_key}, [
-                h('th', {attrs: {colspan: 2}}, [
-                    h('div', _(row_values).map(function (v) {
+            return h('tr', {key: rowKey}, [
+                h('th', {}, [
+                    h('div', _.map(rowValues, function (v) {
                         var label = v ? v[1] : _t('Unknown');
                         var klass = v ? '' : 'o_grid_text_muted';
                         return h('div', {attrs: {title: label, class: klass}}, label);
                     }))
                 ])
-            ].concat(_(row).map(function (cell, cell_index) {
-                return self._renderCell(cell, path.concat([row_index, cell_index]).join('.'));
-            }), [h('td.o_grid_total', self._format(totals[row_index]))]));
+            ].concat(_.map(row, function (cell, cell_index) {
+                return self._renderCell(cell, path.concat([rowIndex, cell_index]).join('.'));
+            }), [h('td.o_grid_total', self._format(totals[rowIndex]))]));
         });
+    },
+    /**
+     * @private
+     * @returns {snabbdom}
+     */
+    _renderGroupedGrid: function () {
+        var self = this;
+        var columns = this.state.length ? this.state[0].cols : [];
+        var superTotals = this._computeTotals(
+            _.flatten(_.pluck(this.state, 'grid'), true));
+        var vnode = this._renderTable(columns, superTotals.columns);
+        var gridBody = vnode.children[0].children;
+        for (var n = 0; n < this.state.length; n++) {
+            var grid = this.state[n];
+
+            var totals = this._computeTotals(grid.grid);
+            var rows = this._renderGridRows(
+                grid.grid || [],
+                this.state.groupBy.slice(1),
+                [n, 'grid'],
+                grid.rows || [],
+                totals.rows
+            );
+            gridBody.push(
+                h('tbody', {class: {o_grid_section: true}}, [
+                    h('tr', [
+                        h('th', {}, [
+                            (grid.__label || [])[1] || "\u00A0"
+                        ])
+                    ].concat(
+                        _(columns).map(function (column, column_index) {
+                            return h('td', {class: {
+                                o_grid_current: column.is_current,
+                            }}, self._format(totals.columns[column_index]));
+                        }),
+                        [h('td.o_grid_total', [
+                            self._format(totals.super)
+                        ])]
+                    ))
+                ].concat(rows)
+            ));
+        }
+        return vnode;
     },
     /**
      * Generates the header and footer for the grid's table. If
@@ -345,9 +328,8 @@ return AbstractRenderer.extend({
                 h('thead', [
                     h('tr', [
                         h('th.o_grid_title_header'),
-                        h('th.o_grid_title_header'),
                     ].concat(
-                        _(columns).map(function (column) {
+                        _.map(columns, function (column) {
                             return h('th', {class: {o_grid_current: column.is_current}},
                                 column.values[col_field][1]
                             );
@@ -357,12 +339,10 @@ return AbstractRenderer.extend({
                 ]),
                 h('tfoot', [
                     h('tr', [
-                        h('td.o_grid_add_line', []),
                         h('td', totals ? _t("Total") : [])
                     ].concat(
-                        _(columns).map(function (column, column_index) {
-                            var cell_content = !totals
-                                ? []
+                        _.map(columns, function (column, column_index) {
+                            var cell_content = !totals ? []
                                 : self._format(totals[column_index]);
                             return h('td', {class: {
                                 o_grid_current: column.is_current,
@@ -373,6 +353,40 @@ return AbstractRenderer.extend({
                 ]),
             ])
         ].concat(this._renderEmptyWarning(empty)));
+    },
+    /**
+     * @private
+     * @returns {snabbdom}
+     */
+    _renderUngroupedGrid: function () {
+        var vnode;
+        var columns = this.state.cols;
+        var rows = this.state.rows;
+        var grid = this.state.grid;
+
+        var totals = this._computeTotals(grid);
+        vnode = this._renderTable(columns, totals.columns, totals.super, !grid.length);
+        vnode.children[0].children.push(
+            h('tbody',
+                this._renderGridRows(
+                    grid,
+                    this.state.groupBy,
+                    ['grid'],
+                    rows,
+                    totals.rows
+                ).concat(_.times(Math.max(5 - rows.length, 0), function () {
+                    return h('tr.o_grid_padding', [
+                        h('th', {}, "\u00A0")
+                    ].concat(
+                        _.map(columns, function (column) {
+                            return h('td', {class: {o_grid_current: column.is_current}}, []);
+                        }),
+                        [h('td.o_grid_total', [])]
+                    ));
+                }))
+            )
+        );
+        return vnode;
     },
 
     //--------------------------------------------------------------------------

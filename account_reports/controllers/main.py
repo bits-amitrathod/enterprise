@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import http
-from odoo.http import request
+from odoo.http import content_disposition, request
 from odoo.addons.web.controllers.main import _serialize_exception
 from odoo.tools import html_escape
 
@@ -26,7 +26,7 @@ class FinancialReportController(http.Controller):
                     None,
                     headers=[
                         ('Content-Type', 'application/vnd.ms-excel'),
-                        ('Content-Disposition', 'attachment; filename=' + report_name + '.xlsx;')
+                        ('Content-Disposition', content_disposition(report_name + '.xlsx'))
                     ]
                 )
                 report_obj.get_xlsx(options, response)
@@ -35,7 +35,7 @@ class FinancialReportController(http.Controller):
                     report_obj.get_pdf(options),
                     headers=[
                         ('Content-Type', 'application/pdf'),
-                        ('Content-Disposition', 'attachment; filename=' + report_name + '.pdf;')
+                        ('Content-Disposition', content_disposition(report_name + '.pdf'))
                     ]
                 )
             if output_format == 'xml':
@@ -44,7 +44,7 @@ class FinancialReportController(http.Controller):
                     content,
                     headers=[
                         ('Content-Type', 'application/vnd.sun.xml.writer'),
-                        ('Content-Disposition', 'attachment; filename=' + report_name + '.xml;'),
+                        ('Content-Disposition', content_disposition(report_name + '.xml')),
                         ('Content-Length', len(content))
                     ]
                 )
@@ -54,7 +54,7 @@ class FinancialReportController(http.Controller):
                     content,
                     headers=[
                         ('Content-Type', 'text/plain'),
-                        ('Content-Disposition', 'attachment; filename=' + report_name + '.txt;'),
+                        ('Content-Disposition', content_disposition(report_name + '.txt')),
                         ('Content-Length', len(content))
                     ]
                 )
