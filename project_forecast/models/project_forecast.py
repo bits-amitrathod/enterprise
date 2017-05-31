@@ -13,7 +13,8 @@ class ProjectForecast(models.Model):
 
     def _default_employee_id(self):
         user_id = self.env.context.get('default_user_id', self.env.uid)
-        return self.env['res.users'].browse(user_id).employee_ids[0]
+        employee_ids = self.env['hr.employee'].search([('user_id', '=', user_id)])
+        return employee_ids and employee_ids[0] or False
 
     def default_end_date(self):
         return date.today() + timedelta(days=1)
