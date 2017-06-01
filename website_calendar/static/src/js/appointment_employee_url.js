@@ -10,7 +10,6 @@ odoo.define('website_calendar.appointment_employee_url', function (require) {
 
 var AbstractField = require('web.AbstractField');
 var core = require('web.core');
-var Dialog = require('web.Dialog');
 var fieldRegistry = require('web.field_registry');
 
 var _t = core._t;
@@ -32,9 +31,12 @@ var FieldemployeeUrl = AbstractField.extend({
         this._super.apply(this, arguments);
         this.tagName = 'div';
 
+        this.url = false;
         var base_url = this.getSession()['web.base.url'];
-        var appt_url = this.record.getContext({fieldName: 'id'}).url;
-        this.url = base_url + appt_url.replace("/appointment", "") + '?employee_id=' + this.value;
+        var appointmentURL = this.record.getContext({fieldName: 'id'}).url;
+        if (appointmentURL) {
+            this.url = base_url + appointmentURL.replace("/appointment", "") + '?employee_id=' + this.value;
+        }
     },
 
     //--------------------------------------------------------------------------
@@ -50,6 +52,9 @@ var FieldemployeeUrl = AbstractField.extend({
      * @private
      */
     _render: function () {
+        if(!this.url) {
+            return;
+        }
         var $link = $('<a>', {
             class: 'o_form_uri fa-o_text_overflow',
             href: this.url,
