@@ -148,9 +148,12 @@ Menu.include({
                     class: 'btn btn-primary',
                     text: _t("Close"),
                 }))
-                .click(function(event) {
+                .click(function (event) {
                     event.preventDefault();
-                    self.trigger_up('click_studio_mode');
+                    if (!$(this).hasClass('o_disabled')) {
+                        self.trigger_up('click_studio_mode');
+                    }
+                    $(this).addClass('o_disabled');
                 });
             this.$leave_button.appendTo($main_navbar);
 
