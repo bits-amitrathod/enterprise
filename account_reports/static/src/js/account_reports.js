@@ -9,6 +9,7 @@ var framework = require('web.framework');
 var crash_manager = require('web.crash_manager');
 var ActionManager = require('web.ActionManager');
 var datepicker = require('web.datepicker');
+var session = require('web.session');
 
 var QWeb = core.qweb;
 var _t = core._t;
