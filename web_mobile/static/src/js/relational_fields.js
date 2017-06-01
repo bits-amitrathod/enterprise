@@ -59,10 +59,13 @@ relational_fields.FieldMany2One.include({
     // Handlers
     //--------------------------------------------------------------------------
 
+    /**
+     * We always open ManyToOne native dialog for select/update field value
+     *
+     * @private
+     */
     _onMobileClick: function () {
-        if (!this.value) {
-            this._invokeMobileDialog('');
-        }
+        this._invokeMobileDialog('');
     },
 });
 
