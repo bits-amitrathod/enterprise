@@ -227,7 +227,7 @@
                                 <option disabled="1" selected="1"> -- select a country -- </option>
                               </t>
                               <t t-foreach="countries or []" t-as="country">
-                                  <option t-att-value="country.id" t-att-data-phone-code="country.phone_code and ('+'+str(country.phone_code)+' ') or None" t-att-selected="'country_id' in partner_data and country.id == partner_data['country_id'][0]"><t t-esc="country.name"/></option>
+                                  <option t-att-value="country.id" t-att-data-phone-code="country.phone_code and ('+'+str(country.phone_code)+' ') or None" t-att-selected="partner_data.get('country_id') and country.id == partner_data['country_id'][0]"><t t-esc="country.name"/></option>
                               </t>
                           </select>
                         </div>
