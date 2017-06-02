@@ -387,6 +387,84 @@ QUnit.module('Studio', {
         vem.destroy();
     });
 
+    QUnit.test('enable stages in kanban editor', function (assert) {
+        assert.expect(6);
+
+        this.data.x_coucou_stage = {
+            fields: {},
+        };
+        this.data.coucou.fields.x_stage_id = {type: 'many2one', relation: 'x_coucou_stage', string: 'Stage', store: true};
+
+        var fieldsView;
+        var nbEditView = 0;
+        var arch =
+            "<kanban>" +
+                "<templates>" +
+                    "<t t-name='kanban-box'>" +
+                        "<div class='o_kanban_record'>" +
+                            "<field name='display_name'/>" +
+                        "</div>" +
+                    "</t>" +
+                "</templates>" +
+            "</kanban>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/create_stages_model') {
+                    assert.strictEqual(args.model_name, 'coucou',
+                        "should create the stages model for the current model");
+                    return $.when();
+                }
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    nbEditView++;
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = "<kanban default_group_by='x_stage_id'>" +
+                            "<templates>" +
+                                "<field name='x_stage_id'/>" +
+                                "<t t-name='kanban-box'>" +
+                                    "<div class='o_kanban_record'>" +
+                                        "<field name='display_name'/>" +
+                                    "</div>" +
+                                "</t>" +
+                            "</templates>" +
+                        "</kanban>";
+                    return $.when({
+                        fields_views: {
+                            kanban: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar input[name="enable_stage"]').attr('checked'), undefined,
+            "the stages shouldn't be enabled");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar select[name="default_group_by"]').val(), "",
+            "the kanban should not be grouped");
+
+        vem.$('.o_web_studio_sidebar input[name="enable_stage"]').click();
+
+        assert.strictEqual(nbEditView, 2,
+            "should edit the view twice: add field in view & set the default_group_by");
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar input[name="enable_stage"]').attr('checked'), 'checked',
+            "the stages should be enabled");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar select[name="default_group_by"]').val(), "x_stage_id",
+            "the kanban should be grouped by stage");
+
+        vem.destroy();
+    });
+
     QUnit.test('empty search editor', function(assert) {
         assert.expect(6);
 

@@ -783,6 +783,49 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
+     * Enable kanban stages.
+     * What it actually does:
+     *  - create a new model Stage
+     *  - create a new Many2one field in the current model related to it
+     *  - set the `default_group_by` attribute on the view
+     *
+     *  @private
+     */
+    _enableStages: function () {
+        var self = this;
+        data_manager.invalidate();
+        this._rpc({
+            route: '/web_studio/create_stages_model',
+            params: {
+                model_name: this.model_name,
+            },
+        }).then(function (relationID) {
+            var fieldName = 'x_stage_id';
+            self.do({
+                type: 'add',
+                target: {
+                    tag: 'templates',
+                },
+                position: 'before',
+                node: {
+                    tag: 'field',
+                    attrs: {},
+                    field_description: {
+                        name: fieldName,
+                        field_description: _t('Stage'),
+                        model_name: self.model_name,
+                        ttype: 'many2one',
+                        relation_id: relationID,
+                    },
+                },
+            });
+
+            self._editViewAttributes('attributes', {
+                default_group_by: fieldName,
+            });
+        });
+    },
+    /**
      * @private
      * @param {String} model_name
      * @param {String} field_name
@@ -1128,6 +1171,9 @@ var ViewEditorManager = Widget.extend({
                 break;
             case 'separator':
                 this._addSeparator(type, node, xpath_info, position);
+                break;
+            case 'enable_stage':
+                this._enableStages();
                 break;
         }
     },

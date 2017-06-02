@@ -257,7 +257,7 @@ class WebStudioController(http.Controller):
             </t>
         """)
         return etree.tostring(arch, encoding='utf-8', pretty_print=True)
-    
+
     def create_business_report(self, model_name):
         def add_column_field(arch, hook, index, one2many_field_id):
             added_nodes_in_table[hook] = True
@@ -1177,3 +1177,21 @@ class WebStudioController(http.Controller):
         """ Set the default value associated to the given field. """
         company_id = request.env.user.company_id.id
         request.env['ir.values'].set_default(model_name, field_name, value, company_id=company_id)
+
+    @http.route('/web_studio/create_stages_model', type='json', auth='user')
+    def create_stages_model(self, model_name):
+        """ Create a new model if it does not exist
+        """
+        stages_model = model_name + '_stage'
+        if not model_name.startswith('x_'):
+            stages_model = 'x_' + stages_model
+        model_id = request.env['ir.model'].search([
+            ('model', '=', stages_model),
+        ])
+        if not model_id:
+            model = request.env['ir.model'].search([('model', '=', model_name)])
+            model_id = request.env['ir.model'].create({
+                'model': stages_model,
+                'name': model.name + ' ' + _('stages'),
+            })
+        return model_id.id

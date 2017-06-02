@@ -503,7 +503,21 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     _onViewChanged: function (ev) {
         var $input = $(ev.currentTarget);
         var attribute = $input.attr('name');
-        if (attribute) {
+        if (attribute === 'enable_stage') {
+            if ($input.is(':checked')) {
+                this.trigger_up('view_change', {
+                    structure: 'enable_stage',
+                });
+            } else {
+                this.trigger_up('view_change', {
+                    type: 'attributes',
+                    structure: 'view_attribute',
+                    new_attrs: {
+                        default_group_by: '',
+                    },
+                });
+            }
+        } else if (attribute) {
             var new_attrs = {};
             if ($input.attr('type') === 'checkbox') {
                 if (($input.is(':checked') && !$input.data('inverse')) || (!$input.is(':checked') && $input.data('inverse'))) {
