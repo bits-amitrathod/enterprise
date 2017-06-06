@@ -57,6 +57,16 @@ QUnit.module('Studio', {
                         string: "Display Name",
                         type: "char"
                     },
+                    m2o: {
+                        string: "M2O",
+                        type: "many2one",
+                        relation: 'product',
+                    },
+                },
+            },
+            product: {
+                fields: {
+                    display_name: {string: "Display Name", type: "char", searchable: true},
                 },
             },
         };
@@ -642,6 +652,49 @@ QUnit.module('Studio', {
 
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
             "there should be two nodes");
+
+        vem.destroy();
+    });
+
+    QUnit.test('add a related field', function(assert) {
+        assert.expect(2);
+
+        this.data.coucou.fields.related_field = {
+            string: "Related",
+            type: 'related',
+        };
+
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name'/></tree>",
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].node.field_description.related,
+                        'm2o.display_name', "related arg should be correct");
+                    fieldsView.arch = "<tree><field name='display_name'/><field name='related_field'/></tree>";
+                    return $.when({
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
+
+        assert.strictEqual($('.modal').length, 1, "a model should be displayed");
+
+        $('.modal .o_field_selector').focusin(); // open the selector popover
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.o_field_selector_popover li[data-name=display_name]').click();
+        $('.modal-footer .btn-primary:first').click(); // confirm
 
         vem.destroy();
     });
