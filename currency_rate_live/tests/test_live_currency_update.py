@@ -9,6 +9,9 @@ class CurrencyTestCase(TransactionCase):
         company_ecb = self.env['res.company'].create({'name': 'TEST ECB', 'currency_provider': 'ecb'})
         company_yah = self.env['res.company'].create({'name': 'TEST YAH', 'currency_provider': 'yahoo'})
         company_fta = self.env['res.company'].create({'name': 'TEST FTA', 'currency_provider': 'fta'})
+        # testing Swiss Federal Tax Administration requires that Franc Suisse can be found
+        # which is not the case in runbot/demo data as l10n_ch is not always installed
+        self.env.ref('base.CHF').write({'active': True})
 
         #check the number of rates for USD
         self.currency_usd = self.env.ref('base.USD')
