@@ -44,6 +44,7 @@ class HelpdeskTeam(models.Model):
         help="In Channel: You can create a new ticket by typing /helpdesk [ticket title]. You can search ticket by typing /helpdesk_search [Keyword1],[Keyword2],.")
     use_website_helpdesk_forum = fields.Boolean('Help Center')
     use_website_helpdesk_slides = fields.Boolean('eLearning')
+    use_helpdesk_timesheet = fields.Boolean('Timesheet on Ticket', help="This required to have project module installed.")
     use_twitter = fields.Boolean('Twitter')
     use_api = fields.Boolean('API')
     use_rating = fields.Boolean('Ratings')
@@ -183,6 +184,12 @@ class HelpdeskTeam(models.Model):
             if self.use_website_helpdesk_slides and slides_module.state not in ('installed', 'to install', 'to upgrade'):
                 slides_module.button_immediate_install()
                 module_installed = True
+
+            helpdesk_timesheet_module = self.env['ir.module.module'].search([('name', '=', 'helpdesk_timesheet')])
+            if self.use_helpdesk_timesheet and helpdesk_timesheet_module.state not in ('installed', 'to install', 'to upgrade'):
+                helpdesk_timesheet_module.button_immediate_install()
+                module_installed = True
+
         # just in case we want to do something if we install a module. (like a refresh ...)
         return module_installed
 

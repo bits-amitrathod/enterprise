@@ -197,6 +197,25 @@
                             </div>
                         </div>
                     </div>
+                    <h2 class="mt32">Sell &amp; Track Hours</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-md-6 o_setting_box" id="timesheet">
+                            <div class="o_setting_left_pane">
+                                <field name="use_helpdesk_timesheet"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="use_helpdesk_timesheet"/>
+                                <div class="text-muted">
+                                    Helpdesk contracts are managed using tasks. Choose a default project for these tasks.
+                                </div>
+                                <div id='helpdesk_timesheet' attrs="{'invisible': [('use_helpdesk_timesheet', '=', False)]}">
+                                    <div class="text-warning mb4 mt16">
+                                        Save this page and refresh to activate the feature
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h2>Performance</h2>
                     <div class="row mt16 o_settings_container">
                         <div class="col-md-6 o_setting_box" id="sla">
