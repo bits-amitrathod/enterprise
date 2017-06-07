@@ -8,16 +8,15 @@ from werkzeug.exceptions import NotFound
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
-from odoo.addons.portal.controllers.portal import get_records_pager
-from odoo.addons.website_portal.controllers.main import website_account
+from odoo.addons.portal.controllers.portal import get_records_pager, CustomerPortal
 from odoo.addons.website_form.controllers.main import WebsiteForm
 from odoo.osv.expression import OR
 
 
-class website_account(website_account):
+class CustomerPortal(CustomerPortal):
 
     def _prepare_portal_layout_values(self):
-        values = super(website_account, self)._prepare_portal_layout_values()
+        values = super(CustomerPortal, self)._prepare_portal_layout_values()
         user = request.env.user
         values['ticket_count'] = request.env['helpdesk.ticket'].sudo().search_count(['|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id)])
         return values

@@ -10,7 +10,8 @@
     'depends': [
         'website_form_editor',
         'helpdesk',
-        'website_portal'
+        'website',
+        'portal',
     ],
     'data': [
         'security/ir.model.access.csv',

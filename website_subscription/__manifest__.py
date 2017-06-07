@@ -13,7 +13,8 @@ Features:
         """,
     'depends': [
         'sale_subscription',
-        'website_portal',
+        'website',
+        'portal',
         'website_payment',
     ],
     'data': [

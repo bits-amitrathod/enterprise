@@ -8,11 +8,10 @@ from odoo.http import request
 from odoo.tools import pycompat
 from odoo.tools.translate import _
 
-from odoo.addons.portal.controllers.portal import get_records_pager
-from odoo.addons.website_portal.controllers.main import website_account
+from odoo.addons.portal.controllers.portal import get_records_pager, CustomerPortal
 
 
-class website_account(website_account):
+class CustomerPortal(CustomerPortal):
 
     def _get_subscription_domain(self, partner):
         return [
@@ -22,7 +21,7 @@ class website_account(website_account):
 
     def _prepare_portal_layout_values(self):
         """ Add subscription details to main account page """
-        values = super(website_account, self)._prepare_portal_layout_values()
+        values = super(CustomerPortal, self)._prepare_portal_layout_values()
         partner = request.env.user.partner_id
         values['subscription_count'] = request.env['sale.subscription'].search_count(self._get_subscription_domain(partner))
         return values
