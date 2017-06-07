@@ -12,7 +12,7 @@ class ReportPartnerLedger(models.AbstractModel):
     _name = "account.partner.ledger"
     _description = "Partner Ledger"
 
-    filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
+    filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_year'}
     filter_cash_basis = False
     filter_all_entries = False
     filter_unfold_all = False
