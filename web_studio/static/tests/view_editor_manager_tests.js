@@ -118,8 +118,9 @@ QUnit.module('Studio', {
             "there should be one hook");
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 0,
             "there should be no node");
-        assert.strictEqual(vem.$('.o_web_studio_sidebar .o_web_studio_existing_fields').children().length, 3,
-            "there should be one available field (id, name, display_name)");
+        var nbFields = _.size(this.data.coucou.fields);
+        assert.strictEqual(vem.$('.o_web_studio_sidebar .o_web_studio_existing_fields').children().length, nbFields,
+            "all fields should be available");
 
         vem.destroy();
     });
@@ -137,8 +138,9 @@ QUnit.module('Studio', {
             "there should be one node");
         assert.strictEqual(vem.$('table thead th.o_web_studio_hook').length, 2,
             "there should be two hooks (before & after the field)");
-        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('.o_web_studio_existing_fields').children().length, 2,
-            "there should be two available fields (id, name)");
+        var nbFields = _.size(this.data.coucou.fields) - 1; // - display_name
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('.o_web_studio_existing_fields').children().length, nbFields,
+            "fields that are not already in the view should be available");
 
         vem.destroy();
     });
