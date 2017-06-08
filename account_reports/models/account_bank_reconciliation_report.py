@@ -158,4 +158,8 @@ class account_bank_reconciliation_report(models.AbstractModel):
 
     @api.model
     def get_report_name(self):
+        journal_id = self._context.get('active_id')
+        if journal_id:
+            journal = self.env['account.journal'].browse(journal_id)
+            return _("Bank Reconciliation") + ': ' + journal.name
         return _("Bank Reconciliation")
