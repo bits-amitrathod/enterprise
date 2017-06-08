@@ -14,7 +14,7 @@
 
     'depends': ['sale_timesheet', 'timesheet_grid'],
     'data': [
-        'views/res_config_views.xml'
+        'views/hr_timesheet_config_settings_views.xml'
     ],
 
     'auto_install': True,

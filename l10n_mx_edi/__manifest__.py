@@ -22,7 +22,7 @@ This module allows the creation of the EDI documents and the communication with 
         'data/account_data.xml',
         'data/payment_method_data.xml',
         'views/account_invoice_view.xml',
-        'views/res_config_view.xml',
+        'views/account_config_settings_views.xml',
         'views/res_partner_view.xml',
         'views/res_company_view.xml',
         'views/ir_ui_view_view.xml',
