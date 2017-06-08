@@ -234,7 +234,7 @@ Menu.include({
             },
         }, {
             on_close: function () {
-                data_manager.invalidate(); // invalidate cache
+                core.bus.trigger('clear_cache'); // invalidate cache
                 self.trigger_up('reload_menu_data'); // reload menus
             },
         });

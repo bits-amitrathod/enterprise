@@ -132,7 +132,7 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
             },
         }).then(function (result) {
             self.trigger_up('new_app_created', result);
-            data_manager.invalidate();
+            core.bus.trigger('clear_cache');
         }).fail(function () {
             Dialog.alert(self, _t('This model already exists. Please specify another model.'));
         }).always(framework.unblockUI.bind(framework));
