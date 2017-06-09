@@ -740,6 +740,12 @@ odoo.define('website_sign.template', function(require) {
                 }
             },
 
+            'keydown .o_sign_template_name_input': function (e) {
+                if (e.keyCode === 13) {
+                    this.$templateNameInput.blur();
+                }
+            },
+
             'templateChange iframe.o_sign_pdf_iframe': function(e) {
                 this.saveTemplate();
             },
