@@ -2,6 +2,7 @@ odoo.define('website_crm_score.set_score', function (require) {
 "use strict";
 
 var ajax = require('web.ajax');
+var rpc = require('web.rpc');
 var seo = require('website.seo');
 var base = require('web_editor.base');
 var core = require('web.core');
@@ -37,7 +38,7 @@ seo.Configurator.include({
         if (!obj) {
             return $.Deferred().reject();
         } else {
-            return this._rpc({
+            return rpc.query({
                     model: obj.model,
                     method: 'read',
                     args: [[obj.id], ['track'], base.get_context()],
@@ -62,7 +63,7 @@ seo.Configurator.include({
         if (!obj) {
             return $.Deferred().reject();
         } else {
-            return this._rpc({
+            return rpc.query({
                     model: obj.model,
                     method: 'write',
                     args: [[obj.id], { track: val }, base.get_context()],
