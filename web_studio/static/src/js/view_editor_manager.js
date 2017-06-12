@@ -736,7 +736,7 @@ var ViewEditorManager = Widget.extend({
      * @returns {Deferred}
      */
     _editView: function (view_id, studio_view_arch, operations) {
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         return this._rpc({
             route: '/web_studio/edit_view',
             params: {
@@ -757,7 +757,7 @@ var ViewEditorManager = Widget.extend({
      * @returns {Deferred}
      */
     _editViewArch: function (view_id, view_arch) {
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         return this._rpc({
             route: '/web_studio/edit_view_arch',
             params: {

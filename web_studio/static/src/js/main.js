@@ -88,7 +88,7 @@ var Main = Widget.extend({
     _addViewType: function (action, view_type, args) {
         var self = this;
         var def = $.Deferred();
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         this._rpc({
             route: '/web_studio/add_view_type',
             params: {
@@ -136,7 +136,7 @@ var Main = Widget.extend({
      */
     _editAction: function (action, args) {
         var self = this;
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         return this._rpc({
             route: '/web_studio/edit_action',
             params: {
@@ -213,7 +213,7 @@ var Main = Widget.extend({
      * @returns {Deferred}
      */
     _getStudioViewArch: function (model, view_type, view_id) {
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         return this._rpc({
             route: '/web_studio/get_studio_view_arch',
             params: {
@@ -261,7 +261,7 @@ var Main = Widget.extend({
      */
     _setAnotherViewRPC: function (action_id, view_mode, view_id) {
         var self = this;
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         return this._rpc({
             route: '/web_studio/set_another_view',
             params: {

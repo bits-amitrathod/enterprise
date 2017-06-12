@@ -85,16 +85,9 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         } else if (this.ttype === 'related') {
             // This restores default modal height (bootstrap) and allows field selector to overflow
             this.$el.css("overflow", "visible").closest(".modal-dialog").css("height", "auto");
-            // We need to get an array of the many2one fields with an attribute 'name'
-            // so first we filter to get only the many2one fields
-            // then we map to set the attribute 'name'
-            // because this.fields have field names as keys and not attribute
-            var many2one_fields = _.chain(this.fields)
-                .filter(function(f) { return f.type === 'many2one'; })
-                .map(function(f){ f.name = f.key; return f; })
-                .value();
             var field_options = {
-                fields: many2one_fields,
+                fields: _.filter(this.fields, {type: 'many2one'}),
+                readonly: false,
             };
             this.fieldSelector = new ModelFieldSelector(this, this.model_name, [], field_options);
             defs.push(this.fieldSelector.appendTo(this.$('.o_many2one_field')));
@@ -131,8 +124,8 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 return [value, value];
             });
         } else if (this.ttype === 'related') {
-            values.related = this.fieldSelector.chain;
-            values.ttype = this.fieldSelector.selectedField.type;
+            values.related = this.fieldSelector.chain.join('.');
+            values.ttype = this.fieldSelector.getSelectedField().type;
         }
         this.trigger('field_default_values_saved', values);
     },

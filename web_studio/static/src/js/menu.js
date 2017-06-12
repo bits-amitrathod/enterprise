@@ -96,7 +96,10 @@ Menu.include({
                 }))
                 .click(function (event) {
                     event.preventDefault();
-                    self.trigger_up('click_studio_mode');
+                    if (!$(this).hasClass('o_disabled')) {
+                        self.trigger_up('click_studio_mode');
+                    }
+                    $(this).addClass('o_disabled');
                 });
             this.$leave_button.appendTo($main_navbar);
 
@@ -234,7 +237,7 @@ Menu.include({
             },
         }, {
             on_close: function () {
-                data_manager.invalidate(); // invalidate cache
+                core.bus.trigger('clear_cache'); // invalidate cache
                 self.trigger_up('reload_menu_data'); // reload menus
             },
         });

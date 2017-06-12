@@ -33,7 +33,7 @@ class ProviderAccount(models.Model):
 
     @api.one
     def _compute_next_synchronization(self):
-        self.next_refresh = self.env['ir.cron'].sudo().search([('name', '=', 'online.sync.gettransaction.cron')], limit=1).nextcall
+        self.next_refresh = self.env['ir.cron'].sudo().search([('id', '=', self.env.ref('account_online_sync.online_sync_cron').id)], limit=1).nextcall
 
     @api.multi
     def open_action(self, action_name, number_added):
@@ -184,7 +184,7 @@ class AccountJournal(models.Model):
 
     @api.one
     def _compute_next_synchronization(self):
-        self.next_synchronization = self.env['ir.cron'].sudo().search([('name', '=', 'online.sync.gettransaction.cron')], limit=1).nextcall
+        self.next_synchronization = self.env['ir.cron'].sudo().search([('id', '=', self.env.ref('account_online_sync.online_sync_cron').id)], limit=1).nextcall
 
     @api.multi
     def action_choose_institution(self):

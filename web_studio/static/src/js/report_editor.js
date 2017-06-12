@@ -101,7 +101,7 @@ var ReportEditor = ReportAction.extend({
      * @returns {Deferred}
      */
     _editViewArch: function (view_id, view_arch) {
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         return this._rpc({
             route: '/web_studio/edit_view_arch',
             params: {

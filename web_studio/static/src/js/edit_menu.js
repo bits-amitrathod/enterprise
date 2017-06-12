@@ -330,7 +330,7 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
      * @returns {Deferred}
      */
     _createNewMenu: function (menu_name, parent_id, model_id) {
-        data_manager.invalidate();
+        core.bus.trigger('clear_cache');
         return this._rpc({
             route: '/web_studio/create_new_menu',
             params: {
