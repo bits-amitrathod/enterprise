@@ -200,7 +200,16 @@ var GanttController = AbstractController.extend({
         var data = {};
         data[this.model.mapping.date_start] = time.auto_date_to_str(start, fields[this.model.mapping.date_start].type);
         if (this.model.mapping.date_stop) {
-            data[this.model.mapping.date_stop] = time.auto_date_to_str(end, fields[this.model.mapping.date_stop].type);
+            // If date_stop is a date, we should write the previous day since it is considered as
+            // included.
+            var field_type = fields[this.model.mapping.date_stop].type;
+            if (field_type === 'date') {
+                end.setTime(end.getTime() - 86400000);
+                data[this.model.mapping.date_stop] = time.auto_date_to_str(end, field_type);
+                end.setTime(end.getTime() + 86400000);
+            } else {
+                data[this.model.mapping.date_stop] = time.auto_date_to_str(end, field_type);
+            }
         } else { // we assume date_duration is defined
             var duration = gantt.calculateDuration(start, end);
             data[this.model.mapping.date_delay] = duration;

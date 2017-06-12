@@ -566,6 +566,10 @@ return AbstractRenderer.extend({
             var percent;
             if (task[mapping.date_stop]) {
                 task_stop = time.auto_str_to_date(task[mapping.date_stop]);
+                // If the date_stop is a date, we assume that the whole day should be included.
+                if (task.fields[mapping.date_stop].type === 'date') {
+                    task_stop.setTime(task_stop.getTime() + 86400000);
+                }
                 if (!task_stop) {
                     task_stop = moment(task_start).clone().add(1, 'hours');
                 }
@@ -726,7 +730,7 @@ return AbstractRenderer.extend({
                 // Consolidation
                 gantt_tasks.push({
                     'id': "gantt_task_" + task.id,
-                    'text': task.display_name,
+                    'text': task.display_name || '',
                     'active': task.active || true,
                     'start_date': task.task_start,
                     'duration': gantt.calculateDuration(task.task_start, task.task_stop),

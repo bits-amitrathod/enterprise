@@ -656,10 +656,11 @@ class AccountInvoice(models.Model):
         else:
             values['payment_policy'] = 'Pago en una sola exhibición'
 
+        domicile = self.journal_id.l10n_mx_address_issued_id or self.company_id
         values['domicile'] = '%s %s, %s' % (
-            self.company_id.city,
-            self.company_id.state_id.name,
-            self.company_id.country_id.name,
+                domicile.city,
+                domicile.state_id.name,
+                domicile.country_id.name,
         )
 
         values['subtotal_wo_discount'] = lambda l: l.quantity * l.price_unit

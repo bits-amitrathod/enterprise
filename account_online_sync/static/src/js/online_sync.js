@@ -64,7 +64,7 @@ var OnlineSyncAccountInstitutionSelector = Widget.extend({
                             return this._rpc({
                                     model: 'account.online.provider',
                                     method: 'get_login_form',
-                                    args: [[self.id], inst[0].id, inst[0].type_provider, self.context],
+                                    args: [[], inst[0].id, inst[0].type_provider, self.context],
                                 })
                                 .then(function(result){
                                     self.do_action(result);
