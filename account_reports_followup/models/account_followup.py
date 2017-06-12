@@ -75,7 +75,7 @@ class account_move_line(models.Model):
     followup_line_id = fields.Many2one('account_followup.followup.line', 'Follow-up Level',
                                        ondelete='restrict') #restrict deletion of the followup line
     followup_date = fields.Date('Latest Follow-up', index=True)
-    result = fields.Monetary(compute='_get_result', method=True, string="Balance") #'balance' field is not the same
+    result = fields.Monetary(compute='_get_result', method=True) #'balance' field is not the same
 
 
 class res_partner(models.Model):

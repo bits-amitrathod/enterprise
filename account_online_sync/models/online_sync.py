@@ -107,7 +107,7 @@ class OnlineAccount(models.Model):
     account_number = fields.Char()
     last_sync = fields.Date("Last synchronization")
     online_identifier = fields.Char(help='id use to identify account in provider system', readonly=True)
-    provider_name = fields.Char(related='account_online_provider_id.name', readonly=True)
+    provider_name = fields.Char(related='account_online_provider_id.name', string="Provider", readonly=True)
     balance = fields.Float(readonly=True, help='balance of the account sent by the third party provider')
 
     @api.multi
