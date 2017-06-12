@@ -327,10 +327,10 @@
                                     </div>
                                     <div class="col-xs-6 o_kanban_primary_right">
                                         <div class="mb4" groups="helpdesk.group_use_sla" attrs="{'invisible': [('use_sla', '=', False)]}">
-                                            <a name="%(helpdesk.action_upcoming_sla_fail_all_tickets)d" type="action"  context="{'search_default_team_id': active_id, 'default_team_id': active_id}"><field name="upcoming_sla_fail_tickets"/> Tickets to Review</a>
+                                            <a name="%(helpdesk.action_upcoming_sla_fail_all_tickets)d" type="action"  context="{'search_default_team_id': active_id, 'default_team_id': active_id}"><t t-esc="record.upcoming_sla_fail_tickets.raw_value"/> Tickets to Review</a>
                                         </div>
                                         <div class="mb4">
-                                            <a name="%(helpdesk.helpdesk_ticket_action_unassigned)d" type="action" context="{'search_default_team_id': active_id, 'default_team_id': active_id}"><field name="unassigned_tickets"/> Unassigned Tickets</a>
+                                            <a name="%(helpdesk.helpdesk_ticket_action_unassigned)d" type="action" context="{'search_default_team_id': active_id, 'default_team_id': active_id}"><t t-esc="record.unassigned_tickets.raw_value"/> Unassigned Tickets</a>
                                         </div>
                                         <div class="mb4" t-if="record.use_rating.raw_value">
                                             <a name="action_view_all_rating" type="object">See Customer Satisfaction</a>

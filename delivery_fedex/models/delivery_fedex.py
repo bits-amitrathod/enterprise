@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
+import time
 
-from odoo import api, models, fields, _
+from odoo import api, models, fields, _, tools
 from odoo.exceptions import ValidationError
 
 from fedex_request import FedexRequest
@@ -75,6 +76,48 @@ class ProviderFedex(models.Model):
     def on_change_fedex_service_type(self):
         self.fedex_saturday_delivery = False
 
+    @tools.ormcache('environment', 'account_number', 'meter_number', 'droppoff_type', 'service_type',
+                    'package_code', 'weight_unit', 'fedex_saturday_delivery', 'currency_name',
+                    'shipper_company', 'shipper_warehouse', 'recipient', 'weight', 'max_weight',
+                    'cache_interval')
+    def _fedex_get_rate(self, environment, account_number, meter_number, droppoff_type, service_type,
+                        package_code, weight_unit, fedex_saturday_delivery, order_name, currency_name,
+                        shipper_company, shipper_warehouse, recipient, weight, max_weight,
+                        cache_interval):
+        Partner = self.env['res.partner']
+        shipper_company = Partner.browse(shipper_company[0])
+        shipper_warehouse = Partner.browse(shipper_warehouse[0])
+        recipient = Partner.browse(recipient[0])
+
+        # Authentication stuff
+        srm = FedexRequest(request_type="rating", prod_environment=environment)
+        superself = self.sudo()
+        srm.web_authentication_detail(superself.fedex_developer_key, superself.fedex_developer_password)
+        srm.client_detail(account_number, meter_number)
+
+        # Build basic rating request and set addresses
+        srm.transaction_detail(order_name)
+        srm.shipment_request(droppoff_type, service_type, package_code, weight_unit, fedex_saturday_delivery)
+
+        srm.set_currency(currency_name)
+        srm.set_shipper(shipper_company, shipper_warehouse)
+        srm.set_recipient(recipient)
+
+        if max_weight and weight > max_weight:
+            total_package = int(weight / max_weight)
+            last_package_weight = weight % max_weight
+
+            for sequence in range(1, total_package + 1):
+                srm.add_package(max_weight, sequence_number=sequence, mode='rating')
+            if last_package_weight:
+                total_package = total_package + 1
+                srm.add_package(last_package_weight, sequence_number=total_package, mode='rating')
+            srm.set_master_package(weight, total_package)
+        else:
+            srm.add_package(weight, mode='rating')
+            srm.set_master_package(weight, 1)
+        return srm.rate()
+
     def fedex_get_shipping_price_from_so(self, orders):
         res = []
         max_weight = _convert_weight(self.fedex_default_packaging_id.max_weight, self.fedex_weight_unit)
@@ -85,35 +128,30 @@ class ProviderFedex(models.Model):
             est_weight_value = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line]) or 0.0
             weight_value = _convert_weight(est_weight_value, self.fedex_weight_unit)
 
-            # Authentication stuff
-            srm = FedexRequest(request_type="rating", prod_environment=self.prod_environment)
-            superself = self.sudo()
-            srm.web_authentication_detail(superself.fedex_developer_key, superself.fedex_developer_password)
-            srm.client_detail(superself.fedex_account_number, superself.fedex_meter_number)
-
-            # Build basic rating request and set addresses
-            srm.transaction_detail(order.name)
-            srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, self.fedex_default_packaging_id.shipper_package_code, self.fedex_weight_unit, self.fedex_saturday_delivery)
             order_currency = order.currency_id
-            srm.set_currency(order_currency.name)
-            srm.set_shipper(order.company_id.partner_id, order.warehouse_id.partner_id)
-            srm.set_recipient(order.partner_id)
+            superself = self.sudo()
 
-            if max_weight and weight_value > max_weight:
-                total_package = int(weight_value / max_weight)
-                last_package_weight = weight_value % max_weight
+            # Cache the rate for 4 hours
+            cache_interval = int(time.time() / (4 * 3600))
 
-                for sequence in range(1, total_package + 1):
-                    srm.add_package(max_weight, sequence_number=sequence, mode='rating')
-                if last_package_weight:
-                    total_package = total_package + 1
-                    srm.add_package(last_package_weight, sequence_number=total_package, mode='rating')
-                srm.set_master_package(weight_value, total_package)
-            else:
-                srm.add_package(weight_value, mode='rating')
-                srm.set_master_package(weight_value, 1)
-
-            request = srm.rate()
+            request = self._fedex_get_rate(
+                self.prod_environment,
+                superself.fedex_account_number,
+                superself.fedex_meter_number,
+                self.fedex_droppoff_type,
+                self.fedex_service_type,
+                self.fedex_default_packaging_id.shipper_package_code,
+                self.fedex_weight_unit,
+                self.fedex_saturday_delivery,
+                order.name,
+                order_currency.name,
+                (order.company_id.partner_id.id, order.company_id.partner_id['__last_update']),
+                (order.warehouse_id.partner_id.id, order.warehouse_id.partner_id['__last_update']),
+                (order.partner_id.id, order.partner_id['__last_update']),
+                weight_value,
+                max_weight,
+                cache_interval,
+            )
 
             warnings = request.get('warnings_message')
             if warnings:
