@@ -396,7 +396,7 @@
                 <filter string="Passed" domain="[('quality_state', '=', 'pass')]" name="passed"/>
                 <filter string="Failed" domain="[('quality_state', '=', 'fail')]" name="failed"/>
                 <group expand="0" string="Group By">
-                    <filter string="State" context="{'group_by': 'quality_state'}"/>
+                    <filter string="State" name="state" context="{'group_by': 'quality_state'}"/>
                 </group>
             </search>
         </field>

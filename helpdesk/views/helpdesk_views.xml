@@ -318,7 +318,7 @@
                 <separator/>
                 <filter string="Archived" domain="[('active','=',False)]" name="archive"/>
                 <separator/>
-                <filter string="SLA Failed" domain="[('sla_fail','!=',False)]" groups="helpdesk.group_use_sla"/>
+                <filter string="SLA Failed" name="sla_failed" domain="[('sla_fail','!=',False)]" groups="helpdesk.group_use_sla"/>
                 <group expand="0" string="Group By">
                   <filter string="Assignee" name="assignee" context="{'group_by':'user_id'}"/>
                   <filter string="Team" name="team" context="{'group_by':'team_id'}"/>

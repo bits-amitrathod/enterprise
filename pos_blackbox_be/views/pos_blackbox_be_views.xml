@@ -277,7 +277,7 @@
             <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
             <field name="arch" type="xml">
                 <search position="inside">
-                    <filter string="FDM transactions" domain="[('blackbox_signature','!=','')]"/>
+                    <filter string="FDM transactions" name="fdm_transactions" domain="[('blackbox_signature','!=','')]"/>
                 </search>
             </field>
         </record>

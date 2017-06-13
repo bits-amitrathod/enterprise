@@ -349,11 +349,11 @@
         <field name="model">marketing.campaign</field>
         <field name="arch" type="xml">
             <search string="Search Campaign">
-                <filter string="New" domain="[('state', '=', 'draft')]" />
-                <filter string="Running" domain="[('state', '=', 'running')]" />
-                <filter string="Stopped" domain="[('state', '=', 'stopped')]" />
+                <filter string="New" name="new" domain="[('state', '=', 'draft')]" />
+                <filter string="Running" name="running" domain="[('state', '=', 'running')]" />
+                <filter string="Stopped" name="stopped" domain="[('state', '=', 'stopped')]" />
                 <separator />
-                <filter string="Archived" domain="[('active', '=', False)]" />
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]" />
                 <group>
                     <filter name="group_state" string="State" context="{'group_by': 'state'}" />
                 </group>

@@ -30,16 +30,16 @@
         <field name="name" string="Phonecalls"/>
         <field name="call_date"/>
         <field name="state"/>
-        <filter string="My Phonecalls" domain="[('user_id', '=', uid)]"/>
-        <filter string="Unassigned" domain="[('user_id','=',False)]"/>
+        <filter string="My Phonecalls" name="my_phonecalls" domain="[('user_id', '=', uid)]"/>
+        <filter string="Unassigned" name="unassigned" domain="[('user_id','=',False)]"/>
         <separator/>
         <filter name="phonecalls_to_do" string="To Do" domain="[('state','in',('open','pending'))]"/>
         <separator/>
         <field name="user_id"/>
         <group expand="0" string="Group By">
-          <filter string="Responsible" domain="[]" context="{'group_by':'user_id'}"/>
-          <filter string="Creation" help="Creation Date" domain="[]" context="{'group_by':'create_date'}"/>
-          <filter string="Month" domain="[]" context="{'group_by':'call_date'}" help="Calls Date by Month"/>
+          <filter string="Responsible" name="responsible" domain="[]" context="{'group_by':'user_id'}"/>
+          <filter string="Creation" name="creation" help="Creation Date" domain="[]" context="{'group_by':'create_date'}"/>
+          <filter string="Month" name="month" domain="[]" context="{'group_by':'call_date'}" help="Calls Date by Month"/>
         </group>
       </search>
     </field>

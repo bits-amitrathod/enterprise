@@ -149,12 +149,12 @@
             <search string="Search Participants">
                 <field name="display_name" string="Resource Name" />
                 <field name="campaign_id" />
-                <filter string="Running" domain="[('state', '=', 'running')]" />
-                <filter string="Completed" domain="[('state', '=', 'completed')]" />
+                <filter string="Running" name="running" domain="[('state', '=', 'running')]" />
+                <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]" />
                 <separator />
                 <group>
-                    <filter string="Campaign" context="{'group_by': 'campaign_id'}" />
-                    <filter string="State" context="{'group_by': 'state'}" />
+                    <filter string="Campaign" name="group_by_campaign" context="{'group_by': 'campaign_id'}" />
+                    <filter string="State" name="group_by_state" context="{'group_by': 'state'}" />
                 </group>
             </search>
         </field>

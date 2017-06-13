@@ -128,7 +128,7 @@
                     <field name="state"/>
                     <group string="Group By">
                         <filter string="Website" domain="[]" name="my_exps" context="{'group_by':'website_id'}"/>
-                        <filter string="State" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
                     </group>
                 </search>
             </field>
@@ -210,7 +210,7 @@
                 <search string="Search version">
                     <field name="website_id"/>
                     <group string="Group By">
-                        <filter string="Website" domain="[]" context="{'group_by':'website_id'}"/>
+                        <filter string="Website" name="my_versions" domain="[]" context="{'group_by':'website_id'}"/>
                     </group>
                 </search>
             </field>

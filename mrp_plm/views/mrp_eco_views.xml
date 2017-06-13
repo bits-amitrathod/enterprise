@@ -321,7 +321,7 @@
                     <filter string='Product' name="productgroup" context="{'group_by': 'product_tmpl_id'}"/>
                     <filter string="State" name="stategroup" context="{'group_by': 'state'}"/>
                     <filter string="Stage" name="stagegroup" context="{'group_by': 'stage_id'}"/>
-                    <filter string='Company' context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                    <filter string='Company' name="company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
                 </group>
             </search>
         </field>
