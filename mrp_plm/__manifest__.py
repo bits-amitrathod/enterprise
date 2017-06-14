@@ -32,4 +32,5 @@ Product Life Management
     ],
     'demo': [],
     'application': True,
+    'license': 'OEEL-1',
 }
