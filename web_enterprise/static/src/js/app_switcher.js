@@ -48,7 +48,6 @@ var AppSwitcher = Widget.extend({
             apps: _.where(this.menu_data, {is_app: true}),
             menu_items: [],
             focus: null,  // index of focused element
-            is_searching: is_mobile(),
         };
     },
     process_menu_data: function(menu_data) {
