@@ -19,4 +19,5 @@
         'wizard/timesheet_validation_views.xml',
     ],
     'auto_install': True,
+    'license': 'OEEL-1',
 }

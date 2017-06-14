@@ -9,5 +9,6 @@
     'version': '0.1',
 
     'depends': ['project_forecast', 'sale_management'],
-    'auto_install': True
+    'auto_install': True,
+    'license': 'OEEL-1',
 }
