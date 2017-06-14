@@ -101,10 +101,13 @@
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_card oe_kanban_global_click">
                                 <div class="row mb4">
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-5">
                                         <strong><span><field name="name"/></span></strong>
                                     </div>
-                                    <div class="col-xs-6 pull-right text-right">
+                                    <div class="col-xs-3">
+                                        <strong><span><field name="value"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-4 pull-right text-right">
                                         <strong><i class="fa fa-fw fa-tags"></i><field name="leads_count"/> leads</strong>
                                     </div>
                                 </div>
@@ -156,7 +159,7 @@
         <!--
         TEAM USER
          -->
-        <!-- Team User From View -->
+        <!-- Team User Form View -->
         <record model="ir.ui.view" id="view_crm_team_user_form">
             <field name="name">Team User Form</field>
             <field name="model">team.user</field>
@@ -267,12 +270,24 @@
         <menuitem id="team_user" name="Leads Assignation" parent="leads_menu" action="team_user_action" />
 
         <!-- TEAM -->
-        <!-- Team Action - form - tree -->
+        <!-- Team Action - form - tree - kanban -->
         <record model="ir.actions.act_window" id="team_action">
             <field name="name">Sales Channels</field>
             <field name="res_model">crm.team</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,kanban,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('sales_team.crm_team_view_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('sales_team.crm_team_view_kanban')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('sales_team.crm_team_view_form')})]"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to define a new sales channel.
+                </p><p>
+                    Use sales channels to organize your sales departments.
+                    Each channel will work with a separate pipeline.
+                </p>
+            </field>
         </record>
 
         <!-- Team User Menu Item -->

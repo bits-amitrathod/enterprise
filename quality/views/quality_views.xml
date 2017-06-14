@@ -473,7 +473,7 @@
     </record>
 
     <!-- QUALITY.ALERT.TEAM -->
-    <record id="quality_alert_team_view_kanban" model="ir.ui.view">
+    <record id="quality_alert_team_dashboard_view_kanban" model="ir.ui.view">
         <field name="name">quality.alert.team.view.kanban</field>
         <field name="model">quality.alert.team</field>
         <field name="arch" type="xml">
@@ -587,11 +587,32 @@
         </field>
     </record>
 
+    <record id="quality_alert_team_view_kanban" model="ir.ui.view">
+        <field name="name">quality.alert.team.view.kanban</field>
+        <field name="model">quality.alert.team</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="quality_alert_team_action" model="ir.actions.act_window">
         <field name="name">Quality Dashboard</field>
         <field name="res_model">quality.alert.team</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="quality_alert_team_dashboard_view_kanban" />
         <field name="help" type="html">
             <p>
               Quality Teams group the different quality alerts/checks
@@ -603,8 +624,11 @@
     <record id="quality_alert_team_action_config" model="ir.actions.act_window">
         <field name="name">Quality Teams</field>
         <field name="res_model">quality.alert.team</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('quality_alert_team_view_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('quality_alert_team_view_kanban')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('quality_alert_team_view_form')})]"/>
     </record>
 
     <!-- QUALITY.TAG -->
@@ -661,9 +685,6 @@
                         <div t-attf-class="oe_kanban_global_click">
                             <div>
                                 <strong><field name="name"/></strong>
-                                <span class="pull-right" title="Folded or not?">
-                                    <field name="folded" widget="boolean"/>
-                                </span>
                             </div>
                         </div>
                     </t>

@@ -112,6 +112,24 @@
         <field name="name">mrp.eco.type.view.kanban</field>
         <field name="model">mrp.eco.type</field>
         <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div>
+                                <strong><field name="name"/></strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="mrp_eco_type_dashboard_view_kanban" model="ir.ui.view">
+        <field name="name">mrp.eco.type.view.kanban</field>
+        <field name="model">mrp.eco.type</field>
+        <field name="arch" type="xml">
             <kanban class="oe_background_grey o_kanban_dashboard o_mrp_plm_kanban" create="0">
                 <field name="name"/>
                 <field name="alias_id"/>
@@ -218,6 +236,7 @@
         <field name="res_model">mrp.eco.type</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="mrp_eco_type_dashboard_view_kanban" />
         <field name="help" type="html">
             <p>
               Create ECO Types
@@ -230,6 +249,9 @@
         <field name="res_model">mrp.eco.type</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('mrp_eco_type_view_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('mrp_eco_type_view_kanban')})]"/>
         <field name="help" type="html">
             <p>
               Create ECO Types
@@ -691,9 +713,6 @@
                         <div t-attf-class="oe_kanban_global_click">
                             <div>
                                 <strong><field name="name"/></strong>
-                                <span class="pull-right" title="Folded or not?">
-                                    <field name="folded" widget="boolean"/>
-                                </span>
                             </div>
                         </div>
                     </t>
