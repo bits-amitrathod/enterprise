@@ -16,7 +16,9 @@ class Assignment(models.TransientModel):
     @api.multi
     def create_assignment(self):
         # create a project.forecast on the project's first month
-        project_start = fields.Date.from_string(self.project_id.date_start)
+        project_start = fields.Date.from_string(fields.Date.today())
+        if self.project_id.date_start:
+            project_start = fields.Date.from_string(self.project_id.date_start)
         month_start = fields.Date.to_string(project_start + relativedelta(day=1))
         month_end = fields.Date.to_string(project_start + relativedelta(months=1, day=1, days=-1))
 

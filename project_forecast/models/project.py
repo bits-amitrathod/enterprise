@@ -21,24 +21,7 @@ class Project(models.Model):
             raise UserError(_('You cannot delete a project containing forecasts. You can either delete all the project\'s forecasts and then delete the project or simply deactivate the project.'))
         return super(Project, self).unlink()
 
-    @api.multi
-    def view_monthly_forecast(self):
-        self.env.cr.execute("""
-            SELECT count(*)
-            FROM project_forecast
-            WHERE project_id = %s
-              AND date_trunc('month', start_date) != date_trunc('month', end_date);
-        """, [self.id])
-        [count] = self.env.cr.fetchone()
-        if count:
-            raise exceptions.UserError(
-                _("Can only be used for forecasts not spanning multiple months, "
-                  "found %(forecast_count)d forecast(s) spanning across "
-                  "months in %(project_name)s") % {
-                    'forecast_count': count,
-                    'project_name': self.display_name,
-                }
-            )
+    def action_view_project_forecast(self):
         context = dict(self.env.context, default_project_id=self.id, default_employee_id=self.user_id.employee_ids[:1].id)
         return {
             'name': _("Forecast"),

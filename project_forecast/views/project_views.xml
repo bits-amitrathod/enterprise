@@ -9,7 +9,7 @@
                 <field name="allow_forecast"/>
             </xpath>
             <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="inside">
-                <a t-if="record.allow_forecast.raw_value" class="o_project_kanban_box" name="view_monthly_forecast" type="object">
+                <a t-if="record.allow_forecast.raw_value" class="o_project_kanban_box" name="action_view_project_forecast" type="object">
                     <div>
                         <span class="o_label">Forecast</span>
                     </div>
@@ -47,7 +47,7 @@
             </div>
             <button name="toggle_active" position="before">
                 <button class="oe_stat_button" type="object" attrs="{'invisible':[('allow_forecast', '=', False)]}"
-                    name="view_monthly_forecast" icon="fa-tasks">
+                    name="action_view_project_forecast" icon="fa-tasks">
                     <span>Forecast</span>
                 </button>
             </button>

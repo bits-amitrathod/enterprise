@@ -170,7 +170,6 @@ class ProjectForecast(models.Model):
 
         # otherwise copy an existing cell from the row, ignore eventual
         # non-monthly forecast
-        # TODO: maybe expand the non-monthly forecast to a fully monthly forecast?
         self.search(row_domain, limit=1).ensure_one().copy({
             'start_date': start,
             'end_date': end,
