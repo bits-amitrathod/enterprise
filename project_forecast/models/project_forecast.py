@@ -18,7 +18,7 @@ class ProjectForecast(models.Model):
         return employee_ids and employee_ids[0] or False
 
     def default_end_date(self):
-        return date.today() + timedelta(days=1)
+        return date.today() + relativedelta(months=1, day=1, days=-1)  # end of current month
 
     def _read_group_employee_ids(self, employee, domain, order):
         group = self.env.ref('project.group_project_user', False) or self.env.ref('base.group_user')
@@ -176,18 +176,6 @@ class ProjectForecast(models.Model):
             cell_field: change,
         })
         return False
-
-    @api.multi
-    def project_forecast_assign(self):
-        # necessary to forward the default_project_id, otherwise it's
-        # stripped out by the context forwarding of actions execution
-        [action] = self.env.ref('project_forecast.action_project_forecast_assign').read()
-
-        action['context'] = {
-            'default_project_id': self.env.context.get('default_project_id'),
-            'default_task_id': self.env.context.get('default_task_id')
-        }
-        return action
 
     @api.model
     def _read_forecast_tasks(self, tasks, domain, order):

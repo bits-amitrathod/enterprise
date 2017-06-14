@@ -14,7 +14,6 @@
         'security/project_forecast_security.xml',
         'views/project_forecast_views.xml',
         'views/project_views.xml',
-        'wizard/project_forecast_assignment_views.xml',
     ],
     'demo': [
         'data/project_forecast_demo.xml',
