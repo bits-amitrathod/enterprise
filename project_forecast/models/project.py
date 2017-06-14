@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, exceptions, fields, models, _
 
@@ -52,20 +54,3 @@ class Task(models.Model):
         if self.env['project.forecast'].search([('task_id', 'in', self.ids)]):
             raise UserError(_('You cannot delete a task containing forecasts. You can either delete all the task\'s forecasts and then delete the task or simply deactivate the task.'))
         return super(Task, self).unlink()
-
-    @api.multi
-    def create_forecast(self):
-        view_id = self.env.ref('project_forecast.project_forecast_view_form').id
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'project.forecast',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': view_id,
-            'target': 'current',
-            'context': {
-                'default_project_id': self.project_id.id,
-                'default_task_id': self.id,
-                'default_employee_id': self.user_id.employee_ids[0].id if self.user_id.employee_ids else False,
-            }
-        }

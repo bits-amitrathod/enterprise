@@ -243,23 +243,6 @@
         action="project_forecast_action_report_activities"/>
 
     <!-- Actions from form view -->
-    <record id="project_forecast_action_from_task" model="ir.actions.act_window">
-        <field name="name">Forecast</field>
-        <field name="res_model">project.forecast</field>
-        <field name="view_mode">grid,gantt,tree,form</field>
-        <field name="context">{
-            'group_by': ['employee_id'],
-            'task_id': active_id,
-            'search_default_task_id': [active_id],
-            'search_default_group_by_employee_id': 1}</field>
-    </record>
-    <record id="project_forecast_action_view_grid_from_task" model="ir.actions.act_window.view">
-        <field name="view_mode">grid</field>
-        <field name="sequence" eval="1"/>
-        <field name="view_id" ref="view_project_forecast_grid_by_user"/>
-        <field name="act_window_id" ref="project_forecast_action_from_task"/>
-    </record>
-
     <record id="project_forecast_action_from_project" model="ir.actions.act_window">
         <field name="name">Forecast</field>
         <field name="res_model">project.forecast</field>
