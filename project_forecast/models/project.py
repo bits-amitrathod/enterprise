@@ -40,19 +40,6 @@ class Project(models.Model):
                 }
             )
         context = dict(self.env.context, default_project_id=self.id, default_employee_id=self.user_id.employee_ids[:1].id)
-        # forecast grid requires start and end dates on the project
-        if not (self.date_start and self.date):
-            return {
-                'name': self.display_name,
-                'type': 'ir.actions.act_window',
-                'res_model': 'project.project',
-                'target': 'new',
-                'res_id': self.id,
-                'view_mode': 'form',
-                'view_id': self.env.ref('project_forecast.view_project_set_dates').id,
-                'context': context,
-            }
-
         return {
             'name': _("Forecast"),
             'type': 'ir.actions.act_window',

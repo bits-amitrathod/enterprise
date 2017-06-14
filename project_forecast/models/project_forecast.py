@@ -134,46 +134,6 @@ class ProjectForecast(models.Model):
             duration = timedelta(days=1)
             self.start_date = end - duration
 
-    def _grid_start_of(self, span, step, anchor):
-        if span != 'project':
-            return super(ProjectForecast, self)._grid_start_of(span, step, anchor)
-
-        if self.env.context.get('default_project_id'):
-            project = self.env['project.project'].browse(self.env.context['default_project_id'])
-        elif self.env.context.get('default_task_id'):
-            project = self.env['project.task'].browse(self.env.context['default_task_id']).project_id
-
-        if step != 'month':
-            raise exceptions.UserError(
-                _("Forecasting over a project only supports monthly forecasts (got step {})").format(step)
-            )
-        if not project.date_start:
-            raise exceptions.UserError(
-                _("A project must have a start date to use a forecast grid, "
-                  "found no start date for {project.display_name}").format(
-                    project=project
-                )
-            )
-        return fields.Date.from_string(project.date_start).replace(day=1)
-
-    def _grid_end_of(self, span, step, anchor):
-        if span != 'project':
-            return super(ProjectForecast, self)._grid_end_of(span, step, anchor)
-
-        if self.env.context.get('default_project_id'):
-            project = self.env['project.project'].browse(self.env.context['default_project_id'])
-        elif self.env.context.get('default_task_id'):
-            project = self.env['project.task'].browse(self.env.context['default_task_id']).project_id
-
-        if not project.date:
-            raise exceptions.UserError(
-                _("A project must have an end date to use a forecast grid, "
-                  "found no end date for {project.display_name}").format(
-                    project=project
-                )
-            )
-        return fields.Date.from_string(project.date)
-
     def _grid_pagination(self, field, span, step, anchor):
         if span != 'project':
             return super(ProjectForecast, self)._grid_pagination(field, span, step, anchor)
