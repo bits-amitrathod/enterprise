@@ -11,4 +11,5 @@
         'views/delivery_ups_view.xml',
         'views/sale_config_settings_views.xml',
     ],
+    'license': 'OEEL-1',
 }

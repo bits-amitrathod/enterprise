@@ -12,4 +12,5 @@
         'views/delivery_usps_template.xml',
         'views/sale_config_settings_views.xml',
     ],
+    'license': 'OEEL-1',
 }
