@@ -21,6 +21,7 @@ This module allows the creation of the EDI documents and the communication with 
         'data/3.2/cfdv32.xml',
         'data/account_data.xml',
         'data/payment_method_data.xml',
+        'data/res_country_data.xml',
         'views/account_invoice_view.xml',
         'views/account_config_settings_views.xml',
         'views/res_partner_view.xml',
@@ -30,6 +31,7 @@ This module allows the creation of the EDI documents and the communication with 
         "views/payment_method_view.xml",
         'views/account_view.xml',
         "views/l10n_mx_edi_report_invoice.xml",
+        'views/res_country_view.xml',
     ],
     'demo': [
         'demo/ir_ui_views.xml',
