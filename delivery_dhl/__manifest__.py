@@ -12,4 +12,5 @@
         'views/sale_config_settings_views.xml',
         'views/stock_config_settings_views.xml',
     ],
+    'license': 'OEEL-1',
 }
