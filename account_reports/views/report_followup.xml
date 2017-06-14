@@ -39,7 +39,7 @@
             <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="js_change_date">Change expected payment date/note</a></li>
         </ul>
     </xpath>
-    <xpath expr="//span[@class='o_account_report_column_value']" position="replace">
+    <xpath expr="//span[hasclass('o_account_report_column_value')]" position="replace">
         <span class="'o_account_report_column_value'">
             <t t-if="column.get('blocked') != None">
                 <input t-if="column['blocked'] == False" type="checkbox" name="blocked" value="True" />
@@ -53,7 +53,7 @@
 </template>
 
 <template id="template_followup_report" inherit_id="account_reports.main_template" primary="True">
-    <xpath expr="//div[contains(@class, 'o_account_reports_body')]" position="before">
+    <xpath expr="//div[hasclass('o_account_reports_body')]" position="before">
         <div class="alert alert-warning o_account_reports_followup-no-action" id='no-action' role="alert" t-if="partner != False and partner.id not in partner.get_partners_in_need_of_action().ids and context.get('print_mode') != True">
             <p><strong>Warning!</strong> No action needs to be taken for this partner. <a t-if="partner.payment_next_action_date &gt; today" class='o_account_reports_followup-auto'>Put back in the list</a></p>
         </div>
@@ -82,7 +82,7 @@
             </t>
         </p>
     </xpath>
-    <xpath expr="//div[@class='o_account_reports_summary_edit']" position="replace">
+    <xpath expr="//div[hasclass('o_account_reports_summary_edit')]" position="replace">
         <div t-if="context.get('print_mode') != True" class="o_account_reports_summary_edit">
                 <textarea name="summary"><t t-if="report.get('summary')" t-raw="report['summary']" /></textarea>
                 <button t-att-data-id="partner.id" class="btn btn-primary js_account_report_save_summary">Save</button>
@@ -115,7 +115,7 @@
             <t t-call="account_reports.line_template_followup_report" />
         </t>
     </xpath>
-    <xpath expr="//div[@class='o_account_reports_summary']" position="before">
+    <xpath expr="//div[hasclass('o_account_reports_summary')]" position="before">
         <span t-if='context.get("print_mode") != True' id='action-buttons' class='o_account_reports_followup_not_clicked no_print'>
             <button class="btn btn-primary followup-letter" action="print_followup" t-att-data-partner="partner.id">Print Letter</button>
             <button class="btn btn-primary followup-email" t-att-data-partner="partner.id">Send by email</button>

@@ -17,7 +17,7 @@
     </template>
 
     <template id="portal_my_home_menu_helpdesk" name="Portal layout : helpdesk tickets menu entries" inherit_id="portal.portal_layout" priority="50">
-        <xpath expr="//ol[contains(@class,'o_portal_submenu')]" position="inside">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
             <li t-if="page_name == 'ticket' or ticket">
                 <a t-if="ticket" t-attf-href="/my/tickets?{{ keep_query() }}">Tickets</a>
                 <t t-else="">Tickets</t>
@@ -29,7 +29,7 @@
     </template>
 
     <template id="portal_my_home_helpdesk_ticket" name="Portal My Home : Helpdesk Ticket" inherit_id="portal.portal_my_home" priority="50">
-        <xpath expr="//ul[contains(@class,'o_portal_docs')]" position="inside">
+        <xpath expr="//ul[hasclass('o_portal_docs')]" position="inside">
             <li t-if="ticket_count" class="list-group-item">
                 <span class="badge" t-esc="ticket_count"/>
                 <a href="/my/tickets">Tickets</a>

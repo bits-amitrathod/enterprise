@@ -158,7 +158,7 @@
 
 <!-- Business Statements Aged receivable templates  -->
  <template id="line_template_aged_receivable_report" inherit_id="account_reports.line_template" primary="True">
-     <xpath expr="//ul[contains(@class, 'o_account_reports_domain_dropdown')]/li[last()]" position="before">
+     <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
          <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
      </xpath>
  </template>
@@ -172,7 +172,7 @@
 
  <!-- Business Statements Aged Payable templates -->
  <template id="line_template_aged_payable_report" inherit_id="account_reports.line_template" primary="True">
-     <xpath expr="//ul[contains(@class, 'o_account_reports_domain_dropdown')]/li[last()]" position="before">
+     <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
          <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
      </xpath>
  </template>
@@ -186,7 +186,7 @@
 
 <!-- partner and general ledger templates -->
 <template id="line_template_partner_ledger_report" inherit_id="account_reports.line_template" primary="True">
-    <xpath expr="//span[contains(@class, 'o_account_reports_caret_icon')]" position="before">
+    <xpath expr="//span[hasclass('o_account_reports_caret_icon')]" position="before">
         <t t-if="line.get('trust') == 'good'">
             <span class="fa fa-circle color-green trust-partner"></span>
         </t>
@@ -197,7 +197,7 @@
             <span class="fa fa-circle color-transparent trust-partner"></span>
         </t>
     </xpath>
-    <xpath expr="//ul[contains(@class, 'o_account_reports_domain_dropdown')]/li[last()]" position="before">
+    <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
         <li t-if="line['caret_options'] != 'account.tax'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
     </xpath>
 </template>
@@ -209,10 +209,10 @@
     </xpath>
 </template>
 <template id="line_template_general_ledger_report" inherit_id="account_reports.line_template" primary="True">
-    <xpath expr="//span[contains(@class, 'account_report_line_name')]" position="inside">
+    <xpath expr="//span[hasclass('account_report_line_name')]" position="inside">
         &amp;nbsp;<a t-if="line.get('unfolded')" t-att-data-id="line.get('id')" action="open_journal_entries" class="no_print o_journal_entries"> ⇒ journal entries</a>
     </xpath>
-    <xpath expr="//ul[contains(@class, 'o_account_reports_domain_dropdown')]/li[last()]" position="before">
+    <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
         <li t-if="line['caret_options'] != 'account.tax'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
     </xpath>
 </template>
@@ -247,7 +247,7 @@
 
 <!-- Aged partner balance templates -->
 <template id="template_aged_partner_balance_line_report" inherit_id="account_reports.line_template" primary="True">
-    <xpath expr="//span[contains(@class, 'o_account_reports_caret_icon')]" position="before">
+    <xpath expr="//span[hasclass('o_account_reports_caret_icon')]" position="before">
         <t t-if="line.get('trust') == 'good'">
             <span class="fa fa-circle color-green trust-partner"></span>
         </t>

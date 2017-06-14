@@ -8,7 +8,7 @@
     </template>
 
     <template id="timesheet_plan" inherit_id="sale_timesheet.timesheet_plan" name="Timesheet Plan (Timesheet and Forecast)" priority="35">
-        <xpath expr="//div[contains(@class, 'o_timesheet_plan_content')]" position="inside">
+        <xpath expr="//div[hasclass('o_timesheet_plan_content')]" position="inside">
             <div class="o_project_plan_project_timesheet_forecast">
                 <t t-if="timesheet_forecast_table and timesheet_forecast_table['rows']">
                     <h3>Forecast</h3>

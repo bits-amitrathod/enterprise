@@ -8,7 +8,7 @@
             <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']" position="after">
                 <field name="subscription_id" attrs="{'invisible': [('subscription_id', '=', False)]}"/>
             </xpath>
-            <xpath expr="//div[@class='oe_button_box']/button[1]" position="before">
+            <xpath expr="//div[hasclass('oe_button_box')]/button[1]" position="before">
                 <button class="oe_stat_button" name="action_open_subscriptions" type="object" icon="fa-book" attrs="{'invisible': [('subscription_count', '=', 0)]}">
                     <field name="subscription_count" widget="statinfo" string="Subscriptions"/>
                 </button>
