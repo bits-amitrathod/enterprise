@@ -13,6 +13,7 @@
         'utm',
         'rating',
         'web_tour',
+        'resource'
     ],
     'description': """
 Helpdesk - Ticket Management App

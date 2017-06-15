@@ -2,9 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
-
 from dateutil import relativedelta
-
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.tools import pycompat
@@ -597,10 +595,28 @@ class HelpdeskTicket(models.Model):
         for ticket in self:
             dom = [('team_id', '=', ticket.team_id.id), ('priority', '<=', ticket.priority), '|', ('ticket_type_id', '=', ticket.ticket_type_id.id), ('ticket_type_id', '=', False)]
             sla = ticket.env['helpdesk.sla'].search(dom, order="time_days, time_hours, time_minutes", limit=1)
+            working_calendar = self.env.user.company_id.resource_calendar_id
             if sla and ticket.sla_id != sla and ticket.active and ticket.create_date:
                 ticket.sla_id = sla.id
                 ticket.sla_name = sla.name
-                ticket.deadline = fields.Datetime.from_string(ticket.create_date) + relativedelta.relativedelta(days=sla.time_days, hours=sla.time_hours, minutes=sla.time_minutes)
+                ticket_create_date = fields.Datetime.from_string(ticket.create_date)
+                if sla.time_days > 0:
+                    deadline = working_calendar.plan_days(
+                        sla.time_days+1,
+                        ticket_create_date,
+                        compute_leaves=True)
+                    # We should also depend on ticket creation time, otherwise for 1 day SLA for example all tickets
+                    # created on monday will have the deadline as tuesday 8:00
+                    deadline = deadline.replace(hour=ticket_create_date.hour, minute=ticket_create_date.minute, second=ticket_create_date.second, microsecond=ticket_create_date.microsecond)
+                else:
+                    deadline = ticket_create_date
+                # We should execute the function plan_hours in any case because
+                # if i create a ticket for 1 day sla configuration and tomorrow at the same time i don't work,
+                # deadline falls on the time that i don't work which is ticket creation time and is not correct
+                ticket.deadline = working_calendar.plan_hours(
+                    sla.time_hours,
+                    deadline,
+                    compute_leaves=True)
 
     @api.depends('deadline', 'stage_id')
     def _compute_sla_fail(self):

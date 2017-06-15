@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+
 from dateutil.relativedelta import relativedelta
+from datetime import datetime, timedelta, date, time
 
 from .common import HelpdeskTransactionCase
 from odoo import fields
@@ -28,11 +30,14 @@ class TestHelpdeskSLA(HelpdeskTransactionCase):
             'stage_id': self.stage_done.id,
             'time_days': 1,
             'time_hours': 1,
-            'time_minutes': 1,
         })
 
     def test_sla_base(self):
         # helpdesk user create a ticket
+        ticket_creation_date = '2016-06-24 13:08:07'
+        # counting from monday 1 day+ 1hour based on ticket creation time
+        ticket_expected_deadline = '2016-06-27 14:08:07'
+
         ticket1 = self.env['helpdesk.ticket'].sudo(self.helpdesk_user.id).create({
             'name': 'test ticket 1',
             'team_id': self.test_team.id,
@@ -42,7 +47,7 @@ class TestHelpdeskSLA(HelpdeskTransactionCase):
         # we rewind its creation date of more than the SLA time (we have to bypass the ORM as it doesn't let you write on create_date)
         ticket1._cr.execute(
             "UPDATE helpdesk_ticket set create_date=%s where id=%s",
-            ["'" + fields.Datetime.to_string(fields.Datetime.from_string(fields.Datetime.now()) - relativedelta(days=1, hours=1, minutes=2)) + "'", ticket1.id])
+            ["'" + ticket_creation_date + "'", ticket1.id])
         # invalidate the cache and manually run the compute as our cr.execute() bypassed the ORM
         ticket1.invalidate_cache()
         ticket1.sla_id = False  # the deadline will only be computed if the sla actually changes
@@ -52,24 +57,20 @@ class TestHelpdeskSLA(HelpdeskTransactionCase):
         # helpdesk user closes the ticket
         ticket1.write({'stage_id': self.stage_done.id})
         # we verify the SLA is failed
-        self.assertTrue(not ticket1.sla_active and ticket1.sla_fail, "Ticket SLA didn't fail while it should have.")
+        self.assertFalse(ticket1.sla_active)
+        self.assertTrue(ticket1.sla_fail)
+        self.assertEqual(ticket1.deadline, ticket_expected_deadline)
 
-        # helpdesk user creates a second ticket, we rewind its creation date of less than the SLA time and close it
+        # helpdesk user creates a second ticket and closes it without SLA fail
         ticket2 = self.env['helpdesk.ticket'].sudo(self.helpdesk_user.id).create({
             'name': 'test ticket 2',
             'team_id': self.test_team.id,
         })
-        # we rewind its creation date of more than the SLA time (we have to bypass the ORM as it doesn't let you write on create_date)
-        self.cr.execute(
-            "UPDATE helpdesk_ticket set create_date=%s where id=%s",
-            ["'" + fields.Datetime.to_string(fields.Datetime.from_string(fields.Datetime.now()) - relativedelta(days=1, hours=1)) + "'", ticket2.id])
-        # manually run the compute as our cr.execute() bypassed the ORM
-        ticket1.invalidate_cache()
-        ticket2._compute_sla()
         # helpdesk user closes the ticket
         ticket2.write({'stage_id': self.stage_done.id})
         # we check the sla didn't fail
-        self.assertTrue(not ticket2.sla_active and not ticket2.sla_fail, "Ticket SLA failed while it should have.")
+        self.assertFalse(ticket2.sla_active)
+        self.assertFalse(ticket2.sla_fail)
 
     def test_sla_priority(self):
         # the manager creates SLAs for ticket priorities
