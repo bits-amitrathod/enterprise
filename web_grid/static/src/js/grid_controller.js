@@ -151,7 +151,7 @@ var GridController = AbstractController.extend({
             view_id: formViewID,
             title: _t("Add a Line"),
             disable_multiple_selection: true,
-            on_saved: this.reload.bind(this),
+            on_saved: this.reload.bind(this, {}),
         }).open();
     },
     /**
