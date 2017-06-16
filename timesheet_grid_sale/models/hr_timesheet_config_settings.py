@@ -6,7 +6,7 @@ from odoo import api, models, fields
 from odoo.addons.timesheet_grid_sale.models.sale import DEFAULT_INVOICED_TIMESHEET
 
 
-class TimesheetConfiguration(models.TransientModel):
+class HrTimesheetConfigSettings(models.TransientModel):
     _inherit = 'hr.timesheet.config.settings'
 
     invoiced_timesheet = fields.Selection([
@@ -14,22 +14,21 @@ class TimesheetConfiguration(models.TransientModel):
         ('approved', "Invoice approved timesheets only"),
     ], default='all', string="Timesheets Invoicing")
 
-    @api.multi
-    def set_default_invoiced_timesheet(self):
-        for record in self:
-            self.env['ir.config_parameter'].sudo().set_param(
-                'sale.invoiced_timesheet',
-                record.invoiced_timesheet
-            )
-        return True
+    def set_values(self):
+        super(HrTimesheetConfigSettings, self).set_values()
+        self.env['ir.config_parameter'].sudo().set_param('sale.invoiced_timesheet', self.invoiced_timesheet)
 
     @api.model
-    def get_default_invoiced_timesheet(self, fields):
-        result = self.env['ir.config_parameter'].sudo().get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
-        return {'invoiced_timesheet': result}
+    def get_values(self):
+        res = super(HrTimesheetConfigSettings, self).get_values()
+        params = self.env['ir.config_parameter'].sudo()
+        res.update(
+            invoiced_timesheet=params.get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
+        )
+        return res
 
 
-class SaleConfiguration(models.TransientModel):
+class SaleConfigSettings(models.TransientModel):
     _inherit = 'sale.config.settings'
 
     invoiced_timesheet = fields.Selection([
@@ -37,16 +36,13 @@ class SaleConfiguration(models.TransientModel):
         ('approved', "Invoice approved timesheets only"),
     ], default='all', string="Timesheets Invoicing")
 
-    @api.multi
-    def set_default_invoiced_timesheet(self):
-        for record in self:
-            self.env['ir.config_parameter'].set_param(
-                'sale.invoiced_timesheet',
-                record.invoiced_timesheet
-            )
-        return True
+    def set_values(self):
+        super(SaleConfigSettings, self).set_values()
+        self.env['ir.config_parameter'].set_param('sale.invoiced_timesheet',self.invoiced_timesheet)
 
     @api.model
-    def get_default_invoiced_timesheet(self, fields):
-        result = self.env['ir.config_parameter'].get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
-        return {'invoiced_timesheet': result}
+    def get_values(self):
+        res = super(SaleConfigSettings, self).get_values()
+        params = self.env['ir.config_parameter'].sudo()
+        res.update(invoiced_timesheet=params.get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET))
+        return res

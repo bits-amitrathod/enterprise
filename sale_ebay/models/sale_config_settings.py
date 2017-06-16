@@ -6,8 +6,7 @@ from ebaysdk.exception import ConnectionError
 from odoo import models, fields, api
 
 
-class EbayConfiguration(models.TransientModel):
-    _name = 'sale.config.settings'
+class SaleConfigSettings(models.TransientModel):
     _inherit = 'sale.config.settings'
 
     ebay_dev_id = fields.Char("Developer Key")
@@ -34,9 +33,9 @@ class EbayConfiguration(models.TransientModel):
     ebay_gallery_plus = fields.Boolean("Gallery Plus", default=False)
 
     @api.multi
-    def set_ebay(self):
-        self.ensure_one()
-        set_param = self.env['ir.config_parameter'].set_param
+    def set_values(self):
+        super(SaleConfigSettings, self).set_values()
+        set_param = self.env['ir.config_parameter'].sudo().set_param
 
         ebay_dev_id = self.ebay_dev_id or ''
         sandbox_token = self.ebay_sandbox_token or ''
@@ -114,41 +113,28 @@ class EbayConfiguration(models.TransientModel):
                         pass
 
     @api.model
-    def get_default_ebay(self, fields):
-        get_param = self.env['ir.config_parameter'].get_param
-        ebay_dev_id = get_param('ebay_dev_id', default='')
-        ebay_sandbox_token = get_param('ebay_sandbox_token', default='')
-        ebay_sandbox_app_id = get_param('ebay_sandbox_app_id', default='')
-        ebay_sandbox_cert_id = get_param('ebay_sandbox_cert_id', default='')
-        ebay_prod_token = get_param('ebay_prod_token', default='')
-        ebay_prod_app_id = get_param('ebay_prod_app_id', default='')
-        ebay_prod_cert_id = get_param('ebay_prod_cert_id', default='')
-        ebay_domain = get_param('ebay_domain', default='sand')
-        ebay_currency = int(get_param('ebay_currency', default=self.env.ref('base.USD')))
-        ebay_country = int(get_param('ebay_country', default=self.env.ref('base.us')))
-        ebay_site = int(get_param('ebay_site', default=self.env['ebay.site'].search([])[0]))
-        ebay_zip_code = get_param('ebay_zip_code')
-        ebay_location = get_param('ebay_location')
-        ebay_out_of_stock = get_param('ebay_out_of_stock', default=False)
-        ebay_sales_team = int(get_param('ebay_sales_team', default=self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]))
-        ebay_gallery_plus = get_param('ebay_gallery_plus')
-        return {'ebay_dev_id': ebay_dev_id,
-                'ebay_sandbox_token': ebay_sandbox_token,
-                'ebay_sandbox_app_id': ebay_sandbox_app_id,
-                'ebay_sandbox_cert_id': ebay_sandbox_cert_id,
-                'ebay_prod_token': ebay_prod_token,
-                'ebay_prod_app_id': ebay_prod_app_id,
-                'ebay_prod_cert_id': ebay_prod_cert_id,
-                'ebay_domain': ebay_domain,
-                'ebay_currency': ebay_currency,
-                'ebay_country': ebay_country,
-                'ebay_site': ebay_site,
-                'ebay_zip_code': ebay_zip_code,
-                'ebay_location': ebay_location,
-                'ebay_out_of_stock': ebay_out_of_stock,
-                'ebay_sales_team': ebay_sales_team,
-                'ebay_gallery_plus': ebay_gallery_plus,
-                }
+    def get_values(self):
+        res = super(SaleConfigSettings, self).get_values()
+        get_param = self.env['ir.config_parameter'].sudo().get_param
+        res.update(
+            ebay_dev_id=get_param('ebay_dev_id', default=''),
+            ebay_sandbox_token=get_param('ebay_sandbox_token', default=''),
+            ebay_sandbox_app_id=get_param('ebay_sandbox_app_id', default=''),
+            ebay_sandbox_cert_id=get_param('ebay_sandbox_cert_id', default=''),
+            ebay_prod_token=get_param('ebay_prod_token', default=''),
+            ebay_prod_app_id=get_param('ebay_prod_app_id', default=''),
+            ebay_prod_cert_id=get_param('ebay_prod_cert_id', default=''),
+            ebay_domain=get_param('ebay_domain', default='sand'),
+            ebay_currency=int(get_param('ebay_currency', default=self.env.ref('base.USD'))),
+            ebay_country=int(get_param('ebay_country', default=self.env.ref('base.us'))),
+            ebay_site=int(get_param('ebay_site', default=self.env['ebay.site'].search([])[0])),
+            ebay_zip_code=get_param('ebay_zip_code'),
+            ebay_location=get_param('ebay_location'),
+            ebay_out_of_stock=get_param('ebay_out_of_stock', default=False),
+            ebay_sales_team=int(get_param('ebay_sales_team', default=self.env['crm.team'].search([('team_type', '=', 'ebay')])[0])),
+            ebay_gallery_plus=get_param('ebay_gallery_plus'),
+        )
+        return res
 
     @api.model
     def button_sync_categories(self, context=None):

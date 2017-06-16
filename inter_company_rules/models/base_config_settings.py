@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
-class inter_company_rules_configuration(models.TransientModel):
-
+class BaseConfigSettings(models.TransientModel):
     _inherit = 'base.config.settings'
 
     company_id = fields.Many2one('res.company', string='Select Company',
@@ -40,8 +39,9 @@ class inter_company_rules_configuration(models.TransientModel):
             self.auto_validation = self.company_id.auto_validation
             self.warehouse_id = self.company_id.warehouse_id.id
 
-    @api.multi
-    def set_inter_company_configuration(self):
+    # YTI FIXME: Could define related fields instead
+    def set_values(self):
+        super(BaseConfigSettings, self).set_values()
         if self.company_id:
             vals = {
                 'so_from_po': self.so_from_po if self.rule_type == 'so_and_po' else False,

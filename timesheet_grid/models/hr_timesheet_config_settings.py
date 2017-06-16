@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 
 
-class TimesheetConfig(models.TransientModel):
+class HrTimesheetConfigSettings(models.TransientModel):
 
     _inherit = 'hr.timesheet.config.settings'
 
@@ -27,85 +27,30 @@ class TimesheetConfig(models.TransientModel):
         ('months', 'After end of month')
     ], string='Frequency', required=True)
 
-    # Cron for users
-
     @api.model
-    def get_default_reminder_user_allow(self, _fields):
-        cron = self.env.ref('timesheet_grid.timesheet_reminder_user')
-        return {
-            'reminder_user_allow': cron.active
-        }
+    def get_values(self):
+        res = super(HrTimesheetConfigSettings, self).get_values()
+        params = self.env['ir.config_parameter'].sudo()
+        cron_user = self.env.ref('timesheet_grid.timesheet_reminder_user')
+        cron_manager = self.env.ref('timesheet_grid.timesheet_reminder_manager')
+        res.update(
+            reminder_user_allow=cron_user.active,
+            reminder_user_delay=int(params.get_param('timesheet.reminder.user.delay', '0')),
+            reminder_user_interval=cron_user.interval_type,
+            reminder_manager_allow=cron_manager.active,
+            reminder_manager_delay=int(params.get_param('timesheet.reminder.manager.delay', '0')),
+            reminder_manager_interval=cron_manager.interval_type,
+        )
+        return res
 
-    @api.multi
-    def set_reminder_user_allow(self):
-        self.ensure_one()
-        cron = self.env.ref('timesheet_grid.timesheet_reminder_user')
-        cron.write({'active': self.reminder_user_allow})
-
-    @api.model
-    def get_default_reminder_user_delay(self, _fields):
-        return {
-            'reminder_user_delay': int(self.env['ir.config_parameter'].sudo().get_param('timesheet.reminder.user.delay', '0'))
-        }
-
-    @api.multi
-    def set_reminder_user_delay(self):
-        if self.reminder_user_delay:
-            self.env['ir.config_parameter'].sudo().set_param('timesheet.reminder.user.delay', self.reminder_user_delay)
-            self._set_cron_next_execution_date('timesheet_grid.timesheet_reminder_user', self.reminder_user_interval, self.reminder_user_delay)
-
-    @api.model
-    def get_default_reminder_user_interval(self, _fields):
-        cron = self.env.ref('timesheet_grid.timesheet_reminder_user')
-        return {
-            'reminder_user_interval': cron.interval_type
-        }
-
-    @api.multi
-    def set_reminder_user_interval(self):
-        self.ensure_one()
+    def set_values(self):
+        super(HrTimesheetConfigSettings, self).set_values()
+        self.env.ref('timesheet_grid.timesheet_reminder_user').write({'active': self.reminder_user_allow})
+        self.env['ir.config_parameter'].sudo().set_param('timesheet.reminder.user.delay', self.reminder_user_delay)
         self._set_cron_next_execution_date('timesheet_grid.timesheet_reminder_user', self.reminder_user_interval, self.reminder_user_delay)
-
-    # Cron for manager
-
-    @api.model
-    def get_default_reminder_manager_allow(self, _fields):
-        cron = self.env.ref('timesheet_grid.timesheet_reminder_manager')
-        return {
-            'reminder_manager_allow': cron.active
-        }
-
-    @api.multi
-    def set_reminder_manager_allow(self):
-        self.ensure_one()
-        cron = self.env.ref('timesheet_grid.timesheet_reminder_manager')
-        cron.write({'active': self.reminder_manager_allow})
-
-    @api.model
-    def get_default_reminder_manager_delay(self, _fields):
-        return {
-            'reminder_manager_delay': int(self.env['ir.config_parameter'].sudo().get_param('timesheet.reminder.manager.delay', '0'))
-        }
-
-    @api.multi
-    def set_reminder_manager_delay(self):
-        if self.reminder_manager_delay:
-            self.env['ir.config_parameter'].sudo().set_param('timesheet.reminder.manager.delay', self.reminder_manager_delay)
-            self._set_cron_next_execution_date('timesheet_grid.timesheet_reminder_manager', self.reminder_manager_interval, self.reminder_manager_delay)
-
-    @api.model
-    def get_default_reminder_manager_interval(self, _fields):
-        cron = self.env.ref('timesheet_grid.timesheet_reminder_manager')
-        return {
-            'reminder_manager_interval': cron.interval_type
-        }
-
-    @api.multi
-    def set_reminder_manager_interval(self):
-        self.ensure_one()
+        self.env.ref('timesheet_grid.timesheet_reminder_manager').write({'active': self.reminder_manager_allow})
+        self.env['ir.config_parameter'].sudo().set_param('timesheet.reminder.manager.delay', self.reminder_manager_delay)
         self._set_cron_next_execution_date('timesheet_grid.timesheet_reminder_manager', self.reminder_manager_interval, self.reminder_manager_delay)
-
-    # Common / others
 
     def _set_cron_next_execution_date(self, xml_id, frequency, delay=0):
         now = datetime.now()

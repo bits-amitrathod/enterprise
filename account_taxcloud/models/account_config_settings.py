@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 from .taxcloud_request import TaxCloudRequest
 
-class TaxCloudConfigSettings(models.TransientModel):
+class AccountConfigSettings(models.TransientModel):
     _inherit = 'account.config.settings'
 
     taxcloud_api_id = fields.Char(string='TaxCloud API ID')
@@ -14,17 +14,21 @@ class TaxCloudConfigSettings(models.TransientModel):
     tic_category_id = fields.Many2one(related='company_id.tic_category_id', string="Default TIC Code")
 
     @api.multi
-    def set_default_taxcloud(self):
+    def set_values(self):
+        super(AccountConfigSettings, self).set_values()
         Param = self.env['ir.config_parameter'].sudo()
         Param.set_param("account_taxcloud.taxcloud_api_id", (self.taxcloud_api_id or '').strip())
         Param.set_param("account_taxcloud.taxcloud_api_key", (self.taxcloud_api_key or '').strip())
 
     @api.model
-    def get_default_taxcloud(self, fields):
+    def get_values(self):
+        res = super(AccountConfigSettings, self).get_values()
         params = self.env['ir.config_parameter'].sudo()
-        taxcloud_api_id = params.get_param('account_taxcloud.taxcloud_api_id', default='')
-        taxcloud_api_key = params.get_param('account_taxcloud.taxcloud_api_key', default='')
-        return dict(taxcloud_api_id=taxcloud_api_id, taxcloud_api_key=taxcloud_api_key)
+        res.update(
+            taxcloud_api_id=params.get_param('account_taxcloud.taxcloud_api_id', default=''),
+            taxcloud_api_key=params.get_param('account_taxcloud.taxcloud_api_key', default=''),
+        )
+        return res
 
     @api.multi
     def sync_taxcloud_category(self):
