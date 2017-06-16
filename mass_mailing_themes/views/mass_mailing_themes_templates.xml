@@ -8,6 +8,11 @@
                  data-images-info='{"logo": {"format": "png"}, "all": {"module": "mass_mailing_themes"}}'>
                 <t t-call="mass_mailing_themes.theme_newsletter_template"/>
             </div>
+            <div data-name="blank" data-nowrap="1"
+                 data-img="/mass_mailing_themes/static/src/img/theme_imgs/blank_thumb"
+                 data-images-info='{"logo": {"format": "png"}, "all": {"module": "mass_mailing_themes"}}'>
+                <t t-call="mass_mailing_themes.theme_blank_template"/>
+            </div>
             <div data-name="airmail"
                  data-img="/mass_mailing_themes/static/src/img/theme_imgs/airmail_thumb"
                  data-images-info='{"logo": {"format": "png"}, "all": {"module": "mass_mailing_themes"}}'>
@@ -39,6 +44,15 @@
                  <t t-call="mass_mailing_themes.theme_solar_template"/>
             </div>
         </xpath>
+    </template>
+
+    <!-- Theme "blank" default template -->
+    <template id="theme_blank_template">
+        <div>
+            <p>
+                Lorem ipsum dolor sit amet, <br/><br/>consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
     </template>
 
     <!-- Theme "Newsletter" default template -->
