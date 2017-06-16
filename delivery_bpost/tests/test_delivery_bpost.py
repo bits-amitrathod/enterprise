@@ -17,7 +17,8 @@ class TestDeliveryBpost(TransactionCase):
                                  'city': 'Ramillies',
                                  'zip': 1367,
                                  'country_id': self.env.ref('base.be').id,
-                                 'phone': '081813700'})
+                                 'phone': '081813700',
+                                 'vat': 'BE0477472701'})
         self.agrolait = self.env.ref('base.res_partner_2')
         self.agrolait.write({'name': 'Odoo Brussels',
                              'street': 'Avenue Edmond Van Nieuwenhuyse 5',
