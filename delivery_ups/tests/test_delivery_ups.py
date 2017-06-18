@@ -64,6 +64,7 @@ class TestDeliveryUPS(TransactionCase):
 
         picking.pack_operation_product_ids.qty_done = 1.0
         picking.do_transfer()
+        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "UPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "UPS carrying price is probably incorrect")
@@ -114,6 +115,7 @@ class TestDeliveryUPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
+        picking.send_to_shipper()
 
         # We put pack each product separately
         po0 = picking.pack_operation_product_ids[0]

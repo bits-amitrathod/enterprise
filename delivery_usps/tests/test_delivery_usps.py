@@ -13,7 +13,12 @@ class TestDeliveryUSPS(TransactionCase):
 
         # Add a full address to "Your Company"
         self.your_company = self.env.ref('base.main_partner')
-        self.your_company.write({'phone': 9874582356})
+        self.your_company.write({'country_id': self.env.ref('base.us').id,
+                                 'state_id': self.env.ref('base.state_us_5').id,
+                                 'city': 'San Francisco',
+                                 'street': '51 Federal Street',
+                                 'zip': '94107',
+                                 'phone': 9874582356})
         self.agrolait = self.env.ref('base.res_partner_2')
         self.think_big_system = self.env.ref('base.res_partner_18')
         self.think_big_system.write({'phone': 3132223456,
@@ -61,6 +66,7 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
+        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
@@ -98,6 +104,7 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
+        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
@@ -135,6 +142,7 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
+        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")

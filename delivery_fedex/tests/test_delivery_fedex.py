@@ -23,6 +23,13 @@ class TestDeliveryFedex(TransactionCase):
         self.uom_unit = self.env.ref('product.product_uom_unit')
 
         self.your_company = self.env.ref('base.main_partner')
+        self.your_company.write({'country_id': self.env.ref('base.us').id,
+                                 'state_id': self.env.ref('base.state_us_5').id,
+                                 'city': 'San Francisco',
+                                 'street': '51 Federal Street',
+                                 'zip': '94107',
+                                 'phone': 9874582356})
+
         self.agrolait = self.env.ref('base.res_partner_2')
         self.agrolait.write({'country_id': self.env.ref('base.be').id})
         self.delta_pc = self.env.ref('base.res_partner_4')
@@ -59,6 +66,7 @@ class TestDeliveryFedex(TransactionCase):
 
             picking.pack_operation_product_ids.qty_done = 1.0
             picking.do_transfer()
+            picking.send_to_shipper()
 
             self.assertIsNot(picking.carrier_tracking_ref, False, "FedEx did not return any tracking number")
             self.assertGreater(picking.carrier_price, 0.0, "FedEx carrying price is probably incorrect")
@@ -104,6 +112,7 @@ class TestDeliveryFedex(TransactionCase):
 
             picking.pack_operation_product_ids.qty_done = 1.0
             picking.do_transfer()
+            picking.send_to_shipper()
 
             self.assertIsNot(picking.carrier_tracking_ref, False, "FedEx did not return any tracking number")
             self.assertGreater(picking.carrier_price, 0.0, "FedEx carrying price is probably incorrect")
@@ -162,6 +171,7 @@ class TestDeliveryFedex(TransactionCase):
             self.assertTrue(all([po.result_package_id is not False for po in picking.pack_operation_ids]), "Some products have not been put in packages")
 
             picking.do_transfer()
+            picking.send_to_shipper()
 
             self.assertIsNot(picking.carrier_tracking_ref, False, "FedEx did not return any tracking number")
             self.assertGreater(picking.carrier_price, 0.0, "FedEx carrying price is probably incorrect")

@@ -60,6 +60,7 @@ class TestDeliveryDHL(TransactionCase):
 
         picking.pack_operation_product_ids.qty_done = 1.0
         picking.do_transfer()
+        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "DHL carrying price is probably incorrect")
@@ -97,6 +98,7 @@ class TestDeliveryDHL(TransactionCase):
 
         picking.pack_operation_product_ids.qty_done = 1.0
         picking.do_transfer()
+        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "DHL carrying price is probably incorrect")
@@ -147,6 +149,7 @@ class TestDeliveryDHL(TransactionCase):
         self.assertTrue(all([po.result_package_id is not False for po in picking.pack_operation_ids]), "Some products have not been put in packages")
 
         picking.do_transfer()
+        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "DHL carrying price is probably incorrect")
