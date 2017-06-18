@@ -16,9 +16,14 @@ class TestDeliveryBpost(TransactionCase):
                                  'state_id': False,
                                  'city': 'Ramillies',
                                  'zip': 1367,
-                                 'country_id': self.env.ref('base.be').id,
                                  'phone': '081813700',
-                                 'vat': 'BE0477472701'})
+                                 'vat': 'BE0477472701'
+                                 })
+        # "country_id" has to be changed in another write than "vat",
+        # else "vat" field is not copied on children partners and can
+        # cause exception when VAT numbers validation is enabled
+        self.your_company.write({'country_id': self.env.ref('base.be').id})
+
         self.agrolait = self.env.ref('base.res_partner_2')
         self.agrolait.write({'name': 'Odoo Brussels',
                              'street': 'Avenue Edmond Van Nieuwenhuyse 5',
