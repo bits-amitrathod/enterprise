@@ -16,31 +16,20 @@ class SaleConfigSettings(models.TransientModel):
     ], string="Mode")
 
     @api.multi
-    def set_pbx_ip(self):
-        self.env['ir.config_parameter'].set_param('crm.voip.pbx_ip', self[0].pbx_ip)
-
-    @api.multi
-    def set_wsServer(self):
-        self.env['ir.config_parameter'].set_param('crm.voip.wsServer', self[0].wsServer)
-
-    @api.multi
-    def set_mode(self):
-        self.env['ir.config_parameter'].set_param('crm.voip.mode', self[0].mode)
+    def set_values(self):
+        super(SaleConfigSettings, self).set_values()
+        params = self.env['ir.config_parameter'].sudo()
+        params.set_param('crm.voip.pbx_ip', self[0].pbx_ip)
+        params.set_param('crm.voip.wsServer', self[0].wsServer)
+        params.set_param('crm.voip.mode', self[0].mode)
 
     @api.model
-    def get_default_pbx_ip(self, fields):
-        params = self.env['ir.config_parameter']
-        pbx_ip = params.get_param('crm.voip.pbx_ip', default='localhost')
-        return {'pbx_ip': pbx_ip}
-
-    @api.model
-    def get_default_wsServer(self, fields):
-        params = self.env['ir.config_parameter']
-        wsServer = params.get_param('crm.voip.wsServer', default='ws://localhost')
-        return {'wsServer': wsServer}
-
-    @api.model
-    def get_default_mode(self, fields):
-        params = self.env['ir.config_parameter']
-        mode = params.get_param('crm.voip.mode', default="demo")
-        return {'mode': mode}
+    def get_values(self):
+        res = super(SaleConfigSettings, self).get_values()
+        params = self.env['ir.config_parameter'].sudo()
+        res.update(
+            pbx_ip=params.get_param('crm.voip.pbx_ip', default='localhost'),
+            wsServer=params.get_param('crm.voip.wsServer', default='ws://localhost'),
+            mode=params.get_param('crm.voip.mode', default="demo"),
+        )
+        return res

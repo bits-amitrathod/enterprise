@@ -23,7 +23,7 @@ Supported formats
         'report/print_check_top.xml',
         'report/print_check_middle.xml',
         'report/print_check_bottom.xml',
-        'views/res_config_view.xml',
+        'views/account_config_settings_views.xml',
     ],
     'installable': True,
     'auto_install': True,

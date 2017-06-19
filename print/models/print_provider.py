@@ -57,9 +57,6 @@ class PrintOrder(models.Model):
     _description = 'Print Order'
     _order = 'sent_date desc'
 
-    def _default_print_provider(self):
-        return self.env['ir.values'].get_default('print.order', 'provider_id')
-
     def _default_currency_id(self):
         provider_id = self.env['ir.values'].get_default('print.order', 'provider_id')
         if provider_id:
@@ -70,7 +67,7 @@ class PrintOrder(models.Model):
     sent_date = fields.Datetime('Sending Date', readonly=True)
     currency_id = fields.Many2one('res.currency', 'Currency', default=_default_currency_id, readonly=True)
     user_id = fields.Many2one('res.users', 'Author', default=lambda self: self.env.user)
-    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True, default=_default_print_provider)
+    provider_id = fields.Many2one('print.provider', 'Print Provider', required=True)
 
     ink = fields.Selection([('BW', 'Black & White'), ('CL', 'Colour')], "Ink", default='BW', states={'sent': [('readonly', True)]})
     paper_weight = fields.Integer("Paper Weight", default=80, readonly=True)

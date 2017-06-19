@@ -10,10 +10,15 @@ class HrRecruitmentConfigSettings(models.TransientModel):
     access_token_validity = fields.Integer(string='Default Access Token Validity Duration')
 
     @api.model
-    def get_default_access_token_validity(self, fields):
-        access_token_validity = self.env['ir.config_parameter'].sudo().get_param('hr_contract_salary.access_token_validity', default=30)
-        return dict(access_token_validity=access_token_validity)
+    def get_values(self):
+        res = super(HrRecruitmentConfigSettings, self).get_values()
+        params = self.env['ir.config_parameter'].sudo()
+        res.update(
+            access_token_validity=params.get_param('hr_contract_salary.access_token_validity', default=30)
+        )
+        return res
 
     @api.multi
-    def set_default_access_token_validity(self):
+    def set_values(self):
+        super(HrRecruitmentConfigSettings, self).set_values()
         self.env['ir.config_parameter'].sudo().set_param("hr_contract_salary.access_token_validity", self.access_token_validity)

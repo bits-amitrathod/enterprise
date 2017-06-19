@@ -53,7 +53,7 @@ class MailChannel(models.Model):
                         method(service_identities, message)
 
     def _get_default_fcm_credentials(self):
-        return self.env['base.config.settings'].sudo().get_default_fcm_credentials()
+        return self.env['base.config.settings'].sudo().get_fcm_credentials()
 
     @api.model
     def _push_notify_fcm(self, identities, message):

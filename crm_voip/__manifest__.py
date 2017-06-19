@@ -29,7 +29,7 @@
         'views/crm_voip_templates.xml',
         'views/crm_phonecall_views.xml',
         'views/crm_lead_views.xml',
-        'views/res_config_views.xml',
+        'views/sale_config_settings_views.xml',
         'views/res_partner_views.xml',
         'views/crm_phonecall_report_views.xml',
         'data/mail_template_data.xml',
