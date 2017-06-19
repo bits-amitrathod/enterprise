@@ -8,6 +8,9 @@ var Model = require('web.Model');
 var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');
 var XMLEditor = require('web_studio.XMLEditor');
 
+var QWeb = core.qweb;
+
+
 var ReportEditor = ReportAction.extend({
 
     template: 'web_studio.report_editor',
@@ -51,6 +54,15 @@ var ReportEditor = ReportAction.extend({
         return this._super.apply(this, arguments).then(function() {
             return self.sidebar.prependTo(self.$el);
         });
+    },
+    _on_iframe_loaded: function () {
+        // Check if the iframe has been correctly loaded
+        if ($(this.iframe).contents().find('body').is(':empty')) {
+            $(this.iframe).replaceWith(QWeb.render('web_studio.report_editor_unavailable'));
+            this.$buttons.hide();
+        } else {
+            this._super.apply(this, arguments);
+        }
     },
     _update_control_panel_buttons: function () {
         this._super.apply(this, arguments);
