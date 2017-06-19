@@ -158,7 +158,7 @@ var account_report_followup = account_report.extend({
             nextActionDatePicker.setValue(moment(dt));
         };
         $content.find('.o_account_reports_followup_next_action_date_button').bind('click', changeDate);
-        
+
         var save = function () {
             var note = $content.find(".o_account_reports_next_action_note").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
             var date = nextActionDatePicker.getValue();
@@ -200,7 +200,7 @@ var account_report_followup = account_report.extend({
         paymentDatePicker.appendTo($content.find('div.o_account_reports_payment_date_picker'));
         var save = function () {
             var note = $content.find("#internalNote").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
-            var date = paymentDatePicker.get_value();
+            var date = paymentDatePicker.getValue();
             return this._rpc({
                     model: 'account.move.line',
                     method: 'write',

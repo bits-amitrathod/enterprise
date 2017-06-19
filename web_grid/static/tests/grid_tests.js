@@ -305,7 +305,7 @@ QUnit.module('Views', {
             assert.ok($('div.modal').length, "should have opened a modal");
 
             // input a project and a task
-            for (var i = 0; i< 2; i++) {
+            for (var i = 0; i < 2; i++) {
                 $('.modal .o_field_many2one input').eq(i).click();
                 $('.modal .o_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
             }
@@ -322,6 +322,61 @@ QUnit.module('Views', {
 
             assert.strictEqual(grid.$('td.o_grid_total:contains(4:00)').length, 1,
                 "should have a total of 4:00");
+
+            grid.destroy();
+            done();
+        });
+    });
+
+    QUnit.test('create analytic lines on grouped grid view', function (assert) {
+        assert.expect(4);
+        var done = assert.async();
+        this.data['analytic.line'].fields.date.default = "2017-02-25";
+
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: '<grid string="Timesheet" adjustment="object" adjust_name="adjust_grid">' +
+                    '<field name="project_id" type="row"  section="1"/>' +
+                    '<field name="task_id" type="row"/>' +
+                    '<field name="date" type="col">' +
+                        '<range name="week" string="Week" span="week" step="day"/>' +
+                        '<range name="month" string="Month" span="month" step="day"/>' +
+                    '</field>'+
+                    '<field name="unit_amount" type="measure" widget="float_time"/>' +
+                '</grid>',
+            currentDate: "2017-02-25",
+            viewOptions: {
+                views: [[23, 'form']],
+            },
+            domain: [['date', '>', '2014-09-09']],
+            archs: this.archs,
+            mockRPC: function (route, args) {
+                if (args.method === 'read_group') {
+                    assert.deepEqual(args.kwargs.domain[3], ['date', '>', '2014-09-09'],
+                        "the action domain should always be given");
+                }
+                if (args.method === 'create') {
+                    assert.strictEqual(args.args[0].date, "2017-02-25",
+                        "default date should be current day");
+                }
+                return this._super(route, args);
+            },
+        });
+
+        return concurrency.delay(0).then(function () {
+            grid.$buttons.find('.o_grid_button_add').click();
+            assert.ok($('div.modal').length, "should have opened a modal");
+            // input a project and a task
+            for (var i = 0; i < 2; i++) {
+                $('.modal .o_field_many2one input').eq(i).click();
+                $('.modal .o_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
+            }
+            // input unit_amount
+            $('.modal input').eq(3).val("4").trigger('input');
+            // save
+            $('.modal .modal-footer button.btn-primary').click();
 
             grid.destroy();
             done();
