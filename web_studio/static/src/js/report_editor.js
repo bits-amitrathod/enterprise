@@ -9,6 +9,9 @@ var session = require('web.session');
 var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');
 var XMLEditor = require('web_studio.XMLEditor');
 
+var QWeb = core.qweb;
+
+
 var ReportEditor = ReportAction.extend({
 
     template: 'web_studio.report_editor',
@@ -120,6 +123,20 @@ var ReportEditor = ReportAction.extend({
         // the edit button is available in Studio even if not in debug mode
         var is_editable = this.edit_mode_available && !this.in_edit_mode;
         this.$buttons.filter('div.o_edit_mode_available').toggle(is_editable);
+    },
+
+    /**
+     * @private
+     * @override
+     */
+    _on_iframe_loaded: function () {
+        // Check if the iframe has been correctly loaded
+        if ($(this.iframe).contents().find('body').is(':empty')) {
+            $(this.iframe).replaceWith(QWeb.render('web_studio.report_editor_unavailable'));
+            this.$buttons.hide();
+        } else {
+            this._super.apply(this, arguments);
+        }
     },
 
     //--------------------------------------------------------------------------
