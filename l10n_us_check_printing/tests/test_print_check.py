@@ -56,7 +56,7 @@ class TestPrintCheck(AccountingTestCase):
             'journal_id': self.bank_journal.id,
             'payment_method_id': self.payment_method_check.id,
         })
-        register_payments.create_payment()
+        register_payments.create_payments()
         return self.env['account.payment'].search([], order="id desc", limit=1)
 
     def test_print_check(self):
