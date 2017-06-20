@@ -21,8 +21,8 @@ class AccountRegisterPayments(models.TransientModel):
         else:
             self.partner_bank_account_id = False
 
-    def get_payment_vals(self):
-        res = super(AccountRegisterPayments, self).get_payment_vals()
+    def _prepare_payment_vals(self, invoices):
+        res = super(AccountRegisterPayments, self)._prepare_payment_vals(invoices)
         if self.payment_method_id == self.env.ref('account_sepa.account_payment_method_sepa_ct'):
             res.update({'partner_bank_account_id': self.partner_bank_account_id.id})
         return res
