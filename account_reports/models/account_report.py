@@ -14,6 +14,7 @@ from babel.dates import get_quarter_names
 from odoo.tools.misc import formatLang, format_date
 from odoo.tools import config
 from odoo.addons.web.controllers.main import clean_action
+from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
 
@@ -133,9 +134,16 @@ class AccountReport(models.AbstractModel):
             # Check if we are opening another report and if yes, pass options and ignore_session
             action = self.env['ir.actions.client'].browse([action_id])
             if action.tag == 'account_report':
-                action = action.read()[0]
                 options['unfolded_lines'] = []
                 options['unfold_all'] = False
+                action = action.read()[0]
+                another_report_context = safe_eval(action['context'])
+                another_report = self.browse(another_report_context['id'])
+                if not self.date_range and another_report.date_range:
+                    # Don't propagate the filter if current report is date based while the targetted
+                    # report is date_range based, because the semantic is not the same:
+                    # 'End of Following Month' in BS != 'Last Month' in P&L (it has to go from 1st day of fiscalyear)
+                    options['date'].pop('filter')
                 action.update({'options': options, 'ignore_session': 'read'})
                 return action
         return action_id
