@@ -10,7 +10,7 @@ class PrintDocumentPartnerWizard(models.TransientModel):
 
     @api.model
     def _default_print_provider(self):
-        return self.env['ir.values'].get_default('print.order', 'provider_id')
+        return self.env['ir.default'].get('print.order', 'provider_id')
 
     @api.model
     def default_get(self, fields):

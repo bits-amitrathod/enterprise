@@ -1197,17 +1197,14 @@ class WebStudioController(http.Controller):
     @http.route('/web_studio/get_default_value', type='json', auth='user')
     def get_default_value(self, model_name, field_name):
         """ Return the default value associated to the given field. """
-        company_id = request.env.user.company_id.id
-        IrValues = request.env['ir.values']
         return {
-            'default_value': IrValues.get_default(model_name, field_name, company_id=company_id)
+            'default_value': request.env['ir.default'].get(model_name, field_name, company_id=True)
         }
 
     @http.route('/web_studio/set_default_value', type='json', auth='user')
     def set_default_value(self, model_name, field_name, value):
         """ Set the default value associated to the given field. """
-        company_id = request.env.user.company_id.id
-        request.env['ir.values'].set_default(model_name, field_name, value, company_id=company_id)
+        request.env['ir.default'].set(model_name, field_name, value, company_id=True)
 
     @http.route('/web_studio/create_stages_model', type='json', auth='user')
     def create_stages_model(self, model_name):

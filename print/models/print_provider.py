@@ -58,7 +58,7 @@ class PrintOrder(models.Model):
     _order = 'sent_date desc'
 
     def _default_currency_id(self):
-        provider_id = self.env['ir.values'].get_default('print.order', 'provider_id')
+        provider_id = self.env['ir.default'].get('print.order', 'provider_id')
         if provider_id:
             return self.env['print.provider'].browse(provider_id).currency_id.id
         return False

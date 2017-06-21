@@ -656,11 +656,11 @@ class ProductTemplate(models.Model):
             currency = self.env['res.currency'].search([
                 ('name', '=', transaction['TransactionPrice']['_currencyID'])])
             company_id = self.env.user.company_id
-            ir_values = self.env['ir.values']
+            IrDefault = self.env['ir.default']
             if variant.taxes_id:
-                taxes_id = variant.taxes_id.mapped('id')
+                taxes_id = variant.taxes_id.ids
             else:
-                taxes_id = ir_values.get_default('product.template', 'taxes_id', company_id=company_id.id)
+                taxes_id = IrDefault.get('product.template', 'taxes_id', company_id=company_id.id)
             sol = self.env['sale.order.line'].create({
                 'product_id': variant.id,
                 'order_id': sale_order.id,
@@ -676,7 +676,7 @@ class ProductTemplate(models.Model):
 
             # create a sales order line if a shipping service is selected
             if 'ShippingServiceSelected' in transaction:
-                taxes_id = ir_values.get_default('product.template', 'taxes_id', company_id=company_id.id)
+                taxes_id = IrDefault.get('product.template', 'taxes_id', company_id=company_id.id)
                 shipping_name = transaction['ShippingServiceSelected']['ShippingService']
                 shipping_product = self.env['product.template'].search([('name', '=', shipping_name)])
                 if not shipping_product:

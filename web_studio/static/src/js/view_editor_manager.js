@@ -1231,10 +1231,10 @@ var ViewEditorManager = Widget.extend({
         this.do_action({
             name: _t('Default Values'),
             type: 'ir.actions.act_window',
-            res_model: 'ir.values',
+            res_model: 'ir.default',
             target: 'current',
             views: [[false, 'list'], [false, 'form']],
-            domain: [['model', '=', this.model_name], ['key', '=', 'default']],
+            domain: [['field_id.model', '=', this.model_name]],
         }, options);
     },
     /**
