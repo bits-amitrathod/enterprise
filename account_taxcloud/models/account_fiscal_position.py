@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 from .taxcloud_request import TaxCloudRequest
@@ -89,7 +89,7 @@ class AccountFiscalPosition(models.Model):
 
         res = request.get_tax()
         if res.get('error_message'):
-            raise ValidationError(res['error_message'])
+            raise ValidationError(_('Unable to retrieve taxes from TaxCloud: ')+'\n'+res['error_message']+'\n\n'+_('The configuration of TaxCloud is in the Accounting app, Settings menu.'))
         return res
 
 class AccountFiscalPositionTax(models.Model):

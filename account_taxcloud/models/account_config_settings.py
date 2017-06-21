@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 from .taxcloud_request import TaxCloudRequest
@@ -37,7 +37,7 @@ class AccountConfigSettings(models.TransientModel):
         res = request.get_tic_category()
 
         if res.get('error_message'):
-            raise ValidationError(res['error_message'])
+            raise ValidationError(_('Unable to retrieve taxes from TaxCloud: ')+'\n'+res['error_message']+'\n\n'+_('The configuration of TaxCloud is in the Accounting app, Settings menu.'))
 
         for category in res['data']:
             if not Category.search([('code', '=', category['TICID'])], limit=1):
