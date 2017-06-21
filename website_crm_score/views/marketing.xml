@@ -35,15 +35,9 @@
         <record id="action_score_now" model="ir.actions.server">
             <field name="name">Crm Score: Apply marked scores</field>
             <field name="model_id" ref="model_website_crm_score"/>
+            <field name="binding_model_id" ref="model_website_crm_score"/>
             <field name="state">code</field>
             <field name="code">records.assign_scores_to_leads()</field>
-        </record>
-
-        <record id="ir_action_score_now" model="ir.values">
-            <field eval="'client_action_multi'" name="key2"/>
-            <field eval="'website.crm.score'" name="model"/>
-            <field name="name">Apply marked scores</field>
-            <field eval="'ir.actions.server,%d'%action_score_now" name="value"/>
         </record>
 
         <!-- Score Menu Item -->

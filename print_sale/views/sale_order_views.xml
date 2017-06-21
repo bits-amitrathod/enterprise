@@ -12,15 +12,7 @@
             <field name="view_id" ref="print.print_order_wizard_view_form"/>
             <field name="target">new</field>
             <field name="multi">True</field>
-        </record>
-
-        <record id="sale_order_action_multi_print_sale" model="ir.values">
-            <field name="model_id" ref="sale.model_sale_order" />
-            <field name="name">Send by post</field>
-            <field name="key2">client_action_multi</field>
-            <field name="value" eval="'ir.actions.act_window,' + str(ref('print_order_wizard_action_multi_print_sale'))" />
-            <field name="key">action</field>
-            <field name="model">sale.order</field>
+            <field name="binding_model_id" ref="sale.model_sale_order" />
         </record>
 
 
@@ -58,15 +50,7 @@
             <field name="view_id" ref="print_document_partner_wizard_view_form"/>
             <field name="target">new</field>
             <field name="multi">True</field>
-        </record>
-
-        <record id="print_document_partner_client_action_multi"  model="ir.values">
-            <field name="model">res.partner</field>
-            <field name="model_id" ref="base.model_res_partner" />
-            <field name="name">Send Document by post</field>
-            <field name="key">action</field>
-            <field name="key2">client_action_multi</field>
-            <field name="value" eval="'ir.actions.act_window,' + str(ref('print_document_partner_action_multi'))" />
+            <field name="binding_model_id" ref="base.model_res_partner" />
         </record>
 
     </data>

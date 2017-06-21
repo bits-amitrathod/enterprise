@@ -109,6 +109,7 @@
     <record id="action_list_items" model="ir.actions.server">
       <field name="name">Ebay: List Product Templates on eBay</field>
       <field name="model_id" ref="sale.model_product_template"/>
+      <field name="binding_model_id" ref="product.model_product_template"/>
       <field name="state">code</field>
       <field name="code">
 if records:
@@ -116,16 +117,10 @@ if records:
       </field>
     </record>
 
-    <record id="value_list_items" model="ir.values">
-      <field name="key2" eval="'client_action_multi'"/>
-      <field name="model" eval="'product.template'"/>
-      <field name="name">List Items on eBay</field>
-      <field name="value" eval="'ir.actions.server,%d'%action_list_items"/>
-    </record>
-
     <record id="action_revise_items" model="ir.actions.server">
       <field name="name">Ebay: Revise Product Templates on eBay</field>
       <field name="model_id" ref="sale.model_product_template"/>
+      <field name="binding_model_id" ref="product.model_product_template"/>
       <field name="state">code</field>
       <field name="code">
 if records:
@@ -133,16 +128,10 @@ if records:
       </field>
     </record>
 
-    <record id="value_revise_items" model="ir.values">
-      <field name="key2" eval="'client_action_multi'"/>
-      <field name="model" eval="'product.template'"/>
-      <field name="name">Revise Items on eBay</field>
-      <field name="value" eval="'ir.actions.server,%d'%action_revise_items"/>
-    </record>
-
     <record id="action_relist_items" model="ir.actions.server">
       <field name="name">Ebay: Relist Product Templates on eBay</field>
       <field name="model_id" ref="sale.model_product_template"/>
+      <field name="binding_model_id" ref="product.model_product_template"/>
       <field name="state">code</field>
       <field name="code">
 if records:
@@ -150,16 +139,10 @@ if records:
       </field>
     </record>
 
-    <record id="value_relist_items" model="ir.values">
-      <field name="key2" eval="'client_action_multi'"/>
-      <field name="model" eval="'product.template'"/>
-      <field name="name">Relist Items on eBay</field>
-      <field name="value" eval="'ir.actions.server,%d'%action_relist_items"/>
-    </record>
-
     <record id="action_end_items_listings" model="ir.actions.server">
       <field name="name">Ebay: End Product Templates Listings on eBay</field>
       <field name="model_id" ref="sale.model_product_template"/>
+      <field name="binding_model_id" ref="product.model_product_template"/>
       <field name="state">code</field>
       <field name="code">
 if records:
@@ -167,27 +150,14 @@ if records:
       </field>
     </record>
 
-    <record id="value_end_items_listings" model="ir.values">
-      <field name="key2" eval="'client_action_multi'"/>
-      <field name="model" eval="'product.template'"/>
-      <field name="name">End Items' Listings on eBay</field>
-      <field name="value" eval="'ir.actions.server,%d'%action_end_items_listings"/>
-    </record>
-
     <record id="action_unlink_items_listings" model="ir.actions.server">
       <field name="name">Ebay: Unlink eBay Product Templates Listings</field>
       <field name="model_id" ref="sale.model_product_template"/>
+      <field name="binding_model_id" ref="product.model_product_template"/>
       <field name="state">code</field>
       <field name="code">
 if records:
   records.unlink_listing_product_ebay()
       </field>
-    </record>
-
-    <record id="value_unlink_items_listings" model="ir.values">
-      <field name="key2" eval="'client_action_multi'"/>
-      <field name="model" eval="'product.template'"/>
-      <field name="name">Unlink eBay Items' Listings</field>
-      <field name="value" eval="'ir.actions.server,%d'%action_unlink_items_listings"/>
     </record>
 </odoo>

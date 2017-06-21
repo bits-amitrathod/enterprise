@@ -646,14 +646,6 @@ class WebStudioController(http.Controller):
         if report:
             if 'groups_id' in values:
                 values['groups_id'] = [(6, 0, values['groups_id'])]
-            if 'ir_values_id' in values:
-                if values['ir_values_id']:
-                    # Avoid to create duplicates contextual action (ir.values)
-                    if not report.ir_values_id:
-                        report.create_action()
-                else:
-                    report.unlink_action()
-                values.pop('ir_values_id')
             report.write(values)
 
     @http.route('/web_studio/edit_view_arch', type='json', auth='user')

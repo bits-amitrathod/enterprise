@@ -2,6 +2,7 @@
     <record id="action_generate_forecast" model="ir.actions.server">
         <field name="name">Project: Generate Task Forecast</field>
         <field name="model_id" ref="model_project_task"/>
+        <field name="binding_model_id" ref="project.model_project_task"/>
         <field name="state">code</field>
         <field name="code">
 task_obj = env['project.task']
@@ -30,12 +31,5 @@ action = {
     "domain": [('id', 'in', forecast_ids)]
 }
         </field>
-    </record>
-
-    <record id="ir_generate_forecast" model="ir.values">
-        <field name="key2" eval="'client_action_multi'"/>
-        <field name="model" eval="'project.task'"/>
-        <field name="name">Generate Task Forecast</field>
-        <field name="value" eval="'ir.actions.server,%d'%action_generate_forecast"/>
     </record>
 </odoo>

@@ -260,15 +260,7 @@
             <field name="view_id" ref="print_order_sendnow_wizard_view_form"/>
             <field name="target">new</field>
             <field name="multi">True</field>
-        </record>
-
-        <record id="print_order_sendnow_client_action_multi" model="ir.values">
-            <field name="model">print.order</field>
-            <field name="model_id" ref="print.model_print_order" />
-            <field name="name">Send Now by post</field>
-            <field name="key">action</field>
-            <field name="key2">client_action_multi</field>
-            <field name="value" eval="'ir.actions.act_window,' + str(ref('print_order_sendnow_action_multi'))" />
+            <field name="binding_model_id" ref="print.model_print_order" />
         </record>
 
     </data>

@@ -205,18 +205,9 @@
     <field name="name">Project Forecast: Archive/Restore forecasts</field>
     <field name="type">ir.actions.server</field>
     <field name="model_id" ref="model_project_forecast" />
+    <field name="binding_model_id" ref="model_project_forecast" />
     <field name="state">code</field>
     <field name="code">records.toggle_active()</field>
-</record>
-
-<record id="project_forecast_ir_values_archive" model="ir.values">
-    <field name="name">Archive/Restore</field>
-    <field name="action_id" ref="project_forecast_server_action_archive" />
-    <field name="value" eval="'ir.actions.server,' + str(ref('project_forecast_server_action_archive'))"/>
-    <field name="key">action</field>
-    <field name="model_id" ref="model_project_forecast" />
-    <field name="model">project.forecast</field>
-    <field name="key2">client_action_multi</field>
 </record>
 
   <menuitem id="project_forecast_menu" name="Forecast"
