@@ -156,7 +156,13 @@ class AccountFinancialReportLine(models.Model):
                                    'Type', default='float', required=True)
     green_on_positive = fields.Boolean('Is growth good when positive', default=True)
     level = fields.Integer(required=True)
-    special_date_changer = fields.Selection([('from_beginning', 'From the beginning'), ('to_beginning_of_period', 'At the beginning of the period'), ('normal', 'Use given dates'), ('strict_range', 'Force given dates for all accounts and account types')], default='normal')
+    special_date_changer = fields.Selection([
+        ('from_beginning', 'From the beginning'),
+        ('to_beginning_of_period', 'At the beginning of the period'),
+        ('normal', 'Use given dates'),
+        ('strict_range', 'Force given dates for all accounts and account types'),
+        ('from_fiscalyear', 'From the beginning of the fiscal year'),
+    ], default='normal')
     show_domain = fields.Selection([('always', 'Always'), ('never', 'Never'), ('foldable', 'Foldable')], default='foldable')
     hide_if_zero = fields.Boolean(default=False)
     action_id = fields.Many2one('ir.actions.actions')
@@ -261,7 +267,7 @@ class AccountFinancialReportLine(models.Model):
                 WHERE journal_id NOT IN (SELECT id FROM account_journal WHERE type in ('cash', 'bank'))
                   AND aml.move_id IN (SELECT DISTINCT move_id FROM account_move_line WHERE user_type_id IN %s)
               )
-            ) """ 
+            ) """
             params = [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)]
         return sql, params
 
@@ -320,6 +326,30 @@ class AccountFinancialReportLine(models.Model):
         return results
 
     @api.multi
+    def _compute_date_range(self):
+        '''Compute the current report line date range according to the dates passed through the context
+        and its specified special_date_changer.
+
+        :return: The date_from, date_to, strict_range values to consider for the report line.
+        '''
+        date_from = self._context.get('date_from', False)
+        date_to = self._context.get('date_to', False)
+
+        strict_range = self.special_date_changer == 'strict_range'
+        if self.special_date_changer == 'from_beginning':
+            date_from = False
+        if self.special_date_changer == 'to_beginning_of_period' and date_from:
+            date_tmp = datetime.strptime(self._context['date_from'], "%Y-%m-%d") - relativedelta(days=1)
+            date_to = date_tmp.strftime('%Y-%m-%d')
+            date_from = False
+        if self.special_date_changer == 'from_fiscalyear' and date_to:
+            date_tmp = datetime.strptime(date_to, '%Y-%m-%d')
+            date_tmp = self.env.user.company_id.compute_fiscalyear_dates(date_tmp)['date_from']
+            date_from = date_tmp.strftime('%Y-%m-%d')
+            strict_range = True
+        return date_from, date_to, strict_range
+
+    @api.multi
     def report_move_lines_action(self):
         domain = safe_eval(self.domain)
         if 'date_from' in self.env.context.get('context', {}):
@@ -350,17 +380,9 @@ class AccountFinancialReportLine(models.Model):
             field_names = ['debit', 'credit', 'balance', 'amount_residual']
         res = dict((fn, 0.0) for fn in field_names)
         if self.domain:
-            strict_range = self.special_date_changer == 'strict_range'
-            period_from = self._context['date_from']
-            period_to = self._context['date_to']
-            if self.special_date_changer == 'from_beginning':
-                period_from = False
-            if self.special_date_changer == 'to_beginning_of_period' and self._context.get('date_from'):
-                date_tmp = datetime.strptime(self._context['date_from'], "%Y-%m-%d") - relativedelta(days=1)
-                period_to = date_tmp.strftime('%Y-%m-%d')
-                period_from = False
-
-            res = self.with_context(strict_range=strict_range, date_from=period_from, date_to=period_to)._compute_line(currency_table, financial_report, group_by=self.groupby, domain=self.domain)
+            date_from, date_to, strict_range = \
+                self._compute_date_range()
+            res = self.with_context(strict_range=strict_range, date_from=date_from, date_to=date_to)._compute_line(currency_table, financial_report, group_by=self.groupby, domain=self.domain)
         return res
 
     @api.one
@@ -520,18 +542,10 @@ class AccountFinancialReportLine(models.Model):
             domain_ids = {'line'}
             k = 0
             for period in comparison_table:
-                period_from = period.get('date_from', False)
-                period_to = period.get('date_to', False) or period.get('date', False)
-                strict_range = False
-                if line.special_date_changer == 'from_beginning':
-                    period_from = False
-                if line.special_date_changer == 'to_beginning_of_period':
-                    date_tmp = datetime.strptime(period_from, "%Y-%m-%d") - relativedelta(days=1)
-                    period_to = date_tmp.strftime('%Y-%m-%d')
-                    period_from = False
-                if line.special_date_changer == 'strict_range':
-                    strict_range = True
-                r = line.with_context(date_from=period_from, date_to=period_to, strict_range=strict_range)._eval_formula(financial_report, debit_credit, currency_table, linesDicts[k])
+                date_from = period.get('date_from', False)
+                date_to = period.get('date_to', False) or period.get('date', False)
+                date_from, date_to, strict_range = line.with_context(date_from=date_from, date_to=date_to)._compute_date_range()
+                r = line.with_context(date_from=date_from, date_to=date_to, strict_range=strict_range)._eval_formula(financial_report, debit_credit, currency_table, linesDicts[k])
                 debit_credit = False
                 res.append(r)
                 domain_ids.update(r)
@@ -679,16 +693,8 @@ class FormulaContext(dict):
             return res
         line_id = self.reportLineObj.search([('code', '=', item)], limit=1)
         if line_id:
-            strict_range = line_id.special_date_changer == 'strict_range'
-            period_from = line_id._context['date_from']
-            period_to = line_id._context['date_to']
-            if line_id.special_date_changer == 'from_beginning':
-                period_from = False
-            if line_id.special_date_changer == 'to_beginning_of_period' and line_id._context.get('date_from'):
-                date_tmp = datetime.strptime(line_id._context['date_from'], "%Y-%m-%d") - relativedelta(days=1)
-                period_to = date_tmp.strftime('%Y-%m-%d')
-                period_from = False
-            res = FormulaLine(line_id.with_context(strict_range=strict_range, date_from=period_from, date_to=period_to), self.currency_table, self.financial_report, linesDict=self.linesDict)
+            date_from, date_to, strict_range = line_id._compute_date_range()
+            res = FormulaLine(line_id.with_context(strict_range=strict_range, date_from=date_from, date_to=date_to), self.currency_table, self.financial_report, linesDict=self.linesDict)
             self.linesDict[item] = res
             return res
         return super(FormulaContext, self).__getitem__(item)

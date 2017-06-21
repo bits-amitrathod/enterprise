@@ -279,14 +279,56 @@
             <field name="financial_report_id" ref="account_financial_report_balancesheet0"/>
             <field name="level" eval="0" />
         </record>
-        <record id="account_financial_current_year_earnings0" model="account.financial.html.report.line">
-            <field name="name">CURRENT YEAR EARNINGS</field>
+        <record id="account_financial_unaffected_earnings0" model="account.financial.html.report.line">
+            <field name="name">Unallocated Earnings</field>
             <field name="code">UNAFFECTED_EARNINGS</field>
-            <field name="domain" eval="[('account_id.user_type_id', '=', ref('account.data_unaffected_earnings'))]" />
-            <field name="formulas">balance = NEP.balance - sum.balance</field>
+            <field name="formulas">balance = CURR_YEAR_EARNINGS.balance + PREV_YEAR_EARNINGS.balance</field>
             <field name="sequence" eval="1"/>
-            <field name="special_date_changer">from_beginning</field>
             <field name="parent_id" ref='account_financial_report_equity0'/>
+            <field name="level" eval="1" />
+        </record>
+        <record id="account_financial_current_year_earnings0" model="account.financial.html.report.line">
+            <field name="name">Current Year Unallocated Earnings</field>
+            <field name="code">CURR_YEAR_EARNINGS</field>
+            <field name="formulas">balance = CURR_YEAR_EARNINGS_PNL.balance + CURR_YEAR_EARNINGS_ALLOC.balance</field>
+            <field name="sequence" eval="1"/>
+            <field name="parent_id" ref='account_financial_unaffected_earnings0'/>
+            <field name="level" eval="2" />
+        </record>
+        <record id="account_financial_current_year_earnings_line_1" model="account.financial.html.report.line">
+            <field name="name">Current Year Earnings</field>
+            <field name="code">CURR_YEAR_EARNINGS_PNL</field>
+            <field name="domain" eval="[('account_id.user_type_id', 'in', [
+                ref('account.data_account_type_revenue'),
+                ref('account.data_account_type_other_income'),
+                ref('account.data_account_type_direct_costs'),
+                ref('account.data_account_type_expenses'),
+                ref('account.data_account_type_depreciation')
+            ])]" />
+            <field name="formulas">balance = -sum.balance</field>
+            <field name="sequence" eval="1"/>
+            <field name="parent_id" ref='account_financial_current_year_earnings0'/>
+            <field name="special_date_changer">from_fiscalyear</field>
+            <field name="level" eval="3" />
+        </record>
+        <record id="account_financial_current_year_earnings_line_2" model="account.financial.html.report.line">
+            <field name="name">Current Year Allocated Earnings</field>
+            <field name="code">CURR_YEAR_EARNINGS_ALLOC</field>
+            <field name="domain" eval="[('account_id.user_type_id', '=', ref('account.data_unaffected_earnings'))]" />
+            <field name="formulas">balance = -sum.balance</field>
+            <field name="sequence" eval="2"/>
+            <field name="parent_id" ref='account_financial_current_year_earnings0'/>
+            <field name="special_date_changer">from_fiscalyear</field>
+            <field name="level" eval="3" />
+        </record>
+        <record id="account_financial_previous_year_earnings0" model="account.financial.html.report.line">
+            <field name="name">Previous Years Unallocated Earnings</field>
+            <field name="code">PREV_YEAR_EARNINGS</field>
+            <field name="domain" eval="[('account_id.user_type_id', '=', ref('account.data_unaffected_earnings'))]" />
+            <field name="formulas">balance = NEP.balance - sum.balance - CURR_YEAR_EARNINGS.balance</field>
+            <field name="sequence" eval="2"/>
+            <field name="special_date_changer">from_beginning</field>
+            <field name="parent_id" ref='account_financial_unaffected_earnings0'/>
             <field name="level" eval="2" />
         </record>
         <record id="account_financial_retained_earnings0" model="account.financial.html.report.line">
@@ -785,7 +827,7 @@
         <menuitem id="menu_action_account_report_partner_ledger" name="Partner Ledger" action="action_account_report_partner_ledger" parent="account_reports_legal_statements_menu"/>
         <menuitem id="menu_action_account_report_cj" name="Consolidated Journals" action="action_account_report_cj" parent="account_reports_legal_statements_menu"/>
 
-        <record id="account_financial_current_year_earnings0" model="account.financial.html.report.line">
+        <record id="account_financial_current_year_earnings_line_1" model="account.financial.html.report.line">
             <field name="action_id" ref='action_account_report_pnl' />
         </record>
         <record id="account_financial_report_executivesummary_cash0" model="account.financial.html.report.line">
