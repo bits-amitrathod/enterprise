@@ -17,9 +17,17 @@
     </template>
 
     <template id="portal_my_home_menu_helpdesk" name="Portal layout : helpdesk tickets menu entries" inherit_id="website_portal.portal_layout" priority="50">
-        <xpath expr="//ul[contains(@class,'o_portal_submenu')]" position="inside">
-            <li t-if="ticket_count" t-att-class="page_name == 'ticket' and 'active'">
-                <a href="/my/tickets">Tickets</a>
+        <xpath expr="//ol[contains(@class,'o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'ticket' or ticket">
+                <a t-if="ticket" t-attf-href="/my/tickets?{{ keep_query() }}">
+                    My Tickets
+                </a>
+                <t t-else="">
+                    My Tickets
+                </t>
+            </li>
+            <li t-if="ticket">
+                #<span t-field="ticket.id"/>
             </li>
         </xpath>
     </template>
@@ -27,10 +35,8 @@
     <template id="portal_my_home_helpdesk_ticket" name="Portal My Home : Helpdesk Ticket" inherit_id="website_portal.portal_my_home" priority="50">
         <xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">
             <h3 t-if="ticket_count" class="page-header">
-                <a href="/my/tickets">Your Tickets
-                    <small class="ml8">
-                        <span class='badge'><t t-esc="ticket_count"/></span>
-                    </small>
+                <a href="/my/tickets">My Tickets
+                    <span class="badge ml8" t-esc="ticket_count"/>
                 </a>
             </h3>
         </xpath>
@@ -39,7 +45,7 @@
     <template id="portal_helpdesk_ticket" name="Helpdesk Ticket">
         <t t-call="website_portal.portal_layout">
             <h3 class="page-header">
-                Your Tickets
+                My Tickets
                 <t t-call="website_portal.portal_searchbar"/>
             </h3>
             <t t-if="not tickets">
@@ -70,66 +76,49 @@
     </template>
 
     <template id="tickets_followup" name="Helpdesk Tickets">
-        <t t-call="website.layout">
-            <div id="wrap">
-                <div class="container">
-                    <div class="oe_structure">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <ol class="breadcrumb mt8">
-                                    <li><a href="/my/home"><i class="fa fa-home"/></a></li>
-                                    <li><a href="/my/tickets">My Tickets</a></li>
-                                    <li>#<span t-field="ticket.id"/></li>
-                                </ol>
+        <t t-call="website_portal.portal_layout">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>
+                                <t t-call='website_portal.record_pager'/>
+                                #<span t-field="ticket.id"/> - <span t-field="ticket.name"/>
+                                <a class="btn btn-info" t-att-href="'/web#return_label=Website&amp;model=helpdesk.ticket&amp;id=%s&amp;view_type=form' % (ticket.id)" groups="helpdesk.group_helpdesk_user">Edit Ticket</a>
+                                <span t-field="ticket.stage_id.name" class="pull-right label label-info" title="Current stage of this ticket"/>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="mb8">
+                        <strong>Date:</strong> <span t-field="ticket.create_date" t-field-options='{"widget": "date"}'/>
+                    </div>
+                    <div class='row'>
+                        <div class="col-md-6" t-if="ticket.user_id">
+                            <strong>Assigned to</strong>
+                            <div>
+                                <address t-field="ticket.user_id" t-field-options='{"widget": "contact", "fields": ["name", "email", "phone"], "no_marker": true}'/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Reported by</strong>
+                            <div t-if="ticket.partner_id">
+                                <address t-field="ticket.partner_id" t-field-options='{"widget": "contact", "fields": ["name", "email"], "no_marker": true}'/>
                             </div>
                         </div>
                     </div>
-                    <div class="container">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4>
-                                            <t t-call='website_portal.record_pager'/>
-                                            #<span t-field="ticket.id"/> - <span t-field="ticket.name"/>
-                                            <a class="btn btn-info" t-att-href="'/web#return_label=Website&amp;model=helpdesk.ticket&amp;id=%s&amp;view_type=form' % (ticket.id)" groups="helpdesk.group_helpdesk_user">Edit Ticket</a>
-                                            <span t-field="ticket.stage_id.name" class="pull-right label label-info" title="Current stage of this ticket"/>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="mb8">
-                                    <strong>Date:</strong> <span t-field="ticket.create_date" t-field-options='{"widget": "date"}'/>
-                                </div>
-                                <div class='row'>
-                                    <div class="col-md-6" t-if="ticket.user_id">
-                                        <strong>Assigned to</strong>
-                                        <div>
-                                            <address t-field="ticket.user_id" t-field-options='{"widget": "contact", "fields": ["name", "email", "phone"], "no_marker": true}'/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <strong>Reported by</strong>
-                                        <div t-if="ticket.partner_id">
-                                            <address t-field="ticket.partner_id" t-field-options='{"widget": "contact", "fields": ["name", "email"], "no_marker": true}'/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt32">
-                            <div class="col-md-12">
-                                <h4><strong>Message and communication history</strong></h4>
-                            </div>
-                            <div class="col-md-10 col-md-offset-1 mt16">
-                                <t t-call="website_mail.message_thread">
-                                    <t t-set="object" t-value="ticket"/>
-                                    <t t-set="disable_composer" t-value="ticket.stage_id.is_close"/>
-                                </t>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="row mt32">
+                <div class="col-md-12">
+                    <h4><strong>Message and communication history</strong></h4>
+                </div>
+                <div class="col-md-10 col-md-offset-1 mt16">
+                    <t t-call="website_mail.message_thread">
+                        <t t-set="object" t-value="ticket"/>
+                        <t t-set="disable_composer" t-value="ticket.stage_id.is_close"/>
+                    </t>
                 </div>
             </div>
         </t>
