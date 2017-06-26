@@ -31,6 +31,9 @@ class MrpProduction(models.Model):
             order.date_planned_start_wo = date_planned_start_wo
             order.date_planned_finished_wo = date_planned_finished_wo
 
+    def _get_start_date(self):
+        return datetime.now()
+
     @api.multi
     def button_plan(self):
         super(MrpProduction, self).button_plan()
@@ -41,7 +44,8 @@ class MrpProduction(models.Model):
 
         # Schedule all work orders (new ones and those already created)
         for order in self:
-            start_date = datetime.now()
+            start_date = order._get_start_date()
+            from_date_set = False
             for workorder in order.workorder_ids:
                 workcenter = workorder.workcenter_id
                 wos = WorkOrder.search([('workcenter_id', '=', workcenter.id), ('date_planned_finished', '<>', False),
@@ -51,6 +55,9 @@ class MrpProduction(models.Model):
                 intervals = workcenter.calendar_id.attendance_ids and workcenter.calendar_id.interval_get(from_date, workorder.duration_expected / 60.0)
                 if intervals:
                     to_date = intervals[-1][1]
+                    if not from_date_set:
+                        from_date = intervals[0][0]
+                        from_date_set = True
                 else:
                     to_date = from_date + relativedelta(minutes=workorder.duration_expected)
                 # Check interval
