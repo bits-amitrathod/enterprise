@@ -25,7 +25,7 @@ var ReportEditor = ReportAction.extend({
     init: function(parent, action, options) {
         options = options || {};
         options = _.extend(options, {
-            report_url: '/report/html/' + action.report_name + '/' + action.active_ids,
+            report_url: '/report/html/' + action.report_name + '/' + action.active_ids + '?studio=1',
             report_name: action.report_name,
             report_file: action.report_file,
             name: action.name,
@@ -37,7 +37,7 @@ var ReportEditor = ReportAction.extend({
         this.view_id = action.view_id;
         this.res_model = 'ir.actions.report.xml';
         this.res_id = action.id;
-        this._super.apply(this, arguments);
+        this._super(parent, action, options);
     },
     willStart: function() {
         var self = this;
