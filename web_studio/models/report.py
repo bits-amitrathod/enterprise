@@ -9,14 +9,14 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 class Report(models.Model):
-    _inherit = 'report'
+    _inherit = 'ir.actions.report'
 
     @api.model
-    def get_html(self, docids, report_name, data=None):
+    def render_qweb_html(self, docids, data=None):
         try:
-            return super(Report, self).get_html(docids, report_name, data)
+            return super(Report, self).render_qweb_html(docids, data)
         except UserError as e:
             if not data.get('studio'):
                 raise
-            _logger.warning("Cannot edit report %r with studio: %s", report_name, e)
+            _logger.warning("Cannot edit report %r with studio: %s", self.report_name, e)
             return ''
