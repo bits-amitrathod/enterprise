@@ -11,5 +11,6 @@ from . import ir_module_module
 from . import ir_rule
 from . import ir_ui_menu
 from . import ir_ui_view
+from . import report
 from . import res_groups
 from . import res_company
