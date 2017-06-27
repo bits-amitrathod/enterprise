@@ -17,8 +17,7 @@
     <li t-if="line['caret_options'] == 'account.invoice.in'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Bill</a></li>
     <li t-if="line['caret_options'] == 'account.payment'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.payment" action="open_document">View Payment</a></li>
     <t t-if="line['caret_options'] == 'account.tax'">
-        <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-tax-type="net" action="open_tax">Net Audit</a></li>
-        <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-tax-type="tax" action="open_tax">Tax Audit</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_tax">Audit</a></li>
     </t>
 </template>
 

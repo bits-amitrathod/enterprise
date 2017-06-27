@@ -183,15 +183,11 @@ class AccountReport(models.AbstractModel):
 
     def open_tax(self, options, params=None):
         active_id = int(str(params.get('id')).split('_')[0])
-        tax_type = params.get('taxType')
-        domain = [('date', '>=', options.get('date').get('date_from')), ('date', '<=', options.get('date').get('date_to'))]
+        domain = [('date', '>=', options.get('date').get('date_from')), ('date', '<=', options.get('date').get('date_to')),
+                  '|', ('tax_ids', 'in', [active_id]), ('tax_line_id', 'in', [active_id])]
         if not options.get('all_entries'):
             domain.append(('move_id.state', '=', 'posted'))
-        if tax_type == 'net':
-            domain.append(('tax_ids', 'in', [active_id]))
-        elif tax_type == 'tax':
-            domain.append(('tax_line_id', 'in', [active_id]))
-        action = action = self.env.ref('account.action_move_line_select').read()[0]
+        action = self.env.ref('account.action_move_line_select_tax_audit').read()[0]
         ctx = self.env.context.copy()
         ctx.update({'active_id': active_id,})
         action = clean_action(action)
