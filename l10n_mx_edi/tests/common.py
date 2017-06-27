@@ -11,7 +11,9 @@ class InvoiceTransactionCase(AccountingTestCase):
         self.invoice_model = self.env['account.invoice']
         self.invoice_line_model = self.env['account.invoice.line']
         self.tax_model = self.env['account.tax']
-        self.partner_agrolait = self.env.ref("base.res_partner_2")
+        self.partner_agrolait = self.env.ref("base.res_partner_address_4")
+        self.partner_agrolait.type = 'invoice'
+        self.partner_agrolait.parent_id.street_name = 'Street Parent'
         self.product = self.env.ref("product.product_product_3")
         self.company = self.env.user.company_id
         self.account_settings = self.env['account.config.settings']

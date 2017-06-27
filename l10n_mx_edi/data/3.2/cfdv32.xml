@@ -52,7 +52,7 @@
                 </cfdi:Emisor>
                 <cfdi:Receptor
                     t-att-rfc="record.l10n_mx_edi_get_customer_rfc()"
-                    t-att-nombre="customer.name">
+                    t-att-nombre="customer.commercial_partner_id.name">
                     <t t-if="record.l10n_mx_edi_is_customer_address_required()">
                     <cfdi:Domicilio
                         t-att-calle="customer.street_name"
