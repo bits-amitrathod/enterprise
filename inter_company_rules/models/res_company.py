@@ -7,14 +7,12 @@ class res_company(models.Model):
 
     _inherit = 'res.company'
 
-    so_from_po = fields.Boolean(string="Create Sales Orders when buying to this company",
-        help="Generate a Sales Order when a Purchase Order with this company as vendor is created.\n The intercompany user must at least be Sale User.")
-    po_from_so = fields.Boolean(string="Create Purchase Orders when selling to this company",
-        help="Generate a Purchase Order when a Sales Order with this company as customer is created.\n The intercompany user must at least be Purchase User.")
-    auto_generate_invoices = fields.Boolean(string="Create Invoices/Credit Notes when encoding invoices/credit notes made to this company",
-        help="Generate Customer/Vendor Bills (and credit notes) when encoding invoices (or credit notes) made to this company.\n e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created.")
-    auto_validation = fields.Boolean(string="Sale/Purchase Orders Auto Validation",
-        help="When a Sales Order or a Purchase Order is created by a multi company rule for this company, it will automatically validate it")
+    rule_type = fields.Selection([('so_and_po', 'Synchronize Sales & Purchase Orders'),
+        ('invoice_and_refund', 'Synchronize Invoices & Bills')],
+        help='Select the type to setup inter company rules in selected company.', default='so_and_po')
+    applicable_on = fields.Selection([('sale', 'Sale Order'), ('purchase', 'Purchase Order'),
+          ('sale_purchase', 'Sale and Purchase Order')])
+    auto_validation = fields.Selection([('draft', 'draft'), ('validated', 'validated')])
     intercompany_user_id = fields.Many2one("res.users", string="Inter Company User", default=SUPERUSER_ID,
         help="Responsible user for creation of documents triggered by intercompany rules.")
     warehouse_id = fields.Many2one("stock.warehouse", string="Warehouse",
@@ -25,10 +23,17 @@ class res_company(models.Model):
         company = self.sudo().search([('partner_id', '=', partner_id)], limit=1)
         return company or False
 
+    @api.onchange('rule_type')
+    def onchange_rule_type(self):
+        if self.rule_type == 'invoice_and_refund':
+            self.applicable_on = False
+            self.auto_validation = False
+            self.warehouse_id = False
+
     @api.one
-    @api.constrains('po_from_so', 'so_from_po', 'auto_generate_invoices')
+    @api.constrains('applicable_on', 'rule_type')
     def _check_intercompany_missmatch_selection(self):
-        if (self.po_from_so or self.so_from_po) and self.auto_generate_invoices:
+        if self.applicable_on and self.rule_type == 'invoice_and_refund':
             raise Warning(_('''You cannot select to create invoices based on other invoices
                     simultaneously with another option ('Create Sales Orders when buying to this
                     company' or 'Create Purchase Orders when selling to this company')!'''))

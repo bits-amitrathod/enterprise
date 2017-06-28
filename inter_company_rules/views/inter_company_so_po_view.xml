@@ -9,12 +9,26 @@
                 <xpath expr="//notebook" position="inside">
                     <page string="Inter-Company Rules">
                         <group string="Inter-Company Rules">
-                            <field name="so_from_po" attrs="{'invisible': [('auto_generate_invoices', '=', True)]}"/>
-                            <field name="po_from_so" attrs="{'invisible': [('auto_generate_invoices', '=', True)]}"/>
-                            <field name="warehouse_id" attrs="{'required': ['|', ('po_from_so', '=', True), ('so_from_po', '=', True)], 'invisible': [('po_from_so', '=', False), ('so_from_po', '=', False)]}" domain="[('company_id', '=', active_id)]"/>
-                            <field name="auto_validation" attrs="{'invisible': [('auto_generate_invoices', '=', True)]}"/>
-                            <field name="auto_generate_invoices" attrs="{'invisible': ['|', ('so_from_po', '=', True), ('po_from_so', '=', True)]}"/>
-                            <field name="intercompany_user_id" colspan="2" attrs="{'required': ['|','|',('so_from_po', '=', True), ('po_from_so', '=', True), ('auto_generate_invoices', '=', True)]}" groups="base.group_no_one"/>
+                            <field name="rule_type" widget="radio" nolabel="1" colspan="2" class="mt8"/>
+                            <div colspan="2" class="mt8 ml16" attrs="{'invisible': [('rule_type', '!=', 'so_and_po')]}">
+                                When a company validates a
+                                <field name="applicable_on" class="oe_inline ml4 mr4" style="padding-right:8px"/>to this company,
+                            </div>
+                            <div colspan="2" class="mt8 ml16" attrs="{'invisible': [('rule_type', '!=', 'so_and_po')]}">
+                                generate a
+                                <field name="auto_validation" class="oe_inline ml4" style="padding-right:8px"/>
+                                <strong>
+                                    <span attrs="{'invisible': [('applicable_on','!=', 'purchase')]}" class="ml4">Sale Order</span>
+                                    <span attrs="{'invisible': [('applicable_on','!=', 'sale')]}" class="ml4">Purchase Order</span>
+                                    <span attrs="{'invisible':[('applicable_on','!=', 'sale_purchase')]}" class="ml4"> Sale and Purchase Order</span>
+                                </strong> using
+                                <field name="warehouse_id" class="ml8 oe_inline" options="{'no_create': True, 'no_open': True}"/>
+                            </div>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="intercompany_user_id" require="1" groups="base.group_no_one"/>
+                            </group>
                         </group>
                     </page>
                 </xpath>

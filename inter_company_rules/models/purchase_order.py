@@ -17,7 +17,7 @@ class purchase_order(models.Model):
         for order in self:
             # get the company from partner then trigger action of intercompany relation
             company_rec = self.env['res.company']._find_company_from_partner(order.partner_id.id)
-            if company_rec and company_rec.so_from_po and (not order.auto_generated):
+            if company_rec and company_rec.applicable_on in ('sale', 'sale_purchase') and (not order.auto_generated):
                 order.inter_company_create_sale_order(company_rec)
         return res
 
@@ -61,7 +61,7 @@ class purchase_order(models.Model):
             self.partner_ref = sale_order.name
 
         #Validation of sales order
-        if company.auto_validation:
+        if company.auto_validation == 'validated':
             sale_order.sudo(intercompany_uid).action_confirm()
 
     @api.one

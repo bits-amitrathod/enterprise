@@ -12,9 +12,8 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
 
         # Enable auto generate invoice in company.
         (self.company_a + self.company_b).write({
-            'so_from_po': False,
-            'po_from_so': False,
-            'auto_generate_invoices': True
+            'applicable_on': False,
+            'rule_type': 'invoice_and_refund'
         })
 
         wizard_vals = {

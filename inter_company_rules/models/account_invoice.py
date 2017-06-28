@@ -16,7 +16,7 @@ class account_invoice(models.Model):
         for invoice in self:
             # do not consider invoices that have already been auto-generated, nor the invoices that were already validated in the past
             company = self.env['res.company']._find_company_from_partner(invoice.partner_id.id)
-            if company and company.auto_generate_invoices and not invoice.auto_generated:
+            if company and company.rule_type == 'invoice_and_refund' and not invoice.auto_generated:
                 if invoice.type == 'out_invoice':
                     invoice.inter_company_create_invoice(company, 'in_invoice', 'purchase')
                 elif invoice.type =='out_refund':
