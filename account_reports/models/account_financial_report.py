@@ -136,6 +136,35 @@ class ReportAccountFinancialReport(models.Model):
     def get_report_name(self):
         return self.name
 
+    @api.multi
+    def _get_copied_name(self):
+        '''Return a copied name of the account.financial.html.report record by adding the suffix (copy) at the end
+        until the name is unique.
+
+        :return: an unique name for the copied account.financial.html.report
+        '''
+        self.ensure_one()
+        name = self.name + ' ' + _('(copy)')
+        while self.search_count([('name', '=', name)]) > 0:
+            name += ' ' + _('(copy)')
+        return name
+
+    @api.multi
+    def copy(self, default=None):
+        '''Copy the whole financial report hierarchy by duplicating each line recursively.
+
+        :param default: Default values.
+        :return: The copied account.financial.html.report record.
+        '''
+        self.ensure_one()
+        if default is None:
+            default = {}
+        default.update({'name': self._get_copied_name()})
+        copied_report_id = super(ReportAccountFinancialReport, self).copy(default=default)
+        for line in self.line_ids:
+            line.copy_hierarchy(report_id=self, copied_report_id=copied_report_id)
+        return copied_report_id
+
 
 class AccountFinancialReportLine(models.Model):
     _name = "account.financial.html.report.line"
@@ -170,6 +199,57 @@ class AccountFinancialReportLine(models.Model):
     _sql_constraints = [
         ('code_uniq', 'unique (code)', "A report line with the same code already exists."),
     ]
+
+    @api.multi
+    def _get_copied_code(self):
+        '''Look for an unique copied code.
+
+        :return: an unique code for the copied account.financial.html.report.line
+        '''
+        self.ensure_one()
+        code = self.code + '_COPY'
+        while self.search_count([('code', '=', code)]) > 0:
+            code += '_COPY'
+        return code
+
+    @api.multi
+    def copy_hierarchy(self, report_id=None, copied_report_id=None, parent_id=None, code_mapping=None):
+        ''' Copy the whole hierarchy from this line by copying each line children recursively and adapting the
+        formulas with the new copied codes.
+
+        :param report_id: The financial report that triggered the duplicate.
+        :param copied_report_id: The copy of old_report_id.
+        :param parent_id: The parent line in the hierarchy (a copy of the original parent line).
+        :param code_mapping: A dictionary keeping track of mapping old_code -> new_code
+        '''
+        self.ensure_one()
+        if code_mapping is None:
+            code_mapping = {}
+        # If the line points to the old report, replace with the new one.
+        # Otherwise, cut the link to another financial report.
+        if report_id and copied_report_id and self.financial_report_id.id == report_id.id:
+            financial_report_id = copied_report_id.id
+        else:
+            financial_report_id = None
+        copy_line_id = self.copy({
+            'financial_report_id': financial_report_id,
+            'parent_id': parent_id and parent_id.id,
+            'code': self.code and self._get_copied_code(),
+        })
+        # Keep track of old_code -> new_code in a mutable dict
+        if self.code:
+            code_mapping[self.code] = copy_line_id.code
+        # Copy children
+        for line in self.children_ids:
+            line.copy_hierarchy(parent_id=copy_line_id, code_mapping=code_mapping)
+        # Update formulas
+        if self.formulas:
+            copied_formulas = self.formulas
+            for k, v in code_mapping.items():
+                for field in ['debit', 'credit', 'balance', 'amount_residual']:
+                    suffix = '.' + field
+                    copied_formulas = copied_formulas.replace(k + suffix, v + suffix)
+            copy_line_id.formulas = copied_formulas
 
     def _query_get_select_sum(self, currency_table):
         """ Little function to help building the SELECT statement when computing the report lines.
