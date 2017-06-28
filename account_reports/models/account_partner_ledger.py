@@ -17,6 +17,7 @@ class ReportPartnerLedger(models.AbstractModel):
     filter_all_entries = False
     filter_unfold_all = False
     filter_account_type = [{'id': 'receivable', 'name': _('Receivable'), 'selected': False}, {'id': 'payable', 'name': _('Payable'), 'selected': False}]
+    filter_unreconciled = False
     #TODO add support for partner_id
 
     def get_templates(self):
@@ -52,6 +53,8 @@ class ReportPartnerLedger(models.AbstractModel):
         sql = "SELECT \"account_move_line\".partner_id%s FROM %s WHERE %s%s AND \"account_move_line\".partner_id IS NOT NULL GROUP BY \"account_move_line\".partner_id"
         tables, where_clause, where_params = self.env['account.move.line']._query_get([('account_id.internal_type', 'in', account_types)])
         line_clause = line_id and ' AND \"account_move_line\".partner_id = ' + str(line_id) or ''
+        if options.get('unreconciled'):
+            line_clause += ' AND \"account_move_line\".full_reconcile_id IS NULL'
         query = sql % (select, tables, where_clause, line_clause)
         self.env.cr.execute(query, where_params)
         results = self.env.cr.fetchall()
@@ -72,6 +75,8 @@ class ReportPartnerLedger(models.AbstractModel):
         base_domain.append(('date', '>=', date_from))
         if context['state'] == 'posted':
             base_domain.append(('move_id.state', '=', 'posted'))
+        if options.get('unreconciled'):
+            base_domain.append(('full_reconcile_id', '=', False))
         for partner_id, result in pycompat.items(results):
             domain = list(base_domain)  # copying the base domain
             domain.append(('partner_id', '=', partner_id))
