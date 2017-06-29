@@ -62,6 +62,7 @@ class ReportAccountFinancialReport(models.Model):
             self.filter_journals = True
         self.filter_all_entries = False
         self.filter_analytic = True if self.analytic else None
+        self.filter_hierarchy = True
         return super(ReportAccountFinancialReport, self).get_options(previous_options)
 
     def create_action_and_menu(self, parent_id):
@@ -488,6 +489,7 @@ class AccountFinancialReportLine(models.Model):
     def _format(self, value):
         if self.env.context.get('no_format'):
             return value
+        value['no_format_name'] = value['name']
         if self.figure_type == 'float':
             currency_id = self.env.user.company_id.currency_id
             if currency_id.is_zero(value['name']):
@@ -656,7 +658,7 @@ class AccountFinancialReportLine(models.Model):
                     vals = {
                         'id': domain_id,
                         'name': name and len(name) >= 45 and name[0:40] + '...' or name,
-                        'level': 1,
+                        'level': 4,
                         'parent_id': line.id,
                         'columns': [{'name': l} for l in res[domain_id]],
                         'caret_options': groupby == 'account_id' and 'account.account' or groupby,

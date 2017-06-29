@@ -43,7 +43,6 @@ class report_account_coa(models.AbstractModel):
         context = self.env.context
         company_id = context.get('company_id') or self.env.user.company_id
         title_index = ''
-        maxlevel = options.get('hierarchy') and 3 or 1
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
         for account in sorted_accounts:
             #skip accounts with all periods = 0 and no initial balance
@@ -54,50 +53,15 @@ class report_account_coa(models.AbstractModel):
             if not non_zero:
                 continue
 
-            #build the lines for the hierarchy
-            for level in range(maxlevel):
-                if (account.code[:level + 1] > title_index[:level + 1]):
-                    title_index = account.code[:level + 1]
-                    if maxlevel == 1:
-                        #no subtotals
-                        cols = [''] + ['' for p in range(len(comparison_table))] * 2 + ['']
-                    else:
-                        #compute the different columns of the hierarchy line
-                        total = dict([(n, 0.0) for n in range(len(comparison_table))])
-                        init_bal = 0.0
-                        for account_sum in sorted_accounts:
-                            #a column of a hierarchy line is the sum of the same columns for all accounts involved
-                            if account_sum.code[:level + 1] == title_index:
-                                init_bal += initial_balances.get(account, 0.0)
-                                for p in range(len(comparison_table)):
-                                    total[p] += grouped_accounts[account_sum][p]['balance']
-                            if account_sum.code[:level + 1] > title_index:
-                                break
-                        #format the values computed above
-                        cols = [self.format_value(init_bal)]
-                        total_periods = 0
-                        for p in pycompat.values(total):
-                            cols.append(p >= 0 and self.format_value(p) or '')
-                            cols.append(p < 0 and self.format_value(-p) or '')
-                            total_periods += p
-                        cols.append(self.format_value(total_periods))
-
-                    lines.append({
-                        'id': 'hierarchy_' + title_index,
-                        'name': level and title_index or (_("Class %s") % title_index),
-                        'columns': [{'name': v} for v in cols],
-                        'level': level + 1,
-                        'unfoldable': False,
-                        'unfolded': True,
-                    })
-
-            cols = [{'name': self.format_value(initial_balances.get(account, 0.0))}]
+            initial_balance = initial_balances.get(account, 0.0)
+            cols = [{'name': self.format_value(initial_balance), 'no_format_name': initial_balance}]
             total_periods = 0
             for period in range(len(comparison_table)):
                 amount = grouped_accounts[account][period]['balance']
                 total_periods += amount
-                cols += [{'name': amount > 0 and self.format_value(amount) or ''}, {'name': amount < 0 and self.format_value(-amount) or ''}]
-            cols += [{'name': self.format_value(initial_balances.get(account, 0.0) + total_periods)}]
+                cols += [{'name': amount > 0 and self.format_value(amount) or '', 'no_format_name': amount > 0 and amount or 0},
+                         {'name': amount < 0 and self.format_value(-amount) or '', 'no_format_name': amount < 0 and amount or 0}]
+            cols += [{'name': self.format_value(initial_balances.get(account, 0.0) + total_periods), 'no_format_name': initial_balances.get(account, 0.0) + total_periods}]
             lines.append({
                 'id': account.id,
                 'parent_id': 'hierarchy_' + title_index,
