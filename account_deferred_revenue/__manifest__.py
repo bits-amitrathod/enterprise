@@ -8,7 +8,7 @@
     'description': """
 
 Revenue recognitions
-===================
+====================
 Manage revenue recognitions on product sales.
 Keeps track of the revenue recognition installments, and creates corresponding journal entries.
 

@@ -10,7 +10,7 @@
     'depends': ['hr', 'calendar', 'survey'],
     'description': """
 Periodical Employees appraisal
-==============================================
+==============================
 
 By using this application you can maintain the motivational process by doing periodical appraisals of your employees performance. The regular assessment of human resources can benefit your people as well your organization.
 

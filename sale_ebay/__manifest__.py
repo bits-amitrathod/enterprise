@@ -9,7 +9,7 @@
 
   'description': """
 Publish your products on eBay
-==============================================================
+=============================
 
 The eBay integrator gives you the opportunity to manage your Odoo's products on eBay.
 

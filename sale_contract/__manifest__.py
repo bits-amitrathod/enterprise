@@ -8,6 +8,7 @@
     'category': 'Sales',
     'description': """
 This module allows you to manage subscriptions.
+
 Features:
     - Create & edit subscriptions
     - Modify subscriptions with sales orders

@@ -8,7 +8,7 @@
     'version': '1.1',
     'description': """
 Accounting reports for Luxembourg
-================================
+=================================
     """,
     'author': ['OpenERP SA, ADN, ACSONE SA/NV'],
     'category': 'Localization',

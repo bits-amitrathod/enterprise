@@ -3,9 +3,9 @@
     'category': "Sales",
     'version': "1.0",
     'depends': ['base', 'sales_team', 'marketing_campaign', 'website_crm'],
-    'description': """\
-    Lead Scoring
-===================
+    'description': """
+Lead Scoring
+============
 
 This module allows you to...
     - Track specific page view on your website.

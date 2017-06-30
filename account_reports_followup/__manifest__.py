@@ -22,7 +22,7 @@ of recall defined. You can define different policies for different companies.
 
 Note that if you want to check the follow-up level for a given partner/account entry, you can do from in the menu:
 ------------------------------------------------------------------------------------------------------------------
-    Reporting / Accounting / **Follow-ups Analysis
+    Reporting / Accounting / **Follow-ups Analysis**
 
 """,
     'website': 'https://www.odoo.com/page/billing',

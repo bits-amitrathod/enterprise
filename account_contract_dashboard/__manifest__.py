@@ -8,7 +8,7 @@
     'category': 'Accounting',
     'description': """
 Accounting Contract Dashboard
-========================
+=============================
 It adds dashboards to :
 1) Analyse the recurrent revenue and other metrics for contracts
 2) Analyse the contracts modifications by salesman and compute their value.

@@ -6,7 +6,7 @@
     'category': 'Accounting',
     'description': """
 Accounting Reports
-====================
+==================
     """,
     'depends': ['account'],
     'data': [

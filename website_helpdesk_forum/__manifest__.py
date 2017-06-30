@@ -12,7 +12,7 @@
     ],
     'description': """
 Website Forum integration for the helpdesk module
-===============================================
+=================================================
 
     Allow your teams to have a related forum to answer customer questions.
     Transform tickets into questions on the forum with a single click.

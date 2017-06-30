@@ -12,7 +12,7 @@
     ],
     'description': """
 Website IM Livechat integration for the helpdesk module
-====================================================
+=======================================================
 
 Features:
 

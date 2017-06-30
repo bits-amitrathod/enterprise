@@ -11,7 +11,7 @@
     ],
     'description': """
 Website form integration for the helpdesk module
-===============================================
+================================================
 
     Allow customers to easily submit tickets through a form on your website.
 
