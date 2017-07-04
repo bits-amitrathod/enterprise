@@ -76,6 +76,17 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 is_nearest_hook = true;
             }
 
+            // Prevent drops outside of groups if not in whitelist
+            var whitelist = ['binary/New Image', 'html/New Html', 'many2many/New Many2many', 'one2many/New One2many']; // format: ttype/field_description
+            var hookTypeBlacklist = ['genericTag', 'afterGroup', 'afterNotebook', 'insideSheet'];
+            var fieldDescription = $($helper.context).data('field_description') || {};
+            if (fieldDescription.ttype && fieldDescription.field_description) {
+                var droppedElement = fieldDescription.ttype + '/' + fieldDescription.field_description;
+                if (whitelist.indexOf(droppedElement) === -1 && hookTypeBlacklist.indexOf(hook.type) > -1) {
+                    is_nearest_hook = false;
+                }
+            }
+
             if (is_nearest_hook) {
                 $(this).addClass('o_web_studio_nearest_hook');
                 return false;
@@ -274,7 +285,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     _renderGenericTag: function (node) {
         var $result = this._super.apply(this, arguments);
         if (node.attrs.class === 'oe_title') {
-            var formEditorHook = this._renderHook(node, 'after');
+            var formEditorHook = this._renderHook(node, 'after', '', 'genericTag');
             formEditorHook.appendTo($result);
         }
         return $result;
@@ -426,7 +437,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             return $result;
         }
         // Add hook after this group
-        var formEditorHook = this._renderHook(node, 'after');
+        var formEditorHook = this._renderHook(node, 'after', '', 'afterGroup');
         formEditorHook.appendTo($('<div>')); // start the widget
         return $result.add(formEditorHook.$el);
     },
@@ -450,7 +461,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         });
         $result.find('ul.nav-tabs').append($addTag);
 
-        var formEditorHook = this._renderHook(node, 'after');
+        var formEditorHook = this._renderHook(node, 'after', '', 'afterNotebook');
         formEditorHook.appendTo($result);
         return $result;
     },
@@ -460,7 +471,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
      */
     _renderTagSheet: function (node) {
         var $result = this._super.apply(this, arguments);
-        var formEditorHook = this._renderHook(node, 'inside');
+        var formEditorHook = this._renderHook(node, 'inside', '', 'insideSheet');
         formEditorHook.appendTo($result.find('.o_form_sheet'));
         return $result;
     },

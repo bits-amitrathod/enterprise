@@ -1006,6 +1006,21 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.test('drop monetary field outside of group', function(assert) {
+        assert.expect(1);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form><sheet/></form>",
+        });
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'), {disableDrop: true});
+        assert.strictEqual(vem.$('.o_web_studio_nearest_hook').length, 0, "There should be no highlighted hook");
+
+        vem.destroy();
+    });
 });
 
 });
