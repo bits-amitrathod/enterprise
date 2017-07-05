@@ -75,3 +75,11 @@ class MXReportAccountCoa(models.AbstractModel):
 
         check_with_xsd(cfdicoa, CFDICOA_XSD % version)
         return cfdicoa
+
+    def get_report_name(self):
+        """The structure to name the CoA reports is:
+        VAT + YEAR + MONTH + CT"""
+        return '%s%s%sCT' % (
+            self.env.user.company_id.vat or '',
+            fields.date.today().year,
+            str(fields.date.today().month).zfill(2))
