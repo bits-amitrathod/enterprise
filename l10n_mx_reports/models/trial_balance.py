@@ -4,6 +4,7 @@
 from odoo import models, api, _, fields
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 MX_NS_REFACTORING = {
     'catalogocuentas__': 'catalogocuentas',
@@ -163,10 +164,12 @@ class MxReportAccountTrial(models.AbstractModel):
                 'credit': str(credit),
                 'end': str(end),
             })
+        date = fields.datetime.strptime(
+            self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)
         chart = {
             'vat': company.vat or '',
-            'month': str(fields.date.today().month).zfill(2),
-            'year': fields.date.today().year,
+            'month': str(date.month).zfill(2),
+            'year': date.year,
             'accounts': accounts,
             'type': 'N',
         }
