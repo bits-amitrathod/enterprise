@@ -152,6 +152,7 @@ var FieldClearbit = FieldChar.extend({
                 changes: {
                     name: company.name,
                     website: company.domain,
+                    company_type: 'company',
                     image: base64Image ? // base64Image equals "data:" if image not available on given url
                            base64Image.replace(/^data:image[^;]*;base64,?/, '') :
                            false,
