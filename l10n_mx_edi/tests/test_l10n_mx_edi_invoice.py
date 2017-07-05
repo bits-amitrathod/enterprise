@@ -59,7 +59,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # Testing sign process
         # -----------------------
         invoice = self.create_invoice()
-        invoice.journal_id.l10n_mx_address_issued_id = self.company_partner.id
+        invoice.sudo().journal_id.l10n_mx_address_issued_id = self.company_partner.id
         invoice.move_name = 'INV/2017/999'
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
@@ -116,7 +116,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         # Testing cancel PAC process
         # -----------------------
-        invoice.journal_id.update_posted = True
+        invoice.sudo().journal_id.update_posted = True
         invoice.action_invoice_cancel()
         self.assertEqual(invoice.state, "cancel")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, 'cancelled',
@@ -173,7 +173,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
     def test_addenda(self):
         invoice = self.create_invoice()
         addenda_autozone = self.ref('l10n_mx_edi.l10n_mx_edi_addenda_autozone')
-        invoice.partner_id.l10n_mx_edi_addenda = addenda_autozone
+        invoice.sudo().partner_id.l10n_mx_edi_addenda = addenda_autozone
         invoice.message_ids.unlink()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")

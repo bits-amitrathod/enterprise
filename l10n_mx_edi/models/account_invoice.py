@@ -338,7 +338,7 @@ class AccountInvoice(models.Model):
         password = pac_info['password']
         for inv in self:
             uuids = [inv.l10n_mx_edi_cfdi_uuid]
-            certificate_id = inv.l10n_mx_edi_cfdi_certificate_id
+            certificate_id = inv.l10n_mx_edi_cfdi_certificate_id.sudo()
             cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
             key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))
             key_password = certificate_id.password
@@ -407,7 +407,7 @@ class AccountInvoice(models.Model):
         password = pac_info['password']
         for inv in self:
             uuid = inv.l10n_mx_edi_cfdi_uuid
-            certificate_id = inv.l10n_mx_edi_cfdi_certificate_id
+            certificate_id = inv.l10n_mx_edi_cfdi_certificate_id.sudo()
             company_id = self.company_id
             cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
             key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))

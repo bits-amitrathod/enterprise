@@ -36,6 +36,13 @@ class InvoiceTransactionCase(AccountingTestCase):
         self.ova = self.env['account.account'].search([
             ('user_type_id', '=', self.env.ref(
                 'account.data_account_type_current_assets').id)], limit=1)
+        self.uid = self.env['res.users'].create({
+            'name': 'User billing mx',
+            'login': 'mx_billing_user',
+            'email': 'mx_billing_user@yourcompany.com',
+            'company_id': self.env.ref('base.main_company').id,
+            'groups_id': [(6, 0, [self.ref('account.group_account_invoice')])]
+        })
 
     def set_currency_rates(self, mxn_rate, usd_rate):
         self.mxn.rate_ids = self.rate_model.create({
@@ -46,7 +53,7 @@ class InvoiceTransactionCase(AccountingTestCase):
     def create_invoice(self, inv_type='out_invoice', currency_id=None):
         if currency_id is None:
             currency_id = self.usd.id
-        invoice = self.invoice_model.create({
+        invoice = self.invoice_model.with_env(self.env(user=self.uid)).create({
             'partner_id': self.partner_agrolait.id,
             'type': inv_type,
             'currency_id': currency_id,
