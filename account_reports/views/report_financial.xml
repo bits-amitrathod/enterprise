@@ -156,6 +156,34 @@
     </div>
 </template>
 
+<!-- Business Statements Aged receivable templates  -->
+ <template id="line_template_aged_receivable_report" inherit_id="account_reports.line_template" primary="True">
+     <xpath expr="//ul[contains(@class, 'o_account_reports_domain_dropdown')]/li[last()]" position="before">
+         <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
+     </xpath>
+ </template>
+ <template id="template_aged_receivable_report" inherit_id="account_reports.main_template" primary="True">
+     <xpath expr="//tbody" position="replace">
+         <t t-if="lines.get('lines')">
+             <t t-call="account_reports.line_template_aged_receivable_report" />
+         </t>
+     </xpath>
+ </template>
+
+ <!-- Business Statements Aged Payable templates -->
+ <template id="line_template_aged_payable_report" inherit_id="account_reports.line_template" primary="True">
+     <xpath expr="//ul[contains(@class, 'o_account_reports_domain_dropdown')]/li[last()]" position="before">
+         <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
+     </xpath>
+ </template>
+ <template id="template_aged_payable_report" inherit_id="account_reports.main_template" primary="True">
+     <xpath expr="//tbody" position="replace">
+         <t t-if="lines.get('lines')">
+             <t t-call="account_reports.line_template_aged_payable_report" />
+         </t>
+     </xpath>
+</template>
+
 <!-- partner and general ledger templates -->
 <template id="line_template_partner_ledger_report" inherit_id="account_reports.line_template" primary="True">
     <xpath expr="//span[contains(@class, 'o_account_reports_caret_icon')]" position="before">

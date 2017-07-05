@@ -97,6 +97,12 @@ class report_account_aged_receivable(models.AbstractModel):
     def get_report_name(self):
         return _("Aged Receivable")
 
+    def get_templates(self):
+        templates = super(report_account_aged_receivable, self).get_templates()
+        templates['main_template'] = 'account_reports.template_aged_receivable_report'
+        templates['line_template'] = 'account_reports.line_template_aged_receivable_report'
+        return templates
+
 
 class report_account_aged_payable(models.AbstractModel):
     _name = "account.aged.payable"
@@ -111,3 +117,9 @@ class report_account_aged_payable(models.AbstractModel):
 
     def get_report_name(self):
         return _("Aged Payable")
+
+    def get_templates(self):
+        templates = super(report_account_aged_payable, self).get_templates()
+        templates['main_template'] = 'account_reports.template_aged_payable_report'
+        templates['line_template'] = 'account_reports.line_template_aged_payable_report'
+        return templates
