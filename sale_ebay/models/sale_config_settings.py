@@ -127,7 +127,7 @@ class EbayConfiguration(models.TransientModel):
         ebay_location = params.get_param('ebay_location')
         ebay_out_of_stock = params.get_param('ebay_out_of_stock', default=False)
         ebay_sales_team = int(params.get_param('ebay_sales_team',
-                              default=self.env['crm.team'].search([])[0]))
+                              default=self.env['crm.team'].search([], limit=1)))
         ebay_gallery_plus = params.get_param('ebay_gallery_plus')
         return {'ebay_dev_id': ebay_dev_id,
                 'ebay_sandbox_token': ebay_sandbox_token,
