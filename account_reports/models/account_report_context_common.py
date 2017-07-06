@@ -2,7 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _, osv
-import xlsxwriter
+try:
+    from odoo.tools.misc import xlsxwriter
+except ImportError:
+    # TODO saas-17: remove the try/except to directly import from misc
+    import xlsxwriter
 from odoo.exceptions import Warning
 from datetime import timedelta, datetime
 import babel
