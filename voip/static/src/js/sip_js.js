@@ -110,11 +110,11 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
         }
         this.remote_audio = document.createElement("audio");
         this.remote_audio.autoplay = "autoplay";
-        $("body").append(this.remote_audio);
+        $("html").append(this.remote_audio);
         this.ringbacktone = document.createElement("audio");
         this.ringbacktone.loop = "true";
         this.ringbacktone.src = "/voip/static/src/sounds/ringbacktone.mp3";
-        $("body").append(this.ringbacktone);
+        $("html").append(this.ringbacktone);
     },
 
     // TODO when the send_notification is moved into utils instead of mail.utils
