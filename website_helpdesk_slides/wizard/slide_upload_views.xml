@@ -18,7 +18,7 @@
                         <field name="url"/>
                     </group>
                     <group>
-                        <field name="tag_ids" widget="many2many_tags" placeholder="Tags..."/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Tags..."/>
                         <field name="category_id" context="{'default_channel_id': channel_id}"/>
                         <field name="slide_type" attrs="{'invisible': ['|', ('mime_type', '!=', 'application/pdf'), ('url', '!=', False)]}"/>
                         <field name="datas" attrs="{'invisible': [('url', '!=', False)]}" widget="FieldBinary" filename="file_name"/>

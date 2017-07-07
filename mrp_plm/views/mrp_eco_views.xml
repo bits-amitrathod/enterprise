@@ -447,7 +447,7 @@
                             <field name="effectivity" widget="radio" attrs="{'readonly': [('state', '=', 'done')]}"/>
                             <field name="effectivity_date" attrs="{'invisible': [('effectivity', '=', 'asap')], 'readonly': [('state', '=', 'done')]}"/>
                             <field name="state" invisible="1"/>
-                            <field name="tag_ids" widget="many2many_tags" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'readonly': [('state', '=', 'done')]}"/>
                         </group>
                     </group>
                     <notebook>
@@ -481,7 +481,7 @@
                                     <field name="user_id"/>
                                     <field name="status"/>
                                     <field name="template_stage_id"/>
-                                    <field name="required_user_ids" widget="many2many_tags"/>
+                                    <field name="required_user_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                     <field name="eco_stage_id" invisible="1"/>
                                 </tree>
                                 <form>
@@ -493,7 +493,7 @@
                                         </group>
                                         <group>
                                             <field name="template_stage_id"/>
-                                            <field name="required_user_ids" widget="many2many_tags"/>
+                                            <field name="required_user_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                             <field name="eco_stage_id" groups="base.group_no_one"/>
                                         </group>
                                     </group>
@@ -668,7 +668,7 @@
                         <tree editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="name" placeholder="e.g. Engineering Department"/>
-                            <field name="user_ids" widget="many2many_tags"/>
+                            <field name="user_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="approval_type"/>
                         </tree>
                     </field>

@@ -38,7 +38,7 @@
                   <tree string="Bank Accounts" create="false" editable="bottom">
                     <field name="name"/>
                     <field name="account_number"/>
-                    <field name="journal_ids" widget="many2many_tags" readonly="True"/>
+                    <field name="journal_ids" widget="many2many_tags" options="{'color_field': 'color'}" readonly="True"/>
                     <field name="balance"/>
                     <field name="last_sync" groups="base.group_no_one"/>
                   </tree>

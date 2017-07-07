@@ -242,7 +242,7 @@
                 <field name="user_closable"/>
                 <field name="payment_mandatory"/>
                 <field name="partial_invoice"/>
-                <field name="tag_ids" string="Plan Change Tags" widget="many2many_tags"
+                <field name="tag_ids" string="Plan Change Tags" widget="many2many_tags" options="{'color_field': 'color'}"
                        help="When a customer wants to change his subscription plan, he has the choice between all the recurring contracts with the same tags."/>
             </xpath>
             <xpath expr="//div[@class='oe_button_box']/button[1]" position="before">
