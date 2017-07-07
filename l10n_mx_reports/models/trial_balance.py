@@ -5,6 +5,7 @@ from odoo import models, api, _, fields
 from odoo.tools import pycompat
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 MX_NS_REFACTORING = {
     'catalogocuentas__': 'catalogocuentas',
@@ -164,10 +165,12 @@ class MxReportAccountTrial(models.AbstractModel):
                 'credit': str(credit),
                 'end': str(end),
             })
+        date = fields.datetime.strptime(
+            self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)
         chart = {
             'vat': company.vat or '',
-            'month': str(fields.date.today().month).zfill(2),
-            'year': fields.date.today().year,
+            'month': str(date.month).zfill(2),
+            'year': date.year,
             'accounts': accounts,
             'type': 'N',
         }
@@ -188,3 +191,15 @@ class MxReportAccountTrial(models.AbstractModel):
 
         check_with_xsd(cfdicoa, CFDIBCE_XSD % version)
         return cfdicoa
+
+    def get_report_name(self):
+        """The structure to name the Trial Balance reports is:
+        VAT + YEAR + MONTH + ReportCode
+        ReportCode:
+        BN - Trial balance with normal information
+        BC - Trial balance with with complementary information. (Now is
+        not suportes)"""
+        return '%s%s%sBN' % (
+            self.env.user.company_id.vat or '',
+            fields.date.today().year,
+            str(fields.date.today().month).zfill(2))

@@ -172,7 +172,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     'id': 'total_' + str(partner.id),
                     'parent_id': 'partner_' + str(partner.id),
                     'class': 'o_account_reports_domain_total',
-                    'name': _('Total') + ' ' + partner.name,
+                    'name': _('Total') + ' ' + (partner.name or ''),
                     'columns': [{'name': v} for v in ['', '', '', '', self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
                 })
                 if too_many:
