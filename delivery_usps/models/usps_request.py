@@ -8,7 +8,6 @@ import requests
 from lxml import etree
 
 from odoo import _
-from odoo.exceptions import ValidationError
 
 # This demo data is only used for the cancel shipping.
 # https://www.usps.com/business/web-tools-apis/package-pickup-api.htm#_Toc289864484
@@ -55,31 +54,31 @@ class USPSRequest():
 
         res = [field for field in shipper_required_field if not shipper[field]]
         if res:
-            raise ValidationError(_("The address of your company is missing or wrong (Missing field(s) :  \n %s)") % ", ".join(res).replace("_id", ""))
+            return _("The address of your company is missing or wrong (Missing field(s) :  \n %s)") % ", ".join(res).replace("_id", "")
         if shipper.country_id.code != 'US':
-            raise ValidationError(_("Please set country U.S.A in your company address, Service is only available for U.S.A"))
+            return _("Please set country U.S.A in your company address, Service is only available for U.S.A")
         if not ZIP_ZIP4.match(shipper.zip):
-            raise ValidationError(_("Please enter a valid ZIP code in your Company address"))
+            return _("Please enter a valid ZIP code in your Company address")
         if not self._convert_phone_number(shipper.phone):
-            raise ValidationError(_("Company phone number is invalid. Please insert a US phone number."))
+            return _("Company phone number is invalid. Please insert a US phone number.")
         res = [field for field in recipient_required_field if not recipient[field]]
         if res:
-            raise ValidationError(_("The recipient address is missing or wrong (Missing field(s) :  \n %s)") % ", ".join(res).replace("_id", ""))
+            return _("The recipient address is missing or wrong (Missing field(s) :  \n %s)") % ", ".join(res).replace("_id", "")
         if delivery_nature == 'domestic' and not ZIP_ZIP4.match(recipient.zip):
-            raise ValidationError(_("Please enter a valid ZIP code in recipient address"))
+            return _("Please enter a valid ZIP code in recipient address")
         if recipient.country_id.code == "US" and delivery_nature == 'international':
-            raise ValidationError(_("USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic."))
+            return _("USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic.")
         if recipient.country_id.code != "US" and delivery_nature == 'domestic':
-            raise ValidationError(_("USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International."))
+            return _("USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International.")
         if order:
             if not order.order_line:
-                raise ValidationError(_("Please provide at least one item to ship."))
+                return _("Please provide at least one item to ship.")
             tot_weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0
-            for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and not line.product_id.type in ['service', 'digital']):
-                raise ValidationError(_('The estimated price cannot be computed because the weight of your product is missing.'))
+            for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):
+                return _('The estimated price cannot be computed because the weight of your product is missing.')
             if tot_weight > 1.81437 and order.carrier_id.usps_service == 'First-Class':     # max weight of FirstClass Service
-                raise ValidationError(_("Please choose another service (maximum weight of this service is 4 pounds)"))
-        return True
+                return _("Please choose another service (maximum weight of this service is 4 pounds)")
+        return False
 
     def _usps_request_data(self, carrier, order):
         currency = carrier.env['res.currency'].search([('name', '=', 'USD')], limit=1)  # USPS Works in USDollars
@@ -162,7 +161,8 @@ class USPSRequest():
                 if usps_service in service.findall("SvcDescription")[0].text:
                     postages_prices += [float(service.findall("Postage")[0].text)]
             if not postages_prices:
-                raise ValidationError(_("The selected USPS service (%s) cannot be used to deliver this package.") % carrier.usps_service)
+                dict_response['error_message'] = _("The selected USPS service (%s) cannot be used to deliver this package.") % carrier.usps_service
+                return dict_response
             else:
                 dict_response['price'] = min(postages_prices)
         return dict_response

@@ -20,7 +20,6 @@ from suds.sax.element import Element
 SUDS_VERSION = suds.__version__
 
 from odoo import _
-from odoo.exceptions import ValidationError
 
 
 _logger = logging.getLogger(__name__)
@@ -184,9 +183,9 @@ class UPSRequest():
         if not shipper.street and not shipper.street2:
             res.append('Street')
         if res:
-            raise ValidationError(_("The address of your company is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res))
+            return _("The address of your company is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res)
         if len(self._clean_phone_number(shipper.phone)) < 10:
-            raise ValidationError(_(UPS_ERROR_MAP.get('120115')))
+            return _(UPS_ERROR_MAP.get('120115'))
         # Check required field for warehouse address
         res = [required_field[field] for field in required_field if not ship_from[field]]
         if ship_from.country_id.code in ('US', 'CA', 'IE') and not ship_from.state_id.code:
@@ -194,9 +193,9 @@ class UPSRequest():
         if not ship_from.street and not ship_from.street2:
             res.append('Street')
         if res:
-            raise ValidationError(_("The address of your warehouse is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res))
+            return _("The address of your warehouse is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res)
         if len(self._clean_phone_number(ship_from.phone)) < 10:
-            raise ValidationError(_(UPS_ERROR_MAP.get('120313')))
+            return _(UPS_ERROR_MAP.get('120313'))
         # Check required field for recipient address
         res = [required_field[field] for field in required_field if not ship_to[field]]
         if ship_to.country_id.code in ('US', 'CA', 'IE') and not ship_to.state_id.code:
@@ -204,18 +203,18 @@ class UPSRequest():
         if not ship_to.street and not ship_to.street2:
             res.append('Street')
         if res:
-            raise ValidationError(_("The recipient address is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res))
+            return _("The recipient address is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res)
         if len(self._clean_phone_number(ship_to.phone)) < 10:
-            raise ValidationError(_(UPS_ERROR_MAP.get('120213')))
+            return _(UPS_ERROR_MAP.get('120213'))
         if order:
             if not order.order_line:
-                raise ValidationError(_("Please provide at least one item to ship."))
-            for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and not line.product_id.type in ['service', 'digital']):
-                raise ValidationError(_("The estimated price cannot be computed because the weight of your product is missing."))
+                return _("Please provide at least one item to ship.")
+            for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):
+                return _("The estimated price cannot be computed because the weight of your product is missing.")
         if picking:
             for move in picking.move_lines.filtered(lambda move: not move.product_id.weight):
-                raise ValidationError(_("The delivery cannot be done because the weight of your product is missing."))
-        return True
+                return _("The delivery cannot be done because the weight of your product is missing.")
+        return False
 
     def get_error_message(self, error_code, description):
         result = {}

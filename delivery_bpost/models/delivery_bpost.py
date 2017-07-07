@@ -3,7 +3,7 @@
 from base64 import b64encode
 
 from odoo import fields, models, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 
 from .bpost_request import BpostRequest
 
@@ -36,20 +36,36 @@ class ProviderBpost(models.Model):
     bpost_saturday = fields.Boolean(string="Delivery on Saturday", help="Allow deliveries on Saturday (extra charges apply)")
     bpost_default_packaging_id = fields.Many2one('product.packaging', string='bpost Default Packaging Type')
 
-    def bpost_get_shipping_price_from_so(self, order):
+    def bpost_rate_shipment(self, order):
         bpost = BpostRequest(self.prod_environment)
-        bpost.check_required_value(order.partner_shipping_id, order.carrier_id.bpost_delivery_nature, order.warehouse_id.partner_id, order=order)
-        price = bpost.rate(order, self)
+        check_value = bpost.check_required_value(order.partner_shipping_id, order.carrier_id.bpost_delivery_nature, order.warehouse_id.partner_id, order=order)
+        if check_value:
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': check_value,
+                    'warning_message': False}
+        try:
+            price = bpost.rate(order, self)
+        except UserError as e:
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': e.message,
+                    'warning_message': False}
         if order.currency_id.name != 'EUR':
             quote_currency = self.env['res.currency'].search([('name', '=', 'EUR')], limit=1)
             price = quote_currency.compute(price, order.currency_id)
-        return price
+        return {'success': True,
+                'price': price,
+                'error_message': False,
+                'warning_message': False}
 
     def bpost_send_shipping(self, pickings):
         res = []
         bpost = BpostRequest(self.prod_environment)
         for picking in pickings:
-            bpost.check_required_value(picking.partner_id, picking.carrier_id.bpost_delivery_nature, picking.picking_type_id.warehouse_id.partner_id, picking=picking)
+            check_value = bpost.check_required_value(picking.partner_id, picking.carrier_id.bpost_delivery_nature, picking.picking_type_id.warehouse_id.partner_id, picking=picking)
+            if check_value:
+                raise UserError(check_value)
             shipping = bpost.send_shipping(picking, self)
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id
             if order_currency.name == "EUR":
@@ -74,7 +90,7 @@ class ProviderBpost(models.Model):
         return res
 
     def bpost_cancel_shipment(self, picking):
-        raise ValidationError(_("You can not cancel a bpost shipment when a shipping label has already been generated."))
+        raise UserError(_("You can not cancel a bpost shipment when a shipping label has already been generated."))
 
     def _bpost_passphrase(self):
         self.ensure_one()

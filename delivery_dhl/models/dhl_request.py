@@ -9,7 +9,7 @@ import unicodedata
 import requests
 
 from odoo import _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 
 
 class DHLProvider():
@@ -58,17 +58,22 @@ class DHLProvider():
 
         param = self._get_rate_param(order, carrier)
         request_text = self._create_rate_xml(param)
-        root = self._send_request(request_text)
+        try:
+            root = self._send_request(request_text)
+        except UserError as e:
+            dict_response['error_found'] = e.message
+            return dict_response
+
         if root.tag == '{http://www.dhl.com}ErrorResponse':
             condition = root.findall('Response/Status/Condition')
-            error_msg = "%s: %s" % (condition[0][0].text, condition[0][1].text)
-            raise ValidationError(_(error_msg))
+            dict_response['error_found'] = "%s: %s" % (condition[0][0].text, condition[0][1].text)
+            return dict_response
 
         elif root.tag == '{http://www.dhl.com}DCTResponse':
             condition = root.findall('GetQuoteResponse/Note/Condition')
             if condition:
-                error_msg = "%s: %s" % (condition[0][0].text, condition[0][1].text)
-                raise ValidationError(_(error_msg))
+                dict_response['error_found'] = "%s: %s" % (condition[0][0].text, condition[0][1].text)
+                return dict_response
 
             products = root.findall('GetQuoteResponse/BkgDetails/QtdShp')
             found = False
@@ -79,8 +84,8 @@ class DHLProvider():
                     dict_response['currency'] = product.findall('QtdSInAdCur/CurrencyCode')[0].text
                     found = True
             if not found:
-                raise ValidationError(_("No shipping available for the selected DHL product"))
-        return dict_response
+                dict_response['error_found'] = _("No shipping available for the selected DHL product")
+            return dict_response
 
     def _get_send_param(self, picking, carrier):
         return {
@@ -142,14 +147,14 @@ class DHLProvider():
         if root.tag == '{http://www.dhl.com}ShipmentValidateErrorResponse':
             condition = root.findall('Response/Status/Condition/')
             error_msg = "%s: %s" % (condition[1].text, condition[0].text)
-            raise ValidationError(_(error_msg))
+            raise UserError(_(error_msg))
         elif root.tag == '{http://www.dhl.com}ErrorResponse':
             condition = root.findall('Response/Status/Condition/')
             if isinstance(condition[0], list):
                 error_msg = "%s: %s" % (condition[0][0].text, condition[0][1].text)
             else:
                 error_msg = "%s: %s" % (condition[0].text, condition[1].text)
-            raise ValidationError(_(error_msg))
+            raise UserError(_(error_msg))
         elif root.tag == '{http://www.dhl.com}ShipmentResponse':
             label_image = root.findall('LabelImage')
             self.label = label_image[0].findall('OutputImage')[0].text
@@ -165,7 +170,7 @@ class DHLProvider():
         if root.tag == '{http://www.dhl.com}ErrorResponse':
             condition = root.findall('Response/Status/Condition/')
             error_msg = "%s: %s" % (condition[0][0].text, condition[0][1].text)
-            raise ValidationError(_(error_msg))
+            raise UserError(_(error_msg))
         elif root.tag == '{http://www.dhl.com}DCTResponse':
             products = root.findall('GetQuoteResponse/BkgDetails/QtdShp')
             found = False
@@ -176,7 +181,7 @@ class DHLProvider():
                     dict_response['currency'] = product.findall('QtdSInAdCur/CurrencyCode')[0].text
                     found = True
             if not found:
-                raise ValidationError(_("No service available for the selected product"))
+                raise UserError(_("No service available for the selected product"))
 
         return dict_response
 
@@ -194,7 +199,7 @@ class DHLProvider():
             req.raise_for_status()
             response_text = req.content
         except IOError:
-            raise ValidationError("DHL Server not found. Check your connectivity.")
+            raise UserError("DHL Server not found. Check your connectivity.")
         root = etree.fromstring(response_text)
         return root
 
@@ -371,17 +376,17 @@ class DHLProvider():
         carrier = carrier.sudo()
         recipient_required_field = ['city', 'zip', 'country_id']
         if not carrier.dhl_SiteID:
-            raise ValidationError(_("DHL Site ID is missing, please modify your delivery method settings."))
+            return _("DHL Site ID is missing, please modify your delivery method settings.")
         if not carrier.dhl_password:
-            raise ValidationError(_("DHL password is missing, please modify your delivery method settings."))
+            return _("DHL password is missing, please modify your delivery method settings.")
         if not carrier.dhl_account_number:
-            raise ValidationError(_("DHL account number is missing, please modify your delivery method settings."))
+            return _("DHL account number is missing, please modify your delivery method settings.")
 
         if not recipient.street and not recipient.street2:
             recipient_required_field.append('street')
         res = [field for field in recipient_required_field if not recipient[field]]
         if res:
-            raise ValidationError(_("The address of the custommer is missing or wrong (Missing field(s) :\n %s)") % ", ".join(res).replace("_id", ""))
+            return _("The address of the custommer is missing or wrong (Missing field(s) :\n %s)") % ", ".join(res).replace("_id", "")
 
         shipper_required_field = ['city', 'zip', 'phone', 'country_id']
         if not shipper.street and not shipper.street2:
@@ -389,14 +394,14 @@ class DHLProvider():
 
         res = [field for field in shipper_required_field if not shipper[field]]
         if res:
-            raise ValidationError(_("The address of your company warehouse is missing or wrong (Missing field(s) :\n %s)") % ", ".join(res).replace("_id", ""))
+            return _("The address of your company warehouse is missing or wrong (Missing field(s) :\n %s)") % ", ".join(res).replace("_id", "")
 
         if order:
             if not order.order_line:
-                raise ValidationError(_("Please provide at least one item to ship."))
-            for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and not line.product_id.type in ['service', 'digital']):
-                raise ValidationError(_('The estimated price cannot be computed because the weight of your product is missing.'))
-        return True
+                return _("Please provide at least one item to ship.")
+            for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):
+                return _('The estimated price cannot be computed because the weight of your product is missing.')
+        return False
 
     def _remove_accents(self, input_str):
         nfkd_form = unicodedata.normalize('NFKD', input_str)

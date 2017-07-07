@@ -50,6 +50,8 @@ class TestDeliveryUPS(TransactionCase):
                    'order_line': [(0, None, sol_vals)]}
 
         sale_order = SaleOrder.create(so_vals)
+        sale_order.get_delivery_price()
+        sale_order.set_delivery_line()
         self.assertGreater(sale_order.delivery_price, 0.0, "UPS delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()
@@ -106,6 +108,8 @@ class TestDeliveryUPS(TransactionCase):
                    'order_line': [(0, None, sol_1_vals), (0, None, sol_2_vals)]}
 
         sale_order = SaleOrder.create(so_vals)
+        sale_order.get_delivery_price()
+        sale_order.set_delivery_line()
         self.assertGreater(sale_order.delivery_price, 0.0, "UPS delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()

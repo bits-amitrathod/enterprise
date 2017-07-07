@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 
 from .usps_request import USPSRequest
 
@@ -84,14 +84,23 @@ class ProviderUSPS(models.Model):
     usps_redirect_partner_id = fields.Many2one('res.partner', string="Redirect Partner")
     usps_machinable = fields.Boolean(string="Machinable", help="Please check on USPS website to ensure that your package is machinable.")
 
-    def usps_get_shipping_price_from_so(self, order):
+    def usps_rate_shipment(self, order):
         srm = USPSRequest(self.prod_environment)
 
-        srm.check_required_value(order.partner_shipping_id, order.carrier_id.usps_delivery_nature, order.warehouse_id.partner_id, order=order)
+        check_result = srm.check_required_value(order.partner_shipping_id, order.carrier_id.usps_delivery_nature, order.warehouse_id.partner_id, order=order)
+        if check_result:
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': check_result,
+                    'warning_message': False}
 
         quotes = srm.usps_rate_request(order, self)
+
         if quotes.get('error_message'):
-            raise ValidationError(quotes['error_message'])
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': _('Error:\n%s') % quotes['error_message'],
+                    'warning_message': False}
 
         # USPS always returns prices in USD
         if order.currency_id.name == 'USD':
@@ -100,17 +109,23 @@ class ProviderUSPS(models.Model):
             quote_currency = self.env['res.currency'].search([('name', '=', 'USD')], limit=1)
             price = quote_currency.compute(quotes['price'], order.currency_id)
 
-        return price
+        return {'success': True,
+                'price': price,
+                'error_message': False,
+                'warning_message': False}
 
     def usps_send_shipping(self, pickings):
         res = []
         srm = USPSRequest(self.prod_environment)
         for picking in pickings:
-            srm.check_required_value(picking.partner_id, self.usps_delivery_nature, picking.picking_type_id.warehouse_id.partner_id, picking=picking)
+            check_result = srm.check_required_value(picking.partner_id, self.usps_delivery_nature, picking.picking_type_id.warehouse_id.partner_id, picking=picking)
+            if check_result:
+                raise UserError(check_result)
+
             booking = srm.usps_request(picking, self.usps_delivery_nature, self.usps_service)
 
             if booking.get('error_message'):
-                raise ValidationError(booking['error_message'])
+                raise UserError(booking['error_message'])
 
             currency_order = picking.sale_id.currency_id
             if not currency_order:
@@ -146,7 +161,7 @@ class ProviderUSPS(models.Model):
         result = srm.cancel_shipment(picking, self.usps_account_validated)
 
         if result['error_found']:
-            raise ValidationError(result['error_message'])
+            raise UserError(result['error_message'])
         else:
             picking.message_post(body=_(u'Shipment N° %s has been cancelled' % picking.carrier_tracking_ref))
             picking.write({'carrier_tracking_ref': '',

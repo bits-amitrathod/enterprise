@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import unittest
 from odoo.tests.common import TransactionCase
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 
 
 # These errors are due to failures of Fedex test server and are not implementation errors
@@ -51,8 +51,10 @@ class TestDeliveryFedex(TransactionCase):
                        'order_line': [(0, None, sol_vals)]}
 
             sale_order = SaleOrder.create(so_vals)
-
+            sale_order.get_delivery_price()
+            self.assertTrue(sale_order.delivery_rating_success, sale_order.delivery_message)
             self.assertGreater(sale_order.delivery_price, 0.0, "FedEx delivery cost for this SO has not been correctly estimated.")
+            sale_order.set_delivery_line()
 
             sale_order.action_confirm()
             self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
@@ -76,7 +78,7 @@ class TestDeliveryFedex(TransactionCase):
             self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
             self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
-        except ValidationError as e:
+        except UserError as e:
             if e.name.strip() in SKIPPABLE_ERRORS:
                 raise unittest.SkipTest(SKIP_MSG)
             else:
@@ -99,7 +101,10 @@ class TestDeliveryFedex(TransactionCase):
                        'order_line': [(0, None, sol_vals)]}
 
             sale_order = SaleOrder.create(so_vals)
+            sale_order.get_delivery_price()
+            self.assertTrue(sale_order.delivery_rating_success, sale_order.delivery_message)
             self.assertGreater(sale_order.delivery_price, 0.0, "FedEx delivery cost for this SO has not been correctly estimated.")
+            sale_order.set_delivery_line()
 
             sale_order.action_confirm()
             self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
@@ -122,7 +127,7 @@ class TestDeliveryFedex(TransactionCase):
             self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
             self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
-        except ValidationError as e:
+        except UserError as e:
             if e.name.strip() in SKIPPABLE_ERRORS:
                 raise unittest.SkipTest(SKIP_MSG)
             else:
@@ -150,7 +155,10 @@ class TestDeliveryFedex(TransactionCase):
                        'order_line': [(0, None, sol_1_vals), (0, None, sol_2_vals)]}
 
             sale_order = SaleOrder.create(so_vals)
+            sale_order.get_delivery_price()
+            self.assertTrue(sale_order.delivery_rating_success, sale_order.delivery_message)
             self.assertGreater(sale_order.delivery_price, 0.0, "FedEx delivery cost for this SO has not been correctly estimated.")
+            sale_order.set_delivery_line()
 
             sale_order.action_confirm()
             self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
@@ -181,7 +189,7 @@ class TestDeliveryFedex(TransactionCase):
             self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
             self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
-        except ValidationError as e:
+        except UserError as e:
             if e.name.strip() in SKIPPABLE_ERRORS:
                 raise unittest.SkipTest(SKIP_MSG)
             else:

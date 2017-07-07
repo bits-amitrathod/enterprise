@@ -17,10 +17,9 @@ class SaleOrder(models.Model):
         if value.get('sale_id'):
             order = self.browse(int(value['sale_id']))
             order.ups_service_type = value.get('ups_service_type')
-            try:
-                # check selected service type is available for that partner address
-                order.carrier_id.ups_get_shipping_price_from_so(order)
+            check = order.carrier_id.ups_rate_shipment(order)
+            if check['success']:
                 return {}
-            except Exception as e:
+            else:
                 order.ups_service_type = order.carrier_id.ups_default_service_type
-                return {'error': e.args[0]}
+                return {'error': check['error_message']}

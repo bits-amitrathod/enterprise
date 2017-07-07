@@ -9,7 +9,7 @@ from werkzeug.urls import url_join
 
 
 from odoo import _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -36,26 +36,26 @@ class BpostRequest():
 
         res = [field for field in recipient_required_fields if not recipient[field]]
         if res:
-            raise ValidationError(_("The recipient address is incomplete or wrong (Missing field(s):  \n %s)") % ", ".join(res).replace("_id", ""))
+            return _("The recipient address is incomplete or wrong (Missing field(s):  \n %s)") % ", ".join(res).replace("_id", "")
         if recipient.country_id.code == "BE" and delivery_nature == 'International':
-            raise ValidationError(_("bpost International is used only to ship outside Belgium. Please change the delivery method into bpost Domestic."))
+            return _("bpost International is used only to ship outside Belgium. Please change the delivery method into bpost Domestic.")
         if recipient.country_id.code != "BE" and delivery_nature == 'Domestic':
-            raise ValidationError(_("bpost Domestic is used only to ship inside Belgium. Please change the delivery method into bpost International."))
+            return _("bpost Domestic is used only to ship inside Belgium. Please change the delivery method into bpost International.")
 
         res = [field for field in shipper_required_fields if not shipper[field]]
         if res:
-            raise ValidationError(_("The address of your company is incomplete or wrong (Missing field(s):  \n %s)") % ", ".join(res).replace("_id", ""))
+            return _("The address of your company is incomplete or wrong (Missing field(s):  \n %s)") % ", ".join(res).replace("_id", "")
         if shipper.country_id.code != 'BE':
-            raise ValidationError(_("Your company/warehouse address must be in Belgium to ship with bpost"))
+            return _("Your company/warehouse address must be in Belgium to ship with bpost")
 
         if order:
             if order.order_line and all(order.order_line.mapped(lambda l: l.product_id.type in ['service', 'digital'])):
-                raise ValidationError(_("The estimated shipping price cannot be computed because all your products are service/digital."))
+                return _("The estimated shipping price cannot be computed because all your products are service/digital.")
             if not order.order_line:
-                raise ValidationError(_("Please provide at least one item to ship."))
+                return _("Please provide at least one item to ship.")
             if order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):
-                raise ValidationError(_('The estimated shipping cannot be computed because the weight of your product is missing.'))
-        return True
+                return _('The estimated shipping cannot be computed because the weight of your product is missing.')
+        return False
 
     def _parse_address(self, partner):
         streetName = None
@@ -95,7 +95,7 @@ class BpostRequest():
             if delivery_method.attrib['countryIso2Code'] == country.code:
                 price = float(self._get_price_by_weight(_grams(weight), delivery_method))
         if not price:
-            raise ValidationError(_("bpost did not return prices for this destination country."))
+            raise UserError(_("bpost did not return prices for this destination country."))
 
         # If delivery on saturday is enabled, there are additional fees
         additional_fees = 0.0
@@ -117,7 +117,7 @@ class BpostRequest():
         elif weight <= 30000:
             return price.attrib['price20To30']
         else:
-            raise ValidationError(_("Packages over 30 Kg are not accepted by bpost."))
+            raise UserError(_("Packages over 30 Kg are not accepted by bpost."))
 
     def send_shipping(self, picking, carrier):
         # Get price of label
@@ -156,7 +156,7 @@ class BpostRequest():
             root = etree.fromstring(response)
             ns = {'ns1': 'http://schema.post.be/shm/deepintegration/v3/'}
             for errors_return in root.findall("ns1:error", ns):
-                raise ValidationError(errors_return.text)
+                raise UserError(errors_return.text)
 
         # Grab printable label and tracking code
         code, response2 = self._send_request('label', None, carrier, reference=reference_id)

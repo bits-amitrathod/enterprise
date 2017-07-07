@@ -86,16 +86,32 @@ class Providerdhl(models.Model):
         ('8X4_PDF', '8X4_PDF')
     ], string="Label Template", default='8X4_A4_PDF')
 
-    def dhl_get_shipping_price_from_so(self, order):
+    def dhl_rate_shipment(self, order):
         srm = DHLProvider(self.prod_environment)
-        srm.check_required_value(self, order.partner_shipping_id, order.warehouse_id.partner_id, order=order)
+        check_value = srm.check_required_value(self, order.partner_shipping_id, order.warehouse_id.partner_id, order=order)
+        if check_value:
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': check_value,
+                    'warning_message': False}
+
         result = srm.rate_request(order, self)
+        if result['error_found']:
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': result['error_found'],
+                    'warning_message': False}
+
         if order.currency_id.name == result['currency']:
             price = float(result['price'])
         else:
             quote_currency = self.env['res.currency'].search([('name', '=', result['currency'])], limit=1)
             price = quote_currency.compute(float(result['price']), order.currency_id)
-        return price
+
+        return {'success': True,
+                'price': price,
+                'error_message': False,
+                'warning_message': False}
 
     def dhl_send_shipping(self, pickings):
         res = []

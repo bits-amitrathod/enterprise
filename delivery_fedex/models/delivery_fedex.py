@@ -4,7 +4,7 @@ import logging
 import time
 
 from odoo import api, models, fields, _, tools
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 
 from .fedex_request import FedexRequest
 
@@ -118,7 +118,7 @@ class ProviderFedex(models.Model):
             srm.set_master_package(weight, 1)
         return srm.rate()
 
-    def fedex_get_shipping_price_from_so(self, order):
+    def fedex_rate_shipment(self, order):
         max_weight = _convert_weight(self.fedex_default_packaging_id.max_weight, self.fedex_weight_unit)
         price = 0.0
 
@@ -166,9 +166,15 @@ class ProviderFedex(models.Model):
                 else:
                     price = company_currency.compute(request['price']['USD'], order_currency)
         else:
-            raise ValidationError(request['errors_message'])
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': _('Error:\n%s') % request['errors_message'],
+                    'warning_message': False}
 
-        return price
+        return {'success': True,
+                'price': price,
+                'error_message': False,
+                'warning_message': _('Warning:\n%s') % warnings if warnings else False}
 
     def fedex_send_shipping(self, pickings):
         res = []
@@ -264,7 +270,7 @@ class ProviderFedex(models.Model):
                             package_labels.append((package_name, srm.get_label()))
                             carrier_tracking_ref = request['tracking_number']
                         else:
-                            raise ValidationError(request['errors_message'])
+                            raise UserError(request['errors_message'])
 
                     # Intermediary packages
                     elif sequence > 1 and sequence < package_count:
@@ -272,7 +278,7 @@ class ProviderFedex(models.Model):
                             package_labels.append((package_name, srm.get_label()))
                             carrier_tracking_ref = carrier_tracking_ref + "," + request['tracking_number']
                         else:
-                            raise ValidationError(request['errors_message'])
+                            raise UserError(request['errors_message'])
 
                     # Last package
                     elif sequence == package_count:
@@ -302,7 +308,7 @@ class ProviderFedex(models.Model):
                                              'tracking_number': carrier_tracking_ref}
                             res = res + [shipping_data]
                         else:
-                            raise ValidationError(request['errors_message'])
+                            raise UserError(request['errors_message'])
 
             # TODO RIM handle if a package is not accepted (others should be deleted)
 
@@ -340,13 +346,13 @@ class ProviderFedex(models.Model):
                                      'tracking_number': carrier_tracking_ref}
                     res = res + [shipping_data]
                 else:
-                    raise ValidationError(request['errors_message'])
+                    raise UserError(request['errors_message'])
 
             ##############
             # No package #
             ##############
             else:
-                raise ValidationError(_('No packages for this picking'))
+                raise UserError(_('No packages for this picking'))
 
         return res
 
@@ -376,7 +382,7 @@ class ProviderFedex(models.Model):
             picking.write({'carrier_tracking_ref': '',
                            'carrier_price': 0.0})
         else:
-            raise ValidationError(result['errors_message'])
+            raise UserError(result['errors_message'])
 
 
 def _convert_weight(weight, unit='KG'):

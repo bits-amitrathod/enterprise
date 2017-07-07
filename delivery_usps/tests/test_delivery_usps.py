@@ -51,7 +51,8 @@ class TestDeliveryUSPS(TransactionCase):
                    'order_line': [(0, None, sol_vals)]}
 
         sale_order = SaleOrder.create(so_vals)
-
+        sale_order.get_delivery_price()
+        sale_order.set_delivery_line()
         self.assertGreater(sale_order.delivery_price, 0.0, "USPS delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()
@@ -66,7 +67,6 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
-        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
@@ -90,6 +90,8 @@ class TestDeliveryUSPS(TransactionCase):
                    'order_line': [(0, None, sol_vals)]}
 
         sale_order = SaleOrder.create(so_vals)
+        sale_order.get_delivery_price()
+        sale_order.set_delivery_line()
         self.assertGreater(sale_order.delivery_price, 0.0, "USPS delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()
@@ -104,7 +106,6 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
-        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
@@ -128,6 +129,8 @@ class TestDeliveryUSPS(TransactionCase):
                    'order_line': [(0, None, sol_vals)]}
 
         sale_order = SaleOrder.create(so_vals)
+        sale_order.get_delivery_price()
+        sale_order.set_delivery_line()
         self.assertGreater(sale_order.delivery_price, 0.0, "USPS delivery cost for this SO has not been correctly estimated.")
 
         sale_order.action_confirm()
@@ -142,7 +145,6 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
-        picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")

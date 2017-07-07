@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, models, fields, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 from odoo.tools import pycompat
 
 from .ups_request import UPSRequest, Package
@@ -58,7 +58,7 @@ class ProviderUPS(models.Model):
         self.ups_cod = False
         self.ups_saturday_delivery = False
 
-    def ups_get_shipping_price_from_so(self, order):
+    def ups_rate_shipment(self, order):
         superself = self.sudo()
         srm = UPSRequest(superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
         ResCurrency = self.env['res.currency']
@@ -94,7 +94,13 @@ class ProviderUPS(models.Model):
         else:
             cod_info = None
 
-        srm.check_required_value(order.company_id.partner_id, order.warehouse_id.partner_id, order.partner_shipping_id, order=order)
+        check_value = srm.check_required_value(order.company_id.partner_id, order.warehouse_id.partner_id, order.partner_shipping_id, order=order)
+        if check_value:
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': check_value,
+                    'warning_message': False}
+
         ups_service_type = order.ups_service_type or self.ups_default_service_type
         result = srm.get_shipping_price(
             shipment_info=shipment_info, packages=packages, shipper=order.company_id.partner_id, ship_from=order.warehouse_id.partner_id,
@@ -102,7 +108,10 @@ class ProviderUPS(models.Model):
             saturday_delivery=self.ups_saturday_delivery, cod_info=cod_info)
 
         if result.get('error_message'):
-            raise ValidationError(result['error_message'])
+            return {'success': False,
+                    'price': 0.0,
+                    'error_message': _('Error:\n%s') % result['error_message'],
+                    'warning_message': False}
 
         if order.currency_id.name == result['currency_code']:
             price = float(result['price'])
@@ -114,7 +123,10 @@ class ProviderUPS(models.Model):
             # Don't show delivery amount, if ups bill my account option is true
             price = 0.0
 
-        return price
+        return {'success': True,
+                'price': price,
+                'error_message': False,
+                'warning_message': False}
 
     def ups_send_shipping(self, pickings):
         res = []
@@ -155,7 +167,9 @@ class ProviderUPS(models.Model):
             else:
                 cod_info = None
 
-            srm.check_required_value(picking.company_id.partner_id, picking.picking_type_id.warehouse_id.partner_id, picking.partner_id, picking=picking)
+            check_value = srm.check_required_value(picking.company_id.partner_id, picking.picking_type_id.warehouse_id.partner_id, picking.partner_id, picking=picking)
+            if check_value:
+                raise UserError(check_value)
 
             package_type = picking.package_ids and picking.package_ids[0].packaging_id.shipper_package_code or self.ups_default_packaging_id.shipper_package_code
             result = srm.send_shipping(
@@ -163,7 +177,7 @@ class ProviderUPS(models.Model):
                 ship_to=picking.partner_id, packaging_type=package_type, service_type=ups_service_type, label_file_type=self.ups_label_file_type, ups_carrier_account=ups_carrier_account,
                 saturday_delivery=picking.carrier_id.ups_saturday_delivery, cod_info=cod_info)
             if result.get('error_message'):
-                raise ValidationError(result['error_message'])
+                raise UserError(result['error_message'])
 
             currency_order = picking.sale_id.currency_id
             if not currency_order:
@@ -212,7 +226,7 @@ class ProviderUPS(models.Model):
         result = srm.cancel_shipment(tracking_ref)
 
         if result.get('error_message'):
-            raise ValidationError(result['error_message'])
+            raise UserError(result['error_message'])
         else:
             picking.message_post(body=_(u'Shipment N° %s has been cancelled' % picking.carrier_tracking_ref))
             picking.write({'carrier_tracking_ref': '',
