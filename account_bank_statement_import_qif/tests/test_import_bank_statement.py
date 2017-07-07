@@ -18,7 +18,7 @@ class TestQifFile(TransactionCase):
 
     def test_qif_file_import(self):
         from odoo.tools import float_compare
-        qif_file_path = get_module_resource('account_bank_statement_import_qif', 'test_qif_file', 'test_qif.qif')
+        qif_file_path = get_module_resource('account_bank_statement_import_qif', 'static/qif', 'test_qif.qif')
         qif_file = base64.b64encode(open(qif_file_path, 'rb').read())
         bank_statement_id = self.BankStatementImport.create(dict(data_file=qif_file,))
         journal = self.env['account.journal'].create({'type': 'bank', 'name': 'bank QIF', 'code': 'BNK67'})

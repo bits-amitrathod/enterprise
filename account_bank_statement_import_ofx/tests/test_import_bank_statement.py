@@ -11,7 +11,7 @@ class TestOfxFile(TransactionCase):
 
     def test_ofx_file_import(self):
         # Get OFX file content
-        ofx_file_path = get_module_resource('account_bank_statement_import_ofx', 'test_ofx_file', 'test_ofx.ofx')
+        ofx_file_path = get_module_resource('account_bank_statement_import_ofx', 'static/ofx', 'test_ofx.ofx')
         ofx_file = base64.b64encode(open(ofx_file_path, 'rb').read())
 
         # Create a bank account and journal corresponding to the OFX file (same currency and account number)
