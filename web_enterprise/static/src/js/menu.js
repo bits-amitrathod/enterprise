@@ -199,7 +199,7 @@ var Menu = Widget.extend({
         if (width < menuItemWidth + othersWidth) {
             var $items = this.$section_placeholder.children();
             var nbItems = $items.length;
-            menuItemWidth += 44; // @odoo-navbar-height - 2 (width of the "+" button)
+            menuItemWidth += 46; // @odoo-navbar-height (width of the "+" button)
             do {
                 nbItems--;
                 menuItemWidth -= $items.eq(nbItems).outerWidth(true);
