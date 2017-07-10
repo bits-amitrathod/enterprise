@@ -19,12 +19,8 @@
     <template id="portal_my_home_menu_helpdesk" name="Portal layout : helpdesk tickets menu entries" inherit_id="website_portal.portal_layout" priority="50">
         <xpath expr="//ol[contains(@class,'o_portal_submenu')]" position="inside">
             <li t-if="page_name == 'ticket' or ticket">
-                <a t-if="ticket" t-attf-href="/my/tickets?{{ keep_query() }}">
-                    My Tickets
-                </a>
-                <t t-else="">
-                    My Tickets
-                </t>
+                <a t-if="ticket" t-attf-href="/my/tickets?{{ keep_query() }}">Tickets</a>
+                <t t-else="">Tickets</t>
             </li>
             <li t-if="ticket">
                 #<span t-field="ticket.id"/>
@@ -33,25 +29,23 @@
     </template>
 
     <template id="portal_my_home_helpdesk_ticket" name="Portal My Home : Helpdesk Ticket" inherit_id="website_portal.portal_my_home" priority="50">
-        <xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">
-            <h3 t-if="ticket_count" class="page-header">
-                <a href="/my/tickets">My Tickets
-                    <span class="badge ml8" t-esc="ticket_count"/>
-                </a>
-            </h3>
+        <xpath expr="//ul[contains(@class,'o_portal_docs')]" position="inside">
+            <li t-if="ticket_count" class="list-group-item">
+                <span class="badge" t-esc="ticket_count"/>
+                <a href="/my/tickets">Tickets</a>
+            </li>
         </xpath>
     </template>
 
     <template id="portal_helpdesk_ticket" name="Helpdesk Ticket">
         <t t-call="website_portal.portal_layout">
-            <h3 class="page-header">
-                My Tickets
+            <h3>Tickets
                 <t t-call="website_portal.portal_searchbar"/>
             </h3>
             <t t-if="not tickets">
                 <p>There are currently no Ticket for your account.</p>
             </t>
-            <t t-if="tickets">
+            <div t-if="tickets" class="panel panel-default">
                 <div class="table-responsive"><table class="table table-hover o_my_status_table">
                     <thead>
                         <tr class="active">
@@ -71,7 +65,7 @@
                 <div t-if="pager" class="o_portal_pager text-center">
                     <t t-call="website.pager"/>
                 </div>
-            </t>
+            </div>
         </t>
     </template>
 

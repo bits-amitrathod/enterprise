@@ -242,36 +242,30 @@
     <template id="portal_my_home_menu_subscription" name="Portal layout : subscription menu entry" inherit_id="website_portal.portal_layout" priority="10">
         <xpath expr="//ol[contains(@class,'o_portal_submenu')]" position="inside">
             <li t-if="page_name == 'subscription' or account">
-                <a t-if="account" t-attf-href="/my/subscription?{{ keep_query() }}">
-                    My Subscriptions
-                </a>
-                <t t-else="">
-                    My Subscriptions
-                </t>
+                <a t-if="account" t-attf-href="/my/subscription?{{ keep_query() }}">Subscriptions</a>
+                <t t-else="">Subscriptions</t>
             </li>
         </xpath>
     </template>
 
-    <template id="portal_my_home_subscription" name="Portal My Home : subscription entries" inherit_id="website_portal.portal_my_home" priority="10">
-        <xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">
-            <h3 t-if="subscription_count" class="page-header">
-                <a href="/my/subscription">My Susbcription
-                    <span class="badge ml8" t-esc="subscription_count"/>
-                </a>
-            </h3>
+    <template id="portal_my_home_subscription" name="Portal My Home : subscription entries" inherit_id="website_portal.portal_my_home" priority="90">
+        <xpath expr="//ul[contains(@class,'o_portal_docs')]" position="inside">
+            <li t-if="subscription_count" class="list-group-item">
+                <span class="badge" t-esc="subscription_count"/>
+                <a href="/my/subscription">Subscriptions</a>
+            </li>
         </xpath>
     </template>
 
     <template id="portal_my_subscriptions" name="My Subscriptions">
         <t t-call="website_portal.portal_layout">
-            <h3 class="page-header">
-                My Subscriptions
+            <h3>Subscriptions
                 <t t-call="website_portal.portal_searchbar"/>
             </h3>
             <t t-if="not accounts">
                 <p>You don't have any subscriptions yet.</p>
             </t>
-            <t t-if="accounts">
+            <div t-if="accounts" class="panel panel-default">
                 <div class="table-responsive"><table class="table table-hover o_my_status_table">
                     <thead>
                         <tr class="active">
@@ -303,7 +297,7 @@
                 <div class="col-md-12 text-center">
                     <t t-call="website.pager"/>
                 </div>
-            </t>
+            </div>
         </t>
     </template>
 
