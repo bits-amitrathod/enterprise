@@ -117,9 +117,9 @@ class ReportPartnerLedger(models.AbstractModel):
                     progress = progress + line_debit - line_credit
                     name = []
                     name = '-'.join(
-                        line.move_id.name not in ['', '/'] and [line.move_id.name] or [] +
-                        line.ref not in ['', '/'] and [line.ref] or [] +
-                        line.name not in ['', '/'] and [line.name] or []
+                        (line.move_id.name not in ['', '/'] and [line.move_id.name] or []) +
+                        (line.ref not in ['', '/', False] and [line.ref] or []) +
+                        (line.name not in ['', '/'] and [line.name] or [])
                     )
                     if len(name) > 35 and not self.env.context.get('no_format'):
                         name = name[:32] + "..."
