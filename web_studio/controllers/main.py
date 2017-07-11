@@ -374,7 +374,7 @@ class WebStudioController(http.Controller):
                     added_nodes['table'] = True
                     added_nodes_in_table = {
                         'name': False,
-                        'description':  False,
+                        'description': False,
                         'quantity': False,
                         'price': False,
                         'total': False,
@@ -518,7 +518,35 @@ class WebStudioController(http.Controller):
         return True
 
     def _get_studio_view(self, view):
-        return request.env['ir.ui.view'].search([('inherit_id', '=', view.id), ('name', 'ilike', '%studio%customization%')], limit=1)
+        domain = [('inherit_id', '=', view.id), ('name', '=', self._generate_studio_view_name(view))]
+        return view.search(domain, order='priority desc, name desc, id desc', limit=1)
+
+    def _set_studio_view(self, view, arch):
+        studio_view = self._get_studio_view(view)
+        if studio_view and len(arch):
+            studio_view.arch_db = arch
+        elif studio_view:
+            studio_view.unlink()
+        elif len(arch):
+            # We have to play with priorities. Consider the following:
+            # View Base: <field name="x"/><field name="y"/>
+            # View Standard inherits Base: <field name="x" position="after"><field name="z"/></field>
+            # View Custo inherits Base: <field name="x" position="after"><field name="x2"/></field>
+            # We want x,x2,z,y, because that's what we did in studio, but the order of xpath
+            # resolution is sequence,name, not sequence,id. Because "Custo" < "Standard", it
+            # would first resolve in x,x2,y, then resolve "Standard" with x,z,x2,y as result.
+            studio_view = request.env['ir.ui.view'].create({
+                'type': view.type,
+                'model': view.model,
+                'inherit_id': view.id,
+                'mode': 'extension',
+                'priority': 99,
+                'arch': arch,
+                'name': self._generate_studio_view_name(view),
+            })
+
+    def _generate_studio_view_name(self, view):
+        return "Odoo Studio: %s customization" % (view.name)
 
     @http.route('/web_studio/get_studio_view_arch', type='json', auth='user')
     def get_studio_view_arch(self, model, view_type, view_id=False):
@@ -543,6 +571,7 @@ class WebStudioController(http.Controller):
         view = request.env['ir.ui.view'].browse(view_id)
         studio_view = self._get_studio_view(view)
         field_created = False
+
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
 
@@ -585,39 +614,30 @@ class WebStudioController(http.Controller):
 
         # Save or create changes into studio view, identifiable by xmlid
         # Example for view id 42 of model crm.lead: web-studio_crm.lead-42
-        # TODO: if len(arch) == 0, delete the view
         new_arch = etree.tostring(arch, encoding='utf-8', pretty_print=True)
-        if studio_view:
-            studio_view.arch_db = new_arch
-        else:
-            # We have to play with priorities. Consider the following:
-            # View Base: <field name="x"/><field name="y"/>
-            # View Standard inherits Base: <field name="x" position="after"><field name="z"/></field>
-            # View Custo inherits Base: <field name="x" position="after"><field name="x2"/></field>
-            # We want x,x2,z,y, because that's what we did in studio, but the order of xpath
-            # resolution is sequence,name, not sequence,id. Because "Custo" < "Standard", it
-            # would first resolve in x,x2,y, then resolve "Standard" with x,z,x2,y as result.
-            studio_view = request.env['ir.ui.view'].create({
-                'type': view.type,
-                'model': view.model,
-                'inherit_id': view.id,
-                'mode': 'extension',
-                'priority': 99,
-                'arch': new_arch,
-                'name': "Odoo Studio: %s customization" % (view.name),
-            })
+        self._set_studio_view(view, new_arch)
 
-        # the registry has been updated so we take the new one
-        ViewModel = request.env[view.model]
-        fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
+        # Normalize the view
+        studio_view = self._get_studio_view(view)
+        try:
+            normalized_view = studio_view.normalize()
+            self._set_studio_view(view, normalized_view)
+            ViewModel = request.env[view.model]
+            fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
+        except ValueError:  # Element '<...>' cannot be located in parent view
+            # If the studio view is not applicable after normalization, let's
+            # just ignore the normalization step, it's better to have a studio
+            # view that is not optimized than to prevent the user from making
+            # the change he would like to make.
+            self._set_studio_view(view, new_arch)
+            fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
+
         view_type = 'list' if view.type == 'tree' else view.type
-        result = {
-            'fields_views': {
-                view_type: fields_view,
-            },
-        }
+        result = {'fields_views': {view_type: fields_view}}
+
         if field_created:
             result['fields'] = ViewModel.fields_get()
+
         return result
 
     @http.route('/web_studio/edit_report', type='json', auth='user')
@@ -723,7 +743,7 @@ class WebStudioController(http.Controller):
                     expr += '[contains(@%s,\'%s\')]' % (k, v)
                 else:
                     expr += '[@%s=\'%s\']' % (k, v)
-            
+
             # Avoid matching nodes in sub views.
             # Example with field as node:
             # A field should be defined only once in a view but in some cases,
@@ -924,7 +944,8 @@ class WebStudioController(http.Controller):
         # Create xpath to put the buttonbox as the first child of the sheet
         if arch.find('sheet'):
             sheet_node = arch.find('sheet')
-            if list(sheet_node): # Check if children exists
+            if list(sheet_node):
+                # Check if children exists
                 xpath_node = etree.SubElement(studio_view_arch, 'xpath', {
                     'expr': '//sheet/*[1]',
                     'position': 'before'
