@@ -73,7 +73,7 @@ class StockPicking(models.Model):
         return candidates_todo and candidates_todo[0].id or candidates[0].id
 
     def _check_product(self, product, qty=1.0):
-        corresponding_po = self.pack_operation_product_ids.filtered(lambda r: r.product_id.id == product.id and not r.result_package_id and not r.location_processed)
+        corresponding_po = self.pack_operation_ids.filtered(lambda r: r.product_id.id == product.id and not r.result_package_id and not r.location_processed)
         if corresponding_po:
             corresponding_po = corresponding_po[0]
             if not corresponding_po.lots_visible:#product.tracking=='none':
@@ -88,7 +88,7 @@ class StockPicking(models.Model):
                 corresponding_po.qty_done += qty
         else:
             picking_type_lots = (self.picking_type_id.use_create_lots or self.picking_type_id.use_existing_lots)
-            self.pack_operation_product_ids += self.pack_operation_product_ids.new({
+            self.pack_operation_ids += self.pack_operation_ids.new({
                 'product_id': product.id,
                 'product_uom_id': product.uom_id.id,
                 'location_id': self.location_id.id,
@@ -114,14 +114,14 @@ class StockPicking(models.Model):
 
     def _check_destination_package(self, package):
         #put in pack logic
-        corresponding_po = self.pack_operation_product_ids.filtered(lambda r: not r.result_package_id and r.qty_done > 0)
+        corresponding_po = self.pack_operation_ids.filtered(lambda r: not r.result_package_id and r.qty_done > 0)
         for packop in corresponding_po:
             qty_done = packop.qty_done
             if qty_done < packop.product_qty:
                 if not packop.pack_lot_ids:
                     packop.product_qty = packop.product_qty - qty_done
                     packop.qty_done = 0.0
-                    self.pack_operation_product_ids += self.pack_operation_product_ids.new({
+                    self.pack_operation_ids += self.pack_operation_ids.new({
                         'product_id': packop.product_id.id,
                         'package_id': packop.package_id.id,
                         'product_uom_id': packop.product_uom_id.id,
@@ -136,7 +136,7 @@ class StockPicking(models.Model):
                         'lots_visible': packop.product_id.tracking != 'none',
                     })
                 else:
-                    self.pack_operation_product_ids += self.pack_operation_product_ids.new({
+                    self.pack_operation_ids += self.pack_operation_ids.new({
                         'product_id': packop.product_id.id,
                         'package_id': packop.package_id.id,
                         'product_uom_id': packop.product_uom_id.id,
@@ -162,14 +162,14 @@ class StockPicking(models.Model):
         return True
 
     def _check_destination_location(self, location):
-        corresponding_po = self.pack_operation_product_ids.filtered(lambda r: not r.location_processed and r.qty_done > 0)
+        corresponding_po = self.pack_operation_ids.filtered(lambda r: not r.location_processed and r.qty_done > 0)
         for packop in corresponding_po:
             qty_done = packop.qty_done
             if qty_done < packop.product_qty:
                 if not packop.pack_lot_ids:
                     packop.product_qty = packop.product_qty - qty_done
                     packop.qty_done = 0.0
-                    self.pack_operation_product_ids += self.pack_operation_product_ids.new({
+                    self.pack_operation_ids += self.pack_operation_ids.new({
                         'package_id': packop.package_id.id,
                         'product_id': packop.product_id.id,
                         'product_uom_id': packop.product_uom_id.id,
@@ -185,7 +185,7 @@ class StockPicking(models.Model):
                         'lots_visible': packop.product_id.tracking != 'none',
                     })
                 else:
-                    self.pack_operation_product_ids += self.pack_operation_product_ids.new({
+                    self.pack_operation_ids += self.pack_operation_ids.new({
                         'product_id': packop.product_id.id,
                         'package_id': packop.package_id.id,
                         'product_uom_id': packop.product_uom_id.id,
