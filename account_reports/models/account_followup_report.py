@@ -196,15 +196,16 @@ class report_account_followup_report(models.AbstractModel):
         email = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice']).email
         if email and email.strip():
             body_html = self.with_context(print_mode=True, mail=True, keep_summary=True).get_html(options)
-            email = self.env['mail.mail'].create({
+            msg = self.get_post_message(options)
+            msg += '<br>' + body_html.decode('utf-8')
+            msg_id = partner.message_post(body=msg, subtype='account_reports.followup_logged_action')
+            email = self.env['mail.mail'].with_context(default_mail_message_id=msg_id).create({
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,
                 'body_html': append_content_to_html(body_html, self.env.user.signature, plaintext=False),
                 'email_from': self.env.user.email or '',
                 'email_to': email,
+                'body': msg,
             })
-            msg = self.get_post_message(options)
-            msg += '<br>' + body_html.decode('utf-8')
-            partner.message_post(body=msg, subtype='account_reports.followup_logged_action')
             return True
         raise UserError(_('Could not send mail to partner because it does not have any email address defined'))
 

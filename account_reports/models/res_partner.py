@@ -88,3 +88,21 @@ class ResPartner(models.Model):
             'name': _('Partner Ledger'),
             'tag': 'account_report',
             'context': "{'model':'account.partner.ledger'}"}
+
+    @api.multi
+    @api.returns('self', lambda value: value.id)
+    def message_post(self, body='', subject=None, message_type='notification',
+                     subtype=None, parent_id=False, attachments=None,
+                     content_subtype='html', **kwargs):
+        # A reply to a followup logged note should be of the same subtype, so that it will be
+        # displayed in the history of the followup letter as well.
+        if parent_id:
+            parent = self.env['mail.message'].browse(parent_id)
+            followup_subtype = self.env.ref('account_reports.followup_logged_action')
+            if subtype and parent.subtype_id == followup_subtype:
+                subtype = 'account_reports.followup_logged_action'
+
+        return super(ResPartner, self).message_post(
+                body=body, subject=subject, message_type=message_type, subtype=subtype,
+                parent_id=parent_id, attachments=attachments, content_subtype=content_subtype,
+                **kwargs)
