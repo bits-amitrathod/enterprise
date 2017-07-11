@@ -37,7 +37,7 @@ class TestMpsReport(TestMpsCommon):
                 'location_id': self.ref('stock.stock_location_14')
             })]
         })
-        inventory.prepare_inventory()
+        inventory.action_start()
         inventory.action_done()
 
 
