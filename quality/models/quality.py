@@ -206,7 +206,7 @@ class QualityAlert(models.Model):
     _inherit = ['mail.thread']
 
     name = fields.Char('Name', default=lambda self: _('New'))
-    description = fields.Text('Description')
+    description = fields.Html('Description')
     stage_id = fields.Many2one('quality.alert.stage', 'Stage',
         group_expand='_read_group_stage_ids',
         default=lambda self: self.env['quality.alert.stage'].search([], limit=1).id, track_visibility="onchange")
@@ -216,8 +216,8 @@ class QualityAlert(models.Model):
     date_assign = fields.Datetime('Date Assigned')
     date_close = fields.Datetime('Date Closed')
     picking_id = fields.Many2one('stock.picking', 'Picking')
-    action_corrective = fields.Text('Corrective Action')
-    action_preventive = fields.Text('Preventive Action')
+    action_corrective = fields.Html('Corrective Action')
+    action_preventive = fields.Html('Preventive Action')
     user_id = fields.Many2one('res.users', 'Responsible', track_visibility='onchange', default=lambda self: self.env.user)
     team_id = fields.Many2one(
         'quality.alert.team', 'Team', required=True,
