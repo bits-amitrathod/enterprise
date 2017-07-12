@@ -129,6 +129,7 @@ class website_subscription(http.Controller):
             'acquirers': acquirers,
             'acc_pm': acc_pm,
             'part_pms': part_pms,
+            'verified_pms': [x for x in part_pms if x.verified],
             'is_salesman': request.env['res.users'].sudo(request.uid).has_group('sales_team.group_sale_salesman'),
             'action': action,
             'message': message,
@@ -165,8 +166,13 @@ class website_subscription(http.Controller):
             account = account_res.browse(account_id)
 
         # no change
-        if int(kw.get('pay_meth', 0)) > 0:
-            account.payment_token_id = int(kw['pay_meth'])
+        if int(kw.get('pm_id', 0)) > 0:
+            account.payment_token_id = int(kw['pm_id'])
+
+        # if no payment has been selected for this account, then we display redirect to /my/subscription with an error message
+        if len(account.payment_token_id) == 0:
+            get_param = 'message=No payment method have been selected for this subscription.&message_class=alert-danger'
+            return request.redirect('/my/subscription/%s/%s?%s' % (account.id, account.uuid, get_param))
 
         # we can't call _recurring_invoice because we'd miss 3DS, redoing the whole payment here
         payment_token = account.payment_token_id
@@ -223,3 +229,22 @@ class website_subscription(http.Controller):
             account.date = datetime.date.today().strftime('%Y-%m-%d')
         return request.redirect('/my/home')
 
+
+    @http.route(['/my/subscription/<int:account_id>/set_pm',
+                '/my/subscription/<int:account_id>/<string:uuid>/set_pm'], type='http', methods=["POST"], auth="public", website=True)
+    def set_payment_method(self, account_id, uuid=None, **kw):
+        account_res = request.env['sale.subscription']
+        if uuid:
+            account = account_res.sudo().browse(account_id)
+            if uuid != account.uuid:
+                raise NotFound()
+        else:
+            account = account_res.browse(account_id)
+
+        if kw.get('pm_id'):
+            account.payment_token_id = int(kw.get('pm_id'))
+            get_param = 'message=Your payment method has been changed for this subscription.&message_class=alert-success'
+        else:
+            get_param = 'message=Impossible to change your payment method for this subscription.&message_class=alert-danger'
+
+        return request.redirect('/my/subscription/%s/%s?%s' % (account.id, account.uuid, get_param))
