@@ -313,7 +313,7 @@ class account_report_context_followup(models.TransientModel):
             context = context.with_context(lang=context.partner_id.lang)
             report_obj = context.get_report_obj()
             lines = report_obj.get_lines(context, public=True)
-            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            base_url = self.env['ir.config_parameter'].sudo().get_param('report.url') or self.env['ir.config_parameter'].sudo().get_param('web.base.url')
             rcontext = {
                 'context': context,
                 'report': report_obj,
