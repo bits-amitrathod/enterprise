@@ -30,7 +30,7 @@
             </xpath>
         </field>
     </record>
-    
+
     <record model="ir.ui.view" id="sale_subscription_template_view_form_inherit_sale_subscription">
         <field name="name">sale.subscription.template.form</field>
         <field name="model">sale.subscription.template</field>
@@ -42,7 +42,8 @@
             <xpath expr="//group[@name='online']" position="inside">
                 <field name="user_closable"/>
                 <field name="payment_mandatory"/>
-                <field name="tag_ids" string="Category" widget="many2many_tags"/>
+                <field name="tag_ids" string="Category" widget="many2many_tags"
+                       options="{'color_field': 'color'}" />
             </xpath>
         </field>
     </record>

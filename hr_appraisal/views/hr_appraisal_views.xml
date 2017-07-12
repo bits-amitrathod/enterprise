@@ -51,7 +51,7 @@
                     <page string="Plan">
                         <group col="4">
                             <field name="manager_appraisal" attrs="{'readonly':[('state', '!=', 'new')]}"/>
-                            <field name="manager_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" attrs="{'invisible':[('manager_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}" readonly="0"/>
+                            <field name="manager_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'invisible':[('manager_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}" readonly="0"/>
                             <field name="manager_survey_id" nolabel="1" placeholder="Appraisal Form..." attrs="{'invisible':[('manager_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"/>
 
                             <field name="employee_appraisal" string="Employee" attrs="{'readonly':[('state', '!=', 'new')]}"/>
@@ -59,11 +59,11 @@
                             <field name="employee_survey_id" nolabel="1" placeholder="Appraisal Form..." attrs="{'invisible':[('employee_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"/>
 
                             <field name="collaborators_appraisal" attrs="{'readonly':[('state', '!=', 'new')]}"/>
-                            <field name="collaborators_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" attrs="{'invisible':[('collaborators_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"/>
+                            <field name="collaborators_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'invisible':[('collaborators_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"/>
                             <field name="collaborators_survey_id" nolabel="1" placeholder="Appraisal Form..." attrs="{'invisible':[('collaborators_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"/>
 
                             <field name="colleagues_appraisal" attrs="{'readonly':[('state', '!=', 'new')]}"/>
-                            <field name="colleagues_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" attrs="{'invisible':[('colleagues_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}" readonly="0"/>
+                            <field name="colleagues_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'invisible':[('colleagues_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}" readonly="0"/>
                             <field name="colleagues_survey_id" placeholder="Appraisal Form..." nolabel="1" attrs="{'invisible':[('colleagues_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"/>
                         </group>
                     </page>
@@ -221,7 +221,7 @@
             <page string="Appraisal">
                 <group string="Send Appraisal Form To" col="4">
                     <field name="appraisal_by_manager"/>
-                    <field name="appraisal_manager_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" attrs="{'invisible':[('appraisal_by_manager','=',False)]}" readonly="0"/>
+                    <field name="appraisal_manager_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'invisible':[('appraisal_by_manager','=',False)]}" readonly="0"/>
                     <field name="appraisal_manager_survey_id" nolabel="1" placeholder="Appraisal Form..." attrs="{'invisible':[('appraisal_by_manager','=',False)]}"/>
 
                     <field name="appraisal_self"/>
@@ -229,10 +229,10 @@
                     <field name="appraisal_self_survey_id" nolabel="1" placeholder="Appraisal Form..." attrs="{'invisible':[('appraisal_self','=',False)]}"/>
 
                     <field name="appraisal_by_collaborators"/>
-                    <field name="appraisal_collaborators_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" attrs="{'invisible':[('appraisal_by_collaborators','=',False)]}"/>
+                    <field name="appraisal_collaborators_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'invisible':[('appraisal_by_collaborators','=',False)]}"/>
                     <field name="appraisal_collaborators_survey_id" nolabel="1" placeholder="Appraisal Form..." attrs="{'invisible':[('appraisal_by_collaborators','=',False)]}"/>
                     <field name="appraisal_by_colleagues"/>
-                    <field name="appraisal_colleagues_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" attrs="{'invisible':[('appraisal_by_colleagues','=',False)]}" readonly="0"/>
+                    <field name="appraisal_colleagues_ids" nolabel="1" placeholder="Select Appraisal Reviewer..." widget="many2many_tags" options="{'color_field': 'color'}" attrs="{'invisible':[('appraisal_by_colleagues','=',False)]}" readonly="0"/>
                     <field name="appraisal_colleagues_survey_id" placeholder="Appraisal Form..." nolabel="1" attrs="{'invisible':[('appraisal_by_colleagues','=',False)]}"/>
                     <field name="child_ids" invisible="1"/>
                 </group>
