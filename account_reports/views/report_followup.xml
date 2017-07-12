@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-xs-5 col-xs-offset-7" style='margin-top: 15px;'>
                 <div t-field="partner.self" 
-                    t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True}'/>
+                    t-field-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
                 <span t-field="partner.vat"/>
             </div>
         </div>
@@ -75,7 +75,6 @@
         <p t-if='context.get("print_mode") != True and invoice_address_id' class='o_account_reports_contact_info'>
             <t t-if="invoice_address_id.phone"><i class='fa fa-phone fa-fw' /><t t-esc="invoice_address_id.phone" /><br /></t>
             <t t-if="invoice_address_id.mobile"><i class='fa fa-mobile fa-fw' /><t t-esc="invoice_address_id.mobile" /><br /></t>
-            <t t-if="invoice_address_id.fax"><i class='fa fa-fax fa-fw' /><t t-esc="invoice_address_id.fax" /><br /></t>
             <t t-if="invoice_address_id.email">
                 <a t-att-href="'mailto:' + invoice_address_id.email">
                     <i class='fa fa-envelope' /><t t-esc="' ' + invoice_address_id.email" />
