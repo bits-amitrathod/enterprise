@@ -18,6 +18,7 @@ var FieldChar = basic_fields.FieldChar;
 var FieldClearbit = FieldChar.extend({
     className: 'o_field_clearbit',
     debounceSuggestions: 400,
+    resetOnAnyFieldChange: true,
 
     events: _.extend({}, FieldChar.prototype.events, {
         'keyup': '_onKeyup',
@@ -35,6 +36,9 @@ var FieldClearbit = FieldChar.extend({
      */
     init: function () {
         this._super.apply(this, arguments);
+        if (this.model !== 'res.partner') {
+            return;
+        }
         if (this.mode === 'edit') {
             this.tagName = 'div';
             this.className += ' dropdown open';
@@ -190,7 +194,9 @@ var FieldClearbit = FieldChar.extend({
      */
     _onInput: function () {
         this._super.apply(this, arguments);
-        this._suggestCompanies(this.$input.val());
+        if (this.record.data.company_type === 'company') {
+            this._suggestCompanies(this.$input.val());
+        }
     },
     /**
      * @override of FieldChar
