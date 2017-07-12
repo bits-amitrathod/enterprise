@@ -2,11 +2,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import calendar
 import copy
-import xlsxwriter
 import json
 import StringIO
 import logging
 import lxml.html
+
+try:
+    from odoo.tools.misc import xlsxwriter
+except ImportError:
+    # TODO saas-17: remove the try/except to directly import from misc
+    import xlsxwriter
+
 from odoo import models, fields, api, _
 from datetime import timedelta, datetime, date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
