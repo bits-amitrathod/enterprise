@@ -187,7 +187,7 @@
       <field name="model">account.journal</field>
       <field name="inherit_id" ref="account.view_account_bank_journal_form"/>
       <field name="arch" type="xml">
-        <xpath expr="//div[@name='bank_source']" position="after">
+        <xpath expr="//field[@name='bank_id']" position="after">
           <label for="account_online_journal_id" attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}"/>
           <div attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}">
             <field name="account_online_journal_id" options="{'no_create': True}" class="oe_inline"/>

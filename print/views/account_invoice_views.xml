@@ -40,7 +40,7 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//header/button[@name='action_invoice_sent' and @class='oe_highlight']" position="before">
+                <xpath expr="//header/button[@name='action_invoice_sent']" position="before">
                     <button name="%(print.print_order_wizard_action)d" string="Send Letter" type="action" attrs="{'invisible':['|', ('sent', '=', True), ('state', '!=', 'open')]}" class="oe_highlight"/>
                 </xpath>
                 <xpath expr="//header/button[@name='action_invoice_sent' and not(@class)]" position="before">
