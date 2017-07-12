@@ -1238,7 +1238,8 @@ odoo.define('website_sign.document_signing', function(require) {
                 var askLocation = ($('#o_sign_ask_location_input').length > 0);
                 if(askLocation && navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
-                        ajax.jsonRpc('/sign/save_location/' + documentPage.requestID + '/' + documentPage.accessToken, 'call', position.coords);
+                        var coords = _.pick(position.coords, ['latitude', 'longitude']);
+                        ajax.jsonRpc('/sign/save_location/' + documentPage.requestID + '/' + documentPage.accessToken, 'call', coords);
                     });
                 }
             });

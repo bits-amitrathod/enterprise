@@ -130,7 +130,8 @@ class EbayConfiguration(models.TransientModel):
         ebay_zip_code = get_param('ebay_zip_code')
         ebay_location = get_param('ebay_location')
         ebay_out_of_stock = get_param('ebay_out_of_stock', default=False)
-        ebay_sales_team = int(get_param('ebay_sales_team', default=self.env['crm.team'].search([('team_type', '=', 'ebay')])[0]))
+        ebay_sales_team = int(get_param('ebay_sales_team',
+            default=self.env['crm.team'].search([('team_type', '=', 'ebay')], limit=1)))
         ebay_gallery_plus = get_param('ebay_gallery_plus')
         return {'ebay_dev_id': ebay_dev_id,
                 'ebay_sandbox_token': ebay_sandbox_token,
