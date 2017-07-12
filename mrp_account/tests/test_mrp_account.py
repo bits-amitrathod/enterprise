@@ -10,7 +10,7 @@ class TestMrpAccount(common.TransactionCase):
         self.categ_standard = self.env['product.category'].create({'name': 'STANDARD',
                                                               'property_cost_method': 'standard',},)
         self.categ_real = self.env['product.category'].create({'name': 'REAL',
-                                                          'property_cost_method': 'real',})
+                                                          'property_cost_method': 'fifo',})
         self.categ_average = self.env['product.category'].create({'name': 'AVERAGE',
                                                              'property_cost_method': 'average'})
         self.dining_table = self.env.ref("mrp.product_product_computer_desk")
@@ -24,6 +24,9 @@ class TestMrpAccount(common.TransactionCase):
         self.source_location_id = self.ref('stock.stock_location_14')
     
     def test_00_production_order_with_accounting(self):
+        self.product_table_sheet.standard_price = 20.0
+        self.product_table_leg.standard_price = 15.0
+        self.product_bolt.standard_price = 10.0
         inventory = self.env['stock.inventory'].create({
             'name': 'Inventory Product Table',
             'filter': 'partial',
@@ -45,20 +48,6 @@ class TestMrpAccount(common.TransactionCase):
             })]
         })
         inventory.action_done()
-        # Write costs on quants like they would come from a purchase
-        # As we don't have the purchase module installed with this one
-        self.product_table_sheet.standard_price = 10.0
-        quants = inventory.move_ids.filtered(lambda x: x.product_id == self.product_table_sheet).mapped('quant_ids')
-        quants.write({'cost': 20.0})
-        
-        self.product_table_leg.standard_price = 15.0
-        quants = inventory.move_ids.filtered(lambda x: x.product_id == self.product_table_leg).mapped('quant_ids')
-        quants.write({'cost': 30.0})
-        
-        self.product_bolt.standard_price = 10.0
-        quants = inventory.move_ids.filtered(lambda x: x.product_id == self.product_bolt).mapped('quant_ids')
-        quants.write({'cost': 30.0})
-        
         self.env.ref('mrp.mrp_bom_desk').routing_id = False # TODO: extend the test later with the necessary operations
         production_table = self.env['mrp.production'].create({
             'product_id': self.dining_table.id,
@@ -75,10 +64,10 @@ class TestMrpAccount(common.TransactionCase):
         })
         produce_wizard.do_produce()
         production_table.post_inventory()
-        quant_value = production_table.move_finished_ids.filtered(lambda x: x.state == "done").quant_ids[0].inventory_value
+        move_value = production_table.move_finished_ids.filtered(lambda x: x.state == "done").value
         
         # Real price of the head (quant: 20) + avg price leg (product: 4*15) + standard price bolt (product: 4*10)
-        self.assertEqual(quant_value, 120, 'Thing should have the correct price')
+        self.assertEqual(move_value, 120, 'Thing should have the correct price')
         
         produce_wizard = self.env['mrp.product.produce'].with_context({
             'active_id': production_table.id,
@@ -88,6 +77,6 @@ class TestMrpAccount(common.TransactionCase):
         })
         produce_wizard.do_produce()
         production_table.post_inventory()
-        quant_value = production_table.move_finished_ids.filtered(lambda x: x.state == "done" and x.product_qty == 2.0).quant_ids[0].inventory_value
+        move_value = production_table.move_finished_ids.filtered(lambda x: x.state == "done" and x.product_qty == 2.0).value
         # 2 * Real price of the head (quant: 20) + avg price leg (product: 4*15) + standard price bolt (product: 4*10)
-        self.assertEqual(quant_value, 240, 'Thing should have the correct price')
+        self.assertEqual(move_value, 240, 'Thing should have the correct price')
