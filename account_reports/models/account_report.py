@@ -456,8 +456,11 @@ class AccountReport(models.AbstractModel):
             existing_manager = self.env['account.report.manager'].create({'report_name': self._name, 'company_id': selected_companies and selected_companies[0] or False, 'financial_report_id': self.id if 'id' in dir(self) else False})
         return existing_manager
 
+    def _get_filter_journals(self):
+        return self.env['account.journal'].search([('company_id', 'in', self.env.user.company_ids.ids or [self.env.user.company_id.id])], order="company_id, name")
+
     def get_journals(self):
-        journals_read = self.env['account.journal'].search([('company_id', 'in', self.env.user.company_ids.ids or [self.env.user.company_id.id])], order="company_id, name")
+        journals_read = self._get_filter_journals()
         journals = []
         previous_company = False
         for c in journals_read:
@@ -466,7 +469,6 @@ class AccountReport(models.AbstractModel):
                 previous_company = c.company_id
             journals.append({'id': c.id, 'name': c.name, 'code': c.code, 'type': c.type, 'selected': False})
         return journals
-
 
     def format_value(self, value, currency=False):
         if self.env.context.get('no_format'):
