@@ -25,7 +25,6 @@ model. Furthermore, you can create a new website form or edit an existing one.
     'qweb': [
         'static/src/xml/*.xml',
     ],
-    'application': True,
-    'auto_install': False,
+    'auto_install': True,
     'license': 'OEEL-1',
 }
