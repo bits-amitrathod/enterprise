@@ -5,7 +5,7 @@ from odoo import fields, models, _
 
 
 
-class StockMoveLots(models.Model):
-    _inherit = 'stock.move.lots'
+class StockPackOperation(models.Model):
+    _inherit = 'stock.pack.operation'
 
     lot_barcode = fields.Char(related="lot_id.name")
