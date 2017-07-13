@@ -66,7 +66,7 @@ class TestReleaseToPayInvoice(AccountingTestCase):
         # We now receive 2 of the products we ordered...
         self.picking_1 = self.purchase_order.picking_ids[0]
         self.picking_1.force_assign()
-        self.picking_1.pack_operation_ids.write({'qty_done': 2.0})
+        self.picking_1.move_line_ids.write({'qty_done': 2.0})
         self.picking_1.button_validate()
 
         # ... and create a back order.
@@ -102,7 +102,7 @@ class TestReleaseToPayInvoice(AccountingTestCase):
         # Finally, we receive the last 8 products ...
         self.picking_2 = self.StockPicking.search([('backorder_id', '=', self.picking_1.id)])
         self.picking_2.force_assign()
-        self.picking_2.pack_operation_ids.write({'qty_done': 8.0})
+        self.picking_2.move_line_ids.write({'qty_done': 8.0})
         self.picking_2.button_validate()
 
         # We received everything, in the same amount as on the bills, so both their status should be 'yes'

@@ -99,7 +99,7 @@ class TestDeliveryDHL(TransactionCase):
         picking.force_assign()
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
-        picking.pack_operation_ids.qty_done = 1.0
+        picking.move_line_ids.qty_done = 1.0
         picking.action_done()
         picking.send_to_shipper()
 
@@ -143,15 +143,15 @@ class TestDeliveryDHL(TransactionCase):
 
         picking.force_assign()
 
-        po0 = picking.pack_operation_ids[0]
-        po1 = picking.pack_operation_ids[1]
+        po0 = picking.move_line_ids[0]
+        po1 = picking.move_line_ids[1]
         po0.qty_done = 1
         picking.put_in_pack()
         po1.qty_done = 1
         picking.put_in_pack()
 
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
-        self.assertTrue(all([po.result_package_id is not False for po in picking.pack_operation_ids]), "Some products have not been put in packages")
+        self.assertTrue(all([po.result_package_id is not False for po in picking.move_line_ids]), "Some products have not been put in packages")
 
         picking.action_done()
         picking.send_to_shipper()

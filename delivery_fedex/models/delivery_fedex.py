@@ -216,7 +216,7 @@ class ProviderFedex(models.Model):
                 total_commodities_amount = 0.0
                 commodity_country_of_manufacture = picking.picking_type_id.warehouse_id.partner_id.country_id.code
 
-                for operation in picking.pack_operation_ids:
+                for operation in picking.move_line_ids:
                     commodity_amount = order_currency.compute(operation.product_id.list_price, commodity_currency)
                     total_commodities_amount += (commodity_amount * operation.product_qty)
                     commodity_description = operation.product_id.name

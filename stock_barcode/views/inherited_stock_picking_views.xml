@@ -9,15 +9,11 @@
             <form position="inside">
                 <field name="_barcode_scanned" widget="picking_barcode_handler"/>
             </form>
-            <xpath expr="//field[@name='pack_operation_ids']/tree" position="inside">
+            <xpath expr="//field[@name='move_line_ids']/tree" position="inside">
                 <field name="product_barcode" invisible="1"/>
                 <field name="location_processed" invisible="1"/>
             </xpath>
-<!--            <xpath expr="//field[@name='pack_operation_ids']/kanban" position="inside">
-                <field name="product_barcode" invisible="1"/>
-                <field name="location_processed" invisible="1"/>
-            </xpath>-->
-            <xpath expr="//field[@name='pack_operation_ids']//field[@name='qty_done']" position="attributes">
+            <xpath expr="//field[@name='move_line_ids']//field[@name='qty_done']" position="attributes">
                 <attribute name="options">{'barcode_events': True}</attribute>
                 <attribute name="widget">field_float_scannable</attribute>
             </xpath>
