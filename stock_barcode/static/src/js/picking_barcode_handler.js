@@ -118,7 +118,7 @@ var PickingBarcodeHandler = AbstractField.extend({
 
         this.trigger_up('activeBarcode', {
             name: this.name,
-            fieldName: 'pack_operation_product_ids',
+            fieldName: 'pack_operation_ids',
             quantity: 'qty_done',
             commands: {
                 'barcode': '_barcodePickingAddRecordId',

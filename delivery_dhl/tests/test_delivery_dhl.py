@@ -59,8 +59,8 @@ class TestDeliveryDHL(TransactionCase):
 
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
-        picking.pack_operation_product_ids.qty_done = 1.0
-        picking.do_transfer()
+        picking.pack_operation_product_id.qty_done = 1.0
+        picking.action_done()
         picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
@@ -99,8 +99,8 @@ class TestDeliveryDHL(TransactionCase):
         picking.force_assign()
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
-        picking.pack_operation_product_ids.qty_done = 1.0
-        picking.do_transfer()
+        picking.pack_operation_ids.qty_done = 1.0
+        picking.action_done()
         picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
@@ -143,8 +143,8 @@ class TestDeliveryDHL(TransactionCase):
 
         picking.force_assign()
 
-        po0 = picking.pack_operation_product_ids[0]
-        po1 = picking.pack_operation_product_ids[1]
+        po0 = picking.pack_operation_ids[0]
+        po1 = picking.pack_operation_ids[1]
         po0.qty_done = 1
         picking.put_in_pack()
         po1.qty_done = 1
@@ -153,7 +153,7 @@ class TestDeliveryDHL(TransactionCase):
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
         self.assertTrue(all([po.result_package_id is not False for po in picking.pack_operation_ids]), "Some products have not been put in packages")
 
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
 
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")

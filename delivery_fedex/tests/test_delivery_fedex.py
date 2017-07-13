@@ -66,7 +66,7 @@ class TestDeliveryFedex(TransactionCase):
 
             self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
-            picking.pack_operation_product_ids.qty_done = 1.0
+            picking.pack_operation_ids.qty_done = 1.0
             picking.do_transfer()
             picking.send_to_shipper()
 
@@ -115,7 +115,7 @@ class TestDeliveryFedex(TransactionCase):
             picking.force_assign()
             self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
-            picking.pack_operation_product_ids.qty_done = 1.0
+            picking.pack_operation_ids.qty_done = 1.0
             picking.do_transfer()
             picking.send_to_shipper()
 
@@ -168,8 +168,8 @@ class TestDeliveryFedex(TransactionCase):
 
             picking.force_assign()
 
-            po0 = picking.pack_operation_product_ids[0]
-            po1 = picking.pack_operation_product_ids[1]
+            po0 = picking.pack_operation_ids[0]
+            po1 = picking.pack_operation_ids[1]
             po0.qty_done = 1
             picking.put_in_pack()
             po1.qty_done = 1
