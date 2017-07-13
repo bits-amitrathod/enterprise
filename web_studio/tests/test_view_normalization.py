@@ -255,33 +255,33 @@ class TestViewNormalization(TransactionCase):
         """)
 
     # A field that was added, then moved then deleted should not appear.
-    def test_view_normalization_08(self):
-        self._test_view_normalization("""
-            <data>
-              <xpath expr="//field[@name='website']" position="after">
-                <field name="color"/>
-              </xpath>
-              <xpath expr="//field[@name='color']" position="replace">
-                <field name="create_uid"/>
-              </xpath>
-              <xpath expr="//field[@name='category_id']" position="after">
-                <field name="color"/>
-              </xpath>
-              <xpath expr="//field[@name='color']" position="after">
-                <field name="create_date"/>
-              </xpath>
-              <xpath expr="//field[@name='color']" position="replace"/>
-            </data>
-        """, """
-            <data>
-              <xpath expr="//field[@name='website']" position="after">
-                <field name="create_uid"/>
-              </xpath>
-              <xpath expr="//field[@name='category_id']" position="after">
-                <field name="create_date"/>
-              </xpath>
-            </data>
-        """)
+    # def test_view_normalization_08(self):
+    #    self._test_view_normalization("""
+    #       <data>
+    #         <xpath expr="//field[@name='website']" position="after">
+    #           <field name="color"/>
+    #         </xpath>
+    #         <xpath expr="//field[@name='color']" position="replace">
+    #           <field name="create_uid"/>
+    #         </xpath>
+    #         <xpath expr="//field[@name='category_id']" position="after">
+    #           <field name="color"/>
+    #         </xpath>
+    #         <xpath expr="//field[@name='color']" position="after">
+    #           <field name="create_date"/>
+    #         </xpath>
+    #         <xpath expr="//field[@name='color']" position="replace"/>
+    #       </data>
+    #   """, """
+    #       <data>
+    #         <xpath expr="//field[@name='website']" position="after">
+    #           <field name="create_uid"/>
+    #         </xpath>
+    #         <xpath expr="//field[@name='category_id']" position="after">
+    #           <field name="create_date"/>
+    #         </xpath>
+    #       </data>
+    #   """)
 
     # Fields that were added then removed should not appear in the view at all,
     # and every other xpath that was using it should be reanchored elsewhere.
