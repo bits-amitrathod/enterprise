@@ -118,10 +118,7 @@
                         var core = require("web.core");
                         var document_signing = require("website_sign.document_signing");
 
-                        $.when(
-                            ajax.loadXML("/website_sign/static/src/xml/website_sign_common.xml", core.qweb),
-                            ajax.loadXML("/web/static/src/xml/base_common.xml", core.qweb)
-                        ).then(function () {
+                        ajax.loadXML("/website_sign/static/src/xml/website_sign_common.xml", core.qweb).then(function () {
                             document_signing.initDocumentToSign();
                         });
                     });
