@@ -14,20 +14,14 @@
 * Traceability report
 * Cost Structure report (mrp_account)""",
     'data': [
-        'data/stock_traceability_report_data.xml',
         'views/mrp_workorder_views.xml',
         'views/mrp_workcenter_views.xml',
         'views/mrp_workorder_template.xml',
         'views/mrp_production_views.xml',
         'views/mrp_routing_views.xml',
-        'views/report_stock_traceability.xml',
-        'views/stock_traceability_report_views.xml',
     ],
     'demo': [
         'data/mrp_production_demo.xml'
-    ],
-    'qweb': [
-        'static/src/xml/stock_traceability_report_backend.xml',
     ],
     'auto_install': True,
     'license': 'OEEL-1',

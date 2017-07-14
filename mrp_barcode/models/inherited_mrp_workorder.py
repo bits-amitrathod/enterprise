@@ -16,24 +16,25 @@ class MrpWorkorder(models.Model):
                     self.qty_producing += 1
                 else:
                     self.qty_producing = 1
-            elif self.active_move_lot_ids or self.product_id.tracking != 'none':
+            elif self.active_move_line_ids or self.product_id.tracking != 'none':
                 lot = self.env['stock.production.lot'].search([('name', '=', barcode)], limit=1)
                 if lot.product_id == self.product_id:
                     self.final_lot_id = lot
                 else:
-                    active_move_lots = self.active_move_lot_ids.filtered(lambda l: l.product_id == lot.product_id)
+                    active_move_lots = self.active_move_line_ids.filtered(lambda l: l.product_id == lot.product_id)
                     if active_move_lots:
                         blank_move_lot = active_move_lots.filtered(lambda m: not m.lot_id)
                         move_lots = active_move_lots.filtered(lambda m: m.lot_id.name == barcode)
                         if move_lots:
-                            move_lots[0].quantity_done += 1.0 # Problem is it will immediately consume more than foreseen on the second scan (check if it becomes red)
+                            move_lots[0].qty_done += 1.0 # Problem is it will immediately consume more than foreseen on the second scan (check if it becomes red)
                         elif blank_move_lot:
                             blank_move_lot[0].lot_id = lot.id
                         else:
-                            self.active_move_lot_ids.new({'move_id': active_move_lots[0].move_id, 
+                            self.active_move_line_ids.new({'move_id': active_move_lots[0].move_id, 
                                                           'lot_id': lot.id,
-                                                          'quantity_done': 1.0,
-                                                          'quantity': 0.0,
+                                                          'qty_done': 1.0,
+                                                          'product_uom_qty': 0.0,
+                                                          'product_uom_id': active_move_lots[0].move_id.product_uom.id,
                                                           'workorder_id': self.id,
                                                           'production_id': self.production_id.id,
                                                           'product_id': lot.product_id.id,
@@ -58,19 +59,20 @@ class MrpWorkorder(models.Model):
                     if lot.product_id == self.product_id:
                         self.final_lot_id = lot
                     else:
-                        active_move_lots = self.active_move_lot_ids.filtered(lambda l: l.product_id == parsed_result['code'])
+                        active_move_lots = self.active_move_line_ids.filtered(lambda l: l.product_id == parsed_result['code'])
                         if active_move_lots:
                             blank_move_lot = active_move_lots.filtered(lambda m: not m.lot_id)
                             move_lots = active_move_lots.filtered(lambda m: m.lot_id.name == barcode)
                             if move_lots:
-                                move_lots[0].quantity_done += 1.0 # Problem is it will immediately consume more than foreseen on the second scan (check if it becomes red)
+                                move_lots[0].qty_done += 1.0 # Problem is it will immediately consume more than foreseen on the second scan (check if it becomes red)
                             elif blank_move_lot:
                                 blank_move_lot[0].lot_id = lot.id
                             else:
-                                self.active_move_lot_ids.new({'move_id': active_move_lots[0].move_id, 
+                                self.active_move_line_ids.new({'move_id': active_move_lots[0].move_id, 
                                                           'lot_id': lot.id,
-                                                          'quantity_done': 1.0,
-                                                          'quantity': 0.0,
+                                                          'qty_done': 1.0,
+                                                          'product_uom_qty': 0.0,
+                                                          'product_uom_id': active_move_lots[0].move_id.product_uom.id,
                                                           'workorder_id': self.id,
                                                           'production_id': self.production_id.id,
                                                           'product_id': lot.product_id.id,

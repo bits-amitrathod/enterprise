@@ -54,7 +54,7 @@ FormController.include({
                     })
                     .then(function (id) {
                         return self._rpc({
-                                model: 'stock.pack.operation',
+                                model: 'stock.move.line',
                                 method: 'action_split_lots',
                                 args: [[id]],
                             });
@@ -118,7 +118,7 @@ var PickingBarcodeHandler = AbstractField.extend({
 
         this.trigger_up('activeBarcode', {
             name: this.name,
-            fieldName: 'pack_operation_product_ids',
+            fieldName: 'move_line_ids',
             quantity: 'qty_done',
             commands: {
                 'barcode': '_barcodePickingAddRecordId',

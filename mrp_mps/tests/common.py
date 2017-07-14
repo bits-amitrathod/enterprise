@@ -21,12 +21,14 @@ class TestMpsCommon(common.TransactionCase):
             'categ_id': category_id,
             'uom_id': uom_id,
             'uom_po_id': uom_id,
+            'type': 'product',
             })
         self.deskhead = self.env['product.product'].create({
             'name': 'Computer Desk Head',
             'categ_id': category_id,
             'uom_id': uom_id,
             'uom_po_id': uom_id,
+            'type': 'product',
             })
 
         # Create bom for computer desk with computer desk head raw material.
