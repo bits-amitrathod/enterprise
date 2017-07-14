@@ -32,8 +32,9 @@ QUnit.module('web_clearbit', {
     },
     beforeEach: function () {
         this.data = {
-            partner: {
+            'res.partner': {
                 fields: {
+                    company_type: {string: "Company Type", type: "selection", selection: [["company", "Company"], ["individual", "Individual"]], searchable: true},
                     name: {string: "Name", type: "char", searchable: true},
                     website: {string: "Website", type: "char", searchable: true},
                     image: {string: "Image", type: "binary", searchable: true},
@@ -55,19 +56,23 @@ QUnit.module('web_clearbit', {
     },
 }, function () {
     QUnit.test("clearbit field: basic usage", function (assert) {
-        assert.expect(9);
+        assert.expect(13);
 
         var form = createView({
             View: FormView,
-            model: 'partner',
+            model: 'res.partner',
             data: this.data,
             arch:
                 '<form>' +
+                    '<field name="company_type"/>' +
                     '<field name="name" widget="field_clearbit"/>' +
                     '<field name="website"/>' +
                     '<field name="image" widget="image"/>' +
                 '</form>',
             mockRPC: function (route, args) {
+                if (args.method) {
+                    assert.step(args.method);
+                }
                 if (route === "/web/static/src/img/placeholder.png"
                     || route === "odoo.com/logo.png"
                     || route === "data:image/png;base64,odoobase64") { // land here as it is not valid base64 content
@@ -76,6 +81,21 @@ QUnit.module('web_clearbit', {
                 return this._super.apply(this, arguments);
             },
         });
+
+        // Checks for individual
+        var $company_type = form.$("select[name='company_type']");
+        $company_type.val('"individual"').trigger('change');
+
+        var $input = form.$(".o_field_clearbit > input:visible");
+        assert.strictEqual($input.length, 1,
+            "there should be an <input/> for the clearbit field");
+        $input.val("od").trigger("input");
+        var $dropdown = form.$(".o_field_clearbit .dropdown-menu:visible");
+        assert.strictEqual($dropdown.length, 0,
+            "there should not be an opened dropdown");
+
+        // Checks for company
+        $company_type.val('"company"').trigger('change');
 
         var $input = form.$(".o_field_clearbit > input:visible");
         assert.strictEqual($input.length, 1,
@@ -112,6 +132,7 @@ QUnit.module('web_clearbit', {
         assert.strictEqual($dropdown.length, 0,
             "unfocusing the input should close the dropdown");
 
+        assert.verifySteps(["default_get"]);
         form.destroy();
     });
 });
