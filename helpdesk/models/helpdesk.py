@@ -547,12 +547,16 @@ class HelpdeskTicket(models.Model):
     @api.depends('assign_date')
     def _compute_assign_hours(self):
         for ticket in self:
+            if not ticket.create_date:
+                continue;
             time_difference = datetime.datetime.now() - fields.Datetime.from_string(ticket.create_date)
             ticket.assign_hours = (time_difference.seconds) / 3600 + time_difference.days * 24
 
     @api.depends('close_date')
     def _compute_close_hours(self):
         for ticket in self:
+            if not ticket.create_date:
+                continue;
             time_difference = datetime.datetime.now() - fields.Datetime.from_string(ticket.create_date)
             ticket.close_hours = (time_difference.seconds) / 3600 + time_difference.days * 24
 
