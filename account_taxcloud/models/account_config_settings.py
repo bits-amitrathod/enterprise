@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 from .taxcloud_request import TaxCloudRequest
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+    _inherit = 'res.config.settings'
 
     taxcloud_api_id = fields.Char(string='TaxCloud API ID')
     taxcloud_api_key = fields.Char(string='TaxCloud API KEY')

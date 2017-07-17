@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrRecruitmentConfigSettings(models.TransientModel):
-    _inherit = 'hr.recruitment.config.settings'
+    _inherit = 'res.config.settings'
 
     access_token_validity = fields.Integer(string='Default Access Token Validity Duration')
 

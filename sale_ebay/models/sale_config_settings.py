@@ -7,7 +7,7 @@ from odoo import models, fields, api
 
 
 class SaleConfigSettings(models.TransientModel):
-    _inherit = 'sale.config.settings'
+    _inherit = 'res.config.settings'
 
     ebay_dev_id = fields.Char("Developer Key")
     ebay_sandbox_token = fields.Text("Sandbox Token")

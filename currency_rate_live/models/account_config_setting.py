@@ -214,7 +214,7 @@ class ResCompany(models.Model):
 
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+    _inherit = 'res.config.settings'
 
     currency_interval_unit = fields.Selection(related="company_id.currency_interval_unit",)
     currency_provider = fields.Selection(related="company_id.currency_provider")

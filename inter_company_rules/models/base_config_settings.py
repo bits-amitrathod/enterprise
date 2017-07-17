@@ -2,7 +2,7 @@
 from odoo import models, fields, api
 
 class BaseConfigSettings(models.TransientModel):
-    _inherit = 'base.config.settings'
+    _inherit = 'res.config.settings'
 
     company_id = fields.Many2one('res.company', string='Select Company',
         help='Select company to setup Inter company rules.')

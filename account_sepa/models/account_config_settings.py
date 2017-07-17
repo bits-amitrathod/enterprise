@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+    _inherit = 'res.config.settings'
 
     sepa_orgid_id = fields.Char(related='company_id.sepa_orgid_id', string="Identification",
         help="Identification assigned by an institution (eg. VAT number).")

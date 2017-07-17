@@ -7,7 +7,7 @@ from odoo.tools.safe_eval import safe_eval
 
 
 class BaseConfigSettings(models.TransientModel):
-    _inherit = "base.config.settings"
+    _inherit = "res.config.settings"
 
     default_sms_provider_id = fields.Many2one(
         'sms.provider', string='Default SMS Provider',

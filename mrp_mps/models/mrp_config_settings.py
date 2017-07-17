@@ -5,6 +5,6 @@ from odoo import fields, models
 
 
 class MrpConfigSettings(models.TransientModel):
-    _inherit = 'mrp.config.settings'
+    _inherit = 'res.config.settings'
 
     manufacturing_period = fields.Selection(related="company_id.manufacturing_period", default='month', string="Manufacturing Period")

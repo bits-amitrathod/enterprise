@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class SaleSubscriptionConfigSettings(models.TransientModel):
-    _name = 'sale.subscription.config.settings'
     _inherit = 'res.config.settings'
 
     module_sale_subscription_dashboard = fields.Boolean('Sale Subscription Dashboard')

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+    _inherit = 'res.config.settings'
 
     us_check_layout = fields.Selection(related='company_id.us_check_layout', string="Check Layout",
         help="Select the format corresponding to the check paper you will be printing your checks on.\n"

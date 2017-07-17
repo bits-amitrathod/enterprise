@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class BaseConfigSettings(models.TransientModel):
-    _inherit = 'base.config.settings'
+    _inherit = 'res.config.settings'
 
     mail_push_notification = fields.Boolean('Notifications', oldname="default_mail_push_notification")
     fcm_api_key = fields.Char('Server API Key')

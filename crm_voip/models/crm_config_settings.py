@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class CrmConfigSettings(models.TransientModel):
-    _inherit = 'crm.config.settings'
+    _inherit = 'res.config.settings'
 
     wsServer = fields.Char("WebSocket", help="The URL of your WebSocket")
     pbx_ip = fields.Char("PBX Server IP", help="The IP adress of your PBX Server")

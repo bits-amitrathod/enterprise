@@ -9,7 +9,7 @@ from odoo import api, fields, models
 
 class HrTimesheetConfigSettings(models.TransientModel):
 
-    _inherit = 'hr.timesheet.config.settings'
+    _inherit = 'res.config.settings'
 
     reminder_user_allow = fields.Boolean("User Reminder",
         help="If checked, send an email to all users who have not recorded their timesheet")

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+    _inherit = 'res.config.settings'
 
     fiscalyear_last_day = fields.Integer(related='company_id.fiscalyear_last_day', default=31)
     fiscalyear_last_month = fields.Selection([

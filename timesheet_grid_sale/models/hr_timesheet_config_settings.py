@@ -7,7 +7,7 @@ from odoo.addons.timesheet_grid_sale.models.sale import DEFAULT_INVOICED_TIMESHE
 
 
 class HrTimesheetConfigSettings(models.TransientModel):
-    _inherit = 'hr.timesheet.config.settings'
+    _inherit = 'res.config.settings'
 
     invoiced_timesheet = fields.Selection([
         ('all', "Invoice all recorded timesheets"),

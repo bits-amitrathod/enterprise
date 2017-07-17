@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+    _inherit = 'res.config.settings'
 
     min_days_between_followup = fields.Integer(related='company_id.min_days_between_followup', string='Minimum days between two follow-ups')
 
