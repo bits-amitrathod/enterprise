@@ -40,10 +40,10 @@
                                         <span t-esc="m['qty']"/> <span t-esc="m['product_id'].uom_id.name"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="m['cost'] / m['qty']" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                        <span t-esc="m['cost'] / m['qty']" widget="monetary" display_currency="currency"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="m['cost']" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                        <span t-esc="m['cost']" widget="monetary" display_currency="currency"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -51,7 +51,7 @@
                                         <strong>Total Cost of Raw Materials</strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong t-esc="line['total_cost']" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                        <strong t-esc="line['total_cost']" widget="monetary" display_currency="currency"/>
                                     </td>
                                 </tr>
                             </tbody>
@@ -82,10 +82,10 @@
                                             <span> <t t-esc="row[3]"/> hours</span>
                                         </td>
                                         <td class="text-right">
-                                            <span t-esc="row[4]" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <span t-esc="row[4]" widget="monetary" display_currency="currency"/>
                                         </td>
                                         <td class="text-right">
-                                            <span t-esc="row[3] * row[4]" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <span t-esc="row[3] * row[4]" widget="monetary" display_currency="currency"/>
                                         </td>
 
                                         <t t-set="opcost" t-value="opcost + row[3] * row[4]"/> 
@@ -95,7 +95,7 @@
                                             <strong>Total Cost of Operations</strong>
                                         </td>
                                         <td class="text-right">
-                                            <span t-esc="opcost" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <span t-esc="opcost" widget="monetary" display_currency="currency"/>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -123,10 +123,10 @@
                                             <span><t t-esc="scrap.product_uom_qty"/> <t t-esc="scrap.product_uom.name"/></span>
                                         </td>
                                         <td class="text-right">
-                                            <span t-esc="scrap.price_unit" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <span t-esc="scrap.price_unit" widget="monetary" display_currency="currency"/>
                                         </td>
                                         <td class="text-right">
-                                            <span t-esc="scrap.product_uom_qty * scrap.price_unit" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <span t-esc="scrap.product_uom_qty * scrap.price_unit" widget="monetary" display_currency="currency"/>
                                         </td>
 
                                         <t t-set="tot_scrap_cost" t-value="tot_scrap_cost + (scrap.product_uom_qty * scrap.price_unit)"/> 
@@ -136,7 +136,7 @@
                                             <strong>Total Cost of Scraps</strong>
                                         </td>
                                         <td class="text-right">
-                                            <span t-esc="tot_scrap_cost" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <span t-esc="tot_scrap_cost" widget="monetary" display_currency="currency"/>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -152,7 +152,7 @@
                                             <strong>Cost for <t t-esc="line['mo_qty']"/> <t t-esc="line['mo_uom'].name"/></strong>
                                         </td>
                                         <td class="text-right">
-                                            <strong t-esc="line['total_cost'] + opcost" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <strong t-esc="line['total_cost'] + opcost" widget="monetary" display_currency="currency"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -160,7 +160,7 @@
                                             <strong>Unit Cost</strong>
                                         </td>
                                         <th class="text-right">
-                                            <strong t-esc="(line['total_cost'] + opcost) / line['mo_qty']" t-esc-options='{"widget": "monetary", "display_currency": "currency"}'/>
+                                            <strong t-esc="(line['total_cost'] + opcost) / line['mo_qty']" widget="monetary" display_currency="currency"/>
                                         </th>
                                     </tr>
                                 </table>
