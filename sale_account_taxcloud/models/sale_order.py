@@ -39,12 +39,12 @@ class SaleOrder(models.Model):
 
         raise_warning = False
         for line in self.order_line.filtered(lambda line: line.price_unit >= 0.0):
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.product_uom_qty
             if not price:
                 tax_rate = 0.0
             else:
                 tax_rate = tax_values[line.id] / price * 100
-            if float_compare(line.tax_id.amount, tax_rate, precision_digits=4):
+            if float_compare(line.tax_id.amount, tax_rate, precision_digits=2):
                 raise_warning = True
                 tax = self.env['account.tax'].sudo().search([
                     ('amount', '=', tax_rate),
@@ -52,7 +52,7 @@ class SaleOrder(models.Model):
                     ('type_tax_use', '=', 'sale')], limit=1)
                 if not tax:
                     tax = self.env['account.tax'].sudo().create({
-                        'name': 'Tax %s %%' % (tax_rate),
+                        'name': 'Tax %.2f %%' % (tax_rate),
                         'amount': tax_rate,
                         'amount_type': 'percent',
                         'type_tax_use': 'sale',
