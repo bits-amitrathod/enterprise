@@ -2,7 +2,7 @@
 
 from odoo import api, models, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_round
 
 from taxcloud_request import TaxCloudRequest
 
@@ -46,6 +46,7 @@ class SaleOrder(models.Model):
                 tax_rate = tax_values[line.id] / price * 100
             if float_compare(line.tax_id.amount, tax_rate, precision_digits=2):
                 raise_warning = True
+                tax_rate = float_round(tax_rate, precision_digits=2)
                 tax = self.env['account.tax'].sudo().search([
                     ('amount', '=', tax_rate),
                     ('amount_type', '=', 'percent'),
