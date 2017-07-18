@@ -13,7 +13,8 @@ if(mobile.methods.getFCMKey){
                 ajax.rpc("/web/dataset/call_kw/mail_push.device/add_device", {
                     model: "mail_push.device",
                     method: "add_device",
-                    args: [response.data.subscription_id, response.data.device_name, 'fcm']
+                    args: [response.data.subscription_id, response.data.device_name, 'fcm'],
+                    kwargs: {},
                 });
             }
         });
