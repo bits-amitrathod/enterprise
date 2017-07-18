@@ -102,7 +102,7 @@ class ReportPartnerLedger(models.AbstractModel):
             line_id = context['default_partner_id']
 
         grouped_partners = self.group_by_partner_id(options, line_id)
-        sorted_partners = sorted(grouped_partners, key=lambda p: p.name)
+        sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines') or context.get('default_partner_id')
         for partner in sorted_partners:
             debit = grouped_partners[partner]['debit']
