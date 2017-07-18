@@ -356,11 +356,8 @@ class ProviderFedex(models.Model):
 
         return res
 
-    def fedex_get_tracking_link(self, pickings):
-        res = []
-        for picking in pickings:
-            res = res + ['https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=%s' % picking.carrier_tracking_ref]
-        return res
+    def fedex_get_tracking_link(self, picking):
+        return 'https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=%s' % picking.carrier_tracking_ref
 
     def fedex_cancel_shipment(self, picking):
         request = FedexRequest(request_type="shipping", prod_environment=self.prod_environment)

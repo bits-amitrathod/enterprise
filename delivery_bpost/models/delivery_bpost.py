@@ -83,11 +83,8 @@ class ProviderBpost(models.Model):
             res = res + [shipping_data]
         return res
 
-    def bpost_get_tracking_link(self, pickings):
-        res = []
-        for picking in pickings:
-            res = res + ['http://track.bpost.be/btr/web/#/search?itemCode=%s&lang=en' % (picking.carrier_tracking_ref)]
-        return res
+    def bpost_get_tracking_link(self, picking):
+        return 'http://track.bpost.be/btr/web/#/search?itemCode=%s&lang=en' % picking.carrier_tracking_ref
 
     def bpost_cancel_shipment(self, picking):
         raise UserError(_("You can not cancel a bpost shipment when a shipping label has already been generated."))

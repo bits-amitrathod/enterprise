@@ -210,11 +210,8 @@ class ProviderUPS(models.Model):
             res = res + [shipping_data]
         return res
 
-    def ups_get_tracking_link(self, pickings):
-        res = []
-        for picking in pickings:
-            res = res + ['http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=%s' % picking.carrier_tracking_ref]
-        return res
+    def ups_get_tracking_link(self, picking):
+        return 'http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=%s' % picking.carrier_tracking_ref
 
     def ups_cancel_shipment(self, picking):
         tracking_ref = picking.carrier_tracking_ref

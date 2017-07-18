@@ -148,11 +148,8 @@ class ProviderUSPS(models.Model):
             res = res + [shipping_data]
         return res
 
-    def usps_get_tracking_link(self, pickings):
-        res = []
-        for picking in pickings:
-            res = res + ['https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=%s' % (picking.carrier_tracking_ref)]
-        return res
+    def usps_get_tracking_link(self, picking):
+        return 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=%s' % picking.carrier_tracking_ref
 
     def usps_cancel_shipment(self, picking):
 

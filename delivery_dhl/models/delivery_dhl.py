@@ -136,11 +136,8 @@ class Providerdhl(models.Model):
 
         return res
 
-    def dhl_get_tracking_link(self, pickings):
-        res = []
-        for picking in pickings:
-            res = res + ['http://www.dhl.com/en/express/tracking.html?AWB=%s' % picking.carrier_tracking_ref]
-        return res
+    def dhl_get_tracking_link(self, picking):
+        return 'http://www.dhl.com/en/express/tracking.html?AWB=%s' % picking.carrier_tracking_ref
 
     def dhl_cancel_shipment(self, picking):
         # Obviously you need a pick up date to delete SHIPMENT by DHL. So you can't do it if you didn't schedule a pick-up.
