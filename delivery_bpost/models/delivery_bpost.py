@@ -37,7 +37,7 @@ class ProviderBpost(models.Model):
     bpost_default_packaging_id = fields.Many2one('product.packaging', string='bpost Default Packaging Type')
 
     def bpost_rate_shipment(self, order):
-        bpost = BpostRequest(self.prod_environment)
+        bpost = BpostRequest(self.prod_environment, self.log_xml)
         check_value = bpost.check_required_value(order.partner_shipping_id, order.carrier_id.bpost_delivery_nature, order.warehouse_id.partner_id, order=order)
         if check_value:
             return {'success': False,
@@ -61,7 +61,7 @@ class ProviderBpost(models.Model):
 
     def bpost_send_shipping(self, pickings):
         res = []
-        bpost = BpostRequest(self.prod_environment)
+        bpost = BpostRequest(self.prod_environment, self.log_xml)
         for picking in pickings:
             check_value = bpost.check_required_value(picking.partner_id, picking.carrier_id.bpost_delivery_nature, picking.picking_type_id.warehouse_id.partner_id, picking=picking)
             if check_value:

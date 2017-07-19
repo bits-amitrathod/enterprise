@@ -20,7 +20,8 @@ def _grams(kilograms):
 
 class BpostRequest():
 
-    def __init__(self, prod_environment):
+    def __init__(self, prod_environment, debug_logger):
+        self.debug_logger = debug_logger
         if prod_environment:
             self.base_url = 'https://api-parcel.bpost.be/services/shm/'
         else:
@@ -186,11 +187,8 @@ class BpostRequest():
                 'send': url_join(self.base_url, '%s/orders' % supercarrier.bpost_account_number),
                 'label': url_join(self.base_url, '%s/orders/%s/labels/%s' % (supercarrier.bpost_account_number, reference, carrier.bpost_label_stock_type))}
 
+        self.debug_logger("%s\n%s\n%s" % (URLS[action], HEADERS[action], xml.decode('utf-8') if xml else None), 'bpost_request_%s' % action)
         response = requests.request(METHODS[action], URLS[action], headers=HEADERS[action], data=xml)
+        self.debug_logger("%s\n%s" % (response.status_code, response.text), 'bpost_response_%s' % action)
 
-        if 400 <= response.status_code <= 599:
-            _logger.debug('HTTP Request headers:\n%s' % HEADERS[action])
-            _logger.debug('HTTP Request XML payload:\n%s' % xml)
-            _logger.debug('HTTP Response:\n%s' % response.status_code)
-            _logger.debug('HTTP Response:\n%s' % response.text)
         return response.status_code, response.text
