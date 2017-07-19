@@ -60,7 +60,7 @@ class ProviderUPS(models.Model):
 
     def ups_rate_shipment(self, order):
         superself = self.sudo()
-        srm = UPSRequest(superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
+        srm = UPSRequest(self.log_xml, superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
         ResCurrency = self.env['res.currency']
         max_weight = self.ups_default_packaging_id.max_weight
         packages = []
@@ -131,7 +131,7 @@ class ProviderUPS(models.Model):
     def ups_send_shipping(self, pickings):
         res = []
         superself = self.sudo()
-        srm = UPSRequest(superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
+        srm = UPSRequest(self.log_xml, superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
         ResCurrency = self.env['res.currency']
         for picking in pickings:
             packages = []
@@ -219,7 +219,7 @@ class ProviderUPS(models.Model):
             tracking_ref = "1ZISDE016691676846"  # used for testing purpose
 
         superself = self.sudo()
-        srm = UPSRequest(superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
+        srm = UPSRequest(self.log_xml, superself.ups_username, superself.ups_passwd, superself.ups_shipper_number, superself.ups_access_number, self.prod_environment)
         result = srm.cancel_shipment(tracking_ref)
 
         if result.get('error_message'):

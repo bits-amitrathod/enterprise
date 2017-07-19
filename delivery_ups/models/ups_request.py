@@ -118,6 +118,18 @@ class Package():
             raise ValueError
 
 
+class LogPlugin(MessagePlugin):
+    """ Small plugin for suds that catches out/ingoing XML requests and logs them"""
+    def __init__(self, debug_logger):
+        self.debug_logger = debug_logger
+
+    def sending(self, context):
+        self.debug_logger(context.envelope, 'ups_request')
+
+    def received(self, context):
+        self.debug_logger(context.reply, 'ups_response')
+
+
 class FixRequestNamespacePlug(MessagePlugin):
     def __init__(self, root):
         self.root = root
@@ -128,7 +140,8 @@ class FixRequestNamespacePlug(MessagePlugin):
 
 
 class UPSRequest():
-    def __init__(self, username, password, shipper_number, access_number, prod_environment):
+    def __init__(self, debug_logger, username, password, shipper_number, access_number, prod_environment):
+        self.debug_logger = debug_logger
         # Product and Testing url
         self.endurl = "https://onlinetools.ups.com/webservices/"
         if not prod_environment:
@@ -166,7 +179,7 @@ class UPSRequest():
 
     def _set_client(self, wsdl, api, root):
         wsdl_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), wsdl)
-        client = Client('file:///%s' % wsdl_path.lstrip('/'), plugins=[FixRequestNamespacePlug(root)])
+        client = Client('file:///%s' % wsdl_path.lstrip('/'), plugins=[FixRequestNamespacePlug(root), LogPlugin(self.debug_logger)])
         self._add_security_header(client)
         client.set_options(location='%s%s' % (self.endurl, api))
         return client
