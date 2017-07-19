@@ -8,8 +8,8 @@ from werkzeug.exceptions import NotFound
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
-
-from odoo.addons.website_portal.controllers.main import website_account, get_records_pager
+from odoo.addons.portal.controllers.portal import get_records_pager
+from odoo.addons.website_portal.controllers.main import website_account
 from odoo.addons.website_form.controllers.main import WebsiteForm
 from odoo.osv.expression import OR
 
