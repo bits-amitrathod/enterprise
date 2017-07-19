@@ -52,7 +52,8 @@ class SaleOrder(models.Model):
                 and any(self.order_line.mapped('product_id').mapped('recurring_invoice')):
             values = self._prepare_contract_data(payment_token_id=payment_token.id if self.require_payment else False)
             subscription = self.env['sale.subscription'].sudo().create(values)
-            subscription.name = self.partner_id.name + ' - ' + subscription.code
+            partner_name =  self.partner_id.name or self.partner_id.parent_id.name
+            subscription.name = partner_name + ' - ' + subscription.code
 
             invoice_line_ids = []
             for line in self.order_line:
