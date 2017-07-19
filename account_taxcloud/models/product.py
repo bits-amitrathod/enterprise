@@ -2,13 +2,14 @@
 
 from odoo import api, fields, models, _
 
+
 class ProductTicCategory(models.Model):
     _name = 'product.tic.category'
     _descrition = "TaxCloud Taxabilty information code for Product Category."
     _rec_name = 'code'
 
-    code = fields.Integer(string="TIC Category Code")
-    description = fields.Char(string='TIC Description')
+    code = fields.Integer(string="TIC Category Code", required=True)
+    description = fields.Char(string='TIC Description', required=True)
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
