@@ -90,7 +90,7 @@ class ProviderFedex(models.Model):
         recipient = Partner.browse(recipient[0])
 
         # Authentication stuff
-        srm = FedexRequest(request_type="rating", prod_environment=environment)
+        srm = FedexRequest(self.log_xml, request_type="rating", prod_environment=environment)
         superself = self.sudo()
         srm.web_authentication_detail(superself.fedex_developer_key, superself.fedex_developer_password)
         srm.client_detail(account_number, meter_number)
@@ -181,7 +181,7 @@ class ProviderFedex(models.Model):
 
         for picking in pickings:
 
-            srm = FedexRequest(request_type="shipping", prod_environment=self.prod_environment)
+            srm = FedexRequest(self.log_xml, request_type="shipping", prod_environment=self.prod_environment)
             superself = self.sudo()
             srm.web_authentication_detail(superself.fedex_developer_key, superself.fedex_developer_password)
             srm.client_detail(superself.fedex_account_number, superself.fedex_meter_number)
@@ -360,7 +360,7 @@ class ProviderFedex(models.Model):
         return 'https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=%s' % picking.carrier_tracking_ref
 
     def fedex_cancel_shipment(self, picking):
-        request = FedexRequest(request_type="shipping", prod_environment=self.prod_environment)
+        request = FedexRequest(self.log_xml, request_type="shipping", prod_environment=self.prod_environment)
         superself = self.sudo()
         request.web_authentication_detail(superself.fedex_developer_key, superself.fedex_developer_password)
         request.client_detail(superself.fedex_account_number, superself.fedex_meter_number)

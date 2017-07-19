@@ -7,6 +7,7 @@ import suds  # should work with suds or its fork suds-jurko
 
 from datetime import datetime
 from suds.client import Client
+from suds.plugin import MessagePlugin
 
 
 _logger = logging.getLogger(__name__)
@@ -14,11 +15,24 @@ _logger = logging.getLogger(__name__)
 # logging.getLogger('suds.client').setLevel(logging.DEBUG)
 
 
+class LogPlugin(MessagePlugin):
+    """ Small plugin for suds that catches out/ingoing XML requests and logs them"""
+    def __init__(self, debug_logger):
+        self.debug_logger = debug_logger
+
+    def sending(self, context):
+        self.debug_logger(context.envelope, 'fedex_request')
+
+    def received(self, context):
+        self.debug_logger(context.reply, 'fedex_response')
+
+
 class FedexRequest():
     """ Low-level object intended to interface Odoo recordsets with FedEx,
         through appropriate SOAP requests """
 
-    def __init__(self, request_type="shipping", prod_environment=False):
+    def __init__(self, debug_logger, request_type="shipping", prod_environment=False, ):
+        self.debug_logger = debug_logger
         self.hasCommodities = False
         self.hasOnePackage = False
 
@@ -145,7 +159,7 @@ class FedexRequest():
     # Rating stuff
 
     def start_rating_transaction(self, wsdl_path):
-        self.client = Client('file:///%s' % wsdl_path.lstrip('/'))
+        self.client = Client('file:///%s' % wsdl_path.lstrip('/'), plugins=[LogPlugin(self.debug_logger)])
         self.VersionId = self.client.factory.create('VersionId')
         self.VersionId.ServiceId = 'crs'
         self.VersionId.Major = '16'
@@ -186,7 +200,7 @@ class FedexRequest():
     # Shipping stuff
 
     def start_shipping_transaction(self, wsdl_path):
-        self.client = Client('file:///%s' % wsdl_path.lstrip('/'))
+        self.client = Client('file:///%s' % wsdl_path.lstrip('/'), plugins=[LogPlugin(self.debug_logger)])
         self.VersionId = self.client.factory.create('VersionId')
         self.VersionId.ServiceId = 'ship'
         self.VersionId.Major = '15'
