@@ -76,11 +76,18 @@
         <field name="max_weight">68</field>
     </record>
 
+    <record id="product_product_delivery_ups_us" model="product.product">
+      <field name="name">UPS US</field>
+      <field name="default_code">Delivery</field>
+      <field name="type">service</field>
+      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/>
+      <field name="list_price">0.0</field>
+    </record>
     <record id="delivery_carrier_ups_us" model="delivery.carrier">
         <field name="name">UPS US</field>
-        <field name="fixed_price">0.0</field>
-        <field name="product_sale_ok" eval="False"/>
-        <field name="product_type">service</field>
+        <field name="product_id" ref="delivery_ups.product_product_delivery_ups_us"/>
         <field name="delivery_type">ups</field>
         <field name="ups_package_weight_unit">LBS</field>
         <field name="ups_package_dimension_unit">IN</field>
@@ -91,11 +98,18 @@
         <field name="ups_default_packaging_id" ref="ups_packaging_02"/>
     </record>
 
+    <record id="product_product_delivery_ups_be" model="product.product">
+      <field name="name">UPS BE</field>
+      <field name="default_code">Delivery</field>
+      <field name="type">service</field>
+      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/>
+      <field name="list_price">0.0</field>
+    </record>
     <record id="delivery_carrier_ups_be" model="delivery.carrier">
         <field name="name">UPS BE</field>
-        <field name="fixed_price">0.0</field>
-        <field name="product_sale_ok" eval="False"/>
-        <field name="product_type">service</field>
+        <field name="product_id" ref="delivery_ups.product_product_delivery_ups_be"/>
         <field name="delivery_type">ups</field>
         <field name="ups_package_weight_unit">KGS</field>
         <field name="ups_package_dimension_unit">CM</field>

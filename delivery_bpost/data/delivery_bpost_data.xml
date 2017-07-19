@@ -6,8 +6,18 @@
       <field name="max_weight">30.0</field>
       <field name="package_carrier_type">bpost</field>
     </record>
+    <record id="product_product_delivery_bpost_world" model="product.product">
+      <field name="name">Bpost World Express Pro</field>
+      <field name="default_code">Delivery</field>
+      <field name="type">service</field>
+      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/>
+      <field name="list_price">0.0</field>
+    </record>
     <record id="delivery_carrier_bpost_inter" model="delivery.carrier">
       <field name="name">Bpost World Express Pro</field>
+      <field name="product_id" ref="delivery_bpost.product_product_delivery_bpost_world"/>
       <field name="delivery_type">bpost</field>
       <field name="bpost_account_number">107088</field>
       <field name="bpost_developer_password">DEMO_shm</field>
@@ -19,8 +29,18 @@
       <field name="bpost_label_format">PDF</field>
       <field name="bpost_default_packaging_id" ref="delivery_bpost.bpost_parcel"/>
     </record>
+    <record id="product_product_delivery_bpost_domestic" model="product.product">
+      <field name="name">Bpost Domestic bpack 24h Pro</field>
+      <field name="default_code">Delivery</field>
+      <field name="type">service</field>
+      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/>
+      <field name="list_price">0.0</field>
+    </record>
     <record id="delivery_carrier_bpost_domestic" model="delivery.carrier">
       <field name="name">Bpost Domestic bpack 24h Pro</field>
+      <field name="product_id" ref="delivery_bpost.product_product_delivery_bpost_domestic"/>
       <field name="delivery_type">bpost</field>
       <field name="country_ids" eval="[(6, 0, [ref('base.be')])]"/>
       <field name="bpost_account_number">107088</field>

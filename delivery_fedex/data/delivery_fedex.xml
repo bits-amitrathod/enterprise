@@ -46,11 +46,18 @@
     </record>
 
     <!-- Fedex Delivery Carriers -->
+    <record id="product_product_delivery_fedex_inter" model="product.product">
+      <field name="name">Fedex International</field>
+      <field name="default_code">Delivery</field>
+      <field name="type">service</field>
+      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/>
+      <field name="list_price">0.0</field>
+    </record>
     <record id="delivery_carrier_fedex_inter" model="delivery.carrier">
         <field name="name">Fedex International</field>
-        <field name="fixed_price">0</field>
-        <field name="product_sale_ok" eval="False"/>
-        <field name="product_type">service</field>
+        <field name="product_id" ref="delivery_fedex.product_product_delivery_fedex_inter"/>
         <field name="delivery_type">fedex</field>
         <field name="fedex_weight_unit">KG</field>
         <field name="fedex_developer_key">JA2mr1yA7NTT8L4i</field>
@@ -60,11 +67,18 @@
         <field name="fedex_default_packaging_id" ref="fedex_packaging_FEDEX_BOX"/>
     </record>
 
+    <record id="product_product_delivery_fedex_us" model="product.product">
+      <field name="name">Fedex US</field>
+      <field name="default_code">Delivery</field>
+      <field name="type">service</field>
+      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/>
+      <field name="list_price">0.0</field>
+    </record>
     <record id="delivery_carrier_fedex_us" model="delivery.carrier">
         <field name="name">Fedex US</field>
-        <field name="fixed_price">0</field>
-        <field name="product_sale_ok" eval="False"/>
-        <field name="product_type">service</field>
+        <field name="product_id" ref="delivery_fedex.product_product_delivery_fedex_us"/>
         <field name="delivery_type">fedex</field>
         <field name="fedex_weight_unit">LB</field>
         <field name="fedex_service_type">PRIORITY_OVERNIGHT</field>
