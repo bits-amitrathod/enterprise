@@ -87,7 +87,7 @@ class Providerdhl(models.Model):
     ], string="Label Template", default='8X4_A4_PDF')
 
     def dhl_rate_shipment(self, order):
-        srm = DHLProvider(self.prod_environment)
+        srm = DHLProvider(self.prod_environment, self.log_xml)
         check_value = srm.check_required_value(self, order.partner_shipping_id, order.warehouse_id.partner_id, order=order)
         if check_value:
             return {'success': False,
@@ -116,7 +116,7 @@ class Providerdhl(models.Model):
     def dhl_send_shipping(self, pickings):
         res = []
 
-        srm = DHLProvider(self.prod_environment)
+        srm = DHLProvider(self.prod_environment, self.log_xml)
         for picking in pickings:
             shipping = srm.send_shipping(picking, self)
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id

@@ -14,7 +14,8 @@ from odoo.exceptions import UserError
 
 class DHLProvider():
 
-    def __init__(self, prod_environment):
+    def __init__(self, prod_environment, debug_logger):
+        self.debug_logger = debug_logger
         if not prod_environment:
             self.url = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet'
         else:
@@ -195,9 +196,11 @@ class DHLProvider():
 
     def _send_request(self, request_xml):
         try:
+            self.debug_logger(request_xml, 'dhl_request')
             req = requests.post(self.url, data=request_xml, headers={'Content-Type': 'application/xml'})
             req.raise_for_status()
             response_text = req.content
+            self.debug_logger(response_text, 'dhl_response')
         except IOError:
             raise UserError("DHL Server not found. Check your connectivity.")
         root = etree.fromstring(response_text)
