@@ -37,7 +37,8 @@ def split_zip(zipcode):
 
 class USPSRequest():
 
-    def __init__(self, prod_environment):
+    def __init__(self, prod_environment, debug_logger):
+        self.debug_logger = debug_logger
         if not prod_environment:
             self.url = 'http://testing.shippingapis.com/ShippingAPI.dll'
         else:
@@ -130,9 +131,11 @@ class USPSRequest():
         api = 'RateV4' if carrier.usps_delivery_nature == 'domestic' else 'IntlRateV2'
 
         try:
+            self.debug_logger(request_text, 'usps_request_rate')
             req = requests.get(self.url, params={'API': api, 'XML': request_text})
             req.raise_for_status()
             response_text = req.content
+            self.debug_logger(response_text, 'usps_response_rate')
         except IOError:
             dict_response['error_message'] = 'USPS Server Not Found - Check your connectivity'
             return dict_response
@@ -243,9 +246,11 @@ class USPSRequest():
         dict_response = {'tracking_number': 0.0, 'price': 0.0, 'currency': "USD"}
         url = 'https://secure.shippingapis.com/ShippingAPI.dll'
         try:
+            self.debug_logger(request_text, 'usps_request_ship')
             req = requests.get(url, params={'API': api, 'XML': request_text})
             req.raise_for_status()
             response_text = req.content
+            self.debug_logger(response_text, 'usps_response_ship')
         except IOError:
             dict_response['error_message'] = 'USPS Server Not Found - Check your connectivity'
 
@@ -304,7 +309,9 @@ class USPSRequest():
             xml = '&XML=%s' % (quote(request_text))
             full_url = '%s%s' % (url, xml)
             try:
+                self.debug_logger(request_text, 'usps_request_cancel')
                 response_text = urlopen(Request(full_url)).read()
+                self.debug_logger(response_text, 'usps_response_cancel')
             except URLError:
                 dict_response['error_message'] = 'USPS Server Not Found - Check your connectivity'
             root = etree.fromstring(response_text)

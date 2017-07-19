@@ -85,7 +85,7 @@ class ProviderUSPS(models.Model):
     usps_machinable = fields.Boolean(string="Machinable", help="Please check on USPS website to ensure that your package is machinable.")
 
     def usps_rate_shipment(self, order):
-        srm = USPSRequest(self.prod_environment)
+        srm = USPSRequest(self.prod_environment, self.log_xml)
 
         check_result = srm.check_required_value(order.partner_shipping_id, order.carrier_id.usps_delivery_nature, order.warehouse_id.partner_id, order=order)
         if check_result:
@@ -116,7 +116,7 @@ class ProviderUSPS(models.Model):
 
     def usps_send_shipping(self, pickings):
         res = []
-        srm = USPSRequest(self.prod_environment)
+        srm = USPSRequest(self.prod_environment, self.log_xml)
         for picking in pickings:
             check_result = srm.check_required_value(picking.partner_id, self.usps_delivery_nature, picking.picking_type_id.warehouse_id.partner_id, picking=picking)
             if check_result:
@@ -153,7 +153,7 @@ class ProviderUSPS(models.Model):
 
     def usps_cancel_shipment(self, picking):
 
-        srm = USPSRequest(self.prod_environment)
+        srm = USPSRequest(self.prod_environment, self.log_xml)
 
         result = srm.cancel_shipment(picking, self.usps_account_validated)
 
