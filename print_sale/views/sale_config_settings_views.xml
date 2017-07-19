@@ -4,14 +4,16 @@
     <record id="sale_config_settings_view_form_inherit_print_sale" model="ir.ui.view">
         <field name="name">sale.config.settings.inherit.print.sale</field>
         <field name="model">sale.config.settings</field>
-        <field name="inherit_id" ref="sale.sale_config_settings_view_form_inherit_sale"/>
+        <field name="inherit_id" ref="sale.sale_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@id='print_docsaway']" position="replace">
-                <div class="row mt16" attrs="{'invisible': [('module_print_docsaway','=',False)]}">
-                    <label for="default_provider_id" class="col-md-4 o_light_label"/>
-                    <field name="default_provider_id" class="col-md-8 oe_inline"/>
-                </div>
-            </xpath>
+            <xpath expr="//div[@id='print_docsaway']" position="after">
+                <div class="content-group">
+                    <div class="row mt16" attrs="{'invisible': [('module_print_docsaway','=',False)]}">
+                        <label for="default_provider_id" class="col-md-4 o_light_label"/>
+                        <field name="default_provider_id" class="col-md-8 oe_inline"/>
+                    </div>
+                 </div>
+             </xpath>
         </field>
     </record>
 

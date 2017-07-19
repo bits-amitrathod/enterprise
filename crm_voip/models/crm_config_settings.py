@@ -4,9 +4,8 @@
 from odoo import api, fields, models
 
 
-class SaleConfigSettings(models.TransientModel):
-    _name = 'sale.config.settings'
-    _inherit = 'sale.config.settings'
+class CrmConfigSettings(models.TransientModel):
+    _inherit = 'crm.config.settings'
 
     wsServer = fields.Char("WebSocket", help="The URL of your WebSocket")
     pbx_ip = fields.Char("PBX Server IP", help="The IP adress of your PBX Server")
@@ -17,7 +16,7 @@ class SaleConfigSettings(models.TransientModel):
 
     @api.multi
     def set_values(self):
-        super(SaleConfigSettings, self).set_values()
+        super(CrmConfigSettings, self).set_values()
         params = self.env['ir.config_parameter'].sudo()
         params.set_param('crm.voip.pbx_ip', self[0].pbx_ip)
         params.set_param('crm.voip.wsServer', self[0].wsServer)
@@ -25,7 +24,7 @@ class SaleConfigSettings(models.TransientModel):
 
     @api.model
     def get_values(self):
-        res = super(SaleConfigSettings, self).get_values()
+        res = super(CrmConfigSettings, self).get_values()
         params = self.env['ir.config_parameter'].sudo()
         res.update(
             pbx_ip=params.get_param('crm.voip.pbx_ip', default='localhost'),
