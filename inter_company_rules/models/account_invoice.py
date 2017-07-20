@@ -57,6 +57,8 @@ class account_invoice(models.Model):
             line2 = self.env['account.invoice.line'].with_context(context).sudo(intercompany_uid).new(inv_line_data)
             line2.invoice_id = invoice.id
             line2._onchange_product_id()
+            if line2.invoice_id.company_id.currency_id.id != line2.invoice_id.currency_id.id:
+                line2.price_unit = inv_line_data['price_unit']
             new_vals = {k: v or False for k, v in dict(line2._cache).items()}
             line_data = line2._convert_to_write(new_vals)
             line.with_context(context).sudo(intercompany_uid).create(line_data)
@@ -81,7 +83,6 @@ class account_invoice(models.Model):
         # find periods of supplier company
         context = self._context.copy()
         context['company_id'] = company.id
-
         # find account, payment term, fiscal position, bank.
         vals = {'name': self.name,
             #TODO : not sure !!
