@@ -20,10 +20,6 @@ Once it is defined, you can automatically print recalls every day through simply
 It will generate a PDF / send emails / set manual actions according to the the different levels 
 of recall defined. You can define different policies for different companies. 
 
-Note that if you want to check the follow-up level for a given partner/account entry, you can do from in the menu:
-------------------------------------------------------------------------------------------------------------------
-    Reporting / Accounting / **Follow-ups Analysis**
-
 """,
     'website': 'https://www.odoo.com/page/billing',
     'depends': ['account_accountant', 'mail', 'account_reports', 'account_extension'],

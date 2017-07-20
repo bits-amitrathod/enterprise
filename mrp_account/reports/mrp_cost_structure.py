@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class MrpCostStructure(models.AbstractModel):
-    _name = 'report.mrp_cost_structure'
+    _name = 'report.mrp_account.mrp_cost_structure'
 
     @api.multi
     def get_lines(self, productions):

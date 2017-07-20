@@ -56,7 +56,7 @@
         <xpath expr="//div[@id='delivery_method']" position="before">
             <t t-call="website_delivery_ups.ups_bill_my_account_dialog"/>
         </xpath>
-        <xpath expr="//div[@id='delivery_method']/label/span" position="after">
+        <xpath expr="//div[@id='delivery_method']/label/abbr" position="after">
             <t t-if="delivery.delivery_type == 'ups' and delivery.ups_bill_my_account">
                 <span id="ups_bill_my_account" class="ml4" t-if="order.carrier_id and order.carrier_id.id == delivery.id">
                     <t t-if="not order.ups_carrier_account">
