@@ -129,11 +129,11 @@ class website_subscription(http.Controller):
             'acquirers': acquirers,
             'acc_pm': acc_pm,
             'part_pms': part_pms,
-            'verified_pms': [x for x in part_pms if x.verified],
             'is_salesman': request.env['res.users'].sudo(request.uid).has_group('sales_team.group_sale_salesman'),
             'action': action,
             'message': message,
             'message_class': message_class,
+            'change_pm': kw.get('change_pm') != None,
             'pricelist': account.pricelist_id.sudo(),
         }
         render_context = dict(
@@ -142,9 +142,11 @@ class website_subscription(http.Controller):
             submit_class='btn btn-primary btn-sm mb8 mt8 pull-right',
             submit_txt='Pay Subscription',
             bootstrap_formatting=True,
+            return_url='/my/subscription/' + str(account_id) + '/' + str(uuid)
         )
         for acquirer in acquirers:
             acquirer.form = acquirer.sudo()._registration_render(account.partner_id.id, render_context)
+
         history = request.session.get('my_subscriptions_history', [])
         values.update(get_records_pager(history, account))
         return request.render("website_subscription.subscription", values)
@@ -205,6 +207,8 @@ class website_subscription(http.Controller):
         subscription = Subscription.sudo().search([('uuid', '=', sub_uuid)])
         tx = tx_res.sudo().browse(tx_id)
 
+        tx.form_feedback(kw, tx.acquirer_id.provider)
+
         get_param = self.payment_succes_msg if tx.state in ['done', 'authorized'] else self.payment_fail_msg
 
         return request.redirect('/my/subscription/%s/%s?%s' % (subscription.id, sub_uuid, get_param))
@@ -242,8 +246,13 @@ class website_subscription(http.Controller):
             account = account_res.browse(account_id)
 
         if kw.get('pm_id'):
-            account.payment_token_id = int(kw.get('pm_id'))
-            get_param = 'message=Your payment method has been changed for this subscription.&message_class=alert-success'
+            new_token = request.env['payment.token'].browse(int(kw.get('pm_id')))
+
+            if new_token.verified:
+                account.payment_token_id = new_token
+                get_param = 'message=Your payment method has been changed for this subscription.&message_class=alert-success'
+            else:
+                get_param = 'message=Your payment method must be verified to use it on a subscription.&message_class=alert-danger'
         else:
             get_param = 'message=Impossible to change your payment method for this subscription.&message_class=alert-danger'
 
