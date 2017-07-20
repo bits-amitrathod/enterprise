@@ -137,24 +137,38 @@ class ProductTemplate(models.Model):
                 variant.ebay_quantity = max(int(variant.virtual_available), 0)
             item['Item']['Quantity'] = variant.ebay_quantity
             item['Item']['StartPrice'] = variant.ebay_fixed_price
+        # We use the attribute to set the attributes linked to computed shipping policies
+        # We don't use attributes since this fix has been done in stable release but will be done
+        # in master.
+        # We don't use the weight attribute due to the fact that eBay handles the English system
+        # of measurement which uses Lbs and Oz. Then we cannot just split the weight field.
+        ShippingPackageAttributes = [
+            'PackageDepth', 'PackageLength', 'PackageWidth', 'WeightMajor',
+            'WeightMinor', 'ShippingIrregular', 'ShippingPackage'
+        ]
         # If one attribute has only one value, we don't create variant
         # but set the value has an item specific on eBay
         if self.attribute_line_ids:
             for attribute in self.attribute_line_ids:
                 if len(attribute.value_ids) == 1:
                     attr_name = attribute.attribute_id.name
-                    attr_value = attribute.value_ids.name
+                    attr_value = self._ebay_encode(attribute.value_ids.name)
                     # We used the attributes in Odoo to match the Brand and MPN attributes
                     # But since 1st March 2016, eBay separated them from the other attributes
                     if attr_name == 'Brand':
-                        item['Item']['ProductListingDetails']['BrandMPN']['Brand'] = self._ebay_encode(attr_value)
+                        item['Item']['ProductListingDetails']['BrandMPN']['Brand'] = attr_value
                     elif attr_name == 'MPN':
-                        item['Item']['ProductListingDetails']['BrandMPN']['MPN'] = self._ebay_encode(attr_value)
+                        item['Item']['ProductListingDetails']['BrandMPN']['MPN'] = attr_value
+                    elif attr_name in ShippingPackageAttributes:
+                        if 'ShippingPackageDetails' not in item['Item']:
+                            item['Item']['ShippingPackageDetails'] = {}
+                        item['Item']['ShippingPackageDetails'][self._ebay_encode(attr_name)] = attr_value
                     else:
                         NameValueList.append({
                             'Name': self._ebay_encode(attr_name),
-                            'Value': self._ebay_encode(attr_value),
+                            'Value': attr_value,
                         })
+
         # We add the Brand and the MPN at the end of the loop
         # because these attributes are mandatory since 1st March 2016
         # but some eBay site are not taking into account the ProductListingDetails.

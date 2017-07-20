@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import logging
 
-from odoo import api, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_round
 
 from .taxcloud_request import TaxCloudRequest
+
+_logger = logging.getLogger(__name__)
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
@@ -48,20 +51,21 @@ class AccountInvoice(models.Model):
 
         raise_warning = False
         for line in self.invoice_line_ids.filtered(lambda line: line.price_unit >= 0.0):
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.quantity
             if not price:
                 tax_rate = 0.0
             else:
                 tax_rate = tax_values[line.id] / price * 100
-            if float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=4):
+            if float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=2):
                 raise_warning = True
+                tax_rate = float_round(tax_rate, precision_digits=2)
                 tax = self.env['account.tax'].sudo().search([
                     ('amount', '=', tax_rate),
                     ('amount_type', '=', 'percent'),
                     ('type_tax_use', '=', 'sale')], limit=1)
                 if not tax:
                     tax = self.env['account.tax'].sudo().create({
-                        'name': 'Tax %s %%' % (tax_rate),
+                        'name': 'Tax %.2f %%' % (tax_rate),
                         'amount': tax_rate,
                         'amount_type': 'percent',
                         'type_tax_use': 'sale',
@@ -93,9 +97,24 @@ class AccountInvoice(models.Model):
                 api_id = Param.sudo().get_param('account_taxcloud.taxcloud_api_id')
                 api_key = Param.sudo().get_param('account_taxcloud.taxcloud_api_key')
                 request = TaxCloudRequest(api_id, api_key)
-                request.client.service.Captured(
-                    request.api_login_id,
-                    request.api_key,
-                    invoice.id,
-                )
+                if invoice.type == 'out_invoice':
+                    request.client.service.Captured(
+                        request.api_login_id,
+                        request.api_key,
+                        invoice.id,
+                    )
+                else:
+                    request.set_invoice_items_detail(self)
+                    origin_invoice = self.env['account.invoice'].search([('number', '=', self.origin)], limit=1)
+                    if origin_invoice:
+                        request.client.service.Returned(
+                            request.api_login_id,
+                            request.api_key,
+                            origin_invoice.id,
+                            request.cart_items,
+                            fields.Datetime.from_string(self.date_invoice)
+                        )
+                    else:
+                        _logger.warning(_("The source document on the refund is not valid and thus the refunded cart won't be logged on your taxcloud account"))
+
         return super(AccountInvoice, self).action_invoice_paid()
