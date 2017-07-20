@@ -3,7 +3,7 @@ import itertools
 
 from odoo import models, fields, api, _
 from odoo.addons.grid.models import END_OF
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class AnalyticLine(models.Model):
@@ -60,6 +60,29 @@ class AnalyticLine(models.Model):
             'views': [(False, 'form')],
         }
 
+    @api.model
+    def create(self, vals):
+        line = super(AnalyticLine, self).create(vals)
+        # A line created before validation limit will be automatically validated
+        if not self.user_has_groups('hr_timesheet.group_hr_timesheet_user') and line.is_timesheet and line.validated:
+            raise ValidationError(_('Only a Timesheets Officer is allowed to create an entry older than the validation limit.'))
+        return line
+
+    @api.multi
+    def write(self, vals):
+        res = super(AnalyticLine, self).write(vals)
+        # Write then check: otherwise, the use can create the timesheet in the future, then change
+        # its date.
+        if not self.user_has_groups('hr_timesheet.group_hr_timesheet_user') and self.filtered(lambda r: r.is_timesheet and r.validated):
+            raise ValidationError(_('Only a Timesheets Officer is allowed to modify a validated entry.'))
+        return res
+
+    @api.multi
+    def unlink(self):
+        if not self.user_has_groups('hr_timesheet.group_hr_timesheet_user') and self.filtered(lambda r: r.is_timesheet and r.validated):
+            raise ValidationError(_('Only a Timesheets Officer is allowed to delete a validated entry.'))
+        return super(AnalyticLine, self).unlink()
+
     @api.multi
     def adjust_grid(self, row_domain, column_field, column_value, cell_field, change):
         if column_field != 'date' or cell_field != 'unit_amount':
@@ -79,6 +102,7 @@ class AnalyticLine(models.Model):
             cell_field: change
         })
         return False
+
     @api.multi
     @api.depends('date', 'user_id.employee_ids.timesheet_validated')
     def _timesheet_line_validated(self):
