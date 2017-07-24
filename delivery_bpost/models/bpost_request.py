@@ -69,7 +69,8 @@ class BpostRequest():
             # match the first number in street because we don't know other
             # countries rules
             ex = re.compile(r'\d+')
-        number = ex.search(partner.street).group(0)
+        match = ex.search(partner.street)
+        number = match.group(0) if match else ''
         streetName = u'%s %s' % (partner.street.replace(number, ''), partner.street2 if partner.street2 else '')
         return (streetName, number)
 
@@ -153,10 +154,13 @@ class BpostRequest():
         xml = carrier.env['ir.qweb'].render('delivery_bpost.bpost_shipping_request', values)
         code, response = self._send_request('send', xml, carrier)
         if code != 201 and response:
-            root = etree.fromstring(response)
-            ns = {'ns1': 'http://schema.post.be/shm/deepintegration/v3/'}
-            for errors_return in root.findall("ns1:error", ns):
-                raise UserError(errors_return.text)
+            try:
+                root = etree.fromstring(response)
+                ns = {'ns1': 'http://schema.post.be/shm/deepintegration/v3/'}
+                for errors_return in root.findall("ns1:error", ns):
+                    raise UserError(errors_return.text)
+            except etree.ParseError:
+                    raise UserError(response)
 
         # Grab printable label and tracking code
         code, response2 = self._send_request('label', None, carrier, reference=reference_id)
