@@ -179,7 +179,7 @@ class View(models.Model):
         for line in diff:
             if line.strip() and not line.startswith('?'):  # Ignore details lines
                 if line.startswith('-'):
-                    node = old_view_iterator.next()
+                    node = next(old_view_iterator)
 
                     # If we are already writing an xpath, we need to either
                     # close it or ignore this line
@@ -207,7 +207,7 @@ class View(models.Model):
                         xpath.attrib['position'] = 'replace'
 
                 elif line.startswith('+'):
-                    node = new_view_iterator.next()
+                    node = next(new_view_iterator)
 
                     if node.tag == 'attributes':
                         continue
@@ -239,8 +239,8 @@ class View(models.Model):
                         self._clone_and_append_to(node, xpath)
 
                 else:
-                    old_node = old_view_iterator.next()
-                    new_view_iterator.next()
+                    old_node = next(old_view_iterator)
+                    next(new_view_iterator)
                     # This is an unchanged line, if an xpath is ungoing, close it.
                     if old_node.tag not in ['attribute', 'attributes']:
                         if xpath.attrib.get('expr'):
