@@ -9,14 +9,14 @@
 # Martin Trigaux <mat@odoo.com>, 2016
 # hman tsao <herman.tsao@gmail.com>, 2017
 # mrshelly <mrshelly@hotmail.com>, 2017
-# zhangpeiqing <zpq001@live.com>, 2017
+# zpq001 <zpq001@live.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 13:22+0000\n"
-"PO-Revision-Date: 2017-04-28 13:22+0000\n"
+"POT-Creation-Date: 2017-07-17 09:14+0000\n"
+"PO-Revision-Date: 2017-07-17 09:14+0000\n"
 "Last-Translator: waveyeung <waveyeung@qq.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -365,12 +365,15 @@ msgstr "余额"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_balancesheet0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_2
 #: model:ir.actions.client,name:account_reports.action_account_report_bs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_2
 msgid "Balance Sheet"
 msgstr "资产负债表"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:161
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:164
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:165
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation_with_journal
 #, python-format
@@ -430,7 +433,9 @@ msgstr "现金收付制"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_cashsummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_3
 #: model:ir.actions.client,name:account_reports.action_account_report_cs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_3
 msgid "Cash Flow Statement"
 msgstr "现金流量表"
 
@@ -855,6 +860,8 @@ msgstr "等于最近报表余额"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_executivesummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_4
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_4
 msgid "Executive Summary"
 msgstr "执行摘要"
 
@@ -1596,6 +1603,8 @@ msgstr "利润表"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_profitandloss0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_1
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_1
 msgid "Profit and Loss"
 msgstr "损益表"
 
@@ -1891,6 +1900,12 @@ msgstr "两周"
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_figure_type
 msgid "Type"
 msgstr "类型"
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_financial_report.py:403
+#, python-format
+msgid "Undefined"
+msgstr "未定义的"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options

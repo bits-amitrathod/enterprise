@@ -3,7 +3,7 @@
 # * account_reports
 # 
 # Translators:
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
+# SV <sv@grimmette.ru>, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
 # Gennady Marchenko <gennadym@gmail.com>, 2017
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 13:22+0000\n"
-"PO-Revision-Date: 2017-04-28 13:22+0000\n"
+"POT-Creation-Date: 2017-07-17 09:14+0000\n"
+"PO-Revision-Date: 2017-07-17 09:14+0000\n"
 "Last-Translator: Masha Koc <mariya.kos.ua@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -367,12 +367,15 @@ msgstr "Баланс"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_balancesheet0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_2
 #: model:ir.actions.client,name:account_reports.action_account_report_bs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_2
 msgid "Balance Sheet"
 msgstr "Балансовая ведомость"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:161
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:164
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:165
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation_with_journal
 #, python-format
@@ -432,7 +435,9 @@ msgstr "Наличная Основа,"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_cashsummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_3
 #: model:ir.actions.client,name:account_reports.action_account_report_cs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_3
 msgid "Cash Flow Statement"
 msgstr "Отчет о Движении Денежных Средств"
 
@@ -860,6 +865,8 @@ msgstr "Равный баланс последнего баланса"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_executivesummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_4
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_4
 msgid "Executive Summary"
 msgstr "Справка для Руководителя"
 
@@ -1606,6 +1613,8 @@ msgstr "Прибыль и убыток"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_profitandloss0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_1
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_1
 msgid "Profit and Loss"
 msgstr "Прибыли и убытки"
 
@@ -1906,6 +1915,12 @@ msgstr "Две недели"
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_figure_type
 msgid "Type"
 msgstr "Тип"
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_financial_report.py:403
+#, python-format
+msgid "Undefined"
+msgstr "Не определено"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options

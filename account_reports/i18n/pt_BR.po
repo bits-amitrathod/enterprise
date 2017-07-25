@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 13:22+0000\n"
-"PO-Revision-Date: 2017-04-28 13:22+0000\n"
+"POT-Creation-Date: 2017-07-17 09:14+0000\n"
+"PO-Revision-Date: 2017-07-17 09:14+0000\n"
 "Last-Translator: Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -369,12 +369,15 @@ msgstr "Saldo"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_balancesheet0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_2
 #: model:ir.actions.client,name:account_reports.action_account_report_bs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_2
 msgid "Balance Sheet"
 msgstr "Balanço"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:161
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:164
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:165
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation_with_journal
 #, python-format
@@ -434,7 +437,9 @@ msgstr "Regime de caixa"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_cashsummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_3
 #: model:ir.actions.client,name:account_reports.action_account_report_cs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_3
 msgid "Cash Flow Statement"
 msgstr "Demonstrações de Fluxo de Caixa"
 
@@ -862,6 +867,8 @@ msgstr "Último Balanço de Extrato Igual"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_executivesummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_4
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_4
 msgid "Executive Summary"
 msgstr "Sumário Executivo"
 
@@ -1608,6 +1615,8 @@ msgstr "Lucros e perdas"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_profitandloss0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_1
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_1
 msgid "Profit and Loss"
 msgstr "Lucros e Perdas"
 
@@ -1905,6 +1914,12 @@ msgstr "Duas semanas"
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_figure_type
 msgid "Type"
 msgstr "Tipo"
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_financial_report.py:403
+#, python-format
+msgid "Undefined"
+msgstr "Indefinido"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options

@@ -6,7 +6,7 @@
 # Martin Trigaux <mat@odoo.com>, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
 # Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
+# SV <sv@grimmette.ru>, 2017
 # Artur Komishenko <Archi1792@gmail.com>, 2017
 # Masha Koc <mariya.kos.ua@gmail.com>, 2017
 # Evgeny <transingularity@gmail.com>, 2017
@@ -14,10 +14,10 @@
 # Denis Trepalin <zekarious@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-07-17 09:14+0000\n"
+"PO-Revision-Date: 2017-07-17 09:14+0000\n"
 "Last-Translator: Denis Trepalin <zekarious@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -154,7 +154,6 @@ msgstr "Применимость"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order_applied_coupon_ids
-#: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
 msgid "Applied Coupons"
 msgstr ""
 
@@ -210,8 +209,8 @@ msgid "Apply on First"
 msgstr ""
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon.py:77
-#: code:addons/sale_coupon/models/sale_coupon_program.py:153
+#: code:addons/sale_coupon/models/sale_coupon.py:81
+#: code:addons/sale_coupon/models/sale_coupon_program.py:159
 #, python-format
 msgid "At least one of the required conditions is not met to get the reward!"
 msgstr ""
@@ -305,7 +304,6 @@ msgstr ""
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_program_action_coupon_program
-#: model:ir.ui.menu,name:sale_coupon.menu_coupon_type_config
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 #: selection:sale.coupon.program,program_type:0
 msgid "Coupon Program"
@@ -317,6 +315,7 @@ msgid "Coupon Program Name..."
 msgstr ""
 
 #. module: sale_coupon
+#: model:ir.ui.menu,name:sale_coupon.menu_coupon_type_config
 #: model:ir.ui.view,arch_db:sale_coupon.sale_config_settings_view_form_inherit_sale_coupon
 msgid "Coupon Programs"
 msgstr ""
@@ -819,8 +818,6 @@ msgstr ""
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_program_action_promo_program
-#: model:ir.ui.menu,name:sale_coupon.menu_promotion_type_config
-#: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
 msgid "Promotion Program"
 msgstr ""
 
@@ -830,9 +827,10 @@ msgid "Promotion Program Name..."
 msgstr ""
 
 #. module: sale_coupon
+#: model:ir.ui.menu,name:sale_coupon.menu_promotion_type_config
 #: model:ir.ui.view,arch_db:sale_coupon.sale_config_settings_view_form_inherit_sale_coupon
 msgid "Promotion Programs"
-msgstr ""
+msgstr "Программы продвижения"
 
 #. module: sale_coupon
 #: selection:sale.coupon.program,program_type:0
@@ -1051,6 +1049,13 @@ msgid "The coupon program for %s is in draft or closed state"
 msgstr ""
 
 #. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon.py:76
+#: code:addons/sale_coupon/models/sale_coupon_program.py:154
+#, python-format
+msgid "The customer doesn't have access to this reward."
+msgstr ""
+
+#. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_discount_fixed_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward_discount_fixed_amount
 msgid "The discount in fixed amount"
@@ -1123,6 +1128,11 @@ msgid "Unit of Measure"
 msgstr "Единица измерения"
 
 #. module: sale_coupon
+#: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
+msgid "Update Promotions"
+msgstr ""
+
+#. module: sale_coupon
 #: selection:sale.coupon.program,promo_code_usage:0
 msgid "Use a code"
 msgstr ""
@@ -1159,9 +1169,28 @@ msgid "Validity duration for a coupon after its generation"
 msgstr ""
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:99
+#: code:addons/sale_coupon/models/sale_coupon_program.py:101
 #, python-format
 msgid "You can not delete a program in active state"
+msgstr ""
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon.py:78
+#, python-format
+msgid ""
+"You don't have the required product quantities on your sales order. All the "
+"products should be recorded on the sales order. (Example: You need to have 3"
+" T-shirts on your sales order if the promotion is 'Buy 2, Get 1 Free'."
+msgstr ""
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon_program.py:156
+#, python-format
+msgid ""
+"You don't have the required product quantities on your sales order. If the "
+"reward is same product quantity, please make sure that all the products are "
+"recorded on the sales order (Example: You need to have 3 T-shirts on your "
+"sales order if the promotion is 'Buy 2, Get 1 Free'."
 msgstr ""
 
 #. module: sale_coupon

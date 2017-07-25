@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-18 16:06+0000\n"
-"PO-Revision-Date: 2017-04-18 16:06+0000\n"
+"POT-Creation-Date: 2017-07-17 09:14+0000\n"
+"PO-Revision-Date: 2017-07-17 09:14+0000\n"
 "Last-Translator: Levent Karakaş <levent@mektup.at>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,7 @@ msgid ""
 "<?xml version=\"1.0\"?>\n"
 "<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
 "    <div style=\"margin-left:30px;align=center;\">\n"
-"        Dear ${object.partner_id.name or 'Madam, Sir'},\n"
+"        Dear ${object.sudo().partner_id.name or 'Madam, Sir'},\n"
 "    </div>\n"
 "    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
 "        This automatic message informs you that we have closed your ticket (reference ${object.id}).\n"
@@ -143,7 +143,7 @@ msgid ""
 "<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
 "    <div style=\"margin-left:30px;align=center;\">\n"
 "        This is an automatic message:<br/>\n"
-"        Dear ${object.partner_id.name or 'Madam, Sir'},\n"
+"        Dear ${object.sudo().partner_id.name or 'Madam, Sir'},\n"
 "    </div>\n"
 "    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
 "        Your request\n"
@@ -192,7 +192,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>Reporting</span>"
-msgstr ""
+msgstr "<span>Raporlama</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -205,6 +205,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
+"Bir Python sözlüğü, bu rumuz için yeni kayıtlar oluştururken varsayılan "
+"değerleri sağlamak için değerlendirilir."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -238,7 +240,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_active
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_active
 msgid "Active"
-msgstr ""
+msgstr "Etkin"
 
 #. module: helpdesk
 #. openerp-web
@@ -272,7 +274,7 @@ msgstr ""
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
 msgid "All"
-msgstr ""
+msgstr "Hepsi"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_main
@@ -382,7 +384,7 @@ msgstr ""
 #. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
 msgid "Blocked"
-msgstr ""
+msgstr "Bloke Edilmiş"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -504,14 +506,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_color
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_color
 msgid "Color Index"
-msgstr ""
+msgstr "Renk İndeksi"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_company_id
 msgid "Company"
-msgstr ""
+msgstr "Firma"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_config
@@ -541,7 +543,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Oluşturan"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_create_date
@@ -551,14 +553,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_create_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturulma"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk.py:686
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_id
 #, python-format
 msgid "Customer"
-msgstr ""
+msgstr "Müşteri"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk.py:688
@@ -608,7 +610,7 @@ msgstr ""
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_team_dashboard
 #, python-format
 msgid "Dashboard"
-msgstr ""
+msgstr "Panel"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_time_days
@@ -638,7 +640,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_description
 msgid "Description"
-msgstr ""
+msgstr "Açıklama"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -737,7 +739,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Group By"
-msgstr ""
+msgstr "Grupla"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_forum
@@ -847,7 +849,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_thread_id
@@ -906,7 +908,7 @@ msgstr "Son Değiştiren"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_write_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_write_date
@@ -916,7 +918,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_write_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: helpdesk
 #. openerp-web
@@ -968,7 +970,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "More <i class=\"fa fa-caret-down\"/>"
-msgstr ""
+msgstr "Daha <i class=\"fa fa-caret-down\"/>"
 
 #. module: helpdesk
 #. openerp-web
@@ -1013,7 +1015,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_name
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_name
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_high_priorities
@@ -1197,7 +1199,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
 msgid "Reporting"
-msgstr ""
+msgstr "Raporlama"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -1297,7 +1299,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_sequence
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sıra"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1308,7 +1310,7 @@ msgstr ""
 #: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1420,7 +1422,7 @@ msgstr ""
 #: model:ir.model,name:helpdesk.model_helpdesk_tag
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_tag_ids
 msgid "Tags"
-msgstr ""
+msgstr "Etiketler"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_tag_action

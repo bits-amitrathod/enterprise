@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 13:22+0000\n"
-"PO-Revision-Date: 2017-04-28 13:22+0000\n"
+"POT-Creation-Date: 2017-07-17 09:14+0000\n"
+"PO-Revision-Date: 2017-07-17 09:14+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -105,7 +105,7 @@ msgstr "<b>Rekeningen</b><br/>"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_analytic
 msgid "<b>Tags</b><br/>"
-msgstr ""
+msgstr "<b>Labels</b><br/>"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.followup_filter_info_template
@@ -170,6 +170,8 @@ msgid ""
 "<span class=\"fa fa-folder-open\"/> Analytic\n"
 "            <span class=\"caret\"/>"
 msgstr ""
+"<span class=\"fa fa-folder-open\"/> Analytisch\n"
+"            <span class=\"caret\"/>"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_account_type
@@ -373,12 +375,15 @@ msgstr "Saldo"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_balancesheet0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_2
 #: model:ir.actions.client,name:account_reports.action_account_report_bs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_2
 msgid "Balance Sheet"
 msgstr "Balans"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:161
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:164
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:165
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation_with_journal
 #, python-format
@@ -438,7 +443,9 @@ msgstr "Kasbasis,"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_cashsummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_3
 #: model:ir.actions.client,name:account_reports.action_account_report_cs
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_3
 msgid "Cash Flow Statement"
 msgstr "Cashflow"
 
@@ -868,6 +875,8 @@ msgstr "Gelijk aan laatste bankafschrift balans"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_executivesummary0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_4
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_4
 msgid "Executive Summary"
 msgstr "Managementsamenvatting"
 
@@ -1406,7 +1415,7 @@ msgstr "Geen herinneringen te verzenden !"
 #: code:addons/account_reports/models/account_aged_partner_balance.py:18
 #, python-format
 msgid "Not&nbsp;due&nbsp;on %s"
-msgstr ""
+msgstr "Niet&nbsp;tegen&nbsp;op%s"
 
 #. module: account_reports
 #. openerp-web
@@ -1518,7 +1527,7 @@ msgstr "Saldilijst per relatie"
 #: model:ir.model.fields,field_description:account_reports.field_res_partner_partner_ledger_label
 #: model:ir.model.fields,field_description:account_reports.field_res_users_partner_ledger_label
 msgid "Partner Ledger Label"
-msgstr ""
+msgstr "Saldilijst label"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_partner_ledger.py:19
@@ -1613,6 +1622,8 @@ msgstr "Winst en verlies"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_profitandloss0
+#: model:ir.actions.client,name:account_reports.account_financial_html_report_action_1
+#: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_1
 msgid "Profit and Loss"
 msgstr "Winst en Verlies"
 
@@ -1912,6 +1923,12 @@ msgid "Type"
 msgstr "Soort"
 
 #. module: account_reports
+#: code:addons/account_reports/models/account_financial_report.py:403
+#, python-format
+msgid "Undefined"
+msgstr "Niet gedefinieerd"
+
+#. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "Unfold"
 msgstr "Uitvouwen"
@@ -2004,12 +2021,12 @@ msgstr "Toon de analytische filter"
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_comparison
 msgid "display the comparison filter"
-msgstr ""
+msgstr "toon de vergelijkingsfilter"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_unfold_all_filter
 msgid "display the unfold all options in report"
-msgstr ""
+msgstr "toon de ontvouw alle optie in rapport"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_cash_basis
@@ -2032,12 +2049,12 @@ msgstr "n/b"
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_report_manager_report_name
 msgid "name of the model of the report"
-msgstr ""
+msgstr "naam van het model van het rapport"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_all
 msgid "partners"
-msgstr ""
+msgstr "relaties"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_date_range
@@ -2048,7 +2065,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
 #: model:ir.ui.view,arch_db:account_reports.search_template_date_filter
 msgid "to:"
-msgstr ""
+msgstr "aan:"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.line_template_general_ledger_report
