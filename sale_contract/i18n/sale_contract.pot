@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~15+e\n"
+"Project-Id-Version: Odoo Server 10.saas~16+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-18 16:06+0000\n"
-"PO-Revision-Date: 2017-04-18 16:06+0000\n"
+"POT-Creation-Date: 2017-07-25 10:35+0000\n"
+"PO-Revision-Date: 2017-07-25 10:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,9 @@ msgid "Contracts that are not assigned to an account manager."
 msgstr ""
 
 #. module: sale_contract
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_country_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_country_id
+#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "Country"
 msgstr ""
 
@@ -345,12 +347,12 @@ msgid "Helps you handle subscriptions and recurring invoicing."
 msgstr ""
 
 #. module: sale_contract
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9480
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_10357
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_wizard_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_9488
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id_10365
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_line_id
 msgid "ID"
 msgstr ""
@@ -501,13 +503,13 @@ msgid "Pending contracts"
 msgstr ""
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:211
+#: code:addons/sale_contract/models/sale_subscription.py:213
 #, python-format
 msgid "Please define Date of Next Invoice of \"%s\"."
 msgstr ""
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:207
+#: code:addons/sale_contract/models/sale_subscription.py:209
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
 msgstr ""
@@ -557,6 +559,7 @@ msgstr ""
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_quantity
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_quantity
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_line_quantity
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_option_quantity
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_wizard_option_quantity
@@ -660,6 +663,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_user_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_user_id
 msgid "Sales Rep"
+msgstr ""
+
+#. module: sale_contract
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_industry_id
+#: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_industry_id
+#: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
+msgid "Sector of Activity"
 msgstr ""
 
 #. module: sale_contract
@@ -898,7 +908,7 @@ msgstr ""
 
 #. module: sale_contract
 #: code:addons/sale_contract/models/sale_order.py:102
-#: code:addons/sale_contract/models/sale_subscription.py:222
+#: code:addons/sale_contract/models/sale_subscription.py:228
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
 msgstr ""
@@ -981,7 +991,7 @@ msgid "You must define a product for everything you sell, whether it's\n"
 msgstr ""
 
 #. module: sale_contract
-#: code:addons/sale_contract/models/sale_subscription.py:194
+#: code:addons/sale_contract/models/sale_subscription.py:198
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
 msgstr ""
