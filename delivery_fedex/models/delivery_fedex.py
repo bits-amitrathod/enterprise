@@ -78,6 +78,12 @@ class ProviderFedex(models.Model):
             est_weight_value = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line]) or 0.0
             weight_value = _convert_weight(est_weight_value, self.fedex_weight_unit)
 
+            # Some users may want to ship very lightweight items; in order to give them a rating, we round the
+            # converted weight of the shipping to the smallest value accepted by FedEx: 0.01 kg or lb.
+            # (in the case where the weight is actually 0.0 because weights are not set, don't do this)
+            if weight_value > 0.0:
+                weight_value = max(weight_value, 0.01)
+
             # Authentication stuff
             srm = FedexRequest(request_type="rating", prod_environment=self.prod_environment)
             superself = self.sudo()
