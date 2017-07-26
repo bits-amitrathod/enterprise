@@ -35,7 +35,7 @@ class MailChannel(models.Model):
         receiver_ids = self.env['res.partner']  # Empty recordset for set operations
         # Create Cloud messages for messages in a chat
         if message.message_type == 'comment':
-            for channel in message.channel_ids:
+            for channel in message.channel_ids.filtered(lambda c: c.channel_type == 'chat'):
                 receiver_ids |= channel.channel_partner_ids - message.author_id
 
             # Create Cloud messages for needactions, but ignore the needaction if it is a result
