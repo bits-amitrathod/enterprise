@@ -11,6 +11,7 @@ class TaxCloudRequest(TaxCloudRequest):
             if line.price_unit >= 0.0 and line.product_uom_qty >= 0.0:
                 product_id = line.product_id.id
                 tic_code = line.product_id.tic_category_id.code or \
+                    line.product_id.categ_id.tic_category_id.code or \
                     line.company_id.tic_category_id.code or \
                     line.env.user.company_id.tic_category_id.code
                 qty = line.product_uom_qty

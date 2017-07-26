@@ -60,4 +60,19 @@
         </field>
     </record>
 
+    <record id="product_category_view_form_inherit_account_taxcloud" model="ir.ui.view">
+        <field name="name">product.category.view.form.inherit.account.taxcloud</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <group name='first' position="after">
+                <group>
+                    <group name="sale_taxcloud" string="TaxCloud">
+                        <field name="tic_category_id" string="TaxCloud Category"/>
+                    </group>
+                </group>
+            </group>
+        </field>
+    </record>
+
 </odoo>
