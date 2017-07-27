@@ -74,7 +74,7 @@ class AccountInvoice(models.Model):
 
         self._onchange_invoice_line_ids()
 
-        if self.env.context.get('taxcloud_authorize_transaction', False):
+        if self.type == "out_invoice" and self.env.context.get('taxcloud_authorize_transaction', False):
             request.client.service.Authorized(
                 request.api_login_id,
                 request.api_key,
