@@ -126,6 +126,8 @@ class USPSRequest():
     def usps_rate_request(self, order, carrier):
         request_detail = self._usps_request_data(carrier, order)
         request_text = carrier.env['ir.qweb'].render('delivery_usps.usps_price_request', request_detail)
+        # crappy fix allowing to rate First Class shipments
+        request_text = request_text.replace('First-Class', 'First Class')
         dict_response = {'price': 0.0, 'currency_code': "USD"}
         api = 'RateV4' if carrier.usps_delivery_nature == 'domestic' else 'IntlRateV2'
         xml = '&XML=%s' % (quote(request_text))

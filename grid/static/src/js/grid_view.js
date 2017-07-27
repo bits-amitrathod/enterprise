@@ -696,6 +696,14 @@ var GridView = View.extend({
             this.proxy('_fetch') // on_close
         );
     },
+
+    get_context: function() {
+        var ctx = this._super();
+        if ( !('quick_create_view' in ctx) || !ctx.quick_create_view) {
+            ctx.quick_create_view = this.ViewManager.views.form && this.ViewManager.views.form.view_id || false;
+        }
+        return ctx;
+    },
 });
 core.view_registry.add('grid', GridView);
 
