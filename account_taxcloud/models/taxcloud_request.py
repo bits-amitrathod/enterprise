@@ -88,7 +88,7 @@ class TaxCloudRequest(object):
 
             cart_item = self.client.factory.create('CartItem')
             cart_item
-            cart_item.Index = line.id
+            cart_item.Index = index + 1
             cart_item.ItemID = product_id
             if tic_code:
                 cart_item.TIC = tic_code
