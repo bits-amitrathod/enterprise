@@ -78,23 +78,23 @@ class TaxCloudRequest(object):
         self.cart_id = invoice.id
         self.cart_items = self.client.factory.create('ArrayOfCartItem')
         cart_items = []
-        for index, line in enumerate(invoice.invoice_line_ids.filtered(lambda line: line.price_unit >= 0.0)):
-            product_id = line.product_id.id
-            tic_code = line.product_id.tic_category_id.code or \
-                line.company_id.tic_category_id.code or \
-                line.env.user.company_id.tic_category_id.code
-            qty = line.quantity
-            price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+        for index, line in enumerate(invoice.invoice_line_ids):
+            if line.price_unit >= 0.0:
+                product_id = line.product_id.id
+                tic_code = line.product_id.tic_category_id.code or \
+                    line.company_id.tic_category_id.code or \
+                    line.env.user.company_id.tic_category_id.code
+                qty = line.quantity
+                price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
 
-            cart_item = self.client.factory.create('CartItem')
-            cart_item
-            cart_item.Index = line.id
-            cart_item.ItemID = product_id
-            if tic_code:
-                cart_item.TIC = tic_code
-            cart_item.Price = price_unit
-            cart_item.Qty = qty
-            cart_items.append(cart_item)
+                cart_item = self.client.factory.create('CartItem')
+                cart_item.Index = index
+                cart_item.ItemID = product_id
+                if tic_code:
+                    cart_item.TIC = tic_code
+                cart_item.Price = price_unit
+                cart_item.Qty = qty
+                cart_items.append(cart_item)
         self.cart_items.CartItem = cart_items
 
     # def authorize_transaction(self, invoice):
@@ -133,9 +133,9 @@ class TaxCloudRequest(object):
             if response.ResponseType == 'OK':
                 formatted_response['values'] = {}
                 for item in response.CartItemsResponse.CartItemResponse:
-                    line_id = item.CartItemIndex
+                    index = item.CartItemIndex
                     tax_amount = item.TaxAmount
-                    formatted_response['values'][line_id] = tax_amount
+                    formatted_response['values'][index] = tax_amount
             elif response.ResponseType == 'Error':
                 formatted_response['error_message'] = response.Messages[0][0].Message
         except suds.WebFault as fault:
