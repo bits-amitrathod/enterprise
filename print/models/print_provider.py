@@ -142,7 +142,14 @@ class PrintOrder(models.Model):
         Report = self.env['report']
         pages = {}
         for current_order in self:
-            report = ReportXml.search([('model', '=', current_order.res_model)], limit=1)
+            # Dirty Fix
+            # Do not forwardport in saas-15+
+            # JEM has made more adequate changes with a9e7018d742b1b78a050c44e56c1cec993b3e71f
+            report_domain = [('model', '=', current_order.res_model)]
+            if current_order.res_model == 'account.invoice':
+                report_domain.append(('name', 'ilike', 'invoices'))
+
+            report = ReportXml.search(report_domain, limit=1)
             if current_order.attachment_id: # compute page number
                 # avoid to recompute the number of page each time for the attachment
                 nbr_pages = pages.get(current_order.attachment_id.id)
