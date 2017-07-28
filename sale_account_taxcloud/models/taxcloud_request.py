@@ -16,7 +16,7 @@ class TaxCloudRequest(TaxCloudRequest):
             price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
 
             cart_item = self.client.factory.create('CartItem')
-            cart_item.Index = index + 1
+            cart_item.Index = line.id
             cart_item.ItemID = product_id
             if tic_code:
                 cart_item.TIC = tic_code
