@@ -15,14 +15,14 @@ class AccountBankStatementImport(models.TransientModel):
         try:
             root = etree.parse(StringIO(data_file)).getroot()
         except:
-            return False
+            return None
         if root.tag.find('camt.053'):
             return root
-        return False
+        return None
 
     def _parse_file(self, data_file):
         root = self._check_camt(data_file)
-        if root:
+        if root is not None:
             return self._parse_file_camt(root)
         return super(AccountBankStatementImport, self)._parse_file(data_file)
 

@@ -27,7 +27,10 @@ class MrpProduction(models.Model):
                 time_lines.write({'cost_already_recorded': True})
                 work_center_cost += (duration / 60.0) * work_order.workcenter_id.costs_hour
             if finished_move.product_id.cost_method in ('real', 'average'):
-                finished_move.price_unit = (sum([q.inventory_value for q in consumed_moves.mapped('quant_ids').filtered(lambda x: x.qty > 0.0)]) + work_center_cost) / finished_move.quantity_done
+                finished_move.price_unit = (
+                    (sum([q.inventory_value for q in consumed_moves.mapped('quant_ids').filtered(lambda x: x.qty > 0.0)]) + work_center_cost) /
+                    finished_move.product_uom._compute_quantity(finished_move.quantity_done, finished_move.product_id.uom_id)
+                )
         return True
 
     def _costs_generate(self):
