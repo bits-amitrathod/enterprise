@@ -5,9 +5,8 @@
 # Translators:
 # KingOPl Slav <87slava13@gmail.com>, 2016
 # Максим Дронь <dronmax@gmail.com>, 2016
-# Sergey Vilizhanin <sv@grimmette.ru>, 2016
+# SV <sv@grimmette.ru>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
-# Viktor Pogrebniak <vp@aifil.ru>, 2016
 # Max Belyanin <maxbelyanin@gmail.com>, 2016
 # Denis Trepalin <zekarious@gmail.com>, 2016
 # Gennady Marchenko <gennadym@gmail.com>, 2016
@@ -163,7 +162,26 @@ msgid "Non Validated"
 msgstr "Не проверенно"
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_project_project
+#: code:addons/timesheet_grid/models/models.py:68
+#, python-format
+msgid ""
+"Only a Timesheets Officer is allowed to create an entry older than the "
+"validation limit."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:83
+#, python-format
+msgid "Only a Timesheets Officer is allowed to delete a validated entry."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:77
+#, python-format
+msgid "Only a Timesheets Officer is allowed to modify a validated entry."
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Project"
 msgstr "Проект"
@@ -172,16 +190,6 @@ msgstr "Проект"
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
 msgstr "Укажите, если эта строка аналитики представлена строкой в табеле."
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_ids
-msgid "Subscriptions"
-msgstr "Подписки"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_count
-msgid "Susbcription Count"
-msgstr "Кол-во подписок"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search

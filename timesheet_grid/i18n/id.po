@@ -4,10 +4,10 @@
 # 
 # Translators:
 # Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2016
-# Deddy Ddr <deddy.ddr@gmail.com>, 2016
 # Muhammad Herdiansyah <herdiansyah@openmailbox.org>, 2016
 # William Surya Permana <zarambie_game@yahoo.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
+# Deddy Ddr <deddy.ddr@gmail.com>, 2016
 # Febrasari Almania <febrasari.almania@gmail.com>, 2016
 msgid ""
 msgstr ""
@@ -161,7 +161,26 @@ msgid "Non Validated"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_project_project
+#: code:addons/timesheet_grid/models/models.py:68
+#, python-format
+msgid ""
+"Only a Timesheets Officer is allowed to create an entry older than the "
+"validation limit."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:83
+#, python-format
+msgid "Only a Timesheets Officer is allowed to delete a validated entry."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:77
+#, python-format
+msgid "Only a Timesheets Officer is allowed to modify a validated entry."
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Project"
 msgstr "Proyek"
@@ -169,16 +188,6 @@ msgstr "Proyek"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_ids
-msgid "Subscriptions"
-msgstr "Langganan"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_count
-msgid "Susbcription Count"
 msgstr ""
 
 #. module: timesheet_grid

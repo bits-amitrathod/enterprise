@@ -160,7 +160,32 @@ msgid "Non Validated"
 msgstr "Niet bevestigd"
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_project_project
+#: code:addons/timesheet_grid/models/models.py:68
+#, python-format
+msgid ""
+"Only a Timesheets Officer is allowed to create an entry older than the "
+"validation limit."
+msgstr ""
+"Alleen een Urenstaat Officier is toegestaan om ingaven ouder dan de "
+"validatiedatum aan te passen."
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:83
+#, python-format
+msgid "Only a Timesheets Officer is allowed to delete a validated entry."
+msgstr ""
+"Alleen een Urenstaat Officier is toegestaan om gevalideerde ingaven te "
+"verwijderen."
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:77
+#, python-format
+msgid "Only a Timesheets Officer is allowed to modify a validated entry."
+msgstr ""
+"Alleen een Urenstaat Officier is toegestaan om gevalideerde ingaven aan te "
+"passen."
+
+#. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Project"
 msgstr "Project"
@@ -170,16 +195,6 @@ msgstr "Project"
 msgid "Set if this analytic line represents a line of timesheet."
 msgstr ""
 "Stel in als de kostenplaatsregel een regel van een urenstaat voorstelt."
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_ids
-msgid "Subscriptions"
-msgstr "Abonnementen"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_project_project_subscription_count
-msgid "Susbcription Count"
-msgstr "Aantal abbonementen"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
