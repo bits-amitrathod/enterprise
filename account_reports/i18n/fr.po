@@ -13,12 +13,13 @@
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
 # lucasdeliege <deliegelucas@gmail.com>, 2016
 # Frédéric Clementi <frederic.clementi@camptocamp.com>, 2016
+# lap.odoo <lap@odoo.com>, 2016
 # Jean-Patrick Debarge <djump@hotmail.fr>, 2016
 # Nicolas Guichard <nicolas.guichard@ovh.fr>, 2016
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2016
 # Xavier Symons <xsy@openerp.com>, 2016
-# Fabien Pinckaers <fp@openerp.com>, 2016
 # Shark McGnark <peculiarcheese@gmail.com>, 2016
+# Fabien Pinckaers <fp@openerp.com>, 2016
 # Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2016
 # Loic <loic.richard2@gmail.com>, 2016
 # Melanie Bernard <mbe@odoo.com>, 2016
@@ -26,13 +27,14 @@
 # Simon Jejcic <simon.jejcic@gmail.com>, 2017
 # Henri MARES <henri.mares@aliceadsl.fr>, 2017
 # Richard Mathot <rim@odoo.com>, 2017
+# Eloïse Stilmant <est@odoo.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-17 09:14+0000\n"
 "PO-Revision-Date: 2017-07-17 09:14+0000\n"
-"Last-Translator: Richard Mathot <rim@odoo.com>, 2017\n"
+"Last-Translator: Eloïse Stilmant <est@odoo.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -164,6 +166,8 @@ msgid ""
 "<span class=\"fa fa-filter\"/>\n"
 "            Companies:"
 msgstr ""
+"<span class=\"fa fa-filter\"/>\n"
+"            Sociétés:"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
@@ -173,7 +177,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.followup_search_template
 msgid "<span class=\"fa fa-filter\"/> Partners:"
-msgstr ""
+msgstr "<span class=\"fa fa-filter\"/> Partenaires:"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_analytic
@@ -215,7 +219,7 @@ msgstr "Une barre de progression pour le suivi des rapports"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_config_settings_view_form_inherit_account_reports
 msgid "A reminder can be sent as of"
-msgstr ""
+msgstr "Un rappel peut être envoyé à partir de"
 
 #. module: account_reports
 #: sql_constraint:account.financial.html.report.line:0
@@ -248,7 +252,7 @@ msgstr "Ligne de rapport de compte"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_config_settings_view_form_inherit_account_reports
 msgid "Account Tags"
-msgstr ""
+msgstr "Étiquettes de comptes"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
@@ -345,7 +349,7 @@ msgstr "Appliquer"
 #: code:addons/account_reports/models/account_report.py:393
 #, python-format
 msgid "As of %s"
-msgstr "À partir de %s"
+msgstr "À la date du %s"
 
 #. module: account_reports
 #: selection:account.financial.html.report.line,special_date_changer:0
@@ -400,7 +404,7 @@ msgstr "Lettrage bancaire"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_bank_view0
 msgid "Bank and Cash Accounts"
-msgstr "Banque et les comptes de caisse"
+msgstr "Banque et Caisse"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_bank_reconciliation_report
@@ -426,7 +430,7 @@ msgstr "Relevés professionnels"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_cash0
 msgid "CASH"
-msgstr "ENCAISSER"
+msgstr "TRESORERIE"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_current_year_earnings0
@@ -459,12 +463,12 @@ msgstr "Flux de trésorerie"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_opening_balance0
 msgid "Cash and cash equivalents, beginning of period"
-msgstr ""
+msgstr "Trésorerie et équivalents, solde initial"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_closing_balance0
 msgid "Cash and cash equivalents, closing balance"
-msgstr "Trésorerie et équivalents de trésorerie, solde de fermeture"
+msgstr "Trésorerie et équivalents de trésorerie, solde final"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_financing0
@@ -493,39 +497,39 @@ msgstr "Flux de trésorerie provenant des activités non classés"
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_investing_in0
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_unclassified_in0
 msgid "Cash in"
-msgstr "Entré "
+msgstr "Encaissements"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_financing_out0
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_investing_out0
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_unclassified_out0
 msgid "Cash out"
-msgstr "Retiré"
+msgstr "Décaissements"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_cash_spent0
 msgid "Cash paid for"
-msgstr ""
+msgstr "Décaissements pour"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_cash_received0
 msgid "Cash received"
-msgstr "Encaisse reçu"
+msgstr "Encaissements"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_cash_received0
 msgid "Cash received from customers"
-msgstr "Encaisse provenant de clients"
+msgstr "Encaissements provenant de clients"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_cash_spent0
 msgid "Cash spent"
-msgstr "Encaisse dépensé "
+msgstr "Décaissements"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_cash_surplus0
 msgid "Cash surplus"
-msgstr "Excédant d'encaisse "
+msgstr "Excédant de liquidités"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.line_template_followup_report
@@ -608,12 +612,12 @@ msgstr "Calcul"
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_cj
 #, python-format
 msgid "Consolidated Journals"
-msgstr ""
+msgstr "Journaux consolidés"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_consolidated_journal
 msgid "Consolidated Journals Report"
-msgstr ""
+msgstr "Rapport des journaux consolidés"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_res_partner
@@ -681,7 +685,7 @@ msgstr "Devise"
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_current_assets0
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_current_assets_view0
 msgid "Current Assets"
-msgstr "Actifs actuels"
+msgstr "Actif circulant"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:85
@@ -693,12 +697,12 @@ msgstr ""
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_current_liabilities0
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_current_liabilities1
 msgid "Current Liabilities"
-msgstr "Passif à court terme"
+msgstr "Passif circulant"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_ca_to_l0
 msgid "Current assets to liabilities"
-msgstr "Actif à court terme au passif"
+msgstr "Actif circulant au passif"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
@@ -851,7 +855,7 @@ msgstr "Fait"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_equity0
 msgid "EQUITY"
-msgstr "ÉQUITÉ"
+msgstr "EQUITY"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
@@ -885,7 +889,7 @@ msgstr ""
 #: model:ir.actions.client,name:account_reports.account_financial_html_report_action_4
 #: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_4
 msgid "Executive Summary"
-msgstr "Résumé générale"
+msgstr "Résumé général"
 
 #. module: account_reports
 #. openerp-web
@@ -917,7 +921,7 @@ msgstr "Frais"
 #: code:addons/account_reports/models/account_report.py:338
 #, python-format
 msgid "Export (XLSX)"
-msgstr ""
+msgstr "Exporter (XLSX)"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_financial_report_id
@@ -946,7 +950,7 @@ msgstr "Pliable"
 #: code:addons/account_reports/static/src/xml/account_report_template.xml:49
 #, python-format
 msgid "Follow-ups Done / Total Follow-ups"
-msgstr ""
+msgstr "Relances faites / Total des relances"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_followup_report.py:162
@@ -1030,7 +1034,7 @@ msgstr "Bénéfice brut "
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_gpmargin0
 msgid "Gross profit margin (gross profit / operating income)"
-msgstr "marge brute"
+msgstr "Marge brute"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_groupby
@@ -1080,7 +1084,7 @@ msgstr "ID"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_totalincome0
 msgid "INCOME"
-msgstr "RECETTES"
+msgstr "Recettes"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.followup_search_template
@@ -1287,7 +1291,7 @@ msgstr "Nombre de jours entre deux rappels"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_config_settings_view_form_inherit_account_reports
 msgid "Minimum spread between two reminders"
-msgstr ""
+msgstr "Écart minimum entre deux relances"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:154
@@ -1360,7 +1364,7 @@ msgstr "Actifs net "
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_net_increase0
 msgid "Net increase in cash and cash equivalents"
-msgstr "Augmentation de la trésorerie et des équivalents de trésorerie "
+msgstr "Augmentation de la trésorerie et équivalents"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_npmargin0
@@ -1421,7 +1425,7 @@ msgstr "Pas de suivi à envoyer !"
 #: code:addons/account_reports/models/account_aged_partner_balance.py:18
 #, python-format
 msgid "Not&nbsp;due&nbsp;on %s"
-msgstr ""
+msgstr "Pas&nbsp;dû&nbsp; %s"
 
 #. module: account_reports
 #. openerp-web
@@ -1460,7 +1464,7 @@ msgstr "Nombre de périodes:"
 #: code:addons/account_reports/models/account_aged_partner_balance.py:18
 #, python-format
 msgid "Older"
-msgstr "Ancien"
+msgstr "Plus de 120 jours"
 
 #. module: account_reports
 #. openerp-web
@@ -1479,12 +1483,12 @@ msgstr "Une semaine"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_income0
 msgid "Operating Income"
-msgstr ""
+msgstr "Résultat Opérationnel"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_other_income0
 msgid "Other Income"
-msgstr "Autre revenu"
+msgstr "Autres revenus"
 
 #. module: account_reports
 #: code:addons/account_reports/models/res_partner.py:79
@@ -1546,7 +1550,7 @@ msgstr "Payable"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_current_liabilities_payable
 msgid "Payables"
-msgstr ""
+msgstr "Dettes"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_config_settings_view_form_inherit_account_reports
@@ -1561,7 +1565,7 @@ msgstr "Pourcentages"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_fixed_assets_view0
 msgid "Plus Fixed Assets"
-msgstr "Plus Immobilisations"
+msgstr "Plus immobilisations"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:152
@@ -1572,12 +1576,12 @@ msgstr ""
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_non_current_assets_view0
 msgid "Plus Non-current Assets"
-msgstr "Plus actifs immobilisés "
+msgstr "Plus actif immobilisé"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_non_current_liabilities0
 msgid "Plus Non-current Liabilities"
-msgstr ""
+msgstr "Plus passif non-circulant"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:110
@@ -1610,7 +1614,7 @@ msgstr "Période précédente"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_config_settings_view_form_inherit_account_reports
 msgid "Print Legal Statement"
-msgstr ""
+msgstr "Imprimez les rapports légaux"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.template_followup_report
@@ -1621,7 +1625,7 @@ msgstr "Imprimer la lettre"
 #: code:addons/account_reports/models/account_report.py:338
 #, python-format
 msgid "Print Preview"
-msgstr ""
+msgstr "Imprimer"
 
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_pnl
@@ -1747,7 +1751,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_st_cash_forecast0
 msgid "Short term cash forecast"
-msgstr "Prévisions d'encaisse à court terme"
+msgstr "Prévisions d'encaissement à court terme"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_debit_credit
@@ -2018,7 +2022,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_config_settings_view_form_inherit_account_reports
 msgid "days after the previous reminder"
-msgstr ""
+msgstr "jours après le rappel précédent"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_analytic
