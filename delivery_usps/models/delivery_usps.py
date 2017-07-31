@@ -31,7 +31,7 @@ class ProviderUSPS(models.Model):
     usps_label_file_type = fields.Selection([('PDF', 'PDF'),
                                              ('TIF', 'TIF')],
                                             string="USPS Label File Type", default='PDF')
-    usps_service = fields.Selection([('First-Class', 'First-Class'),
+    usps_service = fields.Selection([('First Class', 'First Class'),
                                      ('Priority', 'Priority'),
                                      ('Express', 'Express')],
                                     required=True, string="USPS Service", default="Express")

@@ -76,7 +76,7 @@ class USPSRequest():
             tot_weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0
             for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):
                 return _('The estimated price cannot be computed because the weight of your product is missing.')
-            if tot_weight > 1.81437 and order.carrier_id.usps_service == 'First-Class':     # max weight of FirstClass Service
+            if tot_weight > 1.81437 and order.carrier_id.usps_service == 'First Class':     # max weight of FirstClass Service
                 return _("Please choose another service (maximum weight of this service is 4 pounds)")
         return False
 
@@ -126,8 +126,6 @@ class USPSRequest():
     def usps_rate_request(self, order, carrier):
         request_detail = self._usps_request_data(carrier, order)
         request_text = carrier.env['ir.qweb'].render('delivery_usps.usps_price_request', request_detail)
-        # crappy fix allowing to rate First Class shipments
-        request_text = request_text.replace('First-Class', 'First Class')
         dict_response = {'price': 0.0, 'currency_code': "USD"}
         api = 'RateV4' if carrier.usps_delivery_nature == 'domestic' else 'IntlRateV2'
 
@@ -157,10 +155,7 @@ class USPSRequest():
             services = package_root[0].findall("Service")
             postages_prices = []
             for service in services:
-                # Crappy workaround for v9 since I cannot change the selection list in stable.
-                # Proper fix done in master
-                usps_service = carrier.usps_service if carrier.usps_service != 'First Class' else 'First-Class'
-                if usps_service in service.findall("SvcDescription")[0].text:
+                if carrier.usps_service in service.findall("SvcDescription")[0].text:
                     postages_prices += [float(service.findall("Postage")[0].text)]
             if not postages_prices:
                 dict_response['error_message'] = _("The selected USPS service (%s) cannot be used to deliver this package.") % carrier.usps_service
@@ -260,7 +255,7 @@ class USPSRequest():
             return dict_response
 
         elif root.tag == 'DelivConfirmCertifyV4.0Response' or root.tag == 'DeliveryConfirmationV4.0Response':
-            # domestic Priority and First-Class
+            # domestic Priority and First Class
             dict_response['tracking_number'] = root.findtext('DeliveryConfirmationNumber')
             dict_response['price'] = float(root.findtext('Postage'))
             dict_response['label'] = binascii.a2b_base64(root.findtext('DeliveryConfirmationLabel'))
