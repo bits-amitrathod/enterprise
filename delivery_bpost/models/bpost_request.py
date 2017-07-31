@@ -44,7 +44,7 @@ class BpostRequest():
 
         res = [field for field in shipper_required_fields if not shipper[field]]
         if res:
-            return _("The address of your company is incomplete or wrong (Missing field(s):  \n %s)") % ", ".join(res).replace("_id", "")
+            return _("The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n %s)") % ", ".join(res).replace("_id", "")
         if shipper.country_id.code != 'BE':
             return _("Your company/warehouse address must be in Belgium to ship with bpost")
 
