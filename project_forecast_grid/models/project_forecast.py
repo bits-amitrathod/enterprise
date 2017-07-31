@@ -45,7 +45,7 @@ class Forecast(models.Model):
         if not project.date:
             raise odoo.exceptions.UserError(
                 _("A project must have an end date to use a forecast grid, "
-                  "found no end date for {project.display_name").format(
+                  "found no end date for {project.display_name}").format(
                     project=project
                 )
             )
