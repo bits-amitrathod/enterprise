@@ -44,7 +44,7 @@ class ProviderUPS(models.Model):
                                            string="UPS Label File Type", default='GIF', oldname='x_label_file_type')
     ups_bill_my_account = fields.Boolean(string='Bill My Account', help="When user select Bill my account checkbox,\n"
                                      "He will be asked to enter account number as bill may account used to charge customer's account")
-    ups_cod = fields.Boolean(string='Collect on delivery',
+    ups_cod = fields.Boolean(string='Collect on Delivery',
         help='This value added service enables UPS to collect the payment of the shipment from your customer.')
     ups_saturday_delivery = fields.Boolean(string='Saturday Delivery',
         help='This value added service will allow you to ship the package on saturday also.')
