@@ -5,6 +5,13 @@ from odoo.exceptions import ValidationError
 
 from .taxcloud_request import TaxCloudRequest
 
+
+class AccountFiscalPositionTemplate(models.Model):
+    _inherit = 'account.fiscal.position.template'
+
+    is_taxcloud = fields.Boolean(string='Use TaxCloud API')
+
+
 class AccountFiscalPosition(models.Model):
     _inherit = 'account.fiscal.position'
 
@@ -91,6 +98,15 @@ class AccountFiscalPosition(models.Model):
         if res.get('error_message'):
             raise ValidationError(_('Unable to retrieve taxes from TaxCloud: ')+'\n'+res['error_message']+'\n\n'+_('The configuration of TaxCloud is in the Accounting app, Settings menu.'))
         return res
+
+
+class AccountFiscalPositionTaxTemplate(models.Model):
+    _inherit = 'account.fiscal.position.tax.template'
+
+    tic_category_ids = fields.Many2many('product.tic.category', string="TIC Category")
+    state_ids = fields.Many2many('res.country.state', string="Federal States")
+    zip_codes = fields.Char("Zip")
+
 
 class AccountFiscalPositionTax(models.Model):
     _inherit = 'account.fiscal.position.tax'
