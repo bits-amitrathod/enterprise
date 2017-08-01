@@ -314,10 +314,31 @@ class AccountFinancialReportLine(models.Model):
             user_types = self.env['account.account.type'].search([('type', 'in', ('receivable', 'payable'))])
             if not user_types:
                 return sql, params
+
+            # Get all columns from account_move_line using the psql metadata table in order to make sure all columns from the account.move.line model 
+            # are present in the shadowed table.
+            sql = "SELECT column_name FROM information_schema.columns WHERE table_name='account_move_line'";
+            self.env.cr.execute(sql)
+            columns = []
+            columns_2 = []
+            replace_columns = {'date': 'ref.date',
+                                'debit_cash_basis': 'CASE WHEN aml.debit > 0 THEN ref.matched_percentage * aml.debit ELSE 0 END AS debit_cash_basis',
+                                'credit_cash_basis': 'CASE WHEN aml.credit > 0 THEN ref.matched_percentage * aml.credit ELSE 0 END AS credit_cash_basis',
+                                'balance_cash_basis': 'ref.matched_percentage * aml.balance AS balance_cash_basis'}
+            for field in self.env.cr.fetchall():
+                field = name[0]
+                columns.append("\"account_move_line\".%s" % (field,))
+                if field in replace_columns:
+                    columns_2.append(replace_columns.get(field))
+                else:
+                    columns_2.append('aml.%s' % (field,))
+            select_clause_1 = ', '.join(columns);
+            select_clause_2 = ', '.join(columns_2);
+
             #we use query_get() to filter out unrelevant journal items to have a shadowed table as small as possible
             tables, where_clause, where_params = self.env['account.move.line']._query_get()
             sql = """WITH account_move_line AS (
-              SELECT \"account_move_line\".id, \"account_move_line\".date, \"account_move_line\".name, \"account_move_line\".debit_cash_basis, \"account_move_line\".credit_cash_basis, \"account_move_line\".move_id, \"account_move_line\".account_id, \"account_move_line\".journal_id, \"account_move_line\".balance_cash_basis, \"account_move_line\".amount_residual, \"account_move_line\".partner_id, \"account_move_line\".reconciled, \"account_move_line\".company_id, \"account_move_line\".company_currency_id, \"account_move_line\".amount_currency, \"account_move_line\".balance, \"account_move_line\".user_type_id, \"account_move_line\".tax_line_id, \"account_move_line\".invoice_id, \"account_move_line\".credit, \"account_move_line\".tax_exigible, \"account_move_line\".debit, \"account_move_line\".analytic_account_id
+              SELECT """ + select_clause_1 + """
                FROM """ + tables + """
                WHERE (\"account_move_line\".journal_id IN (SELECT id FROM account_journal WHERE type in ('cash', 'bank'))
                  OR \"account_move_line\".move_id NOT IN (SELECT DISTINCT move_id FROM account_move_line WHERE user_type_id IN %s))
@@ -337,12 +358,7 @@ class AccountFinancialReportLine(models.Model):
                     AND "account_move_line".user_type_id IN %s
                     AND """ + where_clause + """
                )
-               SELECT aml.id, ref.date, aml.name,
-                 CASE WHEN aml.debit > 0 THEN ref.matched_percentage * aml.debit ELSE 0 END AS debit_cash_basis,
-                 CASE WHEN aml.credit > 0 THEN ref.matched_percentage * aml.credit ELSE 0 END AS credit_cash_basis,
-                 aml.move_id, aml.account_id, aml.journal_id,
-                 ref.matched_percentage * aml.balance AS balance_cash_basis,
-                 aml.amount_residual, aml.partner_id, aml.reconciled, aml.company_id, aml.company_currency_id, aml.amount_currency, aml.balance, aml.user_type_id, aml.tax_line_id, aml.invoice_id, aml.credit, aml.tax_exigible, aml.debit, aml.analytic_account_id
+               SELECT """ + select_clause_2 + """
                 FROM account_move_line aml
                 RIGHT JOIN payment_table ref ON aml.move_id = ref.move_id
                 WHERE journal_id NOT IN (SELECT id FROM account_journal WHERE type in ('cash', 'bank'))
