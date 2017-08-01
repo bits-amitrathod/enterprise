@@ -128,7 +128,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     name = '-'.join(
                         (line.move_id.name not in ['', '/'] and [line.move_id.name] or []) +
                         (line.ref not in ['', '/', False] and [line.ref] or []) +
-                        (line.name not in ['', '/'] and [line.name] or [])
+                        ([line.name] if line.name and line.name not in ['', '/'] else [])
                     )
                     if len(name) > 35 and not self.env.context.get('no_format'):
                         name = name[:32] + "..."
@@ -181,4 +181,3 @@ class ReportPartnerLedger(models.AbstractModel):
     @api.model
     def get_report_name(self):
         return _('Partner Ledger')
-
