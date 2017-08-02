@@ -293,7 +293,7 @@
                 <filter string="Future Activities" name="activities_upcoming_all"
                         domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
                         ]"/>
-                <filter string="Upcoming SLA Fail" domain="[('sla_active', '=', True),('deadline','!=',False),('deadline', '&lt;=', (datetime.date.today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]" name="upcoming_sla_fail" groups="helpdesk.group_use_sla"/>
+                <filter string="Upcoming SLA Fail" domain="[('sla_active', '=', True),('sla_fail','=',False),('deadline','!=',False),('deadline', '&lt;=', (datetime.date.today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]" name="upcoming_sla_fail" groups="helpdesk.group_use_sla"/>
                 <filter string="SLA Failed" domain="[('sla_fail','!=',False)]" name="sla_failed" groups="helpdesk.group_use_sla"/>
                 <group expand="0" string="Group By">
                     <filter string="Assignee" name="assignee" context="{'group_by':'user_id'}"/>
