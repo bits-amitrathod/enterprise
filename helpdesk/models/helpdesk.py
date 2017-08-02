@@ -71,6 +71,7 @@ class HelpdeskTeam(models.Model):
     def _compute_upcoming_sla_fail_tickets(self):
         ticket_data = self.env['helpdesk.ticket'].read_group([
             ('sla_active', '=', True),
+            ('sla_fail', '=', False),
             ('team_id', 'in', self.ids),
             ('deadline', '!=', False),
             ('deadline', '<=', fields.Datetime.to_string((datetime.date.today() + relativedelta.relativedelta(days=1)))),

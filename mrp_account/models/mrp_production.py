@@ -27,7 +27,8 @@ class MrpProduction(models.Model):
                 time_lines.write({'cost_already_recorded': True})
                 work_center_cost += (duration / 60.0) * work_order.workcenter_id.costs_hour
             if finished_move.product_id.cost_method in ('fifo', 'average'):
-                finished_move.price_unit = (sum([-m.value for m in consumed_moves]) + work_center_cost) / finished_move.quantity_done
+                qty_done = finished_move.product_uom._compute_quantity(finished_move.quantity_done, finished_move.product_id.uom_id)
+                finished_move.price_unit = (sum([-m.value for m in consumed_moves]) + work_center_cost) / qty_done
                 finished_move.value = sum([-m.value for m in consumed_moves]) + work_center_cost
         return True
 

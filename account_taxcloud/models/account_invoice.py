@@ -50,31 +50,32 @@ class AccountInvoice(models.Model):
         tax_values = response['values']
 
         raise_warning = False
-        for line in self.invoice_line_ids.filtered(lambda line: line.price_unit >= 0.0):
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.quantity
-            if not price:
-                tax_rate = 0.0
-            else:
-                tax_rate = tax_values[line.id] / price * 100
-            if float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=2):
-                raise_warning = True
-                tax_rate = float_round(tax_rate, precision_digits=2)
-                tax = self.env['account.tax'].sudo().search([
-                    ('amount', '=', tax_rate),
-                    ('amount_type', '=', 'percent'),
-                    ('type_tax_use', '=', 'sale')], limit=1)
-                if not tax:
-                    tax = self.env['account.tax'].sudo().create({
-                        'name': 'Tax %.2f %%' % (tax_rate),
-                        'amount': tax_rate,
-                        'amount_type': 'percent',
-                        'type_tax_use': 'sale',
-                    })
-                line.invoice_line_tax_ids = tax
+        for index, line in enumerate(self.invoice_line_ids):
+            if line.price_unit >= 0.0:
+                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.quantity
+                if not price:
+                    tax_rate = 0.0
+                else:
+                    tax_rate = tax_values[index] / price * 100
+                if len(line.invoice_line_tax_ids.ids) > 1 or float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=2):
+                    raise_warning = True
+                    tax_rate = float_round(tax_rate, precision_digits=2)
+                    tax = self.env['account.tax'].sudo().search([
+                        ('amount', '=', tax_rate),
+                        ('amount_type', '=', 'percent'),
+                        ('type_tax_use', '=', 'sale')], limit=1)
+                    if not tax:
+                        tax = self.env['account.tax'].sudo().create({
+                            'name': 'Tax %.2f %%' % (tax_rate),
+                            'amount': tax_rate,
+                            'amount_type': 'percent',
+                            'type_tax_use': 'sale',
+                        })
+                    line.invoice_line_tax_ids = tax
 
         self._onchange_invoice_line_ids()
 
-        if self.env.context.get('taxcloud_authorize_transaction', False):
+        if self.type == "out_invoice" and self.env.context.get('taxcloud_authorize_transaction', False):
             request.client.service.Authorized(
                 request.api_login_id,
                 request.api_key,

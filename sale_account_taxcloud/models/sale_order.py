@@ -38,27 +38,28 @@ class SaleOrder(models.Model):
         tax_values = response['values']
 
         raise_warning = False
-        for line in self.order_line.filtered(lambda line: line.price_unit >= 0.0):
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.product_uom_qty
-            if not price:
-                tax_rate = 0.0
-            else:
-                tax_rate = tax_values[line.id] / price * 100
-            if float_compare(line.tax_id.amount, tax_rate, precision_digits=2):
-                raise_warning = True
-                tax_rate = float_round(tax_rate, precision_digits=2)
-                tax = self.env['account.tax'].sudo().search([
-                    ('amount', '=', tax_rate),
-                    ('amount_type', '=', 'percent'),
-                    ('type_tax_use', '=', 'sale')], limit=1)
-                if not tax:
-                    tax = self.env['account.tax'].sudo().create({
-                        'name': 'Tax %.2f %%' % (tax_rate),
-                        'amount': tax_rate,
-                        'amount_type': 'percent',
-                        'type_tax_use': 'sale',
-                    })
-                line.tax_id = tax
+        for index, line in enumerate(self.order_line):
+            if line.price_unit >= 0.0:
+                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.product_uom_qty
+                if not price:
+                    tax_rate = 0.0
+                else:
+                    tax_rate = tax_values[index] / price * 100
+                if len(line.tax_id.ids) > 1 or float_compare(line.tax_id.amount, tax_rate, precision_digits=2):
+                    raise_warning = True
+                    tax_rate = float_round(tax_rate, precision_digits=2)
+                    tax = self.env['account.tax'].sudo().search([
+                        ('amount', '=', tax_rate),
+                        ('amount_type', '=', 'percent'),
+                        ('type_tax_use', '=', 'sale')], limit=1)
+                    if not tax:
+                        tax = self.env['account.tax'].sudo().create({
+                            'name': 'Tax %.2f %%' % (tax_rate),
+                            'amount': tax_rate,
+                            'amount_type': 'percent',
+                            'type_tax_use': 'sale',
+                        })
+                    line.tax_id = tax
         if raise_warning:
             return {'warning': _('The tax rates have been updated, you may want to check it before validation')}
         else:

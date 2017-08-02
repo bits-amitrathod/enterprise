@@ -389,7 +389,7 @@ class DHLProvider():
             recipient_required_field.append('street')
         res = [field for field in recipient_required_field if not recipient[field]]
         if res:
-            return _("The address of the custommer is missing or wrong (Missing field(s) :\n %s)") % ", ".join(res).replace("_id", "")
+            return _("The address of the customer is missing or wrong (Missing field(s) :\n %s)") % ", ".join(res).replace("_id", "")
 
         shipper_required_field = ['city', 'zip', 'phone', 'country_id']
         if not shipper.street and not shipper.street2:

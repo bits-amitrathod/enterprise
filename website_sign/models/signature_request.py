@@ -281,43 +281,52 @@ class SignatureRequest(models.Model):
             return
 
         old_pdf = PdfFileReader(StringIO.StringIO(base64.b64decode(self.template_id.attachment_id.datas)))
-        box = old_pdf.getPage(0).mediaBox
-        height = int(box.getUpperRight_y())
         font = "Helvetica"
-
-        normalFontSize = height*0.015
+        normalFontSize = 0.015
 
         packet = StringIO.StringIO()
         can = canvas.Canvas(packet)
         itemsByPage = self.template_id.signature_item_ids.getByPage()
         SignatureItemValue = self.env['signature.item.value']
         for p in range(0, old_pdf.getNumPages()):
-            if (p+1) not in itemsByPage:
-                can.showPage()
-                continue
+            page = old_pdf.getPage(p)
+            width = page.mediaBox.getUpperRight_x()
+            height = page.mediaBox.getUpperRight_y()
 
-            items = itemsByPage[p+1]
+            # Set page orientation (either 0, 90, 180 or 270)
+            rotation = page.get('/Rotate')
+            if rotation:
+                can.rotate(rotation)
+                # Translate system so that elements are placed correctly
+                # despite of the orientation
+                if rotation == 90:
+                    width, height = height, width
+                    can.translate(0, -height)
+                elif rotation == 180:
+                    can.translate(-width, -height)
+                elif rotation == 270:
+                    width, height = height, width
+                    can.translate(-width, 0)
+
+            items = itemsByPage[p + 1] if p + 1 in itemsByPage else []
             for item in items:
                 value = SignatureItemValue.search([('signature_item_id', '=', item.id), ('signature_request_id', '=', self.id)], limit=1)
                 if not value or not value.value:
                     continue
 
                 value = value.value
-                box = old_pdf.getPage(p).mediaBox
-                width = int(box.getUpperRight_x())
-                height = int(box.getUpperRight_y())
 
                 if item.type_id.type == "text":
-                    can.setFont(font, int(height*item.height*0.8))
+                    can.setFont(font, height*item.height*0.8)
                     can.drawString(width*item.posX, height*(1-item.posY-item.height*0.9), value)
 
                 elif item.type_id.type == "textarea":
-                    can.setFont(font, int(normalFontSize*0.8))
+                    can.setFont(font, height*normalFontSize*0.8)
                     lines = value.split('\n')
-                    y = height*(1-item.posY)
+                    y = (1-item.posY)
                     for line in lines:
                         y -= normalFontSize*0.9
-                        can.drawString(width*item.posX, y, line)
+                        can.drawString(width*item.posX, height*y, line)
                         y -= normalFontSize*0.1
 
                 elif item.type_id.type == "signature" or item.type_id.type == "initial":
