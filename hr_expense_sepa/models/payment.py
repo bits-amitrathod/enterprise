@@ -15,8 +15,8 @@ class HrExpenseRegisterPaymentWizard(models.TransientModel):
     def _onchange_partner_id(self):
         active_ids = self._context.get('active_ids', [])
         expense_sheet = self.env['hr.expense.sheet'].browse(active_ids)
-        if expense_sheet.employee_id.id and expense_sheet.employee_id.bank_account_id.id:
-            self.partner_bank_account_id = expense_sheet.employee_id.bank_account_id.id
+        if expense_sheet.employee_id.id and expense_sheet.employee_id.sudo().bank_account_id.id:
+            self.partner_bank_account_id = expense_sheet.employee_id.sudo().bank_account_id.id
         elif self.partner_id and len(self.partner_id.bank_ids) > 0:
             self.partner_bank_account_id = self.partner_id.bank_ids[0]
         else:
