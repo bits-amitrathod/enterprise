@@ -31,7 +31,7 @@ class ProductTicCategory(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    tic_category_id = fields.Many2one('product.tic.category', string="TIC Category",
+    tic_category_id = fields.Many2one('product.tic.category', string="TaxCloud Category",
         help="TaxCloud uses Taxability Information Codes (TIC) to make sure each item in your catalog "
              "is taxed at the right rate (or, for tax-exempt items, not taxed at all), so it's important "
              "to make sure that each item is assigned a TIC. If you can't find the right tax category for "
@@ -42,4 +42,4 @@ class ProductTemplate(models.Model):
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    tic_category_id = fields.Many2one('product.tic.category', string='Default TIC Code', help="Default TICs(Taxabilty information codes) code to get sales tax from TaxCloud by product category.")
+    tic_category_id = fields.Many2one('product.tic.category', string='Default TIC Code', help="Default TICs(Taxability information codes) code to get sales tax from TaxCloud by product category.")
