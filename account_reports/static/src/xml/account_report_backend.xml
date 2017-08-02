@@ -2,7 +2,7 @@
 
 <templates>
     <t t-name="accountReports.followupSearchView">
-        <div class="o_dropdown o_account_reports_followup-filter">
+        <div class="btn-group o_dropdown o_account_reports_followup-filter">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-filter"/> Partners:
                 <t t-if="context.partner_filter == 'action'">
@@ -53,7 +53,7 @@
         </div>
     </div>
     <t t-name="accountReports.searchView">
-        <div class="o_dropdown o_account_reports_date-filter">
+        <div class="btn-group o_dropdown o_account_reports_date-filter">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-calendar"/> 
                 <t t-if="!report_type.date_range">Date:</t>
@@ -106,7 +106,7 @@
                 </li>
             </ul>
         </div>
-        <div class="o_dropdown o_account_reports_date-filter-cmp" t-if="report_type.comparison">
+        <div class="btn-group o_dropdown o_account_reports_date-filter-cmp" t-if="report_type.comparison">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-bar-chart"/> Comparison:
                 <t t-if="context.date_filter_cmp == 'no_comparison'">None</t>
@@ -153,7 +153,7 @@
                 </li>
             </ul>
         </div>
-        <div class="o_dropdown o_account_reports_date-filter-bool" t-if="report_type.extra_options">
+        <div class="btn-group o_dropdown o_account_reports_date-filter-bool" t-if="report_type.extra_options">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-filter"/> Options:
                 <t t-if="!report_type.cash_basis"> 
@@ -170,7 +170,7 @@
                 <li t-if="context.has_hierarchy" title="Hierarchy" data-value="hierarchy_3" t-att-class="'o_account_reports_one-filter-bool ' + (context.hierarchy_3 and 'selected' or '')"><a>Hierarchy and Subtotals</a></li>
             </ul>
         </div>
-        <div class="o_dropdown o_account_reports_date-filter-multi-company" t-if="context.multi_company">
+        <div class="btn-group o_dropdown o_account_reports_date-filter-multi-company" t-if="context.multi_company">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-filter"/> Companies: <span class="caret"/>
             </a>
@@ -180,7 +180,7 @@
                 </t>
             </ul>
         </div>
-        <div class="o_dropdown o_account_reports_date-filter-journals" t-if="context.journal_ids">
+        <div class="btn-group o_dropdown o_account_reports_date-filter-journals" t-if="context.journal_ids">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-book"/>
                 <t t-if="context.journal_ids.length">
@@ -200,7 +200,7 @@
                 </t>
             </ul>
         </div>
-        <div class="o_dropdown o_account_reports_filter-account_types" t-if="context.account_type">
+        <div class="btn-group o_dropdown o_account_reports_filter-account_types" t-if="context.account_type">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-user"/>
                 <t t-if="context.account_type == 'receivable'">Customers</t>
@@ -214,7 +214,7 @@
                 <li title="Customers and suppliers" data-value="receivable_payable" t-att-class="'o_account_reports_one-account_type ' + ((context.account_type == 'receivable_payable') and 'selected' or '')"><a>Customers and suppliers</a></li>
             </ul>
         </div>
-        <div class="o_dropdown o_account_reports_tags-filter" t-if="report_type.analytic and context.analytic">
+        <div class="btn-group o_dropdown o_account_reports_tags-filter" t-if="report_type.analytic and context.analytic">
             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-folder-open"/> Analytic
                 <span class="caret"/>
