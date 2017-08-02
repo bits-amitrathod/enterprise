@@ -326,7 +326,7 @@ class AccountFinancialReportLine(models.Model):
                                 'credit_cash_basis': 'CASE WHEN aml.credit > 0 THEN ref.matched_percentage * aml.credit ELSE 0 END AS credit_cash_basis',
                                 'balance_cash_basis': 'ref.matched_percentage * aml.balance AS balance_cash_basis'}
             for field in self.env.cr.fetchall():
-                field = name[0]
+                field = field[0]
                 columns.append("\"account_move_line\".%s" % (field,))
                 if field in replace_columns:
                     columns_2.append(replace_columns.get(field))
