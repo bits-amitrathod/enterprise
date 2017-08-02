@@ -399,6 +399,69 @@ QUnit.module('Studio', {
         vem.destroy();
     });
 
+    QUnit.test('grouped kanban editor', function(assert) {
+        assert.expect(4);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<kanban default_group_by='display_name'>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div class='o_kanban_record'>" +
+                                "<field name='display_name'/>" +
+                            "</div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>",
+        });
+
+        assert.ok(vem.$('.o_web_studio_kanban_view_editor').hasClass('o_kanban_grouped'),
+            "the editor should be grouped");
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+        assert.ok(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').hasClass('o_web_studio_widget_empty'),
+            "the empty node should have the empty class");
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor .o_web_studio_hook').length, 1,
+            "there should be one hook");
+
+        vem.destroy();
+    });
+
+    QUnit.test('grouped kanban editor with record', function(assert) {
+        assert.expect(4);
+
+        this.data.coucou.records = [{
+            id: 1,
+            display_name: 'coucou 1',
+        }];
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<kanban default_group_by='display_name'>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div class='o_kanban_record'>" +
+                                "<field name='display_name'/>" +
+                            "</div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>",
+        });
+
+        assert.ok(vem.$('.o_web_studio_kanban_view_editor').hasClass('o_kanban_grouped'),
+            "the editor should be grouped");
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+        assert.notOk(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').hasClass('o_web_studio_widget_empty'),
+            "the empty node should not have the empty class");
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor .o_web_studio_hook').length, 1,
+            "there should be one hook");
+
+        vem.destroy();
+    });
+
     QUnit.test('empty search editor', function(assert) {
         assert.expect(6);
 

@@ -15,8 +15,18 @@ return KanbanRenderer.extend(EditorMixin, {
     init: function () {
         this._super.apply(this, arguments);
 
-        // only render one record
-        this.state.data = this.state.data.slice(0, 1);
+        // We only want to display one record to ease the edition.
+        // If grouped, render the record from only one of the groups that
+        // contains records like if it was ungrouped (fallback on the first
+        // group if all groups are empty).
+        var state = this.state;
+        this.isGrouped = !!this.state.groupedBy.length;
+        if (this.isGrouped) {
+            state = _.find(this.state.data, function (group) {
+                return group.count > 0;
+            }) || this.state.data[0];
+        }
+        this.kanbanRecord = state && state.data[0];
     },
     /**
      * @override
@@ -24,7 +34,7 @@ return KanbanRenderer.extend(EditorMixin, {
     willStart: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
-            if (self.state.data.length === 0) {
+            if (!self.kanbanRecord) {
                 // add an empty record to be able to edit something
                 var model = new BasicModel(self);
                 return model.load({
@@ -34,7 +44,7 @@ return KanbanRenderer.extend(EditorMixin, {
                     type: 'record',
                     viewType: self.state.viewType,
                 }).then(function (record_id){
-                    self.state.data.push(model.get(record_id));
+                    self.kanbanRecord = model.get(record_id);
                 });
             }
         });
@@ -48,8 +58,8 @@ return KanbanRenderer.extend(EditorMixin, {
      * @override
      */
     highlightNearestHook: function ($helper, position) {
-        if (this.kanban_record) {
-            return this.kanban_record.highlightNearestHook($helper, position);
+        if (this.recordEditor) {
+            return this.recordEditor.highlightNearestHook($helper, position);
         }
     },
     /**
@@ -57,8 +67,8 @@ return KanbanRenderer.extend(EditorMixin, {
      */
     getLocalState: function () {
         var state = this._super.apply(this, arguments) || {};
-        if (this.kanban_record && this.kanban_record.selected_node_id) {
-            state.selected_node_id = this.kanban_record.selected_node_id;
+        if (this.recordEditor && this.recordEditor.selected_node_id) {
+            state.selected_node_id = this.recordEditor.selected_node_id;
         }
         return state;
     },
@@ -66,8 +76,8 @@ return KanbanRenderer.extend(EditorMixin, {
      * @override
      */
     setLocalState: function (state) {
-        if (this.kanban_record) {
-            this.kanban_record.setLocalState(state);
+        if (this.recordEditor) {
+            this.recordEditor.setLocalState(state);
         }
     },
 
@@ -80,15 +90,14 @@ return KanbanRenderer.extend(EditorMixin, {
      * @returns {Deferred}
      */
     _render: function () {
-        var is_grouped = !!this.arch.attrs.default_group_by;
-        this.$el.toggleClass('o_kanban_grouped', is_grouped);
-        this.$el.toggleClass('o_kanban_ungrouped', !is_grouped);
+        this.$el.toggleClass('o_kanban_grouped', this.isGrouped);
+        this.$el.toggleClass('o_kanban_ungrouped', !this.isGrouped);
 
         this.$el.empty();
         var fragment = document.createDocumentFragment();
         this._renderUngrouped(fragment);
 
-        if (is_grouped) {
+        if (this.isGrouped) {
             var $group = $('<div>', {class: 'o_kanban_group'});
             $group.append(fragment);
             this.$el.append($group);
@@ -119,18 +128,19 @@ return KanbanRenderer.extend(EditorMixin, {
         }
     },
     /**
+     * Override this method to only render one record and to use the
+     * KanbanRecordEditor.
+     *
      * @private
      * @param {DocumentFragment} fragment
      */
     _renderUngrouped: function (fragment) {
-        // overwrite this method to use the KanbanRecordEditor
-        var self = this;
-        _.each(this.state.data, function (record) {
-            var is_dashboard = self.$el.hasClass('o_kanban_dashboard');
-            self.kanban_record = new KanbanRecordEditor(self, record, self.recordOptions, is_dashboard);
-            self.widgets.push(self.kanban_record);
-            self.kanban_record.appendTo(fragment);
-        });
+        var isDashboard = this.$el.hasClass('o_kanban_dashboard');
+        this.recordEditor = new KanbanRecordEditor(
+            this, this.kanbanRecord, this.recordOptions, isDashboard);
+        this.widgets.push(this.recordEditor);
+        this.recordEditor.appendTo(fragment);
+
         this._renderDemoDivs(fragment, 6);
         this._renderGhostDivs(fragment, 6);
     },
