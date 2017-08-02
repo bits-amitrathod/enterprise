@@ -308,7 +308,6 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         }]).then(function (recordID) {
             var options = {
                 mode: 'edit',
-                standalone: true,
             };
             var record = self.model.get(recordID);
             self.many2one = new EditMenuMany2One(self, 'model', record, options);
