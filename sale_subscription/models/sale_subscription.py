@@ -374,7 +374,7 @@ class SaleSubscription(models.Model):
                 'partner_shipping_id': addr['delivery'],
                 'currency_id': subscription.pricelist_id.currency_id.id,
                 'order_line': order_lines,
-                'project_id': subscription.analytic_account_id.id,
+                'analytic_account_id': subscription.analytic_account_id.id,
                 'subscription_management': 'renew',
                 'note': subscription.description,
                 'fiscal_position_id': fpos_id,
