@@ -106,3 +106,9 @@ class MrpProduction(models.Model):
                 action['context'] = self.env.context
                 action['res_id'] = checks[0].id
                 return action
+
+    @api.multi
+    def action_cancel(self):
+        res = super(MrpProduction, self).action_cancel()
+        self.sudo().mapped('check_ids').filtered(lambda x: x.quality_state == 'none').unlink()
+        return res
