@@ -52,8 +52,9 @@ class TestDeliveryUSPS(TransactionCase):
 
         sale_order = SaleOrder.create(so_vals)
         sale_order.get_delivery_price()
-        sale_order.set_delivery_line()
+        self.assertTrue(sale_order.delivery_rating_success, "USPS has not been able to rate this order (%s)" % sale_order.delivery_message)
         self.assertGreater(sale_order.delivery_price, 0.0, "USPS delivery cost for this SO has not been correctly estimated.")
+        sale_order.set_delivery_line()
 
         sale_order.action_confirm()
         self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
@@ -62,12 +63,10 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
-
-        picking.do_prepare_partial()
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
-
+        picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
 
@@ -91,8 +90,9 @@ class TestDeliveryUSPS(TransactionCase):
 
         sale_order = SaleOrder.create(so_vals)
         sale_order.get_delivery_price()
-        sale_order.set_delivery_line()
+        self.assertTrue(sale_order.delivery_rating_success, "USPS has not been able to rate this order (%s)" % sale_order.delivery_message)
         self.assertGreater(sale_order.delivery_price, 0.0, "USPS delivery cost for this SO has not been correctly estimated.")
+        sale_order.set_delivery_line()
 
         sale_order.action_confirm()
         self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
@@ -101,17 +101,14 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
-
-        picking.do_prepare_partial()
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
-
+        picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
 
         picking.cancel_shipment()
-
         self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
         self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
@@ -130,8 +127,9 @@ class TestDeliveryUSPS(TransactionCase):
 
         sale_order = SaleOrder.create(so_vals)
         sale_order.get_delivery_price()
-        sale_order.set_delivery_line()
+        self.assertTrue(sale_order.delivery_rating_success, "USPS has not been able to rate this order (%s)" % sale_order.delivery_message)
         self.assertGreater(sale_order.delivery_price, 0.0, "USPS delivery cost for this SO has not been correctly estimated.")
+        sale_order.set_delivery_line()
 
         sale_order.action_confirm()
         self.assertEquals(len(sale_order.picking_ids), 1, "The Sale Order did not generate a picking.")
@@ -140,16 +138,13 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
-
-        picking.do_prepare_partial()
         self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
 
         picking.do_transfer()
-
+        picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
 
         picking.cancel_shipment()
-
         self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
         self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
