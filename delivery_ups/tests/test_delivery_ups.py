@@ -61,10 +61,10 @@ class TestDeliveryUPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
+        picking.move_lines[0].quantity_done = 1.0
+        self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-        self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
-
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "UPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "UPS carrying price is probably incorrect")
@@ -122,10 +122,12 @@ class TestDeliveryUPS(TransactionCase):
         move1 = picking.move_lines[1]
         move1.quantity_done = 1.0
         picking._put_in_pack()
-        self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
         self.assertTrue(all([po.result_package_id is not False for po in picking.move_line_ids]), "Some products have not been put in packages")
+        for p in picking.package_ids:
+            p.shipping_weight = p.weight  # we mock choose.delivery.package wizard
+        self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "UPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "UPS carrying price is probably incorrect")

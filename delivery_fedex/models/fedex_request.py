@@ -11,7 +11,7 @@ from suds.client import Client
 
 _logger = logging.getLogger(__name__)
 # uncomment to enable logging of SOAP requests and responses
-# logging.getLogger('suds.client').setLevel(logging.DEBUG)
+# logging.getLogger('suds.transport').setLevel(logging.DEBUG)
 
 
 class FedexRequest():

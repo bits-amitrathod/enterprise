@@ -9,7 +9,7 @@ class TestDeliveryUSPS(TransactionCase):
     def setUp(self):
         super(TestDeliveryUSPS, self).setUp()
 
-        self.iPod16 = self.env.ref('product.product_product_8')
+        self.iPadMini = self.env.ref('product.product_product_6')
 
         # Add a full address to "Your Company"
         self.your_company = self.env.ref('base.main_partner')
@@ -41,10 +41,11 @@ class TestDeliveryUSPS(TransactionCase):
     def test_01_usps_basic_us_domestic_flow(self):
         SaleOrder = self.env['sale.order']
 
-        sol_vals = {'product_id': self.iPod16.id,
-                    'name': "[A6678] iPod (16 GB)",
+        sol_vals = {'product_id': self.iPadMini.id,
+                    'name': "[A1232] iPad Mini",
                     'product_uom': self.env.ref('product.product_uom_unit').id,
-                    'product_uom_qty': 1.0}
+                    'product_uom_qty': 1.0,
+                    'price_unit': self.iPadMini.lst_price}
 
         so_vals = {'partner_id': self.think_big_system.id,
                    'carrier_id': self.env.ref('delivery_usps.delivery_carrier_usps_domestic').id,
@@ -63,9 +64,10 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
-        self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
+        picking.move_lines[0].quantity_done = 1.0
+        self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
@@ -79,10 +81,11 @@ class TestDeliveryUSPS(TransactionCase):
     def test_02_usps_basic_international_flow(self):
         SaleOrder = self.env['sale.order']
 
-        sol_vals = {'product_id': self.iPod16.id,
-                    'name': "[A6678] iPod (16 GB)",
+        sol_vals = {'product_id': self.iPadMini.id,
+                    'name': "[A1232] iPad Mini",
                     'product_uom': self.env.ref('product.product_uom_unit').id,
-                    'product_uom_qty': 1.0}
+                    'product_uom_qty': 1.0,
+                    'price_unit': self.iPadMini.lst_price}
 
         so_vals = {'partner_id': self.agrolait.id,
                    'carrier_id': self.env.ref('delivery_usps.delivery_carrier_usps_international').id,
@@ -101,9 +104,10 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
-        self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
+        picking.move_lines[0].quantity_done = 1.0
+        self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")
@@ -116,10 +120,11 @@ class TestDeliveryUSPS(TransactionCase):
     def test_03_usps_ship_to_canada_flow(self):
         SaleOrder = self.env['sale.order']
 
-        sol_vals = {'product_id': self.iPod16.id,
-                    'name': "[A6678] iPod (16 GB)",
+        sol_vals = {'product_id': self.iPadMini.id,
+                    'name': "[A1232] iPad Mini",
                     'product_uom': self.env.ref('product.product_uom_unit').id,
-                    'product_uom_qty': 1.0}
+                    'product_uom_qty': 1.0,
+                    'price_unit': self.iPadMini.lst_price}
 
         so_vals = {'partner_id': self.montreal.id,
                    'carrier_id': self.env.ref('delivery_usps.delivery_carrier_usps_international').id,
@@ -138,9 +143,10 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
-        self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
+        picking.move_lines[0].quantity_done = 1.0
+        self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "USPS did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "USPS carrying price is probably incorrect")

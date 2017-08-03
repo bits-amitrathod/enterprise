@@ -146,8 +146,8 @@ class BpostRequest():
                   'saturday': carrier.bpost_saturday,
                   # international
                   'international_product': carrier.bpost_international_deliver_type,
-                  'parcelValue': int(picking.sale_id.amount_total),
-                  'contentDescription': '\n'.join(["%d %s" % (move.product_qty, move.product_id.name) for move in picking.move_lines]),
+                  'parcelValue': max(min(int(picking.sale_id.amount_total), 2500000), 100),           # according to bpost, 100 <= parcelValue <= 2500000
+                  'contentDescription': '\n'.join(["%d %s" % (line.product_qty, line.product_id.name) for line in picking.move_line_ids]),
                   'shipmentType': carrier.bpost_shipment_type,
                   'parcelReturnInstructions': carrier.bpost_parcel_return_instructions,
                   }
