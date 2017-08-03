@@ -10,5 +10,9 @@
             <field name='docsaway_key'></field>
         </record>
 
+        <function id="provider_default_set"
+            model="ir.values" name="set_default"
+            eval="('print.order', 'provider_id', ref('print_provider_docsaway'))"/>
+
     </data>
 </odoo>
