@@ -562,6 +562,21 @@ class AccountInvoice(models.Model):
         return res
 
     @api.multi
+    def action_invoice_draft(self):
+        self.l10n_mx_edi_update_sat_status()
+        not_allow = self.filtered(lambda r: r.l10n_mx_edi_is_required() and
+                                  not r.company_id.l10n_mx_edi_pac_test_env and
+                                  r.l10n_mx_edi_cfdi_uuid and
+                                  r.l10n_mx_edi_sat_status != 'cancelled')
+        not_allow.message_post(
+            subject=_('An error occured while setting to draft.'),
+            message_type='comment',
+            body=_('This invoice does not have a properly cancelled XML and '
+                   'it was signed at least once, please cancel properly with '
+                   'the SAT.'))
+        return super(AccountInvoice, self - not_allow).action_invoice_draft()
+
+    @api.multi
     @api.depends('l10n_mx_edi_cfdi_name')
     def _compute_cfdi_values(self):
         '''Fill the invoice fields from the cfdi values.
@@ -816,7 +831,7 @@ class AccountInvoice(models.Model):
         '''Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
         '''
         url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
-        for inv in self:
+        for inv in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
             if self.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
                 continue
             supplier_rfc = inv.l10n_mx_edi_cfdi_supplier_rfc
