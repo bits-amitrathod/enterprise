@@ -127,15 +127,14 @@
                                     Incoming emails create tickets
                                 </div>
                                 <div attrs="{'invisible': [('use_alias','=',False)]}" class="mt16">
-                                    <group class="oe_edit_only" attrs="{'invisible': [('alias_domain', '=', False)]}">
+                                    <div class="oe_edit_only" attrs="{'invisible': [('alias_domain', '=', False)]}">
                                         <label for="alias_id" string="Choose an Email:"/>
-                                        <div name="edit_alias" style="display: inline;" >
-                                            <field name="alias_name"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
-                                        </div>
-                                    </group>
+                                        <field name="alias_name"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
+                                            to create tickets
+                                    </div>
                                     <p class="oe_read_only" attrs="{'invisible': [('alias_domain', '=', False)]}">Send emails to
                                         <strong>
-                                            <field name="alias_id" class="oe_read_only" required="False"/>
+                                            <field name="alias_id" class="oe_read_only oe_inline" required="False"/>
                                         </strong>
                                         to create tickets
                                     </p>
