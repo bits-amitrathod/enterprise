@@ -84,10 +84,10 @@ class MrpCostStructure(models.AbstractModel):
 
 
 class ProductTemplateCostStructure(models.AbstractModel):
-    _name = 'report.product_template_cost_structure'
+    _name = 'report.mrp_account.product_template_cost_structure'
 
     @api.model
     def get_report_values(self, docids, data=None):
-        productions = self.env['mrp.production'].search([('product_id.product_tmpl_id', 'in', docids), ('state', '=', 'done')])
-        res = self.env['report.mrp_cost_structure'].get_lines(productions)
+        productions = self.env['mrp.production'].search([('product_id', 'in', docids), ('state', '=', 'done')])
+        res = self.env['report.mrp_account.mrp_cost_structure'].get_lines(productions)
         return {'lines': res}
