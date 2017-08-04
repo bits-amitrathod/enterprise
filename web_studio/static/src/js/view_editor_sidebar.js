@@ -402,7 +402,7 @@ return Widget.extend(FieldManagerMixin, {
         var $input = $(ev.currentTarget);
         // If we want to edit a filter domain, we don't have a specific
         // field to work on but we want a domain on the current model.
-        var model = this.node.tag === 'filter' ? this.model : this.fields_parameters.relation;
+        var model = this.node.tag === 'filter' ? this.model : this.field_parameters.relation;
         var dialog = new DomainSelectorDialog(this, model, $input.val(), {
             readonly: false,
             debugMode: session.debug,
