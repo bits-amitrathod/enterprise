@@ -6,6 +6,7 @@
 # Christopher Ormaza <chris.ormaza@gmail.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
 # José Vicente <txusev@gmail.com>, 2016
+# RGB Consulting <odoo@rgbconsulting.com>, 2016
 # Luis M. Triana <luis.triana@jarsa.com.mx>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
@@ -206,7 +207,7 @@ msgstr ""
 #: model:ir.model,name:account_reports.model_account_financial_html_report_context
 #: model:ir.model,name:account_reports.model_account_report_context_common
 msgid "A particular context for a financial report"
-msgstr "Contexto particular de reporte financiero"
+msgstr "Contexto particular del informe financiero"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_partner_ledger_context
@@ -246,7 +247,7 @@ msgstr "Contexto particular para el libro mayor"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_context_tax
 msgid "A particular context for the generic tax report"
-msgstr "Contexto particular para reporte generico de impuestos"
+msgstr "Contexto particular para el informe genérico de impuestos"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_context_followup_all
@@ -730,7 +731,7 @@ msgstr "Recepción de efectivo"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_cash_received0
 msgid "Cash received from customers"
-msgstr "Efectivo cobrado"
+msgstr "Efectivo recibido de los clientes"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_cash_spent0
@@ -745,7 +746,7 @@ msgstr "Superávit de efectivo"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_line
 msgid "Change expected payment date/note"
-msgstr "Cambiar fecha/nota esperada de pago"
+msgstr "Cambiar fecha/nota de pago esperado"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_report_coa.py:105
@@ -756,7 +757,7 @@ msgstr "Plan contable"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_coa_report
 msgid "Chart of Account Report"
-msgstr "Reporte de Plan de Cuentas"
+msgstr "Informe de Plan de Cuentas"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_children_ids
@@ -870,7 +871,7 @@ msgstr "Comparación:"
 #: code:addons/account_reports/models/account_report_context_common.py:288
 #, python-format
 msgid "Comparison<br />"
-msgstr "Comparación<br/>"
+msgstr "Comparación <br />"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.view_account_financial_report_line_form
@@ -977,7 +978,7 @@ msgstr "Pasivo actual"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_ca_to_l0
 msgid "Current assets to liabilities"
-msgstr "Activos Corrientes y Pasivos"
+msgstr "Activos Corrientes a Pasivos"
 
 #. module: account_reports
 #. openerp-web
@@ -1137,7 +1138,9 @@ msgstr "Nombre a mostrar"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_type_extra_options
 msgid "Display the extra options dropdown (with cash basis and draft entries)"
-msgstr "Mostrar opciones extras"
+msgstr ""
+"Mostrar el menú desplegable de opciones adicionales (criterio de caja y "
+"entradas de borrador)"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_body
@@ -1173,7 +1176,7 @@ msgstr "Hecho"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_equity0
 msgid "EQUITY"
-msgstr "PASIVO"
+msgstr "EQUIDAD"
 
 #. module: account_reports
 #. openerp-web
@@ -1195,8 +1198,8 @@ msgstr "EXPORTAR (XML)"
 #, python-format
 msgid "Email not sent because of email address of partner not filled in."
 msgstr ""
-"Correo electrónico no pudo ser enviado debido a que la dirección no ha sido "
-"ingresada en la dirección o empresa"
+"Correo no enviado porque no se ha rellenado el campo email en la ficha de la"
+" empresa"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_context_aged_payable_cash_basis
@@ -1232,7 +1235,7 @@ msgstr "Habilitar comparación"
 #: code:addons/account_reports/static/src/xml/account_report_backend.xml:142
 #, python-format
 msgid "End Date :"
-msgstr "Fecha Final :"
+msgstr "Fecha de fin :"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_context_aged_payable_date_to
@@ -1267,21 +1270,21 @@ msgstr "Fecha final de comparación"
 #: code:addons/account_reports/static/src/xml/account_report_backend.xml:75
 #, python-format
 msgid "End of Last Financial Year"
-msgstr "Fecha de Fin de Año Financiero"
+msgstr "Fin del último año financiero"
 
 #. module: account_reports
 #. openerp-web
 #: code:addons/account_reports/static/src/xml/account_report_backend.xml:73
 #, python-format
 msgid "End of Last Month"
-msgstr "Fecha del último mes"
+msgstr "Fin del último mes"
 
 #. module: account_reports
 #. openerp-web
 #: code:addons/account_reports/static/src/xml/account_report_backend.xml:74
 #, python-format
 msgid "End of Last Quarter"
-msgstr "Fecha del último trimestre"
+msgstr "Fin del último trimestre"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:160
@@ -1316,9 +1319,9 @@ msgid ""
 "if you had the customer on the phone and want to remember the date he "
 "promised he would pay)"
 msgstr ""
-"La fecha esperada de pago es asignada manualmente a través de estado de "
-"cuenta del cliente(p.e: si usted tiene a un cliente en el teléfono y quiere "
-"recordarle la fecha en que él ha prometido que le pagará)"
+"La fecha esperada de pago es asignada manualmente a través del estado de la "
+"cuenta del cliente (p.e: si usted tiene a un cliente en el teléfono y quiere"
+" recordarle la fecha en que él ha prometido que le pagará)"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_expenses0
@@ -1366,12 +1369,12 @@ msgstr "Seguimientos Realizados / Total de Seguimientos"
 #: model:ir.model,name:account_reports.model_account_followup_report
 #, python-format
 msgid "Followup Report"
-msgstr "Reporte de Seguimientos"
+msgstr "Informe de seguimientos"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_footnote
 msgid "Footnote for reports"
-msgstr "Pie de Página para Reportes"
+msgstr "Pie de página para informes"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_context_aged_payable_footnotes
@@ -1406,7 +1409,7 @@ msgstr "Administrador de Píes de Página"
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_report_type
 msgid "For report like the balance sheet that do not work with date ranges"
 msgstr ""
-"Para reportes como el balance general que no trabajan con rangos de fechas"
+"Para informes como el balance general que no trabajan con rangos de fechas"
 
 #. module: account_reports
 #: selection:account.financial.html.report.line,special_date_changer:0
@@ -1450,7 +1453,7 @@ msgstr "Informe del libro mayor"
 #: model:ir.actions.client,name:account_reports.action_account_report_gt
 #: model:ir.model,name:account_reports.model_account_generic_tax_report
 msgid "Generic Tax Report"
-msgstr "Reporte Genérico de Impuestos"
+msgstr "Informe Genérico de Impuestos"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_gross_profit0
@@ -1487,7 +1490,7 @@ msgstr "A medio camino!"
 #: code:addons/account_reports/models/account_followup_report.py:157
 #, python-format
 msgid "Hang in there, you're nearly done."
-msgstr "Manténgase allí, esta por terminar."
+msgstr "Espérese, está a punto de acabar."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_hide_if_zero
@@ -1511,7 +1514,7 @@ msgstr "Jerarquía y Subtotales"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_body
 msgid "History <span class=\"caret\"/>"
-msgstr "Historia<span class=\"caret\"/>"
+msgstr "Historial<span class=\"caret\"/>"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_aged_partner_id
@@ -1549,7 +1552,7 @@ msgstr "ID"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_totalincome0
 msgid "INCOME"
-msgstr "INGRESO"
+msgstr "INGRESOS"
 
 #. module: account_reports
 #. openerp-web
@@ -1615,7 +1618,7 @@ msgstr "Dirección de factura"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_green_on_positive
 msgid "Is growth good when positive"
-msgstr "Es buen crecimiento cuando es positivo"
+msgstr "El crecimiento es bueno cuando es positivo"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_partner_ledger.py:207
@@ -1801,7 +1804,7 @@ msgstr "Líneas"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_context_report_id
 msgid "Linked financial report"
-msgstr "Reporte financiero vinculado"
+msgstr "Informe financiero vinculado"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_body
@@ -2356,7 +2359,7 @@ msgstr "Pendientes de cobro"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
 msgid "Reconciliation Report"
-msgstr "Reporte de Reconciliación"
+msgstr "Informe de Reconciliación"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_partner_ledger.py:207
@@ -2378,12 +2381,12 @@ msgstr "Número de referencia"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.view_account_financial_report_line_form
 msgid "Report Line"
-msgstr "Reporte Línea"
+msgstr "Informe Línea"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.view_account_financial_report_line_tree
 msgid "Report Lines"
-msgstr "Reporte Líneas"
+msgstr "Informe Líneas"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.view_account_financial_report_search
@@ -2393,22 +2396,22 @@ msgstr "Tipo de informe"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_type_comparison
 msgid "Reports allow comparisons"
-msgstr "Los reportes permiten comparaciones"
+msgstr "Los informes permiten comparaciones"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_type_cash_basis
 msgid "Reports always use cash basis"
-msgstr "Los reportes siempre usan el filtro analítico"
+msgstr "Los informes siempre usan el filtro analítico"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_type_analytic
 msgid "Reports enable the analytic filter"
-msgstr "Los reportes habilitan el filtro analítico"
+msgstr "Los informes habilitan el filtro analítico"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_type_date_range
 msgid "Reports use a date range and not a single date"
-msgstr "Los reportes utilizan un rango de fechas y no una fecha única"
+msgstr "Los informes utilizan un rango de fechas y no una fecha única"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_return_investment0
@@ -2642,7 +2645,7 @@ msgstr "Líneas del impuesto"
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_gt
 #, python-format
 msgid "Tax Report"
-msgstr "Reporte Impuestos"
+msgstr "Informe de Impuestos"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_footnote_text
@@ -2667,7 +2670,7 @@ msgstr "El primer tiempo te llevó %ss."
 #, python-format
 msgid "The followup report was successfully emailed !"
 msgstr ""
-"El reporte de seguimiento se envió por correo electrónico correctamente!"
+"El informe de seguimiento se envió por correo electrónico correctamente!"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_general_ledger.py:247
@@ -2919,7 +2922,7 @@ msgstr "gestionar notas"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_multicompany_manager
 msgid "manages multicompany for reports"
-msgstr "Gestionar reportes para multicompañia"
+msgstr "Gestionar informes para multicompañia"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_context_followup_all_last_page
@@ -2929,12 +2932,12 @@ msgstr "número de páginas"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_all
 msgid "reports in"
-msgstr "en reportes"
+msgstr "en informes"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_all
 msgid "s per report."
-msgstr "s por reporte"
+msgstr "s por informes"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_all
