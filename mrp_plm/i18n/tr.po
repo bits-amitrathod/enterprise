@@ -3,28 +3,14 @@
 # * mrp_plm
 # 
 # Translators:
-# Ediz Duman <neps1192@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Fırat Kaya <firat.kaya@mechsoft.com.tr>, 2017
-# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2017
-# tanerhasret <tanerhasret@gmail.com>, 2017
-# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
-# gezgin biri <gezginbiri@hotmail.com>, 2017
-# Esin Kandemir <esaykandemir@gmail.com>, 2017
 # Murat Kaplan <muratk@projetgrup.com>, 2017
-# Emre Akayoğlu <emre.akayoglu@mechsoft.com.tr>, 2017
-# Ramiz Deniz Öner <deniz@denizoner.com>, 2017
-# UNIBRAVO SOFTWARE <unibravo@gmail.com>, 2017
-# Saban Yildiz <sabany@projetgrup.com>, 2017
-# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
-# Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-15 11:32+0000\n"
 "PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2017\n"
+"Last-Translator: Murat Kaplan <muratk@projetgrup.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,14 +29,14 @@ msgstr "# Ekler"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_eco_count
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_eco_count
 msgid "# ECOs"
-msgstr ""
+msgstr "# ECO(lar)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_eco_inprogress_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_eco_inprogress_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_eco_inprogress_count
 msgid "# ECOs in progress"
-msgstr ""
+msgstr "# Devam Eden ECO(lar)s"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_kanban
@@ -79,6 +65,11 @@ msgid ""
 "                        Use this feature to store any files, like drawings or specifications.\n"
 "                    </p>"
 msgstr ""
+"<P class = \"oe_view_nocontent_create\">\n"
+"                        ECO'ya, daha sonra ürüne uygulanacak dosyaları yüklemek için tıklayın\n"
+"                    </ P> <p>\n"
+"                        Çizimler veya özellikler gibi dosyaları saklamak için bu özelliği kullanın.\n"
+"                    </ P>"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/product.py:54
@@ -90,11 +81,16 @@ msgid ""
 "                        Use this feature to store any files, like drawings or specifications.\n"
 "                    </p>"
 msgstr ""
+"<P class = \"oe_view_nocontent_create\">\n"
+"                        Dosyaları ürününüze yüklemek için tıklayın.\n"
+"                    </ P> <p>\n"
+"                        Çizimler veya özellikler gibi dosyaları saklamak için bu özelliği kullanın.\n"
+"                    </ P>"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "<span>Bill of Material</span><br/>"
-msgstr ""
+msgstr "<span>Ürün Ağacı</span><br>"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
@@ -104,7 +100,7 @@ msgstr "<span>Yeni</span>"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "<span>Routing</span><br/>"
-msgstr ""
+msgstr "<span>Rota</span><br>"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
@@ -165,7 +161,7 @@ msgstr "Hepsi"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "All Approvals have be done"
-msgstr ""
+msgstr "Tüm Onaylar yapıldı"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
@@ -175,12 +171,12 @@ msgstr "Bütün Doğrulamalar"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_allow_change_stage
 msgid "Allow Change Stage"
-msgstr ""
+msgstr "Aşama Değişimine İzin Ver"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Apply Changes"
-msgstr ""
+msgstr "Değişiklikleri Uygula"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type
@@ -190,17 +186,17 @@ msgstr "Uygula - "
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_approval_roles
 msgid "Approval Roles"
-msgstr ""
+msgstr "Onay Rolleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_9788
 msgid "Approval Stage"
-msgstr ""
+msgstr "Onay Aşaması"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_approval_type
 msgid "Approval Type"
-msgstr ""
+msgstr "Onay Türü"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_ids
@@ -208,7 +204,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Approvals"
-msgstr ""
+msgstr "Onaylamalar"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -223,12 +219,12 @@ msgstr "Onaylandı"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_user_id
 msgid "Approved by"
-msgstr ""
+msgstr "Onaylayan"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
 msgid "Approves, but the approval is optional"
-msgstr ""
+msgstr "Onaylar, ancak onay isteğe bağlıdır"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
@@ -238,7 +234,7 @@ msgstr "Arşivlenmiş"
 #. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
-msgstr ""
+msgstr "Mümkün olduğunca kısa sürede"
 
 #. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
@@ -278,7 +274,7 @@ msgstr "Bloklanmış"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_is_blocking
 msgid "Blocking Stage"
-msgstr ""
+msgstr "Aşamayı Engelleme"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -288,37 +284,37 @@ msgstr "BoM"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "BoM Changes"
-msgstr ""
+msgstr "BoM Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_revision
 msgid "BoM Revision"
-msgstr ""
+msgstr "BoM Revizyonu"
 
 #. module: mrp_plm
 #: selection:mrp.eco,type:0
 msgid "BoM and Routing"
-msgstr ""
+msgstr "BoM ve Yönlendirme"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "BoM:"
-msgstr ""
+msgstr "BoM:"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_user_can_approve
 msgid "Can Approve"
-msgstr ""
+msgstr "Onaylayabilir"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_user_can_reject
 msgid "Can Reject"
-msgstr ""
+msgstr "Reddedebilir"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
 msgid "Changes"
-msgstr ""
+msgstr "Değişiklikler"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_tag_action
@@ -346,12 +342,12 @@ msgstr "Renk İndeksi"
 #. module: mrp_plm
 #: selection:mrp.eco.approval,status:0
 msgid "Commented"
-msgstr ""
+msgstr "Yorumlanan"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
 msgid "Comments only"
-msgstr ""
+msgstr "Sadece yorumlar"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_company_id
@@ -367,13 +363,13 @@ msgstr "Yapılandırma"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Create Alert"
-msgstr ""
+msgstr "Alarm Oluştur"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_type_action_dashboard
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_type_action_form
 msgid "Create ECO Types"
-msgstr ""
+msgstr "ECO Türleri Yarat"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_action
@@ -386,7 +382,7 @@ msgstr ""
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_action_report
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_action_routing
 msgid "Create Engineering Change Orders"
-msgstr ""
+msgstr "Mühendislik Değişiklik Siparişi Yarat"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_create_uid
@@ -430,7 +426,7 @@ msgstr "Sil"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Description of the change and its reason ..."
-msgstr ""
+msgstr "Değişikliğin tanımı ve sebebi ..."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_display_name
@@ -463,79 +459,81 @@ msgstr "Süre"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_eco_id
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
 msgid "ECO"
-msgstr ""
+msgstr "ECO"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_graph
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_pivot
 msgid "ECO Analysis"
-msgstr ""
+msgstr "ECO Analizleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_ids
 msgid "ECO BoM Changes"
-msgstr ""
+msgstr "ECO BoM Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
 msgid "ECO Material changes"
-msgstr ""
+msgstr "ECO Malzeme değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_ids
 msgid "ECO Routing Changes"
-msgstr ""
+msgstr "ECO Rota Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_eco_stage_id
 msgid "ECO Stage"
-msgstr ""
+msgstr "ECO Aşaması"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_stage_action
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_stages
 msgid "ECO Stages"
-msgstr ""
+msgstr "ECO Aşamaları"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_tag_action
 #: model:ir.model,name:mrp_plm.model_mrp_eco_tag
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_tag
 msgid "ECO Tags"
-msgstr ""
+msgstr "ECO Etiketleri"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_type_action_form
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_types
 msgid "ECO Types"
-msgstr ""
+msgstr "ECO Tipleri"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_bom_change_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
 msgid "ECO details"
-msgstr ""
+msgstr "ECO detayları"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_eco_inprogress
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_eco_inprogress
 msgid "ECO in progress?"
-msgstr ""
+msgstr "ECO devam ediyor mu?"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
 msgid "ECO stages give the different stages for the Engineering Change Orders"
 msgstr ""
+"ECO aşamaları, Mühendislik Değişikliği Siparişleri için farklı aşamalardan "
+"geçiyor"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_eco_ids
 msgid "ECO to be applied"
-msgstr ""
+msgstr "Uygulanacak ECO"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "ECO(s)"
-msgstr ""
+msgstr "ECO(lar)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_ecos
@@ -546,29 +544,29 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_routing_view_form_inherit_plm
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 msgid "ECOs"
-msgstr ""
+msgstr "ECO(lar)"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_kanban
 msgid "Eco"
-msgstr ""
+msgstr "Eco"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:549
 #, python-format
 msgid "Eco BoM"
-msgstr ""
+msgstr "Eco BoM"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:561
 #, python-format
 msgid "Eco Routing"
-msgstr ""
+msgstr "Eco Rota"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
 msgid "Eco Routing changes"
-msgstr ""
+msgstr "Eco Rota Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -578,12 +576,12 @@ msgstr "Görevi Düzenle"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_effectivity
 msgid "Effectivity"
-msgstr ""
+msgstr "Yürürlük"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_effectivity_date
 msgid "Effectivity Date"
-msgstr ""
+msgstr "Yürürlük Tarihi"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
@@ -594,17 +592,17 @@ msgstr "E-posta Rumuzu"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_eco_id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_eco_id
 msgid "Engineering Change"
-msgstr ""
+msgstr "Mühendislik Değişimi"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco
 msgid "Engineering Change Order"
-msgstr ""
+msgstr "Mühendislik Değişimi Siparişi"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_stage
 msgid "Engineering Change Order Stage"
-msgstr ""
+msgstr "Mühendislik Değişimi Sipariş Aşaması"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action
@@ -618,17 +616,17 @@ msgstr ""
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_routing
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_ecos
 msgid "Engineering Change Orders"
-msgstr ""
+msgstr "Mühendislik Değişim Siparişleri"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
 msgid "Engineering Changes"
-msgstr ""
+msgstr "Mühendislik Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_ir_attachment_origin_id
 msgid "Field used in the PLM to handle attachments"
-msgstr ""
+msgstr "Ekleri işlemek için PLM'de kullanılan alan"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -638,7 +636,7 @@ msgstr "Filtreler"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_allow_apply_change
 msgid "Final Stage"
-msgstr ""
+msgstr "Son Aşama"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_folded
@@ -653,7 +651,7 @@ msgstr "Grupla ..."
 #. module: mrp_plm
 #: model:ir.module.category,description:mrp_plm.module_category_plm
 msgid "Helps you manage your product's lifecycles."
-msgstr ""
+msgstr "Ürününüzün yaşam döngülerinizi yönetmenize yardımcı olur."
 
 #. module: mrp_plm
 #: selection:mrp.eco,priority:0
@@ -695,17 +693,17 @@ msgstr "Devam Eden"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_approved
 msgid "Is Approved"
-msgstr ""
+msgstr "Onaylandı"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
 msgid "Is Rejected"
-msgstr ""
+msgstr "Reddedildi"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
 msgid "Is required to approve"
-msgstr ""
+msgstr "Onaylamak zorunludur"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_kanban_state
@@ -761,12 +759,12 @@ msgstr "Yönetici"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_upd_time_cycle_manual
 msgid "Manual Duration Change"
-msgstr ""
+msgstr "Manuel Sürenin Değiştirilmesi"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_type
 msgid "Manufacturing Process"
-msgstr ""
+msgstr "Üretim Süreci"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_master_data
@@ -781,7 +779,7 @@ msgstr "Daha <i class=\"fa fa-caret-down\"/>"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
 msgid "Mrp Eco Tags"
-msgstr ""
+msgstr "MRP ECO Etiketleri"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -791,12 +789,12 @@ msgstr "Aktivitelerim"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
-msgstr ""
+msgstr "Değişiklik Siparişlerim"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
 msgid "My Validations"
-msgstr ""
+msgstr "Onaylarım"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_name
@@ -808,22 +806,22 @@ msgstr "İsim"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_id
 msgid "New Bill of Materials"
-msgstr ""
+msgstr "Yeni Malzeme Listesi"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_routing_id
 msgid "New Routing"
-msgstr ""
+msgstr "Yeni Rota"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_new_time_cycle_manual
 msgid "New manual duration"
-msgstr ""
+msgstr "Yeni manuel süre"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_new_product_qty
 msgid "New revision quantity"
-msgstr ""
+msgstr "Yeni revizyon miktarı"
 
 #. module: mrp_plm
 #: selection:mrp.eco,priority:0
@@ -833,7 +831,7 @@ msgstr "Normal"
 #. module: mrp_plm
 #: selection:mrp.eco.approval,status:0
 msgid "Not Yet"
-msgstr ""
+msgstr "Henüz Yeğil"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_note
@@ -844,7 +842,7 @@ msgstr "Bilgi"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_old_time_cycle_manual
 msgid "Old manual duration"
-msgstr ""
+msgstr "Eski manuel süre"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_force_thread_id
@@ -859,7 +857,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_ir_attachment_origin_id
 msgid "Original Attachment"
-msgstr ""
+msgstr "Orijinal Ek"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -919,17 +917,17 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_previous_bom_id
 msgid "Previous BoM"
-msgstr ""
+msgstr "Önceki BoM"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_previous_routing_id
 msgid "Previous Routing"
-msgstr ""
+msgstr "Önceki Rota"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_old_product_qty
 msgid "Previous revision quantity"
-msgstr ""
+msgstr "Önceki revizyon miktarı"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_priority
@@ -948,12 +946,12 @@ msgstr "Ürün"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_product_uom_id
 msgid "Product  UoM"
-msgstr ""
+msgstr "Ürün Ölçü Birimi"
 
 #. module: mrp_plm
 #: selection:mrp.eco,type:0
 msgid "Product Only"
-msgstr ""
+msgstr "Yalnızca Ürün"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
@@ -1004,7 +1002,7 @@ msgstr "Raporlama"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_required_user_ids
 msgid "Requested Users"
-msgstr ""
+msgstr "İstenen Kullanıcılar"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_user_id
@@ -1014,13 +1012,13 @@ msgstr "Sorumlu"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rev :"
-msgstr ""
+msgstr "Rev :"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_revision_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_revision_ids
 msgid "Revision"
-msgstr ""
+msgstr "Revizyon"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_name
@@ -1037,17 +1035,17 @@ msgstr "Rota"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Routing Changes"
-msgstr ""
+msgstr "Rota Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_routing_revision
 msgid "Routing Revision"
-msgstr ""
+msgstr "Rota Revizyonu"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Routing:"
-msgstr ""
+msgstr "Rota:"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_routing
@@ -1087,17 +1085,17 @@ msgstr "Ayarlar"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Short Summary"
-msgstr ""
+msgstr "Kısa Özet"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_allow_apply_change
 msgid "Show Apply Change"
-msgstr ""
+msgstr "Uygulanan Değişikliği Göster"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Show all records which has next action date is before today"
-msgstr ""
+msgstr "Bir sonraki eylem tarihi bugünden önce olan tüm kayıtları göster"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_image_small
@@ -1117,7 +1115,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Someone rejected this change"
-msgstr ""
+msgstr "Birisi bu değişikliği reddetti"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id
@@ -1134,7 +1132,7 @@ msgstr "Aşamalar"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Start New Revision"
-msgstr ""
+msgstr "Yeni Sürüm Başlat"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -1162,11 +1160,15 @@ msgstr "Etiketler"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_user_can_approve
 msgid "Technical field to check if approval by current user is required"
 msgstr ""
+"Geçerli kullanıcının onayının gerekli olup olmadığını kontrol etmek için "
+"teknik alan"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_user_can_reject
 msgid "Technical field to check if reject by current user is possible"
 msgstr ""
+"Mevcut kullanıcı tarafından reddedilip giderilmediğini kontrol etmek için "
+"teknik alan"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_approval_template_id
@@ -1176,12 +1178,12 @@ msgstr "Şablon"
 #. module: mrp_plm
 #: model:res.groups,comment:mrp_plm.group_plm_manager
 msgid "The PLM manager manages products lifecycle management"
-msgstr ""
+msgstr "PLM yöneticisi, ürün yaşam döngüsü yönetimini yönetir"
 
 #. module: mrp_plm
 #: model:res.groups,comment:mrp_plm.group_plm_user
 msgid "The PLM user uses products lifecycle management"
-msgstr ""
+msgstr "PLM kullanıcısı, ürün yaşam döngüsü yönetimini kullanır"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_model_id
@@ -1224,13 +1226,15 @@ msgid ""
 "There is no available image to be set as cover. Send a message on the "
 "engineering order with an attached image."
 msgstr ""
+"Kapak olarak ayarlanacak mevcut bir resim yok. Ekli bir resim içeren "
+"mühendislik siparişinde bir mesaj gönderin."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_validation
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
 msgid "To Apply"
-msgstr ""
+msgstr "Uygula"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,state:0
@@ -1253,7 +1257,7 @@ msgstr "Tür"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Upcoming Activities (7 days)"
-msgstr ""
+msgstr "Yaklaşan Etkinlikler (7 gün)"
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1283,17 +1287,17 @@ msgstr "Sürüm"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Waiting Any Validation"
-msgstr ""
+msgstr "Doğrulama Bekleniyor"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_approvals
 msgid "Waiting Approvals"
-msgstr ""
+msgstr "Onay Bekleniyor"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Waiting My Validation"
-msgstr ""
+msgstr "Doğrulamam Bekleniyor"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -1303,7 +1307,7 @@ msgstr "Onay için Bekleniyor"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_approvals_my
 msgid "Waiting my Approvals"
-msgstr ""
+msgstr "Onayım Bekleniyor"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_workcenter_id
@@ -1325,18 +1329,18 @@ msgstr "İş Emri Mesajları"
 #: code:addons/mrp_plm/models/mrp_eco.py:384
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
-msgstr ""
+msgstr "Sürecin onaylanması gerektiği için aşamayı değiştiremezsiniz."
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:374
 #, python-format
 msgid "You cannot change the stage, as approvals are still required."
-msgstr ""
+msgstr "Aşamayı değiştiremezsiniz, çünkü onaylar yine de gereklidir."
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
-msgstr ""
+msgstr "Örn. Mühendislik Departmanı"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_ir_attachment
@@ -1346,12 +1350,12 @@ msgstr "ir.attachment"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval
 msgid "mrp.eco.approval"
-msgstr ""
+msgstr "mrp.eco.approval"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval_template
 msgid "mrp.eco.approval.template"
-msgstr ""
+msgstr "mrp.eco.approval.template"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
