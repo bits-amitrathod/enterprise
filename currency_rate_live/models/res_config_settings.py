@@ -34,6 +34,7 @@ class ResCompany(models.Model):
         ('ecb', 'European Central Bank'),
         ('fta', 'Federal Tax Administration (Switzerland)'),
         ('banxico', 'Mexican Bank'),
+        ('boc', 'Bank Of Canada'),
     ], default='ecb', string='Service Provider')
     last_currency_sync_date = fields.Date(string="Last Sync Date", readonly=True)
 
@@ -41,10 +42,10 @@ class ResCompany(models.Model):
     def create(self, vals):
         ''' Change the default provider depending on the company data.'''
         if vals.get('country_id') and 'currency_provider' not in vals:
-            if self.env['res.country'].browse(vals['country_id']).code.upper() == 'CH':
-                vals['currency_provider'] = 'fta'
-            elif self.env['res.country'].browse(vals['country_id']).code.upper() == 'MX':
-                vals['currency_provider'] = 'banxico'
+            code_providers = {'CH' : 'fta', 'MX': 'banxico', 'CA' : 'boc'}
+            cc = self.env['res.country'].browse(vals['country_id']).code.upper()
+            if cc in code_providers:
+                vals['currency_provider'] = code_providers[cc]
         return super(ResCompany, self).create(vals)
 
     @api.model
@@ -58,6 +59,9 @@ class ResCompany(models.Model):
             elif company.country_id.code == 'MX':
                 # Sets Banxico as the default provider for every mexican company that was already installed
                 company.currency_provider = 'banxico'
+            elif company.country_id.code == 'CA':
+                # Bank of Canada
+                company.currency_provider = 'boc'
             else:
                 company.currency_provider = 'ecb'
 
@@ -75,6 +79,8 @@ class ResCompany(models.Model):
                 res = company._update_currency_fta()
             elif company.currency_provider == 'banxico':
                 res = company._update_currency_banxico()
+            elif company.currency_provider == 'boc':
+                res = company._update_currency_boc()
             if not res:
                 raise UserError(_('Unable to connect to the online exchange rate platform. The web service may be temporary down. Please try again in a moment.'))
             elif company.currency_provider:
@@ -177,6 +183,48 @@ class ResCompany(models.Model):
                 currency = Currency.search([('name', '=', currency_code)], limit=1)
                 if currency:
                     CurrencyRate.create({'currency_id': currency.id, 'rate': rate, 'name': fields.Date.today(), 'company_id': company.id})
+        return True
+
+    def _update_currency_boc(self):
+        """This method is used to update currencies exchange rate by using Bank
+           Of Canada daily exchange rate service.
+           Exchange rates are expressed as 1 unit of the foreign currency converted into Canadian dollars.
+           Keys are in this format: 'FX{CODE}CAD' e.g.: 'FXEURCAD'
+        """
+        Currency = self.env['res.currency']
+        CurrencyRate = self.env['res.currency.rate']
+
+        available_currencies = {}
+        for currency in self.env['res.currency'].search([]):
+            available_currencies[currency.name] = currency
+
+        request_url = "http://www.bankofcanada.ca/valet/observations/group/FX_RATES_DAILY/json"
+        try:
+            response = requests.request('GET', request_url)
+        except:
+            #connection error, the request wasn't successful
+            return False
+        if not 'application/json' in response.headers.get('Content-Type', ''):
+            return False
+        data = response.json()
+        # 'observations' key contains rates observations by date
+        last_observation_date = sorted([obs['d'] for obs in data['observations']])[-1]
+        last_obs = [obs for obs in data['observations'] if obs['d'] == last_observation_date][0]
+        last_obs.update({'FXCADCAD': {'v': '1'}})
+        for company in self:
+            base_currency_rate = 1
+            if company.currency_id.name != 'CAD':
+                comp_obs = last_obs.get('FX{}CAD'.format(company.currency_id.name), None)
+                if comp_obs is not None:
+                    base_currency_rate = float(comp_obs['v'])
+            for curency_name in available_currencies.keys():
+                curency_obs = last_obs.get('FX{}CAD'.format(curency_name), None)
+                if curency_obs is not None:
+                    rate = float(base_currency_rate) / float(curency_obs['v'])
+                    CurrencyRate.create({'currency_id': available_currencies[curency_name].id, 'rate': rate, 'name': fields.Date.today(), 'company_id': company.id})
+            # Just in case a company is in CAD and CAD is not activated
+            if company.currency_id.rate != 1.0 and company.currency_id.name == 'CAD' and 'CAD' not in available_currencies.keys():
+                CurrencyRate.create({'currency_id': company.currency_id.id, 'rate': 1.0, 'name': fields.Date.today(), 'company_id': company.id})
         return True
 
     def _update_currency_banxico(self):

@@ -34,3 +34,10 @@ class CurrencyTestCase(TransactionCase):
         res = self.test_company._update_currency_banxico()
         self.assertTrue(res)
         self.assertEqual(len(self.currency_usd.rate_ids), rates_count + 1)
+
+    def test_live_currency_update_bco(self):
+        self.test_company.currency_provider = 'boc'
+        rates_count = len(self.currency_usd.rate_ids)
+        res = self.test_company._update_currency_boc()
+        self.assertTrue(res)
+        self.assertEqual(len(self.currency_usd.rate_ids), rates_count + 1)
