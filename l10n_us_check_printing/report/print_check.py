@@ -25,6 +25,7 @@ class report_print_check(models.Model):
                     if (self.journal_id.check_manual_sequencing and self.check_number != 0)\
                     else False,
                 'payment_date': format_date(self.env, self.payment_date),
+                'partner_id': self.partner_id,
                 'partner_name': self.partner_id.name,
                 'currency': self.currency_id,
                 'amount': formatLang(self.env, self.amount, currency_obj=self.currency_id) if i == 0 else 'VOID',
