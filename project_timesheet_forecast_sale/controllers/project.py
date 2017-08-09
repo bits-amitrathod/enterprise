@@ -4,7 +4,7 @@
 import babel
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields, _
+from odoo import http, fields, _
 from odoo.http import request
 from odoo.osv import expression
 from odoo.tools import float_round
@@ -34,6 +34,7 @@ class TimesheetForecastController(SaleTimesheetController):
         if not self._apply_on_forecast(domain) or not values['timesheet_lines']:
             return values
 
+        # -- Table comparing timesheet and forecast
         # starting from the last timesheet date, build the date ranges for timesheet and forecast
         initial_date = fields.Date.from_string(max([line.date for line in values['timesheet_lines']])).replace(day=1)
         ts_months = sorted([fields.Date.to_string(initial_date-relativedelta(months=i)) for i in range(0, DEFAULT_MONTH_RANGE)])
@@ -205,3 +206,29 @@ class TimesheetForecastController(SaleTimesheetController):
         if not is_leaf:
             result['lines'] = {}
         return result
+
+    def _plan_get_stat_button(self, timesheet_lines):
+        stat_buttons = super(SaleTimesheetController, self)._plan_get_stat_button(timesheet_lines)
+
+        stat_project_ids = timesheet_lines.mapped('project_id').ids
+        stat_forecast_domain = [('project_id', 'in', stat_project_ids)]
+        stat_buttons.append({
+            'name': _('Forecast'),
+            'count': request.env['project.forecast'].search_count(stat_forecast_domain),
+            'res_model': 'project.forecast',
+            'domain': stat_forecast_domain,
+            'icon': 'fa fa-tasks',
+        })
+        return stat_buttons
+
+    @http.route('/timesheet/plan/action', type='json', auth="user")
+    def plan_stat_button(self, domain, res_model='account.analytic.line'):
+        action = super(TimesheetForecastController, self).plan_stat_button(domain, res_model=res_model)
+        if res_model == 'project.forecast':
+            action = request.env.ref('project_forecast.action_project_forecast_grid_by_project').read()[0]
+            action.update({
+                'name': _('Forecast'),
+                'domain': domain,
+                'context': request.env.context,  # erase original context to avoid default filter
+            })
+        return action
