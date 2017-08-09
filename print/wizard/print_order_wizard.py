@@ -33,22 +33,19 @@ class PrintOrderWizard(models.TransientModel):
     @api.multi
     @api.onchange('provider_id')
     def onchange_print_order_lines(self):
-        active_ids = self.env.context.get('active_ids', [])
-        active_model = self.env.context.get('active_model', False)
-
-        if active_ids and active_model:
-            lines = []
-            WizardLine = self.env['print.order.line.wizard']
-            for rec in self.env[active_model].browse(active_ids):
-                new_line = WizardLine.create({
-                    'print_order_wizard_id': self.id,
-                    'res_id': rec.id,
-                    'res_model': active_model,
-                    'partner_id': rec.partner_id.id,
-                    'last_send_date': rec.print_sent_date,
-                })
-                lines.append(new_line.id)
-            self.print_order_line_wizard_ids = WizardLine.browse(lines)
+        for wiz in self:
+            active_ids = self.env.context.get('active_ids', [])
+            active_model = self.env.context.get('active_model', False)
+            if active_ids and active_model:
+                lines = []
+                for rec in self.env[active_model].browse(active_ids):
+                    lines.append({
+                        'res_id': rec.id,
+                        'res_model': active_model,
+                        'partner_id': rec.partner_id.id,
+                        'last_send_date': rec.print_sent_date,
+                    })
+                wiz.print_order_line_wizard_ids = [(0, 0, vals) for vals in lines]
 
     @api.one
     @api.depends('print_order_line_wizard_ids')
