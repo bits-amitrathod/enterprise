@@ -78,17 +78,15 @@ class ProjectForecast(models.Model):
         self.exclude = (self.project_id.name == "Leaves")
 
     @api.one
-    @api.depends('resource_hours', 'start_date', 'end_date', 'employee_id.resource_calendar_id')
+    @api.depends('resource_hours', 'start_date', 'end_date', 'employee_id')
     def _compute_time(self):
         start = fields.Datetime.from_string(self.start_date)
         stop = fields.Datetime.from_string(self.end_date).replace(hour=23, minute=59, second=59, microsecond=999999)
-        if self.employee_id.resource_calendar_id:
-            hours = self.employee_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
-            if hours == 0:
-                raise UserError(_("This employee does not work during this period, therefore the task cannot be forecasted."))
+        hours = self.employee_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
+        if hours > 0:
             self.time = self.resource_hours * 100.0 / hours
         else:
-            self.time = 0
+            self.time = 0  # allow to create a forecast for a day you are not supposed to work
 
     @api.one
     @api.constrains('resource_hours')
