@@ -17,6 +17,7 @@ class HelpdeskTeam(models.Model):
 
     name = fields.Char('Helpdesk Team', required=True, translate=True)
     description = fields.Text('About Team', translate=True)
+    active = fields.Boolean(default=True)
     company_id = fields.Many2one(
         'res.company', string='Company',
         default=lambda self: self.env['res.company']._company_default_get('helpdesk.team'))
@@ -119,6 +120,8 @@ class HelpdeskTeam(models.Model):
     @api.multi
     def write(self, vals):
         result = super(HelpdeskTeam, self).write(vals)
+        if 'active' in vals:
+            self.with_context(active_test=False).mapped('ticket_ids').write({'active': vals['active']})
         self.sudo()._check_sla_group()
         self.sudo()._check_modules_to_install()
         # If you plan to add something after this, use a new environment. The one above is no longer valid after the modules install.

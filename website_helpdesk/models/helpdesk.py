@@ -21,6 +21,12 @@ class HelpdeskTeam(models.Model):
             self.website_published = False
 
     @api.multi
+    def write(self, vals):
+        if 'active' in vals and not vals['active']:
+            vals['website_published'] = False
+        return super(HelpdeskTeam, self).write(vals)
+
+    @api.multi
     def action_view_all_rating(self):
         """ Override this method without calling parent to redirect to rating website team page """
         self.ensure_one()

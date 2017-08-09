@@ -67,6 +67,13 @@
         <field name="arch" type="xml">
             <form string="team search" class="oe_form_configuration">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                confirm="(Un)archiving a helpdesk team automatically (un)archives its tickets. Do you want to proceed?"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
                     <div class="oe_title" id='title'>
                         <label for="name" class="oe_edit_only"/>
                         <h1 id="name"><field name="name" placeholder="Helpdesk Team..."/></h1>
@@ -295,6 +302,17 @@
     <menuitem id="helpdesk_team_menu" name="Helpdesk Teams" action="helpdesk_team_action"
         sequence="0" parent="helpdesk.helpdesk_menu_config"
         groups="helpdesk.group_helpdesk_manager"/>
+
+    <record id="helpdesk_team_view_search" model="ir.ui.view">
+        <field name="name">helpdesk.team.search</field>
+        <field name="model">helpdesk.team</field>
+        <field name="arch" type="xml">
+            <search string="Team Search">
+                <field name="name"/>
+                <filter string="Archived" domain="[('active', '=', False)]" name="archived"/>
+            </search>
+        </field>
+    </record>
 
     <record id="helpdesk_team_view_kanban" model="ir.ui.view" >
         <field name="name">helpdesk.team.dashboard</field>
