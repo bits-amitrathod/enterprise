@@ -215,6 +215,7 @@ class SaleSubscription(osv.osv):
             'company_id': contract.company_id.id or False,
             'user_id': contract.manager_id.id,
             'comment': _("This invoice covers the following period: %s - %s") % (next_date.date(), end_date.date()),
+            'user_id': contract.manager_id.id,
         }
         return invoice
 
