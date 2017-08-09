@@ -119,7 +119,7 @@ class ReportAccountFinancialReport(models.Model):
             line_obj = self.env['account.financial.html.report.line'].search([('id', '=', line_id)])
         if options.get('comparison') and options.get('comparison').get('periods'):
             line_obj = line_obj.with_context(periods=options['comparison']['periods'])
-        used_currency = self.env.user.company_id.currency_id
+        used_currency = self.env.user.company_id.currency_id.with_context(company_id=self.env.user.company_id.id)
         currency_table = {}
         for company in self.env['res.company'].search([]):
             if company.currency_id != used_currency:
