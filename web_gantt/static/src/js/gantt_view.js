@@ -82,9 +82,7 @@ var GanttView = AbstractView.extend({
 
         // consolidation exclude, get the related fields
         if (arch.attrs.consolidation_exclude) {
-            _.each(arch.attrs.consolidation_exclude, function (field_name) {
-                mapping.consolidation_exclude = field_name;
-            });
+            mapping.consolidation_exclude = arch.attrs.consolidation_exclude;
         }
         var scale = arch.attrs.scale_zoom;
         if (!_.contains(scales, scale)) {
