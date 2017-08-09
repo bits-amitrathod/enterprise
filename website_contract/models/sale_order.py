@@ -2,7 +2,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class SaleOrder(models.Model):
@@ -20,6 +20,15 @@ class SaleOrder(models.Model):
 
     @api.onchange('contract_template')
     def onchange_contract_template(self):
+        res = {}
+        if self.template_id.contract_template and self.contract_template != self.template_id.contract_template:
+            res['warning'] = {
+                'title': _('Inconsistency detected!'),
+                'message' : _(
+                    'The contract set on the order (%s) is different from the contract set on the quotation template (%s)! '
+                    'It is advised to change the quotation template instead.'
+                ) % (self.contract_template.name, self.template_id.contract_template.name)
+            }
         if not self.template_id.contract_template:
             subscription_lines = [(0, 0, {
                 'product_id': mand_line.product_id.id,
@@ -42,6 +51,7 @@ class SaleOrder(models.Model):
             self.options = options
             if self.contract_template:
                 self.note = self.contract_template.description
+        return res
 
     def create_contract(self):
         """ Create a contract based on the order's quote template's contract template """

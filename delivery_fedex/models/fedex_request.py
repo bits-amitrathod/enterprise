@@ -15,6 +15,9 @@ _logger = logging.getLogger(__name__)
 # logging.getLogger('suds.client').setLevel(logging.DEBUG)
 
 
+STATECODE_REQUIRED_COUNTRIES = ['US', 'CA', 'PR ', 'IN']
+
+
 class FedexRequest():
     """ Low-level object intended to interface Odoo recordsets with FedEx,
         through appropriate SOAP requests """
@@ -67,7 +70,10 @@ class FedexRequest():
         Address = self.client.factory.create('Address')
         Address.StreetLines = ('%s %s') % (warehouse_partner.street or '', warehouse_partner.street2 or '')
         Address.City = warehouse_partner.city or ''
-        Address.StateOrProvinceCode = warehouse_partner.state_id.code or ''
+        if warehouse_partner.country_id.code in STATECODE_REQUIRED_COUNTRIES:
+            Address.StateOrProvinceCode = warehouse_partner.state_id.code or ''
+        else:
+            Address.StateOrProvinceCode = ''
         Address.PostalCode = warehouse_partner.zip or ''
         Address.CountryCode = warehouse_partner.country_id.code or ''
 
@@ -83,7 +89,10 @@ class FedexRequest():
         Address = self.client.factory.create('Address')
         Address.StreetLines = ('%s %s') % (recipient_partner.street or '', recipient_partner.street2 or '')
         Address.City = recipient_partner.city or ''
-        Address.StateOrProvinceCode = recipient_partner.state_id.code or ''
+        if recipient_partner.country_id.code in STATECODE_REQUIRED_COUNTRIES:
+            Address.StateOrProvinceCode = recipient_partner.state_id.code or ''
+        else:
+            Address.StateOrProvinceCode = ''
         Address.PostalCode = recipient_partner.zip or ''
         Address.CountryCode = recipient_partner.country_id.code or ''
 

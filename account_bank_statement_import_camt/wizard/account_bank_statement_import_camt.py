@@ -78,7 +78,7 @@ class AccountBankStatementImport(models.TransientModel):
                 transaction_name = entry.xpath('.//ns:RmtInf/ns:Ustrd/text()', namespaces=ns)
                 transaction_name = transaction_name or entry.xpath('ns:AddtlNtryInf/text()', namespaces=ns)
                 partner_name = entry.xpath('.//ns:RltdPties/ns:%s/ns:Nm/text()' % (counter_party,), namespaces=ns)
-                entry_vals['name'] = transaction_name and transaction_name[0] or '/'
+                entry_vals['name'] = ' '.join(transaction_name) if transaction_name else '/'
                 entry_vals['partner_name'] = partner_name and partner_name[0] or False
                 # Bank Account No
                 bank_account_no = entry.xpath(""".//ns:RltdPties/ns:%sAcct/ns:Id/ns:IBAN/text() |
