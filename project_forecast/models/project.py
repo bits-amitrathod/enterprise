@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, exceptions, fields, models, _
+
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 
 
 class Project(models.Model):
@@ -22,16 +24,16 @@ class Project(models.Model):
         return super(Project, self).unlink()
 
     def action_view_project_forecast(self):
-        context = dict(self.env.context, default_project_id=self.id, default_employee_id=self.user_id.employee_ids[:1].id)
-        return {
-            'name': _("Forecast"),
-            'type': 'ir.actions.act_window',
-            'res_model': 'project.forecast',
-            'view_id': self.env.ref('project_forecast.project_forecast_grid').id,
-            'view_mode': 'grid',
-            'domain': [['project_id', '=', self.id]],
-            'context': context,
-        }
+        action = self.env.ref('project_forecast.project_forecast_action_from_project').read()[0]
+        context = {}
+        if action.get('context'):
+            eval_context = self.env['ir.actions.actions']._get_eval_context()
+            eval_context.update({'active_id': self.id})
+            context = safe_eval(action['context'], eval_context)
+        # add the default employee (for creation)
+        context['default_employee_id'] = self.user_id.employee_ids[:1].id
+        action['context'] = context
+        return action
 
 
 class Task(models.Model):
