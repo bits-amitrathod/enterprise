@@ -104,10 +104,14 @@ class ReportPartnerLedger(models.AbstractModel):
         grouped_partners = self.group_by_partner_id(options, line_id)
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines') or context.get('default_partner_id')
+        total_debit = total_credit = total_balance = 0.0
         for partner in sorted_partners:
             debit = grouped_partners[partner]['debit']
             credit = grouped_partners[partner]['credit']
             balance = grouped_partners[partner]['balance']
+            total_debit += debit
+            total_credit += credit
+            total_balance += balance
             lines.append({
                 'id': 'partner_' + str(partner.id),
                 'name': partner.name,
@@ -186,6 +190,13 @@ class ReportPartnerLedger(models.AbstractModel):
                         'columns': [{}],
                     })
                 lines += domain_lines
+        if not line_id:
+            lines.append({
+                'id': 'grouped_partners_total',
+                'name': _('Total'),
+                'class': 'o_account_reports_domain_total',
+                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(total_debit), self.format_value(total_credit), self.format_value(total_balance)]],
+            })
         return lines
 
     @api.model
