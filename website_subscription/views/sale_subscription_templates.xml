@@ -207,7 +207,7 @@
             <div class="oe_structure"/>
              <div t-if="is_follower" class="col-md-8">
                 <h1 class="page-header">History</h1>
-                <t t-call="website_mail.message_thread">
+                <t t-call="portal.message_thread">
                     <t t-set="object" t-value="account"/>
                     <t t-set="token_field" t-value="'access_token'"/>
                     <t t-set="chatter_mode" t-value="'json'"/>
