@@ -2,7 +2,42 @@
 <odoo>
 
     <!-- Call Function to hide Old Accounting report menu -->
-    <function model="ir.ui.menu" name="unlink" eval="[ref('account.menu_account_report_tree_hierarchy'), ref('account.menu_account_financial_reports_tree'), ref('account.menu_account_reports'), ref('account.menu_general_ledger'), ref('account.menu_general_Balance_report'), ref('account.menu_account_report_pl'), ref('account.menu_account_report'), ref('account.menu_account_report_bs'), ref('account.menu_aged_trial_balance'), ref('account.menu_finance_legal_statement'), ref('account.menu_aged_trial_balance'), ref('account.menu_partner_ledger'), ref('account.menu_print_journal')], {'install_mode': True}"/>
+    <record id="account.menu_account_report_tree_hierarchy" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_account_financial_reports_tree" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_account_reports" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_general_ledger" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_general_Balance_report" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_account_report_pl" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_account_report" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_account_report_bs" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_aged_trial_balance" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_finance_legal_statement" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_partner_ledger" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="account.menu_print_journal" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
 
     <function model="ir.actions.report" name="unlink" eval="[ref('account.action_report_print_overdue')], {'install_mode': True}"/>
 
