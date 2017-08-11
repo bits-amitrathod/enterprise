@@ -54,6 +54,7 @@ QUnit.module('Views', {
                         '<range name="month" string="Month" span="month" step="day"/>' +
                     '</field>'+
                     '<field name="unit_amount" type="measure" widget="float_time"/>' +
+                    '<button string="Action" type="action" name="action_name"/>' +
                     '<empty>' +
                         '<p class="oe_view_nocontent_create">' +
                             'Click to add projects and tasks' +
@@ -470,7 +471,7 @@ QUnit.module('Views', {
     });
 
     QUnit.test('editing a value', function (assert) {
-        assert.expect(7);
+        assert.expect(13);
         var done = assert.async();
 
         var grid = createView({
@@ -479,15 +480,39 @@ QUnit.module('Views', {
             data: this.data,
             arch: this.arch,
             currentDate: "2017-01-25",
+            viewOptions: {
+                context: {some_value: 2},
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'search') {
+                    return $.when([1, 2, 3, 4, 5]);
+                }
+                return this._super.apply(this, arguments);
+            },
             intercepts: {
                 execute_action: function (event) {
-                    grid._rpc({
-                            model: 'analytic.line',
-                            method: 'adjust_grid',
-                            kwargs: event.data.action_data,
-                        })
-                        .then(event.data.on_success)
-                        .fail(event.data.on_fail);
+                    if (event.data.action_data.type === 'action') {
+                        assert.strictEqual(event.data.env.model, 'analytic.line',
+                            'should call with correct model in env');
+                        assert.deepEqual(event.data.env.context, {some_value: 2},
+                            'should call with correct context in env');
+                        assert.deepEqual(event.data.env.resIDs, [1, 2, 3, 4, 5],
+                            'should call with correct resIDs in env');
+                    } else if (event.data.action_data.type === 'object') {
+                        assert.strictEqual(event.data.env.model, 'analytic.line',
+                            'should call with correct model in env');
+                        assert.deepEqual(event.data.env.context, {some_value: 2},
+                            'should call with correct context in env');
+                        assert.notOk('resIDs' in event.data.env,
+                            'should not have set resIDs in env');
+                        grid._rpc({
+                                model: 'analytic.line',
+                                method: 'adjust_grid',
+                                kwargs: event.data.action_data,
+                            })
+                            .then(event.data.on_success)
+                            .fail(event.data.on_fail);
+                    }
                 },
             },
         });
@@ -539,6 +564,8 @@ QUnit.module('Views', {
 
             assert.strictEqual($input.text(), "08:30",
                 "text should have been properly parsed/formatted");
+
+            grid.$buttons.find('button:contains("Action")').click()
 
             grid.destroy();
             done();

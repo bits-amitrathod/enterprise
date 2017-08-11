@@ -70,8 +70,9 @@ class TestDeliveryBpost(TransactionCase):
 
         sale_order = SaleOrder.create(so_vals)
         sale_order.get_delivery_price()
-        sale_order.set_delivery_line()
+        self.assertTrue(sale_order.delivery_rating_success, "bpost has not been able to rate this order (%s)" % sale_order.delivery_message)
         self.assertGreater(sale_order.delivery_price, 0.0, "bpost delivery cost for this SO has not been correctly estimated.")
+        sale_order.set_delivery_line()
 
         sale_order.action_confirm()
         self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
@@ -80,13 +81,11 @@ class TestDeliveryBpost(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
+        picking.move_lines[0].quantity_done = 1.0
+        self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-        picking.do_prepare_partial()
-        self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
-
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
-
         self.assertIsNot(picking.carrier_tracking_ref, False, "bpost did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "bpost carrying price is probably incorrect")
 
@@ -106,8 +105,9 @@ class TestDeliveryBpost(TransactionCase):
 
         sale_order = SaleOrder.create(so_vals)
         sale_order.get_delivery_price()
-        sale_order.set_delivery_line()
+        self.assertTrue(sale_order.delivery_rating_success, "bpost has not been able to rate this order (%s)" % sale_order.delivery_message)
         self.assertGreater(sale_order.delivery_price, 0.0, "bpost delivery cost for this SO has not been correctly estimated.")
+        sale_order.set_delivery_line()
 
         sale_order.action_confirm()
         self.assertEquals(len(sale_order.picking_ids), 1, "The Sales Order did not generate a picking.")
@@ -116,12 +116,10 @@ class TestDeliveryBpost(TransactionCase):
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
         picking.force_assign()
+        picking.move_lines[0].quantity_done = 1.0
+        self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-        picking.do_prepare_partial()
-        self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
-
-        picking.do_transfer()
+        picking.action_done()
         picking.send_to_shipper()
-
         self.assertIsNot(picking.carrier_tracking_ref, False, "bpost did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "bpost carrying price is probably incorrect")

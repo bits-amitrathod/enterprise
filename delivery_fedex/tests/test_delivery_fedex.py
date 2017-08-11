@@ -53,7 +53,10 @@ class TestDeliveryFedex(TransactionCase):
 
             sale_order = SaleOrder.create(so_vals)
             sale_order.get_delivery_price()
-            self.assertTrue(sale_order.delivery_rating_success, sale_order.delivery_message)
+            if not sale_order.delivery_rating_success and sale_order.delivery_message.replace('Error:\n', '').strip() in SKIPPABLE_ERRORS:
+                raise unittest.SkipTest(SKIP_MSG)
+            else:
+                self.assertTrue(sale_order.delivery_rating_success, "FedEx has not been able to rate this order (%s)" % sale_order.delivery_message)
             self.assertGreater(sale_order.delivery_price, 0.0, "FedEx delivery cost for this SO has not been correctly estimated.")
             sale_order.set_delivery_line()
 
@@ -64,18 +67,15 @@ class TestDeliveryFedex(TransactionCase):
             self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
             picking.force_assign()
+            picking.move_lines[0].quantity_done = 1.0
+            self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-            self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
-
-            picking.move_line_ids.qty_done = 1.0
-            picking.do_transfer()
+            picking.action_done()
             picking.send_to_shipper()
-
             self.assertIsNot(picking.carrier_tracking_ref, False, "FedEx did not return any tracking number")
             self.assertGreater(picking.carrier_price, 0.0, "FedEx carrying price is probably incorrect")
 
             picking.cancel_shipment()
-
             self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
             self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
@@ -103,7 +103,10 @@ class TestDeliveryFedex(TransactionCase):
 
             sale_order = SaleOrder.create(so_vals)
             sale_order.get_delivery_price()
-            self.assertTrue(sale_order.delivery_rating_success, sale_order.delivery_message)
+            if not sale_order.delivery_rating_success and sale_order.delivery_message.replace('Error:\n', '').strip() in SKIPPABLE_ERRORS:
+                raise unittest.SkipTest(SKIP_MSG)
+            else:
+                self.assertTrue(sale_order.delivery_rating_success, "FedEx has not been able to rate this order (%s)" % sale_order.delivery_message)
             self.assertGreater(sale_order.delivery_price, 0.0, "FedEx delivery cost for this SO has not been correctly estimated.")
             sale_order.set_delivery_line()
 
@@ -114,17 +117,15 @@ class TestDeliveryFedex(TransactionCase):
             self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
             picking.force_assign()
-            self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
+            picking.move_lines[0].quantity_done = 1.0
+            self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-            picking.move_line_ids.qty_done = 1.0
-            picking.do_transfer()
+            picking.action_done()
             picking.send_to_shipper()
-
             self.assertIsNot(picking.carrier_tracking_ref, False, "FedEx did not return any tracking number")
             self.assertGreater(picking.carrier_price, 0.0, "FedEx carrying price is probably incorrect")
 
             picking.cancel_shipment()
-
             self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
             self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
@@ -157,7 +158,10 @@ class TestDeliveryFedex(TransactionCase):
 
             sale_order = SaleOrder.create(so_vals)
             sale_order.get_delivery_price()
-            self.assertTrue(sale_order.delivery_rating_success, sale_order.delivery_message)
+            if not sale_order.delivery_rating_success and sale_order.delivery_message.replace('Error:\n', '').strip() in SKIPPABLE_ERRORS:
+                raise unittest.SkipTest(SKIP_MSG)
+            else:
+                self.assertTrue(sale_order.delivery_rating_success, "FedEx has not been able to rate this order (%s)" % sale_order.delivery_message)
             self.assertGreater(sale_order.delivery_price, 0.0, "FedEx delivery cost for this SO has not been correctly estimated.")
             sale_order.set_delivery_line()
 
@@ -168,25 +172,23 @@ class TestDeliveryFedex(TransactionCase):
             self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
             picking.force_assign()
-
-            po0 = picking.move_line_ids[0]
-            po1 = picking.move_line_ids[1]
-            po0.qty_done = 1
-            picking.put_in_pack()
-            po1.qty_done = 1
-            picking.put_in_pack()
-
-            self.assertGreater(picking.weight, 0.0, "Picking weight should be positive.")
+            move0 = picking.move_lines[0]
+            move0.quantity_done = 1.0
+            picking._put_in_pack()
+            move1 = picking.move_lines[1]
+            move1.quantity_done = 1.0
+            picking._put_in_pack()
             self.assertTrue(all([po.result_package_id is not False for po in picking.move_line_ids]), "Some products have not been put in packages")
+            for package in picking.move_line_ids.mapped('result_package_id'):
+                package.shipping_weight = package.weight  # we mock choose.delivery.package wizard
+            self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
-            picking.do_transfer()
+            picking.action_done()
             picking.send_to_shipper()
-
             self.assertIsNot(picking.carrier_tracking_ref, False, "FedEx did not return any tracking number")
             self.assertGreater(picking.carrier_price, 0.0, "FedEx carrying price is probably incorrect")
 
             picking.cancel_shipment()
-
             self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
             self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
@@ -195,13 +197,3 @@ class TestDeliveryFedex(TransactionCase):
                 raise unittest.SkipTest(SKIP_MSG)
             else:
                 raise e
-
-    # TODO RIM master: other tests scenarios:
-    # - incomplete addresses:
-    #   * no country
-    #   * no state in US
-    #   * accents in address
-    # - no weight for rating
-    # - no service availability between 2 addresses
-    # - incorrect weight
-    # - cancel twice or with incorrect tracking

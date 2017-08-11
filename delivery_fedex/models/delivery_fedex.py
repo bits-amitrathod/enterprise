@@ -224,12 +224,12 @@ class ProviderFedex(models.Model):
 
                 for operation in picking.move_line_ids:
                     commodity_amount = order_currency.compute(operation.product_id.list_price, commodity_currency)
-                    total_commodities_amount += (commodity_amount * operation.product_qty)
+                    total_commodities_amount += (commodity_amount * operation.qty_done)
                     commodity_description = operation.product_id.name
                     commodity_number_of_piece = '1'
                     commodity_weight_units = self.fedex_weight_unit
-                    commodity_weight_value = _convert_weight(operation.product_id.weight * operation.product_qty, self.fedex_weight_unit)
-                    commodity_quantity = operation.product_qty
+                    commodity_weight_value = _convert_weight(operation.product_id.weight * operation.qty_done, self.fedex_weight_unit)
+                    commodity_quantity = operation.qty_done
                     commodity_quantity_units = 'EA'
                     srm.commodities(commodity_currency.name, commodity_amount, commodity_number_of_piece, commodity_weight_units, commodity_weight_value, commodity_description, commodity_country_of_manufacture, commodity_quantity, commodity_quantity_units)
                 srm.customs_value(commodity_currency.name, total_commodities_amount, "NON_DOCUMENTS")

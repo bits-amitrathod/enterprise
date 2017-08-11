@@ -135,11 +135,9 @@ class ProviderUPS(models.Model):
         ResCurrency = self.env['res.currency']
         for picking in pickings:
             packages = []
-            total_qty = 0
             if picking.package_ids:
                 # Create all packages
                 for package in picking.package_ids:
-                    total_qty += sum(quant.qty for quant in package.quant_ids)
                     packages.append(Package(self, package.shipping_weight, quant_pack=package.packaging_id, name=package.name))
             # Create one package with the rest (the content that is not in a package)
             if picking.weight_bulk:
@@ -151,7 +149,7 @@ class ProviderUPS(models.Model):
 
             shipment_info = {
                 'description': picking.origin,
-                'total_qty': total_qty,
+                'total_qty': sum(sml.qty_done for sml in picking.move_line_ids),
                 'ilt_monetary_value': '%d' % invoice_line_total,
                 'itl_currency_code': self.env.user.company_id.currency_id.name,
             }
