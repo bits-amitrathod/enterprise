@@ -35,7 +35,7 @@
     <xpath expr="//ul" position="replace">
         <ul t-if='context.get("print_mode") != True' class="dropdown-menu o_account_reports_domain_dropdown" role="menu">
             <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Invoice</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user">View Journal Entry</a></li>
             <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="js_change_date">Change expected payment date/note</a></li>
         </ul>
     </xpath>

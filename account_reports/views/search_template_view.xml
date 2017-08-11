@@ -111,7 +111,7 @@
                 <t t-if="options['cash_basis']">Cash Basis,</t> 
                 <t t-if="not options['cash_basis']">Accrual Basis,</t> 
             </t>
-            <t t-if="options.get('all_entries') != None"> 
+            <t t-if="options.get('all_entries') != None" groups="account.group_account_user"> 
                 <t t-if="options['all_entries']">With Draft Entries,</t>
                 <t t-if="not options['all_entries']">Posted Entries Only,</t>
             </t>
@@ -121,8 +121,8 @@
             <span class="caret"/>
         </a>
         <ul class="dropdown-menu o_filters_menu" role="menu">
-            <li t-if="options.get('cash_basis') != None" title="Cash Basis Method" data-filter="cash_basis" class="js_account_report_bool_filter"><a>Cash Basis Method</a></li>
-            <li t-if="options.get('all_entries') != None" title="Include unposted entries" data-filter="all_entries" class="js_account_report_bool_filter"><a>Include Unposted Entries</a></li>
+            <li t-if="options.get('cash_basis') != None" title="Cash Basis Method" data-filter="cash_basis" class="js_account_report_bool_filter" groups="account.group_account_user"><a>Cash Basis Method</a></li>
+            <li t-if="options.get('all_entries') != None" title="Include unposted entries" data-filter="all_entries" class="js_account_report_bool_filter" groups="account.group_account_user"><a>Include Unposted Entries</a></li>
             <li t-if="options.get('hierarchy') != None" title="Hierarchy" data-filter="hierarchy" class="js_account_report_bool_filter"><a>Hierarchy and Subtotals</a></li>
             <li t-if="options.get('unreconciled') != None" title="Unreconciled" data-filter="unreconciled" class="js_account_report_bool_filter"><a>Only Show Unreconciled Entries</a></li>
             <li t-if="options.get('unfold_all') != None" title="Unfold" data-filter="unfold_all" class="js_account_report_bool_filter"><a>Unfold All</a></li>
