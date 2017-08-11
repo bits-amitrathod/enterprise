@@ -101,7 +101,10 @@ var GridController = AbstractController.extend({
         };
         this.trigger_up('execute_action', {
             action_data: actionData,
-            model: this.modelName,
+            env: {
+                context: this.model.getContext(),
+                model: this.modelName
+            },
             on_success: this.reload.bind(this),
         });
     },
@@ -181,8 +184,11 @@ var GridController = AbstractController.extend({
         this.model.getIds().then(function (ids) {
             self.trigger_up('execute_action', {
                 action_data: actionData,
-                model: self.modelName,
-                res_ids: ids,
+                env: {
+                    context: self.model.getContext(),
+                    model: self.modelName,
+                    resIDs: ids,
+                },
                 on_closed: self.reload.bind(self),
             });
         });

@@ -570,6 +570,8 @@ class ProductTemplate(models.Model):
                 ('email', '=', transaction['Buyer']['Email'])])
             if not partner:
                 partner = self.env['res.partner'].create({'name': transaction['Buyer']['UserID']})
+            if len(partner) > 1:
+                partner = partner[0]
             partner_data = {
                 'name': transaction['Buyer']['UserID'],
                 'ebay_id': transaction['Buyer']['UserID'],

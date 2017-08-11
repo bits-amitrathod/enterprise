@@ -39,10 +39,10 @@ class TimesheetForecastController(SaleTimesheetController):
         ts_months = sorted([fields.Date.to_string(initial_date-relativedelta(months=i)) for i in range(0, DEFAULT_MONTH_RANGE)])
         fc_months = sorted([fields.Date.to_string(initial_date+relativedelta(months=i)) for i in range(0, DEFAULT_MONTH_RANGE)])
 
-        timesheet_forecast_data = self._plan_get_timesheet_forecast_data(domain, ts_months, fc_months)
+        timesheet_forecast_data = self.sudo()._plan_get_timesheet_forecast_data(domain, ts_months, fc_months)
 
         so_line_ids = [sol_name_get[0] for sol_name_get in timesheet_forecast_data if sol_name_get]
-        so_sol_mapping = {sol.id: sol.order_id.name_get()[0] for sol in request.env['sale.order.line'].browse(so_line_ids)}
+        so_sol_mapping = {sol.id: sol.order_id.name_get()[0] for sol in request.env['sale.order.line'].sudo().browse(so_line_ids)}
 
         timesheet_forecast_values = {}
         for sol_name_get, sol_line_value in timesheet_forecast_data.items():
@@ -55,7 +55,7 @@ class TimesheetForecastController(SaleTimesheetController):
             for fc_slot in fc_months + ['total']:
                 timesheet_forecast_values[order_name_get]['forecast'][fc_slot] += sol_line_value['forecast'][fc_slot]
 
-        sol_task_planned_hour_mapping = {task.sale_line_id.id: task.planned_hours for task in request.env['project.task'].search([('sale_line_id', 'in', so_line_ids)])}
+        sol_task_planned_hour_mapping = {task.sudo().sale_line_id.id: task.planned_hours for task in request.env['project.task'].search([('sale_line_id', 'in', so_line_ids)])}
 
         # built the table : headers and rows
 

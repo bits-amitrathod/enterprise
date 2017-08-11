@@ -153,7 +153,7 @@ QUnit.module('Views', {
     });
 
     QUnit.test('gantt view with consolidation', function (assert) {
-        assert.expect(5);
+        assert.expect(6);
         var done = assert.async();
 
         createAsyncView({
@@ -183,6 +183,8 @@ QUnit.module('Views', {
                 "should have 2 task bars for task 1, in red");
             assert.strictEqual(gantt.$('.inside_task_bar.o_gantt_colorgreen_3[consolidation_ids="gantt_task_5"]').length, 2,
                 "should have 2 task bars for task 5, in green");
+            assert.strictEqual(gantt.$('.inside_task_bar[consolidation_ids="gantt_task_5"]:nth-child(3)').text(), '41.1 Time',
+                "the number should be rounded to 41.1");
 
             assert.verifySteps(['search_read']);
             gantt.destroy();

@@ -136,9 +136,8 @@ class SaleSubscription(models.Model):
         }
         for sub in self:
             sub.recurring_monthly = (
-                sub.recurring_total * interval_factor[sub.recurring_rule_type] /
-                sub.recurring_interval
-            )
+                sub.recurring_total * interval_factor[sub.recurring_rule_type] / sub.recurring_interval
+            ) if sub.template_id else 0
 
     @api.onchange('partner_id')
     def onchange_partner_id(self):
