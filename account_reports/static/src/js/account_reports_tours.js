@@ -175,6 +175,8 @@ Tour.register('account_followup_reports_widgets', {
             trigger: '#history:visible .dropdown > a',
             run: 'click'
         },
+        // TODO /!\ fix this fragile selector, since other modules can insert other overdue invoices for Agrolait
+        //          and then block the tour
         {
             content: "Check that sent mail has only 2 invoices",
             trigger: '.o_account_reports_history li table:first tbody:not(:has(tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(Total))))',
