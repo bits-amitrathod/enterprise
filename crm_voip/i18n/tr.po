@@ -6,13 +6,19 @@
 # Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2017
 # Levent Karakaş <levent@mektup.at>, 2017
 # Murat Kaplan <muratk@projetgrup.com>, 2017
+# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Emre Akayoğlu <emre.akayoglu@mechsoft.com.tr>, 2017
+# Fırat Kaya <firat.kaya@mechsoft.com.tr>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-15 11:32+0000\n"
 "PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Murat Kaplan <muratk@projetgrup.com>, 2017\n"
+"Last-Translator: Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,6 +37,12 @@ msgid ""
 "    a new call? </p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p>Merhaba ${object.partner_id.name},</p>\n"
+"\n"
+"<p>Anlaşılan konuşmamız sırasında  '${object.name}' hakkında kesintiye uğradığımızı düşünüyorum. Tekrar arayabilmemiz için yeni takvim planlaması yapabilmemiz adına müsaitlik durumunuzu belirtebilir misiniz ?</p>\n"
+"\n"
+"<p>Saygılaırmızla,</p>"
 
 #. module: crm_voip
 #: model:mail.template,body_html:crm_voip.email_template_call_client_notAvailable
@@ -41,17 +53,22 @@ msgid ""
 "    please give me your availability in order to schedule a new call?</p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p> Merhaba ${object.partner_id.name},</p>\n"
+"<p> Sizi  '${object.name}' konusu için ulaşmaya çalıştım.  Yeni bir\n"
+"görüşme planlayabilmemiz için müsaitlik durumunuzu bildirebilir misiniz?</p>\n"
+"<p>Saygılarımızla, </p>"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:78
 #, python-format
 msgid " about %s"
-msgstr ""
+msgstr "hakkında %s"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_nbr
 msgid "# of Cases"
-msgstr ""
+msgstr "Vak'aların sayısı"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
@@ -59,33 +76,35 @@ msgid ""
 "<span attrs=\"{'invisible': [('show_duration', '=', False)], "
 "'required':[('show_duration', '=',True)]}\">min(s)</span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('show_duration', '=', False)], "
+"'required':[('show_duration', '=',True)]}\">dakika(lar)</span>"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_voip_view
 msgid "<span class=\"o_stat_text\">Log a Call</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Görüşmeyi Kaydet</span>"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_voip_view
 msgid "<span class=\"o_stat_text\">Schedule Call</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Schedule Call</span>"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
 msgid "Add to Call Queue"
-msgstr ""
+msgstr "Arama Kuyruğuna Ekle"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_user_id
 msgid "Assign To"
-msgstr ""
+msgstr "Atanan"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:122
 #, python-format
 msgid "Backspace"
-msgstr ""
+msgstr "Geri"
 
 #. module: crm_voip
 #: model:ir.filters,name:crm_voip.filter_crm_phonecall_sales_team
@@ -97,59 +116,59 @@ msgstr ""
 #: code:addons/crm_voip/static/src/js/crm_voip.js:577
 #, python-format
 msgid "Call"
-msgstr ""
+msgstr "Ara"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:73
 #: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:76
 #, python-format
 msgid "Call %s min(s)"
-msgstr ""
+msgstr "Arama %s dakika(lar)"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:79
 #, python-format
 msgid "Call All"
-msgstr ""
+msgstr "Hepsini Ara"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:80
 #, python-format
 msgid "Call Next One"
-msgstr ""
+msgstr "Sonraki Kişiyi Ara"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_name
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_name
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Call Summary"
-msgstr ""
+msgstr "Görüşme Özeti"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_name
 msgid "Call summary"
-msgstr ""
+msgstr "Görüşme özeti"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:886
 #, python-format
 msgid "Calling "
-msgstr ""
+msgstr "Arıyor"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:581
 #, python-format
 msgid "Calling..."
-msgstr ""
+msgstr "Aranıyor..."
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Calls Date by Month"
-msgstr ""
+msgstr "Aya göre Görüşme Tarihi"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
@@ -162,7 +181,7 @@ msgstr "İptal"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:48
 #, python-format
 msgid "Cancel the call"
-msgstr ""
+msgstr "Görüşmeyi iptal et."
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
@@ -172,14 +191,14 @@ msgstr "İptal Edildi"
 #. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.crm_phonecall_view
 msgid "Click to log the summary of a phone call."
-msgstr ""
+msgstr "Görüşme kaydını özetlemek için tıklayın."
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:477
 #, python-format
 msgid "Click to unblock"
-msgstr ""
+msgstr "Engeli kaldırmak için tıkla"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_company_id
@@ -212,17 +231,17 @@ msgstr "Oluşturulma"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Creation"
-msgstr ""
+msgstr "Oluşturma"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Creation Date"
-msgstr ""
+msgstr "Oluşturma Tarihi"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Creation Month"
-msgstr ""
+msgstr "Oluşturma Ayı"
 
 #. module: crm_voip
 #: model:ir.actions.server,name:crm_voip.action_create_call_in_queue
@@ -232,7 +251,7 @@ msgstr ""
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_custom_duration
 msgid "Custom Duration"
-msgstr ""
+msgstr "Özel Süre"
 
 #. module: crm_voip
 #. openerp-web
@@ -247,7 +266,7 @@ msgstr "Müşteri"
 #: code:addons/crm_voip/static/src/js/crm_voip.js:436
 #, python-format
 msgid "Customer unavailable"
-msgstr ""
+msgstr "Müşteri müsait değil"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_date
@@ -259,7 +278,7 @@ msgstr "Tarih"
 #. module: crm_voip
 #: selection:sale.config.settings,mode:0
 msgid "Demo"
-msgstr ""
+msgstr "Demo"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_description
@@ -270,26 +289,26 @@ msgstr "Açıklama"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Description..."
-msgstr ""
+msgstr "Açıklama..."
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:172
 #, python-format
 msgid "Description:"
-msgstr ""
+msgstr "Açıklama:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Discard"
-msgstr ""
+msgstr "Vazgeç"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:5
 #, python-format
 msgid "Display Dialing Panel"
-msgstr ""
+msgstr "Çevirme Panelini Göster"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_display_name
@@ -303,48 +322,48 @@ msgstr "Görünüm Adı"
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "Don't Reschedule"
-msgstr ""
+msgstr "Yeniden Planlama"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_duration
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_duration
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_duration
 msgid "Duration"
-msgstr ""
+msgstr "Süre"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_duration
 msgid "Duration in minutes and seconds."
-msgstr ""
+msgstr "Dakika ve saniye olarak süre"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Edit the log"
-msgstr ""
+msgstr "Kaydı düzenle"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_email
 msgid "Email"
-msgstr ""
+msgstr "E-Posta"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:121
 #, python-format
 msgid "Enter the number..."
-msgstr ""
+msgstr "Sayı Gir..."
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:184
 #, python-format
 msgid "Expected Revenue:"
-msgstr ""
+msgstr "Beklenen Gelir:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Extended Filters..."
-msgstr ""
+msgstr "Gelişmiş Filtreler..."
 
 #. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.action_report_crm_phonecall
@@ -358,7 +377,7 @@ msgstr ""
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_sequence
 msgid "Gives the sequence order when displaying a list of Phonecalls."
-msgstr ""
+msgstr "Telefon görüşmeleri listesini görüntülerken sıra verir."
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
@@ -370,7 +389,7 @@ msgstr "Grupla"
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Held"
-msgstr ""
+msgstr "Gerçekleşen"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_id
@@ -384,27 +403,27 @@ msgstr "ID"
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 1 Week"
-msgstr ""
+msgstr "1 Hafta içinde"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 15 Day"
-msgstr ""
+msgstr "15 gün içinde"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 2 Months"
-msgstr ""
+msgstr "2 ay içinde"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_in_automatic_mode
 msgid "In Automatic Mode"
-msgstr ""
+msgstr "Otomatik Modda"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_in_queue
 msgid "In Call Queue"
-msgstr ""
+msgstr "Çağrı Sırasında"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.crm_phonecall_view
@@ -412,11 +431,13 @@ msgid ""
 "In order to follow up on the call, you can trigger a request for\n"
 "          another call, a meeting or an opportunity."
 msgstr ""
+"Aramayı takip edebilmek için bir görüşme isteğinde bulunabilir\n"
+" toplantı planlayabilirsiniz."
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_lead_in_call_center_queue
 msgid "Is in the Call Queue"
-msgstr ""
+msgstr "Arama Sırasında mı"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall___last_update
@@ -448,12 +469,12 @@ msgstr "Son Güncelleme"
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_id
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_opportunity_id
 msgid "Lead/Opportunity"
-msgstr ""
+msgstr "Aday/Fırsat"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_name
 msgid "Lead/Opportunity name"
-msgstr ""
+msgstr "Fırsat/Aday Adı"
 
 #. module: crm_voip
 #. openerp-web
@@ -461,33 +482,33 @@ msgstr ""
 #: code:addons/crm_voip/static/src/js/crm_voip.js:514
 #, python-format
 msgid "Log a call"
-msgstr ""
+msgstr "Bir görüşme yap"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_partner_mobile
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_partner_mobile
 msgid "Mobile"
-msgstr ""
+msgstr "Mobil"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_mode
 msgid "Mode"
-msgstr ""
+msgstr "Kip"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Month"
-msgstr ""
+msgstr "Ay"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Month of call"
-msgstr ""
+msgstr "Görüşme ayı"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "My Phonecalls"
-msgstr ""
+msgstr "Görüşmelerim"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -497,27 +518,27 @@ msgstr ""
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "My Team"
-msgstr ""
+msgstr "Ekibim"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:178
 #, python-format
 msgid "Next Action:"
-msgstr ""
+msgstr "Sonraki İşlem:"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:59
 #, python-format
 msgid "No opportunity linked"
-msgstr ""
+msgstr "Bağlanmış fırsat yok"
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Not Held"
-msgstr ""
+msgstr "Gerçekleşmeyen"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.crm_phonecall_view
@@ -526,18 +547,20 @@ msgid ""
 "          history of the communication with a customer or to inform another\n"
 "          team member."
 msgstr ""
+"Odoo, bir müşteriyle iletişim geçmişini izlemek veya başka bir ekip üyesine "
+"bilgi vermek için gelen aramaları anında kaydetmenize olanak tanır."
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:114
 #, python-format
 msgid "Opportunity"
-msgstr ""
+msgstr "Fırsat"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_pbx_ip
 msgid "PBX Server IP"
-msgstr ""
+msgstr "PBX Sunucu IP"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_res_partner
@@ -550,61 +573,61 @@ msgstr "İş Ortağı"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_id
 msgid "Partner id"
-msgstr ""
+msgstr "İş Ortağı"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_image_small
 msgid "Partner image"
-msgstr ""
+msgstr "Ortak resmi"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_phone
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_partner_phone
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_partner_phone
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.crm_phonecall_calendar_view
 msgid "Phone Calls"
-msgstr ""
+msgstr "Görüşmeler"
 
 #. module: crm_voip
 #: model:ir.filters,name:crm_voip.filter_crm_phonecall_phone_call_to_do
 msgid "Phone Calls To Do"
-msgstr ""
+msgstr "Yapılacak Görüşmeler"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall_report
 msgid "Phone Calls by user and team"
-msgstr ""
+msgstr "Kullanıcı ve ekip tarafından telefon görüşmeleri"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_graph
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_pivot
 msgid "Phone calls"
-msgstr ""
+msgstr "Görüşmeler"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Phone calls that are assigned to one of the sale teams I manage"
-msgstr ""
+msgstr "Yönettiğim satış ekiplerinden birine atanmış görüşmeler"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Phone calls which are in closed state"
-msgstr ""
+msgstr "Kapalı durumdaki görüşmeler"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid ""
 "Phone calls which are in to do state and Phone calls which receive no answer"
-msgstr ""
+msgstr "Bekleme durumunda ve cevap alamamış olan telefon görüşmeleri"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Phone calls which receive no answer"
-msgstr ""
+msgstr "Cevap almayan telefon görüşmeleri"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,name:crm_voip.crm_phonecall_view
@@ -613,22 +636,22 @@ msgstr ""
 #: model:ir.ui.view,arch_db:crm_voip.crm_phonecall_tree_view
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Phonecalls"
-msgstr ""
+msgstr "Görüşme"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,name:crm_voip.action_report_crm_phonecall
 msgid "Phonecalls Analysis"
-msgstr ""
+msgstr "Telefon Görüşmeleri Analizi"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
 msgid "Planned Date"
-msgstr ""
+msgstr "Planlanan Tarih"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_planned_revenue
 msgid "Planned Revenue"
-msgstr ""
+msgstr "Planlanan Gelir"
 
 #. module: crm_voip
 #. openerp-web
@@ -636,35 +659,37 @@ msgstr ""
 #, python-format
 msgid "Please check if a phone number is given for the current phonecall"
 msgstr ""
+"Lütfen geçerli telefon görüşmesi için bir telefon numarası verilip "
+"verilmediğini kontrol edin"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_probability
 msgid "Probability"
-msgstr ""
+msgstr "Olasılık"
 
 #. module: crm_voip
 #: selection:sale.config.settings,mode:0
 msgid "Production"
-msgstr ""
+msgstr "Üretim"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:67
 #, python-format
 msgid "Refresh the Panel"
-msgstr ""
+msgstr "Paneli Yenile"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
 msgid "Remove from Call Queue"
-msgstr ""
+msgstr "Arama Kuyruğundan kaldır"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:45
 #, python-format
 msgid "Remove from the queue"
-msgstr ""
+msgstr "Sıradan kaldır"
 
 #. module: crm_voip
 #. openerp-web
@@ -708,58 +733,58 @@ msgstr "Kaydet"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Save and Open the Opportunity"
-msgstr ""
+msgstr "Fırsat Kaydedin ve Açın"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_reschedule_option
 msgid "Schedule A New Call"
-msgstr ""
+msgstr "Yeni Bir Görüşme Planla"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
 msgid "Schedule Call"
-msgstr ""
+msgstr "Görüşme Planla"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.crm_phonecall_tree_view
 msgid "Schedule Other Call"
-msgstr ""
+msgstr "Başka bir Görüşme Planla"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
 msgid "Schedule a Call"
-msgstr ""
+msgstr "Görüşme Planla"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:158
 #, python-format
 msgid "Scheduled Date:"
-msgstr ""
+msgstr "Program Tarihi:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:66
 #, python-format
 msgid "Search Phone Calls..."
-msgstr ""
+msgstr "Telefon Görüşmeleri Aranıyor..."
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Search Phonecalls"
-msgstr ""
+msgstr "Görüşmelerde Ara"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:104
 #, python-format
 msgid "Send mail"
-msgstr ""
+msgstr "Mail gönder"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_sequence
@@ -769,25 +794,25 @@ msgstr "Sıra"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_show_duration
 msgid "Show Duration"
-msgstr ""
+msgstr "Süreyi Göster"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_reschedule_date
 msgid "Specific Date"
-msgstr ""
+msgstr "Belirli Tarih"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:885
 #, python-format
 msgid "Start Calling"
-msgstr ""
+msgstr "Aramaya Başla"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_start_time
 msgid "Start time"
-msgstr ""
+msgstr "Başlama zamanı"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_state
@@ -801,17 +826,17 @@ msgstr "Durumu"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:83
 #, python-format
 msgid "Stop"
-msgstr ""
+msgstr "Durdur"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_pbx_ip
 msgid "The IP adress of your PBX Server"
-msgstr ""
+msgstr "PBX Sunucunuzun IP adresi"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_wsServer
 msgid "The URL of your WebSocket"
-msgstr ""
+msgstr "WebSocket URL Adresiniz"
 
 #. module: crm_voip
 #. openerp-web
@@ -819,13 +844,15 @@ msgstr ""
 #, python-format
 msgid "The customer is temporary unavailable. Please try later."
 msgstr ""
+"Müşteriye geçici olarak ulaşılamamaktadır. Lütfen daha sonra tekrar "
+"deneyiniz."
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:549
 #, python-format
 msgid "The phonecall has no number"
-msgstr ""
+msgstr "Telefon görüşmesinde numara yok"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_state
@@ -834,41 +861,44 @@ msgid ""
 "When the call is over, the status is set to Held.\n"
 "If the call is not applicable anymore, the status can be set to Cancelled."
 msgstr ""
+"Bir olay oluşturulduğunda durum \"to do\" olarak ayarlanır.\n"
+"Görüşme bittiğinde durum \"Held\" olarak ayarlanır.\n"
+"Çağrı artık geçerli değilse, durum İptal Edildi olarak ayarlanabilir."
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "To Do"
-msgstr ""
+msgstr "Yapılacak"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.crm_phonecall_tree_view
 msgid "To Opportunity"
-msgstr ""
+msgstr "Fırsat İçin"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Todo"
-msgstr ""
+msgstr "Yapma"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:76
 #, python-format
 msgid "Toggle Dropdown"
-msgstr ""
+msgstr "Aşağı açılıra geç"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "Tomorrow"
-msgstr ""
+msgstr "Yarın"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:89
 #, python-format
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_choice
@@ -878,14 +908,14 @@ msgstr ""
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Unassigned"
-msgstr ""
+msgstr "Atanmamış"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:40
 #, python-format
 msgid "Unknown"
-msgstr ""
+msgstr "Bilinmeyen"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_transfer_wizard.py:34
@@ -896,7 +926,7 @@ msgstr "Uyarı"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_wsServer
 msgid "WebSocket"
-msgstr ""
+msgstr "WebSocket"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_transfer_wizard.py:35
@@ -905,6 +935,7 @@ msgid ""
 "Wrong configuration for the call. There is no external phone number "
 "configured"
 msgstr ""
+"Çağrı için yanlış yapılandırma. Yapılandırılmış harici telefon numarası yok"
 
 #. module: crm_voip
 #. openerp-web
@@ -912,59 +943,59 @@ msgstr ""
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 #, python-format
 msgid "at"
-msgstr ""
+msgstr "de"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall
 msgid "crm.phonecall"
-msgstr ""
+msgstr "crm.phonecall"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall_log_wizard
 msgid "crm.phonecall.log.wizard"
-msgstr ""
+msgstr "crm.phonecall.log.wizard"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall_transfer_wizard
 msgid "crm.phonecall.transfer.wizard"
-msgstr ""
+msgstr "crm.phonecall.transfer.wizard"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_schedule_phonecall
 msgid "crm.schedule_phonecall"
-msgstr ""
+msgstr "crm.schedule_phonecall"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_opportunity_id
 msgid "opportunity"
-msgstr ""
+msgstr "fırsat"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_sale_config_settings
 msgid "sale.config.settings"
-msgstr ""
+msgstr "sale.config.settings"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
 msgid "transfer Option"
-msgstr ""
+msgstr "Transfer Seçeneği"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_number
 msgid "transfer To"
-msgstr ""
+msgstr "...ya havale yap"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
 msgid "transfer the Call"
-msgstr ""
+msgstr "Çağrı aktar"
 
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to another External Phone"
-msgstr ""
+msgstr "Başka bir Harici Telefona aktarma"
 
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to your external phone"
-msgstr ""
+msgstr "Harici telefonuna aktar"

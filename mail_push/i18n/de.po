@@ -3,19 +3,22 @@
 # * mail_push
 # 
 # Translators:
-# Henry Mineehen <info@mineehen.de>, 2016
-# Tina Rittmüller <tr@ife.de>, 2016
-# darenkster <inactive+darenkster@transifex.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Thomas A. Jaeger <tj@jamotion.ch>, 2016
-# Ralf Hilgenstock <rh@dialoge.info>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
+# Tina Rittmüller <tr@ife.de>, 2017
+# Niki Waibel <niki.waibel@gmail.com>, 2017
+# Dejan Dinic <dejan.dinic@bluewin.ch>, 2017
+# darenkster <inactive+darenkster@transifex.com>, 2017
+# Henry Mineehen <info@mineehen.de>, 2017
+# Renzo Meister <info@jamotion.ch>, 2017
+# Wolfgang Taferner <wolfgang.transifex@service.wt-io-it.at>, 2017
+# Ralf Hilgenstock <rh@dialoge.info>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~15+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:15+0000\n"
-"PO-Revision-Date: 2016-10-10 09:15+0000\n"
-"Last-Translator: Ralf Hilgenstock <rh@dialoge.info>, 2016\n"
+"POT-Creation-Date: 2017-04-18 16:06+0000\n"
+"PO-Revision-Date: 2017-04-18 16:06+0000\n"
+"Last-Translator: Ralf Hilgenstock <rh@dialoge.info>, 2017\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,9 +27,24 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mail_push
+#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Generate API and Sender ID"
+msgstr ""
+
+#. module: mail_push
+#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+msgid "API Key"
+msgstr "API-Schlüssel"
+
+#. module: mail_push
 #: model:ir.ui.view,arch_db:mail_push.inherited_view_partner_form
 msgid "Cloud Messaging"
 msgstr ""
+
+#. module: mail_push
+#: model:ir.model,name:mail_push.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_create_uid
@@ -36,12 +54,12 @@ msgstr "Erstellt von"
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_create_date
 msgid "Created on"
-msgstr "Angelegt am"
+msgstr "Erstellt am"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_name
 msgid "Device Name"
-msgstr ""
+msgstr "Gerätename"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_res_partner_device_identity_ids
@@ -59,13 +77,8 @@ msgid "Display Name"
 msgstr "Anzeigename"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.inherited_view_general_configuration
-msgid "Generate API and Sender ID"
-msgstr ""
-
-#. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.inherited_view_general_configuration
-msgid "Google Firebase Push Notification"
+#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+msgid "Get notifications on Android phones"
 msgstr ""
 
 #. module: mail_push
@@ -94,25 +107,37 @@ msgid "Last Updated on"
 msgstr "Zuletzt aktualisiert am"
 
 #. module: mail_push
-#: model:ir.model.fields,field_description:mail_push.field_mail_push_device_service_type
-msgid "Notification Service"
+#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+msgid "Mobile App"
 msgstr ""
 
 #. module: mail_push
-#: model:ir.model,name:mail_push.model_res_partner
+#: model:ir.model.fields,field_description:mail_push.field_mail_push_device_service_type
+msgid "Notification Service"
+msgstr "Benachrichtungsservice"
+
+#. module: mail_push
+#: model:ir.model.fields,field_description:mail_push.field_base_config_settings_default_mail_push_notification
+#: model:ir.model.fields,field_description:mail_push.field_hr_timesheet_config_settings_default_mail_push_notification
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_partner_id
 msgid "Partner"
 msgstr "Partner"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_base_config_settings_fcm_project_id
+#: model:ir.model.fields,field_description:mail_push.field_hr_timesheet_config_settings_fcm_project_id
 msgid "Sender ID"
-msgstr ""
+msgstr "Sender ID"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_base_config_settings_fcm_api_key
+#: model:ir.model.fields,field_description:mail_push.field_hr_timesheet_config_settings_fcm_api_key
 msgid "Server API Key"
-msgstr ""
+msgstr "Server API Key"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_subscription_id
@@ -127,4 +152,4 @@ msgstr "base.config.settings"
 #. module: mail_push
 #: model:ir.model,name:mail_push.model_mail_push_device
 msgid "mail_push.device"
-msgstr ""
+msgstr "mail_push.device"

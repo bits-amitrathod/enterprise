@@ -3,17 +3,14 @@
 # * account_yodlee
 # 
 # Translators:
-# Fırat Kaya <firat.kaya@mechsoft.com.tr>, 2017
-# Ediz Duman <neps1192@gmail.com>, 2017
 # Murat Kaplan <muratk@projetgrup.com>, 2017
-# Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~14+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-15 11:32+0000\n"
 "PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2017\n"
+"Last-Translator: Murat Kaplan <muratk@projetgrup.com>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +23,7 @@ msgstr ""
 #: code:addons/account_yodlee/models/yodlee.py:107
 #, python-format
 msgid "(Diagnostic: %r for URL %s)"
-msgstr "(Tanı: URL %s için %r)"
+msgstr "(Teşhis: URL% s için% r)"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:413
@@ -37,6 +34,10 @@ msgid ""
 "  Please log in to the site to confirm and then complete the site addition "
 "process with the correct login information."
 msgstr ""
+"Zaten Kayıtlı Hesap (436): Siteniz hesabınızın zaten kayıtlı olduğunu "
+"bildirdiği için Otomatik Kayıt işlemi tamamlanamadı. Lütfen doğrulamak için "
+"siteye giriş yapın ve doğru giriş bilgileri ile site ekleme işlemini "
+"tamamlayın."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:400
@@ -48,6 +49,11 @@ msgid ""
 " or contact its customer support to resolve this issue.  Once done, please "
 "update your account credentials in case they are changed."
 msgstr ""
+"Hesap Kilitli (407): Hesabınız kilitli görünmesi nedeniyle hesabınızı "
+"güncelleyemedik. Bu genellikle kısa bir süre içinde çok fazla başarısız "
+"oturum açma girişimi sonucunda oluşur. Bu sorunu çözmek için lütfen siteyi "
+"ziyaret edin veya müşteri desteğiyle iletişime geçin. İşlemler bittiğinde, "
+"lütfen değiştirildiyse, hesabınızın kimlik bilgilerini güncelleyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:427
@@ -57,6 +63,8 @@ msgid ""
 "at the site. Please log in at the site and confirm that your account is set "
 "up, then try again."
 msgstr ""
+"Hesap Bulunamadı (408): Üzgünüz, sitede hesap bulamadık. Lütfen siteye giriş"
+" yapın ve hesabınızın kurulumunu onaylayın ve tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:405
@@ -67,6 +75,9 @@ msgid ""
 "been closed.  Please deactivate or delete the relevant account and try "
 "again."
 msgstr ""
+"Hesaplanan Rapor Kapandı (422): İlgili hesaplarınızdan bir veya daha fazlası"
+" kapatıldığı için hesap bilgilerinizi güncelleyemedik. Lütfen ilgili hesabı "
+"devre dışı bırakın veya silin ve tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:402
@@ -75,22 +86,24 @@ msgid ""
 "Account Type Not Supported(417):The type of account we found is not "
 "currently supported.  Please remove this site and add as a  manual account."
 msgstr ""
+"Desteklenmeyen Hesap Türü (417): Bulduğumuz hesap türü şu anda "
+"desteklenmiyor. Lütfen bu siteyi kaldırın ve manuel hesap ekleyin."
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_journal_yodlee_account_status
 msgid "Active/Inactive on Yodlee system"
-msgstr ""
+msgstr "Yodlee sistemi üzerinde etkin / pasif"
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_additional_status
 msgid "Additional information on status"
-msgstr ""
+msgstr "Durum hakkında ek bilgi"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:435
 #, python-format
 msgid "An Error has occurred (code %s)"
-msgstr ""
+msgstr "Bir Hata oluştu (kod %s )"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:320
@@ -98,18 +111,18 @@ msgstr ""
 #, python-format
 msgid ""
 "An error has occurred while trying to refresh accounts (type not supported)"
-msgstr ""
+msgstr "Hesapları yenilemeye çalışırken bir hata oluştu (desteklenmeyen tür)"
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_res_company
 msgid "Companies"
-msgstr "Firmalar"
+msgstr "Şirketler"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:159
 #, python-format
 msgid "Could not retrieve login form for siteId: %s (%s)"
-msgstr ""
+msgstr "SiteId için oturum açma formu alınamadı: %s ( %s )"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:397
@@ -119,6 +132,9 @@ msgid ""
 "because your username and/or password were reported to be incorrect.  Please"
 " re-verify your username and password."
 msgstr ""
+"Kimlik Doğrulaması Yeniden Doğrulama Gerekli (402): Hesabınızı "
+"güncelleyemedik, kullanıcı adınız ve / veya şifrenizin yanlış olduğu "
+"bildirildi. Lütfen kullanıcı adınızı ve şifrenizi tekrar doğrulayın."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:403
@@ -127,6 +143,9 @@ msgid ""
 "Credential Re-Verification Required (420):The site has merged with another. "
 "Please re-verify your credentials at the site and update the same."
 msgstr ""
+"Kimlik Bilgisinin Yeniden Doğrulanması Gerekli (420): Site bir başka siteyle"
+" birleştirildi. Lütfen sitedeki kimlik bilgilerinizi tekrar doğrulayın ve "
+"güncelleyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:314
@@ -135,12 +154,14 @@ msgid ""
 "Different error have occurred on different accounts, see provider account "
 "message for details"
 msgstr ""
+"Farklı hesaplarda farklı hata oluştu, ayrıntılar için sağlayıcı hesabı "
+"mesajına bakınız."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:101
 #, python-format
 msgid "Error %s, message: %s, reference code: %s"
-msgstr ""
+msgstr "Hata %s , mesaj: %s , referans kodu: %s"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:396
@@ -149,6 +170,8 @@ msgid ""
 "Home Value Not Found (511): The site is unable to provide home value for "
 "your property. We suggest you to delete this site."
 msgstr ""
+"Ev Değeri Bulunamadı (511): Site mülkünüze ev değeri sağlayamıyor. Bu siteyi"
+" silmenizi öneririz."
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_journal
@@ -163,6 +186,8 @@ msgid ""
 "is not English. Please visit the site and change the language setting to "
 "English."
 msgstr ""
+"Geçersiz Dil Ayarı (421): Site hesabınızın dil ayarları İngilizce değil. "
+"Lütfen siteyi ziyaret edin ve dil ayarını İngilizce olarak değiştirin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:419
@@ -173,6 +198,9 @@ msgid ""
 "introduced. Ensure your account settings in <Cobrand> are updated with this "
 "information."
 msgstr ""
+"MFA hatası: Ek Doğrulama Kaydı Gerekli (521): Lütfen yeni güvenlik doğrulama"
+" sistemine kaydolun, <Hesap Adı> tanıtıldı. <Cobrand> 'daki hesap "
+"ayarlarınızın bu bilgilerle güncellendiğinden emin olun."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:422
@@ -181,6 +209,8 @@ msgid ""
 "MFA error: Authentication Information Expired (524):We're sorry, the "
 "authentication information you provided has expired. Please try again."
 msgstr ""
+"MFA hatası: Kimlik Doğrulama Bilgisi Süresi Doldu (524): Üzgünüz, "
+"sağladığınız kimlik doğrulama bilgileri doldu. Lütfen tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:418
@@ -190,6 +220,9 @@ msgid ""
 "indicates that the additional authentication information you provided is "
 "incorrect. Please try updating your account again."
 msgstr ""
+"MFA hatası: Kimlik Doğrulama Bilgileri Yanlış (520): Üzgünüz, site, "
+"sağladığınız ek kimlik doğrulama bilgilerinin yanlış olduğunu belirtir. "
+"Lütfen hesabınızı tekrar güncellemeyi deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:421
@@ -198,6 +231,8 @@ msgid ""
 "MFA error: Authentication Information Incorrect (523):We're sorry, the "
 "authentication information you  provided is incorrect. Please try again."
 msgstr ""
+"MFA hatası: Kimlik Doğrulama Bilgileri Yanlış (523): Üzgünüz, verdiğiniz "
+"kimlik doğrulama bilgileri yanlış. Lütfen tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:417
@@ -207,6 +242,9 @@ msgid ""
 "updated as your authentication information like security question and answer"
 " was unavailable or incomplete. Please update your account settings."
 msgstr ""
+"MFA hatası: Kimlik Doğrulama Gerekli Bilgiler (519): Hesabınız, güvenlik "
+"sorusu ve cevabı kullanılamıyor veya eksik gibi, kimlik doğrulama bilgisi "
+"olarak güncellenmedi. Lütfen hesap ayarlarınızı güncelleyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:416
@@ -216,6 +254,9 @@ msgid ""
 " updated as the required additional authentication information was "
 "unavailable. Please try now."
 msgstr ""
+"MFA hatası: Kimlik Doğrulama Bilgileri Kullanılamıyor (518): Gerekli ek "
+"kimlik doğrulama bilgileri kullanılamadığından hesabınız güncellenmedi. "
+"Lütfen şimdi dene."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:423
@@ -225,6 +266,9 @@ msgid ""
 "your account because your username/password or additional security "
 "credentials are incorrect. Please try again."
 msgstr ""
+"MFA hatası: Kimlik Doğrulama Yeniden Doğrulama Gerekli (526): Hesabınızı "
+"güncelleyemedik; kullanıcı adı / şifre veya ek güvenlik kimlik bilgileriniz "
+"yanlış. Lütfen tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:434
@@ -234,6 +278,10 @@ msgid ""
 "for technical reasons. This type of error is usually resolved in a few days."
 " We apologize for the inconvenience. Please try again later."
 msgstr ""
+"MFA hatası: Hesabın Güncellenmesi Problemi (525): Teknik nedenlerden dolayı "
+"hesabınızı güncelleyemedik. Bu tür bir hata genellikle birkaç gün içinde "
+"çözülür. Verdiğimiz rahatsızlık için özür dileriz. Lütfen daha sonra tekrar "
+"deneyiniz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:420
@@ -243,6 +291,9 @@ msgid ""
 "required security information was unavailable or was not provided within the"
 " expected time. Please try again."
 msgstr ""
+"MFA hatası: İstek Zaman Aşımı (522): İstenilen güvenlik bilgisi "
+"kullanılamadığından veya beklenen sürede sağlanmadığından isteğiniz zaman "
+"aşımına uğradı. Lütfen tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:432
@@ -252,6 +303,10 @@ msgid ""
 "update your account because your token is no longer valid at the site. "
 "Please update your information and try again, or contact customer support."
 msgstr ""
+"MFA hatası: Site Aygıt Bilgisi Süresi Dolmuştur (509): Maalesef, simgeniz "
+"artık sitede geçerli olmadığından hesabınızı güncelleyemiyoruz. Lütfen "
+"bilgilerinizi güncelleyin ve tekrar deneyin veya müşteri desteğiyle "
+"iletişime geçin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:388
@@ -261,6 +316,9 @@ msgid ""
 "session was already established at the same time.  If you are currently "
 "logged on to this account directly, please log off and try after some time"
 msgstr ""
+"Birden Çok Kullanıcı Girişi (416): Hesabınızı güncellemeye çalıştık, ancak "
+"başka bir oturum zaten aynı saatte kuruldu. Şu anda doğrudan bu hesaba "
+"açıldıysanız lütfen oturumu kapatın ve bir süre sonra tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:414
@@ -270,6 +328,8 @@ msgid ""
 " need to provide additional information. Please update your account and try "
 "again."
 msgstr ""
+"Yeni Giriş Bilgileri Gerekli (506): Üzgünüz, bu siteye giriş yapmak için ek "
+"bilgi sağlamanız gerekiyor. Lütfen hesabınızı güncelleyin ve tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:390
@@ -280,6 +340,10 @@ msgid ""
 "persists, please contact customer support at online@odoo.com for further "
 "assistance."
 msgstr ""
+"Hesap Bulunamadı (423): Bir hesabı tespit edemedik. Lütfen şu anda hesap "
+"bilgilerinizin mevcut olduğunu doğrulayın ve sorun devam ederse, daha fazla "
+"yardım için lütfen online@odoo.com adresindeki müşteri desteğiyle iletişime "
+"geçin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:415
@@ -288,24 +352,26 @@ msgid ""
 "No Payees Found(512):Your request cannot be completed as no payees were "
 "found in your account."
 msgstr ""
+"Hiçbir Payees Bulunamadı (512): Talebiniz hesabınıza hiç kimse bulunamadığı "
+"için tamamlanamadı."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:48
 #, python-format
 msgid "Please configure an email in the company settings."
-msgstr ""
+msgstr "Lütfen şirket ayarlarında bir e-posta yapılandırın."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:144
 #, python-format
 msgid "Please enter at least 3 characters for the search"
-msgstr ""
+msgstr "Lütfen arama için en az 3 karakter girin"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:197
 #, python-format
 msgid "Please fill all required fields"
-msgstr ""
+msgstr "Lütfen tüm gerekli alanları doldurunuz"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:399
@@ -316,6 +382,11 @@ msgid ""
 "or contact its customer support to resolve this issue. Once done, please "
 "update your account credentials in case they are changed else try again."
 msgstr ""
+"Hesabın Güncellenmesi İçin Sorun Giderme (406): Sitede biraz ek işlem "
+"yapmanızı gerektirdiği için hesabınızı güncelleyemedik. Bu sorunu çözmek "
+"için lütfen siteyi ziyaret edin veya müşteri desteğiyle iletişime geçin. "
+"İşlem tamamlandıktan sonra lütfen değiştirilmeleri için hesabınızın kimlik "
+"bilgilerini güncelleyin, aksi takdirde tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:433
@@ -324,6 +395,8 @@ msgid ""
 "Problem Updating Account (517) :We'resorry, there was a technical problem "
 "updating your account. Please try again."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (517): Hesabınızı güncellemekle ilgili teknik bir"
+" problem oluştu. Lütfen tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:424
@@ -332,6 +405,8 @@ msgid ""
 "Problem Updating Account(401):We're sorry, your request timed out. Please "
 "try again."
 msgstr ""
+"Hesap Güncellenirken Sorun Giderme (401): Maalesef, isteğiniz zaman aşımına "
+"uğradı. Lütfen tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:425
@@ -341,6 +416,9 @@ msgid ""
 "updating your account. This kind of error is usually resolved in a few days."
 " Please try again later."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (403): Maalesef hesabınızı güncellemekle ilgili "
+"teknik bir sorun oluştu. Bu tür bir hata genellikle birkaç gün içinde "
+"çözülür. Lütfen daha sonra tekrar deneyiniz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:426
@@ -349,6 +427,8 @@ msgid ""
 "Problem Updating Account(404):We're sorry, there was a technical problem "
 "updating your account. Please try again later."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (404): Maalesef hesabınızı güncellemekle ilgili "
+"teknik bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:384
@@ -357,6 +437,8 @@ msgid ""
 "Problem Updating Account(409): We could not update your account because the "
 "end site is experiencing technical difficulties."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (409): Son site teknik zorluklarla "
+"karşılaştığından hesabınızı güncelleyemedik."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:386
@@ -365,6 +447,8 @@ msgid ""
 "Problem Updating Account(412): We could not update your account because the "
 "site is experiencing technical difficulties."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (412): Site teknik zorluklarla karşılaştığından "
+"hesabınızı güncelleyemedik."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:428
@@ -374,6 +458,9 @@ msgid ""
 "at the site because of a technical issue. This type of problem is usually "
 "resolved in a few days. Please try again later."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (413): Maalesef, teknik bir sorun nedeniyle "
+"sitenizdeki hesabınızı güncelleyemedik. Bu tür bir sorun genellikle birkaç "
+"gün içinde çözülür. Lütfen daha sonra tekrar deneyiniz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:387
@@ -382,6 +469,8 @@ msgid ""
 "Problem Updating Account(415): We could not update your account because the "
 "site is experiencing technical difficulties."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (415): Siteniz teknik zorluklarla "
+"karşılaştığından hesabınızı güncelleyemedik."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:389
@@ -390,6 +479,9 @@ msgid ""
 "Problem Updating Account(418): We could not update your account because the "
 "site is experiencing technical difficulties. Please try later."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (418): Siteniz teknik zorluklarla "
+"karşılaştığından hesabınızı güncelleyemedik. Lütfen daha sonra tekrar "
+"deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:429
@@ -399,6 +491,9 @@ msgid ""
 "because of unexpected variations at the site. This kind of problem is "
 "usually resolved in a few days. Please try again later."
 msgstr ""
+"Hesabın Güncellenmesi Problemi (419): Maalesef sitede beklenmedik "
+"değişikliklerden dolayı hesabınızı güncelleyemedik. Bu tür bir problem "
+"genellikle birkaç gün içinde çözülür. Lütfen daha sonra tekrar deneyiniz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:392
@@ -407,6 +502,9 @@ msgid ""
 "Problem Updating Account(425): We could not update your account because the "
 "site is experiencing technical difficulties. Please try later."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (425): Siteniz teknik zorluklarla "
+"karşılaştığından hesabınızı güncelleyemedik. Lütfen daha sonra tekrar "
+"deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:393
@@ -416,6 +514,9 @@ msgid ""
 "technical reasons. This type of error is usually resolved in a few days. We "
 "apologize for the inconvenience."
 msgstr ""
+"Sorun Güncelleniyor Hesabı (426): Teknik nedenlerden dolayı hesabınızı "
+"güncelleyemedik. Bu tür bir hata genellikle birkaç gün içinde çözülür. "
+"Verdiğimiz rahatsızlık için özür dileriz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:430
@@ -425,6 +526,9 @@ msgid ""
 " data updates for this site, and it may take a few days to be successful as "
 "we get started. Please try again later."
 msgstr ""
+"Hesap Güncellenirken Sorun Giderme (507): Üzgünüz, Yodlee bu sitede yeni "
+"veri güncellemeleri yapmaya başladı ve başlamak için birkaç gün sürebilir. "
+"Lütfen daha sonra tekrar deneyiniz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:395
@@ -434,6 +538,9 @@ msgid ""
 "information for your address. Please verify if the property address you have"
 " provided is correct."
 msgstr ""
+"Emlak Kayıt Bulunamadı (510): Site, adresiniz için herhangi bir mülk bilgisi"
+" bulamadı. Lütfen sağladığınız mülkiyet adresinin doğru olup olmadığını "
+"doğrulayın."
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_provider
@@ -448,6 +555,9 @@ msgid ""
 "site requiring you to verify your personal information. Please log in to the"
 " site and update the fields required."
 msgstr ""
+"Yeniden Doğrulama Gerekli (429): Kişisel bilgilerinizi doğrulamanızı isteyen"
+" site nedeniyle hesabınızı güncelleyemedik. Lütfen siteye giriş yapın ve "
+"gerekli alanları güncelleyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:406
@@ -458,6 +568,10 @@ msgid ""
 "click through to your account overview page to update the account.  We "
 "apologize for the inconvenience."
 msgstr ""
+"Yeniden Doğrulama Gerekli (427): Hesabınızı, yeni bir tanıtımı "
+"görüntülemenizi gerektiren site nedeniyle güncelleyemedik. Lütfen hesabı "
+"güncellemek için siteye giriş yapın ve hesap genel görünüm sayfanızı "
+"tıklayın. Verdiğimiz rahatsızlık için özür dileriz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:407
@@ -467,6 +581,9 @@ msgid ""
 "site requiring you to accept a new Terms & Conditions. Please log in to the "
 "site and read and accept the T&C."
 msgstr ""
+"Yeniden Doğrulama Gerekli (428): Yeni bir Şartlar ve Koşullar'ı kabul "
+"etmenizi gerektiren site nedeniyle hesabınızı güncelleyemedik. Lütfen siteye"
+" giriş yapın ve T & C'yi okuyun ve kabul edin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:410
@@ -476,6 +593,9 @@ msgid ""
 "Please complete your registration at the end site. Once completed, please "
 "complete adding this account."
 msgstr ""
+"Kayıt Dikkat Gerektirir (433): Otomatik kayıt işlemi tamamlanmadı. Lütfen "
+"kayıt işleminizi bitiş sitesinde tamamlayın. Tamamlandıktan sonra lütfen bu "
+"hesabı eklemeyi tamamlayın."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:411
@@ -485,6 +605,9 @@ msgid ""
 "completed and requires further input from you.  Please re-verify your "
 "registration information to complete the process."
 msgstr ""
+"Kayıt Dikkat Gerektirir (434): Otomatik Kayıt işlemi tamamlanamadı ve sizden"
+" daha fazla bilgi girilmesini gerektiriyor. İşlemi tamamlamak için lütfen "
+"kayıt bilgilerinizi yeniden doğrulayın."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:412
@@ -494,6 +617,9 @@ msgid ""
 "completed and requires further input from you.  Please re-verify your "
 "registration information to complete the process."
 msgstr ""
+"Kayıt Dikkat Gerektirir (435): Otomatik Kayıt işlemi tamamlanamadı ve sizden"
+" daha fazla bilgi girilmesini gerektiriyor. İşlemi tamamlamak için lütfen "
+"kayıt bilgilerinizi yeniden doğrulayın."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:431
@@ -502,6 +628,8 @@ msgid ""
 "Request Timed Out (508): We are sorry, your request timed out due to "
 "technical reasons. Please try again."
 msgstr ""
+"İstek Zaman Aşımı (508): Üzgünüz, isteğiniz teknik sebeplerden dolayı zaman "
+"aşımına uğradı. Lütfen tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:401
@@ -511,6 +639,9 @@ msgid ""
 "account. You may have selected a similar site under a different category by "
 "accident in which case you should select the correct site."
 msgstr ""
+"İstenen Hesap Türü Bulunamadı (414): İstediğiniz hesabı bulamadık. Kazayla "
+"başka bir kategoride benzer bir site seçmiş olabilirsiniz, bu durumda doğru "
+"siteyi seçmelisiniz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:391
@@ -521,6 +652,10 @@ msgid ""
 "inconvenience.  This problem is typically resolved in a few hours. Please "
 "try later."
 msgstr ""
+"Bakımdan Siteden Sonra İndirme (424): Sitenin bakım için geçici olarak "
+"kapatıldığı için hesabınızı güncelleyemedik. Verdiğimiz rahatsızlık için "
+"özür dileriz. Bu problem genellikle birkaç saat içinde giderilir. Lütfen "
+"daha sonra tekrar deneyin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:385
@@ -529,6 +664,8 @@ msgid ""
 "Site No Longer Available (411):The site no longer provides online services "
 "to its customers.  Please delete this account."
 msgstr ""
+"Site artık mevcut değil (411): Site artık müşterilerine çevrimiçi hizmetler "
+"sağlamıyor. Lütfen bu hesabı silin."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:409
@@ -538,6 +675,9 @@ msgid ""
 "updates. Please deactivate or delete your account. We apologize for the "
 "inconvenience."
 msgstr ""
+"Artık Desteklenmeyen Site (430): Bu site artık veri güncellemeleri için "
+"desteklenmiyor. Lütfen hesabınızı devre dışı bırakın veya silin. Verdiğimiz "
+"rahatsızlık için özür dileriz."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:394
@@ -547,18 +687,21 @@ msgid ""
 "used by this site. We apologize for any inconvenience. Check back "
 "periodically if this situation has changed."
 msgstr ""
+"Desteklenmeyen Site (505): Şu anda bu sitenin kullandığı güvenlik sistemini "
+"desteklemiyoruz. Verdiğimiz rahatsızlıktan dolayı özür dileriz. Bu durum "
+"değişirse periyodik olarak tekrar kontrol edin."
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
 msgid "Technical field: scheduled time for yodlee to perform an update"
-msgstr ""
+msgstr "Teknik Alan: Yodlee'nin güncelleme yapması için zamanlanmış zaman"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:277
 #: code:addons/account_yodlee/models/yodlee.py:278
 #, python-format
 msgid "Timeout: Could not retrieve accounts informations"
-msgstr ""
+msgstr "Zaman aşımı: Hesap bilgileri alınamadı"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:60
@@ -576,48 +719,50 @@ msgid ""
 "Update Request Canceled(405):Your account was not updated because you "
 "canceled the request."
 msgstr ""
+"Güncelleme İsteği İptal Edildi (405): Hesabınızı, talebi iptal ettiğiniz "
+"için güncellenmedi."
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_account_status
 msgid "Yodlee Account Status"
-msgstr ""
+msgstr "Yodlee Hesap Durumu"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_additional_status
 msgid "Yodlee Additional Status"
-msgstr ""
+msgstr "Yodlee Ek Durumu"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_last_attempted_refresh
 msgid "Yodlee Last Attempted Refresh"
-msgstr ""
+msgstr "Yodlee Son Girişimi Yenile"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
 msgid "Yodlee Next Schedule Refresh"
-msgstr ""
+msgstr "Yodlee Sonraki Program Yenilendi"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_status_code
 msgid "Yodlee Status Code"
-msgstr ""
+msgstr "Yodlee Durum Kodu"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_access_token
 msgid "Yodlee access token"
-msgstr ""
+msgstr "Yodlee erişim izni"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_login
 msgid "Yodlee login"
-msgstr ""
+msgstr "Yodlee giriş"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_password
 msgid "Yodlee password"
-msgstr ""
+msgstr "Yodlee şifresi"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_access_token
 msgid "access_token"
-msgstr ""
+msgstr "access_token"
