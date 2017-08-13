@@ -24,6 +24,7 @@
 # Carles Antoli <carlesantoli@hotmail.com>, 2016
 # Alejandro Santana <alejandrosantana@anubia.es>, 2016
 # Miguel Orueta <mo@landoo.es>, 2016
+# Gustavo Valverde <g.valverde02@gmail.com>, 2016
 # Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2016
 # Cristian Salamea <ovnicraft@gmail.com>, 2017
 # Gelo Joga Landoo <gj@landoo.es>, 2017
@@ -779,7 +780,7 @@ msgstr "Contratos"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
 msgid "Create & View Quotation"
-msgstr "Presupuesto Create & View"
+msgstr "Crear & Ver Cotización "
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_create_uid
@@ -996,6 +997,12 @@ msgstr ""
 #, python-format
 msgid "In Progress"
 msgstr "En proceso"
+
+#. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:26
+#, python-format
+msgid "Inconsistency detected!"
+msgstr ""
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
@@ -1305,7 +1312,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.model,name:website_contract.model_sale_quote_template
 msgid "Sale Quotation Template"
-msgstr "Plantilla de presupuesto de venta"
+msgstr "Plantilla de cotización de venta"
 
 #. module: website_contract
 #: model:ir.model,name:website_contract.model_sale_subscription
@@ -1437,6 +1444,15 @@ msgstr "Finalización de la suscripción ${object.code}"
 #: model:ir.ui.view,arch_db:website_contract.prepaid
 msgid "Terms and conditions"
 msgstr "Términos y condiciones"
+
+#. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:27
+#, python-format
+msgid ""
+"The contract set on the order (%s) is different from the contract set on the"
+" quotation template (%s)! It is advised to change the quotation template "
+"instead."
+msgstr ""
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_wizard_date_from

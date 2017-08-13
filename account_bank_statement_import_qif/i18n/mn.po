@@ -6,13 +6,14 @@
 # Martin Trigaux <mat@odoo.com>, 2017
 # Otgonbayar.A <gobi.mn@gmail.com>, 2017
 # Uurdmunkh Ulam-Orgikh <uurdmunkh.u@gmail.com>, 2017
+# BATKHUYAG GANBOLD <gbatkhuyag@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Uurdmunkh Ulam-Orgikh <uurdmunkh.u@gmail.com>, 2017\n"
+"Last-Translator: BATKHUYAG GANBOLD <gbatkhuyag@gmail.com>, 2017\n"
 "Language-Team: Mongolian (https://www.transifex.com/odoo/teams/41243/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +28,9 @@ msgid ""
 " be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
 msgstr ""
+"Бүртгэлийн журнал нь импортлож буй банкны хуулгаас хамаарна. Журналыг "
+"автоматаар танихаар тохируулаагүй тохиолдолд хуулгын форматыг гараар сонгох "
+"шаардлагатай (жишээ нь: QIF)"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
@@ -35,12 +39,16 @@ msgid ""
 "financial institutions use the local format.Therefore, it is frequent "
 "outside the US to have QIF date formated day-first (dd/mm/yy)."
 msgstr ""
+"QIF форматын ашигладаг огноо нь сарыг эхэндээ (сс/өө/оо) оруулдаг хэдий ч, "
+"ихэнх санхүүгийн байгууллагууд орон нутгийн форматыг ашигласан байдаг. Тийм "
+"учраас АНУ -с гадуур орнууд голцуу өдөр нь эхэндээ (өө/сс/оо) форматыг "
+"ашиглах нь түгээмэл."
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:61
 #, python-format
 msgid "Could not decipher the QIF file."
-msgstr ""
+msgstr "QIF файлыг задлах боломжгүй байна."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
@@ -65,12 +73,12 @@ msgstr "Журналь"
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_qif
 msgid "Quicken Interchange Format (.QIF)"
-msgstr ""
+msgstr "Куйкен Программын Солилцооны Формат (.QIF)"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_show_qif_date_format
 msgid "Show qif date format"
-msgstr ""
+msgstr "qif -н огнооны форматыг үзүүл"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import_show_qif_date_format
@@ -78,6 +86,8 @@ msgid ""
 "Technical field used to ask the user for the date format used in the QIF "
 "file, as this format is ambiguous."
 msgstr ""
+"QIF форматд ашигласан огноог дахин лавлах техникийн талбар, учир өөр утгыг "
+"илэрхийлж магадагүй."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view_inherited
@@ -85,6 +95,9 @@ msgid ""
 "The QIF format is ambiguous about dates: please check with your financial "
 "institution whether they format it with month or day first.<br/>"
 msgstr ""
+"QIF форматын огноо нь өөр илэрхийлэлтэй байж магадгүй: үйлчилгээ үзүүлдэг "
+"санхүүгийн байгууллагаас тэдний формат нь эхлээд сар эсвэл өдөр тусгагдсаныг"
+" лавлана уу.<br/>"
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:101
@@ -100,9 +113,9 @@ msgstr "_Import"
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "dd/mm/yy"
-msgstr ""
+msgstr "өө/сс/оо"
 
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "mm/dd/yy"
-msgstr ""
+msgstr "сс/өө/оо"

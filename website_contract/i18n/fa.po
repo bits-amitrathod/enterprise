@@ -5,7 +5,7 @@
 # Translators:
 # Martin Trigaux <mat@odoo.com>, 2016
 # Zahed Alfak <tamass4116@gmail.com>, 2016
-# Faraz Sadri <ifarazir@gmail.com>, 2016
+# ifaraz ir <ifarazir@gmail.com>, 2016
 # Hamid Darabi <hamid.darabi@gmail.com>, 2016
 # Sahar Daraye <sahar.daraye.1369@gmail.com>, 2016
 # Morovat Guivi <tarjomac@gmail.com>, 2016
@@ -879,6 +879,12 @@ msgid "In Progress"
 msgstr "در حال پیشرفت"
 
 #. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:26
+#, python-format
+msgid "Inconsistency detected!"
+msgstr ""
+
+#. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
 msgid ""
 "Insert the options directly, they will be invoiced on the next invoice date."
@@ -1308,6 +1314,15 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_contract.prepaid
 msgid "Terms and conditions"
 msgstr "شرایط و ضوابط"
+
+#. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:27
+#, python-format
+msgid ""
+"The contract set on the order (%s) is different from the contract set on the"
+" quotation template (%s)! It is advised to change the quotation template "
+"instead."
+msgstr ""
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_wizard_date_from

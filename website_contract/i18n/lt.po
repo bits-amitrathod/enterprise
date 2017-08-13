@@ -9,14 +9,14 @@
 # Audrius Palenskis <audrius.palenskis@gmail.com>, 2016
 # UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2016
 # Antanas Muliuolis <an.muliuolis@gmail.com>, 2017
-# Aiste Sutkute <digitouchagencyeur@gmail.com>, 2017
+# digitouch UAB <digitouchagencyeur@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 09:14+0000\n"
 "PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Aiste Sutkute <digitouchagencyeur@gmail.com>, 2017\n"
+"Last-Translator: digitouch UAB <digitouchagencyeur@gmail.com>, 2017\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -884,6 +884,12 @@ msgid "In Progress"
 msgstr "Vykdoma"
 
 #. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:26
+#, python-format
+msgid "Inconsistency detected!"
+msgstr ""
+
+#. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
 msgid ""
 "Insert the options directly, they will be invoiced on the next invoice date."
@@ -1313,6 +1319,15 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_contract.prepaid
 msgid "Terms and conditions"
 msgstr "Sąlygos"
+
+#. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:27
+#, python-format
+msgid ""
+"The contract set on the order (%s) is different from the contract set on the"
+" quotation template (%s)! It is advised to change the quotation template "
+"instead."
+msgstr ""
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_wizard_date_from

@@ -6,9 +6,9 @@
 # grazziano <gra.negocia@gmail.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
 # Mateus Lopes <mateus1@gmail.com>, 2016
-# francisco alexandre bezerra da silva <falexandresilva@gmail.com>, 2016
+# falexandresilva <falexandresilva@gmail.com>, 2016
 # Clemilton Clementino <clemylton@hotmail.com>, 2016
-# Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2016
+# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2016
 # Rui Andrada <shingonoide@gmail.com>, 2016
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
 # Peter Leaf <pablleaf@gmail.com>, 2016
@@ -907,6 +907,12 @@ msgid "In Progress"
 msgstr "Em Andamento"
 
 #. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:26
+#, python-format
+msgid "Inconsistency detected!"
+msgstr ""
+
+#. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
 msgid ""
 "Insert the options directly, they will be invoiced on the next invoice date."
@@ -1347,6 +1353,15 @@ msgstr "Término de assinatura ${object.code}"
 #: model:ir.ui.view,arch_db:website_contract.prepaid
 msgid "Terms and conditions"
 msgstr "Termos e condições"
+
+#. module: website_contract
+#: code:addons/website_contract/models/sale_order.py:27
+#, python-format
+msgid ""
+"The contract set on the order (%s) is different from the contract set on the"
+" quotation template (%s)! It is advised to change the quotation template "
+"instead."
+msgstr ""
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_wizard_date_from

@@ -1070,21 +1070,24 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"ເລກກຳກັບທີ່ສາມາດເລືອກໄດ້ຂອງກະທູ້ (ແຖວຂໍ້ມູນ) "
+"ຊຶ່ງຂໍ້ຄວາມເຂົ້າທັງໝົດຈະໄດ້ຄັດຕິດມາ, ເຖິງແມ່ນວ່າເຂົາເຈົ້າບໍ່ໄດ້ຕອບກັບກໍຕາມ. "
+"ຖ້າຫາກຕັ້ງຕ່າໄວ້, ອັນນີ້ຈະປິດການສ້າງແຖວຂໍ້ມູນໃໝ່ ທັງໝົດ."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_user_id
 msgid "Owner"
-msgstr ""
+msgstr "ເຈົ້າຂອງ"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_model_id
 msgid "Parent Model"
-msgstr ""
+msgstr "ແບບບໍລິສັດແມ່"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "ເລກກຳກັບແຖວຂໍ້ມູນແມ່"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_model_id
@@ -1093,6 +1096,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"ຮູບແບບຂອງແມ່ທີ່ຖືນາມແຝງ. ແບບທີ່ຖືການອ້າງອິງນາມແຝງ "
+"ແມ່ນບໍ່ຈໍາເປັນຕ້ອງແມ່ນແບບທີ່ກໍານົດ ໂດຍ alias_model_id (ຕົວຢ່າງ: ໂຄງການ "
+"(parent_model) ແລະ ໜ້າວຽກ (model))"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_debit_limit
@@ -1128,11 +1134,15 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"ນະໂຍບາຍຂອງການສະແດງຂໍ້ຄວາມຢູ່ເທິງເອກະສານ ໃຫ້ນໍາໃຊ້ ປະຕູເມວລ໌ ນີ້.\n"
+"- ທຸກຄົນ: ທຸກຄົນສາມາດສະແດງ\n"
+"- ຄູ່ຮ່ວມງານ: ຄູ່ຮ່ວມງານທີ່ອະນຸຍາດໃຫ້ເທົ່ານັ້ນ\n"
+"- ຜູ້ຕິດຕາມ: ພຽງແຕ່ ຜູ້ຕິດຕາມຂອງເອກະສານທີ່ກ່ຽວຂ້ອງ ຫຼື ສະມາຊິກຂອງຊ່ອງຕໍ່ໄປນີ້ເທົ່ານັ້ນ\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_priority
 msgid "Priority"
-msgstr ""
+msgstr "ບຸລິມະສິດ"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1194,7 +1204,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "ເລກກຳກັບແຖວຂໍ້ມູນ"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
@@ -1323,6 +1333,8 @@ msgid ""
 "Specific team that uses this stage. Other teams will not be able to see or "
 "use this stage."
 msgstr ""
+"ທີມງານສະເພາະກິດທີ່ໃຊ້ຂັ້ນຕອນນີ້. ທີມງານອື່ນໆຈະບໍ່ສາມາດເຫັນ ຫຼື "
+"ໃຊ້ງານຂັ້ນນີ້."
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
@@ -1336,19 +1348,19 @@ msgstr "ຂັ້ນ"
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_stage
 msgid "Stage Changed"
-msgstr ""
+msgstr "ບາດກ້າວປ່ຽນໄປ"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_stage_view_form
 msgid "Stage Search"
-msgstr ""
+msgstr "ຊອກຫາບາດກ້າວ"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_stage_action
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_stage_ids
 #: model:ir.ui.menu,name:helpdesk.helpdesk_stage_menu
 msgid "Stages"
-msgstr ""
+msgstr "ບາດກ້າວ"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_stage_ids
@@ -1406,19 +1418,19 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tag_view_tree
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_type_view_tree
 msgid "Tag"
-msgstr ""
+msgstr "ເປົ້າໝາຍ"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk.py:376 sql_constraint:helpdesk.tag:0
 #, python-format
 msgid "Tag name already exists !"
-msgstr ""
+msgstr "ຊື່ເປົ້າໝາຍນີ້ມີແລ້ວ!"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_tag
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_tag_ids
 msgid "Tags"
-msgstr ""
+msgstr "ເປົ້າໝາຍ"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_tag_action
@@ -1452,7 +1464,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Team"
-msgstr ""
+msgstr "ທີມງານ"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_member_ids
@@ -1482,6 +1494,9 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"ນີ້ແມ່ນຮູບແບບ (ປະເພດເອກະສານ Odoo) ທີ່ ຊື່ແທນນີ້ກົງກັບ. ອີເມວຂາເຂົ້າ "
+"ທີ່ບໍ່ໄດ້ຕອບກັບ ໄປຍັງ ແຖວຂໍ້ມູນທີ່ມີຢູ່ "
+"ຈະເຮັດໃຫ້ເກີດການສ້າງແຖວຂໍ້ມູນໃໝ່ຂອງແບບນີ້ (ເຊັ່ນວຽກໂຄງການ)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_name
@@ -1489,6 +1504,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"ຊື່ຂອງ ຊື່ແທນອີເມວລ໌, ຕ.ຢ. ໃສ່ \"jobs\" ຖ້າທ່ານຕ້ອງການ ເອົາເປັນຊື່ແທນ "
+"ອີເມວລ໌ ຂອງ <jobs@example.odoo.com>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_user_id
@@ -1498,6 +1515,10 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"ເຈົ້າຂອງແຖວຂໍ້ມູນໄດ້ສ້າງຂຶ້ນໃນຂະນະທີ່ໄດ້ຮັບອີເມວໃນນາມຊື່ແທນນີ້. "
+"ຖ້າຊ່ອງຂໍ້ມູນນີ້ບໍ່ຖືກກໍານົດ "
+"ລະບົບຈະພະຍາຍາມຊອກຫາເຈົ້າຂອງທີ່ຖືກຕ້ອງໂດຍອີງໃສ່ທີ່ຢູ່ຜູ້ສົ່ງ (ຈາກ), "
+"ຫຼືຈະໃຊ້ບັນຊີ ຜູ້ບໍລິຫານ ຖ້າຫາກວ່າບໍ່ພົບຜູ້ໃຊ້ລະບົບສໍາລັບທີ່ຢູ່ນັ້ນ."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_has_unreconciled_entries
@@ -1545,7 +1566,7 @@ msgstr ""
 #: code:addons/helpdesk/models/helpdesk.py:311
 #, python-format
 msgid "This target does not exist."
-msgstr ""
+msgstr "ເປົ້າໝາຍນີ້ຍັງບໍ່ທັນມີ"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
@@ -1703,7 +1724,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Unarchive"
-msgstr ""
+msgstr "ບໍ່ໄດ້ສຳເນົາໄວ້"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_unassigned_tickets
@@ -1744,7 +1765,7 @@ msgstr "ຜູ້ໃຊ້"
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "ຜູ້ໃຊ້ງານ"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_currency_id
