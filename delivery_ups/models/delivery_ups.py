@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError
-from odoo.tools import pycompat
+from odoo.tools import pycompat, pdf
 
 from .ups_request import UPSRequest, Package
 
@@ -135,10 +135,12 @@ class ProviderUPS(models.Model):
         ResCurrency = self.env['res.currency']
         for picking in pickings:
             packages = []
+            package_names = []
             if picking.package_ids:
                 # Create all packages
                 for package in picking.package_ids:
                     packages.append(Package(self, package.shipping_weight, quant_pack=package.packaging_id, name=package.name))
+                    package_names.append(package.name)
             # Create one package with the rest (the content that is not in a package)
             if picking.weight_bulk:
                 packages.append(Package(self, picking.weight_bulk))
@@ -187,21 +189,19 @@ class ProviderUPS(models.Model):
                 quote_currency = ResCurrency.search([('name', '=', result['currency_code'])], limit=1)
                 price = quote_currency.compute(float(result['price']), currency_order)
 
-            labels = []
-            track_numbers = []
+            package_labels = []
             for track_number, label_binary_data in pycompat.items(result.get('label_binary_data')):
-                logmessage = (_("Shipment created into UPS <br/> <b>Tracking Number : </b>%s") % (track_number))
-                picking.message_post(body=logmessage)
-                if self.ups_label_file_type == 'GIF':
-                    labels.append(('LabelUPS-%s.pdf' % track_number, label_binary_data))
-                else:
-                    labels.append(('LabelUPS-%s.%s' % (track_number, self.ups_label_file_type), label_binary_data))
-                track_numbers.append(track_number)
-            logmessage = (_("Shipping label for packages"))
-            picking.message_post(body=logmessage, attachments=labels)
+                package_labels = package_labels + [(track_number, label_binary_data)]
 
-            carrier_tracking_ref = "+".join(track_numbers)
-
+            carrier_tracking_ref = "+".join([pl[0] for pl in package_labels])
+            logmessage = _("Shipment created into UPS<br/>"
+                           "<b>Tracking Numbers:</b> %s<br/>"
+                           "<b>Packages:</b> %s") % (carrier_tracking_ref, ','.join(package_names))
+            if self.ups_label_file_type != 'GIF':
+                attachments = [('LabelUPS-%s.%s' % (pl[0], self.ups_label_file_type), pl[1]) for pl in package_labels]
+            if self.ups_label_file_type == 'GIF':
+                attachments = [('LabelUPS.pdf', pdf.merge_pdf([pl[1] for pl in package_labels]))]
+            picking.message_post(body=logmessage, attachments=attachments)
             shipping_data = {
                 'exact_price': price,
                 'tracking_number': carrier_tracking_ref}

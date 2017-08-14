@@ -5,6 +5,7 @@ import time
 
 from odoo import api, models, fields, _, tools
 from odoo.exceptions import UserError
+from odoo.tools import pdf
 
 from .fedex_request import FedexRequest
 
@@ -303,13 +304,15 @@ class ProviderFedex(models.Model):
                                     carrier_price = company_currency.compute(request['price']['USD'], order_currency)
 
                             carrier_tracking_ref = carrier_tracking_ref + "," + request['tracking_number']
-                            logmessage = (_("Shipment created into Fedex <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))
-                            picking.message_post(body=logmessage)
 
-                            for label in package_labels:
-                                logmessage = (_("Shipping label for package %s") % (label[0]))
-                                picking.message_post(body=logmessage, attachments=[('LabelFedex-%s.%s' % (label[0], self.fedex_label_file_type), label[1])])
-
+                            logmessage = _("Shipment created into Fedex<br/>"
+                                           "<b>Tracking Numbers:</b> %s<br/>"
+                                           "<b>Packages:</b> %s") % (carrier_tracking_ref, ','.join([pl[0] for pl in package_labels]))
+                            if self.fedex_label_file_type != 'PDF':
+                                attachments = [('LabelFedex-%s.%s' % (pl[0], self.fedex_label_file_type), pl[1]) for pl in package_labels]
+                            if self.fedex_label_file_type == 'PDF':
+                                attachments = [('LabelFedex.pdf', pdf.merge_pdf([pl[1] for pl in package_labels]))]
+                            picking.message_post(body=logmessage, attachments=attachments)
                             shipping_data = {'exact_price': carrier_price,
                                              'tracking_number': carrier_tracking_ref}
                             res = res + [shipping_data]
