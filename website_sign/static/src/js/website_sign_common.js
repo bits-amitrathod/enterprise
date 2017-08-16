@@ -438,7 +438,7 @@ odoo.define('website_sign.utils', function (require) {
 
             formatResult: function(partner, resultElem, searchObj) {
                 if(partner.id < 0) {
-                    var partnerMatch = searchObj.term.match(/(?:\s|\()*(((?:\w|-|\.)+)@(?:\w|-)+\.(?:\w|-)+)(?:\s|\))*/);
+                    var partnerMatch = searchObj.term.match(/[\s(]*(([\w-.]+)@(?:[\w-]+\.)+[\w-]+)[\s)]*/);
                     if(!partnerMatch || partnerMatch[1] === undefined) {
                         _.extend(partner, {'name': '', 'email': ''});
                         return $("<div/>", {text: _t("Create: \"") + searchObj.term + "\""})
