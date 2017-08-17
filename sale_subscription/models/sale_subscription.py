@@ -404,7 +404,7 @@ class SaleSubscription(models.Model):
 
 class SaleSubscriptionLine(models.Model):
     _name = "sale.subscription.line"
-    _description = "Susbcription Line"
+    _description = "Subscription Line"
 
     product_id = fields.Many2one('product.product', string='Product', domain="[('recurring_invoice','=',True)]", required=True)
     analytic_account_id = fields.Many2one('sale.subscription', string='Subscription')
@@ -466,7 +466,7 @@ class SaleSubscriptionLine(models.Model):
 class SaleSubscriptionCloseReason(models.Model):
     _name = "sale.subscription.close.reason"
     _order = "sequence, id"
-    _description = "Susbcription Close Reason"
+    _description = "Subscription Close Reason"
 
     name = fields.Char(required=True)
     sequence = fields.Integer(default=10)

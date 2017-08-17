@@ -8,7 +8,7 @@ class AccountAnalyticAccount(models.Model):
     _inherit = 'account.analytic.account'
 
     subscription_ids = fields.One2many('sale.subscription', 'analytic_account_id', string='Subscriptions')
-    subscription_count = fields.Integer(compute='_compute_subscription_count', string='Susbcription Count')
+    subscription_count = fields.Integer(compute='_compute_subscription_count', string='Subscription Count')
 
     def _compute_subscription_count(self):
         subscription_data = self.env['sale.subscription'].read_group(domain=[('analytic_account_id', 'in', self.ids)],
