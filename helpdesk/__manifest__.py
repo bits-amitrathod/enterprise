@@ -13,7 +13,8 @@
         'utm',
         'rating',
         'web_tour',
-        'resource'
+        'resource',
+        'portal',
     ],
     'description': """
 Helpdesk - Ticket Management App
@@ -41,6 +42,7 @@ Features:
         'views/helpdesk_views.xml',
         'views/helpdesk_team_views.xml',
         'views/assets.xml',
+        'views/helpdesk_portal_templates.xml',
         'views/res_partner_views.xml',
         'wizard/helpdesk_ticket_merge_views.xml',
     ],

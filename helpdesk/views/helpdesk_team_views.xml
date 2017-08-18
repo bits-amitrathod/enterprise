@@ -89,6 +89,7 @@
                     <div>
                         <button type="action" name="%(helpdesk_team_action_form)d" string="Create new Helpdesk Teams" class="btn-link" icon="fa-arrow-right"/>
                     </div>
+                    <field name="description" placeholder="Description for customer portal"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <h2>Productivity</h2>
                     <div class="row mt16 o_settings_container" id="productivity">
@@ -238,10 +239,11 @@
                                 <div class="text-muted">
                                     Publish this team's ratings on your website
                                 </div>
-                                <div id="use_website_helpdesk_rating" attrs="{'invisible': [('use_website_helpdesk_rating', '=', False)]}">
-                                    <div class="text-warning mb4 mt16">
-                                        Save this page and refresh to activate the feature.
-                                    </div>
+                                <div attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','=',False)]}" class="mt16">
+                                    View this teams ratings this page:<br/>
+                                    <a type="button" class="btn-link" target="_blank"><i class="fa fa-fw fa-arrow-right"/>
+                                        <field name="website_rating_url" readonly="1" class="oe_inline" widget="url"/>
+                                    </a>
                                 </div>
                             </div>
                         </div>

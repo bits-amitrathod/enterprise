@@ -15,7 +15,7 @@ class WebsiteHelpdesk(http.Controller):
     def index(self, **kw):
         teams = request.env['helpdesk.team'].sudo().search([('use_rating', '=', True), ('use_website_helpdesk_rating', '=', True)])
         values = {'teams': teams}
-        return request.render('website_helpdesk.index', values)
+        return request.render('helpdesk.index', values)
 
     @http.route(['/helpdesk/rating/<model("helpdesk.team"):team>'], type='http', auth="public", website=True)
     def page(self, team, project_id=None, **kw):
@@ -43,4 +43,4 @@ class WebsiteHelpdesk(http.Controller):
             'ratings': ratings,
             'stats': stats,
         }
-        return request.render('website_helpdesk.team_rating_page', values)
+        return request.render('helpdesk.team_rating_page', values)

@@ -10,14 +10,10 @@
     'depends': [
         'helpdesk',
         'website',
-        'portal',
     ],
     'data': [
-        'security/ir.model.access.csv',
-        'security/helpdesk_security.xml',
         'views/assets.xml',
         'views/helpdesk_views.xml',
-        'views/helpdesk_portal_templates.xml',
         'views/helpdesk_templates.xml',
     ],
     'license': 'OEEL-1',

@@ -4,7 +4,7 @@
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
-from odoo.addons.portal.controllers.portal import get_records_pager, CustomerPortal
+from odoo.addons.portal.controllers.portal import get_records_pager, pager as portal_pager, CustomerPortal
 from odoo.osv.expression import OR
 
 
@@ -56,7 +56,7 @@ class CustomerPortal(CustomerPortal):
 
         # pager
         tickets_count = request.env['helpdesk.ticket'].search_count(domain)
-        pager = request.website.pager(
+        pager = portal_pager(
             url="/my/tickets",
             url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby},
             total=tickets_count,
@@ -80,7 +80,7 @@ class CustomerPortal(CustomerPortal):
             'search_in': search_in,
             'search': search,
         })
-        return request.render("website_helpdesk.portal_helpdesk_ticket", values)
+        return request.render("helpdesk.portal_helpdesk_ticket", values)
 
     @http.route([
         "/helpdesk/ticket/<int:ticket_id>",
@@ -93,8 +93,8 @@ class CustomerPortal(CustomerPortal):
         else:
             Ticket = request.env['helpdesk.ticket'].browse(ticket_id)
         if not Ticket:
-            return request.render('website.404')
+            return request.redirect('/my')
         values = {'ticket': Ticket}
         history = request.session.get('my_tickets_history', [])
         values.update(get_records_pager(history, Ticket))
-        return request.render("website_helpdesk.tickets_followup", values)
+        return request.render("helpdesk.tickets_followup", values)

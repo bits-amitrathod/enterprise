@@ -48,7 +48,7 @@
                     </t>
                 </table></div>
                 <div t-if="pager" class="o_portal_pager text-center">
-                    <t t-call="website.pager"/>
+                    <t t-call="portal.pager"/>
                 </div>
             </div>
         </t>
@@ -105,7 +105,7 @@
 
     <!-- Page : List of project -->
     <template id="index" name="Helpdesk Ticket Rating List">
-        <t t-call="website.layout">
+        <t t-call="portal.portal_layout">
             <t t-set="additional_title">Helpdesk Team Satisfaction</t>
             <div id="wrap">
                 <div class="oe_structure"/>
@@ -148,6 +148,67 @@
                 </div>
                 <div class="oe_structure"/>
           </div>
+        </t>
+    </template>
+
+    <!-- Page : Rating of a particular team -->
+    <template id="team_rating_progress_data" name="Ticket Rating Page">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" t-attf-style="width: #{stats[duration][10]}%;" title="Happy">
+                <t t-esc="int(stats[duration][10])"/>%
+            </div>
+            <div class="progress-bar progress-bar-warning" t-attf-style="width: #{stats[duration][5]}%;" title="Average">
+                <t t-esc="int(stats[duration][5])"/>%
+            </div>
+            <div class="progress-bar progress-bar-danger" t-attf-style="width: #{stats[duration][1]}%;" title="Bad">
+                <t t-esc="int(stats[duration][1])"/>%
+            </div>
+        </div>
+    </template>
+
+    <template id="team_rating_data" name="Helpdesk Ticket Rating Page">
+        <h3 class="page-header">Customer Satisfaction</h3>
+        <div class="row">
+            <div class="col-sm-4">
+                <h5>Last 7 days</h5>
+                <t t-set="duration" t-value="7"/>
+                <t t-set="stats" t-value="stats"/>
+                <t t-call="helpdesk.team_rating_progress_data"/>
+            </div>
+            <div class="col-sm-4">
+                <h5>Last 30 days</h5>
+                <t t-set="duration" t-value="30"/>
+                <t t-set="stats" t-value="stats"/>
+                <t t-call="helpdesk.team_rating_progress_data"/>
+            </div>
+            <div class="col-sm-4">
+                <h5>Last 3 months</h5>
+                <t t-set="duration" t-value="90"/>
+                <t t-set="stats" t-value="stats"/>
+                <t t-call="helpdesk.team_rating_progress_data"/>
+            </div>
+
+        </div>
+        <h5 class="page-header">Latest Feedbacks</h5>
+        <t t-foreach="ratings" t-as="rating" class="media">
+            <img t-attf-src='/rating/static/src/img/rating_#{int(rating.rating)}.png' t-att-alt="rating.res_name" t-att-title="rating.res_name"/>
+        </t>
+    </template>
+
+    <template id="team_rating_page" name="Helpdesk Ticket Rating Page">
+        <t t-call="portal.portal_layout">
+             <div id="wrap">
+                <div class="oe_structure"/>
+                <div class="container oe_website_rating_team">
+                    <h1 t-esc="team.name" class="text-center"/>
+                    <div class="row mb32">
+                        <div class="col-md-8">
+                            <t t-call="helpdesk.team_rating_data"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </div>
         </t>
     </template>
 </data>

@@ -5,6 +5,7 @@ import datetime
 from dateutil import relativedelta
 from odoo import api, fields, models, _
 from odoo.addons.helpdesk.models.helpdesk_ticket import TICKET_PRIORITY
+from odoo.addons.http_routing.models.ir_http import slug
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import pycompat
 
@@ -45,6 +46,7 @@ class HelpdeskTeam(models.Model):
     use_website_helpdesk_forum = fields.Boolean('Help Center')
     use_website_helpdesk_slides = fields.Boolean('eLearning')
     use_website_helpdesk_rating = fields.Boolean('Website Rating')
+    website_rating_url = fields.Char('URL to Submit Issue', readonly=True, compute='_compute_website_rating_url')
     use_twitter = fields.Boolean('Twitter')
     use_api = fields.Boolean('API')
     use_rating = fields.Boolean('Ratings')
@@ -60,6 +62,10 @@ class HelpdeskTeam(models.Model):
             activities = team.ticket_ids.rating_get_grades()
             total_activity_values = sum(pycompat.values(activities))
             team.percentage_satisfaction = activities['great'] * 100 / total_activity_values if total_activity_values else -1
+
+    def _compute_website_rating_url(self):
+        for team in self.filtered(lambda team: team.name and team.use_website_helpdesk_rating and team.id):
+            team.website_rating_url = '/helpdesk/rating/%s' % slug(team)
 
     @api.multi
     def _compute_upcoming_sla_fail_tickets(self):
@@ -173,11 +179,6 @@ class HelpdeskTeam(models.Model):
             slides_module = self.env['ir.module.module'].search([('name', '=', 'website_helpdesk_slides')])
             if self.use_website_helpdesk_slides and slides_module.state not in ('installed', 'to install', 'to upgrade'):
                 slides_module.button_immediate_install()
-                module_installed = True
-
-            rating_module = self.env['ir.module.module'].search([('name', '=', 'website_helpdesk')])
-            if self.use_website_helpdesk_rating and rating_module.state not in ('installed', 'to install', 'to upgrade'):
-                rating_module.button_immediate_install()
                 module_installed = True
         # just in case we want to do something if we install a module. (like a refresh ...)
         return module_installed

@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+import uuid
 
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import AccessError
@@ -78,7 +79,9 @@ class HelpdeskTicket(models.Model):
         return stages.search(search_domain, order=order)
 
     name = fields.Char(string='Subject', required=True, index=True)
-
+    access_token = fields.Char(
+        'Security Token', copy=False, default=lambda self: str(uuid.uuid4()),
+        required=True)
     team_id = fields.Many2one('helpdesk.team', string='Helpdesk Team', default=_default_team_id, index=True)
     description = fields.Text()
     active = fields.Boolean(default=True)
@@ -281,6 +284,23 @@ class HelpdeskTicket(models.Model):
             result.append((ticket.id, "%s (#%d)" % (ticket.name, ticket.id)))
         return result
 
+    @api.model_cr_context
+    def _init_column(self, column_name):
+        """ Initialize the value of the given column for existing rows.
+
+            Overridden here because we need to generate different access tokens
+            and by default _init_column calls the default method once and stores
+            its result for every record.
+        """
+        if column_name != 'access_token':
+            super(HelpdeskTicket, self)._init_column(column_name)
+        else:
+            query = """UPDATE %(table_name)s
+                          SET %(column_name)s = md5(md5(random()::varchar || id::varchar) || clock_timestamp()::varchar)::uuid::varchar
+                        WHERE %(column_name)s IS NULL
+                    """ % {'table_name': self._table, 'column_name': column_name}
+            self.env.cr.execute(query)
+
     # Method to called by CRON to update SLA & statistics
     @api.model
     def recompute_all(self):
@@ -383,6 +403,9 @@ class HelpdeskTicket(models.Model):
         groups = super(HelpdeskTicket, self)._notification_recipients(message, groups)
 
         self.ensure_one()
+        for group_name, group_method, group_data in groups:
+            group_data['has_button_access'] = True
+
         if not self.user_id:
             take_action = self._notification_link_helper('assign')
             helpdesk_actions = [{'url': take_action, 'title': _('Assign to me')}]
@@ -405,6 +428,30 @@ class HelpdeskTicket(models.Model):
             else:
                 res[res_id] = super(HelpdeskTicket, self).message_get_reply_to([res_id])[res_id]
         return res
+
+    @api.multi
+    def get_access_action(self, access_uid=None):
+        """ Instead of the classic form view, redirect to website for portal users
+        that can read the ticket if the team is available on website. """
+        self.ensure_one()
+        user, record = self.env.user, self
+        if access_uid:
+            user = self.env['res.users'].sudo().browse(access_uid)
+            record = self.sudo(user)
+
+        if user.share:
+            try:
+                record.check_access_rule('read')
+            except AccessError:
+                pass
+            else:
+                return {
+                    'type': 'ir.actions.act_url',
+                    'url': '/ticket/%s' % self.id,
+                    'target': 'self',
+                    'res_id': self.id,
+                }
+        return super(HelpdeskTicket, self).get_access_action(access_uid)
 
     # Rating Mixin
 
