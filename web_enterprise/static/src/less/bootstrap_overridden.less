@@ -121,6 +121,10 @@
 @table-bg-active: @table-bg-hover;
 @table-border-color: @gray-lighter-dark;
 
+//== Well
+@well-bg: @odoo-color-silver;
+@well-border: @odoo-color-silver;
+
 // ------------------------------------------------------------------
 // Bootstrap components rules (non exposed features variables)
 // ------------------------------------------------------------------
@@ -133,6 +137,25 @@
     h2, h3, h4, h5, h6 {
         font-size: @odoo-font-size-base-touch;
     }
+}
+
+//== Full bg-colors
+.bg-success-full {
+    background-color: @brand-success;
+}
+.bg-warning-full {
+    background-color: @brand-warning;
+}
+.bg-danger-full {
+    background-color: @brand-danger;
+}
+.bg-info-full {
+    background-color: @brand-info;
+}
+
+//== Well
+.well {
+    box-shadow: none;
 }
 
 //== Badges
