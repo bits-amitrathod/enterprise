@@ -7,6 +7,7 @@
     'sequence': 58,
     'summary': 'Allow website visitors to submit tickets through a form',
     'depends': [
+        'website_form_editor',
         'website_helpdesk',
     ],
     'description': """

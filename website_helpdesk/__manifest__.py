@@ -8,7 +8,6 @@
     'summary': 'Bridge module for helpdesk modules using the website.',
     'description': 'Bridge module for helpdesk modules using the website.',
     'depends': [
-        'website_form_editor',
         'helpdesk',
         'website',
         'portal',

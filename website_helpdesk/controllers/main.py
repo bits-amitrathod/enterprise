@@ -124,14 +124,6 @@ class WebsiteForm(WebsiteForm):
         values.update(get_records_pager(history, Ticket))
         return request.render("website_helpdesk.tickets_followup", values)
 
-    @http.route('/website_form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True)
-    def website_form(self, model_name, **kwargs):
-        if request.params.get('partner_email'):
-            Partner = request.env['res.partner'].sudo().search([('email', '=', kwargs.get('partner_email'))], limit=1)
-            if Partner:
-                request.params['partner_id'] = Partner.id
-        return super(WebsiteForm, self).website_form(model_name, **kwargs)
-
 
 class WebsiteHelpdesk(http.Controller):
 
