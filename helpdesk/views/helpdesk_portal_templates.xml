@@ -70,22 +70,29 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="mb8">
-                        <strong>Date:</strong> <span t-field="ticket.create_date" t-field-options='{"widget": "date"}'/>
+                    <div class="row">
+                        <strong class="col-md-2">Reported on</strong>
+                        <span class="col-md-4" t-field="ticket.create_date" t-field-options='{"widget": "date"}'/>
+                        <strong class="col-md-2" t-if="ticket.team_id.portal_rating_url">Managed by</strong>
+                        <span class="col-md-4" t-if="ticket.team_id.portal_rating_url">
+                            <a t-att-href="'%s' % ticket.team_id.portal_rating_url">
+                                <span t-field="ticket.team_id.name"/>
+                            </a>
+                        </span>
                     </div>
                     <div class='row'>
-                        <div class="col-md-6" t-if="ticket.user_id">
-                            <strong>Assigned to</strong>
-                            <div>
-                                <address t-field="ticket.user_id" t-field-options='{"widget": "contact", "fields": ["name", "email", "phone"], "no_marker": true}'/>
-                            </div>
+                        <strong class="col-md-2">Reported by</strong>
+                        <div class="col-md-4" t-if="ticket.partner_id">
+                            <address t-field="ticket.partner_id" t-field-options='{"widget": "contact", "fields": ["name", "email"], "no_marker": true}'/>
                         </div>
-                        <div class="col-md-6">
-                            <strong>Reported by</strong>
-                            <div t-if="ticket.partner_id">
-                                <address t-field="ticket.partner_id" t-field-options='{"widget": "contact", "fields": ["name", "email"], "no_marker": true}'/>
-                            </div>
+                        <strong class="col-md-2" t-if="ticket.user_id">Assigned to</strong>
+                        <div class="col-md-4">
+                            <address t-field="ticket.user_id" t-field-options='{"widget": "contact", "fields": ["name", "email", "phone"], "no_marker": true}'/>
                         </div>
+                    </div>
+                    <div class="row">
+                        <strong class="col-md-2">Description</strong>
+                        <div class="col-md-10" t-field="ticket.description"/>
                     </div>
                 </div>
             </div>
