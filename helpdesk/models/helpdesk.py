@@ -45,11 +45,11 @@ class HelpdeskTeam(models.Model):
         help="In Channel: You can create a new ticket by typing /helpdesk [ticket title]. You can search ticket by typing /helpdesk_search [Keyword1],[Keyword2],.")
     use_website_helpdesk_forum = fields.Boolean('Help Center')
     use_website_helpdesk_slides = fields.Boolean('eLearning')
-    use_website_helpdesk_rating = fields.Boolean('Website Rating')
-    website_rating_url = fields.Char('URL to Submit Issue', readonly=True, compute='_compute_website_rating_url')
     use_twitter = fields.Boolean('Twitter')
     use_api = fields.Boolean('API')
     use_rating = fields.Boolean('Ratings')
+    portal_show_rating = fields.Boolean('Display Rating on Customer Portal', oldname='use_website_helpdesk_rating')
+    portal_rating_url = fields.Char('URL to Submit Issue', readonly=True, compute='_compute_portal_rating_url')
     use_sla = fields.Boolean('SLA Policies')
     upcoming_sla_fail_tickets = fields.Integer(string='Upcoming SLA Fail Tickets', compute='_compute_upcoming_sla_fail_tickets')
     unassigned_tickets = fields.Integer(string='Unassigned Tickets', compute='_compute_unassigned_tickets')
@@ -63,9 +63,13 @@ class HelpdeskTeam(models.Model):
             total_activity_values = sum(pycompat.values(activities))
             team.percentage_satisfaction = activities['great'] * 100 / total_activity_values if total_activity_values else -1
 
-    def _compute_website_rating_url(self):
-        for team in self.filtered(lambda team: team.name and team.use_website_helpdesk_rating and team.id):
-            team.website_rating_url = '/helpdesk/rating/%s' % slug(team)
+    @api.depends('name', 'portal_show_rating')
+    def _compute_portal_rating_url(self):
+        for team in self:
+            if team.name and team.portal_show_rating and team.id:
+                team.portal_rating_url = '/helpdesk/rating/%s' % slug(team)
+            else:
+                team.portal_rating_url = False
 
     @api.multi
     def _compute_upcoming_sla_fail_tickets(self):

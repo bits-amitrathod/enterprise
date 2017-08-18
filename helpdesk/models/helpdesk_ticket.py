@@ -46,7 +46,7 @@ class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
     _description = 'Ticket'
     _order = 'priority desc, id desc'
-    _inherit = ['mail.thread', 'utm.mixin', 'rating.mixin', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'utm.mixin', 'rating.mixin', 'mail.activity.mixin', 'portal.mixin']
 
     @api.model
     def default_get(self, fields):
@@ -126,11 +126,10 @@ class HelpdeskTicket(models.Model):
     sla_active = fields.Boolean(string='SLA active', compute='_compute_sla_fail', store=True)
     sla_fail = fields.Boolean(string='Failed SLA Policy', compute='_compute_sla_fail', store=True)
 
-    website_url = fields.Char('Website URL', compute='_compute_website_url', help='The full URL to access the document through the website.')
-
-    def _compute_website_url(self):
-        for hd in self:
-            hd.website_url = '/helpdesk/ticket/%s' % hd.id
+    def _compute_portal_url(self):
+        super(HelpdeskTicket, self)._compute_portal_url()
+        for ticket in self:
+            ticket.portal_url = '/helpdesk/ticket/%s' % ticket.id
 
     def _onchange_team_get_values(self, team):
         return {

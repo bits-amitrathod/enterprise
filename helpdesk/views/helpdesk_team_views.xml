@@ -232,17 +232,17 @@
                         </div>
                         <div id="website_rating" class="col-md-6 o_setting_box" attrs="{'invisible': [('use_rating', '=', False)]}">
                             <div class="o_setting_left_pane">
-                                <field name="use_website_helpdesk_rating"/>
+                                <field name="portal_show_rating"/>
                             </div>
                             <div class="o_setting_right_pane">
-                                <label for="use_website_helpdesk_rating"/>
+                                <label for="portal_show_rating"/>
                                 <div class="text-muted">
                                     Publish this team's ratings on your website
                                 </div>
-                                <div attrs="{'invisible': ['|', ('use_website_helpdesk_rating', '=', False), ('website_rating_url','=',False)]}" class="mt16">
+                                <div attrs="{'invisible': ['|', ('portal_show_rating', '=', False), ('portal_rating_url','=',False)]}" class="mt16">
                                     View this teams ratings this page:<br/>
                                     <a type="button" class="btn-link" target="_blank"><i class="fa fa-fw fa-arrow-right"/>
-                                        <field name="website_rating_url" readonly="1" class="oe_inline" widget="url"/>
+                                        <field name="portal_rating_url" readonly="1" class="oe_inline" widget="url"/>
                                     </a>
                                 </div>
                             </div>
