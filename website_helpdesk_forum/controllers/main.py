@@ -2,13 +2,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.http import request
-from odoo.addons.website_helpdesk.controllers.main import WebsiteForm
+from odoo.addons.website_helpdesk.controllers.main import WebsiteHelpdesk
 
 
-class WebsiteForm(WebsiteForm):
+class WebsiteHelpdesk(WebsiteHelpdesk):
 
     def get_helpdesk_team_data(self, team, search=None):
-        result = super(WebsiteForm, self).get_helpdesk_team_data(team, search)
+        result = super(WebsiteHelpdesk, self).get_helpdesk_team_data(team, search)
         result['forum'] = team.forum_id
         domain = []
         if search:

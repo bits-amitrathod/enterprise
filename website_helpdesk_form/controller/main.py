@@ -3,8 +3,7 @@
 
 from odoo import http
 from odoo.http import request
-
-from odoo.addons.website_helpdesk.controllers.main import WebsiteForm
+from odoo.addons.website_form.controllers.main import WebsiteForm
 
 
 class WebsiteForm(WebsiteForm):
