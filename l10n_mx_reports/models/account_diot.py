@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from odoo import _, api, models
 from odoo.exceptions import ValidationError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare, pycompat
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare
 
 
 class MxReportPartnerLedger(models.AbstractModel):
@@ -93,7 +93,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             base_domain.append(('date', '>=', context['date_from_aml']))
         if context['state'] == 'posted':
             base_domain.append(('move_id.state', '=', 'posted'))
-        for partner_id, result in pycompat.items(results):
+        for partner_id, result in results.items():
             domain = list(base_domain)  # copying the base domain
             domain.append(('partner_id', '=', partner_id))
             partner = self.env['res.partner'].browse(partner_id)

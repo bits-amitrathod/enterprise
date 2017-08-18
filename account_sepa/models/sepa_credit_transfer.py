@@ -8,7 +8,7 @@ import base64
 from lxml import etree
 
 from odoo import models, fields, api, _
-from odoo.tools import float_round, DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import float_round, DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -190,7 +190,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
                 payments_date_wise[payment.payment_date] = []
             payments_date_wise[payment.payment_date].append(payment)
         count = 0
-        for payment_date, payments_list in pycompat.items(payments_date_wise):
+        for payment_date, payments_list in payments_date_wise.items():
             count += 1
             PmtInf = etree.SubElement(CstmrCdtTrfInitn, "PmtInf")
             PmtInfId = etree.SubElement(PmtInf, "PmtInfId")

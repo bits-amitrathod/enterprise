@@ -312,7 +312,7 @@ def xmlid_getter():
         except KeyError:
             # prefetch when possible
             records = record.browse(record._prefetch[record._name])
-            for rid, val in pycompat.items(records.get_external_id()):
+            for rid, val in records.get_external_id().items():
                 cache[record.browse(rid)] = val
             res = cache[record]
         if check and not res:

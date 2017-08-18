@@ -6,7 +6,7 @@ from datetime import datetime
 from odoo.tools.misc import formatLang, format_date, ustr
 from odoo.tools.translate import _
 import time
-from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError
 import math
 import json
@@ -54,7 +54,7 @@ class report_account_followup_report(models.AbstractModel):
             if currency not in res:
                 res[currency] = []
             res[currency].append(l)
-        for currency, aml_recs in pycompat.items(res):
+        for currency, aml_recs in res.items():
             total = 0
             total_issued = 0
             aml_recs = sorted(aml_recs, key=lambda aml: aml.blocked)

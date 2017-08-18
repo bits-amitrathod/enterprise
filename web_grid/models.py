@@ -89,7 +89,7 @@ class Base(models.AbstractModel):
                     d = expression.normalize_domain([
                         # TODO: how to convert value out of read to domain section?
                         (f, '=', v if isinstance(v, (pycompat.string_types, bool, pycompat.integer_types, float)) else v[0])
-                        for f, v in pycompat.items(r['values'])
+                        for f, v in r['values'].items()
                     ])
                     d = expression.AND([d, c['domain'], domain])
                     row.append(self._grid_make_empty_cell(d))

@@ -5,7 +5,6 @@ from dateutil.relativedelta import relativedelta
 from werkzeug.exceptions import NotFound
 from odoo import http
 from odoo.http import request
-from odoo.tools import pycompat
 from odoo.tools.translate import _
 
 from odoo.addons.website_portal.controllers.main import website_account, get_records_pager
@@ -79,7 +78,7 @@ class website_account(website_account):
             'default_url': '/my/subscription',
             'searchbar_sortings': searchbar_sortings,
             'sortby': sortby,
-            'searchbar_filters': OrderedDict(sorted(pycompat.items(searchbar_filters))),
+            'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
             'filterby': filterby,
         })
         return request.render("website_subscription.portal_my_subscriptions", values)

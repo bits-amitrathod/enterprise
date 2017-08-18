@@ -3,7 +3,7 @@
 
 from odoo import models, api, _, fields
 from odoo.tools.misc import formatLang
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime, timedelta
 
 
@@ -77,7 +77,7 @@ class ReportPartnerLedger(models.AbstractModel):
             base_domain.append(('move_id.state', '=', 'posted'))
         if options.get('unreconciled'):
             base_domain.append(('full_reconcile_id', '=', False))
-        for partner_id, result in pycompat.items(results):
+        for partner_id, result in results.items():
             domain = list(base_domain)  # copying the base domain
             domain.append(('partner_id', '=', partner_id))
             partner = self.env['res.partner'].browse(partner_id)

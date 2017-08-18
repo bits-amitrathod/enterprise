@@ -78,7 +78,7 @@ class AccountReport(models.AbstractModel):
 
         options['unfolded_lines'] = []
         # Merge old options with default from this report
-        for key, value in pycompat.items(options):
+        for key, value in options.items():
             if key in previous_options and value is not None and previous_options[key] is not None:
                 # special case handler for date and comparison as from one report to another, they can have either a date range or single date
                 if key == 'date' or key == 'comparison':
@@ -427,7 +427,7 @@ class AccountReport(models.AbstractModel):
             values=dict(rcontext),
         )
         if self.env.context.get('print_mode', False):
-            for k,v in pycompat.items(self.replace_class()):
+            for k,v in self.replace_class().items():
                 html = html.replace(k, v)
             # append footnote as well
             html = html.replace('<div class="js_account_report_footnotes"></div>', self.get_html_footnotes(footnotes_to_render))
@@ -610,7 +610,7 @@ class AccountReport(models.AbstractModel):
                     vals = {'date': dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), 'string': display_value}
                 options['comparison']['periods'].append(vals)
         if len(options['comparison'].get('periods', [])) > 0:
-            for k, v in pycompat.items(options['comparison']['periods'][0]):
+            for k, v in options['comparison']['periods'][0].items():
                 if k in ('date', 'date_from', 'date_to', 'string'):
                     options['comparison'][k] = v
         return options

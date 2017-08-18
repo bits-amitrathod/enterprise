@@ -83,7 +83,7 @@ class SignatureRequestTemplate(models.Model):
         for item in template.signature_item_ids:
             item.write(signature_items.pop(str(item.id)))
         SignatureItem = self.env['signature.item']
-        for item in pycompat.values(signature_items):
+        for item in signature_items.values():
             item['template_id'] = template.id
             SignatureItem.create(item)
 

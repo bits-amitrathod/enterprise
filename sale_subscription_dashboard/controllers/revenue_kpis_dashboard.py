@@ -132,7 +132,7 @@ class RevenueKPIsDashboard(http.Controller):
                     'prior': stat['prior'],
                     'add_symbol': stat['add_symbol'],
                 }
-                for key, stat in pycompat.items(STAT_TYPES)
+                for key, stat in STAT_TYPES.items()
             },
             'forecast_stat_types': {
                 key: {
@@ -141,7 +141,7 @@ class RevenueKPIsDashboard(http.Controller):
                     'prior': stat['prior'],
                     'add_symbol': stat['add_symbol'],
                 }
-                for key, stat in pycompat.items(FORECAST_STAT_TYPES)
+                for key, stat in FORECAST_STAT_TYPES.items()
             },
             'currency_id': request.env.user.company_id.currency_id.id,
             'contract_templates': request.env['sale.subscription.template'].search_read([], fields=['name']),

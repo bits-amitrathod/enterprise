@@ -7,7 +7,6 @@ from dateutil import relativedelta
 
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, AccessError, ValidationError
-from odoo.tools import pycompat
 
 TICKET_PRIORITY = [
     ('0', 'All'),
@@ -66,7 +65,7 @@ class HelpdeskTeam(models.Model):
     def _compute_percentage_satisfaction(self):
         for team in self:
             activities = team.ticket_ids.rating_get_grades()
-            total_activity_values = sum(pycompat.values(activities))
+            total_activity_values = sum(activities.values())
             team.percentage_satisfaction = activities['great'] * 100 / total_activity_values if total_activity_values else -1
 
     @api.multi
@@ -268,7 +267,7 @@ class HelpdeskTeam(models.Model):
             tickets = self.env['helpdesk.ticket'].search(domain + [('stage_id.is_close', '=', True), ('close_date', '>=', dt)])
             activity = tickets.rating_get_grades()
             total_rating = self.compute_activity_avg(activity)
-            total_activity_values = sum(pycompat.values(activity))
+            total_activity_values = sum(activity.values())
             team_satisfaction = round((total_rating / total_activity_values if total_activity_values else 0), 2)
             if team_satisfaction:
                 result['today']['rating'] = team_satisfaction
@@ -278,7 +277,7 @@ class HelpdeskTeam(models.Model):
             tickets = self.env['helpdesk.ticket'].search(domain + [('stage_id.is_close', '=', True), ('close_date', '>=', dt)])
             activity = tickets.rating_get_grades()
             total_rating = self.compute_activity_avg(activity)
-            total_activity_values = sum(pycompat.values(activity))
+            total_activity_values = sum(activity.values())
             team_satisfaction_7days = round((total_rating / total_activity_values if total_activity_values else 0), 2)
             if team_satisfaction_7days:
                 result['7days']['rating'] = team_satisfaction_7days
@@ -632,7 +631,7 @@ class HelpdeskTicket(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('team_id'):
-            vals.update(item for item in pycompat.items(self._onchange_team_get_values(self.env['helpdesk.team'].browse(vals['team_id']))) if item[0] not in vals)
+            vals.update(item for item in self._onchange_team_get_values(self.env['helpdesk.team'].browse(vals['team_id'])).items() if item[0] not in vals)
 
         # context: no_log, because subtype already handle this
         ticket = super(HelpdeskTicket, self.with_context(mail_create_nolog=True)).create(vals)

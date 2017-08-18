@@ -4,7 +4,6 @@ import mimetypes
 
 from odoo import api, fields, models, _
 from odoo.exceptions import Warning, UserError
-from odoo.tools import pycompat
 
 
 class Slide(models.TransientModel):
@@ -39,8 +38,8 @@ class Slide(models.TransientModel):
             values = res['values']
             if not values.get('document_id'):
                 raise Warning(_('Please enter valid Youtube or Google Doc URL'))
-            for key, value in pycompat.items(values):
-                setattr(self, key, value)
+            for key, value in values.items():
+                self[key] = value
 
     @api.onchange('datas')
     def onchange_file_upload(self):

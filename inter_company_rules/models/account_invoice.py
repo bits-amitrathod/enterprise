@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
 from odoo.exceptions import Warning
-from odoo.tools import pycompat
 
 
 class account_invoice(models.Model):
@@ -60,7 +59,7 @@ class account_invoice(models.Model):
             line2._onchange_product_id()
             if line2.invoice_id.company_id.currency_id.id != line2.invoice_id.currency_id.id:
                 line2.price_unit = inv_line_data['price_unit']
-            new_vals = {k: v or False for k, v in pycompat.items(dict(line2._cache))}
+            new_vals = {k: v or False for k, v in dict(line2._cache).items()}
             line_data = line2._convert_to_write(new_vals)
             line.with_context(context).sudo(intercompany_uid).create(line_data)
         invoice.compute_taxes()
@@ -99,7 +98,7 @@ class account_invoice(models.Model):
             'auto_invoice_id': self.id,}
         inv = self.env['account.invoice'].with_context(context).new(vals)
         inv._onchange_partner_id()
-        new_vals = {k: v or False for k, v in pycompat.items(dict(inv._cache))}
+        new_vals = {k: v or False for k, v in dict(inv._cache).items()}
         return inv._convert_to_write(new_vals)
 
     @api.model
