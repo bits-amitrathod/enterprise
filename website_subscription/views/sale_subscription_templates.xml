@@ -87,59 +87,39 @@
                             </t>
                         </tbody>
                     </table>
-                    <div t-if="account.state in ['pending','close']" class="alert alert-info" role="alert" id="payment_message">
+                    <div t-if="account.state in ['pending','close']" id="payment_message">
                         <div t-if="payment_mandatory and account.state!='open'">
                             <p id="wc_warning_closed" t-if="account.state == 'close'">Your subscription is closed.
                                 <t t-if="missing_periods == 1">If you wish to reopen it, you can pay your invoice for the current invoicing period.</t>
                                 <t t-if="missing_periods &gt; 1">If you wish to reopen it, the <t t-esc="missing_periods"/> missing payments (from <span t-field="account.recurring_next_date"/> to this day) will be automatically processed.</t>
                             </p>
-                            <h1>Payment Acquirers</h1>
-                            <h4 t-if="acquirers">Add a new payment acquirer:</h4>
-                            <div t-if="acquirers" id="new_payment_method" class="row">
-                                <div class="col-md-12">
-                                    <div t-if="error_message" class="alert alert-danger">
-                                    <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
-                                    </div>
-                                    <div t-if='len(acquirers)&gt;1'>
-                                        <label class="control-label" for="pm_acquirer_id">Acquirer</label>
-                                        <select name="pm_acquirer_id" class="form-control">
-                                            <t t-foreach="acquirers" t-as="acquirer">
-                                                <option t-att-value="acquirer.id" t-esc="acquirer.name"/>
-                                            </t>
-                                        </select>
-                                    </div>
-                                    <t t-foreach="acquirers" t-as="acquirer">
-                                        <div t-raw="acquirer.form" t-att-data-acquirer-id="acquirer.id" t-attf-class="acquirer #{'hidden' if acquirer!=acquirers[0] else ''}"/>
-                                    </t>
-                                </div>
-                            </div>
-                            <div t-if="part_pms" class="clearfix">
-                            <h4>Your payment Methods</h4>
-                                <t t-set="payment" t-value="True"/>
-                                <t t-set="form_action" t-value="'/my/subscription/payment/' + str(account.id) + '/' + str(account.uuid)"/>
-                                <t t-set="pms" t-value="verified_pms"/>
-                                <t t-set="submit_txt" t-value="'&lt;span class=&quot;fa fa-lock&quot;&gt;&lt;/span&gt; Pay Subscription'"/>
-                                <t t-set="checked_pm_id" t-value="account.payment_token_id.id"/>
-                                <div class="col-md-12">
-                                    <t t-call="payment.payment_tokens_list"/>
-                                </div>
+                            <div class="clearfix">
+                                <h3 class="mb24">Pay with</h3>
+                                <t t-call="payment.payment_tokens_list">
+                                    <t t-set="show_submit" t-value="True"/>
+                                    <t t-set="form_action" t-value="'/my/subscription/payment/' + str(account.id) + '/' + str(account.uuid)"/>
+                                    <t t-set="pms" t-value="part_pms"/>
+                                    <t t-set="icon_class" t-value="'fa-lock'"/>
+                                    <t t-set="submit_txt" t-value="'Pay Subscription'"/>
+                                    <t t-set="checked_pm_id" t-value="account.payment_token_id.id"/>
+                                    <t t-set="mode" t-value="'payment'"/>
+                                </t>
                             </div>
                         </div>
                     </div>
-                    <div t-if="account.state in ['open'] and part_pms" class="alert alert-info" role="alert" id="payment_managing">
-                        <div class="clearfix">
-                            <h4>Change your payment Methods for this subscription</h4>
-                                <t t-set="payment" t-value="True"/>
-                                <t t-set="form_action" t-value="'/my/subscription/' + str(account.id) + '/' + str(account.uuid) + '/set_pm'"/>
-                                <t t-set="pms" t-value="part_pms"/>
-                                <t t-set="submit_txt" t-value="'Change'"/>
-                                <t t-set="checked_pm_id" t-value="account.payment_token_id.id"/>
-                                <div class="col-md-12">
-                                    <t t-call="payment.payment_tokens_list"/>
-                                </div>
-                        </div>
+                    <div t-if="account.state in ['open'] and change_pm" class="clearfix" id="payment_managing">
+                        <h3 t-if="part_pms" class="mb24">Change payment method</h3>
+                        <h3 t-if="not part_pms" class="mb24">Register a payment method with</h3>
+                        <t t-call="payment.payment_tokens_list">
+                            <t t-set="form_action" t-value="'/my/subscription/' + str(account.id) + '/' + str(account.uuid) + '/set_pm'"/>
+                            <t t-set="pms" t-value="part_pms"/>
+                            <t t-set="icon_class" t-value="'fa-lock'"/>
+                            <t t-set="submit_txt" t-value="'Change'"/>
+                            <t t-set="checked_pm_id" t-value="account.payment_token_id.id"/>
+                            <t t-set="mode" t-value="'payment'"/>
+                            <t t-set="verify_validity" t-value="True"/>
+                        </t>
                     </div>
-
                     <t t-if="account.description">
                         <div class="oe_structure"/>
                         <h3 class="page-header">Terms and conditions</h3>
@@ -172,6 +152,8 @@
                         </div>
                         <div><strong>Next invoice: <span t-field="account.recurring_next_date"/></strong></div>
                         <a t-if="account.state=='open' and account.template_id and display_change_plan" class="mt8 btn btn-primary btn-sm" t-att-href="'/my/subscription/'+str(account.id)+'/change'+'?uuid='+str(account.uuid)">Change plan</a>
+                        <div>Payment method: <t t-esc="account.payment_token_id.short_name"/></div>
+                        <a class="mt8 btn btn-default btn-sm" href="?change_pm">Change Payment Method</a>
                     </div>
                     <div t-if="account.user_id">
                         <a name="wc-your-contact"/>
