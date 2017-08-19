@@ -2,12 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
+import io
 import re
 
 from datetime import datetime, timedelta
 from ebaysdk.exception import ConnectionError
 from ebaysdk.trading import Connection as Trading
-from StringIO import StringIO
 from xml.sax.saxutils import escape
 
 from odoo import models, fields, api, _
@@ -397,7 +397,7 @@ class ProductTemplate(models.Model):
 
         urls = []
         for att in attachments:
-            image = StringIO(base64.standard_b64decode(att["datas"]))
+            image = io.BytesIO(base64.standard_b64decode(att["datas"]))
             files = {'file': ('EbayImage', image)}
             pictureData = {
                 "WarningLevel": "High",

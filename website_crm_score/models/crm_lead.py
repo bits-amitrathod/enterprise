@@ -36,8 +36,8 @@ class Lead(models.Model):
     phone = fields.Char('Phone', track_visibility='onchange')
 
     def encode(self, lead_id):
-        md5_lead_id = md5("%s%s" % (lead_id, self._get_key())).hexdigest()
-        return "%s-%s" % (str(lead_id), md5_lead_id)
+        md5_lead_id = md5(b"%d%s" % (lead_id, self._get_key().encode('ascii'))).hexdigest()
+        return "%d-%s" % (lead_id, md5_lead_id)
 
     def decode(self, request):
         # opens the cookie, verifies the signature of the lead_id
@@ -45,7 +45,7 @@ class Lead(models.Model):
         cookie_content = request.httprequest.cookies.get('lead_id') or ''
         if cookie_content and '-' in cookie_content:
             lead_id, md5_lead_id = cookie_content.split('-', 1)
-            expected_encryped_lead_id = md5("%s%s" % (lead_id, self._get_key())).hexdigest()
+            expected_encryped_lead_id = md5(("%s%s" % (lead_id, self._get_key())).encode('utf-8')).hexdigest()
             if md5_lead_id == expected_encryped_lead_id:
                 return int(lead_id)
             else:

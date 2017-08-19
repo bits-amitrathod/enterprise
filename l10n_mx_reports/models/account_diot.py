@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from odoo import _, api, models
 from odoo.exceptions import ValidationError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare, pycompat
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare
 
 
 class MxReportPartnerLedger(models.AbstractModel):
@@ -93,7 +93,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             base_domain.append(('date', '>=', context['date_from_aml']))
         if context['state'] == 'posted':
             base_domain.append(('move_id.state', '=', 'posted'))
-        for partner_id, result in pycompat.items(results):
+        for partner_id, result in results.items():
             domain = list(base_domain)  # copying the base domain
             domain.append(('partner_id', '=', partner_id))
             partner = self.env['res.partner'].browse(partner_id)
@@ -127,7 +127,7 @@ class MxReportPartnerLedger(models.AbstractModel):
         # Aml go back to the beginning of the user chosen range but the
         # amount on the partner line should go back to either the beginning of
         # the fy or the beginning of times depending on the partner
-        sorted_partners = sorted(grouped_partners, key=lambda p: p.name)
+        sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
         group_iva = self.env.ref('l10n_mx.tax_group_iva')
         group_ret = self.env.ref('l10n_mx.tax_group_iva_ret')

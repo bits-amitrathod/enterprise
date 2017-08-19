@@ -2,9 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import difflib
+import io
 from lxml import etree
 from lxml.builder import E
-from StringIO import StringIO
 from odoo import models
 import json
 import uuid
@@ -50,7 +50,7 @@ class View(models.Model):
         group_2 = E.group(name=group_name + '_right')
         group = E.group(group_1, group_2, name=group_name)
         form = E.form(E.sheet(title, group, string=model._description))
-        arch = etree.tostring(form, encoding='utf-8', pretty_print=True)
+        arch = etree.tostring(form, encoding='unicode', pretty_print=True)
 
         self.create({
             'type': 'form',
@@ -155,9 +155,9 @@ class View(models.Model):
 
         # The parent data tag is missing from read_combined
         new_view_tree = etree.Element('data')
-        new_view_tree.append(etree.parse(StringIO(new_view), parser).getroot())
+        new_view_tree.append(etree.parse(io.StringIO(new_view), parser).getroot())
         old_view_tree = etree.Element('data')
-        old_view_tree.append(etree.parse(StringIO(old_view), parser).getroot())
+        old_view_tree.append(etree.parse(io.StringIO(old_view), parser).getroot())
 
         new_view_arch_string = self._stringify_view(new_view_tree)
         old_view_arch_string = self._stringify_view(old_view_tree)
@@ -179,7 +179,7 @@ class View(models.Model):
         for line in diff:
             if line.strip() and not line.startswith('?'):  # Ignore details lines
                 if line.startswith('-'):
-                    node = old_view_iterator.next()
+                    node = next(old_view_iterator)
 
                     # If we are already writing an xpath, we need to either
                     # close it or ignore this line
@@ -207,7 +207,7 @@ class View(models.Model):
                         xpath.attrib['position'] = 'replace'
 
                 elif line.startswith('+'):
-                    node = new_view_iterator.next()
+                    node = next(new_view_iterator)
 
                     if node.tag == 'attributes':
                         continue
@@ -239,8 +239,8 @@ class View(models.Model):
                         self._clone_and_append_to(node, xpath)
 
                 else:
-                    old_node = old_view_iterator.next()
-                    new_view_iterator.next()
+                    old_node = next(old_view_iterator)
+                    next(new_view_iterator)
                     # This is an unchanged line, if an xpath is ungoing, close it.
                     if old_node.tag not in ['attribute', 'attributes']:
                         if xpath.attrib.get('expr'):
@@ -251,7 +251,7 @@ class View(models.Model):
         if len(xpath):
             arch.append(xpath)
 
-        normalized_arch = etree.tostring(self._indent_tree(arch)) if len(arch) else ''
+        normalized_arch = etree.tostring(self._indent_tree(arch), encoding='unicode') if len(arch) else u''
         return normalized_arch
 
     def _is_compatible(self, xpath, node):
@@ -300,15 +300,15 @@ class View(models.Model):
 
         Returns the parent_node with the newly-appended node
         """
-        # This doesn't copy the children, but we don't truly
-        # care, since children will be another diff line
-        if isinstance(node.tag, basestring):
+        if node.tag is etree.Comment:
+            # For comments, node.tag is the constructor of Comment nodes
+            elem = parent_node.append(etree.Comment(node.text))
+        else:
+            # This doesn't copy the children, but we don't truly
+            # care, since children will be another diff line
             elem = etree.SubElement(parent_node, node.tag, node.attrib)
             elem.text = node.text
             elem.tail = node.tail
-        else:
-            # For comments, node.tag is the constructor of Comment nodes
-            elem = parent_node.append(node.tag(node.text))
         return elem
 
     def _node_to_xpath(self, target_node):
@@ -410,10 +410,10 @@ class View(models.Model):
         """
         result = ''
         node_string = ancestor + '/'
-        if isinstance(node.tag, basestring):
-            node_string += node.tag
+        if node.tag is etree.Comment:
+            node.string += 'comment'
         else:
-            node_string += 'comment'
+            node_string += node.tag
 
         if node.get('name') and node.get('name').strip():
             node_string += '[@name=%s]' % node.get('name').strip().replace('\n', ' ')

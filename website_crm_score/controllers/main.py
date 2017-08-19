@@ -2,7 +2,7 @@
 import json
 from odoo import http, SUPERUSER_ID, fields
 from odoo.http import request
-from odoo.tools import html_escape, pycompat
+from odoo.tools import html_escape
 from odoo.addons.website.controllers.main import Website
 from odoo.addons.website_form.controllers.main import WebsiteForm
 
@@ -80,7 +80,7 @@ class ContactController(WebsiteForm):
 
             # NOTE: the following should be changed when dynamic forms exist
             changed_values = {}
-            for fieldname, fieldvalue in pycompat.items(values):
+            for fieldname, fieldvalue in values.items():
                 if fieldname in lead and fieldvalue:
                     if lead[fieldname] and lead[fieldname] != fieldvalue:
                         changed_values[fieldname] = fieldvalue
@@ -106,7 +106,7 @@ class ContactController(WebsiteForm):
                 score_pageview_ids = []
                 url_list = []
                 pages_viewed = request.session['pages_viewed']
-                for url, date in pycompat.items(pages_viewed):
+                for url, date in pages_viewed.items():
                     vals = {'user_id': request.session.get('uid'), 'url': url, 'view_date': date}
                     score_pageview_ids.append((0, 0, vals))
                     url_list.append(url)

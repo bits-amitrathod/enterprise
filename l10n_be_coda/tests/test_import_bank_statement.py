@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 # Copyright (c) 2012 Noviat nv/sa (www.noviat.be). All rights reserved.
+import base64
 
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 from odoo.modules.module import get_module_resource
@@ -22,7 +23,7 @@ class TestCodaFile(AccountingTestCase):
         self.statement_import_model = self.env['account.bank.statement.import']
         self.bank_statement_model = self.env['account.bank.statement']
         coda_file_path = get_module_resource('l10n_be_coda', 'test_coda_file', 'Ontvangen_CODA.2013-01-11-18.59.15.txt')
-        self.coda_file = open(coda_file_path, 'rb').read().encode('base64')
+        self.coda_file = base64.b64encode(open(coda_file_path, 'rb').read())
         self.context = {
             'journal_id': self.ref('account.bank_journal')
         }

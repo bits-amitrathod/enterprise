@@ -6,7 +6,7 @@ from datetime import datetime
 from odoo.tools.misc import formatLang, format_date, ustr
 from odoo.tools.translate import _
 import time
-from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError
 import math
 import json
@@ -54,7 +54,7 @@ class report_account_followup_report(models.AbstractModel):
             if currency not in res:
                 res[currency] = []
             res[currency].append(l)
-        for currency, aml_recs in pycompat.items(res):
+        for currency, aml_recs in res.items():
             total = 0
             total_issued = 0
             aml_recs = sorted(aml_recs, key=lambda aml: aml.blocked)
@@ -268,7 +268,7 @@ class account_report_followup_all(models.AbstractModel):
 
     def compute_pages(self, options):
         partner_in_need_of_action = self.get_partners_in_need_of_action(options)
-        partner_in_need_of_action = partner_in_need_of_action.sorted(key=lambda x: x.name)
+        partner_in_need_of_action = partner_in_need_of_action.sorted(key=lambda x: x.name or '')
         skipped_partners = self.env['res.partner'].browse(options.get('skipped_partners'))
         total_partners_to_do = (partner_in_need_of_action - skipped_partners).ids
         options['total_pager'] = 1+ (len(total_partners_to_do)/self.PAGER_SIZE)

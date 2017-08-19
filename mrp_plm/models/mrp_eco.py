@@ -4,7 +4,6 @@
 
 from odoo import api, fields, models, tools, SUPERUSER_ID, _
 from odoo.exceptions import UserError
-from odoo.tools import pycompat
 
 
 class MrpEcoType(models.Model):
@@ -258,7 +257,7 @@ class MrpEco(models.Model):
                         'new_operation_id': line.operation_id.id,
                         'new_product_qty': line.product_qty
                     })]
-            for key, old_line in pycompat.items(old_bom_lines):
+            for key, old_line in old_bom_lines.items():
                 new_bom_commands += [(0, 0, {
                     'change_type': 'remove',
                     'product_id': old_line.product_id.id,
@@ -291,7 +290,7 @@ class MrpEco(models.Model):
                         'workcenter_id': operation.workcenter_id.id,
                         'new_time_cycle_manual': operation.time_cycle_manual
                     })]
-            for key, old_op in pycompat.items(old_routing_lines):
+            for key, old_op in old_routing_lines.items():
                 new_routing_commands += [(0, 0, {
                     'change_type': 'remove',
                     'workcenter_id': old_op.workcenter_id.id,

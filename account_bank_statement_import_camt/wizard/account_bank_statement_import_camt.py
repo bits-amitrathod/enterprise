@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from lxml import etree
-from StringIO import StringIO
+import io
 import re
+
+from lxml import etree
 
 from odoo import models
 
@@ -13,7 +14,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _check_camt(self, data_file):
         try:
-            root = etree.parse(StringIO(data_file)).getroot()
+            root = etree.parse(io.BytesIO(data_file)).getroot()
         except:
             return None
         if root.tag.find('camt.053'):

@@ -5,7 +5,6 @@ import datetime
 from dateutil import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.tools import pycompat
 from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 
 
@@ -167,7 +166,7 @@ class MrpMpsReport(models.TransientModel):
                     proc_dec = True
             demand = sum(forecasts.filtered(lambda x: x.mode == 'auto').mapped('forecast_qty'))
             indirect_total = 0.0
-            for day, qty in pycompat.items(indirect):
+            for day, qty in indirect.items():
                 if (day >= date.strftime('%Y-%m-%d')) and (day < date_to.strftime('%Y-%m-%d')):
                     indirect_total += qty
             to_supply = product.mps_forecasted - initial + demand + indirect_total

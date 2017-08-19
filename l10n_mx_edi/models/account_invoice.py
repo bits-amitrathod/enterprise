@@ -395,7 +395,7 @@ class AccountInvoice(models.Model):
                 msg = getattr(response.Incidencias[0][0], 'MensajeIncidencia', None)
             xml_signed = getattr(response, 'xml', None)
             if xml_signed:
-                xml_signed = xml_signed.encode('utf-8').encode('base64')
+                xml_signed = base64.b64encode(xml_signed.encode('utf-8'))
             inv._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
 
     @api.multi
@@ -759,7 +759,7 @@ class AccountInvoice(models.Model):
             addenda_node = etree.fromstring(addenda_str, parser=parser)
             cfdi_addenda_node.extend(addenda_node)
 
-        return {'cfdi': etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8')}
+        return {'cfdi': etree.tostring(tree, pretty_print=True, encoding='UTF-8')}
 
     @api.multi
     def _l10n_mx_edi_retry(self):

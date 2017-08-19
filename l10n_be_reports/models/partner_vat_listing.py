@@ -179,7 +179,7 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
         seq = 0
         sum_turnover = 0.00
         sum_tax = 0.00
-        lines = sorted(lines, key=lambda l: l['columns'][0]['name'])
+        lines = sorted(lines, key=lambda l: l['columns'][0]['name'] or '')
         for vat, values in groupby(lines, key=lambda l: l['columns'][0]['name']):
             values = list(values)
             turnover = sum([k['columns'][1]['name'] or 0.0 for k in values])
