@@ -314,8 +314,8 @@
                 <field name="unassigned_tickets"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div>
-                            <div t-attf-class="o_kanban_card_header #{kanban_color(record.color.raw_value)}">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)}">>
+                            <div t-attf-class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title">
                                     <div class="o_primary"><field name="name"/></div>
                                     <small t-if="record.use_alias.value and record.alias_name.value and record.alias_domain.value"><i class="fa fa-envelope-o"></i>&amp;nbsp; <t t-esc="record.alias_id.value"/></small>
