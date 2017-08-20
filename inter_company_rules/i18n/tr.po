@@ -120,6 +120,8 @@ msgid ""
 "Generate a Purchase Order when a Sales Order with this company as customer is created.\n"
 " The intercompany user must at least be Purchase User."
 msgstr ""
+"Bu firma ile müşteri olarak bir Satış Siparişi oluşturulduğunda bir grup şirkette Satınalma Siparişi oluşturun.\n"
+"Grup Şirket kullanıcısı en azından Satın Alma Kullanıcısı yetkilerine sahip olmalıdır."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_so_from_po
@@ -134,11 +136,13 @@ msgid ""
 "Generate a Sales Order when a Purchase Order with this company as vendor is created.\n"
 " The intercompany user must at least be Sale User."
 msgstr ""
+"Bu firma ile tedarikçi olarak bir Satınalma Siparişi oluşturulduğunda bir grup şirkette otomatik olarak Satış Siparişi oluşturun.\n"
+"Greup Şirket kullanıcısı en azından Satış Kullanıcısı yetkilerine sahip olmalıdır."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_intercompany_user_id
 msgid "Inter Company User"
-msgstr "Şirket İçi Transfer Kullanıcısı"
+msgstr "Grup Şirket Transfer Kullanıcısı"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:43
@@ -146,11 +150,12 @@ msgstr "Şirket İçi Transfer Kullanıcısı"
 #, python-format
 msgid "Inter company user of company %s doesn't have enough access rights"
 msgstr ""
+"%s firmasının grup şirket kullanıcısı yeterli erişim haklarına sahip değil"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "Inter-Company Rules"
-msgstr ""
+msgstr "Grup Şirket Kuralları"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_account_invoice
@@ -167,14 +172,14 @@ msgstr ""
 #: code:addons/inter_company_rules/models/purchase_order.py:40
 #, python-format
 msgid "Provide at least one user for inter company relation for % "
-msgstr ""
+msgstr "Grup Şirketler arası % kayıtlar için en az bir kullanıcı sağlayın"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/account_invoice.py:40
 #: code:addons/inter_company_rules/models/sale_order.py:43
 #, python-format
 msgid "Provide one user for intercompany relation for % "
-msgstr ""
+msgstr "Grup Şirketler arası % kayıtlar için bir kullanıcı sağlayın"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
@@ -186,6 +191,8 @@ msgstr "Satınalma Siparişi"
 msgid ""
 "Responsible user for creation of documents triggered by intercompany rules."
 msgstr ""
+"Grup şirketler arası kurallar tarafından tetiklenen kayıtların "
+"oluşturulmasından sorumlu kullanıcı."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_rule_type
@@ -206,6 +213,8 @@ msgstr "Satış Siparişi"
 #: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_rule_type
 msgid "Select the type to setup inter company rules in selected company."
 msgstr ""
+"Seçilen şirkette grup şirketler arası kayıt kurallarını ayarlamak için "
+"gerekli türü seçin."
 
 #. module: inter_company_rules
 #: selection:base.config.settings,rule_type:0
