@@ -22,7 +22,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "(make sure your scanner uses carriage return suffix)"
-msgstr "(请确保你的扫描枪使用自动回车)"
+msgstr "(请确保你的扫描枪开启了自动回车)"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -224,7 +224,7 @@ msgstr "点击‘盘点’"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_config_view_form_inherit_stock_barcode
 msgid "Configure Product Barcodes"
-msgstr "配置产品的条码"
+msgstr "配置产品条码"
 
 #. module: stock_barcode
 #: model:web.planner,tooltip_planner:stock_barcode.planner_barcode
@@ -234,7 +234,7 @@ msgstr "配置并学习怎样使用条码扫描枪"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Congratulations, you're ready to go live!"
-msgstr "恭喜你，你已经可以上线了"
+msgstr "恭喜你，你已经上线了"
 
 #. module: stock_barcode
 #. openerp-web
@@ -408,13 +408,13 @@ msgstr "找不到批次"
 #: code:addons/stock_barcode/controllers/main.py:23
 #, python-format
 msgid "No picking corresponding to barcode %(barcode)s"
-msgstr "没有拣货单和这个条码%(barcode)s一致"
+msgstr "没有与条码%(barcode)s对应的拣货"
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/controllers/main.py:21
 #, python-format
 msgid "No picking or location corresponding to barcode %(barcode)s"
-msgstr "没有拣货或者库位和这个条码%(barcode)s一致"
+msgstr "没有与条码%(barcode)s对应的库存位置"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -610,7 +610,7 @@ msgstr ""
 msgid ""
 "The barcode \"%(barcode)s\" doesn't correspond to a proper product, package "
 "or location."
-msgstr "条码\"%(barcode)s\" 和产品。包装或者库位不匹配"
+msgstr "条码%(barcode)s不能够对应到正确的产品, 包裹, 或者 库存位置"
 
 #. module: stock_barcode
 #. openerp-web
@@ -646,7 +646,7 @@ msgstr "有两种方法去完成发货单：你可以在打印出来的文档上
 msgid ""
 "There is no production lot for \"%(product)s\" corresponding to "
 "\"%(barcode)s\""
-msgstr "没有和\"%(barcode)s\"一致的的生产批次\"%(product)s\""
+msgstr "没有与条码\"%(barcode)s\"对应的产品\"%(product)s\"的生产批次"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner

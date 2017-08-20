@@ -172,7 +172,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -195,6 +195,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
+"En Python-ordbog, der vil blive evalueret for at angive standardværdier, når"
+" du opretter nye poster til dette alias."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -243,7 +245,7 @@ msgstr "Aktiv"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
 msgid "Alias Contact Security"
-msgstr ""
+msgstr "Alias kontakt sikkerhed"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_name
@@ -258,7 +260,7 @@ msgstr "Alias domæne"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_model_id
 msgid "Aliased Model"
-msgstr ""
+msgstr "Aliased Model"
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
@@ -824,6 +826,8 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
+"ID for overordnet record indeholdende aliaset (eksempel: projekt, der "
+"indeholder opgaveoprettelses aliaset)"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -910,9 +914,9 @@ msgid ""
 "It is set either if there's not at least an unreconciled debit and an "
 "unreconciled credit or if you click the \"Done\" button."
 msgstr ""
-"Sidste gang blev fakturaer og betalinger matchet udført for denne partner. "
-"Det indstilles enten, hvis der ikke er mindst en ukonverteret debet og en "
-"ukonverteret kredit eller hvis du klikker på knappen \"Udført\"."
+"Sidste gang faktura- og betalingsmatchning blev udført for denne partner. "
+"Sættes enten hvis der ikke er mindst en ikke-udlignet debet og en ikke-"
+"udlignet kredit post, eller hvis du klikker på knappen \"Udført\"."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_last_time_entries_checked
@@ -1078,6 +1082,9 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"Valgfri ID for en tråd (record), som alle indgående meddelelser vil blive "
+"vedhæftet, selvom de ikke svarede på det. Hvis opsat, vil dette fuldstændigt"
+" deaktivere oprettelsen af nye poster."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_user_id
@@ -1087,12 +1094,12 @@ msgstr "Ejer"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_model_id
 msgid "Parent Model"
-msgstr ""
+msgstr "Overordnet model"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "Overordnet tråd (record) ID"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_model_id
@@ -1101,6 +1108,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"Overordnet model der holder aliaset. Modellen med aliasreferencen er ikke "
+"nødvendigvis den model, der er givet af alias_model_id (eksempel: projekt "
+"(parent_model) og opgave (model))."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_debit_limit
@@ -1136,6 +1146,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Politik til at sende en besked på dokumentet ved hjælp af mailgatewayen.\n"
+"- alle: alle kan skrive\n"
+"- partnere: kun godkendte partnere\n"
+"- følgere: kun følgere af det relaterede dokument eller medlemmer af følgende kanaler\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_priority
@@ -1202,7 +1216,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "Record tråd ID"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
@@ -1335,6 +1349,8 @@ msgid ""
 "Specific team that uses this stage. Other teams will not be able to see or "
 "use this stage."
 msgstr ""
+"Specifikt team, der bruger denne fase. Andre teams kan ikke se eller bruge "
+"denne fase."
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
@@ -1494,6 +1510,9 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"Modellen (Odoo Document Kind), som dette alias svarer til. Enhver indgående "
+"e-mail, der ikke svarer til en eksisterende post, vil medføre oprettelse af "
+"en ny rekord af denne model (fx en projektopgave)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_name
@@ -1501,6 +1520,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"Navnet på e-mail aliaset, f.eks. 'jobs', hvis du vil fange e-mails til "
+"<jobs@example.odoo.com>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_user_id
@@ -1510,6 +1531,10 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"Ejeren af poster oprettet ved modtagelse af e-mails på dette alias. Hvis "
+"dette felt ikke er indstillet, forsøger systemet at finde den rigtige ejer "
+"baseret på afsenderens (Fra) adresse eller bruger administratorkontoen, hvis"
+" der ikke findes en systembruger for den pågældende adresse."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_has_unreconciled_entries
@@ -1526,7 +1551,7 @@ msgid ""
 "This account will be used instead of the default one as the payable account "
 "for the current partner"
 msgstr ""
-"Denne konto vil blive brugt i stedet for standard, som den betalende konto "
+"Denne konto vil blive brugt i stedet for standardkontoen, som kreditorkonto "
 "for den nuværende partner"
 
 #. module: helpdesk
@@ -1535,8 +1560,8 @@ msgid ""
 "This account will be used instead of the default one as the receivable "
 "account for the current partner"
 msgstr ""
-"Denne konto vil blive brugt i stedet for standarden, som tilgodehavendekonto"
-" for den nuværende partner"
+"Denne konto vil blive brugt i stedet for standardkontoen, som debitorkonto "
+"for den nuværende partner"
 
 #. module: helpdesk
 #. openerp-web
@@ -1553,8 +1578,8 @@ msgid ""
 "This payment term will be used instead of the default one for purchase "
 "orders and vendor bills"
 msgstr ""
-"Denne betalingsperiode vil blive brugt i stedet for standarden for "
-"købsordrer og sælgerregninger"
+"Denne betalingsbetingelse vil blive brugt i stedet for standarden for "
+"købsordrer og leverandør fakturaer"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_property_payment_term_id
@@ -1569,7 +1594,7 @@ msgstr ""
 #: code:addons/helpdesk/models/helpdesk.py:311
 #, python-format
 msgid "This target does not exist."
-msgstr ""
+msgstr "Dette mål eksisterer ikke."
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
