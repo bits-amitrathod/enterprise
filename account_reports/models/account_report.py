@@ -430,7 +430,7 @@ class AccountReport(models.AbstractModel):
             for k,v in self.replace_class().items():
                 html = html.replace(k, v)
             # append footnote as well
-            html = html.replace('<div class="js_account_report_footnotes"></div>', self.get_html_footnotes(footnotes_to_render))
+            html = html.replace(b'<div class="js_account_report_footnotes"></div>', self.get_html_footnotes(footnotes_to_render))
         return html
 
     @api.multi
@@ -629,7 +629,7 @@ class AccountReport(models.AbstractModel):
         """When printing pdf, we sometime want to remove/add/replace class for the report to look a bit different on paper
         this method is used for this, it will replace occurence of value key by the dict value in the generated pdf
         """
-        return {'o_account_reports_no_print': '', 'table-responsive': '', '<a': '<span', '</a>': '</span>'}
+        return {b'o_account_reports_no_print': b'', b'table-responsive': b'', b'<a': b'<span', b'</a>': b'</span>'}
 
     def get_pdf(self, options, minimal_layout=True):
         # As the assets are generated during the same transaction as the rendering of the
