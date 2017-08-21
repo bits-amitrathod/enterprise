@@ -1,4 +1,4 @@
-odoo.define('website_subscription.website_subscription', function (require) {
+odoo.define('sale_subscription.portal_subscription', function (require) {
     'use strict';
 
     require('web.dom_ready');

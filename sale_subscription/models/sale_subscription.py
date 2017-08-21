@@ -578,14 +578,14 @@ class SaleSubscription(models.Model):
                                     })
                                     _logger.error('Fail to create recurring invoice for subscription %s', subscription.code)
                                     if close_subscription:
-                                        _, template_id = imd_res.get_object_reference('website_subscription', 'email_payment_close')
+                                        _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_close')
                                         template = template_res.browse(template_id)
                                         template.with_context(email_context).send_mail(subscription.id)
                                         _logger.debug("Sending Subscription Closure Mail to %s for subscription %s and closing subscription", subscription.partner_id.email, subscription.id)
                                         msg_body = 'Automatic payment failed after multiple attempts. Subscription closed automatically.'
                                         subscription.message_post(body=msg_body)
                                     else:
-                                        _, template_id = imd_res.get_object_reference('website_subscription', 'email_payment_reminder')
+                                        _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_reminder')
                                         msg_body = 'Automatic payment failed. Subscription set to "To Renew".'
                                         if (datetime.datetime.today() - datetime.datetime.strptime(subscription.recurring_next_date, '%Y-%m-%d')).days in [0, 3, 7, 14]:
                                             template = template_res.browse(template_id)
@@ -637,7 +637,7 @@ class SaleSubscription(models.Model):
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
         invoicing_period = relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
         new_date = next_date + invoicing_period
-        _, template_id = imd_res.get_object_reference('website_subscription', 'email_payment_success')
+        _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_success')
         email_context = self.env.context.copy()
         email_context.update({
             'payment_token': self.payment_token_id.name,

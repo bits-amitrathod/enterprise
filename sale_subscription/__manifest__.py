@@ -16,7 +16,11 @@ Features:
     - Generate invoice automatically at fixed intervals
 """,
     'author': 'Camptocamp / Odoo',
-    'depends': ['sale_management'],
+    'depends': [
+        'sale_management',
+        'portal',
+        'sale_payment',
+    ],
     'data': [
         'security/sale_subscription_security.xml',
         'security/ir.model.access.csv',
@@ -28,9 +32,11 @@ Features:
         'views/account_analytic_account_views.xml',
         'views/sale_subscription_views.xml',
         'views/assets.xml',
+        'views/subscription_portal_templates.xml',
         'views/sale_subscription_config_views.xml',
         'views/payment_views.xml',
         'data/sale_subscription_data.xml',
+        'data/mail_template_data.xml',
         'report/sale_subscription_report_view.xml',
     ],
     'demo': [

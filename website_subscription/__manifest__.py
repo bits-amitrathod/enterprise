@@ -14,20 +14,14 @@ Features:
     'depends': [
         'sale_subscription',
         'website',
-        'portal',
         'website_payment',
     ],
     'data': [
-        'views/sale_subscription_templates.xml',
-        'security/ir.model.access.csv',
-        'security/portal_subscription_security.xml',
-        'data/data.xml'
     ],
     'qweb': [
         'static/src/xml/*.xml'
     ],
     'demo': [
-        'data/demo.xml',
     ],
     'installable': True,
     'license': 'OEEL-1',

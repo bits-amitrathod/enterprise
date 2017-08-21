@@ -8,7 +8,7 @@ from odoo.http import request
 from odoo.tools import pycompat
 from odoo.tools.translate import _
 
-from odoo.addons.portal.controllers.portal import get_records_pager, CustomerPortal
+from odoo.addons.portal.controllers.portal import get_records_pager, pager as portal_pager, CustomerPortal
 
 
 class CustomerPortal(CustomerPortal):
@@ -60,7 +60,7 @@ class CustomerPortal(CustomerPortal):
 
         # pager
         account_count = SaleSubscription.search_count(domain)
-        pager = request.website.pager(
+        pager = portal_pager(
             url="/my/subscription",
             url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby, 'filterby': filterby},
             total=account_count,
@@ -82,10 +82,10 @@ class CustomerPortal(CustomerPortal):
             'searchbar_filters': OrderedDict(sorted(pycompat.items(searchbar_filters))),
             'filterby': filterby,
         })
-        return request.render("website_subscription.portal_my_subscriptions", values)
+        return request.render("sale_subscription.portal_my_subscriptions", values)
 
 
-class website_subscription(http.Controller):
+class sale_subscription(http.Controller):
 
     @http.route(['/my/subscription/<int:account_id>/',
                  '/my/subscription/<int:account_id>/<string:uuid>'], type='http', auth="public", website=True)
@@ -149,7 +149,7 @@ class website_subscription(http.Controller):
 
         history = request.session.get('my_subscriptions_history', [])
         values.update(get_records_pager(history, account))
-        return request.render("website_subscription.subscription", values)
+        return request.render("sale_subscription.subscription", values)
 
     payment_succes_msg = 'message=Thank you, your payment has been validated.&message_class=alert-success'
     payment_fail_msg = 'message=There was an error with your payment, please try with another payment method or contact us.&message_class=alert-danger'
