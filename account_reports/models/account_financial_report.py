@@ -120,7 +120,7 @@ class AccountFinancialReportLine(models.Model):
 
     @api.constrains('code')
     def _code_constrains(self):
-        if self.code.strip().lower() in __builtins__.keys():
+        if self.code and self.code.strip().lower() in __builtins__.keys():
             raise ValidationError('The code "%s" is invalid on line with name "%s"' % (self.code, self.name))
 
     def _query_get_select_sum(self, currency_table):
