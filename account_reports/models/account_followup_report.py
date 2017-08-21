@@ -85,8 +85,8 @@ class report_account_followup_report(models.AbstractModel):
                     'unfoldable': False,
                     'columns': [type(v) == dict and v or {'name': v} for v in columns],
                 })
-            total = formatLang(self.env, total, currency_obj=currency)
-            total = total.replace(' ', '&nbsp;') if self.env.context.get('mail') else total
+            totalXXX = formatLang(self.env, total, currency_obj=currency)
+            totalXXX = totalXXX.replace(' ', '&nbsp;') if self.env.context.get('mail') else totalXXX
             line_num += 1
             lines.append({
                 'id': line_num,
@@ -94,7 +94,7 @@ class report_account_followup_report(models.AbstractModel):
                 'class': 'total',
                 'unfoldable': False,
                 'level': 0,
-                'columns': [{'name': v} for v in ['']*(2 if self.env.context.get('print_mode') else 4) + [total >= 0 and _('Total Due') or '', total]],
+                'columns': [{'name': v} for v in ['']*(2 if self.env.context.get('print_mode') else 4) + [total >= 0 and _('Total Due') or '', totalXXX]],
             })
             if total_issued > 0:
                 total_issued = formatLang(self.env, total_issued, currency_obj=currency)
