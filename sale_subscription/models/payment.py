@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models
+from odoo import api, fields, models
+
+
+class PaymentTransaction(models.Model):
+    _name = 'payment.transaction'
+    _inherit = 'payment.transaction'
+
+    invoice_id = fields.Many2one('account.invoice', 'Invoice')
 
 
 class PaymentToken(models.Model):

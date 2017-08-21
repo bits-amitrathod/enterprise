@@ -29,6 +29,7 @@ Features:
         'views/sale_subscription_views.xml',
         'views/assets.xml',
         'views/sale_subscription_config_views.xml',
+        'views/payment_views.xml',
         'data/sale_subscription_data.xml',
         'report/sale_subscription_report_view.xml',
     ],
