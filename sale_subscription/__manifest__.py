@@ -27,7 +27,7 @@ Features:
         'views/res_partner_views.xml',
         'views/account_analytic_account_views.xml',
         'views/sale_subscription_views.xml',
-        'views/sale_subscription_templates.xml',
+        'views/assets.xml',
         'views/sale_subscription_config_views.xml',
         'data/sale_subscription_data.xml',
         'report/sale_subscription_report_view.xml',
