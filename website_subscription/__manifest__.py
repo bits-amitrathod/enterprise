@@ -19,7 +19,6 @@ Features:
     ],
     'data': [
         'views/sale_subscription_templates.xml',
-        'views/sale_subscription_views.xml',
         'security/ir.model.access.csv',
         'security/portal_subscription_security.xml',
         'data/data.xml'
