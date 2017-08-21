@@ -1,81 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import uuid
-
-from odoo import api, exceptions, fields, models
+from odoo import api, models
 from odoo.addons.http_routing.models.ir_http import slug
-
-
-class HelpdeskTicket(models.Model):
-    _inherit = ['helpdesk.ticket']
-
-    access_token = fields.Char(
-        'Security Token', copy=False, default=lambda self: str(uuid.uuid4()),
-        required=True)
-
-    @api.model_cr_context
-    def _init_column(self, column_name):
-        """ Initialize the value of the given column for existing rows.
-
-            Overridden here because we need to generate different access tokens
-            and by default _init_column calls the default method once and stores
-            its result for every record.
-        """
-        if column_name != 'access_token':
-            super(HelpdeskTicket, self)._init_column(column_name)
-        else:
-            query = """UPDATE %(table_name)s
-                          SET %(column_name)s = md5(md5(random()::varchar || id::varchar) || clock_timestamp()::varchar)::uuid::varchar
-                        WHERE %(column_name)s IS NULL
-                    """ % {'table_name': self._table, 'column_name': column_name}
-            self.env.cr.execute(query)
-
-    @api.multi
-    def get_access_action(self, access_uid=None):
-        """ Instead of the classic form view, redirect to website for portal users
-        that can read the ticket if the team is available on website. """
-        self.ensure_one()
-        user, record = self.env.user, self
-        if access_uid:
-            user = self.env['res.users'].sudo().browse(access_uid)
-            record = self.sudo(user)
-
-        if self.sudo().team_id.website_published and user.share:
-            try:
-                record.check_access_rule('read')
-            except exceptions.AccessError:
-                pass
-            else:
-                return {
-                    'type': 'ir.actions.act_url',
-                    'url': '/ticket/%s' % self.id,
-                    'target': 'self',
-                    'res_id': self.id,
-                }
-        return super(HelpdeskTicket, self).get_access_action(access_uid)
-
-    @api.multi
-    def _notification_recipients(self, message, groups):
-        groups = super(HelpdeskTicket, self)._notification_recipients(message, groups)
-
-        self.ensure_one()
-        if self.team_id.website_published:
-            for group_name, group_method, group_data in groups:
-                group_data['has_button_access'] = True
-
-        return groups
 
 
 class HelpdeskTeam(models.Model):
     _name = "helpdesk.team"
     _inherit = ['helpdesk.team', 'website.published.mixin']
-
-    website_rating_url = fields.Char('URL to Submit Issue', readonly=True, compute='_compute_website_rating_url')
-
-    def _compute_website_rating_url(self):
-        for team in self.filtered(lambda team: team.name and team.use_website_helpdesk_rating and team.id):
-            team.website_rating_url = '/helpdesk/rating/%s' % slug(team)
 
     @api.multi
     def _compute_website_url(self):
