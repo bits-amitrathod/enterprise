@@ -72,7 +72,7 @@ odoo.define('website_sign.PDFIframe', function (require) {
             var self = this;
             this.setElement(this.$iframe.contents().find('html'));
 
-            this.$('#openFile, #pageRotateCw, #pageRotateCcw, #pageRotateCcw').add(this.$('#lastPage').next()).hide();
+            this.$('#openFile, #pageRotateCw, #pageRotateCcw, #pageRotateCcw, #viewBookmark').add(this.$('#lastPage').next()).hide();
             this.$('button#print').prop('title', _t("Print original document"));
             this.$('button#download').prop('title', _t("Download original document"));
             this.$('button#zoomOut').click().click();
@@ -438,7 +438,7 @@ odoo.define('website_sign.utils', function (require) {
 
             formatResult: function(partner, resultElem, searchObj) {
                 if(partner.id < 0) {
-                    var partnerMatch = searchObj.term.match(/(?:\s|\()*(((?:\w|-|\.)+)@(?:\w|-)+\.(?:\w|-)+)(?:\s|\))*/);
+                    var partnerMatch = searchObj.term.match(/[\s(]*(([\w-.]+)@(?:[\w-]+\.)+[\w-]+)[\s)]*/);
                     if(!partnerMatch || partnerMatch[1] === undefined) {
                         _.extend(partner, {'name': '', 'email': ''});
                         return $("<div/>", {text: _t("Create: \"") + searchObj.term + "\""})
