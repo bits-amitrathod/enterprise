@@ -346,8 +346,8 @@ var FieldMany2One = common.AbstractField.extend(common.CompletionFieldMixin, com
         if (!this.get("effective_readonly")) {
             this.$input.val(str.split("\n")[0]);
             this.current_display = this.$input.val();
-            this.$follow_button.toggle(!this.is_false());
-            this.$el.toggleClass('o_with_button', !!this.$follow_button && this.$follow_button.length > 0 && !this.is_false());
+            this.$follow_button.toggle(this.is_set());
+            this.$el.toggleClass('o_with_button', !!this.$follow_button && this.$follow_button.length > 0 && this.is_set());
         } else {
             this.$el.html(_.escape(str).split("\n").join("<br/>"));
             // Define callback to perform when clicking on the field
@@ -873,8 +873,9 @@ var FieldX2Many = AbstractManyField.extend({
         }
         return true;
     },
-    is_false: function() {
-        return false;
+    is_set: function() {
+        // always consider that field is "set" hence displayed
+        return true;
     },
 });
 
@@ -1706,8 +1707,9 @@ var FieldMany2ManyCheckBoxes = AbstractManyField.extend(common.ReinitializeField
             this.internal_set_value(new_value);
         }
     },
-    is_false: function() {
-        return false;
+    is_set: function() {
+        // always consider that field is "set" hence displayed
+        return true;
     },
 });
 
