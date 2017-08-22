@@ -187,6 +187,12 @@
                 <sheet string="Subscription">
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button"
+                            icon="fa-globe"
+                            name="open_website_url"
+                            type="object" 
+                            string="Online Preview">
+                            </button>
+                        <button class="oe_stat_button"
                             icon="fa-book"
                             name="action_subscription_invoice"
                             type="object">
@@ -252,6 +258,7 @@
                             <group>
                                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                 <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                <field name="payment_token_id"/>
                             </group>
                             <group>
                             </group>
@@ -299,6 +306,8 @@
                 <field name="recurring_interval"/>
                 <field name="color"/>
                 <field name="subscription_count"/>
+                <field name="payment_mandatory"/>
+                <field name="user_closable"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
@@ -309,6 +318,8 @@
                                             <span><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></span>
                                         </div>
                                         <span>Recurrency: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></span>
+                                        <span t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</span>
+                                        <span t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</span>
                                     </div>
                                 </div><div class="o_kanban_card_manage_pane o_invisible">
                                     <div class="o_kanban_card_manage_section o_kanban_manage_reports">
@@ -412,7 +423,11 @@
                         <group name="accounting" string="Accounting" groups="account.group_account_user">
                             <field name="journal_id" options="{'no_create': True}"/>
                         </group>
-                        <group name="online" string="Online Management" invisible="1">
+                        <group name="online" string="Online Management">
+                            <field name="user_closable"/>
+                            <field name="payment_mandatory"/>
+                            <field name="tag_ids" string="Category" widget="many2many_tags"
+                                   options="{'color_field': 'color'}" />
                         </group>
                     </group>
                     <div name="description">

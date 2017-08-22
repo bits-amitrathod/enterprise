@@ -6,4 +6,10 @@
             <link rel='stylesheet' href='/sale_subscription/static/src/css/sale_subscription_backend.less'/>
         </xpath>
     </template>
+    <template id="assets_frontend" name="Customer portal assets" inherit_id="web.assets_frontend">
+      <xpath expr="." position="inside">
+          <link rel='stylesheet' href='/sale_subscription/static/src/less/portal_subscription.less'/>
+          <script type="text/javascript" src="/sale_subscription/static/src/js/portal_subscription.js"></script>
+      </xpath>
+    </template>
 </odoo>

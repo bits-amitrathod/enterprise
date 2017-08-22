@@ -17,12 +17,19 @@
             <field name="uom_type">bigger</field>
         </record>
 
+         <record id="odoo_online_tag" model="account.analytic.tag">
+            <field name="name">Odoo Online</field>
+         </record>
+
         <!-- Subscription templates -->
         <record id="odoo_monthly" model="sale.subscription.template">
             <field name="name">Odoo Monthly</field>
             <field name="code">MON</field>
             <field name="recurring_interval">1</field>
             <field name="recurring_rule_type">monthly</field>
+            <field name="user_closable">True</field>
+            <field name="payment_mandatory">True</field>
+            <field name="tag_ids" eval="[(6,0, (ref('sale_subscription.odoo_online_tag'),))]"/>
             <field name="description">
         Payment
         All payments are due upon receipt. If a payment is not received or payment method is declined, the buyer forfeits the ownership of any items purchased. If no payment is received, no items will be shipped.
@@ -46,6 +53,8 @@
             <field name="code">YEA</field>
             <field name="recurring_interval">1</field>
             <field name="recurring_rule_type">yearly</field>
+            <field name="user_closable">True</field>
+            <field name="tag_ids" eval="[(6,0, (ref('sale_subscription.odoo_online_tag'),))]"/>
             <field name="description">
         Payment
         All payments are due upon receipt. If a payment is not received or payment method is declined, the buyer forfeits the ownership of any items purchased. If no payment is received, no items will be shipped.
@@ -103,10 +112,6 @@
             <field name="uom_id" ref="subscription_uom_month"/>
             <field name="uom_po_id" ref="subscription_uom_month"/>
         </record>
-
-         <record id="odoo_online_tag" model="account.analytic.tag">
-            <field name="name">Odoo Online</field>
-         </record>
 
         <!-- Recurring products -->
         <record id="odoo_custom_view" model="product.product">
