@@ -119,6 +119,11 @@ class AccountFinancialReportLine(models.Model):
     hide_if_zero = fields.Boolean(default=False)
     action_id = fields.Many2one('ir.actions.actions')
 
+    @api.constrains('code')
+    def _code_constrains(self):
+        if self.code and self.code.strip().lower() in __builtins__.keys():
+            raise ValidationError('The code "%s" is invalid on line with name "%s"' % (self.code, self.name))
+
     def _query_get_select_sum(self, currency_table):
         """ Little function to help building the SELECT statement when computing the report lines.
 
@@ -625,7 +630,11 @@ class FormulaContext(dict):
         return super(FormulaContext, self).__init__(data)
 
     def __getitem__(self, item):
-        if self.only_sum and item not in ['sum', 'sum_if_pos', 'sum_if_neg']:
+        formula_items = ['sum', 'sum_if_pos', 'sum_if_neg']
+        if item in set(__builtins__.keys()) - set(formula_items):
+            return super(FormulaContext, self).__getitem__(item)
+
+        if self.only_sum and item not in formula_items:
             return FormulaLine(self.curObj, self.currency_table, type='null')
         if self.get(item):
             return super(FormulaContext, self).__getitem__(item)
