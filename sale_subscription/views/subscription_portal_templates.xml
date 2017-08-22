@@ -89,6 +89,7 @@
                             <div class="clearfix">
                                 <h3 class="mb24">Pay with</h3>
                                 <t t-call="payment.payment_tokens_list">
+                                    <t t-set="s2s_acquirers" t-value="acquirers"/>
                                     <t t-set="show_submit" t-value="True"/>
                                     <t t-set="form_action" t-value="'/my/subscription/payment/' + str(account.id) + '/' + str(account.uuid)"/>
                                     <t t-set="pms" t-value="part_pms"/>
@@ -110,6 +111,7 @@
                             <t t-set="submit_txt" t-value="'Change'"/>
                             <t t-set="checked_pm_id" t-value="account.payment_token_id.id"/>
                             <t t-set="mode" t-value="'payment'"/>
+                            <t t-set="s2s_acquirers" t-value="acquirers"/>
                             <t t-set="verify_validity" t-value="True"/>
                         </t>
                     </div>
