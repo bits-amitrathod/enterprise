@@ -21,6 +21,7 @@ It assigns manager and user access rights to the Administrator for the accountin
         'views/account_accountant_templates.xml',
         'views/account_config_settings_views.xml',
         'views/product_views.xml',
+        'wizard/account_change_lock_date.xml',
     ],
     'demo': ['data/account_accountant_demo.xml'],
     'test': [],
