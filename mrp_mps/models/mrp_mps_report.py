@@ -3,6 +3,7 @@
 
 import datetime
 from dateutil import relativedelta
+import babel.dates
 
 from odoo import api, fields, models, _
 from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
@@ -119,7 +120,7 @@ class MrpMpsReport(models.TransientModel):
         forecasted = product.mps_forecasted
         date = datetime.datetime.now()
         indirect = self.get_indirect(product)[product.id]
-        display = 'To Supply / Produce'
+        display = _('To Supply / Produce')
         buy_type = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)
         mo_type = self.env.ref('mrp.route_warehouse0_manufacture', raise_if_not_found=False)
         lead_time = 0
@@ -143,12 +144,13 @@ class MrpMpsReport(models.TransientModel):
             if self.period == 'month':
                 date_to = date + relativedelta.relativedelta(months=1)
                 name = date.strftime('%b')
+                name = babel.dates.format_date(format="MMM YY", date=date, locale=self._context.get('lang') or 'en_US')
             elif self.period == 'week':
                 date_to = date + relativedelta.relativedelta(days=7)
-                name = _('Week ') + date.strftime('%U')
+                name = _('Week %s') % date.strftime('%U')
             else:
                 date_to = date + relativedelta.relativedelta(days=1)
-                name = date.strftime('%b %d')
+                name = babel.dates.format_skeleton("MMMd", date, locale=self._context.get('lang') or 'en_US')
             forecasts = self.env['sale.forecast'].search([
                 ('date', '>=', date.strftime('%Y-%m-%d')),
                 ('date', '<', date_to.strftime('%Y-%m-%d')),

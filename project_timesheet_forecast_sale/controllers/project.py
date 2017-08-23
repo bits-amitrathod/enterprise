@@ -39,7 +39,7 @@ class TimesheetForecastController(SaleTimesheetController):
         ts_months = sorted([fields.Date.to_string(initial_date-relativedelta(months=i)) for i in range(0, DEFAULT_MONTH_RANGE)])
         fc_months = sorted([fields.Date.to_string(initial_date+relativedelta(months=i)) for i in range(0, DEFAULT_MONTH_RANGE)])
 
-        timesheet_forecast_data = self.sudo()._plan_get_timesheet_forecast_data(domain, ts_months, fc_months)
+        timesheet_forecast_data = self._plan_get_timesheet_forecast_data(domain, ts_months, fc_months)
 
         so_line_ids = [sol_name_get[0] for sol_name_get in timesheet_forecast_data if sol_name_get]
         so_sol_mapping = {sol.id: sol.order_id.name_get()[0] for sol in request.env['sale.order.line'].sudo().browse(so_line_ids)}
@@ -152,7 +152,7 @@ class TimesheetForecastController(SaleTimesheetController):
         # use _read_group_raw to get date range
         fc_max_month_date = fields.Date.from_string(max(forecast_months))+relativedelta(months=1)
         fc_domain = domain + [('order_line_id', '!=', False), ('start_date', '>=', min(forecast_months)), ('start_date', '<', fields.Date.to_string(fc_max_month_date))]
-        data_forecast = request.env['project.forecast']._read_group_raw(fc_domain, ['order_line_id', 'resource_hours', 'employee_id', 'start_date'], ['start_date:month', 'order_line_id', 'employee_id'], lazy=False)
+        data_forecast = request.env['project.forecast'].sudo()._read_group_raw(fc_domain, ['order_line_id', 'resource_hours', 'employee_id', 'start_date'], ['start_date:month', 'order_line_id', 'employee_id'], lazy=False)
         for forecast_row in data_forecast:
             current_date = forecast_row['start_date:month'][0].split('/')[0]
             resource_hours = float_round(forecast_row['resource_hours'], precision_rounding=hour_rounding)
@@ -167,7 +167,7 @@ class TimesheetForecastController(SaleTimesheetController):
         # use _read_group_raw to get date range
         ts_max_month_date = fields.Date.from_string(max(timesheet_months))+relativedelta(months=1)
         ts_domain = domain + [('so_line', '!=', False), ('date', '<', fields.Date.to_string(ts_max_month_date)), ('date', '>=', min(timesheet_months))]
-        data_timesheet = request.env['account.analytic.line']._read_group_raw(ts_domain, ['so_line', 'unit_amount', 'employee_id', 'date'], ['date:month', 'so_line', 'employee_id'], lazy=False)
+        data_timesheet = request.env['account.analytic.line'].sudo()._read_group_raw(ts_domain, ['so_line', 'unit_amount', 'employee_id', 'date'], ['date:month', 'so_line', 'employee_id'], lazy=False)
         for timesheet_row in data_timesheet:
             current_date = timesheet_row['date:month'][0].split('/')[0]
             unit_amount = float_round(timesheet_row['unit_amount'], precision_rounding=hour_rounding)
