@@ -26,25 +26,13 @@ class report_account_general_ledger(models.AbstractModel):
 
     def get_columns_name(self, options):
         return [{'name': ''},
-                {'name': _("Date"), 'class': 'date'}, 
-                {'name': _("Communication")}, 
-                {'name': _("Partner")}, 
-                {'name': _("Currency"), 'class': 'number'}, 
-                {'name': _("Debit"), 'class': 'number'}, 
-                {'name': _("Credit"), 'class': 'number'}, 
+                {'name': _("Date"), 'class': 'date'},
+                {'name': _("Communication")},
+                {'name': _("Partner")},
+                {'name': _("Currency"), 'class': 'number'},
+                {'name': _("Debit"), 'class': 'number'},
+                {'name': _("Credit"), 'class': 'number'},
                 {'name': _("Balance"), 'class': 'number'}]
-
-    def open_journal_entries(self, options, params):
-        action = self.env.ref('account.action_move_select').read()[0]
-        action = clean_action(action)
-        ctx = self.env.context.copy()
-        active_id = int(params.get('id').split('_')[1])
-        ctx.update({
-            'search_default_dummy_account_id': [active_id],
-            'active_id': active_id,
-            })
-        action['context'] = ctx
-        return action
 
     def _get_with_statement(self, user_types, domain=None):
         """ This function allow to define a WITH statement as prologue to the usual queries returned by query_get().
@@ -228,7 +216,7 @@ class report_account_general_ledger(models.AbstractModel):
         tables, where_clause, where_params = self.env['account.move.line']._query_get()
         query = """
             SELECT rel.account_tax_id, SUM("account_move_line".balance) AS base_amount
-            FROM account_move_line_account_tax_rel rel, """ + tables + """ 
+            FROM account_move_line_account_tax_rel rel, """ + tables + """
             WHERE "account_move_line".id = rel.account_move_line_id
                 AND """ + where_clause + """
            GROUP BY rel.account_tax_id"""
@@ -401,3 +389,8 @@ class report_account_general_ledger(models.AbstractModel):
     @api.model
     def get_report_name(self):
         return _("General Ledger")
+
+    def view_all_journal_items(self, options, params):
+        if params.get('id'):
+            params['id'] = int(params.get('id').split('_')[1])
+        return self.env['account.report'].open_journal_items(options, params)

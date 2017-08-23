@@ -235,6 +235,19 @@ class AccountReport(models.AbstractModel):
         action.update({'options': options, 'context': ctx, 'ignore_session': 'read'})
         return action
 
+    def open_journal_items(self, options, params):
+        action = self.env.ref('account.action_move_line_select').read()[0]
+        action = clean_action(action)
+        ctx = self.env.context.copy()
+
+        if params and 'id' in params:
+            active_id = params['id']
+            ctx.update({
+                    'search_default_account_id': [active_id],
+            })
+            action['context'] = ctx
+        return action
+
     def reverse(self, values):
         """Utility method used to reverse a list, this method is used during template generation in order to reverse periods for example"""
         if type(values) != list:

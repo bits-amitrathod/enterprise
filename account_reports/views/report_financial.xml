@@ -13,6 +13,7 @@
 
 <template id="line_caret_options">
     <li t-if="line['caret_options'] == 'account.account'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_general_ledger">General Ledger</a></li>
+    <li t-if="line['caret_options'] == 'account.account'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_journal_items">Journal Items</a></li>
     <li t-if="line['caret_options'] == 'account.invoice.out'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Invoice</a></li>
     <li t-if="line['caret_options'] == 'account.invoice.in'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Bill</a></li>
     <li t-if="line['caret_options'] == 'account.payment'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.payment" action="open_document">View Payment</a></li>
@@ -210,7 +211,7 @@
 </template>
 <template id="line_template_general_ledger_report" inherit_id="account_reports.line_template" primary="True">
     <xpath expr="//span[hasclass('account_report_line_name')]" position="inside">
-        &amp;nbsp;<a t-if="line.get('unfolded')" t-att-data-id="line.get('id')" action="open_journal_entries" class="no_print o_journal_entries"> ⇒ journal entries</a>
+        &amp;nbsp;<a t-if="line.get('unfolded')" t-att-data-id="line.get('id')" action="view_all_journal_items" class="no_print o_journal_entries"> ⇒ journal items</a>
     </xpath>
     <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
         <li t-if="line['caret_options'] != 'account.tax'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
