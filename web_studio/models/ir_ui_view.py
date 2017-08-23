@@ -411,7 +411,7 @@ class View(models.Model):
         result = ''
         node_string = ancestor + '/'
         if node.tag is etree.Comment:
-            node.string += 'comment'
+            node_string += 'comment'
         else:
             node_string += node.tag
 
