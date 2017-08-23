@@ -84,7 +84,8 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
         } else {
             return new Model('sale.forecast').call('save_forecast_data', [
-                 parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
+                 parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')],
+                 {context: session.user_context})
                 .then(function() {
                     self.get_html().then(function() {
                         self.re_renderElement();
@@ -105,7 +106,10 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_generate_procurement: function(e){
         var self = this;
         var target = $(e.target);
-        return new Model('sale.forecast').call('generate_procurement', [parseInt(target.data('product')), 1]).then(function(result){
+        return new Model('sale.forecast').call('generate_procurement',
+                [parseInt(target.data('product')), 1],
+                {context: session.user_context})
+        .then(function(result){
             if (result){
                 self.get_html().then(function() {
                     self.re_renderElement();
@@ -116,7 +120,9 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_change_auto_mode: function(e){
         var self = this;
         var target = $(e.target);
-        return new Model('sale.forecast').call('change_forecast_mode', [parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))])
+        return new Model('sale.forecast').call('change_forecast_mode',
+            [parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))],
+            {context: session.user_context})
         .then(function(result){
             self.get_html().then(function() {
                 self.re_renderElement();
@@ -140,7 +146,10 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         this.period = $(e.target).parent().data('value');
         var model = new Model('mrp.mps.report');
         return model.call('search', [[]]).then(function(res){
-                return model.call('write', [res, {'period': self.period}]).done(function(result){
+                return model.call('write',
+                    [res, {'period': self.period}],
+                    {context: session.user_context})
+                .done(function(result){
                 self.get_html().then(function() {
                     self.update_cp();
                     self.re_renderElement();
@@ -190,7 +199,8 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer or Float Value should be valid."));
         } else {
             return new Model('sale.forecast').call('save_forecast_data', [
-                parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')])
+                    parseInt($input.data('product')), parseInt(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')],
+                    {context: session.user_context})
                 .done(function(res){
                     self.get_html().then(function() {
                         self.re_renderElement();
@@ -211,7 +221,10 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_apply: function(e){
         var self = this;
         var product = parseInt($(e.target).data('product'));
-        return new Model('mrp.mps.report').call('update_indirect', [product]).then(function(result){
+        return new Model('mrp.mps.report').call('update_indirect',
+                [product],
+                {context: session.user_context})
+        .then(function(result){
             self.get_html().then(function() {
                 self.re_renderElement();
             });
@@ -221,7 +234,10 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     get_html: function() {
         var self = this;
         var defs = [];
-        return new Model('mrp.mps.report').call('get_html', [this.domain]).then(function (result) {
+        return new Model('mrp.mps.report').call('get_html',
+            [this.domain],
+            {context: session.user_context})
+        .then(function (result) {
             self.html = result.html;
             self.report_context = result.report_context;
             self.render_buttons();
@@ -261,7 +277,10 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var self = this;
         this.$buttons = $(QWeb.render("MPS.buttons", {}));
         this.$buttons.on('click', function(){
-            new Model('sale.forecast').call('generate_procurement_all', []).then(function(result){
+            new Model('sale.forecast').call('generate_procurement_all',
+                [],
+                {context: session.user_context})
+            .then(function(result){
                 self.get_html().then(function() {
                     self.re_renderElement();
                 });
