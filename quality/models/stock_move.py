@@ -5,7 +5,6 @@ from collections import defaultdict
 
 from odoo import api, models, _
 from odoo.exceptions import UserError
-from odoo.tools import pycompat
 
 
 class StockMove(models.Model):
@@ -29,7 +28,7 @@ class StockMove(models.Model):
         for move in self:
             pick_moves[move.picking_id] |= move
 
-        for picking, moves in pycompat.items(pick_moves):
+        for picking, moves in pick_moves.items():
             for check in picking.sudo().check_ids:
                 point_key = (check.picking_id.id, check.point_id.id, check.team_id.id, check.product_id.id)
                 quality_points_list.add(point_key)

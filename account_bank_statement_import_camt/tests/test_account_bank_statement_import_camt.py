@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import base64
 
 from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
@@ -11,7 +12,7 @@ class TestCamtFile(TransactionCase):
     def test_camt_file_import(self):
         # Get CAMT file content
         camt_file_path = get_module_resource('account_bank_statement_import_camt', 'test_camt_file', 'test_camt.xml')
-        camt_file = open(camt_file_path, 'rb').read().encode('base64')
+        camt_file = base64.b64encode(open(camt_file_path, 'rb').read())
 
         # Create a bank account and journal corresponding to the CAMT file (same currency and account number)
         bank_journal_id = self.env['account.journal'].create({'name': 'Bank 123456', 'code': 'BNK67', 'type': 'bank',

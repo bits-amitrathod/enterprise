@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import base64
-import StringIO
+import io
 import time
 import uuid
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -280,11 +280,11 @@ class SignatureRequest(models.Model):
             self.completed_document = self.template_id.attachment_id.datas
             return
 
-        old_pdf = PdfFileReader(StringIO.StringIO(base64.b64decode(self.template_id.attachment_id.datas)))
+        old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)), overwriteWarnings=False)
         font = "Helvetica"
         normalFontSize = 0.015
 
-        packet = StringIO.StringIO()
+        packet = io.BytesIO()
         can = canvas.Canvas(packet)
         itemsByPage = self.template_id.signature_item_ids.getByPage()
         SignatureItemValue = self.env['signature.item.value']
@@ -331,13 +331,13 @@ class SignatureRequest(models.Model):
 
                 elif item.type_id.type == "signature" or item.type_id.type == "initial":
                     img = base64.b64decode(value[value.find(',')+1:])
-                    can.drawImage(ImageReader(StringIO.StringIO(img)), width*item.posX, height*(1-item.posY-item.height), width*item.width, height*item.height, 'auto', True)
+                    can.drawImage(ImageReader(io.BytesIO(img)), width*item.posX, height*(1-item.posY-item.height), width*item.width, height*item.height, 'auto', True)
 
             can.showPage()
 
         can.save()
 
-        item_pdf = PdfFileReader(packet)
+        item_pdf = PdfFileReader(packet, overwriteWarnings=False)
         new_pdf = PdfFileWriter()
 
         for p in range(0, old_pdf.getNumPages()):
@@ -345,7 +345,7 @@ class SignatureRequest(models.Model):
             page.mergePage(item_pdf.getPage(p))
             new_pdf.addPage(page)
 
-        output = StringIO.StringIO()
+        output = io.BytesIO()
         new_pdf.write(output)
         self.completed_document = base64.b64encode(output.getvalue())
         output.close()

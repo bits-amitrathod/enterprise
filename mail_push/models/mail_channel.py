@@ -14,7 +14,6 @@ from requests.exceptions import ConnectionError
 
 from odoo import api, models
 from odoo.modules.registry import Registry
-from odoo.tools import pycompat
 
 FCM_MESSAGES_LIMIT = 1000
 FCM_END_POINT = "https://fcm.googleapis.com/fcm/send"
@@ -196,10 +195,10 @@ class MailChannel(models.Model):
         but it includes the canonical ID in the response. We will delete/replace such token.
         Response Format: {'new_token': 'old_token'}
         """
-        all_subsciptions = list(itertools.chain(pycompat.keys(canonical), pycompat.values(canonical)))
+        all_subsciptions = list(itertools.chain(canonical, canonical.values()))
         subscription_exists = env['mail_push.device'].search([('subscription_id', 'in', all_subsciptions)])
         token_exists = subscription_exists.mapped("subscription_id")
-        for old, new in pycompat.items(canonical):
+        for old, new in canonical.items():
             if old in token_exists and new in token_exists:
                 subscription_exists.filtered(lambda r: r.subscription_id == old).unlink()
             elif old in token_exists and new not in token_exists:

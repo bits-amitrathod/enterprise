@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, _, fields
-from odoo.tools import pycompat
 from odoo.tools.xml_utils import check_with_xsd
 
 MX_NS_REFACTORING = {
@@ -71,7 +70,7 @@ class MXReportAccountCoa(models.AbstractModel):
         version = '1.1'
         values = self.get_coa_dict(options)
         cfdicoa = qweb.render(CFDICOA_TEMPLATE, values=values)
-        for key, value in pycompat.items(MX_NS_REFACTORING):
+        for key, value in MX_NS_REFACTORING.items():
             cfdicoa = cfdicoa.replace(key, value + ':')
 
         check_with_xsd(cfdicoa, CFDICOA_XSD % version)

@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError
-from odoo.tools import pycompat, pdf
+from odoo.tools import pdf
 
 from .ups_request import UPSRequest, Package
 
@@ -190,7 +190,7 @@ class ProviderUPS(models.Model):
                 price = quote_currency.compute(float(result['price']), currency_order)
 
             package_labels = []
-            for track_number, label_binary_data in pycompat.items(result.get('label_binary_data')):
+            for track_number, label_binary_data in result.get('label_binary_data').items():
                 package_labels = package_labels + [(track_number, label_binary_data)]
 
             carrier_tracking_ref = "+".join([pl[0] for pl in package_labels])

@@ -6,7 +6,7 @@ from datetime import datetime
 from odoo.tools.misc import formatLang, format_date, ustr
 from odoo.tools.translate import _
 import time
-from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError
 import math
 import json
@@ -54,7 +54,7 @@ class report_account_followup_report(models.AbstractModel):
             if currency not in res:
                 res[currency] = []
             res[currency].append(l)
-        for currency, aml_recs in pycompat.items(res):
+        for currency, aml_recs in res.items():
             total = 0
             total_issued = 0
             aml_recs = sorted(aml_recs, key=lambda aml: aml.blocked)
@@ -85,8 +85,8 @@ class report_account_followup_report(models.AbstractModel):
                     'unfoldable': False,
                     'columns': [type(v) == dict and v or {'name': v} for v in columns],
                 })
-            total = formatLang(self.env, total, currency_obj=currency)
-            total = total.replace(' ', '&nbsp;') if self.env.context.get('mail') else total
+            totalXXX = formatLang(self.env, total, currency_obj=currency)
+            totalXXX = totalXXX.replace(' ', '&nbsp;') if self.env.context.get('mail') else totalXXX
             line_num += 1
             lines.append({
                 'id': line_num,
@@ -94,7 +94,7 @@ class report_account_followup_report(models.AbstractModel):
                 'class': 'total',
                 'unfoldable': False,
                 'level': 0,
-                'columns': [{'name': v} for v in ['']*(2 if self.env.context.get('print_mode') else 4) + [total >= 0 and _('Total Due') or '', total]],
+                'columns': [{'name': v} for v in ['']*(2 if self.env.context.get('print_mode') else 4) + [total >= 0 and _('Total Due') or '', totalXXX]],
             })
             if total_issued > 0:
                 total_issued = formatLang(self.env, total_issued, currency_obj=currency)

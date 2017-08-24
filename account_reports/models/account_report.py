@@ -3,7 +3,7 @@
 import calendar
 import copy
 import json
-import StringIO
+import io
 import logging
 import lxml.html
 import itertools
@@ -78,7 +78,7 @@ class AccountReport(models.AbstractModel):
 
         options['unfolded_lines'] = []
         # Merge old options with default from this report
-        for key, value in pycompat.items(options):
+        for key, value in options.items():
             if key in previous_options and value is not None and previous_options[key] is not None:
                 # special case handler for date and comparison as from one report to another, they can have either a date range or single date
                 if key == 'date' or key == 'comparison':
@@ -440,10 +440,10 @@ class AccountReport(models.AbstractModel):
             values=dict(rcontext),
         )
         if self.env.context.get('print_mode', False):
-            for k,v in pycompat.items(self.replace_class()):
+            for k,v in self.replace_class().items():
                 html = html.replace(k, v)
             # append footnote as well
-            html = html.replace('<div class="js_account_report_footnotes"></div>', self.get_html_footnotes(footnotes_to_render))
+            html = html.replace(b'<div class="js_account_report_footnotes"></div>', self.get_html_footnotes(footnotes_to_render))
         return html
 
     @api.multi
@@ -496,9 +496,9 @@ class AccountReport(models.AbstractModel):
     def format_date(self, dt_to, dt_from, options, dt_filter='date'):
         # previously get_full_date_names
         options_filter = options[dt_filter].get('filter', '')
-        if type(dt_to) in (str, unicode):
+        if isinstance(dt_to, pycompat.string_types):
             dt_to = datetime.strptime(dt_to, DEFAULT_SERVER_DATE_FORMAT)
-        if dt_from and type(dt_from) in (str, unicode):
+        if dt_from and isinstance(dt_from, pycompat.string_types):
             dt_from = datetime.strptime(dt_from, DEFAULT_SERVER_DATE_FORMAT)
         if 'month' in options_filter:
             return format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), date_format='MMM YYYY')
@@ -623,7 +623,7 @@ class AccountReport(models.AbstractModel):
                     vals = {'date': dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), 'string': display_value}
                 options['comparison']['periods'].append(vals)
         if len(options['comparison'].get('periods', [])) > 0:
-            for k, v in pycompat.items(options['comparison']['periods'][0]):
+            for k, v in options['comparison']['periods'][0].items():
                 if k in ('date', 'date_from', 'date_to', 'string'):
                     options['comparison'][k] = v
         return options
@@ -642,7 +642,7 @@ class AccountReport(models.AbstractModel):
         """When printing pdf, we sometime want to remove/add/replace class for the report to look a bit different on paper
         this method is used for this, it will replace occurence of value key by the dict value in the generated pdf
         """
-        return {'o_account_reports_no_print': '', 'table-responsive': '', '<a': '<span', '</a>': '</span>'}
+        return {b'o_account_reports_no_print': b'', b'table-responsive': b'', b'<a': b'<span', b'</a>': b'</span>'}
 
     def get_pdf(self, options, minimal_layout=True):
         # As the assets are generated during the same transaction as the rendering of the
@@ -724,7 +724,7 @@ class AccountReport(models.AbstractModel):
                 }
 
     def get_xlsx(self, options, response):
-        output = StringIO.StringIO()
+        output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet(self.get_report_name())
 

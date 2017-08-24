@@ -5,7 +5,6 @@ from odoo import models, fields, api
 from openerp.addons.base.res import res_users as ru
 from odoo.exceptions import UserError
 from odoo.exceptions import ValidationError
-from odoo.tools import pycompat
 from odoo.tools.translate import _
 
 class AccountTax(models.Model):
@@ -73,7 +72,7 @@ class res_users(models.Model):
         log = self.env['pos_blackbox_be.log']
 
         filtered_values = {field: ('********' if field in ru.USER_PRIVATE_FIELDS else value)
-                               for field, value in pycompat.items(values)}
+                               for field, value in values.items()}
         log.create(filtered_values, "create", self._name, values.get('login'))
 
         return super(res_users, self).create(values)
@@ -83,7 +82,7 @@ class res_users(models.Model):
         log = self.env['pos_blackbox_be.log']
 
         filtered_values = {field: ('********' if field in ru.USER_PRIVATE_FIELDS else value)
-                               for field, value in pycompat.items(values)}
+                               for field, value in values.items()}
         for user in self:
             log.create(filtered_values, "modify", user._name, user.login)
 
@@ -242,9 +241,9 @@ class pos_session(models.Model):
                     total_sold_per_category[key] = line.price_subtotal_incl
 
         if group_by_user_id:
-            return list(pycompat.items(total_sold_per_user_per_category))
+            return list(total_sold_per_user_per_category.items())
         else:
-            return list(pycompat.items(total_sold_per_user_per_category[0]))
+            return list(total_sold_per_user_per_category[0].items())
 
     def get_user_report_data(self):
         data = {}
@@ -271,7 +270,7 @@ class pos_session(models.Model):
         total_sold_per_category_per_user = self.get_total_sold_per_category(group_by_user_id=True)
 
         for user in total_sold_per_category_per_user:
-            data[user[0]]['revenue_per_category'] = list(pycompat.items(user[1]))
+            data[user[0]]['revenue_per_category'] = list(user[1].items())
 
         return data
 

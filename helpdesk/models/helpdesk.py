@@ -7,7 +7,6 @@ from odoo import api, fields, models, _
 from odoo.addons.helpdesk.models.helpdesk_ticket import TICKET_PRIORITY
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import pycompat
 
 
 class HelpdeskTeam(models.Model):
@@ -60,7 +59,7 @@ class HelpdeskTeam(models.Model):
     def _compute_percentage_satisfaction(self):
         for team in self:
             activities = team.ticket_ids.rating_get_grades()
-            total_activity_values = sum(pycompat.values(activities))
+            total_activity_values = sum(activities.values())
             team.percentage_satisfaction = activities['great'] * 100 / total_activity_values if total_activity_values else -1
 
     @api.depends('name', 'portal_show_rating')
@@ -265,7 +264,7 @@ class HelpdeskTeam(models.Model):
             tickets = self.env['helpdesk.ticket'].search(domain + [('stage_id.is_close', '=', True), ('close_date', '>=', dt)])
             activity = tickets.rating_get_grades()
             total_rating = self.compute_activity_avg(activity)
-            total_activity_values = sum(pycompat.values(activity))
+            total_activity_values = sum(activity.values())
             team_satisfaction = round((total_rating / total_activity_values if total_activity_values else 0), 2)
             if team_satisfaction:
                 result['today']['rating'] = team_satisfaction
@@ -275,7 +274,7 @@ class HelpdeskTeam(models.Model):
             tickets = self.env['helpdesk.ticket'].search(domain + [('stage_id.is_close', '=', True), ('close_date', '>=', dt)])
             activity = tickets.rating_get_grades()
             total_rating = self.compute_activity_avg(activity)
-            total_activity_values = sum(pycompat.values(activity))
+            total_activity_values = sum(activity.values())
             team_satisfaction_7days = round((total_rating / total_activity_values if total_activity_values else 0), 2)
             if team_satisfaction_7days:
                 result['7days']['rating'] = team_satisfaction_7days

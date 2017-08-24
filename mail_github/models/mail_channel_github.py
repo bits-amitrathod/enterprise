@@ -9,7 +9,7 @@ from odoo import api, fields, models
 
 
 def github_tokenize(db_secret, db_uuid):
-    return hmac.new(str(db_secret), str(db_uuid), sha1).hexdigest()
+    return hmac.new(db_secret.encode('utf-8'), db_uuid.encode('utf-8'), sha1).hexdigest()
 
 
 class GithubRepository(models.Model):

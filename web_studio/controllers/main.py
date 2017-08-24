@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import io
 from lxml import etree
-from StringIO import StringIO
 from odoo import http, models, _
 from odoo.http import content_disposition, request
 from odoo.exceptions import UserError, AccessError
 from odoo.addons.web_studio.controllers import export
 
-from odoo.tools import pycompat
+from odoo.tools import ustr
 
 
 class WebStudioController(http.Controller):
@@ -144,13 +144,13 @@ class WebStudioController(http.Controller):
 
         # insert missing translations of views
         for view in views:
-            for name, fld in pycompat.items(view._fields):
+            for name, fld in view._fields.items():
                 domain += insert_missing(fld, view)
 
         # insert missing translations of model, and extend domain for related fields
         record = request.env[model.model].search([], limit=1)
         if record:
-            for name, fld in pycompat.items(record._fields):
+            for name, fld in record._fields.items():
                 domain += insert_missing(fld, record)
 
         action = {
@@ -447,23 +447,19 @@ class WebStudioController(http.Controller):
         """
         # Get current model
         model = request.env['ir.model'].search([('model', '=', values.pop('model_name'))])
-        values.update({'model_id': model.id})
+        values['model_id'] = model.id
         # For many2one and many2many fields
         if values.get('relation_id'):
-            values.update({
-                'relation': request.env['ir.model'].browse(values.pop('relation_id')).model
-            })
+            values['relation'] = request.env['ir.model'].browse(values.pop('relation_id')).model
         # For one2many fields
         if values.get('relation_field_id'):
             field = request.env['ir.model.fields'].browse(values['relation_field_id'])
-            values.update({
-                'relation': field.model_id.model,
-                'relation_field': field.name,
-            })
+            values.update(
+                relation=field.model_id.model,
+                relation_field=field.name,
+            )
         if values.get('selection'):
-            values.update({
-                'selection': unicode(values.get('selection')),
-            })
+            values['selection'] = ustr(values['selection']),
         # Create new field
         return request.env['ir.model.fields'].create(values)
 
@@ -558,7 +554,7 @@ class WebStudioController(http.Controller):
         field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(StringIO(studio_view_arch), parser).getroot()
+        arch = etree.parse(io.BytesIO(studio_view_arch), parser).getroot()
         model = view.model
         for op in operations:
             # create a new field if it does not exist
@@ -600,7 +596,7 @@ class WebStudioController(http.Controller):
 
         # Save or create changes into studio view, identifiable by xmlid
         # Example for view id 42 of model crm.lead: web-studio_crm.lead-42
-        new_arch = etree.tostring(arch, encoding='utf-8', pretty_print=True)
+        new_arch = etree.tostring(arch, encoding='unicode', pretty_print=True)
         self._set_studio_view(view, new_arch)
 
         # Normalize the view
@@ -715,7 +711,7 @@ class WebStudioController(http.Controller):
 
     def _get_default_view(self, view_type, attrs):
         arch = etree.Element(view_type, attrs)
-        return etree.tostring(arch, encoding='utf-8', pretty_print=True, method='html')
+        return etree.tostring(arch, encoding='unicode', pretty_print=True, method='html')
 
     def _get_or_create_default_view(self, model, view_type, view_id=False):
         View = request.env['ir.ui.view']
@@ -741,7 +737,7 @@ class WebStudioController(http.Controller):
         else:
             # Format of expr is //tag[@attr1_name=attr1_value][@attr2_name=attr2_value][...]
             expr = '//' + node['tag']
-            for k, v in pycompat.items(node.get('attrs', {})):
+            for k, v in node.get('attrs', {}).items():
                 if k == 'class':
                     # Special case for classes which usually contain multiple values
                     expr += '[contains(@%s,\'%s\')]' % (k, v)
@@ -935,7 +931,7 @@ class WebStudioController(http.Controller):
 
         xpath_node = self._get_xpath_node(arch, operation)
 
-        for key, new_attr in pycompat.items(new_attrs):
+        for key, new_attr in new_attrs.items():
             xml_node = xpath_node.find('attribute[@name="%s"]' % (key))
             if xml_node is None:
                 xml_node = etree.Element('attribute', {'name': key})
@@ -956,7 +952,7 @@ class WebStudioController(http.Controller):
         # Get the arch of the form view with inherited views applied
         arch = request.env[model].fields_view_get(view_type='form')['arch']
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(StringIO(arch), parser).getroot()
+        arch = etree.parse(io.BytesIO(arch), parser).getroot()
 
         # Create xpath to put the buttonbox as the first child of the sheet
         if arch.find('sheet'):

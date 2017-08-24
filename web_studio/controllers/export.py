@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from collections import OrderedDict
 from contextlib import closing
-from cStringIO import StringIO
+import io
 from lxml import etree
 from lxml.builder import E
 import os.path
@@ -89,7 +89,7 @@ XML_FIELDS = [('ir.ui.view', 'arch')]
 
 def generate_archive(module, data):
     """ Returns a zip file containing the given module with the given data. """
-    with closing(StringIO()) as f:
+    with closing(io.BytesIO()) as f:
         with zipfile.ZipFile(f, 'w') as archive:
             for filename, content in generate_module(module, data):
                 archive.writestr(os.path.join(module.name, filename), content)
@@ -147,7 +147,7 @@ def generate_module(module, data):
             nodes.append(record_node)
             skipped.extend(record_skipped)
         root = E.odoo(*nodes)
-        xml = etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True)
+        xml = etree.tostring(root, pretty_print=True, encoding='UTF-8')
 
         # add the XML file to the archive
         filename = os.path.join('data', '%s.xml' % model.replace('.', '_'))
@@ -272,12 +272,12 @@ def generate_field(record, field, get_xmlid):
     """ Serialize the value of ``field`` on ``record`` as an etree Element. """
     value = record[field.name]
     if field.type == 'boolean':
-        return E.field(name=field.name, eval=unicode(value))
+        return E.field(name=field.name, eval=pycompat.text_type(value))
     elif field.type in ('many2one', 'reference'):
         if value:
             return E.field(name=field.name, ref=get_xmlid(value))
         else:
-            return E.field(name=field.name, eval=unicode(False))
+            return E.field(name=field.name, eval=u"False")
     elif field.type in ('many2many', 'one2many'):
         return E.field(
             name=field.name,
@@ -285,18 +285,18 @@ def generate_field(record, field, get_xmlid):
         )
     else:
         if not value:
-            return E.field(name=field.name, eval=unicode(False))
+            return E.field(name=field.name, eval=u"False")
         elif (field.model_name, field.name) in CDATA_FIELDS:
             # Wrap value in <![CDATA[]] to preserve it to be interpreted as XML markup
             node = E.field(name=field.name)
-            node.text = etree.CDATA(unicode(value))
+            node.text = etree.CDATA(pycompat.text_type(value))
             return node
         elif (field.model_name, field.name) in XML_FIELDS:
             # Use an xml parser to remove new lines and indentations in value
             parser = etree.XMLParser(remove_blank_text=True)
             return E.field(etree.XML(value, parser), name=field.name, type='xml')
         else:
-            return E.field(unicode(value), name=field.name)
+            return E.field(pycompat.text_type(value), name=field.name)
 
 
 def xmlid_getter():
@@ -312,7 +312,7 @@ def xmlid_getter():
         except KeyError:
             # prefetch when possible
             records = record.browse(record._prefetch[record._name])
-            for rid, val in pycompat.items(records.get_external_id()):
+            for rid, val in records.get_external_id().items():
                 cache[record.browse(rid)] = val
             res = cache[record]
         if check and not res:
