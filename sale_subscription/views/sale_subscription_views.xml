@@ -189,7 +189,7 @@
                         <button class="oe_stat_button"
                             icon="fa-globe"
                             name="open_website_url"
-                            type="object" 
+                            type="object"
                             string="Online Preview">
                             </button>
                         <button class="oe_stat_button"
@@ -312,7 +312,7 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
                             <div class="o_subscription_kanban_main">
-                                <div class="o_kanban_card_content o_visible">
+                                <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
                                         <div class="o_primary">
                                             <span><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></span>
@@ -321,7 +321,7 @@
                                         <span t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</span>
                                         <span t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</span>
                                     </div>
-                                </div><div class="o_kanban_card_manage_pane o_invisible">
+                                </div><div class="o_kanban_card_manage_pane">
                                     <div class="o_kanban_card_manage_section o_kanban_manage_reports">
                                         <div>
                                             <a type="edit">Settings</a>
@@ -366,7 +366,7 @@
             </tree>
         </field>
     </record>
-    
+
     <record id="sale_subscription_template_view_search" model="ir.ui.view">
         <field name="name">sale.subscription.template.search</field>
         <field name="model">sale.subscription.template</field>
