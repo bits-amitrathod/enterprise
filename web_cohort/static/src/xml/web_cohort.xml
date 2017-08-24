@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="CohortView.buttons">
+        <div class="btn-group btn-group-sm" role="group">
+            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                Measures <span class="caret" />
+            </button>
+            <ul class="dropdown-menu o_cohort_measures_list">
+                <li t-foreach="measures" t-as="measure" t-att-data-field="measure">
+                    <a href="#"><t t-esc="measures[measure]" /></a>
+                </li>
+                <li class="divider"></li>
+                <li data-field="__count__"><a href="#">Count</a></li>
+            </ul>
+        </div>
+        <div class="btn-group btn-group-sm">
+            <button t-foreach="intervals" t-as="interval" class="btn btn-default o_cohort_interval_button" t-att-data-interval="interval">
+                <t t-esc="intervals[interval]" />
+            </button>
+        </div>
+        <div class="btn-group btn-group-sm">
+            <button class="btn btn-default btn-sm fa fa-download o_cohort_download_button" title="Download in Excel file"></button>
+        </div>
+    </t>
+
+    <div t-name="CohortView" class="o_cohort_view">
+        <div t-if="report.rows.length" class="table-responsive">
+            <table class="table text-center mb0">
+                <thead>
+                    <tr>
+                        <th rowspan="2"><t t-esc="date_start_string" /></th>
+                        <th rowspan="2">
+                            <t t-esc="measure" />
+                        </th>
+                        <th colspan="16">
+                            <t t-esc="date_stop_string" /> - By <t t-esc="interval" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th t-foreach="_.range(report.rows[0].columns.length)" t-as="interval">
+                            +<t t-esc="interval" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="report.rows" t-as="row" t-att-data-row="row_index" class="o_cohort_row_clickable">
+                        <td class="o_cohort_value">
+                            <t t-esc="row.date" />
+                        </td>
+                        <td class="o_cohort_value">
+                            <t t-esc="row.value" />
+                        </td>
+                        <td t-foreach="row.columns" t-as="col">
+                            <div
+                                t-attf-style="background-color: rgba(0, 160, 157, #{col.percentage/100.0}); color: #{col.percentage gt 50 and '#FFFFFF' or 'inherit'}"
+                                t-att-data-col="col_index"
+                                t-att-class="'o_cohort_highlight' + (col.value === '-' ? '' : ' o_cohort_value')"
+                                t-att-title="col.value === '-' ? '' : col.value">
+                                <t t-esc="col.percentage" /><t t-if="col.percentage !== ''">%</t>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <t t-set="total" t-value="report.total" />
+                        <td>
+                            <t t-esc="total.total_value" />
+                        </td>
+                        <td t-foreach="total.columns_avg" t-as="col">
+                            <t t-if="total.columns_avg[col]['count']">
+                                <t t-esc="(total.columns_avg[col]['percentage'] / total.columns_avg[col]['count']).toFixed(1)" />%
+                            </t>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div t-else="" class="o_cohort_no_data">
+            No data available for cohort.
+        </div>
+    </div>
+
+</templates>
