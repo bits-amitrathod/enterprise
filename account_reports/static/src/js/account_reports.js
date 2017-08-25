@@ -232,10 +232,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             self.$searchview_buttons.find('[data-filter="analytic_accounts"]').select2("val", self.report_options.analytic_accounts);
             self.$searchview_buttons.find('[data-filter="analytic_tags"]').select2("val", self.report_options.analytic_tags);
         }
-        this.$searchview_buttons.find('.js_account_reports_button_analytic').click(function(event) {
+        this.$searchview_buttons.find('.js_account_reports_analytic_auto_complete').on('change', function(){
             self.report_options.analytic_accounts = self.$searchview_buttons.find('[data-filter="analytic_accounts"]').val();
             self.report_options.analytic_tags = self.$searchview_buttons.find('[data-filter="analytic_tags"]').val();
-            self.reload();
+            return self.reload().then(function(){
+                self.$searchview_buttons.find('.account_analytic_filter').click();
+            })
         });
     },
     format_date: function(moment_date) {
