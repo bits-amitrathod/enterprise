@@ -45,7 +45,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             journal_ids.append(company.tax_cash_basis_journal_id.id)
         tax_ids = self.env['account.tax'].search([
             ('type_tax_use', '=', 'purchase'),
-            ('use_cash_basis', '=', True)])
+            ('tax_exigibility', '=', 'on_payment')])
         account_tax_ids = tax_ids.mapped('cash_basis_account')
         domain = [
             ('journal_id', 'in', journal_ids),
@@ -80,7 +80,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             journal_ids.append(company.tax_cash_basis_journal_id.id)
         tax_ids = self.env['account.tax'].search([
             ('type_tax_use', '=', 'purchase'),
-            ('use_cash_basis', '=', True)])
+            ('tax_exigibility', '=', 'on_payment')])
         account_tax_ids = tax_ids.mapped('cash_basis_account')
         base_domain = [
             ('date', '<=', context['date_to']),
