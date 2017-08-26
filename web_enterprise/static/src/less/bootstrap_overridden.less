@@ -48,6 +48,8 @@
 
 //== Components
 @border-radius-base: 0;
+@border-radius-large: 0;
+@border-radius-small: 0;
 @component-active-bg: @gray-lighter;
 @component-active-color: @odoo-brand-optional;
 
@@ -64,15 +66,24 @@
 @breadcrumb-padding-vertical: 0;
 
 //== Buttons
+@btn-font-weight: 500;
+
 @btn-default-bg: white;
 @btn-default-border: white;
 @btn-default-color: @odoo-brand-optional;
+
 @btn-primary-bg: @odoo-brand-optional;
 @btn-primary-border: @odoo-brand-optional;
 @btn-primary-color: white;
+
 @btn-icon-bg: white;
 @btn-icon-border: white;
 @btn-icon-color: @odoo-main-text-color;
+
+@btn-success-border: @btn-success-bg;
+@btn-info-border: @btn-info-bg;
+@btn-warning-border: @btn-warning-bg;
+@btn-danger-border: @btn-danger-bg;
 
 //== Dropdowns
 @dropdown-bg: white;
@@ -167,12 +178,34 @@
 }
 
 //== Buttons
+
+// Mixin to define variations for btn-links and muted btn-links
+.o-btn-link-variant(@color, @color-active) {
+    text-transform: none;
+    .o-hover-text-color(@default-color: @color, @hover-color: @color-active);
+
+    &, &:hover, &:focus, &:active, &.active {
+        border-color: transparent;
+        background-color: transparent
+    }
+
+    &.text-muted, .text-muted {
+        .o-hover-opacity();
+        .o-hover-text-color(@default-color: @text-muted, @hover-color: @color-active);
+    }
+}
+
 .btn-icon {
-  .button-variant(@btn-icon-color; @btn-icon-bg; @btn-icon-border);
+    .button-variant(@btn-icon-color; @btn-icon-bg; @btn-icon-border);
+
+    &.active {
+        &, &:hover, &:focus {
+            background-color: @gray-lighter-dark;
+            color: @headings-color;
+        }
+    }
 }
-.btn-default, .btn-link{
-    font-weight: 500;
-}
+
 .btn, .btn-sm, .btn-group > .btn {
     border-radius: 0px;
     border: none;
@@ -180,11 +213,34 @@
         outline: none;
     }
 }
+
 .btn-primary.active, .btn-default.active, .btn-icon.active {
     .box-shadow(none);
 }
+
 .btn-primary, .btn-default {
     text-transform: uppercase;
+}
+
+
+.btn-link {
+    font-weight: @btn-font-weight;
+
+    &.btn-default {
+        .o-btn-link-variant(@text-color, @headings-color);
+    }
+    &.btn-success, &.text-success {
+        .o-btn-link-variant(@text-color, @brand-success);
+    }
+    &.btn-warning, &.text-warning {
+        .o-btn-link-variant(@text-color, @brand-warning);
+    }
+    &.btn-danger, &.text-danger {
+        .o-btn-link-variant(@text-color, @brand-danger);
+    }
+    &.btn-info, &.text-info {
+        .o-btn-link-variant(@text-color, darken(@brand-info, 20%));
+    }
 }
 
 //== Navbar
