@@ -14,8 +14,8 @@
 
 //== Greyscale
 @gray-base: #000;
-@gray-darker: lighten(@gray-base, 13.5%);
-@gray-dark: #373434;
+@gray-darker: #1e2124;
+@gray-dark: #2f3136;
 @gray: lighten(@gray-base, 33.5%);
 @gray-light: lighten(@gray-base, 46.7%);
 @gray-lighter: @odoo-color-silver;
@@ -36,7 +36,7 @@
 //== Scaffolding
 @body-bg: @odoo-brand-secondary;
 @text-color: @odoo-main-text-color;
-@link-color: @odoo-brand-optional;
+@link-color: darken(@odoo-brand-optional, 5%);
 @link-hover-decoration: none;
 
 //== Typography
@@ -70,7 +70,7 @@
 
 @btn-default-bg: white;
 @btn-default-border: white;
-@btn-default-color: @odoo-brand-optional;
+@btn-default-color: @link-color;
 
 @btn-primary-bg: @odoo-brand-optional;
 @btn-primary-border: @odoo-brand-optional;
