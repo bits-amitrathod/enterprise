@@ -136,6 +136,13 @@
 @well-bg: @odoo-color-silver;
 @well-border: @odoo-color-silver;
 
+//== Alerts
+@alert-link-font-weight: bold;
+@alert-success-border: @alert-success-text;
+@alert-info-border: @alert-info-text;
+@alert-warning-border: @alert-warning-text;
+@alert-danger-border: @alert-danger-text;
+
 // ------------------------------------------------------------------
 // Bootstrap components rules (non exposed features variables)
 // ------------------------------------------------------------------
@@ -162,6 +169,16 @@
 }
 .bg-info-full {
     background-color: @brand-info;
+}
+
+//== Alerts
+.alert {
+    &.alert-info, &.alert-success, &.alert-warning, &.alert-danger {
+        border-width: 0 0 0 3px;
+    }
+    a {
+        font-weight: @alert-link-font-weight;
+    }
 }
 
 //== Well
