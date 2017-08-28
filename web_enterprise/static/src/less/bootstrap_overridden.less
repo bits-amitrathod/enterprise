@@ -7,6 +7,23 @@
 
 //== Colors
 @brand-primary: @odoo-brand-primary;
+@brand-success: #00a04a;
+@brand-info: #87c0d1;
+@brand-warning: #f0ad4e;
+@brand-danger: #dc6965;
+
+//== Greyscale
+@gray-base: #000;
+@gray-darker: lighten(@gray-base, 13.5%);
+@gray-dark: #373434;
+@gray: lighten(@gray-base, 33.5%);
+@gray-light: lighten(@gray-base, 46.7%);
+@gray-lighter: @odoo-color-silver;
+
+// Define @gray-lighter-dark as a minor @gray-lighter variation used for design
+// purposes only (e.g. cards' borders). We avoid to overwrite the default
+// @gray-light because it is deeply used by bootstrap to define muted elements.
+@gray-lighter-dark: @odoo-color-silver-dark;
 
 //== Titles
 @font-size-h1: @odoo-font-size-base + 19px;
@@ -23,11 +40,11 @@
 @link-hover-decoration: none;
 
 //== Typography
-@font-family-monospace: Roboto;
 @font-family-sans-serif: Roboto;
 @font-family-serif: Roboto;
 @font-size-base: @odoo-font-size-base;
 @headings-font-weight: 400;
+@headings-color: @gray-dark;
 
 //== Components
 @border-radius-base: 0;
@@ -57,6 +74,18 @@
 @btn-icon-border: white;
 @btn-icon-color: @odoo-main-text-color;
 
+//== Dropdowns
+@dropdown-bg: white;
+@dropdown-border: @gray-lighter-dark;
+@dropdown-divider-bg: @gray-lighter-dark;
+@dropdown-link-color: @odoo-main-text-color;
+@dropdown-link-hover-color: @gray-dark;
+@dropdown-link-hover-bg: @gray-lighter-dark;
+@dropdown-link-active-color: @component-active-color;
+@dropdown-link-active-bg: @component-active-bg;
+@dropdown-link-disabled-color: @gray-light;
+@dropdown-header-color: @gray-light;
+
 //== Modals
 @modal-sm: 300px;
 @modal-md: 650px;
@@ -77,9 +106,6 @@
 
 //== Tables
 @table-bg-accent: #eef0f0; // FIXME: expose
-
-//** Hover background for dropdown links.
-@dropdown-link-hover-bg: #d1d1d1;
 
 // ------------------------------------------------------------------
 // Bootstrap components rules (non exposed features variables)
@@ -106,6 +132,9 @@
 //== Buttons
 .btn-icon {
   .button-variant(@btn-icon-color; @btn-icon-bg; @btn-icon-border);
+}
+.btn-default, .btn-link{
+    font-weight: 500;
 }
 .btn, .btn-sm, .btn-group > .btn {
     border-radius: 0px;

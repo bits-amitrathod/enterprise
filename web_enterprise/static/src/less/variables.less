@@ -7,11 +7,15 @@
 @odoo-font-size-base: 13px;
 @odoo-font-size-base-touch: 15px;
 
+@odoo-color-silver: #F9F9F9;
+@odoo-color-silver-dark: #E5E5E5;
+@odoo-color-silver-darker: #E8E7E7;
+
 // Colors
 @odoo-brand-primary: #875A7B;
-@odoo-brand-optional: #21b799;
+@odoo-brand-optional: #00a09d;
 @odoo-brand-secondary: #8f8f8f;
-@odoo-brand-lightsecondary: #e2e2e0;
+@odoo-brand-lightsecondary: @odoo-color-silver;
 
 @odoo-main-color-muted: #a8a8a8;
 @odoo-main-text-color: #666666;
@@ -19,7 +23,7 @@
 @odoo-view-background-color: #ffffff;
 @odoo-shadow-color: #303030;
 
-@odoo-webclient-background-color: @odoo-brand-secondary;
+@odoo-webclient-background-color: @odoo-color-silver-darker;
 @odoo-control-panel-background-color: white;
 @odoo-form-lightsecondary: lighten(@odoo-brand-secondary, 25%);
 
@@ -31,6 +35,21 @@
 @odoo-tooltip-color: @odoo-main-text-color;
 @odoo-tooltip-arrow-color: @odoo-main-text-color;
 
+// UI custom colors (for tags, kanban records' colors, ...)
+@odoo-color-0: #4D4D4D;
+@odoo-color-1: #30C381;
+@odoo-color-2: #FCCD1B;
+@odoo-color-3: #F4A460;
+@odoo-color-4: #FA8072;
+@odoo-color-5: #C57D8B;
+@odoo-color-6: #2969B0;
+@odoo-color-7: #00CED1;
+@odoo-color-8: #7CA951;
+@odoo-color-9: #906094;
+@odoo-color-10: #526774;
+@odoo-color-11: #415C71;
+@odoo-color-12: #B05048;
+
 // Layout
 @screen-xs-min: 475px;
 @screen-xxs-max: (@screen-xs-min - 1);
@@ -39,7 +58,7 @@
 @odoo-form-spacing-unit: 5px;
 @odoo-horizontal-padding: 16px;
 @odoo-innergroup-rpadding: 45px;
-@odoo-dropdown-hpadding: 25px;
+@odoo-dropdown-hpadding: 20px;
 
 @odoo-sheet-vpadding: 24px;
 
