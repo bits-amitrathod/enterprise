@@ -62,15 +62,16 @@ class StockPicking(models.Model):
 
     @api.multi
     def get_po_to_split_from_barcode(self, barcode):
-        ''' Returns the ID of the next PO that needs splitting '''
+        ''' Returns the 'Split lot' action for the PO matching the barcode '''
         candidates = self.env['stock.move.line'].search([
             ('picking_id', 'in', self.ids),
             ('product_barcode', '=', barcode),
             ('location_processed', '=', False),
             ('result_package_id', '=', False),
-        ]).filtered(lambda r: r.lots_visible)
+        ])
         candidates_todo = candidates.filtered(lambda r: r.qty_done < r.product_qty)
-        return candidates_todo and candidates_todo[0].id or candidates[0].id
+        candidates = candidates_todo or candidates
+        return candidates.action_split_lots()
 
     def _check_product(self, product, qty=1.0):
         corresponding_po = self.move_line_ids.filtered(lambda r: r.product_id.id == product.id and not r.result_package_id and not r.location_processed)

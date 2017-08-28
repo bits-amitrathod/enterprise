@@ -294,7 +294,7 @@ class HelpdeskTeam(models.Model):
         if self.env.context.get('helpdesk'):
             domain += [('user_id', '=', self._uid), ('stage_id.is_close', '=', True)]
         ticket_ids = self.env['helpdesk.ticket'].search(domain).ids
-        domain = [('res_id', 'in', ticket_ids), ('rating', '!=', -1), ('res_model', '=', 'helpdesk.ticket')]
+        domain = [('res_id', 'in', ticket_ids), ('rating', '!=', -1), ('res_model', '=', 'helpdesk.ticket'), ('consumed', '=', True)]
         action = self.env.ref('rating.action_view_rating').read()[0]
         action['domain'] = domain
         return action
