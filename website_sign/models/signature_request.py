@@ -292,8 +292,8 @@ class SignatureRequest(models.Model):
         SignatureItemValue = self.env['signature.item.value']
         for p in range(0, old_pdf.getNumPages()):
             page = old_pdf.getPage(p)
-            width = page.mediaBox.getUpperRight_x()
-            height = page.mediaBox.getUpperRight_y()
+            width = float(page.mediaBox.getUpperRight_x())
+            height = float(page.mediaBox.getUpperRight_y())
 
             # Set page orientation (either 0, 90, 180 or 270)
             rotation = page.get('/Rotate')

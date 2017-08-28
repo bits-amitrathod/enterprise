@@ -150,16 +150,17 @@ var GridView = View.extend({
             var label = _(group_fields).map(function (name) {
                 return row.values[name][1];
             }).join(': ');
+            var extended_ctx = this._model.context(additional_context);
             this.do_action({
                 type: 'ir.actions.act_window',
                 name: label,
                 res_model: this._model.name,
                 views: [
                     [views.list ? views.list.view_id : false, 'list'],
-                    [views.form ? views.form.view_id : false, 'form']
+                    [views.form && views.form.view_id || extended_ctx.eval().quick_create_view || false, 'form']
                 ],
                 domain: cell.domain,
-                context: this._model.context(additional_context),
+                context: extended_ctx,
             });
         }
     },
