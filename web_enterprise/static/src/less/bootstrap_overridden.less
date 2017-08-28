@@ -105,7 +105,8 @@
 @navbar-inverse-toggle-hover-bg: @odoo-brand-primary;
 
 //== Tables
-@table-cell-padding: 8px;
+// List views always have the table-condensed class, maybe we should remove it
+// (and consider it does not exist) and change the default table paddings
 @table-condensed-cell-padding: 5px;
 @table-bg: white;
 @table-bg-accent: @gray-lighter;
