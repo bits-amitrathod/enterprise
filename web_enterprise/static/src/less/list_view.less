@@ -13,13 +13,15 @@
 
 // ------- Define paddings independently for each table component -------
 .o-list-view-full-width-padding(@base: @table-cell-padding, @ratio: 1) {
+    @body-padding: floor(@base * @ratio*0.9);
+
     > thead, > tfoot {
         > tr > :not(:empty) {
             padding: (ceil(@base * @ratio) + 4px) ceil(@base * @ratio);
         }
     }
     > tbody > tr:not(.o_list_view_grouped) > td {
-        padding: floor(@base * @ratio*0.9);
+        padding: @body-padding;
     }
     > tbody > tr.o_group_header {
         > th, > td {
@@ -42,6 +44,13 @@
             &.o_list_record_selector {
                 padding-right: 5px!important;
             }
+        }
+    }
+
+    // ------- Editable -------
+    .o_data_row.o_selected_row > .o_data_cell:not(.o_readonly_modifier) {
+        .o_input {
+            padding: @body-padding (@body-padding - 1) @body-padding @body-padding;
         }
     }
 }
@@ -144,8 +153,9 @@
     // Editable
     //--------------------------------------------------------------------------
     .o_data_row.o_selected_row > .o_data_cell:not(.o_readonly_modifier) {
-        > *:last-child {
-            border-right: 1px solid #cccccc;
+        border-right: 1px solid @table-border-color;
+        .o_input {
+            padding-right: @table-condensed-cell-padding - 1;
         }
     }
 }
