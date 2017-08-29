@@ -818,7 +818,7 @@
             <field name="tag">account_report</field>
             <field name="context" eval="{'model': 'account.partner.ledger'}" />
         </record>
-        <menuitem id="menu_action_followups" name="Customer Statements" action="action_account_followup_all" parent="account.menu_finance_receivables" sequence="30" groups="account.group_account_invoice"/>
+        <menuitem id="menu_action_followups" name="Customer Statements" action="action_account_followup_all" parent="account.menu_finance_receivables_follow_up" sequence="1" groups="account.group_account_invoice"/>
         <menuitem id="menu_action_account_report_partner_ledger" name="Partner Ledger" action="action_account_report_partner_ledger" parent="account_reports_partners_reports_menu" groups="account.group_account_user"/>
         <menuitem id="menu_action_account_report_aged_receivable" name="Aged Receivable" action="action_account_report_ar" parent="account_reports_partners_reports_menu"/>
         <menuitem id="menu_action_account_report_aged_payable" name="Aged Payable" action="action_account_report_ap" parent="account_reports_partners_reports_menu"/>
