@@ -1,6 +1,7 @@
 odoo.define('web_studio.AbstractViewEditor', function (require) {
 "use strict";
 
+var ajax = require('web.ajax');
 var AbstractView = require('web.AbstractView');
 
 AbstractView.include({
@@ -44,7 +45,7 @@ AbstractView.include({
         return this._loadSubviews(parent).then(function () {
             return $.when(
                 self._loadData(parent),
-                self._loadLibs()
+                ajax.loadLibs(this)
             ).then(function (handle) {
                 var model = self.getModel();
                 var state = model.get(handle);

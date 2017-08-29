@@ -30,6 +30,23 @@ because of the calculation and is then rendered separately.
 
 // Abstract widget with common methods
 var sale_subscription_dashboard_abstract = Widget.extend(ControlPanelMixin, {
+    cssLibs: [
+        '/web/static/lib/nvd3/nv.d3.css'
+    ],
+    jsLibs: [
+        '/web/static/lib/nvd3/d3.v3.js',
+        '/web/static/lib/nvd3/nv.d3.js',
+        '/web/static/src/js/libs/nvd3.js'
+    ],
+
+    /**
+     * Loads the libraries listed in this.jsLibs and this.cssLibs
+     *
+     * @override
+     */
+    willStart: function () {
+        return $.when(ajax.loadLibs(this), this._super.apply(this, arguments));
+    },
 
     start: function() {
         var self = this;
@@ -375,7 +392,6 @@ var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.exte
 
 // 2. Detailed dashboard
 var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.extend({
-
     events: {
         'click .o_detailed_analysis': 'on_detailed_analysis',
     },

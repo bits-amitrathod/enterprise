@@ -48,17 +48,19 @@ var locale_code = locales_mapping[current_locale] || locales_mapping[current_sho
 var locale_suffix = locale_code !== undefined ? '_' + locale_code : '';
 
 var GanttView = AbstractView.extend({
+    cssLibs: [
+        "/web_gantt/static/lib/dhtmlxGantt/codebase/dhtmlxgantt.css"
+    ],
+    jsLibs: [
+        "/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js",
+        "/web_gantt/static/lib/dhtmlxGantt/codebase/locale/locale" + locale_suffix + ".js"
+    ],
     display_name: _lt('Gantt'),
     icon: 'fa-tasks',
     config: {
         Model: GanttModel,
         Controller: GanttController,
         Renderer: GanttRenderer,
-        js_libs: [
-            ["/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js"],
-            ["/web_gantt/static/lib/dhtmlxGantt/codebase/locale/locale" + locale_suffix + ".js"],
-        ],
-        css_libs: ["/web_gantt/static/lib/dhtmlxGantt/codebase/dhtmlxgantt.css"],
     },
     /**
      * @override

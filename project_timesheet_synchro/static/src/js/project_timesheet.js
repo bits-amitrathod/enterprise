@@ -1,6 +1,7 @@
 odoo.define('project_timeshee.ui', function (require ) {
     "use strict";
 
+    var ajax = require('web.ajax');
     var Context = require('web.Context');
     var core = require('web.core');
     var session = require('web.session');
@@ -8,7 +9,6 @@ odoo.define('project_timeshee.ui', function (require ) {
     var time_module = require('web.time');
     var local_storage = require('web.local_storage');
     var mixins = require('web.mixins');
-    var QWeb = core.qweb;
 
     var MAX_AGE = 21; // Age limit in days for activities before they are removed from the app
     var DEFAULT_TIME_UNIT = 0.25;
@@ -27,11 +27,18 @@ odoo.define('project_timeshee.ui', function (require ) {
     //Main widget to instantiate the app
     var ProjectTimesheet = Widget.extend(mixins.ServiceProvider, {
         template: "app",
+        cssLibs: [
+            '/web/static/lib/nvd3/nv.d3.css'
+        ],
+        jsLibs: [
+            '/web/static/lib/nvd3/d3.v3.js',
+            '/web/static/lib/nvd3/nv.d3.js',
+            '/web/static/src/js/libs/nvd3.js'
+        ],
         init: function(parent) {
             var self = this;
             mixins.ServiceProvider.init.call(this);
             this._super(parent);
-            this.load_template();
 
             // Mobile device detection
             if ( navigator.userAgent.match(/Android/i) ||
@@ -60,7 +67,6 @@ odoo.define('project_timeshee.ui', function (require ) {
             self.syncable = false; // Sync flag. Enabled if the user has a valid session with a server where the appropiate sync module is installed.
             self.sync_in_progress = false;
             self.sync_fail = false;
-
         },
         /**
          * Reloads the browser session and retrieves user data if the app is started from the browser
@@ -68,21 +74,26 @@ odoo.define('project_timeshee.ui', function (require ) {
          */
         willStart: function() {
             var self = this;
+            var defs = [
+                ajax.loadXML('static/src/xml/project_timesheet.xml', core.qweb),
+                ajax.loadLibs(this)
+            ];
             if(self.isDesktop) {
-                return session.session_reload().then(function() {
+                defs.push(session.session_reload().then(function() {
                     self.user = session.username;
                     self.server = session.origin;
                     self.get_user_data(self.user, self.server);
                     self.sanitize_all_ids();
-                });
+                }));
             }
             else {
                 self.user = local_storage.getItem('pt_current_user') ? local_storage.getItem('pt_current_user') : "$no_user$";
                 self.server = local_storage.getItem('pt_current_server') ? local_storage.getItem('pt_current_server') : "$no_server$";
                 self.get_user_data(self.user, self.server);
                 self.sanitize_all_ids();
-                return $.Deferred().resolve();
+                defs.push($.Deferred().resolve());
             }
+            return $.when.apply($, defs);
         },
         start: function() {
             var self = this;
@@ -154,13 +165,6 @@ odoo.define('project_timeshee.ui', function (require ) {
             });
 
             return $.when.apply($, sync_defs);
-        },
-        load_template: function() {
-            var xml = $.ajax({
-                url : "static/src/xml/project_timesheet.xml",
-                async: false // necessary as without the template there isn't much to do.
-            }).responseText;
-            QWeb.add_template(xml);
         },
         /**
          * Attempts to restore the data of the user related to the username and server address given.

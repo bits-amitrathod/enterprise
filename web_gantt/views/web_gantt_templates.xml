@@ -11,9 +11,13 @@
         </template>
 
         <template id="qunit_suite" name="gantt tests" inherit_id="web.qunit_suite">
+            <xpath expr="//script[contains(@src, '/web/static/src/js/libs/nvd3.js')]" position="after">
+                <script type="text/javascript" src="/web_gantt/static/lib/dhtmlxGantt/sources/dhtmlxcommon.js"></script>
+                <script type="text/javascript" src="/web_gantt/static/lib/dhtmlxGantt/codebase/locale/locale.js"></script>
+                <link rel="stylesheet" type="text/css" href="/web_gantt/static/lib/dhtmlxGantt/codebase/dhtmlxgantt.css"/>
+            </xpath>
             <xpath expr="//script[contains(@src, '/web/static/tests/views/kanban_tests.js')]" position="after">
                 <script type="text/javascript" src="/web_gantt/static/tests/gantt_tests.js"></script>
             </xpath>
         </template>
-
 </odoo>
