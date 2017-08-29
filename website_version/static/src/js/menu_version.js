@@ -27,12 +27,13 @@ var EditorVersion = Widget.extend({
         });
 
         this.$el.find('#version-menu-button').click(function() {
-            var view_id = parseInt($('html').attr('data-main-object').match(/\d+/));
-            ajax.jsonRpc( '/website_version/all_versions', 'call', {'view_id': view_id}).then(function (result) {
+            var view_id = self.get_main_object().id;
+            var model = self.get_main_object().model;
+            ajax.jsonRpc( '/website_version/all_versions', 'call', {'view_id': view_id, 'model': model}).then(function (result) {
                 self.$el.find(".o_version_choice").remove();
                 self.$el.find(".first_divider").before(qweb.render("website_version.all_versions", {versions:result}));
             });
-            ajax.jsonRpc( '/website_version/has_experiments', 'call', {'view_id': view_id}).then(function (result) {
+            ajax.jsonRpc( '/website_version/has_experiments', 'call', {'view_id': view_id, 'model': model}).then(function (result) {
                 self.$el.find(".o_experiment").remove();
                 if(result){
                     self.$el.find(".create_experiment").after(qweb.render("website_version.experiment_menu"));
@@ -172,8 +173,9 @@ var EditorVersion = Widget.extend({
     },
 
     create_experiment: function() {
-        var view_id = parseInt($('html').attr('data-main-object').match(/\d+/));
-        ajax.jsonRpc( '/website_version/all_versions_all_goals', 'call', { 'view_id': view_id }).then(function (result) {
+        var view_id = self.get_main_object().id;
+        var model = self.get_main_object().model;
+        ajax.jsonRpc( '/website_version/all_versions_all_goals', 'call', { 'view_id': view_id, 'model': model }).then(function (result) {
             var wizardA = $(qweb.render("website_version.create_experiment",{versions:result.tab_version, goals:result.tab_goal, config:result.check_conf, has_config_rights: result.has_config_rights}));
             wizardA.appendTo($('body')).modal({"keyboard" :true});
 
@@ -279,8 +281,16 @@ var EditorVersion = Widget.extend({
 
     statistics: function() {
         window.open('https://www.google.com/analytics/web/?authuser=0#report/siteopt-experiments/','_blank');
-    }
-
+    },
+    
+    get_main_object: function () {
+        var repr = $('html').data('main-object');
+        var m = repr.match(/(.+)\((\d+),(.*)\)/);
+        return {
+            model: m[1],
+            id: m[2] | 0,
+        };
+    },
 });
 
 $(function() {

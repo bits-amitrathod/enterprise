@@ -44,7 +44,12 @@ class Versioning_Controller(Website):
         return bool(Exp.search(['|', ('state', '=', 'running'), ('state', '=', 'paused'), ('experiment_version_ids.version_id', '=', version_id)], limit=1))
 
     @http.route('/website_version/all_versions', type='json', auth="public", website=True)
-    def all_versions(self, view_id):
+    def all_versions(self, view_id, model=None):
+        #The received view_id is always the id of the main-object of the client. It looks like it is
+        #always expecting an ir_ui_view ID but in case of /blog or /forum, the main-object is not
+        #Same with website_page
+        if model == "website.page":
+            view_id = request.env['website.page'].browse(view_id).ir_ui_view_id.id
         #To get all versions in the menu
         view = request.env['ir.ui.view'].browse(view_id)
         Version = request.env['website_version.version']
@@ -66,7 +71,12 @@ class Versioning_Controller(Website):
         return result
 
     @http.route('/website_version/has_experiments', type='json', auth="user", website=True)
-    def has_experiments(self, view_id):
+    def has_experiments(self, view_id, model=None):
+        #The received view_id is always the id of the main-object of the client. It looks like it is
+        #always expecting an ir_ui_view ID but in case of /blog or /forum, the main-object is not
+        #Same with website_page
+        if model == "website.page":
+            view_id = request.env['website.page'].browse(view_id).ir_ui_view_id.id
         v = request.env['ir.ui.view'].browse(view_id)
         website_id = request.context.get('website_id')
         return bool(request.env["website_version.experiment.version"].search([('version_id.view_ids.key', '=', v.key), ('experiment_id.website_id.id', '=', website_id)], limit=1))

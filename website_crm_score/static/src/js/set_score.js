@@ -18,7 +18,7 @@ websiteSeo.SeoConfigurator.include({
         var self = this;
         var obj = websiteSeo.SeoConfigurator.prototype.getMainObject();
         // only display checkbox for website page
-        if (obj && obj.model === 'ir.ui.view') {
+        if (obj && ['website.page', 'ir.ui.view'].indexOf(obj.model) != -1) {
             this.is_tracked().then(function (data) {
                 var add = $('<input type="checkbox" required="required"/>');
                 if (data[0]['track']) {

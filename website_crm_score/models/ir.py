@@ -8,6 +8,25 @@ class ir_http(models.AbstractModel):
     _inherit = 'ir.http'
 
     @classmethod
+    def _serve_page(cls):
+        response = super(ir_http, cls)._serve_page()
+
+        if response and getattr(response, 'status_code', 0) == 200:
+            if response.qcontext.get('main_object', request.env['ir.ui.view']).track:  # avoid tracking redirected page
+                lead_id = request.env["crm.lead"].decode(request)
+                url = request.httprequest.url
+                vals = {'lead_id': lead_id, 'user_id': request.session.get('uid'), 'url': url}
+
+                if not lead_id or request.env['website.crm.pageview'].create_pageview(vals):
+                    # create_pageview failed
+                    response.delete_cookie('lead_id')
+                    request.session.setdefault('pages_viewed', {})[url] = fields.Datetime.now()
+                    request.session.modified = True
+
+        return response
+
+
+    @classmethod
     def _dispatch(cls):
         delete_cookie = False
 

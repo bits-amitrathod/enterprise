@@ -7,32 +7,6 @@ from odoo.tools import html_escape
 from odoo.addons.website.controllers.main import Website
 from odoo.addons.website_form.controllers.main import WebsiteForm
 
-class PageController(Website):
-
-    @http.route('/page/<page:page>', auth="public", website=True)
-    def page(self, page, **opt):
-        response = super(PageController, self).page(page, **opt)
-        # duplication of ir_http.py
-
-        if getattr(response, 'status_code', 0) == 200:
-            try:
-                view = request.website.get_template(page)
-            except:
-                pass  # view not found
-            else:
-                if view.track:  # avoid tracking redirected page
-                    lead_id = request.env["crm.lead"].decode(request)
-                    url = request.httprequest.url
-                    vals = {'lead_id': lead_id, 'user_id': request.session.get('uid'), 'url': url}
-
-                    if not lead_id or request.env['website.crm.pageview'].create_pageview(vals):
-                        # create_pageview failed
-                        response.delete_cookie('lead_id')
-                        request.session.setdefault('pages_viewed', {})[url] = fields.Datetime.now()
-                        request.session.modified = True
-
-        return response
-
 
 class ContactController(WebsiteForm):
 
