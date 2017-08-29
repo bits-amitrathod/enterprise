@@ -24,7 +24,7 @@ QUnit.module('Barcode', {
                     name: "Mouse, Optical",
                 }],
             },
-            'stock.pack.operation': {
+            'stock.move.line': {
                 fields: {
                     product_id: {string: "Product", type: 'many2one', relation: 'product'},
                     product_qty: {string: "To Do", type: 'float', digits: [16,1]},
@@ -49,18 +49,18 @@ QUnit.module('Barcode', {
             stock_picking: {
                 fields: {
                     _barcode_scanned: {string: "Barcode Scanned", type: 'char'},
-                    pack_operation_product_ids: {
+                    move_line_ids: {
                         string: "one2many field",
-                        relation: 'stock.pack.operation',
+                        relation: 'stock.move.line',
                         type: 'one2many',
                     },
                 },
                 records: [{
                     id: 2,
-                    pack_operation_product_ids: [3],
+                    move_line_ids: [3],
                 }, {
                     id: 5,
-                    pack_operation_product_ids: [5],
+                    move_line_ids: [5],
                 }],
             },
         };
@@ -79,7 +79,7 @@ QUnit.test('scan a product (no tracking)', function (assert) {
                 '<sheet>' +
                     '<notebook>' +
                         '<page string="Operations">' +
-                            '<field name="pack_operation_product_ids">' +
+                            '<field name="move_line_ids">' +
                                 '<tree>' +
                                     '<field name="product_id"/>' +
                                     '<field name="product_qty"/>' +
@@ -117,7 +117,7 @@ QUnit.test('scan a product tracked by lot', function (assert) {
     assert.expect(8);
 
     // simulate a PO for a tracked by lot product
-    this.data['stock.pack.operation'].records[0].lots_visible = true;
+    this.data['stock.move.line'].records[0].lots_visible = true;
 
     var form = createView({
         View: FormView,
@@ -129,7 +129,7 @@ QUnit.test('scan a product tracked by lot', function (assert) {
                     '<notebook>' +
                         '<page string="Operations">' +
                             '<field name="display_name"/>' +
-                            '<field name="pack_operation_product_ids">' +
+                            '<field name="move_line_ids">' +
                                 '<tree>' +
                                     '<field name="product_id"/>' +
                                     '<field name="product_qty"/>' +
