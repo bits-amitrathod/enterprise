@@ -4,6 +4,7 @@ import base64
 from itertools import groupby
 import logging
 import re
+from datetime import datetime
 
 from lxml import etree
 from lxml.objectify import fromstring
@@ -18,6 +19,7 @@ from werkzeug import url_encode
 
 from odoo import _, api, fields, models, tools
 from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools import DEFAULT_SERVER_TIME_FORMAT
 
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
 CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
@@ -119,6 +121,10 @@ class AccountInvoice(models.Model):
         string='Certificate', copy=False, readonly=True,
         help='The certificate used during the generation of the cfdi.',
         compute='_compute_cfdi_values')
+    l10n_mx_edi_time_invoice = fields.Char(
+        string='Time invoice', readonly=True, copy=False,
+        states={'draft': [('readonly', False)]},
+        help="Keep empty to use the current México central time")
 
     # -------------------------------------------------------------------------
     # HELPERS
@@ -724,6 +730,9 @@ class AccountInvoice(models.Model):
         if error_log:
             return {'error': _('Please check your configuration: ') + create_list_html(error_log)}
 
+        # -Compute date and time of the invoice
+        time_invoice = datetime.strptime(
+            self.l10n_mx_edi_time_invoice, DEFAULT_SERVER_TIME_FORMAT).time()
         # -----------------------
         # Create the EDI document
         # -----------------------
@@ -731,7 +740,8 @@ class AccountInvoice(models.Model):
         parser = etree.XMLParser(remove_blank_text=True)
 
         # -Compute certificate data
-        values['date'] = certificate_id.sudo().get_mx_current_datetime().strftime('%Y-%m-%dT%H:%M:%S')
+        values['date'] = datetime.combine(
+            fields.Datetime.from_string(self.date_invoice), time_invoice).strftime('%Y-%m-%dT%H:%M:%S')
         values['certificate_number'] = certificate_id.serial_number
         values['certificate'] = certificate_id.sudo().get_data()[0]
 
@@ -804,6 +814,24 @@ class AccountInvoice(models.Model):
                 record.journal_id.code, record.number)).replace('/', '')
             record._l10n_mx_edi_retry()
         return result
+
+    @api.multi
+    def action_date_assign(self):
+        """Assign invoice time and date"""
+        for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
+            date_mx = self.env['l10n_mx_edi.certificate'].sudo().get_mx_current_datetime()
+            if not record.date_invoice:
+                record.date_invoice = date_mx
+            if not record.l10n_mx_edi_time_invoice:
+                record.l10n_mx_edi_time_invoice = date_mx.strftime(
+                    DEFAULT_SERVER_TIME_FORMAT)
+        return super(AccountInvoice, self).action_date_assign()
+
+    @api.multi
+    def action_invoice_draft(self):
+        """Reset l10n_mx_edi_time_invoice when invoice state set to draft"""
+        self.write({'l10n_mx_edi_time_invoice': False})
+        return super(AccountInvoice, self).action_invoice_draft()
 
     @api.multi
     def action_invoice_cancel(self):
