@@ -101,6 +101,7 @@ def generate_module(module, data):
         module. Returned filenames are local to the module directory.
         Only exports models in MODELS_TO_EXPORT.
         Groups exported data by model in separated files.
+        The content of the files is yielded as an encoded bytestring (utf-8)
     """
     get_xmlid = xmlid_getter()
 
@@ -171,7 +172,7 @@ def generate_module(module, data):
         yield ('warning.txt', "\n".join(content))
 
     # yield files '__manifest__.py' and '__init__.py'
-    yield ('__manifest__.py', """# -*- coding: utf-8 -*-
+    manifest = """# -*- coding: utf-8 -*-
 {
     'name': %r,
     'version': '1.0',
@@ -193,8 +194,11 @@ def generate_module(module, data):
         ''.join("\n        %r," % f for f in filenames),
         module.application,
         module.license,
-    ))
-    yield ('__init__.py', '')
+    )
+    manifest = manifest.encode('utf-8')
+
+    yield ('__manifest__.py', manifest)
+    yield ('__init__.py', b'')
 
 
 def get_relations(record, field):

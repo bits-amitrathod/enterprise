@@ -554,7 +554,7 @@ class WebStudioController(http.Controller):
         field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(io.BytesIO(studio_view_arch), parser).getroot()
+        arch = etree.parse(io.StringIO(studio_view_arch), parser).getroot()
         model = view.model
         for op in operations:
             # create a new field if it does not exist
@@ -1224,7 +1224,7 @@ class WebStudioController(http.Controller):
         if not studio_view:
             studio_view = self._create_studio_view(view, '<data/>')
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(StringIO(studio_view.arch_db), parser).getroot()
+        arch = etree.parse(io.StringIO(studio_view.arch_db), parser).getroot()
         expr = "//field[@name='%s']" % field_name
         position = 'inside'
         xpath_node = arch.find('xpath[@expr="%s"][@position="%s"]' % (expr, position))
