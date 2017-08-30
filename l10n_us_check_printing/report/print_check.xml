@@ -13,6 +13,9 @@
 
 <template id="ckus_check">
     <div class="ckus_check">
+        <t t-if="page['state'] == 'cancelled'">
+            <div class="o-watermark">VOID</div>
+        </t>
         <div class="sequence_number" t-if="page['sequence_number']" t-esc="page['sequence_number']" />
         <div class="ckus_date" t-esc="page['payment_date']"/>
         <div class="ckus_payee_name" t-esc="page['partner_name']"/>

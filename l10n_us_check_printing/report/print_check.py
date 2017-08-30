@@ -28,6 +28,7 @@ class report_print_check(models.Model):
                 'partner_id': self.partner_id,
                 'partner_name': self.partner_id.name,
                 'currency': self.currency_id,
+                'state': self.state,
                 'amount': formatLang(self.env, self.amount, currency_obj=self.currency_id) if i == 0 else 'VOID',
                 'amount_in_word': self.fill_line(self.check_amount_in_words) if i == 0 else 'VOID',
                 'memo': self.communication,
