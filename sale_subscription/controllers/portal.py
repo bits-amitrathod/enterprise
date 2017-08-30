@@ -134,17 +134,11 @@ class sale_subscription(http.Controller):
             'message_class': message_class,
             'change_pm': kw.get('change_pm') != None,
             'pricelist': account.pricelist_id.sudo(),
+            'submit_class':'btn btn-primary btn-sm mb8 mt8 pull-right',
+            'submit_txt':'Pay Subscription',
+            'bootstrap_formatting':True,
+            'return_url':'/my/subscription/' + str(account_id) + '/' + str(uuid),
         }
-        render_context = dict(
-            values,
-            json=True,
-            submit_class='btn btn-primary btn-sm mb8 mt8 pull-right',
-            submit_txt='Pay Subscription',
-            bootstrap_formatting=True,
-            return_url='/my/subscription/' + str(account_id) + '/' + str(uuid)
-        )
-        for acquirer in acquirers:
-            acquirer.form = acquirer.sudo()._registration_render(account.partner_id.id, render_context)
 
         history = request.session.get('my_subscriptions_history', [])
         values.update(get_records_pager(history, account))
