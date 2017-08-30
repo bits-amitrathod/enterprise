@@ -129,7 +129,7 @@ class account_context_coa(models.TransientModel):
         return self.env['account.coa.report']
 
     def get_special_date_line_names(self):
-        temp = self.get_full_date_names(self.date_to)
+        temp = self.get_full_date_names(self.date_to, self.date_from)
         if not isinstance(temp, unicode):
             temp = temp.decode("utf-8")
         columns = []

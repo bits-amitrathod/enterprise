@@ -43,7 +43,7 @@
         <field name="level" eval="3"/>
         <field name="parent_id" ref="account_financial_report_l10n_th_01"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_pers_tax_serv_3')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_th_04')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -54,7 +54,7 @@
         <field name="level" eval="3"/>
         <field name="parent_id" ref="account_financial_report_l10n_th_01"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_pers_tax_advt_2'), ref('l10n_th.tag_pers_tax_trans_1'), ref('l10n_th.tag_pers_tax_rent_5')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', ref('l10n_th.tag_th_05'))]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -75,7 +75,7 @@
         <field name="level" eval="3"/>
         <field name="parent_id" ref="account_financial_report_l10n_th_02"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_comp_tax_serv_3')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_th_07')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -86,7 +86,7 @@
         <field name="level" eval="3"/>
         <field name="parent_id" ref="account_financial_report_l10n_th_02"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_comp_tax_rent_5'), ref('l10n_th.tag_comp_tax_advt_2'), ref('l10n_th.tag_comp_tax_trans_1')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_th_08')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -105,7 +105,7 @@
         <field name="sequence" eval="3"/>
         <field name="level" eval="2"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_output_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_th_10')])]"/>
         <field name="formulas">balance=-sum.balance</field>
         <field name="parent_id" ref="account_financial_report_l10n_th_1_2"/>
         <field name="special_date_changer">strict_range</field>
@@ -116,7 +116,7 @@
         <field name="sequence" eval="4"/>
         <field name="level" eval="2"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_input_vat_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_th.tag_th_11')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="parent_id" ref="account_financial_report_l10n_th_1_2"/>
         <field name="special_date_changer">strict_range</field>
@@ -156,7 +156,7 @@
         <field name="level" eval="3"/>
         <field name="parent_id" ref="account_financial_report_th_2_1_1"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_pers_tax_serv_3')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_th_15')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -186,7 +186,7 @@
         <field name="level" eval="3"/>
         <field name="parent_id" ref="account_financial_report_th_2_1_2"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_comp_tax_serv_3')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_th_18')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -195,7 +195,7 @@
         <field name="code">THTAX_50_PND53_6_BASE</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="3"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_pers_tax_rent_5'), ref('l10n_th.tag_pers_tax_advt_2'), ref('l10n_th.tag_comp_tax_rent_5'), ref('l10n_th.tag_comp_tax_advt_2'), ref('l10n_th.tag_comp_tax_trans_1'), ref('l10n_th.tag_pers_tax_trans_1')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_th_19')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="parent_id" ref="account_financial_report_th_2_1_2"/>
         <field name="show_domain">never</field>
@@ -217,7 +217,7 @@
         <field name="level" eval="2"/>
         <field name="parent_id" ref="account_financial_report_th_2_2"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_output_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_th_21')])]"/>
         <field name="formulas">balance=-sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -228,7 +228,7 @@
         <field name="level" eval="2"/>
         <field name="parent_id" ref="account_financial_report_th_2_2"/>
         <field name="show_domain">never</field>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_input_vat_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_th.tag_th_22')])]"/>
         <field name="formulas">balance=sum.balance</field>
         <field name="special_date_changer">strict_range</field>
     </record>

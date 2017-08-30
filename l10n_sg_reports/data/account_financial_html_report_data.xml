@@ -33,7 +33,7 @@
         <field name="code">SGTAX_Tax_Received0</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_zr_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_04')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_01"/>
         <field name="show_domain">never</field>
@@ -45,7 +45,7 @@
         <field name="code">SGTAX_Tax_Received7_SR</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_sr_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_05')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_01"/>
         <field name="show_domain">never</field>
@@ -57,7 +57,7 @@
         <field name="code">SGTAX_Tax_Received7_DS</field>
         <field name="sequence" eval="3"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_ds_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_06')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_01"/>
         <field name="show_domain">never</field>
@@ -79,7 +79,7 @@
         <field name="code">SGTAX_Tax_Paid7_TX7</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_tx7_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_08')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -91,7 +91,7 @@
         <field name="code">SGTAX_Tax_Paid7_TX_N33</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_txn33_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_09')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -103,7 +103,7 @@
         <field name="code">SGTAX_Tax_Paid7_TX_E33</field>
         <field name="sequence" eval="3"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_txe33_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_10')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -115,7 +115,7 @@
         <field name="code">SGTAX_Tax_Paid7_BL</field>
         <field name="sequence" eval="4"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_bl_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_11')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -127,7 +127,7 @@
         <field name="code">SGTAX_Tax_Paid7_IM</field>
         <field name="sequence" eval="5"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_im_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_12')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -139,7 +139,7 @@
         <field name="code">SGTAX_Tax_Paid7_TX_RE</field>
         <field name="sequence" eval="6"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_txre_7')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_13')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -151,7 +151,7 @@
         <field name="code">SGTAX_Tax_Paid0_ME</field>
         <field name="sequence" eval="7"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_me_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_14')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -163,7 +163,7 @@
         <field name="code">SGTAX_Tax_Paid0_NR</field>
         <field name="sequence" eval="8"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_nr_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_15')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -175,7 +175,7 @@
         <field name="code">SGTAX_Tax_Paid0_ZP</field>
         <field name="sequence" eval="9"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_zp_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_16')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_01_02"/>
         <field name="show_domain">never</field>
@@ -187,7 +187,7 @@
         <field name="code">SGTAX_MES_Purchase_Tax</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="0"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_mes_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_17')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="financial_report_id" ref="account_financial_report_l10n_sg"/>
         <field name="show_domain">never</field>
@@ -209,7 +209,7 @@
         <field name="code">SGTAX_Out_of_Scope_Purchase_Tax</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_op_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_19')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_03"/>
         <field name="show_domain">never</field>
@@ -221,7 +221,7 @@
         <field name="code">SGTAX_Out_of_Scope_Sales_Tax</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_os_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_20')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_03"/>
         <field name="show_domain">never</field>
@@ -243,7 +243,7 @@
         <field name="code">SGTAX_Exempted_Purchase_Tax</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_ep_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_22')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_04"/>
         <field name="show_domain">never</field>
@@ -255,7 +255,7 @@
         <field name="code">SGTAX_Exempted_Sales_Tax_ES33</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_es_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_23')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_04"/>
         <field name="show_domain">never</field>
@@ -267,7 +267,7 @@
         <field name="code">SGTAX_Exempted_Sales_Tax_ESN33</field>
         <field name="sequence" eval="3"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_esn_0')])]"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_sg.tag_sg_24')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_04"/>
         <field name="show_domain">never</field>
@@ -309,7 +309,7 @@
         <field name="code">SGTAX_Sales_7_Standard_SR</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="3"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_sr_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_28')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_01_01"/>
         <field name="show_domain">never</field>
@@ -321,7 +321,7 @@
         <field name="code">SGTAX_Sales_7_Standard_DS</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="3"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_ds_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_29')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_01_01"/>
         <field name="show_domain">never</field>
@@ -333,7 +333,7 @@
         <field name="code">SGTAX_Box2</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_zr_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_30')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_01"/>
         <field name="show_domain">never</field>
@@ -355,7 +355,7 @@
         <field name="code">SGTAX_Sales_Exempted_ES33</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="3"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_es_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_32')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_01_03"/>
         <field name="show_domain">never</field>
@@ -367,7 +367,7 @@
         <field name="code">SGTAX_Sales_Exempted_ESN33</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="3"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_esn_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_33')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_01_03"/>
         <field name="show_domain">never</field>
@@ -389,7 +389,7 @@
         <field name="code">SGTAX_Purchase_7_Standard_TX7</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_tx7_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_35')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -401,7 +401,7 @@
         <field name="code">SGTAX_Purchase_7_Standard_TX_N33</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_txn33_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_36')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -413,7 +413,7 @@
         <field name="code">SGTAX_Purchase_7_Standard_TX_E33</field>
         <field name="sequence" eval="3"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_txe33_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_37')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -425,7 +425,7 @@
         <field name="code">SGTAX_Purchase_7_Standard_BL</field>
         <field name="sequence" eval="4"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_bl_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_38')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -437,7 +437,7 @@
         <field name="code">SGTAX_Purchase_7_Standard_IM</field>
         <field name="sequence" eval="5"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_im_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_39')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -449,7 +449,7 @@
         <field name="code">SGTAX_Purchase_7_Standard_TX_RE</field>
         <field name="sequence" eval="6"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_txre_7')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_40')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -461,7 +461,7 @@
         <field name="code">SGTAX_Purchase_0_Standard_ME</field>
         <field name="sequence" eval="7"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_me_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_41')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -473,7 +473,7 @@
         <field name="code">SGTAX_Purchase_0_Standard_NR</field>
         <field name="sequence" eval="8"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_nr_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_42')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -485,7 +485,7 @@
         <field name="code">SGTAX_Purchase_0_Standard_ZP</field>
         <field name="sequence" eval="9"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_zp_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_43')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05_02"/>
         <field name="show_domain">never</field>
@@ -497,7 +497,7 @@
         <field name="code">SGTAX_Box9</field>
         <field name="sequence" eval="3"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_mes_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_44')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05"/>
         <field name="show_domain">never</field>
@@ -509,7 +509,7 @@
         <field name="code">SGTAX_Purchase_Exempted</field>
         <field name="sequence" eval="4"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_ep_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_45')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05"/>
         <field name="show_domain">never</field>
@@ -521,7 +521,7 @@
         <field name="code">SGTAX_Purchase_Out_Of_Scope</field>
         <field name="sequence" eval="5"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_purchase_tax_op_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_46')])]"/>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05"/>
         <field name="show_domain">never</field>
@@ -533,7 +533,7 @@
         <field name="code">SGTAX_Sales_Out_Of_Scope</field>
         <field name="sequence" eval="6"/>
         <field name="level" eval="1"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_sale_tax_os_0')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_sg.tag_sg_47')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="account_financial_report_sg_05"/>
         <field name="show_domain">never</field>
