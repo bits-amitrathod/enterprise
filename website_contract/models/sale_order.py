@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 from dateutil.relativedelta import relativedelta
+from odoo.exceptions import UserError
 
 from odoo import api, fields, models, _
 
@@ -64,6 +65,10 @@ class SaleOrder(models.Model):
             subscription = self.env['sale.subscription'].sudo().create(values)
             partner_name =  self.partner_id.name or self.partner_id.parent_id.name
             subscription.name = partner_name + ' - ' + subscription.code
+            if not subscription.analytic_account_id.partner_id:
+                subscription.analytic_account_id.partner_id = self.partner_id
+            elif subscription.analytic_account_id.partner_id != self.partner_id:
+                raise UserError(_("The analytic account set on the SO is already used for an other partner."))
 
             invoice_line_ids = []
             for line in self.order_line:
