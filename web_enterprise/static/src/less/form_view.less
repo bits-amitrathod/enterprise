@@ -6,25 +6,20 @@
     // Define left and right padding according to screen resolution
     .o-form-sheet-inner-left-padding() {
         padding-left: @odoo-horizontal-padding;
-
         @media screen and (min-width: @screen-md-min) and (max-width: (@o-screen-sidechatter-min - 1px)) {
             padding-left: @odoo-horizontal-padding*2;
         }
     }
-
     .o-form-sheet-inner-right-padding() {
         padding-right: @odoo-horizontal-padding;
-
         @media screen and (min-width: @screen-md-min) and (max-width: (@o-screen-sidechatter-min - 1px)) {
             padding-right: @odoo-horizontal-padding*2;
         }
     }
-
     // Compensate margins
     .o-form-sheet-negative-margin() {
         margin-left: -@odoo-horizontal-padding;
         margin-right: -@odoo-horizontal-padding;
-
         @media screen and (min-width: @screen-md-min) and (max-width: (@o-screen-sidechatter-min - 1px)) {
             margin-left: -@odoo-horizontal-padding*2;
             margin-right: -@odoo-horizontal-padding*2;
@@ -102,13 +97,16 @@
     // Button box
     .oe_button_box {
         position: relative;
-        text-align: right;
-        box-shadow: inset 0 -1px 0 @gray-lighter-dark;
         display: block;
         min-height: 1px;
-        margin-top: -@odoo-sheet-vpadding;
         margin-bottom: @odoo-sheet-vpadding;
+        margin-top: -@odoo-sheet-vpadding;
         .o-form-sheet-negative-margin();
+        text-align: right;
+        // Use box-shadow instead of border-bottom because some button boxes are
+        // empty in some cases and we do not want to see a floating border in
+        // that cases.
+        box-shadow: inset 0 -1px 0 @gray-lighter-dark;
 
         &.o_full .oe_stat_button:not(.o_invisible_modifier) ~ .oe_stat_button {
             border-left: 1px solid @gray-lighter-dark;
@@ -346,8 +344,7 @@
                     // to define the distance between panel and content
                     margin-top: 0;
 
-                    // Very special first childs.
-                    // These elements wil appear attached to Tabs
+                    // These elements will appear attached to the tabs
                     &.oe_form_field_html_text {
                         .o-form-sheet-negative-margin();
                         margin-top: -@odoo-horizontal-padding;
@@ -382,18 +379,21 @@
                         }
                     }
 
-                    &.o_field_one2many.o_field_widget {
-                        .o-form-sheet-negative-margin();
-                        margin-top: -@odoo-horizontal-padding;
+                    &.o_field_x2many.o_field_x2many_list {
                         display: block;
                         width: auto;
+                        .o-form-sheet-negative-margin();
+                        margin-top: -@odoo-horizontal-padding;
 
-                        td:first-child, th:first-child {
-                            .o-form-sheet-inner-left-padding();
+                        tr > :first-child {
+                            &, .o_input {
+                                .o-form-sheet-inner-left-padding();
+                            }
                         }
-
-                        td:last-child, th:last-child {
-                            .o-form-sheet-inner-right-padding();
+                        tr > :last-child {
+                            &, .o_input {
+                                .o-form-sheet-inner-right-padding();
+                            }
                         }
                     }
                 }
@@ -423,11 +423,6 @@
                     }
                 }
             }
-        }
-
-        .o_data_row.o_selected_row > .o_data_cell:not(.o_readonly_modifier) > .o_field_widget {
-            position: relative;
-            width: 100%;
         }
     }
 
