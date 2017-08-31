@@ -274,7 +274,7 @@ return AbstractRenderer.extend({
         var columns = this.state.length ? this.state[0].cols : [];
         var superTotals = this._computeTotals(
             _.flatten(_.pluck(this.state, 'grid'), true));
-        var vnode = this._renderTable(columns, superTotals.columns);
+        var vnode = this._renderTable(columns, superTotals.columns, superTotals.super);
         var gridBody = vnode.children[0].children;
         for (var n = 0; n < this.state.length; n++) {
             var grid = this.state[n];
