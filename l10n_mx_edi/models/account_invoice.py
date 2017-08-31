@@ -568,6 +568,8 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def action_invoice_draft(self):
+        """Reset l10n_mx_edi_time_invoice when invoice state set to draft"""
+
         self.l10n_mx_edi_update_sat_status()
         not_allow = self.filtered(lambda r: r.l10n_mx_edi_is_required() and
                                   not r.company_id.l10n_mx_edi_pac_test_env and
@@ -579,6 +581,7 @@ class AccountInvoice(models.Model):
             body=_('This invoice does not have a properly cancelled XML and '
                    'it was signed at least once, please cancel properly with '
                    'the SAT.'))
+        (self - not_allow).write({'l10n_mx_edi_time_invoice': False})
         return super(AccountInvoice, self - not_allow).action_invoice_draft()
 
     @api.multi
@@ -825,12 +828,6 @@ class AccountInvoice(models.Model):
                 record.l10n_mx_edi_time_invoice = date_mx.strftime(
                     DEFAULT_SERVER_TIME_FORMAT)
         return super(AccountInvoice, self).action_date_assign()
-
-    @api.multi
-    def action_invoice_draft(self):
-        """Reset l10n_mx_edi_time_invoice when invoice state set to draft"""
-        self.write({'l10n_mx_edi_time_invoice': False})
-        return super(AccountInvoice, self).action_invoice_draft()
 
     @api.multi
     def action_invoice_cancel(self):
