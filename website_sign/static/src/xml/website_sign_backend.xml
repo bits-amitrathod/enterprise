@@ -5,7 +5,7 @@
             <div class="form-group clearfix" groups="base.group_no_one">
                 <label for="o_sign_name" class="col-md-2">Field Name</label>
                 <div class="col-md-10">
-                    <input type="text" id="o_sign_name"/>
+                    <input type="text" id="o_sign_name" class="o_input"/>
                 </div>
             </div>
             <div class="form-group">
@@ -55,20 +55,20 @@
             <div class="form-group">
                 <label for="signature_request_subject_input" class="col-md-3">Subject</label>
                 <div class="col-md-9">
-                    <input type="text" class="o_sign_subject_input" placeholder="Signature Request"/>
+                    <input type="text" class="o_sign_subject_input o_input" placeholder="Signature Request"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="sign_message_textarea" class="col-md-3">Message</label>
                 <div class="col-md-9">
-                    <textarea class="o_sign_message_textarea" rows="4"/>
+                    <textarea class="o_sign_message_textarea o_input" rows="4"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="sign_reference_input" class="col-md-3">Filename</label>
                 <div class="col-md-9">
                     <div class="input-group">
-                        <input type="text" class="o_sign_reference_input" aria-describedby="o_sign_pdf_ext"/>
+                        <input type="text" class="o_sign_reference_input o_input" aria-describedby="o_sign_pdf_ext"/>
                         <span class="input-group-addon" id="o_sign_pdf_ext"><t t-esc="widget.attachment.datas_fname.substr(widget.attachment.datas_fname.lastIndexOf('.'))"/></span>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
 
             <label for="o_sign_share_link_input" class="col-md-3">Link to Share</label>
             <div class="col-md-9">
-                <input id="o_sign_share_link_input" type="text" readonly="readonly"/>
+                <input id="o_sign_share_link_input" type="text" class="o_input" readonly="readonly"/>
             </div>
 
             <p>To be able to share, there must be only one responsible for all fields !</p>
@@ -102,7 +102,7 @@
         <div class="text-center clearfix">
             <div class="o_sign_template_saved_info alert alert-success pull-right"><span class="fa fa-check"/> Saved</div>
             <span t-if="!widget.has_signature_requests" class="fa fa-pencil" title="Edit template name"/>
-            <input type="text" class="o_sign_template_name_input" t-att-value="widget.signature_request_template.attachment_id.name"/>
+            <input type="text" class="o_sign_template_name_input o_input" t-att-value="widget.signature_request_template.attachment_id.name"/>
         </div>
 
         <div t-if="widget.has_signature_requests &amp;&amp; widget.isPDF" class="text-center">

@@ -12,25 +12,26 @@ FormController.include({
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
+
     /**
-     * Used to find the product who match with the scanned barcode
+     * Override to take into account 'location_processed' and 'result_package_id'
+     * to determine whether or not the given barcode matches the given record in
+     * the case of a 'picking_barcode_handler' widget.
      *
      * @private
      * @override
      * @param {Object} record
      * @param {string} barcode
      * @param {Object} activeBarcode
-     * @returns {Deferred}
+     * @returns {boolean}
      */
     _barcodeRecordFilter: function (record, barcode, activeBarcode) {
+        var matching = this._super.apply(this, arguments);
         if (activeBarcode.widget === 'picking_barcode_handler') {
-            return record.data.product_barcode === barcode &&
-                !record.data.lots_visible &&
-                !record.data.location_processed &&
-                !record.data.result_package_id &&
-                record.data.qty_done < record.data.product_qty;
+            var data = record.data;
+            matching = matching && !data.location_processed && !data.result_package_id;
         }
-        return this._super.apply(this, arguments);
+        return matching;
     },
     /**
      * Method called when a record is already found
@@ -44,47 +45,26 @@ FormController.include({
      * @returns {Deferred}
      */
     _barcodeSelectedCandidate: function (candidate, record, barcode, activeBarcode) {
-        if (activeBarcode.widget === 'picking_barcode_handler') {
+        if (activeBarcode.widget === 'picking_barcode_handler' && candidate.data.lots_visible) {
             var self = this;
-            return this.saveRecord().done(function() {
+            // the product is tracked by lot -> open the split lot wizard
+            // save the record for the server to be aware of the operation
+            return this.saveRecord(this.handle, {stayInEdit: true, reload: false}).then(function () {
                 return self._rpc({
-                        model: 'stock.picking',
-                        method: 'get_po_to_split_from_barcode',
-                        args: [[record.data.id], barcode],
-                    })
-                    .then(function (id) {
-                        return self._rpc({
-                                model: 'stock.move.line',
-                                method: 'action_split_lots',
-                                args: [[id]],
-                            });
-                    }).done(function (action) {
-                        self.trigger('detached');
-                        self.do_action(action, {
-                            on_close: function() {
-                                self.trigger('attached');
-                                self.update({}, {reload: true});
-                            }
-                        });
+                    model: 'stock.picking',
+                    method: 'get_po_to_split_from_barcode',
+                    args: [[record.data.id], barcode],
+                }).done(function (action) {
+                    // the function returns an action (wizard)
+                    self._barcodeStopListening();
+                    self.do_action(action, {
+                        on_close: function() {
+                            self._barcodeStartListening();
+                            self.update({}, {reload: true});
+                        }
                     });
+                });
             });
-        }
-        return this._super.apply(this, arguments);
-    },
-    /**
-     * Method called when no records match
-     *
-     * @private
-     * @override
-     * @param {Object} record
-     * @param {string} barcode
-     * @param {Object} activeBarcode
-     * @returns {Deferred}
-     */
-    _barcodeWithoutCandidate: function (record, barcode, activeBarcode) {
-        if (activeBarcode.widget === 'picking_barcode_handler') {
-            this.do_warn(_t("Can't find the product for this Picking"));
-            return $.when();
         }
         return this._super.apply(this, arguments);
     },

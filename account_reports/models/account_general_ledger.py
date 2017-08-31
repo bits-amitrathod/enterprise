@@ -206,7 +206,7 @@ class report_account_general_ledger(models.AbstractModel):
         if not unaffected_earnings_line and unaffected_earnings_results['balance']:
             #search an unaffected earnings account
             unaffected_earnings_account = self.env['account.account'].search([
-                ('user_type_id', '=', self.env.ref('account.data_unaffected_earnings').id), ('company_id', 'in', self.env.context['context_id'].company_ids.ids)
+                ('user_type_id', '=', self.env.ref('account.data_unaffected_earnings').id), ('company_id', 'in', self.env.context.get('company_ids', []))
             ], limit=1)
             if unaffected_earnings_account and (not line_id or unaffected_earnings_account.id == line_id):
                 accounts[unaffected_earnings_account[0]] = unaffected_earnings_results

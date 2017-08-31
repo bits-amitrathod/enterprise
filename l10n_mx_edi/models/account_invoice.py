@@ -15,10 +15,9 @@ except ImportError:
     logging.getLogger(__name__).warning("The num2words python library is not installed, l10n_mx_edi features won't be fully available.")
     num2words = None
 
-from werkzeug import url_encode
-
 from odoo import _, api, fields, models, tools
 from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools.misc import html_escape
 from odoo.tools import DEFAULT_SERVER_TIME_FORMAT
 
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
@@ -866,10 +865,12 @@ class AccountInvoice(models.Model):
             customer_rfc = inv.l10n_mx_edi_cfdi_customer_rfc
             total = inv.l10n_mx_edi_cfdi_amount
             uuid = inv.l10n_mx_edi_cfdi_uuid
-            params = url_encode({'re': supplier_rfc, 'rr': customer_rfc, 'tt': total, 'id': uuid})
+            params = '"?re=%s&rr=%s&tt=%s&id=%s' % (
+                html_escape(html_escape(supplier_rfc or '')),
+                html_escape(html_escape(customer_rfc or '')),
+                total or 0.0, uuid or '')
             try:
-                client = Client(url)
-                response = client.service.Consulta(params).Estado
+                response = Client(url).service.Consulta(params).Estado
             except Exception as e:
                 inv.l10n_mx_edi_log_error(e.message or e.reason.__repr__())
                 continue
