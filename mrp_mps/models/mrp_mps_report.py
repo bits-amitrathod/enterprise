@@ -150,7 +150,7 @@ class MrpMpsReport(models.TransientModel):
                 name = _('Week %s') % date.strftime('%U')
             else:
                 date_to = date + relativedelta.relativedelta(days=1)
-                name = babel.dates.format_skeleton("MMMd", date, locale=self._context.get('lang') or 'en_US')
+                name = babel.dates.format_date(format="MMM d", date=date, locale=self._context.get('lang') or 'en_US')
             forecasts = self.env['sale.forecast'].search([
                 ('date', '>=', date.strftime('%Y-%m-%d')),
                 ('date', '<', date_to.strftime('%Y-%m-%d')),
