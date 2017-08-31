@@ -17,7 +17,7 @@
     ],
     'data': [
         'views/inter_company_so_po_view.xml',
-        'views/base_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
     ],
     'test': [
     #TODO: need to move these tests in python test suite (Accounting test case)

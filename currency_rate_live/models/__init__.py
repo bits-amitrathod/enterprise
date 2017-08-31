@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from . import account_config_setting
+from . import res_config_settings

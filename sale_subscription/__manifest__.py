@@ -33,7 +33,7 @@ Features:
         'views/sale_subscription_views.xml',
         'views/assets.xml',
         'views/subscription_portal_templates.xml',
-        'views/sale_subscription_config_views.xml',
+        'views/res_config_settings_views.xml',
         'views/payment_views.xml',
         'data/sale_subscription_data.xml',
         'data/mail_template_data.xml',

@@ -9,8 +9,7 @@
     'data': [
         'data/delivery_dhl_data.xml',
         'views/delivery_dhl_view.xml',
-        'views/sale_config_settings_views.xml',
-        'views/stock_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
     ],
     'license': 'OEEL-1',
 }

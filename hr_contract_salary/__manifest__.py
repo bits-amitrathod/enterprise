@@ -17,7 +17,7 @@
     'data': [
         'views/hr_contract_salary_templates.xml',
         'views/hr_views.xml',
-        'views/hr_recruitment_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
         'data/hr_contract_salary_data.xml',
     ],
     'qweb': [

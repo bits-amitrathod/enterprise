@@ -16,7 +16,7 @@ You need to install a provider alongside of this module in order to be able send
     'depends': ['base', 'mail'],
     'data': [
         'views/sms_views.xml',
-        'views/base_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
         'wizard/sms_message_send_views.xml',
         'security/ir.model.access.csv',
     ],

@@ -28,7 +28,7 @@ procure.
         'views/product_views.xml',
         'views/mrp_mps_report_views.xml',
         'report/mrp_mps_report_templates.xml',
-        'views/mrp_config_settings_views.xml'
+        'views/res_config_settings_views.xml'
     ],
     'demo': [
         'data/mps_demo.xml',

@@ -17,8 +17,7 @@ See: https://www.bpost.be/portal/goHome
     'data': [
         'data/delivery_bpost_data.xml',
         'views/delivery_bpost_views.xml',
-        'views/sale_config_settings_views.xml',
-        'views/stock_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
         'views/bpost_request_templates.xml',
     ],
     'license': 'OEEL-1',

@@ -28,7 +28,7 @@ of recall defined. You can define different policies for different companies.
         'security/ir.model.access.csv',
         'data/account_followup_data.xml',
         'views/account_followup_views.xml',
-        'views/account_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
         'views/report_followup.xml',
     ],
     'demo': ['data/account_followup_demo.xml'],

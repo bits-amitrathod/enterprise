@@ -10,8 +10,7 @@
         'data/delivery_usps_data.xml',
         'views/delivery_usps_view.xml',
         'views/delivery_usps_template.xml',
-        'views/sale_config_settings_views.xml',
-        'views/stock_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
     ],
     'license': 'OEEL-1',
 }

@@ -15,7 +15,7 @@
     'data': [
         'data/sepa.xml',
         'views/account_journal_dashboard_view.xml',
-        'views/account_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
         'views/sepa_credit_transfer_view.xml',
         'views/account_payment.xml',
     ],

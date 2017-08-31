@@ -14,7 +14,7 @@ for every message in chatter.
     'depends': ['mail', 'web_mobile'],
     'data': [
         'views/mail_push_templates.xml',
-        'views/base_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
         'security/ir.model.access.csv'
     ],
     'installable': True,

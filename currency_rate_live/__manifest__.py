@@ -10,7 +10,7 @@
         'account',
     ],
     'data': [
-        'views/account_config_setting_view.xml',
+        'views/res_config_settings_views.xml',
         'views/service_cron_data.xml',
         'data/data.xml',
     ],

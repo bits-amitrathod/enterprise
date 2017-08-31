@@ -51,7 +51,7 @@
         'views/account_invoice_view.xml',
         'views/account_journal_dashboard_view.xml',
         'views/report_invoice.xml',
-        'views/res_config_view.xml',
+        'views/res_config_settings_views.xml',
         'views/res_partner_view.xml',
         'views/sdd_xml_archive_views.xml',
         'views/sdd_mandate_views.xml',

@@ -5,6 +5,6 @@ from . import product
 from . import res_country
 from . import res_currency
 from . import res_partner
-from . import sale_config_settings
+from . import res_config_settings
 from . import sale_ebay
 from . import stock_picking

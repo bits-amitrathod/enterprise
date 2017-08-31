@@ -38,7 +38,7 @@ Key Features
       'security/sale_ebay_security.xml',
       'wizard/ebay_link_listing_views.xml',
       'views/product_views.xml',
-      'views/sale_config_settings_views.xml',
+      'views/res_config_settings_views.xml',
       'views/res_partner_views.xml',
       'views/stock_picking_views.xml',
       'data/mail_template_data.xml',
