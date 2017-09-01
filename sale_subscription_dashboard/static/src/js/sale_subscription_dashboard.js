@@ -1162,173 +1162,6 @@ var sale_subscription_dashboard_salesman = sale_subscription_dashboard_abstract.
     },
 });
 
-
-// Cohort Analysis
-var sale_subscription_dashboard_cohort = sale_subscription_dashboard_abstract.extend({
-
-    events: {
-        'click .js_to_subs': 'on_cohort_table',
-    },
-
-    init: function(parent, context) {
-        this._super(parent, context);
-
-        this.action_id = context.id;
-        this.date_start = moment().startOf('year');
-        this.cohort_period = 'month';
-        this.cohort_periods = [['day', _t('By Day')], ['week', _t('By Week')], ['month', _t('By Month')], ['year', _t('By Year')]];
-        this.cohort_interest = 'number';
-        this.cohort_interests = [['number', _t('Number of Subscriptions')], ['value', _t('Recurring Revenue (MRR)')]];
-        this.filters = {
-            'template_ids': [],
-            'tag_ids': [],
-            'company_ids': [session.company_id],
-        };
-    },
-
-    willStart: function() {
-        var self = this;
-        return this._super().then(function() {
-            return $.when(self.fetch_cohort_report());
-        });
-    },
-
-    fetch_cohort_report: function() {
-        var self = this;
-        return self._rpc({
-            route: '/sale_subscription_dashboard/fetch_cohort_report',
-            params: {
-                date_start: this.date_start.format('YYYY-MM-DD'),
-                cohort_period: this.cohort_period,
-                cohort_interest: this.cohort_interest,
-                filters: this.filters
-            }
-        }).then(function (result) {
-            self.cohort_report = result.cohort_report;
-            self.contract_templates = result.contract_templates;
-            self.tags = result.tags;
-            self.companies = result.companies;
-            self.currency_id = result.currency_id;
-        });
-    },
-
-    render_dashboard: function() {
-        this.$el.empty().append(QWeb.render("sale_subscription_dashboard.cohort_report", {
-            cohort_report: this.cohort_report,
-            cohort_interest: this.cohort_interest,
-            currency_id: this.currency_id,
-            format_number: this.format_number,
-        }));
-
-        this.update_cp();
-
-        var self = this;
-        _.each(this.$('.js_heat'), function(el) {
-            var perc = 1 - $(el).data('value')/100;
-            el.style.backgroundColor = self.shadeRGB_color("rbg(63,131,163)", perc);
-            if (perc < 0.4) {
-                el.style.color = "white";
-            }
-        });
-    },
-
-    on_cohort_table: function(ev) {
-
-        var row = $(ev.currentTarget).data().row;
-        var column = $(ev.currentTarget).data().column;
-
-        var cell_content = this.cohort_report[row].values[column] || this.cohort_report[row];
-        var subs_domain = cell_content && cell_content.domain || [];
-
-        if (!subs_domain.length) {
-            return;
-        }
-
-        var options = {
-            on_reverse_breadcrumb: this.on_reverse_breadcrumb,
-        };
-
-        this.do_action({
-            type: 'ir.actions.act_window',
-            res_model: 'sale.subscription',
-            views: [[false, 'list'], [false, 'form']],
-            name: column === undefined && _t('Subscriptions') || _t('Churned Subscriptions'),
-            domain: subs_domain,
-        }, options);
-    },
-
-    on_reverse_breadcrumb: function() {
-        this.update_cp();
-        web_client.do_push_state({action: this.action_id});
-    },
-
-    on_update_options: function() {
-        this.date_start = this.date_picker.getValue() || '0001-02-01';
-        this.cohort_period = this.$searchview.find('option[name="period"]:selected').val();
-        this.cohort_interest = this.$searchview.find('option[name="interest"]:selected').val();
-        this.filters.template_ids = this.get_filtered_template_ids();
-        this.filters.tag_ids = this.get_filtered_tag_ids();
-        this.filters.company_ids = this.get_filtered_company_ids();
-
-        var self = this;
-        addLoader(this.$('.o_cohort_analysis').empty());
-        this.fetch_cohort_report().done(function() {
-            self.render_dashboard();
-        });
-    },
-
-    get_filtered_template_ids: function() {
-        var $contract_inputs = this.$searchview_buttons.find(".selected > .o_contract_template_filter");
-        return _.map($contract_inputs, function(el) { return $(el).data('id'); });
-    },
-
-    get_filtered_tag_ids: function() {
-        var $tag_inputs = this.$searchview_buttons.find(".selected > .o_tags_filter");
-        return _.map($tag_inputs, function(el) { return $(el).data('id'); });
-    },
-
-    get_filtered_company_ids: function() {
-        var $company_inputs = this.$searchview_buttons.find(".selected > .o_companies_filter");
-        return _.map($company_inputs, function(el) { return $(el).data('id'); });
-    },
-
-    set_up_datetimepickers: function() {
-        this.date_picker = new datepicker.DateWidget(this, {
-            viewMode: 'years',
-        });
-        var self = this;
-        this.date_picker.prependTo(this.$searchview).then(function() {
-            self.date_picker.setValue(moment(self.date_start));
-        });
-    },
-
-    update_cp: function() {
-        this.$searchview = $(QWeb.render("sale_subscription_dashboard.cohort_searchview", {widget: this}));
-        this.$searchview.on('click', '.o_update_options', this.on_update_options);
-        this.set_up_datetimepickers();
-        this.render_filters();
-
-        this.update_control_panel({
-            cp_content: {
-                $searchview: this.$searchview,
-                $searchview_buttons: this.$searchview_buttons,
-            },
-        });
-
-    },
-
-    shadeRGB_color: function(color, percent) {
-        var f = color.split(","), t = percent<0?0:255 , p = percent < 0 ? percent * -1: percent, R = parseInt(f[0].slice(4)), G=parseInt(f[1]), B=parseInt(f[2]);
-        return "rgb("+(Math.round((t-R)*p)+R)+","+(Math.round((t-G)*p)+G)+","+(Math.round((t-B)*p)+B)+")";
-    },
-
-    format_number: function(value) {
-        value = utils.human_number(value);
-        return render_monetary_field(value, this.currency_id);
-    },
-
-});
-
 // Utility functions
 
 function addLoader(selector) {
@@ -1524,13 +1357,11 @@ function get_color_class(value, direction) {
 // Add client actions
 
 core.action_registry.add('sale_subscription_dashboard_main', sale_subscription_dashboard_main);
-core.action_registry.add('sale_subscription_dashboard_cohort', sale_subscription_dashboard_cohort);
 core.action_registry.add('sale_subscription_dashboard_detailed', sale_subscription_dashboard_detailed);
 core.action_registry.add('sale_subscription_dashboard_forecast', sale_subscription_dashboard_forecast);
 core.action_registry.add('sale_subscription_dashboard_salesman', sale_subscription_dashboard_salesman);
 
 return {sale_subscription_dashboard_main: sale_subscription_dashboard_main,
-        sale_subscription_dashboard_salesman: sale_subscription_dashboard_salesman,
-        sale_subscription_dashboard_cohort: sale_subscription_dashboard_cohort
+        sale_subscription_dashboard_salesman: sale_subscription_dashboard_salesman
     };
 });

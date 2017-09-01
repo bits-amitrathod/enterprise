@@ -3,127 +3,15 @@
 
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 from math import floor
 from odoo import http, _
 from odoo.http import request
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
 from .stat_types import STAT_TYPES, FORECAST_STAT_TYPES, compute_mrr_growth_values
 
-# We need to use the same formatting as the one in read_group (see models.py)
-DISPLAY_FORMATS = {
-    'day': '%d %b %Y',
-    'week': 'W%W %Y',
-    'week_special': '%w W%W %Y',
-    'month': '%B %Y',
-    'year': '%Y',
-}
-
 
 class RevenueKPIsDashboard(http.Controller):
-
-    @http.route('/sale_subscription_dashboard/fetch_cohort_report', type='json', auth='user')
-    def cohort(self, date_start, cohort_period, cohort_interest, filters):
-        """
-        Get a Cohort Analysis report
-
-        :param date_start: date of the first subscription to take into account
-        :param cohort_period: cohort period. Between 'day','week','month', 'year'
-        :param cohort_interest: cohort interest. Could be 'value' or 'number'
-        :param filters: filtering on specific subscription templates, tags, companies
-        """
-
-        cohort_report = []
-        company_currency_id = request.env.user.company_id.currency_id
-
-        subs_domain = [
-            ('state', 'not in', ['draft', 'cancel']),
-            ('date_start', '>=', date_start),
-            ('date_start', '<=', date.today().strftime(DEFAULT_SERVER_DATE_FORMAT))]
-        if filters.get('template_ids'):
-            subs_domain.append(('template_id', 'in', filters.get('template_ids')))
-        if filters.get('tag_ids'):
-            subs_domain.append(('tag_ids', 'in', filters.get('tag_ids')))
-        if filters.get('company_ids'):
-            subs_domain.append(('company_id', 'in', filters.get('company_ids')))
-
-        for cohort_group in request.env['sale.subscription']._read_group_raw(domain=subs_domain, fields=['date_start'], groupby='date_start:' + cohort_period):
-            # _read_group_raw returns (range, label), with range like date1/date2
-            tf = cohort_group['date_start:' + cohort_period]
-            date1 = tf[0].split('/')[0]
-            cohort_subs = request.env['sale.subscription'].search(cohort_group['__domain'])
-            cohort_date = datetime.strptime(date1, DEFAULT_SERVER_DATE_FORMAT)
-
-            if cohort_interest == 'value':
-                # TODO: value should possibly depend on `cohort_period` rather than be monthly?
-                starting_value = float(sum([
-                    x.currency_id._convert(x.recurring_monthly, company_currency_id, x.company_id, x.date_start)
-                    if x.currency_id else x.recurring_monthly
-                    for x in cohort_subs
-                ]))
-            else:
-                starting_value = float(len(cohort_subs))
-            cohort_line = []
-
-            for ij in range(0, 16):
-                ij_start_date = cohort_date
-                if cohort_period == 'day':
-                    ij_start_date += relativedelta(days=ij)
-                    ij_end_date = ij_start_date + relativedelta(days=1)
-                elif cohort_period == 'week':
-                    ij_start_date += relativedelta(days=7*ij)
-                    ij_end_date = ij_start_date + relativedelta(days=7)
-                elif cohort_period == 'month':
-                    ij_start_date += relativedelta(months=ij)
-                    ij_end_date = ij_start_date + relativedelta(months=1)
-                else:
-                    ij_start_date += relativedelta(years=ij)
-                    ij_end_date = ij_start_date + relativedelta(years=1)
-
-                if ij_start_date > datetime.today():
-                    # Who can predict the future, right ?
-                    cohort_line.append({
-                        'value': '-',
-                        'percentage': '-',
-                        'domain': '',
-                    })
-                    continue
-                significative_period = ij_start_date.strftime(DISPLAY_FORMATS[cohort_period])
-                churned_subs = [x for x in cohort_subs if x.date and datetime.strptime(x.date, DEFAULT_SERVER_DATE_FORMAT).strftime(DISPLAY_FORMATS[cohort_period]) == significative_period]
-
-                if cohort_interest == 'value':
-                    # TODO: value should possibly depend on `cohort_period` rather than be monthly?
-                    churned_value = sum([
-                        x.currency_id._convert(x.recurring_monthly, company_currency_id, x.company_id, x.date)
-                        if x.currency_id else x.recurring_monthly for x in churned_subs])
-                else:
-                    churned_value = len(churned_subs)
-
-                previous_cohort_remaining = starting_value if ij == 0 else cohort_line[-1]['value']
-                cohort_remaining = previous_cohort_remaining - churned_value
-                cohort_line_ij = {
-                    'value': cohort_remaining,
-                    'percentage': starting_value and round(100*(cohort_remaining)/starting_value, 1) or 0,
-                    'domain': cohort_group['__domain'] + [
-                        ("date", ">=", ij_start_date.strftime(DEFAULT_SERVER_DATE_FORMAT)),
-                        ("date", "<", ij_end_date.strftime(DEFAULT_SERVER_DATE_FORMAT))]
-                }
-                cohort_line.append(cohort_line_ij)
-
-            cohort_report.append({
-                'period': tf[1],
-                'starting_value': starting_value,
-                'domain': cohort_group['__domain'],
-                'values': cohort_line,
-            })
-
-        return {
-            'contract_templates': request.env['sale.subscription.template'].search_read([], ['name']),
-            'tags': request.env['account.analytic.tag'].search_read([], ['name']),
-            'companies': request.env['res.company'].search_read([], ['name']),
-            'cohort_report': cohort_report,
-            'currency_id': company_currency_id.id,
-        }
 
     @http.route('/sale_subscription_dashboard/fetch_data', type='json', auth='user')
     def fetch_data(self):

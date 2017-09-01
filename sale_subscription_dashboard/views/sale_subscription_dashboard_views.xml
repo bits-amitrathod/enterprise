@@ -34,10 +34,6 @@
         <field name="name">Revenue KPIs</field>
         <field name="tag">sale_subscription_dashboard_main</field>
     </record>
-    <record id="action_subscription_dashboard_report_cohort" model="ir.actions.client">
-        <field name="name">Cohort Analysis</field>
-        <field name="tag">sale_subscription_dashboard_cohort</field>
-    </record>
     <record id="action_subscription_dashboard_report_detailed" model="ir.actions.client">
         <field name="name">Detailed KPI</field>
         <field name="tag">sale_subscription_dashboard_detailed</field>
@@ -62,8 +58,39 @@
         <field name="help">From this view, have an analysis of your different invoice line entries.</field>
     </record>
 
+    <record id="sale_subscription_view_search_inherit_sale_subscription_dashboard" model="ir.ui.view">
+        <field name="name">sale.subscription.search.inherit</field>
+        <field name="model">sale.subscription</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='cancelled']" position="after">
+                <separator />
+                <filter
+                    string="This Year"
+                    name="this_year"
+                    domain="[('date_start', '&gt;=', context_today().strftime('%Y-01-01')), ('date_start', '&lt;=', context_today().strftime('%Y-12-31'))]" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_subscription_dashboard_action_cohort" model="ir.actions.act_window">
+        <field name="name">Subscription</field>
+        <field name="res_model">sale.subscription</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">cohort</field>
+        <field name="context">{'search_default_this_year': 1, 'search_default_open': 1, 'search_default_pending': 1, 'search_default_closed': 1}</field>
+    </record>
+
+    <record id="sale_subscription_view_cohort" model="ir.ui.view">
+        <field name="name">sale.subscription.cohort</field>
+        <field name="model">sale.subscription</field>
+        <field name="arch" type="xml">
+            <cohort string="Subscription" date_start="date_start" date_stop="date" interval="month" />
+        </field>
+    </record>
+
     <menuitem id="menu_sale_subscription_dashboard" name="Dashboard" sequence="1" parent="sale_subscription.menu_sale_subscription_root"/>
     <menuitem id="menu_action_subscription_dashboard_report_main" action="sale_subscription_dashboard.action_subscription_dashboard_report_main" parent="menu_sale_subscription_dashboard" name="Revenue KPIs" groups="sale_subscription.group_sale_subscription_manager"/>
     <menuitem id="menu_action_subscription_dashboard_report_salesman" action="sale_subscription_dashboard.action_subscription_dashboard_report_salesman" parent="menu_sale_subscription_dashboard" name="Salesperson Dashboard"/>
-    <menuitem id="menu_action_subscription_dashboard_report_cohort" action="sale_subscription_dashboard.action_subscription_dashboard_report_cohort" parent="menu_sale_subscription_dashboard" name="Cohort Analysis" groups="sale_subscription.group_sale_subscription_manager"/>
+    <menuitem id="menu_action_subscription_dashboard_report_cohort" action="sale_subscription_dashboard.sale_subscription_dashboard_action_cohort" parent="menu_sale_subscription_dashboard" name="Cohort Analysis" groups="sale_subscription.group_sale_subscription_manager"/>
 </odoo>

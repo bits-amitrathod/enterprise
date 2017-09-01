@@ -10,9 +10,6 @@ odoo.define('sale_subscription_dashboard.sale_subscription_tests', function (req
     SubscriptionDashBoard.sale_subscription_dashboard_salesman.include({
         update_cp: function () {},
     });
-    SubscriptionDashBoard.sale_subscription_dashboard_cohort.include({
-        update_cp: function () {},
-    });
     QUnit.module('sale_subscription_dashboard', {
         beforeEach: function () {
             this.data = {
@@ -161,96 +158,6 @@ odoo.define('sale_subscription_dashboard.sale_subscription_tests', function (req
                         account_analytic: false
                     }]
                 },
-                fetch_cohort_report: {
-                    currency_id: 3,
-                    companies: [{
-                        "id": 1,
-                        "name": "YourCompany"
-                    }],
-                    cohort_report: [{
-                        values: [{
-                            percentage: 100.0,
-                            value: 2.0
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }, {
-                            percentage: "-",
-                            domain: "",
-                            value: "-"
-                        }],
-                        starting_value: 2.0,
-                        period: "August 2017"
-                    }],
-                    contract_templates: [{
-                        id: 1,
-                        name: "Odoo Monthly"
-                    }, {
-                        id: 2,
-                        name: "Odoo Yearly"
-                    }],
-                    tags: [{
-                        id: 1,
-                        name: "Contracts"
-                    }, {
-                        id: 2,
-                        name: "Odoo Online"
-                    }],
-
-                },
             };
         }
     }, function () {
@@ -310,28 +217,6 @@ odoo.define('sale_subscription_dashboard.sale_subscription_tests', function (req
             assert.strictEqual(salesman_dashboard.$('#NRR_invoices .table-responsive tr:eq(2) td:first').text(), "Agrolait", "should contain NRR Invoices partner 'Agrolait'");
             assert.strictEqual(salesman_dashboard.$('#NRR_invoices .table-responsive tr:eq(2) td:last').text(), "525", "should contain NRR Invoices Amount '525'");
             salesman_dashboard.destroy();
-            done();
-        });
-
-        QUnit.test('sale_subscription_cohort', function (assert) {
-            var done = assert.async();
-            var self = this;
-            assert.expect(2);
-            var cohort_dashboard = new SubscriptionDashBoard.sale_subscription_dashboard_cohort(null, {
-                id: 1,
-            });
-            testUtils.addMockEnvironment(cohort_dashboard, {
-                mockRPC: function (route, args) {
-                    if (route === '/sale_subscription_dashboard/fetch_cohort_report') {
-                        return $.when(self.data.fetch_cohort_report);
-                    }
-                    return $.when();
-                },
-            });
-            cohort_dashboard.appendTo($('#qunit-fixture'));
-            assert.strictEqual(cohort_dashboard.$('.o_cohort_analysis').length, 1, "should display the table of cohort analysis.");
-            assert.strictEqual(cohort_dashboard.$('.o_cohort_analysis td.js_to_subs:not(.js_heat)').text().trim(), "2", "should contain the total subscriptions.");
-            cohort_dashboard.destroy();
             done();
         });
     });
