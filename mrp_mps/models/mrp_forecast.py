@@ -20,7 +20,6 @@ class SaleForecast(models.Model):
     to_supply = fields.Float('To Supply', help="If mode is Manual, this is the forced value")
     group_id = fields.Many2one('procurement.group', 'Procurement Group')
     mode = fields.Selection([('auto','Automatic'),('manual','Manual')], string="Mode", default='auto', required=True)
-    procurement_id = fields.Many2one('procurement.order', string='Procurement Generated', default=False)
     state = fields.Selection([('draft','Forecast'), ('done','Done')], 'State', default='draft', required=True)
     warehouse_id = fields.Many2one('stock.warehouse', 'Production Location')
 
@@ -35,76 +34,68 @@ class SaleForecast(models.Model):
     def generate_procurement(self, product_id=False, limit=False):
         """ Create procurements related to """
         product = self.env['product.product'].browse(product_id)
-        #date = fields.Datetime.from_string(fields.Datetime.now()) #necessary?
         mps_report = self.env['mrp.mps.report'].search([])[0]
         if not limit:
             result = [x for x in mps_report.get_data(product) if x['procurement_enable']]
             for data in result:
-                date_cmp = data['date']
-                if date_cmp < fields.Datetime.now():
-                    date = fields.Datetime.now()
+                date_cmp = datetime.datetime.strptime(data['date'], '%Y-%m-%d')
+                if date_cmp < datetime.datetime.now():
+                    date = datetime.datetime.now()
                 else:
                     date = date_cmp
-                procurement_id = self._action_procurement_create(product, data['to_supply'], date)
-                if procurement_id:
-                    domain = [('date', '<', data['date_to']),
-                            ('date', '>=', data['date']),
-                            ('product_id', '=', product_id),
-                            ('state', '!=', 'done'),
-                            ('procurement_id', '=', False)]
-                    forecasts = self.search(domain)
-                    if forecasts:
-                        forecasts.write({'procurement_id': procurement_id, 'state': 'done'})
-                    else:
-                        self.create({'date': date_cmp, 'product_id': product_id, 'forecast_qty': 0.0, 
-                                     'procurement_id': procurement_id, 'state': 'done'})
+                self._action_procurement_create(product, data['to_supply'], date)
+                domain = [('date', '<', data['date_to']),
+                          ('date', '>=', data['date']),
+                          ('product_id', '=', product_id),
+                          ('state', '!=', 'done'),]
+                forecasts = self.search(domain)
+                if forecasts:
+                    forecasts.write({'state': 'done'})
+                else:
+                    self.create({'date': date_cmp, 'product_id': product_id, 'forecast_qty': 0.0,
+                                 'state': 'done'})
         else:
             result = [x for x in mps_report.get_data(product) if not x['procurement_done']]
             if result:
                 data = result[0]
-                date_cmp = data['date']
-                if date_cmp < fields.Datetime.now():
-                    date = fields.Datetime.now()
+                date_cmp = datetime.datetime.strptime(data['date'], '%Y-%m-%d')
+                if date_cmp < datetime.datetime.now():
+                    date = datetime.datetime.now()
                 else:
                     date = date_cmp
-                procurement_id = self._action_procurement_create(product, data['to_supply'], date)
-                if procurement_id:
-                    domain = [('date', '>=', data['date']),
-                            ('date', '<', data['date_to']),
-                            ('product_id', '=', product_id),
-                            ('state', '!=', 'done'),
-                            ('procurement_id', '=', False)]
-                    forecasts = self.search(domain)
-                    if forecasts:
-                        forecasts.write({'procurement_id': procurement_id, 'state': 'done'})
-                    else:
-                        self.create({'date': date_cmp, 'product_id': product_id, 'forecast_qty': 0.0, 
-                                     'procurement_id': procurement_id, 'state': 'done'})
+                self._action_procurement_create(product, data['to_supply'], date)
+                domain = [('date', '>=', data['date']),
+                          ('date', '<', data['date_to']),
+                          ('product_id', '=', product_id),
+                          ('state', '!=', 'done')]
+                forecasts = self.search(domain)
+                if forecasts:
+                    forecasts.write({'state': 'done'})
+                else:
+                    self.create({'date': date_cmp,
+                                 'product_id': product_id,
+                                 'forecast_qty': 0.0,
+                                 'state': 'done'})
         return True
 
     @api.model
     def _prepare_procurement(self, product, date):
-        #currently only work on the main (first) warehouse
+        # TODO currently only work on the main (first) warehouse
         warehouse = self.env['stock.warehouse'].search([], limit=1)
         return {
-            'name': product.name,
-            'date_planned': date,
-            'product_id': product.id,
-            'product_uom': product.uom_id.id,
-            'company_id': self.env.user.company_id.id,
-            'warehouse_id': warehouse[0].id if warehouse else False,
-            'location_id': warehouse[0].lot_stock_id.id if warehouse else False,
+            'date_planned': date.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+            'company_id': self.env.user.company_id,
+            'warehouse_id': warehouse[0] if warehouse else False,
+            'add_date_in_domain': True,
         }
 
     @api.model
     def _action_procurement_create(self, product, to_supply, date):
-        procurement = self.env["procurement.order"]
         if to_supply:
             vals = self._prepare_procurement(product, date)
-            vals['product_qty'] = to_supply
-            new_proc = procurement.create(vals)
-            new_proc.run()
-            return new_proc.id
+            warehouse = self.env['stock.warehouse'].search([], limit=1)
+            location = warehouse[0].lot_stock_id if warehouse else False
+            self.env['procurement.group'].run(product, to_supply, product.uom_id, location, product.name, 'MPS', vals)
         return False
 
     @api.model
@@ -130,7 +121,7 @@ class SaleForecast(models.Model):
         if field == 'to_supply':
             if not quantity:
                 # If you put it back to manual, then delete the to_supply
-                forecasts.filtered(lambda x: not x.procurement_id).unlink()
+                forecasts.filtered(lambda x: x.state != 'done').unlink()
             else:
                 qty_supply = sum(forecasts.mapped('to_supply'))
                 new_quantity = quantity - qty_supply
@@ -157,3 +148,13 @@ class SaleForecastIndirect(models.Model):
     product_origin_id = fields.Many2one('product.product', string='Product', required=True)
     product_id = fields.Many2one('product.product', string='Product', required=True)
     quantity = fields.Float('Indirect Quantity')
+
+
+class ProcurementRule(models.Model):
+    _inherit = 'procurement.rule'
+
+    def _make_po_get_domain(self, values, partner):
+        domain = super(ProcurementRule, self)._make_po_get_domain(values, partner)
+        if values.get('add_date_in_domain', False) and values.get('date_planned', False):
+            domain += (('date_planned', '=', values['date_planned']),)
+        return domain

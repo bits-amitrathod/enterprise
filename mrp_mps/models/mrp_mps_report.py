@@ -120,7 +120,7 @@ class MrpMpsReport(models.TransientModel):
         forecasted = product.mps_forecasted
         date = datetime.datetime.now()
         indirect = self.get_indirect(product)[product.id]
-        display = _('To Supply / Produce')
+        display = _('To Reveive / To Supply / Produce')
         buy_type = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)
         mo_type = self.env.ref('mrp.route_warehouse0_manufacture', raise_if_not_found=False)
         lead_time = 0
@@ -134,7 +134,6 @@ class MrpMpsReport(models.TransientModel):
             date = datetime.datetime(date.year, date.month, 1)
         elif self.period == 'week':
             date = date - relativedelta.relativedelta(days=date.weekday())
-            
         if date < datetime.datetime.today():
             initial = product.with_context(to_date=date.strftime('%Y-%m-%d')).qty_available
         else:
@@ -162,9 +161,8 @@ class MrpMpsReport(models.TransientModel):
             for f in forecasts:
                 if f.mode == 'manual':
                     mode = 'manual'
-                if f.state == 'done':  # Still used, state done?
+                if f.state == 'done':
                     state = 'done'
-                if f.procurement_id:
                     proc_dec = True
             demand = sum(forecasts.filtered(lambda x: x.mode == 'auto').mapped('forecast_qty'))
             indirect_total = 0.0
@@ -180,7 +178,20 @@ class MrpMpsReport(models.TransientModel):
             if mode == 'manual':
                 to_supply = sum(forecasts.filtered(lambda x: x.mode == 'manual').mapped('to_supply'))
             if proc_dec:
-                to_supply = sum(forecasts.filtered(lambda x: x.procurement_id).mapped('procurement_id').mapped('product_qty'))
+                wh = self.env['stock.warehouse'].search([], limit=1)
+                loc = wh.lot_stock_id
+                purchase_lines = self.env['purchase.order.line'].search([('order_id.picking_type_id.default_location_dest_id', 'child_of', loc.id),
+                                                                         ('product_id', '=', product.id),
+                                                                         ('state', 'in', ('draft','sent','to approve')),
+                                                                         ('date_planned', '>=', date.strftime('%Y-%m-%d')),
+                                                                         ('date_planned', '<', date_to.strftime('%Y-%m-%d'))])
+                move_lines = self.env['stock.move'].search([('location_dest_id', 'child_of', loc.id),
+                                                            ('product_id', '=', product.id),
+                                                            ('state', 'not in', ['done', 'cancel', 'draft']),
+                                                            ('location_id.usage', '!=', 'internal'),
+                                                            ('date_expected', '>=', date.strftime('%Y-%m-%d')),
+                                                            ('date_expected', '<', date_to.strftime('%Y-%m-%d'))])
+                to_supply = sum([x.product_qty for x in purchase_lines]) + sum([x.product_qty for x in move_lines]) #TODO: UoM conversion for PO lines
             forecasted = to_supply - demand + initial - indirect_total
             result.append({
                 'period': name,
