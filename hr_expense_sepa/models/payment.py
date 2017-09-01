@@ -3,8 +3,8 @@
 from odoo import models, fields, api
 
 
-class HrExpenseRegisterPaymentWizard(models.TransientModel):
-    _inherit = "hr.expense.register.payment.wizard"
+class HrExpenseSheetRegisterPaymentWizard(models.TransientModel):
+    _inherit = "hr.expense.sheet.register.payment.wizard"
 
     payment_method_code = fields.Char(related='payment_method_id.code',
                                       help="Technical field used to adapt the interface to the payment type selected.",
@@ -23,7 +23,7 @@ class HrExpenseRegisterPaymentWizard(models.TransientModel):
             self.partner_bank_account_id = False
 
     def _get_payment_vals(self):
-        res = super(HrExpenseRegisterPaymentWizard, self)._get_payment_vals()
+        res = super(HrExpenseSheetRegisterPaymentWizard, self)._get_payment_vals()
         if self.payment_method_id == self.env.ref('account_sepa.account_payment_method_sepa_ct'):
             res.update({'partner_bank_account_id': self.partner_bank_account_id.id})
         return res
