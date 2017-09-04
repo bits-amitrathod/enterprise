@@ -566,8 +566,18 @@ class ProductTemplate(models.Model):
     def create_sale_order(self, transaction):
         if not self.env['sale.order'].search([
            ('client_order_ref', '=', transaction['OrderLineItemID'])]):
-            partner = self.env['res.partner'].search([
-                ('email', '=', transaction['Buyer']['Email'])])
+            # After 15 days eBay doesn't send the email anymore but 'Invalid Request'.
+            # If 2 transactions are synchronized with 2 different buyers with 'Invalid Request',
+            # the second buyer information will override the firs one. So we make the search
+            # on the ebay_id instead.
+            email = transaction['Buyer']['Email']
+            if email == "Invalid Request":
+                email = False
+                partner = self.env['res.partner'].search([
+                    ('ebay_id', '=', transaction['Buyer']['UserID'])])
+            else:
+                partner = self.env['res.partner'].search([
+                    ('email', '=', email)])
             if not partner:
                 partner = self.env['res.partner'].create({'name': transaction['Buyer']['UserID']})
             if len(partner) > 1:
@@ -575,7 +585,7 @@ class ProductTemplate(models.Model):
             partner_data = {
                 'name': transaction['Buyer']['UserID'],
                 'ebay_id': transaction['Buyer']['UserID'],
-                'email': transaction['Buyer']['Email'],
+                'email': email,
                 'ref': 'eBay',
             }
             if 'BuyerInfo' in transaction['Buyer'] and\
