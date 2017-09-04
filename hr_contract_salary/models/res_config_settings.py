@@ -14,7 +14,7 @@ class ResConfigSettings(models.TransientModel):
         res = super(ResConfigSettings, self).get_values()
         params = self.env['ir.config_parameter'].sudo()
         res.update(
-            access_token_validity=params.get_param('hr_contract_salary.access_token_validity', default=30)
+            access_token_validity=int(params.get_param('hr_contract_salary.access_token_validity', default=30))
         )
         return res
 
