@@ -64,7 +64,7 @@ class AccountReport(models.AbstractModel):
         if not previous_options:
             previous_options = {}
         options = {}
-        filter_list = [attr for attr in dir(self) if not callable(getattr(self, attr)) and not attr.startswith('__') and attr.startswith('filter_') and len(attr) > 7]
+        filter_list = [attr for attr in dir(self) if attr.startswith('filter_') and len(attr) > 7 and not callable(getattr(self, attr))]
         for element in filter_list:
             filter_name = element[7:]
             options[filter_name] = getattr(self, element)
