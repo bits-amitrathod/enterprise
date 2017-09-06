@@ -105,10 +105,11 @@ var FieldClearbit = form_widgets.FieldChar.extend({
     },
     on_select_dropdown: function () {
         var self = this;
-        if (!this.$dropdown) {
-            var $active = []
+        var $active;
+        if (!this.$dropdown || !this.suggestions.length) {
+            $active = [];
         } else {
-            var $active = this.$dropdown.find('.o_clearbit_suggestion.active');
+            $active = this.$dropdown.find('.o_clearbit_suggestion.active');
         }
         if($active.length == 1) {
             var result = this.suggestions[$active.data('index')];
