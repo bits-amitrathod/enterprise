@@ -17,6 +17,10 @@ var EventScanView = Widget.extend({
         'click .o_event_info': 'open_event_form',
     },
 
+    init: function(parent, action) {
+        this._super.apply(this, arguments);
+        this.action = action;
+    },
     willStart: function() {
         var self = this;
         return this._super().then(function() {
