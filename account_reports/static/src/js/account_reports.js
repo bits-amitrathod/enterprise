@@ -148,7 +148,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             self.$searchview_buttons.find('.o_foldable_menu[data-filter="'+$(this).data('filter')+'"]').toggleClass('o_closed_menu o_open_menu');
         });
         // render filter (add selected class to the options that are selected)
-        _.each(self.report_options, function(k) { 
+        _.each(self.report_options, function(k) {
             if (k!== null && k.filter !== undefined) {
                 self.$searchview_buttons.find('[data-filter="'+k.filter+'"]').addClass('selected');
             }
@@ -339,7 +339,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                 if (!footnote_text) {
                     return self.$el.find('.footnote[data-id="'+existing_footnote[0].id+'"] .o_account_reports_footnote_icons').click();
                 }
-                // replace text of existing footnote 
+                // replace text of existing footnote
                 return this._rpc({
                         model: 'account.report.footnote',
                         method: 'write',
@@ -410,13 +410,16 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         var index = self.report_options.unfolded_lines.indexOf(line_id);
         if (index > -1) {
             self.report_options.unfolded_lines.splice(index, 1);
-        } 
+        }
         if ($lines_to_hide.length > 0) {
             line.data('unfolded', 'False');
             $lines_to_hide.find('.js_account_report_line_footnote').addClass('folded');
             $lines_to_hide.hide();
             _.each($lines_to_hide, function(el){
-                self.fold($(el));
+                var child = $(el).find('[data-id]:first');
+                if (child) {
+                    self.fold(child);
+                }
             })
         }
         return false;

@@ -64,5 +64,6 @@ class MrpProduction(models.Model):
     @api.multi
     def button_mark_done(self):
         self.ensure_one()
-        super(MrpProduction, self).button_mark_done()
+        res = super(MrpProduction, self).button_mark_done()
         self._costs_generate()
+        return res
