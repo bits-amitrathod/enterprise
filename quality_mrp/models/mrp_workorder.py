@@ -93,9 +93,10 @@ class MrpProductionWorkcenterLine(models.Model):
                 checks_to_assign = self.check_ids.filtered(lambda x: not x.lot_id)
                 if checks_to_assign:
                     checks_to_assign.write({'lot_id': self.final_lot_id.id})
-        super(MrpProductionWorkcenterLine, self).record_production()
+        res = super(MrpProductionWorkcenterLine, self).record_production()
         if self.qty_producing > 0:
             self._create_checks()
+        return res
 
     @api.multi
     def check_quality(self):

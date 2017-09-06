@@ -11,7 +11,7 @@ class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.bank.statement.import"
 
     def _check_csv(self, filename):
-        return filename and filename.strip().endswith('.csv')
+        return filename and filename.lower().strip().endswith('.csv')
 
     @api.multi
     def import_file(self):
