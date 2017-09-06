@@ -11,9 +11,28 @@ from .fedex_request import FedexRequest
 
 _logger = logging.getLogger(__name__)
 
-
-# List of currencies that seems to be unaccepted by Fedex when declaring customs values
-FEDEX_CURRENCY_BLACKLIST = ['AED']
+# Why using standardized ISO codes? It's way more fun to use made up codes...
+# https://www.fedex.com/us/developer/WebHelp/ws/2014/dvg/WS_DVG_WebHelp/Appendix_F_Currency_Codes.htm
+FEDEX_CURR_MATCH = {
+    u'UYU': u'UYP',
+    u'XCD': u'ECD',
+    u'MXN': u'NMP',
+    u'KYD': u'CID',
+    u'CHF': u'SFR',
+    u'GBP': u'UKL',
+    u'IDR': u'RPA',
+    u'DOP': u'RDD',
+    u'JPY': u'JYE',
+    u'KRW': u'WON',
+    u'SGD': u'SID',
+    u'CLP': u'CHP',
+    u'JMD': u'JAD',
+    u'KWD': u'KUD',
+    u'AED': u'DHS',
+    u'TWD': u'NTD',
+    u'ARS': u'ARN',
+    u'LVL': u'EURO',
+}
 
 
 class ProviderFedex(models.Model):
@@ -99,7 +118,7 @@ class ProviderFedex(models.Model):
         srm.transaction_detail(order_name)
         srm.shipment_request(droppoff_type, service_type, package_code, weight_unit, fedex_saturday_delivery)
 
-        srm.set_currency(currency_name)
+        srm.set_currency(_convert_curr_iso_fdx(currency_name))
         srm.set_shipper(shipper_company, shipper_warehouse)
         srm.set_recipient(recipient)
 
@@ -164,13 +183,13 @@ class ProviderFedex(models.Model):
                 _logger.info(warnings)
 
             if not request.get('errors_message'):
-                if order_currency.name in request['price']:
-                    price = request['price'][order_currency.name]
+                if _convert_curr_iso_fdx(order_currency.name) in request['price']:
+                    price = request['price'][_convert_curr_iso_fdx(order_currency.name)]
                 else:
                     _logger.info("Preferred currency has not been found in FedEx response")
                     company_currency = order.company_id.currency_id
-                    if company_currency.name in request['price']:
-                        price = company_currency.compute(request['price'][company_currency.name], order_currency)
+                    if _convert_curr_iso_fdx(company_currency.name) in request['price']:
+                        price = company_currency.compute(request['price'][_convert_curr_iso_fdx(company_currency.name)], order_currency)
                     else:
                         price = company_currency.compute(request['price']['USD'], order_currency)
             else:
@@ -196,7 +215,7 @@ class ProviderFedex(models.Model):
 
             package_type = picking.package_ids and picking.package_ids[0].packaging_id.shipper_package_code or self.fedex_default_packaging_id.shipper_package_code
             srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, package_type, self.fedex_weight_unit, self.fedex_saturday_delivery)
-            srm.set_currency(picking.company_id.currency_id.name)
+            srm.set_currency(_convert_curr_iso_fdx(picking.company_id.currency_id.name))
             srm.set_shipper(picking.company_id.partner_id, picking.picking_type_id.warehouse_id.partner_id)
             srm.set_recipient(picking.partner_id)
 
@@ -211,11 +230,7 @@ class ProviderFedex(models.Model):
             # Commodities for customs declaration (international shipping)
             if self.fedex_service_type in ['INTERNATIONAL_ECONOMY', 'INTERNATIONAL_PRIORITY']:
 
-                # Fedex does not accept some currencies, so we have to force conversion
                 commodity_currency = order_currency
-                if order_currency.name in FEDEX_CURRENCY_BLACKLIST:
-                    commodity_currency = self.env.ref('base.USD')
-
                 total_commodities_amount = 0.0
                 commodity_country_of_manufacture = picking.picking_type_id.warehouse_id.partner_id.country_id.code
 
@@ -228,8 +243,8 @@ class ProviderFedex(models.Model):
                     commodity_weight_value = _convert_weight(operation.product_id.weight * operation.product_qty, self.fedex_weight_unit)
                     commodity_quantity = operation.product_qty
                     commodity_quantity_units = 'EA'
-                    srm.commodities(commodity_currency.name, commodity_amount, commodity_number_of_piece, commodity_weight_units, commodity_weight_value, commodity_description, commodity_country_of_manufacture, commodity_quantity, commodity_quantity_units)
-                srm.customs_value(commodity_currency.name, total_commodities_amount, "NON_DOCUMENTS")
+                    srm.commodities(_convert_curr_iso_fdx(commodity_currency.name), commodity_amount, commodity_number_of_piece, commodity_weight_units, commodity_weight_value, commodity_description, commodity_country_of_manufacture, commodity_quantity, commodity_quantity_units)
+                srm.customs_value(_convert_curr_iso_fdx(commodity_currency.name), total_commodities_amount, "NON_DOCUMENTS")
                 srm.duties_payment(picking.picking_type_id.warehouse_id.partner_id.country_id.code, superself.fedex_account_number)
 
             package_count = len(picking.package_ids) or 1
@@ -289,13 +304,13 @@ class ProviderFedex(models.Model):
                         if not request.get('errors_message'):
                             package_labels.append((package_name, srm.get_label()))
 
-                            if order_currency.name in request['price']:
-                                carrier_price = request['price'][order_currency.name]
+                            if _convert_curr_iso_fdx(order_currency.name) in request['price']:
+                                carrier_price = request['price'][_convert_curr_iso_fdx(order_currency.name)]
                             else:
                                 _logger.info("Preferred currency has not been found in FedEx response")
                                 company_currency = picking.company_id.currency_id
-                                if company_currency.name in request['price']:
-                                    carrier_price = company_currency.compute(request['price'][company_currency.name], order_currency)
+                                if _convert_curr_iso_fdx(company_currency.name) in request['price']:
+                                    carrier_price = company_currency.compute(request['price'][_convert_curr_iso_fdx(company_currency.name)], order_currency)
                                 else:
                                     carrier_price = company_currency.compute(request['price']['USD'], order_currency)
 
@@ -331,13 +346,13 @@ class ProviderFedex(models.Model):
 
                 if not request.get('errors_message'):
 
-                    if order_currency.name in request['price']:
-                        carrier_price = request['price'][order_currency.name]
+                    if _convert_curr_iso_fdx(order_currency.name) in request['price']:
+                        carrier_price = request['price'][_convert_curr_iso_fdx(order_currency.name)]
                     else:
                         _logger.info("Preferred currency has not been found in FedEx response")
                         company_currency = picking.company_id.currency_id
-                        if company_currency.name in request['price']:
-                            carrier_price = company_currency.compute(request['price'][company_currency.name], order_currency)
+                        if _convert_curr_iso_fdx(company_currency.name) in request['price']:
+                            carrier_price = company_currency.compute(request['price'][_convert_curr_iso_fdx(company_currency.name)], order_currency)
                         else:
                             carrier_price = company_currency.compute(request['price']['USD'], order_currency)
 
@@ -396,3 +411,10 @@ def _convert_weight(weight, unit='KG'):
         return weight / 0.45359237
     else:
         raise ValueError
+
+def _convert_curr_fdx_iso(code):
+    curr_match = {v: k for k, v in FEDEX_CURR_MATCH.items()}
+    return curr_match.get(code, code)
+
+def _convert_curr_iso_fdx(code):
+    return FEDEX_CURR_MATCH.get(code, code)
