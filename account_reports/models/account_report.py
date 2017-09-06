@@ -606,7 +606,7 @@ class AccountReport(models.AbstractModel):
     def get_xlsx(self, options, response):
         output = StringIO.StringIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        sheet = workbook.add_worksheet(self.get_report_name())
+        sheet = workbook.add_worksheet(self.get_report_name()[:31])
 
         def_style = workbook.add_format({'font_name': 'Arial'})
         title_style = workbook.add_format({'font_name': 'Arial', 'bold': True, 'bottom': 2})
