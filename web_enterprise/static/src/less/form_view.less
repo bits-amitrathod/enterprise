@@ -34,12 +34,13 @@
     // Sheet
     .o_form_sheet_bg {
         .o-flex(1, 0, auto);
+        background-color: @odoo-webclient-background-color;
         border-bottom: 1px solid @gray-lighter-dark;
-        .o-vertical-gradient(@odoo-color-silver-darker, @odoo-color-silver-dark);
 
         > .o_form_sheet {
             .container;
             background-color: @odoo-view-background-color;
+            border: 1px solid @gray-lighter-darker;
             box-shadow: 0 5px 20px -15px black;
             margin: @odoo-sheet-vpadding*0.2 auto;
             @media (min-width: @screen-sm-min) {
@@ -87,7 +88,6 @@
     .oe_button_box {
         position: relative;
         display: block;
-        min-height: 1px;
         margin-bottom: @odoo-sheet-vpadding;
         margin-top: -@odoo-sheet-vpadding;
         .o-form-sheet-negative-margin();
@@ -95,13 +95,13 @@
         // Use box-shadow instead of border-bottom because some button boxes are
         // empty in some cases and we do not want to see a floating border in
         // that cases.
-        box-shadow: inset 0 -1px 0 @gray-lighter-dark;
+        box-shadow: inset 0 -1px 0 @gray-lighter-darker;
 
         &.o_full .oe_stat_button:not(.o_invisible_modifier) ~ .oe_stat_button {
-            border-left: 1px solid @gray-lighter-dark;
+            border-left: 1px solid @gray-lighter-darker;
         }
         &.o_not_full .oe_stat_button {
-            border-left: 1px solid @gray-lighter-dark;
+            border-left: 1px solid @gray-lighter-darker;
         }
 
         > .btn.oe_stat_button, > .o_dropdown_more {
@@ -284,7 +284,7 @@
     // Notebooks
     .o_notebook {
         > ul.nav.nav-tabs {
-            border-bottom: 1px solid @gray-lighter-dark;
+            border-bottom: 1px solid @gray-lighter-darker;
             .o-form-sheet-negative-margin();
             .o-form-sheet-inner-left-padding();
 
@@ -306,7 +306,7 @@
                 }
 
                 &.active > a {
-                    border: 1px solid @gray-lighter-dark;
+                    border: 1px solid @gray-lighter-darker;
                     border-bottom: 0;
 
                     &, &:hover, &:focus, &:active {
@@ -323,7 +323,7 @@
         }
 
         > .tab-content {
-            border-bottom: 1px solid @gray-lighter-dark;
+            border-bottom: 1px solid @gray-lighter-darker;
 
             > .tab-pane {
                 padding: @odoo-horizontal-padding 0;
