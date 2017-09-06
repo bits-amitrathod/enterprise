@@ -39,7 +39,7 @@ class StockInventory(models.Model):
             dom = [('company_id', '=', company_id), ('location_id', '=', self.scan_location_id.id or self.location_id.id), ('lot_id', '=', False),
                         ('product_id','=', product.id), ('owner_id', '=', False), ('package_id', '=', False)]
             quants = StockQuant.search(dom)
-            th_qty = sum([x.qty for x in quants])
+            th_qty = sum([x.quantity for x in quants])
             self.line_ids += self.line_ids.new({
                 'location_id': self.scan_location_id.id or self.location_id.id,
                 'product_id': product.id,
