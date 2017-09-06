@@ -48,6 +48,16 @@ class FinancialReportController(http.Controller):
                         ('Content-Length', len(content))
                     ]
                 )
+            if output_format == 'xaf':
+                content = report_obj.get_xaf(options)
+                response = request.make_response(
+                    content,
+                    headers=[
+                        ('Content-Type', 'application/vnd.sun.xml.writer'),
+                        ('Content-Disposition', 'attachment; filename=' + report_name + '.xaf;'),
+                        ('Content-Length', len(content))
+                    ]
+                )
             if output_format == 'txt':
                 content = report_obj.get_txt(options)
                 response = request.make_response(

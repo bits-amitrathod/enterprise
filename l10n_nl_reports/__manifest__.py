@@ -73,11 +73,12 @@
     """,
     'author': 'Veritos - Jan Verlaan',
     'website': 'http://www.veritos.nl',
-    'depends': [
-        'l10n_nl', 'account_reports',
-    ],
+    'depends': ['l10n_nl', 'account_reports'],
     'data': [
-        'data/account_financial_html_report_data.xml',
+        'data/account_financial_report_profit_loss.xml',
+        'data/account_financial_report_turnover_tax.xml',
+        'data/account_financial_report_intrastat.xml',
+        'data/xml_audit_file_3_2.xml',
     ],
     'installable': True,
     'auto_install': True,
