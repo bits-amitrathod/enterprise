@@ -66,7 +66,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right o_account_reports_history" role="menu">
                     <t t-foreach="model.get_history(partner)" t-as='msg'>
-                        <li role="presentation" style='margin-left: 5px'><t t-esc='msg.date' /> (<t t-esc='msg.author_id.name' />) : <t t-raw='msg.body' /></li>
+                        <li role="presentation" style='margin-left: 5px'><t t-esc='msg.date' /> (<t t-esc='msg.author_id.sudo().name' />) : <t t-raw='msg.body' /></li>
                         <li role="presentation" class="divider"></li>
                     </t>
                 </ul>

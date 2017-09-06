@@ -458,7 +458,7 @@ class AccountFinancialReportLine(models.Model):
     @api.constrains('groupby')
     def _check_same_journal(self):
         if self.groupby and self.groupby not in self.env['account.move.line']:
-            raise ValidationError("Groupby should be a journal item field")
+            raise ValidationError(_("Groupby should be a journal item field"))
 
     def _get_sum(self, currency_table, financial_report, field_names=None):
         ''' Returns the sum of the amls in the domain '''
@@ -557,7 +557,7 @@ class AccountFinancialReportLine(models.Model):
 
             groupby = self.groupby or 'id'
             if groupby not in self.env['account.move.line']:
-                raise ValueError('Groupby should be a field from account.move.line')
+                raise ValueError(_('Groupby should be a field from account.move.line'))
             select, select_params = self._query_get_select_sum(currency_table)
             params += select_params
             sql = sql + "SELECT \"account_move_line\"." + groupby + ", " + select + " FROM " + tables + " WHERE " + where_clause + " GROUP BY \"account_move_line\"." + groupby
