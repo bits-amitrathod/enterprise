@@ -6,7 +6,7 @@
 
         // Extra room when needed
         &:last-child {
-            padding-right: ceil(@base * @ratio) + 5px + @odoo-horizontal-padding;
+            padding-right: ceil(@base * @ratio) + 5px + @odoo-horizontal-padding!important;
         }
     }
 }
@@ -17,11 +17,11 @@
 
     > thead, > tfoot {
         > tr > :not(:empty) {
-            padding: (ceil(@base * @ratio) + 4px) ceil(@base * @ratio);
+            padding: (ceil(@base * @ratio) + 4px) 4px;
         }
     }
     > tbody > tr:not(.o_list_view_grouped) > td {
-        padding: @body-padding;
+        padding: @body-padding 4px;
     }
     > tbody > tr.o_group_header {
         > th, > td {
