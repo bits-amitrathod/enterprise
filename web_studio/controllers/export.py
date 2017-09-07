@@ -147,7 +147,7 @@ def generate_module(module, data):
             nodes.append(record_node)
             skipped.extend(record_skipped)
         root = E.odoo(*nodes)
-        xml = etree.tostring(root, pretty_print=True, encoding='UTF-8')
+        xml = etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True)
 
         # add the XML file to the archive
         filename = os.path.join('data', '%s.xml' % model.replace('.', '_'))
