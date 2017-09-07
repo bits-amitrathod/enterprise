@@ -87,6 +87,7 @@ var Menu = Widget.extend({
         this.appswitcher_displayed = !!appswitcher;
         this.backbutton_displayed = this.appswitcher_displayed && !!overapp;
 
+        this.$el.toggleClass('o_app_switcher_visible', this.appswitcher_displayed);
         this.$menu_toggle.toggleClass('fa-chevron-left', this.appswitcher_displayed)
                          .toggleClass('fa-th', !this.appswitcher_displayed);
         if (this.appswitcher_displayed && !this.backbutton_displayed) {

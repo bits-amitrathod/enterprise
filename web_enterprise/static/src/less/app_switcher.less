@@ -1,3 +1,31 @@
+@o_app_switcher_menu_shadow: 0 1px 0 fade(black, 45%);
+
+body > nav.o_app_switcher_visible {
+    margin-bottom: -@odoo-navbar-height;
+    z-index: 1;
+
+    > .o_main_navbar {
+        background-color: transparent;
+        border-color: transparent;
+
+        .open .dropdown-toggle {
+            background-color: fade(black, 10%);
+        }
+        .oe_topbar_avatar {
+            box-shadow: @o_app_switcher_menu_shadow;
+        }
+
+        &, & > ul > li {
+            > a {
+                text-shadow: @o_app_switcher_menu_shadow;
+
+                &:hover, &:focus {
+                    background-color: fade(black, 0%);
+                }
+            }
+        }
+    }
+}
 
 .o_application_switcher {
     // Fallback for browsers that doesn't support css gradients
@@ -6,7 +34,7 @@
     .o-background-size(cover);
 
     // Prefer css gradient over images
-    .o-skew-gradient(rgba(197, 155, 156, 1), rgba(121, 112, 131, 1));
+    .o-skew-gradient(#77717e, #c9a8a9);
 
     font-size: @odoo-font-size-base-touch;
 
@@ -24,16 +52,16 @@
             .o_app {
                 background: transparent;
                 border: 1px solid transparent;
-                border-radius: 6%;
+                border-radius: 3%;
                 text-decoration: none;
                 text-align: center;
                 outline: none;
                 .o-transition(all, 0.3s);
 
                 .o_app_icon {
-                    border-radius: 6%;
+                    border-radius: 4%;
                     .o-transition(all, 0.1s);
-                    box-shadow: 0 6px 15px fade(black, 5%);
+                    box-shadow: 0 7px 15px -10px black;
                     -webkit-filter: grayscale(25%);
                     filter: grayscale(25%);
 
@@ -46,27 +74,16 @@
                     .o-text-overflow(block);
                     margin-top: 8px;
                     color: white;
-                    font-weight: 700;
+                    font-weight: 400;
+                    text-shadow: 0 1px 1px fade(black, 45%);
                 }
 
-                &:focus, &.o_focused {
-                    background-color: fade(white, 10%);
-
+                &:focus, &.o_focused, &:hover {
                     .o_app_icon {
-                        box-shadow: 0 0 0 transparent;
                         -webkit-filter: grayscale(0%);
                         filter: grayscale(0%);
-                    }
-                }
-
-                &:hover {
-                    border-color: fade(white, 8%);
-                    background-color: fade(white, 5%);
-
-                    .o_app_icon {
-                        box-shadow: 0 0 0 transparent;
-                        -webkit-filter: grayscale(0%);
-                        filter: grayscale(0%);
+                        box-shadow: 0 8px 15px -10px black;
+                        .o-transform(translateY(-1px));
                     }
                 }
             }

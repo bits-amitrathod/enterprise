@@ -1,7 +1,9 @@
+@o-app-switcher-container-size: 850px;
 
 .o_application_switcher {
     height: 100%;
     overflow: auto;
+    padding-top: @odoo-navbar-height;
     .o-flex-display();
     .o-flex-flow(column, nowrap);
     .o-align-items(center);
@@ -12,12 +14,12 @@
         .o-align-items(center);
         .o-flex(1, 0, auto);
         width: 100%;
-        max-width: @screen-sm-min;
+        max-width: @o-app-switcher-container-size;
 
         .o_apps {
             .o-flex(0, 0, auto);
             width: 100%;
-            max-width: @screen-sm-min;
+            max-width: @o-app-switcher-container-size;
             .clearfix();
 
             .o_app {
@@ -73,5 +75,10 @@
         .o-flex-display();
         .o-flex(1, 0, auto);
         align-items: flex-end;
+
+        img {
+            -webkit-filter: drop-shadow(0 1px 0px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(0 1px 0px rgba(0, 0, 0, 0.4));
+        }
     }
 }
