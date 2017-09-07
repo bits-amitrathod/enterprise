@@ -11,16 +11,21 @@ class EventBarcode(http.Controller):
         attendee = Registration.search([('barcode', '=', barcode), ('event_id', '=', event_id)], limit=1)
         if not attendee:
             return {'warning': _('This ticket is not valid for this event')}
+        res = {
+            'registration': dict(attendee.summary(), id=attendee.id),
+        }
         count = Registration.search_count([('state', '=', 'done'), ('event_id', '=', event_id)])
         attendee_name = attendee.name or _('Attendee')
         if attendee.state == 'cancel':
-            return {'warning': _('Canceled registration'), 'count': count}
+            res.update({'warning': _('Canceled registration')})
         elif attendee.state != 'done':
             attendee.write({'state': 'done', 'date_closed': fields.Datetime.now()})
             count += 1
-            return {'success': _('%s is successfully registered') % attendee_name, 'count': count}
+            res.update({'success': _('%s is successfully registered') % attendee_name})
         else:
-            return {'warning': _('%s is already registered') % attendee_name, 'count': count}
+            res.update({'warning': _('%s is already registered') % attendee_name})
+        res['count'] = count
+        return res
 
     @http.route(['/event_barcode/event'], type='json', auth="user")
     def get_event_data(self, event_id):
