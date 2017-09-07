@@ -550,11 +550,10 @@ class WebStudioController(http.Controller):
     def edit_view(self, view_id, studio_view_arch, operations=None):
         IrModelFields = request.env['ir.model.fields']
         view = request.env['ir.ui.view'].browse(view_id)
-        studio_view = self._get_studio_view(view)
         field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(io.BytesIO(studio_view_arch), parser).getroot()
+        arch = etree.fromstring(studio_view_arch, parser=parser)
         model = view.model
         for op in operations:
             # create a new field if it does not exist
@@ -601,10 +600,10 @@ class WebStudioController(http.Controller):
 
         # Normalize the view
         studio_view = self._get_studio_view(view)
+        ViewModel = request.env[view.model]
         try:
             normalized_view = studio_view.normalize()
             self._set_studio_view(view, normalized_view)
-            ViewModel = request.env[view.model]
             fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         except ValueError:  # Element '<...>' cannot be located in parent view
             # If the studio view is not applicable after normalization, let's
