@@ -1,10 +1,15 @@
 @o_app_switcher_menu_shadow: 0 1px 0 fade(black, 45%);
 
-body > nav.o_app_switcher_visible {
-    margin-bottom: -@odoo-navbar-height;
-    z-index: 1;
+.o_app_switcher_visible.o_web_client {
+    // Fallback for browsers that doesn't support css gradients
+    background-position: center;
+    background-image: url(/web_enterprise/static/src/img/application-switcher-bg.jpg);
+    .o-background-size(cover);
 
-    > .o_main_navbar {
+    // Prefer css gradient over images
+    .o-skew-gradient(#77717e, #c9a8a9);
+
+    .o_main_navbar {
         background-color: transparent;
         border-color: transparent;
 
@@ -28,14 +33,6 @@ body > nav.o_app_switcher_visible {
 }
 
 .o_application_switcher {
-    // Fallback for browsers that doesn't support css gradients
-    background-position: center;
-    background-image: url(/web_enterprise/static/src/img/application-switcher-bg.jpg);
-    .o-background-size(cover);
-
-    // Prefer css gradient over images
-    .o-skew-gradient(#77717e, #c9a8a9);
-
     font-size: @odoo-font-size-base-touch;
 
     .o_menu_search.o_bar_hidden input {

@@ -280,6 +280,8 @@ return AbstractWebClient.extend({
             });
     },
     toggle_app_switcher: function (display) {
+        this.$el.toggleClass('o_app_switcher_visible', display);
+
         if (display === this.app_switcher_displayed) {
             return; // nothing to do (prevents erasing previously detached webclient content)
         }
