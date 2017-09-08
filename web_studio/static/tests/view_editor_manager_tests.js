@@ -25,7 +25,7 @@ var createViewEditorManager = function (params) {
         return this._super(route, args);
     };
     var mockServer = testUtils.addMockEnvironment(widget, params);
-    var fieldsView = mockServer.fieldsViewGet(params.arch, params.model);
+    var fieldsView = mockServer.fieldsViewGet(params);
     if (params.viewID) {
         fieldsView.view_id = params.viewID;
     }
