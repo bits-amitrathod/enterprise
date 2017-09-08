@@ -24,6 +24,7 @@ var NewViewDialog = Dialog.extend({
         this.model = params.action.res_model;
         this.on_save_callback = params.callback;
         this.debug = config.debug;
+        this.mandatory_stop_date = params.mandatory_stop_date;
         var options = {
             title: _.str.sprintf(_t("Generate %s View"), this.view_type),
             size: 'medium',

@@ -318,6 +318,44 @@
                 </div>
             </t>
 
+            <!-- Cohort view settings -->
+            <t t-if="widget.view_type === 'cohort'">
+                <div class="o_web_studio_sidebar_select">
+                    <label for="date_start">Start Date Field</label>
+                    <select id="date_start" name="date_start">
+                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="field.store and _.contains(['date', 'datetime'], field.type)" t-att-selected="widget.state.attrs.date_start ===  field.name ? 'selected' : undefined" t-att-value="field.name">
+                            <t t-esc="field.string" /> <span t-if="widget.debug">(<t t-esc="field.name"/>)</span>
+                        </option>
+                    </select>
+                </div>
+                <div class="o_web_studio_sidebar_select">
+                    <label for="date_stop">Stop Date Field</label>
+                    <select id="date_stop" name="date_stop">
+                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="field.store and _.contains(['date', 'datetime'], field.type)" t-att-selected="widget.state.attrs.date_stop ===  field.name ? 'selected' : undefined" t-att-value="field.name">
+                            <t t-esc="field.string" /> <span t-if="widget.debug">(<t t-esc="field.name"/>)</span>
+                        </option>
+                    </select>
+                </div>
+                <div class="o_web_studio_sidebar_select">
+                    <label for="measure">Measure Field</label>
+                    <select id="measure" name="measure">
+                        <option></option>
+                        <option t-foreach="widget.orderered_fields" t-as="field" t-if="field.name !== 'id' and field.store and _.contains(['integer', 'float', 'monetary'], field.type)" t-att-selected="widget.state.attrs.measure ===  field.name ? 'selected' : undefined" t-att-value="field.name">
+                            <t t-esc="field.string" /> <span t-if="widget.debug">(<t t-esc="field.name"/>)</span>
+                        </option>
+                    </select>
+                </div>
+                <div class="o_web_studio_sidebar_select">
+                    <label for="interval">Interval</label>
+                    <select id="interval" name="interval">
+                        <option t-att-selected="widget.state.attrs.interval === 'day' ? 'selected' : undefined" value="day">Day</option>
+                        <option t-att-selected="widget.state.attrs.interval === 'week' ? 'selected' : undefined" value="week">Week</option>
+                        <option t-att-selected="widget.state.attrs.interval === 'month' ? 'selected' : undefined" value="month">Month</option>
+                        <option t-att-selected="widget.state.attrs.interval === 'year' ? 'selected' : undefined" value="year">Year</option>
+                    </select>
+                </div>
+            </t>
+
             <!-- Pivot view settings -->
             <t t-if="widget.view_type === 'pivot'">
 

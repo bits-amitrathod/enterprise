@@ -16,6 +16,7 @@ var VIEW_TYPES = [
     'pivot',
     'calendar',
     'gantt',
+    'cohort',
 ];
 
 var ActionEditor = Widget.extend({
@@ -118,6 +119,9 @@ var ActionEditor = Widget.extend({
                 category = 'timeline';
                 break;
             case 'gantt':
+                category = 'timeline';
+                break;
+            case 'cohort':
                 category = 'timeline';
                 break;
         }

@@ -145,6 +145,10 @@ var Main = AbstractAction.extend({
                 if (view_type === 'gantt' || view_type === 'calendar') {
                     params.view_type = view_type;
                     new NewViewDialog(self, params).open();
+                } else if (view_type === 'cohort') {
+                    params.view_type = view_type;
+                    params.mandatory_stop_date = true;
+                    new NewViewDialog(self, params).open();
                 } else {
                     Dialog.alert(self, result);
                     def.reject();
