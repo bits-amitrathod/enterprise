@@ -700,6 +700,10 @@ class AccountInvoice(models.Model):
         return values
 
     @api.multi
+    def l10n_mx_edi_get_addenda(self, values):
+        return self.partner_id.commercial_partner_id.l10n_mx_edi_addenda.render(values=values)
+
+    @api.multi
     def _l10n_mx_edi_create_cfdi(self):
         '''Creates and returns a dictionnary containing 'cfdi' if the cfdi is well created, 'error' otherwise.
         '''
@@ -764,14 +768,11 @@ class AccountInvoice(models.Model):
             return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}
 
         # Post append addenda
-        if self.partner_id.l10n_mx_edi_addenda:
-            cfdi_addenda_node = tree.Addenda
-            addenda_tree = etree.fromstring(self.partner_id.l10n_mx_edi_addenda.arch, parser=parser)
-            addenda_str = qweb.render(addenda_tree, values=values)
-            addenda_node = etree.fromstring(addenda_str, parser=parser)
+        if self.partner_id.commercial_partner_id.l10n_mx_edi_addenda:
+            cfdi_addenda_node = tree.find(".//{http://www.sat.gob.mx/cfd/3}Addenda")
+            addenda_node = etree.fromstring(self.l10n_mx_edi_get_addenda(values), parser=parser)
             cfdi_addenda_node.extend(addenda_node)
-
-        return {'cfdi': etree.tostring(tree, pretty_print=True, encoding='UTF-8')}
+        return {'cfdi': etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8')}
 
     @api.multi
     def _l10n_mx_edi_retry(self):

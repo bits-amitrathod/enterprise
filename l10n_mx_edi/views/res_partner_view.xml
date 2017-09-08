@@ -11,7 +11,7 @@
                     <field name="l10n_mx_edi_locality" placeholder="Locality..."/>
                 </xpath>
                 <xpath expr="//notebook[last()]" position="inside">
-                    <page string="Addenda">
+                    <page string="Addenda" attrs="{'invisible': [('is_company', '=', False)]}">
                         <group>
                             <field name="l10n_mx_edi_addenda"/>
                         </group>

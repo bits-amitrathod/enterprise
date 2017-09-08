@@ -10,5 +10,8 @@ class ResPartner(models.Model):
         string='Addenda',
         help='A view representing the addenda',
         domain=[('l10n_mx_edi_addenda_flag', '=', True)])
+    l10n_mx_edi_addenda_doc = fields.Html(string='Addenda Documentation',
+        help='''How should be done the adenda for this customer (try to put human readable information here to help the
+        invoice people to fill properly the fields in the invoice)''')
     l10n_mx_edi_colony = fields.Char(string='Colony Name')
     l10n_mx_edi_locality = fields.Char(string='Locality Name')

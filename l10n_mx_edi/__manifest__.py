@@ -34,8 +34,9 @@ This module allows the creation of the EDI documents and the communication with 
         'views/res_country_view.xml',
     ],
     'demo': [
-        'demo/ir_ui_views.xml',
         'demo/l10n_mx_edi_demo.xml',
+        'views/addenda/bosh.xml',
+        'views/addenda/autozone.xml',
     ],
     'installable': True,
     'auto_install': False,

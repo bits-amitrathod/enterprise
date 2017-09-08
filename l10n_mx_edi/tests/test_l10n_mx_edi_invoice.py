@@ -182,7 +182,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         xml_str = base64.decodestring(invoice.message_ids[-2].attachment_ids.datas)
         xml = objectify.fromstring(xml_str)
         xml_expected = objectify.fromstring(
-            '<ADDENDA10 xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'DEPTID="DEPTID" VERSION="VERSION" BUYER="BUYER" VENDOR_ID="VENDOR_ID" POID="POID" PODATE="PODATE" EMAIL="EMAIL"/>')
+            '<ADDENDA10 xmlns:cfdi="http://www.sat.gob.mx/cfd/3" '
+            'DEPTID="DEPTID" VERSION="VERSION" BUYER="BUYER" VENDOR_ID="VENDOR_ID" POID="POID" PODATE="PODATE" '
+            'EMAIL="%s"/>' % invoice.company_id.partner_id.email)
         xml_addenda = xml.Addenda.xpath('ADDENDA10')[0]
         self.assertEqualXML(xml_addenda, xml_expected)
