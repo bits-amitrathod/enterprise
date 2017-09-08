@@ -139,7 +139,9 @@ class Certificate(models.Model):
         self.ensure_one()
         key_pem = self.get_pem_key(self.key, self.password)
         private_key = crypto.load_privatekey(crypto.FILETYPE_PEM, key_pem)
-        cadena_crypted = crypto.sign(private_key, cadena, 'sha1')
+        version = cadena.split('|')[2]
+        encrypt = 'sha256WithRSAEncryption' if version == '3.3' else 'sha1'
+        cadena_crypted = crypto.sign(private_key, cadena, encrypt)
         return base64.encodestring(cadena_crypted).replace('\n', '').replace('\r', '')
 
     @api.multi

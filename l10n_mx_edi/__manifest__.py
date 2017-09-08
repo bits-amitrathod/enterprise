@@ -12,14 +12,21 @@ Allow the user to generate the EDI document for Mexican invoicing.
 
 This module allows the creation of the EDI documents and the communication with the Mexican certification providers (PACs) to sign/cancel them.
     """,
-    'depends': ['account', 'base_vat', 'base_address_extended'],
+    'depends': [
+        'account_invoicing',
+        'base_vat',
+        'base_address_extended',
+        'document'
+    ],
     'external_dependencies' : {
         'python' : ['OpenSSL'],
     },
     'data': [
         'security/ir.model.access.csv',
-        'data/3.2/cfdv32.xml',
+        'data/3.2/cfdi.xml',
+        'data/3.3/cfdi.xml',
         'data/account_data.xml',
+        'data/action_server_data.xml',
         'data/payment_method_data.xml',
         'data/res_country_data.xml',
         'views/account_invoice_view.xml',
@@ -32,12 +39,15 @@ This module allows the creation of the EDI documents and the communication with 
         'views/account_view.xml',
         "views/l10n_mx_edi_report_invoice.xml",
         'views/res_country_view.xml',
+        'views/product_view.xml',
     ],
     'demo': [
         'demo/l10n_mx_edi_demo.xml',
         'views/addenda/bosh.xml',
         'views/addenda/autozone.xml',
+        'demo/config_parameter_demo.xml',
     ],
+    "post_init_hook": "post_init_hook",
     'installable': True,
     'auto_install': False,
 }

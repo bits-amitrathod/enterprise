@@ -4,6 +4,7 @@ import base64
 from itertools import groupby
 import logging
 import re
+from os.path import join
 from datetime import datetime
 
 from lxml import etree
@@ -16,14 +17,15 @@ except ImportError:
     num2words = None
 
 from odoo import _, api, fields, models, tools
-from odoo.tools.xml_utils import check_with_xsd
 from odoo.tools.misc import html_escape
+from odoo.tools.xml_utils import check_with_xsd
 from odoo.tools import DEFAULT_SERVER_TIME_FORMAT
 
-CFDI_TEMPLATE = 'l10n_mx_edi.cfdv32'
-CFDI_XSD = 'l10n_mx_edi/data/%s/cfdv32.xsd'
-CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal_3_2.xslt'
+CFDI_TEMPLATE = 'l10n_mx_edi.cfdiv32'
+CFDI_TEMPLATE_33 = 'l10n_mx_edi.cfdiv33'
+CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal.xslt'
 CFDI_XSLT_CADENA_TFD = 'l10n_mx_edi/data/xslt/%s/cadenaoriginal_TFD_1_0.xslt'
+CFDI_XSLT_CADENA_TFD_11 = 'l10n_mx_edi/data/xslt/%s/cadenaoriginal_TFD_1_1.xslt'
 # Mapped from original SAT state to l10n_mx_edi_sat_status selection value
 # https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl
 CFDI_SAT_QR_STATE = {
@@ -97,7 +99,7 @@ class AccountInvoice(models.Model):
         help='Indicates the way the invoice was/will be paid, where the '
         'options could be: Cash, Nominal Check, Credit Card, etc. Leave empty '
         'if unkown and the XML will show "Unidentified".',
-        default=lambda self: self.env.ref('l10n_mx_edi.payment_method_na',
+        default=lambda self: self.env.ref('l10n_mx_edi.payment_method_otros',
                                           raise_if_not_found=False))
     l10n_mx_edi_uuid = fields.Char('Fiscal Folio', copy=False, readonly=True,
         help='Unused field to remove in master')
@@ -124,6 +126,34 @@ class AccountInvoice(models.Model):
         string='Time invoice', readonly=True, copy=False,
         states={'draft': [('readonly', False)]},
         help="Keep empty to use the current México central time")
+    l10n_mx_edi_usage = fields.Selection([
+        ('G01', 'Acquisition of merchandise'),
+        ('G02', 'Returns, discounts or bonuses'),
+        ('G03', 'General expenses'),
+        ('I01', 'Constructions'),
+        ('I02', 'Office furniture and equipment investment'),
+        ('I03', 'Transportation equipment'),
+        ('I04', 'Computer equipment and accessories'),
+        ('I05', 'Dices, dies, molds, matrices and tooling'),
+        ('I06', 'Telephone communications'),
+        ('I07', 'Satellite communications'),
+        ('I08', 'Other machinery and equipment'),
+        ('D01', 'Medical, dental and hospital expenses.'),
+        ('D02', 'Medical expenses for disability'),
+        ('D03', 'Funeral expenses'),
+        ('D04', 'Donations'),
+        ('D05', 'Real interest effectively paid for mortgage loans (room house)'),
+        ('D06', 'Voluntary contributions to SAR'),
+        ('D07', 'Medical insurance premiums'),
+        ('D08', 'Mandatory School Transportation Expenses'),
+        ('D09', 'Deposits in savings accounts, premiums based on pension plans.'),
+        ('D10', 'Payments for educational services (Colegiatura)'),
+        ('P01', 'To define'),
+    ], 'Usage', default='P01',
+        help='Used in CFDI 3.3 to express the key to the usage that will '
+        'gives the receiver to this invoice. This value is defined by the '
+        'customer. \nNote: It is not cause for cancellation if the key set is '
+        'not the usage that will give the receiver of the document.')
 
     # -------------------------------------------------------------------------
     # HELPERS
@@ -206,8 +236,7 @@ class AccountInvoice(models.Model):
     def _get_l10n_mx_edi_cadena(self):
         self.ensure_one()
         #get the xslt path
-        pac_name = self.company_id.l10n_mx_edi_pac
-        version = self.l10n_mx_edi_get_pac_version(pac_name)
+        version = self.l10n_mx_edi_get_pac_version()
         xslt_path = CFDI_XSLT_CADENA % version
         #get the cfdi as eTree
         cfdi = base64.decodestring(self.l10n_mx_edi_cfdi)
@@ -437,10 +466,14 @@ class AccountInvoice(models.Model):
             inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
     @api.multi
-    def l10n_mx_edi_get_pac_version(self, pac_name):
-        '''Returns the cfdi version of the pac. By default, the version is 3.2.
+    def l10n_mx_edi_get_pac_version(self):
+        '''Returns the cfdi version to generate the CFDI.
+        In December, 1, 2017 the CFDI 3.2 is deprecated, after of July 1, 2018
+        the CFDI 3.3 could be used.
         '''
-        return "3.2"
+        version = self.env['ir.config_parameter'].sudo().get_param(
+            'l10n_mx_edi_cfdi_version', '3.3')
+        return version
 
     @api.multi
     def _l10n_mx_edi_call_service(self, service_type):
@@ -606,8 +639,9 @@ class AccountInvoice(models.Model):
             inv.l10n_mx_edi_cfdi_amount = tree.get('total')
             inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
             inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
+            certificate = tree.get('noCertificado', tree.get('NoCertificado'))
             inv.l10n_mx_edi_cfdi_certificate_id = self.env['l10n_mx_edi.certificate'].sudo().search(
-                [('serial_number', '=', tree.attrib['noCertificado'])], limit=1)
+                [('serial_number', '=', certificate)], limit=1)
 
     @api.multi
     def _l10n_mx_edi_create_taxes_cfdi_values(self):
@@ -626,6 +660,7 @@ class AccountInvoice(models.Model):
                          if tax.tax_id.tag_ids else tax.tax_id.name).upper(),
                 'amount': round(abs(tax.amount or 0.0), 2),
                 'rate': round(abs(tax.tax_id.amount), 2),
+                'type': tax.tax_id.l10n_mx_cfdi_tax_type,
             }
             if tax.amount >= 0:
                 values['total_transferred'] += abs(tax.amount or 0.0)
@@ -645,6 +680,20 @@ class AccountInvoice(models.Model):
             values['folio'] = last_number_match.group().lstrip('0') or None
         return values
 
+    __check_cfdi_re = re.compile(ur'''([A-Z]|[a-z]|[0-9]| |Ñ|ñ|!|"|%|&|'|´|-|:|;|>|=|<|@|_|,|\{|\}|`|~|á|é|í|ó|ú|Á|É|Í|Ó|Ú|ü|Ü)''')
+
+    @staticmethod
+    def _get_string_cfdi(text, size=100):
+        """Replace from text received the characters that are not found in the
+        regex. This regex is taken from SAT documentation
+        https://goo.gl/C9sKH6
+        text: Text to remove extra characters
+        size: Cut the string in size len
+        Ex. 'Product ABC (small size)' - 'Product ABC small size'"""
+        for char in AccountInvoice.__check_cfdi_re.sub('', text):
+            text = text.replace(char, ' ')
+        return text.strip()[:size]
+
     @api.multi
     def _l10n_mx_edi_create_cfdi_values(self):
         '''Create the values to fill the CFDI template.
@@ -659,26 +708,37 @@ class AccountInvoice(models.Model):
             'supplier': self.company_id.partner_id.commercial_partner_id,
             'issued': self.journal_id.l10n_mx_address_issued_id,
             'customer': self.partner_id.commercial_partner_id,
-            'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
+            'fiscal_position': self.company_id.partner_id.property_account_position_id,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
             'amount_untaxed': '%0.*f' % (precision_digits, amount_untaxed),
             'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
+            'use_cfdi': self.l10n_mx_edi_usage,
+            'conditions': self._get_string_cfdi(
+                self.payment_term_id.name, 1000) if self.payment_term_id else False,
         }
 
         values.update(self._l10n_mx_get_serie_and_folio(self.number))
         ctx = dict(company_id=self.company_id.id, date=self.date_invoice)
         mxn = self.env.ref('base.MXN').with_context(ctx)
         invoice_currency = self.currency_id.with_context(ctx)
-        values['rate'] = '%0.*f' % (precision_digits, invoice_currency.compute(1, mxn))
+        values['rate'] = ('%0.*f' % (
+            precision_digits, invoice_currency.compute(1, mxn))) if self.currency_id.name != 'MXN' else False
 
+        version = self.l10n_mx_edi_get_pac_version()
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
 
-        if len(self.payment_term_id.line_ids) > 1:
-            values['payment_policy'] = 'Pago en parcialidades'
-        else:
-            values['payment_policy'] = 'Pago en una sola exhibición'
-
+        term_ids = self.payment_term_id.line_ids
+        if version == '3.2':
+            if len(term_ids.ids) > 1:
+                values['payment_policy'] = 'Pago en parcialidades'
+            else:
+                values['payment_policy'] = 'Pago en una sola exhibición'
+        elif version == '3.3':
+            # In CFDI 3.3, the payment policy is PUE when the invoice is to be
+            # paid directly, PPD otherwise
+            values['payment_policy'] = 'PPD' if term_ids.search([
+                ('days', '>', 0), ('id', 'in', term_ids.ids)], limit=1) else 'PUE'
         domicile = self.journal_id.l10n_mx_address_issued_id or self.company_id
         values['domicile'] = '%s %s, %s' % (
                 domicile.city,
@@ -686,9 +746,15 @@ class AccountInvoice(models.Model):
                 domicile.country_id.name,
         )
 
+        values['decimal_precision'] = precision_digits
         values['subtotal_wo_discount'] = lambda l: l.quantity * l.price_unit
+        values['total_discount'] = lambda l, d: ('%.*f' % (
+            int(d), l.quantity * l.price_unit * l.discount / 100)) if l.discount else False
 
         values['taxes'] = self._l10n_mx_edi_create_taxes_cfdi_values()
+
+        values['tax_name'] = lambda t: {'ISR': '001', 'IVA': '002', 'IEPS': '003'}.get(
+            t, False)
 
         if self.l10n_mx_edi_partner_bank_id:
             digits = [s for s in self.l10n_mx_edi_partner_bank_id.acc_number if s.isdigit()]
@@ -697,11 +763,37 @@ class AccountInvoice(models.Model):
         else:
             values['account_4num'] = None
 
+        values.update(self.get_cfdi_related())
         return values
 
     @api.multi
     def l10n_mx_edi_get_addenda(self, values):
         return self.partner_id.commercial_partner_id.l10n_mx_edi_addenda.render(values=values)
+
+    @api.multi
+    def get_cfdi_related(self):
+        """To node CfdiRelacionados get documents related with that invoice
+        Considered:
+            - 01 - Nota de crédito
+            - 04 - Sustitución de los CFDI previos
+        Not considered:
+            - 02 - Nota de débito de los documentos relacionados
+            - 03 - Devolución de mercancía sobre facturas o traslados previos
+            - 05 - Traslados de mercancias facturados previamente
+            - 06 - Factura generada por los traslados previos
+            - 07 - CFDI por aplicación de anticipo"""
+        cfdi_related = []
+        relation_type = '01' if self.refund_invoice_id.l10n_mx_edi_cfdi_uuid else ''
+        relation_type = '04' if self.l10n_mx_edi_cfdi_uuid else relation_type
+        if self.refund_invoice_id.l10n_mx_edi_cfdi_uuid:
+            cfdi_related = [
+                {'uuid': self.refund_invoice_id.l10n_mx_edi_cfdi_uuid or ''}]
+        if self.l10n_mx_edi_cfdi_uuid:
+            cfdi_related = [{'uuid': self.l10n_mx_edi_cfdi_uuid or ''}]
+        return {
+            'cfdi_related_type': relation_type,
+            'cfdi_related': cfdi_related,
+            }
 
     @api.multi
     def _l10n_mx_edi_create_cfdi(self):
@@ -742,7 +834,7 @@ class AccountInvoice(models.Model):
         # -----------------------
         # Create the EDI document
         # -----------------------
-        version = self.l10n_mx_edi_get_pac_version(pac_name)
+        version = self.l10n_mx_edi_get_pac_version()
         parser = etree.XMLParser(remove_blank_text=True)
 
         # -Compute certificate data
@@ -752,20 +844,37 @@ class AccountInvoice(models.Model):
         values['certificate'] = certificate_id.sudo().get_data()[0]
 
         # -Compute cfdi
-        cfdi = qweb.render(CFDI_TEMPLATE, values=values)
+        if version == '3.2':
+            cfdi = qweb.render(CFDI_TEMPLATE, values=values)
+        elif version == '3.3':
+            cfdi = qweb.render(CFDI_TEMPLATE_33, values=values)
 
         # -Compute cadena
         tree = self.l10n_mx_edi_get_xml_etree(cfdi)
         cadena = self.l10n_mx_edi_generate_cadena(CFDI_XSLT_CADENA % version, tree)
 
         # Post append cadena
-        tree.attrib['sello'] = certificate_id.sudo().get_encrypted_cadena(cadena)
+        xsd_path = ''
+        if version == '3.2':
+            tree.attrib['sello'] = certificate_id.sudo().get_encrypted_cadena(cadena)
+            xsd_path = 'l10n_mx_edi/data/%s/cfdi.xsd' % version
+        elif version == '3.3':
+            tree.attrib['Sello'] = certificate_id.sudo().get_encrypted_cadena(cadena)
+            xsd_xml_id = 'l10n_mx_edi.xsd_cached_cfdv33_xsd'
+            attachment = self.env.ref(xsd_xml_id, False)
+            if attachment:
+                filestore = tools.config.filestore(self._cr.dbname)
+                xsd_path = join(filestore, attachment.store_fname)
 
         # Check with xsd
-        try:
-            check_with_xsd(tree, CFDI_XSD % version)
-        except Exception as e:
-            return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}
+        if xsd_path:
+            try:
+                check_with_xsd(tree, xsd_path)
+            except (IOError, ValueError):
+                logging.getLogger(__name__).info(
+                    _('The xsd file to validate the XML structure was not found'))
+            except Exception as e:
+                return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}
 
         # Post append addenda
         if self.partner_id.commercial_partner_id.l10n_mx_edi_addenda:
@@ -778,6 +887,7 @@ class AccountInvoice(models.Model):
     def _l10n_mx_edi_retry(self):
         '''Try to generate the cfdi attachment and then, sign it.
         '''
+        version = self.l10n_mx_edi_get_pac_version()
         for inv in self:
             cfdi_values = inv._l10n_mx_edi_create_cfdi()
             error = cfdi_values.pop('error', None)
@@ -789,8 +899,8 @@ class AccountInvoice(models.Model):
                 continue
             # cfdi has been successfully generated
             inv.l10n_mx_edi_pac_status = 'to_sign'
-            filename = ('%s-%s-MX-Invoice-3-2.xml' % (
-                inv.journal_id.code, inv.number)).replace('/', '')
+            filename = ('%s-%s-MX-Invoice-%s.xml' % (
+                inv.journal_id.code, inv.number, version.replace('.', '-'))).replace('/', '')
             ctx = self.env.context.copy()
             ctx.pop('default_type', False)
             inv.l10n_mx_edi_cfdi_name = filename
@@ -812,9 +922,10 @@ class AccountInvoice(models.Model):
     def invoice_validate(self):
         '''Generates the cfdi attachments for mexican companies when validated.'''
         result = super(AccountInvoice, self).invoice_validate()
+        version = self.l10n_mx_edi_get_pac_version()
         for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
-            record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-3-2.xml' % (
-                record.journal_id.code, record.number)).replace('/', '')
+            record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-%s.xml' % (
+                record.journal_id.code, record.number, version.replace('.', '-'))).replace('/', '')
             record._l10n_mx_edi_retry()
         return result
 

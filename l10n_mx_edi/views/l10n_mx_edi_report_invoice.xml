@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-xs-2">
                     <strong>Payment Type:</strong>
-                    <p t-esc="xml.get('formaDePago')"/>
+                    <p t-esc="xml.get('formaDePago', xml.get('MetodoPago'))"/>
                 </div>
                 <div class="col-xs-2" t-if="xml.get('NumCtaPago')">
                     <strong>Bank Account:</strong>
@@ -60,13 +60,13 @@
                             <span>Digital stamp of the emitter</span>
                         </div>
                         <div class="digital-stamp-content">
-                            <span t-esc="xml.get('sello', 'No identificado')"/>
+                            <span t-esc="xml.get('sello', xml.get('Sello', 'No identificado'))"/>
                         </div>
                         <div class="digital-stamp">
                             <span>Digital stamp SAT</span>
                         </div>
                         <div class="digital-stamp-content">
-                            <span t-esc="tfd.get('selloSAT', 'No identificado')"/>
+                            <span t-esc="tfd.get('selloSAT', tfd.get('SelloSAT', 'No identificado'))"/>
                         </div>
                         <div class="digital-stamp">
                             <span>Original chain complement of digital certification SAT</span>
@@ -84,10 +84,12 @@
                             <span>Extra Info</span>
                         </div>
                         <div class="digital-stamp-content">
-                            <span>Emitter certificate:</span> <span t-esc="xml.get('noCertificado')"/>
+                            <span>Emitter certificate:</span> <span t-esc="xml.get('noCertificado', xml.get('NoCertificado'))"/>
                             <span> | Expedition place:</span> <span t-esc="xml.get('LugarExpedicion')"/>
-                            <span> | Fiscal Regime:</span> <span t-esc="xml.Emisor.RegimenFiscal.get('Regimen')"/>
-                            <span> | Emission Date:</span> <span t-esc="xml.get('fecha', '').replace('T', ' ')"/>
+                            <span> | Fiscal Regime:</span>
+                                <t t-if="xml.get('version', '') == '3.2'"> <span t-esc="xml.Emisor.RegimenFiscal.get('Regimen')"/></t>
+                                <t t-if="xml.get('Version', '') == '3.3'"> <span t-esc="xml.Emisor.get('RegimenFiscal', '')"/></t>
+                            <span> | Emission Date:</span> <span t-esc="xml.get('fecha', xml.get('Fecha', '')).replace('T', ' ')"/>
                             <span> | Certification Date:</span> <span t-esc="tfd.get('FechaTimbrado', '').replace('T', ' ')"/>
                             <span> | Fiscal Folio:</span> <span t-esc="tfd.get('UUID')"/>
                         </div>

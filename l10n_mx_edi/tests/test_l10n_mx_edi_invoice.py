@@ -13,6 +13,8 @@ from . import common
 class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
     def setUp(self):
         super(TestL10nMxEdiInvoice, self).setUp()
+        self.refund_model = self.env['account.invoice.refund']
+
         self.cert = misc.file_open(os.path.join(
             'l10n_mx_edi', 'demo', 'pac_credentials', 'certificate.cer')).read()
         self.cert_key = misc.file_open(os.path.join(
@@ -20,9 +22,12 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.cert_password = '12345678a'
         self.l10n_mx_edi_basic_configuration()
         self.xml_expected_str = misc.file_open(os.path.join(
-            'l10n_mx_edi', 'tests', 'expected_cfdi.xml')).read()
+            'l10n_mx_edi', 'tests', 'expected_cfdi32.xml')).read()
         self.xml_expected = objectify.fromstring(self.xml_expected_str)
         self.company_partner = self.env.ref('base.main_partner')
+        self.payment_term = self.ref('account.account_payment_term_net')
+        self.config_parameter = self.env.ref(
+            'l10n_mx_edi.l10n_mx_edi_version_cfdi')
 
     def l10n_mx_edi_basic_configuration(self):
         self.company.write({
@@ -86,16 +91,31 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
                          invoice.message_ids.mapped('body'))
         xml = invoice_disc.l10n_mx_edi_get_xml_etree()
         xml_expected_disc = objectify.fromstring(self.xml_expected_str)
-        xml_expected_disc.attrib['subTotal'] = '500.00'
-        xml_expected_disc.attrib['descuento'] = '50.00'
-        # 500 - 10% + taxes(16%, -10%)
-        xml_expected_disc.attrib['total'] = '477.00'
+        version = xml.get('version', xml.get('Version', ''))
+        if version == '3.2':
+            xml_expected_disc.attrib['subTotal'] = '500.00'
+            xml_expected_disc.attrib['descuento'] = '50.00'
+            # 500 - 10% + taxes(16%, -10%)
+            xml_expected_disc.attrib['total'] = '477.00'
+        elif version == '3.3':
+            xml_expected_disc.attrib['SubTotal'] = '500.00'
+            xml_expected_disc.attrib['Descuento'] = '50.00'
+            # 500 - 10% + taxes(16%, -10%)
+            xml_expected_disc.attrib['Total'] = '477.00'
         self.xml_merge_dynamic_items(xml, xml_expected_disc)
-        xml_expected_disc.attrib['folio'] =  xml.attrib['folio']
-        xml_expected_disc.attrib['serie'] = xml.attrib['serie']
-        for concepto in xml_expected_disc.Conceptos:
-            concepto.Concepto.attrib['valorUnitario'] = '500.0'
-            concepto.Concepto.attrib['importe'] = '500.0'
+        if version == '3.2':
+            xml_expected_disc.attrib['folio'] = xml.attrib['folio']
+            xml_expected_disc.attrib['serie'] = xml.attrib['serie']
+            for concepto in xml_expected_disc.Conceptos:
+                concepto.Concepto.attrib['valorUnitario'] = '500.0'
+                concepto.Concepto.attrib['importe'] = '500.0'
+        elif version == '3.3':
+            xml_expected_disc.attrib['Folio'] = xml.attrib['Folio']
+            xml_expected_disc.attrib['Serie'] = xml.attrib['Serie']
+            for concepto in xml_expected_disc.Conceptos:
+                concepto.Concepto.attrib['ValorUnitario'] = '500.00'
+                concepto.Concepto.attrib['Importe'] = '500.00'
+                concepto.Concepto.attrib['Descuento'] = '50.00'
         self.assertEqualXML(xml, xml_expected_disc)
 
         # -----------------------
@@ -129,17 +149,18 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice.l10n_mx_edi_update_sat_status()
         self.assertNotEqual(invoice.l10n_mx_edi_sat_status, "cancelled")
 
-        # Use a real UUID cancelled
-        xml_tfd = invoice.l10n_mx_edi_get_tfd_etree(xml)
-        xml_tfd.attrib['UUID'] = '0F481E0F-47A5-4647-B06B-8B471671F377'
-        xml.Emisor.attrib['rfc'] = 'VAU111017CG9'
-        xml.Receptor.attrib['rfc'] = 'IAL691030TK3'
-        xml.attrib['total'] = '1.16'
-        xml_attach = invoice.l10n_mx_edi_retrieve_last_attachment()
-        xml_attach.datas = base64.encodestring(etree.tostring(xml))
-        invoice.l10n_mx_edi_update_sat_status()
-        self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled",
-                         invoice.message_ids.mapped('body'))
+        # Use a real UUID cancelled, only with CFDI version 3.2
+        if version == '3.2':
+            xml_tfd = invoice.l10n_mx_edi_get_tfd_etree(xml)
+            xml_tfd.attrib['UUID'] = '0F481E0F-47A5-4647-B06B-8B471671F377'
+            xml.Emisor.attrib['rfc'] = 'VAU111017CG9'
+            xml.Receptor.attrib['rfc'] = 'IAL691030TK3'
+            xml.attrib['total'] = '1.16'
+            xml_attach = invoice.l10n_mx_edi_retrieve_last_attachment()
+            xml_attach.datas = base64.encodestring(etree.tostring(xml))
+            invoice.l10n_mx_edi_update_sat_status()
+            self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled",
+                            invoice.message_ids.mapped('body'))
 
     def test_l10n_mx_edi_invoice_basic_sf(self):
         self.account_settings.create({'l10n_mx_edi_pac': 'solfact'}).execute()
@@ -168,7 +189,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         invoice.currency_id = self.mxn.id
         values = invoice._l10n_mx_edi_create_cfdi_values()
-        self.assertEqual(float(values['rate']), 1)
+        self.assertFalse(values['rate'])
 
     def test_addenda(self):
         invoice = self.create_invoice()
@@ -187,3 +208,37 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             'EMAIL="%s"/>' % invoice.company_id.partner_id.email)
         xml_addenda = xml.Addenda.xpath('ADDENDA10')[0]
         self.assertEqualXML(xml_addenda, xml_expected)
+
+    def test_l10n_mx_edi_invoice_basic_33(self):
+        isr_tag = self.env['account.account.tag'].search(
+            [('name', '=', 'ISR')])
+        self.config_parameter.value = '3.3'
+        self.xml_expected_str = misc.file_open(os.path.join(
+            'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read()
+        self.xml_expected = objectify.fromstring(self.xml_expected_str)
+        self.tax_positive.l10n_mx_cfdi_tax_type = 'Tasa'
+        self.tax_negative.write({
+            'l10n_mx_cfdi_tax_type': 'Tasa',
+            'tag_ids': [(4, isr_tag.ids)],
+        })
+        self.test_l10n_mx_edi_invoice_basic()
+
+        # -----------------------
+        # Testing invoice refund to verify CFDI related section
+        # -----------------------
+        invoice = self.create_invoice()
+        invoice.action_invoice_open()
+        refund = self.refund_model.with_context(
+            active_ids=invoice.ids).create({
+                'filter_refund': 'refund',
+                'description': 'Refund Test',
+                'date': invoice.date_invoice,
+            })
+        result = refund.invoice_refund()
+        refund_id = result.get('domain')[1][2]
+        refund = self.invoice_model.browse(refund_id)
+        refund.action_invoice_open()
+        xml = refund.l10n_mx_edi_get_xml_etree()
+        self.assertEquals(xml.CfdiRelacionados.CfdiRelacionado.get('UUID'),
+                          invoice.l10n_mx_edi_cfdi_uuid,
+                          'Invoice UUID is different to CFDI related')

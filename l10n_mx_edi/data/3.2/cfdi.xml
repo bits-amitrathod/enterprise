@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="cfdv32">
+        <template id="cfdiv32">
             <cfdi:Comprobante
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
@@ -48,7 +48,7 @@
                             t-att-pais="issued.country_id.name"
                             t-att-codigoPostal="issued.zip"/>
                     </t>
-                    <cfdi:RegimenFiscal t-att-Regimen="fiscal_position"/>
+                    <cfdi:RegimenFiscal t-att-Regimen="fiscal_position.name"/>
                 </cfdi:Emisor>
                 <cfdi:Receptor
                     t-att-rfc="record.l10n_mx_edi_get_customer_rfc()"
