@@ -351,38 +351,6 @@ class SaleSubscription(models.Model):
         self._recurring_create_invoice()
         return self.action_subscription_invoice()
 
-    @api.returns('account.invoice')
-    def _recurring_create_invoice(self, automatic=False):
-        AccountInvoice = self.env['account.invoice']
-        invoices = AccountInvoice
-        current_date = fields.Date.today()
-        periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
-        domain = [('id', 'in', self.ids)] if self.ids else [('recurring_next_date', '<=', current_date), ('state', '=', 'open')]
-        sub_data = self.search_read(fields=['id', 'company_id'], domain=domain)
-        for company_id in set(data['company_id'][0] for data in sub_data):
-            sub_ids = [s['id'] for s in sub_data if s['company_id'][0] == company_id]
-            subs = self.with_context(company_id=company_id, force_company=company_id).browse(sub_ids)
-            for sub in subs:
-                try:
-                    invoices += AccountInvoice.create(sub._prepare_invoice())
-                    invoices[-1].message_post_with_view(
-                        'mail.message_origin_link', values={'self': invoices[-1], 'origin': sub},
-                        subtype_id=self.env.ref('mail.mt_note').id)
-                    invoices[-1].compute_taxes()
-                    next_date = fields.Date.from_string(sub.recurring_next_date or current_date)
-                    rule, interval = sub.recurring_rule_type, sub.recurring_interval
-                    new_date = next_date + relativedelta(**{periods[rule]: interval})
-                    sub.write({'recurring_next_date': new_date})
-                    if automatic:
-                        self.env.cr.commit()
-                except Exception:
-                    if automatic:
-                        self.env.cr.rollback()
-                        _logger.exception('Fail to create recurring invoice for subscription %s', sub.code)
-                    else:
-                        raise
-        return invoices
-
     def _prepare_renewal_order_values(self):
         res = dict()
         for subscription in self:
