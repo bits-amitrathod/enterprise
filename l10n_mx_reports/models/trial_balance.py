@@ -104,8 +104,9 @@ class MxReportAccountTrial(models.AbstractModel):
         context = self.env.context
         company_id = context.get('company_id') or self.env.user.company_id
         is_zero = company_id.currency_id.is_zero
-        account_ids = self.env['account.account'].search(
-            safe_eval(line.domain or '[]'), order='code')
+        domain = safe_eval(line.domain or '[]')
+        domain.append((('deprecated', '=', False)))
+        account_ids = self.env['account.account'].search(domain, order='code')
         for account in account_ids:
             #skip accounts with all periods = 0 and no initial balance
             non_zero = False
