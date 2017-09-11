@@ -2,6 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, _, fields
+from openerp.exceptions import ValidationError
+from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import check_with_xsd
 
 MX_NS_REFACTORING = {
@@ -37,7 +39,56 @@ class MXReportAccountCoa(models.AbstractModel):
 
     def get_lines(self, options, line_id=None):
         options['coa_only'] = True
-        return self._post_process({}, {}, options, [])
+        lines = self._post_process({}, {}, options, [])
+        if lines:
+            afrl_obj = self.env['account.financial.html.report.line']
+            afr_lines = afrl_obj.search([
+                ('parent_id', '=', False),
+                ('code', 'ilike', 'MX_COA_%')], order='code')
+            lines.extend(self._get_accounts_not_found(afr_lines))
+        return lines
+
+    def _get_accounts_not_found(self, afr_lines):
+        """Add the accounts that are not found with domains in the AFR
+        lines, with this the is indicated the accounts that will not show in
+        the report."""
+        accounts = []
+        lines = []
+        account_obj = self.env['account.account']
+        for domain in afr_lines.mapped('children_ids').mapped('domain'):
+            account_ids = account_obj.search(
+                safe_eval(domain or '[]'), order='code')
+            accounts.extend(account_ids.ids)
+        accounts = account_obj.search([
+            ('id', 'not in', list(set(accounts))),
+            ('deprecated', '=', False)])
+
+        if accounts:
+            lines.append({
+                'id': 'misconfigured_accounts',
+                'type': 'line',
+                'name': _('Misconfigured Accounts'),
+                'footnotes': {},
+                'columns': [{'name': ''}],
+                'level': 1,
+                'unfoldable': False,
+                'unfolded': True,
+            })
+            for account in accounts:
+                name = '%s %s' % (account.code, account.name)
+                name = name[:133] + "..." if len(name) > 135 else name
+                lines.append({
+                    'id': account.id,
+                    'type': 'account_id',
+                    'name': name,
+                    'footnotes': {},
+                    'columns': [{'name': ''}],
+                    'level': 3,
+                    'caret_options': 'account.account',
+                    'unfoldable': False,
+                    'unfolded': True,
+                })
+        return lines
 
     def get_coa_dict(self, options):
         xml_data = self.get_lines(options)
@@ -49,7 +100,13 @@ class MXReportAccountCoa(models.AbstractModel):
             account = account_obj.browse(line['id'])
             tag = account.tag_ids.filtered(lambda r: r.color == 4)
             if not tag:
-                continue
+                msg = _(
+                    'This XML could not be generated because some accounts '
+                    'are not correctly configured and can not be added in '
+                    'this report. This accounts are found in the section '
+                    '"Misconfigured Accounts", please configure your tag and '
+                    'try generate the report XML again.')
+                raise ValidationError(msg)
             accounts.append({
                 'code': tag.name[:6],
                 'number': account.code,

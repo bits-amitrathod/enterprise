@@ -102,6 +102,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Do not forward port in Master as of 09/2017 -->
+                    <div class="row">
+                        <div class="col-md-12" t-if="ticket.description">
+                            <strong >Description</strong>
+                            <div t-field="ticket.description" t-field-options="{'widget': 'text', 'fields': ['description'], 'no_marker': True}"/>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row mt32">
