@@ -6,13 +6,11 @@ import logging
 from contextlib import closing
 from os.path import join, dirname, realpath
 from lxml import etree, objectify
+
 from odoo import api, tools, SUPERUSER_ID
+import requests
 
 _logger = logging.getLogger(__name__)
-try:
-    from urllib.request import urlopen
-except ImportError:
-    from urllib import urlopen
 
 
 def post_init_hook(cr, registry):
@@ -50,10 +48,10 @@ def _assign_codes_uom(cr, registry):
 def _load_xsd_files(cr, registry, url):
     fname = url.split('/')[-1]
     try:
-        with closing(urlopen(url)) as f_url:
-            content = f_url.read()
-        res = objectify.fromstring(content)
-    except (IOError, etree.XMLSyntaxError) as e:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        res = objectify.fromstring(response.content)
+    except (requests.exceptions.HTTPError, etree.XMLSyntaxError) as e:
         logging.getLogger(__name__).info(
             'I cannot connect with the given URL or you are trying to load an '
             'invalid xsd file.\n%s', e.message)
