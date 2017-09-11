@@ -264,6 +264,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     edit_summary: function(e) {
         var $textarea = $(e.target).parents('.o_account_reports_body').find('textarea[name="summary"]');
         var height = Math.max($(e.target).parents('.o_account_reports_body').find('.o_account_report_summary').height(), 100); // Compute the height that will be needed
+        // TODO master: remove replacing <br /> (this was kept for existing data)
         var text = $textarea.val().replace(new RegExp('<br />', 'g'), '\n'); // Remove unnecessary spaces and line returns
         $textarea.height(height); // Give it the right height
         $textarea.val(text);
@@ -273,7 +274,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     },
     save_summary: function(e) {
         var self = this;
-        var text = $(e.target).siblings().val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
+        var text = $(e.target).siblings().val().replace(/[ \t]+/g, ' ');
         return this._rpc({
                 model: 'account.report.manager',
                 method: 'write',
@@ -286,7 +287,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                 if (!text) {
                     text = "<input type='text' class='o_input o_field_widget' name='summary' placeholder='Click to add an introductory explanation' />";
                 }
-                return $(e.target).parent().siblings('.o_account_reports_summary').html('<span>'+text+'</span');
+                return $(e.target).parent().siblings('.o_account_reports_summary').find('> .o_account_report_summary').html('<span>'+text+'</span');
             });
     },
     render_footnotes: function() {
@@ -327,11 +328,11 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         })
         var text = '';
         if (existing_footnote.length !== 0) {
-            text = existing_footnote[0].text.replace(new RegExp('<br />', 'g'), '\n');;
+            text = existing_footnote[0].text;
         }
         var $content = $(QWeb.render('accountReports.footnote_dialog', {text: text, line: line_id}));
         var save = function() {
-            var footnote_text = $('.js_account_reports_footnote_note').val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
+            var footnote_text = $('.js_account_reports_footnote_note').val().replace(/[ \t]+/g, ' ');
             if (!footnote_text && existing_footnote.length === 0) {return;}
             if (existing_footnote.length !== 0) {
                 if (!footnote_text) {
