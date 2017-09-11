@@ -363,34 +363,34 @@ class View(models.Model):
             target_node_expr = '.' + self._node_to_xpath(target_node)
             return old_view.find(target_node_expr) is not None
 
+        nxt = node.getnext()
+        prev = node.getprevious()
+
         if node.tag == 'attribute':
+            # Invisible element
             target_node = node.getparent().getparent()  # /node/attributes/attribute
             reanchor_position = 'attributes'
-
-        elif _is_valid_anchor(node.getprevious()) and node.getprevious().get('name'):
-            # Reanchor on last preceding sibling, if it has a name
-            target_node = node.getprevious()
-            reanchor_position = 'after'
-
-        elif _is_valid_anchor(node.getnext()) and node.getnext().get('name'):
-            # Reanchor on first following sibling, if it has a name
-            target_node = node.getnext()
-            reanchor_position = 'before'
-
-        elif _is_valid_anchor(node.getprevious()):
-            # Reanchor on last preceding sibling, even though it lacks a name
-            target_node = node.getprevious()
-            reanchor_position = 'after'
-
-        elif _is_valid_anchor(node.getnext()):
-            # Reanchor on first following sibling, even though it lacks a name
-            target_node = node.getnext()
-            reanchor_position = 'before'
-
         else:
-            # Reanchor on first parent, but the "inside" will make it last child
-            target_node = node.getparent()
-            reanchor_position = 'inside'
+            # Visible element
+            while prev is not None or nxt is not None:
+                # Try to anchor onto the closest adjacent element
+                if _is_valid_anchor(prev):
+                    target_node = prev
+                    reanchor_position = 'after'
+                    break
+                elif _is_valid_anchor(nxt):
+                    target_node = nxt
+                    reanchor_position = 'before'
+                    break
+                else:
+                    if prev is not None:
+                        prev = prev.getprevious()
+                    if nxt is not None:
+                        nxt = nxt.getnext()
+            else:
+                # Reanchor on first parent, but the "inside" will make it last child
+                target_node = node.getparent()
+                reanchor_position = 'inside'
 
         reanchor_expr = self._node_to_xpath(target_node)
         return reanchor_expr, reanchor_position
