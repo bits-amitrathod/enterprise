@@ -71,7 +71,7 @@ class account_report_context_followup(models.TransientModel):
     def create(self, vals):
         if 'level' in vals:
             partner = self.env['res.partner'].browse(vals['partner_id'])
-            summary = self.env['account_followup.followup.line'].with_context(lang=partner.lang).browse(vals['level']).description.replace('\n', '<br />')
+            summary = (self.env['account_followup.followup.line'].with_context(lang=partner.lang).browse(vals['level']).description or '').replace('\n', '<br />')
             try:
                 formatted_summary = summary % {'partner_name': partner.name,
                                                'date': time.strftime('%Y-%m-%d'),
