@@ -20,11 +20,13 @@
                                 <field name="analytic"/>
                                 <field name="show_journal_filter"/>
                                 <field name="unfold_all_filter"/>
-                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="hierarchy_option"/>
                             </group>
                             <group>
                                 <field name="debit_credit"/>
                                 <field name="tax_report"/>
+                                <field name="parent_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
                             </group>
                             <field colspan="4" name="line_ids"/>
                         </group>
@@ -38,6 +40,7 @@
             <field name="arch" type="xml">
                 <tree string="Account Report">
                     <field name="name"/>
+                    <field name="parent_id"/>
                 </tree>
             </field>
         </record>

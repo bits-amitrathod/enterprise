@@ -256,6 +256,7 @@ class report_account_general_ledger(models.AbstractModel):
         company_id = self.env.user.company_id
         dt_from = options['date'].get('date_from')
         line_id = line_id and int(line_id.split('_')[1]) or None
+        aml_lines = []
         # Aml go back to the beginning of the user chosen range but the amount on the account line should go back to either the beginning of the fy or the beginning of times depending on the account
         grouped_accounts = self.with_context(date_from_aml=dt_from, date_from=dt_from and company_id.compute_fiscalyear_dates(datetime.strptime(dt_from, "%Y-%m-%d"))['date_from'] or None).group_by_account_id(options, line_id)
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
@@ -318,7 +319,7 @@ class report_account_general_ledger(models.AbstractModel):
                         caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'
                     elif line.payment_id:
                         caret_type = 'account.payment'
-                    domain_lines.append({
+                    line_value = {
                         'id': line.id,
                         'caret_options': caret_type,
                         'parent_id': 'account_%s' % (account.id,),
@@ -328,7 +329,9 @@ class report_account_general_ledger(models.AbstractModel):
                                     line_credit != 0 and self.format_value(line_credit) or '',
                                     self.format_value(progress)]],
                         'level': 1,
-                    })
+                    }
+                    aml_lines.append(line.id)
+                    domain_lines.append(line_value)
                 domain_lines.append({
                     'id': 'total_' + str(account.id),
                     'class': 'o_account_reports_domain_total',
@@ -386,6 +389,8 @@ class report_account_general_ledger(models.AbstractModel):
                     'level': 1,
                 })
 
+        if self.env.context.get('aml_only', False):
+            return aml_lines
         return lines
 
     @api.model

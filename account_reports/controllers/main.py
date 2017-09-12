@@ -68,6 +68,16 @@ class FinancialReportController(http.Controller):
                         ('Content-Length', len(content))
                     ]
                 )
+            if output_format == 'csv':
+                content = report_obj.get_csv(options)
+                response = request.make_response(
+                    content,
+                    headers=[
+                        ('Content-Type', 'text/csv'),
+                        ('Content-Disposition', 'attachment; filename=' + report_name + '.csv;'),
+                        ('Content-Length', len(content))
+                    ]
+                )
             response.set_cookie('fileToken', token)
             return response
         except Exception as e:

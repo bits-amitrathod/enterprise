@@ -23,11 +23,12 @@ class ReportAccountFinancialReport(models.Model):
     comparison = fields.Boolean('Allow comparison', default=True, help='display the comparison filter')
     cash_basis = fields.Boolean('Use cash basis', help='if true, report will always use cash basis, if false, user can choose from filter inside the report')
     analytic = fields.Boolean('Allow analytic filter', help='display the analytic filter')
+    hierarchy_option = fields.Boolean('Enable the hiarchy option', help='Display the hierarchy choice in the report options')
     show_journal_filter = fields.Boolean('Allow filtering by journals', help='display the journal filter in the report')
     unfold_all_filter = fields.Boolean('Show unfold all filter', help='display the unfold all options in report')
     company_id = fields.Many2one('res.company', string='Company')
-    menuitem_created = fields.Boolean("Menu Has Been Created", default=False)
-    parent_id = fields.Many2one('ir.ui.menu')
+    generated_menu_id = fields.Many2one(string='Menu Item', comodel_name='ir.ui.menu', help="The menu item generated for this report, or None if there isn't any.")
+    parent_id = fields.Many2one('ir.ui.menu', related="generated_menu_id.parent_id")
     tax_report = fields.Boolean('Tax Report', help="Set to True to automatically filter out journal items that have the boolean field 'tax_exigible' set to False")
 
     def get_columns_name(self, options):
@@ -62,7 +63,7 @@ class ReportAccountFinancialReport(models.Model):
             self.filter_journals = True
         self.filter_all_entries = False
         self.filter_analytic = True if self.analytic else None
-        self.filter_hierarchy = True
+        self.filter_hierarchy = True if self.hierarchy_option else None
         return super(ReportAccountFinancialReport, self).get_options(previous_options)
 
     def create_action_and_menu(self, parent_id):
@@ -70,24 +71,27 @@ class ReportAccountFinancialReport(models.Model):
         # remove those entries when deinstalling the corresponding module
         module = self._context.get('install_mode_data', {}).get('module', 'account_reports')
         IMD = self.env['ir.model.data']
-        action_vals = {
-            'name': self.get_report_name(),
-            'tag': 'account_report',
-            'context': {
-                'model': 'account.financial.html.report',
-                'id': self.id,
-            },
-        }
-        action_id = IMD._update('ir.actions.client', module, action_vals,
-                                'account_financial_html_report_action_' + str(self.id))
-        menu_vals = {
-            'name': self.get_report_name(),
-            'parent_id': parent_id or IMD.xmlid_to_res_id('account.menu_finance_reports'),
-            'action': 'ir.actions.client,%s' % (action_id,),
-        }
-        IMD._update('ir.ui.menu', module, menu_vals,
-                    'account_financial_html_report_menu_' + str(self.id))
-        self.write({'menuitem_created': True})
+        for report in self:
+            if not report.generated_menu_id:
+                action_vals = {
+                    'name': report.get_report_name(),
+                    'tag': 'account_report',
+                    'context': {
+                        'model': 'account.financial.html.report',
+                        'id': report.id,
+                    },
+                }
+                action_id = IMD._update('ir.actions.client', module, action_vals,
+                                    xml_id='account_financial_html_report_action_' + str(report.id), noupdate=True)
+                menu_vals = {
+                    'name': report.get_report_name(),
+                    'parent_id': parent_id or IMD.xmlid_to_res_id('account.menu_finance_reports'),
+                    'action': 'ir.actions.client,%s' % (action_id,),
+                }
+
+                new_menu = IMD._update('ir.ui.menu', module, menu_vals,
+                            xml_id='account_financial_html_report_menu_' + str(report.id), noupdate=True)
+                self.write({'generated_menu_id': new_menu})
 
     @api.model
     def create(self, vals):
