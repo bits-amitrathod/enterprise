@@ -80,12 +80,12 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     on_change_quantity: function(e) {
         var self = this;
         var $input = $(e.target);
-        var target_value = formats.parse_value($input.val().replace(String.fromCharCode(8209), '-'), {type: 'float'}, 0);
-        if(isNaN(target_value)) {
+        var target_value = formats.parse_value($input.val().replace(String.fromCharCode(8209), '-'), {type: 'float'}, false);
+        if(isNaN(target_value) && target_value !== false) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
         } else {
             return new Model('sale.forecast').call('save_forecast_data', [
-                 parseInt($input.data('product')), parseFloat(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')],
+                 parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
                  {context: session.user_context})
                 .then(function() {
                     self.get_html().then(function() {
@@ -195,12 +195,12 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_forecast_save: function(e){
         var self = this;
         var $input = $(e.target);
-        var target_value = formats.parse_value($input.val().replace(String.fromCharCode(8209), '-'), {type: 'float'}, 0);
-        if(isNaN(target_value)) {
+        var target_value = formats.parse_value($input.val().replace(String.fromCharCode(8209), '-'), {type: 'float'}, false);
+        if(isNaN(target_value) && target_value !== false) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer or Float Value should be valid."));
         } else {
             return new Model('sale.forecast').call('save_forecast_data', [
-                    parseInt($input.data('product')), parseFloat(target_value), $input.data('date'), $input.data('date_to'), $input.data('name')],
+                    parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
                     {context: session.user_context})
                 .done(function(res){
                     self.get_html().then(function() {
