@@ -560,6 +560,30 @@ class TestViewNormalization(TransactionCase):
             </data>
         """)
 
+    # Test anchoring next to studio fields
+    def test_view_normalization_16(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='mobile']" position="after">
+                <field name="contact_address"/>
+              </xpath>
+              <xpath expr="//field[@name='contact_address']" position="after">
+                <field name="tz"/>
+              </xpath>
+              <xpath expr="//field[@name='tz']" position="before">
+                <field name="phone"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='mobile']" position="after">
+                <field name="contact_address"/>
+                <field name="phone"/>
+                <field name="tz"/>
+              </xpath>
+            </data>
+        """)
+
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
         _request_stack.pop()

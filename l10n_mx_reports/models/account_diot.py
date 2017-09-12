@@ -5,7 +5,7 @@ from __future__ import division
 from datetime import datetime, timedelta
 
 from odoo import _, api, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare
 
 
@@ -68,6 +68,7 @@ class MxReportPartnerLedger(models.AbstractModel):
     def group_by_partner_id(self, options, line_id):
         partners = {}
         results = self.do_query(options, line_id)
+        mx_country = self.env.ref('base.mx')
         initial_bal_date_to = datetime.strptime(self.env.context[
             'date_from_aml'], DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
         initial_bal_results = self.with_context(
@@ -93,6 +94,8 @@ class MxReportPartnerLedger(models.AbstractModel):
             base_domain.append(('date', '>=', context['date_from_aml']))
         if context['state'] == 'posted':
             base_domain.append(('move_id.state', '=', 'posted'))
+        without_vat = []
+        without_too = []
         for partner_id, result in results.items():
             domain = list(base_domain)  # copying the base domain
             domain.append(('partner_id', '=', partner_id))
@@ -109,6 +112,31 @@ class MxReportPartnerLedger(models.AbstractModel):
             else:
                 partners[partner]['lines'] = self.env[
                     'account.move.line'].search(domain, order='date')
+            without_vat += (
+                (partner.name,)
+                if partner.country_id == mx_country and not partner.vat and
+                partners[partner]['lines']
+                else ())
+            without_too += ((partner.name,)
+                            if not partner.l10n_mx_type_of_operation and
+                            partners[partner]['lines']
+                            else ())
+        if (without_vat or without_too) and self._context.get('raise'):
+            msg = _('The report cannot be generated because of: ')
+            msg += (
+                _('\n\nThe following partners do not have a '
+                  'valid RFC: \n - %s') %
+                '\n - '.join(without_vat) if without_vat else '')
+            msg += (
+                _('\n\nThe following partners do not have a '
+                  'type of operation: \n - %s') %
+                '\n - '.join(without_too) if without_too else '')
+            msg += _(
+                '\n\nPlease fill the missing information in the partners and '
+                'try again.')
+
+            raise UserError(msg)
+
         return partners
 
     @api.model
@@ -140,8 +168,10 @@ class MxReportPartnerLedger(models.AbstractModel):
         tax0 = tax_ids.filtered(lambda r: not float_compare(
             r.amount, 0.0, 0) and r.tax_group_id == group_iva)
         for partner in sorted_partners:
+            amls = grouped_partners[partner]['lines']
+            if not amls:
+                continue
             if not partner:
-                amls = grouped_partners[partner]['lines']
                 for line in amls:
                     lines.append({
                         'id': str(line.id),
@@ -273,7 +303,7 @@ class MxReportPartnerLedger(models.AbstractModel):
 
     def get_txt(self, options):
         ctx = self.set_context(options)
-        ctx.update({'no_format':True, 'print_mode':True})
+        ctx.update({'no_format':True, 'print_mode':True, 'raise': True})
         #data_check = self.with_context(ctx).check_data_report(options)
         #if data_check.get('name', ''):
         #    raise ValidationError(data_check.get('name', ''))
@@ -343,7 +373,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             if not line.get('id').startswith('partner_'):
                 continue
             columns = line.get('columns', [])
-            if not any(columns[5:]):
+            if not sum([c.get('name', 0) for c in columns[5:]]):
                 continue
             data = [''] * 23
             data[0] = columns[0]['name']

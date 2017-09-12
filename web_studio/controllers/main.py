@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import io
 from lxml import etree
 from odoo import http, models, _
 from odoo.http import content_disposition, request
@@ -550,11 +549,10 @@ class WebStudioController(http.Controller):
     def edit_view(self, view_id, studio_view_arch, operations=None):
         IrModelFields = request.env['ir.model.fields']
         view = request.env['ir.ui.view'].browse(view_id)
-        studio_view = self._get_studio_view(view)
         field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(io.StringIO(studio_view_arch), parser).getroot()
+        arch = etree.fromstring(studio_view_arch, parser=parser)
         model = view.model
         for op in operations:
             # create a new field if it does not exist
@@ -601,10 +599,10 @@ class WebStudioController(http.Controller):
 
         # Normalize the view
         studio_view = self._get_studio_view(view)
+        ViewModel = request.env[view.model]
         try:
             normalized_view = studio_view.normalize()
             self._set_studio_view(view, normalized_view)
-            ViewModel = request.env[view.model]
             fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         except ValueError:  # Element '<...>' cannot be located in parent view
             # If the studio view is not applicable after normalization, let's
@@ -944,7 +942,7 @@ class WebStudioController(http.Controller):
         # Get the arch of the form view with inherited views applied
         arch = request.env[model].fields_view_get(view_type='form')['arch']
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(io.BytesIO(arch), parser).getroot()
+        arch = etree.fromstring(arch, parser=parser)
 
         # Create xpath to put the buttonbox as the first child of the sheet
         if arch.find('sheet'):
@@ -1224,7 +1222,7 @@ class WebStudioController(http.Controller):
         if not studio_view:
             studio_view = self._create_studio_view(view, '<data/>')
         parser = etree.XMLParser(remove_blank_text=True)
-        arch = etree.parse(io.StringIO(studio_view.arch_db), parser).getroot()
+        arch = etree.fromstring(studio_view.arch_db, parser=parser)
         expr = "//field[@name='%s']" % field_name
         position = 'inside'
         xpath_node = arch.find('xpath[@expr="%s"][@position="%s"]' % (expr, position))
