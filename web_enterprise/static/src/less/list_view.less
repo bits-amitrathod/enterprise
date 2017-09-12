@@ -13,12 +13,10 @@
 
 // ------- Define paddings independently for each table component -------
 .o-list-view-full-width-padding(@base: @table-cell-padding, @ratio: 1) {
-    @body-padding: floor(@base * @ratio*0.9);
+    @body-padding: floor(@base * @ratio*0.7);
 
-    > thead, > tfoot {
-        > tr > :not(:empty) {
-            padding: (ceil(@base * @ratio) + 4px) 4px;
-        }
+    > thead > tr > :not(:empty) {
+        padding: (ceil(@base * @ratio) + 4px) 4px;
     }
     > tbody > tr:not(.o_list_view_grouped) > td {
         padding: @body-padding 4px;
@@ -28,6 +26,9 @@
             padding-top: floor(@table-condensed-cell-padding*0.2);
             padding-bottom: floor(@table-condensed-cell-padding*0.2);
         }
+    }
+    > tfoot > tr > :not(:empty) {
+        padding: (ceil(@base * @ratio) + 2px) 4px;
     }
 
     .o-list-view-sortable-caret-padding(@base, @ratio);
@@ -89,11 +90,6 @@
 
         > tr:first-child > th {
             border: none;
-
-            // ------- Sortable columns -------
-            &.o_column_sortable:last-child::after {
-                right: @odoo-horizontal-padding;
-            }
         }
     }
 
@@ -101,8 +97,8 @@
     tbody:first-of-type > tr:first-child:not(.o_group_header) {
         box-shadow: inset 0px 5px 10px -4px fade(black, 10%);
     }
-    tfoot {
-        border-top: none;
+    tfoot > tr > td {
+        border-top: 2px solid @gray-lighter-darker;
     }
 
     // ------- Force progress bars to respect table's layout -------

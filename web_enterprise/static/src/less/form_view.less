@@ -456,9 +456,9 @@
 
     // Specific style classes
     .o_group.o_inner_group.oe_subtotal_footer {
-        border-top: 1px solid @odoo-brand-secondary;
+        border-top: 1px solid @gray-lighter-dark;;
         .oe_subtotal_footer_separator {
-            border-top: 1px solid @odoo-brand-secondary;
+            border-top: 1px solid @gray-lighter-dark;;
         }
     }
 
@@ -487,9 +487,13 @@
     // only enabled when being able to render the sheet and the chatter to their
     // minimum width). From these widths, both can grow at equal rates.
     @o-chatter-min-width: 530px;
-    @o-form-sheet-min-width: @container-md - 166px; // Safest would be @container-md
+    @o-form-sheet-min-width: @container-md; // Safest is @container-md as it is
+                                            // the minimal width of the default
+                                            // form view design for md/lg sizes
 
-    // Previous values were chosen so that side chatter is enabled at 1368px
+    // Note: if we want to set the sidechatter to be enabled for a specific
+    // screen size (like 1366px) then we have to choose the above values
+    // accordingly (not directly set this next variable)
     @o-screen-sidechatter-min: (@o-form-sheet-min-width + 2 * @odoo-horizontal-padding + @o-chatter-min-width);
 
     @media screen and (min-width: @o-screen-sidechatter-min) {
