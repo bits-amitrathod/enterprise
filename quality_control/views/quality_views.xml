@@ -43,7 +43,7 @@
                                 <strong><field name="product_tmpl_id"/></strong>
                             </div>
                             <div>
-                                <field name="name"/>
+                                <field name="display_name"/>
                             </div>
                             <div class="oe_kanban_bottom_right">
                                 <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
@@ -127,7 +127,7 @@
         <field name="model">quality.alert</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name" />
+                <field name="display_name" string="Name"/>
                 <field name="check_id"/>
                 <field name="stage_id"/>
                 <field name="description"/>
