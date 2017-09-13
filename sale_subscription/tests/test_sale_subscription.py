@@ -84,11 +84,11 @@ class TestSubscription(TestSubscriptionCommon):
     def test_analytic_account(self):
         """Analytic accounting flow."""
         # analytic account is copied on order confirmation
-        self.sale_order_3.project_id = self.account_1
+        self.sale_order_3.analytic_account_id = self.account_1
         self.sale_order_3.action_confirm()
         subscriptions = self.sale_order_3.order_line.mapped('subscription_id')
         for subscription in subscriptions:
-            self.assertEqual(self.sale_order_3.project_id, subscription.analytic_account_id)
+            self.assertEqual(self.sale_order_3.analytic_account_id, subscription.analytic_account_id)
             inv = subscription._recurring_create_invoice()
             # invoice lines have the correct analytic account
             self.assertEqual(inv.invoice_line_ids[0].account_analytic_id, subscription.analytic_account_id)

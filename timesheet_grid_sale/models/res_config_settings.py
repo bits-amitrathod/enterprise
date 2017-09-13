@@ -10,8 +10,8 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     invoiced_timesheet = fields.Selection([
-        ('all', "Invoice all recorded timesheets"),
-        ('approved', "Invoice approved timesheets only"),
+        ('all', "All recorded timesheets"),
+        ('approved', "Approved timesheets only"),
     ], default='all', string="Timesheets Invoicing")
 
     def set_values(self):

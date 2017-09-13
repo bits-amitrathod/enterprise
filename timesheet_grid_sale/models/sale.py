@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+
 from odoo import api, models
+from odoo.osv import expression
 
 DEFAULT_INVOICED_TIMESHEET = 'all'
 
@@ -8,19 +10,10 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     @api.multi
-    def _compute_analytic(self, domain=None):
+    def _timesheet_compute_delivered_quantity_domain(self):
+        domain = super(SaleOrderLine, self)._timesheet_compute_delivered_quantity_domain()
+        # force to use only the validated timesheet
         param_invoiced_timesheet = self.env['ir.config_parameter'].sudo().get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
         if param_invoiced_timesheet == 'approved':
-            domain = [
-                    '&',
-                        ('so_line', 'in', self.ids),
-                        '|',
-                            '&',
-                            ('amount', '<=', 0.0),
-                            ('is_timesheet', '=', False),
-                            '&',
-                                ('is_timesheet', '=', True),
-                                ('validated', '=', True),
-            ]
-
-        return super(SaleOrderLine, self)._compute_analytic(domain=domain)
+            domain = expression.AND(domain, [('validated', '=', True)])
+        return domain

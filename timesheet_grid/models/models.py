@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime, date, timedelta
+from datetime import date
 from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api, _
 from odoo.addons.web_grid.models import END_OF, STEP_BY, START_OF
 from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
-from odoo.tools import float_round
 
 
 class AnalyticLine(models.Model):
@@ -148,78 +147,3 @@ class AnalyticLine(models.Model):
         # span is always daily and value is an iso range
         day = column_value.split('/')[0]
         return [('name', '=', False), ('date', '=', day)]
-
-    @api.model
-    def _cron_email_get_period(self, cron_xmlid):
-        """ calculate the cron period """
-        cron = self.env.ref(cron_xmlid)
-        date_stop = fields.Date.today()
-        if cron.interval_type == 'months':
-            date_start = date.today() + relativedelta(day=1, days=-1)
-        else:
-            date_start = date.today() - timedelta(days=datetime.now().weekday()+1)
-        date_start = fields.Date.to_string(date_start)
-        return date_start, date_stop
-
-    @api.model
-    def _cron_email_reminder_user(self):
-        """ Send an email reminder to the user having at least one timesheet since the last 3 month. From those ones, we exclude
-            ones having complete their timesheet (meaning timesheeted the same hours amount than their working calendar).
-        """
-        # get the employee that have at least a timesheet for the last 3 months
-        users = self.search([
-            ('date', '>=', fields.Date.to_string(date.today() - relativedelta(months=3))),
-            ('date', '<=', fields.Date.today()),
-        ]).mapped('user_id')
-
-        # calculate the cron period
-        date_start, date_stop = self._cron_email_get_period('timesheet_grid.timesheet_reminder_user')
-
-        # get the related employees timesheet status for the cron period
-        employees = self.env['hr.employee'].search([('user_id', 'in', users.ids)])
-        work_hours_struct = employees.get_timesheet_and_working_hours(date_start, date_stop)
-
-        for employee in employees:
-            if employee.user_id and work_hours_struct[employee.id]['timesheet_hours'] < work_hours_struct[employee.id]['working_hours']:
-                self._cron_send_email_reminder(
-                    employee,
-                    'timesheet_grid.mail_template_timesheet_reminder_user',
-                    'hr_timesheet.act_hr_timesheet_line',
-                    additionnal_values=work_hours_struct[employee.id],
-                )
-
-    @api.model
-    def _cron_email_reminder_manager(self):
-        """ Send a email reminder to all users having the group 'timesheet manager'. """
-        date_start, date_stop = self._cron_email_get_period('timesheet_grid.timesheet_reminder_manager')
-        values = {
-            'date_start': date_start,
-            'date_stop': date_stop,
-        }
-        users = self.env['res.users'].search([('groups_id', 'in', [self.env.ref('hr_timesheet.group_timesheet_manager').id])])
-        self._cron_send_email_reminder(
-            self.env['hr.employee'].search([('user_id', 'in', users.ids)]),
-            'timesheet_grid.mail_template_timesheet_reminder_manager',
-            'timesheet_grid.action_timesheet_previous_week',
-            additionnal_values=values)
-
-    @api.model
-    def _cron_send_email_reminder(self, employees, template_xmlid, action_xmlid, additionnal_values=None):
-        """ Send the email reminder to specified users
-            :param user_ids : list of user identifier to send the reminder
-            :param template_xmlid : xml id of the reminder mail template
-        """
-        action_url = '%s/web#menu_id=%s&action=%s' % (
-            self.env['ir.config_parameter'].sudo().get_param('web.base.url'),
-            self.env.ref('hr_timesheet.timesheet_menu_root').id,
-            self.env.ref(action_xmlid).id,
-        )
-
-        # send mail template to users having email address
-        template = self.env.ref(template_xmlid)
-        template_ctx = {'action_url': action_url}
-        if additionnal_values:
-            template_ctx.update(additionnal_values)
-
-        for employee in employees.filtered('user_id'):
-            template.with_context(lang=employee.user_id.lang, **template_ctx).send_mail(employee.id)

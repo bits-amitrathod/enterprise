@@ -8,9 +8,9 @@ from odoo.osv import expression
 class ValidationWizard(models.TransientModel):
     _inherit = 'timesheet.validation'
 
-    # Recompute SO Lines delivered at validation
     @api.multi
     def action_validate(self):
+        """ Recompute SO Lines delivered at validation """
         # As super will change the "timesheet_validated" field of a
         # "validable_employee", we have to get the min date before
         # calling super().
@@ -40,9 +40,6 @@ class ValidationWizard(models.TransientModel):
                 domain,
                 [('date', '>', oldest_last_validation_date)]
             ])
-        self.env['account.analytic.line'].search(domain) \
-            .mapped('so_line') \
-            .sudo() \
-            ._compute_analytic()
+        self.env['account.analytic.line'].sudo().search(domain).mapped('so_line')._analytic_compute_delivered_quantity()
 
         return res

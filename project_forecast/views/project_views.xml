@@ -13,12 +13,12 @@
                     <a name="view_monthly_forecast" type="object">Forecast</a>
                 </div>
             </xpath>
-            <xpath expr="//div[hasclass('o_project_kanban_boxes')]/div[last()]" position="before">
-                <div attrs="{'invisible': [('allow_forecast', '=', False)]}" class="o_project_kanban_box">
-                    <a t-if="record.allow_forecast.raw_value" name="view_monthly_forecast" type="object">
+            <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="inside">
+                <a t-if="record.allow_forecast.raw_value" class="o_project_kanban_box" name="view_monthly_forecast" type="object">
+                    <div>
                         <span class="o_label">Forecast</span>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </xpath>
         </field>
     </record>

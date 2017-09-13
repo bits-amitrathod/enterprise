@@ -51,7 +51,7 @@ class SaleOrder(models.Model):
             'description': self.note or template.description,
             'pricelist_id': self.pricelist_id.id,
             'company_id': self.company_id.id,
-            'analytic_account_id': self.project_id.id,
+            'analytic_account_id': self.analytic_account_id.id,
         }
         # compute the next date
         today = datetime.date.today()

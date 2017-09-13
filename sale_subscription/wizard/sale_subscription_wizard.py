@@ -22,7 +22,7 @@ class SaleSubscriptionWizard(models.TransientModel):
         team = self.env['crm.team']._get_default_team_id(user_id=self.subscription_id.user_id.id)
         order = sale_order_obj.create({
             'partner_id': self.subscription_id.partner_id.id,
-            'project_id': self.subscription_id.analytic_account_id.id,
+            'analytic_account_id': self.subscription_id.analytic_account_id.id,
             'team_id': team and team.id,
             'pricelist_id': self.subscription_id.pricelist_id.id,
             'fiscal_position_id': fpos_id,
