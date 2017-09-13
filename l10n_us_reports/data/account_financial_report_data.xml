@@ -7,17 +7,15 @@
             <field name="context" eval="{'model': 'l10n_us_reports.check.register'}"/>
         </record>
 
-        <menuitem id="us_statements_menu"
-                  name="USA"
-                  parent="account.menu_finance_reports"
-                  sequence="0"
-                  groups="account.group_account_user"/>
-
         <menuitem id="check_register_menu"
                   name="Check Register"
-                  parent="us_statements_menu"
+                  parent="account.account_reports_legal_statements_menu"
                   sequence="100"
                   groups="account.group_account_user"
                   action="l10n_us_reports.check_register"/>
+
+        <record model="ir.ui.menu" id="account.account_reports_legal_statements_menu">
+            <field name="name">US GAAP</field>
+        </record>
     </data>
 </odoo>

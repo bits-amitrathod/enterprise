@@ -131,7 +131,7 @@
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_account_asset_revenue_form')})]"/>
     </record>
 
-    <menuitem parent="account.menu_finance_entries" id="menu_action_account_revenue_recognition" action="action_account_revenue_form" sequence="102" groups="account.group_account_user"/>
+    <menuitem parent="account.menu_finance_entries_management" id="menu_action_account_revenue_recognition" action="action_account_revenue_form" sequence="102" groups="account.group_account_user"/>
 
 
     <!-- Configuration -->
@@ -144,6 +144,6 @@
         <field name="view_mode">tree,kanban,form</field>
         <field name="context">{'default_type': 'sale'}</field>
     </record>
-    <menuitem parent="account.account_management_menu" id="menu_action_account_asset_asset_list_normal_sale" action="action_account_asset_asset_list_normal_sale" sequence="5"/>
+    <menuitem parent="account.account_management_menu" id="menu_action_account_asset_asset_list_normal_sale" action="action_account_asset_asset_list_normal_sale" sequence="7"/>
 
 </odoo>
