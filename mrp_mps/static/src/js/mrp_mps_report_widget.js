@@ -7,7 +7,7 @@ var ControlPanelMixin = require('web.ControlPanelMixin');
 var SearchView = require('web.SearchView');
 var data = require('web.data');
 var pyeval = require('web.pyeval');
-var formats = require('web.formats');
+var field_utils = require('web.field_utils');
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -73,21 +73,22 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     on_change_quantity: function(e) {
         var self = this;
         var $input = $(e.target);
-        var target_value = formats.parse_value($input.val().replace(String.fromCharCode(8209), '-'), {type: 'float'}, false);
-        if(isNaN(target_value) && target_value !== false) {
-            this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
-        } else {
-            return this._rpc({
-                    model: 'sale.forecast',
-                    method: 'save_forecast_data',
-                    args: [parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
-                })
-                .then(function() {
-                    self.get_html().then(function() {
-                        self.re_renderElement();
-                    });
-            });
+        var target_values;
+        try {
+            target_value = field_utils.parseInteger($input.val().replace(String.fromCharCode(8209), '-'));
+        } catch(err) {
+            return this.do_warn(_t("Wrong value entered!"), err);
         }
+        return this._rpc({
+            model: 'sale.forecast',
+            method: 'save_forecast_data',
+            args: [parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
+        })
+        .then(function() {
+            self.get_html().then(function() {
+                self.re_renderElement();
+            });
+        });
     },
     visible_procurement_button: function(e){
         clearTimeout(this.hover_element);
@@ -210,21 +211,22 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     mps_forecast_save: function(e){
         var self = this;
         var $input = $(e.target);
-        var target_value = formats.parse_value($input.val().replace(String.fromCharCode(8209), '-'), {type: 'float'}, false);
-        if(isNaN(target_value) && target_value !== false) {
-            this.do_warn(_t("Wrong value entered!"), _t("Only Integer or Float Value should be valid."));
-        } else {
-            return this._rpc({
-                    model: 'sale.forecast',
-                    method: 'save_forecast_data',
-                    args: [parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
-                })
-                .done(function(res){
-                    self.get_html().then(function() {
-                        self.re_renderElement();
-                    });
-                });
+        var target_value;
+        try {
+            target_value = field_utils.parseInteger($input.val().replace(String.fromCharCode(8209), '-'));
+        } catch(err) {
+            return this.do_warn(_t("Wrong value entered!"), err);
         }
+        return this._rpc({
+            model: 'sale.forecast',
+            method: 'save_forecast_data',
+            args: [parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
+        })
+        .done(function(res){
+            self.get_html().then(function() {
+                self.re_renderElement();
+            });
+        });
     },
     mps_apply: function(e){
         var self = this;
