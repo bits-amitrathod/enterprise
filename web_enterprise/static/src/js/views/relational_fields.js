@@ -12,6 +12,8 @@ var relational_fields = require('web.relational_fields');
 var FieldStatus = relational_fields.FieldStatus;
 var qweb = core.qweb;
 
+var _t = core._t;
+
 FieldStatus.include({
     //--------------------------------------------------------------------------
     // Private
@@ -30,6 +32,24 @@ FieldStatus.include({
             }));
         } else {
             return this._super.apply(this, arguments);
+        }
+    },
+});
+
+relational_fields.FieldOne2Many.include({
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _renderButtons: function () {
+        if (this.activeActions.create) {
+            _.extend(this.nodeOptions, { create_text: _t('Add an Item')});
+            this._super.apply(this, arguments);
         }
     },
 });
