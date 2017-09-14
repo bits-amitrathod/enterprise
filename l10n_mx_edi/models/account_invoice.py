@@ -680,7 +680,7 @@ class AccountInvoice(models.Model):
             values['folio'] = last_number_match.group().lstrip('0') or None
         return values
 
-    __check_cfdi_re = re.compile(ur'''([A-Z]|[a-z]|[0-9]| |Ñ|ñ|!|"|%|&|'|´|-|:|;|>|=|<|@|_|,|\{|\}|`|~|á|é|í|ó|ú|Á|É|Í|Ó|Ú|ü|Ü)''')
+    __check_cfdi_re = re.compile(u'''([A-Z]|[a-z]|[0-9]| |Ñ|ñ|!|"|%|&|'|´|-|:|;|>|=|<|@|_|,|\{|\}|`|~|á|é|í|ó|ú|Á|É|Í|Ó|Ú|ü|Ü)''')
 
     @staticmethod
     def _get_string_cfdi(text, size=100):
