@@ -104,7 +104,7 @@ class report_account_consolidated_journal(models.AbstractModel):
         tables, where_clause, where_params = self.env['account.move.line'].with_context(strict_range=True)._query_get()
         if line_id:
             where_clause += ' AND j.id = %s'
-            where_params += str(line_id)
+            where_params += [str(line_id)]
         select = select % (tables, where_clause)
         self.env.cr.execute(select, where_params)
         results = self.env.cr.dictfetchall()
