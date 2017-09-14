@@ -373,8 +373,8 @@ var Main = Widget.extend({
                 ['mode', '=', 'primary'],
                 ['model', '=', this.action.res_model],
             ],
-            on_selected: function (view_id) {
-                self._setAnotherView(view_type, view_id[0]);
+            on_selected: function (records) {
+                self._setAnotherView(view_type, records[0].id);
             }
         }).open();
     },

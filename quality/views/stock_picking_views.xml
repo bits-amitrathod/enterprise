@@ -9,7 +9,7 @@
                 <button name="button_quality_alert" type="object" string="Quality Alert" context="{'default_picking_id': active_id}" attrs="{'invisible': ['|',('check_ids', '=', []), '&amp;', ('quality_check_fail', '=', True), ('quality_alert_count', '=', 0)]}"/>
                 <button name="button_quality_alert" type="object" string="Quality Alert" context="{'default_picking_id': active_id}" class="oe_highlight" attrs="{'invisible': ['|', ('quality_check_fail', '=', False), ('quality_alert_count', '!=', 0)]}"/>
                 <button string="Quality Checks" name="check_quality" type="object" class="oe_highlight"
-                        attrs="{'invisible': ['|', ('quality_check_todo', '=', False), ('state', '=', 'done')]}" groups="quality.group_quality_user"/>
+                        attrs="{'invisible': ['|', ('quality_check_todo', '=', False), ('state', 'in', ('done', 'cancel'))]}" groups="quality.group_quality_user"/>
                 <field name="check_ids" invisible="1"/>
                 <field name="quality_check_todo" invisible="1"/>
                 <field name="quality_check_fail" invisible="1"/>
