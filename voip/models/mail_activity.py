@@ -58,7 +58,7 @@ class MailActivity(models.Model):
         if 'mobile' in record:
             numbers['mobile'] = record.mobile
         if not numbers['phone'] and not numbers['mobile']:
-            fields = model._fields.iteritems()
+            fields = model._fields.items()
             partner_field_name = [k for k, v in fields if v.type == 'many2one' and v.comodel_name == 'res.partner'][0]
             if len(partner_field_name):
                 numbers['phone'] = record[partner_field_name].phone
