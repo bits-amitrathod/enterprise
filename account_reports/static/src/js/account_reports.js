@@ -11,6 +11,7 @@ var framework = require('web.framework');
 var crash_manager = require('web.crash_manager');
 var ActionManager = require('web.ActionManager');
 var datepicker = require('web.datepicker');
+var formats = require('web.formats');
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -161,12 +162,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                 var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to"]');
                 if (date_from.length > 0){
                     error = date_from.val() === "" || date_to.val() === "";
-                    self.report_options.date.date_from = self.format_date(new moment(date_from.val(), 'L'));
-                    self.report_options.date.date_to = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.date.date_from = formats.parse_value(date_from.val(), {'type': 'date'});
+                    self.report_options.date.date_to = formats.parse_value(date_to.val(), {'type': 'date'});
                 }
                 else {
                     error = date_to.val() === "";
-                    self.report_options.date.date = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.date.date = formats.parse_value(date_to.val(), {'type': 'date'});
                 }
             }
             if (error) {
@@ -207,11 +208,11 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                 var date_from = self.$searchview_buttons.find('.o_datepicker_input[name="date_from_cmp"]');
                 var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to_cmp"]')
                 if (date_from.length > 0){
-                    self.report_options.comparison.date_from = self.format_date(new moment(date_from.val(), 'L'));
-                    self.report_options.comparison.date_to = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.comparison.date_from = formats.parse_value(date_from.val(), {'type': 'date'});
+                    self.report_options.comparison.date_to = formats.parse_value(date_to.val(), {'type': 'date'});
                 }
                 else {
-                    self.report_options.comparison.date = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.comparison.date = formats.parse_value(date_to.val(), {'type': 'date'});
                 }
             }
             self.reload();
