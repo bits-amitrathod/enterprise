@@ -50,7 +50,8 @@ class StockPicking(models.Model):
         res = super(StockPicking, self)._create_backorder(backorder_moves=backorder_moves)
         if self.env.context.get('skip_check'):
             return res
-
+        # remove quality check of unreceived product
+        self.sudo().mapped('check_ids').filtered(lambda x: x.quality_state == 'none').unlink()
         res.mapped('move_lines')._create_quality_checks()
         return res
 
@@ -61,6 +62,12 @@ class StockPicking(models.Model):
         if self.mapped('check_ids').filtered(lambda x: x.quality_state == 'none' and x.product_id in product_to_check):
             raise UserError(_('You still need to do the quality checks!'))
         return super(StockPicking, self).do_transfer()
+
+    @api.multi
+    def action_cancel(self):
+        res = super(StockPicking, self).action_cancel()
+        self.sudo().mapped('check_ids').filtered(lambda x: x.quality_state == 'none').unlink()
+        return res
 
     @api.multi
     def button_quality_alert(self):

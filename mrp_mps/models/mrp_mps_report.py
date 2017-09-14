@@ -222,7 +222,8 @@ class MrpMpsReport(models.TransientModel):
         rcontext = {
             'products': [(x, res.get_data(x)) for x in self.env['product.product'].search(domain, limit=20)],
             'nb_periods': NUMBER_OF_COLS,
-            'company': self.env.user.company_id
+            'company': self.env.user.company_id,
+            'format_float': self.env['ir.qweb.field.float'].value_to_html,
         }
         result = {
             'html': self.env.ref('mrp_mps.report_inventory').render(rcontext),

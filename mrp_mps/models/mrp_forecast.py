@@ -119,7 +119,7 @@ class SaleForecast(models.Model):
             else:
                 self.create({'date': date, 'product_id': product_id, 'forecast_qty': new_quantity})
         if field == 'to_supply':
-            if not quantity:
+            if quantity is False:
                 # If you put it back to manual, then delete the to_supply
                 forecasts.filtered(lambda x: x.state != 'done').unlink()
             else:
