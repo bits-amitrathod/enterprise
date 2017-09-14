@@ -1,7 +1,5 @@
 # coding: utf-8
 
-import itertools
-
 from odoo.tests.common import TransactionCase
 from odoo import fields
 
@@ -172,11 +170,11 @@ class BanxicoTest(TransactionCase):
         self.assertNotEqual(self.usd.rate, 1 / 10.0)
         foreigns2 = [foreign_currency.compute(1, self.mxn, round=False)
                      for foreign_currency in self.foreign_currencies]
-        for curr, foreign1, foreign2 in itertools.izip(self.foreign_currencies, foreigns1, foreigns2):
+        for curr, foreign1, foreign2 in zip(self.foreign_currencies, foreigns1, foreigns2):
             self.assertEqual(curr.compare_amounts(foreign1, foreign2), 0,
                              "%s diff rate %s != %s" % (curr.name, foreign1, foreign2))
         # Compare expected xml mocked rate values vs real ones
-        for curr, real_rate, expected_rate in itertools.izip(self.foreign_currencies, foreigns1, self.foreign_expected_rates):
+        for curr, real_rate, expected_rate in zip(self.foreign_currencies, foreigns1, self.foreign_expected_rates):
             self.assertEqual(curr.compare_amounts(real_rate, expected_rate), 0,
                              "%s diff rate %s != %s" % (curr.name, real_rate, expected_rate))
 
