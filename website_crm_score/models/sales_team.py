@@ -30,7 +30,7 @@ if pycompat.PY2:
                 _flanker_warning = True
             return True
 else:
-    _logger.warning('Flanker is not compatible with Python 3, email validation has been disabled')
+    _logger.info('Flanker is not compatible with Python 3, email validation has been disabled')
     def checkmail(mail): return True
 
 class team_user(models.Model):
