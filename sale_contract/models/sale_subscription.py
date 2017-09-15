@@ -211,11 +211,13 @@ class SaleSubscription(models.Model):
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
         end_date = next_date + relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
         end_date = end_date - relativedelta(days=1)     # remove 1 day as normal people thinks in term of inclusive ranges.
+        addr = self.partner_id.address_get(['delivery'])
 
         return {
             'account_id': self.partner_id.property_account_receivable_id.id,
             'type': 'out_invoice',
             'partner_id': self.partner_id.id,
+            'partner_shipping_id': addr['delivery'],
             'currency_id': self.pricelist_id.currency_id.id,
             'journal_id': journal.id,
             'origin': self.code,
