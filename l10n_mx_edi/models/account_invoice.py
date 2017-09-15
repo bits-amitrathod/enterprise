@@ -2,7 +2,6 @@
 
 import base64
 from itertools import groupby
-import logging
 import re
 from os.path import join
 from datetime import datetime
@@ -10,11 +9,6 @@ from datetime import datetime
 from lxml import etree
 from lxml.objectify import fromstring
 from suds.client import Client
-try:
-    from num2words import num2words
-except ImportError:
-    logging.getLogger(__name__).warning("The num2words python library is not installed, l10n_mx_edi features won't be fully available.")
-    num2words = None
 
 from odoo import _, api, fields, models, tools
 from odoo.tools.misc import html_escape
@@ -283,35 +277,25 @@ class AccountInvoice(models.Model):
                 return True
         return False
 
-    @api.model
+    @api.multi
     def l10n_mx_edi_amount_to_text(self):
         """Method to transform a float amount to text words
         E.g. 100 - ONE HUNDRED
         :returns: Amount transformed to words mexican format for invoices
         :rtype: str
         """
-        if num2words is None:
-            logging.getLogger(__name__).warning("The library 'num2words' is missing, cannot render textual amounts.")
-            return ""
         self.ensure_one()
-        amount = self.amount_total
-        currency = self.currency_id.name
-        partner_lang = self.partner_id.lang
-        if not partner_lang:
-            partner_lang = 'es'
-        currency = currency.upper()
-        lang = (partner_lang + '_').split('_')[0].lower()
+        currency = self.currency_id.name.upper()
         # M.N. = Moneda Nacional (National Currency)
         # M.E. = Moneda Extranjera (Foreign Currency)
-        currency_type, currency_mx = (
-            ['M.N.', 'PESOS'] if currency == 'MXN' else ['M.E.', currency])
+        currency_type = 'M.N' if currency == 'MXN' else 'M.E.'
         # Split integer and decimal part
-        amount_i, amount_d = divmod(amount, 1)
+        amount_i, amount_d = divmod(self.amount_total, 1)
         amount_d = round(amount_d, 2)
         amount_d = int(amount_d * 100)
-        words = num2words(amount_i, lang=lang).upper()
-        invoice_words = '%(words)s %(curr_mx)s %(amount_d)02d/100 %(curr_t)s' % dict(
-            words=words, curr_mx=currency_mx, amount_d=amount_d, curr_t=currency_type)
+        words = self.currency_id.with_context(lang=self.partner_id.lang or 'es_ES').amount_to_text(amount_i).upper()
+        invoice_words = '%(words)s %(amount_d)02d/100 %(curr_t)s' % dict(
+            words=words, amount_d=amount_d, curr_t=currency_type)
         return invoice_words
 
     @api.multi
