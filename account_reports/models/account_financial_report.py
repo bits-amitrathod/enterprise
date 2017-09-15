@@ -120,6 +120,14 @@ class ReportAccountFinancialReport(models.Model):
                 menu.unlink()
         return super(ReportAccountFinancialReport, self).unlink()
 
+    def _get_currency_table(self):
+        used_currency = self.env.user.company_id.currency_id.with_context(company_id=self.env.user.company_id.id)
+        currency_table = {}
+        for company in self.env['res.company'].search([]):
+            if company.currency_id != used_currency:
+                currency_table[company.currency_id.id] = used_currency.rate / company.currency_id.rate
+        return currency_table
+
     @api.multi
     def get_lines(self, options, line_id=None):
         line_obj = self.line_ids
@@ -127,12 +135,8 @@ class ReportAccountFinancialReport(models.Model):
             line_obj = self.env['account.financial.html.report.line'].search([('id', '=', line_id)])
         if options.get('comparison') and options.get('comparison').get('periods'):
             line_obj = line_obj.with_context(periods=options['comparison']['periods'])
-        used_currency = self.env.user.company_id.currency_id.with_context(company_id=self.env.user.company_id.id)
-        currency_table = {}
-        for company in self.env['res.company'].search([]):
-            if company.currency_id != used_currency:
-                currency_table[company.currency_id.id] = used_currency.rate / company.currency_id.rate
-        linesDicts = [{} for _ in range(0, len(options.get('comparison', {}).get('periods', [])) + 2)]
+        currency_table = self._get_currency_table()
+        linesDicts = [{} for _ in range(0, len((options.get('comparison') or {}).get('periods') or []) + 2)]
         res = line_obj.with_context(
             cash_basis=options.get('cash_basis') or self.cash_basis,
         ).get_lines(self, currency_table, options, linesDicts)
@@ -324,7 +328,7 @@ class AccountFinancialReportLine(models.Model):
             if not user_types:
                 return sql, params
 
-            # Get all columns from account_move_line using the psql metadata table in order to make sure all columns from the account.move.line model 
+            # Get all columns from account_move_line using the psql metadata table in order to make sure all columns from the account.move.line model
             # are present in the shadowed table.
             sql = "SELECT column_name FROM information_schema.columns WHERE table_name='account_move_line'";
             self.env.cr.execute(sql)
@@ -511,6 +515,23 @@ class AccountFinancialReportLine(models.Model):
                             raise err
         return res
 
+    def get_rows_count(self):
+        groupby = self.groupby or 'id'
+        if groupby not in self.env['account.move.line']:
+            raise ValueError(_('Groupby should be a field from account.move.line'))
+
+        date_from, date_to, strict_range = self._compute_date_range()
+        tables, where_clause, where_params = self.env['account.move.line'].with_context(strict_range=strict_range, date_from=date_from, date_to=date_to)._query_get(domain=self.domain)
+
+        query = 'SELECT count(distinct(account_move_line.' + groupby + ')) FROM ' + tables + 'WHERE' + where_clause
+        self.env.cr.execute(query, where_params)
+        return self.env.cr.dictfetchall()[0]['count']
+
+    def get_value_from_context(self):
+        if self.env.context.get('financial_report_line_values'):
+            return self.env.context.get('financial_report_line_values').get(self.code, 0)
+        return 0
+
     def _format(self, value):
         if self.env.context.get('no_format'):
             return value
@@ -559,6 +580,10 @@ class AccountFinancialReportLine(models.Model):
         formulas = self._split_formulas()
         if self.code and self.code in linesDict:
             res = linesDict[self.code]
+        elif formulas and formulas['balance'].strip() == 'count_rows' and self.groupby:
+            return {'line': {'balance': self.get_rows_count()}}
+        elif formulas and formulas['balance'].strip() == 'from_context':
+            return {'line': {'balance': self.get_value_from_context()}}
         else:
             res = FormulaLine(self, currency_table, financial_report, linesDict=linesDict)
         vals = {}
@@ -670,6 +695,7 @@ class AccountFinancialReportLine(models.Model):
                 'unfoldable': len(domain_ids) > 1 and line.show_domain != 'always',
                 'unfolded': line.id in options.get('unfolded_lines', []) or line.show_domain == 'always',
             }
+
             if line.action_id:
                 vals['action_id'] = line.action_id.id
             domain_ids.remove('line')
@@ -802,6 +828,10 @@ class FormulaContext(dict):
             res = (d2 - d1).days
             self['NDays'] = res
             return res
+        if item == 'count_rows':
+            return self.curObj.get_rows_count()
+        if item == 'from_context':
+            return self.curObj.get_value_from_context()
         line_id = self.reportLineObj.search([('code', '=', item)], limit=1)
         if line_id:
             date_from, date_to, strict_range = line_id._compute_date_range()
