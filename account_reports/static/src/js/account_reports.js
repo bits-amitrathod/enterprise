@@ -10,6 +10,7 @@ var crash_manager = require('web.crash_manager');
 var ActionManager = require('web.ActionManager');
 var datepicker = require('web.datepicker');
 var session = require('web.session');
+var field_utils = require('web.field_utils');
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -171,12 +172,12 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                 var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to"]');
                 if (date_from.length > 0){
                     error = date_from.val() === "" || date_to.val() === "";
-                    self.report_options.date.date_from = self.format_date(new moment(date_from.val(), 'L'));
-                    self.report_options.date.date_to = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.date.date_from = field_utils.parse.date(date_from.val());
+                    self.report_options.date.date_to = field_utils.parse.date(date_to.val());
                 }
                 else {
                     error = date_to.val() === "";
-                    self.report_options.date.date = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.date.date = field_utils.parse.date(date_to.val());
                 }
             }
             if (error) {
@@ -215,13 +216,13 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             self.report_options.comparison.number_period = (number_period.length > 0) ? parseInt(number_period.val()) : 1;
             if ($(this).data('filter') === 'custom') {
                 var date_from = self.$searchview_buttons.find('.o_datepicker_input[name="date_from_cmp"]');
-                var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to_cmp"]')
+                var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to_cmp"]');
                 if (date_from.length > 0){
-                    self.report_options.comparison.date_from = self.format_date(new moment(date_from.val(), 'L'));
-                    self.report_options.comparison.date_to = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.comparison.date_from = field_utils.parse.date(date_from.val());
+                    self.report_options.comparison.date_to = field_utils.parse.date(date_to.val());
                 }
                 else {
-                    self.report_options.comparison.date = self.format_date(new moment(date_to.val(), 'L'));
+                    self.report_options.comparison.date = field_utils.parse.date(date_to.val());
                 }
             }
             self.reload();
