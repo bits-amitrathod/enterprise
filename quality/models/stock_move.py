@@ -10,9 +10,8 @@ from odoo.exceptions import UserError
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    @api.multi
-    def action_confirm(self):
-        moves = super(StockMove, self).action_confirm()
+    def _action_confirm(self):
+        moves = super(StockMove, self)._action_confirm()
         if self.env.context.get('skip_check'):
             # Skip checks if extra moves were created during transfer
             return moves

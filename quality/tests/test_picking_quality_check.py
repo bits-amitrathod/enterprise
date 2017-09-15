@@ -49,7 +49,7 @@ class TestQualityCheck(TestQualityCommon):
         self.picking_in.check_ids.do_pass()
 
         # Validate incoming shipment.
-        self.picking_in.do_new_transfer()
+        self.picking_in.button_validate()
 
         # Now check state of quality check.
         self.assertEquals(self.picking_in.check_ids.quality_state, 'pass')

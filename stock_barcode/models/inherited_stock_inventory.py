@@ -23,7 +23,7 @@ class StockInventory(models.Model):
                 'filter': 'partial',
                 'name': fields.Date.context_today(self),
             })
-            new_inv.prepare_inventory()
+            new_inv.action_start()
             action['res_id'] = new_inv.id
         return action
 
