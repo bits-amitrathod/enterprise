@@ -394,7 +394,8 @@ class product_template(models.Model):
     def _create_picture_url(self):
         attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'product.template'),
-            ('res_id', '=', self.id)
+            ('res_id', '=', self.id),
+            ('mimetype', 'ilike', 'image')
         ], order="create_date")
 
         urls = []
