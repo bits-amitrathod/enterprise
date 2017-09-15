@@ -75,7 +75,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var $input = $(e.target);
         var target_values;
         try {
-            target_value = field_utils.parseInteger($input.val().replace(String.fromCharCode(8209), '-'));
+            target_value = field_utils.parse.integer($input.val().replace(String.fromCharCode(8209), '-'));
         } catch(err) {
             return this.do_warn(_t("Wrong value entered!"), err);
         }
@@ -213,7 +213,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var $input = $(e.target);
         var target_value;
         try {
-            target_value = field_utils.parseInteger($input.val().replace(String.fromCharCode(8209), '-'));
+            target_value = field_utils.parse.integer($input.val().replace(String.fromCharCode(8209), '-'));
         } catch(err) {
             return this.do_warn(_t("Wrong value entered!"), err);
         }
