@@ -25,17 +25,21 @@ class report_account_coa(models.AbstractModel):
         return templates
 
     def get_columns_name(self, options):
-        columns = [{'name': ''}, {'name': _('Initial Balance'), 'class': 'number'}]
+        columns = [
+            {'name': ''},
+            {'name': _('Debit'), 'class': 'number'},
+            {'name': _('Credit'), 'class': 'number'},
+        ]
         if options.get('comparison') and options['comparison'].get('periods'):
-            for period in options['comparison']['periods']:
-                columns += [
-                    {'name': _('Debit'), 'class': 'number'},
-                    {'name': _('Credit'), 'class': 'number'},
-                    ]
+            columns += [
+                {'name': _('Debit'), 'class': 'number'},
+                {'name': _('Credit'), 'class': 'number'},
+            ] * len(options['comparison']['periods'])
         return columns + [
             {'name': _('Debit'), 'class': 'number'},
             {'name': _('Credit'), 'class': 'number'},
-            {'name': _('Total'), 'class': 'number'},
+            {'name': _('Debit'), 'class': 'number'},
+            {'name': _('Credit'), 'class': 'number'},
         ]
 
     def _post_process(self, grouped_accounts, initial_balances, options, comparison_table):
@@ -44,6 +48,10 @@ class report_account_coa(models.AbstractModel):
         company_id = context.get('company_id') or self.env.user.company_id
         title_index = ''
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
+        zero_value = self.format_value(0)
+        sum_columns = [0,0,0,0]
+        for period in range(len(comparison_table)):
+            sum_columns += [0, 0]
         for account in sorted_accounts:
             #skip accounts with all periods = 0 and no initial balance
             non_zero = False
@@ -54,14 +62,30 @@ class report_account_coa(models.AbstractModel):
                 continue
 
             initial_balance = initial_balances.get(account, 0.0)
-            cols = [{'name': self.format_value(initial_balance), 'no_format_name': initial_balance}]
+            sum_columns[0] += initial_balance if initial_balance > 0 else 0
+            sum_columns[1] += -initial_balance if initial_balance < 0 else 0
+            cols = [
+                {'name': initial_balance > 0 and self.format_value(initial_balance) or zero_value, 'no_format_name': initial_balance > 0 and initial_balance or 0},
+                {'name': initial_balance < 0 and self.format_value(-initial_balance) or zero_value, 'no_format_name': initial_balance < 0 and initial_balance or 0},
+            ]
             total_periods = 0
             for period in range(len(comparison_table)):
                 amount = grouped_accounts[account][period]['balance']
                 total_periods += amount
-                cols += [{'name': amount > 0 and self.format_value(amount) or '', 'no_format_name': amount > 0 and amount or 0},
-                         {'name': amount < 0 and self.format_value(-amount) or '', 'no_format_name': amount < 0 and amount or 0}]
-            cols += [{'name': self.format_value(initial_balances.get(account, 0.0) + total_periods), 'no_format_name': initial_balances.get(account, 0.0) + total_periods}]
+                cols += [{'name': amount > 0 and self.format_value(amount) or zero_value, 'no_format_name': amount > 0 and amount or 0},
+                         {'name': amount < 0 and self.format_value(-amount) or zero_value, 'no_format_name': amount < 0 and amount or 0}]
+                p_indice = period * 2 if period > 1 else 3
+                p_indice = 1 if period == 0 else p_indice
+                sum_columns[(p_indice) + 1] += amount if amount > 0 else 0
+                sum_columns[(p_indice) + 2] += -amount if amount < 0 else 0
+
+            total_amount = initial_balance + total_periods
+            sum_columns[-2] += total_amount if total_amount > 0 else 0
+            sum_columns[-1] += -total_amount if total_amount < 0 else 0
+            cols += [
+                {'name': total_amount > 0 and self.format_value(total_amount) or zero_value, 'no_format_name': total_amount > 0 and total_amount or 0},
+                {'name': total_amount < 0 and self.format_value(-total_amount) or zero_value, 'no_format_name': total_amount < 0 and total_amount or 0},
+                ]
             lines.append({
                 'id': account.id,
                 'parent_id': 'hierarchy_' + title_index,
@@ -70,6 +94,13 @@ class report_account_coa(models.AbstractModel):
                 'unfoldable': False,
                 'caret_options': 'account.account',
             })
+        lines.append({
+             'id': 'grouped_accounts_total',
+             'name': _('Total'),
+             'class': 'o_account_reports_domain_total',
+             'columns': [{'name': self.format_value(v)} for v in sum_columns],
+             'level': 0,
+        })
         return lines
 
     @api.model

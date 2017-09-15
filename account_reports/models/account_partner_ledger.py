@@ -33,6 +33,7 @@ class ReportPartnerLedger(models.AbstractModel):
             {'name': _('Account')},
             {'name': _('Ref')},
             {'name': _('Matching Number')},
+            {'name': _('Initial Balance'), 'class': 'number'},
             {'name': _('Debit'), 'class': 'number'},
             {'name': _('Credit'), 'class': 'number'},
             {'name': _('Balance'), 'class': 'number'},
@@ -67,7 +68,7 @@ class ReportPartnerLedger(models.AbstractModel):
         if not account_types:
             account_types = [a.get('id') for a in options.get('account_type')]
         date_from = options['date']['date_from']
-        results = self.with_context(date_from=False).do_query(options, line_id)
+        results = self.do_query(options, line_id)
         initial_bal_date_to = datetime.strptime(date_from, DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
         initial_bal_results = self.with_context(date_from=False, date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT)).do_query(options, line_id)
         context = self.env.context
@@ -83,6 +84,7 @@ class ReportPartnerLedger(models.AbstractModel):
             partner = self.env['res.partner'].browse(partner_id)
             partners[partner] = result
             partners[partner]['initial_bal'] = initial_bal_results.get(partner.id, {'balance': 0, 'debit': 0, 'credit': 0})
+            partners[partner]['balance'] += partners[partner]['initial_bal']['balance']
             if not context.get('print_mode'):
                 #  fetch the 81 first amls. The report only displays the first 80 amls. We will use the 81st to know if there are more than 80 in which case a link to the list view must be displayed.
                 partners[partner]['lines'] = self.env['account.move.line'].search(domain, order='date', limit=81)
@@ -104,18 +106,20 @@ class ReportPartnerLedger(models.AbstractModel):
         grouped_partners = self.group_by_partner_id(options, line_id)
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines') or context.get('default_partner_id')
-        total_debit = total_credit = total_balance = 0.0
+        total_initial_balance = total_debit = total_credit = total_balance = 0.0
         for partner in sorted_partners:
             debit = grouped_partners[partner]['debit']
             credit = grouped_partners[partner]['credit']
             balance = grouped_partners[partner]['balance']
+            initial_balance = grouped_partners[partner]['initial_bal']['balance']
+            total_initial_balance += initial_balance
             total_debit += debit
             total_credit += credit
             total_balance += balance
             lines.append({
                 'id': 'partner_' + str(partner.id),
                 'name': partner.name,
-                'columns': [{'name': v} for v in [self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
+                'columns': [{'name': v} for v in [self.format_value(initial_balance), self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
                 'level': 2,
                 'trust': partner.trust,
                 'unfoldable': True,
@@ -123,7 +127,7 @@ class ReportPartnerLedger(models.AbstractModel):
                 'colspan': 5,
             })
             if 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all:
-                progress = 0
+                progress = initial_balance
                 domain_lines = []
                 amls = grouped_partners[partner]['lines']
                 too_many = False
@@ -137,8 +141,8 @@ class ReportPartnerLedger(models.AbstractModel):
                     else:
                         line_debit = line.debit
                         line_credit = line.credit
+                    progress_before = progress
                     progress = progress + line_debit - line_credit
-                    name = []
                     name = '-'.join(
                         (line.move_id.name not in ['', '/'] and [line.move_id.name] or []) +
                         (line.ref not in ['', '/', False] and [line.ref] or []) +
@@ -155,30 +159,13 @@ class ReportPartnerLedger(models.AbstractModel):
                         'id': line.id,
                         'parent_id': 'partner_' + str(partner.id),
                         'name': line.date,
-                        'columns': [{'name': v} for v in [line.journal_id.code, line.account_id.code, name, line.full_reconcile_id.name,
+                        'columns': [{'name': v} for v in [line.journal_id.code, line.account_id.code, name, line.full_reconcile_id.name, self.format_value(progress_before),
                                     line_debit != 0 and self.format_value(line_debit) or '',
                                     line_credit != 0 and self.format_value(line_credit) or '',
                                     self.format_value(progress)]],
                         'caret_options': caret_type,
                         'level': 1,
                     })
-                initial_debit = grouped_partners[partner]['initial_bal']['debit']
-                initial_credit = grouped_partners[partner]['initial_bal']['credit']
-                initial_balance = grouped_partners[partner]['initial_bal']['balance']
-                domain_lines[:0] = [{
-                    'id': 'initial_balance_' + str(partner.id),
-                    'class': 'o_account_reports_initial_balance',
-                    'parent_id': 'partner_' + str(partner.id),
-                    'name': _('Initial Balance'),
-                    'columns': [{'name': v} for v in ['', '', '', '', self.format_value(initial_debit), self.format_value(initial_credit), self.format_value(initial_balance)]],
-                }]
-                domain_lines.append({
-                    'id': 'total_' + str(partner.id),
-                    'parent_id': 'partner_' + str(partner.id),
-                    'class': 'o_account_reports_domain_total',
-                    'name': _('Total') + ' ' + (partner.name or ''),
-                    'columns': [{'name': v} for v in ['', '', '', '', self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
-                })
                 if too_many:
                     domain_lines.append({
                         'id': 'too_many_' + str(partner.id),
@@ -186,7 +173,7 @@ class ReportPartnerLedger(models.AbstractModel):
                         'action': 'view_too_many',
                         'action_id': 'partner,%s' % (partner.id,),
                         'name': _('There are more than 80 items in this list, click here to see all of them'),
-                        'colspan': 7,
+                        'colspan': 8,
                         'columns': [{}],
                     })
                 lines += domain_lines
@@ -194,8 +181,9 @@ class ReportPartnerLedger(models.AbstractModel):
             lines.append({
                 'id': 'grouped_partners_total',
                 'name': _('Total'),
+                'level': 0,
                 'class': 'o_account_reports_domain_total',
-                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(total_debit), self.format_value(total_credit), self.format_value(total_balance)]],
+                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(total_initial_balance), self.format_value(total_debit), self.format_value(total_credit), self.format_value(total_balance)]],
             })
         return lines
 

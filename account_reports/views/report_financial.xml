@@ -74,7 +74,7 @@
             </t>
         </t>
 
-        <tr t-att-class="trclass+' '+(line.get('class', ''))" t-att-data-parent-id="line.get('parent_id', False)">
+        <tr t-att-class="trclass+' '+(line.get('class', ''))" t-att-data-parent-id="line.get('parent_id', False)" t-att-style="line.get('style', '')">
             <td t-att-data-id="line['id']" t-att-class="'o_account_report_line ' + (line.get('unfoldable') and 'js_account_report_foldable' or '')" t-att-data-unfolded="line.get('unfolded', False)" t-att-colspan="line.get('colspan', '1')">
                     <t t-if="line.get('unfoldable')">
                         <span t-att-data-id="line['id']" class="o_account_reports_caret_icon"><i t-att-class="'fa fa-fw ' + (line.get('unfolded') and 'fa-caret-down' or 'fa-caret-right')"></i></span>
@@ -230,8 +230,8 @@
 <template id="template_coa_report" inherit_id="account_reports.main_template" primary="True">
     <xpath expr="//thead/tr" position="before">
         <tr>
-            <th t-att-class="'o_account_report_column_header'" colspan="2">
-            </th>
+            <th t-att-class="'o_account_report_column_header'" colspan="1"/>
+            <th t-att-class="'o_account_report_column_header text-center'" colspan="2">Initial Balance</th>
             <t t-foreach="model.reverse(options['comparison'].get('periods'))" t-as="column_header">
                 <th t-att-class="'o_account_report_column_header text-center'" colspan="2">
                     <t t-raw="column_header.get('string')"/>
@@ -240,8 +240,7 @@
             <th t-att-class="'o_account_report_column_header text-center'" colspan="2">
                 <t t-raw="options['date'].get('string')"/>
             </th>
-            <th t-att-class="'o_account_report_column_header'">
-            </th>
+            <th t-att-class="'o_account_report_column_header text-center'" colspan="2">Total</th>
         </tr>
     </xpath>
 </template>
