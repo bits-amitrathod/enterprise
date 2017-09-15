@@ -1,6 +1,7 @@
 odoo.define('voip.phonecall', function (require) {
 "use strict";
 
+var ChatManager = require('mail.chat_manager');
 var core = require('web.core');
 var session = require('web.session');
 var Widget = require('web.Widget');
@@ -59,6 +60,8 @@ var PhonecallWidget = Widget.extend({
             model: 'voip.phonecall',
             method: 'hangup_call',
             args: [this.id],
+        }).then(function () {
+            ChatManager.bus.trigger('voip_reload_chatter');
         });
     },
     /**
@@ -263,6 +266,8 @@ var PhonecallDetails = Widget.extend({
             model: 'mail.activity',
             method: 'action_done',
             args: [[this.activity_id]],
+        }).then(function () {
+            ChatManager.bus.trigger('voip_reload_chatter');
         });
     },
     /**
