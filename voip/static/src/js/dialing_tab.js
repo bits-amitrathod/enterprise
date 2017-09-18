@@ -295,12 +295,13 @@ var ActivitiesTab = PhonecallTab.extend({
      */
     callFromActivityWidget: function (params) {
         var self = this;
+        var def = new $.Deferred();
         this.currentPhonecall = _.find(this.phonecalls, function (phonecall) {
             return phonecall.activity_id === params.activityId;
         });
         if (this.currentPhonecall) {
             this._selectCall(this.currentPhonecall);
-            this.initPhonecall();
+            def.resolve();
         } else {
             this._rpc({
                 model: 'voip.phonecall',
@@ -310,10 +311,11 @@ var ActivitiesTab = PhonecallTab.extend({
                 self._displayInQueue(phonecall).then(function (phonecallWidget) {
                     self.currentPhonecall = phonecallWidget;
                     self._selectCall(phonecallWidget);
-                    self.phonecallDetails.showCallDisplay();
+                    def.resolve();
                 });
             });
         }
+        return def;
     },
     /**
      * @override
@@ -364,7 +366,6 @@ var RecentTab = PhonecallTab.extend({
             self._displayInQueue(phonecall).then(function (phonecallWidget) {
                 self.currentPhonecall = phonecallWidget;
                 self._selectCall(phonecallWidget);
-                self.phonecallDetails.showCallDisplay();
                 def.resolve();
             });
         });
@@ -394,7 +395,6 @@ var RecentTab = PhonecallTab.extend({
             self._displayInQueue(phonecall).then(function (phonecallWidget) {
                 self.currentPhonecall = phonecallWidget;
                 self._selectCall(phonecallWidget);
-                self.phonecallDetails.showCallDisplay();
                 def.resolve();
             });
         });
