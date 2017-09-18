@@ -208,7 +208,7 @@ class TimesheetForecastController(SaleTimesheetController):
         return result
 
     def _plan_get_stat_button(self, timesheet_lines):
-        stat_buttons = super(SaleTimesheetController, self)._plan_get_stat_button(timesheet_lines)
+        stat_buttons = super(TimesheetForecastController, self)._plan_get_stat_button(timesheet_lines)
 
         stat_project_ids = timesheet_lines.mapped('project_id').ids
         stat_forecast_domain = [('project_id', 'in', stat_project_ids)]
