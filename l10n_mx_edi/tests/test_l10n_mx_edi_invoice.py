@@ -16,13 +16,13 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.refund_model = self.env['account.invoice.refund']
 
         self.cert = misc.file_open(os.path.join(
-            'l10n_mx_edi', 'demo', 'pac_credentials', 'certificate.cer')).read()
+            'l10n_mx_edi', 'demo', 'pac_credentials', 'certificate.cer'), 'rb').read()
         self.cert_key = misc.file_open(os.path.join(
-            'l10n_mx_edi', 'demo', 'pac_credentials', 'certificate.key')).read()
+            'l10n_mx_edi', 'demo', 'pac_credentials', 'certificate.key'), 'rb').read()
         self.cert_password = '12345678a'
         self.l10n_mx_edi_basic_configuration()
         self.xml_expected_str = misc.file_open(os.path.join(
-            'l10n_mx_edi', 'tests', 'expected_cfdi32.xml')).read()
+            'l10n_mx_edi', 'tests', 'expected_cfdi32.xml'), mode='rb').read()
         self.xml_expected = objectify.fromstring(self.xml_expected_str)
         self.company_partner = self.env.ref('base.main_partner')
         self.payment_term = self.ref('account.account_payment_term_net')
@@ -75,7 +75,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqualXML(xml, self.xml_expected)
         xml_attach = base64.decodestring(invoice.l10n_mx_edi_cfdi)
         self.assertEqual(xml_attach.splitlines()[0].lower(),
-                         '<?xml version="1.0" encoding="utf-8"?>'.lower())
+                         b'<?xml version="1.0" encoding="utf-8"?>'.lower())
 
         # ----------------
         # Testing discount
@@ -214,7 +214,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             [('name', '=', 'ISR')])
         self.config_parameter.value = '3.3'
         self.xml_expected_str = misc.file_open(os.path.join(
-            'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read()
+            'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read().encode('UTF-8')
         self.xml_expected = objectify.fromstring(self.xml_expected_str)
         self.tax_positive.l10n_mx_cfdi_tax_type = 'Tasa'
         self.tax_negative.write({

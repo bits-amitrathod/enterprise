@@ -155,6 +155,9 @@ var DialingPanel = Widget.extend({
                     _t('Please check if a phone number is given for the current phonecall'));
                 return;
             }
+            if (!this.shown || this.folded) {
+                this._toggleDisplay();
+            }
             this.activeTab.initPhonecall();
             this.userAgent.makeCall(number);
         }
@@ -177,6 +180,24 @@ var DialingPanel = Widget.extend({
     _showHeader: function () {
         this.$searchBar.show();
         this.$tabs.show();
+    },
+    /**
+     * @private
+     */
+    _toggleDisplay: function () {
+        if (this.shown) {
+            if (!this.folded) {
+                this.$el.hide();
+                this.shown = false;
+            } else {
+                this._onToggleFold(false);
+            }
+        } else {
+            this.$el.show();
+            this.shown = true;
+            this.folded = false;
+            this.$searchInput.focus();
+        }
     },
     /**
      * @private
@@ -215,11 +236,13 @@ var DialingPanel = Widget.extend({
      */
     callFromActivityWidget: function (params) {
         if (!this.inCall) {
+            var self = this;
             this.$('.o_dial_tabs > li.active, .tab-pane.active').removeClass('active');
             this.$('li.o_dial_activities_tab, .tab-pane.o_dial_next_activities').addClass('active');
             this.activeTab = this.tabs.nextActivities;
-            this.activeTab.callFromActivityWidget(params);
-            this.userAgent.makeCall(params.number);
+            this.activeTab.callFromActivityWidget(params).done(function () {
+                self._makeCall(params.number);
+            });
         }
     },
     /**
@@ -237,7 +260,7 @@ var DialingPanel = Widget.extend({
             this.$('li.o_dial_recent_tab, .tab-pane.o_dial_recent').addClass('active');
             this.activeTab = this.tabs.recent;
             this.activeTab.callFromPhoneWidget(params).done(function () {
-                self.userAgent.makeCall(params.number);
+                self._makeCall(params.number);
             });
         }
     },
@@ -268,7 +291,7 @@ var DialingPanel = Widget.extend({
                     this.activeTab = this.tabs.recent;
                     this.activeTab.callFromNumber(number).done(function () {
                         self.$searchInput.val('');
-                        self.userAgent.makeCall(number);
+                        self._makeCall(number);
                     });
                 }
             } else {
@@ -279,7 +302,7 @@ var DialingPanel = Widget.extend({
                     this.$('li.o_dial_recent_tab, .tab-pane.o_dial_recent').addClass('active');
                     this.activeTab = this.tabs.recent;
                     this.activeTab.callFromNumber(number).done(function () {
-                        self.userAgent.makeCall(number);
+                        self._makeCall(number);
                         self.$keypadInput.val("");
                     });
                 }
@@ -442,23 +465,8 @@ var DialingPanel = Widget.extend({
      * @private
      */
     _onToggleDisplay: function () {
-        if (this.shown) {
-            if (!this.folded) {
-                this.$el.hide();
-                this.shown = ! this.shown;
-            } else {
-                this._onToggleFold(false);
-            }
-        } else {
-            this._refreshPhonecallsStatus();
-            if (!this.folded) {
-                this.$el.show();
-                this.shown = ! this.shown;
-            } else {
-                this._onToggleFold(false);
-            }
-            this.$searchInput.focus();
-        }
+        this._toggleDisplay();
+        this._refreshPhonecallsStatus();
     },
     /**
      * @private

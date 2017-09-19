@@ -295,7 +295,7 @@ return AbstractWebClient.extend({
                 var $to_detach = self.$el.contents()
                         .not(self.menu.$el)
                         .not('.o_loading')
-                        .not('.o_chat_window')
+                        .not('.o_in_appswitcher')
                         .not('.o_notification_manager');
                 self.web_client_content = document.createDocumentFragment();
                 dom.detach([{widget: self.action_manager}], {$to_detach: $to_detach}).appendTo(self.web_client_content);

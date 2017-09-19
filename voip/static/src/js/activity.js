@@ -1,12 +1,23 @@
 odoo.define('voip.Activity', function (require) {
 "use strict";
 
+var ChatManager = require('mail.chat_manager');
 var MailActivity = require('mail.Activity');
 
 var Activity = MailActivity.include({
     events: _.extend({}, MailActivity.prototype.events, {
         'click .o_activity_voip_call': '_onVoipCall',
     }),
+
+    /**
+     * @override
+     */
+    init: function () {
+        this._super.apply(this, arguments);
+        ChatManager.bus.on('voip_reload_chatter', this, function () {
+            this._reload({activity: true, thread: true});
+        });
+    },
 
     //--------------------------------------------------------------------------
     // Handlers
