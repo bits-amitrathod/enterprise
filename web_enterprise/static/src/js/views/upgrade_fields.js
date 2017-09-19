@@ -12,8 +12,22 @@ var basic_fields = require('web.basic_fields');
 var field_registry = require('web.field_registry');
 var relational_fields = require('web.relational_fields');
 
+var UpgradeBoolean = basic_fields.FieldBoolean.extend({
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * Compatibility with community, where a function 'renderWithLabel' is
+     * defined to correctly position the 'Enterprise' label indicating that the
+     * feature is enterprise only. Without this, it crashes when opening
+     * Settings views in enterprise.
+     */
+    renderWithLabel: function () {},
+});
+
 field_registry
-    .add('upgrade_boolean', basic_fields.FieldBoolean)
+    .add('upgrade_boolean', UpgradeBoolean)
     .add('upgrade_radio', relational_fields.FieldRadio);
 
 });
