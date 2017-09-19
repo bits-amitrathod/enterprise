@@ -18,7 +18,7 @@ class website_account(website_account):
     def account(self, **kw):
         response = super(website_account, self).account()
         user = request.env.user
-        tickets_count = request.env['helpdesk.ticket'].sudo().search_count(['|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id)])
+        tickets_count = request.env['helpdesk.ticket'].sudo().search_count(['|', '|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id), ('partner_id', '=', user.partner_id.commercial_partner_id.id)])
         response.qcontext.update({'tickets': tickets_count})
         return response
 
@@ -26,7 +26,7 @@ class website_account(website_account):
     def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
         user = request.env.user
-        domain = ['|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id)]
+        domain = ['|', '|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id), ('partner_id', '=', user.partner_id.commercial_partner_id.id)]
 
         searchbar_sortings = {
             'date': {'label': _('Newest'), 'order': 'create_date desc'},
