@@ -3,6 +3,7 @@
 import base64
 from itertools import groupby
 import re
+import logging
 from os.path import join
 from datetime import datetime
 
@@ -27,6 +28,8 @@ CFDI_SAT_QR_STATE = {
     'Cancelado': 'cancelled',
     'Vigente': 'valid',
 }
+
+_logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -335,7 +338,7 @@ class AccountInvoice(models.Model):
         username = pac_info['username']
         password = pac_info['password']
         for inv in self:
-            cfdi = inv.l10n_mx_edi_cfdi
+            cfdi = inv.l10n_mx_edi_cfdi.decode('UTF-8')
             try:
                 client = Client(url, timeout=20)
                 response = client.service.timbrar(username, password, cfdi, False)
@@ -357,8 +360,10 @@ class AccountInvoice(models.Model):
         for inv in self:
             uuids = [inv.l10n_mx_edi_cfdi_uuid]
             certificate_id = inv.l10n_mx_edi_cfdi_certificate_id.sudo()
-            cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
-            key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))
+            cer_pem = base64.encodestring(certificate_id.get_pem_cer(
+                certificate_id.content)).decode('UTF-8')
+            key_pem = base64.encodestring(certificate_id.get_pem_key(
+                certificate_id.key, certificate_id.password)).decode('UTF-8')
             key_password = certificate_id.password
             try:
                 client = Client(url, timeout=20)
@@ -399,7 +404,7 @@ class AccountInvoice(models.Model):
         username = pac_info['username']
         password = pac_info['password']
         for inv in self:
-            cfdi = [inv.l10n_mx_edi_cfdi]
+            cfdi = [inv.l10n_mx_edi_cfdi.decode('UTF-8')]
             try:
                 client = Client(url, timeout=20)
                 response = client.service.stamp(cfdi, username, password)
@@ -427,8 +432,10 @@ class AccountInvoice(models.Model):
             uuid = inv.l10n_mx_edi_cfdi_uuid
             certificate_id = inv.l10n_mx_edi_cfdi_certificate_id.sudo()
             company_id = self.company_id
-            cer_pem = base64.encodestring(certificate_id.get_pem_cer(certificate_id.content))
-            key_pem = base64.encodestring(certificate_id.get_pem_key(certificate_id.key, certificate_id.password))
+            cer_pem = base64.encodestring(certificate_id.get_pem_cer(
+                certificate_id.content)).decode('UTF-8')
+            key_pem = base64.encodestring(certificate_id.get_pem_key(
+                certificate_id.key, certificate_id.password)).decode('UTF-8')
             cancelled = False
             code = False
             try:
@@ -855,7 +862,7 @@ class AccountInvoice(models.Model):
             try:
                 check_with_xsd(tree, xsd_path)
             except (IOError, ValueError):
-                logging.getLogger(__name__).info(
+                _logger.info(
                     _('The xsd file to validate the XML structure was not found'))
             except Exception as e:
                 return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}

@@ -2,10 +2,9 @@
 
 import base64
 import logging
-import os
 import ssl
+import subprocess
 import tempfile
-from contextlib import closing
 from datetime import datetime
 
 _logger = logging.getLogger(__name__)
@@ -25,29 +24,17 @@ from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 KEY_TO_PEM_CMD = 'openssl pkcs8 -in %s -inform der -outform pem -out %s -passin file:%s'
 
 
-def unlink_temporary_files(temporary_files):
-    for temporary_file in temporary_files:
-        try:
-            os.unlink(temporary_file)
-        except (OSError, IOError):
-            _logger.error('Error when trying to remove file %s', temporary_file)
-
-
 def convert_key_cer_to_pem(key, password):
     # TODO compute it from a python way
-    key_file_fd, key_file_path = tempfile.mkstemp(suffix='.key', prefix='edi.mx.tmp.')
-    with closing(os.fdopen(key_file_fd, 'w')) as key_file:
+    with tempfile.NamedTemporaryFile('wb', suffix='.key', prefix='edi.mx.tmp.') as key_file, \
+            tempfile.NamedTemporaryFile('wb', suffix='.txt', prefix='edi.mx.tmp.') as pwd_file, \
+            tempfile.NamedTemporaryFile('rb', suffix='.key', prefix='edi.mx.tmp.') as keypem_file:
         key_file.write(key)
-    pwd_file_fd, pwd_file_path = tempfile.mkstemp(suffix='.txt', prefix='edi.mx.tmp.')
-    with closing(os.fdopen(pwd_file_fd, 'w')) as pwd_file:
+        key_file.flush()
         pwd_file.write(password)
-    keypem_file_fd, keypem_file_path = tempfile.mkstemp(suffix='.key', prefix='edi.mx.tmp.')
-
-    os.popen(KEY_TO_PEM_CMD % (key_file_path, keypem_file_path, pwd_file_path))
-    with open(keypem_file_path, 'r') as f:
-        key_pem = f.read()
-
-    unlink_temporary_files([key_file_path, keypem_file_path, pwd_file_path])
+        pwd_file.flush()
+        subprocess.call((KEY_TO_PEM_CMD % (key_file.name, keypem_file.name, pwd_file.name)).split())
+        key_pem = keypem_file.read()
     return key_pem
 
 
@@ -92,7 +79,7 @@ class Certificate(models.Model):
         '''Get the current content in PEM format
         '''
         self.ensure_one()
-        return ssl.DER_cert_to_PEM_cert(base64.decodestring(content))
+        return ssl.DER_cert_to_PEM_cert(base64.decodestring(content)).encode('UTF-8')
 
     @api.multi
     @tools.ormcache('key', 'password')
@@ -100,7 +87,7 @@ class Certificate(models.Model):
         '''Get the current key in PEM format
         '''
         self.ensure_one()
-        return convert_key_cer_to_pem(base64.decodestring(key), password)
+        return convert_key_cer_to_pem(base64.decodestring(key), password.encode('UTF-8'))
 
     @api.multi
     def get_data(self):
@@ -110,7 +97,7 @@ class Certificate(models.Model):
         cer_pem = self.get_pem_cer(self.content)
         certificate = crypto.load_certificate(crypto.FILETYPE_PEM, cer_pem)
         for to_del in ['\n', ssl.PEM_HEADER, ssl.PEM_FOOTER]:
-            cer_pem = cer_pem.replace(to_del, '')
+            cer_pem = cer_pem.replace(to_del.encode('UTF-8'), b'')
         return cer_pem, certificate
 
     @api.multi
@@ -142,7 +129,7 @@ class Certificate(models.Model):
         version = cadena.split('|')[2]
         encrypt = 'sha256WithRSAEncryption' if version == '3.3' else 'sha1'
         cadena_crypted = crypto.sign(private_key, cadena, encrypt)
-        return base64.encodestring(cadena_crypted).replace('\n', '').replace('\r', '')
+        return base64.b64encode(cadena_crypted)
 
     @api.multi
     @api.constrains('content', 'key', 'password')
@@ -158,9 +145,9 @@ class Certificate(models.Model):
             try:
                 cer_pem, certificate = record.get_data()
                 before = mexican_tz.localize(
-                    datetime.strptime(certificate.get_notBefore(), date_format))
+                    datetime.strptime(certificate.get_notBefore().decode("utf-8"), date_format))
                 after = mexican_tz.localize(
-                    datetime.strptime(certificate.get_notAfter(), date_format))
+                    datetime.strptime(certificate.get_notAfter().decode("utf-8"), date_format))
                 serial_number = certificate.get_serial_number()
             except Exception:
                 raise ValidationError(_('The certificate content is invalid.'))
