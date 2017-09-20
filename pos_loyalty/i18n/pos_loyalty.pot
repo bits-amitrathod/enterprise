@@ -4,16 +4,31 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~15+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-18 16:06+0000\n"
-"PO-Revision-Date: 2017-04-18 16:06+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: pos_loyalty
+#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_kanban
+msgid "<span>Points per currency :</span>"
+msgstr ""
+
+#. module: pos_loyalty
+#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_kanban
+msgid "<strong>Points per order :</strong>"
+msgstr ""
+
+#. module: pos_loyalty
+#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_kanban
+msgid "<strong>Points per product :</strong>"
+msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_name
@@ -153,6 +168,7 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_pos_order_loyalty_points
 #: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
+#: model:ir.model.fields,field_description:pos_loyalty.field_res_users_loyalty_points
 msgid "Loyalty Points"
 msgstr ""
 
@@ -161,7 +177,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_loyalty_program_id
 #: model:ir.model.fields,field_description:pos_loyalty.field_pos_config_loyalty_id
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_form
-#: model:ir.ui.view,arch_db:pos_loyalty.view_pos_config_form
 msgid "Loyalty Program"
 msgstr ""
 
@@ -173,8 +188,6 @@ msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.actions.act_window,name:pos_loyalty.action_loyalty_program_form
-#: model:ir.ui.menu,name:pos_loyalty.menu_loyalty_program
-#: model:ir.ui.view,arch_db:pos_loyalty.pos_config_settings_view_form_inherit_pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_tree
 #: model:ir.ui.view,arch_db:pos_loyalty.view_pos_pos_form
 msgid "Loyalty Programs"
@@ -409,12 +422,13 @@ msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_res_partner_loyalty_points
+#: model:ir.model.fields,help:pos_loyalty.field_res_users_loyalty_points
 msgid "The loyalty points the user won as part of a Loyalty Program"
 msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_pos_config_loyalty_id
-msgid "The loyalty program used by this point_of_sale"
+msgid "The loyalty program used by this point_of_sale."
 msgstr ""
 
 #. module: pos_loyalty

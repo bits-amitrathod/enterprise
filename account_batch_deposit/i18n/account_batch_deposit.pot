@@ -4,26 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: account_batch_deposit
-#: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
-msgid "Account: Create Batch Deposit"
-msgstr ""
-
-#. module: account_batch_deposit
-#: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
-msgid "Account: Print Batch Deposits"
-msgstr ""
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_payment.py:42
@@ -64,10 +54,8 @@ msgstr ""
 
 #. module: account_batch_deposit
 #: model:account.payment.method,name:account_batch_deposit.account_payment_method_batch_deposit
-#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
-#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.account_journal_dashboard_kanban_view_inherited
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
@@ -85,7 +73,13 @@ msgid "Batch Deposit Sequence"
 msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/models/account_journal.py:43
+#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
+#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
+msgid "Batch Deposits"
+msgstr ""
+
+#. module: account_batch_deposit
+#: code:addons/account_batch_deposit/models/account_journal.py:44
 #, python-format
 msgid "Batch Deposits Sequence"
 msgstr ""
@@ -98,7 +92,8 @@ msgid "Batch deposits allows you to group received checks before you deposit the
 msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/models/account_journal.py:68
+#: code:addons/account_batch_deposit/models/account_journal.py:69
+#: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
 msgstr ""
@@ -149,7 +144,7 @@ msgstr ""
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:94
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:137
 #, python-format
 msgid "Incorrect Operation"
 msgstr ""
@@ -204,8 +199,13 @@ msgid "Print"
 msgstr ""
 
 #. module: account_batch_deposit
-#: model:ir.actions.report.xml,name:account_batch_deposit.action_print_batch_deposit
+#: model:ir.actions.report,name:account_batch_deposit.action_print_batch_deposit
 msgid "Print Batch Deposit"
+msgstr ""
+
+#. module: account_batch_deposit
+#: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
+msgid "Print Batch Deposits"
 msgstr ""
 
 #. module: account_batch_deposit
@@ -237,7 +237,7 @@ msgstr ""
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:91
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:135
 #, python-format
 msgid "Some journal items from the selected batch deposit are already selected in another reconciliation : "
 msgstr ""

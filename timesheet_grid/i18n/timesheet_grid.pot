@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~16+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-25 10:35+0000\n"
-"PO-Revision-Date: 2017-07-25 10:35+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,117 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: timesheet_grid
-#: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_manager
-msgid "<?xml version=\"1.0\"?>\n"
-"<data><div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
-"    <tbody><tr>\n"
-"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
-"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
-"        </td>\n"
-"    </tr></tbody>\n"
-"</table>\n"
-"</div>\n"
-"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"    <tbody><tr>\n"
-"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"            <p>Dear ${object.name},</p>\n"
-"            <p>This is a friendly reminder to approved your team's hours for the period : ${ctx.get('date_start')} - ${ctx.get('date_stop')}.</p>\n"
-"            % if ctx.get('action_url'):\n"
-"                <center>\n"
-"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">Validate your timesheet</a>\n"
-"                </center>\n"
-"            % endif\n"
-"            <p>Best regards,</p>\n"
-"        </td>\n"
-"    </tr><tr>\n"
-"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"            % if user.signature\n"
-"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
-"            </p>\n"
-"            % endif\n"
-"            <p style=\"font-size: 11px;\"><strong>Sent by\n"
-"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
-"                <strong>${user.company_id.name}</strong>\n"
-"            </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
-"            </strong></p>\n"
-"        </td>\n"
-"    </tr></tbody>\n"
-"</table>\n"
-"</div>\n"
-"            </data>"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
-msgid "<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
-"    <tbody><tr>\n"
-"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
-"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
-"        </td>\n"
-"    </tr></tbody>\n"
-"</table>\n"
-"</div>\n"
-"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"    <tbody><tr>\n"
-"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"            <p>Dear ${object.name},</p>\n"
-"            <p>This is a friendly reminder to log your hours for the period : ${ctx.get('date_start')} - ${ctx.get('date_stop')}.\n"
-"                For the time being, you only logged ${ctx.get('timesheet_hours')} hours on the ${ctx.get('working_hours')} requested.\n"
-"            </p>\n"
-"            % if ctx.get('action_url'):\n"
-"                <center>\n"
-"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">Fill your timesheet</a>\n"
-"                </center>\n"
-"            % endif\n"
-"            <p>Best regards,</p>\n"
-"        </td>\n"
-"    </tr><tr>\n"
-"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"            % if user.signature\n"
-"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
-"            </p>\n"
-"            % endif\n"
-"            <p style=\"font-size: 11px;\"><strong>Sent by\n"
-"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
-"                <strong>${user.company_id.name}</strong>\n"
-"            </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
-"            </strong></p>\n"
-"        </td>\n"
-"    </tr></tbody>\n"
-"</table>\n"
-"</div>\n"
-"            "
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_config_settings_view_form
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet managers"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_config_settings_view_form
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet users"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
-msgid "Activities"
-msgstr ""
-
-#. module: timesheet_grid
-#: selection:hr.timesheet.config.settings,reminder_manager_interval:0
-#: selection:hr.timesheet.config.settings,reminder_user_interval:0
-msgid "After end of month"
-msgstr ""
-
-#. module: timesheet_grid
-#: selection:hr.timesheet.config.settings,reminder_manager_interval:0
-#: selection:hr.timesheet.config.settings,reminder_user_interval:0
-msgid "After end of week"
 msgstr ""
 
 #. module: timesheet_grid
@@ -173,6 +69,11 @@ msgid "Click to add projects and tasks"
 msgstr ""
 
 #. module: timesheet_grid
+#: model:ir.model,name:timesheet_grid.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_create_uid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_create_uid
 msgid "Created by"
@@ -195,12 +96,6 @@ msgid "Describe your activity"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.actions.act_window,name:timesheet_grid.timesheet_action_detailled_activities
-#: model:ir.ui.menu,name:timesheet_grid.timesheet_menu_report_detailled_timesheet
-msgid "Detailled Activities"
-msgstr ""
-
-#. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_display_name
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_display_name
 msgid "Display Name"
@@ -220,8 +115,16 @@ msgid "Employee"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_config_settings_reminder_manager_interval
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_config_settings_reminder_user_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_allow
+msgid "Employee Reminder"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_interval
 msgid "Frequency"
 msgstr ""
 
@@ -247,12 +150,18 @@ msgid "ID"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_hr_timesheet_config_settings_reminder_manager_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "If checked, send an email to all manager"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_hr_timesheet_config_settings_reminder_user_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_manager_allow
+msgid "If checked, send an email to all managers who have not validated their timesheet"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_user_allow
 msgid "If checked, send an email to all users who have not recorded their timesheet"
 msgstr ""
 
@@ -297,13 +206,15 @@ msgid "Line edition and creation from grid"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_config_settings_reminder_manager_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "Manager Reminder"
 msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Month"
 msgstr ""
 
@@ -313,14 +224,40 @@ msgid "My Team"
 msgstr ""
 
 #. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_nextdate
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_nextdate
+msgid "Next cron date for manager reminder"
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_config_settings_reminder_manager_delay
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_config_settings_reminder_user_delay
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_delay
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_delay
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_delay
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_delay
 msgid "Number of days"
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:101
+#, python-format
+msgid "Only a Timesheets Officer is allowed to create an entry older than the validation limit."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:116
+#, python-format
+msgid "Only a Timesheets Officer is allowed to delete a validated entry."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:110
+#, python-format
+msgid "Only a Timesheets Officer is allowed to modify a validated entry."
 msgstr ""
 
 #. module: timesheet_grid
@@ -357,12 +294,7 @@ msgid "Time Spent"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Timesheet"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_config_settings_view_form
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Timesheet Control"
 msgstr ""
 
@@ -391,6 +323,13 @@ msgid "Timesheet: Managers Email Reminder"
 msgstr ""
 
 #. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
+msgid "Timesheets"
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Timesheets Validation Date"
 msgstr ""
@@ -412,11 +351,6 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/js/tour.js:29
 #, python-format
 msgid "Use tasks to track the different type of activities. (e.g. Graphic Design, Programming, Project Management)"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_config_settings_reminder_user_allow
-msgid "User Reminder"
 msgstr ""
 
 #. module: timesheet_grid
@@ -480,6 +414,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Week"
 msgstr ""
 
@@ -489,13 +424,35 @@ msgid "You will be able to register your working hours on the given task."
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_config_settings_view_form
+#: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_manager
+msgid "\\x3c3f786d6c2076657273696f6e3d22312e30223f3e0a3c646174613e3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a36303070783b626f726465722d636f6c6c617073653a636f6c6c617073653b6261636b67726f756e643a696e68657269743b636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c74642076616c69676e3d2263656e746572222077696474683d2232303022207374796c653d2270616464696e673a3130707820313070782031307078203570783b666f6e742d73697a653a2031327078223e0a2020202020202020202020203c696d67207372633d222f6c6f676f2e706e6722207374796c653d2270616464696e673a203070783b206d617267696e3a203070783b206865696768743a206175746f3b2077696474683a20383070783b2220616c743d22247b757365722e636f6d70616e795f69642e6e616d657d222f3e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a3630307078203b746578742d616c69676e3a6a7573746966793b206d617267696e3a30206175746f3b20626f726465722d636f6c6c617073653a636f6c6c617073653b206261636b67726f756e643a696e68657269743b20636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020203c703e4465617220247b6f626a6563742e6e616d657d2c3c2f703e0a2020202020202020202020203c703e54686973206973206120667269656e646c792072656d696e64657220746f20617070726f76656420796f7572207465616d277320686f75727320666f722074686520706572696f64203a20247b6374782e6765742827646174655f737461727427297d202d20247b6374782e6765742827646174655f73746f7027297d2e3c2f703e0a20202020202020202020202025206966206374782e6765742827616374696f6e5f75726c27293a0a202020202020202020202020202020203c63656e7465723e0a20202020202020202020202020202020202020203c6120687265663d22247b6374782e6765742827616374696f6e5f75726c27297d22207374796c653d226261636b67726f756e642d636f6c6f723a20233161626339633b2070616464696e673a20313070783b20746578742d6465636f726174696f6e3a206e6f6e653b20636f6c6f723a20236666663b20626f726465722d7261646975733a203570783b20666f6e742d73697a653a20313470783b2220636c6173733d226f5f64656661756c745f736e69707065745f74657874223e56616c696461746520796f75722074696d6573686565743c2f613e0a202020202020202020202020202020203c2f63656e7465723e0a2020202020202020202020202520656e6469660a2020202020202020202020203c703e4265737420726567617264732c3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020202520696620757365722e7369676e61747572650a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313470783b223e247b757365722e7369676e6174757265207c20736166657d0a2020202020202020202020203c2f703e0a2020202020202020202020202520656e6469660a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313170783b223e3c7374726f6e673e53656e742062790a2020202020202020202020203c6120687265663d22247b6f626a6563742e757365725f69642e636f6d70616e795f69642e776562736974657d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e0a202020202020202020202020202020203c7374726f6e673e247b757365722e636f6d70616e795f69642e6e616d657d3c2f7374726f6e673e0a2020202020202020202020203c2f613e207573696e67203c6120687265663d227777772e6f646f6f2e636f6d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e3c7374726f6e673e4f646f6f3c2f7374726f6e673e3c2f613e0a2020202020202020202020203c2f7374726f6e673e3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a2020202020202020202020203c2f646174613e"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
+msgid "\\x3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a36303070783b626f726465722d636f6c6c617073653a636f6c6c617073653b6261636b67726f756e643a696e68657269743b636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c74642076616c69676e3d2263656e746572222077696474683d2232303022207374796c653d2270616464696e673a3130707820313070782031307078203570783b666f6e742d73697a653a2031327078223e0a2020202020202020202020203c696d67207372633d222f6c6f676f2e706e6722207374796c653d2270616464696e673a203070783b206d617267696e3a203070783b206865696768743a206175746f3b2077696474683a20383070783b2220616c743d22247b757365722e636f6d70616e795f69642e6e616d657d222f3e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a3630307078203b746578742d616c69676e3a6a7573746966793b206d617267696e3a30206175746f3b20626f726465722d636f6c6c617073653a636f6c6c617073653b206261636b67726f756e643a696e68657269743b20636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020203c703e4465617220247b6f626a6563742e6e616d657d2c3c2f703e0a2020202020202020202020203c703e54686973206973206120667269656e646c792072656d696e64657220746f206c6f6720796f757220686f75727320666f722074686520706572696f64203a20247b6374782e6765742827646174655f737461727427297d202d20247b6374782e6765742827646174655f73746f7027297d2e0a20202020202020202020202020202020466f72207468652074696d65206265696e672c20796f75206f6e6c79206c6f6767656420247b6374782e676574282774696d6573686565745f686f75727327297d20686f757273206f6e2074686520247b6374782e6765742827776f726b696e675f686f75727327297d207265717565737465642e0a2020202020202020202020203c2f703e0a20202020202020202020202025206966206374782e6765742827616374696f6e5f75726c27293a0a202020202020202020202020202020203c63656e7465723e0a20202020202020202020202020202020202020203c6120687265663d22247b6374782e6765742827616374696f6e5f75726c27297d22207374796c653d226261636b67726f756e642d636f6c6f723a20233161626339633b2070616464696e673a20313070783b20746578742d6465636f726174696f6e3a206e6f6e653b20636f6c6f723a20236666663b20626f726465722d7261646975733a203570783b20666f6e742d73697a653a20313470783b2220636c6173733d226f5f64656661756c745f736e69707065745f74657874223e46696c6c20796f75722074696d6573686565743c2f613e0a202020202020202020202020202020203c2f63656e7465723e0a2020202020202020202020202520656e6469660a2020202020202020202020203c703e4265737420726567617264732c3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020202520696620757365722e7369676e61747572650a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313470783b223e247b757365722e7369676e6174757265207c20736166657d0a2020202020202020202020203c2f703e0a2020202020202020202020202520656e6469660a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313170783b223e3c7374726f6e673e53656e742062790a2020202020202020202020203c6120687265663d22247b6f626a6563742e757365725f69642e636f6d70616e795f69642e776562736974657d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e0a202020202020202020202020202020203c7374726f6e673e247b757365722e636f6d70616e795f69642e6e616d657d3c2f7374726f6e673e0a2020202020202020202020203c2f613e207573696e67203c6120687265663d227777772e6f646f6f2e636f6d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e3c7374726f6e673e4f646f6f3c2f7374726f6e673e3c2f613e0a2020202020202020202020203c2f7374726f6e673e3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a202020202020202020202020"
+msgstr ""
+
+#. module: timesheet_grid
+#: selection:res.company,timesheet_mail_employee_interval:0
+#: selection:res.company,timesheet_mail_manager_interval:0
+msgid "after end of month"
+msgstr ""
+
+#. module: timesheet_grid
+#: selection:res.company,timesheet_mail_employee_interval:0
+#: selection:res.company,timesheet_mail_manager_interval:0
+msgid "after end of week"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "days"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_hr_timesheet_config_settings
-msgid "hr.timesheet.config.settings"
+#: model:ir.model,name:timesheet_grid.model_res_config_settings
+msgid "res.config.settings"
 msgstr ""
 
 #. module: timesheet_grid

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~16+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-25 10:35+0000\n"
-"PO-Revision-Date: 2017-07-25 10:35+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr ""
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:174
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:176
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 #, python-format
 msgid "Add a Product"
@@ -121,8 +121,8 @@ msgid "Default Unit of Measure used for all stock operation."
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model.fields,help:mrp_mps.field_mrp_config_settings_manufacturing_period
 #: model:ir.model.fields,help:mrp_mps.field_res_company_manufacturing_period
+#: model:ir.model.fields,help:mrp_mps.field_res_config_settings_manufacturing_period
 msgid "Default value for the time ranges in Master Production Schedule report."
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:200
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:202
 #: model:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
 #, python-format
 msgid "Forecast Product"
@@ -254,8 +254,8 @@ msgid "Manual"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_config_settings_manufacturing_period
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company_manufacturing_period
+#: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings_manufacturing_period
 msgid "Manufacturing Period"
 msgstr ""
 
@@ -291,20 +291,6 @@ msgid "Monthly"
 msgstr ""
 
 #. module: mrp_mps
-#. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:77
-#, python-format
-msgid "Only Integer Value should be valid."
-msgstr ""
-
-#. module: mrp_mps
-#. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:214
-#, python-format
-msgid "Only Integer or Float Value should be valid."
-msgstr ""
-
-#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_period
 msgid "Period"
 msgstr ""
@@ -317,13 +303,13 @@ msgid "Period:"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_procurement_id
-msgid "Procurement Generated"
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_group_id
+msgid "Procurement Group"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_group_id
-msgid "Procurement Group"
+#: model:ir.model,name:mrp_mps.model_procurement_rule
+msgid "Procurement Rule"
 msgstr ""
 
 #. module: mrp_mps
@@ -373,7 +359,7 @@ msgid "State"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.ui.view,arch_db:mrp_mps.view_mrp_config_form_inherit_mrp_mps
+#: model:ir.ui.view,arch_db:mrp_mps.res_config_settings_view_form
 msgid "Time Range"
 msgstr ""
 
@@ -385,6 +371,12 @@ msgid "To Produce"
 msgstr ""
 
 #. module: mrp_mps
+#: code:addons/mrp_mps/models/mrp_mps_report.py:123
+#, python-format
+msgid "To Reveive / To Supply / Produce"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_to_supply
 msgid "To Supply"
 msgstr ""
@@ -392,7 +384,7 @@ msgstr ""
 #. module: mrp_mps
 #: code:addons/mrp_mps/models/mrp_mps_report.py:149
 #, python-format
-msgid "Week "
+msgid "Week %s"
 msgstr ""
 
 #. module: mrp_mps
@@ -407,8 +399,8 @@ msgstr ""
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:77
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:214
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:80
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:218
 #, python-format
 msgid "Wrong value entered!"
 msgstr ""
@@ -419,13 +411,13 @@ msgid "double click in order to empty"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model,name:mrp_mps.model_mrp_config_settings
-msgid "mrp.config.settings"
+#: model:ir.model,name:mrp_mps.model_mrp_mps_report
+msgid "mrp.mps.report"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model,name:mrp_mps.model_mrp_mps_report
-msgid "mrp.mps.report"
+#: model:ir.model,name:mrp_mps.model_res_config_settings
+msgid "res.config.settings"
 msgstr ""
 
 #. module: mrp_mps
