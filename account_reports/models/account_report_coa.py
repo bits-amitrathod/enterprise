@@ -125,6 +125,8 @@ class report_account_coa(models.AbstractModel):
                 if account not in grouped_accounts.keys():
                     grouped_accounts[account] = [{'balance': 0, 'debit': 0, 'credit': 0} for p in comparison_table]
                 grouped_accounts[account][period_number]['balance'] = res[account]['balance'] - res[account]['initial_bal']['balance']
+                grouped_accounts[account][period_number]['debit'] = res[account]['debit']
+                grouped_accounts[account][period_number]['credit'] = res[account]['credit']
             period_number += 1
 
         #make intermediary sums and build the report
@@ -133,4 +135,4 @@ class report_account_coa(models.AbstractModel):
 
     @api.model
     def get_report_name(self):
-        return _("Chart of Account")
+        return _("Trial Balance")
