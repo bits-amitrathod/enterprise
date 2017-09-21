@@ -138,7 +138,7 @@ class CalendarAppointmentType(models.Model):
                         if intervals[upper_bound][0] <= start_dt:
                             return upper_bound
                         return lower_bound
-                    index = (upper_bound + lower_bound) / 2
+                    index = (upper_bound + lower_bound) // 2
                     if intervals[index][0] <= start_dt:
                         return recursive_find_index(index, upper_bound)
                     else:
