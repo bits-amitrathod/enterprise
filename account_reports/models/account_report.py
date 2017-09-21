@@ -305,93 +305,73 @@ class AccountReport(models.AbstractModel):
                 }
         return info
 
-    def _create_hierarchy_total(self, id_suffix, name, parent_id, level, last_group_sums):
-        currency_id = self.env.user.company_id.currency_id
-        return {
-            'id': 'hierarchy_total_%s' % id_suffix,
-            'name': _('Total %s') % name,
-            'unfoldable': False,
-            'unfolded': True,
-            'level': level,
-            'parent_id': parent_id,  # to make these fold when the original parent gets folded
-            'class': 'hierarchy_total',
-            'columns': [{'name': formatLang(self.env, group_sum, currency_obj=currency_id) if group_sum else ''} for group_sum in last_group_sums],  # todo jov: float compare
-        }
-
-    def _sums_are_not_zero(self, sums):
-        currency_id = self.env.user.company_id.currency_id
-        return any([not currency_id.is_zero(sum) for sum in sums])
-
     def create_hierarchy(self, lines):
+        """This method is called when the option 'hiearchy' is enabled on a report.
+        It receives the lines (as computed by get_lines()) in argument, and will add
+        a hiearchy in those lines by using the account.group of accounts. If not set,
+        it will fallback on creating a hierarchy based on the account's code first 3
+        digits.
+        """
         AccountAccount = self.env['account.account']
-        AccountGroup = self.env['account.group']
-        lines_with_hierarchy = []
-        seen_groups = {}
-        last_group = False
-        last_non_account_level = 0
-        last_group_level = 0
-        last_group_sums = []
+        hierarchy_list = {}
+        current_position = 0
 
         for line in lines:
+            columns = line.get('columns', [{}])
             is_grouped_by_account = line.get('caret_options') == 'account.account'
             account_id = AccountAccount.browse(line.get('id')) if is_grouped_by_account else AccountAccount
             group_id = account_id.group_id
-            columns = line.get('columns', [{}])
-
             if group_id:
-                if group_id != last_group:
-                    # print totals for leaves
-                    if self._sums_are_not_zero(last_group_sums) and last_group and group_id.parent_id != last_group:
-                        lines_with_hierarchy.append(self._create_hierarchy_total(len(lines_with_hierarchy), last_group.name,
-                                                                                 line['parent_id'], last_group_level + 1, last_group_sums))
-                        last_group_sums = []
+                group_prefix = group_id.code_prefix
+                group_name = group_id.name
+                group_key = group_id
+            else:
+                group_name = ''
+                group_prefix = account_id.code and account_id.code[0:3] or False
+                group_key = group_prefix
 
-                    current_group_level = last_non_account_level + 1 + AccountGroup.search_count([('id', 'parent_of', group_id.id)])
-                    last_group_level = current_group_level
-                    last_group = group_id
-                    current_list_length = len(lines_with_hierarchy)
-                    while group_id and group_id.id not in seen_groups:
-                        seen_groups[group_id.id] = True
-
-                        # hierarchies are built from the bottom up
-                        lines_with_hierarchy.insert(current_list_length, {
-                            'id': 'hierarchy_%s_%s' % (current_list_length, current_group_level),
-                            'name': '%s %s' % (group_id.code_prefix, group_id.name) if group_id.code_prefix else group_id.name,
+            current_group_level = line.get('caret_options') == 'account.account' and 4 or line.get('level', 4)
+            while group_key:
+                #create hierarchy leaves if needed
+                if group_key not in hierarchy_list:
+                    current_group_level -= 1
+                    hierarchy_list[group_key] = {
+                        'position': (current_position, current_group_level),  # will be used to insert at the good place
+                        'values': {
+                            'id': 'hierarchy_%s_%s' % (current_position, current_group_level),
+                            'name': '%s %s' % (group_prefix, group_name) if group_prefix else group_name,
                             'unfoldable': False,
                             'unfolded': True,
                             'parent_id': line['parent_id'],  # to make these fold when the original parent gets folded
                             'level': current_group_level,
-                            'columns': [{'name': ''}] * len(columns),  # to insert empty tds for o_account_reports_level2 border
-                        })
+                            'columns': [0 for l in range(len(columns))],
+                        }
+                    }
 
-                        current_group_level -= 1
-                        group_id = group_id.parent_id
+                #sum line values in hierarchy leaves
+                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in zip(hierarchy_list[group_key]['values']['columns'], [c['no_format_name'] for c in columns])]
 
-                last_group_sums = [last + column.get('no_format_name', 0) for last, column in itertools.izip_longest(last_group_sums, columns, fillvalue=0)]
-                line['level'] = last_group_level + 1
+                #loop on
+                if account_id.group_id:
+                    group_key = group_key.parent_id
+                    group_prefix = group_key.code_prefix
+                    group_name = group_key.name
+                else:
+                    group_prefix = group_prefix[:-1]
+                    group_name = ''
+                    group_key = group_prefix
 
-            else:
-                # ignore lines grouped by account because they are
-                # usually level 1, regardless of what their parent
-                # line level is
-                if not is_grouped_by_account and line.get('level'):
-                    last_non_account_level = line['level']
+            #count the number of lines passed
+            current_position += 1
 
-                if self._sums_are_not_zero(last_group_sums):
-                    lines_with_hierarchy.append(self._create_hierarchy_total(len(lines_with_hierarchy), last_group.name,
-                                                                             line['parent_id'], last_group_level + 1, last_group_sums))
-                    last_group_sums = []
-
-                last_group = False
-                seen_groups = {}
-
-            lines_with_hierarchy.append(line)
-
-        if self._sums_are_not_zero(last_group_sums):
-            lines_with_hierarchy.append(self._create_hierarchy_total(len(lines_with_hierarchy), last_group.name,
-                                                                     line['parent_id'], last_group_level + 1, last_group_sums))
-
-        return lines_with_hierarchy
+        #build the final list that will be return
+        already_inserted = 0
+        for key in sorted(hierarchy_list, key=lambda x:hierarchy_list[x]['position']):
+            value = hierarchy_list[key]
+            value['values']['columns'] = [{'name': self.format_value(v)} for v in value['values']['columns']]
+            lines.insert(value['position'][0] + already_inserted, value['values'])
+            already_inserted += 1
+        return lines
 
     @api.multi
     def get_html(self, options, line_id=None, additional_context=None):
