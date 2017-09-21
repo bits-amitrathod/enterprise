@@ -213,32 +213,45 @@
                                     </div>
                                     <t t-name="timeline">
                                         <div class="o_ma_timeline text-center">
-                                            <t t-set="actions" t-value="{'mail_open': 'envelope-open-o', 'mail_not_open': 'envelope-open-o', 'mail_reply': 'reply', 'mail_not_reply': 'reply', 'mail_click': 'hand-pointer-o', 'mail_not_click': 'hand-pointer-o', 'mail_bounce': 'exclamation-circle'}" />
-                                            <t t-if="_.contains(['mail_not_open', 'mail_not_reply', 'mail_not_click'], record.trigger_type.raw_value)">
-                                                <span class="o_ma_text_rejected">
-                                                    <i t-attf-class="fa fa-#{actions[record.trigger_type.raw_value]}" />
-                                                    <t t-esc="_.str.capitalize(record.trigger_type.value.replace('Mail: ', ''))" />
-                                                </span>
-                                                <div class="o_ma_text_rejected">within</div>
+                                            <t t-if="record.trigger_type.raw_value == 'mail_open'">
+                                                <div class="o_ma_text_processed">
+                                                    <i class="fa fa-envelope-open-o" /> Opened after
+                                                </div>
+                                            </t>
+                                            <t t-if="record.trigger_type.raw_value == 'mail_reply'">
+                                                <div class="o_ma_text_processed">
+                                                    <i class="fa fa-reply" /> Replied after
+                                                </div>
+                                            </t>
+                                            <t t-if="record.trigger_type.raw_value == 'mail_click'">
+                                                <div class="o_ma_text_processed">
+                                                    <i class="fa fa-hand-pointer-o" /> Clicked after
+                                                </div>
+                                            </t>
+                                            <t t-if="record.trigger_type.raw_value == 'mail_not_open'">
+                                                <div class="o_ma_text_rejected">
+                                                    <i class="fa fa-envelope-open-o" /> Not opened withing
+                                                </div>
+                                            </t>
+                                            <t t-if="record.trigger_type.raw_value == 'mail_not_reply'">
+                                                <div class="o_ma_text_rejected">
+                                                    <i class="fa fa-reply" /> Not replied withing
+                                                </div>
+                                            </t>
+                                            <t t-if="record.trigger_type.raw_value == 'mail_not_click'">
+                                                <div class="o_ma_text_rejected">
+                                                    <i class="fa fa-hand-pointer-o" /> Not clicked withing
+                                                </div>
+                                            </t>
+                                            <t t-if="record.trigger_type.raw_value == 'mail_bounce'">
+                                                <div class="o_ma_text_rejected">
+                                                    <i class="fa fa-exclamation-circle" /> Mail bounced after
+                                                </div>
                                             </t>
                                             <strong>
                                                 <i class="fa fa-clock-o" /> <field name="interval_number" />
                                                 <field name="interval_type" />
                                             </strong>
-                                            <t t-if="_.contains(['mail_open', 'mail_reply', 'mail_click'], record.trigger_type.raw_value)">
-                                                <div class="o_ma_text_processed">After</div>
-                                                <span class="o_ma_text_processed">
-                                                    <i t-attf-class="fa fa-#{actions[record.trigger_type.raw_value]}" />
-                                                    <t t-esc="record.trigger_type.value.replace('Mail: ', '')" />
-                                                </span>
-                                            </t>
-                                            <t t-if="'mail_bounce' == record.trigger_type.raw_value">
-                                                <div class="o_ma_text_rejected">After</div>
-                                                <span class="o_ma_text_rejected">
-                                                    <i t-attf-class="fa fa-#{actions[record.trigger_type.raw_value]}" />
-                                                    <t t-esc="record.trigger_type.value.replace('Mail: ', '')" />
-                                                </span>
-                                            </t>
                                         </div>
                                     </t>
                                 </templates>

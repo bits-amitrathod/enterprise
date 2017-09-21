@@ -102,10 +102,19 @@
                                                 <field name="schedule_date" />
                                             </t>
                                             <t t-else="">
-                                                <t t-if="_.contains(['mail_open', 'mail_reply', 'mail_click'], record.trigger_type.raw_value)">
-                                                    <t t-set="actions" t-value="{'mail_open': 'envelope-open-o', 'mail_reply': 'reply', 'mail_click': 'hand-pointer-o'}" />
+                                                <t t-if="record.trigger_type.raw_value == 'mail_open'">
                                                     <span class="o_ma_text_scheduled">
-                                                        Not <i t-attf-class="fa fa-#{actions[record.trigger_type.raw_value]}" /> <t t-esc="record.trigger_type.value.replace('Mail: ', '')" /> yet
+                                                        <i t-attf-class="fa fa-envelope-open-o" /> Not opened yet
+                                                    </span>
+                                                </t>
+                                                <t t-if="record.trigger_type.raw_value == 'mail_reply'">
+                                                    <span class="o_ma_text_scheduled">
+                                                        <i t-attf-class="fa fa-reply" /> Not replied yet
+                                                    </span>
+                                                </t>
+                                                <t t-if="record.trigger_type.raw_value == 'mail_click'">
+                                                    <span class="o_ma_text_scheduled">
+                                                        <i t-attf-class="fa fa-hand-pointer-o" /> Not clicked yet
                                                     </span>
                                                 </t>
                                             </t>
