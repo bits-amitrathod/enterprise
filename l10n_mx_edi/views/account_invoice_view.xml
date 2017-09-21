@@ -21,6 +21,7 @@
                     <div class="o_row">
                         <field name="l10n_mx_edi_cfdi_uuid" states="open,paid,cancel"/>
                     </div>
+                    <field name="l10n_mx_edi_origin" groups="base.group_no_one"/>
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="l10n_mx_edi_partner_bank_id" domain="['|', ('partner_id', '=', commercial_partner_id), ('partner_id', '=', partner_id)]" context="{'default_partner_id': commercial_partner_id}"/>

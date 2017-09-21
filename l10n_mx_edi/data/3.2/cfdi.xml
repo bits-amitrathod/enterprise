@@ -51,7 +51,7 @@
                     <cfdi:RegimenFiscal t-att-Regimen="fiscal_position.name"/>
                 </cfdi:Emisor>
                 <cfdi:Receptor
-                    t-att-rfc="record.l10n_mx_edi_get_customer_rfc()"
+                    t-att-rfc="customer.l10n_mx_edi_get_customer_rfc()"
                     t-att-nombre="customer.name">
                     <t t-if="record.l10n_mx_edi_is_customer_address_required()">
                     <cfdi:Domicilio
