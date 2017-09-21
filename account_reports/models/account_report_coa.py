@@ -133,4 +133,4 @@ class report_account_coa(models.AbstractModel):
 
     @api.model
     def get_report_name(self):
-        return _("Chart of Account")
+        return _("Trial Balance")
