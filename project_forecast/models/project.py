@@ -75,6 +75,6 @@ class Task(models.Model):
             'context': {
                 'default_project_id': self.project_id.id,
                 'default_task_id': self.id,
-                'default_employee_id': self.user_id.employee_ids[0].id,
+                'default_employee_id': self.user_id.employee_ids and self.user_id.employee_ids[0].id,
             }
         }
