@@ -669,7 +669,7 @@ class AccountReport(models.AbstractModel):
         )
         body_html = self.with_context(print_mode=True).get_html(options)
 
-        body = body.replace('<body class="o_account_reports_body_print">', '<body class="o_account_reports_body_print">' + body_html)
+        body = body.replace(b'<body class="o_account_reports_body_print">', b'<body class="o_account_reports_body_print">' + body_html)
         if minimal_layout:
             header = self.env['ir.actions.report'].render_template("web.internal_layout", values=rcontext)
             footer = ''
