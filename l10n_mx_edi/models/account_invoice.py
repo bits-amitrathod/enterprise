@@ -234,6 +234,8 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         partner_id = self.partner_id.commercial_partner_id
+        if self.partner_id.type == 'invoice':
+            partner_id = self.partner_id
         address_fields = ['street_name',
                           'street_number',
                           'street_number2',
@@ -644,12 +646,19 @@ class AccountInvoice(models.Model):
         precision_digits = self.env['decimal.precision'].precision_get('Account')
         amount_untaxed = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit))
         amount_discount = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit * l.discount / 100.0))
+        partner_id = self.partner_id
+        if self.partner_id.type != 'invoice':
+            partner_id = self.partner_id.commercial_partner_id
+            self.message_post(body=_(
+                'The business partner address was used for the generation of '
+                'the CFDI, since the customer address is not a billing address.'),
+                subtype='account.mt_invoice_validated')
         values = {
             'record': self,
             'currency_name': self.currency_id.name,
             'supplier': self.company_id.partner_id.commercial_partner_id,
             'issued': self.journal_id.l10n_mx_address_issued_id,
-            'customer': self.partner_id.commercial_partner_id,
+            'customer': partner_id,
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
