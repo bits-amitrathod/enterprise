@@ -131,7 +131,6 @@
         <div class="o_menu_brand" role="button" />
         <ul class="o_menu_sections"/>
         <ul class="o_menu_systray"/>
-        <t t-call="Menu.Mobile.TopBar"/>
     </div>
 </nav>
 
@@ -151,21 +150,21 @@
         </a>
     </li>
 
-    <!-- Toggling the Flag to get the Desired Menu behaviour in Desktop View -->
-    <li t-if="menu.children.length and !enable_multi_level_dropdown" role="presentation" t-att-class="'dropdown-header o_menu_header_lvl_' + depth">
+    <!-- Desktop case -->
+    <li t-if="menu.children.length and !mobile" role="presentation" t-att-class="'dropdown-header o_menu_header_lvl_' + depth">
         <span><t t-esc="menu.name"/></span>
         <t t-foreach="menu.children" t-as="menu">
             <t t-call="Menu.link"/>
         </t>
     </li>
 
-    <!-- Toggling the Flag to get the Desired Menu behaviour in Mobile View -->
-    <li t-if="menu.children.length and enable_multi_level_dropdown" class="o_burger_menu_section">
+    <!-- Mobile case -->
+   <li t-if="menu.children.length and mobile" class="o_burger_menu_section">
         <a href="#" t-att-class="'o_menu_entry_lvl_' + depth" t-att-data-menu-xmlid="menu.xmlid" data-toggle="dropdown" role="button" aria-expanded="false">
             <t t-esc="menu.name"/>
-            <span class="fa fa-chevron-right toggle_icon pull-right mt4"/>
+            <span class="fa fa-chevron-right toggle_icon pull-right"/>
         </a>
-        <ul class="o_mobile_menu_section_container">
+        <ul>
             <t t-foreach="menu.children" t-as="menu">
                 <t t-call="Menu.link"/>
             </t>

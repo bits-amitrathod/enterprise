@@ -3,7 +3,6 @@ odoo.define('web_enterprise.Menu', function (require) {
 
 var config = require('web.config');
 var core = require('web.core');
-var session = require('web.session');
 var Widget = require('web.Widget');
 var SystrayMenu = require('web.SystrayMenu');
 var UserMenu = require('web.UserMenu');
@@ -13,47 +12,15 @@ SystrayMenu.Items.push(UserMenu);
 
 var QWeb = core.qweb;
 
-/**
- * Usermenu for mobile.
- **/
-var UserMenuMobile = UserMenu.extend({
-    template: 'UserMenu.Mobile',
-     events: _.extend({}, UserMenu.prototype.events, {
-        'click li a[data-menu]': '_onUserMenuClick',
-     }),
-
-     // Handlers
-    /**
-     * On Usermenu click call particular method.
-     * @private
-     */
-     _onUserMenuClick: function (ev) {
-        var menu = $(ev.target).data('menu');
-        this['_onMenu' + menu.charAt(0).toUpperCase() + menu.slice(1)]();
-     }
-});
-
 var Menu = Widget.extend({
     template: 'Menu',
+    menusTemplate: 'Menu.sections',
     events: {
-        'click .o_menu_toggle': function (ev) {
-            ev.preventDefault();
-            this.trigger_up((this.appswitcher_displayed)? 'hide_app_switcher' : 'show_app_switcher');
-            this.$el.parent().removeClass('o_mobile_menu_opened');
-        },
-        'mouseover .o_menu_sections > li:not(.open)': function(e) {
-            if (config.device.size_class >= config.device.SIZES.SM) {
-                var $opened = this.$('.o_menu_sections > li.open');
-                if($opened.length) {
-                    $opened.removeClass('open');
-                    $(e.currentTarget).addClass('open').find('> a').focus();
-                }
-            }
-        },
-        'click .o_menu_brand': '_onMainMenuClick',
-        'click .o_mobile_menu_toggle': '_onBurgerMenuToggleClick',
-        'click .o_mobile_menu_close': '_onBurgerMenuCloseClick'
+        'click .o_menu_toggle': '_onToggleAppSwitcher',
+        'mouseover .o_menu_sections > li:not(.open)': '_onMouseOverMenu',
+        'click .o_menu_brand': '_onAppNameClicked',
     },
+
     init: function (parent, menu_data) {
         var self = this;
         this._super.apply(this, arguments);
@@ -64,7 +31,9 @@ var Menu = Widget.extend({
         this.menu_data = menu_data;
 
         // Prepare navbar's menus
-        var $menu_sections = $(QWeb.render('Menu.sections', {'menu_data': this.menu_data}));
+        var $menu_sections = $(QWeb.render(this.menusTemplate, {
+            menu_data: this.menu_data,
+        }));
         $menu_sections.filter('section').each(function () {
             self.$menu_sections[parseInt(this.className, 10)] = $(this).children('li');
         });
@@ -100,9 +69,6 @@ var Menu = Widget.extend({
         this.systray_menu.attachTo(this.$('.o_menu_systray'));
 
         core.bus.on("resize", this, _.debounce(this._handle_extra_items, 500));
-
-        // Hide usermenu and switch company menu in mobile view becuase we have added new burger menu for both
-        this.$('.o_user_menu, .o_switch_company_menu').addClass('hidden-xs');
 
         return this._super.apply(this, arguments);
     },
@@ -236,124 +202,43 @@ var Menu = Widget.extend({
         }
     },
 
+    //--------------------------------------------------------------------------
     // Handlers
+    //--------------------------------------------------------------------------
 
     /**
-     * Display burger menu in mobile.
-     * @private
-     * @param {MouseEvent} event
-     */
-    _onBurgerMenuToggleClick: function (ev) {
-        ev.preventDefault();
-        var self = this;
-
-        var menus = _.filter(this.menu_data.children, {'id': self.current_primary_menu});
-        menus = menus.length && !self.appswitcher_displayed ? menus[0].children : [];
-        this.$('.o_mobile_menu_container').animate({"right":"0%"}, 300).removeClass('o_hidden');
-        this.$(".o_mobile_menu_container").html($(QWeb.render("Menu.Mobile.UserMenu", {session: session,enable_menu:menus.length})));
-        var user_menu = new UserMenuMobile(this);
-        user_menu.appendTo(this.$('.o_mobile_menu_user_menu_items'));
-
-        if (menus.length) {
-            this.$(".o_mobile_menu_content").append($(QWeb.render('Menu.Mobile.Sections', {'menu_items': menus})));
-            this.$(".o_user_menu_caret_icon").removeClass("dropup");
-
-            this.$('.o_mobile_menu_user_menu').on('click', this._onUserMenuClick.bind(this));
-            this.$(".o_burger_menu_section").on('click', this._onBurgerMenuSectionClick.bind(this));
-            this.$(".o_burger_menu_root a[data-menu]").on("click", function (event) {
-                self._onBurgerMenuActionClick(event);
-            });
-            this.$(".o_mobile_menu_content").on('click', function () {
-                self.$('.o_burger_menu_root span.fa-chevron-down').toggleClass("fa-chevron-down fa-chevron-right");
-            });
-        } else {
-            this.$(".o_mobile_menu_content").removeClass("o_mobile_menu_darken");
-            this.$('.o_mobile_menu_user_menus').removeClass("o_hidden");
-        }
-
-        this.$('.o_mobile_menu_user_company').on('click', function (e){
-            self._onMultiCompanyClick(e);
-        });
-    },
-
-    /**
-     * @private
-     * @param {MouseEvent} event
-     */
-    _onBurgerMenuCloseClick: function () {
-        var self = this;
-        this.$('.o_mobile_menu_container').animate({"right": "100%"}, 300, function () {
-            self.$('.o_mobile_menu_container').addClass("o_hidden");
-        });
-    },
-
-    /**
-     * Toggle user's preferences option and main menu.
-     * @private
-     * @param {MouseEvent} event
-     */
-    _onUserMenuClick: function () {
-        this.$(".o_mobile_menu_content").toggleClass("o_mobile_menu_darken");
-        this.$(".o_user_menu_caret_icon").toggleClass("dropup");
-        this.$('.o_mobile_menu_app_menus').toggleClass("o_hidden");
-        this.$('.o_burger_menu_root span.fa-chevron-down').toggleClass("fa-chevron-down fa-chevron-right");
-    },
-
-    /**
-     * On section menu toggle the N-Level sub menu.
-     * @private
-     * @param {MouseEvent} event
-     */
-    _onBurgerMenuSectionClick: function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var $target = $(e.currentTarget);
-        var $opened = !$target.parents(".o_burger_menu_section.open").length ? this.$(".o_burger_menu_section.open").not(this) : $target.parent().find(".o_burger_menu_section.open").not(this);
-        $opened.removeClass("open");
-        $opened.find(".toggle_icon:first()").toggleClass("fa-chevron-down fa-chevron-right");
-        $target.toggleClass("open");
-        $target.find(".toggle_icon:first()").toggleClass("fa-chevron-down fa-chevron-right");
-    },
-
-    /**
-     * On menu click redirect to particular action.
-     * @private
-     * @param {MouseEvent} event
-     */
-    _onBurgerMenuActionClick: function (ev) {
-        ev.preventDefault();
-        this._on_secondary_menu_click($(ev.currentTarget).data('menu'), $(ev.currentTarget).data('action-id'));
-        this._onBurgerMenuCloseClick();
-    },
-
-    /**
-     * Switch company.
-     * @private
-     * @param {MouseEvent} event
-     */
-    _onMultiCompanyClick: function (ev) {
-        ev.preventDefault();
-        var companyID = $(ev.currentTarget).data('id');
-        this._rpc({
-            model: 'res.users',
-            method: 'write',
-            args: [[session.uid], {'company_id': companyID}],
-        }).then(function () {
-            window.location.reload();
-        });
-    },
-
-    /**
-     * When clicking on the main menu title, we want to open the first action of
-     * the current application
+     * When clicking on app name, opens the first action of the app
      *
      * @private
      */
-    _onMainMenuClick: function () {
+    _onAppNameClicked: function () {
         var actionID = this.menu_id_to_action_id(this.current_primary_menu);
         this._trigger_menu_clicked(this.current_primary_menu, actionID);
-    }
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onMouseOverMenu: function (ev) {
+        if (!config.isMobile) {
+            var $opened = this.$('.o_menu_sections > li.open');
+            if ($opened.length) {
+                $opened.removeClass('open');
+                $(ev.currentTarget).addClass('open').find('> a').focus();
+            }
+        }
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onToggleAppSwitcher: function (ev) {
+        ev.preventDefault();
+        this.trigger_up(this.appswitcher_displayed ? 'hide_app_switcher' : 'show_app_switcher');
+        this.$el.parent().removeClass('o_mobile_menu_opened');
+    },
 });
 
 return Menu;
+
 });

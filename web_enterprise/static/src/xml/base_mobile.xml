@@ -22,81 +22,45 @@
     </ul>
 </t>
 
-<t t-name="UserMenu.Mobile">
-    <ul>
-        <li><a href="#" data-menu="documentation">Documentation</a></li>
-        <li><a href="#" data-menu="support">Support</a></li>
-        <li><a href="#" data-menu="settings">Preferences</a></li>
-        <li><a href="#" data-menu="account">My Odoo.com account</a></li>
-        <li><a href="#" data-menu="logout">Log out</a></li>
-        <li><a href="#" class="hidden" data-menu="shortcut">Add to Home Screen</a></li>
-        <li><a href="#" class="hidden" data-menu="switch"> Switch/Add Account</a></li>
-    </ul>
-</t>
-
-<t t-name="Menu.Mobile.TopBar">
-    <div class="o_mobile_menu_container o_hidden"/>
-</t>
-
-<t t-name="Menu.Mobile.UserMenu">
-    <div class="o_mobile_menu_top_bar">
-        <div class="o_mobile_menu_top_bar_content ml16">
-            <div class="o_mobile_menu_user_menu mt8 mb8">
-                <img class="img-circle oe_mobile_menu_topbar_avatar mr8" t-att-src="'/web/image?model=res.users&amp;field=image_small&amp;id=' + session.uid"/>
-                <span><t t-esc="session.name"/></span>
-                <span t-if="enable_menu" class="o_user_menu_caret_icon dropup">
-                    <span class="caret ml4"/>
-                </span>
-            </div>
+<t t-name="BurgerMenu">
+    <div class="o_burger_menu o_in_appswitcher">
+        <div class="o_burger_menu_topbar">
+            <span>
+                <img class="img-circle o_burger_menu_avatar" t-att-src="'/web/image?model=res.users&amp;field=image_small&amp;id=' + session.uid"/>
+                <span class="o_burger_menu_username"><t t-esc="session.name"/></span>
+                <span class="o_burger_menu_caret"><span class="caret"/></span>
+            </span>
+            <span class="fa fa-close o_burger_menu_close pull-right"/>
         </div>
-        <span class="fa fa-close o_mobile_menu_close pull-right mr16 mt16"/>
-    </div>
-    <div class="o_mobile_menu_content o_mobile_menu_darken">
-        <div class="o_mobile_menu_app_menus o_mobile_menu_user_menus o_hidden mt16 mb16">
-            <div t-if="session.user_companies" class="o_mobile_menu_user_companies">
-                <label class="ml16">
-                    <strong>COMPANIES</strong>
-                </label>
-                <t t-foreach="session.user_companies.allowed_companies" t-as="company">
-                    <div t-attf-class="row o_mobile_menu_user_company #{session.user_companies.current_company[0] == company[0] ? 'active' : ''}" t-att-data-id="company[0]">
-                        <div class="col-md-12">
-                            <span class="fa fa-building-o mobile_menu_company_icon mr16"/>
+        <div class="o_burger_menu_content o_burger_menu_dark">
+            <div class="o_burger_menu_user">
+                <div t-if="session.user_companies" class="o_burger_menu_companies">
+                    <div class="o_burger_menu_user_title">COMPANIES</div>
+                    <t t-foreach="session.user_companies.allowed_companies" t-as="company">
+                        <div t-attf-class="o_burger_menu_company #{session.user_companies.current_company[0] == company[0] ? 'active' : ''}" t-att-data-id="company[0]">
+                            <span class="fa fa-building-o o_burger_menu_company_icon"/>
                             <t t-esc="company[1]"/>
                         </div>
-                    </div>
-                </t>
+                    </t>
+                </div>
             </div>
-            <div class="o_mobile_menu_user_menu_items mt4 ml4"/>
+            <div class="o_burger_menu_app"/>
         </div>
     </div>
 </t>
 
-<t t-name="Menu.Mobile.Sections">
-    <div class="o_mobile_menu_app_menus mt16 mb16">
-        <ul class="o_burger_menu_root">
-            <t t-foreach="menu_items" t-as="menu">
-                <t t-set="depth" t-value="1"/>
-                <t t-if="!menu.children.length">
-                    <t t-set="depth" t-value="-1"/>
+<t t-name="Menu.sections.mobile">
+    <t t-set="mobile" t-value="true"/>
+    <t t-foreach="menu_data.children" t-as="primary_menu">
+        <section t-att-class="primary_menu.id">
+            <t t-if="primary_menu.children.length">
+                <t t-foreach="primary_menu.children" t-as="submenu">
+                    <t t-set="menu" t-value="submenu"/>
                     <t t-call="Menu.link"/>
                 </t>
-                <t t-if="menu.children.length">
-                    <li class="o_burger_menu_section">
-                        <a href="#" t-att-class="'o_menu_entry_lvl_' + depth" t-att-data-menu-xmlid="menu.xmlid" data-toggle="dropdown" role="button" aria-expanded="false"><t t-esc="menu.name"/>
-                            <span class="fa fa-chevron-right toggle_icon mt4 pull-right"/>
-                        </a>
-                        <ul class="o_mobile_menu_section_container">
-                            <t t-foreach="menu.children" t-as="menu">
-                                <t t-set="enable_multi_level_dropdown" t-value="true"/>
-                                <t t-call="Menu.link"/>
-                            </t>
-                            <t t-set="depth" t-value="depth + 1"/>
-                        </ul>
-                    </li>
-                </t>
             </t>
-        </ul>
-    </div>
+        </section>
+    </t>
 </t>
 
 </templates>
