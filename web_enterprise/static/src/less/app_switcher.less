@@ -9,7 +9,9 @@
     // Prefer css gradient over images
     .o-skew-gradient(#77717e, #c9a8a9);
 
-    &.o_web_client .o_main_navbar {
+    // When applied on webclient (note: we do not specify the webclient class
+    // here to avoid breaking studio custom style)
+    &:not(.o_app_switcher_background_custom) .o_main_navbar {
         background-color: transparent;
         border-color: transparent;
 

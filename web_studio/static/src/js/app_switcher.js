@@ -3,6 +3,7 @@ odoo.define('web_studio.AppSwitcher', function (require) {
 
 var core = require('web.core');
 var session = require('web.session');
+var WebClient = require('web.WebClient');
 var web_client = require('web.web_client');
 var AppSwitcher = require('web_enterprise.AppSwitcher');
 
@@ -53,6 +54,19 @@ AppSwitcher.include({
                 "background-size": "cover",
             });
         }
+    },
+});
+
+WebClient.include({
+    /**
+     * Adds a class on the webclient on top of the o_app_switcher_background
+     * class to inform that the appswitcher is customized.
+     *
+     * @override
+     */
+    toggle_app_switcher: function (display) {
+        this._super.apply(this, arguments);
+        this.$el.toggleClass('o_app_switcher_background_custom', display && !!this.menu_data.background_image);
     },
 });
 
