@@ -164,9 +164,10 @@ return AbstractWebClient.extend({
     do_action: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function(action) {
-            if (self.menu.appswitcher_displayed && action.target !== 'new') {
-                self.toggle_app_switcher(false);
-            }
+            if (self.menu.appswitcher_displayed && action.target !== 'new' &&
+                action.type !== 'ir.actions.act_window_close') {
+                    self.toggle_app_switcher(false);
+                }
         });
     },
     do_push_state: function (state) {
