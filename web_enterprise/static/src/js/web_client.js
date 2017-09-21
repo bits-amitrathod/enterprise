@@ -40,12 +40,12 @@ return AbstractWebClient.extend({
         this._super.apply(this, arguments);
 
         /*
-            Small patch to allow having a link with a href towards an anchor. Since odoo use hashtag 
-            to represent the current state of the view, we can't easily distinguish between a link 
-            towards an anchor and a link towards anoter view/state. If we want to navigate towards an 
-            anchor, we must not change the hash of the url otherwise we will be redirected to the app 
+            Small patch to allow having a link with a href towards an anchor. Since odoo use hashtag
+            to represent the current state of the view, we can't easily distinguish between a link
+            towards an anchor and a link towards anoter view/state. If we want to navigate towards an
+            anchor, we must not change the hash of the url otherwise we will be redirected to the app
             switcher instead.
-            To check if we have an anchor, first check if we have an href attributes starting with #. 
+            To check if we have an anchor, first check if we have an href attributes starting with #.
             Try to find a element in the DOM using JQuery selector.
             If we have a match, it means that it is probably a link to an anchor, so we jump to that anchor.
         */
@@ -280,7 +280,7 @@ return AbstractWebClient.extend({
             });
     },
     toggle_app_switcher: function (display) {
-        this.$el.toggleClass('o_app_switcher_visible', display);
+        this.$el.toggleClass('o_app_switcher_background', display);
 
         if (display === this.app_switcher_displayed) {
             return; // nothing to do (prevents erasing previously detached webclient content)
