@@ -26,7 +26,7 @@ class TestDeliveryBpost(TransactionCase):
 
         self.agrolait = self.env.ref('base.res_partner_2')
         self.agrolait.write({'name': 'Odoo Brussels',
-                             'street': 'Avenue Edmond Van Nieuwenhuyse 5',
+                             'street': 'Avenue Edmond Van Nieuwenhuyse 6',
                              'street2': False,
                              'state_id': False,
                              'city': 'Auderghem',
