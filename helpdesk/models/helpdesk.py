@@ -59,6 +59,8 @@ class HelpdeskTeam(models.Model):
     unassigned_tickets = fields.Integer(string='Unassigned Tickets', compute='_compute_unassigned_tickets')
     percentage_satisfaction = fields.Integer(
         compute="_compute_percentage_satisfaction", string="% Happy", store=True, default=-1)
+    resource_calendar_id = fields.Many2one('resource.calendar', 'Working Hours',
+        default=lambda self: self.env.user.company_id.resource_calendar_id)
 
     @api.depends('ticket_ids.rating_ids.rating')
     def _compute_percentage_satisfaction(self):

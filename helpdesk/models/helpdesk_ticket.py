@@ -202,7 +202,7 @@ class HelpdeskTicket(models.Model):
         for ticket in self:
             dom = [('team_id', '=', ticket.team_id.id), ('priority', '<=', ticket.priority), '|', ('ticket_type_id', '=', ticket.ticket_type_id.id), ('ticket_type_id', '=', False)]
             sla = ticket.env['helpdesk.sla'].search(dom, order="time_days, time_hours", limit=1)
-            working_calendar = self.env.user.company_id.resource_calendar_id
+            working_calendar = ticket.team_id.resource_calendar_id
             if sla and ticket.sla_id != sla and ticket.active and ticket.create_date:
                 ticket.sla_id = sla.id
                 ticket.sla_name = sla.name

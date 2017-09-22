@@ -219,6 +219,15 @@
                                 <div attrs="{'invisible': [('use_sla','=',False)]}" class="mt16">
                                     <button name="%(helpdesk_sla_action)d" type="action" string="Configure SLA Policies" icon="fa-arrow-right" class="btn-link"/>
                                 </div>
+                                <div attrs="{'invisible': [('use_sla', '=', False)]}" class="mt16">
+                                    <label for="resource_calendar_id"/>
+                                    <div class="text-muted">
+                                        Set the calendar used to compute SLA target
+                                    </div>
+                                    <div class="mt16">
+                                        <field name="resource_calendar_id" attrs="{'required': [('use_sla', '=', True)]}"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6 o_setting_box" id="rating">
