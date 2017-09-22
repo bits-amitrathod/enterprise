@@ -482,7 +482,7 @@ class AccountReport(models.AbstractModel):
         if 'month' in options_filter:
             return format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), date_format='MMM YYYY')
         if 'quarter' in options_filter:
-            quarter = (dt_to.month - 1) / 3 + 1
+            quarter = (dt_to.month - 1) // 3 + 1
             return ('%s %s') % (get_quarter_names('abbreviated', locale=self._context.get('lang') or 'en_US')[quarter], dt_to.year)
         if 'year' in options_filter:
             if self.env.user.company_id.fiscalyear_last_day == 31 and self.env.user.company_id.fiscalyear_last_month == 12:
@@ -514,7 +514,7 @@ class AccountReport(models.AbstractModel):
             dt_from = dt_from and today.replace(day=1) or False
             dt_to = (today.replace(day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
         elif options_filter == 'this_quarter':
-            quarter = (today.month - 1) / 3 + 1
+            quarter = (today.month - 1) // 3 + 1
             dt_to = (today.replace(month=quarter * 3, day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
             dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 2, year=dt_to.year) or False
         elif options_filter == 'this_year':
@@ -525,7 +525,7 @@ class AccountReport(models.AbstractModel):
             dt_to = today.replace(day=1) - timedelta(days=1)
             dt_from = dt_from and dt_to.replace(day=1) or False
         elif options_filter == 'last_quarter':
-            quarter = (today.month - 1) / 3 + 1
+            quarter = (today.month - 1) // 3 + 1
             quarter = quarter - 1 if quarter > 1 else 4
             dt_to = (today.replace(month=quarter * 3, day=1, year=today.year if quarter != 4 else today.year - 1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
             dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 2, year=dt_to.year) or False
