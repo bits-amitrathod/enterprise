@@ -6,7 +6,6 @@ import json
 import io
 import logging
 import lxml.html
-import itertools
 
 try:
     from odoo.tools.misc import xlsxwriter
@@ -349,7 +348,7 @@ class AccountReport(models.AbstractModel):
                     }
 
                 #sum line values in hierarchy leaves
-                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in zip(hierarchy_list[group_key]['values']['columns'], [c['no_format_name'] for c in columns])]
+                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in pycompat.izip(hierarchy_list[group_key]['values']['columns'], [c['no_format_name'] for c in columns])]
 
                 #loop on
                 if account_id.group_id:
