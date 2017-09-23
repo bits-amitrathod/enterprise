@@ -1,10 +1,10 @@
 # coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, _, fields
+from odoo import models, _, fields, tools
 from openerp.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
-from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools.xml_utils import _check_with_xsd
 
 MX_NS_REFACTORING = {
     'catalogocuentas__': 'catalogocuentas',
@@ -130,7 +130,8 @@ class MXReportAccountCoa(models.AbstractModel):
         for key, value in MX_NS_REFACTORING.items():
             cfdicoa = cfdicoa.replace(key, value + ':')
 
-        check_with_xsd(cfdicoa, CFDICOA_XSD % version)
+        with tools.file_open(CFDICOA_XSD % version, "rb") as xsd:
+            _check_with_xsd(cfdicoa, xsd)
         return cfdicoa
 
     def get_report_name(self):

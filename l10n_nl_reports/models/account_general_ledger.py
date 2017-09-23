@@ -3,6 +3,7 @@
 from odoo import models, fields, api, tools, release, _
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools.xml_utils import _check_with_xsd
 
 import calendar
 import json
@@ -136,7 +137,8 @@ class ReportAccountGeneralLedger(models.AbstractModel):
             'moves_credit': moves_credit,
         }
         audit_content = self.env['ir.qweb'].render('l10n_nl_reports.xaf_audit_file', values)
-        tools.check_with_xsd(audit_content, 'l10n_nl_reports/data/xml_audit_file_3_2.xsd')
+        with tools.file_open('l10n_nl_reports/data/xml_audit_file_3_2.xsd', 'rb') as xsd:
+            _check_with_xsd(audit_content, xsd)
         return audit_content
 
     def l10n_nl_print_xaf(self, options):
