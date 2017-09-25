@@ -328,7 +328,7 @@ class report_account_general_ledger(models.AbstractModel):
                                     line_debit != 0 and self.format_value(line_debit) or '',
                                     line_credit != 0 and self.format_value(line_credit) or '',
                                     self.format_value(progress)]],
-                        'level': 1,
+                        'level': 4,
                     }
                     aml_lines.append(line.id)
                     domain_lines.append(line_value)
@@ -386,7 +386,7 @@ class report_account_general_ledger(models.AbstractModel):
                     'caret_options': 'account.tax',
                     'unfoldable': False,
                     'columns': [{'name': v} for v in ['', '', '', '', values['base_amount'], values['tax_amount'], '']],
-                    'level': 1,
+                    'level': 4,
                 })
 
         if self.env.context.get('aml_only', False):

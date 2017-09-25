@@ -125,7 +125,7 @@ class report_account_consolidated_journal(models.AbstractModel):
                     'id': 'journal_%s_%s_%s' % (values['journal_id'],values['month'],values['yyyy']),
                     'name': convert_date('%s-%s-01' % (values['yyyy'], values['month']), {'format': 'MMM YYYY'}),
                     'caret_options': True,
-                    'level': 1,
+                    'level': 4,
                     'parent_id': values['journal_id'],
                     'columns': [{'name': n} for n in [self.format_value(values['debit']), self.format_value(values['credit']), self.format_value(values['balance'])]],
                 }
