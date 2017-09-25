@@ -99,7 +99,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             this.state.field = field;
 
             // only for list & tree view
-            this.state.modifiers = JSON.parse(this.state.attrs.modifiers || '{}');
+            this.state.modifiers = this.state.attrs.modifiers || {};
             this._computeFieldAttrs();
 
             // get infos from the widget:
@@ -180,7 +180,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
          * These attributes are either taken from modifiers or attrs
          * so attrs store their combinaison.
          */
-        this.state.attrs.invisible = this.state.modifiers.invisible || this.state.modifiers.tree_invisible;
+        this.state.attrs.invisible = this.state.modifiers.invisible || this.state.modifiers.column_invisible;
         this.state.attrs.readonly = this.state.modifiers.readonly;
         this.state.attrs.string = this.state.attrs.string || this.state.field.string;
         this.state.attrs.help = this.state.attrs.help || this.state.field.help;
