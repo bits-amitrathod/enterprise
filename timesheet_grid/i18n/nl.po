@@ -3,18 +3,18 @@
 # * timesheet_grid
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Eric Geens <ericgeens@yahoo.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 # Cas Vissers <casvissers@brahoo.nl>, 2017
+# Eric Geens <ericgeens@yahoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,13 +23,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: timesheet_grid
-#: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_all
-#: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_all
-msgid "All Timesheets"
-msgstr "Alle urenstaten"
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+msgid "Activate a periodical email reminder for timesheet managers"
+msgstr ""
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:45
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+msgid "Activate a periodical email reminder for timesheet users"
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:79
 #, python-format
 msgid "All selected timesheets are already validated"
 msgstr "Alle geselecteerde urenstaten zijn al bevestigd"
@@ -40,63 +44,140 @@ msgid "Analytic Line"
 msgstr "Kostenplaatsregel"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.validable_form
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+msgid "Android App"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+msgid "Apple App"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Cancel"
 msgstr "Annuleer"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
+#. openerp-web
+#: code:addons/timesheet_grid/static/src/js/tour.js:22
+#, python-format
+msgid "Choose a <b>project name</b>. (e.g. name of a customer, or product)"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+msgid "Chrome Plugin"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Click to add projects and tasks"
 msgstr "Klik om projecten en taken toe te voegen"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_create_uid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_create_uid
+#: model:ir.model,name:timesheet_grid.model_res_company
+msgid "Companies"
+msgstr "Bedrijven"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_create_uid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_create_uid
 msgid "Created by"
 msgstr "Aangemaakt door"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_create_date
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_create_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_create_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_create_date
 msgid "Created on"
 msgstr "Aangemaakt op"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
-msgstr "Datum tot wanneer de werknemer zijn urenstaten gevalideerd zijn"
+msgstr "Datum tot wanneer de werknemer zijn urenstaten bevestigd zijn"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_form
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Describe your activity"
 msgstr "Omschrijf uw activiteit"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_display_name
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_display_name
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_display_name
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_display_name
 msgid "Display Name"
 msgstr "Schermnaam"
 
 #. module: timesheet_grid
+#. openerp-web
+#: code:addons/timesheet_grid/static/src/js/tour.js:43
+#, python-format
+msgid "Easily switch to the monthly or daily view to control your time"
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_employee_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_employee_id
 msgid "Employee"
 msgstr "Werknemer"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
-msgid "Group By"
-msgstr "Groepeer op"
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_allow
+msgid "Employee Reminder"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_id
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_interval
+msgid "Frequency"
+msgstr "Frequentie"
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+msgid "Get Android app"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+msgid "Get Chrome plugin"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+msgid "Get iOS app"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_id
 msgid "ID"
 msgstr "ID"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable___last_update
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation___last_update
+#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_manager_allow
+msgid "If checked, send an email to all manager"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_manager_allow
+msgid ""
+"If checked, send an email to all managers who have not validated their "
+"timesheet"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_user_allow
+msgid ""
+"If checked, send an email to all users who have not recorded their timesheet"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation___last_update
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line___last_update
 msgid "Last Modified on"
 msgstr "Laatst gewijzigd op"
 
@@ -106,85 +187,137 @@ msgid "Last Month"
 msgstr " Vorige maand"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_write_uid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_write_uid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_write_uid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_write_uid
 msgid "Last Updated by"
 msgstr "Laatst bijgewerkt door"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_write_date
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_write_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_write_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_write_date
 msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
 msgid "Last Week"
-msgstr "Laatste week"
+msgstr "Vorige week"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_form
+#. openerp-web
+#: code:addons/timesheet_grid/static/src/js/tour.js:17
+#, python-format
+msgid "Let's create your first timesheet entry."
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Line edition and creation from grid"
 msgstr "Lijn wijzigingen en aanmaken vanuit grid"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
+msgid "Manager Reminder"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Month"
 msgstr "Maand"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_validation_search
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Team"
 msgstr "Mijn Team"
 
 #. module: timesheet_grid
-#: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_current
-#: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_my
-msgid "My Timesheet"
-msgstr "Mijn urenstaten"
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_nextdate
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_nextdate
+msgid "Next cron date for manager reminder"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
-msgid "My Timesheets"
-msgstr "Mijn urenstaten"
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
-msgstr "Niet gevalideerd"
+msgstr "Niet bevestigd"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
-msgid "Project"
-msgstr "Project"
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_delay
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_delay
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_delay
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_delay
+msgid "Number of days"
+msgstr "Aantal dagen"
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:101
+#, python-format
+msgid ""
+"Only a Timesheets Officer is allowed to create an entry older than the "
+"validation limit."
+msgstr ""
+"Alleen een Urenstaat Officier is toegestaan om ingaven ouder dan de "
+"validatiedatum aan te passen."
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:116
+#, python-format
+msgid "Only a Timesheets Officer is allowed to delete a validated entry."
+msgstr ""
+"Alleen een Urenstaat Officier is toegestaan om gevalideerde ingaven te "
+"verwijderen."
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:110
+#, python-format
+msgid "Only a Timesheets Officer is allowed to modify a validated entry."
+msgstr ""
+"Alleen een urenstaat functionaris is toegestaan om gevalideerde ingaven aan "
+"te passen."
+
+#. module: timesheet_grid
+#: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_manager
+msgid "Reminder: please approve your team's timesheets"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_user
+msgid "Reminder: please log your hours"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
 msgstr ""
-"Ingesteld als de analytische lijn een lijn van een urenstaat voorstelt."
+"Stel in als de kostenplaatsregel een regel van een urenstaat voorstelt."
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
-msgid "Task"
-msgstr "Taak"
+#. openerp-web
+#: code:addons/timesheet_grid/static/src/js/tour.js:36
+#, python-format
+msgid ""
+"Set the number of hours done on this project, for every day of the week. "
+"(e.g. 1.5 or 1:30)"
+msgstr ""
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:40
+#: code:addons/timesheet_grid/models/models.py:74
 #, python-format
 msgid "There aren't any timesheet to validate"
 msgstr "Er zijn geen urenstaten om goed te keuren."
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_form
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Time Spent"
 msgstr "Bestede tijd"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
-msgid "Timesheet"
-msgstr "Urenstaat"
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+msgid "Timesheet Control"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_is_timesheet
@@ -192,96 +325,169 @@ msgid "Timesheet Line"
 msgstr "Urenstaat regel"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_list
-msgid "Timesheet Lines"
-msgstr "Urenstaatregels"
+#: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_manager_id
+msgid "Timesheet Responsible"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
-#: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_week
-msgid "Timesheets To Validate"
-msgstr "Te valideren urenstaten"
+#: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
+#: model:ir.cron,cron_name:timesheet_grid.timesheet_reminder_user
+#: model:ir.cron,name:timesheet_grid.timesheet_reminder_user
+msgid "Timesheet: Employees Email Reminder"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_manager_ir_actions_server
+#: model:ir.cron,cron_name:timesheet_grid.timesheet_reminder_manager
+#: model:ir.cron,name:timesheet_grid.timesheet_reminder_manager
+msgid "Timesheet: Managers Email Reminder"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
+msgid "Timesheets"
+msgstr "Urenstaten"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
-msgid "Timesheets validation limit"
-msgstr "Urenstaten bevestiging limiet"
+msgid "Timesheets Validation Date"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
 msgid "To Validate"
-msgstr "Te valideren"
+msgstr "Te bevestigen"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
-msgid "Users"
-msgstr "Gebruikers"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validable_ids
-msgid "Validable"
+#. openerp-web
+#: code:addons/timesheet_grid/static/src/js/tour.js:13
+#, python-format
+msgid ""
+"Track your timesheets to invoice easily, or control costs. <i>It starts "
+"here.</i>"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validate
-#: model:ir.ui.view,arch_db:timesheet_grid.validable_form
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_validate
+#. openerp-web
+#: code:addons/timesheet_grid/static/src/js/tour.js:29
+#, python-format
+msgid ""
+"Use tasks to track the different type of activities. (e.g. Graphic Design, "
+"Programming, Project Management)"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_manager_id
+msgid "User responsible of timesheet validation. Should be Timesheet Manager."
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_validate
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee_validation
 msgid "Validate"
-msgstr "Valideer"
+msgstr "Controleer"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.validable_form
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Validate Timesheets"
-msgstr "Valideer urenstaten"
+msgstr "Bevestig urenstaten"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
-msgid "Validate To"
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
+msgid "Validate the timesheets of the selected employees up to"
+msgstr "Bevestig de urenstaten van de geselecteerde werknemers tot en met"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,help:timesheet_grid.field_timesheet_validation_line_validate
+msgid "Validate this employee's timesheet up to the chosen date"
+msgstr "Bevestig de werknemer zijn urenstaten tot de gekozen datum"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_date
+msgid "Validate up to"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.validable_form
-msgid "Validate the timesheets of the selected employees up to"
-msgstr "Valideer de urenstaten van de geselecteerde werknemers tot en met"
-
-#. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_timesheet_grid_validable_validate
-msgid "Validate this employee's timesheet up to the chosen date"
-msgstr "Valideer de werknemer zijn urenstaten tot de gekozen datum"
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Validated"
 msgstr "Goedgekeurd"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_validated
-msgid "Validated line"
-msgstr "Gevalideerde lijn"
+#: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
+#: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_week
+msgid "Validated Timesheets"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validation_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_validated
+msgid "Validated line"
+msgstr "Bevestigde regel"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_validation_id
 msgid "Validation"
 msgstr "Bevestiging"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_line_ids
+msgid "Validation Line"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Week"
 msgstr "Week"
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_timesheet_grid_validable
-msgid "timesheet_grid.validable"
-msgstr "timesheet_grid.validable"
-
-#. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_timesheet_grid_validation
-msgid "timesheet_grid.validation"
-msgstr "timesheet_grid.validation"
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
-msgid "you will be able to register your working hours on the given task"
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+msgid "You will be able to register your working hours on the given task."
 msgstr ""
-"U heeft de mogelijkheid om uw werkuren en activiteiten te registreren op de "
-"gegeven taak"
+
+#. module: timesheet_grid
+#: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_manager
+msgid ""
+"\\x3c3f786d6c2076657273696f6e3d22312e30223f3e0a3c646174613e3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a36303070783b626f726465722d636f6c6c617073653a636f6c6c617073653b6261636b67726f756e643a696e68657269743b636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c74642076616c69676e3d2263656e746572222077696474683d2232303022207374796c653d2270616464696e673a3130707820313070782031307078203570783b666f6e742d73697a653a2031327078223e0a2020202020202020202020203c696d67207372633d222f6c6f676f2e706e6722207374796c653d2270616464696e673a203070783b206d617267696e3a203070783b206865696768743a206175746f3b2077696474683a20383070783b2220616c743d22247b757365722e636f6d70616e795f69642e6e616d657d222f3e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a3630307078203b746578742d616c69676e3a6a7573746966793b206d617267696e3a30206175746f3b20626f726465722d636f6c6c617073653a636f6c6c617073653b206261636b67726f756e643a696e68657269743b20636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020203c703e4465617220247b6f626a6563742e6e616d657d2c3c2f703e0a2020202020202020202020203c703e54686973206973206120667269656e646c792072656d696e64657220746f20617070726f76656420796f7572207465616d277320686f75727320666f722074686520706572696f64203a20247b6374782e6765742827646174655f737461727427297d202d20247b6374782e6765742827646174655f73746f7027297d2e3c2f703e0a20202020202020202020202025206966206374782e6765742827616374696f6e5f75726c27293a0a202020202020202020202020202020203c63656e7465723e0a20202020202020202020202020202020202020203c6120687265663d22247b6374782e6765742827616374696f6e5f75726c27297d22207374796c653d226261636b67726f756e642d636f6c6f723a20233161626339633b2070616464696e673a20313070783b20746578742d6465636f726174696f6e3a206e6f6e653b20636f6c6f723a20236666663b20626f726465722d7261646975733a203570783b20666f6e742d73697a653a20313470783b2220636c6173733d226f5f64656661756c745f736e69707065745f74657874223e56616c696461746520796f75722074696d6573686565743c2f613e0a202020202020202020202020202020203c2f63656e7465723e0a2020202020202020202020202520656e6469660a2020202020202020202020203c703e4265737420726567617264732c3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020202520696620757365722e7369676e61747572650a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313470783b223e247b757365722e7369676e6174757265207c20736166657d0a2020202020202020202020203c2f703e0a2020202020202020202020202520656e6469660a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313170783b223e3c7374726f6e673e53656e742062790a2020202020202020202020203c6120687265663d22247b6f626a6563742e757365725f69642e636f6d70616e795f69642e776562736974657d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e0a202020202020202020202020202020203c7374726f6e673e247b757365722e636f6d70616e795f69642e6e616d657d3c2f7374726f6e673e0a2020202020202020202020203c2f613e207573696e67203c6120687265663d227777772e6f646f6f2e636f6d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e3c7374726f6e673e4f646f6f3c2f7374726f6e673e3c2f613e0a2020202020202020202020203c2f7374726f6e673e3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a2020202020202020202020203c2f646174613e"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
+msgid ""
+"\\x3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a36303070783b626f726465722d636f6c6c617073653a636f6c6c617073653b6261636b67726f756e643a696e68657269743b636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c74642076616c69676e3d2263656e746572222077696474683d2232303022207374796c653d2270616464696e673a3130707820313070782031307078203570783b666f6e742d73697a653a2031327078223e0a2020202020202020202020203c696d67207372633d222f6c6f676f2e706e6722207374796c653d2270616464696e673a203070783b206d617267696e3a203070783b206865696768743a206175746f3b2077696474683a20383070783b2220616c743d22247b757365722e636f6d70616e795f69642e6e616d657d222f3e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a3c646976207374796c653d2270616464696e673a3070783b77696474683a36303070783b6d617267696e3a6175746f3b6261636b67726f756e643a20234646464646462072657065617420746f70202f313030253b636f6c6f723a23373737373737223e0a3c7461626c652063656c6c73706163696e673d2230222063656c6c70616464696e673d223022207374796c653d2277696474683a3630307078203b746578742d616c69676e3a6a7573746966793b206d617267696e3a30206175746f3b20626f726465722d636f6c6c617073653a636f6c6c617073653b206261636b67726f756e643a696e68657269743b20636f6c6f723a696e6865726974223e0a202020203c74626f64793e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020203c703e4465617220247b6f626a6563742e6e616d657d2c3c2f703e0a2020202020202020202020203c703e54686973206973206120667269656e646c792072656d696e64657220746f206c6f6720796f757220686f75727320666f722074686520706572696f64203a20247b6374782e6765742827646174655f737461727427297d202d20247b6374782e6765742827646174655f73746f7027297d2e0a20202020202020202020202020202020466f72207468652074696d65206265696e672c20796f75206f6e6c79206c6f6767656420247b6374782e676574282774696d6573686565745f686f75727327297d20686f757273206f6e2074686520247b6374782e6765742827776f726b696e675f686f75727327297d207265717565737465642e0a2020202020202020202020203c2f703e0a20202020202020202020202025206966206374782e6765742827616374696f6e5f75726c27293a0a202020202020202020202020202020203c63656e7465723e0a20202020202020202020202020202020202020203c6120687265663d22247b6374782e6765742827616374696f6e5f75726c27297d22207374796c653d226261636b67726f756e642d636f6c6f723a20233161626339633b2070616464696e673a20313070783b20746578742d6465636f726174696f6e3a206e6f6e653b20636f6c6f723a20236666663b20626f726465722d7261646975733a203570783b20666f6e742d73697a653a20313470783b2220636c6173733d226f5f64656661756c745f736e69707065745f74657874223e46696c6c20796f75722074696d6573686565743c2f613e0a202020202020202020202020202020203c2f63656e7465723e0a2020202020202020202020202520656e6469660a2020202020202020202020203c703e4265737420726567617264732c3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c74723e0a20202020202020203c7464207374796c653d2270616464696e673a307078203130707820357078203570783b666f6e742d73697a653a20313470783b223e0a2020202020202020202020202520696620757365722e7369676e61747572650a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313470783b223e247b757365722e7369676e6174757265207c20736166657d0a2020202020202020202020203c2f703e0a2020202020202020202020202520656e6469660a2020202020202020202020203c70207374796c653d22666f6e742d73697a653a20313170783b223e3c7374726f6e673e53656e742062790a2020202020202020202020203c6120687265663d22247b6f626a6563742e757365725f69642e636f6d70616e795f69642e776562736974657d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e0a202020202020202020202020202020203c7374726f6e673e247b757365722e636f6d70616e795f69642e6e616d657d3c2f7374726f6e673e0a2020202020202020202020203c2f613e207573696e67203c6120687265663d227777772e6f646f6f2e636f6d22207374796c653d22746578742d6465636f726174696f6e3a6e6f6e653b20636f6c6f723a20233837354137423b223e3c7374726f6e673e4f646f6f3c2f7374726f6e673e3c2f613e0a2020202020202020202020203c2f7374726f6e673e3c2f703e0a20202020202020203c2f74643e0a202020203c2f74723e3c2f74626f64793e0a3c2f7461626c653e0a3c2f6469763e0a202020202020202020202020"
+msgstr ""
+
+#. module: timesheet_grid
+#: selection:res.company,timesheet_mail_employee_interval:0
+#: selection:res.company,timesheet_mail_manager_interval:0
+msgid "after end of month"
+msgstr ""
+
+#. module: timesheet_grid
+#: selection:res.company,timesheet_mail_employee_interval:0
+#: selection:res.company,timesheet_mail_manager_interval:0
+msgid "after end of week"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+msgid "days"
+msgstr "dagen"
+
+#. module: timesheet_grid
+#: model:ir.model,name:timesheet_grid.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"
+
+#. module: timesheet_grid
+#: model:ir.model,name:timesheet_grid.model_timesheet_validation
+msgid "timesheet.validation"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model,name:timesheet_grid.model_timesheet_validation_line
+msgid "timesheet.validation.line"
+msgstr ""

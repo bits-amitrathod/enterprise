@@ -3,20 +3,21 @@
 # * stock_barcode
 # 
 # Translators:
-# José Vicente <txusev@gmail.com>, 2016
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
-# Ana Juaristi <ajuaristio@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2016
-# Glen Sojo <inactive+glen.sojo@transifex.com>, 2016
-# Miguel Orueta <mo@landoo.es>, 2016
+# Miguel Orueta <mo@landoo.es>, 2017
+# José Vicente <txusev@gmail.com>, 2017
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
+# Ana Juaristi <ajuaristio@gmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2017
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
+# Glen Sojo <inactive+glen.sojo@transifex.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Miguel Orueta <mo@landoo.es>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Glen Sojo <inactive+glen.sojo@transifex.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,8 +128,8 @@ msgid ""
 "but allows for a full traceability of the parts. It's usually used by "
 "manufacturers of sensitive products."
 msgstr ""
-"<Strong>Escanear lotes o números de serie:</strong> esto lleva más tiempo, "
-"pero permite una trazabilidad completa de los productos. Por lo general, es "
+"<strong>Escanear lotes o números de serie:</strong> lleva más tiempo, pero "
+"permite una trazabilidad completa de los productos. Por lo general, es "
 "utilizado por los fabricantes de productos de consumo."
 
 #. module: stock_barcode
@@ -152,8 +153,8 @@ msgid ""
 "<strong>To attribute a barcode to a Location,</strong> simply enter one on "
 "the Location form (accessible from your"
 msgstr ""
-"<Strong> Para asignar un código de barras a una ubicación, </ strong> "
-"simplemente introduzca uno en el formulario Ubicación."
+"<Strong>Para asignar un código de barras a una ubicación,</strong> "
+"simplemente introduzca uno en el formulario Ubicación (accessible desde su"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -166,13 +167,13 @@ msgid ""
 "<strong>To process Delivery Orders from a computer or mobile "
 "device:</strong>"
 msgstr ""
-"<Strong>Para procesar albaranesdesde un ordenador o dispositivo "
+"<Strong>Para procesar albaranes desde un ordenador o dispositivo "
 "móvil:</strong>"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "<strong>To process printed Delivery Orders:</strong>"
-msgstr "<Strong>Para procesar albaranes impresos: </ strong>"
+msgstr "<Strong>Para procesar albaranes impresos: </strong>"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -184,7 +185,7 @@ msgstr "<Strong>Hemos probado algunos dispositivos para usted:</strong>"
 msgid ""
 "<strong>What is the difference between Lots and Serial Numbers?</strong>"
 msgstr ""
-"<Strong>¿Cuál es la diferencia entre lotes y números de serie?</Strong>"
+"<strong>¿Cuál es la diferencia entre lotes y números de serie?</strong>"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -194,12 +195,12 @@ msgstr "Retorno de carro automático"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Automatic carriage return: <span class=\"label\">OFF</span>"
-msgstr "Retorno de carro automático: <span class=\"label\">OFF</ span>"
+msgstr "Retorno de carro automático: <span class=\"label\">OFF</span>"
 
 #. module: stock_barcode
 #: model:ir.actions.client,name:stock_barcode.stock_barcode_action_main_menu
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_inventory_line_product_barcode
-#: model:ir.model.fields,field_description:stock_barcode.field_stock_pack_operation_product_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line_product_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_scrap_product_barcode
 #: model:ir.ui.menu,name:stock_barcode.stock_barcode_menu
 msgid "Barcode"
@@ -263,7 +264,7 @@ msgid "Click on 'Inventory'"
 msgstr "Haga clic en \"Inventario\""
 
 #. module: stock_barcode
-#: model:ir.ui.view,arch_db:stock_barcode.stock_config_view_form_inherit_stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Configure Product Barcodes"
 msgstr "Configurar códigos de barras de productos"
 
@@ -279,7 +280,7 @@ msgstr "¡Enhorabuena, ya está listo para hacerlo en vivo!"
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:42
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:48
 #, python-format
 msgid ""
 "Do you want to permanently remove this message ?\n"
@@ -290,7 +291,7 @@ msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:45
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:51
 #, python-format
 msgid "Don't show this message again"
 msgstr "No mostrar este mensaje de nuevo"
@@ -364,7 +365,7 @@ msgstr "Inateck BCST-20:"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_inventory_line_product_barcode
-#: model:ir.model.fields,help:stock_barcode.field_stock_pack_operation_product_barcode
+#: model:ir.model.fields,help:stock_barcode.field_stock_move_line_product_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_scrap_product_barcode
 msgid "International Article Number used for product identification."
 msgstr ""
@@ -390,7 +391,7 @@ msgstr "Diseño del teclado"
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:51
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:57
 #, python-format
 msgid "Leave it"
 msgstr "Déjelo"
@@ -407,7 +408,7 @@ msgstr ""
 "Cargue todos los albaranes marcadas como \"Para hacer\", y abra el primero."
 
 #. module: stock_barcode
-#: model:ir.model.fields,field_description:stock_barcode.field_stock_pack_operation_location_processed
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line_location_processed
 msgid "Location Processed"
 msgstr ""
 
@@ -446,8 +447,8 @@ msgid ""
 "Naming the locations within your warehouse(s) is crucial for a good "
 "inventory management."
 msgstr ""
-"Nombrar los lugares dentro de su almacén(s) es crucial para una buena "
-"gestión de inventario."
+"Identificar las ubicaciones dentro de su almacén(s) es crucial para una "
+"buena gestión de inventario."
 
 #. module: stock_barcode
 #: model:ir.actions.act_window,name:stock_barcode.stock_inventory_action_new_inventory
@@ -457,10 +458,9 @@ msgstr "Nuevo inventario"
 #. module: stock_barcode
 #: code:addons/stock_barcode/controllers/main.py:69
 #, python-format
-msgid "No internal picking type. Please configure one in warehouse settings."
+msgid ""
+"No internal operation type. Please configure one in warehouse settings."
 msgstr ""
-"No hay tipo de albarán interno. Configure uno en la configuración del "
-"almacén."
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:54
@@ -547,7 +547,7 @@ msgid ""
 "the operation."
 msgstr ""
 "Una vez que haya escaneado todos los productos, escanee la acción Validar "
-"(en código de barras) para finalizar la operación."
+"-en código de barras- para finalizar la operación."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -569,14 +569,14 @@ msgid "Operations"
 msgstr "Operaciones"
 
 #. module: stock_barcode
-#: model:ir.model,name:stock_barcode.model_stock_pack_operation
+#: model:ir.model,name:stock_barcode.model_stock_move_line
 msgid "Packing Operation"
 msgstr "Operación de empaquetado"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Pick up and scan each listed product."
-msgstr "Recoja y escanee cada producto listado."
+msgstr "Recoger y escanear cada producto listado."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -590,7 +590,7 @@ msgstr "Albarán"
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:39
+#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:86
 #, python-format
 msgid "Picking %s"
 msgstr "Seleccionando %s"
@@ -622,7 +622,7 @@ msgstr "Códigos de barras de productos"
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:48
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:54
 #, python-format
 msgid "Remove it"
 msgstr "Eliminar"
@@ -701,26 +701,26 @@ msgstr ""
 "Establecer códigos de barras en la importación inicial de sus productos o"
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:285
+#: code:addons/stock_barcode/models/inherited_stock_picking.py:286
 #, python-format
 msgid ""
 "The barcode \"%(barcode)s\" doesn't correspond to a proper product, package "
 "or location."
 msgstr ""
-"El código de barras \"% (barcode) s\" no corresponde a un producto, paquete "
-"o ubicación apropiados."
-
-#. module: stock_barcode
-#. openerp-web
-#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:39
-#, python-format
-msgid "The picking is %s and cannot be edited."
-msgstr "El picking es %s y no se puede editar."
+"El código de barras \"%(barcode)s\" no corresponde a un producto, paquete o "
+"ubicación apropiados."
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_picking_type
-msgid "The picking type determines the picking view"
-msgstr "El tipo de albarán determina la vista de albarán"
+msgid "The operation type determines the picking view"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:87
+#, python-format
+msgid "The picking is %s and cannot be edited."
+msgstr "El picking es %s y no se puede editar."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -774,7 +774,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_picking_type_kanban
 msgid "To Do"
-msgstr "Para ejecutar"
+msgstr "Por hacer"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_picking_type_kanban
@@ -855,7 +855,7 @@ msgid "Wireless and USB, laser, rational choice, about $50"
 msgstr "Inalámbrico y USB, láser, elección racional, alrededor de $ 50"
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:284
+#: code:addons/stock_barcode/models/inherited_stock_picking.py:285
 #, python-format
 msgid "Wrong barcode"
 msgstr "Código de barras incorrecto"
@@ -876,7 +876,7 @@ msgstr ""
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:38
 #, python-format
 msgid "You have already scanned the serial number \"%(barcode)s\""
-msgstr "Ya ha escaneado el número de serie \"% (barcode) s\""
+msgstr "Ya ha escaneado el número de serie \"%(barcode)s\""
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:22
@@ -943,7 +943,7 @@ msgstr "stock.scrap"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "then scan it, the result should be <i>YES IT WORKS.</i>"
-msgstr "Luego escanéelo, el resultado debería ser <i>YES IT WORKS.</I>"
+msgstr "Luego escanéelo, el resultado debería ser <i>YES IT WORKS.</i>"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner

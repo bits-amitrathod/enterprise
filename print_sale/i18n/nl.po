@@ -3,14 +3,15 @@
 # * print_sale
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,9 +36,9 @@ msgid ""
 " one of the document you want to send has not a correct postal "
 "address.</span>"
 msgstr ""
-"<span class=\"oe_form_field oe_inline\"><b>Foutief verzendadres :</b> "
+"<span class=\"oe_form_field oe_inline\"><b>Foutief afleveradres :</b> "
 "Minstens één van de documenten die u wilt verzenden bevatten een foutief "
-"verzendadres.</span>"
+"afleveradres.</span>"
 
 #. module: print_sale
 #: selection:print.document.partner.wizard,ink:0
@@ -67,14 +68,9 @@ msgid "Created on"
 msgstr "Aangemaakt op"
 
 #. module: print_sale
-#: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_currency_id
+#: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_currency_id
 msgid "Currency"
 msgstr "Valuta"
-
-#. module: print_sale
-#: model:ir.model.fields,field_description:print_sale.field_sale_config_settings_default_print_provider
-msgid "Default Account"
-msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_display_name
@@ -215,7 +211,7 @@ msgid "Test"
 msgstr "Test"
 
 #. module: print_sale
-#: code:addons/print_sale/models/sale_order.py:17
+#: code:addons/print_sale/models/sale_order.py:23
 #, python-format
 msgid ""
 "This sales order was sent by post with the provider %(provider_name)s at the"
@@ -223,9 +219,12 @@ msgid ""
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
+"Deze verkooporder was verzonden via post met de aanbieden %(provider_name)s "
+"op het volgende adres. "
+"<br/><br/>%(partner_name)s<br/>%(partner_street)s<br/>%(partner_city)s%(partner_zip)s<br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print_sale
-#: code:addons/print_sale/wizard/print_document_partner_wizard.py:73
+#: code:addons/print_sale/wizard/print_document_partner_wizard.py:67
 #, python-format
 msgid ""
 "Your credit provider is too small. Please, configure your account (> "
@@ -243,13 +242,3 @@ msgstr "print.document.partner.line.wizard"
 #: model:ir.model,name:print_sale.model_print_document_partner_wizard
 msgid "print.document.partner.wizard"
 msgstr "print.document.partner.wizard"
-
-#. module: print_sale
-#: model:ir.model,name:print_sale.model_print_order_line_wizard
-msgid "print.order.line.wizard"
-msgstr "print.order.line.wizard"
-
-#. module: print_sale
-#: model:ir.model,name:print_sale.model_sale_config_settings
-msgid "sale.config.settings"
-msgstr "sale.config.settings"

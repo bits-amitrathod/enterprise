@@ -7,10 +7,10 @@
 # Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr ", door"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "<b>State :</b>"
-msgstr ""
+msgstr "<b>Fase:</b>"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
@@ -73,6 +73,8 @@ msgstr "Commit"
 msgid ""
 "Complete name of the github repository. e.i.: my-username/my-public-repo"
 msgstr ""
+"Volledig naam van de Github repository, bijvoorbeeld: mijn-gebruikersnaam"
+"/mijn-publieke-repo"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_create_uid
@@ -92,12 +94,12 @@ msgstr "Discussiekanaal"
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_enabled
 msgid "Enable listening to Github repositories"
-msgstr ""
+msgstr "Sta luisteren naar Github repositories toe"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_res_users_github_login
@@ -170,7 +172,7 @@ msgstr "Repository ID"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "Repository full name: user/repository."
-msgstr ""
+msgstr "Volledige naam repository: gebruiker/repository."
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_name
@@ -190,7 +192,7 @@ msgstr "De Github repositories die het kanaal zal volgen"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "The signature to be pasted when setting up the webhook on Github"
-msgstr ""
+msgstr "De signatuur om te plakken wanneer u de webhook op Github opzet"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
@@ -203,6 +205,7 @@ msgstr ""
 #: model:ir.model.fields,help:mail_github.field_mail_channel_github_url_token
 msgid "URL to put as the payload target when configuring GitHub webhook"
 msgstr ""
+"URL om in te geven als payload wanneer u de Github webhook configureert"
 
 #. module: mail_github
 #: model:ir.model,name:mail_github.model_res_users
@@ -212,10 +215,10 @@ msgstr "Gebruikers"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "commented"
-msgstr ""
+msgstr "opmerking"
 
 #. module: mail_github
-#: code:addons/mail_github/controllers/main.py:173
+#: code:addons/mail_github/controllers/main.py:174
 #, python-format
 msgid "commit"
 msgstr "commit"
@@ -231,7 +234,7 @@ msgid "created a new"
 msgstr "heeft een nieuwe aangemaakt"
 
 #. module: mail_github
-#: code:addons/mail_github/controllers/main.py:196
+#: code:addons/mail_github/controllers/main.py:197
 #, python-format
 msgid "issue"
 msgstr "issue"
@@ -257,8 +260,8 @@ msgid "on repository"
 msgstr "op repository"
 
 #. module: mail_github
-#: code:addons/mail_github/controllers/main.py:210
-#: code:addons/mail_github/controllers/main.py:217
+#: code:addons/mail_github/controllers/main.py:211
+#: code:addons/mail_github/controllers/main.py:218
 #, python-format
 msgid "pull request"
 msgstr "pull request"

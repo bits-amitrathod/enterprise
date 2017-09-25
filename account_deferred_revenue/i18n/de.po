@@ -3,23 +3,23 @@
 # * account_deferred_revenue
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Wolfgang Taferner <wolfgang.transifex@service.wt-io-it.at>, 2016
-# Rudolf Schnapka <rs@techno-flex.de>, 2016
-# Philipp Hug <philipp@hug.cx>, 2016
-# Thorsten Vocks <thorsten.vocks@openbig.org>, 2016
-# Anja Funk <anja.funk@afimage.de>, 2016
-# Tina Rittmüller <tr@ife.de>, 2016
-# Thomas A. Jaeger <tj@jamotion.ch>, 2016
-# Ralf Hilgenstock <rh@dialoge.info>, 2016
-# darenkster <inactive+darenkster@transifex.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
+# Wolfgang Taferner <wolfgang.transifex@service.wt-io-it.at>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
+# Thorsten Vocks <thorsten.vocks@openbig.org>, 2017
+# Philipp Hug <philipp@hug.cx>, 2017
+# Anja Funk <anja.funk@afimage.de>, 2017
+# Gab_Odoo <gab@odoo.com>, 2017
+# Tina Rittmüller <tr@ife.de>, 2017
+# Renzo Meister <info@jamotion.ch>, 2017
+# Ermin Trevisan <trevi@twanda.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-29 14:58+0000\n"
-"PO-Revision-Date: 2016-09-29 14:58+0000\n"
-"Last-Translator: darenkster <inactive+darenkster@transifex.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Ermin Trevisan <trevi@twanda.com>, 2017\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,7 +55,7 @@ msgstr "Unternehmen"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Compute Revenue"
-msgstr ""
+msgstr "Erlöse errechnen"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
@@ -65,6 +65,11 @@ msgstr "Bestätigen"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Cumulative Revenue"
+msgstr "Kumulierte Erlöse"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Current Revenue"
 msgstr ""
 
 #. module: account_deferred_revenue
@@ -81,11 +86,9 @@ msgstr "Datum für Einnahmen aus Verkauf"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Date of asset"
-msgstr "Datum Geschäftsausstattung"
+msgstr "Anlagedatum"
 
 #. module: account_deferred_revenue
-#: model:ir.actions.act_window,name:account_deferred_revenue.action_asset_revenue_report
-#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_asset_revenue_report
 #: model:ir.ui.view,arch_db:account_deferred_revenue.action_account_revenue_report_graph
 #: model:ir.ui.view,arch_db:account_deferred_revenue.action_account_revenue_report_pivot
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
@@ -99,26 +102,24 @@ msgid "Deferred Revenue Type"
 msgstr "Umsatzabgrenzungstyp"
 
 #. module: account_deferred_revenue
+#: model:ir.actions.act_window,name:account_deferred_revenue.action_account_asset_asset_list_normal_sale
+#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_account_asset_asset_list_normal_sale
+msgid "Deferred Revenue Types"
+msgstr ""
+
+#. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Deferred Revenue name"
 msgstr "Rechnungsabgrenzungsbezeichnung"
 
 #. module: account_deferred_revenue
 #: model:ir.actions.act_window,name:account_deferred_revenue.action_account_revenue_form
+#: model:ir.actions.act_window,name:account_deferred_revenue.action_asset_revenue_report
 #: model:ir.ui.menu,name:account_deferred_revenue.menu_action_account_revenue_recognition
+#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_asset_revenue_report
+#: model:ir.ui.view,arch_db:account_deferred_revenue.res_config_settings_view_form
 msgid "Deferred Revenues"
-msgstr "Verzögerte Einnahmen"
-
-#. module: account_deferred_revenue
-#: model:ir.actions.act_window,name:account_deferred_revenue.action_account_asset_asset_list_normal_sale
-#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_account_asset_asset_list_normal_sale
-msgid "Deferred Revenues Types"
-msgstr "Arten der Rechnungsabgrenzung"
-
-#. module: account_deferred_revenue
-#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
-msgid "Depreciation Lines"
-msgstr "Abschreibungsbuchungen"
+msgstr "Passive Rechnungsabgrenzung"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
@@ -141,8 +142,8 @@ msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.menu,name:account_deferred_revenue.menu_recognition_depreciation_confirmation_wizard
-msgid "Generate Deferred Revenue Entries"
-msgstr "Lege Rechnungsabgrenzungsposten an"
+msgid "Generate Deferred Revenues Entries"
+msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
@@ -167,12 +168,17 @@ msgstr "Artikel"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Modify Revenue"
+msgstr "Rechnungsabgrenzung ändern"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Next Period Revenue"
 msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Number of Revenues"
-msgstr ""
+msgstr "Anzahl der Rechnungsabgrenzungen"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
@@ -212,16 +218,26 @@ msgstr "Umsatz"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Board"
-msgstr ""
+msgstr "Abgrenzungsübersicht"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Date"
+msgstr "Erlösdatum"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Revenue Entry"
 msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Information"
+msgstr "Abgrenzungsinformationen"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Revenue Lines"
 msgstr ""
 
 #. module: account_deferred_revenue
@@ -231,6 +247,7 @@ msgstr "Einnahmen pro Monat"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_asset_sale_tree
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Name"
 msgstr "Umsatzbezeichnung"
 

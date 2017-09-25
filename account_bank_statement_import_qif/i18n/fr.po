@@ -3,20 +3,22 @@
 # * account_bank_statement_import_qif
 # 
 # Translators:
-# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
-# Nicolas JEUDY <nicolas@sudokeys.com>, 2016
-# Olivier Lenoir <olivier.lenoir@free.fr>, 2016
-# Cyrille de Lambert <cdelambert@teclib.com>, 2016
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
+# Nicolas JEUDY <njeudy@panda-chi.io>, 2017
+# Quentin THEURET <odoo@kerpeo.com>, 2017
+# Olivier Lenoir <olivier.lenoir@free.fr>, 2017
 # Xavier Symons <xsy@openerp.com>, 2017
-# Richard Mathot <rim@odoo.com>, 2017
 # Sébastien Le Ray <sebastien-github@orniz.org>, 2017
+# Cyrille de Lambert <cdelambert@teclib.com>, 2017
+# Richard Mathot <rim@odoo.com>, 2017
+# Bertrand LATOUR <divoir@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Sébastien Le Ray <sebastien-github@orniz.org>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Bertrand LATOUR <divoir@gmail.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +50,7 @@ msgstr ""
 "premier (jj/mm/aa) en dehors des États-Unis."
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:61
+#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:59
 #, python-format
 msgid "Could not decipher the QIF file."
 msgstr "Impossible de déchiffrer le fichier QIF."
@@ -81,7 +83,7 @@ msgstr "Format d'échange Quicken (.QIF)"
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_show_qif_date_format
 msgid "Show Qif Date Format"
-msgstr ""
+msgstr "Montrer le format de date QIF"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import_show_qif_date_format
@@ -89,6 +91,8 @@ msgid ""
 "Technical field used to ask the user for the date format used in the QIF "
 "file, as this format is ambiguous."
 msgstr ""
+"Champ technique utilisé pour demander à l'utilisateur le format de date "
+"utilité dans le fichier QIF, comme le format est ambigu."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view_inherited
@@ -96,9 +100,12 @@ msgid ""
 "The QIF format is ambiguous about dates: please check with your financial "
 "institution whether they format it with month or day first.<br/>"
 msgstr ""
+"Le format QIF est ambigu à propos des dates : veuillez vérifier avec votre "
+"institution financière si ils les formatent avec le mois ou le jour en "
+"premier."
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:101
+#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:105
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr ""

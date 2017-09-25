@@ -3,18 +3,18 @@
 # * mrp_maintenance
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
-# Eric Geens <ericgeens@yahoo.com>, 2016
-# Cas Vissers <casvissers@brahoo.nl>, 2016
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
+# Eric Geens <ericgeens@yahoo.com>, 2017
+# Cas Vissers <casvissers@brahoo.nl>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,17 +51,17 @@ msgstr "Apparatuur"
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
 msgid "Est. Next Failure"
-msgstr "Verwachte volgende faling"
+msgstr "Verwachte volgende storing"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Estimated Next Failure"
-msgstr "Verwachte volgende faling"
+msgstr "Verwachte volgende storing"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_estimated_next_failure
 msgid "Estimated time before next failure (in days)"
-msgstr "Verwachte tijd tot volgende faling (in dagen)"
+msgstr "Verwachte tijd tot volgende fout (in dagen)"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_expected_mtbf
@@ -107,7 +107,7 @@ msgstr "Onderhoud"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter_equipment_ids
 msgid "Maintenance Equipment"
-msgstr "Onderhoud materiaal"
+msgstr "Onderhoud apparatuur"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
@@ -119,14 +119,12 @@ msgstr "Onderhoudsopdracht"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workorder_maintenance_request_count
 msgid "Maintenance Request Count"
-msgstr ""
+msgstr "Aantal onderhoudsopdrachten"
 
 #. module: mrp_maintenance
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:96
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:126
-#: model:ir.actions.act_window,name:mrp_maintenance.maintenance_request_action_reports
 #: model:ir.model,name:mrp_maintenance.model_maintenance_request
-#: model:ir.ui.menu,name:mrp_maintenance.maintenance_request_reporting
 #, python-format
 msgid "Maintenance Requests"
 msgstr "Onderhoudsopdrachten"
@@ -147,8 +145,8 @@ msgstr "Tijd tussen falingen"
 msgid ""
 "Mean Time Between Failure, computed based on done corrective maintenances."
 msgstr ""
-"Mean Time Between Failure wordt berekend op basis van correctie onderhoud "
-"welke gereed is."
+"Mean Time Between Failure, wordt berekend op basis van uitgevoerd correctief"
+"  onderhoud."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_mttr
@@ -164,19 +162,9 @@ msgid "New Maintenance Request"
 msgstr "Nieuwe onderhoud opdracht"
 
 #. module: mrp_maintenance
-#: model:ir.actions.act_window,help:mrp_maintenance.maintenance_request_action_reports
-msgid "No maintenance request."
-msgstr "Geen onderhoudsopdracht."
-
-#. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production_maintenance_count
 msgid "Number of maintenance requests"
 msgstr "Hoeveelheid onderhoudsopdrachten"
-
-#. module: mrp_maintenance
-#: model:ir.ui.menu,name:mrp_maintenance.maintenance_reporting
-msgid "Reporting"
-msgstr "Rapportering"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production_request_ids
@@ -186,24 +174,20 @@ msgstr "Opdrachtaanvraag"
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workcenter
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_workcenter_id
+#: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Work Center"
-msgstr "Productieplaats"
+msgstr "Werkplek"
 
 #. module: mrp_maintenance
 #: model:ir.ui.menu,name:mrp_maintenance.menu_workcenter_tree
 msgid "Work Centers"
-msgstr "Productieplaats"
+msgstr "Werkplekken"
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workorder
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request_workorder_id
 msgid "Work Order"
-msgstr "Werkopdracht"
-
-#. module: mrp_maintenance
-#: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
-msgid "WorkCenter"
-msgstr "Werkplaats"
+msgstr "Werkorder"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
@@ -214,4 +198,4 @@ msgstr "dagen"
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:50
 #, python-format
 msgid "work centers"
-msgstr "productieplaatsen"
+msgstr "werkplekken"

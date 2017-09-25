@@ -3,18 +3,18 @@
 # * sale_ebay
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Eric Geens <eric.geens@vitabiz.be>, 2016
-# Volluta <volluta@tutanota.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
+# Eric Geens <eric.geens@vitabiz.be>, 2017
+# Volluta <volluta@tutanota.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 # Eric Geens <ericgeens@yahoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr ""
 "      "
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:371
+#: code:addons/sale_ebay/models/product.py:383
 #, python-format
 msgid ""
 " If you want to set quantity to 0, the Out Of Stock option should be enabled"
@@ -49,7 +49,7 @@ msgstr ""
 "en de lijstlengte moet gezet worden op 'Til Canceled"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:374
+#: code:addons/sale_ebay/models/product.py:386
 #, python-format
 msgid ""
 " You need to have at least 2 variations selected for a multi-variations listing.\n"
@@ -84,7 +84,7 @@ msgid "7 Days"
 msgstr "7 dagen"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:245
+#: code:addons/sale_ebay/models/product.py:259
 #, python-format
 msgid ""
 "All the quantities must be greater than 0 or you need to enable the Out Of "
@@ -154,19 +154,24 @@ msgid "Code"
 msgstr "Code"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:338
+#: code:addons/sale_ebay/models/product.py:352
 #, python-format
 msgid "Configure The eBay Integrator Now"
 msgstr "Configureer de eBay integrator nu"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.model,name:sale_ebay.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: sale_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Countries & Currencies"
-msgstr ""
+msgstr "Landen & valuta's"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_res_country
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_country
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_country
 msgid "Country"
 msgstr "Land"
 
@@ -190,7 +195,7 @@ msgstr "Aangemaakt op"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_res_currency
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_currency
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_currency
 msgid "Currency"
 msgstr "Valuta"
 
@@ -211,7 +216,7 @@ msgid "Description Template"
 msgstr "Omschrijving sjabloon"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_dev_id
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_dev_id
 msgid "Developer Key"
 msgstr "Ontwikkelaarssleutel"
 
@@ -238,7 +243,7 @@ msgstr ""
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_list_items
 msgid "Ebay: List Product Templates on eBay"
-msgstr ""
+msgstr "E-bay: Toon productsjablonen op e-Bay"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_relist_items
@@ -253,11 +258,6 @@ msgstr ""
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_unlink_items_listings
 msgid "Ebay: Unlink eBay Product Templates Listings"
-msgstr ""
-
-#. module: sale_ebay
-#: model:ir.actions.server,name:sale_ebay.action_ebay_update_carrier
-msgid "Ebay: Update eBay Carrier Information"
 msgstr ""
 
 #. module: sale_ebay
@@ -283,7 +283,7 @@ msgid "End Item's Listing"
 msgstr "Stop product oplijsting"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:231
+#: code:addons/sale_ebay/models/product.py:245
 #, python-format
 msgid ""
 "Error Encountered.\n"
@@ -293,7 +293,7 @@ msgstr ""
 "Geen variant ingesteld om op te lijsten op eBay."
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:377
+#: code:addons/sale_ebay/models/product.py:389
 #, python-format
 msgid ""
 "Error Encountered.\n"
@@ -319,9 +319,9 @@ msgid "Full Name"
 msgstr "Volledige naam"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_gallery_plus
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_gallery_plus
 msgid "Gallery Plus"
-msgstr ""
+msgstr "Gallerij plus"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
@@ -338,12 +338,12 @@ msgid "ID"
 msgstr "ID"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Import eBay config data and sync transactions"
-msgstr ""
+msgstr "Importeer e-Bay configuratie data en synchroniseer transacties"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:367
+#: code:addons/sale_ebay/models/product.py:381
 #, python-format
 msgid ""
 "Impossible to revise a listing into a multi-variations listing.\n"
@@ -394,7 +394,7 @@ msgstr "Laatst bijgewerkt"
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_leaf_category
 msgid "Leaf Category"
-msgstr ""
+msgstr "Bladcategorie"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
@@ -404,22 +404,22 @@ msgstr "Koppel bestaande oplijsting"
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Link With Existing eBay Listing"
-msgstr ""
+msgstr "Linken met bestaande eBay oplijsting"
 
 #. module: sale_ebay
 #: model:ir.actions.act_window,name:sale_ebay.action_ebay_link_listing
 msgid "Link with Existing eBay Listing"
-msgstr ""
+msgstr "Link met bestaande eBay oplijsting"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
 msgid "Link with eBay Listing"
-msgstr ""
+msgstr "Link met eBay oplijsting"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "List Item on eBay"
-msgstr ""
+msgstr "Toon item op eBay"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_listing_type
@@ -428,19 +428,19 @@ msgid "Listing Type"
 msgstr "Lijstsoort"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_location
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_location
 msgid "Location"
 msgstr "Locatie"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_domain
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_domain
 msgid "Mode"
 msgstr "Modus"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Mode and credentials"
-msgstr ""
+msgstr "Modus en inloggegevens"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_name
@@ -462,26 +462,21 @@ msgid "Official eBay Category"
 msgstr "Officiële eBay categorie"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:337
+#: code:addons/sale_ebay/models/product.py:351
 #, python-format
 msgid "One parameter is missing."
 msgstr "Er ontbreekt een parameter."
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:363
+#: code:addons/sale_ebay/models/product.py:377
 #, python-format
 msgid "Or the condition is not compatible with the category."
 msgstr "Of de conditie is niet passend bij de categorie."
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_out_of_stock
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_out_of_stock
 msgid "Out Of Stock"
-msgstr ""
-
-#. module: sale_ebay
-#: model:ir.model,name:sale_ebay.model_res_partner
-msgid "Partner"
-msgstr "Relatie"
+msgstr "Niet meer op stock"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_seller_payment_policy_id
@@ -490,7 +485,7 @@ msgid "Payment Policy"
 msgstr "Betalingsbeleid"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Policies"
 msgstr "Beleidsregels"
 
@@ -511,7 +506,7 @@ msgid "Product"
 msgstr "Product"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Product Categories"
 msgstr "Productcategorieën"
 
@@ -521,29 +516,29 @@ msgid "Product Template"
 msgstr "Productsjabloon"
 
 #. module: sale_ebay
-#: selection:sale.config.settings,ebay_domain:0
+#: selection:res.config.settings,ebay_domain:0
 msgid "Production"
 msgstr "Productie"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_prod_app_id
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_app_id
 msgid "Production App Key"
 msgstr "Productie App sleutel"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_prod_cert_id
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_cert_id
 msgid "Production Cert Key"
 msgstr "Productie cert sleutel"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_prod_token
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_token
 msgid "Production Token"
 msgstr "Productietoken"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Products & Transactions"
-msgstr ""
+msgstr "Producten & Transacties"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_use
@@ -580,33 +575,33 @@ msgstr "Herzie item"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_crm_team
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sales_team
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_sales_team
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Sales Channel"
 msgstr "Verkoopkanaal"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Sales channel to manage eBay sales"
-msgstr ""
+msgstr "Verkoopkanaal om e-Bay verkopen te beheren"
 
 #. module: sale_ebay
-#: selection:sale.config.settings,ebay_domain:0
+#: selection:res.config.settings,ebay_domain:0
 msgid "Sandbox"
 msgstr "Sandbox"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sandbox_app_id
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_sandbox_app_id
 msgid "Sandbox App Key"
 msgstr "Sandbox app sleutel"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sandbox_cert_id
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_sandbox_cert_id
 msgid "Sandbox Cert Key"
 msgstr "Sandbox cert sleutel"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sandbox_token
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_sandbox_token
 msgid "Sandbox Token"
 msgstr "Sandbox token"
 
@@ -629,12 +624,12 @@ msgid "Starting Price for Auction"
 msgstr "Startprijs voor bieding"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Storage"
 msgstr "Opslag"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Storage location of your products"
 msgstr "Opslaglocatie van uw producten"
 
@@ -662,37 +657,27 @@ msgid "Summary"
 msgstr "Samenvatting"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Sync now"
 msgstr "Sync nu"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Synchronization"
 msgstr "Synchronisatie"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:694
+#: code:addons/sale_ebay/models/product.py:718
 #, python-format
 msgid "The Buyer Chose The Following Delivery Method :\n"
 msgstr "De koper koos de volgende afleveringsmethode:\n"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:690
-#: code:addons/sale_ebay/models/product.py:691
+#: code:addons/sale_ebay/models/product.py:714
+#: code:addons/sale_ebay/models/product.py:715
 #, python-format
 msgid "The Buyer Posted :\n"
 msgstr "De koper plaatste:\n"
-
-#. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:369
-#, python-format
-msgid ""
-"The UPC value (the barcode value of your product) is not valid by using the "
-"checksum."
-msgstr ""
-"De UPC-waarde (het barcoderesultaat van uw product) heeft een ongeldig "
-"controlegetal."
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_subtitle
@@ -743,6 +728,11 @@ msgid "Type"
 msgstr "Soort"
 
 #. module: sale_ebay
+#: model:ir.actions.server,name:sale_ebay.action_ebay_update_carrier
+msgid "Update eBay Carrier Information"
+msgstr "Update eBay vervoerder informatie"
+
+#. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_sync_stock
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_sync_stock
 msgid "Use Stock Quantity"
@@ -759,18 +749,19 @@ msgid "Variants"
 msgstr "Varianten"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_zip_code
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_zip_code
 msgid "Zip"
 msgstr "Postcode"
 
 #. module: sale_ebay
 #: model:crm.team,name:sale_ebay.ebay_sales_team
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "eBay"
 msgstr "eBay"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "eBay Account"
 msgstr "e-Bay account"
 
@@ -798,14 +789,9 @@ msgid "eBay Listing ID"
 msgstr "eBay lijst ID"
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "eBay Options"
 msgstr "e-Bay opties"
-
-#. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
-msgid "eBay Sale"
-msgstr "eBay verkoop"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_listing_status
@@ -815,6 +801,7 @@ msgstr "eBay status"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_partner_ebay_id
+#: model:ir.model.fields,field_description:sale_ebay.field_res_users_ebay_id
 msgid "eBay User ID"
 msgstr "eBay gebruikersid"
 
@@ -824,7 +811,7 @@ msgid "eBay Variant URL"
 msgstr "eBay variant URL"
 
 #. module: sale_ebay
-#: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_site
+#: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_site
 msgid "eBay Website"
 msgstr "e-Bay website"
 
@@ -839,8 +826,8 @@ msgstr ""
 "'%s'"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:470
-#: code:addons/sale_ebay/models/product.py:543
+#: code:addons/sale_ebay/models/product.py:482
+#: code:addons/sale_ebay/models/product.py:555
 #, python-format
 msgid ""
 "eBay error: Impossible to synchronize the products. \n"
@@ -850,13 +837,13 @@ msgstr ""
 "'%s'"
 
 #. module: sale_ebay
-#: code:addons/sale_ebay/models/product.py:365
+#: code:addons/sale_ebay/models/product.py:379
 #, python-format
 msgid "eBay is unreachable. Please try again later."
 msgstr "eBay is onbereikbaar. Probeer later opnieuw."
 
 #. module: sale_ebay
-#: model:ir.ui.view,arch_db:sale_ebay.sale_config_settings_view_form_inherit_sales_ebay
+#: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "eBay parameters"
 msgstr "e-bay parameters"
 
@@ -892,6 +879,6 @@ msgid "ebay.site"
 msgstr "ebay.site"
 
 #. module: sale_ebay
-#: model:ir.model,name:sale_ebay.model_sale_config_settings
-msgid "sale.config.settings"
-msgstr "sale.config.settings"
+#: model:ir.model,name:sale_ebay.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"
