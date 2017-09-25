@@ -53,6 +53,9 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
                 var number = invite_session.remoteIdentity.uri.user;
                 var confirmation = confirm(_t("Incoming call from ") + name + ' (' + number + ')');
                 if(confirmation){
+                    if (self.onCall) {
+                        self.hangup();
+                    }
                     var call_options = {
                         media: {
                             render: {
