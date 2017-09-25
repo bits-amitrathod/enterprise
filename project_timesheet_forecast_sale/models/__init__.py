@@ -3,3 +3,4 @@
 
 from . import project
 from . import project_forecast
+from . import sale_order
