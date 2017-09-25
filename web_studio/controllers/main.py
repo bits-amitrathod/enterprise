@@ -458,7 +458,7 @@ class WebStudioController(http.Controller):
                 relation_field=field.name,
             )
         if values.get('selection'):
-            values['selection'] = ustr(values['selection']),
+            values['selection'] = ustr(values['selection'])
         # Create new field
         return request.env['ir.model.fields'].create(values)
 
