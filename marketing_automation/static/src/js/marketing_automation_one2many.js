@@ -174,7 +174,7 @@ var HierarchyKanbanRecord = KanbanRecord.extend({
                     close: true
                 }],
                 $content: $('<div>', {
-                    html: _t("This Activity has dependant child activity. 'DELETE ALL' will delete all child activity."),
+                    html: _t("This Activity has a dependant child activity. 'DELETE ALL' will delete all child activities."),
                 }),
             }).open();
         } else if (_.indexOf(['act', 'mail_open', 'mail_not_open', 'mail_reply', 'mail_not_reply', 'mail_click', 'mail_not_click', 'mail_bounce'], type) !== -1) {
@@ -186,7 +186,7 @@ var HierarchyKanbanRecord = KanbanRecord.extend({
                     'default_trigger_type': type
                 });
             } else {
-                this.do_warn(_t('Please save campaingn to add child activity'));
+                this.do_warn(_t('Please save the campaign to add a child activity'));
             }
         } else {
             this._super.apply(this, arguments);
