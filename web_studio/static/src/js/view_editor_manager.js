@@ -418,6 +418,7 @@ return Widget.extend({
                 break;
             case 'field':
                 var field_description = event.data.field_description;
+                new_attrs = _.pick(new_attrs, this.expr_attrs.field);
                 this._add_field(type, field_description, node, xpath_info, position, new_attrs);
                 break;
             case 'chatter':
@@ -442,6 +443,7 @@ return Widget.extend({
                 this._edit_attributes_element(type, node, xpath_info, new_attrs);
                 break;
             case 'filter':
+                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context']);
                 this._add_filter(type, node, xpath_info, position, new_attrs);
                 break;
             case 'separator':
