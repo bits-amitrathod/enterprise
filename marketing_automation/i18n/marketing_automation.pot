@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-21 14:25+0000\n"
-"PO-Revision-Date: 2017-09-21 14:25+0000\n"
+"POT-Creation-Date: 2017-09-26 11:37+0000\n"
+"PO-Revision-Date: 2017-09-26 11:37+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -347,6 +347,11 @@ msgstr ""
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
+msgid "Domain"
+msgstr ""
+
+#. module: marketing_automation
+#: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Don't update"
 msgstr ""
 
@@ -544,6 +549,12 @@ msgid "Mailing"
 msgstr ""
 
 #. module: marketing_automation
+#: code:addons/marketing_automation/models/marketing_participant.py:149
+#, python-format
+msgid "Manually"
+msgstr ""
+
+#. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Mark as completed"
 msgstr ""
@@ -557,7 +568,6 @@ msgstr ""
 #. module: marketing_automation
 #: model:ir.model,name:marketing_automation.model_marketing_activity
 #: model:ir.model.fields,field_description:marketing_automation.field_mail_compose_message_marketing_activity_id
-#: model:ir.model.fields,field_description:marketing_automation.field_survey_mail_compose_message_marketing_activity_id
 msgid "Marketing Activity"
 msgstr ""
 
@@ -1053,13 +1063,13 @@ msgid "Valid during"
 msgstr ""
 
 #. module: marketing_automation
-#: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration_type
-msgid "Validity Duration Type"
+#: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration
+msgid "Validity Duration"
 msgstr ""
 
 #. module: marketing_automation
-#: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration
-msgid "Validity duration"
+#: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration_type
+msgid "Validity Duration Type"
 msgstr ""
 
 #. module: marketing_automation
@@ -1093,11 +1103,6 @@ msgstr ""
 #. module: marketing_automation
 #: selection:marketing.activity,trigger_type:0
 msgid "beginning of campaign"
-msgstr ""
-
-#. module: marketing_automation
-#: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-msgid "domain"
 msgstr ""
 
 #. module: marketing_automation

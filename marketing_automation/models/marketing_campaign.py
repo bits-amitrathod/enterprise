@@ -218,7 +218,7 @@ class MarketingActivity(models.Model):
         ('weeks', 'Weeks'),
         ('months', 'Months')], string='Delay Type',
         default='hours', required=True)
-    validity_duration = fields.Boolean('Validity duration')
+    validity_duration = fields.Boolean('Validity Duration')
     validity_duration_number = fields.Integer(string='Valid during', default=0)
     validity_duration_type = fields.Selection([
         ('hours', 'Hours'),
