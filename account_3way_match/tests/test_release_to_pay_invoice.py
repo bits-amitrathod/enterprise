@@ -71,7 +71,7 @@ class TestReleaseToPayInvoice(AccountingTestCase):
 
         # ... and create a back order.
         self.stock_backorder_confirmation_1 = self.StockBackorderConfirmation.create({
-            'pick_id': self.picking_1.id
+            'pick_ids': [(4, self.picking_1.id)]
             })
         self.stock_backorder_confirmation_1.process()
 
