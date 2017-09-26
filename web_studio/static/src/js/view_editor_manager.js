@@ -1185,8 +1185,8 @@ var ViewEditorManager = Widget.extend({
         // edit or create the subviews
         var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
         var field = fields_view.fields[node.attrs.name];
-        var attrs = this.editor.state.fieldsInfo[this.editor.state.viewType][node.attrs.name];
         if (this.view_type === 'form' && field) {
+            var attrs = this.editor.state.fieldsInfo[this.editor.state.viewType][node.attrs.name];
             var isX2Many = _.contains(['one2many','many2many'], field.type);
             var notEditableWidgets = ['many2many_tags', 'hr_org_chart'];
             if (isX2Many && !_.contains(notEditableWidgets, attrs.widget)) {
