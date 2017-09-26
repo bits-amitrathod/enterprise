@@ -2,8 +2,8 @@ odoo.define('website_studio.FormManager', function (require) {
 "use strict";
 
 /**
- * This is the widget used by studio to render the website forms linked to 
- * the model being edited and to redirect to the frontend to modify 
+ * This is the widget used by studio to render the website forms linked to
+ * the model being edited and to redirect to the frontend to modify
  * a given website form or to create a new website form.
  *
  * @module website_studio.FormManager
@@ -36,7 +36,7 @@ var FormManager = Widget.extend({
      *                              to reset the breadcrumbs
      *                           - disable_edition: a boolean
      *                              to tell the webclient that
-     *                              the action is not a navigation 
+     *                              the action is not a navigation
      *                              we want to navigation in Studio with,
      *                              but it's an action we want to open
      *                              normally (because it is used by Studio).
@@ -92,7 +92,7 @@ var FormManager = Widget.extend({
      */
     _redirectToNewForm: function () {
         var self = this;
-        this.session
+        this.getSession()
             .user_has_group('website.group_website_designer')
             .then(function (is_website_designer) {
                 if (is_website_designer) {
