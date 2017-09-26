@@ -30,6 +30,7 @@ class Company(models.Model):
     ], string='Frequency', required=True, default="weeks")
     timesheet_mail_manager_nextdate = fields.Datetime('Next cron date for manager reminder', readonly=True)
 
+    @api.model
     def create(self, values):
         company = super(Company, self).create(values)
         company._timesheet_postprocess(values)
