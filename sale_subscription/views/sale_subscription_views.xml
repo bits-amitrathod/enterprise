@@ -258,7 +258,8 @@
                             <group>
                                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                 <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
-                                <field name="payment_token_id"/>
+                                <field name="payment_mandatory" invisible="1"/>
+                                <field name="payment_token_id" attrs="{'invisible': [('payment_mandatory', '==', False)]}"/>
                             </group>
                             <group>
                             </group>
