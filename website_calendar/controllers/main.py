@@ -137,6 +137,13 @@ class WebsiteCalendar(http.Controller):
             'state': 'open',
             'name': _('%s with %s') % (appointment_type.name, name),
             'start': date_start.strftime(dtf),
+            # FIXME master
+            # we override here start_date(time) value because they are not properly
+            # recomputed due to ugly overrides in event.calendar (reccurrencies suck!)
+            #     (fixing them in stable is a pita as it requires a good rewrite of the
+            #      calendar engine)
+            'start_date': date_start.strftime(dtf),
+            'start_datetime': date_start.strftime(dtf),
             'stop': date_end.strftime(dtf),
             'allday': False,
             'duration': appointment_type.appointment_duration,
