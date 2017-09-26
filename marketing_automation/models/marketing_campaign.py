@@ -428,7 +428,7 @@ class MarketingActivity(models.Model):
 
         if self.validity_duration:
             duration = relativedelta(**{self.validity_duration_type: self.validity_duration_number})
-            invalid_traces = traces.filtered(lambda trace: trace.schedule_date + duration < Datetime.now())
+            invalid_traces = traces.filtered(lambda trace: not trace.schedule_date or trace.schedule_date + duration < Datetime.now())
             invalid_traces.action_cancel()
             traces = traces - invalid_traces
 
