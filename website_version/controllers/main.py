@@ -49,7 +49,7 @@ class Versioning_Controller(Website):
         #always expecting an ir_ui_view ID but in case of /blog or /forum, the main-object is not
         #Same with website_page
         if model == "website.page":
-            view_id = request.env['website.page'].browse(view_id).ir_ui_view_id.id
+            view_id = request.env['website.page'].browse(view_id).view_id.id
         #To get all versions in the menu
         view = request.env['ir.ui.view'].browse(view_id)
         Version = request.env['website_version.version']
@@ -76,7 +76,7 @@ class Versioning_Controller(Website):
         #always expecting an ir_ui_view ID but in case of /blog or /forum, the main-object is not
         #Same with website_page
         if model == "website.page":
-            view_id = request.env['website.page'].browse(view_id).ir_ui_view_id.id
+            view_id = request.env['website.page'].browse(view_id).view_id.id
         v = request.env['ir.ui.view'].browse(view_id)
         website_id = request.context.get('website_id')
         return bool(request.env["website_version.experiment.version"].search([('version_id.view_ids.key', '=', v.key), ('experiment_id.website_id.id', '=', website_id)], limit=1))
