@@ -289,9 +289,14 @@
                                             <div>
                                                 <field name="trigger_type" />
                                             </div>
-                                            <field name="parent_id" domain="[('id', 'in', parent.marketing_activity_ids), ('id', '!=', id)]" attrs="{'required': [('trigger_type', '!=', 'begin')], 'invisible': [('trigger_type', '=', 'begin')]}" />
-                                            <label for="parent_id" class="hidden" />
-                                            <small class="oe_edit_only o_ma_alert text-muted" attrs="{'invisible': [('trigger_type', '=', 'begin')]}">(save the campaign to make its activities selectable)</small>
+                                            <label for="parent_id" attrs="{'invisible': [('trigger_type', '=', 'begin')]}"/>
+                                            <div>
+                                                <field name="parent_id" domain="[('id', 'in', parent.marketing_activity_ids), ('id', '!=', id)]" attrs="{'required': [('trigger_type', '!=', 'begin')], 'invisible': [('trigger_type', '=', 'begin')]}" options="{'no_create_edit': True}"/>
+                                            </div>
+                                            <label string="Warning" invisible="1"/>
+                                            <div>
+                                                <small class="oe_edit_only text-muted" attrs="{'invisible': [('trigger_type', '=', 'begin')]}">(save the campaign to make its activities selectable)</small>
+                                            </div>
                                             <label for="validity_duration"/>
                                             <div>
                                                 <field name="validity_duration"/>
