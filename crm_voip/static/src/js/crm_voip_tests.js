@@ -51,7 +51,7 @@ QUnit.module('crm_voip', {
             },
         });
 
-        var $phoneLink = form.$('a.o_form_uri.o_field_widget.o_text_overflow');
+        var $phoneLink = form.$('a.o_form_uri.o_field_widget');
         assert.strictEqual($phoneLink.length, 1,
             "should have a anchor with correct classes");
         assert.strictEqual($phoneLink.text(), 'y\u00ADop',
@@ -71,7 +71,7 @@ QUnit.module('crm_voip', {
 
         // save
         form.$buttons.find('.o_form_button_save').click();
-        $phoneLink = form.$('a.o_form_uri.o_field_widget.o_text_overflow');
+        $phoneLink = form.$('a.o_form_uri.o_field_widget');
         assert.strictEqual($phoneLink.text(), 'n\u00ADew',
             "new value should be displayed properly as text with the skype obfuscation");
         assert.strictEqual($phoneLink.attr('href'), 'tel:new',
@@ -101,7 +101,7 @@ QUnit.module('crm_voip', {
         assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').first().text(), 'y\u00ADop',
             "value should be displayed properly as text with the skype obfuscation");
 
-        var $phoneLink = list.$('a.o_form_uri.o_field_widget.o_text_overflow');
+        var $phoneLink = list.$('a.o_form_uri.o_field_widget');
         assert.strictEqual($phoneLink.length, 5,
             "should have anchors with correct classes");
         assert.strictEqual($phoneLink.first().attr('href'), 'tel:yop',
@@ -121,7 +121,7 @@ QUnit.module('crm_voip', {
         assert.ok(!$cell.parent().hasClass('o_selected_row'), 'should not be in edit mode anymore');
         assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').first().text(), 'n\u00ADew',
             "value should be properly updated");
-        $phoneLink = list.$('a.o_form_uri.o_field_widget.o_text_overflow');
+        $phoneLink = list.$('a.o_form_uri.o_field_widget');
         assert.strictEqual($phoneLink.length, 5,
             "should still have anchors with correct classes");
         assert.strictEqual($phoneLink.first().attr('href'), 'tel:new',
