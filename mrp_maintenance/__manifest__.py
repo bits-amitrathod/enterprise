@@ -15,7 +15,7 @@ Maintenance in MRP
 * Equipments related to workcenters
 * MTBF, MTTR, ...
 """,
-    'depends': ['mrp_workorder', 'maintenance'],
+    'depends': ['quality_mrp', 'maintenance'],
     'data': [
         'views/maintenance_views.xml',
         'views/mrp_views.xml'
