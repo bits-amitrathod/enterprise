@@ -48,7 +48,7 @@ class report_account_coa(models.AbstractModel):
         company_id = context.get('company_id') or self.env.user.company_id
         title_index = ''
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
-        zero_value = self.format_value(0)
+        zero_value = ''
         sum_columns = [0,0,0,0]
         for period in range(len(comparison_table)):
             sum_columns += [0, 0]
