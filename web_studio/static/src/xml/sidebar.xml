@@ -160,7 +160,7 @@
         <input id="string" name="string" type="text"
             t-att-value="widget.attrs.string"/>
     </div>
-    <div>
+    <div t-if="widget.view_type === 'form'">
         <label for="help">Help Tooltip</label>
         <input id="help" name="help" type="text"
             t-att-value="widget.attrs.help"/>
