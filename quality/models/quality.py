@@ -10,6 +10,12 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.addons import decimal_precision as dp
 from math import sqrt
 
+class TestType(models.Model):
+    _name = "quality.point.test_type"
+    _description = "Test Type"
+
+    name = fields.Char('Name', required=True)
+    technical_name = fields.Char('Technical name', required=True)
 
 class QualityPoint(models.Model):
     _name = "quality.point"
@@ -51,10 +57,9 @@ class QualityPoint(models.Model):
     active = fields.Boolean(default=True)
     check_count = fields.Integer(compute="_compute_check_count")
     check_ids = fields.One2many('quality.check', 'point_id')
-    test_type = fields.Selection([
-        ('passfail', 'Pass - Fail'),
-        ('measure', 'Measure')], string="Test Type",
-        default='passfail', required=True)
+    test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', required=True,
+            default=lambda self: self.env['quality.point.test_type'].search([('technical_name', '=', 'passfail')]))
+    test_type = fields.Char(related='test_type_id.technical_name')
 
     norm = fields.Float('Norm', digits=dp.get_precision('Quality Tests'))  # TDE RENAME ?
     tolerance_min = fields.Float('Min Tolerance', digits=dp.get_precision('Quality Tests'))
@@ -241,7 +246,7 @@ class QualityCheck(models.Model):
     alert_ids = fields.One2many('quality.alert', 'check_id', string='Alerts')
     alert_count = fields.Integer('# Quality Alerts', compute="_compute_alert_count")
     note = fields.Html(related='point_id.note', readonly=True)
-    test_type = fields.Selection(related="point_id.test_type", readonly=True)
+    test_type = fields.Char(related="point_id.test_type", readonly=True)
     norm_unit = fields.Char(related='point_id.norm_unit', readonly=True)
     measure = fields.Float('Measure', default=0.0, digits=dp.get_precision('Quality Tests'), track_visibility='onchange')
     measure_success = fields.Selection([
