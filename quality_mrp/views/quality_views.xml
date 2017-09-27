@@ -8,6 +8,11 @@
                 <field name="operation_id" attrs="{'invisible': [('code', '!=', 'mrp_operation')]}" groups="mrp.group_mrp_routings" options="{'no_create': True}"/>
                 <field name="code" invisible="1"/>
             </field>
+            <field name="user_id" position="after">
+                <field name="worksheet" widget="radio" attrs="{'invisible': ['|', ('code', '!=', 'mrp_operation'), ('operation_id', '=', False)]}"/>
+                <field name="worksheet_page" attrs="{'invisible': ['|', '|', ('code', '!=', 'mrp_operation'), ('operation_id', '=', False), ('worksheet', '!=', 'scroll')]}"/>
+                <field name="component_id" attrs="{'invisible': ['|', '|', ('code', '!=', 'mrp_operation'), ('operation_id', '=', False), ('test_type', '!=', 'register_consumed_materials')]}" />
+            </field>
         </field>
     </record>
 
@@ -56,8 +61,8 @@
         <field name="res_model">quality.check</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[('workorder_id', '=', active_id)]</field>
-        <field name="target">new</field>
+        <field name="domain">[('workorder_id', '=', active_id), ('test_type', '!=', 'register_consumed_materials')]</field>
+        <field name="target">main</field>
         <field name="context">{
             'search_default_workorder_id': [active_id],
             'default_workorder_id': active_id,
