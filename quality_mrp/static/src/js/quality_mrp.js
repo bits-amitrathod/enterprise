@@ -47,7 +47,7 @@ var BackArrow = FieldInteger.extend({
         'click': '_onClick',
     },
     _render: function () {
-        this.$el.html('<button class="btn btn-default"><i class="fa fa-arrow-left"/></button>');
+        this.$el.html('<button class="btn btn-default o_workorder_icon_btn o_workorder_icon_back"><i class="fa fa-arrow-left"/></button>');
     },
     _onClick: function() {
         var self = this;

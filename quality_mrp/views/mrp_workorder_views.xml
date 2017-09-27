@@ -55,7 +55,7 @@
         <field name="name">mrp.workorder.view.form.inherit.quality.tablet.new</field>
         <field name="model">mrp.workorder</field>
         <field name="arch" type="xml">
-            <form string="Production Workcenter" delete="0" create="0">
+            <form string="Production Workcenter" delete="0" create="0" class="o_workorder_tablet">
                 <field name="allow_producing_quantity_change" invisible="1"/>
                 <field name="active_move_line_ids" invisible="1"/>
                 <field name="current_quality_check_id" invisible="1"/>
@@ -78,9 +78,9 @@
                 <field name="workcenter_id" invisible="1"/>
                 <field name="working_state" invisible="1"/>
                 <field name="worksheet_page" invisible="1"/>
-                <div class="row workorder_bar">
-                    <div class="workorder_bar_left">
-                        <field name="id" widget="back_arrow" readonly="1"/>
+                <div class="workorder_bar">
+                    <div class="workorder_bar_left o_workorder_bar_content">
+                        <field name="id" class="o_workorder_icon_btn" widget="back_arrow" readonly="1"/>
                         <label for="product_id" string=""/>
                         <field name="product_id" options="{'no_open': True}" readonly="1"/>
                         <label for="qty_producing" string=":"/>
@@ -89,84 +89,106 @@
                         <label for="product_uom_id" string="" class="oe_inline"/>
                         <field name="product_uom_id" options="{'no_open': True}" class="oe_inline"/>
                     </div>
-                    <div class="workorder_bar_right text-right">
-                        <field name="production_id" options="{'no_open': True}" readonly="1"/> - <field name="name" readonly="1"/>
-                    </div>
-                    <div class="workorder_bar_center text-center">
+                    <div class="workorder_bar_center o_workorder_bar_content">
                         <div attrs="{'invisible': [('tracking', '=', 'none')]}">
                             <label for="final_lot_id" string="Lot:" attrs="{'invisible': [('tracking', '!=', 'lot')]}"/>
                             <label for="final_lot_id" string="SN:" attrs="{'invisible': [('tracking', '!=', 'serial')]}"/>
                             <field name="final_lot_id" context="{'default_product_id': product_id}"/>
                         </div>
                     </div>
+                    <div class="workorder_bar_right o_workorder_bar_content o_workorder_bar_content_right">
+                        <field name="production_id" options="{'no_open': True}" readonly="1"/> - <field name="name" readonly="1"/>
+                    </div>
                 </div>
-                <div class="row workorder_actions">
-                    <div class="col-xs-6">
+                <div class="workorder_actions">
+                    <div class="o_workorder_bar_content">
+                        <button name="action_menu" type="object" class="btn-default o_workorder_icon_btn" string="" icon="fa-th"/>
+                        <button name="button_pending" type="object" class="btn-default mr8" attrs="{'invisible': ['|', ('is_user_working', '=', False), ('working_state', '=', 'blocked')]}" string="Pause"/>
+                        <button name="button_start" type="object" class="btn-warning" attrs="{'invisible': ['|', ('is_user_working', '=', True), ('working_state', '=', 'blocked')]}" string="Continue"/>
+                        <button name="button_unblock" type="object" context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': [('working_state', '!=', 'blocked')]}" string="Unblock" class="btn-danger"/>
+                        <button name="action_previous" type="object" class="btn-default" string="Previous" icon="fa-chevron-left o_workorder_btn_icon_small" attrs="{'invisible': [('is_first_step', '=', True)]}"/>
+                        <button name="action_skip" type="object" class="btn-default" string="Skip" icon="fa-step-forward pull-right o_workorder_btn_icon_small" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('quality_state', '!=', 'none')]}"/>
+                        <button name="action_next" type="object" class="btn-default" string="Next" icon="fa-chevron-right pull-right o_workorder_btn_icon_small" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('quality_state', '=', 'none')]}"/>
+                    </div>
+                    <div class="o_workorder_bar_content o_workorder_bar_content_right">
                         <div attrs="{'invisible': [('working_state', '=', 'blocked')]}">
-                            <button name="do_pass" type="object" class="btn-primary" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Pass"/>
-                            <button name="do_pass" type="object" attrs="{'invisible': ['|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail')]}" string="Pass"/>
-                            <button name="do_fail" type="object" class="btn-primary" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
-                            <button name="do_fail" type="object" attrs="{'invisible': ['|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
+                            <button name="do_fail" type="object" class="btn-danger" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
+                            <button name="do_fail" type="object" class="btn-danger" attrs="{'invisible': ['|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
+                            <button name="do_pass" type="object" class="btn-success" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Pass"/>
+                            <button name="do_pass" type="object" class="btn-success" attrs="{'invisible': ['|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail')]}" string="Pass"/>
                             <button name="action_next" type="object" class="btn-primary" attrs="{'invisible': ['|', ('is_last_step', '=', True), '&amp;', '|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail'), ('test_type', '!=', 'dummy')]}" string="Next"/>
                             <button name="action_next" type="object" class="btn-primary" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('test_type', 'not in', ['register_consumed_materials', 'picture'])]}" string="Validate"/>
                             <button name="do_measure" type="object" class="btn-primary" string="Validate" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
                             <button name="record_production" type="object" string="Record production" attrs="{'invisible': ['|', '|', '|', ('is_last_step', '!=', True), ('skipped_check_ids', '!=', []), ('is_last_lot', '=', True)]}" class="btn-primary"/>
-                            <button name="do_finish" type="object" string="Mark as Done" attrs="{'invisible': ['|', '|', '|', ('is_last_step', '!=', True), ('skipped_check_ids', '!=', []), ('is_last_lot', '=', False)]}" class="btn-primary"/>
+                            <button name="do_finish" type="object" string="Mark as Done" icon="fa-check" attrs="{'invisible': ['|', '|', '|', ('is_last_step', '!=', True), ('skipped_check_ids', '!=', []), ('is_last_lot', '=', False)]}" class="btn-primary"/>
                             <button name="action_first_skipped_step" type="object" string="Finish steps" attrs="{'invisible': ['|', '|', '|', ('is_last_step', '!=', True), ('state', '!=', 'progress'), ('skipped_check_ids', '=', [])]}" class="btn-primary"/>
                         </div>
                     </div>
-                    <div class="col-xs-6 text-right">
-                        <button name="action_menu" type="object" class="btn-default" string="Menu"/>
-                        <button name="button_pending" type="object" class="btn-warning" attrs="{'invisible': ['|', ('is_user_working', '=', False), ('working_state', '=', 'blocked')]}" string="Pause"/>
-                        <button name="button_start" type="object" class="btn-warning" attrs="{'invisible': ['|', ('is_user_working', '=', True), ('working_state', '=', 'blocked')]}" string="Continue"/>
-                        <button name="button_unblock" type="object" context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': [('working_state', '!=', 'blocked')]}" string="Unblock" class="btn-danger"/>
-                        <button name="action_previous" type="object" class="btn-default" string="Previous" attrs="{'invisible': [('is_first_step', '=', True)]}"/>
-                        <button name="action_skip" type="object" class="btn-default" string="Skip" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('quality_state', '!=', 'none')]}"/>
-                        <button name="action_next" type="object" class="btn-default" string="Next" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('quality_state', '=', 'none')]}"/>
+                </div>
+                <div class="o_workorder_data">
+                    <field class="o_workorder_note" name="note"/>
+                    <div class="workorder_picture">
+                        <field name="picture" widget="tablet_image" attrs="{'invisible': [('test_type', '!=', 'picture')], 'required': [('test_type', '=', 'picture')]}"/>
                     </div>
-                </div>
-                <field name="note"/>
-                <div class="workorder_picture">
-                    <field name="picture" widget="tablet_image" attrs="{'invisible': [('test_type', '!=', 'picture')], 'required': [('test_type', '=', 'picture')]}"/>
-                </div>
-                <div attrs="{'invisible': [('test_type', '!=', 'measure')]}" class="o_row">
-                    <label for="measure" string="Measure:" />
-                    <field name="measure" attrs="{'required': [('test_type', '=', 'measure')]}" class="oe_inline"/>
-                    <field name="norm_unit"/>
-                </div>
-                <h3 attrs="{'invisible': ['|', '|', ('current_quality_check_id', '!=', False), ('check_ids', '=', []), ('qty_producing', '=', 0)]}">
-                    <field name="product_id" options="{'no_open': True}"/> -
-                    <span attrs="{'invisible': ['|', ('tracking', '=', 'none'), ('lot_id', '=', False)]}">
-                        <field name="lot_id"/> -
-                    </span>
-                    <field name="qty_producing" readonly="1" force_save="1"/>
-                    <label for="product_uom_id" string=" "/>
-                    <field name="product_uom_id" options="{'no_open': True}" class="oe_inline"/>
-                </h3>
-                <field name="finished_product_check_ids" options="{'no_open': True}" attrs="{'invisible': ['|', '|', ('current_quality_check_id', '!=', False), ('check_ids', '=', []), ('qty_producing', '=', 0)]}" readonly="1">
-                    <tree decoration-success="quality_state == 'pass'" decoration-danger="quality_state == 'fail'">
-                        <field name="quality_state" invisible="1"/>
-                        <field name="test_type" invisible="1"/>
-                        <field name="control_date" string="Date"/>
-                        <field name="user_id" string="Operator"/>
-                        <field name="title"/>
-                        <field name="result"/>
-                        <field name="quality_state_for_summary"/>
-                    </tree>
-                </field>
-                <group attrs="{'invisible': ['|', ('test_type', '!=', 'register_consumed_materials'), ('is_last_step', '=', True)]}">
-                    <field name="component_id" readonly="1"/>
-                    <field name="lot_id" context="{'default_product_id': component_id}" attrs="{'invisible': [('component_tracking', '=', 'none')]}" string="Lot/SN"/>
-                    <label for="qty_done" string="Quantity"/>
-                    <div class="o_row">
-                        <div>
-                            <field name="qty_done" attrs="{'readonly': [('component_tracking', '=', 'serial')]}" string="Quantity" class="oe_inline"/> /
-                            <field name="component_remaining_qty" readonly="1" class="oe_inline"/>
-                            <label for="qty_done" string=" "/>
-                            <field name="component_uom_id" readonly="1" class="oe_inline"/>
+                    <div attrs="{'invisible': [('test_type', '!=', 'measure')]}" class="o_row mb8">
+                        <label for="measure" string="Measure:" />
+                        <field name="measure" attrs="{'required': [('test_type', '=', 'measure')]}" class="oe_inline"/>
+                        <field name="norm_unit"/>
+                    </div>
+                    <h3 attrs="{'invisible': ['|', '|', ('current_quality_check_id', '!=', False), ('check_ids', '=', []), ('qty_producing', '=', 0)]}">
+                        <field name="product_id" options="{'no_open': True}"/> -
+                        <span attrs="{'invisible': ['|', ('tracking', '=', 'none'), ('lot_id', '=', False)]}">
+                            <field name="lot_id"/> -
+                        </span>
+                        <field name="qty_producing" readonly="1" force_save="1"/>
+                        <label for="product_uom_id" string=" "/>
+                        <field name="product_uom_id" options="{'no_open': True}" class="oe_inline"/>
+                    </h3>
+                    <field name="finished_product_check_ids" options="{'no_open': True}" attrs="{'invisible': ['|', '|', ('current_quality_check_id', '!=', False), ('check_ids', '=', []), ('qty_producing', '=', 0)]}" readonly="1">
+                        <tree decoration-success="quality_state == 'pass'" decoration-danger="quality_state == 'fail'">
+                            <field name="quality_state" invisible="1"/>
+                            <field name="test_type" invisible="1"/>
+                            <field name="control_date" string="Date"/>
+                            <field name="user_id" string="Operator"/>
+                            <field name="title"/>
+                            <field name="result"/>
+                            <field name="quality_state_for_summary"/>
+                        </tree>
+                    </field>
+                    <group class="hidden" attrs="{'invisible': ['|', ('test_type', '!=', 'register_consumed_materials'), ('is_last_step', '=', True)]}">
+                        <field name="component_id" readonly="1"/>
+                        <field name="lot_id" context="{'default_product_id': component_id}" attrs="{'invisible': [('component_tracking', '=', 'none')]}" string="Lot/SN"/>
+                        <label for="qty_done" string="Quantity"/>
+                        <div class="o_row">
+                            <div>
+                                <field name="qty_done" attrs="{'readonly': [('component_tracking', '=', 'serial')]}" string="Quantity" class="oe_inline"/> /
+                                <field name="component_remaining_qty" readonly="1" class="oe_inline"/>
+                                <label for="qty_done" string=" "/>
+                                <field name="component_uom_id" readonly="1" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </group>
+
+                    <div class="o_workorder_bar_content o_workorder_form" attrs="{'invisible': ['|', ('test_type', '!=', 'register_consumed_materials'), ('is_last_step', '=', True)]}">
+                        <div class="o_workorder_field">
+                            <div class="o_form_label">Component</div>
+                            <field name="component_id" readonly="1"/>
+                        </div>
+                        <div class="o_workorder_field text-center">
+                            <div class="o_form_label">Lot/SN</div>
+                            <field name="lot_id" context="{'default_product_id': component_id}" attrs="{'invisible': [('component_tracking', '=', 'none')]}" string="Lot/SN"/>
+                        </div>
+                        <div class="o_workorder_field text-right">
+                            <label for="qty_done" string="Quantity"/>
+                            <div>
+                                <field name="qty_done" attrs="{'readonly': [('component_tracking', '=', 'serial')]}" string="Quantity" class="oe_inline"/> /
+                                <field name="component_remaining_qty" readonly="1" class="oe_inline"/>
+                                <label for="qty_done" string=" "/>
+                                <field name="component_uom_id" readonly="1" class="oe_inline"/>
+                            </div>
                         </div>
                     </div>
-                </group>
+                </div>
                 <div class="workorder_pdf">
                     <field name="worksheet" widget="pdf_viewer" attrs="{'invisible': [('is_last_step', '=', True), ('is_first_step', '=', False)]}"/>
                 </div>
