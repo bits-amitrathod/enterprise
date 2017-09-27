@@ -310,7 +310,7 @@
                 <field name="name"/>
                 <field name="bom_id"/>
                 <field name="effectivity_date"/>
-                <field name="displayed_image_id"/>
+                <field name="displayed_image_attachment_id"/>
                 <field name="stage_id"/>
                 <field name="color"/>
                 <field name="message_needaction_counter"/>
@@ -373,8 +373,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div t-if="record.displayed_image_id.value">
-                                <field name="displayed_image_id" widget="attachment_image"/>
+                            <div t-if="record.displayed_image_attachment_id.value">
+                                <field name="displayed_image_attachment_id" widget="attachment_image"/>
                             </div>
                             <div class="oe_clear"></div>
                         </div>
