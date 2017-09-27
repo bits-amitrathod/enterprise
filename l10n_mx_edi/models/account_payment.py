@@ -498,7 +498,7 @@ class AccountPayment(models.Model):
                 client = Client(url, timeout=20)
                 response = client.service.timbrar(username, password, cfdi, False)
             except Exception as e:
-                rec.l10n_mx_edi_log_error(e.message)
+                rec.l10n_mx_edi_log_error(str(e))
                 continue
             msg = getattr(response.resultados[0], 'mensaje', None)
             code = getattr(response.resultados[0], 'status', None)
@@ -524,7 +524,7 @@ class AccountPayment(models.Model):
                 client = Client(url, timeout=20)
                 response = client.service.cancelar(username, password, uuids, cer_pem, key_pem, key_password)
             except Exception as e:
-                rec.l10n_mx_edi_log_error(e.message)
+                rec.l10n_mx_edi_log_error(str(e))
                 continue
             code = getattr(response.resultados[0], 'statusUUID', None)
             cancelled = code in ('201', '202')  # cancelled or previously cancelled
@@ -546,7 +546,7 @@ class AccountPayment(models.Model):
                 client = Client(url, timeout=20)
                 response = client.service.stamp(cfdi, username, password)
             except Exception as e:
-                rec.l10n_mx_edi_log_error(e.message)
+                rec.l10n_mx_edi_log_error(str(e))
                 continue
             code = 0
             msg = None
@@ -581,7 +581,7 @@ class AccountPayment(models.Model):
                 invoices_list.uuids.string = [uuid]
                 response = client.service.cancel(invoices_list, username, password, company_id.vat, cer_pem, key_pem)
             except Exception as e:
-                inv.l10n_mx_edi_log_error(e.message)
+                inv.l10n_mx_edi_log_error(str(e))
                 continue
             if not hasattr(response, 'Folios'):
                 msg = _('A delay of 2 hours has to be respected before to cancel')
@@ -656,7 +656,7 @@ class AccountPayment(models.Model):
             try:
                 response = Client(url).service.Consulta(params).Estado
             except Exception as e:
-                rec.l10n_mx_edi_log_error(e.message or e.reason.__repr__())
+                rec.l10n_mx_edi_log_error(str(e))
                 continue
             rec.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(response.__repr__(), 'none')
 
