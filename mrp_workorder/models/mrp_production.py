@@ -26,8 +26,10 @@ class MrpProduction(models.Model):
         for order in self:
             date_planned_start_wo = date_planned_finished_wo = False
             if order.workorder_ids:
-                date_planned_start_wo = order.workorder_ids.sorted(key=lambda r: r.date_planned_start)[0].date_planned_start
-                date_planned_finished_wo = order.workorder_ids.sorted(key=lambda r: r.date_planned_finished)[-1].date_planned_finished
+                start_dates = order.workorder_ids.filtered(lambda r: r.date_planned_start is not False).sorted(key=lambda r: r.date_planned_start)
+                date_planned_start_wo = start_dates[0].date_planned_start if start_dates else False
+                finished_dates = order.workorder_ids.sorted(key=lambda r: r.date_planned_finished)
+                date_planned_finished_wo = finished_dates[-1].date_planned_finished if finished_dates else False
             order.date_planned_start_wo = date_planned_start_wo
             order.date_planned_finished_wo = date_planned_finished_wo
 
