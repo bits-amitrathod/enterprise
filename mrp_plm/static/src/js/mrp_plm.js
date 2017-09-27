@@ -36,7 +36,9 @@ KanbanRecord.include({
                     $cover_modal.modal('toggle');
                     $cover_modal.on('click', 'img', function (ev) {
                         self._updateRecord({
-                            displayed_image_id: $(ev.currentTarget).data('id'),
+                            displayed_image_id: {
+                                id: $(ev.currentTarget).data('id'),
+                            },
                         });
                         $cover_modal.modal('toggle');
                         $cover_modal.remove();
