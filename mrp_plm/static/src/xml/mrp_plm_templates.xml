@@ -13,7 +13,7 @@
                     <div t-if="attachment_ids.length > 0" class="row">
                         <t t-foreach="attachment_ids" t-as="attachment">
                             <div class="col-sm-3 o_image" style="height: 100%">
-                                <img style="cursor: pointer; width: 100%" t-att-src="'/web/image/' + attachment['id'] + '?unique=1'" t-att-data-id="attachment['id']"/>
+                                <img style="cursor: pointer; width: 100%" t-att-src="'/web/image/' + attachment['ir_attachment_id'][0] + '?unique=1'" t-att-data-id="attachment['id']"/>
                             </div>
                         </t>
                     </div>
