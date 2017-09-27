@@ -157,16 +157,20 @@ class MxReportPartnerLedger(models.AbstractModel):
         # the fy or the beginning of times depending on the partner
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
-        group_iva = self.env.ref('l10n_mx.tax_group_iva')
-        group_ret = self.env.ref('l10n_mx.tax_group_iva_ret')
-        group_exe = self.env.ref('l10n_mx.tax_group_iva_exent')
+        tag_16 = self.env.ref('l10n_mx.tag_diot_16')
+        tag_0 = self.env.ref('l10n_mx.tag_diot_0')
+        tag_ret = self.env.ref('l10n_mx.tag_diot_ret')
+        tag_exe = self.env.ref('l10n_mx.tag_diot_exento')
         tax_ids = self.env['account.tax'].search([
             ('type_tax_use', '=', 'purchase')])
-        tax16 = tax_ids.filtered(
-            lambda r: not float_compare(r.amount, 16.0, 0) and
-            r.tax_group_id == group_iva)
-        tax0 = tax_ids.filtered(lambda r: not float_compare(
-            r.amount, 0.0, 0) and r.tax_group_id == group_iva)
+        tax16 = tax_ids.search([('id', 'in', tax_ids.ids),
+                                ('tag_ids', 'in', tag_16.ids)])
+        tax0 = tax_ids.search([('id', 'in', tax_ids.ids),
+                               ('tag_ids', 'in', tag_0.ids)])
+        tax_ret = tax_ids.search([('id', 'in', tax_ids.ids),
+                                  ('tag_ids', 'in', tag_ret.ids)])
+        tax_exe = tax_ids.search([('id', 'in', tax_ids.ids),
+                                  ('tag_ids', 'in', tag_exe.ids)])
         for partner in sorted_partners:
             amls = grouped_partners[partner]['lines']
             if not amls:
@@ -197,12 +201,10 @@ class MxReportPartnerLedger(models.AbstractModel):
             total_tax0 += sum([partner_data.get(tax, 0) for tax in tax0.ids])
             p_columns.append(int(round(total_tax0, 0)))
             exempt += sum([partner_data.get(exem, 0)
-                           for exem in tax_ids.filtered(
-                               lambda r: r.tax_group_id == group_exe).ids])
+                           for exem in tax_exe.ids])
             p_columns.append(int(round(exempt, 0)))
             withh += sum([abs(partner_data.get(ret.id, 0) / (100 / ret.amount))
-                          for ret in tax_ids.filtered(
-                              lambda r: r.tax_group_id == group_ret)])
+                          for ret in tax_ret])
             p_columns.append(int(round(withh, 0)))
             unfolded = 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all
             lines.append({
@@ -231,7 +233,7 @@ class MxReportPartnerLedger(models.AbstractModel):
                     line_credit = line.credit
                 progress = progress + line_debit - line_credit
                 name = line.display_name
-                name = name[:32] + "..." if name > 35 else name
+                name = name[:32] + "..." if len(name) > 35 else name
                 columns = ['', '', '', '']
                 columns.append('')
                 total_tax16 = 0
@@ -248,14 +250,12 @@ class MxReportPartnerLedger(models.AbstractModel):
                     for tax in tax0.ids if tax in line.tax_ids.ids])
                 columns.append(int(round(total_tax0, 0)))
                 exempt += sum([line.debit or line.credit * -1
-                               for exem in tax_ids.filtered(
-                                   lambda r: r.tax_group_id == group_exe).ids
+                               for exem in tax_exe.ids
                                if exem in line.tax_ids.ids])
                 columns.append(int(round(exempt, 0)))
                 withh += sum([
                     abs((line.debit or line.credit * -1) / (100 / ret.amount))
-                    for ret in tax_ids.filtered(
-                        lambda r: r.tax_group_id == group_ret)
+                    for ret in tax_ret
                     if ret.id in line.tax_ids.ids])
                 columns.append(int(round(withh, 0)))
                 caret_type = 'account.move'
