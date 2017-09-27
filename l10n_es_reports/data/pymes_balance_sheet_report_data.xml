@@ -172,8 +172,7 @@
                                         '|', ('account_id.code','=like','35%'),
                                         '|', ('account_id.code','=like','36%'),
                                         '|', ('account_id.code','=like','39%'),
-                                        '|', ('account_id.code','=like','407%'),
-                                        ('account_id.code','=like','2954%'),]"/>
+                                        ('account_id.code','=like','407%')]"/>
             <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
@@ -265,7 +264,7 @@
                                         '|', ('account_id.code','=like','5944%'),
                                         '|', ('account_id.code','=like','5953%'),
                                         ('account_id.code','=like','5954%')]"/>
-            <field name="formulas">balance = -sum.balance</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
             <field name="level" eval="2" />
@@ -277,7 +276,7 @@
             <field name="code">l10n_es_pymes_debits_sum_12400</field>
             <field name="domain" eval="['|', ('account_id.code','=like','5523%'),
                                         ('account_id.code','=like','5524%')]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.debit</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
             <field name="level" eval="2" />
@@ -287,7 +286,7 @@
             <field name="name">III. Inversiones en empresas del grupo y asociadas a corto plazo</field>
             <field name="code">l10n_es_pymes_line_12400</field>
             <field name="parent_id" ref="balance_pymes_line_12000"/>
-            <field name="formulas">balance = -(l10n_es_pymes_balances_sum_12400.balance + l10n_es_pymes_debits_sum_12400.balance)</field>
+            <field name="formulas">balance = l10n_es_pymes_balances_sum_12400.balance + l10n_es_pymes_debits_sum_12400.balance</field>
             <field name="sequence" eval="17"/>
             <field name="level" eval="2" />
         </record>
@@ -321,7 +320,7 @@
                                         '|', ('account_id.code','=like','596%'),
                                         '|', ('account_id.code','=like','597%'),
                                         ('account_id.code','=like','598%')]"/>
-            <field name="formulas">balance = -sum.balance</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
             <field name="level" eval="2" />
@@ -335,7 +334,7 @@
                                         '|', ('account_id.code','=like','551%'),
                                         '|', ('account_id.code','=like','554%'),
                                         ('account_id.code','=like','5525%')]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.debit</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
             <field name="level" eval="2" />
@@ -345,7 +344,7 @@
             <field name="name">IV. Inversiones financieras a corto plazo</field>
             <field name="code">l10n_es_pymes_line_12500</field>
             <field name="parent_id" ref="balance_pymes_line_12000"/>
-            <field name="formulas">balance = -(l10n_es_pymes_balances_sum_12500.balance + l10n_es_pymes_debits_sum_12500.balance)</field>
+            <field name="formulas">balance = l10n_es_pymes_balances_sum_12500.balance + l10n_es_pymes_debits_sum_12500.balance</field>
             <field name="sequence" eval="18"/>
             <field name="level" eval="2" />
         </record>
@@ -547,7 +546,7 @@
             <field name="parent_id" ref="balance_pymes_line_20000"/>
             <field name="domain" eval="['|', ('account_id.code','=like','130%'),
                                         '|', ('account_id.code','=like','131%'),
-                                        '|', ('account_id.code','=like','132%')]"/>
+                                        ('account_id.code','=like','132%')]"/>
             <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
@@ -820,7 +819,7 @@
         <record id="balance_pymes_line_32400_balances" model="account.financial.html.report.line">
             <field name="name">32400 balances sum</field>
             <field name="code">l10n_es_pymes_balances_sum_32400</field>
-            <field name="domain" eval="[('account_id.code','=','None'),
+            <field name="domain" eval="['|', ('account_id.code','=like','5103%'),
                                         '|', ('account_id.code','=like','5104%'),
                                         '|', ('account_id.code','=like','5113%'),
                                         '|', ('account_id.code','=like','5114%'),

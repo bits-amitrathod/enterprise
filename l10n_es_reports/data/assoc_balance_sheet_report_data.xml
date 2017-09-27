@@ -279,7 +279,7 @@
                                         '|', ('account_id.code','=like','5944%'),
                                         '|', ('account_id.code','=like','5953%'),
                                         ('account_id.code','=like','5954%')]"/>
-            <field name="formulas">balance = -sum.balance</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
             <field name="level" eval="2" />
@@ -291,7 +291,7 @@
             <field name="code">l10n_es_assoc_debits_sum_12400</field>
             <field name="domain" eval="['|', ('account_id.code','=like','5523%'),
                                         ('account_id.code','=like','5524%')]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.debit</field>
             <field name="level" eval="2" />
         </record>
 
@@ -332,7 +332,7 @@
                                         '|', ('account_id.code','=like','5955%'),
                                         '|', ('account_id.code','=like','597%'),
                                         ('account_id.code','=like','598%')]"/>
-            <field name="formulas">balance = -sum.balance</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="level" eval="2" />
         </record>
 
@@ -342,7 +342,7 @@
             <field name="code">l10n_es_assoc_debits_sum_12500</field>
             <field name="domain" eval="['|', ('account_id.code','=like','551%'),
                                         ('account_id.code','=like','5525%')]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.debit</field>
             <field name="level" eval="2" />
         </record>
 
@@ -714,7 +714,7 @@
             <field name="name">VII. Deuda con características especiales a largo plazo</field>
             <field name="code">l10n_es_assoc_line_31700</field>
             <field name="parent_id" ref="balance_assoc_line_31000"/>
-            <field name="domain" eval="[('account_id.tag_ids', '=', '%(balance_sheet_31700_account)d')]"/>
+            <field name="domain" eval="[('account_id.code', '=like', '15%')]"/>
             <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="show_domain">foldable</field>
