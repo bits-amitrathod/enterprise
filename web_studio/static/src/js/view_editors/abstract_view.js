@@ -45,7 +45,7 @@ AbstractView.include({
         return this._loadSubviews(parent).then(function () {
             return $.when(
                 self._loadData(parent),
-                ajax.loadLibs(this)
+                ajax.loadLibs(self)
             ).then(function (handle) {
                 var model = self.getModel();
                 var state = model.get(handle);

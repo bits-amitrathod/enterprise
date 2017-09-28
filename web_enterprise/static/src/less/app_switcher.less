@@ -1,6 +1,6 @@
 @o_app_switcher_menu_shadow: 0 1px 0 fade(black, 45%);
 
-.o_app_switcher_visible.o_web_client {
+.o_app_switcher_background {
     // Fallback for browsers that doesn't support css gradients
     background-position: center;
     background-image: url(/web_enterprise/static/src/img/application-switcher-bg.jpg);
@@ -9,7 +9,9 @@
     // Prefer css gradient over images
     .o-skew-gradient(#77717e, #c9a8a9);
 
-    .o_main_navbar {
+    // When applied on webclient (note: we do not specify the webclient class
+    // here to avoid breaking studio custom style)
+    &:not(.o_app_switcher_background_custom) .o_main_navbar {
         background-color: transparent;
         border-color: transparent;
 

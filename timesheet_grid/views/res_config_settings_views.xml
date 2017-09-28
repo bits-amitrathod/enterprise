@@ -19,7 +19,7 @@
                                 Activate a periodical email reminder for timesheet users
                             </div>
                             <div class="content-group" attrs="{'invisible': [('reminder_user_allow', '=', False)]}">
-                                <div class="row mt16" id="mail_alias_domain">
+                                <div class="row mt16" id="user_mail_alias_domain">
                                     <label for="reminder_user_interval" class="col-md-3 o_light_label"/>
                                     <field name="reminder_user_delay" class="oe_inline"/> days
                                     <field name="reminder_user_interval" class="oe_inline"/>
@@ -38,7 +38,7 @@
                                 Activate a periodical email reminder for timesheet managers
                             </div>
                             <div class="content-group" attrs="{'invisible': [('reminder_manager_allow', '=', False)]}">
-                                <div class="row mt16" id="mail_alias_domain">
+                                <div class="row mt16" id="manager_mail_alias_domain">
                                     <label for="reminder_manager_interval" class="col-md-3 o_light_label"/>
                                     <field name="reminder_manager_delay" class="oe_inline"/> days
                                     <field name="reminder_manager_interval" class="oe_inline"/>

@@ -406,6 +406,9 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
                 var options = {
                     confirm_callback: function () {
                         self.incomingtone.pause();
+                        if (self.onCall) {
+                            self.hangup();
+                        }
                         var callOptions = {
                             media: {
                                 render: {

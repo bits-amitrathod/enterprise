@@ -3,16 +3,19 @@
 # * account_bank_statement_import_qif
 # 
 # Translators:
-# Anja Funk <anja.funk@afimage.de>, 2016
-# Wolfgang Taferner <wolfgang.transifex@service.wt-io-it.at>, 2016
-# Ermin Trevisan <trevi@twanda.com>, 2016
+# Anja Funk <anja.funk@afimage.de>, 2017
+# Gab_Odoo <gab@odoo.com>, 2017
+# Dejan Dinic <dejan.dinic@bluewin.ch>, 2017
+# Thomas Neu <t.neu@runbox.com>, 2017
+# Wolfgang Taferner <wolfgang.transifex@service.wt-io-it.at>, 2017
+# Ermin Trevisan <trevi@twanda.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Ermin Trevisan <trevi@twanda.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Ermin Trevisan <trevi@twanda.com>, 2017\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +30,9 @@ msgid ""
 " be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
 msgstr ""
+"Das Buchungsjournal bezieht sich auf den Bankauszug, den Sie importieren. "
+"Bei Bankauszügen, die keine automatische Zuordnung zulassen (z.B. QIF) "
+"müssen Sie eine manuelle Auswahl treffen."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
@@ -35,9 +41,13 @@ msgid ""
 "financial institutions use the local format.Therefore, it is frequent "
 "outside the US to have QIF date formated day-first (dd/mm/yy)."
 msgstr ""
+"Obwohl das historische QIF-Datumsformat monatlich (mm/dd/yy) ausgewiesen "
+"wird, verwenden viele Finanzinstitute das lokale Format, weshalb es "
+"außerhalb der USA häufig vorkommt, dass QIF-Datum tagesgenau formatiert ist "
+"(dd/mm/yy)."
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:61
+#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:59
 #, python-format
 msgid "Could not decipher the QIF file."
 msgstr "Kann die QIF Datei nicht entschlüsseln."
@@ -45,7 +55,7 @@ msgstr "Kann die QIF Datei nicht entschlüsseln."
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
 msgid "Dates format"
-msgstr ""
+msgstr "Datumsformat"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_hide_journal_field
@@ -69,7 +79,7 @@ msgstr "Quicken Interchange Format (.QIF)"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_show_qif_date_format
-msgid "Show qif date format"
+msgid "Show Qif Date Format"
 msgstr ""
 
 #. module: account_bank_statement_import_qif
@@ -78,6 +88,8 @@ msgid ""
 "Technical field used to ask the user for the date format used in the QIF "
 "file, as this format is ambiguous."
 msgstr ""
+"Technisches Feld, das verwendet wird, um den Benutzer nach dem in der QIF-"
+"Datei verwendeten Datumsformat zu fragen, da dieses Format mehrdeutig ist."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view_inherited
@@ -85,9 +97,12 @@ msgid ""
 "The QIF format is ambiguous about dates: please check with your financial "
 "institution whether they format it with month or day first.<br/>"
 msgstr ""
+"Das QIF-Format ist bezüglich der Datumsangaben unklar: Bitte überprüfen Sie "
+"bei Ihrem Finanzinstitut, ob die Datunsangabten mit Monat oder mit Tag "
+"beginnen. <br/>"
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:101
+#: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:105
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr ""
@@ -101,9 +116,9 @@ msgstr "_Import"
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "dd/mm/yy"
-msgstr ""
+msgstr "dd.mm.yyyy"
 
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "mm/dd/yy"
-msgstr ""
+msgstr "mm.dd.yyyy"

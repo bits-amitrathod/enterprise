@@ -3,16 +3,16 @@
 # * mail_push
 # 
 # Translators:
+# Martin Trigaux <mat@odoo.com>, 2017
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
 # Mario Gielissen <mario@openworx.nl>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Mario Gielissen <mario@openworx.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,19 +21,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
 msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Generate API and Sender ID"
 msgstr "<i class=\"fa fa-fw fa-arrow-right\"/>Genereer API en afzender ID"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
 msgid "API Key"
 msgstr "API-code"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.inherited_view_partner_form
-msgid "Cloud Messaging"
-msgstr "Cloud bericht"
+#: model:ir.model,name:mail_push.model_res_partner
+msgid "Contact"
+msgstr "Contact"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_create_uid
@@ -52,6 +52,7 @@ msgstr "Apparaat naam"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_res_partner_device_identity_ids
+#: model:ir.model.fields,field_description:mail_push.field_res_users_device_identity_ids
 msgid "Device identities"
 msgstr "Apparaat identiteiten"
 
@@ -63,10 +64,10 @@ msgstr "Discussiekanaal"
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_display_name
 msgid "Display Name"
-msgstr "Weergave naam"
+msgstr "Schermnaam"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
 msgid "Get notifications on Android phones"
 msgstr "Krijg notificaties op Android toestellen"
 
@@ -96,7 +97,7 @@ msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.base_config_settings_view_form_inherit_mail_push
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
 msgid "Mobile App"
 msgstr "Mobiele app"
 
@@ -106,23 +107,22 @@ msgid "Notification Service"
 msgstr "Notificatie service"
 
 #. module: mail_push
-#: model:ir.model.fields,field_description:mail_push.field_base_config_settings_default_mail_push_notification
+#: model:ir.model.fields,field_description:mail_push.field_res_config_settings_mail_push_notification
 msgid "Notifications"
 msgstr "Notificaties"
 
 #. module: mail_push
-#: model:ir.model,name:mail_push.model_res_partner
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_partner_id
 msgid "Partner"
 msgstr "Relatie"
 
 #. module: mail_push
-#: model:ir.model.fields,field_description:mail_push.field_base_config_settings_fcm_project_id
+#: model:ir.model.fields,field_description:mail_push.field_res_config_settings_fcm_project_id
 msgid "Sender ID"
 msgstr "Afzender ID"
 
 #. module: mail_push
-#: model:ir.model.fields,field_description:mail_push.field_base_config_settings_fcm_api_key
+#: model:ir.model.fields,field_description:mail_push.field_res_config_settings_fcm_api_key
 msgid "Server API Key"
 msgstr "Server API sleutel"
 
@@ -132,11 +132,11 @@ msgid "Subscription ID"
 msgstr "Abonnement ID"
 
 #. module: mail_push
-#: model:ir.model,name:mail_push.model_base_config_settings
-msgid "base.config.settings"
-msgstr "base.config.settings"
-
-#. module: mail_push
 #: model:ir.model,name:mail_push.model_mail_push_device
 msgid "mail_push.device"
 msgstr "mail_push.device"
+
+#. module: mail_push
+#: model:ir.model,name:mail_push.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"

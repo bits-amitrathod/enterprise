@@ -3,35 +3,42 @@
 # * helpdesk
 # 
 # Translators:
-# Jeanjean Noname <monsieur.spock@gmail.com>, 2017
-# Jérémy Donas <LeDistordu@users.noreply.github.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Olivier Lenoir <olivier.lenoir@free.fr>, 2017
-# Xavier Symons <xsy@openerp.com>, 2017
 # Xavier Belmere <Info@cartmeleon.com>, 2017
-# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
-# Richard Mathot <rim@odoo.com>, 2017
-# leemannd <denis.leemann@camptocamp.com>, 2017
-# Olivier Dony <odo@odoo.com>, 2017
-# Shark McGnark <peculiarcheese@gmail.com>, 2017
-# Nicolas JEUDY <nicolas@sudokeys.com>, 2017
-# matthieu gaillet <matthieu.gaillet@lebrass.be>, 2017
-# Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
-# Miguel Vidali <mvidali129@gmail.com>, 2017
-# Henri Cornuau <hcornuau@gmail.com>, 2017
-# Fabien Pinckaers <fp@openerp.com>, 2017
-# Agathe Mollé <molleagathe@gmail.com>, 2017
+# Eloïse Stilmant <est@odoo.com>, 2017
 # Lucas Deliege <lud@odoo.com>, 2017
-# Clo <clo@odoo.com>, 2017
-# Leo Schmitt <inactive+lschmitt@transifex.com>, 2017
+# Olivier Lenoir <olivier.lenoir@free.fr>, 2017
+# Jeanjean Noname <monsieur.spock@gmail.com>, 2017
+# Frédéric LIETART <stuff@tifred.fr>, 2017
+# Xavier Symons <xsy@openerp.com>, 2017
+# Miguel Vidali <mvidali129@gmail.com>, 2017
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
+# Jérémy Donas <LeDistordu@users.noreply.github.com>, 2017
+# Fabien Pinckaers <fp@openerp.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Richard Mathot <rim@odoo.com>, 2017
+# Micky Jault <micky037@hotmail.fr>, 2017
+# leemannd <denis.leemann@camptocamp.com>, 2017
+# Saad Thaifa <saad.thaifa@gmail.com>, 2017
 # Sébastien Le Ray <sebastien-github@orniz.org>, 2017
+# Lucas Deliege <lud@openerp.com>, 2017
+# Nicolas JEUDY <njeudy@panda-chi.io>, 2017
+# Olivier Dony <odo@odoo.com>, 2017
+# Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
+# Benelita Prauhart <internetinfo07@gmail.com>, 2017
+# Bertrand LATOUR <divoir@gmail.com>, 2017
+# Agathe Mollé <molleagathe@gmail.com>, 2017
+# Nancy Bolognesi <nb@microcom.ca>, 2017
+# Shark McGnark <peculiarcheese@gmail.com>, 2017
+# Fabri Yohann <psn@fabri.pw>, 2017
+# Clo <clo@odoo.com>, 2017
+# Henri Cornuau <hcornuau@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Sébastien Le Ray <sebastien-github@orniz.org>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Henri Cornuau <hcornuau@gmail.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,125 +67,6 @@ msgid "% Happy"
 msgstr "% content"
 
 #. module: helpdesk
-#: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
-"% set access_token = object.rating_get_access_token()\n"
-"    <table style=\"width:600px;margin:5px auto;\">\n"
-"        <tbody>\n"
-"            <tr><td>\n"
-"                <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
-"            </td><td style=\"text-align:right;vertical-align:middle;\">\n"
-"                    Satisfaction Survey\n"
-"            </td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"    <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
-"        <tbody>\n"
-"            <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
-"                <p>Hello,</p>\n"
-"                <p>Please take a moment to rate our services related to the ticket \"<strong>${object.name}</strong>\"\n"
-"                   assigned to <strong>${object.rating_get_rated_partner_id().name}</strong>.</p>\n"
-"                <p>We appreciate your feedback. It helps us to improve continuously.</p>\n"
-"            </td></tr>\n"
-"            <tr><td style=\"padding:10px 20px\">\n"
-"                <table summary=\"o_mail_notification\" style=\"width:100%;border-top:1px solid #e1e1e1;\">\n"
-"                    <tr>\n"
-"                        <td style=\"text-align:center;\">\n"
-"                            <h2 style=\"font-weight:300;font-size:18px;\">\n"
-"                                Tell us how you feel about our service:\n"
-"                            </h2>\n"
-"                            <div style=\"text-color: #888888\">(click on one of these smileys)</div>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <tr>\n"
-"                        <td style=\"padding:10px 10px;\">\n"
-"                            <table style=\"width:100%;text-align:center;\">\n"
-"                                <tr>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/10\">\n"
-"                                            <img alt=\"Satisfied\" src=\"/rating/static/src/img/rating_10.png\" title=\"Satisfied\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/5\">\n"
-"                                            <img alt=\"Not satisfied\" src=\"/rating/static/src/img/rating_5.png\" title=\"Not satisfied\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/1\">\n"
-"                                            <img alt=\"Highly Dissatisfied\" src=\"/rating/static/src/img/rating_1.png\" title=\"Highly Dissatisfied\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                </tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </table>\n"
-"            </td></tr>\n"
-"            <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '') | safe}</td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"    <table style=\"width:600px;margin:auto;text-align:center;font-size:12px;\">\n"
-"        <tbody>\n"
-"            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
-"                <p>This customer survey has been sent because your ticket has been moved to the stage <b>${object.stage_id.name}</b></p>\n"
-"                <p>Email automatically sent by <a href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo Helpdesk</a> for <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
-"            </td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"</div>\n"
-"        "
-msgstr ""
-
-#. module: helpdesk
-#: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
-"    <div style=\"margin-left:30px;align=center;\">\n"
-"        Dear ${object.partner_id.name or 'Madam, Sir'},\n"
-"    </div>\n"
-"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
-"        This automatic message informs you that we have closed your ticket (reference ${object.id}).\n"
-"\n"
-"        We hope that the services provided have met your expectations.\n"
-"        If you have any more questions or comments, don't hesitate to reply to this e-mail to re-open your ticket.\n"
-"\n"
-"        Thank you for your cooperation.\n"
-"    </div><br/>\n"
-"    <span style=\"margin-left:30px;font-weight:normal;\">Kind regards, </span>\n"
-"    <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} Team.</span>\n"
-"</div>\n"
-"        "
-msgstr ""
-
-#. module: helpdesk
-#: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
-"    <div style=\"margin-left:30px;align=center;\">\n"
-"        This is an automatic message:<br/>\n"
-"        Dear ${object.partner_id.name or 'Madam, Sir'},\n"
-"    </div>\n"
-"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
-"        Your request\n"
-"        % if object.access_token:\n"
-"        <a href=\"/helpdesk/ticket/${object.id}/${object.access_token}\">${object.name}</a>\n"
-"        % endif\n"
-"        has been received and is being reviewed by our ${object.team_id.name or ''} team.\n"
-"        The reference of your ticket is ${object.id}.\n"
-"        <br/>To add additional comments, reply to this email.\n"
-"    </div><br/>\n"
-"    <span style=\"margin-left:30px;font-weight:normal;\">Thank you </span>\n"
-"    <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} Team.</span>\n"
-"</div>\n"
-"        "
-msgstr ""
-
-#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:58
 #, python-format
@@ -186,11 +74,28 @@ msgid ""
 "<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
 "from here!"
 msgstr ""
+"<b>Les étoiles</b> définisse la <b>priorité de l'incident</b>. Vous pouvez "
+"directement le changer d'ici!"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.index
+msgid "<i class=\"fa fa-arrow-circle-right \"/> See the feedbacks"
+msgstr "<i class=\"fa fa-arrow-circle-right \"/> Voir les évaluations"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/> Configurer le nom de domaine"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "<i class=\"fa fa-arrow-right\"/> View documentation"
+msgstr "<i class=\"fa fa-arrow-right\"/> Voir la documentation"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.index
+msgid "<i class=\"fa fa-envelope\"/> Email :"
+msgstr "<i class=\"fa fa-envelope\"/> Email :"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -198,9 +103,26 @@ msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.index
+msgid "<i/> Customer Satisfaction Ration:"
+msgstr "<i/> Ratio de Satisfaction Client :"
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i>No customer feedback yet.</i>"
 msgstr "<i>Pas encore de retour client.</i>"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.view_partner_form_inherit_helpdesk
+msgid "<span class=\"o_stat_text\"> Tickets</span>"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
+msgid ""
+"<span class=\"text-muted\">NB: This will archive the selected tickets "
+"(Except the destination ticket)</span>"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -211,6 +133,26 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>View Tickets</span>"
 msgstr "<span>Voir les Tickets</span>"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
+msgid "<strong class=\"col-md-2\">Description</strong>"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
+msgid "<strong class=\"col-md-2\">Reported by</strong>"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
+msgid "<strong class=\"col-md-2\">Reported on</strong>"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
+msgid "<strong>Message and communication history</strong>"
+msgstr "<strong>Historique des messages et communications</strong>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_defaults
@@ -259,7 +201,7 @@ msgstr "À propos équipes"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_active
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_active
 msgid "Active"
-msgstr "Actif"
+msgstr "Actif/ve"
 
 #. module: helpdesk
 #. openerp-web
@@ -269,6 +211,8 @@ msgid ""
 "Add columns to configure <b>stages for your tickets</b>.<br/><i>e.g. "
 "Awaiting Customer Feedback, Customer Followup, ...</i>"
 msgstr ""
+"Ajoutez des colonnes pour configurer <b>des étapes pour vos "
+"incidents</b>.<br/><i>e.g. En attente de feedback, Suivi Client, ...</i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
@@ -304,9 +248,8 @@ msgstr "Tous les tickets"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Allow your customers to easily rate your services."
-msgstr ""
-"Ceci permet aux clients de donner facilement une évalation de vos services"
+msgid "Allow your customers to easily rate your services"
+msgstr "Permettez à vos clients de facilement noter vos services"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -324,14 +267,25 @@ msgstr "Archiver"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Archived"
-msgstr "Archivé"
+msgstr "Archivé/s"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
+msgid "Assign To Me"
+msgstr "Me l'assigner"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:39
 #, python-format
 msgid "Assign the ticket to someone."
-msgstr ""
+msgstr "Assignez le ticket à quelqu'un."
+
+#. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk_ticket.py:410
+#, python-format
+msgid "Assign to me"
+msgstr "Me l'assigner"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_assign_method
@@ -339,7 +293,9 @@ msgid "Assignation Method"
 msgstr "Méthode d'affectation"
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_user_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_user_id
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Assigned to"
 msgstr "Assigné à"
 
@@ -377,6 +333,11 @@ msgstr ""
 "⇥Balanced: à celui qui possède le moins de tickets ouverts"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
+msgid "Average"
+msgstr "Moyen"
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:104
 #, python-format
@@ -391,6 +352,11 @@ msgid "Avg Open Hours"
 msgstr "Moy Heures Ouvrées"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
+msgid "Bad"
+msgstr "Mauvais"
+
+#. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Balanced"
 msgstr "Équilibrée"
@@ -399,6 +365,11 @@ msgstr "Équilibrée"
 #: selection:helpdesk.ticket,kanban_state:0
 msgid "Blocked"
 msgstr "Bloqué"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
+msgid "Cancel"
+msgstr "Annuler"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -437,7 +408,7 @@ msgstr "Cliquez ici pour créer un nouveau modèle."
 #: code:addons/helpdesk/static/src/js/tour.js:18
 #, python-format
 msgid "Click here to view this team's tickets."
-msgstr ""
+msgstr "Cliquez ici pour voir les Incidents de cette équipe. "
 
 #. module: helpdesk
 #. openerp-web
@@ -520,7 +491,7 @@ msgstr "Couleur"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_color
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_color
 msgid "Color Index"
-msgstr "Index de Couleur"
+msgstr "Index de la couleur"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_company_id
@@ -541,10 +512,23 @@ msgstr "Configuration des stratégies SLA"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Connect third party application and create tickets using web services."
+msgid "Connect third party application and create tickets using web services"
 msgstr ""
-"Connectez une application tiers et créer des tickets en utilisant des "
-"services web."
+
+#. module: helpdesk
+#: model:ir.model,name:helpdesk.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_create_new_ticket
+msgid "Create a new ticket"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Create new Helpdesk Teams"
+msgstr "Créer une nouvelle équipe Helpdesk"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_create_uid
@@ -552,6 +536,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_create_uid
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_create_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_create_uid
 msgid "Created by"
 msgstr "Créé par"
@@ -562,19 +547,26 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_create_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_create_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_create_date
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_create_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_create_date
 msgid "Created on"
 msgstr "Créé le"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:660
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
+msgid "Current stage of this ticket"
+msgstr "Statut de ce ticket"
+
+#. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk_ticket.py:333
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_id
 #, python-format
 msgid "Customer"
 msgstr "Client"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:662
+#: code:addons/helpdesk/models/helpdesk_ticket.py:335
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_email
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_email
 #, python-format
 msgid "Customer Email"
@@ -593,7 +585,12 @@ msgid "Customer Rating"
 msgstr "Évaluation de la Clientèle"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:647
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_data
+msgid "Customer Satisfaction"
+msgstr "Satisfaction du client"
+
+#. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk_ticket.py:320
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
@@ -615,7 +612,7 @@ msgstr "Objectif Journalier"
 
 #. module: helpdesk
 #. openerp-web
-#: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:16
+#: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:222
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_team_dashboard_action_main
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_team_dashboard
 #, python-format
@@ -651,8 +648,20 @@ msgstr "Supprimer"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_description
+#: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
 msgid "Description"
 msgstr "Description"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Description for customer portal"
+msgstr ""
+
+#. module: helpdesk
+#: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
+#, python-format
+msgid "Description from ticket %s: %s"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -670,9 +679,15 @@ msgstr "Description du ticket..."
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_display_name
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_display_name
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_display_name
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_display_name
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr "affichage nom"
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_portal_show_rating
+msgid "Display Rating on Customer Portal"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -680,10 +695,9 @@ msgid "Edit"
 msgstr "Modifier"
 
 #. module: helpdesk
-#: model:ir.actions.act_window,name:helpdesk.action_helpdesk_email_template_tree
-#: model:ir.ui.menu,name:helpdesk.helpdesk_templates_menu
-msgid "Email Templates"
-msgstr "Modèles de courriels"
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
+msgid "Edit Ticket"
+msgstr "Modifier le Ticket"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_alias
@@ -698,13 +712,15 @@ msgid ""
 "Enter a subject or title for this ticket.<br/><i>(e.g. Problem with "
 "installation, Wrong order, Can't understand bill, etc.)</i>"
 msgstr ""
+"Entrez un sujet ou titre pour cet incident. <br/><i>(e.g. Problème avec "
+"l'installation, Mauvaise commande, etc.)"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:34
 #, python-format
 msgid "Enter the customer. Feel free to create it on the fly."
-msgstr ""
+msgstr "Entre un client. Vous pouvez le créer à la volée. "
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_sla_fail
@@ -746,16 +762,26 @@ msgstr ""
 "dans les deux heures et nous les resolvons dans les 36 hours."
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Future Activities"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Get in touch with you website visitors."
-msgstr "Restez en contact avec les visiteurs de votre site web."
+msgid "Get in touch with you website visitors"
+msgstr "Entrez en contact avec les visiteurs de votre site"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Group By"
-msgstr "Grouper par"
+msgstr "Regrouper par"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
+msgid "Happy"
+msgstr "Content"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_forum
@@ -781,13 +807,20 @@ msgid "Helpdesk Team"
 msgstr "Equipe Helpdesk"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.index
+msgid "Helpdesk Team Satisfaction"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Helpdesk Team..."
 msgstr "Equipe Helpdesk..."
 
 #. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk.py:137
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action
-#: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
+#: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action_form
+#, python-format
 msgid "Helpdesk Teams"
 msgstr "Equipes Helpdesk"
 
@@ -810,18 +843,23 @@ msgid "Helpdesk Tickets"
 msgstr "Tickets Helpdesk"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid ""
+"Helpdesk contracts are managed using tasks. Choose a default project for "
+"these tasks."
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.actions.server,name:helpdesk.helpdesk_team_action_settings
+msgid "Helpdesk: Teams Settings"
+msgstr "Assistance: Configuration des équipes"
+
+#. module: helpdesk
 #: model:ir.actions.server,name:helpdesk.helpdesk_sla_cron_ir_actions_server
 #: model:ir.cron,cron_name:helpdesk.helpdesk_sla_cron
 #: model:ir.cron,name:helpdesk.helpdesk_sla_cron
 msgid "Helpdesk: compute SLAs"
 msgstr ""
-
-#. module: helpdesk
-#. openerp-web
-#: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:170
-#, python-format
-msgid "Hi there."
-msgstr "Bonjour."
 
 #. module: helpdesk
 #. openerp-web
@@ -849,15 +887,8 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "How to assign newly created tickets to the right person."
-msgstr "Comment assigner les tickets nouvellement créés à la bonne personne."
-
-#. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:719
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
-#, python-format
-msgid "I take it"
-msgstr "Je m'en occupe"
+msgid "How to assign newly created tickets to the right person"
+msgstr "Assigner les nouveaux tickets entrants à la bonne personne"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_id
@@ -865,6 +896,7 @@ msgstr "Je m'en occupe"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_id
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_id
 msgid "ID"
 msgstr "ID"
@@ -895,8 +927,8 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Incoming emails create tickets."
-msgstr "Les courriers entrant créer des tickets."
+msgid "Incoming emails create tickets"
+msgstr "Les courriels entrants créent des tickets"
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_incident
@@ -910,8 +942,23 @@ msgstr "État kanban"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Keep empty for everyone to see this team."
-msgstr ""
+msgid "Keep empty for everyone to see this team"
+msgstr "Gardez vide pour que tout le monde puisse voir la team"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_data
+msgid "Last 3 months"
+msgstr "Les 3 derniers mois"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_data
+msgid "Last 30 days"
+msgstr "Les 30 derniers jours"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_data
+msgid "Last 7 days"
+msgstr "Les 7 derniers jours"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla___last_update
@@ -919,6 +966,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag___last_update
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team___last_update
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket___last_update
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge___last_update
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type___last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
@@ -928,6 +976,7 @@ msgstr "Dernière modification le"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_write_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_write_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_write_uid
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_write_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_write_uid
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_write_uid
 msgid "Last Updated by"
@@ -938,17 +987,28 @@ msgstr "Dernière mise à jour par"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_write_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_write_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_write_date
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_write_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_write_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Late Activities"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.team_rating_data
+msgid "Latest Feedbacks"
+msgstr "Dernières évaluations"
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:23
 #, python-format
 msgid "Let's create your first ticket."
-msgstr ""
+msgstr "Créons votre premier ticket."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_livechat
@@ -961,6 +1021,11 @@ msgid "Low priority"
 msgstr "Priorité basse"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.tickets_followup
+msgid "Managed by"
+msgstr ""
+
+#. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_manager
 msgid "Manager"
 msgstr "Gestionnaire"
@@ -969,6 +1034,21 @@ msgstr "Gestionnaire"
 #: selection:helpdesk.team,assign_method:0
 msgid "Manually"
 msgstr "Manuellement"
+
+#. module: helpdesk
+#: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_actions_act_window_merge_tickets
+msgid "Merge Selected Tickets"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
+msgid "Merge Tickets"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_ticket_id
+msgid "Merge into an existing ticket"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_priority
@@ -993,9 +1073,9 @@ msgstr ""
 "création du ticket."
 
 #. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
-msgid "More <i class=\"fa fa-caret-down\"/>"
-msgstr "Plus <i class=\"fa fa-caret-down\"/>"
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "My Activities"
+msgstr "Mes activités"
 
 #. module: helpdesk
 #. openerp-web
@@ -1043,6 +1123,23 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_ticket_name
+msgid "New ticket name"
+msgstr ""
+
+#. module: helpdesk
+#: code:addons/helpdesk/controllers/portal.py:26
+#, python-format
+msgid "Newest"
+msgstr "Le plus récent"
+
+#. module: helpdesk
+#: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
+#, python-format
+msgid "No description"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_high_priorities
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_main
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_main_tree
@@ -1070,7 +1167,7 @@ msgstr "Nombre de tickets du même partenaire"
 
 #. module: helpdesk
 #. openerp-web
-#: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
+#: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:187
 #, python-format
 msgid "Only Integer Value should be valid."
 msgstr "Un entier est attendu."
@@ -1183,13 +1280,8 @@ msgstr "Productivité"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Public Description..."
-msgstr "Description Publique..."
-
-#. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Publish this team's ratings on your website."
-msgstr "Publier les notes de cette équipe sur votre site web."
+msgid "Publish this team's ratings on your website"
+msgstr ""
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_question
@@ -1198,8 +1290,8 @@ msgstr "Question"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Question and answer section on your website."
-msgstr "Section Question/Réponse sur votre site web."
+msgid "Question and answer section on your website"
+msgstr "Ajouter une section Questions et Réponses sur votre site"
 
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
@@ -1228,7 +1320,7 @@ msgstr "Prêt pour la prochaine étape"
 
 #. module: helpdesk
 #. openerp-web
-#: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:171
+#: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:170
 #, python-format
 msgid "Ready to boost your customer service?"
 msgstr "Prêt à booster votre service clientèle ?"
@@ -1305,16 +1397,51 @@ msgid "Save this page and refresh to activate the feature"
 msgstr "Sauvegarder et rafraîchir cette page pour activer la fonction"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Save this page and refresh to activate the feature."
+msgstr "Sauvez cette page et rafraichissez pour activer la fonctionnalité. "
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:43
 #, python-format
 msgid "Save this ticket and the modifications you've made to it."
 msgstr ""
+"Sauvegarder cet incident et les modifications que vous avez apportées."
+
+#. module: helpdesk
+#: code:addons/helpdesk/controllers/portal.py:30
+#, python-format
+msgid "Search <span class=\"nolabel\"> (in Content)</span>"
+msgstr "Chercher<span class=\"nolabel\"> (dans le Contenu)</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_search
 msgid "Search SLA Policies"
 msgstr "Chercher des stratégies SLA"
+
+#. module: helpdesk
+#: code:addons/helpdesk/controllers/portal.py:33
+#, python-format
+msgid "Search in All"
+msgstr "Chercher dans Tout"
+
+#. module: helpdesk
+#: code:addons/helpdesk/controllers/portal.py:32
+#, python-format
+msgid "Search in Customer"
+msgstr ""
+
+#. module: helpdesk
+#: code:addons/helpdesk/controllers/portal.py:31
+#, python-format
+msgid "Search in Messages"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_access_token
+msgid "Security Token"
+msgstr "Jeton de sécurité"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -1333,6 +1460,18 @@ msgstr "Self-Service"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Sell &amp; Track Hours"
+msgstr ""
+
+#. module: helpdesk
+#. openerp-web
+#: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:173
+#, python-format
+msgid "Send an email to"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Send emails to"
 msgstr "Envoyer un email à"
 
@@ -1345,23 +1484,31 @@ msgstr "Séquence"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Set up your Service Level Agreements to track performance."
-msgstr "Configurer votre SLA pour superviser les performances"
+msgid "Set up your Service Level Agreements to track performance"
+msgstr ""
 
 #. module: helpdesk
+#: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Settings"
-msgstr "Paramètres"
+msgstr "Configuration"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Share presentation and videos, and organize into courses."
-msgstr ""
+msgid "Share presentation and videos, and organize into courses"
+msgstr "Partagez des présentations et des vidéos, et organisez-les en cours"
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_use_sla
 msgid "Show SLA Policies"
 msgstr "Afficher les Stratégies SLA"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+"Montrez toutes les enregistrements pour lesquelles la date des prochaines "
+"actions est pour aujourd'hui ou avant. "
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_team_ids
@@ -1416,12 +1563,19 @@ msgstr ""
 "comment un ticket spécifique est positionné dans le processus."
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
+msgid "Status"
+msgstr "État"
+
+#. module: helpdesk
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_stage
 msgid "Status Changed"
 msgstr "Status modifié"
 
 #. module: helpdesk
+#: code:addons/helpdesk/controllers/portal.py:27
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_name
+#, python-format
 msgid "Subject"
 msgstr "Sujet"
 
@@ -1432,8 +1586,8 @@ msgstr "Sujet..."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "Submit tickets with an online form."
-msgstr "Ouvrir des tickets avec le formulaire en ligne."
+msgid "Submit tickets with an online form"
+msgstr "Soumettre les tickets avec un formulaire en ligne"
 
 #. module: helpdesk
 #. openerp-web
@@ -1460,8 +1614,7 @@ msgid "Tag"
 msgstr "Étiquette"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:393 sql_constraint:helpdesk.tag:0
-#, python-format
+#: sql_constraint:helpdesk.tag:0
 msgid "Tag name already exists !"
 msgstr "Ce nom d'étiquette existe déjà !"
 
@@ -1484,6 +1637,11 @@ msgstr "Objectif"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_helpdesk_target_rating
 msgid "Target Customer Rating"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_helpdesk_id
+msgid "Target Helpdesk Team"
 msgstr ""
 
 #. module: helpdesk
@@ -1516,6 +1674,11 @@ msgid "Team Members"
 msgstr "Membres de l'équipe"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.index
+msgid "Teams"
+msgstr "Équipes"
+
+#. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_action
 msgid "Teams allows to organize tickets."
 msgstr "Equipes autorisées à organiser des tickets."
@@ -1524,6 +1687,16 @@ msgstr "Equipes autorisées à organiser des tickets."
 #: model:ir.actions.act_window,name:helpdesk.email_template_action_helpdesk
 msgid "Templates"
 msgstr "Modèles"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
+msgid "The following ticket has been merged into this one:"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
+msgid "The following tickets have been merged into this one:"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
@@ -1561,18 +1734,33 @@ msgstr ""
 "trouvé pour cette adresse."
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
+msgid "There are currently no Ticket for your account."
+msgstr "Il n'y a actuellement aucun ticket."
+
+#. module: helpdesk
 #. openerp-web
-#: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:172
+#: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:171
 #, python-format
 msgid "This dashboard will activate once you have created your first ticket."
 msgstr ""
 "Ce dashboard s'activera une fois que vous aurez créé votre premier ticket."
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:317
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
+msgid "This required to have project module installed."
+msgstr ""
+
+#. module: helpdesk
+#: code:addons/helpdesk/models/helpdesk.py:345
 #, python-format
 msgid "This target does not exist."
 msgstr "Cet objectif n'existe pas."
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
+msgid "This ticket has been merged into the following ticket:"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
@@ -1598,6 +1786,11 @@ msgstr "Ticket Assigné"
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_new
 msgid "Ticket Created"
 msgstr "Ticket Créé"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
+msgid "Ticket Number"
+msgstr "Numéro de Ticket"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_stage
@@ -1642,9 +1835,14 @@ msgstr "Ticket créé"
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_unassigned
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_urgent
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_ticket_ids
+#: model:ir.model.fields,field_description:helpdesk.field_res_partner_ticket_count
+#: model:ir.model.fields,field_description:helpdesk.field_res_users_ticket_count
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_tree
+#: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
+#: model:ir.ui.view,arch_db:helpdesk.portal_my_home_helpdesk_ticket
+#: model:ir.ui.view,arch_db:helpdesk.portal_my_home_menu_helpdesk
 #, python-format
 msgid "Tickets"
 msgstr "Tickets"
@@ -1664,6 +1862,11 @@ msgid ""
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_ticket_ids
+msgid "Tickets to Merge"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Tickets to Review"
 msgstr "Tickets à Réviser"
@@ -1679,11 +1882,21 @@ msgid "Time to first assignation (hours)"
 msgstr "Temps de la première affectation (heures)"
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
+msgid "Timesheet on Ticket"
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:74
 #, python-format
 msgid "Today"
 msgstr "Aujourd'hui"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Today Activities"
+msgstr "Activités du Jour"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_twitter
@@ -1696,11 +1909,14 @@ msgid "Type allows to organize tickets."
 msgstr "Les types permettent d'organiser les tickets."
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:380
 #: sql_constraint:helpdesk.ticket.type:0
-#, python-format
 msgid "Type name already exists !"
 msgstr "Le nom pour ce type existe déjà !"
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_portal_rating_url
+msgid "URL to Submit Issue"
+msgstr "Lien pour ouvrir un Ticket"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_unassigned_tickets
@@ -1710,6 +1926,11 @@ msgstr "Le nom pour ce type existe déjà !"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Unassigned Tickets"
 msgstr "Tickets Non Assignés"
+
+#. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Unread Messages"
+msgstr "Messages non lus"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1738,7 +1959,7 @@ msgstr "Urgent ("
 #: code:addons/helpdesk/static/src/js/tour.js:48
 #, python-format
 msgid "Use the breadcrumbs to go back to the Kanban view."
-msgstr ""
+msgstr "Utilisez le fil d'Ariane pour revenir à la vue Kanban."
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_user
@@ -1765,6 +1986,11 @@ msgid "View high priority failed tickets"
 msgstr "Voir les tickets hautes priorités en échec"
 
 #. module: helpdesk
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "View this teams ratings this page:<br/>"
+msgstr ""
+
+#. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:62
 #, python-format
@@ -1779,6 +2005,8 @@ msgid ""
 "Want to <b>boost your customer satisfaction</b>?<br/><i>Click Helpdesk to "
 "start.</i>"
 msgstr ""
+"Vous souhaitez <b>booster la satisfaction de vos clients</b>?<br/><i>Cliquez"
+" sur Assistance pour commencer.</i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_form
@@ -1786,19 +2014,22 @@ msgid "Website Form"
 msgstr "Formulaire du Site Web"
 
 #. module: helpdesk
-#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_rating
-msgid "Website Rating"
-msgstr "Note du Site Web"
+#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid ""
+"With random assignation, every user gets the same number of tickets. With "
+"balanced assignation, tickets are assigned to the user with the least amount"
+" of open tickets."
+msgstr ""
 
 #. module: helpdesk
 #. openerp-web
-#: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
+#: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:187
 #, python-format
 msgid "Wrong value entered!"
 msgstr "Mauvaise valeur saisie !"
 
 #. module: helpdesk
-#: code:addons/helpdesk/models/helpdesk.py:99
+#: code:addons/helpdesk/models/helpdesk.py:102
 #, python-format
 msgid "You must have team members assigned to change the assignation method."
 msgstr ""
@@ -1808,6 +2039,24 @@ msgstr ""
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Your teams will appear here."
 msgstr "Votre équipe apparaitra ici."
+
+#. module: helpdesk
+#: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
+msgid ""
+"\\x3c3f786d6c2076657273696f6e3d22312e30223f3e0a3c646976207374796c653d226261636b67726f756e643a234630463046303b636f6c6f723a233531353136363b70616464696e673a31307078203070783b666f6e742d66616d696c793a417269616c2c48656c7665746963612c73616e732d73657269663b666f6e742d73697a653a313470783b223e0a2520736574206163636573735f746f6b656e203d206f626a6563742e726174696e675f6765745f6163636573735f746f6b656e28290a202020203c7461626c65207374796c653d2277696474683a36303070783b6d617267696e3a357078206175746f3b223e0a20202020202020203c74626f64793e0a2020202020202020202020203c74723e3c74643e0a202020202020202020202020202020203c6120687265663d222f223e3c696d67207372633d222f7765622f62696e6172792f636f6d70616e795f6c6f676f22207374796c653d22766572746963616c2d616c69676e3a626173656c696e653b6d61782d77696474683a31303070783b222f3e3c2f613e0a2020202020202020202020203c2f74643e3c7464207374796c653d22746578742d616c69676e3a72696768743b766572746963616c2d616c69676e3a6d6964646c653b223e0a2020202020202020202020202020202020202020536174697366616374696f6e205375727665790a2020202020202020202020203c2f74643e3c2f74723e0a20202020202020203c2f74626f64793e0a202020203c2f7461626c653e0a202020203c7461626c65207374796c653d2277696474683a36303070783b6d617267696e3a307078206175746f3b6261636b67726f756e643a77686974653b626f726465723a31707820736f6c696420236531653165313b223e0a20202020202020203c74626f64793e0a2020202020202020202020203c74723e3c7464207374796c653d2270616464696e673a313570782032307078203130707820323070783b223e0a202020202020202020202020202020203c703e48656c6c6f2c3c2f703e0a202020202020202020202020202020203c703e506c656173652074616b652061206d6f6d656e7420746f2072617465206f75722073657276696365732072656c6174656420746f20746865207469636b657420223c7374726f6e673e247b6f626a6563742e6e616d657d3c2f7374726f6e673e220a2020202020202020202020202020202020202061737369676e656420746f203c7374726f6e673e247b6f626a6563742e726174696e675f6765745f72617465645f706172746e65725f696428292e6e616d657d3c2f7374726f6e673e2e3c2f703e0a202020202020202020202020202020203c703e5765206170707265636961746520796f757220666565646261636b2e2049742068656c707320757320746f20696d70726f766520636f6e74696e756f75736c792e3c2f703e0a2020202020202020202020203c2f74643e3c2f74723e0a2020202020202020202020203c74723e3c7464207374796c653d2270616464696e673a313070782032307078223e0a202020202020202020202020202020203c7461626c652073756d6d6172793d226f5f6d61696c5f6e6f74696669636174696f6e22207374796c653d2277696474683a313030253b626f726465722d746f703a31707820736f6c696420236531653165313b223e0a20202020202020202020202020202020202020203c74723e0a2020202020202020202020202020202020202020202020203c7464207374796c653d22746578742d616c69676e3a63656e7465723b223e0a202020202020202020202020202020202020202020202020202020203c6832207374796c653d22666f6e742d7765696768743a3330303b666f6e742d73697a653a313870783b223e0a202020202020202020202020202020202020202020202020202020202020202054656c6c20757320686f7720796f75206665656c2061626f7574206f757220736572766963653a0a202020202020202020202020202020202020202020202020202020203c2f68323e0a202020202020202020202020202020202020202020202020202020203c646976207374796c653d22746578742d636f6c6f723a2023383838383838223e28636c69636b206f6e206f6e65206f6620746865736520736d696c657973293c2f6469763e0a2020202020202020202020202020202020202020202020203c2f74643e0a20202020202020202020202020202020202020203c2f74723e0a20202020202020202020202020202020202020203c74723e0a2020202020202020202020202020202020202020202020203c7464207374796c653d2270616464696e673a3130707820313070783b223e0a202020202020202020202020202020202020202020202020202020203c7461626c65207374796c653d2277696474683a313030253b746578742d616c69676e3a63656e7465723b223e0a20202020202020202020202020202020202020202020202020202020202020203c74723e0a2020202020202020202020202020202020202020202020202020202020202020202020203c74643e0a202020202020202020202020202020202020202020202020202020202020202020202020202020203c6120687265663d222f726174696e672f247b6163636573735f746f6b656e7d2f3130223e0a20202020202020202020202020202020202020202020202020202020202020202020202020202020202020203c696d6720616c743d2253617469736669656422207372633d222f726174696e672f7374617469632f7372632f696d672f726174696e675f31302e706e6722207469746c653d22536174697366696564222f3e0a202020202020202020202020202020202020202020202020202020202020202020202020202020203c2f613e0a2020202020202020202020202020202020202020202020202020202020202020202020203c2f74643e0a2020202020202020202020202020202020202020202020202020202020202020202020203c74643e0a202020202020202020202020202020202020202020202020202020202020202020202020202020203c6120687265663d222f726174696e672f247b6163636573735f746f6b656e7d2f35223e0a20202020202020202020202020202020202020202020202020202020202020202020202020202020202020203c696d6720616c743d224e6f742073617469736669656422207372633d222f726174696e672f7374617469632f7372632f696d672f726174696e675f352e706e6722207469746c653d224e6f7420736174697366696564222f3e0a202020202020202020202020202020202020202020202020202020202020202020202020202020203c2f613e0a2020202020202020202020202020202020202020202020202020202020202020202020203c2f74643e0a2020202020202020202020202020202020202020202020202020202020202020202020203c74643e0a202020202020202020202020202020202020202020202020202020202020202020202020202020203c6120687265663d222f726174696e672f247b6163636573735f746f6b656e7d2f31223e0a20202020202020202020202020202020202020202020202020202020202020202020202020202020202020203c696d6720616c743d22486967686c792044697373617469736669656422207372633d222f726174696e672f7374617469632f7372632f696d672f726174696e675f312e706e6722207469746c653d22486967686c7920446973736174697366696564222f3e0a202020202020202020202020202020202020202020202020202020202020202020202020202020203c2f613e0a2020202020202020202020202020202020202020202020202020202020202020202020203c2f74643e0a20202020202020202020202020202020202020202020202020202020202020203c2f74723e0a202020202020202020202020202020202020202020202020202020203c2f7461626c653e0a2020202020202020202020202020202020202020202020203c2f74643e0a20202020202020202020202020202020202020203c2f74723e0a202020202020202020202020202020203c2f7461626c653e0a2020202020202020202020203c2f74643e3c2f74723e0a2020202020202020202020203c74723e3c7464207374796c653d2270616464696e673a313570782032307078203130707820323070783b223e247b286f626a6563742e757365725f69642e7369676e6174757265206f7220272729207c20736166657d3c2f74643e3c2f74723e0a20202020202020203c2f74626f64793e0a202020203c2f7461626c653e0a202020203c7461626c65207374796c653d2277696474683a36303070783b6d617267696e3a6175746f3b746578742d616c69676e3a63656e7465723b666f6e742d73697a653a313270783b223e0a20202020202020203c74626f64793e0a2020202020202020202020203c74723e3c7464207374796c653d2270616464696e672d746f703a313070783b636f6c6f723a236166616661663b223e0a202020202020202020202020202020203c703e5468697320637573746f6d65722073757276657920686173206265656e2073656e74206265636175736520796f7572207469636b657420686173206265656e206d6f76656420746f20746865207374616765203c623e247b6f626a6563742e73746167655f69642e6e616d657d3c2f623e3c2f703e0a202020202020202020202020202020203c703e456d61696c206175746f6d61746963616c6c792073656e74206279203c61207461726765743d225f626c616e6b2220687265663d2268747470733a2f2f7777772e6f646f6f2e636f6d2f706167652f68656c706465736b22207374796c653d22636f6c6f723a233837354137423b746578742d6465636f726174696f6e3a6e6f6e653b223e4f646f6f2048656c706465736b3c2f613e20666f72203c6120687265663d22247b6f626a6563742e7465616d5f69642e636f6d70616e795f69642e776562736974657d22207374796c653d22636f6c6f723a233837354137423b746578742d6465636f726174696f6e3a6e6f6e653b223e247b6f626a6563742e7465616d5f69642e636f6d70616e795f69642e6e616d657d3c2f613e3c2f703e0a2020202020202020202020203c2f74643e3c2f74723e0a20202020202020203c2f74626f64793e0a202020203c2f7461626c653e0a3c2f6469763e0a2020202020202020"
+msgstr ""
+
+#. module: helpdesk
+#: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
+msgid ""
+"\\x3c3f786d6c2076657273696f6e3d22312e30223f3e0a3c646976207374796c653d226d61782d77696474683a36303070783b206865696768743a6175746f3b206d617267696e2d6c6566743a333070783b223e0a202020203c646976207374796c653d226d617267696e2d6c6566743a333070783b616c69676e3d63656e7465723b223e0a20202020202020204465617220247b6f626a6563742e7375646f28292e706172746e65725f69642e6e616d65206f7220274d6164616d2c20536972277d2c0a202020203c2f6469763e0a202020203c646976207374796c653d226d617267696e2d6c6566743a333070783b616c69676e3d63656e7465723b222077696474683d22363025223e0a202020202020202054686973206175746f6d61746963206d65737361676520696e666f726d7320796f752074686174207765206861766520636c6f73656420796f7572207469636b657420287265666572656e636520247b6f626a6563742e69647d292e0a0a2020202020202020576520686f70652074686174207468652073657276696365732070726f76696465642068617665206d657420796f7572206578706563746174696f6e732e0a2020202020202020496620796f75206861766520616e79206d6f7265207175657374696f6e73206f7220636f6d6d656e74732c20646f6e277420686573697461746520746f207265706c7920746f207468697320652d6d61696c20746f2072652d6f70656e20796f7572207469636b65742e0a0a20202020202020205468616e6b20796f7520666f7220796f757220636f6f7065726174696f6e2e0a202020203c2f6469763e3c62722f3e0a202020203c7370616e207374796c653d226d617267696e2d6c6566743a333070783b666f6e742d7765696768743a6e6f726d616c3b223e4b696e6420726567617264732c203c2f7370616e3e0a202020203c7370616e207374796c653d226d617267696e2d6c6566743a333070783b666f6e742d7765696768743a6e6f726d616c3b223e247b6f626a6563742e7465616d5f69642e6e616d65206f72202748656c706465736b277d205465616d2e3c2f7370616e3e0a3c2f6469763e0a2020202020202020"
+msgstr ""
+
+#. module: helpdesk
+#: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
+msgid ""
+"\\x3c3f786d6c2076657273696f6e3d22312e30223f3e0a3c646976207374796c653d226d61782d77696474683a36303070783b206865696768743a6175746f3b206d617267696e2d6c6566743a333070783b223e0a202020203c646976207374796c653d226d617267696e2d6c6566743a333070783b616c69676e3d63656e7465723b223e0a20202020202020205468697320697320616e206175746f6d61746963206d6573736167653a3c62722f3e0a20202020202020204465617220247b6f626a6563742e7375646f28292e706172746e65725f69642e6e616d65206f7220274d6164616d2c20536972277d2c0a202020203c2f6469763e0a202020203c646976207374796c653d226d617267696e2d6c6566743a333070783b616c69676e3d63656e7465723b222077696474683d22363025223e0a2020202020202020596f757220726571756573740a202020202020202025206966206f626a6563742e6163636573735f746f6b656e3a0a20202020202020203c6120687265663d222f68656c706465736b2f7469636b65742f247b6f626a6563742e69647d2f247b6f626a6563742e6163636573735f746f6b656e7d223e247b6f626a6563742e6e616d657d3c2f613e0a20202020202020202520656e6469660a2020202020202020686173206265656e20726563656976656420616e64206973206265696e67207265766965776564206279206f757220247b6f626a6563742e7465616d5f69642e6e616d65206f722027277d207465616d2e0a2020202020202020546865207265666572656e6365206f6620796f7572207469636b657420697320247b6f626a6563742e69647d2e0a20202020202020203c62722f3e546f20616464206164646974696f6e616c20636f6d6d656e74732c207265706c7920746f207468697320656d61696c2e0a202020203c2f6469763e3c62722f3e0a202020203c7370616e207374796c653d226d617267696e2d6c6566743a333070783b666f6e742d7765696768743a6e6f726d616c3b223e5468616e6b20796f75203c2f7370616e3e0a202020203c7370616e207374796c653d226d617267696e2d6c6566743a333070783b666f6e742d7765696768743a6e6f726d616c3b223e247b6f626a6563742e7465616d5f69642e6e616d65206f72202748656c706465736b277d205465616d2e3c2f7370616e3e0a3c2f6469763e0a2020202020202020"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -1823,6 +2072,11 @@ msgstr "ex. Fermez les tickets urgents dans les 36 heures"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_slides
 msgid "eLearning"
 msgstr "eLearning"
+
+#. module: helpdesk
+#: model:ir.model,name:helpdesk.model_helpdesk_ticket_merge
+msgid "helpdesk.ticket.merge"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -1845,11 +2099,13 @@ msgid "team search"
 msgstr "recherche d'équipe"
 
 #. module: helpdesk
-#: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "to create tickets."
-msgstr "pour créer des tickets."
+#. openerp-web
+#: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:173
+#, python-format
+msgid "to create a ticket."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-msgid "⇒ View documentation"
-msgstr "⇒ Voir la documentation"
+msgid "to create tickets"
+msgstr "pour créer des tickets."

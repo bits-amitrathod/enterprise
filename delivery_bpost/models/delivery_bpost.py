@@ -93,4 +93,4 @@ class ProviderBpost(models.Model):
         self.ensure_one()
         if any(c.delivery_type != 'bpost' for c in self):
             raise UserError(_("You cannot compute a passphrase for non-bpost carriers."))
-        return b64encode("%s:%s" % (self.bpost_account_number, self.bpost_developer_password))
+        return b64encode(("%s:%s" % (self.bpost_account_number, self.bpost_developer_password)).encode()).decode()

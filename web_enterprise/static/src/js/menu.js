@@ -14,26 +14,13 @@ var QWeb = core.qweb;
 
 var Menu = Widget.extend({
     template: 'Menu',
+    menusTemplate: 'Menu.sections',
     events: {
-        'click .o_menu_toggle': function (ev) {
-            ev.preventDefault();
-            this.trigger_up((this.appswitcher_displayed)? 'hide_app_switcher' : 'show_app_switcher');
-            this.$el.parent().removeClass('o_mobile_menu_opened');
-        },
-        'click .o_mobile_menu_toggle': function () {
-            this.$el.parent().toggleClass('o_mobile_menu_opened');
-        },
-        'mouseover .o_menu_sections > li:not(.open)': function(e) {
-            if (config.device.size_class >= config.device.SIZES.SM) {
-                var $opened = this.$('.o_menu_sections > li.open');
-                if($opened.length) {
-                    $opened.removeClass('open');
-                    $(e.currentTarget).addClass('open').find('> a').focus();
-                }
-            }
-        },
-        'click .o_menu_brand': '_onMainMenuClick'
+        'click .o_menu_toggle': '_onToggleAppSwitcher',
+        'mouseover .o_menu_sections > li:not(.open)': '_onMouseOverMenu',
+        'click .o_menu_brand': '_onAppNameClicked',
     },
+
     init: function (parent, menu_data) {
         var self = this;
         this._super.apply(this, arguments);
@@ -44,7 +31,9 @@ var Menu = Widget.extend({
         this.menu_data = menu_data;
 
         // Prepare navbar's menus
-        var $menu_sections = $(QWeb.render('Menu.sections', {'menu_data': this.menu_data}));
+        var $menu_sections = $(QWeb.render(this.menusTemplate, {
+            menu_data: this.menu_data,
+        }));
         $menu_sections.filter('section').each(function () {
             self.$menu_sections[parseInt(this.className, 10)] = $(this).children('li');
         });
@@ -213,17 +202,43 @@ var Menu = Widget.extend({
         }
     },
 
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
     /**
-     * When clicking on the main menu title, we want to open the first action of
-     * the current application
+     * When clicking on app name, opens the first action of the app
      *
      * @private
      */
-    _onMainMenuClick: function () {
+    _onAppNameClicked: function () {
         var actionID = this.menu_id_to_action_id(this.current_primary_menu);
         this._trigger_menu_clicked(this.current_primary_menu, actionID);
-    }
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onMouseOverMenu: function (ev) {
+        if (!config.isMobile) {
+            var $opened = this.$('.o_menu_sections > li.open');
+            if ($opened.length) {
+                $opened.removeClass('open');
+                $(ev.currentTarget).addClass('open').find('> a').focus();
+            }
+        }
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onToggleAppSwitcher: function (ev) {
+        ev.preventDefault();
+        this.trigger_up(this.appswitcher_displayed ? 'hide_app_switcher' : 'show_app_switcher');
+        this.$el.parent().removeClass('o_mobile_menu_opened');
+    },
 });
 
 return Menu;
+
 });

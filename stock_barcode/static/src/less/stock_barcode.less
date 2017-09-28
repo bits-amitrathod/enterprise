@@ -4,14 +4,8 @@
     .o-justify-content(center);
     .o-align-items(center);
 
-    @media (min-width: @screen-xs-max) {
-        background: url("../../../../web_enterprise/static/src/img/application-switcher-bg.jpg") no-repeat center center fixed;
-        background-size: cover;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+    @media (min-width: @screen-sm-min) {
+        .o-position-absolute(0, 0, 0, 0);
     }
 }
 
@@ -51,7 +45,7 @@
         margin-bottom: 0;
     }
 
-    @media (min-width: @screen-xs-max) {
+    @media (min-width: @screen-sm-min) {
         flex: 0 0 auto;
         width: 550px;
         border-radius: 10px;

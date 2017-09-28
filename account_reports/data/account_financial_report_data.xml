@@ -2,12 +2,13 @@
 <odoo>
     <data>
 
-        <menuitem id="account_reports_partners_reports_menu" name="Partners Reports" parent="account.menu_finance_reports" sequence="2"/>
+        <menuitem id="account_reports_partners_reports_menu" name="Partner Reports" parent="account.menu_finance_reports" sequence="2"/>
         <menuitem id="account_reports_audit_reports_menu" name="Audit Reports" parent="account.menu_finance_reports" sequence="3"/>
 
         <record model="ir.actions.server" id="action_journal_items">
             <field name="name">Journal Items by tax</field>
             <field name="model_id" ref="account_reports.model_account_financial_html_report_line"/>
+            <field name="state">code</field>
             <field name="code">
                 action = env['account.financial.html.report.line'].browse(context['active_id']).report_move_lines_action()
             </field>

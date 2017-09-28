@@ -48,7 +48,7 @@ var createViewEditorManager = function (params) {
 
 var ViewEditorManager = require('web_studio.ViewEditorManager');
 
-QUnit.module('Studio', {
+QUnit.module('ViewEditorManager', {
     beforeEach: function () {
         this.data = {
             coucou: {
@@ -73,7 +73,7 @@ QUnit.module('Studio', {
     }
 }, function () {
 
-    QUnit.module('ViewEditorManager');
+    QUnit.module('List');
 
     QUnit.test('list editor sidebar', function(assert) {
         assert.expect(5);
@@ -197,6 +197,8 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.module('Form');
 
     QUnit.test('empty form editor', function(assert) {
         assert.expect(4);
@@ -325,6 +327,8 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.module('Kanban');
 
     QUnit.test('empty kanban editor', function(assert) {
         assert.expect(4);
@@ -540,6 +544,8 @@ QUnit.module('Studio', {
         vem.destroy();
     });
 
+    QUnit.module('Search');
+
     QUnit.test('empty search editor', function(assert) {
         assert.expect(6);
 
@@ -565,7 +571,7 @@ QUnit.module('Studio', {
     });
 
     QUnit.test('search editor', function(assert) {
-        assert.expect(9);
+        assert.expect(13);
 
         var vem = createViewEditorManager({
             data: this.data,
@@ -606,8 +612,22 @@ QUnit.module('Studio', {
         assert.strictEqual(vem.$('.o_web_studio_search_view_editor [data-node-id]').length, 4,
             "there should be 4 nodes");
 
+        // edit the autocompletion field
+        $('.o_web_studio_search_view_editor .o_web_studio_search_autocompletion_container [data-node-id]').click();
+
+        assert.ok(vem.$('.o_web_studio_sidebar').find('.o_web_studio_properties').hasClass('active'),
+            "the Properties tab should now be active");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should now display the field properties");
+        assert.ok(vem.$('.o_web_studio_search_view_editor .o_web_studio_search_autocompletion_container [data-node-id]').hasClass('o_clicked'),
+            "the field should have the clicked style");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
+            "the field should have the label Display Name in the sidebar");
+
         vem.destroy();
     });
+
+    QUnit.module('Pivot');
 
     QUnit.test('empty pivot editor', function(assert) {
         assert.expect(3);
@@ -635,6 +655,8 @@ QUnit.module('Studio', {
         vem.destroy();
     });
 
+    QUnit.module('Graph');
+
     QUnit.test('empty graph editor', function(assert) {
         var done = assert.async();
         assert.expect(3);
@@ -661,6 +683,8 @@ QUnit.module('Studio', {
             done();
         });
     });
+
+    QUnit.module('Others');
 
     QUnit.test('error during tree rendering: undo', function(assert) {
         assert.expect(4);
@@ -1084,6 +1108,8 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.module('X2Many');
 
     QUnit.test('display one2many without inline views', function(assert) {
         assert.expect(1);

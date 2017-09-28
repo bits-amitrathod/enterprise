@@ -63,15 +63,37 @@ class StockPicking(models.Model):
     @api.multi
     def get_po_to_split_from_barcode(self, barcode):
         ''' Returns the 'Split lot' action for the PO matching the barcode '''
+        product_id = self.env['product.product'].search([('barcode', '=', barcode)])
         candidates = self.env['stock.move.line'].search([
             ('picking_id', 'in', self.ids),
             ('product_barcode', '=', barcode),
             ('location_processed', '=', False),
             ('result_package_id', '=', False),
         ])
-        candidates_todo = candidates.filtered(lambda r: r.qty_done < r.product_qty)
-        candidates = candidates_todo or candidates
-        return candidates.action_split_lots()
+
+        action_ctx = dict(self.env.context,
+            default_picking_id=self.id,
+            serial=self.product_id.tracking == 'serial',
+            default_product_id=product_id.id,
+            candidates=candidates.ids)
+        view_id = self.env.ref('stock_barcode.view_barcode_lot_form').id
+        return {
+            'name': _('Lot/Serial Number Details'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock_barcode.lot',
+            'views': [(view_id, 'form')],
+            'view_id': view_id,
+            'target': 'new',
+            'context': action_ctx}
+
+    def new_product_scanned(self, barcode):
+        product_id = self.env['product.product'].search([('barcode', '=', barcode)])
+        if not product_id or product_id.tracking == 'none':
+            return self.on_barcode_scanned(barcode)
+        else:
+            return self.get_po_to_split_from_barcode(barcode)
 
     def _check_product(self, product, qty=1.0):
         corresponding_po = self.move_line_ids.filtered(lambda r: r.product_id.id == product.id and not r.result_package_id and not r.location_processed)
@@ -82,7 +104,7 @@ class StockPicking(models.Model):
                 last_po = False
                 for po in corresponding_po:
                     last_po = po
-                    if po.product_qty > po.qty_done:
+                    if po.product_uom_qty > po.qty_done:
                         new_po = po
                         break
                 corresponding_po = new_po or last_po
@@ -95,7 +117,7 @@ class StockPicking(models.Model):
                 'location_id': self.location_id.id,
                 'location_dest_id': self.location_dest_id.id,
                 'qty_done': (product.tracking == 'none' and picking_type_lots) and qty or 0.0,
-                'product_qty': 0.0,
+                'product_uom_qty': 0.0,
                 # TDE FIXME: those fields are compute without inverse: unnecessary ?
                 'from_loc': self.location_id.name,
                 'to_loc': self.location_dest_id.name,
@@ -118,9 +140,9 @@ class StockPicking(models.Model):
         corresponding_po = self.move_line_ids.filtered(lambda r: not r.result_package_id and r.qty_done > 0)
         for packop in corresponding_po:
             qty_done = packop.qty_done
-            if qty_done < packop.product_qty:
+            if qty_done < packop.product_uom_qty:
                 if not packop.pack_lot_ids:
-                    packop.product_qty = packop.product_qty - qty_done
+                    packop.product_uom_qty = packop.product_uom_qty - qty_done
                     packop.qty_done = 0.0
                     self.move_line_ids += self.move_line_ids.new({
                         'product_id': packop.product_id.id,
@@ -129,7 +151,7 @@ class StockPicking(models.Model):
                         'location_id': packop.location_id.id,
                         'location_dest_id': packop.location_dest_id.id,
                         'qty_done': qty_done,
-                        'product_qty': qty_done,
+                        'product_uom_qty': qty_done,
                         # TDE FIXME: those fields are compute without inverse: unnecessary ?
                         'from_loc': packop.location_id.name + (packop.package_id and (' : ' + packop.package_id.name) or ''),
                         'to_loc': packop.location_dest_id.name + ' : ' + package.name,
@@ -144,7 +166,7 @@ class StockPicking(models.Model):
                         'location_id': packop.location_id.id,
                         'location_dest_id': packop.location_dest_id.id,
                         'qty_done': 0.0,
-                        'product_qty': packop.product_qty - qty_done,
+                        'product_uom_qty': packop.product_uom_qty - qty_done,
                         # TDE FIXME: those fields are compute without inverse: unnecessary ?
                         'from_loc': packop.from_loc,
                         'to_loc': packop.to_loc,
@@ -152,7 +174,7 @@ class StockPicking(models.Model):
                     })
                     packop.result_package_id = package.id
                     packop.to_loc = packop.location_dest_id.name + ' : ' + package.name
-                    packop.product_qty = qty_done
+                    packop.product_uom_qty = qty_done
             else:
                 packop.result_package_id = package
                 packop.to_loc = packop.location_dest_id.name + ' : ' + package.name
@@ -166,9 +188,9 @@ class StockPicking(models.Model):
         corresponding_po = self.move_line_ids.filtered(lambda r: not r.location_processed and r.qty_done > 0)
         for packop in corresponding_po:
             qty_done = packop.qty_done
-            if qty_done < packop.product_qty:
+            if qty_done < packop.product_uom_qty:
                 if not packop.pack_lot_ids:
-                    packop.product_qty = packop.product_qty - qty_done
+                    packop.product_uom_qty = packop.product_uom_qty - qty_done
                     packop.qty_done = 0.0
                     self.move_line_ids += self.move_line_ids.new({
                         'package_id': packop.package_id.id,
@@ -177,7 +199,7 @@ class StockPicking(models.Model):
                         'location_id': packop.location_id.id,
                         'location_dest_id': location.id,
                         'qty_done': qty_done,
-                        'product_qty': qty_done,
+                        'product_uom_qty': qty_done,
                         # TDE FIXME: those fields are compute without inverse: unnecessary ?
                         'from_loc': packop.location_id.name + (packop.package_id and (' : ' + packop.package_id.name) or ''),
                         'to_loc': location.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or ''),
@@ -193,7 +215,7 @@ class StockPicking(models.Model):
                         'location_id': packop.location_id.id,
                         'location_dest_id': packop.location_dest_id.id,
                         'qty_done': 0.0,
-                        'product_qty': packop.product_qty - qty_done,
+                        'product_uom_qty': packop.product_uom_qty - qty_done,
                         # TDE FIXME: those fields are compute without inverse: unnecessary ?
                         'from_loc': packop.from_loc,
                         'to_loc': packop.to_loc,
@@ -202,7 +224,7 @@ class StockPicking(models.Model):
                     packop.location_processed = True
                     packop.location_dest_id = location.id
                     packop.to_loc = packop.location_dest_id.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or '')
-                    packop.product_qty = qty_done
+                    packop.product_uom_qty = qty_done
             else:
                 packop.location_dest_id = location.id
                 packop.to_loc = packop.location_dest_id.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or '')

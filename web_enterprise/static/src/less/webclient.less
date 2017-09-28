@@ -6,38 +6,53 @@ div.o_checkbox {
 
     display: inline-block;
     position: relative;
-    vertical-align: sub;
-
-    > input {
-        width: @odoo-checkbox-size;
-        height: @odoo-checkbox-size;
-        margin: 0; // bootstrap override
-
-        opacity: 0;
-        .o-position-absolute();
-        cursor: pointer;
-
-        + span {
-            display: block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    input[type="checkbox"] {
+        position: inherit;
+        margin-left: 0;
+    }
+    > label {
+        display: inline;
+        padding-left: 0px;
+        min-height: 15px;
+        .o_checkbox_label {
+            margin-left: 5px;
+        }
+        > input {
             width: @odoo-checkbox-size;
             height: @odoo-checkbox-size;
-            border: 1px solid @odoo-brand-secondary;
-            background-color: white;
-        }
+            margin: 0; // bootstrap override
 
-        &:checked + span {
-            background-repeat: no-repeat;
-            background-image: url(../img/checked.svg);
-            background-position: center center;
-        }
+            opacity: 0;
+            .o-position-absolute();
+            cursor: pointer;
 
-        &:disabled + span {
-            opacity: 0.7;
-            border: 1px solid @odoo-brand-lightsecondary;
-        }
+            + span {
+                position: absolute;
+                margin-top: 2px;
+                margin-left: -15px;
+                display: inline-block;
+                width: @odoo-checkbox-size;
+                height: @odoo-checkbox-size;
+                border: 1px solid @odoo-brand-secondary;
+                background-color: white;
+            }
 
-        &:focus + span {
-            outline: 1px solid @odoo-brand-optional;
+            &:checked + span {
+                background-repeat: no-repeat;
+                background-image: url(../img/checked.svg);
+                background-position: center center;
+            }
+
+            &:disabled + span {
+                opacity: 0.7;
+                border: 1px solid @odoo-brand-lightsecondary;
+            }
+
+            &:focus + span {
+                outline: 1px solid @odoo-brand-optional;
+            }
         }
     }
 }

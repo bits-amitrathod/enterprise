@@ -3,7 +3,7 @@
 <templates xml:space="preserve">
 
     <t t-name="event_barcode_template">
-        <div class="o_event_barcode_bg">
+        <div class="o_event_barcode_bg o_app_switcher_background">
             <div class="o_event_barcode_detail text-center mt32">
                 <div class="col-md-3 col-xs-12 o_event_date">
                     <span class="o_event_day mt24"><t t-esc="widget.data.date"/></span>
@@ -33,6 +33,26 @@
                 <img class="mt16" src="/event_barcode/static/img/barcode.png"/>
                 <input class="mt32" type="text" id="event_barcode" placeholder="Waiting for barcode scan..." size="40"/>
             </div>
+        </div>
+    </t>
+
+    <t t-name="event_registration_summary">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="text-center" style="margin-bottom: 18px;"><img t-att-src="registration.image"/></div>
+            <div t-if="success" class="alert alert-success text-center"><t t-esc="success"/></div>
+            <div t-if="warning" class="alert alert-warning text-center"><t t-esc="warning"/></div>
+            <div t-if="registration.alert" class="alert alert-danger text-center"><t t-esc="registration.alert"/></div>
+          </div>
+        </div>
+        <div id="registration_information" class="row">
+          <div class="col-md-12">
+            <table class="table table-striped">
+              <tr t-foreach="registration.information" t-as="info">
+                <td><t t-esc="info[0]"/></td><td t-att-class="info[2] ? ('text-' + info[2]) : undefined"><t t-esc="info[1]"/></td>
+              </tr>
+            </table>
+          </div>
         </div>
     </t>
 

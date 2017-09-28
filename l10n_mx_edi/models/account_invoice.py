@@ -15,6 +15,7 @@ from odoo import _, api, fields, models, tools
 from odoo.tools.misc import html_escape
 from odoo.tools.xml_utils import check_with_xsd
 from odoo.tools import DEFAULT_SERVER_TIME_FORMAT
+from odoo.exceptions import UserError
 
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdiv32'
 CFDI_TEMPLATE_33 = 'l10n_mx_edi.cfdiv33'
@@ -151,34 +152,23 @@ class AccountInvoice(models.Model):
         'gives the receiver to this invoice. This value is defined by the '
         'customer. \nNote: It is not cause for cancellation if the key set is '
         'not the usage that will give the receiver of the document.')
+    l10n_mx_edi_origin = fields.Char(
+        string='CFDI Origin', copy=False,
+        help='In some cases like payments, credit notes, debit notes, '
+        'invoices re-signed or invoices that are redone due to payment in '
+        'advance will need this field filled, the format is: \nOrigin Type|'
+        'UUID1, UUID2, ...., UUIDn.\nWhere the origin type could be:\n'
+        '- 01: Nota de crédito\n'
+        '- 02: Nota de débito de los documentos relacionados\n'
+        '- 03: Devolución de mercancía sobre facturas o traslados previos\n'
+        '- 04: Sustitución de los CFDI previos\n'
+        '- 05: Traslados de mercancias facturados previamente\n'
+        '- 06: Factura generada por los traslados previos\n'
+        '- 07: CFDI por aplicación de anticipo')
 
     # -------------------------------------------------------------------------
     # HELPERS
     # -------------------------------------------------------------------------
-
-    @api.model
-    def l10n_mx_edi_get_customer_rfc(self):
-        '''In Mexico depending of some cases the vat (rfc) is not mandatory to be recorded in customers, only for those
-        cases instead try to force the record values and make documentation, given a customer the system will propose
-        properly a vat (rfc) in order to generate properly the xml following this law:
-
-        http://www.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/cfdi/PyRFactElect.pdf.
-
-        :return: XEXX010101000, XAXX010101000 or the customer vat depending of the country
-        '''
-        self.ensure_one()
-        partner_id = self.partner_id.commercial_partner_id
-        if partner_id.country_id and partner_id.country_id != self.env.ref('base.mx'):
-            # Following Question 5 in legal Document.
-            return 'XEXX010101000'
-        if (partner_id.country_id == self.env.ref('base.mx') or not partner_id.country_id) and not partner_id.vat:
-            self.message_post(
-                body=_('Using General Public VAT because no vat found'),
-                subtype='account.mt_invoice_validated')
-            # Following Question 4 in legal Document.
-            return 'XAXX010101000'
-        # otherwise it returns what customer says and if False xml validation will be solving other cases.
-        return partner_id.vat
 
     @api.model
     def l10n_mx_edi_retrieve_attachments(self):
@@ -221,13 +211,12 @@ class AccountInvoice(models.Model):
         :param cfdi: The cfdi as etree
         :return: the TimbreFiscalDigital node
         '''
-        self.ensure_one()
         if not hasattr(cfdi, 'Complemento'):
             return None
         attribute = 'tfd:TimbreFiscalDigital[1]'
         namespace = {'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital'}
         node = cfdi.Complemento.xpath(attribute, namespaces=namespace)
-        return node[0] if node else False
+        return node[0] if node else None
 
     @api.model
     def _get_l10n_mx_edi_cadena(self):
@@ -253,7 +242,6 @@ class AccountInvoice(models.Model):
         :param cfdi_as_tree: The cfdi converted as a tree
         :return: A string computed with the invoice data called the cadena
         '''
-        self.ensure_one()
         xslt_root = etree.parse(tools.file_open(xslt_path))
         return str(etree.XSLT(xslt_root)(cfdi_as_tree))
 
@@ -266,6 +254,8 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         partner_id = self.partner_id.commercial_partner_id
+        if self.partner_id.type == 'invoice':
+            partner_id = self.partner_id
         address_fields = ['street_name',
                           'street_number',
                           'street_number2',
@@ -343,7 +333,7 @@ class AccountInvoice(models.Model):
                 client = Client(url, timeout=20)
                 response = client.service.timbrar(username, password, cfdi, False)
             except Exception as e:
-                inv.l10n_mx_edi_log_error(e.message)
+                inv.l10n_mx_edi_log_error(str(e))
                 continue
             msg = getattr(response.resultados[0], 'mensaje', None)
             code = getattr(response.resultados[0], 'status', None)
@@ -369,7 +359,7 @@ class AccountInvoice(models.Model):
                 client = Client(url, timeout=20)
                 response = client.service.cancelar(username, password, uuids, cer_pem, key_pem, key_password)
             except Exception as e:
-                inv.l10n_mx_edi_log_error(e.message)
+                inv.l10n_mx_edi_log_error(str(e))
                 continue
             code = getattr(response.resultados[0], 'statusUUID', None)
             cancelled = code in ('201', '202')  # cancelled or previously cancelled
@@ -409,7 +399,7 @@ class AccountInvoice(models.Model):
                 client = Client(url, timeout=20)
                 response = client.service.stamp(cfdi, username, password)
             except Exception as e:
-                inv.l10n_mx_edi_log_error(e.message)
+                inv.l10n_mx_edi_log_error(str(e))
                 continue
             code = 0
             msg = None
@@ -444,7 +434,7 @@ class AccountInvoice(models.Model):
                 invoices_list.uuids.string = [uuid]
                 response = client.service.cancel(invoices_list, username, password, company_id.vat, cer_pem, key_pem)
             except Exception as e:
-                inv.l10n_mx_edi_log_error(e.message)
+                inv.l10n_mx_edi_log_error(str(e))
                 continue
             if not hasattr(response, 'Folios'):
                 msg = _('A delay of 2 hours has to be respected before to cancel')
@@ -456,7 +446,7 @@ class AccountInvoice(models.Model):
                 msg = '' if cancelled else _("Cancelling got an error")
             inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
-    @api.multi
+    @api.model
     def l10n_mx_edi_get_pac_version(self):
         '''Returns the cfdi version to generate the CFDI.
         In December, 1, 2017 the CFDI 3.2 is deprecated, after of July 1, 2018
@@ -503,6 +493,8 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         if xml_signed:
+            # Post append addenda
+            xml_signed = self.l10n_mx_edi_append_addenda(xml_signed)
             body_msg = _('The sign service has been called with success')
             # Update the pac status
             self.l10n_mx_edi_pac_status = 'signed'
@@ -600,13 +592,28 @@ class AccountInvoice(models.Model):
                                   r.l10n_mx_edi_cfdi_uuid and
                                   r.l10n_mx_edi_sat_status != 'cancelled')
         not_allow.message_post(
-            subject=_('An error occured while setting to draft.'),
+            subject=_('An error occurred while setting to draft.'),
             message_type='comment',
             body=_('This invoice does not have a properly cancelled XML and '
                    'it was signed at least once, please cancel properly with '
                    'the SAT.'))
-        (self - not_allow).write({'l10n_mx_edi_time_invoice': False})
+        allow = self - not_allow
+        allow.write({'l10n_mx_edi_time_invoice': False})
+        if self.l10n_mx_edi_get_pac_version() == '3.3':
+            for record in allow.filtered('l10n_mx_edi_origin'):
+                record.l10n_mx_edi_origin = self._set_cfdi_origin('04', [record.l10n_mx_edi_cfdi_uuid])
         return super(AccountInvoice, self - not_allow).action_invoice_draft()
+
+    @api.model
+    def _prepare_refund(self, invoice, date_invoice=None, date=None,
+                        description=None, journal_id=None):
+        """When is created the invoice refund is assigned the reference to
+        the invoice that was generate it"""
+        values = super(AccountInvoice, self)._prepare_refund(
+            invoice, date_invoice=date_invoice, date=date,
+            description=description, journal_id=journal_id)
+        values['l10n_mx_edi_origin'] = self._set_cfdi_origin('01', [invoice.l10n_mx_edi_cfdi_uuid])
+        return values
 
     @api.multi
     @api.depends('l10n_mx_edi_cfdi_name')
@@ -693,12 +700,19 @@ class AccountInvoice(models.Model):
         precision_digits = self.env['decimal.precision'].precision_get('Account')
         amount_untaxed = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit))
         amount_discount = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit * l.discount / 100.0))
+        partner_id = self.partner_id
+        if self.partner_id.type != 'invoice':
+            partner_id = self.partner_id.commercial_partner_id
+            self.message_post(body=_(
+                'The business partner address was used for the generation of '
+                'the CFDI, since the customer address is not a billing address.'),
+                subtype='account.mt_invoice_validated')
         values = {
             'record': self,
             'currency_name': self.currency_id.name,
             'supplier': self.company_id.partner_id.commercial_partner_id,
             'issued': self.journal_id.l10n_mx_address_issued_id,
-            'customer': self.partner_id.commercial_partner_id,
+            'customer': partner_id,
             'fiscal_position': self.company_id.partner_id.property_account_position_id,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
@@ -754,37 +768,44 @@ class AccountInvoice(models.Model):
         else:
             values['account_4num'] = None
 
-        values.update(self.get_cfdi_related())
         return values
 
     @api.multi
-    def l10n_mx_edi_get_addenda(self, values):
-        return self.partner_id.commercial_partner_id.l10n_mx_edi_addenda.render(values=values)
-
-    @api.multi
     def get_cfdi_related(self):
-        """To node CfdiRelacionados get documents related with that invoice
-        Considered:
-            - 01 - Nota de crédito
-            - 04 - Sustitución de los CFDI previos
-        Not considered:
-            - 02 - Nota de débito de los documentos relacionados
-            - 03 - Devolución de mercancía sobre facturas o traslados previos
-            - 05 - Traslados de mercancias facturados previamente
-            - 06 - Factura generada por los traslados previos
-            - 07 - CFDI por aplicación de anticipo"""
-        cfdi_related = []
-        relation_type = '01' if self.refund_invoice_id.l10n_mx_edi_cfdi_uuid else ''
-        relation_type = '04' if self.l10n_mx_edi_cfdi_uuid else relation_type
-        if self.refund_invoice_id.l10n_mx_edi_cfdi_uuid:
-            cfdi_related = [
-                {'uuid': self.refund_invoice_id.l10n_mx_edi_cfdi_uuid or ''}]
-        if self.l10n_mx_edi_cfdi_uuid:
-            cfdi_related = [{'uuid': self.l10n_mx_edi_cfdi_uuid or ''}]
+        """To node CfdiRelacionados get documents related with each invoice
+        from l10n_mx_edi_origin, hope the next structure:
+            relation type|UUIDs separated by ,"""
+        self.ensure_one()
+        if not self.l10n_mx_edi_origin:
+            return {}
+        origin = self.l10n_mx_edi_origin.split('|')
+        uuids = origin[1].split(',') if len(origin) > 1 else []
         return {
-            'cfdi_related_type': relation_type,
-            'cfdi_related': cfdi_related,
+            'type': origin[0],
+            'related': [u.strip() for u in uuids],
             }
+
+    def l10n_mx_edi_append_addenda(self, xml_signed):
+        self.ensure_one()
+        addenda = (
+            self.partner_id.l10n_mx_edi_addenda or
+            self.partner_id.commercial_partner_id.l10n_mx_edi_addenda)
+        if not addenda:
+            return xml_signed
+        values = {
+            'record': self,
+        }
+        tree = fromstring(base64.decodestring(xml_signed))
+        addenda_node = tree.Addenda if hasattr(
+            tree, 'Addenda') else etree.Element(etree.QName(
+                'http://www.sat.gob.mx/cfd/3', 'Addenda'))
+        addenda_node.append(fromstring(addenda.render(values=values)))
+        tree.append(addenda_node)
+        self.message_post(
+            body=_('Addenda has been added in the CFDI with success'),
+            subtype='account.mt_invoice_validated')
+        return base64.encodestring(etree.tostring(
+            tree, pretty_print=True, xml_declaration=True, encoding='UTF-8'))
 
     @api.multi
     def _l10n_mx_edi_create_cfdi(self):
@@ -826,7 +847,6 @@ class AccountInvoice(models.Model):
         # Create the EDI document
         # -----------------------
         version = self.l10n_mx_edi_get_pac_version()
-        parser = etree.XMLParser(remove_blank_text=True)
 
         # -Compute certificate data
         values['date'] = datetime.combine(
@@ -867,11 +887,6 @@ class AccountInvoice(models.Model):
             except Exception as e:
                 return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}
 
-        # Post append addenda
-        if self.partner_id.commercial_partner_id.l10n_mx_edi_addenda:
-            cfdi_addenda_node = tree.find(".//{http://www.sat.gob.mx/cfd/3}Addenda")
-            addenda_node = etree.fromstring(self.l10n_mx_edi_get_addenda(values), parser=parser)
-            cfdi_addenda_node.extend(addenda_node)
         return {'cfdi': etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8')}
 
     @api.multi
@@ -972,6 +987,55 @@ class AccountInvoice(models.Model):
             try:
                 response = Client(url).service.Consulta(params).Estado
             except Exception as e:
-                inv.l10n_mx_edi_log_error(e.message or e.reason.__repr__())
+                inv.l10n_mx_edi_log_error(str(e))
                 continue
             inv.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(response.__repr__(), 'none')
+
+    @api.multi
+    def _set_cfdi_origin(self, rtype='', uuids=[]):
+        """Try to write the origin in of the CFDI, it is important in order
+        to have a centralized way to manage this elements due to the fact
+        that this logic can be used in several places functionally speaking
+        all around Odoo.
+        :param rtype:
+            - 01: Nota de crédito
+            - 02: Nota de débito de los documentos relacionados
+            - 03: Devolución de mercancía sobre facturas o traslados previos
+            - 04: Sustitución de los CFDI previos
+            - 05: Traslados de mercancias facturados previamente
+            - 06: Factura generada por los traslados previos
+            - 07: CFDI por aplicación de anticipo
+        :param uuids:
+        :return:
+        """
+        self.ensure_one()
+        types = ['01', '02', '03', '04', '05', '06', '07']
+        if not rtype in types:
+            raise UserError(_('Invalid given type of document for field CFDI '
+                                'Origin'))
+        uuids = [u for u in uuids if isinstance(u, str)]
+        ids = ','.join(uuids)
+        l10n_mx_edi_origin = self.l10n_mx_edi_origin
+        if not l10n_mx_edi_origin:
+            origin = '%s|%s' % (rtype, ids)
+            self.update({'l10n_mx_edi_origin': origin})
+            return origin
+        old_rtype = l10n_mx_edi_origin.split('|')[0]
+        if old_rtype not in types:
+            raise UserError(_('Invalid type of document for field CFDI '
+                                'Origin'))
+        if old_rtype != rtype:
+            raise UserError(_('I can not have more than one type of CFDI '
+                                'related'))
+        try:
+            old_ids = l10n_mx_edi_origin.split('|')[1].split(',')
+        except IndexError:
+            raise UserError(
+                _('The cfdi origin field must be filled with type and list of '
+                  'cfdi separated by comma like this '
+                  '"01|89966ACC-0F5C-447D-AEF3-3EED22E711EE,89966ACC-0F5C-447D-AEF3-3EED22E711EE"'
+                  '\n get %s instead' % l10n_mx_edi_origin))
+        ids = ','.join(old_ids + uuids)
+        origin = '%s|%s' % (rtype, ids)
+        self.update({'l10n_mx_edi_origin': origin})
+        return origin

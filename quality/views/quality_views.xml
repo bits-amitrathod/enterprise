@@ -796,7 +796,8 @@
                                 <field name="measure_frequency_unit_value" nolabel="1" attrs="{'invisible': [('measure_frequency_type', '!=', 'periodical')]}"/>
                                 <field name="measure_frequency_unit" attrs="{'invisible': [('measure_frequency_type', '!=', 'periodical')]}"/>
                             </div>
-                            <field name="test_type"/>
+                            <field name="test_type" invisible="1"/>
+                            <field name="test_type_id" widget="selection"/>
                             <label for="norm" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
                             <div class="o_row" attrs="{'invisible': [('test_type', '!=', 'measure')]}">
                                 <field name="norm" attrs="{'required': [('test_type', '=', 'measure')]}"/>
@@ -812,13 +813,13 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Notes">
+                        <page string="Instructions">
                             <field name="note" placeholder="Describe the quality check to do..."/>
                         </page>
-                        <page string="Reason">
+                        <page string="Notes">
                             <field name="reason" placeholder="Describe why you need to perform this quality check..."/>
                         </page>
-                        <page string="Message If Failure">
+                        <page string="Message If Failure" attrs="{'invisible': [('test_type', 'in', ['picture', 'dummy', 'register_consumed_materials'])]}">
                             <field name="failure_message"/>
                         </page>
                     </notebook>

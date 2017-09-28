@@ -49,7 +49,7 @@ class Versioning_Controller(Website):
         #always expecting an ir_ui_view ID but in case of /blog or /forum, the main-object is not
         #Same with website_page
         if model == "website.page":
-            view_id = request.env['website.page'].browse(view_id).ir_ui_view_id.id
+            view_id = request.env['website.page'].browse(view_id).view_id.id
         #To get all versions in the menu
         view = request.env['ir.ui.view'].browse(view_id)
         Version = request.env['website_version.version']
@@ -76,7 +76,7 @@ class Versioning_Controller(Website):
         #always expecting an ir_ui_view ID but in case of /blog or /forum, the main-object is not
         #Same with website_page
         if model == "website.page":
-            view_id = request.env['website.page'].browse(view_id).ir_ui_view_id.id
+            view_id = request.env['website.page'].browse(view_id).view_id.id
         v = request.env['ir.ui.view'].browse(view_id)
         website_id = request.context.get('website_id')
         return bool(request.env["website_version.experiment.version"].search([('version_id.view_ids.key', '=', v.key), ('experiment_id.website_id.id', '=', website_id)], limit=1))
@@ -103,7 +103,7 @@ class Versioning_Controller(Website):
         client_id = request.env['ir.config_parameter'].sudo().get_param('google_management_client_id', default=False)
         client_secret = request.env['ir.config_parameter'].sudo().get_param('google_management_client_secret', default=False)
         if not client_id or not client_secret:
-            dummy, action = request.env['ir.model.data'].get_object_reference('website_version', 'action_config_settings_google_management')
+            dummy, action = request.env['ir.model.data'].get_object_reference('base_setup', 'action_general_configuration')
             return {
                 "status": "need_config_from_admin",
                 "url": '',

@@ -48,7 +48,7 @@ class report_account_coa(models.AbstractModel):
         company_id = context.get('company_id') or self.env.user.company_id
         title_index = ''
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
-        zero_value = self.format_value(0)
+        zero_value = ''
         sum_columns = [0,0,0,0]
         for period in range(len(comparison_table)):
             sum_columns += [0, 0]
@@ -122,6 +122,8 @@ class report_account_coa(models.AbstractModel):
                 if account not in grouped_accounts:
                     grouped_accounts[account] = [{'balance': 0, 'debit': 0, 'credit': 0} for p in comparison_table]
                 grouped_accounts[account][period_number]['balance'] = res[account]['balance'] - res[account]['initial_bal']['balance']
+                grouped_accounts[account][period_number]['debit'] = res[account]['debit']
+                grouped_accounts[account][period_number]['credit'] = res[account]['credit']
             period_number += 1
 
         #make intermediary sums and build the report
@@ -130,4 +132,4 @@ class report_account_coa(models.AbstractModel):
 
     @api.model
     def get_report_name(self):
-        return _("Chart of Account")
+        return _("Trial Balance")

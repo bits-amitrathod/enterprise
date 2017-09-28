@@ -5,6 +5,7 @@ var AbstractField = require('web.AbstractField');
 var core = require('web.core');
 var framework = require('web.framework');
 var field_registry = require('web.field_registry');
+var weContext = require("web_editor.context");
 
 var _t = core._t;
 
@@ -29,7 +30,7 @@ var rtoken = AbstractField.extend({
             route: '/website_version/google_access',
             params: {
                 fromurl: window.location.href,
-                local_context: this.getContext(),
+                local_context: weContext.get(),
             },
         })
         .done(function(o) {

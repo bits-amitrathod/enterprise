@@ -23,6 +23,7 @@ Note: Only the admin user is allowed to make those customizations.
         'web_grid',
         'mail',
         'web',
+        'web_enterprise',
         'web_editor',
         'web_gantt',
     ],

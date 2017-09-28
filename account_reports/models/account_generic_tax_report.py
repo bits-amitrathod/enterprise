@@ -173,7 +173,7 @@ class generic_tax_report(models.AbstractModel):
                         'name': tax['obj'].name + ' (' + str(tax['obj'].amount) + ')',
                         'unfoldable': False,
                         'columns': columns,
-                        'level': 1,
+                        'level': 4,
                         'caret_options': 'account.tax',
                     })
                     for child in tax.get('children', []):
@@ -185,7 +185,7 @@ class generic_tax_report(models.AbstractModel):
                             'name': '   ' + child['obj'].name + ' (' + str(child['obj'].amount) + ')',
                             'unfoldable': False,
                             'columns': columns,
-                            'level': 1,
+                            'level': 4,
                             'caret_options': 'account.tax',
                         })
             line_id += 1

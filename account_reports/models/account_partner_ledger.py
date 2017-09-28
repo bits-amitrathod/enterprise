@@ -164,7 +164,7 @@ class ReportPartnerLedger(models.AbstractModel):
                                     line_credit != 0 and self.format_value(line_credit) or '',
                                     self.format_value(progress)]],
                         'caret_options': caret_type,
-                        'level': 1,
+                        'level': 4,
                     })
                 if too_many:
                     domain_lines.append({

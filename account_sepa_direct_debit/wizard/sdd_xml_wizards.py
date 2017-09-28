@@ -31,7 +31,13 @@ class GenerateXMLWizard(models.TransientModel):
         payments_set = self.env['account.payment']
         payments_in_exception = []
         for payment in self.payments_to_send_ids:
-            if payment.company_id == self.company_id and payment.state == 'posted' and payment.payment_method_code == 'sdd':
+
+            if payment.company_id == self.company_id \
+                and payment.state == 'posted' \
+                and payment.payment_method_code == 'sdd' \
+                and payment.sdd_mandate_id.partner_bank_id.bank_id \
+                and payment.sdd_mandate_id.partner_bank_id.bank_id.bic:
+
                 payment.state = 'sent'
                 payments_set += payment
             else:

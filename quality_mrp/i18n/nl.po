@@ -3,17 +3,16 @@
 # * quality_mrp
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Cas Vissers <casvissers@brahoo.nl>, 2016
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,17 +23,19 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
+msgid ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
+msgstr ""
+
+#. module: quality_mrp
+#: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
+#: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Alert</span>"
 msgstr "<span class=\"o_stat_text\">Kwaliteit melding</span>"
 
 #. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_alert_count
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_alert_count
-msgid "Alert Count"
-msgstr ""
-
-#. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_alert_ids
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_ids
 msgid "Alerts"
 msgstr "Waarschuwingen"
 
@@ -44,26 +45,20 @@ msgid "Check"
 msgstr "Controleer"
 
 #. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_check_todo
-#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_check_todo
-msgid "Check Todo"
-msgstr ""
-
-#. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_check_ids
 msgid "Checks"
 msgstr "Controles"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.quality_alert_view_form_inherit_mrp
-msgid "Create Production Message"
-msgstr "Maak een productiebericht aan"
+msgid "Create Work Order Message"
+msgstr ""
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_tablet_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "Done"
-msgstr "Verwerkt"
+msgstr "Gereed"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_mrp_production
@@ -71,7 +66,7 @@ msgid "Manufacturing Order"
 msgstr "Productieorder"
 
 #. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_operation_id
+#: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_workorder_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_workorder_id
 msgid "Operation"
 msgstr "Handeling"
@@ -84,6 +79,7 @@ msgstr "Productieorder"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_alert
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_alert_ids
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workcenter_view_kanban_inherit_quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_tablet_view_form_inherit_quality
@@ -92,16 +88,27 @@ msgid "Quality Alert"
 msgstr "Kwaliteitswaarschuwing"
 
 #. module: quality_mrp
-#: code:addons/quality_mrp/models/mrp_production.py:38
-#: code:addons/quality_mrp/models/mrp_workorder.py:36
-#, python-format
-msgid "Quality Alerts"
-msgstr "Kwaliteitswaarschuwingen"
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_count
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_alert_count
+msgid "Quality Alert Count"
+msgstr "Kwaliteitswaarschuwing teller"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_check
 msgid "Quality Check"
 msgstr "Kwaliteitscontrole"
+
+#. module: quality_mrp
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_check_fail
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_check_fail
+msgid "Quality Check Fail"
+msgstr "Kwaliteitscontrole gefaald"
+
+#. module: quality_mrp
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_check_todo
+#: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_check_todo
+msgid "Quality Check Todo"
+msgstr "Kwaliteitscontrole te doen"
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,name:quality_mrp.quality_check_action_mo
@@ -118,6 +125,11 @@ msgid "Quality Point"
 msgstr "Kwaliteit controlepunt"
 
 #. module: quality_mrp
+#: model:ir.model.fields,field_description:quality_mrp.field_quality_point_operation_id
+msgid "Step"
+msgstr "Stap"
+
+#. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_code
 msgid "Type of Operation"
 msgstr "Soort bewerking"
@@ -126,27 +138,22 @@ msgstr "Soort bewerking"
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_workcenter_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_workcenter_id
 msgid "Work Center"
-msgstr "Productieplaats"
+msgstr "Werkplek"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_mrp_workorder
 msgid "Work Order"
-msgstr "Werkopdracht"
+msgstr "Werkorder"
 
 #. module: quality_mrp
-#: model:ir.model.fields,field_description:quality_mrp.field_quality_point_workcenter_id
-msgid "Workcenter"
-msgstr "Werkplaats"
-
-#. module: quality_mrp
-#: code:addons/quality_mrp/models/quality.py:25
+#: code:addons/quality_mrp/models/quality.py:31
 #, python-format
-msgid "Workorder Messages"
-msgstr "Werkopdracht berichten"
+msgid "Work Order Messages"
+msgstr ""
 
 #. module: quality_mrp
-#: code:addons/quality_mrp/models/mrp_production.py:95
-#: code:addons/quality_mrp/models/mrp_workorder.py:86
+#: code:addons/quality_mrp/models/mrp_production.py:93
+#: code:addons/quality_mrp/models/mrp_workorder.py:89
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "U moet de kwaliteitscontroles nog steeds doen!"

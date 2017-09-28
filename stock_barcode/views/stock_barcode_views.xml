@@ -35,6 +35,7 @@
         <field name="view_mode">form</field>
         <field name="context">{
             'form_view_initial_mode': 'edit',
+            'force_detailed_view': True,
         }</field>
     </record>
 
@@ -48,6 +49,7 @@
             'default_picking_type_id': active_id,
             'contact_display': 'partner_address',
             'search_default_available': 1,
+            'force_detailed_view': True,
         }</field>
     </record>
 
@@ -95,6 +97,7 @@
         <field name="view_id" ref="stock_picking_type_kanban"/>
         <field name="context">{
             'form_view_initial_mode': 'edit',
+            'force_detailed_view': True,
         }</field>
     </record>
 

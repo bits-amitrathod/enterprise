@@ -172,10 +172,675 @@
         <field name="marketing_activity_ids" eval="[(4, ref('marketing_activity_1')), (4, ref('marketing_activity_2')), (4, ref('marketing_activity_3'))]" />
     </record>
 
-    <!-- Start Campaign -->
-    <function model="marketing.campaign" name="action_start_campaign"><value eval="[ref('marketing_campaign_1')]"/></function>
-    <!-- Generate participants -->
-    <function model="marketing.campaign" name="sync_participants"><value eval="[ref('marketing_campaign_1')]"/></function>
+    <!-- participant 1 -->
+
+    <record id="participant_1" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_25" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_1" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_1" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=14)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_1" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_1" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_1" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_1" />
+        <field name="parent_id" ref="trace_2_participant_1" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=7) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 2 -->
+
+    <record id="participant_2" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_22" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_2" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_2" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=13)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_2" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_2" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=6)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_2" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_2" />
+        <field name="parent_id" ref="trace_2_participant_2" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=6) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 3 -->
+
+    <record id="participant_3" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_4" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_3" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_3" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=13)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_3" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_3" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=6)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_3" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_3" />
+        <field name="parent_id" ref="trace_2_participant_3" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=6) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 4 -->
+
+    <record id="participant_4" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_3" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_4" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_4" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=12)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_4" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_4" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_4" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_4" />
+        <field name="parent_id" ref="trace_2_participant_4" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=5) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 5 -->
+
+    <record id="participant_5" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_12" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_5" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_5" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=11)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_5" model="marketing.trace">
+        <field name="state">rejected</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_5" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 6 -->
+
+    <record id="participant_6" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_16" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_6" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_6" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=11)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_6" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_6" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_6" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_6" />
+        <field name="parent_id" ref="trace_2_participant_6" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 7 -->
+
+    <record id="participant_7" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_28" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_7" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_7" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=11)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_7" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_7" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_7" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_7" />
+        <field name="parent_id" ref="trace_2_participant_7" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 8 -->
+
+    <record id="participant_8" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_15" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_8" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_8" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=11)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_8" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_8" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_8" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_8" />
+        <field name="parent_id" ref="trace_2_participant_8" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 9 -->
+
+    <record id="participant_9" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_3" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_9" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_9" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_9" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_9" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_9" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_9" />
+        <field name="parent_id" ref="trace_2_participant_9" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=3) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 10 -->
+
+    <record id="participant_10" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_5" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_10" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_10" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_10" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_10" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 11 -->
+
+    <record id="participant_11" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_10" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_11" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_11" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_11" model="marketing.trace">
+        <field name="state">rejected</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_11" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 12 -->
+
+    <record id="participant_12" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.demo_user0_res_partner" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_12" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_12" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=9)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_12" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_12" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_12" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_12" />
+        <field name="parent_id" ref="trace_2_participant_12" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 13 -->
+
+    <record id="participant_13" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_11" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_13" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_13" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=9)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_13" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_13" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_13" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_13" />
+        <field name="parent_id" ref="trace_2_participant_13" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 14 -->
+
+    <record id="participant_14" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_13" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_14" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_14" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=9)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_14" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_14" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_14" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_14" />
+        <field name="parent_id" ref="trace_2_participant_14" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 15 -->
+
+    <record id="participant_15" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_14" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_15" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_15" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=8)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_15" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_15" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_15" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_15" />
+        <field name="parent_id" ref="trace_2_participant_15" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=1) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 16 -->
+
+    <record id="participant_16" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_34" />
+        <field name="state">completed</field>
+    </record>
+
+    <record id="trace_1_participant_16" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_16" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=8)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_16" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_16" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_3_participant_16" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_3" />
+        <field name="participant_id" ref="participant_16" />
+        <field name="parent_id" ref="trace_2_participant_16" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=1) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 17 -->
+
+    <record id="participant_17" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_33" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_17" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_17" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_17" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_17" />
+        <field name="schedule_date" eval="DateTime.now().strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 18 -->
+
+    <record id="participant_18" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_24" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_18" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_18" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=6)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_18" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_18" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 19 -->
+
+    <record id="participant_19" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_32" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_19" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_19" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_19" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_19" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 20 -->
+
+    <record id="participant_20" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_10" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_20" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_20" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_20" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_20" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 21 -->
+
+    <record id="participant_21" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_17" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_21" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_21" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_21" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_21" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 22 -->
+
+    <record id="participant_22" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_2" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_22" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_22" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_22" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_22" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 23 -->
+
+    <record id="participant_23" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_18" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_23" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_23" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_23" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_23" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 24 -->
+
+    <record id="participant_24" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_30" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_24" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_24" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_24" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_24" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <!-- participant 25 -->
+
+    <record id="participant_25" model="marketing.participant">
+        <field name="campaign_id" ref="marketing_campaign_1" />
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="res_id" ref="base.res_partner_address_18" />
+        <field name="state">running</field>
+    </record>
+
+    <record id="trace_1_participant_25" model="marketing.trace">
+        <field name="state">processed</field>
+        <field name="activity_id" ref="marketing_activity_1" />
+        <field name="participant_id" ref="participant_25" />
+        <field name="schedule_date" eval="(DateTime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
+
+    <record id="trace_2_participant_25" model="marketing.trace">
+        <field name="activity_id" ref="marketing_activity_2" />
+        <field name="participant_id" ref="participant_25" />
+        <field name="schedule_date" eval="(DateTime.now() + timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')" />
+    </record>
 
 
 </odoo>

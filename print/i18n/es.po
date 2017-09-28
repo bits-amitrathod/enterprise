@@ -3,31 +3,31 @@
 # * print
 # 
 # Translators:
-# José Vicente <txusev@gmail.com>, 2016
-# Sergio Hevia <sah@talleresbernesga.com>, 2016
-# Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
-# Ivan Nieto <ivan.n.s@tuta.io>, 2016
-# Cristóbal Martí Oliver <info@moblesmarti.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Ana Juaristi <ajuaristio@gmail.com>, 2016
-# oihane <oihanecruce@gmail.com>, 2016
-# Carles Antoli <carlesantoli@hotmail.com>, 2016
-# Alejandro Die Sanchis <marketing@domatix.com>, 2016
-# Jose Manuel <admin@jaboweb.com>, 2016
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
-# Antonio Trueba <atgayol@gmail.com>, 2016
-# Gafic SLP Albert Cabedo (GAFIC, SLP) <albertgafic@gmail.com>, 2016
-# Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
-# Miguel Orueta <mo@landoo.es>, 2016
-# Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
+# Sergio Hevia <sah@talleresbernesga.com>, 2017
+# Ivan Nieto <ivan.n.s@tuta.io>, 2017
+# Cristóbal Martí Oliver <info@moblesmarti.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Jesus Zapata <jesus@vauxoo.com>, 2017
+# Gafic SLP Albert Cabedo (GAFIC, SLP) <albertgafic@gmail.com>, 2017
+# Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2017
+# José Vicente <txusev@gmail.com>, 2017
+# Ana Juaristi <ajuaristio@gmail.com>, 2017
+# Alejandro Die Sanchis <marketing@domatix.com>, 2017
+# Jose Manuel <admin@jaboweb.com>, 2017
+# Alejandro Santana <alejandrosantana@anubia.es>, 2017
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
+# Antonio Trueba <atgayol@gmail.com>, 2017
+# Gustavo Valverde <g.valverde02@gmail.com>, 2017
+# Miguel Orueta <mo@landoo.es>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Miguel Orueta <mo@landoo.es>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -86,7 +86,22 @@ msgstr ""
 "Por favor, recarge su cuenta de proovedor para enviar documentos."
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:64
+#: model:ir.ui.view,arch_db:print.view_print_provider_kanban
+msgid "<strong>Environment</strong>"
+msgstr ""
+
+#. module: print
+#: model:ir.ui.view,arch_db:print.view_print_provider_kanban
+msgid "<strong>Name</strong>"
+msgstr "<strong>Nombre</strong>"
+
+#. module: print
+#: model:ir.ui.view,arch_db:print.view_print_provider_kanban
+msgid "<strong>Provider</strong>"
+msgstr ""
+
+#. module: print
+#: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
 msgstr "Al menos uno de los documentos que desea enviar contiene un error."
@@ -123,6 +138,11 @@ msgid "Compute price"
 msgstr "Calcula el precio"
 
 #. module: print
+#: model:ir.model,name:print.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
 msgid "Cost to Deliver"
 msgstr "Gasto de entrega"
@@ -147,7 +167,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_create_date
 #: model:ir.model.fields,field_description:print.field_print_provider_create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr "Creado en"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_create_date
@@ -161,7 +181,8 @@ msgstr "Haber"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_currency_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_currency_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_provider_currency_id
 msgid "Currency"
 msgstr "Moneda"
 
@@ -173,12 +194,22 @@ msgstr "Moneda"
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_display_name
 #: model:ir.model.fields,field_description:print.field_print_provider_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre mostrado"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_name
+msgid "Document"
+msgstr "Documento"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Document Detail"
 msgstr "Detalle del documento"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
+msgid "Document sensable"
+msgstr ""
 
 #. module: print
 #: selection:print.order,state:0
@@ -224,7 +255,7 @@ msgstr "Agrupar por..."
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_id
 #: model:ir.model.fields,field_description:print.field_print_provider_id
 msgid "ID"
-msgstr "ID"
+msgstr "ID (identificación)"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_ink
@@ -239,8 +270,16 @@ msgstr "Factura"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
+#: model:ir.model.fields,field_description:print.field_res_users_has_address
 msgid "Is address valid"
 msgstr "Es dirección válida"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
+msgid "Is sendable"
+msgstr "Es enviable"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin___last_update
@@ -271,7 +310,7 @@ msgstr "Última fecha de envío"
 #: model:ir.model.fields,field_description:print.field_print_order_write_uid
 #: model:ir.model.fields,field_description:print.field_print_provider_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización por"
+msgstr "Última actualización de"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_date
@@ -280,7 +319,7 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:print.field_print_order_write_date
 #: model:ir.model.fields,field_description:print.field_print_provider_write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr "Última actualización en"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
@@ -345,10 +384,22 @@ msgid "Paper Weight"
 msgstr "Peso del papel"
 
 #. module: print
-#: model:ir.model,name:print.model_res_partner
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Partner"
 msgstr "Empresa"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
+msgid "Partner has an addess"
+msgstr ""
+
+#. module: print
+#: code:addons/print/wizard/print_order_wizard.py:71
+#, python-format
+msgid ""
+"Please check the document is in a correct state, and that its partner has a "
+"correct postal address."
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -369,12 +420,12 @@ msgstr "Proveedor postal"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Postal Wizard Order"
-msgstr ""
+msgstr "Asistente orden postal"
 
 #. module: print
 #: model:ir.model,name:print.model_print_mixin
 msgid "Print Mixin (Printable Object)"
-msgstr ""
+msgstr "Impresión combinada (objeto imprimible)"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
@@ -385,7 +436,7 @@ msgstr "Imprimir Pedido"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_line_wizard_view_tree
 msgid "Print Order Lines"
-msgstr ""
+msgstr "Imprimir líneas de orden"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_wizard
@@ -459,9 +510,15 @@ msgid "Recipient partner"
 msgstr "Tercero destinatario"
 
 #. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_report_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
+msgid "Report"
+msgstr "Informe"
+
+#. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Reset to Draft"
-msgstr "Cambiar a borrador"
+msgstr "Cambiar a Borrador"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_id
@@ -469,7 +526,7 @@ msgid "Resource ID"
 msgstr "ID del Recurso"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_model
+#: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
 msgid "Resource Model"
 msgstr "Modelo del recurso"
 
@@ -497,12 +554,12 @@ msgstr "Enviar ahora"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Send Now Postal Wizard Order"
-msgstr ""
+msgstr "Asistente envío orden postal"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_sendnow_action_multi
 msgid "Send Now by post"
-msgstr ""
+msgstr "Enviar ahora por correo"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action
@@ -520,7 +577,6 @@ msgid "Sent"
 msgstr "Enviado"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_state
 #: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
 msgid "State"
 msgstr "Estado"
@@ -552,29 +608,39 @@ msgid "Test"
 msgstr "Test"
 
 #. module: print
-#: code:addons/print/models/print_provider.py:191
+#: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
+#: model:ir.model.fields,help:print.field_print_provider_currency_id
+msgid ""
+"The currency will be used for amount, balance account, print order price, "
+"..."
+msgstr ""
+
+#. module: print
+#: code:addons/print/models/print_provider.py:226
 #, python-format
 msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
 "file, or set up the Object ID and Model Name fields."
 msgstr ""
+"El documento no tiene ningún PDF asociado: tiene que seleccionar un archivo "
+"adjunto o configurar los campos Id de objeto y nombre de modelo."
 
 #. module: print
-#: code:addons/print/models/print_provider.py:186
+#: code:addons/print/models/print_provider.py:221
 #, python-format
 msgid ""
 "The document you want to print and send is not printable. There is no report"
-" action (ir.actions.report.xml) for the model %s."
+" action (ir.actions.report) for the model %s."
 msgstr ""
 
 #. module: print
-#: code:addons/print/wizard/print_order_wizard.py:62
+#: code:addons/print/wizard/print_order_wizard.py:68
 #, python-format
-msgid "The document you want to send contains the following mistake : %s"
-msgstr "El documento que desea enviar contiene el siguiente error: %s"
+msgid "The document you want to send contains a mistake."
+msgstr ""
 
 #. module: print
-#: code:addons/print/models/account_invoice.py:20
+#: code:addons/print/models/account_invoice.py:26
 #, python-format
 msgid ""
 "This invoice was sent by post with the provider %(provider_name)s at the "
@@ -582,6 +648,10 @@ msgid ""
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
+"Esta factura se envió por correo con el proveedor %(provider_name)s a la "
+"siguiente dirección.<br/><br/> %(partner_name)s <br/> %(partner_street)s "
+"<br/> %(partner_city)s "
+"%(partner_zip)s<br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
@@ -601,9 +671,9 @@ msgstr "C.P."
 #. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard
 msgid "print.order.line.wizard"
-msgstr ""
+msgstr "print.order.line.wizard"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_sendnow_wizard
 msgid "print.order.sendnow.wizard"
-msgstr ""
+msgstr "print.order.sendnow.wizard"

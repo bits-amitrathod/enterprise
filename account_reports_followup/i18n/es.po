@@ -3,30 +3,27 @@
 # * account_reports_followup
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Gafic SLP Albert Cabedo (GAFIC, SLP) <albertgafic@gmail.com>, 2016
-# Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
-# Ivan Nieto <ivan.n.s@tuta.io>, 2016
-# Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
-# Ana Juaristi <ajuaristio@gmail.com>, 2016
-# Alejandro Die Sanchis <marketing@domatix.com>, 2016
-# José Vicente <txusev@gmail.com>, 2016
-# Luis M. Triana <luis.triana@jarsa.com.mx>, 2016
-# oihane <oihanecruce@gmail.com>, 2016
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
-# Carles Antoli <carlesantoli@hotmail.com>, 2016
-# Sergio Flores <vitavitae1@gmail.com>, 2016
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
-# Christopher Ormaza <chris.ormaza@gmail.com>, 2017
-# Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Gustavo Valverde <g.valverde02@gmail.com>, 2017
+# Alejandro Santana <alejandrosantana@anubia.es>, 2017
+# Ivan Nieto <ivan.n.s@tuta.io>, 2017
+# Antonio Trueba <atgayol@gmail.com>, 2017
 # Lina Maria Avendaño Carvajal <lina8823@gmail.com>, 2017
+# Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2017
+# Alejandro Die Sanchis <marketing@domatix.com>, 2017
+# José Vicente <txusev@gmail.com>, 2017
+# Luis M. Triana <luis.triana@jarsa.com.mx>, 2017
+# Sergio Flores <vitavitae1@gmail.com>, 2017
+# Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2017
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Lina Maria Avendaño Carvajal <lina8823@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -118,26 +115,28 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
-msgid ""
-"<b>%(partner_name)s</b>: Partner Name\n"
-"                                <b>%(date)s</b>: Current Date\n"
-"                                <b>%(user_signature)s</b>: User Name\n"
-"                                <b>%(company_name)s</b>: User's Company Name"
-msgstr ""
-"<b>%(partner_name)s</b>: Nombre Empresa\n"
-"<b>%(date)s</b>: Fecha Actual\n"
-"<b>%(user_signature)s</b>: Nombre Usuario\n"
-"<b>%(company_name)s</b>: Nombre de usuario de la empresa"
+msgid ": Current Date"
+msgstr ": Fecha actual"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": Partner Name"
+msgstr "Nombre empresa"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User Name"
+msgstr ": Nombre de usuario"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User's Company Name"
+msgstr "Nombre de compañía del usuario"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_report_all
 msgid "A progress bar for followup reports"
 msgstr "Una barra de progreso para informes de seguimiento"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
-msgid "A reminder can be sent as of"
-msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
@@ -162,7 +161,7 @@ msgstr "Asignar un responsable"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_result
 msgid "Balance"
-msgstr "Saldo pendiente"
+msgstr "Balance"
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -187,6 +186,11 @@ msgid "Company Name"
 msgstr "Nombre de la compañía"
 
 #. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
 msgid "Created by"
@@ -200,6 +204,7 @@ msgstr "Creado el"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_note
 msgid "Customer Payment Promise"
 msgstr "Promesa de pago del cliente"
 
@@ -212,12 +217,12 @@ msgstr "Los días de los niveles de seguimiento deben ser distintos"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_display_name
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre a Mostrar"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Do it Later"
-msgstr "Hacerlo más tarde"
+msgstr "Hacerlo Luego"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
@@ -228,6 +233,11 @@ msgstr "Hecho"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
 msgid "Due Days"
 msgstr "Días vencimiento"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Duration between two reminders"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -263,12 +273,13 @@ msgstr "Nivel seguimiento"
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Follow-up Levels"
 msgstr "Niveles de seguimiento"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_responsible_id
 msgid "Follow-up Responsible"
 msgstr "Responsable del seguimiento"
 
@@ -281,7 +292,7 @@ msgstr "Pasos del seguimiento"
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_report
 msgid "Followup Report"
-msgstr "Reporte de Seguimientos"
+msgstr "Informe de Seguimientos"
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -315,19 +326,19 @@ msgstr "Apunte contable"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup___last_update
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line___last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Última Modificación en"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización por"
+msgstr "Última Actualización por"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_date
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr "Última Actualización el"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_date
@@ -335,7 +346,7 @@ msgid "Latest Follow-up"
 msgstr "Último seguimiento"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:53
+#: code:addons/account_reports_followup/models/account_followup_report.py:56
 #, python-format
 msgid "Level: "
 msgstr "Nivel:"
@@ -343,7 +354,7 @@ msgstr "Nivel:"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Log a Note"
-msgstr "Registar una nota"
+msgstr "Registar una Nota"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
@@ -352,24 +363,24 @@ msgid "Manual Action"
 msgstr "Acción manual"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:65
+#: code:addons/account_reports_followup/models/account_followup_report.py:68
 #, python-format
 msgid "Manual action done"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr "Días mínimos entre dos seguimientos"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
-msgid "Minimum spread between two reminders"
-msgstr ""
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:113
+#: code:addons/account_reports_followup/models/account_followup.py:113
 #, python-format
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
@@ -385,6 +396,7 @@ msgstr "Solo se permite un seguimiento por compañía"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
@@ -393,17 +405,12 @@ msgstr ""
 "responsable para la acción."
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_res_partner
-msgid "Partner"
-msgstr "Empresa"
-
-#. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Partner entries"
 msgstr "Asientos de empresa"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Payment Follow-up"
 msgstr "Seguimiento de pagos"
 
@@ -414,6 +421,7 @@ msgstr "Seguimiento de pagos"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_note
 msgid "Payment Note"
 msgstr "Nota de pago"
 
@@ -508,8 +516,8 @@ msgid "Total debit"
 msgstr "Total debe"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
@@ -551,7 +559,7 @@ msgstr ""
 "parte superior derecha."
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:64
+#: code:addons/account_reports_followup/models/account_followup.py:64
 #, python-format
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
@@ -561,13 +569,8 @@ msgstr ""
 "utilizar el carácter porcentaje."
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_config_settings
-msgid "account.config.settings"
-msgstr "account.config.settings"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
-msgid "days after the previous reminder"
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "days between each reminder"
 msgstr ""
 
 #. module: account_reports_followup
@@ -579,3 +582,8 @@ msgstr "días desde vencimiento, ejecute las siguientes acciones:"
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "e.g. Call the customer, check if it's paid, ..."
 msgstr "Por ejemplo, llamar al cliente, comprobar si está pagado, ..."
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"

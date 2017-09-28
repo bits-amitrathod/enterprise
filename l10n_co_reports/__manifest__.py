@@ -19,7 +19,9 @@ Accounting reports for Colombia
     'category': 'Localization',
     'depends': ['l10n_co', 'account_reports'],
     'data': [
-        'data/account_financial_html_report_data.xml'
+        'data/l10n_co_reports.xml',
+        'wizard/retention_report_views.xml',
+        'report/certification_report_templates.xml',
     ],
     'demo': [],
     'auto_install': True,

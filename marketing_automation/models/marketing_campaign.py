@@ -205,7 +205,7 @@ class MarketingActivity(models.Model):
     _name = 'marketing.activity'
     _description = 'Marketing Activity'
     _inherits = {'utm.source': 'utm_source_id'}
-    _order = 'interval_type, interval_number'
+    _order = 'interval_standardized'
 
     utm_source_id = fields.Many2one('utm.source', 'Source', ondelete='cascade', required=True)
     campaign_id = fields.Many2one(
@@ -218,7 +218,9 @@ class MarketingActivity(models.Model):
         ('weeks', 'Weeks'),
         ('months', 'Months')], string='Delay Type',
         default='hours', required=True)
-    validity_duration = fields.Boolean('Validity duration')
+    interval_standardized = fields.Integer('Send after (in hours)', compute='_compute_interval_standardized', store=True, readonly=True)
+
+    validity_duration = fields.Boolean('Validity Duration')
     validity_duration_number = fields.Integer(string='Valid during', default=0)
     validity_duration_type = fields.Selection([
         ('hours', 'Hours'),
@@ -269,6 +271,15 @@ class MarketingActivity(models.Model):
     total_bounce = fields.Integer(compute='_compute_statistics')
     statistics_graph_data = fields.Char(compute='_compute_statistics_graph_data')
 
+    @api.depends('interval_type', 'interval_number')
+    def _compute_interval_standardized(self):
+        factors = {'hours': 1,
+                   'days': 24,
+                   'weeks': 168,
+                   'months': 720}
+        for activity in self:
+            activity.interval_standardized = activity.interval_number * factors[activity.interval_type]
+
     @api.depends('activity_type', 'trace_ids')
     def _compute_statistics(self):
         if not self.ids:
@@ -307,8 +318,9 @@ class MarketingActivity(models.Model):
     @api.constrains('trigger_type', 'parent_id')
     def _check_trigger_begin(self):
         if any(activity.trigger_type == 'begin' and activity.parent_id for activity in self):
-            raise ValidationError(_("Error! Put an anal plug."))
+            raise ValidationError(_("Error! You can't define a child activity with a trigger of type 'begin'."))
 
+    @api.model
     def create(self, values):
         campaign_id = values.get('campaign_id')
         if not campaign_id:
@@ -427,7 +439,7 @@ class MarketingActivity(models.Model):
 
         if self.validity_duration:
             duration = relativedelta(**{self.validity_duration_type: self.validity_duration_number})
-            invalid_traces = traces.filtered(lambda trace: trace.schedule_date + duration < Datetime.now())
+            invalid_traces = traces.filtered(lambda trace: not trace.schedule_date or trace.schedule_date + duration < Datetime.now())
             invalid_traces.action_cancel()
             traces = traces - invalid_traces
 

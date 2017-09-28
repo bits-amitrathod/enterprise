@@ -12,6 +12,11 @@ class AccountJournal(models.Model):
         help='Used in multiple-offices environments to fill, with the given '
         'address, the node "ExpedidoEn" in the XML for invoices of this '
         'journal. If empty, the node won\'t be added.')
+    l10n_mx_edi_payment_method_id = fields.Many2one(
+        'l10n_mx_edi.payment.method',
+        string='Payment Method',
+        help='Indicates the way the payment was/will be received, where the '
+        'options could be: Cash, Nominal Check, Credit Card, etc.')
 
 
 class AccountTax(models.Model):

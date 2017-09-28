@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -76,6 +76,13 @@ msgid "EPL2"
 msgstr ""
 
 #. module: delivery_fedex
+#: code:addons/delivery_fedex/models/delivery_fedex.py:197
+#, python-format
+msgid "Error:\n"
+"%s"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_file_type
 msgid "FEDEX Label File Type"
 msgstr ""
@@ -101,7 +108,8 @@ msgid "FIRST_OVERNIGHT"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.ui.view,arch_db:delivery_fedex.sale_config_settings_view_form_inherit_delivery_fedex
+#: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
+#: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
 msgid "FedEx Delivery Methods"
 msgstr ""
 
@@ -116,8 +124,8 @@ msgid "Fedex Configuration"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:delivery.carrier,name:delivery_fedex.delivery_carrier_fedex_inter
-#: model:product.product,name:delivery_fedex.delivery_carrier_fedex_inter_product_product
+#: model:product.product,name:delivery_fedex.product_product_delivery_fedex_inter
+#: model:product.template,name:delivery_fedex.product_product_delivery_fedex_inter_product_template
 msgid "Fedex International"
 msgstr ""
 
@@ -137,8 +145,8 @@ msgid "Fedex Tutorial"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:delivery.carrier,name:delivery_fedex.delivery_carrier_fedex_us
-#: model:product.product,name:delivery_fedex.delivery_carrier_fedex_us_product_product
+#: model:product.product,name:delivery_fedex.product_product_delivery_fedex_us
+#: model:product.template,name:delivery_fedex.product_product_delivery_fedex_us_product_template
 msgid "Fedex US"
 msgstr ""
 
@@ -188,7 +196,7 @@ msgid "Meter Number"
 msgstr ""
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:307
+#: code:addons/delivery_fedex/models/delivery_fedex.py:379
 #, python-format
 msgid "No packages for this picking"
 msgstr ""
@@ -314,22 +322,21 @@ msgid "Saturday Delivery"
 msgstr ""
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:340
+#: code:addons/delivery_fedex/models/delivery_fedex.py:402
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr ""
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:259
-#: code:addons/delivery_fedex/models/delivery_fedex.py:301
+#: code:addons/delivery_fedex/models/delivery_fedex.py:366
 #, python-format
 msgid "Shipment created into Fedex <br/> <b>Tracking Number : </b>%s"
 msgstr ""
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:263
+#: code:addons/delivery_fedex/models/delivery_fedex.py:323
 #, python-format
-msgid "Shipping label for package %s"
+msgid "Shipment created into Fedex<br/><b>Tracking Numbers:</b> %s<br/><b>Packages:</b> %s"
 msgstr ""
 
 #. module: delivery_fedex
@@ -357,6 +364,13 @@ msgstr ""
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "These certifications usually require that you contact the FedEx support team by email."
+msgstr ""
+
+#. module: delivery_fedex
+#: code:addons/delivery_fedex/models/delivery_fedex.py:203
+#, python-format
+msgid "Warning:\n"
+"%s"
 msgstr ""
 
 #. module: delivery_fedex

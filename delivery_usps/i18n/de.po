@@ -3,21 +3,22 @@
 # * delivery_usps
 # 
 # Translators:
-# Tina Rittmüller <tr@ife.de>, 2016
-# Ralf Hilgenstock <rh@dialoge.info>, 2016
-# Michael Knappe <michael@michaelknappe.net>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Thorsten Vocks <thorsten.vocks@openbig.org>, 2016
-# darenkster <inactive+darenkster@transifex.com>, 2016
-# Anja Funk <anja.funk@afimage.de>, 2016
-# aNj <anj2j@yahoo.de>, 2016
+# Tina Rittmüller <tr@ife.de>, 2017
+# Ralf Hilgenstock <rh@dialoge.info>, 2017
+# Michael Knappe <michael@michaelknappe.net>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Thorsten Vocks <thorsten.vocks@openbig.org>, 2017
+# darenkster <inactive+darenkster@transifex.com>, 2017
+# Ermin Trevisan <trevi@twanda.com>, 2017
+# Anja Funk <anja.funk@afimage.de>, 2017
+# aNj <anj2j@yahoo.de>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: aNj <anj2j@yahoo.de>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: aNj <anj2j@yahoo.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,7 +47,7 @@ msgid "Check this box if your account is validated by USPS"
 msgstr "Aktivieren Sie diese Box, wenn Ihr Konto von USPS bestätigt wurde."
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:63
+#: code:addons/delivery_usps/models/usps_request.py:64
 #, python-format
 msgid "Company phone number is invalid. Please insert a US phone number."
 msgstr ""
@@ -57,11 +58,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_content_type
 msgid "Content Type"
 msgstr "Berichtsinhalt"
-
-#. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
-msgid "DHL Configuration"
-msgstr "DHL Einstellung"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_delivery_nature
@@ -79,19 +75,27 @@ msgid "Domestic"
 msgstr "Inland"
 
 #. module: delivery_usps
+#: code:addons/delivery_usps/models/delivery_usps.py:102
+#, python-format
+msgid ""
+"Error:\n"
+"%s"
+msgstr ""
+
+#. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "Express"
 msgstr "Express"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
-msgid "First-Class"
-msgstr ""
+msgid "First Class"
+msgstr "First Class"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
 msgid "Flat"
-msgstr ""
+msgstr "Minimalistisch"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_mail_type:0
@@ -225,37 +229,38 @@ msgid "Parcel"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:80
-#, python-format
-msgid "Please Change the Service Max. weight of this Service is 4 pounds"
-msgstr ""
-
-#. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_machinable
 msgid ""
 "Please check on USPS website to ensure that your package is machinable."
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:68
+#: code:addons/delivery_usps/models/usps_request.py:81
+#, python-format
+msgid ""
+"Please choose another service (maximum weight of this service is 4 pounds)"
+msgstr ""
+
+#. module: delivery_usps
+#: code:addons/delivery_usps/models/usps_request.py:69
 #, python-format
 msgid "Please enter a valid ZIP code in recipient address"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:61
+#: code:addons/delivery_usps/models/usps_request.py:62
 #, python-format
 msgid "Please enter a valid ZIP code in your Company address"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:75
+#: code:addons/delivery_usps/models/usps_request.py:76
 #, python-format
 msgid "Please provide at least one item to ship."
 msgstr "Bitte wählen Sie mindestens ein Eintrag zum Versenden"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:59
+#: code:addons/delivery_usps/models/usps_request.py:60
 #, python-format
 msgid ""
 "Please set country U.S.A in your company address, Service is only available "
@@ -271,6 +276,12 @@ msgstr "Postkarte"
 #: selection:delivery.carrier,usps_service:0
 msgid "Priority"
 msgstr "Priorität"
+
+#. module: delivery_usps
+#: code:addons/delivery_usps/models/usps_request.py:371
+#, python-format
+msgid "Recipient address cannot be found. Please check the address exists."
+msgstr ""
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_container:0
@@ -309,13 +320,13 @@ msgid "Sample"
 msgstr "Beispiel"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:154
+#: code:addons/delivery_usps/models/delivery_usps.py:163
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "Versand Nr %s wurde storniert"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:131
+#: code:addons/delivery_usps/models/delivery_usps.py:143
 #, python-format
 msgid "Shipment created into USPS <br/> <b>Tracking Number : </b>%s"
 msgstr ""
@@ -336,13 +347,7 @@ msgid "TIF"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:159
-#, python-format
-msgid "The USPS service selected (%s) cannot be used to deliver this package."
-msgstr ""
-
-#. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:57
+#: code:addons/delivery_usps/models/usps_request.py:58
 #, python-format
 msgid ""
 "The address of your company is missing or wrong (Missing field(s) :  \n"
@@ -350,7 +355,7 @@ msgid ""
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:78
+#: code:addons/delivery_usps/models/usps_request.py:79
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -360,19 +365,17 @@ msgstr ""
 " Gewichtsangabe hat."
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:361
-#, python-format
-msgid ""
-"The recepient address can't be found. Please check that your recepient has "
-"an existing address."
-msgstr ""
-
-#. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:66
+#: code:addons/delivery_usps/models/usps_request.py:67
 #, python-format
 msgid ""
 "The recipient address is missing or wrong (Missing field(s) :  \n"
 " %s)"
+msgstr ""
+
+#. module: delivery_usps
+#: code:addons/delivery_usps/models/usps_request.py:164
+#, python-format
+msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
 
 #. module: delivery_usps
@@ -396,16 +399,27 @@ msgid "Type of container"
 msgstr "Art des Behältnisses"
 
 #. module: delivery_usps
-#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_domestic
-#: model:product.product,name:delivery_usps.delivery_carrier_usps_domestic_product_product
+#: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
+msgid "USPS Configuration"
+msgstr ""
+
+#. module: delivery_usps
+#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
+#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
+msgid "USPS Delivery Methods"
+msgstr ""
+
+#. module: delivery_usps
+#: model:product.product,name:delivery_usps.product_product_delivery_usps_domestic
+#: model:product.template,name:delivery_usps.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic Flat Rate Envelope"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:72
+#: code:addons/delivery_usps/models/usps_request.py:73
 #, python-format
 msgid ""
-"USPS Domestic is used only to ship  inside of the U.S.A. Please change the "
+"USPS Domestic is used only to ship inside of the U.S.A. Please change the "
 "delivery method into USPS International."
 msgstr ""
 
@@ -415,17 +429,17 @@ msgid "USPS First Class Mail Type"
 msgstr ""
 
 #. module: delivery_usps
-#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_international
-#: model:product.product,name:delivery_usps.delivery_carrier_usps_international_product_product
+#: model:product.product,name:delivery_usps.product_product_delivery_usps_international
+#: model:product.template,name:delivery_usps.product_product_delivery_usps_international_product_template
 msgid "USPS International Flat Rate Box"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:70
+#: code:addons/delivery_usps/models/usps_request.py:71
 #, python-format
 msgid ""
-"USPS International is used only to ship  outside of the U.S.A. Please change"
-" the delivery method into USPS Domestic."
+"USPS International is used only to ship outside of the U.S.A. Please change "
+"the delivery method into USPS Domestic."
 msgstr ""
 
 #. module: delivery_usps
@@ -450,11 +464,11 @@ msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_size_container
-msgid "Usps size container"
+msgid "Usps Size Container"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:363
+#: code:addons/delivery_usps/models/usps_request.py:373
 #, python-format
-msgid "Your company or recipient zip code is incorrect."
-msgstr "Ihr Unternehmen, oder die Postleitzahl, ist falsch."
+msgid "Your company or recipient ZIP code is incorrect."
+msgstr ""

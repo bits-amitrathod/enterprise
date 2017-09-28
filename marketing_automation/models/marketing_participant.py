@@ -145,6 +145,9 @@ class MarketingTrace(models.Model):
     bounced = fields.Datetime(related='mail_statistics_ids.bounced')
     clicked = fields.Datetime(related='mail_statistics_ids.clicked')
 
+    def participant_action_cancel(self):
+        self.action_cancel(message=_('Manually'))
+
     def action_cancel(self, message=None):
         values = {'state': 'canceled', 'schedule_date': Datetime.now()}
         if message:

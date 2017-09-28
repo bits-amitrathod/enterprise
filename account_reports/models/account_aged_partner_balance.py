@@ -59,7 +59,7 @@ class report_account_aged_partner(models.AbstractModel):
                         'id': aml.id,
                         'name': aml.move_id.name if aml.move_id.name else '/',
                         'caret_options': caret_type,
-                        'level': 1,
+                        'level': 4,
                         'parent_id': 'partner_%s' % (values['partner_id'],),
                         'columns': [{'name': v} for v in [line['period'] == 6-i and self.format_value(sign * line['amount']) or '' for i in range(7)]],
                     }

@@ -43,6 +43,7 @@ class SaleSubscription(models.Model):
     recurring_monthly = fields.Float(compute='_compute_recurring_monthly', string="Monthly Recurring Revenue", store=True)
     close_reason_id = fields.Many2one("sale.subscription.close.reason", string="Close Reason", track_visibility='onchange')
     template_id = fields.Many2one('sale.subscription.template', string='Subscription Template', required=True, track_visibility='onchange')
+    payment_mandatory = fields.Boolean(related='template_id.payment_mandatory')
     description = fields.Text()
     user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange')
     invoice_count = fields.Integer(compute='_compute_invoice_count')

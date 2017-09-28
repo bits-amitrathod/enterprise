@@ -348,8 +348,8 @@ class WebStudioController(http.Controller):
                     added_nodes['title'] = True
                     # Add title
                     title_node = etree.fromstring("""
-                        <strong><t t-esc="doc.name"/></strong>
-                    """)
+                        <strong><t t-esc="doc.%(field_name_title)s"/></strong>
+                    """ % {'field_name_title': field_id.name})
                     arch.find(".//h2[@name='title']").append(title_node)
                 elif not added_nodes['date'] and field_id.ttype in ['date', 'datetime']:
                     added_nodes['date'] = True
@@ -458,7 +458,7 @@ class WebStudioController(http.Controller):
                 relation_field=field.name,
             )
         if values.get('selection'):
-            values['selection'] = ustr(values['selection']),
+            values['selection'] = ustr(values['selection'])
         # Create new field
         return request.env['ir.model.fields'].create(values)
 

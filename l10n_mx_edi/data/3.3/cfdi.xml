@@ -24,11 +24,12 @@
                 t-att-MetodoPago="payment_policy"
                 t-att-LugarExpedicion="supplier.zip"
                 t-att-Confirmacion="confirmation">
-                <t t-if="cfdi_related_type">
+                <t t-set="related" t-value="record.get_cfdi_related()"/>
+                <t t-if="related">
                     <cfdi:CfdiRelacionados
-                        t-att-TipoRelacion="cfdi_related_type">
-                        <t t-foreach="cfdi_related" t-as="cfdi">
-                            <cfdi:CfdiRelacionado t-att-UUID="cfdi['uuid']"/>
+                        t-att-TipoRelacion="related['type']">
+                        <t t-foreach="related['related']" t-as="number">
+                            <cfdi:CfdiRelacionado t-att-UUID="number"/>
                         </t>
                     </cfdi:CfdiRelacionados>
                 </t>
@@ -37,7 +38,7 @@
                     t-att-Nombre="record._get_string_cfdi(supplier.name, 254)"
                     t-att-RegimenFiscal="fiscal_position.l10n_mx_edi_code"/>
                 <cfdi:Receptor
-                    t-att-Rfc="record.l10n_mx_edi_get_customer_rfc()"
+                    t-att-Rfc="customer.l10n_mx_edi_get_customer_rfc()"
                     t-att-Nombre="record._get_string_cfdi(customer.name, 254)"
                     t-att-ResidenciaFiscal="customer.country_id.l10n_mx_edi_code if customer.country_id.l10n_mx_edi_code != 'MEX' else False"
                     t-att-NumRegIdTrib="receiver_reg_trib"
@@ -46,7 +47,7 @@
                     <t t-foreach="record.invoice_line_ids" t-as="line">
                         <cfdi:Concepto
                             t-att-ClaveProdServ="line.product_id.l10n_mx_edi_code_sat_id.code"
-                            t-att-NoIdentificacion="record._get_string_cfdi(line.product_id.default_code)"
+                            t-att-NoIdentificacion="record._get_string_cfdi(line.product_id.default_code or '')"
                             t-att-Cantidad="line.quantity"
                             t-att-ClaveUnidad="line.uom_id.l10n_mx_edi_code_sat_id.code"
                             t-att-Unidad="record._get_string_cfdi(line.uom_id.name, 20)"

@@ -132,19 +132,26 @@ class WebsiteCalendar(http.Controller):
 
         categ_id = request.env.ref('website_calendar.calendar_event_type_data_online_appointment')
         alarm_ids = appointment_type.reminder_ids and [(6, 0, appointment_type.reminder_ids.ids)] or []
-        partner_ids = [Employee.user_id.partner_id.id] + [Partner.id]
+        partner_ids = list(set([Employee.user_id.partner_id.id] + [Partner.id]))
         event = request.env['calendar.event'].sudo().create({
             'state': 'open',
             'name': _('%s with %s') % (appointment_type.name, name),
             'start': date_start.strftime(dtf),
+            # FIXME master
+            # we override here start_date(time) value because they are not properly
+            # recomputed due to ugly overrides in event.calendar (reccurrencies suck!)
+            #     (fixing them in stable is a pita as it requires a good rewrite of the
+            #      calendar engine)
+            'start_date': date_start.strftime(dtf),
+            'start_datetime': date_start.strftime(dtf),
             'stop': date_end.strftime(dtf),
             'allday': False,
             'duration': appointment_type.appointment_duration,
             'description': description,
             'alarm_ids': alarm_ids,
             'location': appointment_type.location,
-            'partner_ids': [(4, partner_ids)],
-            'categ_ids': [(4, categ_id.id)],
+            'partner_ids': [(4, pid, False) for pid in partner_ids],
+            'categ_ids': [(4, categ_id.id, False)],
             'appointment_type_id': appointment_type.id,
         })
         event.attendee_ids.write({'state': 'accepted'})

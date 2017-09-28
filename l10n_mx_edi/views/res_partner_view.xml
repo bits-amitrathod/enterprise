@@ -14,6 +14,7 @@
                     <page string="Addenda" attrs="{'invisible': [('is_company', '=', False)]}">
                         <group>
                             <field name="l10n_mx_edi_addenda"/>
+                            <field name="l10n_mx_edi_addenda_doc" attrs="{'invisible': [('l10n_mx_edi_addenda', '=', False)]}"/>
                         </group>
                     </page>
                 </xpath>

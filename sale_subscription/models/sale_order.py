@@ -52,6 +52,7 @@ class SaleOrder(models.Model):
             'pricelist_id': self.pricelist_id.id,
             'company_id': self.company_id.id,
             'analytic_account_id': self.analytic_account_id.id,
+            'payment_token_id': self.payment_tx_id.payment_token_id.id if template.payment_mandatory else False
         }
         # compute the next date
         today = datetime.date.today()

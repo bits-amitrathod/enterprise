@@ -46,6 +46,7 @@ class MxReportAccountTrial(models.AbstractModel):
         if self.env.user.company_id.country_id.code.upper() == 'MX':
             # TODO: something like: and all([c.country_id.code == 'MX' for c in options.companies]):
             afrl_obj = self.env['account.financial.html.report.line']
+
             lines = []
             afr_lines = afrl_obj.search([
                 ('parent_id', '=', False),
@@ -127,7 +128,8 @@ class MxReportAccountTrial(models.AbstractModel):
                 for period in range(len(comparison_table)):
                     amount = grouped_accounts[account][period]['balance']
                     total_periods += amount
-                    cols += [amount > 0 and self.format_value(amount) or '', amount < 0 and self.format_value(-amount) or '']
+                    cols += [self.format_value(grouped_accounts[account][period]['debit']),
+                             self.format_value(grouped_accounts[account][period]['credit'])]
                 cols += [self.format_value(initial_balances.get(account, 0.0) + total_periods)]
             lines.append({
                 'id': account.id,

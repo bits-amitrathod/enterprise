@@ -15,15 +15,17 @@ UserMenu.include({
      * @override
      */
     start: function () {
-        if (mobile.methods.switchAccount) {
-            this.$('a[data-menu="logout"]').addClass('hidden');
-            this.$('a[data-menu="account"]').addClass('hidden');
-            this.$('a[data-menu="switch"]').removeClass('hidden');
-        }
-        if (mobile.methods.addHomeShortcut) {
-            this.$('a[data-menu="shortcut"]').removeClass('hidden');
-        }
-        return this._super();
+        var self = this;
+        return this._super.apply(this, arguments).then(function () {
+            if (mobile.methods.switchAccount) {
+                self.$('a[data-menu="logout"]').addClass('hidden');
+                self.$('a[data-menu="account"]').addClass('hidden');
+                self.$('a[data-menu="switch"]').removeClass('hidden');
+            }
+            if (mobile.methods.addHomeShortcut) {
+                self.$('a[data-menu="shortcut"]').removeClass('hidden');
+            }
+        });
     },
 
     //--------------------------------------------------------------------------

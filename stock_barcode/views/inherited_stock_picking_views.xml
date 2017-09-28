@@ -20,14 +20,17 @@
             <xpath expr="//button[@name='button_validate']" position="attributes">
                 <attribute name="barcode_trigger">validate</attribute>
             </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="barcode_trigger">cancel</attribute>
+            </xpath>
             <xpath expr="//button[@name='do_print_picking']" position="attributes">
-                <attribute name="barcode_trigger">print</attribute>
+                <attribute name="barcode_trigger">print-op</attribute>
             </xpath>
             <xpath expr="//button[@name='put_in_pack']" position="attributes">
-                <attribute name="barcode_trigger">put-in-pack</attribute>
+                <attribute name="barcode_trigger">pack</attribute>
             </xpath>
             <xpath expr="//button[@name='button_scrap']" position="attributes">
-                <attribute name="barcode_trigger">button_scrap</attribute>
+                <attribute name="barcode_trigger">scrap</attribute>
             </xpath>
         </field>
     </record>

@@ -225,6 +225,7 @@ class MrpEco(models.Model):
     displayed_image_id = fields.Many2one(
         'mrp.document', 'Displayed Image',
         domain="[('res_model', '=', 'mrp.eco'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]")
+    displayed_image_attachment_id = fields.Many2one('ir.attachment', related='displayed_image_id.ir_attachment_id')
     color = fields.Integer('Color')
     active = fields.Boolean('Active', default=True, help="If the active field is set to False, it will allow you to hide the engineering change order without removing it.")
     current_bom_id = fields.Many2one('mrp.bom', string="New Bom")
