@@ -1004,26 +1004,39 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('element removal', function(assert) {
-        assert.expect(4);
+        assert.expect(8);
 
         var editViewCount = 0;
         var arch = "<form><sheet>" +
                 "<group>" +
                     "<field name='display_name'/>" +
+                    "<field name='m2o'/>" +
                 "</group>" +
-                "<notebook><page><field name='id'/></page></notebook>" +
+                "<notebook><page name='page'><field name='id'/></page></notebook>" +
             "</sheet></form>";
         var fieldsView;
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
             arch: arch,
-            mockRPC: function (route) {
+            mockRPC: function (route, args) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
                 }
                 if (route === '/web_studio/edit_view') {
                     editViewCount++;
+                    if (editViewCount === 1) {
+                        assert.strictEqual(_.has(args.operations[0].target, 'xpath_info'), false,
+                            'should not give xpath_info if we have the tag identifier attributes');
+                    } else if (editViewCount === 2) {
+                        assert.strictEqual(args.operations[1].target.tag, 'group',
+                            'should compute correctly the parent node for the group');
+                    } else if (editViewCount === 3) {
+                        assert.strictEqual(args.operations[2].target.tag, 'notebook',
+                            'should delete the notebook because the last page is deleted');
+                        assert.strictEqual(_.last(args.operations[2].target.xpath_info).tag, 'notebook',
+                            'should have the notebook as xpath last element');
+                    }
                     // the server sends the arch in string but it's post-processed
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
@@ -1063,7 +1076,6 @@ QUnit.module('ViewEditorManager', {
 
         assert.strictEqual(editViewCount, 3,
             "should have edit the view 3 times");
-
         vem.destroy();
     });
 
