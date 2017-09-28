@@ -169,7 +169,8 @@ class MrpEco(models.Model):
     effectivity = fields.Selection([
         ('asap', 'As soon as possible'),
         ('date', 'At Date')], string='Effectivity',  # Is this English ?
-        default='asap', required=True, help='Date on which the changes should be applied. For reference only.')
+        compute='_compute_effectivity', inverse='_set_effectivity', store=True,
+        help='Date on which the changes should be applied. For reference only.')
     effectivity_date = fields.Datetime('Effectivity Date', track_visibility='onchange', help="For reference only.")
     approval_ids = fields.One2many('mrp.eco.approval', 'eco_id', 'Approvals', help='Approvals by stage')
 
@@ -235,6 +236,16 @@ class MrpEco(models.Model):
     def _compute_attachments(self):
         for p in self:
             p.mrp_document_count = len(p.mrp_document_ids)
+
+    @api.depends('effectivity_date')
+    def _compute_effectivity(self):
+        for eco in self:
+            eco.effectivity = 'date' if eco.effectivity_date else 'asap'
+
+    def _set_effectivity(self):
+        for eco in self:
+            if eco.effectivity == 'asap':
+                eco.effectivity_date = False
 
     def _is_conflict(self, new_bom_lines, changes=None):
         # Find rebase lines having conflict or not.
