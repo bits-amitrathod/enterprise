@@ -50,7 +50,7 @@ class MxReportPartnerLedger(models.AbstractModel):
         domain = [
             ('journal_id', 'in', journal_ids),
             ('account_id', 'not in', account_tax_ids.ids),
-            ('tax_ids', '!=', False),
+            ('tax_ids', 'in', tax_ids.ids),
         ]
         tables, where_clause, where_params = self.env[
             'account.move.line']._query_get(domain)

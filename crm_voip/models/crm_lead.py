@@ -29,7 +29,7 @@ class CrmLead(models.Model):
                 'partner_id': opp.partner_id.id,
                 'state': 'open',
                 'partner_phone': opp.phone or opp.partner_id.phone,
-                'partner_mobile': opp.partner_id.mobile,
+                'partner_mobile': opp.mobile or opp.partner_id.mobile,
                 'in_queue': True,
             })
         return {
@@ -49,7 +49,7 @@ class CrmLead(models.Model):
             'partner_id': self.partner_id.id,
             'state': 'open',
             'partner_phone': self.phone or self.partner_id.phone,
-            'partner_mobile': self.partner_id.mobile,
+            'partner_mobile': self.mobile or self.partner_id.mobile,
             'in_queue': True,
         })
         return phonecall.id
