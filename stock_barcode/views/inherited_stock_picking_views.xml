@@ -26,6 +26,9 @@
             <xpath expr="//button[@name='do_print_picking']" position="attributes">
                 <attribute name="barcode_trigger">print-op</attribute>
             </xpath>
+            <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="attributes">
+                <attribute name="barcode_trigger">print-slip</attribute>
+            </xpath>
             <xpath expr="//button[@name='put_in_pack']" position="attributes">
                 <attribute name="barcode_trigger">pack</attribute>
             </xpath>
