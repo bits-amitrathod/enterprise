@@ -46,7 +46,7 @@ Menu.include({
      */
     _closeBurgerMenu: function () {
         var self = this;
-        this.$burgerMenu.animate({right: '100%'}, 200, function () {
+        this.$burgerMenu.animate({left: '100%'}, 200, function () {
             self.$burgerMenu.addClass("o_hidden");
         });
     },
@@ -133,8 +133,8 @@ Menu.include({
         this.$burgerMenu.find('.o_burger_menu_user').toggleClass('o_hidden', displaySubMenus);
 
         // display the burger menu
-        this.$burgerMenu.css({right: '100%'});
-        this.$burgerMenu.animate({right: '0%'}, 200).removeClass('o_hidden');
+        this.$burgerMenu.css({left: '100%'});
+        this.$burgerMenu.animate({left: '0%'}, 200).removeClass('o_hidden');
     },
     /**
      * @override
