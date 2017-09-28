@@ -25,17 +25,17 @@ FIELDS_TO_EXPORT = {
         'trg_date_range_type', 'trigger'
     ],
     'ir.actions.act_window': [
-        'auto_search', 'context', 'domain', 'filter', 'groups_id', 'help', 'limit', 'multi', 'name',
-        'res_model', 'search_view_id', 'src_model', 'target', 'type', 'usage', 'view_id',
-        'view_ids', 'view_mode', 'view_type'
+        'auto_search', 'binding_model_id', 'binding_type', 'context', 'domain', 'filter',
+        'groups_id', 'help', 'limit', 'multi', 'name', 'res_model', 'search_view_id', 'src_model',
+        'target', 'type', 'usage', 'view_id', 'view_ids', 'view_mode', 'view_type'
     ],
     'ir.actions.report': [
-        'attachment', 'attachment_use', 'groups_id', 'model', 'multi', 'name', 'report_name',
-        'report_type'
+        'attachment', 'attachment_use', 'binding_model_id', 'binding_type', 'groups_id', 'model',
+        'multi', 'name', 'report_name', 'report_type'
     ],
     'ir.actions.server': [
-        'child_ids', 'code', 'crud_model_id', 'help', 'link_field_id', 'model_id', 'name',
-        'sequence', 'state'
+        'binding_model_id', 'binding_type', 'child_ids', 'code', 'crud_model_id', 'help',
+        'link_field_id', 'model_id', 'name', 'sequence', 'state'
     ],
     'ir.filters': [
         'action_id', 'active', 'context', 'domain', 'is_default', 'model_id', 'name', 'sort'
@@ -73,7 +73,7 @@ FIELDS_TO_EXPORT = {
 FIELDS_NOT_TO_EXPORT = {
     'base.automation': ['trg_date_calendar_id'],
     'ir.actions.report': ['ir_values_id'],
-    'ir.actions.server': ['channel_ids', 'fields_lines', 'menu_ir_values_id', 'partner_ids'],
+    'ir.actions.server': ['channel_ids', 'fields_lines', 'partner_ids'],
     'ir.filter': ['user_id'],
     'mail.template': ['attachment_ids', 'mail_server_id', 'ref_ir_value'],
     'res.groups': ['category_id', 'users'],
