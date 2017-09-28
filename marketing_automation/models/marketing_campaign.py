@@ -205,7 +205,7 @@ class MarketingActivity(models.Model):
     _name = 'marketing.activity'
     _description = 'Marketing Activity'
     _inherits = {'utm.source': 'utm_source_id'}
-    _order = 'interval_type, interval_number'
+    _order = 'interval_standardized'
 
     utm_source_id = fields.Many2one('utm.source', 'Source', ondelete='cascade', required=True)
     campaign_id = fields.Many2one(
@@ -218,6 +218,8 @@ class MarketingActivity(models.Model):
         ('weeks', 'Weeks'),
         ('months', 'Months')], string='Delay Type',
         default='hours', required=True)
+    interval_standardized = fields.Integer('Send after (in hours)', compute='_compute_interval_standardized', store=True, readonly=True)
+
     validity_duration = fields.Boolean('Validity Duration')
     validity_duration_number = fields.Integer(string='Valid during', default=0)
     validity_duration_type = fields.Selection([
@@ -268,6 +270,15 @@ class MarketingActivity(models.Model):
     total_reply = fields.Integer(compute='_compute_statistics')
     total_bounce = fields.Integer(compute='_compute_statistics')
     statistics_graph_data = fields.Char(compute='_compute_statistics_graph_data')
+
+    @api.depends('interval_type', 'interval_number')
+    def _compute_interval_standardized(self):
+        factors = {'hours': 1,
+                   'days': 24,
+                   'weeks': 168,
+                   'months': 720}
+        for activity in self:
+            activity.interval_standardized = activity.interval_number * factors[activity.interval_type]
 
     @api.depends('activity_type', 'trace_ids')
     def _compute_statistics(self):
