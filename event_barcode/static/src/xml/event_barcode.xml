@@ -36,4 +36,24 @@
         </div>
     </t>
 
+    <t t-name="event_registration_summary">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="text-center" style="margin-bottom: 18px;"><img t-att-src="registration.image"/></div>
+            <div t-if="success" class="alert alert-success text-center"><t t-esc="success"/></div>
+            <div t-if="warning" class="alert alert-warning text-center"><t t-esc="warning"/></div>
+            <div t-if="registration.alert" class="alert alert-danger text-center"><t t-esc="registration.alert"/></div>
+          </div>
+        </div>
+        <div id="registration_information" class="row">
+          <div class="col-md-12">
+            <table class="table table-striped">
+              <tr t-foreach="registration.information" t-as="info">
+                <td><t t-esc="info[0]"/></td><td t-att-class="info[2] ? ('text-' + info[2]) : undefined"><t t-esc="info[1]"/></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+    </t>
+
 </templates>

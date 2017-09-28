@@ -1175,10 +1175,10 @@ odoo.define('website_sign.document_signing', function(require) {
                         }, 500);
                     }
                     if (success === true) {
-                        this.iframeWidget.disableItems();
-                        (new (this.get_thankyoudialog_class())(this)).open();
+                        self.iframeWidget.disableItems();
+                        (new (self.get_thankyoudialog_class())(self)).open();
                     }
-                    if ('url' in success) {
+                    if (typeof success === 'object' && success.url) {
                         document.location.pathname = success['url'];
                     }
                 });

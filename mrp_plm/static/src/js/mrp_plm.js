@@ -21,9 +21,9 @@ KanbanRecord.include({
         if (this.modelName === 'mrp.eco' && $(ev.currentTarget).data('type') === 'set_cover') {
             ev.preventDefault();
             this._rpc({
-                    model: 'ir.attachment',
+                    model: 'mrp.document',
                     method: 'search_read',
-                    fields: ['id', 'name'],
+                    fields: ['id', 'name', 'ir_attachment_id'],
                     domain: [['res_model', '=', 'mrp.eco'], ['res_id', '=', this.id], ['mimetype', 'ilike', 'image']],
                 })
                 .then(function (attachment_ids) {
@@ -36,7 +36,9 @@ KanbanRecord.include({
                     $cover_modal.modal('toggle');
                     $cover_modal.on('click', 'img', function (ev) {
                         self._updateRecord({
-                            displayed_image_id: $(ev.currentTarget).data('id'),
+                            displayed_image_id: {
+                                id: $(ev.currentTarget).data('id'),
+                            },
                         });
                         $cover_modal.modal('toggle');
                         $cover_modal.remove();

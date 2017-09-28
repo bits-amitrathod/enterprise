@@ -342,8 +342,10 @@ class WebsiteSign(WebsiteSign):
 
     @http.route(['/sign/sign/<int:id>/<token>'], type='json', auth='public')
     def sign(self, id, token, signature=None):
-        super(WebsiteSign, self).sign(id, token, signature)
+        result = super(WebsiteSign, self).sign(id, token, signature)
         request_item = request.env['signature.request.item'].sudo().search([('access_token', '=', token)])
         contract = request.env['hr.contract'].sudo().search([('signature_request_ids', 'in', request_item.signature_request_id.ids)])
-        contract.access_token_consumed = True
-        return {'url': '/salary_package/thank_you/' + str(contract.job_id.id)}
+        if contract:
+            contract.access_token_consumed = True
+            return {'url': '/salary_package/thank_you/' + str(contract.job_id.id)}
+        return result

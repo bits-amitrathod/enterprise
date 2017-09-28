@@ -2,10 +2,12 @@ odoo.define('event_barcode.EventScanView', function (require) {
 "use strict";
 
 var core = require('web.core');
+var Dialog = require('web.Dialog');
 var Widget = require('web.Widget');
 var time = require('web.time');
 
 var _t = core._t;
+var QWeb = core.qweb;
 
 
 // load widget with main barcode scanning View
@@ -79,6 +81,37 @@ var EventScanView = Widget.extend({
                     self.$('.o_event_reg_attendee'),
                     result.count
                 );
+            }
+            if (result.registration && (result.registration.alert || !_.isEmpty(result.registration.information))) {
+                new Dialog(self, {
+                    title: _t('Registration Summary'),
+                    size: 'medium',
+                    $content: QWeb.render('event_registration_summary', {
+                        'success': result.success,
+                        'warning': result.warning,
+                        'registration': result.registration
+                    }),
+                    buttons: [
+                        {text: _t('Close'), close: true, classes: 'btn-primary'},
+                        {text: _t('Print'), click: function () {
+                          self.do_action({
+                              type: 'ir.actions.report.xml',
+                              report_type: 'qweb-pdf',
+                              report_name: 'event.event_registration_report_template_badge/' + result.registration.id,
+                          });
+                        }
+                    },
+                    {text: _t('View'), close: true, click: function() {
+                        self.do_action({
+                            type: 'ir.actions.act_window',
+                            res_model: 'event.registration',
+                            res_id: result.registration.id,
+                            views: [[false, 'form']],
+                            target: 'current'
+                        });
+                    }},
+                ]}).open();
+            } else if (result.success) {
                 self.do_notify(result.success, false, false, 'o_event_success');
             } else if (result.warning) {
                 self.do_warn(_("Warning"), result.warning);
