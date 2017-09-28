@@ -102,6 +102,9 @@ var UserAgent = Class.extend(mixins.PropertiesMixin, {
                     var confirmation = confirm(_t("Incoming call from ") + name + ' (' + number + ')');
                     if(confirmation){
                         self.ringbacktone.pause();
+                        if (self.onCall) {
+                           self.hangup();
+                        }
                         var call_options = {
                             media: {
                                 render: {

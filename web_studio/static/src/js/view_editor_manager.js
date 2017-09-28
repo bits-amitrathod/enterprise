@@ -245,6 +245,8 @@ var ViewEditorManager = Widget.extend({
                 def = $.when(new Editors.search(this, this.fields_view));
             } else {
                 def = $.when(new SearchRenderer(this, this.fields_view));
+                new_attrs = _.pick(new_attrs, this.expr_attrs.field);
+                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context']);
             }
         } else {
             var View = view_registry.get(this.view_type);

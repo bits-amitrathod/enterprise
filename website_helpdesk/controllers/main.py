@@ -19,7 +19,7 @@ class website_account(website_account):
     def _prepare_portal_layout_values(self):
         values = super(website_account, self)._prepare_portal_layout_values()
         user = request.env.user
-        domain = ['|', '|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id), ('partner_id', '=', user.partner_id.commercial_partner_id.id)]
+        domain = ['|', ('user_id', '=', user.id), ('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]
         values['ticket_count'] = request.env['helpdesk.ticket'].sudo().search_count(domain)
         return values
 
@@ -27,7 +27,7 @@ class website_account(website_account):
     def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, search=None, search_in='content', **kw):
         values = self._prepare_portal_layout_values()
         user = request.env.user
-        domain = ['|', '|', ('user_id', '=', user.id), ('partner_id', '=', user.partner_id.id), ('partner_id', '=', user.partner_id.commercial_partner_id.id)]
+        domain = ['|', ('user_id', '=', user.id), ('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]
 
         searchbar_sortings = {
             'date': {'label': _('Newest'), 'order': 'create_date desc'},
