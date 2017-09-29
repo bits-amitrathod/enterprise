@@ -32,6 +32,7 @@ This module allows the creation of the EDI documents and the communication with 
         'data/action_server_data.xml',
         'data/payment_method_data.xml',
         'data/res_country_data.xml',
+        'data/mail_invoice_template.xml',
         'views/account_invoice_view.xml',
         'views/account_payment_view.xml',
         'views/res_config_settings_views.xml',
