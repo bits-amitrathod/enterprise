@@ -586,11 +586,11 @@ class AccountInvoice(models.Model):
     def action_invoice_draft(self):
         """Reset l10n_mx_edi_time_invoice when invoice state set to draft"""
 
-        self.l10n_mx_edi_update_sat_status()
-        not_allow = self.filtered(lambda r: r.l10n_mx_edi_is_required() and
-                                  not r.company_id.l10n_mx_edi_pac_test_env and
-                                  r.l10n_mx_edi_cfdi_uuid and
-                                  r.l10n_mx_edi_sat_status != 'cancelled')
+        signed = self.filtered(lambda r: r.l10n_mx_edi_is_required() and
+                               not r.company_id.l10n_mx_edi_pac_test_env and
+                               r.l10n_mx_edi_cfdi_uuid)
+        signed.l10n_mx_edi_update_sat_status()
+        not_allow = signed.filtered(lambda r: r.l10n_mx_edi_sat_status != 'cancelled')
         not_allow.message_post(
             subject=_('An error occurred while setting to draft.'),
             message_type='comment',
@@ -600,7 +600,7 @@ class AccountInvoice(models.Model):
         allow = self - not_allow
         allow.write({'l10n_mx_edi_time_invoice': False})
         if self.l10n_mx_edi_get_pac_version() == '3.3':
-            for record in allow.filtered('l10n_mx_edi_origin'):
+            for record in allow.filtered('l10n_mx_edi_cfdi_uuid'):
                 record.l10n_mx_edi_origin = self._set_cfdi_origin('04', [record.l10n_mx_edi_cfdi_uuid])
         return super(AccountInvoice, self - not_allow).action_invoice_draft()
 
@@ -612,7 +612,8 @@ class AccountInvoice(models.Model):
         values = super(AccountInvoice, self)._prepare_refund(
             invoice, date_invoice=date_invoice, date=date,
             description=description, journal_id=journal_id)
-        values['l10n_mx_edi_origin'] = self._set_cfdi_origin('01', [invoice.l10n_mx_edi_cfdi_uuid])
+        if invoice.l10n_mx_edi_cfdi_uuid:
+            values['l10n_mx_edi_origin'] = self._set_cfdi_origin('01', [invoice.l10n_mx_edi_cfdi_uuid])
         return values
 
     @api.multi
