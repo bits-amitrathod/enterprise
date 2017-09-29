@@ -418,7 +418,7 @@ return Widget.extend({
                 break;
             case 'field':
                 var field_description = event.data.field_description;
-                new_attrs = _.pick(new_attrs, this.expr_attrs.field);
+                new_attrs = _.pick(new_attrs, ['name', 'widget']);
                 this._add_field(type, field_description, node, xpath_info, position, new_attrs);
                 break;
             case 'chatter':
