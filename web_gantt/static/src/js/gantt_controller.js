@@ -43,7 +43,7 @@ var GanttController = AbstractController.extend({
     renderButtons: function ($node) {
         var self = this;
         if ($node) {
-            this.$buttons = $(qweb.render("GanttView.buttons", {'isMobile': config.isMobile}));
+            this.$buttons = $(qweb.render("GanttView.buttons", {'isMobile': config.device.isMobile}));
             this.$buttons.appendTo($node);
             this.$buttons.find('.o_gantt_button_scale').bind('click', function (event) {
                 self.$buttons.find('.dropdown_gantt_content').text($(this).text());

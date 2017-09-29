@@ -13,7 +13,7 @@ var Menu = require('web_enterprise.Menu');
 
 var QWeb = core.qweb;
 
-if (!config.isMobile) {
+if (!config.device.isMobile) {
     return;
 }
 

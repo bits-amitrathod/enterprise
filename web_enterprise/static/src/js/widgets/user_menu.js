@@ -20,7 +20,7 @@ UserMenu.include({
      */
     init: function () {
         this._super.apply(this, arguments);
-        if (config.isMobile) {
+        if (config.device.isMobile) {
             this.className = 'o_user_menu_mobile';
             this.tagName = 'ul';
             this.template = undefined;
@@ -30,7 +30,7 @@ UserMenu.include({
      * @override
      */
     start: function () {
-        if (config.isMobile) {
+        if (config.device.isMobile) {
             this.$el.append(QWeb.render('UserMenu.Actions'));
         }
         return this._super.apply(this, arguments);

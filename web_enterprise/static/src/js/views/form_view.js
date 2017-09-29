@@ -23,7 +23,7 @@ FormView.include({
      * @override
      */
     getRenderer: function () {
-        this.config.Renderer = config.isMobile ? MobileFormRenderer : FormRenderer;
+        this.config.Renderer = config.device.isMobile ? MobileFormRenderer : FormRenderer;
         return this._super.apply(this, arguments);
     }
 });

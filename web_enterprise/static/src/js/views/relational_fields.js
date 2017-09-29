@@ -24,7 +24,7 @@ FieldStatus.include({
      * @private
      */
     _render: function () {
-        if (config.isMobile) {
+        if (config.device.isMobile) {
             this.$el.html(qweb.render("FieldStatus.content.mobile", {
                 selection: this.status_information,
                 status: _.findWhere(this.status_information, {selected: true}),
