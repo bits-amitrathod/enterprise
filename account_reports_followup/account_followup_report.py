@@ -35,7 +35,7 @@ class account_report_followup(models.AbstractModel):
         followup_line = self.get_followup_line(options)
         if followup_line:
             partner = self.env['res.partner'].browse(options['partner_id'])
-            summary = followup_line.description.replace('\n', '<br />')
+            summary = followup_line.description
             try:
                 summary = summary % {'partner_name': partner.name,
                                                'date': time.strftime('%Y-%m-%d'),
@@ -47,7 +47,7 @@ class account_report_followup(models.AbstractModel):
                 raise ValueError(message)
             return summary
         else:
-            return (self.env.user.company_id.overdue_msg and self.env.user.company_id.overdue_msg.replace('\n', '<br />')) or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
+            return self.env.user.company_id.overdue_msg or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
 
     def get_post_message(self, options):
         res = super(account_report_followup, self).get_post_message(options)

@@ -125,7 +125,7 @@ class report_account_followup_report(models.AbstractModel):
             }
 
     def get_default_summary(self, options):
-        return self.env.user.company_id.overdue_msg and self.env.user.company_id.overdue_msg.replace('\n', '<br />') or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
+        return self.env.user.company_id.overdue_msg or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
 
     def get_report_manager(self, options):
         domain = [('report_name', '=', 'account.followup.report'), ('partner_id', '=', options.get('partner_id'))]
@@ -202,6 +202,12 @@ class report_account_followup_report(models.AbstractModel):
         email = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice']).email
         if email and email.strip():
             body_html = self.with_context(print_mode=True, mail=True, keep_summary=True).get_html(options)
+            # When printing we need te replace the \n of the summary by <br /> tags
+            start_index = body_html.find(b'<span>',body_html.find(b'<div class="o_account_reports_summary">'))
+            end_index = start_index > -1 and body_html.find(b'</span>', start_index) or -1
+            if end_index > -1:
+                replaced_msg = body_html[start_index:end_index].replace(b'\n', b'<br />')
+                body_html = body_html[:start_index] + replaced_msg + body_html[end_index:]
             email = self.env['mail.mail'].create({
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,
                 'body_html': append_content_to_html(body_html, self.env.user.signature, plaintext=False),
