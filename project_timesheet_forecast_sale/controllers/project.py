@@ -82,7 +82,7 @@ class TimesheetForecastController(SaleTimesheetController):
                 sol_row += [sol_vals['timesheet'].get(ts_m) for ts_m in ts_months + ['total']]
                 sol_row += [sol_vals['forecast'].get(fc_m) for fc_m in fc_months + ['total']]
                 sol_planned_hours = sol_task_planned_hour_mapping.get(sol_name_get[0], 0.0)
-                sol_remaining_hours = sol_planned_hours - sol_row[DEFAULT_MONTH_RANGE + 1] - sol_row[2 * (DEFAULT_MONTH_RANGE + 1)]
+                sol_remaining_hours = sol_planned_hours - sol_row[DEFAULT_MONTH_RANGE + 1]
                 sol_row += [sol_planned_hours, sol_remaining_hours]
                 total_planned_hours += sol_planned_hours
                 total_remaining_hours += sol_remaining_hours
