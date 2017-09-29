@@ -863,18 +863,13 @@ var ViewEditorManager = Widget.extend({
      * @returns {Deferred}
      */
     _setDefaultValue: function (model_name, field_name, value) {
-        var self = this;
         var def = $.Deferred();
         var params = {
             model_name: model_name,
             field_name: field_name,
             value: value,
         };
-        this._rpc({route: '/web_studio/set_default_value', params: params})
-            .fail(function (result, error) {
-                var alert = Dialog.alert(self, error.data.message);
-                alert.on('closed', null, def.reject.bind(def));
-            });
+        this._rpc({route: '/web_studio/set_default_value', params: params});
         return def;
     },
     /**
