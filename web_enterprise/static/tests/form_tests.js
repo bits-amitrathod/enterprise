@@ -52,9 +52,7 @@ QUnit.module('web_enterprise', {
                     '</sheet>' +
                 '</form>',
             res_id: 1,
-            config: {
-                isMobile: true,
-            },
+            config: {device: {isMobile: true}},
         });
 
         assert.strictEqual(form.$('.o_statusbar_buttons a:contains(Action)').length, 1,
@@ -90,9 +88,7 @@ QUnit.module('web_enterprise', {
                     '</sheet>' +
                 '</form>',
             res_id: 1,
-            config: {
-                isMobile: true,
-            },
+            config: {device: {isMobile: true}},
         });
 
         assert.strictEqual(form.$('.o_statusbar_buttons').length, 0,

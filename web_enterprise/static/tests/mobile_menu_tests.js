@@ -71,7 +71,7 @@ QUnit.module('web_enterprise mobile_menu_tests', {
 
         var parent = createParent({
             data: {},
-            config: {isMobile: true},
+            config: {device: {isMobile: true}},
         });
 
         var mobileMenu = new Menu(parent, this.data);
@@ -100,7 +100,7 @@ QUnit.module('web_enterprise mobile_menu_tests', {
 
         var parent = createParent({
             data: {},
-            config: {isMobile: true},
+            config: {device: {isMobile: true}},
         });
 
         var mobileMenu = new Menu(parent, this.data);

@@ -48,9 +48,7 @@ QUnit.module('relational_fields', {
                     '<field name="display_name"/>' +
                 '</form>',
             res_id: 1,
-            config: {
-                isMobile: true,
-            },
+            config: {device: {isMobile: true}},
         });
 
         assert.strictEqual(form.$('.o_statusbar_status > button:contains(aaa)').length, 1,
@@ -83,9 +81,7 @@ QUnit.module('relational_fields', {
                     '<header><field name="trululu" widget="statusbar"/></header>' +
                 '</form>',
             res_id: 4,
-            config: {
-                isMobile: true,
-            },
+            config: {device: {isMobile: true}},
         });
 
         assert.ok(form.$('.o_statusbar_status').hasClass('o_field_empty'),
