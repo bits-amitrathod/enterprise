@@ -590,7 +590,7 @@ class module(models.Model):
     _inherit = 'ir.module.module'
 
     @api.multi
-    def state_update(self, newstate, states_to_update, level=100):
+    def _state_update(self, newstate, states_to_update, level=100):
         blacklisted_modules = ["pos_reprint", "pos_discount"]
 
         if newstate == "to install":
@@ -598,7 +598,7 @@ class module(models.Model):
                 if module_to_update.name in blacklisted_modules:
                     raise UserError(_("This module is not allowed with the Fiscal Data Module."))
 
-        return super(module, self).state_update(newstate, states_to_update, level=level)
+        return super(module, self)._state_update(newstate, states_to_update, level=level)
 
     @api.multi
     def module_uninstall(self):
