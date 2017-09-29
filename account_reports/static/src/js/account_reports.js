@@ -212,20 +212,27 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         });
         this.$searchview_buttons.find('.js_account_report_date_cmp_filter').click(function (event){
             self.report_options.comparison.filter = $(this).data('filter');
+            var error = false;
             var number_period = $(this).parent().find('input[name="periods_number"]');
             self.report_options.comparison.number_period = (number_period.length > 0) ? parseInt(number_period.val()) : 1;
             if ($(this).data('filter') === 'custom') {
                 var date_from = self.$searchview_buttons.find('.o_datepicker_input[name="date_from_cmp"]');
                 var date_to = self.$searchview_buttons.find('.o_datepicker_input[name="date_to_cmp"]');
                 if (date_from.length > 0){
+                    error = date_from.val() === "" || date_to.val() === "";
                     self.report_options.comparison.date_from = field_utils.parse.date(date_from.val());
                     self.report_options.comparison.date_to = field_utils.parse.date(date_to.val());
                 }
                 else {
+                    error = date_to.val() === "";
                     self.report_options.comparison.date = field_utils.parse.date(date_to.val());
                 }
             }
-            self.reload();
+            if (error) {
+                crash_manager.show_warning({data: {message: _t('Date cannot be empty')}});
+            } else {
+                self.reload();
+            }
         });
         // analytic filter
         this.$searchview_buttons.find('.js_account_reports_analytic_auto_complete').select2();
