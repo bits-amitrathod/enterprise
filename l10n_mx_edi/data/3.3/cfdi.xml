@@ -39,7 +39,7 @@
                     t-att-RegimenFiscal="fiscal_position.l10n_mx_edi_code"/>
                 <cfdi:Receptor
                     t-att-Rfc="customer.l10n_mx_edi_get_customer_rfc()"
-                    t-att-Nombre="record._get_string_cfdi(customer.name, 254)"
+                    t-att-Nombre="record._get_string_cfdi(customer.commercial_partner_id.name, 254)"
                     t-att-ResidenciaFiscal="customer.country_id.l10n_mx_edi_code if customer.country_id.l10n_mx_edi_code != 'MEX' else False"
                     t-att-NumRegIdTrib="receiver_reg_trib"
                     t-att-UsoCFDI="use_cfdi"/>
