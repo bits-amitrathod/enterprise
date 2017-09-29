@@ -36,7 +36,7 @@ class SDDMandate(models.Model):
     debtor_id_code = fields.Char(string='Debtor Identifier', readonly=True, states={'draft':[('readonly',False)]}, help="Free reference identifying the debtor in your company.")
     partner_id = fields.Many2one(comodel_name='res.partner', string='Debtor', required=True, readonly=True, states={'draft':[('readonly',False)]}, help="Customer whose payments are to be managed by this mandate.")
     company_id = fields.Many2one(comodel_name='res.company', default=lambda self: self.env['res.company']._company_default_get(), help="Company for whose invoices the mandate can be used.")
-    partner_bank_id = fields.Many2one(string='Debtor Account', comodel_name='res.partner.bank', required=True, readonly=True, states={'draft':[('readonly',False)]}, help="Account of the customer to collect payments from.")
+    partner_bank_id = fields.Many2one(string='Debtor Account', comodel_name='res.partner.bank', help="Account of the customer to collect payments from.")
     paid_invoice_ids = fields.One2many(string='Invoices Paid', comodel_name='account.invoice', readonly=True, inverse_name='sdd_paying_mandate_id', help="Invoices paid using this mandate.")
     start_date = fields.Date(string="Start Date", required=True, readonly=True, states={'draft':[('readonly',False)]}, help="Date from which the mandate can be used (inclusive).")
     end_date = fields.Date(string="End Date", states={'closed':[('readonly',True)]}, help="Date until which the mandate can be used (exclusive).")
@@ -104,12 +104,6 @@ class SDDMandate(models.Model):
                 record.end_date = fields.Date.today()
                 record.state = 'closed'
 
-    def action_download_mandate_pdf(self):
-        """ Called by the 'print' button of the form view.
-        """
-        self._check_debtor_account()
-        return self.env.ref('account_sepa_direct_debit.sdd_mandate_form_report_main').report_action(self)
-
     def action_view_paid_invoices(self):
         return {
             'type': 'ir.actions.act_window',
@@ -153,6 +147,8 @@ class SDDMandate(models.Model):
                 raise UserError(_("The debtor identifier you specified exceeds the limitation of 35 characters imposed by SEPA regulation"))
 
     def _check_debtor_account(self):
+        if any([not record.partner_bank_id for record in self]):
+            raise UserError(_("A debtor account is required to valide a SEPA Direct Debit mandate."))
         if any([record.partner_bank_id.acc_type != 'iban' for record in self]):
             raise UserError(_("SEPA Direct Debit scheme only accepts IBAN account numbers. Please select an IBAN-compliant debtor account for this mandate."))
 

@@ -43,6 +43,7 @@
 
     'data': [
         'security/ir.model.access.csv',
+        'report/empty_mandate_report.xml',
         'data/account_data.xml',
         'data/sdd_payment_method.xml',
         'data/set_sdd_on_bank_journals.yml',
@@ -56,6 +57,5 @@
         'views/sdd_xml_archive_views.xml',
         'views/sdd_mandate_views.xml',
         'wizard/sdd_xml_wizards.xml',
-        'report/empty_mandate_report.xml',
     ],
 }

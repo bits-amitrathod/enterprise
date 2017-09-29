@@ -8,7 +8,7 @@
                 <form string="Customer mandate">
                     <header>
                         <field name="state" widget="statusbar" statusbar_visible="draft,active"/>
-                        <button string="Print" type="object" name="action_download_mandate_pdf" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <button string="Print" type="action" name="%(account_sepa_direct_debit.sdd_mandate_form_report_main)d" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
                         <button string="Validate" type="object" name="action_validate_mandate" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
                         <button string="Revoke" type="object" name="action_revoke_mandate" class="oe_highlight" attrs="{'invisible':[('state','!=','active')]}"/>
                         <button string="Close" type="object" name="action_close_mandate" class="oe_highlight" attrs="{'invisible':[('state','!=','active')]}"/>
