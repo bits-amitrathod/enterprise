@@ -341,7 +341,7 @@ class AccountReport(models.AbstractModel):
                             'name': '%s %s' % (group_prefix, group_name) if group_prefix else group_name,
                             'unfoldable': False,
                             'unfolded': True,
-                            'parent_id': line['parent_id'],  # to make these fold when the original parent gets folded
+                            'parent_id': line.get('parent_id'),  # to make these fold when the original parent gets folded
                             'level': current_group_level,
                             'columns': [0 for l in range(len(columns))],
                         }
