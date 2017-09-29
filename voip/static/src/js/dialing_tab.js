@@ -218,7 +218,7 @@ var PhonecallTab = Widget.extend({
      */
     _selectCall: function (phonecall) {
         var $el = this.$el;
-        if (this.phonecallDetails && this.phonecallDetails.$el.is(":visible")) {
+        if (this.selectedPhonecall) {
             $el = this.phonecallDetails.$el;
         }
         this.phonecallDetails = new Phonecall.PhonecallDetails(this, phonecall);
