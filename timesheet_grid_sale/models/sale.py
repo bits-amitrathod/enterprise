@@ -15,5 +15,5 @@ class SaleOrderLine(models.Model):
         # force to use only the validated timesheet
         param_invoiced_timesheet = self.env['ir.config_parameter'].sudo().get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
         if param_invoiced_timesheet == 'approved':
-            domain = expression.AND(domain, [('validated', '=', True)])
+            domain = expression.AND([domain, [('validated', '=', True)]])
         return domain
