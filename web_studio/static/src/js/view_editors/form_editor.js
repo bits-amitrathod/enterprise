@@ -78,14 +78,11 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             }
 
             // Prevent drops outside of groups if not in whitelist
-            var whitelist = ['binary/New Image', 'html/New Html', 'many2many/New Many2many', 'one2many/New One2many']; // format: ttype/field_description
+            var whitelist = ['o_web_studio_field_picture', 'o_web_studio_field_html', 'o_web_studio_field_many2many', 'o_web_studio_field_one2many']; 
             var hookTypeBlacklist = ['genericTag', 'afterGroup', 'afterNotebook', 'insideSheet'];
-            var fieldDescription = $($helper.context).data('field_description') || {};
-            if (fieldDescription.ttype && fieldDescription.field_description) {
-                var droppedElement = fieldDescription.ttype + '/' + fieldDescription.field_description;
-                if (whitelist.indexOf(droppedElement) === -1 && hookTypeBlacklist.indexOf(hook.type) > -1) {
-                    is_nearest_hook = false;
-                }
+            var fieldClasses = $($helper.context)[0].className.split(' ')
+            if (_.intersection(fieldClasses, whitelist).length === 0 && hookTypeBlacklist.indexOf(hook.type) > -1) {
+                is_nearest_hook = false;
             }
 
             if (is_nearest_hook) {
