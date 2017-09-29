@@ -67,8 +67,8 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             var hook_id = $(this).data('hook_id');
             var hook = self.hook_nodes[hook_id];
             if ($($helper.context).data('structure') === 'notebook') {
-                // a notebook cannot be placed inside a page
-                if (hook.type !== 'page') {
+                // a notebook cannot be placed inside a page or in a group
+                if (hook.type !== 'page' && !$(this).parents('.o_group').length) {
                     is_nearest_hook = true;
                 }
             } else {

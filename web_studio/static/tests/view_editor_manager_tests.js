@@ -1004,6 +1004,31 @@ QUnit.module('Studio', {
 
         vem.destroy();
     });
+
+    QUnit.test('notebook not drag and drop in a group', function(assert) {
+        assert.expect(1);
+        var editViewCount = 0;
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+            "</sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_studio/edit_view') {
+                    editViewCount++;
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        testUtils.dragAndDrop(vem.$('.o_web_studio_field_type_container .o_web_studio_field_tabs'), $('.o_group .o_web_studio_hook'));
+        assert.strictEqual(editViewCount, 0,
+            "the notebook cannot be dropped inside a group");
+        vem.destroy();
+    });
 });
 
 });
