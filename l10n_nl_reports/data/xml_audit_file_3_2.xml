@@ -105,7 +105,8 @@
                                 <docRef t-esc="l.ref or '/'"/>
                                 <effDate t-esc="l.date"/>
                                 <desc t-esc="l.name"/>
-                                <amnt t-esc="l.credit or l.debit"/>
+                                <!-- The XAF XSD only support 2 decimal places -->
+                                <amnt t-esc="round(l.credit or l.debit, 2)"/>
                                 <amntTp t-esc="amnt_tp(l)"/>
                                 <recRef t-if="l.full_reconcile_id" t-esc="l.full_reconcile_id.name"/>
                                 <custSupID t-if="l.partner_id" t-esc="l.partner_id.id"/>
