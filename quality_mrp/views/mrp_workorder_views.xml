@@ -107,11 +107,12 @@
                         <button name="button_start" type="object" class="btn-warning" attrs="{'invisible': ['|', ('is_user_working', '=', True), ('working_state', '=', 'blocked')]}" string="Continue"/>
                         <button name="button_unblock" type="object" context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': [('working_state', '!=', 'blocked')]}" string="Unblock" class="btn-danger"/>
                         <button name="action_previous" type="object" class="btn-default" string="Previous" icon="fa-chevron-left o_workorder_btn_icon_small" attrs="{'invisible': [('is_first_step', '=', True)]}"/>
-                        <button name="action_skip" type="object" class="btn-default" string="Skip" icon="fa-step-forward pull-right o_workorder_btn_icon_small" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('quality_state', '!=', 'none')]}"/>
-                        <button name="action_next" type="object" class="btn-default" string="Next" icon="fa-chevron-right pull-right o_workorder_btn_icon_small" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('quality_state', '=', 'none')]}"/>
+                        <button disabled="1" class="btn-default" string="Previous" icon="fa-chevron-left o_workorder_btn_icon_small" attrs="{'invisible': [('is_first_step', '=', False)]}"/>
+                        <button name="action_skip" type="object" class="btn-default" string="Skip" icon="fa-step-forward pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', True)]}"/>
+                        <button disabled="1" class="btn-default" string="Skip" icon="fa-step-forward pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', False)]}"/>
                     </div>
                     <div class="o_workorder_bar_content o_workorder_bar_content_right">
-                        <div attrs="{'invisible': [('working_state', '=', 'blocked')]}">
+                        <div attrs="{'invisible': ['|', ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}">
                             <button name="do_fail" type="object" class="btn-danger" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
                             <button name="do_fail" type="object" class="btn-danger" attrs="{'invisible': ['|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
                             <button name="do_pass" type="object" class="btn-success" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Pass"/>
