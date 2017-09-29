@@ -3,10 +3,19 @@
 
 from datetime import datetime
 
-from odoo import models
+from odoo import models, api
 
 class AccountJournal(models.Model):
     _inherit = 'account.journal'
+
+    @api.multi
+    def open_action(self):
+        action = super(AccountJournal, self).open_action()
+        view = self.env.ref('account.action_invoice_tree2')
+        if view and action["id"] == view.id:
+            account_purchase_filter = self.env.ref('account_3way_match.account_invoice_filter_inherit_account_3way_match', False)
+            action['search_view_id'] = account_purchase_filter and [account_purchase_filter.id, account_purchase_filter.name] or False
+        return action
 
     def _get_open_bills_to_pay_query(self):
         """
