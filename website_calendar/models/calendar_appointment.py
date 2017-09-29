@@ -227,7 +227,8 @@ class CalendarAppointmentType(models.Model):
             self._slots_available(slots, first_day.astimezone(pytz.UTC), last_day.astimezone(pytz.UTC), employee)
 
         # Compute calendar rendering and inject available slots
-        start = first_day
+        today = requested_tz.fromutc(datetime.utcnow())
+        start = today
         month_dates_calendar = cal.Calendar(0).monthdatescalendar
         months = []
         while (start.year, start.month) <= (last_day.year, last_day.month):
@@ -238,7 +239,7 @@ class CalendarAppointmentType(models.Model):
                     today_slots = []
                     if day.weekday() in (cal.SUNDAY, cal.SATURDAY):
                         weekend_cls = 'o_weekend'
-                    if day == first_day.date() and day.month == start.month:
+                    if day == today.date() and day.month == today.month:
                         today_cls = 'o_today'
                     if day.month != start.month:
                         mute_cls = 'text-muted o_mute_day'
