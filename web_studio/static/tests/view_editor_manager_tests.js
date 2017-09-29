@@ -487,27 +487,50 @@ QUnit.module('Studio', {
     });
 
     QUnit.test('search editor', function(assert) {
-        assert.expect(9);
+        assert.expect(10);
 
+        var arch = "<search>" +
+                "<field name='display_name'/>" +
+                "<filter string='My Name' " +
+                    "name='my_name' " +
+                    "domain='[(\"display_name\",\"=\",coucou)]'" +
+                "/>" +
+                "<filter string='My Name2' " +
+                    "name='my_name2' " +
+                    "domain='[(\"display_name\",\"=\",coucou2)]'" +
+                "/>" +
+                "<group expand='0' string='Group By'>" +
+                    "<filter name='groupby_display_name' " +
+                    "domain='[]' context=\"{'group_by':'display_name'}\"/>" +
+                "</group>" +
+            "</search>";
+        var fieldsView;
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
-            arch: "<search>" +
-                    "<field name='display_name'/>" +
-                    "<filter string='My Name' " +
-                        "name='my_name' " +
-                        "domain='[(\"display_name\",\"=\",coucou)]'" +
-                    "/>" +
-                    "<filter string='My Name2' " +
-                        "name='my_name2' " +
-                        "domain='[(\"display_name\",\"=\",coucou2)]'" +
-                    "/>" +
-                    "<group expand='0' string='Group By'>" +
-                        "<filter name='groupby_display_name' " +
-                        "domain='[]' context=\"{'group_by':'display_name'}\"/>" +
-                    "</group>" +
-                "</search>",
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0].node.attrs, {name: 'display_name'},
+                        "we should only specify the name (in attrs) when adding a field");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            search: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
         });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
 
         assert.strictEqual(vem.view_type, 'search',
             "view type should be search");
@@ -527,6 +550,9 @@ QUnit.module('Studio', {
             "there should be 1 nodes in the group by");
         assert.strictEqual(vem.$('.o_web_studio_search_view_editor [data-node-id]').length, 4,
             "there should be 4 nodes");
+
+        // try to add a field in the autocompletion section
+        testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields > .ui-draggable:first'), $('.o_web_studio_search_autocompletion_fields .o_web_studio_hook:first'));
 
         vem.destroy();
     });

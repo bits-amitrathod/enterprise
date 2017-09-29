@@ -63,9 +63,9 @@ var SearchEditor = SearchRenderer.extend(EditorMixin, {
             var hook_classes = $helper.attr("class");
             var table_type = $nearest_form_hook.closest('table').data('type');
             var accept_fields = ['autocompletion_fields', 'group_by'];
-            var is_field_droppable = hook_classes.includes("o_web_studio_field") && _.contains(accept_fields, table_type);
+            var is_field_droppable = hook_classes.indexOf("o_web_studio_field") > -1 && _.contains(accept_fields, table_type);
             var is_component_droppable = table_type === 'filters' &&
-                (hook_classes.includes("o_web_studio_filter") || hook_classes.includes("o_web_studio_filter_separator"));
+                (hook_classes.indexOf("o_web_studio_filter") > -1 || hook_classes.indexOf("o_web_studio_filter_separator") > -1);
             // We check if the field dropped is a groupabble field
             // if dropped in the group_by table
             if (table_type === 'group_by' && is_field_droppable) {
