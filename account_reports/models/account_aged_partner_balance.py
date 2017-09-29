@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api, _, fields
-from odoo.tools.misc import formatLang
+from odoo import models, api, _
+from odoo.tools.misc import format_date
 
 
 class report_account_aged_partner(models.AbstractModel):
@@ -15,7 +15,7 @@ class report_account_aged_partner(models.AbstractModel):
 
     def get_columns_name(self, options):
         columns = [{}]
-        columns += [{'name': v, 'class': 'number'} for v in [_("Not&nbsp;due&nbsp;on %s") % options['date'].get('string'), _("0&nbsp;-&nbsp;30"), _("30&nbsp;-&nbsp;60"), _("60&nbsp;-&nbsp;90"), _("90&nbsp;-&nbsp;120"), _("Older"), _("Total")]]
+        columns += [{'name': v, 'class': 'number'} for v in [_("Not&nbsp;due&nbsp;on %s") % format_date(self.env, options['date']['date']), _("0&nbsp;-&nbsp;30"), _("30&nbsp;-&nbsp;60"), _("60&nbsp;-&nbsp;90"), _("90&nbsp;-&nbsp;120"), _("Older"), _("Total")]]
         return columns
 
     def get_templates(self):
