@@ -65,7 +65,7 @@ class MrpBom(models.Model):
     def button_mrp_eco(self):
         self.ensure_one()
         action = self.env.ref('mrp_plm.mrp_eco_action_main').read()[0]
-        action['domain'] = [('id', 'in', self.eco_ids.ids)]
+        action['domain'] = [('bom_id', '=', self.id)]
         action['context'] = {
             'default_bom_id': self.id,
             'default_product_tmpl_id': self.product_tmpl_id.id
