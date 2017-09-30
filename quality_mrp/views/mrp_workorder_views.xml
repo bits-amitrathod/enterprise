@@ -87,7 +87,7 @@
                         <field name="qty_producing" class="oe_inline text-left" attrs="{'readonly': ['|', ('allow_producing_quantity_change', '=', False), ('tracking', '=', 'serial')]}" required="1"/>
                         / <field name="qty_remaining" class="oe_inline text-left"/>
                         <label for="product_uom_id" string="" class="oe_inline"/>
-                        <field name="product_uom_id" options="{'no_open': True}" class="oe_inline"/>
+                        <field name="product_uom_id" options="{'no_open': True}" class="oe_inline" readonly="1"/>
                     </div>
                     <div class="workorder_bar_center o_workorder_bar_content">
                         <div attrs="{'invisible': [('tracking', '=', 'none')]}">
@@ -108,8 +108,8 @@
                         <button name="button_unblock" type="object" context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': [('working_state', '!=', 'blocked')]}" string="Unblock" class="btn-danger"/>
                         <button name="action_previous" type="object" class="btn-default" string="Previous" icon="fa-chevron-left o_workorder_btn_icon_small" attrs="{'invisible': [('is_first_step', '=', True)]}"/>
                         <button disabled="1" class="btn-default" string="Previous" icon="fa-chevron-left o_workorder_btn_icon_small" attrs="{'invisible': [('is_first_step', '=', False)]}"/>
-                        <button name="action_skip" type="object" class="btn-default" string="Skip" icon="fa-step-forward pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', True)]}"/>
-                        <button disabled="1" class="btn-default" string="Skip" icon="fa-step-forward pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', False)]}"/>
+                        <button name="action_skip" type="object" class="btn-default" string="Skip" icon="fa-chevron-right pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', True)]}"/>
+                        <button disabled="1" class="btn-default" string="Skip" icon="fa-chevron-right pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', False)]}"/>
                     </div>
                     <div class="o_workorder_bar_content o_workorder_bar_content_right">
                         <div attrs="{'invisible': ['|', ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}">
