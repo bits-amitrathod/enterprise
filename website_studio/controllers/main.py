@@ -30,9 +30,8 @@ class WebsiteStudioController(http.Controller):
         xml_id = request.env['website'].new_page(
             form_name,
             template=template,
-            ispage=True,
             namespace='website',
-        )
+        )['url']
         view = request.env['ir.ui.view'].search([
             ('type', '=', 'qweb'),
             ('key', '=', xml_id),
