@@ -2,18 +2,12 @@
 # This file contains the translation of the following modules:
 # * mrp_maintenance
 # 
-# Translators:
-# Ediz Duman <neps1192@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# UNIBRAVO SOFTWARE <unibravo@gmail.com>, 2017
-# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,16 +18,26 @@ msgstr ""
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_view_form_inherit_maintenance
 msgid "<span class=\"o_stat_text\">Maintenance Request</span>"
-msgstr "<span class=\"o_stat_text\">Bakım Talebi</span>"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
 msgid "<span class=\"o_stat_text\">Maintenance</span>"
-msgstr "<span class=\"o_stat_text\">Bakım</span>"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_estimated_next_failure
 msgid "Computed as Latest Failure Date + MTBF"
+msgstr ""
+
+#. module: mrp_maintenance
+#: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture1
+msgid "Crosscut Saw: 8 ppi."
+msgstr ""
+
+#. module: mrp_maintenance
+#: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture3
+msgid "Drill Machine"
 msgstr ""
 
 #. module: mrp_maintenance
@@ -45,7 +49,7 @@ msgstr ""
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
 msgid "Equipments"
-msgstr "Ekipmanlar"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
@@ -71,6 +75,11 @@ msgstr ""
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_expected_mtbf
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Expected Mean Time Between Failure"
+msgstr ""
+
+#. module: mrp_maintenance
+#: model:maintenance.equipment.category,name:mrp_maintenance.equipment_furniture_tools
+msgid "Furniture Tools"
 msgstr ""
 
 #. module: mrp_maintenance
@@ -101,19 +110,18 @@ msgstr ""
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_kanban_inherit_maintenance
 msgid "Maintenance"
-msgstr "Bakım"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter_equipment_ids
 msgid "Maintenance Equipment"
-msgstr "Bakım Ekipmanı"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
-#: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_tablet_view_form_inherit_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_view_form_inherit_maintenance
 msgid "Maintenance Request"
-msgstr "Bakım Talebi"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workorder_maintenance_request_count
@@ -123,18 +131,21 @@ msgstr ""
 #. module: mrp_maintenance
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:96
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:126
-#: model:ir.actions.act_window,name:mrp_maintenance.maintenance_request_action_reports
 #: model:ir.model,name:mrp_maintenance.model_maintenance_request
-#: model:ir.ui.menu,name:mrp_maintenance.maintenance_request_reporting
 #, python-format
 msgid "Maintenance Requests"
-msgstr "Bakım Talepleri"
+msgstr ""
+
+#. module: mrp_maintenance
+#: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_tablet_view_form_inherit_maintenance
+msgid "Maintenance request"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_production
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request_production_id
 msgid "Manufacturing Order"
-msgstr "Üretim Emri"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
@@ -158,54 +169,45 @@ msgstr ""
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:144
 #, python-format
 msgid "New Maintenance Request"
-msgstr "Yeni Bakım Talebi"
-
-#. module: mrp_maintenance
-#: model:ir.actions.act_window,help:mrp_maintenance.maintenance_request_action_reports
-msgid "No maintenance request."
-msgstr "Bakım talebi yok."
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production_maintenance_count
 msgid "Number of maintenance requests"
-msgstr "Bakım talebi sayısı"
-
-#. module: mrp_maintenance
-#: model:ir.ui.menu,name:mrp_maintenance.maintenance_reporting
-msgid "Reporting"
-msgstr "Raporlama"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production_request_ids
 msgid "Request"
-msgstr "İstek"
+msgstr ""
+
+#. module: mrp_maintenance
+#: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture2
+msgid "Scrub Plane"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workcenter
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_workcenter_id
+#: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Work Center"
-msgstr "İş Merkezi"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.ui.menu,name:mrp_maintenance.menu_workcenter_tree
 msgid "Work Centers"
-msgstr "İş Merkezleri"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workorder
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request_workorder_id
 msgid "Work Order"
-msgstr "İş Emri"
-
-#. module: mrp_maintenance
-#: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
-msgid "WorkCenter"
-msgstr "İş Merkezi"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "days"
-msgstr "gün"
+msgstr ""
 
 #. module: mrp_maintenance
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:50

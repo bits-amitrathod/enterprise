@@ -7,13 +7,14 @@
 # Martin Trigaux <mat@odoo.com>, 2017
 # Stefan Hartenfels <stefan.hartenfels@camptocamp.com>, 2017
 # Thorsten Vocks <thorsten.vocks@openbig.org>, 2017
+# Ermin Trevisan <trevi@twanda.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Thorsten Vocks <thorsten.vocks@openbig.org>, 2017\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: Ermin Trevisan <trevi@twanda.com>, 2017\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,17 +25,27 @@ msgstr ""
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_view_form_inherit_maintenance
 msgid "<span class=\"o_stat_text\">Maintenance Request</span>"
-msgstr ""
+msgstr "Wartungsanforderung"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
 msgid "<span class=\"o_stat_text\">Maintenance</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Wartung</span>"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_estimated_next_failure
 msgid "Computed as Latest Failure Date + MTBF"
 msgstr ""
+
+#. module: mrp_maintenance
+#: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture1
+msgid "Crosscut Saw: 8 ppi."
+msgstr ""
+
+#. module: mrp_maintenance
+#: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture3
+msgid "Drill Machine"
+msgstr "Bohrmaschine"
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_maintenance_equipment
@@ -74,6 +85,11 @@ msgid "Expected Mean Time Between Failure"
 msgstr ""
 
 #. module: mrp_maintenance
+#: model:maintenance.equipment.category,name:mrp_maintenance.equipment_furniture_tools
+msgid "Furniture Tools"
+msgstr ""
+
+#. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Latest Failure"
 msgstr ""
@@ -110,7 +126,6 @@ msgstr "Wartungsausrüstung"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
-#: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_tablet_view_form_inherit_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_view_form_inherit_maintenance
 msgid "Maintenance Request"
 msgstr "Wartungsanfrage"
@@ -129,6 +144,11 @@ msgid "Maintenance Requests"
 msgstr "Wartungsanfragen"
 
 #. module: mrp_maintenance
+#: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_tablet_view_form_inherit_maintenance
+msgid "Maintenance request"
+msgstr ""
+
+#. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_production
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request_production_id
 msgid "Manufacturing Order"
@@ -143,7 +163,7 @@ msgstr ""
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_mtbf
 msgid ""
 "Mean Time Between Failure, computed based on done corrective maintenances."
-msgstr ""
+msgstr "Durchschnittliche Ausfallrate basierend auf Reparaturen"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_mttr
@@ -167,6 +187,11 @@ msgstr "Anzahl Wartungsanfragen"
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production_request_ids
 msgid "Request"
 msgstr "Anfrage"
+
+#. module: mrp_maintenance
+#: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture2
+msgid "Scrub Plane"
+msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workcenter
