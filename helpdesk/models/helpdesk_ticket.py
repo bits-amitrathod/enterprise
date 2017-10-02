@@ -208,7 +208,7 @@ class HelpdeskTicket(models.Model):
                     deadline,
                     compute_leaves=True)
 
-    @api.depends('deadline', 'stage_id', 'sla_id.stage_id.sequence', 'stage_id.sequence')
+    @api.depends('deadline', 'stage_id.sequence', 'sla_id.stage_id.sequence')
     def _compute_sla_fail(self):
         if not self.user_has_groups("helpdesk.group_use_sla"):
             return
