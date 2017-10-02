@@ -26,7 +26,7 @@ class SaleSubscription(models.Model):
     pricelist_id = fields.Many2one('product.pricelist', string='Pricelist', required=True)
     currency_id = fields.Many2one('res.currency', related='pricelist_id.currency_id', string='Currency', readonly=True)
     recurring_invoice_line_ids = fields.One2many('sale.subscription.line', 'analytic_account_id', string='Invoice Lines', copy=True)
-    recurring_rule_type = fields.Selection(string='Recurrency', help="Invoice automatically repeat at specified interval", related="template_id.recurring_rule_type", readonly=1)
+    recurring_rule_type = fields.Selection(string='Recurrence', help="Invoice automatically repeat at specified interval", related="template_id.recurring_rule_type", readonly=1)
     recurring_interval = fields.Integer(string='Repeat Every', help="Repeat every (Days/Week/Month/Year)", related="template_id.recurring_interval", readonly=1)
     recurring_next_date = fields.Date(string='Date of Next Invoice', default=fields.Date.today, help="The next invoice will be created on this date then the period will be extended.")
     recurring_total = fields.Float(compute='_compute_recurring_total', string="Recurring Price", store=True, track_visibility='onchange')
@@ -450,7 +450,7 @@ class SaleSubscriptionTemplate(models.Model):
     description = fields.Text(translate=True)
     recurring_rule_type = fields.Selection([('daily', 'Day(s)'), ('weekly', 'Week(s)'),
                                             ('monthly', 'Month(s)'), ('yearly', 'Year(s)'), ],
-                                           string='Recurrency',
+                                           string='Recurrence',
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
