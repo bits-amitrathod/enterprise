@@ -571,27 +571,50 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('search editor', function(assert) {
-        assert.expect(13);
+        assert.expect(14);
 
+        var arch = "<search>" +
+                "<field name='display_name'/>" +
+                "<filter string='My Name' " +
+                    "name='my_name' " +
+                    "domain='[(\"display_name\",\"=\",coucou)]'" +
+                "/>" +
+                "<filter string='My Name2' " +
+                    "name='my_name2' " +
+                    "domain='[(\"display_name\",\"=\",coucou2)]'" +
+                "/>" +
+                "<group expand='0' string='Group By'>" +
+                    "<filter name='groupby_display_name' " +
+                    "domain='[]' context=\"{'group_by':'display_name'}\"/>" +
+                "</group>" +
+            "</search>";
+        var fieldsView;
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
-            arch: "<search>" +
-                    "<field name='display_name'/>" +
-                    "<filter string='My Name' " +
-                        "name='my_name' " +
-                        "domain='[(\"display_name\",\"=\",coucou)]'" +
-                    "/>" +
-                    "<filter string='My Name2' " +
-                        "name='my_name2' " +
-                        "domain='[(\"display_name\",\"=\",coucou2)]'" +
-                    "/>" +
-                    "<group expand='0' string='Group By'>" +
-                        "<filter name='groupby_display_name' " +
-                        "domain='[]' context=\"{'group_by':'display_name'}\"/>" +
-                    "</group>" +
-                "</search>",
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0].node.attrs, {name: 'display_name'},
+                        "we should only specify the name (in attrs) when adding a field");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            search: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
         });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
 
         assert.strictEqual(vem.view_type, 'search',
             "view type should be search");
@@ -623,6 +646,9 @@ QUnit.module('ViewEditorManager', {
             "the field should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
             "the field should have the label Display Name in the sidebar");
+
+        // try to add a field in the autocompletion section
+        testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields > .ui-draggable:first'), $('.o_web_studio_search_autocompletion_fields .o_web_studio_hook:first'));
 
         vem.destroy();
     });
@@ -977,26 +1003,39 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('element removal', function(assert) {
-        assert.expect(4);
+        assert.expect(8);
 
         var editViewCount = 0;
         var arch = "<form><sheet>" +
                 "<group>" +
                     "<field name='display_name'/>" +
+                    "<field name='m2o'/>" +
                 "</group>" +
-                "<notebook><page><field name='id'/></page></notebook>" +
+                "<notebook><page name='page'><field name='id'/></page></notebook>" +
             "</sheet></form>";
         var fieldsView;
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
             arch: arch,
-            mockRPC: function (route) {
+            mockRPC: function (route, args) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
                 }
                 if (route === '/web_studio/edit_view') {
                     editViewCount++;
+                    if (editViewCount === 1) {
+                        assert.strictEqual(_.has(args.operations[0].target, 'xpath_info'), false,
+                            'should not give xpath_info if we have the tag identifier attributes');
+                    } else if (editViewCount === 2) {
+                        assert.strictEqual(args.operations[1].target.tag, 'group',
+                            'should compute correctly the parent node for the group');
+                    } else if (editViewCount === 3) {
+                        assert.strictEqual(args.operations[2].target.tag, 'notebook',
+                            'should delete the notebook because the last page is deleted');
+                        assert.strictEqual(_.last(args.operations[2].target.xpath_info).tag, 'notebook',
+                            'should have the notebook as xpath last element');
+                    }
                     // the server sends the arch in string but it's post-processed
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
@@ -1091,6 +1130,31 @@ QUnit.module('ViewEditorManager', {
         assert.verifySteps(['field', 'field'],
             "should have clicked again on the node after edition to reload the sidebar");
 
+        vem.destroy();
+    });
+
+    QUnit.test('notebook not drag and drop in a group', function(assert) {
+        assert.expect(1);
+        var editViewCount = 0;
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+            "</sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route) {
+                if (route === '/web_studio/edit_view') {
+                    editViewCount++;
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        testUtils.dragAndDrop(vem.$('.o_web_studio_field_type_container .o_web_studio_field_tabs'), $('.o_group .o_web_studio_hook'));
+        assert.strictEqual(editViewCount, 0,
+            "the notebook cannot be dropped inside a group");
         vem.destroy();
     });
 

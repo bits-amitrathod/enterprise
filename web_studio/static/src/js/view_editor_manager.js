@@ -290,8 +290,6 @@ var ViewEditorManager = Widget.extend({
                 def = $.when(new Editors.search(this, fields_view));
             } else {
                 def = $.when(new SearchRenderer(this, fields_view));
-                new_attrs = _.pick(new_attrs, this.expr_attrs.field);
-                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context']);
             }
         } else {
             var View = view_registry.get(this.view_type);
@@ -1051,6 +1049,11 @@ var ViewEditorManager = Widget.extend({
             var is_root = !findParent(this.fields_view.arch, parent_node);
             if (parent_node.children.length === 1 && !is_root) {
                 node = parent_node;
+            // Since we changed the node being deleted, we recompute the xpath_info
+            // if necessary
+            if (node && _.isEmpty(_.pick(node.attrs, this.expr_attrs[node.tag]))) {
+                xpath_info = findParentsPositions(this.fields_view.arch, node);
+            }
             }
         }
 
@@ -1079,18 +1082,13 @@ var ViewEditorManager = Widget.extend({
      * @returns {Deferred}
      */
     _setDefaultValue: function (model_name, field_name, value) {
-        var self = this;
         var def = $.Deferred();
         var params = {
             model_name: model_name,
             field_name: field_name,
             value: value,
         };
-        this._rpc({route: '/web_studio/set_default_value', params: params})
-            .fail(function (result, error) {
-                var alert = Dialog.alert(self, error.data.message);
-                alert.on('closed', null, def.reject.bind(def));
-            });
+        this._rpc({route: '/web_studio/set_default_value', params: params});
         return def;
     },
     /**
@@ -1354,7 +1352,7 @@ var ViewEditorManager = Widget.extend({
         var position = event.data.position || 'after';
         var xpath_info;
         var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
-        if (node && !_.pick(node.attrs, this.expr_attrs[node.tag]).length) {
+        if (node && _.isEmpty(_.pick(node.attrs, this.expr_attrs[node.tag]))) {
             xpath_info = findParentsPositions(fields_view.arch, node);
         }
         switch (structure) {
@@ -1376,6 +1374,7 @@ var ViewEditorManager = Widget.extend({
                 break;
             case 'field':
                 var field_description = event.data.field_description;
+                new_attrs = _.pick(new_attrs, ['name', 'widget']);
                 this._addField(type, field_description, node, xpath_info, position,
                     new_attrs);
                 break;
@@ -1402,6 +1401,7 @@ var ViewEditorManager = Widget.extend({
                     new_attrs);
                 break;
             case 'filter':
+                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context']);
                 this._addFilter(type, node, xpath_info, position, new_attrs);
                 break;
             case 'separator':
@@ -1417,8 +1417,23 @@ var ViewEditorManager = Widget.extend({
 function findParent(arch, node) {
     var parent = arch;
     var result;
+    var xpathInfo = findParentsPositions(arch, node);
     _.each(parent.children, function (child) {
-        if (child.attrs && child.attrs.name === node.attrs.name) {
+        var deepEqual = true;
+        // If there is no attributes, we can't compare the nodes with them
+        // so we compute the child xpath_info and compare it to the node
+        // we are looking in the arch.
+        if (_.isEmpty(child.attrs)) {
+            var childXpathInfo = findParentsPositions(arch, child);
+            _.each(xpathInfo, function (node, index) {
+                if (index >= childXpathInfo.length) {
+                    deepEqual = false;
+                } else if (!_.isEqual(xpathInfo[index], childXpathInfo[index])) {
+                    deepEqual = false;
+                }
+            });
+        }
+        if (deepEqual && child.attrs && child.attrs.name === node.attrs.name) {
             result = parent;
         } else {
             var res = findParent(child, node);

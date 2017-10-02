@@ -19,7 +19,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='privacy']" position="after">
                 <separator/>
-                <filter string="Online Appointments" domain="[('categ_ids','in', [%(website_calendar.calendar_event_type_data_online_appointment)d])]" name="online"/>
+                <filter string="Online Appointments" domain="[('appointment_type_id', '!=', False)]" name="online"/>
                 <separator/>
                 <field name="appointment_type_id"/>
             </xpath>

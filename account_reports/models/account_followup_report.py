@@ -119,7 +119,7 @@ class report_account_followup_report(models.AbstractModel):
             }
 
     def get_default_summary(self, options):
-        return self.env.user.company_id.overdue_msg and self.env.user.company_id.overdue_msg.replace('\n', '<br />') or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
+        return self.env.user.company_id.overdue_msg or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
 
     def get_report_manager(self, options):
         domain = [('report_name', '=', 'account.followup.report'), ('partner_id', '=', options.get('partner_id'))]
