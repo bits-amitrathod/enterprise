@@ -450,7 +450,7 @@ class SaleSubscriptionTemplate(models.Model):
     description = fields.Text(translate=True)
     recurring_rule_type = fields.Selection([('daily', 'Day(s)'), ('weekly', 'Week(s)'),
                                             ('monthly', 'Month(s)'), ('yearly', 'Year(s)'), ],
-                                           string='Recurrency',
+                                           string='Recurrence',
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
