@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -95,17 +95,17 @@ msgstr ""
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.view_sale_coupon_program_kanban
 msgid "<strong>Active</strong>"
-msgstr ""
+msgstr "<strong>Actief</strong>"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.view_sale_coupon_program_kanban
 msgid "<strong>Coupons</strong>"
-msgstr ""
+msgstr "<strong>Kortingsbonnen</strong>"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.view_sale_coupon_program_kanban
 msgid "<strong>Sales</strong>"
-msgstr ""
+msgstr "<strong>Verkopen</strong>"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:71
@@ -571,13 +571,13 @@ msgstr "Globale kortingen zijn niet cumuleerbaar."
 #: code:addons/sale_coupon/models/sale_coupon_program.py:150
 #, python-format
 msgid "Global discounts are not cumulative."
-msgstr ""
+msgstr "Globale kortingen zijn niet cumuleerbaar."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_apply_code_id
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_generate_id
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_id
-#: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_id_11414
+#: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_id_11533
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_reward_id
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule_id
 msgid "ID"
@@ -862,6 +862,7 @@ msgstr "Promotie programma"
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_promo_program
 msgid "Promotional offers limited in time or a limited order number."
 msgstr ""
+"Promoties van gelimiteerde duur in tijd of een gelimiteerd order aantal."
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_coupon_program
@@ -872,7 +873,7 @@ msgstr "Promoties van gelimiteerde duur."
 #: code:addons/sale_coupon/models/sale_coupon_program.py:148
 #, python-format
 msgid "Promotionals codes are not cumulative."
-msgstr ""
+msgstr "Promotiecodes zijn niet cumuleerbaar."
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_promo_program
@@ -887,7 +888,11 @@ msgid "Quantity"
 msgstr "Hoeveelheid"
 
 #. module: sale_coupon
-#: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_generate_partner_ids
+#: model:ir.model,name:sale_coupon.model_sale_order
+msgid "Quotation"
+msgstr "Offerte"
+
+#. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_partner_ids
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule_rule_partner_ids
 msgid "Related Partners"
@@ -985,7 +990,6 @@ msgstr "Verkoop kortingsbon regel"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_order_action
-#: model:ir.model,name:sale_coupon.model_sale_order
 msgid "Sales Order"
 msgstr "Verkooporder"
 

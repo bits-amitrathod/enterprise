@@ -9,7 +9,6 @@
 # Clo <clo@odoo.com>, 2017
 # Fabien Pinckaers <fp@openerp.com>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
-# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
 # Stanislas Sodonon <stanislas.sodonon@gmail.com>, 2017
 # Simon Jejcic <simon.jejcic@gmail.com>, 2017
 # Matillon Samantha <smatillon@gmail.com>, 2017
@@ -17,6 +16,7 @@
 # Nancy Bolognesi <nb@microcom.ca>, 2017
 # Xavier Symons <xsy@openerp.com>, 2017
 # Florian Hatat <mininet@wanadoo.fr>, 2017
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
 # lucasdeliege <deliegelucas@gmail.com>, 2017
 # Xavier Belmere <Info@cartmeleon.com>, 2017
 # Frédéric Clementi <frederic.clementi@camptocamp.com>, 2017
@@ -36,8 +36,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Last-Translator: leemannd <denis.leemann@camptocamp.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -134,15 +134,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_reports.search_template_analytic
 msgid "<b>Tags</b><br/>"
 msgstr "<b>Etiquettes</b><br/>"
-
-#. module: account_reports
-#: model:ir.ui.view,arch_db:account_reports.followup_filter_info_template
-msgid ""
-"<br/>\n"
-"            Customer ref:"
-msgstr ""
-"<br/>\n"
-"            Réf client :"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.template_followup_report
@@ -356,7 +347,7 @@ msgid "Apply"
 msgstr "Appliquer"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:514
+#: code:addons/account_reports/models/account_report.py:493
 #, python-format
 msgid "As of %s"
 msgstr "à la date du %s"
@@ -545,12 +536,6 @@ msgstr "Excédant de liquidités"
 #: model:ir.ui.view,arch_db:account_reports.line_template_followup_report
 msgid "Change expected payment date/note"
 msgstr "Changer la date/note de payement prévue"
-
-#. module: account_reports
-#: code:addons/account_reports/models/account_report_coa.py:133
-#, python-format
-msgid "Chart of Account"
-msgstr "Plan comptable"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_coa_report
@@ -743,6 +728,11 @@ msgid "Customer Statements"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.ui.view,arch_db:account_reports.followup_filter_info_template
+msgid "Customer ref:"
+msgstr "Réf. du client :"
+
+#. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_followup
 #: model:ir.actions.client,name:account_reports.action_account_followup_all
 msgid "Customers Statement"
@@ -769,6 +759,7 @@ msgstr "Date :"
 #. module: account_reports
 #. openerp-web
 #: code:addons/account_reports/static/src/js/account_reports.js:184
+#: code:addons/account_reports/static/src/js/account_reports.js:232
 #, python-format
 msgid "Date cannot be empty"
 msgstr "La date ne peut pas être vide"
@@ -950,7 +941,7 @@ msgid "Expenses"
 msgstr "Notes de frais"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:457
+#: code:addons/account_reports/models/account_report.py:436
 #, python-format
 msgid "Export (XLSX)"
 msgstr "Exporter (XLSX)"
@@ -1011,7 +1002,7 @@ msgid "Formulas"
 msgstr "Formules"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:515
+#: code:addons/account_reports/models/account_report.py:494
 #, python-format
 msgid "From %s <br/> to  %s"
 msgstr "De %s <br/> à  %s"
@@ -1047,7 +1038,7 @@ msgid "General Ledger Report"
 msgstr "Grand livre"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:132
+#: code:addons/account_reports/models/account_report.py:131
 #, python-format
 msgid "General Report"
 msgstr ""
@@ -1455,7 +1446,7 @@ msgid "No Unit"
 msgstr "Pas d'unité"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:578
+#: code:addons/account_reports/models/account_report.py:557
 #, python-format
 msgid "No comparison"
 msgstr "Pas de comparaison"
@@ -1596,7 +1587,7 @@ msgstr ""
 
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.account_reports_partners_reports_menu
-msgid "Partners Reports"
+msgid "Partner Reports"
 msgstr ""
 
 #. module: account_reports
@@ -1690,7 +1681,7 @@ msgid "Print Letter"
 msgstr "Imprimer la lettre"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:457
+#: code:addons/account_reports/models/account_report.py:436
 #, python-format
 msgid "Print Preview"
 msgstr "Imprimer"
@@ -1953,7 +1944,7 @@ msgstr "Aujourd'hui"
 #: code:addons/account_reports/models/account_financial_report.py:723
 #: code:addons/account_reports/models/account_general_ledger.py:360
 #: code:addons/account_reports/models/account_partner_ledger.py:183
-#: code:addons/account_reports/models/account_report_coa.py:99
+#: code:addons/account_reports/models/account_report_coa.py:98
 #: model:ir.ui.view,arch_db:account_reports.template_coa_report
 #, python-format
 msgid "Total"
@@ -1965,12 +1956,6 @@ msgstr "Total"
 #, python-format
 msgid "Total "
 msgstr "Total"
-
-#. module: account_reports
-#: code:addons/account_reports/models/account_report.py:312
-#, python-format
-msgid "Total %s"
-msgstr ""
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_followup_report.py:97
@@ -1985,8 +1970,10 @@ msgid "Total Overdue"
 msgstr "Total en retard"
 
 #. module: account_reports
+#: code:addons/account_reports/models/account_report_coa.py:134
 #: model:ir.actions.client,name:account_reports.action_account_report_coa
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_coa
+#, python-format
 msgid "Trial Balance"
 msgstr "Balance générale"
 

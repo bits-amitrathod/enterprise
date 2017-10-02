@@ -12,7 +12,6 @@
 # Antonio Trueba <atgayol@gmail.com>, 2017
 # Gelo Joga Landoo <gj@landoo.es>, 2017
 # Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2017
-# Miguel Orueta <mo@landoo.es>, 2017
 # RGB Consulting <odoo@rgbconsulting.com>, 2017
 # Cristian Salamea <ovnicraft@gmail.com>, 2017
 # José Vicente <txusev@gmail.com>, 2017
@@ -32,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Last-Translator: Alejandro Santana <alejandrosantana@anubia.es>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +40,44 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_subscription
+#: model:sale.subscription.template,description:sale_subscription.odoo_monthly
+#: model:sale.subscription.template,description:sale_subscription.odoo_yearly
+msgid ""
+"\n"
+"        Payment\n"
+"        All payments are due upon receipt. If a payment is not received or payment method is declined, the buyer forfeits the ownership of any items purchased. If no payment is received, no items will be shipped.\n"
+"\n"
+"        Shipping Policies\n"
+"        Shipping will be paid for by the buyer in the amount agreed upon by the seller at the time of purchase. If an item is lost during shipping, the total cost of item, including shipping, will be refunded to the buyer by the seller. Shipping costs may double if shipping internationally. If an item is damaged during shipping, seller will not be held responsible.\n"
+"\n"
+"        Refund/Return Policy\n"
+"        Items are entitled to be refunded or returned based on complaint. If an item is damaged during shipping, a replacement item will be sent free of charge. If an item is unsatisfactory, a written explanation is needed before the item may be considered for a refund. Buyer must take into account the description of the item before requesting a refund. If the item matches the description by the seller and the buyer is unsatisfied, seller is not responsible for refund. Exchanges are granted on a case-by-case basis.\n"
+"\n"
+"        Cancellation\n"
+"        An item may be cancelled up until payment has been processed. Once payment has been processed, the buyer is responsible for payment.\n"
+"\n"
+"        Complaints\n"
+"        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
+"            "
+msgstr ""
+"\n"
+"        Pago\n"
+"        Todos los pagos se deben al momento de recibirlos. si un pago no es recibido o se rechaza el método de pago, el comprador pierde la propiedad de los artículos comprados. Si no se recibe ningún pago, no se enviaran artículos.\n"
+"\n"
+"        Políticas de envío\n"
+"        El envío será pagado por el comprador en la cantidad acordada por el vendedor en el momento de la compra. Si un artículo se pierde durante el envío, el coste total del artículo, incluyendo el envío, será devuelto al comprador por el vendedor. Los gastos de envío pueden duplicarse si se envían internacionalmente. Si un artículo se daña durante el envío, el vendedor no será responsable.\n"
+"\n"
+"        Política de Reembolso/Devolución\n"
+"        Los artículos tienen derecho a reembolso o devolución basados en una queja. Si un artículo está dañado durante el envío, un artículo de reemplazo será enviado gratuitamente. Si un artículo es insatisfactorio, se necesita una explicación por escrito antes de que se considere el artículo para un reembolso. El comprador debe tener en cuenta la descripción del artículo antes de solicitar un reembolso. Si el artículo coincide con la descripción por el vendedor y el comprador está insatisfecho, el vendedor no es responsable del reembolso. Los intercambios se conceden caso por caso.\n"
+"\n"
+"        Cancelación\n"
+"        Un artículo puede ser cancelado hasta que se procese el pago. Una vez que el pago ha sido procesado, el comprador es responsable del pago.\n"
+"\n"
+"        Quejas\n"
+"        Cualquier queja sobre artículos o vendedores puede ser enviada a nuestro equipo de soporte: support@wesellyourstuff.com o (888) 555-0198. No hay garantía de una resolución. Cada caso será examinado individualmente, y el vendedor estará en contacto también.\n"
+"            "
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_success
@@ -495,6 +532,7 @@ msgid "Archived"
 msgstr "Archivado"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_payment_mandatory
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_payment_mandatory
 msgid "Automatic Payment"
 msgstr "Pago automático"
@@ -567,7 +605,7 @@ msgstr ""
 #: code:addons/sale_subscription/static/src/js/tour.js:41
 #, python-format
 msgid ""
-"Choose the recurrency for this template.<br/><i>(e.g. 1 time per Year)</i>"
+"Choose the recurrence for this template.<br/><i>(e.g. 1 time per Year)</i>"
 msgstr ""
 
 #. module: sale_subscription
@@ -786,10 +824,76 @@ msgid "Current plan:"
 msgstr "Plan actual:"
 
 #. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_custom_domain
+#: model:product.template,name:sale_subscription.odoo_custom_domain_product_template
+msgid "Custom Domain"
+msgstr "Dominio propio"
+
+#. module: sale_subscription
+#: model:product.product,description_sale:sale_subscription.odoo_custom_domain
+#: model:product.product,description_sale:sale_subscription.odoo_custom_domain_yearly
+#: model:product.template,description_sale:sale_subscription.odoo_custom_domain_product_template
+#: model:product.template,description_sale:sale_subscription.odoo_custom_domain_yearly_product_template
+msgid ""
+"Custom Domain\n"
+"        Access your Odoo Instance using your own domain."
+msgstr ""
+
+#. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_custom_domain_yearly
+#: model:product.template,name:sale_subscription.odoo_custom_domain_yearly_product_template
+msgid "Custom Domain (Yearly)"
+msgstr ""
+
+#. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_partner_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_partner_id
 msgid "Customer"
 msgstr "Cliente"
+
+#. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_custom_module
+#: model:product.template,name:sale_subscription.odoo_custom_module_product_template
+msgid "Customized Module"
+msgstr "Módulo modificado"
+
+#. module: sale_subscription
+#: model:product.product,description_sale:sale_subscription.odoo_custom_module
+#: model:product.product,description_sale:sale_subscription.odoo_custom_module_yearly
+#: model:product.template,description_sale:sale_subscription.odoo_custom_module_product_template
+#: model:product.template,description_sale:sale_subscription.odoo_custom_module_yearly_product_template
+msgid ""
+"Customized Module\n"
+"        Customize a module to better match your business process."
+msgstr ""
+
+#. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_custom_module_yearly
+#: model:product.template,name:sale_subscription.odoo_custom_module_yearly_product_template
+msgid "Customized Module (Yearly)"
+msgstr ""
+
+#. module: sale_subscription
+#: model:product.product,description_sale:sale_subscription.odoo_custom_view
+#: model:product.product,description_sale:sale_subscription.odoo_custom_view_yearly
+#: model:product.template,description_sale:sale_subscription.odoo_custom_view_product_template
+#: model:product.template,description_sale:sale_subscription.odoo_custom_view_yearly_product_template
+msgid ""
+"Customized View\n"
+"        Customize one or more views (in a single module) to better suit your needs."
+msgstr ""
+
+#. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_custom_view
+#: model:product.template,name:sale_subscription.odoo_custom_view_product_template
+msgid "Customized Views"
+msgstr "Vistas personalizadas"
+
+#. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_custom_view_yearly
+#: model:product.template,name:sale_subscription.odoo_custom_view_yearly_product_template
+msgid "Customized Views (Yearly)"
+msgstr ""
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
@@ -921,12 +1025,12 @@ msgid "History"
 msgstr "Historial"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_11555
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_11674
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id_11587
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id_11706
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_id
 msgid "ID"
@@ -961,6 +1065,7 @@ msgstr ""
 "creará una suscripción"
 
 #. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_payment_mandatory
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_payment_mandatory
 msgid ""
 "If set, payments will be made automatically and invoices will not be "
@@ -1063,7 +1168,7 @@ msgid "Invoices"
 msgstr "Facturas"
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_order.py:151
+#: code:addons/sale_subscription/models/sale_order.py:152
 #, python-format
 msgid "Invoicing period: %s - %s"
 msgstr ""
@@ -1144,6 +1249,7 @@ msgid "Manage your payment methods"
 msgstr "Gestione sus métodos de pago"
 
 #. module: sale_subscription
+#: model:product.uom,name:sale_subscription.subscription_uom_month
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Month(s)"
 msgstr "Mes(es)"
@@ -1191,6 +1297,28 @@ msgstr "Más moderno"
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Next invoice:"
 msgstr "Siguiente factura:"
+
+#. module: sale_subscription
+#: model:product.product,description_sale:sale_subscription.odoo_saas
+#: model:product.template,description_sale:sale_subscription.odoo_saas_product_template
+msgid ""
+"Odoo Custom Module\n"
+"        A custom module tailored especifically for your company"
+msgstr ""
+
+#. module: sale_subscription
+#: model:product.product,description_sale:sale_subscription.odoo_saas_yearly
+#: model:product.template,description_sale:sale_subscription.odoo_saas_yearly_product_template
+msgid ""
+"Odoo SAAS\n"
+"        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
+msgstr ""
+
+#. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_saas_yearly
+#: model:product.template,name:sale_subscription.odoo_saas_yearly_product_template
+msgid "Odoo SAAS (Yearly)"
+msgstr ""
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -1257,13 +1385,13 @@ msgid "Pending subscriptions"
 msgstr ""
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:293
+#: code:addons/sale_subscription/models/sale_subscription.py:294
 #, python-format
 msgid "Please define Date of Next Invoice of \"%s\"."
 msgstr ""
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:289
+#: code:addons/sale_subscription/models/sale_subscription.py:290
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
 msgstr "Por favor, defina un diario para la compañía \"%s\"."
@@ -1325,6 +1453,11 @@ msgid "Quantity that will be invoiced."
 msgstr ""
 
 #. module: sale_subscription
+#: model:ir.model,name:sale_subscription.model_sale_order
+msgid "Quotation"
+msgstr "Cotización"
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
 msgid "Reason"
 msgstr "Motivo"
@@ -1333,12 +1466,12 @@ msgstr "Motivo"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_rule_type
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_recurring_rule_type
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
-msgid "Recurrency"
-msgstr "Recurrencia"
+msgid "Recurrence"
+msgstr ""
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
-msgid "Recurrency:"
+msgid "Recurrence:"
 msgstr ""
 
 #. module: sale_subscription
@@ -1439,17 +1572,12 @@ msgid "Sales"
 msgstr "Ventas"
 
 #. module: sale_subscription
-#: model:ir.model,name:sale_subscription.model_sale_order
-msgid "Sales Order"
-msgstr "Pedido de venta"
-
-#. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:86
+#: code:addons/sale_subscription/models/sale_subscription.py:87
 #: model:ir.ui.view,arch_db:sale_subscription.sale_order_view_tree_subscription
 #, python-format
 msgid "Sales Orders"
@@ -1677,6 +1805,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_home_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
 #: model:ir.ui.view,arch_db:sale_subscription.res_partner_view_inherit_sale_subscription
+#: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_graph
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_pivot
@@ -1711,11 +1840,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_pending
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_pending
 msgid "Subscriptions to Renew"
-msgstr ""
-
-#. module: sale_subscription
-#: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
-msgid "Subscrpitions"
 msgstr ""
 
 #. module: sale_subscription
@@ -1821,10 +1945,15 @@ msgid "The user will have write access to Subscriptions."
 msgstr ""
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:310
+#: code:addons/sale_subscription/models/sale_subscription.py:311
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
 msgstr "Esta factura cubre el siguiente periodo: %s - %s"
+
+#. module: sale_subscription
+#: model:product.uom.categ,name:sale_subscription.uom_categ_time
+msgid "Time"
+msgstr "Tiempo"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:47
@@ -1930,6 +2059,7 @@ msgid "Wizard"
 msgstr "Asistente"
 
 #. module: sale_subscription
+#: model:product.uom,name:sale_subscription.subscription_uom_year
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Year(s)"
 msgstr "Año(s)"
@@ -1963,7 +2093,7 @@ msgstr ""
 "físico, un consumible o servicios que usted subcontrate."
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:278
+#: code:addons/sale_subscription/models/sale_subscription.py:279
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
 msgstr "Tienes que seleccionar un cliente para la suscripción %s!"
@@ -2016,6 +2146,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "month(s)"
 msgstr "mes(es)"
+
+#. module: sale_subscription
+#: model:product.product,name:sale_subscription.odoo_saas
+#: model:product.template,name:sale_subscription.odoo_saas_product_template
+msgid "odoo_custom_module"
+msgstr ""
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_payment_token

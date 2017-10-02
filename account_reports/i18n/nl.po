@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Last-Translator: Volluta <volluta@tutanota.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -78,7 +78,7 @@ msgstr "&times;"
 #: code:addons/account_reports/models/account_financial_report.py:158
 #, python-format
 msgid "(copy)"
-msgstr ""
+msgstr "(kopie)"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_aged_partner_balance.py:18
@@ -113,15 +113,6 @@ msgstr "<b>Rekeningen</b><br/>"
 #: model:ir.ui.view,arch_db:account_reports.search_template_analytic
 msgid "<b>Tags</b><br/>"
 msgstr "<b>Labels</b><br/>"
-
-#. module: account_reports
-#: model:ir.ui.view,arch_db:account_reports.followup_filter_info_template
-msgid ""
-"<br/>\n"
-"            Customer ref:"
-msgstr ""
-"<br/>\n"
-"            Klantreferentie:"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.template_followup_report
@@ -192,7 +183,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.partner_view_buttons
 msgid "<span class=\"o_stat_text\">Due</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Vervallen</span>"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view_account_manager
@@ -316,7 +307,7 @@ msgstr "Sta vergelijking toe"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_show_journal_filter
 msgid "Allow filtering by journals"
-msgstr ""
+msgstr "Sta filteren op dagboeken toe"
 
 #. module: account_reports
 #: selection:account.financial.html.report.line,show_domain:0
@@ -341,7 +332,7 @@ msgid "Apply"
 msgstr "Toepassen"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:514
+#: code:addons/account_reports/models/account_report.py:493
 #, python-format
 msgid "As of %s"
 msgstr "Per %s"
@@ -354,12 +345,12 @@ msgstr "Aan het begin van deze peiode"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.line_caret_options
 msgid "Audit"
-msgstr ""
+msgstr "Audit"
 
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.account_reports_audit_reports_menu
 msgid "Audit Reports"
-msgstr ""
+msgstr "Audit rapportage"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.template_followup_report
@@ -528,12 +519,6 @@ msgstr "Kasoverschot"
 #: model:ir.ui.view,arch_db:account_reports.line_template_followup_report
 msgid "Change expected payment date/note"
 msgstr "De verwachte betaaldatum/notitie wijzigen"
-
-#. module: account_reports
-#: code:addons/account_reports/models/account_report_coa.py:133
-#, python-format
-msgid "Chart of Account"
-msgstr "Rekeningschema"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_coa_report
@@ -728,6 +713,11 @@ msgid "Customer Statements"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.ui.view,arch_db:account_reports.followup_filter_info_template
+msgid "Customer ref:"
+msgstr "Klant referentie:"
+
+#. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_followup
 #: model:ir.actions.client,name:account_reports.action_account_followup_all
 msgid "Customers Statement"
@@ -754,6 +744,7 @@ msgstr "Datum :"
 #. module: account_reports
 #. openerp-web
 #: code:addons/account_reports/static/src/js/account_reports.js:184
+#: code:addons/account_reports/static/src/js/account_reports.js:232
 #, python-format
 msgid "Date cannot be empty"
 msgstr "Datum kan niet leeg zijn"
@@ -872,7 +863,7 @@ msgstr "EIGEN VERMOGEN"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_hierarchy_option
 msgid "Enable the hiarchy option"
-msgstr ""
+msgstr "Sta de hiërarchie optie toe"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
@@ -935,7 +926,7 @@ msgid "Expenses"
 msgstr "Declaraties"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:457
+#: code:addons/account_reports/models/account_report.py:436
 #, python-format
 msgid "Export (XLSX)"
 msgstr "Export (XLSX)"
@@ -996,7 +987,7 @@ msgid "Formulas"
 msgstr "Formules"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:515
+#: code:addons/account_reports/models/account_report.py:494
 #, python-format
 msgid "From %s <br/> to  %s"
 msgstr "Van %s <br/> t/m  %s"
@@ -1009,7 +1000,7 @@ msgstr "Van het begin"
 #. module: account_reports
 #: selection:account.financial.html.report.line,special_date_changer:0
 msgid "From the beginning of the fiscal year"
-msgstr ""
+msgstr "Vanaf het begin van het fiscale jaar"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
@@ -1032,7 +1023,7 @@ msgid "General Ledger Report"
 msgstr "Grootboek overzicht"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:132
+#: code:addons/account_reports/models/account_report.py:131
 #, python-format
 msgid "General Report"
 msgstr "Algemeen rapport"
@@ -1067,13 +1058,13 @@ msgstr "Groepeer op"
 #: code:addons/account_reports/models/account_financial_report.py:605
 #, python-format
 msgid "Groupby should be a field from account.move.line"
-msgstr ""
+msgstr "Groepeer op moet een veld zijn van accout.move.line"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_financial_report.py:485
 #, python-format
 msgid "Groupby should be a journal item field"
-msgstr ""
+msgstr "Groepeer op moet een dagboek veld zijn"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_hide_if_zero
@@ -1310,7 +1301,7 @@ msgstr "Bijbehorende nummer"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_generated_menu_id
 msgid "Menu Item"
-msgstr ""
+msgstr "Menu item"
 
 #. module: account_reports
 #: model:mail.message.subtype,description:account_reports.followup_logged_action
@@ -1441,7 +1432,7 @@ msgid "No Unit"
 msgstr "Geen eenheid"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:578
+#: code:addons/account_reports/models/account_report.py:557
 #, python-format
 msgid "No comparison"
 msgstr "Geen vergelijking"
@@ -1580,7 +1571,7 @@ msgstr "Saldilijst label"
 
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.account_reports_partners_reports_menu
-msgid "Partners Reports"
+msgid "Partner Reports"
 msgstr ""
 
 #. module: account_reports
@@ -1646,7 +1637,7 @@ msgstr "Alleen definitieve boekingen"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "Posted Entries Only,"
-msgstr ""
+msgstr "Alleen definitieve boekingen."
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_prepayements0
@@ -1674,10 +1665,10 @@ msgid "Print Letter"
 msgstr "Druk een brief af"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:457
+#: code:addons/account_reports/models/account_report.py:436
 #, python-format
 msgid "Print Preview"
-msgstr "Print voorbeeld"
+msgstr "Afdrukvoorbeeld"
 
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_pnl
@@ -1898,7 +1889,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_generated_menu_id
 msgid "The menu item generated for this report, or None if there isn't any."
-msgstr ""
+msgstr "Het menuitem gegenereerd voor dit rapport of None als er geen is."
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_general_ledger.py:346
@@ -1938,7 +1929,7 @@ msgstr "Vandaag"
 #: code:addons/account_reports/models/account_financial_report.py:723
 #: code:addons/account_reports/models/account_general_ledger.py:360
 #: code:addons/account_reports/models/account_partner_ledger.py:183
-#: code:addons/account_reports/models/account_report_coa.py:99
+#: code:addons/account_reports/models/account_report_coa.py:98
 #: model:ir.ui.view,arch_db:account_reports.template_coa_report
 #, python-format
 msgid "Total"
@@ -1950,12 +1941,6 @@ msgstr "Totaal"
 #, python-format
 msgid "Total "
 msgstr "Totaal"
-
-#. module: account_reports
-#: code:addons/account_reports/models/account_report.py:312
-#, python-format
-msgid "Total %s"
-msgstr ""
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_followup_report.py:97
@@ -1970,8 +1955,10 @@ msgid "Total Overdue"
 msgstr "Totaal vervallen"
 
 #. module: account_reports
+#: code:addons/account_reports/models/account_report_coa.py:134
 #: model:ir.actions.client,name:account_reports.action_account_report_coa
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_coa
+#, python-format
 msgid "Trial Balance"
 msgstr "Proefbalans"
 
@@ -2069,7 +2056,7 @@ msgstr "Met conceptboekingen"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "With Draft Entries,"
-msgstr ""
+msgstr "Met conceptboekingen,"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.followup_search_template
@@ -2126,7 +2113,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_manager
 msgid "manage summary and footnotes of reports"
-msgstr ""
+msgstr "Beheer samenvattingen en voetteksten van rapportages"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_financial_report.py:567
@@ -2163,4 +2150,4 @@ msgstr "aan:"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.line_template_general_ledger_report
 msgid "⇒ journal items"
-msgstr ""
+msgstr "⇒ boekingesregels"

@@ -216,11 +216,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.xml_expected_str = misc.file_open(os.path.join(
             'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read().encode('UTF-8')
         self.xml_expected = objectify.fromstring(self.xml_expected_str)
-        self.tax_positive.l10n_mx_cfdi_tax_type = 'Tasa'
-        self.tax_negative.write({
-            'l10n_mx_cfdi_tax_type': 'Tasa',
-            'tag_ids': [(4, isr_tag.ids)],
-        })
+        self.tax_negative.tag_ids |= isr_tag
         self.test_l10n_mx_edi_invoice_basic()
 
         # -----------------------

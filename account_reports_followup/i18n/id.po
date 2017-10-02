@@ -3,18 +3,18 @@
 # * account_reports_followup
 # 
 # Translators:
-# Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Febrasari Almania <febrasari.almania@gmail.com>, 2016
-# William Surya Permana <zarambie_game@yahoo.com>, 2016
-# Deddy Ddr <deddy.ddr@gmail.com>, 2016
+# Bonny Useful <bonny.useful@gmail.com>, 2017
+# Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2017
+# William Surya Permana <zarambie_game@yahoo.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Febrasari Almania <febrasari.almania@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:58+0000\n"
-"PO-Revision-Date: 2016-09-19 12:58+0000\n"
-"Last-Translator: Deddy Ddr <deddy.ddr@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: Febrasari Almania <febrasari.almania@gmail.com>, 2017\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -94,20 +94,26 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
-msgid ""
-"<b>%(partner_name)s</b>: Partner Name\n"
-"                                <b>%(date)s</b>: Current Date\n"
-"                                <b>%(user_signature)s</b>: User Name\n"
-"                                <b>%(company_name)s</b>: User's Company Name"
+msgid ": Current Date"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup
-msgid "A particular context for the followup report"
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": Partner Name"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User Name"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User's Company Name"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_account_followup_report_all
 msgid "A progress bar for followup reports"
 msgstr ""
 
@@ -157,9 +163,9 @@ msgid "Company Name"
 msgstr "Nama Perusahaan"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.view_account_config_settings_inherit
-msgid "Configure your follow-up levels"
-msgstr "Mengkonfigurasi tingkat tindak lanjut Anda"
+#: model:ir.model,name:account_reports_followup.model_res_partner
+msgid "Contact"
+msgstr "Kontak"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
@@ -175,6 +181,7 @@ msgstr "Dibuat pada"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_note
 msgid "Customer Payment Promise"
 msgstr "Janji pelanggan Pembayaran"
 
@@ -190,12 +197,12 @@ msgid "Display Name"
 msgstr "Nama Tampilan"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Do it Later"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Done"
 msgstr "selesai"
 
@@ -203,6 +210,11 @@ msgstr "selesai"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
 msgid "Due Days"
 msgstr "Hari karena"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Duration between two reminders"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -224,7 +236,7 @@ msgstr "Follow-Up Action"
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_tree
 msgid "Follow-up"
-msgstr "Tembusan"
+msgstr "Tindak Lanjut"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup_line
@@ -238,11 +250,13 @@ msgstr "Tindak lanjut Tingkat"
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Follow-up Levels"
-msgstr "Tindak lanjut Tingkat"
+msgstr "Tingkatan Tindak Lanjut"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_responsible_id
 msgid "Follow-up Responsible"
 msgstr "Tindak lanjut yang Bertanggung Jawab"
 
@@ -251,6 +265,11 @@ msgstr "Tindak lanjut yang Bertanggung Jawab"
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
 msgstr "Tindak lanjut Langkah"
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_account_followup_report
+msgid "Followup Report"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -293,7 +312,7 @@ msgstr "Terakhir diperbarui oleh"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_date
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_date
 msgid "Last Updated on"
-msgstr "Terakhir Diperbaharui pada"
+msgstr "Terakhir diperbarui pada"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_date
@@ -301,18 +320,13 @@ msgid "Latest Follow-up"
 msgstr "Terbaru Follow-up"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_report_context_followup_level
-msgid "Level"
-msgstr "Tingkat"
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:62
+#: code:addons/account_reports_followup/models/account_followup_report.py:56
 #, python-format
 msgid "Level: "
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Log a Note"
 msgstr ""
 
@@ -323,23 +337,24 @@ msgid "Manual Action"
 msgstr "Pengguna Action"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:57
+#: code:addons/account_reports_followup/models/account_followup_report.py:68
 #, python-format
-msgid "Manual action done\n"
+msgid "Manual action done"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Minimum"
 msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
-msgid "Minimum days between two follow-ups *"
-msgstr ""
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:113
+#: code:addons/account_reports_followup/models/account_followup.py:113
 #, python-format
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
@@ -353,6 +368,7 @@ msgstr "Hanya satu tindak lanjut per perusahaan diperbolehkan"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
@@ -361,14 +377,14 @@ msgstr ""
 "dia bertanggung jawab untuk tindakan."
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_res_partner
-msgid "Partner"
-msgstr "Rekanan"
-
-#. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Partner entries"
 msgstr "Entri mitra"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Payment Follow-up"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
@@ -377,11 +393,12 @@ msgstr "Pembayaran Follow-up"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_note
 msgid "Payment Note"
 msgstr "Pembayaran Catatan"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Print Letter"
 msgstr ""
 
@@ -416,7 +433,7 @@ msgid "Send an Email"
 msgstr "Kirim email"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Send by email"
 msgstr ""
 
@@ -483,8 +500,8 @@ msgid "Urging reminder letter"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
@@ -524,7 +541,7 @@ msgstr ""
 "icon yang tepat."
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:64
+#: code:addons/account_reports_followup/models/account_followup.py:64
 #, python-format
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
@@ -534,9 +551,9 @@ msgstr ""
 "ingin menggunakan karakter persen."
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_config_settings
-msgid "account.config.settings"
-msgstr "akun.config.Settings"
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "days between each reminder"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -547,3 +564,8 @@ msgstr "hari terlambat, lakukan tindakan berikut:"
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "e.g. Call the customer, check if it's paid, ..."
 msgstr "misalnya Panggil pelanggan, memeriksa apakah itu dibayar, ..."
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"

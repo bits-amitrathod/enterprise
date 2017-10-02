@@ -1,9 +1,9 @@
 # coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api, _, fields
+from odoo import models, api, _, fields, tools
 from odoo.tools.safe_eval import safe_eval
-from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools.xml_utils import _check_with_xsd
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 MX_NS_REFACTORING = {
@@ -189,9 +189,11 @@ class MxReportAccountTrial(models.AbstractModel):
         values = self.with_context(ctx).get_bce_dict(options)
         cfdicoa = qweb.render(CFDIBCE_TEMPLATE, values=values)
         for key, value in MX_NS_REFACTORING.items():
-            cfdicoa = cfdicoa.replace(key, value + ':')
+            cfdicoa = cfdicoa.replace(key.encode('UTF-8'),
+                                      value.encode('UTF-8') + b':')
 
-        check_with_xsd(cfdicoa, CFDIBCE_XSD % version)
+        with tools.file_open(cfdicoa, CFDIBCE_XSD % version, "rb") as xsd:
+            _check_with_xsd(cfdicoa, xsd)
         return cfdicoa
 
     def get_report_name(self):

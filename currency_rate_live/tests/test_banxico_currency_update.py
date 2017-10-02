@@ -4,7 +4,10 @@ from odoo.tests.common import TransactionCase
 from odoo import fields
 from odoo.tools import pycompat
 
-from mock import patch
+try:
+    from unittest.mock import patch
+except ImportError:
+    from mock import patch
 from suds.client import Client
 
 

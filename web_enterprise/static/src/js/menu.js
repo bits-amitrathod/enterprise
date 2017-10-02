@@ -220,7 +220,7 @@ var Menu = Widget.extend({
      * @param {MouseEvent} ev
      */
     _onMouseOverMenu: function (ev) {
-        if (!config.isMobile) {
+        if (!config.device.isMobile) {
             var $opened = this.$('.o_menu_sections > li.open');
             if ($opened.length) {
                 $opened.removeClass('open');

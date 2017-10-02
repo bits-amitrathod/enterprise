@@ -78,10 +78,10 @@ class DatevExportCSV(models.AbstractModel):
 
     # Source: http://www.datev.de/dnlexom/client/app/index.html#/document/1036228/D103622800029
     def get_csv(self, options):
-        header = u'"Währungskennung";"Soll-/Haben-Kennzeichen";"Umsatz (ohne Soll-/Haben-Kennzeichen)";"BU-Schlüssel";"Gegenkonto (ohne BU-Schlüssel)";"Belegfeld 1";"Belegfeld 2";"Datum";"Konto";"EU-Land und UStID";"Kurs"\n'.encode('iso-8859-1')
+        header = u'"Währungskennung";"Soll-/Haben-Kennzeichen";"Umsatz (ohne Soll-/Haben-Kennzeichen)";"BU-Schlüssel";"Gegenkonto (ohne BU-Schlüssel)";"Belegfeld 1";"Belegfeld 2";"Datum";"Konto";"EU-Land und UStID";"Kurs"'
 
         move_line_ids = self.with_context(self.set_context(options), print_mode=True, aml_only=True).get_lines(options)
-        lines = ''
+        lines = [header]
         for aml in self.env['account.move.line'].browse(move_line_ids):
             if aml.debit == aml.credit:
                 # Ignore debit = credit = 0
@@ -116,6 +116,5 @@ class DatevExportCSV(models.AbstractModel):
                 'eulandUSTID': partner_vat,
                 'kurs': str(currency.rate).replace('.', ','),
             }
-            line = '"{waehrung}";"{sollhaben}";"{umsatz}";"{buschluessel}";"{gegenkonto}";"{belegfeld1}";"{belegfeld2}";"{datum}";"{konto}";"{eulandUSTID}";"{kurs}"\n'.format(**line_value)
-            lines += line.encode('iso-8859-1')
-        return header + lines
+            lines.append(u'"{waehrung}";"{sollhaben}";"{umsatz}";"{buschluessel}";"{gegenkonto}";"{belegfeld1}";"{belegfeld2}";"{datum}";"{konto}";"{eulandUSTID}";"{kurs}"'.format(**line_value))
+        return u'\n'.join(lines).encode('iso-8859-1') + b'\n'

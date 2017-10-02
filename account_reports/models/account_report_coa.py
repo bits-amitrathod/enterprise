@@ -66,14 +66,14 @@ class report_account_coa(models.AbstractModel):
             sum_columns[1] += -initial_balance if initial_balance < 0 else 0
             cols = [
                 {'name': initial_balance > 0 and self.format_value(initial_balance) or zero_value, 'no_format_name': initial_balance > 0 and initial_balance or 0},
-                {'name': initial_balance < 0 and self.format_value(-initial_balance) or zero_value, 'no_format_name': initial_balance < 0 and initial_balance or 0},
+                {'name': initial_balance < 0 and self.format_value(-initial_balance) or zero_value, 'no_format_name': initial_balance < 0 and abs(initial_balance) or 0},
             ]
             total_periods = 0
             for period in range(len(comparison_table)):
                 amount = grouped_accounts[account][period]['balance']
                 total_periods += amount
                 cols += [{'name': amount > 0 and self.format_value(amount) or zero_value, 'no_format_name': amount > 0 and amount or 0},
-                         {'name': amount < 0 and self.format_value(-amount) or zero_value, 'no_format_name': amount < 0 and amount or 0}]
+                         {'name': amount < 0 and self.format_value(-amount) or zero_value, 'no_format_name': amount < 0 and abs(amount) or 0}]
                 p_indice = period * 2 if period > 1 else 3
                 p_indice = 1 if period == 0 else p_indice
                 sum_columns[(p_indice) + 1] += amount if amount > 0 else 0
@@ -84,11 +84,10 @@ class report_account_coa(models.AbstractModel):
             sum_columns[-1] += -total_amount if total_amount < 0 else 0
             cols += [
                 {'name': total_amount > 0 and self.format_value(total_amount) or zero_value, 'no_format_name': total_amount > 0 and total_amount or 0},
-                {'name': total_amount < 0 and self.format_value(-total_amount) or zero_value, 'no_format_name': total_amount < 0 and total_amount or 0},
+                {'name': total_amount < 0 and self.format_value(-total_amount) or zero_value, 'no_format_name': total_amount < 0 and abs(total_amount) or 0},
                 ]
             lines.append({
                 'id': account.id,
-                'parent_id': 'hierarchy_' + title_index,
                 'name': account.code + " " + account.name,
                 'columns': cols,
                 'unfoldable': False,
@@ -122,11 +121,11 @@ class report_account_coa(models.AbstractModel):
                 if account not in grouped_accounts:
                     grouped_accounts[account] = [{'balance': 0, 'debit': 0, 'credit': 0} for p in comparison_table]
                 grouped_accounts[account][period_number]['balance'] = res[account]['balance'] - res[account]['initial_bal']['balance']
-                grouped_accounts[account][period_number]['debit'] = res[account]['debit']
-                grouped_accounts[account][period_number]['credit'] = res[account]['credit']
+                grouped_accounts[account][period_number]['debit'] = res[account]['debit'] - res[account]['initial_bal']['debit']
+                grouped_accounts[account][period_number]['credit'] = res[account]['credit'] - res[account]['initial_bal']['credit']
             period_number += 1
 
-        #make intermediary sums and build the report
+        #build the report
         lines = self._post_process(grouped_accounts, initial_balances, options, comparison_table)
         return lines
 

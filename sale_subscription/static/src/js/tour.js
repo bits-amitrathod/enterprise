@@ -38,7 +38,7 @@ tour.register('sale_subscription_tour', {
 {
     trigger: 'select.field_rule_type',
     extra_trigger: '.o_form_editable',
-    content: _t('Choose the recurrency for this template.<br/><i>(e.g. 1 time per Year)</i>'),
+    content: _t('Choose the recurrence for this template.<br/><i>(e.g. 1 time per Year)</i>'),
     position: 'right',
     width: 200,
 },

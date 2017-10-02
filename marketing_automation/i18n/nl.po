@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-21 14:25+0000\n"
-"PO-Revision-Date: 2017-09-21 14:25+0000\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -60,27 +60,27 @@ msgstr "<i class=\"fa fa-check-circle\"/> Beantwoord"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-msgid "<i class=\"fa fa-envelope-open-o\"/> Not opened withing"
+msgid "<i class=\"fa fa-envelope-open-o\"/> Not opened within"
 msgstr ""
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-envelope-open-o\"/> Opened after"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-open-o\"/> Geopend na"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-exclamation-circle\"/> Mail bounced after"
-msgstr ""
+msgstr "<i class=\"fa fa-exclamation-circle\"/>Mail teruggekaatst na"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Clicked after"
-msgstr ""
+msgstr "<i class=\"fa fa-hand-pointer-o\"/> Geklikt na"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-msgid "<i class=\"fa fa-hand-pointer-o\"/> Not clicked withing"
+msgid "<i class=\"fa fa-hand-pointer-o\"/> Not clicked within"
 msgstr ""
 
 #. module: marketing_automation
@@ -95,24 +95,21 @@ msgstr "<i class=\"fa fa-plus-circle\"/> Onderliggende activiteit toevoegen"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-msgid "<i class=\"fa fa-reply\"/> Not replied withing"
+msgid "<i class=\"fa fa-reply\"/> Not replied within"
 msgstr ""
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-reply\"/> Replied after"
-msgstr ""
+msgstr "<i class=\"fa fa-reply\"/> Gereageerd na"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid ""
-"<small class=\"oe_edit_only o_ma_alert text-muted\" attrs=\"{'invisible': "
+"<small class=\"oe_edit_only text-muted\" attrs=\"{'invisible': "
 "[('trigger_type', '=', 'begin')]}\">(save the campaign to make its "
 "activities selectable)</small>"
 msgstr ""
-"<small class=\"oe_edit_only o_ma_alert text-muted\" attrs=\"{'invisible': "
-"[('trigger_type', '=', 'begin')]}\">(sla de campagne op om de activiteiten "
-"te kunnen selecteren)</small>"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -179,6 +176,18 @@ msgstr ""
 "dit domein"
 
 #. module: marketing_automation
+#: model:mail.mass_mailing,name:marketing_automation.mass_mailing_after_7_days
+#: model:utm.source,name:marketing_automation.mass_mailing_after_7_days_utm_source
+msgid "After 7 days"
+msgstr ""
+
+#. module: marketing_automation
+#: model:marketing.activity,name:marketing_automation.marketing_activity_2
+#: model:utm.source,name:marketing_automation.marketing_activity_2_utm_source
+msgid "After 7 days (if not partner yet)"
+msgstr ""
+
+#. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_search
 msgid "Archived"
 msgstr "Gearchiveerd"
@@ -203,7 +212,6 @@ msgid "Bounced"
 msgstr "Niet verzonden"
 
 #. module: marketing_automation
-#: model:ir.actions.act_window,name:marketing_automation.marketing_campaign_action
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_campaign_id
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_participant_campaign_id
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -218,6 +226,7 @@ msgid "Campaign Name"
 msgstr "Campagnenaam"
 
 #. module: marketing_automation
+#: model:ir.actions.act_window,name:marketing_automation.marketing_campaign_action
 #: model:ir.ui.menu,name:marketing_automation.marketing_campaign_menu
 msgid "Campaigns"
 msgstr "Campagnes"
@@ -369,6 +378,11 @@ msgstr "Document-ID"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
+msgid "Domain"
+msgstr "Domein"
+
+#. module: marketing_automation
+#: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Don't update"
 msgstr "Niet bijwerken"
 
@@ -408,7 +422,7 @@ msgid "Error message"
 msgstr "Foutmelding"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:305
+#: code:addons/marketing_automation/models/marketing_campaign.py:316
 #, python-format
 msgid "Error! You can't create recursive hierarchy of Activity."
 msgstr ""
@@ -416,7 +430,7 @@ msgstr ""
 "activiteit."
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:310
+#: code:addons/marketing_automation/models/marketing_campaign.py:321
 #, python-format
 msgid ""
 "Error! You can't define a child activity with a trigger of type 'begin'."
@@ -428,13 +442,13 @@ msgid "Exception"
 msgstr "Fout"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:510
+#: code:addons/marketing_automation/models/marketing_campaign.py:522
 #, python-format
 msgid "Exception in mass mailing: %s"
 msgstr "Fout bij bulkmailing: %s"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:483
+#: code:addons/marketing_automation/models/marketing_campaign.py:495
 #, python-format
 msgid "Exception in server action: %s"
 msgstr "Fout bij serveractie: %s"
@@ -569,6 +583,12 @@ msgid "Mailing"
 msgstr "Mailing"
 
 #. module: marketing_automation
+#: code:addons/marketing_automation/models/marketing_participant.py:149
+#, python-format
+msgid "Manually"
+msgstr "Handmatig"
+
+#. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Mark as completed"
 msgstr "Markeren als voltooid"
@@ -593,7 +613,7 @@ msgid "Marketing Automation"
 msgstr "Marketingautomatisering"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:506
+#: code:addons/marketing_automation/models/marketing_campaign.py:518
 #, python-format
 msgid "Marketing Automation: activity <%s> encountered mass mailing issue %s"
 msgstr ""
@@ -601,7 +621,7 @@ msgstr ""
 " opgetreden %s"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:479
+#: code:addons/marketing_automation/models/marketing_campaign.py:491
 #, python-format
 msgid "Marketing Automation: activity <%s> encountered server action issue %s"
 msgstr ""
@@ -659,6 +679,13 @@ msgid "Mass mailing statistics"
 msgstr "Bulkmailstatistieken"
 
 #. module: marketing_automation
+#: model:ir.actions.server,name:marketing_automation.ir_action_server_action_message_sales_person
+#: model:marketing.activity,name:marketing_automation.marketing_activity_3
+#: model:utm.source,name:marketing_automation.marketing_activity_3_utm_source
+msgid "Message for sales person"
+msgstr ""
+
+#. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_model_id
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign_model_id
 msgid "Model"
@@ -700,22 +727,30 @@ msgstr "Geen activiteit toegevoegd"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Not clicked yet"
-msgstr ""
+msgstr "Nog niet geklikt"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Not opened yet"
-msgstr ""
+msgstr "Nog niet geopend"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Not replied yet"
-msgstr ""
+msgstr "Nog niet gereageerd"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_participant_model_id
 msgid "Object"
 msgstr "Object"
+
+#. module: marketing_automation
+#: model:mail.mass_mailing,name:marketing_automation.mass_mailing_offer_free_trial
+#: model:marketing.activity,name:marketing_automation.marketing_activity_1
+#: model:utm.source,name:marketing_automation.marketing_activity_1_utm_source
+#: model:utm.source,name:marketing_automation.mass_mailing_offer_free_trial_utm_source
+msgid "Offer free trial"
+msgstr ""
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_opened
@@ -733,25 +768,25 @@ msgid "Parent"
 msgstr "Bovenliggend"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_participant.py:176
+#: code:addons/marketing_automation/models/marketing_participant.py:179
 #, python-format
 msgid "Parent activity mail bounced"
 msgstr "E-mail bovenliggende activiteit teruggekaatst"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_participant.py:174
+#: code:addons/marketing_automation/models/marketing_participant.py:177
 #, python-format
 msgid "Parent activity mail clicked"
 msgstr "E-mail bovenliggende activiteit aangeklikt"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_participant.py:175
+#: code:addons/marketing_automation/models/marketing_participant.py:178
 #, python-format
 msgid "Parent activity mail opened"
 msgstr "E-mail bovenliggende activiteit geopend"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_participant.py:173
+#: code:addons/marketing_automation/models/marketing_participant.py:176
 #, python-format
 msgid "Parent activity mail replied"
 msgstr "E-mail bovenliggende activiteit beantwoord"
@@ -773,6 +808,12 @@ msgid "Participants"
 msgstr "Deelnemers"
 
 #. module: marketing_automation
+#: model:marketing.campaign,name:marketing_automation.marketing_campaign_1
+#: model:utm.campaign,name:marketing_automation.marketing_campaign_1_utm_campaign
+msgid "Partnership Offer"
+msgstr ""
+
+#. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Perform"
 msgstr "Uitvoeren"
@@ -781,8 +822,8 @@ msgstr "Uitvoeren"
 #. openerp-web
 #: code:addons/marketing_automation/static/src/js/marketing_automation_one2many.js:189
 #, python-format
-msgid "Please save campaingn to add child activity"
-msgstr "Sla de campagne op om een onderliggende activiteit toe te voegen"
+msgid "Please save the campaign to add a child activity"
+msgstr ""
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -833,8 +874,8 @@ msgid "Records"
 msgstr "Records"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:294
-#: code:addons/marketing_automation/models/marketing_campaign.py:392
+#: code:addons/marketing_automation/models/marketing_campaign.py:305
+#: code:addons/marketing_automation/models/marketing_campaign.py:404
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_rejected
 #: selection:marketing.trace,state:0
 #, python-format
@@ -842,7 +883,7 @@ msgid "Rejected"
 msgstr "Afgewezen"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:458
+#: code:addons/marketing_automation/models/marketing_campaign.py:470
 #, python-format
 msgid "Rejected by activity filter or record deleted / archived"
 msgstr "Afgewezen door activiteitsfilter of record verwijderd / gearchiveerd"
@@ -923,6 +964,11 @@ msgid "Send after"
 msgstr "Verzenden na"
 
 #. module: marketing_automation
+#: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_interval_standardized
+msgid "Send after (in hours)"
+msgstr ""
+
+#. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_sent
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Sent"
@@ -994,8 +1040,8 @@ msgid "Subject"
 msgstr "Onderwerp"
 
 #. module: marketing_automation
-#: code:addons/marketing_automation/models/marketing_campaign.py:293
-#: code:addons/marketing_automation/models/marketing_campaign.py:391
+#: code:addons/marketing_automation/models/marketing_campaign.py:304
+#: code:addons/marketing_automation/models/marketing_campaign.py:403
 #, python-format
 msgid "Success"
 msgstr "Succes"
@@ -1015,11 +1061,9 @@ msgstr "Doelmodel"
 #: code:addons/marketing_automation/static/src/js/marketing_automation_one2many.js:177
 #, python-format
 msgid ""
-"This Activity has dependant child activity. 'DELETE ALL' will delete all "
-"child activity."
+"This Activity has a dependant child activity. 'DELETE ALL' will delete all "
+"child activities."
 msgstr ""
-"Deze activiteit heeft afhankelijke onderliggende activiteit. Met Alles "
-"verwijderen worden alle onderliggende activiteiten verwijderd."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_total_bounce
@@ -1100,14 +1144,19 @@ msgid "Valid during"
 msgstr "Geldig tijdens"
 
 #. module: marketing_automation
+#: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration
+msgid "Validity Duration"
+msgstr "Geldheidsduur"
+
+#. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration_type
 msgid "Validity Duration Type"
 msgstr "Soort geldigheidsduur"
 
 #. module: marketing_automation
-#: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration
-msgid "Validity duration"
-msgstr "Geldigheidsduur"
+#: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
+msgid "Warning"
+msgstr "Waarschuwing"
 
 #. module: marketing_automation
 #: selection:marketing.activity,interval_type:0
@@ -1142,11 +1191,6 @@ msgstr "andere activiteit"
 #: selection:marketing.activity,trigger_type:0
 msgid "beginning of campaign"
 msgstr "begin van campagne"
-
-#. module: marketing_automation
-#: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-msgid "domain"
-msgstr "domein"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form

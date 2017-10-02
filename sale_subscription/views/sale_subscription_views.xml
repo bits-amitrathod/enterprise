@@ -318,7 +318,7 @@
                                         <div class="o_primary">
                                             <span><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></span>
                                         </div>
-                                        <span>Recurrency: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></span>
+                                        <span>Recurrence: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></span>
                                         <span t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</span>
                                         <span t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</span>
                                     </div>
@@ -411,7 +411,7 @@
                     <group name="main">
                         <group>
                             <field name="code"/>
-                            <label for="recurring_interval" string="Recurrency"/>
+                            <label for="recurring_interval" string="Recurrence"/>
                             <div>
                                 <field name="recurring_interval" class="oe_inline"/>
                                 <field name="recurring_rule_type" class="oe_inline field_rule_type"/>

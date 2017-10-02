@@ -4,16 +4,15 @@ import base64
 from itertools import groupby
 import re
 import logging
-from os.path import join
 from datetime import datetime
+from io import BytesIO
 
 from lxml import etree
 from lxml.objectify import fromstring
 from suds.client import Client
 
 from odoo import _, api, fields, models, tools
-from odoo.tools.misc import html_escape
-from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools.xml_utils import _check_with_xsd
 from odoo.tools import DEFAULT_SERVER_TIME_FORMAT
 from odoo.exceptions import UserError
 
@@ -586,11 +585,11 @@ class AccountInvoice(models.Model):
     def action_invoice_draft(self):
         """Reset l10n_mx_edi_time_invoice when invoice state set to draft"""
 
-        self.l10n_mx_edi_update_sat_status()
-        not_allow = self.filtered(lambda r: r.l10n_mx_edi_is_required() and
-                                  not r.company_id.l10n_mx_edi_pac_test_env and
-                                  r.l10n_mx_edi_cfdi_uuid and
-                                  r.l10n_mx_edi_sat_status != 'cancelled')
+        signed = self.filtered(lambda r: r.l10n_mx_edi_is_required() and
+                               not r.company_id.l10n_mx_edi_pac_test_env and
+                               r.l10n_mx_edi_cfdi_uuid)
+        signed.l10n_mx_edi_update_sat_status()
+        not_allow = signed.filtered(lambda r: r.l10n_mx_edi_sat_status != 'cancelled')
         not_allow.message_post(
             subject=_('An error occurred while setting to draft.'),
             message_type='comment',
@@ -600,7 +599,7 @@ class AccountInvoice(models.Model):
         allow = self - not_allow
         allow.write({'l10n_mx_edi_time_invoice': False})
         if self.l10n_mx_edi_get_pac_version() == '3.3':
-            for record in allow.filtered('l10n_mx_edi_origin'):
+            for record in allow.filtered('l10n_mx_edi_cfdi_uuid'):
                 record.l10n_mx_edi_origin = self._set_cfdi_origin('04', [record.l10n_mx_edi_cfdi_uuid])
         return super(AccountInvoice, self - not_allow).action_invoice_draft()
 
@@ -612,7 +611,8 @@ class AccountInvoice(models.Model):
         values = super(AccountInvoice, self)._prepare_refund(
             invoice, date_invoice=date_invoice, date=date,
             description=description, journal_id=journal_id)
-        values['l10n_mx_edi_origin'] = self._set_cfdi_origin('01', [invoice.l10n_mx_edi_cfdi_uuid])
+        if invoice.l10n_mx_edi_cfdi_uuid:
+            values['l10n_mx_edi_origin'] = self._set_cfdi_origin('01', [invoice.l10n_mx_edi_cfdi_uuid])
         return values
 
     @api.multi
@@ -857,35 +857,33 @@ class AccountInvoice(models.Model):
         # -Compute cfdi
         if version == '3.2':
             cfdi = qweb.render(CFDI_TEMPLATE, values=values)
+            node_sello = 'sello'
+            with tools.file_open('l10n_mx_edi/data/%s/cfdi.xsd' % version, 'rb') as xsd:
+                xsd_datas = xsd.read()
         elif version == '3.3':
             cfdi = qweb.render(CFDI_TEMPLATE_33, values=values)
+            node_sello = 'Sello'
+            attachment = self.env.ref('l10n_mx_edi.xsd_cached_cfdv33_xsd', False)
+            xsd_datas = base64.b64decode(attachment.datas) if attachment else b''
+        else:
+            return {'error': _('Unsupported version %s') % version}
 
         # -Compute cadena
         tree = self.l10n_mx_edi_get_xml_etree(cfdi)
         cadena = self.l10n_mx_edi_generate_cadena(CFDI_XSLT_CADENA % version, tree)
-
-        # Post append cadena
-        xsd_path = ''
-        if version == '3.2':
-            tree.attrib['sello'] = certificate_id.sudo().get_encrypted_cadena(cadena)
-            xsd_path = 'l10n_mx_edi/data/%s/cfdi.xsd' % version
-        elif version == '3.3':
-            tree.attrib['Sello'] = certificate_id.sudo().get_encrypted_cadena(cadena)
-            xsd_xml_id = 'l10n_mx_edi.xsd_cached_cfdv33_xsd'
-            attachment = self.env.ref(xsd_xml_id, False)
-            if attachment:
-                filestore = tools.config.filestore(self._cr.dbname)
-                xsd_path = join(filestore, attachment.store_fname)
+        tree.attrib[node_sello] = certificate_id.sudo().get_encrypted_cadena(cadena)
 
         # Check with xsd
-        if xsd_path:
+        if xsd_datas:
             try:
-                check_with_xsd(tree, xsd_path)
+                with BytesIO(xsd_datas) as xsd:
+                    _check_with_xsd(tree, xsd)
             except (IOError, ValueError):
                 _logger.info(
                     _('The xsd file to validate the XML structure was not found'))
             except Exception as e:
-                return {'error': _('The cfdi generated is not valid') + create_list_html(e.name.split('\n'))}
+                return {'error': (_('The cfdi generated is not valid') +
+                                    create_list_html(str(e).split('\\n')))}
 
         return {'cfdi': etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8')}
 
@@ -981,8 +979,8 @@ class AccountInvoice(models.Model):
             total = inv.l10n_mx_edi_cfdi_amount
             uuid = inv.l10n_mx_edi_cfdi_uuid
             params = '"?re=%s&rr=%s&tt=%s&id=%s' % (
-                html_escape(html_escape(supplier_rfc or '')),
-                html_escape(html_escape(customer_rfc or '')),
+                tools.html_escape(tools.html_escape(supplier_rfc or '')),
+                tools.html_escape(tools.html_escape(customer_rfc or '')),
                 total or 0.0, uuid or '')
             try:
                 response = Client(url).service.Consulta(params).Estado

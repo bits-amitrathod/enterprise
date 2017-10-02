@@ -478,7 +478,7 @@
             </select>
         </div>
         <div t-if="!_.contains(widget.NON_DEFAULT_TYPES, widget.state.field.type)"
-            t-att-class="widget.state.field.type ? 'o_web_studio_sidebar_select' : 'o_web_studio_sidebar_text'">
+            t-att-class="widget.state.field.type === 'selection' ? 'o_web_studio_sidebar_select' : 'o_web_studio_sidebar_text'">
             <label for="default_value">Default value</label>
             <t t-if="widget.state.field.type === 'selection'">
                 <select id="default_value" name="default_value" data-type="default_value">

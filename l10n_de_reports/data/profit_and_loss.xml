@@ -52,7 +52,7 @@
         <field name="level" eval="2" />
     </record>
     <record id="skr_pl_line_income_3" model="account.financial.html.report.line">
-        <field name="name">3. Andere aktivierte eigenleistungen</field>
+        <field name="name">3. Andere aktivierte Eigenleistungen</field>
         <field name="code">SKR_3</field>
         <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_pl_line_income'/>
@@ -62,7 +62,7 @@
         <field name="level" eval="2" />
     </record>
     <record id="skr_pl_line_income_4" model="account.financial.html.report.line">
-        <field name="name">4. Sonstige betrieliche erträge</field>
+        <field name="name">4. Sonstige betriebliche Erträge</field>
         <field name="code">SKR_4</field>
         <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_pl_line_income'/>
@@ -112,7 +112,7 @@
         <field name="level" eval="2" />
     </record>
     <record id="skr_pl_line_expense_4" model="account.financial.html.report.line">
-        <field name="name">8. Sonstige betrieliche aufwendungen</field>
+        <field name="name">8. Sonstige betriebliche Aufwendungen</field>
         <field name="code">SKR_8</field>
         <field name="formulas">balance = SKR_8_1.balance + SKR_8_2.balance + SKR_8_3.balance + SKR_8_4.balance + SKR_8_5.balance + SKR_8_6.balance + SKR_8_7.balance</field>
         <field name="parent_id" ref='skr_pl_line_expense'/>
@@ -192,7 +192,7 @@
 
     <!-- Business operation -->
     <record id="skr_pl_line_business_operation" model="account.financial.html.report.line">
-        <field name="name">Ergebnis der Gewöhnlichen Geschäftstätigkeit</field>
+        <field name="name">Ergebnis der gewöhnlichen Geschäftstätigkeit</field>
         <field name="code">SKR_BUSINESS</field>
         <field name="formulas">balance = SKR_9.balance + SKR_10.balance + SKR_11.balance - SKR_12.balance - SKR_13.balance</field>
         <field name="parent_id" ref='skr_pl_line_total'/>
@@ -252,7 +252,7 @@
 
     <!-- Taxes -->
     <record id="skr_pl_line_taxes" model="account.financial.html.report.line">
-        <field name="name">Steuern vom einkommen und Ertrag</field>
+        <field name="name">Steuern vom Einkommen und Ertrag</field>
         <field name="code">SKR_TAXES</field>
         <field name="formulas">balance = SKR_14.balance + SKR_15.balance</field>
         <field name="parent_id" ref='skr_pl_line_total'/>
@@ -260,7 +260,7 @@
         <field name="level" eval="1" />
     </record>
     <record id="skr_pl_line_taxes_1" model="account.financial.html.report.line">
-        <field name="name">14. Steuern vom einkommen und Ertrag</field>
+        <field name="name">14. Steuern vom Einkommen und Ertrag</field>
         <field name="code">SKR_14</field>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref='skr_pl_line_taxes'/>
@@ -270,7 +270,7 @@
         <field name="level" eval="2" />
     </record>
     <record id="skr_pl_line_taxes_2" model="account.financial.html.report.line">
-        <field name="name">15. Sonstige steuern</field>
+        <field name="name">15. Sonstige Steuern</field>
         <field name="code">SKR_15</field>
         <field name="formulas">balance = sum.balance</field>
         <field name="parent_id" ref='skr_pl_line_taxes'/>

@@ -3,18 +3,18 @@
 # * mail_push
 # 
 # Translators:
-# Phạm Lân <phamquanglan@gmail.com>, 2016
-# fanha99 <fanha99@hotmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# son dang <son.dang@doda100.com>, 2016
-# Hoang Loc Le Huu <loclhh@gmail.com>, 2016
+# son dang <son.dang@doda100.com>, 2017
+# Hoang Loc Le Huu <loclhh@gmail.com>, 2017
+# fanha99 <fanha99@hotmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Phạm Lân <phamquanglan@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:15+0000\n"
-"PO-Revision-Date: 2016-10-10 09:15+0000\n"
-"Last-Translator: Hoang Loc Le Huu <loclhh@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Phạm Lân <phamquanglan@gmail.com>, 2017\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,9 +23,19 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.inherited_view_partner_form
-msgid "Cloud Messaging"
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
+msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Generate API and Sender ID"
 msgstr ""
+
+#. module: mail_push
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
+msgid "API Key"
+msgstr ""
+
+#. module: mail_push
+#: model:ir.model,name:mail_push.model_res_partner
+msgid "Contact"
+msgstr "Liên hệ"
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_create_uid
@@ -44,6 +54,7 @@ msgstr ""
 
 #. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_res_partner_device_identity_ids
+#: model:ir.model.fields,field_description:mail_push.field_res_users_device_identity_ids
 msgid "Device identities"
 msgstr ""
 
@@ -58,13 +69,8 @@ msgid "Display Name"
 msgstr "Tên hiển thị"
 
 #. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.inherited_view_general_configuration
-msgid "Generate API and Sender ID"
-msgstr ""
-
-#. module: mail_push
-#: model:ir.ui.view,arch_db:mail_push.inherited_view_general_configuration
-msgid "Google Firebase Push Notification"
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
+msgid "Get notifications on Android phones"
 msgstr ""
 
 #. module: mail_push
@@ -93,23 +99,32 @@ msgid "Last Updated on"
 msgstr "Cập nhật lần cuối vào"
 
 #. module: mail_push
+#: model:ir.ui.view,arch_db:mail_push.res_config_settings_view_form
+msgid "Mobile App"
+msgstr ""
+
+#. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_service_type
 msgid "Notification Service"
 msgstr ""
 
 #. module: mail_push
-#: model:ir.model,name:mail_push.model_res_partner
+#: model:ir.model.fields,field_description:mail_push.field_res_config_settings_mail_push_notification
+msgid "Notifications"
+msgstr "Thông báo"
+
+#. module: mail_push
 #: model:ir.model.fields,field_description:mail_push.field_mail_push_device_partner_id
 msgid "Partner"
 msgstr "Đối tác"
 
 #. module: mail_push
-#: model:ir.model.fields,field_description:mail_push.field_base_config_settings_fcm_project_id
+#: model:ir.model.fields,field_description:mail_push.field_res_config_settings_fcm_project_id
 msgid "Sender ID"
 msgstr ""
 
 #. module: mail_push
-#: model:ir.model.fields,field_description:mail_push.field_base_config_settings_fcm_api_key
+#: model:ir.model.fields,field_description:mail_push.field_res_config_settings_fcm_api_key
 msgid "Server API Key"
 msgstr ""
 
@@ -119,11 +134,11 @@ msgid "Subscription ID"
 msgstr ""
 
 #. module: mail_push
-#: model:ir.model,name:mail_push.model_base_config_settings
-msgid "base.config.settings"
-msgstr "base.config.settings"
-
-#. module: mail_push
 #: model:ir.model,name:mail_push.model_mail_push_device
 msgid "mail_push.device"
+msgstr ""
+
+#. module: mail_push
+#: model:ir.model,name:mail_push.model_res_config_settings
+msgid "res.config.settings"
 msgstr ""

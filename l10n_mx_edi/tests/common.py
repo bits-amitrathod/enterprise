@@ -18,10 +18,12 @@ class InvoiceTransactionCase(AccountingTestCase):
         self.company = self.env.user.company_id
         self.account_settings = self.env['res.config.settings']
         self.tax_positive = self.tax_model.search([('name', '=', 'IVA(16%) VENTAS')])[0]
+        self.tax_positive.l10n_mx_cfdi_tax_type = 'Tasa'
         self.tax_negative = self.tax_model.create({
             'name': 'ISR',
             'amount_type': 'percent',
             'amount': -10,
+            'l10n_mx_cfdi_tax_type': 'Tasa',
         })
         self.product.taxes_id = [self.tax_positive.id, self.tax_negative.id]
         self.product.l10n_mx_edi_code_sat_id = self.ref(

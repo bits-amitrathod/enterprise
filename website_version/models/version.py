@@ -42,7 +42,7 @@ class version(models.Model):
         copy_l = self.env['ir.ui.view']
         ir_ui_view = self.env['ir.ui.view']
         for view in self.view_ids:
-            master_id = ir_ui_view .search([('key', '=', view.key), ('version_id', '=', False), ('website_id', '=', view.website_id.id)])
+            master_id = ir_ui_view.search([('key', '=', view.key), ('version_id', '=', False), ('website_id', '=', view.website_id.id)])
             if master_id:
                 #Delete all the website views having a key which is in the version published
                 del_l += master_id
@@ -51,6 +51,14 @@ class version(models.Model):
                 #Views that have no website_id, must be copied because they can be shared with another website
                 master_id = ir_ui_view.search([('key', '=', view.key), ('version_id', '=', False), ('website_id', '=', False)])
                 copy_l += master_id
+
+            #All the views in the version published are copied without version_id
+            page = self.env['website.page'].search([('view_id', '=', master_id.id)])
+            copied_view = view.copy({'version_id': None})
+            if page:
+                page.write({'view_id': copied_view.id})
+
+        # Before removing, the copied one should be set as website.page's iruiview to prevent page to be deleted (cascade)
         if copy_l:
             if save_master:
                 #To check if the name of the version to copy master already exists
@@ -59,11 +67,10 @@ class version(models.Model):
                 if check_id:
                     check_id.unlink()
                 copy_version_id = self.create({'name': copy_master_name, 'website_id': self.website_id.id})
-                copy_l.copy({'version_id': copy_version_id.id, 'website_id': self.website_id.id})
+                for rec in copy_l:
+                    rec.copy({'version_id': copy_version_id.id, 'website_id': self.website_id.id})
             del_l.unlink()
-        #All the views in the version published are copied without version_id
-        for view in self.view_ids:
-            view.copy({'version_id': None})
+
         return self.name
 
     #To make a version of a version

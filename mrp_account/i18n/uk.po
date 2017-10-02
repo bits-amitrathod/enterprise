@@ -3,16 +3,16 @@
 # * mrp_account
 # 
 # Translators:
-# Bohdan Lisnenko <lem8r.ka11a@gmail.com>, 2016
-# ТАрас <tratatuta@i.ua>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Bohdan Lisnenko <lem8r.ka11a@gmail.com>, 2017
+# ТАрас <tratatuta@i.ua>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,7 +51,12 @@ msgid "Analytic Account"
 msgstr "Аналітичний рахунок"
 
 #. module: mrp_account
-#: model:ir.actions.report.xml,name:mrp_account.action_cost_struct_mrp_production
+#: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
+msgid "Code"
+msgstr "Код"
+
+#. module: mrp_account
+#: model:ir.actions.report,name:mrp_account.action_cost_struct_mrp_production
 #: model:ir.ui.view,arch_db:mrp_account.mrp_production_form_inherit_view6
 #: model:ir.ui.view,arch_db:mrp_account.product_product_inherit_form_view_cost_structure
 msgid "Cost Analysis"
@@ -68,7 +73,7 @@ msgid "Cost Structure"
 msgstr ""
 
 #. module: mrp_account
-#: model:ir.actions.report.xml,name:mrp_account.action_cost_struct_product_template
+#: model:ir.actions.report,name:mrp_account.action_cost_struct_product_template
 msgid "Cost Structure Analysis"
 msgstr ""
 
@@ -103,8 +108,8 @@ msgid "Costing Information"
 msgstr "Інформація про вартість"
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure_display_name
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure_display_name
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure_display_name
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure_display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -116,14 +121,14 @@ msgid ""
 msgstr ""
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure_id
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure_id
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure_id
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure_id
 msgid "ID"
 msgstr "ІД"
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure___last_update
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure___last_update
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure___last_update
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure___last_update
 msgid "Last Modified on"
 msgstr "Остання модифікація"
 
@@ -212,11 +217,11 @@ msgid "manufacturing order(s)."
 msgstr ""
 
 #. module: mrp_account
-#: model:ir.model,name:mrp_account.model_report_mrp_cost_structure
-msgid "report.mrp_cost_structure"
+#: model:ir.model,name:mrp_account.model_report_mrp_account_mrp_cost_structure
+msgid "report.mrp_account.mrp_cost_structure"
 msgstr ""
 
 #. module: mrp_account
-#: model:ir.model,name:mrp_account.model_report_product_template_cost_structure
-msgid "report.product_template_cost_structure"
+#: model:ir.model,name:mrp_account.model_report_mrp_account_product_template_cost_structure
+msgid "report.mrp_account.product_template_cost_structure"
 msgstr ""

@@ -387,7 +387,8 @@ class AccountPayment(models.Model):
             datetime.strptime('12:00:00', '%H:%M:%S').time()).strftime('%Y-%m-%dT%H:%M:%S')
         rate = ('%0.*f' % (
             precision_digits,
-            self.currency_id.compute(1, mxn))) if self.currency_id.name != 'MXN' else False
+            self.currency_id.with_context(date=self.payment_date).compute(
+                1, mxn))) if self.currency_id.name != 'MXN' else False
         return {
             'mxn': mxn,
             'payment_date': date,
@@ -424,16 +425,16 @@ class AccountPayment(models.Model):
             body_msg = _('The cancel service has been called with success')
             self.l10n_mx_edi_pac_status = 'cancelled'
             legal = _(
-                '''<h3 style="color:red">Legal warning</h3>'
-                '<p> Regarding the issue of the CFDI with' Complement for
-                 receipt of payments', where there are errors in the receipt, this
-                 may be canceled provided it is replaced by another with the correct data.
-                 If the error consists in which the payment receipt
-                 complement should not have been issued because the consideration
-                 had already been paid in full; replaced by another with an
-                 amount of one peso.</p>
-                 <p><a href="http://www.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf">
-                 For more information here (Pag. 5)</a></p>''')
+                '''<h3 style="color:red">Legal warning</h3>
+                <p> Regarding the issue of the CFDI with' Complement for
+                receipt of payments', where there are errors in the receipt, this
+                may be canceled provided it is replaced by another with the correct data.
+                If the error consists in which the payment receipt
+                complement should not have been issued because the consideration
+                had already been paid in full; replaced by another with an
+                amount of one peso.</p>
+                <p><a href="http://www.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf">
+                For more information here (Pag. 5)</a></p>''')
             self.message_post(body=legal, message_type='notification')
         else:
             body_msg = _('The cancel service requested failed')

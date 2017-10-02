@@ -12,7 +12,7 @@ var config = require('web.config');
 var SwitchCompanyMenu = require('web.SwitchCompanyMenu');
 var SystrayMenu = require('web.SystrayMenu');
 
-if (config.isMobile) {
+if (config.device.isMobile) {
     var index = SystrayMenu.Items.indexOf(SwitchCompanyMenu);
     SystrayMenu.Items.splice(index, 1);
 }

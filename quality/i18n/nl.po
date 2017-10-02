@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -64,6 +64,8 @@ msgid ""
 "<span class=\"o_stat_text\">AVG:</span>\n"
 "                                <span class=\"o_stat_text\">STD:</span>"
 msgstr ""
+"<span class=\"o_stat_text\">GEMM.</span>\n"
+"                                <span class=\"o_stat_text\">STD:</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
@@ -88,12 +90,12 @@ msgstr "<span>tot </span>"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
 msgid "<strong>Operation :</strong>"
-msgstr ""
+msgstr "<strong>Operatie :</strong>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
 msgid "<strong>Product :</strong>"
-msgstr ""
+msgstr "<strong>Product :</strong>"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_defaults
@@ -243,7 +245,7 @@ msgstr "Configuratie"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Confirm Measure"
-msgstr ""
+msgstr "Bevestig eenheid"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -301,6 +303,7 @@ msgstr "Maak kwaliteitswaarschuwingen."
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_check_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_point_create_uid
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_reason_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_tag_create_uid
 msgid "Created by"
@@ -312,6 +315,7 @@ msgstr "Aangemaakt door"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_check_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_point_create_date
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_reason_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_tag_create_date
 msgid "Created on"
@@ -384,6 +388,7 @@ msgstr "Omschrijving van de issue..."
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_check_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_point_display_name
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_reason_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_display_name
 msgid "Display Name"
@@ -416,7 +421,7 @@ msgstr "Mislukt"
 #: model:ir.model.fields,field_description:quality.field_quality_check_failure_message
 #: model:ir.model.fields,field_description:quality.field_quality_point_failure_message
 msgid "Failure Message"
-msgstr ""
+msgstr "Bericht mislukt"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_folded
@@ -451,6 +456,7 @@ msgstr "Hoog"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_check_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_id
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id
 #: model:ir.model.fields,field_description:quality.field_quality_reason_id
 #: model:ir.model.fields,field_description:quality.field_quality_tag_id
 msgid "ID"
@@ -476,11 +482,17 @@ msgid "In progress"
 msgstr "In behandeling"
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid "Instructions"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_check___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_point___last_update
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_reason___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_tag___last_update
 msgid "Last Modified on"
@@ -491,6 +503,7 @@ msgstr "Laatst gewijzigd op"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_check_write_uid
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_point_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_reason_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_tag_write_uid
@@ -502,6 +515,7 @@ msgstr "Laatst bijgewerkt door"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_alert_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_check_write_date
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_point_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_reason_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_tag_write_date
@@ -537,7 +551,6 @@ msgstr "Max tolerantie"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure
-#: selection:quality.point,test_type:0
 msgid "Measure"
 msgstr "Eenheid"
 
@@ -554,7 +567,7 @@ msgstr "Meet succes"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Message If Failure"
-msgstr ""
+msgstr "Bericht indien mislukt"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_tolerance_min
@@ -582,22 +595,23 @@ msgstr "Mijn waarschuwingen"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_name
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_name
 #: model:ir.model.fields,field_description:quality.field_quality_check_name
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_name
 #: model:ir.model.fields,field_description:quality.field_quality_reason_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_name
 msgid "Name"
 msgstr "Naam"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:24
-#: code:addons/quality/models/quality.py:111
-#: code:addons/quality/models/quality.py:112
-#: code:addons/quality/models/quality.py:225
-#: code:addons/quality/models/quality.py:292
-#: code:addons/quality/models/quality.py:293
-#: code:addons/quality/models/quality.py:397
-#: code:addons/quality/models/quality.py:432
-#: code:addons/quality/models/quality.py:433
-#: code:addons/quality/models/quality.py:473
+#: code:addons/quality/models/quality.py:30
+#: code:addons/quality/models/quality.py:116
+#: code:addons/quality/models/quality.py:117
+#: code:addons/quality/models/quality.py:230
+#: code:addons/quality/models/quality.py:297
+#: code:addons/quality/models/quality.py:298
+#: code:addons/quality/models/quality.py:402
+#: code:addons/quality/models/quality.py:437
+#: code:addons/quality/models/quality.py:438
+#: code:addons/quality/models/quality.py:478
 #, python-format
 msgid "New"
 msgstr "Nieuw"
@@ -696,11 +710,6 @@ msgid "Pass"
 msgstr "Geslaagd"
 
 #. module: quality
-#: selection:quality.point,test_type:0
-msgid "Pass - Fail"
-msgstr "Geslaagd - mislukt"
-
-#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 #: selection:quality.check,quality_state:0
 msgid "Passed"
@@ -774,8 +783,8 @@ msgid "Quality"
 msgstr "Kwaliteit"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:355
-#: code:addons/quality/models/quality.py:368
+#: code:addons/quality/models/quality.py:360
+#: code:addons/quality/models/quality.py:373
 #: model:ir.model,name:quality.model_quality_alert
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_calendar
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
@@ -835,7 +844,7 @@ msgid "Quality Alerts"
 msgstr "Kwaliteitswaarschuwingen"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:450
+#: code:addons/quality/models/quality.py:455
 #: model:ir.model,name:quality.model_quality_check
 #, python-format
 msgid "Quality Check"
@@ -853,11 +862,11 @@ msgid "Quality Check Fail"
 msgstr "Kwaliteitscontrole gefaald"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:316
+#: code:addons/quality/models/quality.py:321
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 #, python-format
 msgid "Quality Check Failed"
-msgstr ""
+msgstr "Kwaliteitscontrole mislukt"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_check_action_main
@@ -868,7 +877,7 @@ msgstr ""
 "moment"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:332
+#: code:addons/quality/models/quality.py:337
 #: model:ir.actions.act_window,name:quality.quality_check_action_main
 #: model:ir.actions.act_window,name:quality.quality_check_action_picking
 #: model:ir.actions.act_window,name:quality.quality_check_action_report
@@ -958,11 +967,6 @@ msgid "Randomly"
 msgstr "Willekeurig"
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_point_view_form
-msgid "Reason"
-msgstr "Reden"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_force_thread_id
 msgid "Record Thread ID"
 msgstr "Record Thread ID"
@@ -1004,7 +1008,7 @@ msgid "Settings"
 msgstr "Instellingen"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8910
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Fase"
@@ -1037,7 +1041,7 @@ msgid "Tags"
 msgstr "Labels"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8920
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1051,6 +1055,13 @@ msgstr "Teams"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_test_type
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_technical_name
+msgid "Technical name"
+msgstr ""
+
+#. module: quality
+#: model:ir.model,name:quality.model_quality_point_test_type
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
 msgid "Test Type"
 msgstr "Soort test"
 
@@ -1152,7 +1163,7 @@ msgstr "Zeer hoog"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_warning_message
 msgid "Warning Message"
-msgstr ""
+msgstr "Waarschuwingsberichten"
 
 #. module: quality
 #: selection:quality.point,measure_frequency_unit:0
@@ -1160,10 +1171,11 @@ msgid "Week(s)"
 msgstr "Week/weken"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:268
+#: code:addons/quality/models/quality.py:273
 #, python-format
 msgid "You measured %.2f %s and it should be between %.2f and %.2f %s."
 msgstr ""
+"Uw heeft gemeten %.2f %s en het zou moeten liggen tussen %.2f en %.2f %s."
 
 #. module: quality
 #: code:addons/quality/models/stock_picking.py:63
