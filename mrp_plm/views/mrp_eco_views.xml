@@ -423,7 +423,7 @@
                     <button string="Start New Revision" name="action_new_revision" type="object"
                             class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
                     <button string="Apply Rebase" name="apply_rebase" help="Rebase new revision of BoM with previous eco bom and old bom changes." type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'rebase')]}"/>
-                    <button string="Conflict Resolved" name="conflict_resolve" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'conflict')]}" confirm="System will automatically resolved the conflict(s) and apply changes, Are you agree ?"/>
+                    <button string="Conflict Resolved" name="conflict_resolve" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'conflict')]}" confirm="System will automatically resolved the conflict(s) and apply changes. Do you agree?"/>
                     <button string="Approve" name="approve" type="object"
                             class="oe_highlight" attrs="{'invisible': [('user_can_approve', '=', False)]}"/>
                     <button string="Reject" name="reject" type="object"
