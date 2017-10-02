@@ -52,7 +52,7 @@ class AnalyticLine(models.Model):
             anchor = fields.Date.from_string(self.env.context['grid_anchor'])
         else:
             anchor = date.today() + relativedelta(weeks=-1, days=1, weekday=0)
-        span = self.env.context.get('grid_range', {'span': 'week'})['span']
+        span = self.env.context.get('grid_range', 'week')
         date_ago = fields.Date.to_string(anchor - STEP_BY[span] + START_OF[span])
 
         tasks |= self.env['account.analytic.line'].search([
@@ -67,7 +67,7 @@ class AnalyticLine(models.Model):
             anchor = fields.Date.from_string(self.env.context['grid_anchor'])
         else:
             anchor = date.today() + relativedelta(weeks=-1, days=1, weekday=0)
-        span = self.env.context.get('grid_range', {'span': 'week'})['span']
+        span = self.env.context.get('grid_range', 'week')
         validate_to = fields.Date.to_string(anchor + END_OF[span])
 
         if not self:
