@@ -84,9 +84,9 @@ class ProductTemplate(models.Model):
             "Item": {
                 "Title": self._ebay_encode(self.ebay_title),
                 "PrimaryCategory": {"CategoryID": self.ebay_category_id.category_id},
-                "StartPrice": comp_currency.compute(self.ebay_price, currency)
+                "StartPrice": comp_currency._convert(self.ebay_price, currency, self.env.user.company_id, fields.Date.today())
                 if self.ebay_listing_type == 'Chinese'
-                else comp_currency.compute(self.ebay_fixed_price, currency),
+                else comp_currency._convert(self.ebay_fixed_price, currency, self.env.user.company_id, fields.Date.today()),
                 "CategoryMappingAllowed": "true",
                 "Country": country.code,
                 "Currency": currency.name,
@@ -122,7 +122,7 @@ class ProductTemplate(models.Model):
             if self.env['ir.config_parameter'].sudo().get_param('ebay_gallery_plus'):
                 item['Item']['PictureDetails']['GalleryType'] = 'Plus'
         if self.ebay_listing_type == 'Chinese' and self.ebay_buy_it_now_price:
-            item['Item']['BuyItNowPrice'] = comp_currency.compute(self.ebay_buy_it_now_price, currency)
+            item['Item']['BuyItNowPrice'] = comp_currency._convert(self.ebay_buy_it_now_price, currency, self.env.user.company_id, fields.Date.today())
         NameValueList = []
         variant = self.product_variant_ids.filtered('ebay_use')
         # We set by default the brand and the MPN because of the new eBay policy
@@ -282,7 +282,7 @@ class ProductTemplate(models.Model):
                     ean = variant.barcode
             variations.append({
                 'Quantity': variant.ebay_quantity,
-                'StartPrice': comp_currency.compute(variant.ebay_fixed_price, currency),
+                'StartPrice': comp_currency._convert(variant.ebay_fixed_price, currency, self.env.user.company_id, fields.Date.today()),
                 'VariationSpecifics': {'NameValueList': variant_name_values},
                 'Delete': False if variant.ebay_use else True,
                 'VariationProductListingDetails': {
@@ -678,9 +678,9 @@ class ProductTemplate(models.Model):
                 'name': self.name,
                 'product_uom_qty': float(transaction['QuantityPurchased']),
                 'product_uom': variant.uom_id.id,
-                'price_unit': currency.compute(
+                'price_unit': currency._convert(
                     float(transaction['TransactionPrice']['value']),
-                    self.env.user.company_id.currency_id),
+                    company_id.currency_id, company_id, fields.Date.today()),
                 'tax_id': [(6, 0, taxes_id)] if taxes_id else False,
             })
             sol._compute_tax_id()
@@ -703,9 +703,9 @@ class ProductTemplate(models.Model):
                     'product_id': shipping_product.product_variant_ids[0].id,
                     'product_uom_qty': 1,
                     'product_uom': self.env.ref('uom.product_uom_unit').id,
-                    'price_unit': currency.compute(
+                    'price_unit': currency._convert(
                             float(transaction['ShippingServiceSelected']['ShippingServiceCost']['value']),
-                            company_id.currency_id),
+                            company_id.currency_id, company_id, fields.Date.today()),
                     'tax_id': [(6, 0, taxes_id)] if taxes_id else False,
                     'is_delivery': True,
                 })

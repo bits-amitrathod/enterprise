@@ -741,7 +741,7 @@ class AccountInvoice(models.Model):
         mxn = self.env.ref('base.MXN').with_context(ctx)
         invoice_currency = self.currency_id.with_context(ctx)
         values['rate'] = ('%.6f' % (
-            invoice_currency.compute(1, mxn))) if self.currency_id.name != 'MXN' else False
+            invoice_currency._convert(1, mxn, self.company_id, self.date_invoice or fields.Date.today()))) if self.currency_id.name != 'MXN' else False
 
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
 

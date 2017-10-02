@@ -117,7 +117,8 @@ class ProviderUPS(models.Model):
             price = float(result['price'])
         else:
             quote_currency = ResCurrency.search([('name', '=', result['currency_code'])], limit=1)
-            price = quote_currency.compute(float(result['price']), order.currency_id)
+            price = quote_currency._convert(
+                float(result['price']), order.currency_id, order.company_id, order.date_order or fields.Date.today())
 
         if self.ups_bill_my_account and order.ups_carrier_account:
             # Don't show delivery amount, if ups bill my account option is true
@@ -180,6 +181,7 @@ class ProviderUPS(models.Model):
             if result.get('error_message'):
                 raise UserError(result['error_message'])
 
+            order = picking.sale_id
             currency_order = picking.sale_id.currency_id
             if not currency_order:
                 currency_order = picking.company_id.currency_id
@@ -188,7 +190,8 @@ class ProviderUPS(models.Model):
                 price = float(result['price'])
             else:
                 quote_currency = ResCurrency.search([('name', '=', result['currency_code'])], limit=1)
-                price = quote_currency.compute(float(result['price']), currency_order)
+                price = quote_currency._convert(
+                    float(result['price']), currency_order, order.company_id, order.date_order or fields.Date.today())
 
             package_labels = []
             for track_number, label_binary_data in result.get('label_binary_data').items():

@@ -56,7 +56,11 @@ class RevenueKPIsDashboard(http.Controller):
 
             if cohort_interest == 'value':
                 # TODO: value should possibly depend on `cohort_period` rather than be monthly?
-                starting_value = float(sum([x.currency_id.compute(x.recurring_monthly, company_currency_id) if x.currency_id else x.recurring_monthly for x in cohort_subs]))
+                starting_value = float(sum([
+                    x.currency_id._convert(x.recurring_monthly, company_currency_id, x.company_id, x.date_start)
+                    if x.currency_id else x.recurring_monthly
+                    for x in cohort_subs
+                ]))
             else:
                 starting_value = float(len(cohort_subs))
             cohort_line = []
@@ -89,7 +93,9 @@ class RevenueKPIsDashboard(http.Controller):
 
                 if cohort_interest == 'value':
                     # TODO: value should possibly depend on `cohort_period` rather than be monthly?
-                    churned_value = sum([x.currency_id.compute(x.recurring_monthly, company_currency_id) if x.currency_id else x.recurring_monthly for x in churned_subs])
+                    churned_value = sum([
+                        x.currency_id._convert(x.recurring_monthly, company_currency_id, x.company_id, x.date)
+                        if x.currency_id else x.recurring_monthly for x in churned_subs])
                 else:
                     churned_value = len(churned_subs)
 

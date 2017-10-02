@@ -140,10 +140,11 @@ class BanxicoTest(TransactionCase):
 
     def set_rate(self, currency, rate):
         currency.rate_ids.unlink()
-        currency.rate_ids = currency.rate_ids.create({
+        currency.rate_ids = self.env['res.currency.rate'].create({
             'rate': rate,
             'currency_id': currency.id,
             'name': fields.Date.today() + ' 00:00:00',
+            'company_id': self.company.id,
         })
 
     def test_banxico_currency_update_nomxn(self):
@@ -152,27 +153,27 @@ class BanxicoTest(TransactionCase):
 
     def test_banxico_currency_update(self):
         # Using self.usd.rate=1 and self.mxn.rate != 1
-        self.set_rate(self.usd, 1)
-        self.assertEqual(self.usd.rate, 1)
-        self.set_rate(self.mxn, 10)
-        self.assertEqual(self.mxn.rate, 10)
+        self.set_rate(self.usd, 1.0)
+        self.assertEqual(self.usd.rate, 1.0)
+        self.set_rate(self.mxn, 10.0)
+        self.assertEqual(self.mxn.rate, 10.0)
         with patch('suds.client.Client', new=serviceClientMock):
             self.company.update_currency_rates()
-        self.assertEqual(self.usd.rate, 1)
-        self.assertNotEqual(self.mxn.rate, 10)
-        foreigns1 = [foreign_currency.compute(1, self.mxn, round=False)
+        self.assertEqual(self.usd.rate, 1.0)
+        self.assertNotEqual(self.mxn.rate, 10.0)
+        foreigns1 = [foreign_currency._convert(1.0, self.mxn, company=self.company, date=fields.Date.today())
                      for foreign_currency in self.foreign_currencies]
 
         # Using self.mxn.rate=1 and self.usd.rate != 1
-        self.set_rate(self.mxn, 1)
-        self.assertEqual(self.mxn.rate, 1)
+        self.set_rate(self.mxn, 1.0)
+        self.assertEqual(self.mxn.rate, 1.0)
         self.set_rate(self.usd, 0.1)
         self.assertEqual(self.usd.compare_amounts(self.usd.rate, 0.1), 0)
         with patch('suds.client.Client', new=serviceClientMock):
             self.company.update_currency_rates()
-        self.assertEqual(self.mxn.rate, 1)
-        self.assertNotEqual(self.usd.rate, 1 / 10.0)
-        foreigns2 = [foreign_currency.compute(1, self.mxn, round=False)
+        self.assertEqual(self.mxn.rate, 1.0)
+        self.assertNotEqual(self.usd.rate, 1.0 / 10.0)
+        foreigns2 = [foreign_currency._convert(1.0, self.mxn, company=self.company, date=fields.Date.today())
                      for foreign_currency in self.foreign_currencies]
         for curr, foreign1, foreign2 in pycompat.izip(self.foreign_currencies, foreigns1, foreigns2):
             self.assertEqual(curr.compare_amounts(foreign1, foreign2), 0,

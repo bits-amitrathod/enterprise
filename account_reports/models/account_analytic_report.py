@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api, _
+from odoo import api, fields, models, _
 from odoo.addons.web.controllers.main import clean_action
 
 
@@ -49,7 +49,8 @@ class analytic_report(models.AbstractModel):
         currency_obj = self.env['res.currency']
         user_currency = self.env.user.company_id.currency_id
         analytic_lines = self.env['account.analytic.line'].read_group(analytic_line_domain_for_group, ['amount', 'currency_id'], ['currency_id'])
-        balance = sum([currency_obj.browse(row['currency_id'][0]).compute(row['amount'], user_currency) for row in analytic_lines])
+        balance = sum([currency_obj.browse(row['currency_id'][0])._convert(
+            row['amount'], user_currency, self.env.user.company_id, fields.Date.today()) for row in analytic_lines])
         return balance
 
     def _generate_analytic_group_line(self, group, analytic_line_domain, unfolded=False):

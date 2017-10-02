@@ -388,8 +388,8 @@ class AccountPayment(models.Model):
             fields.Datetime.from_string(self.payment_date),
             datetime.strptime('12:00:00', '%H:%M:%S').time()).strftime('%Y-%m-%dT%H:%M:%S')
         rate = ('%.6f' % (
-            self.currency_id.with_context(date=self.payment_date).compute(
-                1, mxn))) if self.currency_id.name != 'MXN' else False
+            self.currency_id._convert(
+                1, mxn, self.company_id, self.payment_date or fields.Date.today()))) if self.currency_id.name != 'MXN' else False
         return {
             'mxn': mxn,
             'payment_date': date,

@@ -197,9 +197,11 @@ class ProviderFedex(models.Model):
                 _logger.info("Preferred currency has not been found in FedEx response")
                 company_currency = order.company_id.currency_id
                 if _convert_curr_iso_fdx(company_currency.name) in request['price']:
-                    price = company_currency.compute(request['price'][_convert_curr_iso_fdx(company_currency.name)], order_currency)
+                    amount = request['price'][_convert_curr_iso_fdx(company_currency.name)]
+                    price = company_currency._convert(amount, order_currency, order.company_id, order.date_order or fields.Date.today())
                 else:
-                    price = company_currency.compute(request['price']['USD'], order_currency)
+                    amount = request['price']['USD']
+                    price = company_currency._convert(amount, order_currency, order.company_id, order.date_order or fields.Date.today())
         else:
             return {'success': False,
                     'price': 0.0,
@@ -236,6 +238,7 @@ class ProviderFedex(models.Model):
 
             srm.shipment_label('COMMON2D', self.fedex_label_file_type, self.fedex_label_stock_type, 'TOP_EDGE_OF_TEXT_FIRST', 'SHIPPING_LABEL_FIRST')
 
+            order = picking.sale_id
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id
 
             net_weight = self._fedex_convert_weight(picking.shipping_weight, self.fedex_weight_unit)
@@ -248,7 +251,7 @@ class ProviderFedex(models.Model):
                 commodity_country_of_manufacture = picking.picking_type_id.warehouse_id.partner_id.country_id.code
 
                 for operation in picking.move_line_ids:
-                    commodity_amount = order_currency.compute(operation.product_id.list_price, commodity_currency)
+                    commodity_amount = order_currency._convert(operation.product_id.list_price, commodity_currency, order.company_id, order.date_order or fields.Date.today())
                     total_commodities_amount += (commodity_amount * operation.qty_done)
                     commodity_description = operation.product_id.name
                     commodity_number_of_piece = '1'
@@ -323,9 +326,13 @@ class ProviderFedex(models.Model):
                                 _logger.info("Preferred currency has not been found in FedEx response")
                                 company_currency = picking.company_id.currency_id
                                 if _convert_curr_iso_fdx(company_currency.name) in request['price']:
-                                    carrier_price = company_currency.compute(request['price'][_convert_curr_iso_fdx(company_currency.name)], order_currency)
+                                    amount = request['price'][_convert_curr_iso_fdx(company_currency.name)]
+                                    carrier_price = company_currency._convert(
+                                        amount, order_currency, order.company_id, order.date_order or fields.Date.today())
                                 else:
-                                    carrier_price = company_currency.compute(request['price']['USD'], order_currency)
+                                    amount = request['price']['USD']
+                                    carrier_price = company_currency._convert(
+                                        amount, order_currency, order.company_id, order.date_order or fields.Date.today())
 
                             carrier_tracking_ref = carrier_tracking_ref + "," + request['tracking_number']
 
@@ -367,9 +374,13 @@ class ProviderFedex(models.Model):
                         _logger.info("Preferred currency has not been found in FedEx response")
                         company_currency = picking.company_id.currency_id
                         if _convert_curr_iso_fdx(company_currency.name) in request['price']:
-                            carrier_price = company_currency.compute(request['price'][_convert_curr_iso_fdx(company_currency.name)], order_currency)
+                            amount = request['price'][_convert_curr_iso_fdx(company_currency.name)]
+                            carrier_price = company_currency._convert(
+                                amount, order_currency, order.company_id, order.date_order or fields.Date.today())
                         else:
-                            carrier_price = company_currency.compute(request['price']['USD'], order_currency)
+                            amount = request['price']['USD']
+                            carrier_price = company_currency._convert(
+                                amount, order_currency, order.company_id, order.date_order or fields.Date.today())
 
                     carrier_tracking_ref = request['tracking_number']
                     logmessage = (_("Shipment created into Fedex <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))

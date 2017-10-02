@@ -42,13 +42,17 @@ class ebay_link_listing(models.TransientModel):
                 ('category_id', '=', item['Storefront']['StoreCategory2ID']),
                 ('category_type', '=', 'store')
             ]).id if 'Storefront' in item else False,
-            'ebay_price': currency.compute(
+            'ebay_price': currency._convert(
                 float(item['StartPrice']['value']),
-                self.env.user.company_id.currency_id
+                self.env.user.company_id.currency_id,
+                self.env.user.company_id,
+                fields.Date.today()
             ),
-            'ebay_buy_it_now_price': currency.compute(
+            'ebay_buy_it_now_price': currency._convert(
                 float(item['BuyItNowPrice']['value']),
-                self.env.user.company_id.currency_id
+                self.env.user.company_id.currency_id,
+                self.env.user.company_id,
+                fields.Date.today()
             ),
             'ebay_listing_type': item['ListingType'],
             'ebay_listing_duration': item['ListingDuration'],
@@ -103,9 +107,11 @@ class ebay_link_listing(models.TransientModel):
                 variant.write({
                     'ebay_use': True,
                     'ebay_quantity_sold': variation['SellingStatus']['QuantitySold'],
-                    'ebay_fixed_price': currency.compute(
+                    'ebay_fixed_price': currency._convert(
                         float(variation['StartPrice']['value']),
-                        self.env.user.company_id.currency_id
+                        self.env.user.company_id.currency_id,
+                        self.env.user.company_id,
+                        fields.Date.today()
                     ),
                     'ebay_quantity': int(variation['Quantity']) - int(variation['SellingStatus']['QuantitySold']),
                 })
@@ -113,9 +119,11 @@ class ebay_link_listing(models.TransientModel):
         elif product.product_variant_count == 1:
             product.product_variant_ids.write({
                 'ebay_quantity_sold': item['SellingStatus']['QuantitySold'],
-                'ebay_fixed_price': currency.compute(
+                'ebay_fixed_price': currency._convert(
                     float(item['StartPrice']['value']),
-                    self.env.user.company_id.currency_id
+                    self.env.user.company_id.currency_id,
+                    self.env.user.company_id,
+                    fields.Date.today()
                 ),
                 'ebay_quantity': int(item['Quantity']) - int(item['SellingStatus']['QuantitySold']),
             })

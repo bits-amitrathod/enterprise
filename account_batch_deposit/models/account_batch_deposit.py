@@ -38,7 +38,7 @@ class AccountBatchDeposit(models.Model):
                 amount += payment.amount
             else:
                 # Note : this makes self.date the value date, which IRL probably is the date of the reception by the bank
-                amount += payment_currency.with_context({'date': self.date}).compute(payment.amount, journal_currency)
+                amount += payment_currency._convert(payment.amount, journal_currency, self.journal_id.company_id, self.date or fields.Date.today())
         self.amount = amount
 
     @api.one

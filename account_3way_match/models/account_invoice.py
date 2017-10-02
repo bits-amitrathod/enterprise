@@ -82,7 +82,8 @@ class AccountInvoiceLine(models.Model):
                 # A price difference between the original order and the invoice results in an exception
                 invoice_currency = invoice_line.currency_id
                 order_currency = po_line.currency_id
-                invoice_converted_price = invoice_currency.compute(invoice_line.price_unit, order_currency)
+                invoice_converted_price = invoice_currency._convert(
+                    invoice_line.price_unit, order_currency, invoice_line.company_id, fields.Date.today())
                 if order_currency.compare_amounts(po_line.price_unit, invoice_converted_price) != 0:
                     invoice_line.can_be_paid = 'exception'
                     continue

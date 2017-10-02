@@ -247,10 +247,11 @@ class ResCompany(models.Model):
         def update_rate(currency, rate, date):
             #  Deleting current rate values because we can only have one
             currency.rate_ids.filtered(lambda r: date == r.name).unlink()
-            currency.rate_ids.create({
+            self.env['res.currency.rate'].create({
                 'rate': rate,
                 'currency_id': currency.id,
                 'name': date,
+                'company_id': self.id,
             })
             # Update cached rate field
             currency._compute_current_rate()
@@ -272,16 +273,16 @@ class ResCompany(models.Model):
         base_currency = mxn
         currency_to_update = usd
         rate = 1.0 / usd_mxn
-        if mxn.rate != 1 and usd.rate == 1:
+        if mxn.rate != 1.0 and usd.rate == 1.0:
             # Most of the time Mexico use USD.rate=1 and company.currency=MXN
             base_currency = usd
             currency_to_update = mxn
             rate = usd_mxn
         else:
             # Force MXN.rate=1 to get a valid base
-            update_rate(mxn, 1, date)
+            update_rate(mxn, 1.0, date)
         update_rate(currency_to_update, rate, date)
-        base_mxn_rate = base_currency.compute(1, mxn, round=False)
+        base_mxn_rate = base_currency._convert(1.0, mxn, self, date, round=False)
         foreigns = {
             # position order of the rates from webservices
             3: self.env.ref('base.EUR'),

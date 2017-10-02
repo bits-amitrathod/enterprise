@@ -7,7 +7,7 @@ import re
 import requests
 from lxml import etree
 
-from odoo import _
+from odoo import fields, _
 
 # This demo data is only used for the cancel shipping.
 # https://www.usps.com/business/web-tools-apis/package-pickup-api.htm#_Toc289864484
@@ -93,7 +93,8 @@ class USPSRequest():
             price = total_value
         else:
             quote_currency = order.currency_id
-            price = quote_currency.compute(total_value, currency)
+            price = quote_currency._convert(
+                total_value, currency, order.company_id, order.date_order or fields.Date.today())
 
         rate_detail = {
             'api': 'RateV4' if carrier.usps_delivery_nature == 'domestic' else 'IntlRateV2',
@@ -187,12 +188,15 @@ class USPSRequest():
 
         for line in picking.move_lines:
             USD = carrier.env['res.currency'].search([('name', '=', 'USD')], limit=1)
+            order = picking.sale_id
             shipper_currency = picking.sale_id.currency_id or picking.company_id.currency_id
             if shipper_currency.name == USD.name:
                 price = line.product_id.lst_price * int(line.product_uom_qty)
             else:
                 quote_currency = picking.env['res.currency'].search([('name', '=', shipper_currency.name)], limit=1)
-                price = quote_currency.compute(line.product_id.lst_price * line.product_uom_qty, USD)
+                amount = line.product_id.lst_price * line.product_uom_qty
+                price = quote_currency._convert(
+                    amount, USD, order.company_id, order.date_order or fields.Date.today())
             weight = carrier._usps_convert_weight(line.product_id.weight * line.product_uom_qty)
             itemdetail.append(self._item_data(line, weight, price))
 

@@ -24,7 +24,8 @@ class AccountInvoiceLine(models.Model):
                 amount_tax = taxes['taxes'][0]['amount'] if taxes else 0.0
                 amount_tax_no_change = amount_tax
                 if record.invoice_id.currency_id and record.invoice_id.company_id and record.invoice_id.currency_id != record.invoice_id.company_id.currency_id:
-                    amount_tax = record.invoice_id.currency_id.with_context(date=record.invoice_id.date_invoice).compute(amount_tax, record.invoice_id.company_id.currency_id)
+                    amount_tax = record.invoice_id.currency_id._convert(
+                        amount_tax, record.invoice_id.company_id.currency_id, record.invoice_id.company_id, record.invoice_id.date_invoice or fields.Date.today())
                 sign = record.invoice_id.type in ['in_refund', 'out_refund'] and -1 or 1
                 amount_tax *= sign
                 amount_tax_no_change *= sign

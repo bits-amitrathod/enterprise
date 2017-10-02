@@ -106,7 +106,7 @@ class Providerdhl(models.Model):
             price = float(result['price'])
         else:
             quote_currency = self.env['res.currency'].search([('name', '=', result['currency'])], limit=1)
-            price = quote_currency.compute(float(result['price']), order.currency_id)
+            price = quote_currency._convert(float(result['price']), order.currency_id, order.company_id, order.date_order or fields.Date.today())
 
         return {'success': True,
                 'price': price,
@@ -119,12 +119,13 @@ class Providerdhl(models.Model):
         srm = DHLProvider(self.prod_environment, self.log_xml)
         for picking in pickings:
             shipping = srm.send_shipping(picking, self)
+            order = picking.sale_id
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id
             if order_currency.name == shipping['currency']:
                 carrier_price = float(shipping['price'])
             else:
                 quote_currency = self.env['res.currency'].search([('name', '=', shipping['currency'])], limit=1)
-                carrier_price = quote_currency.compute(float(shipping['price']), order_currency)
+                carrier_price = quote_currency._convert(float(shipping['price']), order_currency, order.company_id, order.date_order or fields.Date.today())
             carrier_tracking_ref = shipping['tracking_number']
             logmessage = (_("Shipment created into DHL <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))
             picking.message_post(body=logmessage, attachments=[('LabelDHL-%s.%s' % (carrier_tracking_ref, self.dhl_label_image_format), srm.save_label())])

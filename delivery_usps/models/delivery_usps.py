@@ -109,7 +109,8 @@ class ProviderUSPS(models.Model):
             price = quotes['price']
         else:
             quote_currency = self.env['res.currency'].search([('name', '=', 'USD')], limit=1)
-            price = quote_currency.compute(quotes['price'], order.currency_id)
+            price = quote_currency._convert(
+              quotes['price'], order.currency_id, order.company_id, order.date_order or fields.Date.today())
 
         return {'success': True,
                 'price': price,
@@ -129,6 +130,7 @@ class ProviderUSPS(models.Model):
             if booking.get('error_message'):
                 raise UserError(booking['error_message'])
 
+            order = picking.sale_id
             currency_order = picking.sale_id.currency_id
             if not currency_order:
                 currency_order = picking.company_id.currency_id
@@ -138,7 +140,8 @@ class ProviderUSPS(models.Model):
                 price = booking['price']
             else:
                 quote_currency = self.env['res.currency'].search([('name', '=', "USD")], limit=1)
-                price = quote_currency.compute(booking['price'], currency_order)
+                price = quote_currency._convert(
+                  booking['price'], currency_order, order.company_id, order.date_order or fields.Date.today())
 
             carrier_tracking_ref = booking['tracking_number']
 

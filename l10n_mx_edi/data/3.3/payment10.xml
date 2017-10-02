@@ -73,7 +73,7 @@
                             <t t-set="balance" t-value="invoice.residual + amount"/>
                             <t t-set="amount" t-value="amount - write_off"/>
                             <t t-set="residual" t-value="balance - amount if balance - amount &gt; 0 else 0"/>
-                            <t t-set="inv_rate" t-value="('%.6f' % (invoice.currency_id.with_context(date=invoice.date_invoice).compute(1, record.currency_id, round=False))) if record.currency_id != invoice.currency_id else False"/>
+                            <t t-set="inv_rate" t-value="('%.6f' % (invoice.currency_id._convert(1, record.currency_id, invoice.company_id, invoice.date_invoice or datetime.date.today(), round=False))) if record.currency_id != invoice.currency_id else False"/>
                             <t t-set="inv_rate" t-value="1 if inv_rate and invoice.currency_id.name == 'MXN' else inv_rate"/>
                             <Pago10:DoctoRelacionado
                                 t-att-IdDocumento="invoice.l10n_mx_edi_cfdi_uuid"
