@@ -128,12 +128,10 @@ class StockPicking(models.Model):
         return True
 
     def _check_source_package(self, package):
-        corresponding_po = self.move_line_ids.filtered(lambda r: r.package_id.id == package.id)
-        if corresponding_po:
-            corresponding_po[0].qty_done = 1.0
-            corresponding_po[0].is_done = True
-            return True
-        return False
+        corresponding_po = self.move_line_ids.filtered(lambda r: r.package_id.id == package.id and r.result_package_id.id == package.id)
+        for po in corresponding_po:
+            po.qty_done = po.product_uom_qty
+        return corresponding_po and True or False
 
     def _check_destination_package(self, package):
         #put in pack logic
@@ -178,7 +176,7 @@ class StockPicking(models.Model):
             else:
                 packop.result_package_id = package
                 packop.to_loc = packop.location_dest_id.name + ' : ' + package.name
-        corresponding_pack_po = self.move_line_ids.filtered(lambda r: not r.result_package_id and (r.qty_done > 0 or r.is_done == True))
+        corresponding_pack_po = self.move_line_ids.filtered(lambda r: not r.result_package_id and r.qty_done > 0)
         for packop in corresponding_pack_po:
             packop.to_loc = packop.location_dest_id.name + ' : ' + package.name
             packop.result_package_id = package.id
@@ -229,7 +227,7 @@ class StockPicking(models.Model):
                 packop.location_dest_id = location.id
                 packop.to_loc = packop.location_dest_id.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or '')
                 packop.location_processed = True
-        corresponding_pack_po = self.move_line_ids.filtered(lambda r: not r.location_processed and (r.qty_done > 0 or r.is_done == True))
+        corresponding_pack_po = self.move_line_ids.filtered(lambda r: not r.location_processed and r.qty_done > 0)
         for packop in corresponding_pack_po:
             packop.location_dest_id = location.id
             packop.to_loc = packop.location_dest_id.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or '')
