@@ -156,20 +156,6 @@
                             <field name="quality_state_for_summary"/>
                         </tree>
                     </field>
-                    <group class="hidden" attrs="{'invisible': ['|', ('test_type', '!=', 'register_consumed_materials'), ('is_last_step', '=', True)]}">
-                        <field name="component_id" readonly="1"/>
-                        <field name="lot_id" context="{'default_product_id': component_id}" attrs="{'invisible': [('component_tracking', '=', 'none')]}" string="Lot/SN"/>
-                        <label for="qty_done" string="Quantity"/>
-                        <div class="o_row">
-                            <div>
-                                <field name="qty_done" attrs="{'readonly': [('component_tracking', '=', 'serial')]}" string="Quantity" class="oe_inline"/> /
-                                <field name="component_remaining_qty" readonly="1" class="oe_inline"/>
-                                <label for="qty_done" string=" "/>
-                                <field name="component_uom_id" readonly="1" class="oe_inline"/>
-                            </div>
-                        </div>
-                    </group>
-
                     <div class="o_workorder_bar_content o_workorder_form" attrs="{'invisible': ['|', ('test_type', '!=', 'register_consumed_materials'), ('is_last_step', '=', True)]}">
                         <div class="o_workorder_field">
                             <div class="o_form_label">Component</div>
