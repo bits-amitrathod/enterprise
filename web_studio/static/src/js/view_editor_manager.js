@@ -443,7 +443,7 @@ return Widget.extend({
                 this._edit_attributes_element(type, node, xpath_info, new_attrs);
                 break;
             case 'filter':
-                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context']);
+                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context', 'create_group']);
                 this._add_filter(type, node, xpath_info, position, new_attrs);
                 break;
             case 'separator':
