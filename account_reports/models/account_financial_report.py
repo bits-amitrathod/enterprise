@@ -27,7 +27,10 @@ class ReportAccountFinancialReport(models.Model):
     show_journal_filter = fields.Boolean('Allow filtering by journals', help='display the journal filter in the report')
     unfold_all_filter = fields.Boolean('Show unfold all filter', help='display the unfold all options in report')
     company_id = fields.Many2one('res.company', string='Company')
-    generated_menu_id = fields.Many2one(string='Menu Item', comodel_name='ir.ui.menu', help="The menu item generated for this report, or None if there isn't any.")
+    generated_menu_id = fields.Many2one(
+        string='Menu Item', comodel_name='ir.ui.menu', copy=False,
+        help="The menu item generated for this report, or None if there isn't any."
+    )
     parent_id = fields.Many2one('ir.ui.menu', related="generated_menu_id.parent_id")
     tax_report = fields.Boolean('Tax Report', help="Set to True to automatically filter out journal items that have the boolean field 'tax_exigible' set to False")
 
