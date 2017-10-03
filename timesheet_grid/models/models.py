@@ -128,7 +128,12 @@ class AnalyticLine(models.Model):
 
         additionnal_domain = self._get_adjust_grid_domain(column_value)
         domain = expression.AND([row_domain, additionnal_domain])
-        line = self.search(domain, limit=1, order="create_date DESC")
+        line = self.search(domain)
+        if len(line) > 1:
+            raise UserError(_(
+                'Multiple timesheet entries match the modified value. Please '
+                'change the search options or modify the entries individually.'
+            ))
 
         if line:  # update existing line
             line.write({
