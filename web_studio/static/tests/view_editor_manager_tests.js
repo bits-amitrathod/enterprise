@@ -616,6 +616,9 @@ QUnit.module('ViewEditorManager', {
         // used to generate the new fields view in mockRPC
         fieldsView = $.extend(true, {}, vem.fields_view);
 
+        // try to add a field in the autocompletion section
+        testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields > .ui-draggable:first'), $('.o_web_studio_search_autocompletion_fields .o_web_studio_hook:first'));
+
         assert.strictEqual(vem.view_type, 'search',
             "view type should be search");
         assert.strictEqual(vem.$('.o_web_studio_search_view_editor').length, 1,
@@ -638,6 +641,7 @@ QUnit.module('ViewEditorManager', {
         // edit the autocompletion field
         $('.o_web_studio_search_view_editor .o_web_studio_search_autocompletion_container [data-node-id]').click();
 
+
         assert.ok(vem.$('.o_web_studio_sidebar').find('.o_web_studio_properties').hasClass('active'),
             "the Properties tab should now be active");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
@@ -646,9 +650,6 @@ QUnit.module('ViewEditorManager', {
             "the field should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
             "the field should have the label Display Name in the sidebar");
-
-        // try to add a field in the autocompletion section
-        testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields > .ui-draggable:first'), $('.o_web_studio_search_autocompletion_fields .o_web_studio_hook:first'));
 
         vem.destroy();
     });
