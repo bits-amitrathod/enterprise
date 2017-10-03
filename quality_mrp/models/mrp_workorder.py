@@ -172,12 +172,12 @@ class MrpProductionWorkcenterLine(models.Model):
         if self.skip_completed_checks:
             self._change_quality_check(increment=1, children=1, checks=self.skipped_check_ids)
         else:
-            self._change_quality_check(increment=1)
+            self._change_quality_check(increment=1, children=1)
 
     def action_first_skipped_step(self):
         self.ensure_one()
         self.skip_completed_checks = True
-        self._change_quality_check(position=0, checks=self.skipped_check_ids)
+        self._change_quality_check(position=0, children=1, checks=self.skipped_check_ids)
 
     def action_previous(self):
         self.ensure_one()
