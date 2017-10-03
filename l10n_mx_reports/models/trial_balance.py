@@ -192,7 +192,7 @@ class MxReportAccountTrial(models.AbstractModel):
             cfdicoa = cfdicoa.replace(key.encode('UTF-8'),
                                       value.encode('UTF-8') + b':')
 
-        with tools.file_open(cfdicoa, CFDIBCE_XSD % version, "rb") as xsd:
+        with tools.file_open(CFDIBCE_XSD % version, "rb") as xsd:
             _check_with_xsd(cfdicoa, xsd)
         return cfdicoa
 
