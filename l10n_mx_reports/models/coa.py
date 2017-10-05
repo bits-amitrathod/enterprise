@@ -11,9 +11,9 @@ MX_NS_REFACTORING = {
     'BCE__': 'BCE',
 }
 
-CFDICOA_TEMPLATE = 'l10n_mx_reports.cfdi11coa'
-CFDICOA_XSD = 'l10n_mx_reports/data/xsd/%s/cfdi11coa.xsd'
-CFDICOA_XSLT_CADENA = 'l10n_mx_reports/data/xslt/%s/CatalogoCuentas_1_1.xslt'
+CFDICOA_TEMPLATE = 'l10n_mx_reports.cfdicoa'
+CFDICOA_XSD = 'l10n_mx_reports/data/xsd/%s/cfdicoa.xsd'
+CFDICOA_XSLT_CADENA = 'l10n_mx_reports/data/xslt/%s/CatalogoCuentas_1_2.xslt'
 
 
 class MXReportAccountCoa(models.AbstractModel):
@@ -124,7 +124,7 @@ class MXReportAccountCoa(models.AbstractModel):
 
     def get_xml(self, options):
         qweb = self.env['ir.qweb']
-        version = '1.1'
+        version = '1.3'
         values = self.get_coa_dict(options)
         cfdicoa = qweb.render(CFDICOA_TEMPLATE, values=values)
         for key, value in MX_NS_REFACTORING.items():

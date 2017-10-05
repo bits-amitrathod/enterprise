@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:catalogocuentas="www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:contelec_td="www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE" targetNamespace="www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:import namespace="www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE" schemaLocation="http://s3.vauxoo.com/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE/CatalogosParaEsqContE.xsd"/>
+<xs:schema xmlns:catalogocuentas="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:contelec_td="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE" targetNamespace="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE" schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE/CatalogosParaEsqContE.xsd"/>
     <xs:element name="Catalogo">
         <xs:annotation>
             <xs:documentation>Estándar de catálogo de cuentas que se entrega como parte de la contabilidad electrónica.</xs:documentation>
@@ -62,7 +62,7 @@
                         </xs:attribute>
                         <xs:attribute name="Natur" use="required">
                             <xs:annotation>
-                                <xs:documentation>Atributo requerido para expresar la naturaleza de la cuenta o subcuenta. (D - Deudora, A - Acreedora). ( Activo = D ) ( Pasivo = A ) ( Capital = A ) ( Ingreso = A ) ( Costo = D ) ( Gasto = D ) ( Resultado Integral de Financiamiento = D y/o A ) ( Cuentas de orden = D y/o A ).</xs:documentation>
+                                <xs:documentation>Atributo requerido para expresar la naturaleza de la cuenta o subcuenta. (D - Deudora, A - Acreedora). ( Activo = D ) ( Pasivo = A ) ( Capital = A ) ( Ingreso = A ) ( Costo = D ) ( Gasto = D ) ( Resultado Integral de Financiamiento = D y/o A ) ( Cuentas de orden = D y/o A ). Existen cuentas de Activo, Pasivo y Capital que por  su naturaleza pueden presentarse de manera Deudora o Acreedora.</xs:documentation>
                             </xs:annotation>
                             <xs:simpleType>
                                 <xs:restriction base="xs:string">
@@ -73,7 +73,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="Version" type="xs:string" use="required" fixed="1.1">
+            <xs:attribute name="Version" type="xs:string" use="required" fixed="1.3">
                 <xs:annotation>
                     <xs:documentation>Atributo requerido para expresar la versión del formato</xs:documentation>
                 </xs:annotation>

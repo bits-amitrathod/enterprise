@@ -11,10 +11,10 @@ MX_NS_REFACTORING = {
     'BCE__': 'BCE',
 }
 
-CFDIBCE_TEMPLATE = 'l10n_mx_reports.cfdi11balance'
-CFDIBCE_XSD = 'l10n_mx_reports/data/xsd/%s/cfdi11balance.xsd'
+CFDIBCE_TEMPLATE = 'l10n_mx_reports.cfdibalance'
+CFDIBCE_XSD = 'l10n_mx_reports/data/xsd/%s/cfdibalance.xsd'
 CFDIBCE_XSLT_CADENA = ('l10n_mx_reports/data/xslt/%s'
-                       '/BalanzaComprobacion_1_1.xslt')
+                       '/BalanzaComprobacion_1_2.xslt')
 
 
 # TODO: When the module l10n_mx_edi is merged use the method in that module
@@ -187,7 +187,7 @@ class MxReportAccountTrial(models.AbstractModel):
     @api.model
     def get_xml(self, options):
         qweb = self.env['ir.qweb']
-        version = '1.1'
+        version = '1.3'
         ctx = self.set_context(options)
         if not ctx.get('date_to'):
             return False
