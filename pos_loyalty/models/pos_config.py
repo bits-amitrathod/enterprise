@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class PosConfig(models.Model):
     _inherit = 'pos.config'
 
-    loyalty_id = fields.Many2one('loyalty.program', string='Loyalty Program', help='The loyalty program used by this point_of_sale.')
+    loyalty_id = fields.Many2one('loyalty.program', string='Loyalty Program', help='The loyalty program used by this point of sale.')
 
     @api.onchange('module_pos_loyalty')
     def _onchange_module_pos_loyalty(self):
