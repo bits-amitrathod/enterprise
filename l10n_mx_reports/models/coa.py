@@ -129,6 +129,8 @@ class MXReportAccountCoa(models.AbstractModel):
         cfdicoa = qweb.render(CFDICOA_TEMPLATE, values=values)
         for key, value in MX_NS_REFACTORING.items():
             cfdicoa = cfdicoa.replace(key, value + ':')
+        cfdicoa = self.l10n_mx_edi_add_digital_stamp(
+            CFDICOA_XSLT_CADENA % version, cfdicoa)
 
         check_with_xsd(cfdicoa, CFDICOA_XSD % version)
         return cfdicoa
