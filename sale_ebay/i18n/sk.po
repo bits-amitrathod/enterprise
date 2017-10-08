@@ -2,12 +2,17 @@
 # This file contains the translation of the following modules:
 # * sale_ebay
 # 
+# Translators:
+# Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Pavol Krnáč <pavol.krnac@ekoenergo.sk>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-30 12:54+0000\n"
 "PO-Revision-Date: 2015-10-30 12:54+0000\n"
+"Last-Translator: Pavol Krnáč <pavol.krnac@ekoenergo.sk>, 2017\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,6 +29,9 @@ msgid ""
 "        \n"
 "      "
 msgstr ""
+"\n"
+"\n"
+"${object.ebay_description | safe}"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:310
@@ -32,6 +40,8 @@ msgid ""
 " If you want to set quantity to 0, the Out Of Stock option should be enabled"
 " and the listing duration should set to Good 'Til Canceled"
 msgstr ""
+"Ak chcete nastaviť množstvo na 0, možnosť Vypredané by mala byť aktivovná a "
+"zoznam trvania by mal nastavený na Dobrý kým nebude zrušený"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:313
@@ -40,31 +50,33 @@ msgid ""
 " You need to have at least 2 variations selected for a multi-variations listing.\n"
 " Or if you try to delete a variation, you cannot do it by unselecting it. Setting the quantity to 0 is the safest method to make a variation unavailable."
 msgstr ""
+"Musíte mať aspoň 2 varianty vybrané pre zoznamové multi-variácie.\n"
+"Alebo ak sa pokúsite odstrániť variant, môžete to urobiť tým, že zrušíte jej výber. Nastavenie množstva na 0 je najbezpečnejším spôsobom, aby sa spraviť varáciu nedostupnu."
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "10 Days"
-msgstr ""
+msgstr "10 dní"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "3 Days"
-msgstr ""
+msgstr "3 dni"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "30 Days (only for fixed price)"
-msgstr ""
+msgstr "30 dní (len pre pevnú cenu)"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "5 Days"
-msgstr ""
+msgstr "5 dní"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "7 Days"
-msgstr ""
+msgstr "7 dní"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:198
@@ -73,87 +85,89 @@ msgid ""
 "All the quantities must be greater than 0 or you need to enable the Out Of "
 "Stock option."
 msgstr ""
+"Všetky množstvá musia byť väčšie ako 0, alebo musíte aktivovať možnosť "
+"Vypredané."
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_best_offer
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_best_offer
 msgid "Allow Best Offer"
-msgstr ""
+msgstr "Povoliť najlepšiu ponuku"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_type:0
 msgid "Auction"
-msgstr ""
+msgstr "Aukcia"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_country_ebay_available
 #: model:ir.model.fields,field_description:sale_ebay.field_res_currency_ebay_available
 msgid "Availability To Use For eBay API"
-msgstr ""
+msgstr "Dostupnosť pre použitie eBay API"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_buy_it_now_price
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_buy_it_now_price
 msgid "Buy It Now Price"
-msgstr ""
+msgstr "Kúpiť ihneď cena"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušiť"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_category_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_category_id
 msgid "Category"
-msgstr ""
+msgstr "Kategória"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_category_2_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_category_2_id
 msgid "Category 2 (Optional)"
-msgstr ""
+msgstr "Kategória 2 (voliteľné)"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_category_id
 msgid "Category ID"
-msgstr ""
+msgstr "ID kategórie"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_category_parent_id
 msgid "Category Parent ID"
-msgstr ""
+msgstr "Nadradené ID kategórie"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_category_type
 msgid "Category Type"
-msgstr ""
+msgstr "Typ kategórie"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_item_condition_code
 msgid "Code"
-msgstr ""
+msgstr "Kód "
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.view_sale_ebay_settings
 msgid "Configuration"
-msgstr ""
+msgstr "Nastavenie"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:277
 #, python-format
 msgid "Configure The eBay Integrator Now"
-msgstr ""
+msgstr "Konfigurovať eBay integrátor teraz"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_res_country
 msgid "Country"
-msgstr ""
+msgstr "Krajina"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_country
 msgid "Country Where The Products Are Stored"
-msgstr ""
+msgstr "Krajina kde sú produkty uskladnené"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_create_uid
@@ -162,7 +176,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_create_uid
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Created by "
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_create_date
@@ -171,39 +185,39 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_create_date
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Created on "
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_res_currency
 msgid "Currency"
-msgstr ""
+msgstr "Mena"
 
 #. module: sale_ebay
 #: selection:ebay.category,category_type:0
 msgid "Custom Store Category"
-msgstr ""
+msgstr "Kategória prispôsobený obchod"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Describe the product characteristics..."
-msgstr ""
+msgstr "Popíšte charakteristiku produktu..."
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_description
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_description
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_template_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_template_id
 msgid "Description Template"
-msgstr ""
+msgstr "Šablóna popisu"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_dev_id
 msgid "Developer Key"
-msgstr ""
+msgstr "Vývojársky kľúč"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_display_name
@@ -212,23 +226,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_display_name
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Názov obrazovky "
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_listing_duration
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_listing_duration
 msgid "Duration"
-msgstr ""
+msgstr "Trvanie"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "End Item's Listing"
-msgstr ""
+msgstr "Ukončiť výpis položky"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_end_items_listings
 msgid "End Items' Listings"
-msgstr ""
+msgstr "Ukončiť výpisy položky"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:184
@@ -237,6 +251,8 @@ msgid ""
 "Error Encountered.\n"
 " No Variant Set To Be Listed On eBay."
 msgstr ""
+"Chyba.\n"
+"Žiadna varianta nebola nastavená na výpis na eBay."
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:316
@@ -245,27 +261,29 @@ msgid ""
 "Error Encountered.\n"
 "'%s'"
 msgstr ""
+"Chyba.\n"
+"'%s'"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_fixed_price
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_fixed_price
 msgid "Fixed Price"
-msgstr ""
+msgstr "Pevná cena"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_type:0
 msgid "Fixed price"
-msgstr ""
+msgstr "Pevná cena"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_full_name
 msgid "Full Name"
-msgstr ""
+msgstr "Celé meno"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "Good 'Til Cancelled (only for fixed price)"
-msgstr ""
+msgstr "Dobré kym nebude zrušené (len pre pevnú cenu)"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_id
@@ -274,7 +292,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_id
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:306
@@ -283,12 +301,14 @@ msgid ""
 "Impossible to revise a listing into a multi-variations listing.\n"
 " Create a new listing."
 msgstr ""
+"Nemožné zrevidovať výpis na multi-variačný zoznam.\n"
+"Vytvorte nový výpis."
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_item_condition_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_item_condition_id
 msgid "Item Condition"
-msgstr ""
+msgstr "Stav položky"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category___last_update
@@ -297,7 +317,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy___last_update
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Posledná modifikácia"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_write_uid
@@ -306,7 +326,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_write_uid
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upravoval"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_write_date
@@ -315,55 +335,55 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_write_date
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upravované"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_last_sync
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_last_sync
 msgid "Last update"
-msgstr ""
+msgstr "Posledná aktualizácia"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_leaf_category
 msgid "Leaf category"
-msgstr ""
+msgstr "Kategória hárku"
 
 #. module: sale_ebay
 #: model:ir.actions.act_window,name:sale_ebay.action_ebay_link_listing
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
 msgid "Link Existing Listing"
-msgstr ""
+msgstr "Pripojiť existujúci výpis"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
 msgid "Link Listing"
-msgstr ""
+msgstr "Pripojiť výpis"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Link With Existing Listing"
-msgstr ""
+msgstr "Prepojiť s existujúcim výpisom"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "List Item"
-msgstr ""
+msgstr "Vypísať položku"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_list_items
 msgid "List Items"
-msgstr ""
+msgstr "Vypísať položky"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_listing_type
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_listing_type
 msgid "Listing Type"
-msgstr ""
+msgstr "Typ výpisu"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_location
 msgid "Location Where The Products Are Stored"
-msgstr ""
+msgstr "Lokácia kde sú produkty uskladnené"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_name
@@ -371,224 +391,224 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_name
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_name
 msgid "Name"
-msgstr ""
+msgstr "Meno"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/sale_ebay.py:183
 #, python-format
 msgid "No Business Policies"
-msgstr ""
+msgstr "Žiadne obchodné postupy"
 
 #. module: sale_ebay
 #: selection:ebay.category,category_type:0
 msgid "Official eBay Category"
-msgstr ""
+msgstr "Oficiálna eBay kategória"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:276
 #, python-format
 msgid "One parameter is missing."
-msgstr ""
+msgstr "Jeden parameter chýba."
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:302
 #, python-format
 msgid "Or the condition is not compatible with the category."
-msgstr ""
+msgstr "Alebo táto podmienka nie je kompatibilná s danou kategóriu."
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_res_partner
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_seller_payment_policy_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_seller_payment_policy_id
 msgid "Payment Policy"
-msgstr ""
+msgstr "Postup platby"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_policy_id
 msgid "Policy ID"
-msgstr ""
+msgstr "ID postupu"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_private_listing
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_private_listing
 msgid "Private Listing"
-msgstr ""
+msgstr "Súkromný výpis"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_product_product
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_ebay_tree_view
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Šablóna produktu"
 
 #. module: sale_ebay
 #: selection:sale.config.settings,ebay_domain:0
 msgid "Production"
-msgstr ""
+msgstr "Výroba"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_prod_app_id
 msgid "Production App Key"
-msgstr ""
+msgstr "Kľúč výrobnej aplikácie"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_prod_cert_id
 msgid "Production Cert Key"
-msgstr ""
+msgstr "Certifikát výrobnej aplikácie"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_prod_token
 msgid "Production Token"
-msgstr ""
+msgstr "Známka výroby"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_use
 msgid "Publish On eBay"
-msgstr ""
+msgstr "Zverejniť na eBay"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_quantity
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_quantity
 msgid "Quantity"
-msgstr ""
+msgstr "Množstvo"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_quantity_sold
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_quantity_sold
 msgid "Quantity Sold"
-msgstr ""
+msgstr "Predané množstvo"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Relist Item"
-msgstr ""
+msgstr "Nanovo vypísať položku"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_relist_items
 msgid "Relist Items"
-msgstr ""
+msgstr "Nanovo vypísať položky"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_seller_return_policy_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_seller_return_policy_id
 msgid "Return Policy"
-msgstr ""
+msgstr "Reklamačný postup"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Revise Item"
-msgstr ""
+msgstr "Zrevidovať položku"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_revise_items
 msgid "Revise Items"
-msgstr ""
+msgstr "Zrevidovať položky"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sales_team
 msgid "Sales Team"
-msgstr ""
+msgstr "Predajný tým"
 
 #. module: sale_ebay
 #: selection:sale.config.settings,ebay_domain:0
 msgid "Sandbox"
-msgstr ""
+msgstr "Sandbox"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sandbox_app_id
 msgid "Sandbox App Key"
-msgstr ""
+msgstr "Kľúč Sandbox aplikácie"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sandbox_cert_id
 msgid "Sandbox Cert Key"
-msgstr ""
+msgstr "Kľúč Sandbox certifikátu "
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_sandbox_token
 msgid "Sandbox Token"
-msgstr ""
+msgstr "Sandbox známka"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_seller_shipping_policy_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_seller_shipping_policy_id
 msgid "Shipping Policy"
-msgstr ""
+msgstr "Podmienky dopravy"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_start_date
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Počiatočný dátum"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_price
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_price
 msgid "Starting Price for Auction"
-msgstr ""
+msgstr "Počiatočná cena pre aukciu"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_store_category_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_store_category_id
 msgid "Store Category (Optional)"
-msgstr ""
+msgstr "Kategória obchodu (voliteľné)"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_store_category_2_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_store_category_2_id
 msgid "Store Category 2 (Optional)"
-msgstr ""
+msgstr "Kategória obchodu 2 (voliteľné)"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_subtitle
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_subtitle
 msgid "Subtitle"
-msgstr ""
+msgstr "Titulka"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_short_summary
 msgid "Summary"
-msgstr ""
+msgstr "Zhrnutie"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.view_sale_ebay_settings
 msgid "Sync categories"
-msgstr ""
+msgstr "Synchronizovať kategórie"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.view_sale_ebay_settings
 msgid "Sync countries and currencies"
-msgstr ""
+msgstr "Synchronizovať krajiny a meny"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.view_sale_ebay_settings
 msgid "Sync policies"
-msgstr ""
+msgstr "Synchronizovať podmienky"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.view_sale_ebay_settings
 msgid "Sync product status"
-msgstr ""
+msgstr "Synchronizovať stav produktu"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:608
 #, python-format
 msgid "The Buyer Chose The Following Delivery Method :\n"
-msgstr ""
+msgstr "Kupujúci si vybral nasledovný spôsob doručenia:\n"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:604 code:addons/sale_ebay/product.py:605
 #, python-format
 msgid "The Buyer Posted :\n"
-msgstr ""
+msgstr "Kupujúci zverejnil :\n"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:308
@@ -597,6 +617,8 @@ msgid ""
 "The UPC value (the barcode value of your product) is not valid by using the "
 "checksum."
 msgstr ""
+"Hodnota UPC (hodnota čiarového kódu vášho výrobku) nie je platný pomocou "
+"kontrolného súčtu."
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_subtitle
@@ -605,12 +627,14 @@ msgid ""
 "The subtitle is restricted to 55 characters. Fees can be claimed by eBay for"
 " this feature"
 msgstr ""
+"Titulka je obmedzená na 55 znakov. eBay môže nárokovať poplatky za túto "
+"funkciu"
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_title
 #: model:ir.model.fields,help:sale_ebay.field_product_template_ebay_title
 msgid "The title is restricted to 80 characters"
-msgstr ""
+msgstr "Titul je obmedzný na 80 znakov"
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_category_2_id
@@ -619,127 +643,129 @@ msgid ""
 "The use of a secondary category is not allowed on every eBay sites. Fees can"
 " be claimed by eBay for this feature"
 msgstr ""
+"Použitie druhotnej kategórie nie je povolené na všetkých eBay stránkach. "
+"eBay si môže nárokovať poplatky za túto funkciu"
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_template_id
 #: model:ir.model.fields,help:sale_ebay.field_product_template_ebay_template_id
 msgid "This field contains the template that will be used."
-msgstr ""
+msgstr "Toto pole obsahuje šablónu ktorá bude použitá."
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_title
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_title
 msgid "Title"
-msgstr ""
+msgstr "Titul"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Prevod"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_policy_policy_type
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_ebay_update_carrier
 msgid "Update eBay Carrier Information"
-msgstr ""
+msgstr "Aktualizovať informácie o eBay doávateľovi"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_gallery_plus
 msgid "Use Gallery Plus Option"
-msgstr ""
+msgstr "Použiť možnosť Gallery Plus"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_out_of_stock
 msgid "Use Out Of Stock Option"
-msgstr ""
+msgstr "Použiť možnosť Vypredané"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_sync_stock
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_sync_stock
 msgid "Use Stock Quantity"
-msgstr ""
+msgstr "Použiť Skladové množstvo"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_use
 msgid "Use eBay"
-msgstr ""
+msgstr "Použiť eBay"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Variants"
-msgstr ""
+msgstr "Varianty"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_zip_code
 msgid "Zip Code Where The Products Are Stored"
-msgstr ""
+msgstr "PSČ miesta kde sú produkty uskladnené"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.sale_ebay_category_tree_view
 msgid "eBay Categories"
-msgstr ""
+msgstr "eBay kategórie"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_currency
 msgid "eBay Currency"
-msgstr ""
+msgstr "eBay mena"
 
 #. module: sale_ebay
 #: model:product.category,name:sale_ebay.product_category_ebay
 msgid "eBay Delivery Services"
-msgstr ""
+msgstr "eBay dodacie služby"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_site_ebay_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_id
 msgid "eBay ID"
-msgstr ""
+msgstr "eBay ID"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.view_sale_ebay_settings
 msgid "eBay Integration"
-msgstr ""
+msgstr "eBay integrácia"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_link_listing_ebay_id
 msgid "eBay Listing ID"
-msgstr ""
+msgstr "eBay ID výpisu"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "eBay Sale"
-msgstr ""
+msgstr "eBay predaj"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_domain
 msgid "eBay Site"
-msgstr ""
+msgstr "eBay stránka"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_sale_config_settings_ebay_site
 msgid "eBay Site Used"
-msgstr ""
+msgstr "Použitá eBay stránka"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_listing_status
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_listing_status
 msgid "eBay Status"
-msgstr ""
+msgstr "eBay stav"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_partner_ebay_id
 msgid "eBay User ID"
-msgstr ""
+msgstr "eBay ID používateľa"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_variant_url
 msgid "eBay Variant URL"
-msgstr ""
+msgstr "eBay URL varianta"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/sale_ebay.py:53
@@ -748,6 +774,8 @@ msgid ""
 "eBay error: Impossible to synchronize the categories. \n"
 "'%s'"
 msgstr ""
+"eBay chyba: Nemožné synchronizovať kategórie. \n"
+"'%s'"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:408 code:addons/sale_ebay/product.py:478
@@ -756,50 +784,52 @@ msgid ""
 "eBay error: Impossible to synchronize the products. \n"
 "'%s'"
 msgstr ""
+"eBay chyba: Nemožné synchronizovať produkty. \n"
+"'%s'"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/product.py:304
 #, python-format
 msgid "eBay is unreachable. Please try again later."
-msgstr ""
+msgstr "eBay je nedostupný. Skúste prosím neskôr."
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_url
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_url
 msgid "eBay url"
-msgstr ""
+msgstr "eBay url"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_ebay_category
 msgid "ebay.category"
-msgstr ""
+msgstr "ebay.category"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_ebay_item_condition
 msgid "ebay.item.condition"
-msgstr ""
+msgstr "ebay.item.condition"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_ebay_link_listing
 msgid "ebay.link.listing"
-msgstr ""
+msgstr "ebay.link.listing"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_ebay_policy
 msgid "ebay.policy"
-msgstr ""
+msgstr "ebay.policy"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_ebay_site
 msgid "ebay.site"
-msgstr ""
+msgstr "ebay.site"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
 msgid "or"
-msgstr ""
+msgstr "alebo"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_sale_config_settings
 msgid "sale.config.settings"
-msgstr ""
+msgstr "sale.config.settings"
