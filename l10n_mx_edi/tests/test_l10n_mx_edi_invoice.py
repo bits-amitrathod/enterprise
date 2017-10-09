@@ -130,8 +130,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqual(len(xml_attachs), 2)
         xml_1 = objectify.fromstring(base64.decodestring(xml_attachs[0].datas))
         xml_2 = objectify.fromstring(base64.decodestring(xml_attachs[1].datas))
-        # TODO: Supports this case. Currently the xml date is changed.
-        # self.assertEqualXML(xml_1, xml_2)
+        xml_2.remove(xml_2.Addenda)
+        self.assertEqualXML(xml_1, xml_2)
 
         # -----------------------
         # Testing cancel PAC process
