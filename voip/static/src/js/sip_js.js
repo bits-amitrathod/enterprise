@@ -206,7 +206,7 @@ var UserAgent = Class.extend(core.mixins.PropertiesMixin,{
             },10000);
             return;
         }
-        this.current_number = number;
+        this.current_number = number.replace(/[\s-/.]/g, '');
 
         //if there is already a media stream, it is reused
         if (this.media_stream) {
