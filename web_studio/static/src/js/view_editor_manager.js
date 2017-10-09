@@ -1125,7 +1125,7 @@ var ViewEditorManager = Widget.extend({
                 this._editElementAttributes(type, node, xpath_info, new_attrs);
                 break;
             case 'filter':
-                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context']);
+                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context', 'create_group']);
                 this._addFilter(type, node, xpath_info, position, new_attrs);
                 break;
             case 'separator':
