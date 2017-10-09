@@ -568,13 +568,14 @@ var GanttView = View.extend({
                 });
             }
             else {
+                var duration = (task.task_stop.getTime() - task.task_start.getTime()) / 3600000;
                 // Consolidation
                 gantt_tasks.push({
                     'id': "gantt_task_" + task.id,
                     'text': task.display_name || '',
                     'active': task.active,
                     'start_date': task.task_start,
-                    'duration': gantt.calculateDuration(task.task_start, task.task_stop),
+                    'duration': duration,
                     'progress': task.percent / 100,
                     'parent': parent_id,
                     'consolidation': task[self.fields_view.arch.attrs.consolidation],
