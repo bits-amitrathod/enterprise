@@ -334,9 +334,10 @@ class AccountInvoice(models.Model):
             except Exception as e:
                 inv.l10n_mx_edi_log_error(str(e))
                 continue
-            msg = getattr(response.resultados[0], 'mensaje', None)
-            code = getattr(response.resultados[0], 'status', None)
-            xml_signed = getattr(response.resultados[0], 'cfdiTimbrado', None)
+            res = response.resultados
+            msg = getattr(res[0] if res else response, 'mensaje', None)
+            code = getattr(res[0] if res else response, 'status', None)
+            xml_signed = getattr(res[0] if res else response, 'cfdiTimbrado', None)
             inv._l10n_mx_edi_post_sign_process(xml_signed, code, msg)
 
     @api.multi
@@ -360,10 +361,11 @@ class AccountInvoice(models.Model):
             except Exception as e:
                 inv.l10n_mx_edi_log_error(str(e))
                 continue
-            code = getattr(response.resultados[0], 'statusUUID', None)
+            res = response.resultados
+            code = getattr(res[0], 'statusUUID', None) if res else getattr(response, 'status', None)
             cancelled = code in ('201', '202')  # cancelled or previously cancelled
             # no show code and response message if cancel was success
-            msg = '' if cancelled else getattr(response.resultados[0], 'mensaje', None)
+            msg = '' if cancelled else getattr(res[0] if res else response, 'mensaje', None)
             code = '' if cancelled else code
             inv._l10n_mx_edi_post_cancel_process(cancelled, code, msg)
 
