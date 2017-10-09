@@ -4,18 +4,18 @@
 # 
 # Translators:
 # Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
-# Max Belyanin <maxbelyanin@gmail.com>, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
 # Denis Trepalin <zekarious@gmail.com>, 2017
+# SV <sv@grimmette.ru>, 2017
+# Max Belyanin <maxbelyanin@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Denis Trepalin <zekarious@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Max Belyanin <maxbelyanin@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,10 +38,11 @@ msgstr "4. Страница слежения"
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_running
 msgid "Active"
-msgstr "Активно"
+msgstr "Актив"
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_ir_ui_view_track
+#: model:ir.model.fields,help:website_crm_score.field_website_page_track
 msgid "Allow to specify for one page of the website to be trackable or not"
 msgstr ""
 "Разрешить указать для одной страницы сайта, чтобы быть отслеживаются или нет"
@@ -82,6 +83,11 @@ msgid "Capacity"
 msgstr "Вместимость"
 
 #. module: website_crm_score
+#: model:ir.actions.act_window,help:website_crm_score.team_action
+msgid "Click here to define a new sales channel."
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.actions.act_window,help:website_crm_score.team_user_action
 msgid "Click to create a salesmen."
 msgstr "Нажмите для создания продавца."
@@ -117,6 +123,11 @@ msgstr ""
 #: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_scoring
 #: model:ir.cron,name:website_crm_score.ir_cron_lead_scoring
 msgid "Crm Score: lead scoring "
+msgstr ""
+
+#. module: website_crm_score
+#: model:ir.model.fields,help:website_crm_score.field_website_crm_score_last_run
+msgid "Date from the last scoring on all leads."
 msgstr ""
 
 #. module: website_crm_score
@@ -192,6 +203,11 @@ msgstr "Последний раз обновил"
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_write_date
 msgid "Last Updated on"
 msgstr "Последнее обновление"
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_last_run
+msgid "Last run"
+msgstr "Посл. запуск"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_lead_id
@@ -342,7 +358,7 @@ msgstr "Записи продаж"
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_team_user_ids
 msgid "Salesman"
-msgstr "Менеджер продаж"
+msgstr "Продавец"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_lead_score
@@ -401,6 +417,7 @@ msgstr "Назначенные команды"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_ir_ui_view_track
+#: model:ir.model.fields,field_description:website_crm_score.field_website_page_track
 msgid "Track"
 msgstr "Курс"
 
@@ -413,6 +430,13 @@ msgstr "Ничьи инициативы"
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_url
 msgid "Url"
 msgstr "Url"
+
+#. module: website_crm_score
+#: model:ir.actions.act_window,help:website_crm_score.team_action
+msgid ""
+"Use sales channels to organize your sales departments.\n"
+"                    Each channel will work with a separate pipeline."
+msgstr ""
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_user_id
@@ -468,6 +492,11 @@ msgstr "fa-times"
 #: model:ir.model,name:website_crm_score.model_ir_ui_view
 msgid "ir.ui.view"
 msgstr "ir.ui.view"
+
+#. module: website_crm_score
+#: model:ir.ui.view,arch_db:website_crm_score.website_crm_score_view_kanban
+msgid "leads"
+msgstr "инициативы"
 
 #. module: website_crm_score
 #: model:ir.ui.view,arch_db:website_crm_score.sales_team_form_view_assign

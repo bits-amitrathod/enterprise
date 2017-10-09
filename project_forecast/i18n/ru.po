@@ -3,20 +3,18 @@
 # * project_forecast
 # 
 # Translators:
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
-# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
-# Alex Puchkov <ap@alteco.co>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
-# Максим Дронь <dronmax@gmail.com>, 2017
+# SV <sv@grimmette.ru>, 2017
 # Viktor Pogrebniak <vp@aifil.ru>, 2017
-# Max Belyanin <maxbelyanin@gmail.com>, 2017
+# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Максим Дронь <dronmax@gmail.com>, 2017
 # Denis Trepalin <zekarious@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
 "Last-Translator: Denis Trepalin <zekarious@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -42,9 +40,27 @@ msgid "<span>Forecast</span>"
 msgstr "<span>Прогноз</span>"
 
 #. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:152
+#, python-format
+msgid ""
+"A project must have a start date to use a forecast grid, found no start date"
+" for {project.display_name}"
+msgstr ""
+"Проект должен иметь дату начала использования сетки прогноза, не найдено "
+"даты начала для {project.display_name}"
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:170
+#, python-format
+msgid ""
+"A project must have an end date to use a forecast grid, found no end date "
+"for {project.display_name}"
+msgstr ""
+
+#. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_active
 msgid "Active"
-msgstr "Активно"
+msgstr "Актив"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_task_allow_forecast
@@ -63,14 +79,42 @@ msgid "Archived"
 msgstr "Архивировано"
 
 #. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.project_forecast_grid
+msgid "Assign"
+msgstr "Назначить"
+
+#. module: project_forecast
+#: model:ir.actions.act_window,name:project_forecast.action_project_forecast_assign
+msgid "Assign user on a task"
+msgstr "Назначить пользователя на задачу"
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_assign
+msgid "Assign user on task"
+msgstr "Назначить пользователя на эту задачу"
+
+#. module: project_forecast
+#: model:ir.ui.menu,name:project_forecast.menu_project_forecast_grid_by_project
 #: model:ir.ui.menu,name:project_forecast.project_forecast_group_by_project
 msgid "By Project"
 msgstr "По Проекту"
 
 #. module: project_forecast
+#: model:ir.ui.menu,name:project_forecast.menu_project_forecast_grid_by_user
 #: model:ir.ui.menu,name:project_forecast.project_forecast_group_by_user
 msgid "By User"
 msgstr "По пользователю"
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project.py:28
+#, python-format
+msgid ""
+"Can only be used for forecasts not spanning multiple months, found "
+"%(forecast_count)d forecast(s) spanning across months in %(project_name)s"
+msgstr ""
+"Может быть использоваться только для прогнозов, не охватывающих несколько "
+"месяцев, найдено %(forecast_count)d прогноза(ов), охватывающих через месяцы "
+"в %(project_name)s"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_color
@@ -78,35 +122,39 @@ msgid "Color"
 msgstr "Цвет"
 
 #. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_token_count
-msgid "Count Payment Token"
-msgstr "Токен количества платежей"
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_assign
+msgid "Create"
+msgstr "Создать"
 
 #. module: project_forecast
-#: model:ir.ui.view,arch_db:project_forecast.project_view_form_inherit_project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.task_view_form_inherit_project_forecast
 msgid "Create a forecast"
 msgstr "Создать прогноз"
 
 #. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_create_uid
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_create_uid
 msgid "Created by"
 msgstr "Создано"
 
 #. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_create_date
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_create_date
 msgid "Created on"
 msgstr "Создан"
 
 #. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_display_name
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_display_name
 msgid "Display Name"
 msgstr "Отображаемое Имя"
 
 #. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_effective_hours
-msgid "Effective hours"
-msgstr "Эффективные часы"
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_employee_id
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_employee_id
+#: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
+msgid "Employee"
+msgstr "Сотрудник"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_end_date
@@ -119,10 +167,11 @@ msgid "Exclude"
 msgstr "Исключать"
 
 #. module: project_forecast
+#: code:addons/project_forecast/models/project.py:50
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_from_task
-#: model:ir.actions.act_window,name:project_forecast.project_forecast_action_project
 #: model:ir.ui.menu,name:project_forecast.project_forecast_menu
 #: model:ir.ui.view,arch_db:project_forecast.project_view_kanban_inherit_project_forecast
+#, python-format
 msgid "Forecast"
 msgstr "Прогноз"
 
@@ -131,6 +180,16 @@ msgstr "Прогноз"
 #: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
 msgid "Forecast Analysis"
 msgstr ""
+
+#. module: project_forecast
+#: model:ir.actions.act_window,name:project_forecast.action_project_forecast_grid_by_project
+msgid "Forecast By Project"
+msgstr "Прогноз по проекту"
+
+#. module: project_forecast
+#: model:ir.actions.act_window,name:project_forecast.action_project_forecast_grid_by_user
+msgid "Forecast By User"
+msgstr "Прогноз по пользователю"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
@@ -153,10 +212,28 @@ msgid "Forecast by user"
 msgstr "Прогноз по пользователю"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:120
+#: code:addons/project_forecast/models/project_forecast.py:97
 #, python-format
 msgid "Forecasted time must be positive"
 msgstr "Интервал должен быть положительным или равняться нулю"
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.view_project_set_dates
+msgid ""
+"Forecasting on a project requires that the project\n"
+"                        have start and end dates"
+msgstr ""
+"Прогнозирование проекта требует, чтобы проект\n"
+"                       имел дату начала и окончания"
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:148
+#, python-format
+msgid ""
+"Forecasting over a project only supports monthly forecasts (got step {})"
+msgstr ""
+"Прогнозирование над проектом поддерживает только ежемесячные прогнозы "
+"(получил шаг {})"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -164,39 +241,71 @@ msgid "Future"
 msgstr "Будущее"
 
 #. module: project_forecast
+#: model:ir.ui.menu,name:project_forecast.project_forecast_gantt
+msgid "Gantt"
+msgstr "Диаграмма Ганта"
+
+#. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_pivot
 msgid "Graph"
 msgstr "График"
 
 #. module: project_forecast
-#: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
-msgid "Group By"
-msgstr "Группировать"
+#: model:ir.ui.menu,name:project_forecast.menu_project_forecast_grid
+msgid "Grid"
+msgstr "Сетка"
 
 #. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:186
+#, python-format
+msgid ""
+"Grid adjustment for project forecasts only supports the 'start_date' columns"
+" field and the 'resource_hours' cell field, got respectively "
+"%(column_field)r and %(cell_field)r"
+msgstr ""
+"Корректировка сетки для прогнозов проекта поддерживает только поля столбцов "
+"'start_date' и 'resource_hours' клеток, соответственно получили "
+"%(column_field)r и %(cell_field)r"
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
+msgid "Group By"
+msgstr "Группировать по"
+
+#. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_id
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_id
 msgid "ID"
 msgstr "Номер"
 
 #. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_res_users_has_address
-msgid "Is address valid"
-msgstr "Это правильный адрес"
-
-#. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast___last_update
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment___last_update
 msgid "Last Modified on"
 msgstr "Последнее изменение"
 
 #. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_write_uid
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_write_uid
 msgid "Last Updated by"
 msgstr "Последний раз обновил"
 
 #. module: project_forecast
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_write_date
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_write_date
 msgid "Last Updated on"
 msgstr "Последнее обновление"
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
+msgid "Month"
+msgstr "Месяц"
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.project_forecast_grid
+msgid "Monthly Forecast"
+msgstr "Ежемесячный прогноз"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -214,29 +323,9 @@ msgid "Name"
 msgstr "Название"
 
 #. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_next_action
-msgid "Next Action"
-msgstr "Следующее действие"
-
-#. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_next_action_date
-msgid "Next Action Date"
-msgstr "Дата следующего действия"
-
-#. module: project_forecast
-#: model:ir.model.fields,help:project_forecast.field_res_users_payment_next_action
-msgid "Note regarding the next action."
-msgstr "Примечание относительно следующего действия."
-
-#. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "Past"
 msgstr "Прошлые"
-
-#. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_res_users_payment_token_ids
-msgid "Payment Tokens"
-msgstr "Токен оплаты"
 
 #. module: project_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_forecast_time
@@ -249,21 +338,33 @@ msgid "Planned hours"
 msgstr "Запланированные часы"
 
 #. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_percentage_hours
-msgid "Progress"
-msgstr "Выполнение"
-
-#. module: project_forecast
 #: model:ir.model,name:project_forecast.model_project_project
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_project_id
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_project_id
+#: model:ir.ui.view,arch_db:project_forecast.project_forecast_grid
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "Project"
 msgstr "Проект"
 
 #. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.view_project_set_dates
+msgid "Project Dates"
+msgstr "Сроки проекта"
+
+#. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
 msgid "Project Forecast"
 msgstr "Прогноз проекта"
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
+msgid "Project Forecast By Project"
+msgstr ""
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
+msgid "Project Forecast By User"
+msgstr "Прогноз проекта по пользователю"
 
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
@@ -276,9 +377,9 @@ msgid "Project: Generate Task Forecast"
 msgstr ""
 
 #. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_res_users_resource_ids
-msgid "Resource"
-msgstr "Ресурс"
+#: model:ir.model.fields,help:project_forecast.field_project_forecast_user_id
+msgid "Related user name for the resource to manage its access."
+msgstr "Пользователь управляющий доступом к ресурсу"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_start_date
@@ -287,6 +388,7 @@ msgstr "Дата начала"
 
 #. module: project_forecast
 #: model:ir.model,name:project_forecast.model_project_task
+#: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_task_id
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_task_id
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "Task"
@@ -303,12 +405,7 @@ msgid "Task tags"
 msgstr "Теги задач"
 
 #. module: project_forecast
-#: model:ir.model.fields,help:project_forecast.field_res_users_payment_next_action_date
-msgid "The date before which no action should be taken."
-msgstr "Дата, перед которой никаких действий не должно быть принято."
-
-#. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:132
+#: code:addons/project_forecast/models/project_forecast.py:109
 #, python-format
 msgid "The start-date must be lower than end-date."
 msgstr "Дата начала должна быть раньше даты окончания."
@@ -320,29 +417,35 @@ msgid "This feature shows the Forecast link in the kanban view"
 msgstr "Это свойство показывает ссылку Прогноза в представлении канбан"
 
 #. module: project_forecast
-#: model:ir.model.fields,field_description:project_forecast.field_res_users_unreconciled_aml_ids
-msgid "Unreconciled Aml"
-msgstr ""
-
-#. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_user_id
-#: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
 msgid "User"
 msgstr "Пользователь"
 
 #. module: project_forecast
-#: model:ir.model,name:project_forecast.model_res_users
-msgid "Users"
-msgstr "Пользователи"
+#: model:ir.ui.view,arch_db:project_forecast.view_project_set_dates
+msgid "View Forecast"
+msgstr "Вид прогноза"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:81
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
+msgid "Week"
+msgstr "Неделя"
+
+#. module: project_forecast
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
+#: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
+msgid "Year"
+msgstr "Год"
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:88
 #, python-format
 msgid "You cannot set a user with no working time."
 msgstr ""
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:126
+#: code:addons/project_forecast/models/project_forecast.py:103
 #, python-format
 msgid "Your task is not in the selected project."
 msgstr "Ваша задача не в выбранном проекте."
@@ -353,7 +456,12 @@ msgid "project.forecast"
 msgstr "project.forecast"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:60
+#: model:ir.model,name:project_forecast.model_project_forecast_assignment
+msgid "project.forecast.assignment"
+msgstr "project.forecast.assignment"
+
+#. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:68
 #, python-format
 msgid "undefined"
 msgstr "не определено"

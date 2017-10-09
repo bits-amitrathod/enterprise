@@ -2,17 +2,12 @@
 # This file contains the translation of the following modules:
 # * account_reports_followup
 # 
-# Translators:
-# Dorin Hongu <dhongu@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Fekete Mihai <mihai.fekete@forestandbiomass.ro>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-19 12:58+0000\n"
-"PO-Revision-Date: 2016-09-19 12:58+0000\n"
-"Last-Translator: Fekete Mihai <mihai.fekete@forestandbiomass.ro>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,18 +33,6 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
-"\n"
-"Stimate %(partner_name)s,\n"
-"\n"
-"În ciuda mai multor înștiințări trimise, contul dumneavoastră încă nu este soluționat.\n"
-"\n"
-"Dacă plata nu este efectuata completa în 8 zile, atunci vom întreprinde acțiunea legală pentru recuperarea datoriei, fără nicio altă înştiinţare.\n"
-"\n"
-"Speram ca aceasta acțiune se va dovedi a nu fi necesară, iar detaliile plaților restante sunt tiparite mai jos.\n"
-"\n"
-"In cazul in care aveti intrebari referitoare la aceasta situatie, nu ezitati sa contactati departamentul nostru contabil.\n"
-"\n"
-"Cu stima,\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line1
@@ -63,14 +46,6 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
-"\n"
-"Stimate %(partner_name)s,\n"
-"\n"
-"Exceptand faptul ca este o greseala a noastra, se pare ca urmatoarea suma este inca neplatita. Va rugam sa luati masurile necesare pentru a efectua plata in urmatoarele 8 zile.\n"
-"\n"
-"Daca plata a fost efectuata dupa primirea acestui email, va rugam sa nu luati in considerare acest mesaj. Nu exitati sa contactati departamentul nostru contabil.  \n"
-"\n"
-"Cu stima,\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line2
@@ -89,63 +64,56 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
-"\n"
-"Stimate %(partner_name)s,\n"
-"\n"
-"Suntem dezamagiti sa constatam ca, in ciuda faptului ca v-am trimis o instiintare, acest cont este foarte restant.\n"
-"\n"
-"Este esential sa efectuati plata imediat, in caz contrar va trebui sa luam in considerare oprirea contului dumneavoastra, ceea ce inseamna ca nu vom mai putea sa furnizam companiei dumneavoastra (bunuri/servicii).\n"
-"Va rugam sa luati masurile necesare pentru a efectua plata in urmatoarele 8 zile.\n"
-"\n"
-"Daca exista vreo problema cu plata facturii, problema de care noi nu suntem constienti, nu ezitati sa contactati departamentul nostru contabil, pentru a rezolva problema rapid.\n"
-"\n"
-"Detaliile referitoare la plata restanta sunt imprimate mai jos.\n"
-"\n"
-"Cu stima,\n"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
-msgid ""
-"<b>%(partner_name)s</b>: Partner Name\n"
-"                                <b>%(date)s</b>: Current Date\n"
-"                                <b>%(user_signature)s</b>: User Name\n"
-"                                <b>%(company_name)s</b>: User's Company Name"
+msgid ": Current Date"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup
-msgid "A particular context for the followup report"
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": Partner Name"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User Name"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User's Company Name"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_account_followup_report_all
 msgid "A progress bar for followup reports"
 msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
 msgid "Account Follow-up"
-msgstr "Cont Urmarire"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_note
 msgid "Action To Do"
-msgstr "Acțiune de efectuat"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "After"
-msgstr "După"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_responsible_id
 msgid "Assign a Responsible"
-msgstr "Atribuiti un Responsabil"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_result
 msgid "Balance"
-msgstr "Sold"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -155,65 +123,71 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_company
 msgid "Companies"
-msgstr "Companii"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_company_id
 msgid "Company"
-msgstr "Companie"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_name
 msgid "Company Name"
-msgstr "Numele companiei"
+msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.view_account_config_settings_inherit
-msgid "Configure your follow-up levels"
-msgstr "Configurați nivelurile de urmărire"
+#: model:ir.model,name:account_reports_followup.model_res_partner
+msgid "Contact"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
 msgid "Created by"
-msgstr "Creat de"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_date
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_date
 msgid "Created on"
-msgstr "Creat în"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_note
 msgid "Customer Payment Promise"
-msgstr "Promisiunea de Plata a Clientului"
+msgstr ""
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup.line:0
 msgid "Days of the follow-up levels must be different"
-msgstr "Zilele nivelurilor de urmarire trebuie sa fie diferite"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_display_name
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_display_name
 msgid "Display Name"
-msgstr "Nume afișat"
+msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Do it Later"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Done"
-msgstr "Efectuat"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
 msgid "Due Days"
-msgstr "Zile Scadente"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Duration between two reminders"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -223,45 +197,52 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_followup_id
 msgid "Follow Ups"
-msgstr "Urmariri"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_name
 msgid "Follow-Up Action"
-msgstr "Actiunea de Urmarire"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_followup_line_ids
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_tree
 msgid "Follow-up"
-msgstr "Urmare"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup_line
 msgid "Follow-up Criteria"
-msgstr "Criterii de Urmarire"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_line_id
 msgid "Follow-up Level"
-msgstr "Nivelul Urmaririi"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Follow-up Levels"
-msgstr "Nivelurile Urmaririlor"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_responsible_id
 msgid "Follow-up Responsible"
-msgstr "Responsabil cu urmarirea"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
-msgstr "Pasii Continuarii"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_account_followup_report
+msgid "Followup Report"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -275,55 +256,49 @@ msgstr ""
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
 msgid "Gives the sequence order when displaying a list of follow-up lines."
 msgstr ""
-"Da ordinea secventei atunci cand afiseaza o lista cu linii de urmarire."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_id
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_move_line
 msgid "Journal Item"
-msgstr "Element Jurnal"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup___last_update
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line___last_update
 msgid "Last Modified on"
-msgstr "Ultima modificare la"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_uid
 msgid "Last Updated by"
-msgstr "Ultima actualizare făcută de"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_date
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_date
 msgid "Last Updated on"
-msgstr "Ultima actualizare în"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_date
 msgid "Latest Follow-up"
-msgstr "Cea mai recenta Urmarire"
+msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_report_context_followup_level
-msgid "Level"
-msgstr "Nivel"
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:62
+#: code:addons/account_reports_followup/models/account_followup_report.py:56
 #, python-format
 msgid "Level: "
-msgstr "Nivel:"
+msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Log a Note"
 msgstr ""
 
@@ -331,26 +306,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Manual Action"
-msgstr "Acțiune manuală"
+msgstr ""
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:57
+#: code:addons/account_reports_followup/models/account_followup_report.py:68
 #, python-format
-msgid "Manual action done\n"
+msgid "Manual action done"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Minimum"
 msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
-msgid "Minimum days between two follow-ups *"
-msgstr ""
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:113
+#: code:addons/account_reports_followup/models/account_followup.py:113
 #, python-format
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
@@ -360,51 +336,51 @@ msgstr ""
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
 msgid "Only one follow-up per company is allowed"
-msgstr "Este permisa o singura urmarire pentru fiecare companie"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
 msgstr ""
-"Optional, puteti atribui un utilizator acestui camp, care il va face "
-"responsabil pentru actiune."
-
-#. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_res_partner
-msgid "Partner"
-msgstr "Partener"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Partner entries"
-msgstr "Inregistrari partener"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Payment Follow-up"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
-msgstr "Urmariri Plata"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_note
 msgid "Payment Note"
-msgstr "Nota de Plata"
+msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Print Letter"
 msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_description
 msgid "Printed Message"
-msgstr "Mesaj tiparit"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_filter
 msgid "Search Follow-up"
-msgstr "Cauta Urmarirea"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line2
@@ -414,7 +390,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_letter
 msgid "Send a Letter"
-msgstr "Trimite o Scrisoare"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -424,17 +400,17 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_email
 msgid "Send an Email"
-msgstr "Trimite un Email"
+msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
+#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
 msgid "Send by email"
 msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_sequence
 msgid "Sequence"
-msgstr "Secvență"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_delay
@@ -443,9 +419,6 @@ msgid ""
 "the reminder.  Could be negative if you want to send a polite alert "
 "beforehand."
 msgstr ""
-"Numarul de zile de asteptare dupa data scadenta a facturii pentru a trimite "
-"instiintarea. Poate fi negativa daca doriti sa trimiteti o alerta "
-"politicoasa in prealabil."
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line3
@@ -464,24 +437,16 @@ msgid ""
 "                        same customer, the actions of the most \n"
 "                        overdue invoice will be executed."
 msgstr ""
-"Pentru a le aminti clientilor sa isi plateasca facturile, puteti\n"
-"                        defini diferite actiuni in functie de cat de tare\n"
-"                        este restant clientul. Aceste actiuni sunt incluse\n"
-"                        in nivelurile de urmarire care sunt declansate atunci cand data\n"
-"                        scadenta a unei facturi a depasit un anumit\n"
-"                        numar de zile. Daca mai exista facturi restante ale \n"
-"                        aceluiasi client, vor fi executate actiunile majoritatii  \n"
-"                        facturilor scadente."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Total credit"
-msgstr "Credit total"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Total debit"
-msgstr "Debit total"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
@@ -494,8 +459,8 @@ msgid "Urging reminder letter"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
@@ -504,12 +469,12 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
 msgid "When processing, it will print a letter"
-msgstr "Atunci cand proceseaza, va tipari o scrisoare"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_email
 msgid "When processing, it will send an email"
-msgstr "Atunci cand proceseaza, va trimite un email"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_manual_action
@@ -517,8 +482,6 @@ msgid ""
 "When processing, it will set the manual action to be taken for that "
 "customer. "
 msgstr ""
-"Atunci cand proceseaza, va veta actiunea manuala care va fi intreprinsa "
-"pentru acel client. "
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -529,33 +492,31 @@ msgid ""
 "                            forget to translate in all languages you installed\n"
 "                            using to top right icon."
 msgstr ""
-"Scrieti aici introducerea la scrisoare,\n"
-"                            in functie de nivelul urmaririi. Puteti\n"
-"                            folosi urmatoarele cuvinte cheie in text. Nu\n"
-"                            uitati sa o traduceti in toate limbile pe care le-ati instalat\n"
-"                            folosind icoana din dreapta sus."
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:64
+#: code:addons/account_reports_followup/models/account_followup.py:64
 #, python-format
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
 "the percent character."
 msgstr ""
-"Descrierea d-voastra este nevalida, folositi legenda din partea dreapta sau "
-"%% daca doriti sa folositi caracterele procentuale."
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_config_settings
-msgid "account.config.settings"
-msgstr "account.config.settings"
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "days between each reminder"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "days overdue, do the following actions:"
-msgstr "zile restante, intreprindeti urmatoarele actiuni:"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "e.g. Call the customer, check if it's paid, ..."
-msgstr "de exemplu Sunati un client, verificati daca este platit, ..."
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_res_config_settings
+msgid "res.config.settings"
+msgstr ""

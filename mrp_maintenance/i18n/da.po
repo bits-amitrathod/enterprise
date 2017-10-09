@@ -3,14 +3,16 @@
 # * mrp_maintenance
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Ejner Sønniksen <ejner@vkdata.dk>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Sanne Kristensen <sanne@vkdata.dk>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: Sanne Kristensen <sanne@vkdata.dk>, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,12 +23,12 @@ msgstr ""
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_view_form_inherit_maintenance
 msgid "<span class=\"o_stat_text\">Maintenance Request</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Anmodning om vedligeholdelse</span>"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
 msgid "<span class=\"o_stat_text\">Maintenance</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Vedligeholdelse</span>"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_estimated_next_failure
@@ -47,7 +49,7 @@ msgstr ""
 #: model:ir.model,name:mrp_maintenance.model_maintenance_equipment
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
 msgid "Equipment"
-msgstr ""
+msgstr "Udstyr"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
@@ -122,24 +124,26 @@ msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
-#: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_tablet_view_form_inherit_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_view_form_inherit_maintenance
 msgid "Maintenance Request"
 msgstr ""
 
 #. module: mrp_maintenance
-#: code:addons/mrp_maintenance/models/mrp_maintenance.py:96
-#: code:addons/mrp_maintenance/models/mrp_maintenance.py:126
-#: model:ir.actions.act_window,name:mrp_maintenance.maintenance_request_action_reports
-#: model:ir.model,name:mrp_maintenance.model_maintenance_request
-#: model:ir.ui.menu,name:mrp_maintenance.maintenance_request_reporting
-#, python-format
-msgid "Maintenance Requests"
+#: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workorder_maintenance_request_count
+msgid "Maintenance Request Count"
 msgstr ""
 
 #. module: mrp_maintenance
-#: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workorder_maintenance_request_count
-msgid "Maintenance request count"
+#: code:addons/mrp_maintenance/models/mrp_maintenance.py:96
+#: code:addons/mrp_maintenance/models/mrp_maintenance.py:126
+#: model:ir.model,name:mrp_maintenance.model_maintenance_request
+#, python-format
+msgid "Maintenance Requests"
+msgstr "Vedligeholdelsesanmodning"
+
+#. module: mrp_maintenance
+#: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workorder_tablet_view_form_inherit_maintenance
+msgid "Maintenance request"
 msgstr ""
 
 #. module: mrp_maintenance
@@ -173,23 +177,13 @@ msgid "New Maintenance Request"
 msgstr ""
 
 #. module: mrp_maintenance
-#: model:ir.actions.act_window,help:mrp_maintenance.maintenance_request_action_reports
-msgid "No maintenance request."
-msgstr ""
-
-#. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production_maintenance_count
 msgid "Number of maintenance requests"
 msgstr ""
 
 #. module: mrp_maintenance
-#: model:ir.ui.menu,name:mrp_maintenance.maintenance_reporting
-msgid "Reporting"
-msgstr "Rapportering"
-
-#. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production_request_ids
-msgid "Request ids"
+msgid "Request"
 msgstr ""
 
 #. module: mrp_maintenance
@@ -200,6 +194,7 @@ msgstr ""
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workcenter
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_workcenter_id
+#: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Work Center"
 msgstr "Arbejdscenter"
 
@@ -213,11 +208,6 @@ msgstr "Arbejdscentre"
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request_workorder_id
 msgid "Work Order"
 msgstr "Job"
-
-#. module: mrp_maintenance
-#: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
-msgid "WorkCenter"
-msgstr "Arbejdscenter"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp

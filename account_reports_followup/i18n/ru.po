@@ -5,16 +5,16 @@
 # Translators:
 # Martin Trigaux <mat@odoo.com>, 2017
 # Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
-# Максим Дронь <dronmax@gmail.com>, 2017
+# SV <sv@grimmette.ru>, 2017
 # Gennady Marchenko <gennadym@gmail.com>, 2017
+# Максим Дронь <dronmax@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Gennady Marchenko <gennadym@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: Максим Дронь <dronmax@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,6 +24,8 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line3
+#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
+#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line5
 msgid ""
 "\n"
 "Dear %(partner_name)s,\n"
@@ -105,26 +107,28 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
-msgid ""
-"<b>%(partner_name)s</b>: Partner Name\n"
-"                                <b>%(date)s</b>: Current Date\n"
-"                                <b>%(user_signature)s</b>: User Name\n"
-"                                <b>%(company_name)s</b>: User's Company Name"
+msgid ": Current Date"
 msgstr ""
-"<b>%(partner_name)s</b>: Имя Партнера\n"
-"<b>%(date)s</b>: Текущая Дата\n"
-"<b>%(user_signature)s</b>: Имя Пользователя\n"
-"<b>%(company_name)s</b>: Наименование Компании Пользователя"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": Partner Name"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User Name"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+msgid ": User's Company Name"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_report_all
 msgid "A progress bar for followup reports"
 msgstr "Прогресс-бар для следующих отчетов"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
-msgid "A reminder can be sent as of"
-msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
@@ -173,6 +177,11 @@ msgid "Company Name"
 msgstr "Название компании"
 
 #. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
+
+#. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
 msgid "Created by"
@@ -186,6 +195,7 @@ msgstr "Создан"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_note
 msgid "Customer Payment Promise"
 msgstr "Покупатель Обещает Оплату"
 
@@ -214,6 +224,11 @@ msgstr "Сделано"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
 msgid "Due Days"
 msgstr "Даты Оплаты"
+
+#. module: account_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Duration between two reminders"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -249,12 +264,13 @@ msgstr "Уровень дальнейших действий"
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Follow-up Levels"
 msgstr "Уровни напоминаний"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_responsible_id
 msgid "Follow-up Responsible"
 msgstr "Ответственный за напоминания"
 
@@ -321,7 +337,7 @@ msgid "Latest Follow-up"
 msgstr "Последние дальнейшие действия"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:53
+#: code:addons/account_reports_followup/models/account_followup_report.py:56
 #, python-format
 msgid "Level: "
 msgstr "Уровень:"
@@ -338,24 +354,24 @@ msgid "Manual Action"
 msgstr "Действие вручную"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup_report.py:65
+#: code:addons/account_reports_followup/models/account_followup_report.py:68
 #, python-format
 msgid "Manual action done"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "Minimum"
+msgstr ""
+
+#. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr "Минимальные дни между двумя наблюдениями"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
-msgid "Minimum spread between two reminders"
-msgstr ""
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:113
+#: code:addons/account_reports_followup/models/account_followup.py:113
 #, python-format
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
@@ -371,6 +387,7 @@ msgstr "Возможно только одно напоминание на ко�
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
@@ -379,17 +396,12 @@ msgstr ""
 "ответственным за действия."
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_res_partner
-msgid "Partner"
-msgstr "Партнёр"
-
-#. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Partner entries"
 msgstr "Партнерские проводки"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Payment Follow-up"
 msgstr "Напоминание об оплате"
 
@@ -400,6 +412,7 @@ msgstr "Напоминания о платежах"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_note
 msgid "Payment Note"
 msgstr "Примечания к оплате"
 
@@ -495,8 +508,18 @@ msgid "Total debit"
 msgstr "Итого по дебету"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup
+#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
+msgid "Urging reminder email"
+msgstr "Побуждающее напоминание по электронной почте"
+
+#. module: account_reports_followup
+#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
+msgid "Urging reminder letter"
+msgstr "Побуждающее напоминание по почте"
+
+#. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings_min_days_between_followup
 msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
@@ -538,7 +561,7 @@ msgstr ""
 "которые вы установили, используя правый верхний значок."
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/account_followup.py:64
+#: code:addons/account_reports_followup/models/account_followup.py:64
 #, python-format
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
@@ -548,13 +571,8 @@ msgstr ""
 "Вы хотите использовать символ процента."
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_config_settings
-msgid "account.config.settings"
-msgstr "account.config.settings"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.account_config_settings_view_form_inherit_reports_followup
-msgid "days after the previous reminder"
+#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
+msgid "days between each reminder"
 msgstr ""
 
 #. module: account_reports_followup
@@ -566,3 +584,8 @@ msgstr "дней просрочки, выполните следующие де�
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "e.g. Call the customer, check if it's paid, ..."
 msgstr "например: Позвоните клиенту, проверьте заплатил ли он ..."
+
+#. module: account_reports_followup
+#: model:ir.model,name:account_reports_followup.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"

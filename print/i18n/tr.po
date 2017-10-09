@@ -2,12 +2,21 @@
 # This file contains the translation of the following modules:
 # * print
 # 
+# Translators:
+# Martin Trigaux <mat@odoo.com>, 2017
+# Murat Kaplan <muratk@projetgrup.com>, 2017
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
+# İlknur Püskül <ilknurpuskull@gmail.com>, 2017
+# Levent Karakaş <levent@mektup.at>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
+# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,6 +47,25 @@ msgid ""
 "              \n"
 "            "
 msgstr ""
+"\n"
+"                <body>\n"
+"                      <p>Sayın ${object.partner_id.name},</p>\n"
+"\n"
+"                      <p>\"Yazdır ve Gönder\" belgelerinin son işleminde bazı hatalar oluştu. Yapmış olduğunuz hatalı Yazdırma Emri listesi buradadır.</p>\n"
+"                      <p>Bazı hatalar belirlenmiştir. Lütfen bunlara buradan bakın <i>Ayarlar > Yazdırma Emirleri</i>.</p>\n"
+"\n"
+"                      % if ctx.get('print_errors'):\n"
+"                            <p>\n"
+"                            Yazdırma Emri ID  |    Hata Mesajı <br/>\n"
+"                            -------------------------------------- <br/>\n"
+"                                  % for print_order_id, error_text in ctx.get('print_errors'):\n"
+"                                        ${print_order_id}    |    ${error_text} <br/>\n"
+"                                  % endfor\n"
+"                            </p>\n"
+"                      % endif\n"
+"                </body>\n"
+"              \n"
+"            "
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
@@ -45,6 +73,8 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
+"<b> Kredi hatası :</b> Sağlayıcı Kredi hesabı eksidir. Belge göndermek için "
+"lütfen sağlayıcı hesabınızı doldurun."
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -54,7 +84,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
 msgid "<strong>Name</strong>"
-msgstr ""
+msgstr "<strong>Adı</strong>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -65,43 +95,43 @@ msgstr ""
 #: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
-msgstr ""
+msgstr "Göndermek istediğiniz en az bir belgede hata var."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_user_id
 msgid "Author"
-msgstr ""
+msgstr "Üretici"
 
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Black & White"
-msgstr ""
+msgstr "Siyah & Beyaz"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_city
 msgid "City"
-msgstr ""
+msgstr "Semt/İlçe"
 
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Colour"
-msgstr ""
+msgstr "Renk"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Compute price"
-msgstr ""
+msgstr "Fiyat hesaplama"
 
 #. module: print
 #: model:ir.model,name:print.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontak"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
@@ -111,7 +141,7 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_country_id
 msgid "Country"
-msgstr ""
+msgstr "Ülke"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_create_uid
@@ -120,7 +150,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_create_uid
 #: model:ir.model.fields,field_description:print.field_print_provider_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Oluşturan"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_create_date
@@ -128,24 +158,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_create_date
 #: model:ir.model.fields,field_description:print.field_print_provider_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturulma"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_create_date
 msgid "Creation Date"
-msgstr ""
+msgstr "Oluşturma Tarihi"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_provider_balance
 msgid "Credit"
-msgstr ""
+msgstr "Alacak"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_currency_id
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_currency_id
 #: model:ir.model.fields,field_description:print.field_print_provider_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Para Birimi"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_display_name
@@ -155,12 +185,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_display_name
 #: model:ir.model.fields,field_description:print.field_print_provider_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Görünüm Adı"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_name
 msgid "Document"
-msgstr ""
+msgstr "Belge"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -175,28 +205,28 @@ msgstr ""
 #. module: print
 #: selection:print.order,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Taslak"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_environment
 #: model:ir.model.fields,field_description:print.field_print_provider_environment
 msgid "Environment"
-msgstr ""
+msgstr "Ortam"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_error_message
 msgid "Error"
-msgstr ""
+msgstr "Hata"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_error_message
 msgid "Error Message"
-msgstr ""
+msgstr "Hata Mesajı"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Failed"
-msgstr ""
+msgstr "Başarısız"
 
 #. module: print
 #: model:mail.template,subject:print.print_user_notify_failed_email_template
@@ -206,7 +236,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Group By..."
-msgstr ""
+msgstr "Grupla..."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_id
@@ -216,31 +246,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_id
 #: model:ir.model.fields,field_description:print.field_print_provider_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_ink
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_ink
 msgid "Ink"
-msgstr ""
+msgstr "Mürekkep"
 
 #. module: print
 #: model:ir.model,name:print.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Fatura"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
 #: model:ir.model.fields,field_description:print.field_res_users_has_address
 msgid "Is address valid"
-msgstr ""
+msgstr "Adresi geçerli mi"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
 #: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
 #: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
 msgid "Is sendable"
-msgstr ""
+msgstr "Gönderilebilir"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin___last_update
@@ -250,7 +280,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard___last_update
 #: model:ir.model.fields,field_description:print.field_print_provider___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_account_invoice_print_sent_date
@@ -271,7 +301,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_write_uid
 #: model:ir.model.fields,field_description:print.field_print_provider_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_date
@@ -280,17 +310,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_write_date
 #: model:ir.model.fields,field_description:print.field_print_provider_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
 msgid "Lines"
-msgstr ""
+msgstr "Satırlar"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_res_model
 msgid "Model Name"
-msgstr ""
+msgstr "Model Adı"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
@@ -301,7 +331,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_partner_name
 #: model:ir.model.fields,field_description:print.field_print_provider_name
 msgid "Name"
-msgstr ""
+msgstr "İsim"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_nbr_pages
@@ -321,7 +351,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Orders"
-msgstr ""
+msgstr "Siparişler"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
@@ -336,18 +366,18 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_attachment_id
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_paper_weight
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_paper_weight
 msgid "Paper Weight"
-msgstr ""
+msgstr "Kağıt Ağırlığı"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Partner"
-msgstr ""
+msgstr "İş Ortağı"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
@@ -392,7 +422,7 @@ msgstr ""
 #: model:ir.model,name:print.model_print_order
 #: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
 msgid "Print Order"
-msgstr ""
+msgstr "Yazdır"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_line_wizard_view_tree
@@ -403,7 +433,7 @@ msgstr ""
 #: model:ir.model,name:print.model_print_order_wizard
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
 msgid "Print Order Wizard"
-msgstr ""
+msgstr "Yazdırma Sihirbazı"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_action
@@ -419,7 +449,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_id
 #: model:ir.ui.menu,name:print.print_provider_menu
 msgid "Print Provider"
-msgstr ""
+msgstr "Yazdırma Sağlayıcısı"
 
 #. module: print
 #: model:ir.actions.server,name:print.ir_cron_print_scheduler_action_ir_actions_server
@@ -436,28 +466,28 @@ msgstr ""
 #. module: print
 #: selection:print.provider,environment:0
 msgid "Production"
-msgstr ""
+msgstr "Üretim"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_provider_provider
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Provider"
-msgstr ""
+msgstr "Sağlayıcı"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_balance
 msgid "Provider Credit"
-msgstr ""
+msgstr "Sağlayıcı Kredisi"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 msgid "Provider Information"
-msgstr ""
+msgstr "Sağlayıcı Bilgisi"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Ready"
-msgstr ""
+msgstr "Hazır"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -468,49 +498,49 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
 #: model:ir.model.fields,field_description:print.field_print_order_partner_id
 msgid "Recipient partner"
-msgstr ""
+msgstr "Alıcı iş ortağı"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_report_id
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
 msgid "Report"
-msgstr ""
+msgstr "Çıktı"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Taslağa Ayarla"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_id
 msgid "Resource ID"
-msgstr ""
+msgstr "Kaynak ID"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
 msgid "Resource Model"
-msgstr ""
+msgstr "Kaynak Model"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Send"
-msgstr ""
+msgstr "Gönder"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action_multi_print
 msgid "Send Invoices by post"
-msgstr ""
+msgstr "Faturaları Posta ile Gönder"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.account_invoice_view_form_inherit_print
 msgid "Send Letter"
-msgstr ""
+msgstr "Mektup Gönder"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Send Now"
-msgstr ""
+msgstr "Şimdi Gönder"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -525,7 +555,7 @@ msgstr ""
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action
 msgid "Send by Post"
-msgstr ""
+msgstr "Postayla Gönder"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_sent_date
@@ -535,28 +565,28 @@ msgstr ""
 #. module: print
 #: selection:print.order,state:0
 msgid "Sent"
-msgstr ""
+msgstr "Gönderilmiş"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
 msgid "State"
-msgstr ""
+msgstr "İl/Eyalet"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_state
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Status"
-msgstr ""
+msgstr "Durumu"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_street
 msgid "Street"
-msgstr ""
+msgstr "Sokak/Cadde"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_street2
 msgid "Street2"
-msgstr ""
+msgstr "Adres2"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -566,7 +596,7 @@ msgstr ""
 #. module: print
 #: selection:print.provider,environment:0
 msgid "Test"
-msgstr ""
+msgstr "Test Adı"
 
 #. module: print
 #: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
@@ -611,7 +641,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 msgid "Update"
-msgstr ""
+msgstr "Güncelleştirme"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -621,7 +651,7 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_zip
 msgid "Zip"
-msgstr ""
+msgstr "PK"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard

@@ -3,19 +3,19 @@
 # * quality
 # 
 # Translators:
-# Yoshi Tashiro <tashiro@roomsfor.hk>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Manami Hashi <manami@roomsfor.hk>, 2016
-# NOKA Shigekazu <shigekazu.noka@gmail.com>, 2016
-# 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2016
-# Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2016
+# Yoshi Tashiro <tashiro@roomsfor.hk>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Manami Hashi <manami@roomsfor.hk>, 2017
+# Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2017
+# NOKA Shigekazu <shigekazu.noka@gmail.com>, 2017
+# 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2017\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +40,7 @@ msgid "% of the operation"
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
@@ -52,14 +52,28 @@ msgid ""
 msgstr ""
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+msgid ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid ""
+"<span class=\"o_stat_text\">AVG:</span>\n"
+"                                <span class=\"o_stat_text\">STD:</span>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+msgid "<span class=\"o_stat_text\">Quality Alert</span>"
+msgstr ""
+
+#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "<span class=\"o_stat_text\">Quality Check</span>"
 msgstr "<span class=\"o_stat_text\">品質検査</span>"
-
-#. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
-msgid "<span>Quality Alerts</span>"
-msgstr "<span>品質アラート</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -69,6 +83,16 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "<span>to </span>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
+msgid "<strong>Operation :</strong>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
+msgid "<strong>Product :</strong>"
 msgstr ""
 
 #. module: quality
@@ -100,6 +124,7 @@ msgstr "アラート"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_ids
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_ids
 #: model:ir.ui.menu,name:quality.menu_quality_alerts
 msgid "Alerts"
 msgstr "アラート"
@@ -140,29 +165,35 @@ msgid "Archived"
 msgstr "アーカイブ済"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_average
+msgid "Average"
+msgstr "平均"
+
+#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 msgid "Cancel"
 msgstr "取消"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_check_id
+#: model:ir.model.fields,field_description:quality.field_quality_point_check_ids
 msgid "Check"
 msgstr "確認"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_count
-msgid "Check count"
+msgid "Check Count"
 msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
 msgid "Checked By"
-msgstr ""
+msgstr "担当者"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
 msgid "Checked Date"
-msgstr ""
+msgstr "検査日"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_check_ids
@@ -170,7 +201,7 @@ msgid "Checks"
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "Checks In Progress"
 msgstr ""
 
@@ -178,6 +209,11 @@ msgstr ""
 #: model:ir.actions.act_window,help:quality.quality_point_action
 msgid "Click here to add a new Quality Control Points"
 msgstr "クリックして品質管理ポイントを新規作成してください。"
+
+#. module: quality
+#: model:ir.actions.act_window,help:quality.quality_tag_action
+msgid "Click to add a new tag."
+msgstr "クリックで新しいタグを追加。"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_color
@@ -203,9 +239,14 @@ msgid "Configuration"
 msgstr "設定"
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
+msgid "Confirm Measure"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
 msgid "Control Date"
-msgstr ""
+msgstr "管理日"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -233,6 +274,11 @@ msgid "Control Type"
 msgstr "管理タイプ"
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
+msgid "Correct Measure"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_corrective
 msgid "Corrective Action"
 msgstr "修正措置"
@@ -243,11 +289,17 @@ msgid "Corrective Actions"
 msgstr "修正措置"
 
 #. module: quality
+#: model:ir.actions.act_window,help:quality.quality_alert_action_check
+msgid "Create Quality Alerts."
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_check_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_point_create_uid
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_reason_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_tag_create_uid
 msgid "Created by"
@@ -259,6 +311,7 @@ msgstr "作成者"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_check_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_point_create_date
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_reason_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_tag_create_date
 msgid "Created on"
@@ -323,7 +376,7 @@ msgstr "説明"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Description of the issue..."
-msgstr ""
+msgstr "問題の説明..."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_display_name
@@ -331,6 +384,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_check_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_point_display_name
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_reason_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_display_name
 msgid "Display Name"
@@ -358,6 +412,12 @@ msgstr "不合格"
 #: selection:quality.check,quality_state:0
 msgid "Failed"
 msgstr "不合格"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_failure_message
+#: model:ir.model.fields,field_description:quality.field_quality_point_failure_message
+msgid "Failure Message"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_folded
@@ -392,6 +452,7 @@ msgstr "高"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_check_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_id
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id
 #: model:ir.model.fields,field_description:quality.field_quality_reason_id
 #: model:ir.model.fields,field_description:quality.field_quality_tag_id
 msgid "ID"
@@ -402,7 +463,7 @@ msgstr "ID"
 msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
-msgstr "エイリアスを保持する親レコードのID（例：プロジェクトは、タスク作成エイリアスを保持）"
+msgstr "エイリアスを保持する親レコードのID(例：プロジェクトは、タスク作成エイリアスを保持)"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -415,11 +476,17 @@ msgid "In progress"
 msgstr "進行中"
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid "Instructions"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_check___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_point___last_update
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_reason___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_tag___last_update
 msgid "Last Modified on"
@@ -430,6 +497,7 @@ msgstr "最終更新日"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_check_write_uid
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_point_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_reason_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_tag_write_uid
@@ -441,6 +509,7 @@ msgstr "最終更新者"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_alert_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_check_write_date
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_point_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_reason_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_tag_write_date
@@ -466,30 +535,36 @@ msgstr "アラート作成"
 #. module: quality
 #: model:res.groups,name:quality.group_quality_manager
 msgid "Manager"
-msgstr "マネジャ"
+msgstr "マネージャ"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_tolerance_max
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_max
 msgid "Max Tolerance"
 msgstr "最大許容値"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure
-#: selection:quality.point,test_type:0
 msgid "Measure"
-msgstr "分析対象"
+msgstr "測定対象"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
+msgid "Measure Frequency Unit"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
 msgid "Measure Success"
+msgstr "合否測定"
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid "Message If Failure"
 msgstr ""
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
-msgid "Measure frequency unit"
-msgstr ""
-
-#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_tolerance_min
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_min
 msgid "Min Tolerance"
 msgstr "最小許容値"
@@ -505,11 +580,6 @@ msgid "Month(s)"
 msgstr "月"
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
-msgid "More <i class=\"fa fa-caret-down\"/>"
-msgstr "さらに <i class=\"fa fa-caret-down\"/>"
-
-#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "My Alerts"
 msgstr "自分のアラート"
@@ -519,21 +589,23 @@ msgstr "自分のアラート"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_name
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_name
 #: model:ir.model.fields,field_description:quality.field_quality_check_name
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_name
 #: model:ir.model.fields,field_description:quality.field_quality_reason_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_name
 msgid "Name"
 msgstr "名称"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:22
-#: code:addons/quality/models/quality.py:79
-#: code:addons/quality/models/quality.py:80
-#: code:addons/quality/models/quality.py:189
-#: code:addons/quality/models/quality.py:243
-#: code:addons/quality/models/quality.py:244
-#: code:addons/quality/models/quality.py:324
-#: code:addons/quality/models/quality.py:358
-#: code:addons/quality/models/quality.py:359
+#: code:addons/quality/models/quality.py:30
+#: code:addons/quality/models/quality.py:116
+#: code:addons/quality/models/quality.py:117
+#: code:addons/quality/models/quality.py:230
+#: code:addons/quality/models/quality.py:297
+#: code:addons/quality/models/quality.py:298
+#: code:addons/quality/models/quality.py:402
+#: code:addons/quality/models/quality.py:437
+#: code:addons/quality/models/quality.py:438
+#: code:addons/quality/models/quality.py:478
 #, python-format
 msgid "New"
 msgstr "新規"
@@ -541,7 +613,7 @@ msgstr "新規"
 #. module: quality
 #: selection:quality.check,measure_success:0
 msgid "No measure"
-msgstr ""
+msgstr "測定対象外"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_alert_action_report
@@ -577,10 +649,16 @@ msgid "Notes"
 msgstr "ノート"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_picking_id
 #: model:ir.model.fields,field_description:quality.field_quality_check_picking_id
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Operation"
-msgstr "作業"
+msgstr "工程"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
+msgid "Operation Type"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_force_thread_id
@@ -622,18 +700,13 @@ msgid "Pass"
 msgstr "合格"
 
 #. module: quality
-#: selection:quality.point,test_type:0
-msgid "Pass - Fail"
-msgstr "合否判定"
-
-#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 #: selection:quality.check,quality_state:0
 msgid "Passed"
 msgstr "合格"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_stock_picking_check_todo
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_todo
 msgid "Pending checks"
 msgstr ""
 
@@ -646,11 +719,6 @@ msgstr "パーセント"
 #: selection:quality.point,measure_frequency_type:0
 msgid "Periodically"
 msgstr "定期"
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
-msgid "Picking Type"
-msgstr "ピッキングタイプ"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_contact
@@ -705,10 +773,11 @@ msgid "Quality"
 msgstr "品質"
 
 #. module: quality
-#: code:addons/quality/models/quality.py:282
-#: code:addons/quality/models/quality.py:295
+#: code:addons/quality/models/quality.py:360
+#: code:addons/quality/models/quality.py:373
 #: model:ir.model,name:quality.model_quality_alert
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_calendar
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 #, python-format
 msgid "Quality Alert"
 msgstr "品質アラート"
@@ -718,6 +787,11 @@ msgstr "品質アラート"
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_pivot
 msgid "Quality Alert Analysis"
 msgstr "品質アラート分析"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_count
+msgid "Quality Alert Count"
+msgstr ""
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_alert_stage
@@ -745,7 +819,7 @@ msgstr "品質アラートチーム"
 msgid ""
 "Quality Alert stages define the different steps a quality alert should go "
 "through."
-msgstr ""
+msgstr "品質アラートステージは品質アラートの進捗を示します。"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_action_check
@@ -753,16 +827,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:quality.quality_alert_action_team
 #: model:ir.ui.menu,name:quality.menu_quality_alert
 #: model:ir.ui.menu,name:quality.menu_quality_alert_report
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "Quality Alerts"
 msgstr "品質アラート"
 
 #. module: quality
-#: model:ir.actions.act_window,help:quality.quality_alert_action_check
-msgid "Quality Alerts can be created. I know this is difficult to believe."
-msgstr ""
-
-#. module: quality
-#: code:addons/quality/models/quality.py:369
+#: code:addons/quality/models/quality.py:455
 #: model:ir.model,name:quality.model_quality_check
 #, python-format
 msgid "Quality Check"
@@ -775,12 +845,25 @@ msgid "Quality Check Analysis"
 msgstr "品質検査分析"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_fail
+msgid "Quality Check Fail"
+msgstr ""
+
+#. module: quality
+#: code:addons/quality/models/quality.py:321
+#: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
+#, python-format
+msgid "Quality Check Failed"
+msgstr ""
+
+#. module: quality
 #: model:ir.actions.act_window,help:quality.quality_check_action_main
 #: model:ir.actions.act_window,help:quality.quality_check_action_team
 msgid "Quality Check is the execution of a quality control in some point"
 msgstr ""
 
 #. module: quality
+#: code:addons/quality/models/quality.py:337
 #: model:ir.actions.act_window,name:quality.quality_check_action_main
 #: model:ir.actions.act_window,name:quality.quality_check_action_picking
 #: model:ir.actions.act_window,name:quality.quality_check_action_report
@@ -791,13 +874,14 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+#, python-format
 msgid "Quality Checks"
 msgstr "品質検査"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_check_action_spc
 msgid "Quality Checks SPC"
-msgstr ""
+msgstr "品質検査SPC"
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_control
@@ -842,6 +926,12 @@ msgid "Quality Tag"
 msgstr "品質タグ"
 
 #. module: quality
+#: model:ir.actions.act_window,name:quality.quality_tag_action
+#: model:ir.ui.menu,name:quality.menu_config_quality_tags
+msgid "Quality Tags"
+msgstr ""
+
+#. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_team_action_config
 msgid "Quality Teams"
 msgstr "品質チーム"
@@ -857,11 +947,6 @@ msgstr ""
 #: selection:quality.point,measure_frequency_type:0
 msgid "Randomly"
 msgstr "ランダム"
-
-#. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_point_view_form
-msgid "Reason"
-msgstr "理由"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_force_thread_id
@@ -893,31 +978,32 @@ msgid "Root Cause"
 msgstr "根本原因"
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_point_view_form
-msgid "SPC"
-msgstr ""
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_sequence
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_sequence
+#: model:ir.model.fields,field_description:quality.field_quality_point_sequence
 msgid "Sequence"
 msgstr "付番"
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "Settings"
 msgstr "管理設定"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9329
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "ステージ"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_standard_deviation
+msgid "Standard Deviation"
+msgstr ""
+
+#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 msgid "State"
-msgstr "状態"
+msgstr "都道府県・州"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_quality_state
@@ -931,11 +1017,13 @@ msgstr "在庫移動"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_tag_ids
+#: model:ir.ui.view,arch_db:quality.quality_tag_view_search
+#: model:ir.ui.view,arch_db:quality.quality_tag_view_tree
 msgid "Tags"
 msgstr "タグ"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9307
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -949,6 +1037,13 @@ msgstr "チーム"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_test_type
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_technical_name
+msgid "Technical name"
+msgstr ""
+
+#. module: quality
+#: model:ir.model,name:quality.model_quality_point_test_type
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
 msgid "Test Type"
 msgstr "テストタイプ"
 
@@ -966,7 +1061,7 @@ msgstr ""
 msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
-msgstr "eメールのエイリアス.例えば<jjobs@example.odoo.com>のメールを受け取りたい場合'jobs’を選択"
+msgstr "eメールのエイリアス.例えば<jobs@example.odoo.com>のメールを受け取りたい場合'jobs’を選択"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_user_id
@@ -976,7 +1071,7 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
-"このエイリアスに電子メールを受信した時に作成されるレコードのオーナー。このフィールドが設定されない場合、システムは送信者(From)アドレスに基づいた適切な所有者を見つけるか、見つからなければオーナーアカウントを使用します。"
+"このエイリアスに電子メールを受信した時に作成されるレコードのオーナー。このフィールドが設定されない場合、システムは送信者(From)アドレスに基づいた適切なオーナーを見つけるか、見つからなければ管理者アカウントを使用します。"
 
 #. module: quality
 #: model:res.groups,comment:quality.group_quality_manager
@@ -1040,12 +1135,23 @@ msgid "Very High"
 msgstr "とても高い"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_warning_message
+msgid "Warning Message"
+msgstr ""
+
+#. module: quality
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Week(s)"
 msgstr "週"
 
 #. module: quality
-#: code:addons/quality/models/stock_move.py:48
+#: code:addons/quality/models/quality.py:273
+#, python-format
+msgid "You measured %.2f %s and it should be between %.2f and %.2f %s."
+msgstr ""
+
+#. module: quality
+#: code:addons/quality/models/stock_picking.py:63
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr ""

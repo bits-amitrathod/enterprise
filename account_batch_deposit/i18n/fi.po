@@ -3,18 +3,21 @@
 # * account_batch_deposit
 # 
 # Translators:
-# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Kari Lindgren <kari.lindgren@emsystems.fi>, 2016
-# Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2016
-# Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
+# Kari Lindgren <kari.lindgren@emsystems.fi>, 2017
+# Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2017
+# Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2017
+# Svante Suominen <svante.suominen@web-veistamo.fi>, 2017
+# Veikko Väätäjä <veikko.vaataja@gmail.com>, 2017
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2017
+# Tommi Rintala <tommi.rintala@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Tommi Rintala <tommi.rintala@gmail.com>, 2017\n"
 "Language-Team: Finnish (https://www.transifex.com/odoo/teams/41243/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,17 +46,17 @@ msgstr ""
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_journal_id
 msgid "Bank"
-msgstr "Banco"
+msgstr "Pankki"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Bank Journal"
-msgstr ""
+msgstr "Päiväkirja, pankki"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement
 msgid "Bank Statement"
-msgstr "Bank Statement"
+msgstr "Pankin tiliote"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement_line
@@ -61,13 +64,18 @@ msgid "Bank Statement Line"
 msgstr "Pankkitiliotteen rivi"
 
 #. module: account_batch_deposit
-#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
+#: model:account.payment.method,name:account_batch_deposit.account_payment_method_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_batch_deposit
-#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
 #: model:ir.ui.view,arch_db:account_batch_deposit.account_journal_dashboard_kanban_view_inherited
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
+msgstr ""
+
+#. module: account_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
+msgid "Batch Deposit Payment Method Selected"
 msgstr ""
 
 #. module: account_batch_deposit
@@ -76,19 +84,15 @@ msgid "Batch Deposit Sequence"
 msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/models/account_journal.py:43
+#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
+#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
+msgid "Batch Deposits"
+msgstr ""
+
+#. module: account_batch_deposit
+#: code:addons/account_batch_deposit/models/account_journal.py:44
 #, python-format
 msgid "Batch Deposits Sequence"
-msgstr ""
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
-msgid "Batch deposit id"
-msgstr ""
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
-msgid "Batch deposit payment method selected"
 msgstr ""
 
 #. module: account_batch_deposit
@@ -100,7 +104,7 @@ msgid ""
 msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/models/account_journal.py:68
+#: code:addons/account_batch_deposit/models/account_journal.py:69
 #: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
@@ -118,14 +122,14 @@ msgstr "Luotu"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_currency_id
-msgid "Currency id"
-msgstr "Valuutan tunniste"
+msgid "Currency"
+msgstr "Valuutta"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 msgid "Customer"
-msgstr "Partner"
+msgstr "Asiakas"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_date
@@ -152,10 +156,10 @@ msgstr "Tunniste (ID)"
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:94
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:137
 #, python-format
 msgid "Incorrect Operation"
-msgstr ""
+msgstr "Virheellinen toiminto"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_journal
@@ -210,7 +214,7 @@ msgid "Print"
 msgstr "Tulosta"
 
 #. module: account_batch_deposit
-#: model:ir.actions.report.xml,name:account_batch_deposit.action_print_batch_deposit
+#: model:ir.actions.report,name:account_batch_deposit.action_print_batch_deposit
 msgid "Print Batch Deposit"
 msgstr ""
 
@@ -232,7 +236,7 @@ msgstr "Täsmäytetty"
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_name
 msgid "Reference"
-msgstr "Referencia"
+msgstr "Viite"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
@@ -248,7 +252,7 @@ msgstr ""
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:91
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:135
 #, python-format
 msgid ""
 "Some journal items from the selected batch deposit are already selected in "
@@ -259,7 +263,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_state
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "State"
-msgstr "Osavaltio/Maakunta"
+msgstr "Tila"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected

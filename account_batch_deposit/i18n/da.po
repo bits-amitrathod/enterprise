@@ -3,18 +3,19 @@
 # * account_batch_deposit
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Morten Schou <ms@msteknik.dk>, 2016
-# Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2016
-# Jesper Carstensen <jc@danodoo.dk>, 2016
-# Jesper Carstensen <info@danodoo.dk>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
+# Sanne Kristensen <sanne@vkdata.dk>, 2017
+# Morten Schou <ms@msteknik.dk>, 2017
+# Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2017
+# Jesper Carstensen <jc@danodoo.dk>, 2017
+# Jesper Carstensen <info@danodoo.dk>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Jesper Carstensen <info@danodoo.dk>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Jesper Carstensen <info@danodoo.dk>, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,16 +59,21 @@ msgstr "Bank kontoudtog"
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Bank kontoudtogslinie"
+msgstr "Bank kontoudtogslinje"
 
 #. module: account_batch_deposit
-#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
+#: model:account.payment.method,name:account_batch_deposit.account_payment_method_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_batch_deposit
-#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
 #: model:ir.ui.view,arch_db:account_batch_deposit.account_journal_dashboard_kanban_view_inherited
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
+msgstr ""
+
+#. module: account_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
+msgid "Batch Deposit Payment Method Selected"
 msgstr ""
 
 #. module: account_batch_deposit
@@ -76,19 +82,15 @@ msgid "Batch Deposit Sequence"
 msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/models/account_journal.py:43
+#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
+#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
+msgid "Batch Deposits"
+msgstr ""
+
+#. module: account_batch_deposit
+#: code:addons/account_batch_deposit/models/account_journal.py:44
 #, python-format
 msgid "Batch Deposits Sequence"
-msgstr ""
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
-msgid "Batch deposit id"
-msgstr ""
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
-msgid "Batch deposit payment method selected"
 msgstr ""
 
 #. module: account_batch_deposit
@@ -100,7 +102,7 @@ msgid ""
 msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/models/account_journal.py:68
+#: code:addons/account_batch_deposit/models/account_journal.py:69
 #: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
@@ -118,8 +120,8 @@ msgstr "Oprettet den"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_currency_id
-msgid "Currency id"
-msgstr "Valuta id"
+msgid "Currency"
+msgstr "Valuta"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
@@ -142,7 +144,7 @@ msgstr "Vis navn"
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Group By"
-msgstr "Gruppér efter"
+msgstr "Sortér efter"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_id
@@ -152,10 +154,10 @@ msgstr "ID"
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:94
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:137
 #, python-format
 msgid "Incorrect Operation"
-msgstr ""
+msgstr "Forkert handling"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_journal
@@ -186,7 +188,7 @@ msgstr "Memo"
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "New"
-msgstr "Opret"
+msgstr "Ny"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_payment
@@ -210,7 +212,7 @@ msgid "Print"
 msgstr "Udskriv"
 
 #. module: account_batch_deposit
-#: model:ir.actions.report.xml,name:account_batch_deposit.action_print_batch_deposit
+#: model:ir.actions.report,name:account_batch_deposit.action_print_batch_deposit
 msgid "Print Batch Deposit"
 msgstr ""
 
@@ -227,7 +229,7 @@ msgstr "Udskrevet"
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "Reconciled"
-msgstr "Udlignet/afstemt"
+msgstr "Udlignet"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_name
@@ -248,7 +250,7 @@ msgstr ""
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:91
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:135
 #, python-format
 msgid ""
 "Some journal items from the selected batch deposit are already selected in "
@@ -271,12 +273,12 @@ msgstr ""
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 msgid "Total"
-msgstr "I alt"
+msgstr "Total"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Unreconciled"
-msgstr "Uudlignet"
+msgstr "Ikke udlignet"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form

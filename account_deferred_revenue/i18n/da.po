@@ -3,16 +3,18 @@
 # * account_deferred_revenue
 # 
 # Translators:
-# Morten Schou <ms@msteknik.dk>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Jesper Carstensen <info@danodoo.dk>, 2016
+# Sanne Kristensen <sanne@vkdata.dk>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Ejner Sønniksen <ejner@vkdata.dk>, 2017
+# Pernille Kristensen <pernillekristensen1994@gmail.com>, 2017
+# Jesper Carstensen <info@danodoo.dk>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-29 14:58+0000\n"
-"PO-Revision-Date: 2016-09-29 14:58+0000\n"
-"Last-Translator: Jesper Carstensen <info@danodoo.dk>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Jesper Carstensen <info@danodoo.dk>, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,12 +25,12 @@ msgstr ""
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_asset_sale_tree
 msgid "Assets"
-msgstr "Anlægs aktiver"
+msgstr "Anlægsaktiver"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Assets in running state"
-msgstr "Anlæg er aktivt"
+msgstr "Aktiv er aktivt"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
@@ -38,7 +40,7 @@ msgstr "Kategori"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Category of asset"
-msgstr "Kategorier af anlæg"
+msgstr "Kategorier af aktiver"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
@@ -48,7 +50,7 @@ msgstr "Virksomhed"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Compute Revenue"
-msgstr ""
+msgstr "Beregn indtægter"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
@@ -58,6 +60,11 @@ msgstr "Bekræft"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Cumulative Revenue"
+msgstr "Kumulativ indtægt"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Current Revenue"
 msgstr ""
 
 #. module: account_deferred_revenue
@@ -69,49 +76,45 @@ msgstr "Kunde"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Date of Revenue Sales"
-msgstr ""
+msgstr "Dato for omsætning"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Date of asset"
-msgstr "Anlægs dato"
+msgstr "Dato for aktiv"
 
 #. module: account_deferred_revenue
-#: model:ir.actions.act_window,name:account_deferred_revenue.action_asset_revenue_report
-#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_asset_revenue_report
 #: model:ir.ui.view,arch_db:account_deferred_revenue.action_account_revenue_report_graph
 #: model:ir.ui.view,arch_db:account_deferred_revenue.action_account_revenue_report_pivot
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Deferred Revenue Analysis"
-msgstr ""
+msgstr "Analyse af udskudt indkomst"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_invoice_asset_form
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_invoice_revenue_recognition_category
 msgid "Deferred Revenue Type"
-msgstr "Type for udskudt indtægt"
-
-#. module: account_deferred_revenue
-#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
-msgid "Deferred Revenue name"
-msgstr ""
-
-#. module: account_deferred_revenue
-#: model:ir.actions.act_window,name:account_deferred_revenue.action_account_revenue_form
-#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_account_revenue_recognition
-msgid "Deferred Revenues"
-msgstr ""
+msgstr "Type for udskudt omsætning"
 
 #. module: account_deferred_revenue
 #: model:ir.actions.act_window,name:account_deferred_revenue.action_account_asset_asset_list_normal_sale
 #: model:ir.ui.menu,name:account_deferred_revenue.menu_action_account_asset_asset_list_normal_sale
-msgid "Deferred Revenues Types"
+msgid "Deferred Revenue Types"
 msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
-msgid "Depreciation Lines"
-msgstr "Afskrivning linier"
+msgid "Deferred Revenue name"
+msgstr "Navn på udskudt indtægt"
+
+#. module: account_deferred_revenue
+#: model:ir.actions.act_window,name:account_deferred_revenue.action_account_revenue_form
+#: model:ir.actions.act_window,name:account_deferred_revenue.action_asset_revenue_report
+#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_account_revenue_recognition
+#: model:ir.ui.menu,name:account_deferred_revenue.menu_action_asset_revenue_report
+#: model:ir.ui.view,arch_db:account_deferred_revenue.res_config_settings_view_form
+msgid "Deferred Revenues"
+msgstr "Udskudt omsætning"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
@@ -121,7 +124,7 @@ msgstr "Kladde"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Extended Filters..."
-msgstr "Udvidede filtre"
+msgstr "Udvidede filtre..."
 
 #. module: account_deferred_revenue
 #: model:ir.actions.act_window,help:account_deferred_revenue.action_asset_revenue_report
@@ -132,13 +135,13 @@ msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.menu,name:account_deferred_revenue.menu_recognition_depreciation_confirmation_wizard
-msgid "Generate Deferred Revenue Entries"
+msgid "Generate Deferred Revenues Entries"
 msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Gross value of asset"
-msgstr "Brutto værdi af anlæg"
+msgstr "Brutto værdi af aktiver"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
@@ -153,22 +156,27 @@ msgstr "Faktura"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Items"
-msgstr "Emner"
+msgstr "Varer"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Modify Revenue"
+msgstr "Ændre indtjening"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Next Period Revenue"
 msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Number of Revenues"
-msgstr ""
+msgstr "Antal indtægter"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Partner"
-msgstr "Kontakt"
+msgstr "Partner"
 
 #. module: account_deferred_revenue
 #: model:ir.actions.act_window,name:account_deferred_revenue.action_recognition_depreciation_confirmation_wizard
@@ -183,12 +191,12 @@ msgstr "Bogført"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Posted depreciation lines"
-msgstr "Bogførte afskrivnings linier"
+msgstr "Bogførte afskrivningslinjer"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Recognition in draft state"
-msgstr ""
+msgstr "Medtag i udkaststilstand"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
@@ -198,38 +206,49 @@ msgstr "Resterende"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue"
-msgstr ""
+msgstr "Indtægter"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Board"
-msgstr ""
+msgstr "Indtægts oversigt"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Date"
+msgstr "Indtægtsdato"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Revenue Entry"
 msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Information"
+msgstr "Indtægts information"
+
+#. module: account_deferred_revenue
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
+msgid "Revenue Lines"
 msgstr ""
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Revenue Month"
-msgstr ""
+msgstr "Indtægts måned"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_asset_sale_tree
+#: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Revenue Name"
-msgstr ""
+msgstr "Indtægts navn"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Revenue Recognition"
-msgstr ""
+msgstr "Metode til indtægtsføring"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
@@ -239,14 +258,14 @@ msgstr "Kører"
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_asset_revenue_report_search
 msgid "Sales Month"
-msgstr ""
+msgstr "Salgs måned"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Sell or Dispose"
-msgstr "Sælg eller kassér"
+msgstr "Sælg eller bortskaf"
 
 #. module: account_deferred_revenue
 #: model:ir.ui.view,arch_db:account_deferred_revenue.view_account_asset_revenue_form
 msgid "Set to Draft"
-msgstr "Sæt til udkast"
+msgstr "Sæt til kladde"

@@ -3,18 +3,19 @@
 # * account_online_sync
 # 
 # Translators:
-# Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2016
-# Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2016
-# Kari Lindgren <kari.lindgren@emsystems.fi>, 2016
-# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Kari Lindgren <kari.lindgren@emsystems.fi>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Veikko Väätäjä <veikko.vaataja@gmail.com>, 2017
+# Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2017
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2017
+# Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2017\n"
 "Language-Team: Finnish (https://www.transifex.com/odoo/teams/41243/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,23 +39,30 @@ msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_number
-msgid "Account number"
-msgstr ""
+msgid "Account Number"
+msgstr "Tilinumero"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_account_online_journal_ids
-msgid "Account online journal ids"
+msgid "Account Online Journal"
 msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_account_online_provider_id
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_online_provider_id
-msgid "Account online provider id"
+msgid "Account Online Provider"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.actions.server,name:account_online_sync.online_sync_cron_ir_actions_server
+#: model:ir.cron,cron_name:account_online_sync.online_sync_cron
+#: model:ir.cron,name:account_online_sync.online_sync_cron
+msgid "Account: Journal online sync"
 msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_action_required
-msgid "Action required"
+msgid "Action Required"
 msgstr ""
 
 #. module: account_online_sync
@@ -63,7 +71,7 @@ msgid "Additional information"
 msgstr ""
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:57
+#: code:addons/account_online_sync/models/online_sync.py:59
 #, python-format
 msgid "An error occurred during online synchronization"
 msgstr ""
@@ -76,7 +84,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_balance
 msgid "Balance"
-msgstr "Balance"
+msgstr "Saldo"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
@@ -86,7 +94,7 @@ msgstr "Pankkitilit"
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement
 msgid "Bank Statement"
-msgstr "Bank Statement"
+msgstr "Pankin tiliote"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement_line
@@ -110,17 +118,43 @@ msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_company_id
-msgid "Company id"
-msgstr ""
+msgid "Company"
+msgstr "Yritys"
 
 #. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.account_bank_journal_form_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
 msgid "Configure"
 msgstr "Konfiguroi"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_count_account_online_journal
-msgid "Count account online journal"
+msgid "Count Account Online Journal"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create bi-monthly statements"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create daily statements"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create monthly statements"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create one statement per synchronization"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create weekly statements"
 msgstr ""
 
 #. module: account_online_sync
@@ -136,6 +170,11 @@ msgstr "Luonut"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_create_date
 msgid "Created on"
 msgstr "Luotu"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_journal_bank_statement_creation
+msgid "Creation of bank statement"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_display_name
@@ -176,13 +215,9 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_journal
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_journal_ids
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_journal_id
 msgid "Journal"
 msgstr "Päiväkirja"
-
-#. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_journal_id
-msgid "Journal id"
-msgstr "Päiväkirjan id"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal___last_update
@@ -190,6 +225,11 @@ msgstr "Päiväkirjan id"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard___last_update
 msgid "Last Modified on"
 msgstr "Viimeksi muokattu"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_last_refresh
+msgid "Last Refresh"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_write_uid
@@ -204,11 +244,6 @@ msgstr "Viimeksi päivittänyt"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_write_date
 msgid "Last Updated on"
 msgstr "Viimeksi päivitetty"
-
-#. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_last_refresh
-msgid "Last refresh"
-msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_last_sync
@@ -245,7 +280,7 @@ msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_number_added
-msgid "Number added"
+msgid "Number Added"
 msgstr ""
 
 #. module: account_online_sync
@@ -255,6 +290,7 @@ msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_bank_statement_line_online_identifier
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_online_identifier
 msgid "Online Identifier"
 msgstr ""
 
@@ -282,14 +318,9 @@ msgid "Online account"
 msgstr ""
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_online_identifier
-msgid "Online identifier"
-msgstr ""
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:251
+#: code:addons/account_online_sync/models/online_sync.py:269
 #, python-format
-msgid "Opening statement : first synchronization"
+msgid "Opening statement: first synchronization"
 msgstr ""
 
 #. module: account_online_sync
@@ -304,7 +335,17 @@ msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_account_identifier
-msgid "Provider account identifier"
+msgid "Provider Account Identifier"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_identifier
+msgid "Provider Identifier"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_type
+msgid "Provider Type"
 msgstr ""
 
 #. module: account_online_sync
@@ -313,18 +354,8 @@ msgid "Provider for online account synchronization"
 msgstr ""
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_identifier
-msgid "Provider identifier"
-msgstr ""
-
-#. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_type
-msgid "Provider type"
-msgstr ""
-
-#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_status_code
-msgid "Status code"
+msgid "Status Code"
 msgstr ""
 
 #. module: account_online_sync
@@ -344,9 +375,17 @@ msgid "Techhnical message from third party provider that can help debugging"
 msgstr ""
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:58
+#: code:addons/account_online_sync/models/online_sync.py:60
 #, python-format
 msgid "The following error happened during the synchronization: %s"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_journal_bank_statement_creation
+msgid ""
+"This field is used for the online synchronization:\n"
+"                                                    depending on the option selected, newly fetched transactions\n"
+"                                                    will be put inside previous statement or in a new one"
 msgstr ""
 
 #. module: account_online_sync
@@ -355,7 +394,7 @@ msgid "True if user needs to take action by updating account"
 msgstr ""
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:122
+#: code:addons/account_online_sync/models/online_sync.py:127
 #, python-format
 msgid "Unimplemented"
 msgstr ""
@@ -412,6 +451,12 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_number_added
 msgid "number of accounts added from call to new_institution"
+msgstr ""
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:315
+#, python-format
+msgid "online sync"
 msgstr ""
 
 #. module: account_online_sync

@@ -3,20 +3,20 @@
 # * account_online_sync
 # 
 # Translators:
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
-# Артур Чеботарь <artcha.chebotar@gmail.com>, 2017
 # Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Максим Дронь <dronmax@gmail.com>, 2017
-# Max Belyanin <maxbelyanin@gmail.com>, 2017
+# Артур Чеботарь <artcha.chebotar@gmail.com>, 2017
+# SV <sv@grimmette.ru>, 2017
 # Evgeny <transingularity@gmail.com>, 2017
+# Максим Дронь <dronmax@gmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Max Belyanin <maxbelyanin@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Evgeny <transingularity@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Max Belyanin <maxbelyanin@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +76,7 @@ msgid "Additional information"
 msgstr "Дополнительная информация"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:58
+#: code:addons/account_online_sync/models/online_sync.py:59
 #, python-format
 msgid "An error occurred during online synchronization"
 msgstr "Произошла ошибка во время синхронизации онлайн"
@@ -127,6 +127,7 @@ msgid "Company"
 msgstr "Компания"
 
 #. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.account_bank_journal_form_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
 msgid "Configure"
 msgstr "Настроить"
@@ -134,6 +135,31 @@ msgstr "Настроить"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_count_account_online_journal
 msgid "Count Account Online Journal"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create bi-monthly statements"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create daily statements"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create monthly statements"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create one statement per synchronization"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.journal,bank_statement_creation:0
+msgid "Create weekly statements"
 msgstr ""
 
 #. module: account_online_sync
@@ -149,6 +175,11 @@ msgstr "Создано"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_create_date
 msgid "Created on"
 msgstr "Создан"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_journal_bank_statement_creation
+msgid "Creation of bank statement"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_display_name
@@ -296,7 +327,7 @@ msgid "Online account"
 msgstr "Онлайн аккаунт"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:261
+#: code:addons/account_online_sync/models/online_sync.py:269
 #, python-format
 msgid "Opening statement: first synchronization"
 msgstr ""
@@ -355,10 +386,18 @@ msgstr ""
 "отладке"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:59
+#: code:addons/account_online_sync/models/online_sync.py:60
 #, python-format
 msgid "The following error happened during the synchronization: %s"
 msgstr "Следующая ошибка произошло во время синхронизации: %s"
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_journal_bank_statement_creation
+msgid ""
+"This field is used for the online synchronization:\n"
+"                                                    depending on the option selected, newly fetched transactions\n"
+"                                                    will be put inside previous statement or in a new one"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_action_required
@@ -367,7 +406,7 @@ msgstr ""
 "Истина, если пользователю необходимо принять меры, обновив учетную запись"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:126
+#: code:addons/account_online_sync/models/online_sync.py:127
 #, python-format
 msgid "Unimplemented"
 msgstr "Невыполненными"
@@ -427,6 +466,12 @@ msgstr "имя банковского учреждения"
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_number_added
 msgid "number of accounts added from call to new_institution"
 msgstr "количество аккаунтов, добавленных из вызова new_institution"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:315
+#, python-format
+msgid "online sync"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_count_account_online_journal

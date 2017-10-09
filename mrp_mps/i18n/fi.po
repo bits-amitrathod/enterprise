@@ -3,19 +3,19 @@
 # * mrp_mps
 # 
 # Translators:
-# Kari Lindgren <kari.lindgren@emsystems.fi>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Marko Happonen <marko.happonen@sprintit.fi>, 2016
-# Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2016
-# Svante Suominen <svante.suominen@web-veistamo.fi>, 2016
-# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# Kari Lindgren <kari.lindgren@emsystems.fi>, 2017
+# Svante Suominen <svante.suominen@web-veistamo.fi>, 2017
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2017
+# Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2017
+# Veikko Väätäjä <veikko.vaataja@gmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:49+0000\n"
+"PO-Revision-Date: 2017-10-02 11:49+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Finnish (https://www.transifex.com/odoo/teams/41243/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,7 +57,7 @@ msgstr ""
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:155
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:176
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 #, python-format
 msgid "Add a Product"
@@ -70,7 +70,7 @@ msgstr "Käytä"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product_apply_active
-msgid "Apply active"
+msgid "Apply Active"
 msgstr ""
 
 #. module: mrp_mps
@@ -82,7 +82,7 @@ msgstr "Automaattinen"
 #: model:ir.ui.view,arch_db:mrp_mps.mrp_mps_report_view_form
 #: model:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Peru"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_res_company
@@ -135,8 +135,8 @@ msgid "Default Unit of Measure used for all stock operation."
 msgstr "Oletusyksikkö kaikille varaston toiminnoille."
 
 #. module: mrp_mps
-#: model:ir.model.fields,help:mrp_mps.field_mrp_config_settings_manufacturing_period
 #: model:ir.model.fields,help:mrp_mps.field_res_company_manufacturing_period
+#: model:ir.model.fields,help:mrp_mps.field_res_config_settings_manufacturing_period
 msgid ""
 "Default value for the time ranges in Master Production Schedule report."
 msgstr ""
@@ -175,7 +175,7 @@ msgstr ""
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:176
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:202
 #: model:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
 #, python-format
 msgid "Forecast Product"
@@ -249,6 +249,11 @@ msgid "Launch green cells"
 msgstr ""
 
 #. module: mrp_mps
+#: model:ir.ui.menu,name:mrp_mps.mrp_mps_menu_planning
+msgid "MPS"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product_mps_active
 msgid "MPS Active"
 msgstr ""
@@ -264,8 +269,8 @@ msgid "Manual"
 msgstr "Manuaalinen"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_config_settings_manufacturing_period
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company_manufacturing_period
+#: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings_manufacturing_period
 msgid "Manufacturing Period"
 msgstr ""
 
@@ -273,7 +278,7 @@ msgstr ""
 #: model:ir.actions.client,name:mrp_mps.mrp_mps_report_action_client
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_report_menu
 msgid "Master Production Schedule"
-msgstr ""
+msgstr "Päätuotantosuunnitelma"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product_mps_max_supply
@@ -306,20 +311,6 @@ msgid "Mouse, Wireless"
 msgstr "Hiiri, langaton"
 
 #. module: mrp_mps
-#. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:84
-#, python-format
-msgid "Only Integer Value should be valid."
-msgstr "Vain kokonaisluku on sallittu."
-
-#. module: mrp_mps
-#. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:190
-#, python-format
-msgid "Only Integer or Float Value should be valid."
-msgstr ""
-
-#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_period
 msgid "Period"
 msgstr "Jakso"
@@ -332,14 +323,14 @@ msgid "Period:"
 msgstr "Jakso:"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_procurement_id
-msgid "Procurement Generated"
-msgstr ""
-
-#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_group_id
 msgid "Procurement Group"
 msgstr "Hankintaryhmä"
+
+#. module: mrp_mps
+#: model:ir.model,name:mrp_mps.model_procurement_rule
+msgid "Procurement Rule"
+msgstr "Hankintasääntö"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_product_product
@@ -385,7 +376,12 @@ msgstr ""
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_state
 msgid "State"
-msgstr "Osavaltio/Maakunta"
+msgstr "Tila"
+
+#. module: mrp_mps
+#: model:ir.ui.view,arch_db:mrp_mps.res_config_settings_view_form
+msgid "Time Range"
+msgstr ""
 
 #. module: mrp_mps
 #. openerp-web
@@ -395,6 +391,12 @@ msgid "To Produce"
 msgstr "Valmistettavat"
 
 #. module: mrp_mps
+#: code:addons/mrp_mps/models/mrp_mps_report.py:123
+#, python-format
+msgid "To Reveive / To Supply / Produce"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_to_supply
 msgid "To Supply"
 msgstr ""
@@ -402,8 +404,8 @@ msgstr ""
 #. module: mrp_mps
 #: code:addons/mrp_mps/models/mrp_mps_report.py:149
 #, python-format
-msgid "Week "
-msgstr "Viikko "
+msgid "Week %s"
+msgstr ""
 
 #. module: mrp_mps
 #. openerp-web
@@ -417,11 +419,11 @@ msgstr "Viikottainen"
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:84
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:190
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:80
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:218
 #, python-format
 msgid "Wrong value entered!"
-msgstr "Väärä arvo syötetty!"
+msgstr "Syötetty väärä arvo!"
 
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -429,14 +431,14 @@ msgid "double click in order to empty"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model,name:mrp_mps.model_mrp_config_settings
-msgid "mrp.config.settings"
-msgstr "mrp.config.settings"
-
-#. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_mps_report
 msgid "mrp.mps.report"
 msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model,name:mrp_mps.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_sale_forecast
