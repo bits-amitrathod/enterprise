@@ -42,6 +42,27 @@ class MxReportAccountTrial(models.AbstractModel):
         buttons += [{'name': _('Export For SAT (XML)'), 'action': 'print_xml'}]
         return buttons
 
+    def get_templates(self):
+        """Get this template for better fit of columns"""
+        templates = super(MxReportAccountTrial, self).get_templates()
+        templates['main_template'] = 'l10n_mx_reports.template_coa_report'
+        return templates
+
+    def get_columns_name(self, options):
+        """Get more specific columns to use in SAT report"""
+        columns = [{'name': ''}, {'name': _('Initial Balance'), 'class': 'number'}]
+        if options.get('comparison') and options['comparison'].get('periods'):
+            for period in options['comparison']['periods']:
+                columns += [
+                    {'name': _('Debit'), 'class': 'number'},
+                    {'name': _('Credit'), 'class': 'number'},
+                    ]
+        return columns + [
+            {'name': _('Debit'), 'class': 'number'},
+            {'name': _('Credit'), 'class': 'number'},
+            {'name': _('Total'), 'class': 'number'},
+        ]
+
     def _post_process(self, grouped_accounts, initial_balances, options, comparison_table):
         if self.env.user.company_id.country_id.code.upper() == 'MX':
             # TODO: something like: and all([c.country_id.code == 'MX' for c in options.companies]):

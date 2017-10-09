@@ -30,6 +30,7 @@
         "data/templates/cfdi11balance.xml",
         "views/res_country_view.xml",
         "views/res_partner_view.xml",
+        "views/report_financial.xml",
     ],
     "installable": True,
     "auto_install": True,
