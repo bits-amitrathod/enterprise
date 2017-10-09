@@ -1,12 +1,11 @@
 odoo.define('web_mobile.notification_manager', function (require) {
 "use strict";
 
-var notification_manager = require('web.notification').NotificationManager;
+var NotificationManager = require('web.NotificationManager');
 
 var mobile = require('web_mobile.rpc');
 
-
-notification_manager.include({
+NotificationManager.include({
 
     //--------------------------------------------------------------------------
     // Public
