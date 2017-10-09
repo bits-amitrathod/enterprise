@@ -366,7 +366,7 @@ var RecentTab = PhonecallTab.extend({
             self._displayInQueue(phonecall).then(function (phonecallWidget) {
                 self.currentPhonecall = phonecallWidget;
                 self._selectCall(phonecallWidget);
-                def.resolve();
+                def.resolve(phonecallWidget);
             });
         });
         return def;
@@ -395,30 +395,37 @@ var RecentTab = PhonecallTab.extend({
             self._displayInQueue(phonecall).then(function (phonecallWidget) {
                 self.currentPhonecall = phonecallWidget;
                 self._selectCall(phonecallWidget);
-                def.resolve();
+                def.resolve(phonecallWidget);
             });
         });
         return def;
     },
     /**
      * @override
+     *
+     * @param {Object} phonecall if given the functiondoesn't have to create a
+     *                           new phonecall
      */
-    initPhonecall: function () {
+    initPhonecall: function (phonecall) {
         var self = this;
         var _super = this._super.bind(this);
-        this._rpc({
-            model: 'voip.phonecall',
-            method: 'create_from_recent',
-            args: [
-                this.currentPhonecall.id,
-            ],
-        }).then(function (phonecall) {
-            self._displayInQueue(phonecall).then(function (phonecallWidget) {
-                self.currentPhonecall = phonecallWidget;
-                self._selectCall(phonecallWidget);
-                _super();
+        if (!phonecall) {
+            this._rpc({
+                model: 'voip.phonecall',
+                method: 'create_from_recent',
+                args: [
+                    this.currentPhonecall.id,
+                ],
+            }).then(function (phonecall) {
+                self._displayInQueue(phonecall).then(function (phonecallWidget) {
+                    self.currentPhonecall = phonecallWidget;
+                    self._selectCall(phonecallWidget);
+                    _super();
+                });
             });
-        });
+        } else {
+            _super();
+        }
     },
     /**
      * @override
