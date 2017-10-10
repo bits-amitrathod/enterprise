@@ -1344,6 +1344,28 @@ QUnit.module('ViewEditorManager', {
             "there should be 2 nodes after the drag and drop.");
         vem.destroy();
     });
+
+    QUnit.test('notebook and group drag and drop after a group', function(assert) {
+        assert.expect(2);
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+            "</sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+        });
+        var $afterGroupHook = vem.$('.o_form_sheet > .o_web_studio_hook');
+        testUtils.dragAndDrop(vem.$('.o_web_studio_field_type_container .o_web_studio_field_tabs'),
+            $afterGroupHook, {disableDrop: true});
+        assert.strictEqual(vem.$('.o_web_studio_nearest_hook').length, 1, "There should be 1 highlighted hook");
+        testUtils.dragAndDrop(vem.$('.o_web_studio_field_type_container .o_web_studio_field_columns'),
+            $afterGroupHook, {disableDrop: true});
+        assert.strictEqual(vem.$('.o_web_studio_nearest_hook').length, 1, "There should be 1 highlighted hook");
+        vem.destroy();
+    });
 });
 
 });
