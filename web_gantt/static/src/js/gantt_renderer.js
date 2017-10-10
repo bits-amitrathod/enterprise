@@ -728,13 +728,14 @@ return AbstractRenderer.extend({
                 });
             }
             else {
+                var duration = (task.task_stop - task.task_start) / 3600000;
                 // Consolidation
                 gantt_tasks.push({
                     'id': "gantt_task_" + task.id,
                     'text': task.display_name || '',
                     'active': task.active || true,
                     'start_date': task.task_start,
-                    'duration': gantt.calculateDuration(task.task_start, task.task_stop),
+                    'duration': duration,
                     'progress': task.percent / 100,
                     'parent': parent_id || 0,
                     'consolidation': task[mapping.consolidation] || null,

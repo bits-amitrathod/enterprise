@@ -154,13 +154,13 @@ class HelpdeskTicket(models.Model):
 
     @api.depends('partner_id')
     def _compute_partner_tickets(self):
-        self.ensure_one()
-        ticket_data = self.env['helpdesk.ticket'].read_group([
-            ('partner_id', '=', self.partner_id.id),
-            ('stage_id.is_close', '=', False)
-        ], ['partner_id'], ['partner_id'])
-        if ticket_data:
-            self.partner_tickets = ticket_data[0]['partner_id_count']
+        for ticket in self:
+            ticket_data = self.env['helpdesk.ticket'].read_group([
+                ('partner_id', '=', ticket.partner_id.id),
+                ('stage_id.is_close', '=', False)
+            ], ['partner_id'], ['partner_id'])
+            if ticket_data:
+                ticket.partner_tickets = ticket_data[0]['partner_id_count']
 
     @api.depends('assign_date')
     def _compute_assign_hours(self):

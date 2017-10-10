@@ -296,7 +296,7 @@ class StockPicking(models.Model):
                     if self._check_destination_location(location):
                         return
 
-            product_packaging = self.env['product.packaging'].search([('barcode', '=', product_barcode)], limit=1)
+            product_packaging = self.env['product.packaging'].search([('barcode', '=', parsed_result['code'])], limit=1)
             if product_packaging.product_id:
                 if self._check_product(product_packaging.product_id,product_packaging.qty):
                     return
