@@ -766,11 +766,11 @@ class WebStudioController(http.Controller):
             else:
                 xml_node_group = xml_node
 
-            xml_node_page_right = etree.SubElement(xml_node_group, 'group', {'name': name + '_right'})
             xml_node_page_left = etree.SubElement(xml_node_group, 'group', {'name': name + '_left'})
+            xml_node_page_right = etree.SubElement(xml_node_group, 'group', {'name': name + '_right'})
             if title:
-                xml_node_page_right.attrib['string'] = _('Right Title')
                 xml_node_page_left.attrib['string'] = _('Left Title')
+                xml_node_page_right.attrib['string'] = _('Right Title')
 
         # Create the actual node inside the xpath. It needs to be the first
         # child of the xpath to respect the order in which they were added.
