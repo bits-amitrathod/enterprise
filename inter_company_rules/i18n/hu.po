@@ -3,16 +3,16 @@
 # * inter_company_rules
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# krnkris <krnkris@freemail.hu>, 2016
-# Oregional <geza.nagy@oregional.hu>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
+# krnkris <krnkris@freemail.hu>, 2017
+# gezza <geza.nagy@oregional.hu>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Oregional <geza.nagy@oregional.hu>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: gezza <geza.nagy@oregional.hu>, 2017\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/account_invoice.py:84
+#: code:addons/inter_company_rules/models/account_invoice.py:89
 #, python-format
 msgid " Invoice: "
 msgstr "Számla:"
@@ -42,8 +42,8 @@ msgid "Auto Generated Sales Order"
 msgstr ""
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_auto_validation
-#: model:ir.ui.view,arch_db:inter_company_rules.base_config_settings_view_form_inherit_inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_auto_validation
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
 msgid "Auto-validate Sales/Purchase Orders"
 msgstr ""
 
@@ -53,7 +53,7 @@ msgid "Companies"
 msgstr "Vállalatok"
 
 #. module: inter_company_rules
-#: model:ir.ui.view,arch_db:inter_company_rules.base_config_settings_view_form_inherit_inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
 msgid "Company"
 msgstr "Vállalat"
 
@@ -71,26 +71,25 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_auto_generate_invoices
 msgid ""
-"Create Invoices/Refunds when encoding invoices/refunds made to this company"
+"Create Invoices/Credit Notes when encoding invoices/credit notes made to "
+"this company"
 msgstr ""
-"Hozzon létre Számlákat/Visszatérítéseket ha számlákat/visszatérítéseket "
-"készít ennek a vállalatnak"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_po_from_so
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_po_from_so
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_po_from_so
 msgid "Create Purchase Orders when selling to this company"
 msgstr ""
 "Hozzon létre Beszerzési megrendeléseket, ha értékesít ennek a vállalatnak "
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_so_from_po
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_so_from_po
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_so_from_po
 msgid "Create Sales Orders when buying to this company"
 msgstr ""
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_warehouse_id
+#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_warehouse_id
 msgid ""
 "Default value to set on Purchase Orders that will be created based on Sales "
 "Orders made to this company."
@@ -109,14 +108,12 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_generate_invoices
 msgid ""
-"Generate Customer/Vendor Bills (and refunds) when encoding invoices (or refunds) made to this company.\n"
+"Generate Customer/Vendor Bills (and credit notes) when encoding invoices (or credit notes) made to this company.\n"
 " e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
 msgstr ""
-"Állítson elő Vevői/Beszállítói számlákat (és visszatérítéseket), ehhez a vállalathoz, ha számlákat (vagy visszatérítéseket) rögzít be.\n"
-" pl.: Állítson elő egy Vásárlói Számlát ha ezzel a vállalattal, mint beszállítóval Beszállítói Számlát már létrehozott."
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_po_from_so
+#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_po_from_so
 msgid ""
 "Generate a Purchase Order when a Sale Order with this company as customer is"
 " created."
@@ -132,7 +129,7 @@ msgid ""
 msgstr ""
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_so_from_po
+#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_so_from_po
 msgid ""
 "Generate a Sale Order when a Purchase Order with this company as vendor is "
 "created."
@@ -153,7 +150,7 @@ msgid "Inter Company User"
 msgstr "Belső vállalati felhasználó"
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/purchase_order.py:43
+#: code:addons/inter_company_rules/models/purchase_order.py:42
 #: code:addons/inter_company_rules/models/sale_order.py:46
 #, python-format
 msgid "Inter company user of company %s doesn't have enough access rights"
@@ -172,13 +169,13 @@ msgid "Invoice"
 msgstr "Számla"
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/account_invoice.py:75
+#: code:addons/inter_company_rules/models/account_invoice.py:81
 #, python-format
 msgid "Please define %s journal for this company: \"%s\" (id:%d)."
 msgstr "Kérem határozzon meg %s naplót ehhez a vállalthoz: \"%s\" (id:%d)."
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/purchase_order.py:40
+#: code:addons/inter_company_rules/models/purchase_order.py:39
 #, python-format
 msgid "Provide at least one user for inter company relation for % "
 msgstr ""
@@ -186,7 +183,7 @@ msgstr ""
 "hozzátartozik ehhez % "
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/account_invoice.py:40
+#: code:addons/inter_company_rules/models/account_invoice.py:44
 #: code:addons/inter_company_rules/models/sale_order.py:43
 #, python-format
 msgid "Provide one user for intercompany relation for % "
@@ -200,6 +197,11 @@ msgid "Purchase Order"
 msgstr "Beszerzési megrendelés"
 
 #. module: inter_company_rules
+#: model:ir.model,name:inter_company_rules.model_sale_order
+msgid "Quotation"
+msgstr "Árajánlat"
+
+#. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_intercompany_user_id
 msgid ""
 "Responsible user for creation of documents triggered by intercompany rules."
@@ -208,7 +210,7 @@ msgstr ""
 "dokumentumokhoz."
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_rule_type
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_rule_type
 msgid "Rule Type"
 msgstr ""
 
@@ -218,24 +220,29 @@ msgid "Sale/Purchase Orders Auto Validation"
 msgstr "Értékesítés/Beszerzés megrendelések automatikus jóváhagyása"
 
 #. module: inter_company_rules
-#: model:ir.model,name:inter_company_rules.model_sale_order
-msgid "Sales Order"
-msgstr "Vásárlói megrendelés"
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_rules_company_id
+msgid "Select Company"
+msgstr "Vállalat kiválasztása"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_rule_type
+#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rules_company_id
+msgid "Select company to setup Inter company rules."
+msgstr "Belső vállalati szabályok beállításához válasszon vállalkozást."
+
+#. module: inter_company_rules
+#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rule_type
 msgid "Select the type to setup inter company rules in selected company."
 msgstr ""
 "A kiválasztott vállalathoz tartozó belső vállalati szabályok beállításához "
 "válasszon típust."
 
 #. module: inter_company_rules
-#: selection:base.config.settings,rule_type:0
-msgid "Send Invoices & Refunds"
+#: selection:res.config.settings,rule_type:0
+msgid "Send Invoices & Credit Notes"
 msgstr ""
 
 #. module: inter_company_rules
-#: selection:base.config.settings,rule_type:0
+#: selection:res.config.settings,rule_type:0
 msgid "Send Sales & Purchase Orders"
 msgstr ""
 
@@ -260,12 +267,12 @@ msgid "Warehouse"
 msgstr "Raktár"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_warehouse_id
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_warehouse_id
 msgid "Warehouse For Purchase Orders"
 msgstr "Raktár a beszerzési megrendelésekhez"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_auto_validation
+#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_auto_validation
 msgid ""
 "When a Sale Order or a Purchase Order is created by a multi\n"
 "            company rule for this company, it will automatically validate it."
@@ -302,6 +309,6 @@ msgid ""
 msgstr ""
 
 #. module: inter_company_rules
-#: model:ir.model,name:inter_company_rules.model_base_config_settings
-msgid "base.config.settings"
-msgstr "base.config.settings"
+#: model:ir.model,name:inter_company_rules.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"

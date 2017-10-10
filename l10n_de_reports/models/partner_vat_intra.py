@@ -18,7 +18,10 @@ class ReportL10nDePartnerVatIntra(models.AbstractModel):
         context = self.env.context
         if not context.get('company_ids'):
             return lines
-        tag_ids = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in ['l10n_de.tag_de_intracom_community_supplies', 'l10n_de.tag_de_intracom_ABC']]
+        tag_ids = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in [
+            'l10n_de.tag_de_intracom_community_delivery', 
+            'l10n_de.tag_de_intracom_community_supplies', 
+            'l10n_de.tag_de_intracom_ABC']]
         query = """
             SELECT p.name As partner_name, l.partner_id AS partner_id, p.vat AS vat,
                       tt.account_account_tag_id AS intra_code, SUM(-l.balance) AS amount,
@@ -46,7 +49,13 @@ class ReportL10nDePartnerVatIntra(models.AbstractModel):
 
             amt = row['amount'] or 0.0
             if amt:
-                columns = [row['partner_country'], row['vat'].replace(' ', '').upper(), amt, 1 if row['intra_code'] == tag_ids[0] else 2]
+                if row['intra_code'] == tag_ids[0]:
+                    code = ''
+                elif row['intra_code'] == tag_ids[1]:
+                    code = 1
+                else:
+                    code = 2
+                columns = [row['partner_country'], row['vat'].replace(' ', '').upper(), amt, code]
                 if not context.get('no_format', False):
                     currency_id = self.env.user.company_id.currency_id
                     columns[2] = formatLang(self.env, columns[2], currency_obj=currency_id)

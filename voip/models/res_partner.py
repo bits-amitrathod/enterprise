@@ -39,7 +39,7 @@ class Contact(models.Model):
             country = self._phone_get_country()
             country_code = country.code if country else None
             try:
-                phone_nbr = phonenumbers.parse(self.phone, region=country_code, keep_raw_input=True)
+                phone_nbr = phonenumbers.parse(number, region=country_code, keep_raw_input=True)
             except phonenumbers.phonenumberutil.NumberParseException:
                 return number
             if not phonenumbers.is_possible_number(phone_nbr) or not phonenumbers.is_valid_number(phone_nbr):

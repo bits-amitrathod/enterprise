@@ -553,7 +553,7 @@
         <field name="name">1. Rückstellungen für Pensionen und ähnliche Verpflichtungen</field>
         <field name="code">SKR_BS_LIABILITIES_C1</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_b'/>
+        <field name="parent_id" ref='skr_bs_liabilities_c'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_C_1')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="1"/>
@@ -563,7 +563,7 @@
         <field name="name">2. Steuerrückstellungen</field>
         <field name="code">SKR_BS_LIABILITIES_C2</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_b'/>
+        <field name="parent_id" ref='skr_bs_liabilities_c'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_C_2')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="2"/>
@@ -573,7 +573,7 @@
         <field name="name">3. Sonstige Rückstellungen</field>
         <field name="code">SKR_BS_LIABILITIES_C3</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_b'/>
+        <field name="parent_id" ref='skr_bs_liabilities_c'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_C_3')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="3"/>
@@ -585,7 +585,7 @@
         <field name="name">1. Anleihen, davon konvertibeln</field>
         <field name="code">SKR_BS_LIABILITIES_D1</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_1')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="1"/>
@@ -595,7 +595,7 @@
         <field name="name">2. Verbindlichkeiten gegenüber Kreditinstituten</field>
         <field name="code">SKR_BS_LIABILITIES_D2</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_2')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="2"/>
@@ -605,7 +605,7 @@
         <field name="name">3. Erhaltene Anzahlungen auf Bestellungen</field>
         <field name="code">SKR_BS_LIABILITIES_D3</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_3')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="3"/>
@@ -615,7 +615,7 @@
         <field name="name">4. Verbindlichkeiten aus Lieferungen und Leistungen</field>
         <field name="code">SKR_BS_LIABILITIES_D4</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_4')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="4"/>
@@ -625,7 +625,7 @@
         <field name="name">5. Verbindlichkeiten aus der Annahme gezogener Wechsel und der Ausstellung eigener Wechsel</field>
         <field name="code">SKR_BS_LIABILITIES_D5</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_5')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="5"/>
@@ -635,7 +635,7 @@
         <field name="name">6. Verbindlichkeiten gegenüber verbundenen Unternehmen</field>
         <field name="code">SKR_BS_LIABILITIES_D6</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_6')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="6"/>
@@ -645,7 +645,7 @@
         <field name="name">7. Verbindlichkeiten gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht</field>
         <field name="code">SKR_BS_LIABILITIES_D7</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_7')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="7"/>
@@ -655,7 +655,7 @@
         <field name="name">8. Sonstige Verbindlichkeiten, davon aus Steuern, davon im Rahmen der sozialen Sicherheit</field>
         <field name="code">SKR_BS_LIABILITIES_D8</field>
         <field name="formulas">balance = sum.balance</field>
-        <field name="parent_id" ref='skr_bs_liabilities_c'/>
+        <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_8')])]"/>
         <field name="groupby">account_id</field>
         <field name="sequence" eval="8"/>

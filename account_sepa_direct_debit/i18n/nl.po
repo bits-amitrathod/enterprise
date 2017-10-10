@@ -82,6 +82,8 @@ msgid ""
 "<strong>Name of the reference party:</strong> "
 "......................................"
 msgstr ""
+"<strong>Naam van de referentie partij:</strong> "
+"......................................"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -125,11 +127,13 @@ msgid ""
 "A mandate represents the authorization you receive from a customer\n"
 "                    to automatically collect money on her account."
 msgstr ""
+"Een mandaat stelt de autorisering voor die u krijgt van een klant\n"
+"om automatisch geld te ontvangen van haar account."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_partner_bank_id
 msgid "Account of the customer to collect payments from."
-msgstr ""
+msgstr "Bankrekening van de klant om betalingen van af te houden."
 
 #. module: account_sepa_direct_debit
 #: selection:sdd.mandate,state:0
@@ -458,7 +462,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_paid_invoice_ids
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "Invoices Paid"
-msgstr ""
+msgstr "Betaalde facturen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_paid_invoice_ids
@@ -518,7 +522,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_view_account_invoice_search
 msgid "Linked to revoked mandate"
-msgstr ""
+msgstr "Gelinkt aan ingetrokken mandaat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.report,name:account_sepa_direct_debit.sdd_mandate_form_report_main
@@ -535,7 +539,7 @@ msgstr ""
 #: model:ir.cron,cron_name:account_sepa_direct_debit.sdd_mandate_state_cron
 #: model:ir.cron,name:account_sepa_direct_debit.sdd_mandate_state_cron
 msgid "Mandate state updater"
-msgstr ""
+msgstr "Mandaat status updater"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -555,7 +559,7 @@ msgstr "Naam van dit XML bestand"
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,help:account_sepa_direct_debit.action_sdd_payments_to_collect
 msgid "No direct debit payment to collect."
-msgstr ""
+msgstr "Geen incassobetalingen te innen."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_payments_to_collect_nber
@@ -614,6 +618,8 @@ msgstr ""
 msgid ""
 "Only mandates in draft state can be deleted from database when cancelled."
 msgstr ""
+"Alleen mandaten in concept fase kunnen worden verwijderd als deze zijn "
+"geannuleerd."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sdd_res_partner_view
@@ -623,12 +629,12 @@ msgstr "Open de mandaten van deze relatie"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_original_doc
 msgid "Original Document"
-msgstr ""
+msgstr "Origineel document"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_original_doc_filename
 msgid "Original Document File Name"
-msgstr ""
+msgstr "Origineel document bestandsnaam"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_original_doc
@@ -672,7 +678,7 @@ msgstr "Betalingen"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_generate_xml_wizard_payments_to_send_ids
 msgid "Payments To Send"
-msgstr ""
+msgstr "Betalingen om te versturen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_download_xml_wizard_payment_ids
@@ -692,7 +698,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_payment_ids
 msgid "Payments generated thanks to this mandate."
-msgstr ""
+msgstr "Betalingen aangemaakt dankzij deze mandaat."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_download_xml_wizard_payments_in_exception
@@ -766,12 +772,12 @@ msgstr "Ingetrokken"
 #: model:ir.actions.act_window,name:account_sepa_direct_debit.account_sepa_direct_debit_xml_archive_tree_act
 #: model:ir.ui.menu,name:account_sepa_direct_debit.account_sepa_direct_debit_sdd_payment_files_menu
 msgid "SDD Payment Files"
-msgstr ""
+msgstr "SSD betaalbestanden"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_company_sdd_creditor_identifier
 msgid "SDD creditor identifier"
-msgstr ""
+msgstr "SSD crediteur identifier"
 
 #. module: account_sepa_direct_debit
 #: model:account.payment.method,name:account_sepa_direct_debit.payment_method_sdd

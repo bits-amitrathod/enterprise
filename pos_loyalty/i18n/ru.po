@@ -4,25 +4,39 @@
 # 
 # Translators:
 # Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
-# Viktor Pogrebniak <vp@aifil.ru>, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
 # Max Belyanin <maxbelyanin@gmail.com>, 2017
-# Alex Puchkov <ap@alteco.co>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
+# SV <sv@grimmette.ru>, 2017
+# Alex Puchkov <ap@alteco.co>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:32+0000\n"
-"PO-Revision-Date: 2017-02-15 11:32+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Alex Puchkov <ap@alteco.co>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#. module: pos_loyalty
+#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_kanban
+msgid "<span>Points per currency :</span>"
+msgstr ""
+
+#. module: pos_loyalty
+#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_kanban
+msgid "<strong>Points per order :</strong>"
+msgstr ""
+
+#. module: pos_loyalty
+#: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_kanban
+msgid "<strong>Points per product :</strong>"
+msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_name
@@ -48,6 +62,11 @@ msgstr "Категория"
 #: model:ir.actions.act_window,help:pos_loyalty.action_loyalty_program_form
 msgid "Click to create a Loyalty Program."
 msgstr "Нажмите, чтобы создать программу лояльности."
+
+#. module: pos_loyalty
+#: model:ir.model,name:pos_loyalty.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_create_uid
@@ -161,6 +180,7 @@ msgstr "Последнее обновление"
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_pos_order_loyalty_points
 #: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
+#: model:ir.model.fields,field_description:pos_loyalty.field_res_users_loyalty_points
 msgid "Loyalty Points"
 msgstr ""
 
@@ -169,7 +189,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_loyalty_program_id
 #: model:ir.model.fields,field_description:pos_loyalty.field_pos_config_loyalty_id
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_form
-#: model:ir.ui.view,arch_db:pos_loyalty.view_pos_config_form
 msgid "Loyalty Program"
 msgstr "Программа Лояльности"
 
@@ -181,7 +200,6 @@ msgstr "Название программы лояльности"
 
 #. module: pos_loyalty
 #: model:ir.actions.act_window,name:pos_loyalty.action_loyalty_program_form
-#: model:ir.ui.menu,name:pos_loyalty.menu_loyalty_program
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_tree
 #: model:ir.ui.view,arch_db:pos_loyalty.view_pos_pos_form
 msgid "Loyalty Programs"
@@ -225,11 +243,6 @@ msgid "No Rewards Available"
 msgstr ""
 
 #. module: pos_loyalty
-#: model:ir.model,name:pos_loyalty.model_res_partner
-msgid "Partner"
-msgstr "Партнёр"
-
-#. module: pos_loyalty
 #. openerp-web
 #: code:addons/pos_loyalty/static/src/js/loyalty.js:383
 #, python-format
@@ -248,8 +261,8 @@ msgstr "Балл продукт"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_pos_order
-msgid "Point of Sale"
-msgstr "Точка продаж"
+msgid "Point of Sale Orders"
+msgstr "Заказы точки продажи"
 
 #. module: pos_loyalty
 #. openerp-web
@@ -430,14 +443,15 @@ msgstr "Суммы баллов лояльности округлены до к�
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_res_partner_loyalty_points
+#: model:ir.model.fields,help:pos_loyalty.field_res_users_loyalty_points
 msgid "The loyalty points the user won as part of a Loyalty Program"
 msgstr ""
 "Баллы лояльности, выигранные пользователем в рамках Программы лояльности"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_pos_config_loyalty_id
-msgid "The loyalty program used by this point_of_sale"
-msgstr "Программа лояльности, используемая этим point_of_sale"
+msgid "The loyalty program used by this point_of_sale."
+msgstr ""
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_reward_minimum_points

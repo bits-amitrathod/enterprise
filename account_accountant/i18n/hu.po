@@ -3,14 +3,15 @@
 # * account_accountant
 # 
 # Translators:
-# krnkris <krnkris@freemail.hu>, 2016
+# krnkris <krnkris@freemail.hu>, 2017
+# gezza <geza.nagy@oregional.hu>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 09:49+0000\n"
-"PO-Revision-Date: 2017-02-15 09:49+0000\n"
+"POT-Creation-Date: 2017-10-02 11:49+0000\n"
+"PO-Revision-Date: 2017-10-02 11:49+0000\n"
 "Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -20,57 +21,92 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
+#: model:ir.ui.menu,name:account_accountant.menu_account_group
+msgid "Account Groups"
+msgstr ""
+
+#. module: account_accountant
+#: model:ir.ui.menu,name:account_accountant.account_tag_menu
+msgid "Account Tags"
+msgstr ""
+
+#. module: account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Account used when transferring between banks"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.model.fields,field_description:account_accountant.field_account_config_settings_use_anglo_saxon
+#: model:ir.ui.view,arch_db:account_accountant.res_partner_view_form
+msgid "Accounting"
+msgstr "Könyvelés"
+
+#. module: account_accountant
+#: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_use_anglo_saxon
 msgid "Anglo-Saxon Accounting"
 msgstr "Angolszász könyvelés"
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Automate deferred revenues entries for multi-year contracts"
+#: model:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
+msgid "Cancel"
+msgstr "Mégsem"
+
+#. module: account_accountant
+#: model:ir.model,name:account_accountant.model_account_change_lock_date
+msgid "Change lock date"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Automated Entries"
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_uid
+msgid "Created by"
+msgstr "Létrehozta"
+
+#. module: account_accountant
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_date
+msgid "Created on"
+msgstr "Létrehozva"
+
+#. module: account_accountant
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_display_name
+msgid "Display Name"
+msgstr "Megjelenített név"
+
+#. module: account_accountant
+#: model:ir.ui.menu,name:account_accountant.menu_account_financial_reports_tree
+msgid "Financial Reports"
+msgstr "Pénzügyi  kimutatások"
+
+#. module: account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
+msgid "Fiscal Period Closing"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Cash Basis"
-msgstr "Készpénz alap"
-
-#. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Entry Locking"
-msgstr ""
-
-#. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Year"
 msgstr "Üzleti év"
 
 #. module: account_accountant
-#: model:ir.model.fields,field_description:account_accountant.field_account_config_settings_fiscalyear_last_day
+#: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_day
 msgid "Fiscalyear Last Day"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.model.fields,field_description:account_accountant.field_account_config_settings_fiscalyear_last_month
+#: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid "Fiscalyear Last Month"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_id
+msgid "ID"
+msgstr "Azonosító"
+
+#. module: account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Inter-Banks Transfers"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.model.fields,help:account_accountant.field_account_config_settings_transfer_account_id
+#: model:ir.model.fields,help:account_accountant.field_res_config_settings_transfer_account_id
 msgid ""
 "Intermediary account used when moving money from a liquidity account to "
 "another"
@@ -79,18 +115,28 @@ msgstr ""
 "számláról egy másikra"
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Journal used to declare taxes at payment date"
-msgstr ""
-
-#. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last Day"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Last day of your fiscal year"
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date___last_update
+msgid "Last Modified on"
+msgstr "Utoljára módosítva"
+
+#. module: account_accountant
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_write_uid
+msgid "Last Updated by"
+msgstr "Utoljára frissítette"
+
+#. module: account_accountant
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_write_date
+msgid "Last Updated on"
+msgstr "Utoljára frissítve "
+
+#. module: account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
+msgid "Last day of your fiscal year, for automatic opening entries"
 msgstr ""
 
 #. module: account_accountant
@@ -101,18 +147,30 @@ msgid "Let's start with a new customer invoice."
 msgstr "Kezdjük egy új vásárlói számlával."
 
 #. module: account_accountant
-#: model:ir.model.fields,field_description:account_accountant.field_account_config_settings_fiscalyear_lock_date
-msgid "Lock Date"
-msgstr "Lezárási dátum"
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
+#: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_lock_date
+msgid "Lock Date for All Users"
+msgstr ""
 
 #. module: account_accountant
-#: model:ir.model.fields,field_description:account_accountant.field_account_config_settings_period_lock_date
+#: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_period_lock_date
+#: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_period_lock_date
 msgid "Lock Date for Non-Advisers"
 msgstr "Lezárási dátum a nem-könyvelők részére"
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Lock dates for period closing"
+#: model:ir.ui.menu,name:account_accountant.menu_action_change_lock_date
+msgid "Lock Dates"
+msgstr ""
+
+#. module: account_accountant
+#: model:ir.actions.act_window,name:account_accountant.action_view_account_change_lock_date
+msgid "Lock your Fiscal Period"
+msgstr ""
+
+#. module: account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
+msgid "Lock your fiscal period"
 msgstr ""
 
 #. module: account_accountant
@@ -123,7 +181,8 @@ msgid "Make your system ready to invoice in a few steps."
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.model.fields,help:account_accountant.field_account_config_settings_fiscalyear_lock_date
+#: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
+#: model:ir.model.fields,help:account_accountant.field_res_config_settings_fiscalyear_lock_date
 msgid ""
 "No users, including Advisers, can edit accounts prior to and inclusive of "
 "this date. Use it for fiscal year locking for example."
@@ -133,7 +192,7 @@ msgstr ""
 "leállításához."
 
 #. module: account_accountant
-#: model:ir.model.fields,help:account_accountant.field_account_config_settings_period_lock_date
+#: model:ir.model.fields,help:account_accountant.field_res_config_settings_period_lock_date
 msgid ""
 "Only users with the 'Adviser' role can edit accounts prior to and inclusive "
 "of this date. Use it for period locking inside an open fiscal year, for "
@@ -142,6 +201,19 @@ msgstr ""
 "Kizárólag a 'Könyvelő' jogosultsággal rendelkező felhasználók "
 "szerkeszthetnek számlákat melyek előbbiek mint ez a dátum. Használja például"
 " egy nyitott üzleti év szakaszának leállításához."
+
+#. module: account_accountant
+#: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_period_lock_date
+msgid ""
+"Only users with the Adviser role can edit accounts prior to and inclusive of"
+" this date. Use it for period locking inside an open fiscal year, for "
+"example."
+msgstr ""
+
+#. module: account_accountant
+#: model:ir.ui.menu,name:account_accountant.menu_product_product_categories
+msgid "Product Categories"
+msgstr "Termékkategóriák"
 
 #. module: account_accountant
 #. openerp-web
@@ -155,45 +227,26 @@ msgstr ""
 "Kezdéshez kattintson ide."
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
+#: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Record cost of goods sold in your journal entries"
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Save this page and come back here to set up the feature."
-msgstr ""
+#: model:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
+msgid "Save"
+msgstr "Mentés"
 
 #. module: account_accountant
-#: model:ir.model.fields,field_description:account_accountant.field_account_config_settings_tax_cash_basis_journal_id
-msgid "Tax Cash Basis Journal"
-msgstr "Készpénz alap adó napló"
-
-#. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
+#: model:ir.model.fields,help:account_accountant.field_res_config_settings_fiscalyear_last_day
+#: model:ir.model.fields,help:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid ""
-"This allows you to manage the assets owned by a company or a person. It "
-"keeps track of the depreciation occurred on those assets, and creates "
-"account move for those depreciation lines."
+"The last day of the month will be taken if the chosen day doesn't exist."
 msgstr ""
 
 #. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid ""
-"This allows you to manage the revenue recognition on selling products. It "
-"keeps track of the installments occurred on those revenue recognitions, and "
-"creates account moves for those installment lines."
-msgstr ""
-
-#. module: account_accountant
-#: model:ir.model.fields,field_description:account_accountant.field_account_config_settings_transfer_account_id
+#: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_transfer_account_id
 msgid "Transfer Account"
 msgstr "Belső utalásos számla"
-
-#. module: account_accountant
-#: model:ir.ui.view,arch_db:account_accountant.account_config_settings_view_form_inherit_account_accountant
-msgid "Use depreciation boards, automate amortization entries"
-msgstr ""
 
 #. module: account_accountant
 #. openerp-web
@@ -226,6 +279,6 @@ msgstr ""
 "megtekintéséhez.</i>"
 
 #. module: account_accountant
-#: model:ir.model,name:account_accountant.model_account_config_settings
-msgid "account.config.settings"
-msgstr "account.config.settings"
+#: model:ir.model,name:account_accountant.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"

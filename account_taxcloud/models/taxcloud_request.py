@@ -3,6 +3,7 @@
 
 import logging
 import suds
+import re
 import requests
 
 from suds.client import Client
@@ -31,7 +32,7 @@ class TaxCloudRequest(object):
             'Address2': partner.street2 or '',
             'City': partner.city,
             "State": partner.state_id.code,
-            "Zip5": partner.zip,
+            "Zip5": re.sub('[^0-9]', '', partner.zip),
             "Zip4": ""
         }
         res = requests.post("https://api.taxcloud.com/1.0/TaxCloud/VerifyAddress", data=address_to_verify).json()

@@ -81,7 +81,7 @@
                     </t>
                     <t t-if="not line.get('caret_options')">
                             <span class="account_report_line_name">
-                                <a t-if="line.get('action_id')" t-att-data-action-id="line['action_id']" t-att-action="line.get('action', 'execute_action')">
+                                <a t-if="line.get('action_id')" t-att-data-id="line['id']" t-att-data-action-id="line['action_id']" t-att-action="line.get('action', 'execute_action')">
                                     <t t-esc="line.get('name')"/>
                                 </a>
                                 <t t-if="not line.get('action_id')" t-esc="line.get('name')"/>

@@ -147,8 +147,11 @@ var DialingPanel = Widget.extend({
     /**
      * @private
      * @param  {String} number
+     * @param {Object} phonecall if the event function already created a phonecall;
+     *                           this phonecall is passed to the initPhonecall function
+     *                           in order to not create a new one.
      */
-    _makeCall: function (number) {
+    _makeCall: function (number, phonecall) {
         if (!this.inCall) {
             if (!number) {
                 this.do_notify(_t('The phonecall has no number'),
@@ -158,7 +161,7 @@ var DialingPanel = Widget.extend({
             if (!this.shown || this.folded) {
                 this._toggleDisplay();
             }
-            this.activeTab.initPhonecall();
+            this.activeTab.initPhonecall(phonecall);
             this.userAgent.makeCall(number);
         }
     },
@@ -259,8 +262,8 @@ var DialingPanel = Widget.extend({
             this.$('.o_dial_tabs > li.active, .tab-pane.active').removeClass('active');
             this.$('li.o_dial_recent_tab, .tab-pane.o_dial_recent').addClass('active');
             this.activeTab = this.tabs.recent;
-            this.activeTab.callFromPhoneWidget(params).done(function () {
-                self._makeCall(params.number);
+            this.activeTab.callFromPhoneWidget(params).done(function (phonecall) {
+                self._makeCall(params.number, phonecall);
             });
         }
     },
@@ -289,9 +292,9 @@ var DialingPanel = Widget.extend({
                     this.$('.o_dial_tabs > li.active, .tab-pane.active').removeClass('active');
                     this.$('li.o_dial_recent_tab, .tab-pane.o_dial_recent').addClass('active');
                     this.activeTab = this.tabs.recent;
-                    this.activeTab.callFromNumber(number).done(function () {
+                    this.activeTab.callFromNumber(number).done(function (phonecall) {
                         self.$searchInput.val('');
-                        self._makeCall(number);
+                        self._makeCall(number, phonecall);
                     });
                 }
             } else {
@@ -301,8 +304,8 @@ var DialingPanel = Widget.extend({
                     this.$('.o_dial_tabs > li.active, .tab-pane.active').removeClass('active');
                     this.$('li.o_dial_recent_tab, .tab-pane.o_dial_recent').addClass('active');
                     this.activeTab = this.tabs.recent;
-                    this.activeTab.callFromNumber(number).done(function () {
-                        self._makeCall(number);
+                    this.activeTab.callFromNumber(number).done(function (phonecall) {
+                        self._makeCall(number, phonecall);
                         self.$keypadInput.val("");
                     });
                 }

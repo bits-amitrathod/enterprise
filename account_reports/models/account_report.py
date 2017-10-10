@@ -137,23 +137,28 @@ class AccountReport(models.AbstractModel):
     def execute_action(self, options, params=None):
         action_id = int(params.get('actionId'))
         action = self.env['ir.actions.actions'].browse([action_id])
-        if action.type == 'ir.actions.client':
+        action_type = action.type
+        action = self.env[action.type].browse([action_id])
+        action_read = action.read()[0]
+        if action_type == 'ir.actions.client':
             # Check if we are opening another report and if yes, pass options and ignore_session
-            action = self.env['ir.actions.client'].browse([action_id])
             if action.tag == 'account_report':
                 options['unfolded_lines'] = []
                 options['unfold_all'] = False
-                action = action.read()[0]
-                another_report_context = safe_eval(action['context'])
+                another_report_context = safe_eval(action_read['context'])
                 another_report = self.browse(another_report_context['id'])
                 if not self.date_range and another_report.date_range:
                     # Don't propagate the filter if current report is date based while the targetted
                     # report is date_range based, because the semantic is not the same:
                     # 'End of Following Month' in BS != 'Last Month' in P&L (it has to go from 1st day of fiscalyear)
                     options['date'].pop('filter')
-                action.update({'options': options, 'ignore_session': 'read'})
-                return action
-        return action_id
+                action_read.update({'options': options, 'ignore_session': 'read'})
+        if params.get('id'):
+            # Add the id of the account.financial.html.report.line in the action's context
+            context = action_read.get('context') and safe_eval(action_read['context']) or {}
+            context.setdefault('active_id', int(params['id']))
+            action_read['context'] = context
+        return action_read
 
     @api.multi
     def open_document(self, options, params=None):

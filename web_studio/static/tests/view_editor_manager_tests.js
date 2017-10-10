@@ -616,6 +616,9 @@ QUnit.module('ViewEditorManager', {
         // used to generate the new fields view in mockRPC
         fieldsView = $.extend(true, {}, vem.fields_view);
 
+        // try to add a field in the autocompletion section
+        testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields > .ui-draggable:first'), $('.o_web_studio_search_autocompletion_fields .o_web_studio_hook:first'));
+
         assert.strictEqual(vem.view_type, 'search',
             "view type should be search");
         assert.strictEqual(vem.$('.o_web_studio_search_view_editor').length, 1,
@@ -638,6 +641,7 @@ QUnit.module('ViewEditorManager', {
         // edit the autocompletion field
         $('.o_web_studio_search_view_editor .o_web_studio_search_autocompletion_container [data-node-id]').click();
 
+
         assert.ok(vem.$('.o_web_studio_sidebar').find('.o_web_studio_properties').hasClass('active'),
             "the Properties tab should now be active");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
@@ -646,9 +650,6 @@ QUnit.module('ViewEditorManager', {
             "the field should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
             "the field should have the label Display Name in the sidebar");
-
-        // try to add a field in the autocompletion section
-        testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields > .ui-draggable:first'), $('.o_web_studio_search_autocompletion_fields .o_web_studio_hook:first'));
 
         vem.destroy();
     });
@@ -1003,39 +1004,26 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('element removal', function(assert) {
-        assert.expect(8);
+        assert.expect(4);
 
         var editViewCount = 0;
         var arch = "<form><sheet>" +
                 "<group>" +
                     "<field name='display_name'/>" +
-                    "<field name='m2o'/>" +
                 "</group>" +
-                "<notebook><page name='page'><field name='id'/></page></notebook>" +
+                "<notebook><page><field name='id'/></page></notebook>" +
             "</sheet></form>";
         var fieldsView;
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
             arch: arch,
-            mockRPC: function (route, args) {
+            mockRPC: function (route) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
                 }
                 if (route === '/web_studio/edit_view') {
                     editViewCount++;
-                    if (editViewCount === 1) {
-                        assert.strictEqual(_.has(args.operations[0].target, 'xpath_info'), false,
-                            'should not give xpath_info if we have the tag identifier attributes');
-                    } else if (editViewCount === 2) {
-                        assert.strictEqual(args.operations[1].target.tag, 'group',
-                            'should compute correctly the parent node for the group');
-                    } else if (editViewCount === 3) {
-                        assert.strictEqual(args.operations[2].target.tag, 'notebook',
-                            'should delete the notebook because the last page is deleted');
-                        assert.strictEqual(_.last(args.operations[2].target.xpath_info).tag, 'notebook',
-                            'should have the notebook as xpath last element');
-                    }
                     // the server sends the arch in string but it's post-processed
                     // by the ViewEditorManager
                     fieldsView.arch = arch;

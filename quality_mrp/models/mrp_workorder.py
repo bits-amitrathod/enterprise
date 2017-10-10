@@ -150,10 +150,20 @@ class MrpProductionWorkcenterLine(models.Model):
             'quality_state': state,
             'user_id': self.env.user.id,
             'control_date': datetime.now()})
+        old_check_id = self.current_quality_check_id
         if self.skip_completed_checks:
             self._change_quality_check(increment=1, children=1, checks=self.skipped_check_ids)
         else:
             self._change_quality_check(increment=1, children=1)
+        if state == 'fail' and old_check_id.failure_message:
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'quality.check',
+                'views': [[self.env.ref('quality_mrp.quality_check_failure_message').id, 'form']],
+                'name': _('Failure Message'),
+                'target': 'new',
+                'res_id': old_check_id.id,
+            }
 
     def action_skip(self):
         self.ensure_one()
@@ -162,12 +172,12 @@ class MrpProductionWorkcenterLine(models.Model):
         if self.skip_completed_checks:
             self._change_quality_check(increment=1, children=1, checks=self.skipped_check_ids)
         else:
-            self._change_quality_check(increment=1)
+            self._change_quality_check(increment=1, children=1)
 
     def action_first_skipped_step(self):
         self.ensure_one()
         self.skip_completed_checks = True
-        self._change_quality_check(position=0, checks=self.skipped_check_ids)
+        self._change_quality_check(position=0, children=1, checks=self.skipped_check_ids)
 
     def action_previous(self):
         self.ensure_one()
@@ -257,7 +267,7 @@ class MrpProductionWorkcenterLine(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'mrp.workorder',
             'views': [[self.env.ref('quality_mrp.mrp_workorder_view_form_tablet_menu').id, 'form']],
-            'name': 'Menu',
+            'name': _('Menu'),
             'target': 'new',
             'res_id': self.id,
         }
@@ -419,11 +429,11 @@ class MrpProductionWorkcenterLine(models.Model):
 
     def action_next(self):
         self.ensure_one();
-        self._next()
+        return self._next()
 
     def do_fail(self):
         self.ensure_one()
-        self._next('fail')
+        return self._next('fail')
 
     def do_finish(self):
         self.record_production()
@@ -433,12 +443,12 @@ class MrpProductionWorkcenterLine(models.Model):
 
     def do_pass(self):
         self.ensure_one()
-        self._next('pass')
+        return self._next('pass')
 
     def do_measure(self):
         self.ensure_one()
         point_id = self.current_quality_check_id.point_id
         if self.measure < point_id.tolerance_min or self.measure > point_id.tolerance_max:
-            self.do_fail()
+            return self.do_fail()
         else:
-            self.do_pass()
+            return self.do_pass()

@@ -52,7 +52,7 @@ class AnalyticLine(models.Model):
             anchor = fields.Date.from_string(self.env.context['grid_anchor'])
         else:
             anchor = date.today() + relativedelta(weeks=-1, days=1, weekday=0)
-        span = self.env.context.get('grid_range', {'span': 'week'})['span']
+        span = self.env.context.get('grid_range', 'week')
         date_ago = fields.Date.to_string(anchor - STEP_BY[span] + START_OF[span])
 
         tasks |= self.env['account.analytic.line'].search([
@@ -67,7 +67,7 @@ class AnalyticLine(models.Model):
             anchor = fields.Date.from_string(self.env.context['grid_anchor'])
         else:
             anchor = date.today() + relativedelta(weeks=-1, days=1, weekday=0)
-        span = self.env.context.get('grid_range', {'span': 'week'})['span']
+        span = self.env.context.get('grid_range', 'week')
         validate_to = fields.Date.to_string(anchor + END_OF[span])
 
         if not self:
@@ -128,7 +128,12 @@ class AnalyticLine(models.Model):
 
         additionnal_domain = self._get_adjust_grid_domain(column_value)
         domain = expression.AND([row_domain, additionnal_domain])
-        line = self.search(domain, limit=1, order="create_date DESC")
+        line = self.search(domain)
+        if len(line) > 1:
+            raise UserError(_(
+                'Multiple timesheet entries match the modified value. Please '
+                'change the search options or modify the entries individually.'
+            ))
 
         if line:  # update existing line
             line.write({

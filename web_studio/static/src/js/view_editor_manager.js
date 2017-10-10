@@ -1049,11 +1049,6 @@ var ViewEditorManager = Widget.extend({
             var is_root = !findParent(this.fields_view.arch, parent_node);
             if (parent_node.children.length === 1 && !is_root) {
                 node = parent_node;
-            // Since we changed the node being deleted, we recompute the xpath_info
-            // if necessary
-            if (node && _.isEmpty(_.pick(node.attrs, this.expr_attrs[node.tag]))) {
-                xpath_info = findParentsPositions(this.fields_view.arch, node);
-            }
             }
         }
 
@@ -1401,7 +1396,7 @@ var ViewEditorManager = Widget.extend({
                     new_attrs);
                 break;
             case 'filter':
-                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context']);
+                new_attrs = _.pick(new_attrs, ['name', 'string', 'domain', 'context', 'create_group']);
                 this._addFilter(type, node, xpath_info, position, new_attrs);
                 break;
             case 'separator':
@@ -1417,23 +1412,8 @@ var ViewEditorManager = Widget.extend({
 function findParent(arch, node) {
     var parent = arch;
     var result;
-    var xpathInfo = findParentsPositions(arch, node);
     _.each(parent.children, function (child) {
-        var deepEqual = true;
-        // If there is no attributes, we can't compare the nodes with them
-        // so we compute the child xpath_info and compare it to the node
-        // we are looking in the arch.
-        if (_.isEmpty(child.attrs)) {
-            var childXpathInfo = findParentsPositions(arch, child);
-            _.each(xpathInfo, function (node, index) {
-                if (index >= childXpathInfo.length) {
-                    deepEqual = false;
-                } else if (!_.isEqual(xpathInfo[index], childXpathInfo[index])) {
-                    deepEqual = false;
-                }
-            });
-        }
-        if (deepEqual && child.attrs && child.attrs.name === node.attrs.name) {
+        if (child.attrs && child.attrs.name === node.attrs.name) {
             result = parent;
         } else {
             var res = findParent(child, node);
