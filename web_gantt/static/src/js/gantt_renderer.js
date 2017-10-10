@@ -728,7 +728,7 @@ return AbstractRenderer.extend({
                 });
             }
             else {
-                var duration = (task.task_stop.getTime() - task.task_start.getTime()) / 3600000;
+                var duration = (task.task_stop - task.task_start) / 3600000;
                 // Consolidation
                 gantt_tasks.push({
                     'id': "gantt_task_" + task.id,
