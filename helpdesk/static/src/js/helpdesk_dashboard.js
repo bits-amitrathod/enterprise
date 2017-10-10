@@ -126,7 +126,9 @@ var HelpdeskDashboardModel = KanbanModel.extend({
      */
     get: function (localID) {
         var result = this._super.apply(this, arguments);
-        result.dashboardValues = this.dashboardValues[localID];
+        if (_.isObject(result)) {
+            result.dashboardValues = this.dashboardValues[localID];
+        }
         return result;
     },
     /**
