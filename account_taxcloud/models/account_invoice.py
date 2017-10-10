@@ -70,6 +70,7 @@ class AccountInvoice(models.Model):
                             'amount': tax_rate,
                             'amount_type': 'percent',
                             'type_tax_use': 'sale',
+                            'description': 'Sales Tax',
                         })
                     line.invoice_line_tax_ids = tax
 
