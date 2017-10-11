@@ -32,21 +32,15 @@ var SubMenu = Widget.extend({
         this.active_view_types = this.action.view_mode.split(',');
         this.studio_actions = [{action: 'action_web_studio_main', title: 'Views'}];
         this.multi_lang = options.multi_lang;
-        if (active_view) {
-            var bc_options = {
-                action: 'action_web_studio_main',
-                active_view: active_view,
-                title: active_view.charAt(0).toUpperCase() + active_view.slice(1),
-            };
-            this._addAction(bc_options);
-        }
+        this._setDefaultBc(active_view);
+
         bus.on('action_changed', this, this._onActionChanged.bind(this));
 
         bus.on('undo_available', this, this._onToggleUndo.bind(this, true));
         bus.on('undo_not_available', this, this._onToggleUndo.bind(this, false));
         bus.on('redo_available', this, this._onToggleRedo.bind(this, true));
         bus.on('redo_not_available', this, this._onToggleRedo.bind(this, false));
-
+        var bc_options;
         bus.on('edition_mode_entered', this, function (view_type) {
             if (self.studio_actions.length === 1) {
                 bc_options = {
@@ -159,6 +153,20 @@ var SubMenu = Widget.extend({
         this.do_action(action, options);
         this.renderElement();
     },
+    /**
+     * Set the first element in the breadcrumb based on the active view.
+     * @param {String} activeView
+     */
+    _setDefaultBc: function (activeView) {
+        if (activeView) {
+            var bc_options = {
+                action: 'action_web_studio_main',
+                active_view: activeView,
+                title: activeView.charAt(0).toUpperCase() + activeView.slice(1),
+            };
+            this._addAction(bc_options);
+        }
+    },
 
     //--------------------------------------------------------------------------
     // Handlers
@@ -171,6 +179,11 @@ var SubMenu = Widget.extend({
     _onActionChanged: function (new_action) {
         this.action = new_action;
         this.active_view_types = this.action.view_mode.split(',');
+        this.studio_actions = [{action: 'action_web_studio_main', title: 'Views'}];
+        var activeView = new_action.viewManager &&
+            new_action.viewManager.active_view &&
+            new_action.viewManager.active_view.type;
+        this._setDefaultBc(activeView);
         this.renderElement();
     },
     /**
