@@ -61,7 +61,7 @@ var OnlineSyncAccountInstitutionSelector = Widget.extend({
                         self.$el.siblings('.institution_detail').find('.js_choose_institution').click(function(){
                             // Open new client action
                             $(this).parent().find('.btn').toggleClass('disabled');
-                            return this._rpc({
+                            return self._rpc({
                                     model: 'account.online.provider',
                                     method: 'get_login_form',
                                     args: [[], inst[0].id, inst[0].type_provider, self.context],
