@@ -107,7 +107,10 @@ def generate_module(module, data):
 
     # Generate xml files and yield them
     filenames = []          # filenames to include in the module to export
-    depends = set()         # module dependencies of the module to export
+    # depends contains module dependencies of the module to export, as a result
+    # we add web_studio by default to deter importing studio customizations
+    # in community databases
+    depends = set([u'web_studio'])
     skipped = []            # non-exported field values
 
     for model in MODELS_TO_EXPORT:
