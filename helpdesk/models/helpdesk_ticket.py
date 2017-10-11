@@ -101,6 +101,7 @@ class HelpdeskTicket(models.Model):
     user_id = fields.Many2one('res.users', string='Assigned to', track_visibility='onchange', domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)])
     partner_id = fields.Many2one('res.partner', string='Customer')
     partner_tickets = fields.Integer('Number of tickets from the same partner', compute='_compute_partner_tickets')
+    attachment_number = fields.Integer(compute='_compute_attachment_number', string="Number of Attachments")
 
     # Used to submit tickets from a contact form
     partner_name = fields.Char(string='Customer Name')
@@ -136,6 +137,22 @@ class HelpdeskTicket(models.Model):
             'user_id': team.get_new_user().id,
             'stage_id': self.env['helpdesk.stage'].search([('team_ids', 'in', team.id)], order='sequence', limit=1).id
         }
+
+    @api.multi
+    def _compute_attachment_number(self):
+        read_group_res = self.env['ir.attachment'].read_group(
+            [('res_model', '=', 'helpdesk.ticket'), ('res_id', 'in', self.ids)],
+            ['res_id'], ['res_id'])
+        attach_data = { res['res_id']: res['res_id_count'] for res in read_group_res }
+        for record in self:
+            record.attachment_number = attach_data.get(record.id, 0)
+
+    @api.multi
+    def action_get_attachment_tree_view(self):
+        attachment_action = self.env.ref('base.action_attachment')
+        action = attachment_action.read()[0]
+        action['domain'] = str(['&', ('res_model', '=', self._name), ('res_id', 'in', self.ids)])
+        return action
 
     @api.onchange('team_id')
     def _onchange_team_id(self):
