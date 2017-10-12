@@ -526,8 +526,8 @@ var GanttView = View.extend({
             groups = [{
                 'id': 1,
                 'name': '',
-                'task_start': self.focus_date,
-                'task_stop': self.focus_date,
+                'task_start': self.focus_date.toDate(),
+                'task_stop': self.focus_date.toDate(),
                 'duration': 1,
             }];
         }
