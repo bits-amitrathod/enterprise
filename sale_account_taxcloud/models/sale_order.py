@@ -45,19 +45,20 @@ class SaleOrder(models.Model):
                     tax_rate = 0.0
                 else:
                     tax_rate = tax_values[index] / price * 100
-                if len(line.tax_id.ids) > 1 or float_compare(line.tax_id.amount, tax_rate, precision_digits=2):
+                if len(line.tax_id.ids) > 1 or float_compare(line.tax_id.amount, tax_rate, precision_digits=3):
                     raise_warning = True
-                    tax_rate = float_round(tax_rate, precision_digits=2)
+                    tax_rate = float_round(tax_rate, precision_digits=3)
                     tax = self.env['account.tax'].sudo().search([
                         ('amount', '=', tax_rate),
                         ('amount_type', '=', 'percent'),
                         ('type_tax_use', '=', 'sale')], limit=1)
                     if not tax:
                         tax = self.env['account.tax'].sudo().create({
-                            'name': 'Tax %.2f %%' % (tax_rate),
+                            'name': 'Tax %.3f %%' % (tax_rate),
                             'amount': tax_rate,
                             'amount_type': 'percent',
                             'type_tax_use': 'sale',
+                            'description': 'Sales Tax',
                         })
                     line.tax_id = tax
         if raise_warning:
