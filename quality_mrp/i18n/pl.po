@@ -12,10 +12,10 @@
 # Grażyna Grzelak <grazyna.grzelak@openglobe.pl>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2017-10-10 12:20+0000\n"
+"PO-Revision-Date: 2017-10-10 12:20+0000\n"
 "Last-Translator: Grażyna Grzelak <grazyna.grzelak@openglobe.pl>, 2017\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -154,6 +154,12 @@ msgid "Failure"
 msgstr ""
 
 #. module: quality_mrp
+#: code:addons/quality_mrp/models/mrp_workorder.py:163
+#, python-format
+msgid "Failure Message"
+msgstr ""
+
+#. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Finish steps"
 msgstr ""
@@ -190,13 +196,9 @@ msgstr ""
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_lot_id
+#: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Lot"
 msgstr "Partia"
-
-#. module: quality_mrp
-#: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
-msgid "Lot/SN"
-msgstr ""
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -229,6 +231,12 @@ msgid "Measure:"
 msgstr ""
 
 #. module: quality_mrp
+#: code:addons/quality_mrp/models/mrp_workorder.py:270
+#, python-format
+msgid "Menu"
+msgstr "Menu"
+
+#. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_move_line_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_move_line_id
 msgid "Move Line"
@@ -243,6 +251,11 @@ msgstr "Następny"
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_note
 msgid "Note"
 msgstr "Notatka"
+
+#. module: quality_mrp
+#: model:ir.ui.view,arch_db:quality_mrp.quality_check_failure_message
+msgid "OK"
+msgstr "Ok"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_workorder_id
@@ -290,7 +303,7 @@ msgstr ""
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/mrp_workorder.py:84
-#: code:addons/quality_mrp/models/mrp_workorder.py:161
+#: code:addons/quality_mrp/models/mrp_workorder.py:171
 #, python-format
 msgid ""
 "Please ensure the quantity to produce is nonnegative and does not exceed the"
@@ -414,6 +427,11 @@ msgstr "Odpowiedzialny"
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_result
 msgid "Result"
+msgstr ""
+
+#. module: quality_mrp
+#: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
+msgid "SN"
 msgstr ""
 
 #. module: quality_mrp
@@ -590,14 +608,14 @@ msgid "Worksheet page"
 msgstr ""
 
 #. module: quality_mrp
-#: code:addons/quality_mrp/models/mrp_workorder.py:377
+#: code:addons/quality_mrp/models/mrp_workorder.py:387
 #, python-format
 msgid "You should provide a lot for the final product"
 msgstr "Musisz wprowadzić numer partii dla produktu gotowego"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/mrp_production.py:93
-#: code:addons/quality_mrp/models/mrp_workorder.py:375
+#: code:addons/quality_mrp/models/mrp_workorder.py:385
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr ""

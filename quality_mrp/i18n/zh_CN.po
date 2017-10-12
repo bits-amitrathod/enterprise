@@ -2,12 +2,22 @@
 # This file contains the translation of the following modules:
 # * quality_mrp
 # 
+# Translators:
+# Jeffery CHEN <jeffery9@gmail.com>, 2017
+# Xia Fajin <xia.fajin@elico-corp.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Talway <9010446@qq.com>, 2017
+# xiaobin wu <bd5dml@gmail.com>, 2017
+# liAnGjiA <liangjia@qq.com>, 2017
+# Yaorong Li <55yaorong.li@gmail.com>, 2017
+# 卓忆科技 <zhanghao@jointd.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2017-10-10 12:20+0000\n"
+"PO-Revision-Date: 2017-10-10 12:20+0000\n"
+"Last-Translator: 卓忆科技 <zhanghao@jointd.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,12 +37,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Alert</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">质量警报</span>"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_ids
 msgid "Alerts"
-msgstr ""
+msgstr "提醒"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_allow_producing_quantity_change
@@ -47,29 +57,29 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet_menu
 msgid "Block"
-msgstr ""
+msgstr "阻塞"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_check_ids
 msgid "Check"
-msgstr ""
+msgstr "检查"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_check_ids
 msgid "Checks"
-msgstr ""
+msgstr "检查"
 
 #. module: quality_mrp
 #. openerp-web
 #: code:addons/quality_mrp/static/src/xml/widget_template.xml:9
 #, python-format
 msgid "Clear"
-msgstr ""
+msgstr "清除"
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,help:quality_mrp.mrp_workorder_action_tablet
 msgid "Click to start a new work order."
-msgstr ""
+msgstr "点击开始一个新的工单。"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_component_id
@@ -82,12 +92,12 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Continue"
-msgstr ""
+msgstr "继续"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_control_date
 msgid "Control Date"
-msgstr ""
+msgstr "控制日期"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.quality_alert_view_form_inherit_mrp
@@ -103,13 +113,13 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Date"
-msgstr ""
+msgstr "日期   "
 
 #. module: quality_mrp
 #: model:ir.model.fields,help:quality_mrp.field_mrp_workorder_component_uom_id
 #: model:ir.model.fields,help:quality_mrp.field_quality_check_component_uom_id
 msgid "Default Unit of Measure used for all stock operation."
-msgstr ""
+msgstr "所有库存作业的默认计量单位"
 
 #. module: quality_mrp
 #: selection:quality.point,worksheet:0
@@ -123,24 +133,30 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 #, python-format
 msgid "Done"
-msgstr ""
+msgstr "完成"
 
 #. module: quality_mrp
 #. openerp-web
 #: code:addons/quality_mrp/static/src/xml/widget_template.xml:8
 #, python-format
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Fail"
-msgstr ""
+msgstr "失败"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/quality.py:112
 #, python-format
 msgid "Failure"
+msgstr ""
+
+#. module: quality_mrp
+#: code:addons/quality_mrp/models/mrp_workorder.py:163
+#, python-format
+msgid "Failure Message"
 msgstr ""
 
 #. module: quality_mrp
@@ -180,13 +196,9 @@ msgstr ""
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_lot_id
-msgid "Lot"
-msgstr ""
-
-#. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
-msgid "Lot/SN"
-msgstr ""
+msgid "Lot"
+msgstr "批次"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -196,22 +208,22 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_mrp_production
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "制造订单"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Mark as Done"
-msgstr ""
+msgstr "标记为完成"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_measure
 msgid "Measure"
-msgstr ""
+msgstr "测量"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_measure_success
 msgid "Measure Success"
-msgstr ""
+msgstr "测量成功"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -219,32 +231,43 @@ msgid "Measure:"
 msgstr ""
 
 #. module: quality_mrp
+#: code:addons/quality_mrp/models/mrp_workorder.py:270
+#, python-format
+msgid "Menu"
+msgstr "菜单"
+
+#. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_move_line_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_move_line_id
 msgid "Move Line"
-msgstr ""
+msgstr "凭证行"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Next"
-msgstr ""
+msgstr "下一个"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_note
 msgid "Note"
-msgstr ""
+msgstr "便笺"
+
+#. module: quality_mrp
+#: model:ir.ui.view,arch_db:quality_mrp.quality_check_failure_message
+msgid "OK"
+msgstr "OK"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_workorder_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_workorder_id
 msgid "Operation"
-msgstr ""
+msgstr "作业"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Operator"
-msgstr ""
+msgstr "操作员"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_parent_id
@@ -254,23 +277,23 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_routing_id
 msgid "Parent Routing"
-msgstr ""
+msgstr "父级工艺路线"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Pass"
-msgstr ""
+msgstr "通过"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Pause"
-msgstr ""
+msgstr "暂停"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_picture
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_picture
 msgid "Picture"
-msgstr ""
+msgstr "图片"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/quality.py:120
@@ -280,7 +303,7 @@ msgstr ""
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/mrp_workorder.py:84
-#: code:addons/quality_mrp/models/mrp_workorder.py:161
+#: code:addons/quality_mrp/models/mrp_workorder.py:171
 #, python-format
 msgid ""
 "Please ensure the quantity to produce is nonnegative and does not exceed the"
@@ -313,18 +336,18 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "Process"
-msgstr ""
+msgstr "处理"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_production_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_production_id
 msgid "Production Order"
-msgstr ""
+msgstr "生产单"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Production Workcenter"
-msgstr ""
+msgstr "生产工作中心"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_alert
@@ -332,7 +355,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workcenter_view_kanban_inherit_quality_mrp
 msgid "Quality Alert"
-msgstr ""
+msgstr "质量警报"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_count
@@ -343,7 +366,7 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_check
 msgid "Quality Check"
-msgstr ""
+msgstr "质量检查"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_check_fail
@@ -363,12 +386,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "Quality Checks"
-msgstr ""
+msgstr "质量检查"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_point
 msgid "Quality Point"
-msgstr ""
+msgstr "质量点"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet_menu
@@ -378,7 +401,7 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Quantity"
-msgstr ""
+msgstr "数量"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -399,11 +422,16 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_user_id
 msgid "Responsible"
-msgstr ""
+msgstr "负责人"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_result
 msgid "Result"
+msgstr ""
+
+#. module: quality_mrp
+#: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
+msgid "SN"
 msgstr ""
 
 #. module: quality_mrp
@@ -414,7 +442,7 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet_menu
 msgid "Scrap"
-msgstr ""
+msgstr "报废"
 
 #. module: quality_mrp
 #: selection:quality.point,worksheet:0
@@ -424,7 +452,7 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Skip"
-msgstr ""
+msgstr "跳过"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_skip_completed_checks
@@ -440,12 +468,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_state
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_quality_state_for_summary
 msgid "Status"
-msgstr ""
+msgstr "状态"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_operation_id
 msgid "Step"
-msgstr ""
+msgstr "步"
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,name:quality_mrp.action_quality_mrp_show_steps
@@ -457,7 +485,7 @@ msgstr ""
 #: code:addons/quality_mrp/models/quality.py:112
 #, python-format
 msgid "Success"
-msgstr ""
+msgstr "成功"
 
 #. module: quality_mrp
 #. openerp-web
@@ -470,7 +498,7 @@ msgstr ""
 #: model:ir.model,name:quality_mrp.model_quality_point_test_type
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_test_type
 msgid "Test Type"
-msgstr ""
+msgstr "测试类型"
 
 #. module: quality_mrp
 #: model:ir.model.fields,help:quality_mrp.field_quality_point_routing_id
@@ -483,59 +511,59 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_title
 msgid "Title"
-msgstr ""
+msgstr "称谓"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/quality.py:105
 #, python-format
 msgid "To Do"
-msgstr ""
+msgstr "待办"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_component_tracking
 msgid "Tracking"
-msgstr ""
+msgstr "追踪"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_code
 msgid "Type of Operation"
-msgstr ""
+msgstr "作业类型"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet_menu
 msgid "Unblock"
-msgstr ""
+msgstr "解除阻塞"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_component_uom_id
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_norm_unit
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_component_uom_id
 msgid "Unit of Measure"
-msgstr ""
+msgstr "计量单位"
 
 #. module: quality_mrp
 #. openerp-web
 #: code:addons/quality_mrp/static/src/xml/widget_template.xml:11
 #, python-format
 msgid "Uploading..."
-msgstr ""
+msgstr "正在上传..."
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Validate"
-msgstr ""
+msgstr "验证"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_workcenter_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_workcenter_id
 msgid "Work Center"
-msgstr ""
+msgstr "工作中心"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_mrp_workorder
 msgid "Work Order"
-msgstr ""
+msgstr "工单"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/quality.py:53
@@ -546,7 +574,7 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.actions.act_window,name:quality_mrp.mrp_workorder_action_tablet
 msgid "Work Orders"
-msgstr ""
+msgstr "工单"
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,help:quality_mrp.mrp_workorder_action_tablet
@@ -567,7 +595,7 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_worksheet
 msgid "Worksheet"
-msgstr ""
+msgstr "工作记录表"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_worksheet_page
@@ -580,14 +608,14 @@ msgid "Worksheet page"
 msgstr ""
 
 #. module: quality_mrp
-#: code:addons/quality_mrp/models/mrp_workorder.py:377
+#: code:addons/quality_mrp/models/mrp_workorder.py:387
 #, python-format
 msgid "You should provide a lot for the final product"
-msgstr ""
+msgstr "你需要提供完工产品的批次／序列号"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/mrp_production.py:93
-#: code:addons/quality_mrp/models/mrp_workorder.py:375
+#: code:addons/quality_mrp/models/mrp_workorder.py:385
 #, python-format
 msgid "You still need to do the quality checks!"
-msgstr ""
+msgstr "你还是需要做质量检查!"
