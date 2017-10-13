@@ -10,6 +10,10 @@ var ServicesMixin = require('web.ServicesMixin');
 
 var _t = core._t;
 
+var clean_number = function(number) {
+    return number.replace(/[\s-/.]/g, '');
+}
+
 var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
     /**
      * @constructor
@@ -195,7 +199,7 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
             }
             this.alwaysTransfer = result.always_transfer;
             this.ignoreIncoming = result.ignore_incoming;
-            this.externalPhone = result.external_phone;
+            this.externalPhone = clean_number(result.external_phone);
             // catch the error if the ws uri is wrong
             this.ua.transport.ws.onerror = function () {
                 self._triggerError(_t('The websocket uri could be wrong.') +
@@ -234,6 +238,7 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
             }
         };
         try {
+            number = clean_number(number);
             if(this.alwaysTransfer){
                 this.sipSession = this.ua.invite(this.externalPhone, callOptions);
                 this.currentNumber = number;

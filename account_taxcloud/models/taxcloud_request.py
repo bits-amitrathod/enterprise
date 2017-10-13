@@ -99,23 +99,6 @@ class TaxCloudRequest(object):
 
     # def authorize_transaction(self, invoice):
 
-    # send request to TaxCloud.
-    def get_tax(self):
-        formatted_response = {}
-        try:
-            self.response = self.client.service.Lookup(self.api_login_id, self.api_key, 'NoCustomerID', 'NoCartID', self.cart_items, self.origin, self.destination, False)
-            if self.response.ResponseType == 'OK':
-                for res in self.response.CartItemsResponse.CartItemResponse:
-                    formatted_response['tax_amount'] = res.TaxAmount
-            elif self.response.ResponseType == 'Error':
-                formatted_response['error_message'] = self.response.Messages[0][0].Message
-        except suds.WebFault as fault:
-            formatted_response['error_message'] = fault
-        except IOError:
-            formatted_response['error_message'] = "TaxCloud Server Not Found"
-
-        return formatted_response
-
     def get_all_taxes_values(self):
         formatted_response = {}
         try:
