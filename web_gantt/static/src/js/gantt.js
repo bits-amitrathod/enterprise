@@ -413,7 +413,7 @@ var GanttView = View.extend({
                     task_stop.setTime(task_stop.getTime() + 86400000);
                 }
                 if (!task_stop) {
-                    task_stop = moment(task_start).clone().add(1, 'hours');
+                    task_stop = moment(task_start).clone().add(1, 'hours').toDate();
                 }
             } else { // we assume date_duration is defined
                 var tmp = formats.format_value(task[self.fields_view.arch.attrs.date_delay],
