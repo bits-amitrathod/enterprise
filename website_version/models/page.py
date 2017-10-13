@@ -14,11 +14,13 @@ class PageVersion(models.Model):
             recognized as such anymore.
         """
         page = self.browse(int(data['id']))
-        pages = self.env['ir.ui.view'].search([
-            ('key', '=', page.key),
-            '|', ('website_id', '=', False), ('website_id', '=', website_id)
-        ])
-        pages.write({'key': 'website.' + slugify(data['name'], 50), 'name': data['name']})
+        if page.name != data['name']:
+            pages = self.env['ir.ui.view'].search([
+                ('key', '=', page.key),
+                '|', ('website_id', '=', False), ('website_id', '=', website_id)
+            ])
+            page_key = self.env['website'].get_unique_key(slugify(data['name']))
+            pages.write({'key': page_key, 'name': data['name']})
 
         return super(PageVersion, self).save_page_info(website_id, data)
 

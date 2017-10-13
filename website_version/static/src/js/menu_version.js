@@ -173,6 +173,7 @@ var EditorVersion = Widget.extend({
     },
 
     create_experiment: function() {
+        var self = this;
         var view_id = self.get_main_object().id;
         var model = self.get_main_object().model;
         ajax.jsonRpc( '/website_version/all_versions_all_goals', 'call', { 'view_id': view_id, 'model': model }).then(function (result) {

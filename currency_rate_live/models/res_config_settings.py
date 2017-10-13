@@ -189,7 +189,7 @@ class ResCompany(models.Model):
             except:
                 #connection error, the request wasn't successful
                 return False
-            data = json.loads(result)
+            data = json.loads(result.decode('utf-8'))
             if not data.get('query') or not data['query'].get('results'):
                 #result is None, web service not available for the moment.
                 return False

@@ -127,8 +127,13 @@ class Versioning_Controller(Website):
             icp.set_param('google_management_client_secret', client_secret.strip() or '')
 
     @http.route('/website_version/all_versions_all_goals', type='json', auth="user", website=True)
-    def all_versions_all_goals(self, view_id):
+    def all_versions_all_goals(self, view_id, model=None):
         #To get all versions and all goals to create an experiment
+        #The received view_id is always the id of the main-object of the client. It looks like it is
+        #always expecting an ir_ui_view ID but in case of /blog or /forum, the main-object is not
+        #Same with website_page
+        if model == "website.page":
+            view_id = request.env['website.page'].browse(view_id).view_id.id
         view = request.env['ir.ui.view']
         version = request.env['website_version.version']
         goal = request.env['website_version.goals']

@@ -600,18 +600,18 @@ class WebStudioController(http.Controller):
         # Normalize the view
         studio_view = self._get_studio_view(view)
         ViewModel = request.env[view.model]
+
         try:
             normalized_view = studio_view.normalize()
             self._set_studio_view(view, normalized_view)
-            fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         except ValueError:  # Element '<...>' cannot be located in parent view
             # If the studio view is not applicable after normalization, let's
             # just ignore the normalization step, it's better to have a studio
             # view that is not optimized than to prevent the user from making
             # the change he would like to make.
             self._set_studio_view(view, new_arch)
-            fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
 
+        fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         view_type = 'list' if view.type == 'tree' else view.type
         result = {'fields_views': {view_type: fields_view}}
 
@@ -801,11 +801,11 @@ class WebStudioController(http.Controller):
             else:
                 xml_node_group = xml_node
 
-            xml_node_page_right = etree.SubElement(xml_node_group, 'group', {'name': name + '_right'})
             xml_node_page_left = etree.SubElement(xml_node_group, 'group', {'name': name + '_left'})
+            xml_node_page_right = etree.SubElement(xml_node_group, 'group', {'name': name + '_right'})
             if title:
-                xml_node_page_right.attrib['string'] = _('Right Title')
                 xml_node_page_left.attrib['string'] = _('Left Title')
+                xml_node_page_right.attrib['string'] = _('Right Title')
 
         # Create the actual node inside the xpath. It needs to be the first
         # child of the xpath to respect the order in which they were added.

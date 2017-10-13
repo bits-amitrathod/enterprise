@@ -114,6 +114,38 @@ QUnit.test('edit the target', function(assert) {
     kanban.destroy();
 });
 
+QUnit.test('dashboard rendering with empty many2one', function(assert) {
+    assert.expect(2);
+
+    // add an empty many2one
+    this.data.partner.fields.partner_id = {string: "Partner", type: 'many2one', relation: 'partner'};
+    this.data.partner.records[0].partner_id = false;
+
+    var dashboard_data = this.dashboard_data;
+    var kanban = createView({
+        View: view_registry.get('helpdesk_dashboard'),
+        model: 'partner',
+        data: this.data,
+        arch: '<kanban class="o_kanban_test">' +
+                '<field name="partner_id"/>' +
+                '<templates><t t-name="kanban-box">' +
+                    '<div><field name="foo"/></div>' +
+                '</t></templates>' +
+              '</kanban>',
+        mockRPC: function(route, args) {
+            if (args.method === 'retrieve_dashboard') {
+                assert.ok(true, "should call /retrieve_dashboard");
+                return $.when(dashboard_data);
+            }
+            return this._super(route, args);
+        },
+    });
+
+    assert.strictEqual(kanban.$('div.o_helpdesk_dashboard').length, 1,
+            "should render the dashboard");
+    kanban.destroy();
+});
+
 });
 
 });

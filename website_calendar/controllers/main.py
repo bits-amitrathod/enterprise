@@ -23,7 +23,7 @@ class WebsiteCalendar(http.Controller):
             if country_code:
                 suggested_appointment_types = request.env['calendar.appointment.type'].search([
                     '|', ('country_ids', '=', False),
-                         ('country_ids.code', 'in', country_code)])
+                         ('country_ids.code', 'in', [country_code])])
             else:
                 suggested_appointment_types = request.env['calendar.appointment.type'].search([])
             if not suggested_appointment_types:

@@ -28,7 +28,7 @@ websiteSeo.SeoConfigurator.include({
                 else {
                     self.track = false;
                 }
-                self.$('h3[class="track-page"]').append(add);
+                self.$('h4[class="track-page"]').append(add);
             });
         }
         return def;
