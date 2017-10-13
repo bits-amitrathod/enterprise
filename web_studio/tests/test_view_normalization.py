@@ -584,6 +584,18 @@ class TestViewNormalization(TransactionCase):
             </data>
         """)
 
+    # Test replace of last element in arch
+    def test_view_normalization_17(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='lang']" position="replace"/>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='lang']" position="replace"/>
+            </data>
+        """)
+
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
         _request_stack.pop()

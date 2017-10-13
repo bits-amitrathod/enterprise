@@ -600,18 +600,18 @@ class WebStudioController(http.Controller):
         # Normalize the view
         studio_view = self._get_studio_view(view)
         ViewModel = request.env[view.model]
+
         try:
             normalized_view = studio_view.normalize()
             self._set_studio_view(view, normalized_view)
-            fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         except ValueError:  # Element '<...>' cannot be located in parent view
             # If the studio view is not applicable after normalization, let's
             # just ignore the normalization step, it's better to have a studio
             # view that is not optimized than to prevent the user from making
             # the change he would like to make.
             self._set_studio_view(view, new_arch)
-            fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
 
+        fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         view_type = 'list' if view.type == 'tree' else view.type
         result = {'fields_views': {view_type: fields_view}}
 

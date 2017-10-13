@@ -248,7 +248,7 @@ class View(models.Model):
                             xpath = etree.Element('xpath')
 
         # Append last remaining xpath if needed
-        if len(xpath):
+        if xpath.get('expr') is not None:
             arch.append(xpath)
 
         normalized_arch = etree.tostring(self._indent_tree(arch), encoding='unicode') if len(arch) else u''
