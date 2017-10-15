@@ -16,32 +16,28 @@ websiteSeo.SeoConfigurator.include({
     start: function () {
         var def = this._super.apply(this, arguments);
         var self = this;
-        var obj = websiteSeo.SeoConfigurator.prototype.getMainObject();
-        // only display checkbox for website page
-        if (obj && ['website.page', 'ir.ui.view'].indexOf(obj.model) != -1) {
-            this.is_tracked().then(function (data) {
-                var add = $('<input type="checkbox" required="required"/>');
-                if (data[0]['track']) {
-                    add.attr('checked','checked');
-                    self.track = true;
-                }
-                else {
-                    self.track = false;
-                }
-                self.$('h4[class="track-page"]').append(add);
-            });
-        }
+        this.is_tracked().then(function (data) {
+            var add = $('<input type="checkbox" required="required"/>');
+            if (data[0]['track']) {
+                add.attr('checked','checked');
+                self.track = true;
+            }
+            else {
+                self.track = false;
+            }
+            self.$('h4[class="track-page"]').append(add);
+        });
         return def;
     },
     is_tracked: function (val) {
-        var obj = websiteSeo.SeoConfigurator.prototype.getMainObject();
-        if (!obj) {
+        var viewid = $('html').data('viewid');
+        if (!viewid) {
             return $.Deferred().reject();
         } else {
             return rpc.query({
-                    model: obj.model,
+                    model: 'ir.ui.view',
                     method: 'read',
-                    args: [[obj.id], ['track'], weContext.get()],
+                    args: [[viewid], ['track'], weContext.get()],
                 });
         }
     },
@@ -59,14 +55,14 @@ websiteSeo.SeoConfigurator.include({
         }
     },
     trackPage: function (val) {
-        var obj = websiteSeo.SeoConfigurator.prototype.getMainObject();
-        if (!obj) {
+        var viewid = $('html').data('viewid');
+        if (!viewid) {
             return $.Deferred().reject();
         } else {
             return rpc.query({
-                    model: obj.model,
+                    model: 'ir.ui.view',
                     method: 'write',
-                    args: [[obj.id], { track: val }, weContext.get()],
+                    args: [[viewid], { track: val }, weContext.get()],
                 });
         }
     },
