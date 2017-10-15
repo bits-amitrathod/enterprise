@@ -17,7 +17,7 @@ class ir_http(models.AbstractModel):
                 url = request.httprequest.url
                 vals = {'lead_id': lead_id, 'user_id': request.session.get('uid'), 'url': url}
 
-                if not lead_id or request.env['website.crm.pageview'].create_pageview(vals):
+                if not lead_id or not request.env['website.crm.pageview'].create_pageview(vals):
                     # create_pageview failed
                     response.delete_cookie('lead_id')
                     request.session.setdefault('pages_viewed', {})[url] = fields.Datetime.now()
@@ -29,18 +29,17 @@ class ir_http(models.AbstractModel):
     @classmethod
     def _dispatch(cls):
         delete_cookie = False
-
+        response = super(ir_http, cls)._dispatch()
         if request.endpoint and request.endpoint.routing and request.endpoint.routing.get('track'):
             lead_id = request.env["crm.lead"].decode(request)
             url = request.httprequest.url
             vals = {'lead_id': lead_id, 'user_id': request.session.get('uid'), 'url': url}
-            if not lead_id or request.env['website.crm.pageview'].create_pageview(vals):
+            if not lead_id or not request.env['website.crm.pageview'].create_pageview(vals):
                 # create_pageview was fail
                 delete_cookie = True
                 request.session.setdefault('pages_viewed', {})[url] = fields.Datetime.now()
                 request.session.modified = True
 
-        response = super(ir_http, cls)._dispatch()
         if isinstance(response, Exception):
             return response
 
