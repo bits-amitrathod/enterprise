@@ -24,6 +24,7 @@ registry
     .add('email', basic_fields.EmailWidget)
     .add('url', basic_fields.UrlWidget)
     .add('image', basic_fields.FieldBinaryImage)
+    .add('list.image', basic_fields.FieldBinaryFile)
     .add('binary', basic_fields.FieldBinaryFile)
     .add('monetary', basic_fields.FieldMonetary)
     .add('priority', basic_fields.PriorityWidget)
