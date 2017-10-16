@@ -238,6 +238,8 @@ class AccountReport(models.AbstractModel):
     def set_context(self, options):
         """This method will set information inside the context based on the options dict as some options need to be in context for the query_get method defined in account_move_line"""
         ctx = self.env.context.copy()
+        if options.get('cash_basis'):
+            ctx['cash_basis'] = True
         if options.get('date') and options['date'].get('date_from'):
             ctx['date_from'] = options['date']['date_from']
         if options.get('date'):
