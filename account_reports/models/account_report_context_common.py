@@ -200,9 +200,11 @@ class AccountReportContextCommon(models.TransientModel):
         ][index]
 
     def get_cmp_date(self):
-        if self.get_report_obj().get_report_type() == 'no_date_range':
-            return self.get_full_date_names(self.date_to_cmp)
-        return self.get_full_date_names(self.date_to_cmp, self.date_from_cmp)
+        if self.date_to_cmp:
+            if self.get_report_obj().get_report_type() == 'no_date_range':
+                return self.get_full_date_names(self.date_to_cmp)
+            return self.get_full_date_names(self.date_to_cmp, self.date_from_cmp)
+        return self.get_full_date_names((datetime.today() + timedelta(days=-365)).strftime("%Y-%m-%d"))
 
     def get_periods(self):
         res = self.get_cmp_periods()
