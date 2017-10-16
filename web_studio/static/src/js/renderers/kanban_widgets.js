@@ -291,3 +291,18 @@ return {
 };
 
 });
+
+// We add the widget define in account in the studio kanban widgets registry
+// in order to be able to display it correctly in studio.
+// This fix is only needed before the new view system (saas16) and should not
+// be forward-ported after it.
+odoo.define('web.kanban_widgets_fix', function (require) {
+"use strict";
+
+var kanbanWidgets = require('web.kanban_widgets');
+var kanban_widgets = require('web_kanban.widgets');
+setTimeout(function () {
+    kanbanWidgets.registry.add('dashboard_graph', kanban_widgets.registry.get('dashboard_graph'));
+});
+
+});
