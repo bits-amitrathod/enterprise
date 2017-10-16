@@ -18,6 +18,7 @@ class ReportPartnerLedger(models.AbstractModel):
     filter_unfold_all = False
     filter_account_type = [{'id': 'receivable', 'name': _('Receivable'), 'selected': False}, {'id': 'payable', 'name': _('Payable'), 'selected': False}]
     #TODO add support for partner_id
+    filter_partner_id = False
 
     def get_templates(self):
         templates = super(ReportPartnerLedger, self).get_templates()
@@ -93,12 +94,12 @@ class ReportPartnerLedger(models.AbstractModel):
         context = self.env.context
 
         #If a default partner is set, we only want to load the line referring to it.
-        if context.get('default_partner_id'):
-            line_id = context['default_partner_id']
+        if options.get('partner_id'):
+            line_id = options['partner_id']
 
         grouped_partners = self.group_by_partner_id(options, line_id)
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name)
-        unfold_all = context.get('print_mode') and not options.get('unfolded_lines') or context.get('default_partner_id')
+        unfold_all = context.get('print_mode') and not options.get('unfolded_lines') or options.get('partner_id')
         for partner in sorted_partners:
             debit = grouped_partners[partner]['debit']
             credit = grouped_partners[partner]['credit']
