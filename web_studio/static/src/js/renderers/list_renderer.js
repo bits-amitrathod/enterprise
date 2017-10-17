@@ -220,7 +220,8 @@ return AbstractRenderer.extend({
         var field = this.fields[node.attrs.name];
         var value = record.data[node.attrs.name];
         if (node.attrs.widget) {
-            var Widget = this.widgets_registry.get(node.attrs.widget);
+            var widgetKeys = ['list.' + node.attrs.widget, node.attrs.widget];
+            var Widget = this.widgets_registry.get_any(widgetKeys);
             if (Widget) {
                 var widget = new Widget(this, node.attrs.name, record, {
                     mode: 'readonly',
