@@ -458,8 +458,23 @@ return Widget.extend(StandaloneFieldManagerMixin, {
                 } else {
                     new_attrs.effect = 'False';
                 }
-            }
-            else if ($input.attr('type') === 'checkbox') {
+            } else if (attribute === 'img_size') {
+                var newOptions = _.extend({}, this.state.attrs.options);
+                var size = parseInt($input.val());
+                newOptions.size = [size, size];
+                new_attrs.options = JSON.stringify(newOptions);
+            } else if (attribute === 'widget') {
+                // reset widget options
+                var widget = $input.val();
+                new_attrs = {
+                    widget: widget,
+                    options: '',
+                };
+                if (widget === 'image') {
+                    // add small as a default size for image widget
+                    new_attrs.options = JSON.stringify({size: [90, 90]});
+                }
+            } else if ($input.attr('type') === 'checkbox') {
                 if (!_.contains(["invisible", "required", "readonly"], attribute)) {
                     if ($input.is(':checked')) {
                         new_attrs[attribute] = $input.data('leave-empty') === 'checked' ? '': 'True';

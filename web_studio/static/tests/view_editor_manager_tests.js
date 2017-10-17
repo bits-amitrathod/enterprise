@@ -112,6 +112,7 @@ QUnit.module('ViewEditorManager', {
             partner: {
                 fields: {
                     display_name: {string: "Display Name", type: "char"},
+                    image: {string: "Image", type: "binary"},
                 },
                 records: [{
                     id: 4,
@@ -348,6 +349,135 @@ QUnit.module('ViewEditorManager', {
             "the sidebar should now display the field properties");
         assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_clicked'),
             "the column should have the clicked style");
+        vem.destroy();
+    });
+
+    QUnit.test('image field edition (change size)', function (assert) {
+        assert.expect(10);
+
+        var arch = "<form>" +
+            "<sheet>" +
+                "<field name='image' widget='image' options='{\"size\":[90, 90],\"preview_image\":\"coucou\"}'/>" +
+            "</sheet>" +
+        "</form>";
+        var fieldsView;
+
+        this.data.partner.records.push({
+            id: 8,
+            display_name: "kamlesh",
+            image: "sulochan",
+        });
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'partner',
+            arch: arch,
+            res_id: 8,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                } else if (route === 'data:image/png;base64,sulochan') {
+                    assert.step('image');
+                    return $.when();
+                } else if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].new_attrs.options, "{\"size\":[270,270],\"preview_image\":\"coucou\"}",
+                        "appropriate options for 'image' widget should be passed");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = "<form>" +
+                        "<sheet>" +
+                            "<field name='image' widget='image' options='{\"size\": [270, 270]}'/>" +
+                        "</sheet>" +
+                    "</form>";
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_field_image').length, 1,
+            "there should be one image");
+        assert.verifySteps(['image'], "the image should have been fetched");
+
+        // edit the image
+        vem.$('.o_web_studio_form_view_editor .o_field_image').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select#img_size').length, 1,
+            "the sidebar should display dropdown to change image size");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select#img_size option:selected').val(), "90",
+            "the image size should be correctly selected");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_field_image').hasClass('o_clicked'),
+            "image should have the clicked style");
+
+        // change image size to large
+        vem.$('.o_web_studio_sidebar_content.o_display_field select#img_size').val(270).trigger('change');
+        assert.verifySteps(['image', 'image'], "the image should have been fetched again");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select#img_size option:selected').val(), "270",
+            "the image size should be correctly selected");
+        vem.destroy();
+    });
+
+    QUnit.test('change widget binary to image (check default size)', function (assert) {
+        assert.expect(4);
+
+        var arch = "<form>" +
+            "<sheet>" +
+                "<field name='image'/>" +
+            "</sheet>" +
+        "</form>";
+        var fieldsView;
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'partner',
+            arch: arch,
+            res_id: 4,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].new_attrs.options, '{"size":[90,90]}',
+                        "appropriate default options for 'image' widget should be passed");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]').length, 1,
+            "there should be one binary field");
+
+        // edit the binary field
+        vem.$('.o_web_studio_form_view_editor [data-node-id]').click();
+
+        // Change widget from binary to image
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select#widget').length, 1,
+            "the sidebar should display dropdown to change widget");
+        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_clicked'),
+            "binary field should have the clicked style");
+
+        // change widget to image
+        vem.$('.o_web_studio_sidebar_content.o_display_field select#widget').val('image').trigger('change');
         vem.destroy();
     });
 
