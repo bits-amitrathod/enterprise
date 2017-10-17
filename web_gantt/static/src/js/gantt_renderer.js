@@ -571,7 +571,7 @@ return AbstractRenderer.extend({
                     task_stop.setTime(task_stop.getTime() + 86400000);
                 }
                 if (!task_stop) {
-                    task_stop = moment(task_start).clone().add(1, 'hours');
+                    task_stop = moment(task_start).clone().add(1, 'hours').toDate();
                 }
             } else { // we assume date_duration is defined
                 // FIXME this code branch is not tested
@@ -685,8 +685,8 @@ return AbstractRenderer.extend({
             groups = [{
                 'id': 0,
                 'display_name': '',
-                'task_start': this.state.focus_date,
-                'task_stop': this.state.focus_date,
+                'task_start': this.state.focus_date.toDate(),
+                'task_stop': this.state.focus_date.toDate(),
                 'percent': 0,
             }];
         }
