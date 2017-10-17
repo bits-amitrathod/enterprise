@@ -33,7 +33,7 @@ class TaxCloudRequest(object):
             'Address2': partner.street2 or '',
             'City': partner.city,
             "State": partner.state_id.code,
-            "Zip5": re.sub('[^0-9]', '', partner.zip),
+            "Zip5": re.sub('[^0-9]', '', partner.zip or ''),
             "Zip4": ""
         }
         res = requests.post("https://api.taxcloud.com/1.0/TaxCloud/VerifyAddress", data=address_to_verify).json()

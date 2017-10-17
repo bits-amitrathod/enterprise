@@ -59,7 +59,8 @@ class version(models.Model):
                 if check_id:
                     check_id.unlink()
                 copy_version_id = self.create({'name': copy_master_name, 'website_id': self.website_id.id})
-                copy_l.copy({'version_id': copy_version_id.id, 'website_id': self.website_id.id})
+                for source in copy_l:
+                    source.copy({'version_id': copy_version_id.id, 'website_id': self.website_id.id})
             del_l.unlink()
         #All the views in the version published are copied without version_id
         for view in self.view_ids:
