@@ -140,6 +140,22 @@ class View(models.Model):
         # after this one when calling the read_combined to get the old_view then
         # re-enabling them all afterwards.
 
+        def add_xpath_to_arch(arch, xpath):
+            """
+            Appends the xpath to the arch if the xpath's position != 'replace'
+            (deletion), otherwise it is prepended to the arch.
+
+            This is done because when moving an existing field somewhere before
+            its original position it will append a replace xpath and then
+            append the existing field xpath, effictively removing the one just
+            added and showing the one that existed before.
+            """
+            # TODO: Only add attributes if the xpath has children
+            if xpath.get('position') == 'replace':
+                arch.insert(0, xpath)
+            else:
+                arch.append(xpath)
+
         # Fetch the root view
         root_view = self
         while root_view.mode != 'primary':
@@ -183,10 +199,10 @@ class View(models.Model):
 
                     # If we are already writing an xpath, we need to either
                     # close it or ignore this line
-                    if xpath.attrib.get('expr'):
+                    if xpath.get('expr'):
                         # Maybe we are already removing the parent of this
                         # node so this one will be removed automatically
-                        current_xpath_target = old_view_tree.find('.' + xpath.attrib.get('expr'))
+                        current_xpath_target = old_view_tree.find('.' + xpath.get('expr'))
                         if xpath.get('position') == 'replace' and \
                                 current_xpath_target in node.iterancestors():
                             continue
@@ -197,7 +213,7 @@ class View(models.Model):
                         elif ((node.tag != 'attribute' and xpath.get('position') != 'after') or
                                 (node.tag == 'attribute' and xpath.get('position') != 'attributes')):
                             # Consecutive removals need different xpath
-                            arch.append(xpath)
+                            add_xpath_to_arch(arch, xpath)
                             xpath = etree.Element('xpath')
 
                     xpath.attrib['expr'] = self._node_to_xpath(node)
@@ -221,7 +237,7 @@ class View(models.Model):
                     # If the current xpath is not compatible with what we want
                     # to add, we need to close it.
                     if xpath.get('expr') and not self._is_compatible(xpath, node):
-                            arch.append(xpath)
+                            add_xpath_to_arch(arch, xpath)
                             xpath = etree.Element('xpath')
 
                     # At this point, we either have no current xpath, or the one
@@ -243,13 +259,13 @@ class View(models.Model):
                     next(new_view_iterator)
                     # This is an unchanged line, if an xpath is ungoing, close it.
                     if old_node.tag not in ['attribute', 'attributes']:
-                        if xpath.attrib.get('expr'):
-                            arch.append(xpath)
+                        if xpath.get('expr'):
+                            add_xpath_to_arch(arch, xpath)
                             xpath = etree.Element('xpath')
 
         # Append last remaining xpath if needed
         if xpath.get('expr') is not None:
-            arch.append(xpath)
+            add_xpath_to_arch(arch, xpath)
 
         normalized_arch = etree.tostring(self._indent_tree(arch), encoding='unicode') if len(arch) else u''
         return normalized_arch

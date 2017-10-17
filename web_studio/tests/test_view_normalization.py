@@ -596,6 +596,65 @@ class TestViewNormalization(TransactionCase):
             </data>
         """)
 
+    # Replace an existing element then add it back in but somewhere before
+    # its original position
+    def test_view_normalization_18(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='mobile']" position="replace"/>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="mobile" widget="phone"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='mobile']" position="replace"/>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="mobile" widget="phone"/>
+              </xpath>
+            </data>
+        """)
+
+    # Delete an existing element, then replace another element with the deleted
+    # element further down
+    def test_view_normalization_19(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='phone']" position="replace"/>
+              <xpath expr="//field[@name='email']" position="replace"/>
+              <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="phone"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='email']" position="replace">
+                <field name="phone"/>
+              </xpath>
+              <xpath expr="//field[@name='phone']" position="replace"/>
+            </data>
+        """)
+
+    # Delete an existing element, then replace another element before the
+    # original element with the latter
+    def test_view_normalization_20(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='email']" position="replace"/>
+              <xpath expr="//field[@name='phone']" position="replace"/>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="email"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='email']" position="replace"/>
+              <xpath expr="//field[@name='phone']" position="replace">
+                <field name="email"/>
+              </xpath>
+            </data>
+        """)
+
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
         _request_stack.pop()
