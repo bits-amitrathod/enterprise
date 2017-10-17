@@ -4,7 +4,7 @@
 from openerp import models, fields, api, _
 from openerp.tools.misc import formatLang
 from datetime import datetime, timedelta
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, float_is_zero
 
 
 class report_account_general_ledger(models.AbstractModel):
@@ -196,7 +196,8 @@ class report_account_general_ledger(models.AbstractModel):
             aml_ids = [x[0] for x in aml_ids]
             accounts[account]['lines'] = self.env['account.move.line'].browse(aml_ids)
         #if the unaffected earnings account wasn't in the selection yet: add it manually
-        if not unaffected_earnings_line and unaffected_earnings_results['balance']:
+        user_currency = self.env.user.company_id.currency_id
+        if not unaffected_earnings_line and not float_is_zero(unaffected_earnings_results['balance'], precision_digits=user_currency.decimal_places):
             #search an unaffected earnings account
             unaffected_earnings_account = self.env['account.account'].search([
                 ('user_type_id', '=', self.env.ref('account.data_unaffected_earnings').id), ('company_id', 'in', self.env.context['context_id'].company_ids.ids)
