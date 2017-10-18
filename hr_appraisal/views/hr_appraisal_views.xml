@@ -236,16 +236,16 @@
                     <field name="appraisal_colleagues_survey_id" placeholder="Appraisal Form..." nolabel="1" attrs="{'invisible':[('appraisal_by_colleagues','=',False)]}"/>
                     <field name="child_ids" invisible="1"/>
                 </group>
-                <group string="Periodicity" col="4">
+                <group string="Periodicity" col="2">
                     <group>
                         <field name="periodic_appraisal"/>
-                        <field name="appraisal_date" attrs="{'invisible':[('periodic_appraisal','=',False)], 'required':[('periodic_appraisal','=',True)]}"/>
                     </group>
-                    <group>
+                    <group attrs="{'invisible':[('periodic_appraisal','=',False)]}">
+                        <field name="appraisal_date" attrs="{'required':[('periodic_appraisal','=',True)]}"/>
                         <label for="appraisal_frequency" string="Repeat Every"/>
                         <div class="o_row">
-                            <field name="appraisal_frequency" attrs="{'invisible':[('periodic_appraisal','=',False)], 'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
-                            <field name="appraisal_frequency_unit" attrs="{'invisible':[('periodic_appraisal','=',False)], 'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
+                            <field name="appraisal_frequency" attrs="{'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
+                            <field name="appraisal_frequency_unit" attrs="{'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
                         </div>
                     </group>
                 </group>
