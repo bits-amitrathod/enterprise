@@ -15,7 +15,7 @@ class MxReportPartnerLedger(models.AbstractModel):
     _description = "DIOT"
 
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
-    filter_all_entries = False
+    filter_all_entries = None
 
     def get_columns_name(self, options):
         return [
@@ -92,8 +92,6 @@ class MxReportPartnerLedger(models.AbstractModel):
         ]
         if context['date_from_aml']:
             base_domain.append(('date', '>=', context['date_from_aml']))
-        if context['state'] == 'posted':
-            base_domain.append(('move_id.state', '=', 'posted'))
         without_vat = []
         without_too = []
         for partner_id, result in results.items():
@@ -304,67 +302,7 @@ class MxReportPartnerLedger(models.AbstractModel):
     def get_txt(self, options):
         ctx = self.set_context(options)
         ctx.update({'no_format':True, 'print_mode':True, 'raise': True})
-        #data_check = self.with_context(ctx).check_data_report(options)
-        #if data_check.get('name', ''):
-        #    raise ValidationError(data_check.get('name', ''))
         return self.with_context(ctx)._l10n_mx_diot_txt_export(options)
-
-    #@api.model
-    #def check_data_report(self, options):
-    #    data = self.get_lines(options)
-    #    lines_wo_partner = self.check_lines_wo_partner(
-    #        [l for l in data if l.get('type', False) == 'line_wo_partner'])
-    #    partner_wo_data = self.check_lines_partner_data(
-    #        [l for l in data if l.get('type', False) == 'line'])
-    #    moves_0 = self.check_lines_amount(
-    #        [l for l in data if l.get('type', False) == 'move_line_id'])
-    #    return lines_wo_partner or partner_wo_data or moves_0
-
-    #@api.multi
-    #def check_lines_wo_partner(self, lines):
-    #    moves_wo_partner = []
-    #    moves_wo_partner.extend([
-    #        line['id'] for line in lines if line.get('id')])
-    #    if not moves_wo_partner:
-    #        return {}
-    #    return {
-    #        'type': 'ir.actions.act_window',
-    #        'name': _('Moves without supplier'),
-    #        'res_model': 'account.move.line',
-    #        'views': [[False, 'list'], [False, 'form']],
-    #        'domain': [['id', 'in', moves_wo_partner]],
-    #    }
-
-    #@api.multi
-    #def check_lines_partner_data(self, lines):
-    #    partners = []
-    #    partners.extend([int(line['id']) for line in lines if line.get('id')])
-    #    partners = self.env['res.partner'].browse(
-    #        partners)._get_not_partners_diot()
-    #    if not partners:
-    #        return {}
-    #    return {
-    #        'type': 'ir.actions.act_window',
-    #        'name': _('Suppliers without information necessary for DIOT'),
-    #        'res_model': 'res.partner',
-    #        'views': [[False, 'list'], [False, 'form']],
-    #        'domain': [
-    #            ['id', 'in', partners.ids], ['active', 'in', [True, False]]],
-    #    }
-
-    #@api.multi
-    #def check_lines_amount(self, lines):
-    #    moves0 = [line['id'] for line in lines
-    #              if line.get('id') and not sum(line.get('columns', [])[5:])]
-    #    if not moves0:
-    #        return {}
-    #    return {
-    #        'type': 'ir.actions.act_window',
-    #        'name': _('Movements to corroborate the amounts of taxes'),
-    #        'res_model': 'account.move.line',
-    #        'views': [[False, 'list'], [False, 'form']],
-    #        'domain': [['id', 'in', moves0]],
-    #    }
 
     def _l10n_mx_diot_txt_export(self, options):
         txt_data = self.get_lines(options)
@@ -380,9 +318,9 @@ class MxReportPartnerLedger(models.AbstractModel):
             data[1] = columns[1]['name']
             data[2] = columns[2]['name'] if columns[0]['name'] == '04' else ''
             data[3] = columns[2]['name'] if columns[0]['name'] != '04' else ''
-            data[4] = u''.join(line.get('name', '')).encode('utf-8').strip()
+            data[4] = u''.join(line.get('name', '')).encode('utf-8').strip().decode("utf-8")
             data[5] = columns[3]['name']
-            data[6] = u''.join(columns[4]['name']).encode('utf-8').strip()
+            data[6] = u''.join(columns[4]['name']).encode('utf-8').strip().decode("utf-8")
             data[7] = int(columns[5]['name']) if columns[5]['name'] else ''
             data[13] = int(columns[6]['name']) if columns[6]['name'] else ''
             data[18] = int(columns[7]['name']) if columns[7]['name'] else ''
