@@ -70,7 +70,7 @@ return AbstractWebClient.extend({
         return this._rpc({
                 model: 'ir.ui.menu',
                 method: 'load_menus',
-                args: [core.debug],
+                args: [config.debug],
                 context: session.user_context,
             })
             .then(function(menu_data) {

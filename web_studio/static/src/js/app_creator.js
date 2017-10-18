@@ -1,6 +1,7 @@
 odoo.define('web_studio.AppCreator', function (require) {
 "use strict";
 
+var config = require('web.config');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
@@ -35,7 +36,7 @@ var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
         this._super.apply(this, arguments);
         StandaloneFieldManagerMixin.init.call(this);
         this.currentStep = 1;
-        this.debug = core.debug;
+        this.debug = config.debug;
     },
     /**
      * @override

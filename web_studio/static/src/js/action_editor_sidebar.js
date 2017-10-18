@@ -1,7 +1,7 @@
 odoo.define('web_studio.ActionEditorSidebar', function (require) {
 "use strict";
 
-var core = require('web.core');
+var config = require('web.config');
 var relational_fields = require('web.relational_fields');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
@@ -22,7 +22,7 @@ var ActionEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         this._super.apply(this, arguments);
         StandaloneFieldManagerMixin.init.call(this);
 
-        this.debug = core.debug;
+        this.debug = config.debug;
         this.action = action;
         this.action_attrs = {
             name: action.display_name || action.name,

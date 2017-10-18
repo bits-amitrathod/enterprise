@@ -2,6 +2,7 @@ odoo.define('web_studio.NewViewDialog', function (require) {
 "use strict";
 
 var ajax = require('web.ajax');
+var config = require('web.config');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var session = require('web.session');
@@ -22,7 +23,7 @@ var NewViewDialog = Dialog.extend({
         this.view_type = params.view_type;
         this.model = params.action.res_model;
         this.on_save_callback = params.callback;
-        this.debug = core.debug;
+        this.debug = config.debug;
         var options = {
             title: _.str.sprintf(_t("Generate %s View"), this.view_type),
             size: 'medium',

@@ -1,6 +1,7 @@
 odoo.define('web_studio.EditMenu', function (require) {
 "use strict";
 
+var config = require('web.config');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
@@ -311,7 +312,7 @@ var NewMenuDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             };
             var record = self.model.get(recordID);
             self.many2one = new EditMenuMany2One(self, 'model', record, options);
-            self.many2one.nodeOptions.no_create_edit = !core.debug;
+            self.many2one.nodeOptions.no_create_edit = !config.debug;
             self._registerWidget(recordID, 'model', self.many2one);
             self.many2one.appendTo(self.$('.js_model'));
         }));

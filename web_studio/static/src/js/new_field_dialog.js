@@ -1,6 +1,7 @@
 odoo.define('web_studio.NewFieldDialog', function (require) {
 "use strict";
 
+var config = require('web.config');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var relational_fields = require('web.relational_fields');
@@ -66,7 +67,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 record = self.model.get(recordID);
                 self.many2one_field = new Many2one(self, 'field', record, options);
                 self._registerWidget(recordID, 'field', self.many2one_field);
-                self.many2one_field.nodeOptions.no_create_edit = !core.debug;
+                self.many2one_field.nodeOptions.no_create_edit = !config.debug;
                 self.many2one_field.appendTo(self.$('.o_many2one_field'));
             }));
         } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
@@ -79,7 +80,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 record = self.model.get(recordID);
                 self.many2one_model = new Many2one(self, 'model', record, options);
                 self._registerWidget(recordID, 'model', self.many2one_model);
-                self.many2one_model.nodeOptions.no_create_edit = !core.debug;
+                self.many2one_model.nodeOptions.no_create_edit = !config.debug;
                 self.many2one_model.appendTo(self.$('.o_many2one_model'));
             }));
         } else if (this.ttype === 'related') {

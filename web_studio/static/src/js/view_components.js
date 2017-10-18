@@ -2,6 +2,7 @@ odoo.define('web_studio.view_components', function (require) {
 "use strict";
 
 var core = require('web.core');
+var config = require('web.config');
 var Registry = require('web.Registry');
 var Widget = require('web.Widget');
 
@@ -18,7 +19,7 @@ var AbstractComponent = Widget.extend({
         this.$el.addClass('o_web_studio_component');
         this.$el.data('structure', this.structure);
         this.$el.text(this.label);
-        if (core.debug && this.description) {
+        if (config.debug && this.description) {
             this.$el.addClass('o_web_studio_debug');
             this.$el.append($('<div>')
                 .addClass('o_web_studio_component_description')

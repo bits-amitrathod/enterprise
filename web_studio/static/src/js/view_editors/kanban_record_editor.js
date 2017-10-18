@@ -1,6 +1,7 @@
 odoo.define('web_studio.KanbanRecordEditor', function (require) {
 "use strict";
 
+var config = require('web.config');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var KanbanRecord = require('web.KanbanRecord');
@@ -366,7 +367,7 @@ var NewKanbanHelperDialog = Dialog.extend({
         this.orderered_fields = _.sortBy(this.fields, 'string');
 
         this.show_new = show_new;
-        this.debug = core.debug;
+        this.debug = config.debug;
 
         var options = {
             title: _t('Select a Field'),

@@ -1,7 +1,7 @@
 odoo.define('web_studio.ReportEditorSidebar', function (require) {
 "use strict";
 
-var core = require('web.core');
+var config = require('web.config');
 var relational_fields = require('web.relational_fields');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var Widget = require('web.Widget');
@@ -24,7 +24,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     init: function (parent, report) {
         this._super.apply(this, arguments);
         StandaloneFieldManagerMixin.init.call(this);
-        this.debug = core.debug;
+        this.debug = config.debug;
         this.report = report;
     },
     /**

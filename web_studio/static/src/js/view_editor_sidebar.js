@@ -1,6 +1,7 @@
 odoo.define('web_studio.ViewEditorSidebar', function (require) {
 "use strict";
 
+var config = require('web.config');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var DomainSelectorDialog = require("web.DomainSelectorDialog");
@@ -59,7 +60,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     init: function (parent, params) {
         this._super.apply(this, arguments);
         StandaloneFieldManagerMixin.init.call(this);
-        this.debug = core.debug;
+        this.debug = config.debug;
 
         this.view_type = params.view_type;
         this.model_name = params.model_name;
