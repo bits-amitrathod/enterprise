@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from copy import deepcopy
 from lxml import etree
 from odoo import http, models, _
 from odoo.http import content_disposition, request
@@ -580,6 +581,35 @@ class WebStudioController(http.Controller):
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.fromstring(studio_view_arch, parser=parser)
         model = view.model
+
+        # Determine whether an operation is associated with
+        # the creation of a binary field
+        def create_binary_field(op):
+            if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
+                ttype = op['node']['field_description'].get('ttype')
+                is_image = op['node']['attrs'].get('widget') == 'image'
+                return ttype == 'binary' and not is_image
+            return False
+
+        # Every time the creation of a binary field is requested,
+        # we also create an invisible char field meant to contain the filename.
+        # The char field is then associated with the binary field
+        # via the 'filename' attribute of the latter.
+        for op in [op for op in operations if create_binary_field(op)]:
+            filename = op['node']['field_description']['name'] + '_filename'
+
+            # Create an operation adding an additional char field
+            char_op = deepcopy(op);
+            char_op['node']['field_description'].update({
+                'name': filename,
+                'ttype': 'char',
+                'field_description': _('Filename for %s') % op['node']['field_description']['name'],
+            })
+            char_op['node']['attrs']['invisible'] = '1'
+            operations.append(char_op)
+
+            op['node']['attrs']['filename'] = filename
+
         for op in operations:
             # create a new field if it does not exist
             if 'node' in op:
