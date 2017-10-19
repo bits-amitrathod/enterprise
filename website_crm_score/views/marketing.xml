@@ -74,7 +74,7 @@
                         <group>
                             <field name="rule_type"/>
                             <field name="value" attrs="{'invisible':[('rule_type','!=','score')]}"/>
-                            <field name="domain"/>
+                            <field name="domain" widget="domain" options="{'model': 'crm.lead'}"/>
                             <field name="event_based"/>
                             <field name="running"/>
                             <field name="last_run" groups="base.group_no_one" />
@@ -176,8 +176,7 @@
                             <div>
                                 <field name="maximum_user_leads" class="oe_inline"/>
                             </div>
-                            <!--<field name="team_user_domain" widget="domain" options="{'model': 'crm.lead'}"/>-->
-                            <field name="team_user_domain" />
+                            <field name="team_user_domain" widget="domain" options="{'model': 'crm.lead'}"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
