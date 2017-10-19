@@ -84,6 +84,13 @@ class TestViewNormalization(TransactionCase):
                                     <field name="state_id"/>
                                     <field name="image"/>
                                     <field name="lang"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_details">
+                                                <field name="name"/>
+                                            </div>
+                                        </t>
+                                    </templates>
                                 </kanban>
                             </field>
                         </page>
@@ -651,6 +658,32 @@ class TestViewNormalization(TransactionCase):
               <xpath expr="//field[@name='email']" position="replace"/>
               <xpath expr="//field[@name='phone']" position="replace">
                 <field name="email"/>
+              </xpath>
+            </data>
+        """)
+
+    # template fields are appended to the templates, not to the kanban itself
+    def test_view_normalization_21(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//templates//field[@name='name']" position="after">
+                <field name="phone"/>
+              </xpath>
+              <xpath expr="//templates//field[@name='phone']" position="after">
+                <field name="mobile"/>
+              </xpath>
+              <xpath expr="//templates//field[@name='name']" position="before">
+                <field name="color"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//templates//field[@name='name']" position="before">
+                <field name="color"/>
+              </xpath>
+              <xpath expr="//templates//field[@name='name']" position="after">
+                <field name="phone"/>
+                <field name="mobile"/>
               </xpath>
             </data>
         """)

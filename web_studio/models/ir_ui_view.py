@@ -334,7 +334,7 @@ class View(models.Model):
         if target_node.tag == 'attribute':
             target_node = target_node.getparent().getparent()
 
-        if target_node.attrib.get('name'):
+        if target_node.get('name'):
             expr = '//%s' % self._identify_node(target_node)
 
         else:
@@ -343,7 +343,8 @@ class View(models.Model):
                 for n in target_node.iterancestors()
                 if n.getparent() is not None
             ]
-            expr = '//%s/%s' % ('/'.join(reversed(ancestors)), self._identify_node(target_node))
+            expr = '//%s/%s' % ('/'.join(reversed(ancestors)),
+                                self._identify_node(target_node))
 
         return expr
 
@@ -360,7 +361,20 @@ class View(models.Model):
                 node.tag,
                 len(list(node.itersiblings(tag=node.tag, preceding=True))) + 1
             )
+
+        if self._is_templates_node(node):
+            node_str = 'templates//' + node_str
+
         return node_str
+
+    def _is_templates_node(self, node):
+        """
+        Checks if the node in the view is inside a templates element
+        so that //templates might be prepended to the xpath generated in
+        _closest_node_to_xpath
+        """
+        ancestors = node.iterancestors()
+        return len([x for x in ancestors if x.tag == 'templates']) > 0
 
     def _closest_node_to_xpath(self, node, old_view):
         """
