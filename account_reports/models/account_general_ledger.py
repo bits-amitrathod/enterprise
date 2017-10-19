@@ -311,25 +311,34 @@ class report_account_general_ledger(models.AbstractModel):
                     name = line.name and line.name or ''
                     if line.ref:
                         name = name and name + ' - ' + line.ref or line.ref
-                    if len(name) > 35 and not self.env.context.get('no_format'):
+                    name_title = name
+                    # Don't split the name when printing
+                    if len(name) > 35 and not self.env.context.get('no_format') and not self.env.context.get('print_mode'):
                         name = name[:32] + "..."
                     partner_name = line.partner_id.name
-                    if partner_name and len(partner_name) > 35  and not self.env.context.get('no_format'):
+                    partner_name_title = partner_name
+                    if partner_name and len(partner_name) > 35  and not self.env.context.get('no_format') and not self.env.context.get('print_mode'):
                         partner_name = partner_name[:32] + "..."
                     caret_type = 'account.move'
                     if line.invoice_id:
                         caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'
                     elif line.payment_id:
                         caret_type = 'account.payment'
+                    columns = [{'name': v} for v in [format_date(self.env, line.date), name, partner_name, currency,
+                                    line_debit != 0 and self.format_value(line_debit) or '',
+                                    line_credit != 0 and self.format_value(line_credit) or '',
+                                    self.format_value(progress)]]
+                    columns[1]['class'] = 'whitespace_print'
+                    columns[2]['class'] = 'whitespace_print'
+                    columns[1]['title'] = name_title
+                    columns[2]['title'] = partner_name_title
                     line_value = {
                         'id': line.id,
                         'caret_options': caret_type,
+                        'class': 'top-vertical-align',
                         'parent_id': 'account_%s' % (account.id,),
                         'name': line.move_id.name if line.move_id.name else '/',
-                        'columns': [{'name': v} for v in [format_date(self.env, line.date), name, partner_name, currency,
-                                    line_debit != 0 and self.format_value(line_debit) or '',
-                                    line_credit != 0 and self.format_value(line_credit) or '',
-                                    self.format_value(progress)]],
+                        'columns': columns,
                         'level': 4,
                     }
                     aml_lines.append(line.id)
