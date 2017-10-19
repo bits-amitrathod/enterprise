@@ -535,7 +535,7 @@ class AccountFinancialReportLine(models.Model):
                 res.append(r)
                 domain_ids.update(set(r.keys()))
                 k += 1
-            res = self._put_columns_together(res, domain_ids)
+            res = line._put_columns_together(res, domain_ids)
             if line.hide_if_zero and all([float_is_zero(k, precision_rounding=currency_precision) for k in res['line']]):
                 continue
 
