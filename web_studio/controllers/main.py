@@ -563,9 +563,10 @@ class WebStudioController(http.Controller):
         # Determine whether an operation is associated with
         # the creation of a binary field
         def create_binary_field(op):
-            if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
-                ttype = op['node']['field_description'].get('ttype')
-                is_image = op['node']['attrs'].get('widget') == 'image'
+            node = op.get('node')
+            if node and node.get('tag') == 'field' and node.get('field_description'):
+                ttype = node['field_description'].get('ttype')
+                is_image = node['attrs'].get('widget') == 'image'
                 return ttype == 'binary' and not is_image
             return False
 
