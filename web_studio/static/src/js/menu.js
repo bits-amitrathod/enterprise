@@ -3,6 +3,7 @@ odoo.define('web_studio.Menu', function (require) {
 
 var core = require('web.core');
 var data_manager = require('web.data_manager');
+var Dialog = require('web.Dialog');
 var framework = require('web.framework');
 var Menu = require('web_enterprise.Menu');
 var session = require('web.session');
@@ -17,6 +18,7 @@ var _t = core._t;
 Menu.include({
     events: _.extend({}, Menu.prototype.events, {
         'click .o_web_studio_change_background': '_onChangeBackground',
+        'click .o_web_studio_reset_default_background': '_onResetDefaultBackground',
         'click .o_web_studio_export': '_onExport',
         'click .o_web_studio_import': '_onImport',
     }),
@@ -199,6 +201,29 @@ Menu.include({
             self.$('form.o_form_binary_form').submit();
         });
         this.$('input.o_input_file').click();
+    },
+    /**
+     * Reset the background to default.
+     */
+    _onResetDefaultBackground: function () {
+        var self = this;
+        var message = _t('Are you sure you want to reset the background image?');
+  
+        Dialog.confirm(this, message, {
+            confirm_callback: function () {
+                framework.blockUI();
+                self._rpc({
+                    route: '/web_studio/reset_background_image',
+                    params: {
+                        context: session.user_context,
+                    },
+                }).then(function () {
+                    self.do_action('reload');
+                }).fail(function () {
+                    framework.unblockUI();
+                });
+            }
+        });
     },
     /**
      * Export all customizations done by Studio in a zip file containing Odoo

@@ -437,6 +437,10 @@ class WebStudioController(http.Controller):
         if attachment:
             request.env.user.sudo(request.uid).company_id.background_image = attachment.datas
 
+    @http.route('/web_studio/reset_background_image', type='json', auth='user')
+    def reset_background_image(self):
+        request.env.user.sudo(request.uid).company_id.background_image = None
+
     def create_new_field(self, values):
         """ Create a new field with given values.
             In some cases we have to convert "id" to "name" or "name" to "id"
