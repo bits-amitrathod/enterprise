@@ -79,7 +79,7 @@
                                             <span t-att-res-id="row[1]" res-model="mrp.routing.workcenter" view-type="form" t-esc="row[2]"/>
                                         </td>
                                         <td class="text-right">
-                                            <span> <t t-esc="row[3]"/> hours</span>
+                                            <span> <t t-esc="row[3]" t-options='{"widget": "float", "precision": 4}'/> hours</span>
                                         </td>
                                         <td class="text-right">
                                             <span t-esc="row[4]" />

@@ -1,6 +1,8 @@
 # coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from lxml import etree
+from lxml.objectify import fromstring
 from odoo import models, api, _, fields, tools
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import _check_with_xsd
@@ -11,10 +13,10 @@ MX_NS_REFACTORING = {
     'BCE__': 'BCE',
 }
 
-CFDIBCE_TEMPLATE = 'l10n_mx_reports.cfdi11balance'
-CFDIBCE_XSD = 'l10n_mx_reports/data/xsd/%s/cfdi11balance.xsd'
+CFDIBCE_TEMPLATE = 'l10n_mx_reports.cfdibalance'
+CFDIBCE_XSD = 'l10n_mx_reports/data/xsd/%s/cfdibalance.xsd'
 CFDIBCE_XSLT_CADENA = ('l10n_mx_reports/data/xslt/%s'
-                       '/BalanzaComprobacion_1_1.xslt')
+                       '/BalanzaComprobacion_1_2.xslt')
 
 
 # TODO: When the module l10n_mx_edi is merged use the method in that module
@@ -67,6 +69,12 @@ class MxReportAccountTrial(models.AbstractModel):
         if self.env.user.company_id.country_id.code.upper() == 'MX':
             # TODO: something like: and all([c.country_id.code == 'MX' for c in options.companies]):
             afrl_obj = self.env['account.financial.html.report.line']
+            company_id = self.env.context.get('company_id') or self.env.user.company_id
+            for period_number, period in enumerate(reversed(comparison_table)):
+                res = self.with_context(date_from_aml=period['date_from'], date_to=period['date_to'], date_from=period['date_from'] and company_id.compute_fiscalyear_dates(fields.datetime.strptime(period['date_from'], "%Y-%m-%d"))['date_from'] or None).group_by_account_id(options, None)
+                for account in res:
+                    grouped_accounts[account][period_number]['debit'] -= res[account]['initial_bal']['debit']
+                    grouped_accounts[account][period_number]['credit'] -= res[account]['initial_bal']['credit']
 
             lines = []
             afr_lines = afrl_obj.search([
@@ -162,6 +170,23 @@ class MxReportAccountTrial(models.AbstractModel):
             })
         return lines
 
+    def l10n_mx_edi_add_digital_stamp(self, path_xslt, cfdi):
+        """Add digital stamp certificate attributes in XML report"""
+        company_id = self.env.user.company_id
+        certificate_ids = company_id.l10n_mx_edi_certificate_ids
+        certificate_id = certificate_ids.sudo().get_valid_certificate()
+        if not certificate_id:
+            return cfdi
+        tree = fromstring(cfdi)
+        xslt_root = etree.parse(tools.file_open(path_xslt))
+        cadena = str(etree.XSLT(xslt_root)(tree))
+        sello = certificate_id.sudo().get_encrypted_cadena(cadena)
+        tree.attrib['Sello'] = sello
+        tree.attrib['noCertificado'] = certificate_id.serial_number
+        tree.attrib['Certificado'] = certificate_id.sudo().get_data()[0]
+        return etree.tostring(tree, pretty_print=True,
+                              xml_declaration=True, encoding='UTF-8')
+
     def get_bce_dict(self, options):
         company = self.env.user.company_id
         xml_data = self.get_lines(options)
@@ -202,7 +227,7 @@ class MxReportAccountTrial(models.AbstractModel):
     @api.model
     def get_xml(self, options):
         qweb = self.env['ir.qweb']
-        version = '1.1'
+        version = '1.3'
         ctx = self.set_context(options)
         if not ctx.get('date_to'):
             return False
@@ -212,6 +237,8 @@ class MxReportAccountTrial(models.AbstractModel):
         for key, value in MX_NS_REFACTORING.items():
             cfdicoa = cfdicoa.replace(key.encode('UTF-8'),
                                       value.encode('UTF-8') + b':')
+        cfdicoa = self.l10n_mx_edi_add_digital_stamp(
+            CFDIBCE_XSLT_CADENA % version, cfdicoa)
 
         with tools.file_open(CFDIBCE_XSD % version, "rb") as xsd:
             _check_with_xsd(cfdicoa, xsd)

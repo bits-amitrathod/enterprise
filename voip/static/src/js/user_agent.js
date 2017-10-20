@@ -11,7 +11,7 @@ var ServicesMixin = require('web.ServicesMixin');
 var _t = core._t;
 
 var clean_number = function(number) {
-    return number.replace(/[\s-/.]/g, '');
+    return number.replace(/[\s-/.\u00AD]/g, '');
 }
 
 var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {

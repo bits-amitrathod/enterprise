@@ -477,24 +477,36 @@ class WebStudioController(http.Controller):
 
         action_id = request.env[action_type].browse(action_id)
         if action_id:
-
             if 'groups_id' in args:
                 args['groups_id'] = [(6, 0, args['groups_id'])]
 
             if 'view_mode' in args:
                 args['view_mode'] = args['view_mode'].replace('list', 'tree')  # list is stored as tree in db
 
-                # As view_ids has precedence on view_mode, we need to use them and resequence them
-                view_modes = args['view_mode'].split(',')
-                if action_id.view_ids:
+                # As view_id and view_ids have precedence on view_mode, we need to correctly set them
+                if action_id.view_id or action_id.view_ids:
+                    view_modes = args['view_mode'].split(',')
+
+                    # add new view_mode
                     missing_view_modes = [x for x in view_modes if x not in [y.view_mode for y in action_id.view_ids]]
                     for view_mode in missing_view_modes:
-                        request.env['ir.actions.act_window.view'].create({'view_mode': view_mode, 'act_window_id': action_id.id})
-                for view_id in action_id.view_ids:
-                    if view_id.view_mode in view_modes:
-                        view_id.sequence = view_modes.index(view_id.view_mode)
-                    else:
-                        view_id.unlink()
+                        vals = {
+                            'act_window_id': action_id.id,
+                            'view_mode': view_mode,
+                        }
+                        if action_id.view_id and action_id.view_id.type == view_mode:
+                            # reuse the same view_id in the corresponding view_ids record
+                            vals['view_id'] = action_id.view_id.id
+
+                        request.env['ir.actions.act_window.view'].create(vals)
+
+                    for view_id in action_id.view_ids:
+                        if view_id.view_mode in view_modes:
+                            # resequence according to new view_modes
+                            view_id.sequence = view_modes.index(view_id.view_mode)
+                        else:
+                            # remove old view_mode
+                            view_id.unlink()
 
             action_id.write(args)
 
@@ -854,7 +866,7 @@ class WebStudioController(http.Controller):
 
         # There is a counter on the button ; as the related field is a many2one, we need
         # to create a new computed field that counts the number of records in the one2many
-        button_count_field_name = 'x_%s_count' % field.name
+        button_count_field_name = 'x_%s__%s_count' % (field.name, field.model.replace('.', '_'))[0:63]
         button_count_field = request.env['ir.model.fields'].search([('name', '=', button_count_field_name), ('model_id', '=', model.id)])
         if not button_count_field:
             compute_function = """

@@ -153,7 +153,7 @@
             <t t-set='partner' t-value="model.env['res.partner'].browse(options.get('partners_to_show')[data_index])"/>
             <t t-set='lines' t-value="{'columns_header': lines.get('columns_header'), 'lines': data}" />
             <t t-set="invoice_address_id" t-value="model.env['res.partner'].browse(partner.address_get(['invoice'])['invoice'])"/>
-            <t t-set="report" t-value="model.get_report_value(partner, options)"/>
+            <t t-set="report" t-value="model.with_context(lang=partner.lang or model.env.user.lang).get_report_value(partner, options)"/>
         </t>
         <p></p>
         <p></p>

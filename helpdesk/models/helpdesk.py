@@ -166,27 +166,27 @@ class HelpdeskTeam(models.Model):
         module_installed = False
         for team in self:
             form_module = self.env['ir.module.module'].search([('name', '=', 'website_helpdesk_form')])
-            if self.use_website_helpdesk_form and form_module.state not in ('installed', 'to install', 'to upgrade'):
+            if team.use_website_helpdesk_form and form_module.state not in ('installed', 'to install', 'to upgrade'):
                 form_module.button_immediate_install()
                 module_installed = True
 
             livechat_module = self.env['ir.module.module'].search([('name', '=', 'website_helpdesk_livechat')])
-            if self.use_website_helpdesk_livechat and livechat_module.state not in ('installed', 'to install', 'to upgrade'):
+            if team.use_website_helpdesk_livechat and livechat_module.state not in ('installed', 'to install', 'to upgrade'):
                 livechat_module.button_immediate_install()
                 module_installed = True
 
             forum_module = self.env['ir.module.module'].search([('name', '=', 'website_helpdesk_forum')])
-            if self.use_website_helpdesk_forum and forum_module.state not in ('installed', 'to install', 'to upgrade'):
+            if team.use_website_helpdesk_forum and forum_module.state not in ('installed', 'to install', 'to upgrade'):
                 forum_module.button_immediate_install()
                 module_installed = True
 
             slides_module = self.env['ir.module.module'].search([('name', '=', 'website_helpdesk_slides')])
-            if self.use_website_helpdesk_slides and slides_module.state not in ('installed', 'to install', 'to upgrade'):
+            if team.use_website_helpdesk_slides and slides_module.state not in ('installed', 'to install', 'to upgrade'):
                 slides_module.button_immediate_install()
                 module_installed = True
 
             helpdesk_timesheet_module = self.env['ir.module.module'].search([('name', '=', 'helpdesk_timesheet')])
-            if self.use_helpdesk_timesheet and helpdesk_timesheet_module.state not in ('installed', 'to install', 'to upgrade'):
+            if team.use_helpdesk_timesheet and helpdesk_timesheet_module.state not in ('installed', 'to install', 'to upgrade'):
                 helpdesk_timesheet_module.button_immediate_install()
                 module_installed = True
 

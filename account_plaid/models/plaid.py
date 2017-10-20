@@ -126,7 +126,7 @@ class PlaidProviderAccount(models.Model):
                     }
                 with self.pool.cursor() as cr:
                     new_id = self.with_env(self.env(cr=cr)).create(vals)
-                    self = self.browse(new_id)
+                    self = self.browse(new_id.id)
             else:
                 provider_account.update_status('IN_PROGRESS')
                 self = provider_account

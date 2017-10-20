@@ -24,8 +24,9 @@ session.include({
         if (mobile.methods.downloadFile) {
             mobile.methods.downloadFile(options);
             if (options.complete) { options.complete(); }
+            return true;
         } else {
-            this._super.apply(this, arguments);
+            return this._super.apply(this, arguments);
         }
     },
 });
