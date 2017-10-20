@@ -124,8 +124,13 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 return [value, value];
             });
         } else if (this.ttype === 'related') {
+            var selectedField = this.fieldSelector.getSelectedField();
+            if (!selectedField) {
+                Dialog.alert(this, _t('You cannot create an empty related field.'));
+                return;
+            }
             values.related = this.fieldSelector.chain.join('.');
-            values.ttype = this.fieldSelector.getSelectedField().type;
+            values.ttype = selectedField.type;
         }
         this.trigger('field_default_values_saved', values);
     },
