@@ -9,7 +9,7 @@ from dateutil import rrule
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.addons.base.res.res_partner import _tz_get
+from odoo.addons.base.models.res_partner import _tz_get
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.exceptions import ValidationError
 

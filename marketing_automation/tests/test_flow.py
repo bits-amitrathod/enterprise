@@ -11,7 +11,7 @@ from odoo.addons.marketing_automation.tests.common import MarketingCampaignTestB
 
 class MarketingCampaignTest(MarketingCampaignTestBase):
 
-    @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
+    @mute_logger('odoo.addons.base.models.ir_model', 'odoo.models')
     def test_simple_flow(self):
         date = Datetime.from_string('2014-08-01 15:02:32')  # so long, little task
         date_str = Datetime.to_string(date)

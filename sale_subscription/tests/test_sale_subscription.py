@@ -8,7 +8,7 @@ from odoo.tools import mute_logger, float_utils
 
 class TestSubscription(TestSubscriptionCommon):
 
-    @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
+    @mute_logger('odoo.addons.base.models.ir_model', 'odoo.models')
     def test_template(self):
         """ Test behaviour of on_change_template """
         Subscription = self.env['sale.subscription']
@@ -26,7 +26,7 @@ class TestSubscription(TestSubscriptionCommon):
         temp.on_change_template()
         self.assertTrue(temp.description, 'sale_subscription: description not copied on new cached sale.subscription record')
 
-    @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
+    @mute_logger('odoo.addons.base.models.ir_model', 'odoo.models')
     def test_sale_order(self):
         """ Test sales order line copying for recurring products on confirm"""
         self.sale_order.action_confirm()

@@ -5,7 +5,7 @@ from odoo.tools import mute_logger
 
 class test_assign(TestScoring):
 
-    @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
+    @mute_logger('odoo.addons.base.models.ir_model', 'odoo.models')
     def test_00_assign(self):
         all_lead_ids = [self.lead0, self.lead1, self.lead2, self.lead3, self.lead4, self.lead5]
 
