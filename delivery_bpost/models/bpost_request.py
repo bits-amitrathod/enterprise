@@ -148,7 +148,9 @@ class BpostRequest():
                   # international
                   'international_product': carrier.bpost_international_deliver_type,
                   'parcelValue': max(min(int(picking.sale_id.amount_total), 2500000), 100),           # according to bpost, 100 <= parcelValue <= 2500000
-                  'contentDescription': '\n'.join(["%d %s" % (line.product_qty, line.product_id.name) for line in picking.move_line_ids]),
+                  'contentDescription': ' '.join([
+                     "%d %s" % (line.product_qty, re.sub('[\W_]+', '', line.product_id.name or '')) for line in picking.move_line_ids
+                  ])[:50],
                   'shipmentType': carrier.bpost_shipment_type,
                   'parcelReturnInstructions': carrier.bpost_parcel_return_instructions,
                   }
