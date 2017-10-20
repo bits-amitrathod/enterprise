@@ -6,6 +6,8 @@ from odoo.addons.web_studio.controllers.main import WebStudioController
 
 class TestViewNormalization(TransactionCase):
 
+    maxDiff = None
+
     def setUp(self):
         super(TestViewNormalization, self).setUp()
         _request_stack.push(self)
@@ -83,7 +85,6 @@ class TestViewNormalization(TransactionCase):
                                     <field name="mobile"/>
                                     <field name="state_id"/>
                                     <field name="image"/>
-                                    <field name="lang"/>
                                     <templates>
                                         <t t-name="kanban-box">
                                             <div class="oe_kanban_details">
@@ -684,6 +685,60 @@ class TestViewNormalization(TransactionCase):
               <xpath expr="//templates//field[@name='name']" position="after">
                 <field name="phone"/>
                 <field name="mobile"/>
+              </xpath>
+            </data>
+        """)
+
+    # adding kanban and template fields while using absolute xpaths
+    def test_view_normalization_22(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//templates" position="before">
+                <field name="lang"/>
+              </xpath>
+              <xpath expr="//templates//div" position="inside">
+                <div class="o_dropdown_kanban dropdown">
+                            <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                <span class="fa fa-bars fa-lg"/>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
+                                <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
+                                <li><ul class="oe_kanban_colorpicker" data-field="lang"/></li>
+                            </ul>
+                        </div>
+              </xpath>
+              <xpath expr="//templates//div" position="attributes">
+                <attribute name="color">lang</attribute>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='image']" position="after">
+                <field name="lang"/>
+              </xpath>
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]" position="attributes">
+                <attribute name="color">lang</attribute>
+              </xpath>
+              <xpath expr="//templates//field[@name='name']" position="after">
+                <div class="o_dropdown_kanban dropdown">
+                  <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                    <span class="fa fa-bars fa-lg"/>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <t t-if="widget.editable">
+                      <li>
+                        <a type="edit">Edit</a>
+                        <a type="delete">Delete</a>
+                        <ul class="oe_kanban_colorpicker" data-field="lang"/>
+                      </li>
+                    </t>
+                    <t t-if="widget.deletable">
+                      <li/>
+                    </t>
+                    <li/>
+                  </ul>
+                </div>
               </xpath>
             </data>
         """)

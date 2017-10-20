@@ -355,15 +355,14 @@ class View(models.Model):
         sibling elements (absolute identifier)
         """
         if node.get('name'):
-            node_str = '%s[@name=\'%s\']' % (node.tag, node.get('name'))
+            node_str = 'templates//' if self._is_templates_node(node) else ''
+            node_str += '%s[@name=\'%s\']' % (node.tag, node.get('name'))
         else:
             node_str = '%s[%s]' % (
                 node.tag,
                 len(list(node.itersiblings(tag=node.tag, preceding=True))) + 1
             )
 
-        if self._is_templates_node(node):
-            node_str = 'templates//' + node_str
 
         return node_str
 
