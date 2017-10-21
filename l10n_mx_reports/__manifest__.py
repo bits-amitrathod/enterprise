@@ -26,10 +26,11 @@
     "data": [
         "data/account_financial_report_data.xml",
         "data/country_data.xml",
-        "data/templates/cfdi11coa.xml",
-        "data/templates/cfdi11balance.xml",
+        "data/templates/cfdicoa.xml",
+        "data/templates/cfdibalance.xml",
         "views/res_country_view.xml",
         "views/res_partner_view.xml",
+        "views/report_financial.xml",
     ],
     "installable": True,
     "auto_install": True,

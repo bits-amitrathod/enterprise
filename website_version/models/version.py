@@ -67,8 +67,8 @@ class version(models.Model):
                 if check_id:
                     check_id.unlink()
                 copy_version_id = self.create({'name': copy_master_name, 'website_id': self.website_id.id})
-                for rec in copy_l:
-                    rec.copy({'version_id': copy_version_id.id, 'website_id': self.website_id.id})
+                for source in copy_l:
+                    source.copy({'version_id': copy_version_id.id, 'website_id': self.website_id.id})
             del_l.unlink()
 
         return self.name

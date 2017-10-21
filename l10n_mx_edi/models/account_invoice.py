@@ -1016,17 +1016,14 @@ class AccountInvoice(models.Model):
         uuids = [u for u in uuids if isinstance(u, str)]
         ids = ','.join(uuids)
         l10n_mx_edi_origin = self.l10n_mx_edi_origin
-        if not l10n_mx_edi_origin:
+        old_rtype = l10n_mx_edi_origin.split('|')[0] if l10n_mx_edi_origin else False
+        if old_rtype and old_rtype not in types:
+            raise UserError(_('Invalid type of document for field CFDI '
+                              'Origin'))
+        if not l10n_mx_edi_origin or old_rtype != rtype:
             origin = '%s|%s' % (rtype, ids)
             self.update({'l10n_mx_edi_origin': origin})
             return origin
-        old_rtype = l10n_mx_edi_origin.split('|')[0]
-        if old_rtype not in types:
-            raise UserError(_('Invalid type of document for field CFDI '
-                                'Origin'))
-        if old_rtype != rtype:
-            raise UserError(_('I can not have more than one type of CFDI '
-                                'related'))
         try:
             old_ids = l10n_mx_edi_origin.split('|')[1].split(',')
         except IndexError:

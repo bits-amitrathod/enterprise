@@ -37,7 +37,7 @@ class MrpCostStructure(models.AbstractModel):
 
             #get the cost of raw material effectively used
             raw_material_moves = []
-            query_str = """SELECT product_id, bom_line_id, SUM(product_qty), SUM(price_unit * product_qty)
+            query_str = """SELECT product_id, bom_line_id, SUM(product_qty), abs(SUM(price_unit * product_qty))
                             FROM stock_move WHERE raw_material_production_id in %s AND state != 'cancel'
                             GROUP BY bom_line_id, product_id"""
             self.env.cr.execute(query_str, (tuple(mos.ids), ))

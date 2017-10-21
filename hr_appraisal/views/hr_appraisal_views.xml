@@ -158,8 +158,8 @@
                                     <span t-attf-class="#{deadline}"><i><field name="date_final_interview"/></i></span></t>
                                 </div>
                                 <div>
-                                    <a name="action_get_users_input" type="object">(<field name="count_sent_survey">) Sent Appraisal</field></a>
-                                    <a name="action_get_users_input" type="object" context="{'answers':True}"> (<field name="count_completed_survey">) Answers </field></a>
+                                    <a name="action_get_users_input" type="object">(<field name="count_sent_survey"/>) Sent Appraisal</a>
+                                    <a name="action_get_users_input" type="object" context="{'answers':True}"> (<field name="count_completed_survey"/>) Answers</a>
                                 </div>
                                 <div class="oe_kanban_bottom_right">
                                     <div class="o_kanban_inline_block">
@@ -211,7 +211,7 @@
         <field name="arch" type="xml">
         <xpath expr="//button[@name='toggle_active']" position="before">
             <button name="%(open_view_hr_appraisal_tree2)d"
-                class="oe_inline oe_stat_button"
+                class="oe_stat_button"
                 icon="fa-sitemap"
                 type="action">
                 <field name="appraisal_count" widget="statinfo"/>
@@ -236,16 +236,16 @@
                     <field name="appraisal_colleagues_survey_id" placeholder="Appraisal Form..." nolabel="1" attrs="{'invisible':[('appraisal_by_colleagues','=',False)]}"/>
                     <field name="child_ids" invisible="1"/>
                 </group>
-                <group string="Periodicity" col="4">
+                <group string="Periodicity" col="2">
                     <group>
                         <field name="periodic_appraisal"/>
-                        <field name="appraisal_date" attrs="{'invisible':[('periodic_appraisal','=',False)], 'required':[('periodic_appraisal','=',True)]}"/>
                     </group>
-                    <group>
+                    <group attrs="{'invisible':[('periodic_appraisal','=',False)]}">
+                        <field name="appraisal_date" attrs="{'required':[('periodic_appraisal','=',True)]}"/>
                         <label for="appraisal_frequency" string="Repeat Every"/>
                         <div class="o_row">
-                            <field name="appraisal_frequency" attrs="{'invisible':[('periodic_appraisal','=',False)], 'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
-                            <field name="appraisal_frequency_unit" attrs="{'invisible':[('periodic_appraisal','=',False)], 'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
+                            <field name="appraisal_frequency" attrs="{'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
+                            <field name="appraisal_frequency_unit" attrs="{'required':[('periodic_appraisal','=',True)]}" class="oe_inline"/>
                         </div>
                     </group>
                 </group>

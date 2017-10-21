@@ -9,7 +9,6 @@ odoo.define('website_studio.FormManager', function (require) {
  * @module website_studio.FormManager
  */
 
-var ajax = require('web.ajax');
 var core = require('web.core');
 var framework = require('web.framework');
 var Widget = require('web.Widget');
@@ -60,11 +59,14 @@ var FormManager = Widget.extend({
         }
         this.res_model = this.action.res_model;
         return this._super.apply(this, arguments).then(function () {
-                return ajax.jsonRpc('/website_studio/get_forms', 'call', {
-                      res_model: self.res_model,
-                }).then(function (forms) {
-                        self.forms = forms;
-                    });
+            return self._rpc({
+                route: '/website_studio/get_forms',
+                params: {
+                  res_model: self.res_model,
+                },
+            }).then(function (forms) {
+                self.forms = forms;
+            });
         });
     },
 
@@ -73,14 +75,14 @@ var FormManager = Widget.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * This method is called by the widget to redirect to the form having the
-     * xml_id given in the parameters in the frontend and in edit mode.
+     * This method is called by the widget to redirect to the form in the
+     * frontend and in edit mode.
      *
      * @private
-     * @param {string} xml_id Contains the xml_id in the form of 'module.view_name'
+     * @param {string} url
      */
-    _redirectToForm: function (xml_id) {
-        var url = '/page/' + xml_id + '?enable_editor=1';
+    _redirectToForm: function (url) {
+        url = url + '?enable_editor=1';
         framework.redirect(url);
     },
     /**
@@ -96,8 +98,11 @@ var FormManager = Widget.extend({
             .user_has_group('website.group_website_designer')
             .then(function (is_website_designer) {
                 if (is_website_designer) {
-                    ajax.jsonRpc('/website_studio/create_form', 'call', {
-                        res_model: self.res_model,
+                    self._rpc({
+                        route: '/website_studio/create_form',
+                        params: {
+                            res_model: self.res_model,
+                        },
                     }).then(function (url) {
                         self._redirectToForm(url);
                     });
@@ -125,11 +130,13 @@ var FormManager = Widget.extend({
         if ($(ev.currentTarget).data('new-form')) {
             this._redirectToNewForm();
         } else {
-            this._redirectToForm($(ev.currentTarget).data('xml_id'));
+            this._redirectToForm($(ev.currentTarget).data('url'));
         }
     },
 });
 
 core.action_registry.add('action_web_studio_form', FormManager);
+
+return FormManager;
 
 });

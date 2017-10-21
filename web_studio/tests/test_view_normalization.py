@@ -84,6 +84,13 @@ class TestViewNormalization(TransactionCase):
                                     <field name="state_id"/>
                                     <field name="image"/>
                                     <field name="lang"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_details">
+                                                <field name="name"/>
+                                            </div>
+                                        </t>
+                                    </templates>
                                 </kanban>
                             </field>
                         </page>
@@ -593,6 +600,91 @@ class TestViewNormalization(TransactionCase):
         """, """
             <data>
               <xpath expr="//field[@name='lang']" position="replace"/>
+            </data>
+        """)
+
+    # Replace an existing element then add it back in but somewhere before
+    # its original position
+    def test_view_normalization_18(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='mobile']" position="replace"/>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="mobile" widget="phone"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='mobile']" position="replace"/>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="mobile" widget="phone"/>
+              </xpath>
+            </data>
+        """)
+
+    # Delete an existing element, then replace another element with the deleted
+    # element further down
+    def test_view_normalization_19(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='phone']" position="replace"/>
+              <xpath expr="//field[@name='email']" position="replace"/>
+              <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="phone"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='email']" position="replace">
+                <field name="phone"/>
+              </xpath>
+              <xpath expr="//field[@name='phone']" position="replace"/>
+            </data>
+        """)
+
+    # Delete an existing element, then replace another element before the
+    # original element with the latter
+    def test_view_normalization_20(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='email']" position="replace"/>
+              <xpath expr="//field[@name='phone']" position="replace"/>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="email"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='email']" position="replace"/>
+              <xpath expr="//field[@name='phone']" position="replace">
+                <field name="email"/>
+              </xpath>
+            </data>
+        """)
+
+    # template fields are appended to the templates, not to the kanban itself
+    def test_view_normalization_21(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//templates//field[@name='name']" position="after">
+                <field name="phone"/>
+              </xpath>
+              <xpath expr="//templates//field[@name='phone']" position="after">
+                <field name="mobile"/>
+              </xpath>
+              <xpath expr="//templates//field[@name='name']" position="before">
+                <field name="color"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//templates//field[@name='name']" position="before">
+                <field name="color"/>
+              </xpath>
+              <xpath expr="//templates//field[@name='name']" position="after">
+                <field name="phone"/>
+                <field name="mobile"/>
+              </xpath>
             </data>
         """)
 

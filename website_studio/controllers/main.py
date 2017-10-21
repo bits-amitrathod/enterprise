@@ -27,23 +27,16 @@ class WebsiteStudioController(http.Controller):
         model.write(values)
         template = 'website_studio.default_form_page'
         form_name = model.name
-        xml_id = request.env['website'].new_page(
-            form_name,
+        new_page = request.env['website'].new_page(
+            name=form_name,
+            add_menu=True,
             template=template,
+            ispage=True,
             namespace='website',
-        )['url']
-        view = request.env['ir.ui.view'].search([
-            ('type', '=', 'qweb'),
-            ('key', '=', xml_id),
-        ])
+        )
+        view = request.env['ir.ui.view'].browse(new_page['view_id'])
         view.arch = self._post_process_arch(view.arch, model)
-        # Create website menu for the page
-        request.env['website.menu'].create({
-            'name': form_name,
-            'url': "/page/" + xml_id,
-            'parent_id': 1,
-        })
-        return xml_id
+        return new_page['url']
 
     @http.route('/website_studio/get_forms', type='json', auth='user')
     def get_website_form(self, res_model):
@@ -53,10 +46,12 @@ class WebsiteStudioController(http.Controller):
             :return: dict of the views containing a form linked to the model
             :rtype: dict
         """
-        View = request.env['ir.ui.view']
-        views = View.search([('type', '=', 'qweb')])
+        views = request.env['ir.ui.view'].search([('type', '=', 'qweb')])
         website_forms = views.filtered(lambda v: self._is_editable_form(v, res_model))
-        return View.search_read([('id', 'in', website_forms.ids)])
+        return request.env['website.page'].search_read(
+            [('view_id', 'in', website_forms.ids)],
+            ['url', 'name']
+        )
 
     def _is_editable_form(self, view, res_model):
         """ Check if the view contains an editable form.

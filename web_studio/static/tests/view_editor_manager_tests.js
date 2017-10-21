@@ -851,13 +851,15 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a related field', function(assert) {
-        assert.expect(2);
+        assert.expect(6);
+
 
         this.data.coucou.fields.related_field = {
             string: "Related",
             type: 'related',
         };
 
+        var nbEdit = 0;
         var fieldsView;
         var vem = createViewEditorManager({
             data: this.data,
@@ -865,6 +867,7 @@ QUnit.module('ViewEditorManager', {
             arch: "<tree><field name='display_name'/></tree>",
             mockRPC: function (route, args) {
                 if (route === '/web_studio/edit_view') {
+                    nbEdit++;
                     assert.strictEqual(args.operations[0].node.field_description.related,
                         'm2o.display_name', "related arg should be correct");
                     fieldsView.arch = "<tree><field name='display_name'/><field name='related_field'/></tree>";
@@ -883,12 +886,23 @@ QUnit.module('ViewEditorManager', {
 
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
 
-        assert.strictEqual($('.modal').length, 1, "a model should be displayed");
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+
+        // try to create an empty related field
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 2, "an alert should be displayed");
+
+        // remove the alert
+        $('.modal:eq(1) button:contains("Ok")').click();
+        assert.strictEqual(nbEdit, 0, "should not have edited the view");
+        assert.strictEqual($('.modal').length, 1, "the first  modal should still be displayed");
 
         $('.modal .o_field_selector').focusin(); // open the selector popover
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=display_name]').click();
         $('.modal-footer .btn-primary:first').click(); // confirm
+
+        assert.strictEqual(nbEdit, 1, "should have edited the view");
 
         vem.destroy();
     });
@@ -1004,26 +1018,39 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('element removal', function(assert) {
-        assert.expect(4);
+        assert.expect(8);
 
         var editViewCount = 0;
         var arch = "<form><sheet>" +
                 "<group>" +
                     "<field name='display_name'/>" +
+                    "<field name='m2o'/>" +
                 "</group>" +
-                "<notebook><page><field name='id'/></page></notebook>" +
+                "<notebook><page name='page'><field name='id'/></page></notebook>" +
             "</sheet></form>";
         var fieldsView;
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
             arch: arch,
-            mockRPC: function (route) {
+            mockRPC: function (route, args) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
                 }
                 if (route === '/web_studio/edit_view') {
                     editViewCount++;
+                    if (editViewCount === 1) {
+                        assert.strictEqual(_.has(args.operations[0].target, 'xpath_info'), false,
+                            'should not give xpath_info if we have the tag identifier attributes');
+                    } else if (editViewCount === 2) {
+                        assert.strictEqual(args.operations[1].target.tag, 'group',
+                            'should compute correctly the parent node for the group');
+                    } else if (editViewCount === 3) {
+                        assert.strictEqual(args.operations[2].target.tag, 'notebook',
+                            'should delete the notebook because the last page is deleted');
+                        assert.strictEqual(_.last(args.operations[2].target.xpath_info).tag, 'notebook',
+                            'should have the notebook as xpath last element');
+                    }
                     // the server sends the arch in string but it's post-processed
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
@@ -1063,7 +1090,6 @@ QUnit.module('ViewEditorManager', {
 
         assert.strictEqual(editViewCount, 3,
             "should have edit the view 3 times");
-
         vem.destroy();
     });
 
@@ -1330,6 +1356,28 @@ QUnit.module('ViewEditorManager', {
         testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields .o_web_studio_field_many2one'), $('.o_web_studio_hook'));
         assert.strictEqual(vem.$('.o_web_studio_view_renderer thead tr [data-node-id]').length, 2,
             "there should be 2 nodes after the drag and drop.");
+        vem.destroy();
+    });
+
+    QUnit.test('notebook and group drag and drop after a group', function(assert) {
+        assert.expect(2);
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+            "</sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+        });
+        var $afterGroupHook = vem.$('.o_form_sheet > .o_web_studio_hook');
+        testUtils.dragAndDrop(vem.$('.o_web_studio_field_type_container .o_web_studio_field_tabs'),
+            $afterGroupHook, {disableDrop: true});
+        assert.strictEqual(vem.$('.o_web_studio_nearest_hook').length, 1, "There should be 1 highlighted hook");
+        testUtils.dragAndDrop(vem.$('.o_web_studio_field_type_container .o_web_studio_field_columns'),
+            $afterGroupHook, {disableDrop: true});
+        assert.strictEqual(vem.$('.o_web_studio_nearest_hook').length, 1, "There should be 1 highlighted hook");
         vem.destroy();
     });
 });

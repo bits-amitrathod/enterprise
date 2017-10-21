@@ -47,6 +47,15 @@
                     </field>
                 </page>
             </notebook>
+            <xpath expr="//field[@name='qty_producing']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='final_lot_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='active_move_line_ids']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
         </field>
     </record>
 
