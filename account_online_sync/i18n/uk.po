@@ -6,13 +6,14 @@
 # Zoriana Zaiats <sorenabell@quintagroup.com>, 2017
 # Bohdan Lisnenko <lem8r.ka11a@gmail.com>, 2017
 # ТАрас <tratatuta@i.ua>, 2017
+# Аліна Семенюк <alinasemeniuk1@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: ТАрас <tratatuta@i.ua>, 2017\n"
+"Last-Translator: Аліна Семенюк <alinasemeniuk1@gmail.com>, 2017\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,6 +27,8 @@ msgid ""
 "<i class=\"fa fa-plus-circle\" aria-hidden=\"true\"/> <span> Add a new bank "
 "to the system</span>"
 msgstr ""
+"<i class=\"fa fa-plus-circle\" aria-hidden=\"true\"/> <span> Додати новий "
+"банк у систему</span>"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -33,6 +36,8 @@ msgid ""
 "<strong>Well done!</strong>\n"
 "                  Your banking institution is now synchronized with Odoo and a total of"
 msgstr ""
+"<strong>Добре зроблено!</strong>\n"
+"                  Ваша банківська установа зараз синхронізована з Odoo і в цілому"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_number
@@ -111,7 +116,7 @@ msgstr "Зупинено"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_status_code
 msgid "Code to identify problem"
-msgstr ""
+msgstr "Код для виявлення проблеми"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_company_id
@@ -183,7 +188,7 @@ msgstr "Назва для відображення"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_sync_date
 msgid "Fetch transaction from"
-msgstr ""
+msgstr "Отримати транзакцію з"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_id
@@ -198,16 +203,20 @@ msgid ""
 "ID of the banking institution in third party server used for debugging "
 "purpose"
 msgstr ""
+"ID банківської установи на сторонньому сервері, який використовується для "
+"налагодження"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_provider_account_identifier
 msgid "ID used to identify provider account in third party server"
 msgstr ""
+"ID використовується для ідентифікації облікового запису постачальника на "
+"сторонньому сервері"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_journal
 msgid "Interface for online account journal"
-msgstr ""
+msgstr "Інтерфейс для онлайн-журналу обліку"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_journal
@@ -294,7 +303,7 @@ msgstr "Онлайн ідентифікатор"
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_online_provider_account
 msgid "Online Provider Account"
-msgstr ""
+msgstr "Онлайн-провайдер рахунку"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -323,7 +332,7 @@ msgstr ""
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
 msgid "Plaid"
-msgstr ""
+msgstr "Plaid"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -391,6 +400,7 @@ msgstr ""
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_action_required
 msgid "True if user needs to take action by updating account"
 msgstr ""
+"Справді, якщо користувачеві потрібно вжити заходів, оновивши обліковий запис"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:127
@@ -427,7 +437,7 @@ msgstr "Yodlee"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_balance
 msgid "balance of the account sent by the third party provider"
-msgstr ""
+msgstr "залишок рахунку, відправлений стороннім провайдером"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -435,11 +445,15 @@ msgid ""
 "bank accounts have been retrieved.\n"
 "                  You can associate those bank accounts to a journal in order to automatically retrieve the latest statements from your bank."
 msgstr ""
+"банківські рахунки були отримані.\n"
+"                  Ви можете пов'язати ці банківські рахунки з журналом, щоб автоматично отримувати останні банківські виписки з вашого банку."
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_online_identifier
 msgid "id use to identify account in provider system"
 msgstr ""
+"використовуйте id для ідентифікації облікового запису в системі "
+"постачальника"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_provider_name
@@ -450,7 +464,7 @@ msgstr "назва банківської організації"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_number_added
 msgid "number of accounts added from call to new_institution"
-msgstr ""
+msgstr "кількість рахунків, доданих від виклику до нова_установа"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:315
@@ -464,3 +478,6 @@ msgid ""
 "technical field used to hide account_online_journal_id if no institution has"
 " been loaded in the system"
 msgstr ""
+"Технічне поле використовується для приховання "
+"обліковий_запис_онлайн_журналі_id якщо жодна установка не завантажена в "
+"систему"

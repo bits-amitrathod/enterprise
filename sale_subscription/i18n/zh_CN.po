@@ -53,6 +53,26 @@ msgid ""
 "        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
 "            "
 msgstr ""
+"\n"
+"付款\n"
+"\n"
+"所有款项应于收到后支付。如果没有收到付款或付款方式下降，买方丧失任何购买的物品的所有权。如果没有收到付款，没有项目将被运送。\n"
+"\n"
+"航运政策\n"
+"\n"
+"运费将由买方按卖方在购买时商定的金额支付。如果货物在运输过程中丢失，货物的总成本，包括运费，将由卖方退还给买方。国际航运成本可能加倍。如果货物在运输过程中受损，卖方将不负责任。\n"
+"\n"
+"退款/退货政策\n"
+"\n"
+"物品有权根据投诉退款或退货。如果货物在运输过程中损坏，将免费寄送替换品。如果一个项目不令人满意，在该项目被考虑退款之前，需要书面说明。在退款之前，买方必须考虑到商品的描述。如果货物与卖方的描述相符，买方不满意，卖方不负责退款。交流是逐案基础上进行的。\n"
+"\n"
+"取消\n"
+"\n"
+"在付款完成之前，可以取消一个项目。货款一经处理，买方就负责付款。\n"
+"\n"
+"投诉\n"
+"\n"
+"关于项目或卖方的任何投诉可发送到我们的支持团队：support@wesellyourstuff.com或(888) 555-0198。没有一个决议的保证。每个案件将分别看，卖方也将接触。"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_success
@@ -333,16 +353,18 @@ msgid ""
 "<abbr title=\"You need to be logged in as this subscription's customer to "
 "change country\">Taxes</abbr>:"
 msgstr ""
+"<abbr title=\"You need to be logged in as this subscription's customer to "
+"change country\">税</abbr>："
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Automatic payments"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/>自动付款"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Closable by customer"
-msgstr ""
+msgstr "允许客户关闭"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -377,12 +399,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "<span class=\"o_label\">Subscriptions</span>"
-msgstr ""
+msgstr "<span class=\"o_label\">订阅</span>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "<strong>Next Billing Amount:</strong>"
-msgstr ""
+msgstr "<strong>下一个计费金额：</strong>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -423,7 +445,7 @@ msgstr "在订阅添加"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Add options to the subscription directly or through a quotation"
-msgstr ""
+msgstr "直接或通过引用向订阅添加选项"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:45
@@ -441,7 +463,7 @@ msgstr "分析账户"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Analyze revenues &amp; renewals of subscriptions"
-msgstr ""
+msgstr "分析收入和续订"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_search
@@ -465,6 +487,9 @@ msgid ""
 "Billing:\n"
 "                            Every"
 msgstr ""
+"演员表:\n"
+"\n"
+"每一个"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
@@ -488,7 +513,7 @@ msgstr "已取消"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Cancelled subscriptions"
-msgstr ""
+msgstr "取消订阅"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
@@ -498,12 +523,12 @@ msgstr "类别"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Change Payment Method"
-msgstr ""
+msgstr "修改付款方式"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Change payment method"
-msgstr ""
+msgstr "支付方式的改变"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -515,7 +540,7 @@ msgstr "更改方案"
 #: code:addons/sale_subscription/static/src/js/tour.js:68
 #, python-format
 msgid "Choose a product name.<br/><i>(e.g. eLearning Access)</i>"
-msgstr ""
+msgstr "选择一个产品的名字<br/><i>（例如网络访问）。</i>"
 
 #. module: sale_subscription
 #. openerp-web
@@ -523,14 +548,14 @@ msgstr ""
 #, python-format
 msgid ""
 "Choose the recurrence for this template.<br/><i>(e.g. 1 time per Year)</i>"
-msgstr ""
+msgstr "选择此模板的递归<br/><i>（例如每年1次）</i>"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:22
 #, python-format
 msgid "Click here to create <b>your first subscription template</b>"
-msgstr ""
+msgstr "单击此处可创建<b>您的第一个订阅模板</b>"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
@@ -541,7 +566,7 @@ msgstr "点击来创建一个订阅的模板"
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_filtered
 msgid "Click to create a new subscription."
-msgstr ""
+msgstr "单击以创建新订阅。"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
@@ -551,7 +576,7 @@ msgstr "单击去定义新产品."
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
 msgid "Click to define a new subscription."
-msgstr ""
+msgstr "单击以定义新订阅。"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_user_closable
@@ -563,7 +588,7 @@ msgstr "被客户关闭"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_close_reason_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_close_reason_id
 msgid "Close Reason"
-msgstr "关闭理由"
+msgstr "关闭原因"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_close_reason_action
@@ -571,7 +596,7 @@ msgstr "关闭理由"
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_tree
 msgid "Close Reasons"
-msgstr "关闭理由"
+msgstr "关闭原因"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -586,12 +611,12 @@ msgstr "关闭你的账户"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Close your subscription"
-msgstr ""
+msgstr "关闭你的订阅"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_close_reason_wizard_action
 msgid "Close/Cancel Reason"
-msgstr "关闭/取消理由"
+msgstr "关闭/取消原因"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:48
@@ -605,7 +630,7 @@ msgstr "已关闭"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Closed subscriptions"
-msgstr ""
+msgstr "封闭的订阅"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:224
@@ -642,14 +667,14 @@ msgstr "配置"
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_config_settings_action
 msgid "Configure Subscriptions"
-msgstr ""
+msgstr "配置订阅"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:18
 #, python-format
 msgid "Configure your subscription templates here"
-msgstr ""
+msgstr "在这里配置订阅模板"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -678,7 +703,7 @@ msgstr "创建并查看询价单"
 msgid ""
 "Create a sale order that will overwrite this subscription when confirmed "
 "(renewal quotation)"
-msgstr ""
+msgstr "创建一个销售订单，该订单将在确认时重写此订阅（续订报价）"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
@@ -687,13 +712,18 @@ msgid ""
 "                be either for an undefined or a limited period. In case of a limited period, it will\n"
 "                be flagged as to renew one month before the end date."
 msgstr ""
+"创建订阅来管理经常发票和付款。订阅可以\n"
+"\n"
+"要么是不确定的，要么是有限的。在有限的时间内，它将\n"
+"\n"
+"被标记为在截止日期前一个月更新。"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:57
 #, python-format
 msgid "Create your first subscription product here"
-msgstr ""
+msgstr "在这里创建您的第一个订阅产品"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_create_uid
@@ -729,6 +759,11 @@ msgid ""
 "Upselling: The Sales Order added lines to the subscription\n"
 "Renewal: The Sales Order replaced the subscription's content with its own"
 msgstr ""
+"创建：销售订单创建订阅\n"
+"\n"
+"销售：销售订单添加的行的订阅\n"
+"\n"
+"更新：销售订单用自己的订阅内容替换订阅内容。"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_currency_id
@@ -755,12 +790,15 @@ msgid ""
 "Custom Domain\n"
 "        Access your Odoo Instance using your own domain."
 msgstr ""
+"自定义域\n"
+"\n"
+"使用自己的域名访问您的Odoo实例。"
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_custom_domain_yearly
 #: model:product.template,name:sale_subscription.odoo_custom_domain_yearly_product_template
 msgid "Custom Domain (Yearly)"
-msgstr ""
+msgstr "自定义域（每年）"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_partner_id
@@ -783,12 +821,15 @@ msgid ""
 "Customized Module\n"
 "        Customize a module to better match your business process."
 msgstr ""
+"定制模块\n"
+"\n"
+"定制一个模块，以更好地匹配您的业务流程。"
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_custom_module_yearly
 #: model:product.template,name:sale_subscription.odoo_custom_module_yearly_product_template
 msgid "Customized Module (Yearly)"
-msgstr ""
+msgstr "定制模块（每年）"
 
 #. module: sale_subscription
 #: model:product.product,description_sale:sale_subscription.odoo_custom_view
@@ -799,6 +840,9 @@ msgid ""
 "Customized View\n"
 "        Customize one or more views (in a single module) to better suit your needs."
 msgstr ""
+"客户视图\n"
+"\n"
+"自定义一个或多个视图（在单个模块中）以更好地满足您的需求。"
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_custom_view
@@ -810,7 +854,7 @@ msgstr "自定义的视图"
 #: model:product.product,name:sale_subscription.odoo_custom_view_yearly
 #: model:product.template,name:sale_subscription.odoo_custom_view_yearly_product_template
 msgid "Customized Views (Yearly)"
-msgstr ""
+msgstr "定制视图（每年）"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
@@ -841,12 +885,12 @@ msgstr "天"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Deferred Revenue"
-msgstr ""
+msgstr "递延收入"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_asset
 msgid "Deferred revenue management for subscriptions"
-msgstr ""
+msgstr "订阅的递延收益管理"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_description
@@ -902,7 +946,7 @@ msgstr "结束日期已经过去了"
 #: code:addons/sale_subscription/static/src/js/tour.js:34
 #, python-format
 msgid "Enter a name for this template.<br/><i>(e.g. eLearning Yearly)</i>"
-msgstr ""
+msgstr "给这个模板起名<br/><i>（如，网上学习年）</i>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -924,7 +968,7 @@ msgstr "未来的活动"
 #: code:addons/sale_subscription/static/src/js/tour.js:62
 #, python-format
 msgid "Go ahead and create a new product"
-msgstr ""
+msgstr "继续创造一个新产品"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -962,14 +1006,14 @@ msgstr "如果勾选此项,用户将能够从前端关闭他的帐户"
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
-msgstr ""
+msgstr "如果未设置，则将使用合作伙伴的默认支付令牌。"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_date
 msgid ""
 "If set in advance, the subscription will be set to pending 1 month before "
 "the date and will be closed on the date set in this field."
-msgstr ""
+msgstr "如果预先设定，订阅将被设置为在日期之前的1个月，并将在该字段中设置的日期关闭。"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_product_product_recurring_invoice
@@ -991,7 +1035,7 @@ msgstr "如果设置,支付将自动生成和发票将不会尝试付款是否�
 msgid ""
 "If set, subscriptions with this template will invoice in this journal; "
 "otherwise the sales journal with the lowest sequence is used."
-msgstr ""
+msgstr "如果订阅这模板集，将发票做在这个分类帐；否则销售分类帐最低的序列被使用。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1005,19 +1049,19 @@ msgstr "如果你关闭你的帐户,它将保持活跃,直到你的下一个发�
 msgid ""
 "If you confirm, you subscription will be closed right away. Your current "
 "invoicing period is valid until"
-msgstr ""
+msgstr "如果您确认，您的订阅将立即关闭。您目前的发票期有效期至"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "If you wish to reopen it, the"
-msgstr ""
+msgstr "如果您希望重新打开它，则"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period."
-msgstr ""
+msgstr "如果您希望重新打开它，您可以为当前的发票期支付您的发票。"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:46
@@ -1033,7 +1077,7 @@ msgstr "进行中"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_industry_id
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Industry"
-msgstr ""
+msgstr "工业"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
@@ -1049,7 +1093,7 @@ msgstr "发票"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_invoice_count
 msgid "Invoice Count"
-msgstr ""
+msgstr "发票数"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_account_invoice_line
@@ -1086,12 +1130,12 @@ msgstr "发票"
 #: code:addons/sale_subscription/models/sale_order.py:152
 #, python-format
 msgid "Invoicing period: %s - %s"
-msgstr ""
+msgstr "发票时间：%s-%s"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Keeps track of the revenue recognition installments"
-msgstr ""
+msgstr "跟踪收入确认分期付款"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription___last_update
@@ -1137,21 +1181,21 @@ msgstr "晚活动"
 #: code:addons/sale_subscription/static/src/js/tour.js:27
 #, python-format
 msgid "Let's create your first subscription template."
-msgstr ""
+msgstr "让我们创建您的第一个订阅模板"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:52
 #, python-format
 msgid "Let's go to the catalog to create our first subscription product"
-msgstr ""
+msgstr "让我们去目录创建我们的第一个订阅产品。"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:75
 #, python-format
 msgid "Link your product to a subscription template in this tab"
-msgstr ""
+msgstr "将产品链接到此选项卡中的订阅模板"
 
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_manager
@@ -1200,7 +1244,7 @@ msgstr "新建"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "New Subscriptions"
-msgstr ""
+msgstr "新订阅"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:41
@@ -1220,6 +1264,9 @@ msgid ""
 "Odoo Custom Module\n"
 "        A custom module tailored especifically for your company"
 msgstr ""
+"Odoo自定义模块\n"
+"\n"
+"自定义模块定制专为贵公司"
 
 #. module: sale_subscription
 #: model:product.product,description_sale:sale_subscription.odoo_saas_yearly
@@ -1228,12 +1275,15 @@ msgid ""
 "Odoo SAAS\n"
 "        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
 msgstr ""
+"Odoo SaaS\n"
+"\n"
+"访问您的Odoo实例。存储在我们的服务器上：高速、高可靠性和日常备份。"
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_saas_yearly
 #: model:product.template,name:sale_subscription.odoo_saas_yearly_product_template
 msgid "Odoo SAAS (Yearly)"
-msgstr ""
+msgstr "odoo SaaS（年）"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -1242,16 +1292,20 @@ msgid ""
 "            state. After the negociation, the salesman should close or renew\n"
 "            pending subscriptions."
 msgstr ""
+"odoo自动套重新订阅待定状态\n"
+"\n"
+"谈判后，销售人员应该终止或重新开始\n"
+"待定订阅。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "Online Management"
-msgstr ""
+msgstr "在线管理"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Online Preview"
-msgstr ""
+msgstr "在线预览"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_lines
@@ -1272,7 +1326,7 @@ msgstr "业务伙伴"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Pay with"
-msgstr ""
+msgstr "支付 于"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_payment_token_id
@@ -1287,7 +1341,7 @@ msgstr "付款交易"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Payment method:"
-msgstr ""
+msgstr "付款方式："
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_reminder
@@ -1297,13 +1351,13 @@ msgstr "订阅支付提醒 ${object.code}"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Pending subscriptions"
-msgstr ""
+msgstr "等待订阅"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:294
 #, python-format
 msgid "Please define Date of Next Invoice of \"%s\"."
-msgstr ""
+msgstr "请注明下一次发票日期“%s”"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:290
@@ -1346,7 +1400,7 @@ msgstr "产品模板"
 #: model:ir.model.fields,help:sale_subscription.field_product_product_subscription_template_id
 #: model:ir.model.fields,help:sale_subscription.field_product_template_subscription_template_id
 msgid "Product will be included in a selected template"
-msgstr ""
+msgstr "产品将包含在选定的模板中。"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.product_template_action_subscription
@@ -1365,7 +1419,7 @@ msgstr "数量"
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_line_quantity
 msgid "Quantity that will be invoiced."
-msgstr ""
+msgstr "发票金额。"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_order
@@ -1382,12 +1436,12 @@ msgstr "原因"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_recurring_rule_type
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "Recurrence"
-msgstr ""
+msgstr "重新提起"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "Recurrence:"
-msgstr ""
+msgstr "重新提起"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_total
@@ -1529,7 +1583,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_industry_id
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Sector of Activity"
-msgstr ""
+msgstr "活动部门"
 
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
