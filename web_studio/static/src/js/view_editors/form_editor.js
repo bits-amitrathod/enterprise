@@ -369,9 +369,8 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
      * @private
      */
     _renderInnerGroupField: function (node) {
-        var $result = this._super.apply(this, arguments);
         node.has_label = (node.attrs.nolabel !== "1");
-        return $result;
+        return this._super.apply(this, arguments);
     },
     /**
      * @override
