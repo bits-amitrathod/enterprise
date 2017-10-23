@@ -927,9 +927,6 @@ class WebStudioController(http.Controller):
                 eval_attr.append(group_xmlid.complete_name)
             eval_attr = ",".join(eval_attr)
             new_attrs['groups'] = eval_attr
-        else:
-            # TOFIX
-            new_attrs['groups'] = ''
 
         xpath_node = self._get_xpath_node(arch, operation)
 
