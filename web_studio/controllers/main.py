@@ -423,7 +423,7 @@ class WebStudioController(http.Controller):
             'report_type': 'qweb-pdf',
             'report_name': view.name,
         })
-        # Add in the print menu (ir_values_id field)
+        # Add in the print menu
         report.create_action()
 
         return {
@@ -656,6 +656,12 @@ class WebStudioController(http.Controller):
         if report:
             if 'groups_id' in values:
                 values['groups_id'] = [(6, 0, values['groups_id'])]
+            if 'display_in_print' in values:
+                if values['display_in_print']:
+                    report.create_action()
+                else:
+                    report.unlink_action()
+                values.pop('display_in_print')
             report.write(values)
 
     @http.route('/web_studio/edit_view_arch', type='json', auth='user')
