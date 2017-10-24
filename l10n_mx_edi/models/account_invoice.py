@@ -808,6 +808,13 @@ class AccountInvoice(models.Model):
         '''Generates the cfdi attachments for mexican companies when validated.'''
         result = super(AccountInvoice, self).invoice_validate()
         for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
+            if self.type == 'out_refund' and not self.refund_invoice_id.l10n_mx_edi_cfdi_uuid:
+                self.message_post(
+                    body='<p style="color:red">' + _(
+                        'The invoice related has no valid fiscal folio. For this '
+                        'reason, this refund didn\'t generate a fiscal document.') + '</p>',
+                    subtype='account.mt_invoice_validated')
+                continue
             record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-3-2.xml' % (
                 record.journal_id.code, record.number)).replace('/', '')
             record._l10n_mx_edi_retry()

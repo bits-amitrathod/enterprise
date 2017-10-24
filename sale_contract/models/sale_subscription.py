@@ -242,7 +242,7 @@ class SaleSubscription(models.Model):
         account_id = fiscal_position.map_account(account).id
 
         tax = line.product_id.taxes_id.filtered(lambda r: r.company_id == company)
-        tax = fiscal_position.map_tax(tax)
+        tax = fiscal_position.map_tax(tax, product=line.product_id, partner=self.partner_id)
         return {
             'name': line.name,
             'account_id': account_id,
