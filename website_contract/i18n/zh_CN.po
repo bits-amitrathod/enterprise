@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Jeffery CHEN <jeffery9@gmail.com>, 2016
+# 苏州远鼎 <tiexinliu@126.com>, 2017
+# Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 09:14+0000\n"
 "PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2016\n"
+"Last-Translator: Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,6 +41,26 @@ msgid ""
 "        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
 "            "
 msgstr ""
+"\n"
+"付款\n"
+"\n"
+"所有款项应于收到后支付。如果没有收到付款或付款方式下降，买方丧失任何购买的物品的所有权。如果没有收到付款，没有项目将被运送。\n"
+"\n"
+"航运政策\n"
+"\n"
+"运费将由买方按卖方在购买时商定的金额支付。如果货物在运输过程中丢失，货物的总成本，包括运费，将由卖方退还给买方。国际航运成本可能加倍。如果货物在运输过程中受损，卖方将不负责任。\n"
+"\n"
+"退款/退货政策\n"
+"\n"
+"物品有权根据投诉退款或退货。如果货物在运输过程中损坏，将免费寄送替换品。如果一个项目不令人满意，在该项目被考虑退款之前，需要书面说明。在退款之前，买方必须考虑到商品的描述。如果货物与卖方的描述相符，买方不满意，卖方不负责退款。交流是逐案基础上进行的。\n"
+"\n"
+"取消\n"
+"\n"
+"在付款完成之前，可以取消一个项目。货款一经处理，买方就负责付款。\n"
+"\n"
+"投诉\n"
+"\n"
+"关于项目或卖方的任何投诉可发送到我们的支持团队：support@wesellyourstuff.com或（888）555-0198。没有一个决议的保证。每个案件将分别看，卖方也将接触。"
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_payment_success
@@ -386,12 +408,12 @@ msgstr "<abbr title=\"你需要登录作为本合同的客户更改国家\">税<
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Automatic payments"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/>自动付款"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Closable by customer"
-msgstr ""
+msgstr "允许客户关闭"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
@@ -458,7 +480,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
 msgid "<span class=\"o_label\">Subscriptions</span>"
-msgstr ""
+msgstr "<span class=\"o_label\">订阅</span>"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.prepaid
@@ -721,6 +743,9 @@ msgid ""
 "Custom Domain\n"
 "        Access your Odoo Instance using your own domain."
 msgstr ""
+"自定义域\n"
+"\n"
+"使用自己的域名访问您的Odoo实例。"
 
 #. module: website_contract
 #: model:sale.quote.option,name:website_contract.sugg_line_12
@@ -745,6 +770,9 @@ msgid ""
 "Customized Module\n"
 "        Customize a module to better match your business process."
 msgstr ""
+"定制模块\n"
+"\n"
+"定制一个模块，以更好地匹配您的业务流程。"
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_view
@@ -753,6 +781,9 @@ msgid ""
 "Customized View\n"
 "        Customize one or more views (in a single module) to better suit your needs."
 msgstr ""
+"客户视图\n"
+"\n"
+"自定义一个或多个视图（在单个模块中）以更好地满足您的需求。"
 
 #. module: website_contract
 #: model:product.product,name:website_contract.odoo_custom_view
@@ -825,7 +856,7 @@ msgstr "如果勾选此项,用户将能够从前端关闭他的帐户"
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
-msgstr ""
+msgstr "如果未设置，则将使用合作伙伴的默认支付令牌。"
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_order_contract_template
@@ -866,14 +897,14 @@ msgstr "如果你确认,合约将立即关闭。你目前的发票是有效的,�
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "If you wish to reopen it, the"
-msgstr ""
+msgstr "如果您希望重新打开它，则"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period."
-msgstr ""
+msgstr "如果您希望重新打开它，您可以为当前的发票期支付您的发票。"
 
 #. module: website_contract
 #: code:addons/website_contract/controllers/main.py:47
@@ -1013,6 +1044,9 @@ msgid ""
 "Odoo SAAS\n"
 "        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
 msgstr ""
+"Odoo SaaS\n"
+"\n"
+"访问您的Odoo实例。存储在我们的服务器上：高速、高可靠性和日常备份。"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract_pricing
@@ -1539,7 +1573,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Your subscription is closed."
-msgstr ""
+msgstr "您的订阅已关闭."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
