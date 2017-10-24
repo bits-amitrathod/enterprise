@@ -66,7 +66,7 @@ widgets.bankStatementReconciliationLine.include({
     render_batch_deposits_selector: function() {
         var self = this;
         this.$(".match_controls .batch_deposits_selector").remove();
-        if (this.st_line.has_no_partner) {
+        if (this.st_line && this.st_line.has_no_partner) {
             // Select deposits from the same journal as the bank statement
             var relevant_deposits = _.filter(this.getParent().batch_deposits, function(d) { return d.journal_id === self.st_line.journal_id });
             this.$(".match_controls .filter").after(QWeb.render("batch_deposits_selector", {
