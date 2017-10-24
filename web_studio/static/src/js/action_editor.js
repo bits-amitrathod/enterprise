@@ -132,10 +132,6 @@ var ActionEditor = Widget.extend({
      * @private
      */
     _onActionParameters: function () {
-        var options = {
-            keep_state: true,
-            disable_edition: true,
-        };
         // open action form view
         this.do_action({
             type: 'ir.actions.act_window',
@@ -143,7 +139,7 @@ var ActionEditor = Widget.extend({
             res_id: this.action.id,
             views: [[false, 'form']],
             target: 'current',
-        }, options);
+        });
     },
 });
 

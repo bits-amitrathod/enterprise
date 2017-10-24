@@ -89,7 +89,6 @@ WebClient.include({
      * @override
      */
     do_action: function (action, options) {
-
         if (this.studio_mode === 'main' && action.target === 'new') {
             // Wizards in the app creator can be opened (ex: Import wizard)
             // TODO: what if we modify target = 'curent' to modify it?
@@ -97,21 +96,29 @@ WebClient.include({
             return $.Deferred().reject();
         }
 
-        // the option `disable_edition` can be used to tell the webclient that
-        // the action is not a navigation we want to navigation in Studio with, but
-        // it's an action we want to open normally (because it is used by Studio).
-        if (this.studio_mode && !options.disable_edition) {
-            // we are navigating inside Studio so the studio action manager is used
-            return this.studio_action_manager.do_action.apply(this, arguments);
+        // The option `useStudioAM` can be used to tell the webclient that the
+        // action is part of the navigation process in Studio, so it shouldn't
+        // be threated as a normal action ; in this case, a *small hack*
+        // consists of using another action manager that makes the `do_action`
+        // and using this resulted action in Studio.
+        // @see on_menu_clicked, _openNavigatedActionInStudio
+        if (this.studio_mode) {
+            if (options.useStudioAM) {
+                // we are navigating inside Studio so the studio action manager
+                // is used
+                return this.studio_action_manager.do_action.apply(this, arguments);
+            } else {
+                // we are doing action inside Studio but as the currently edited
+                // action in Studio does not change, the state cannot change
+                options.keep_state = true;
+            }
         }
-
         if (this.studio_mode === 'main') {
             // these are options used by Studio main action
             options = options || {};
             options.view_env = this.edited_action.widget.env;
             options.chatter_allowed = this.studio_chatter_allowed;
         }
-
         return this._super.apply(this, arguments);
     },
     /**
@@ -147,7 +154,6 @@ WebClient.include({
         var action = options.action;
         var action_options = {
             clear_breadcrumbs: true,
-            disable_edition: true,
         };
         var defs = [];
         this.studio_mode = mode;
@@ -224,6 +230,7 @@ WebClient.include({
         return this._super.apply(this, arguments);
     },
     /**
+     * @see on_menu_clicked
      * @override
      */
     on_app_clicked: function () {
@@ -249,7 +256,8 @@ WebClient.include({
             if (display) {
                 bus.trigger('studio_toggled', 'app_creator', this.studio_info);
             } else {
-                if (this.edited_action.action_descr.tag === 'action_web_studio_app_creator') {
+                var action = this.action_manager.get_inner_action();
+                if (action.action_descr.tag === 'action_web_studio_app_creator') {
                     // special case for the app_creator, which stays in app_creator mode
                     bus.trigger('studio_toggled', 'app_creator', this.studio_info);
                 } else {
@@ -327,6 +335,17 @@ WebClient.include({
         }
         bus.trigger('action_changed', action.action_descr);
         return this.openStudio('main', _.extend(options || {}, { action: action }));
+    },
+    /**
+     * @see on_menu_clicked for explanations about the Studio action manager use
+     * @private
+     * @override
+     */
+    _openMenu: function (action, options) {
+        if (this.studio_mode) {
+            options.useStudioAM = true;
+        }
+        return this._super.apply(this, arguments);
     },
     /**
      * Restore the Studio action manager to a previous state.

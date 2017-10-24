@@ -51,10 +51,7 @@ var StudioReportKanbanController = KanbanController.extend({
             })
             .then(function(action) {
                 if (action.active_ids.length) {
-                    self.do_action(action, {
-                        keep_state: true,
-                        disable_edition: true,
-                    });
+                    self.do_action(action);
                 } else {
                     new Dialog(this, {
                         size: 'medium',

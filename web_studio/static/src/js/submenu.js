@@ -122,7 +122,6 @@ var SubMenu = Widget.extend({
                 var options = {
                     action: self.action,
                     clear_breadcrumbs: true,
-                    disable_edition: true,
                     index: index,
                 };
                 if (bc.active_view) {
@@ -185,7 +184,6 @@ var SubMenu = Widget.extend({
             action: this.action,
             active_view: view_name,
             clear_breadcrumbs: true,
-            disable_edition: true,
         });
     },
     /**
@@ -207,7 +205,6 @@ var SubMenu = Widget.extend({
             this._replaceAction('action_web_studio_main', title, {
                 action: this.action,
                 clear_breadcrumbs: true,
-                disable_edition: true,
             });
         } else if (_.contains(['automations', 'reports', 'acl', 'filters'], name)) {
             var self = this;
@@ -218,8 +215,6 @@ var SubMenu = Widget.extend({
             }).then(function (result) {
                 self._replaceAction(result, title, {
                     clear_breadcrumbs: true,
-                    disable_edition: true,
-                    keep_state: true,
                 });
             });
         }

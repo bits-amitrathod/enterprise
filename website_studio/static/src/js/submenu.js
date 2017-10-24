@@ -25,8 +25,6 @@ var WebsiteSubMenu = SubMenu.include({
             this._replaceAction('action_web_studio_form', title, {
                 action: this.action,
                 clear_breadcrumbs: true,
-                disable_edition: true,
-                keep_state: true,
             });
         }
     },

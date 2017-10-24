@@ -1224,10 +1224,6 @@ var ViewEditorManager = Widget.extend({
      * @param {OdooEvent} event
      */
     _onOpenDefaults: function () {
-        var options = {
-            keep_state: true,
-            disable_edition: true,
-        };
         this.do_action({
             name: _t('Default Values'),
             type: 'ir.actions.act_window',
@@ -1235,7 +1231,7 @@ var ViewEditorManager = Widget.extend({
             target: 'current',
             views: [[false, 'list'], [false, 'form']],
             domain: [['field_id.model', '=', this.model_name]],
-        }, options);
+        });
     },
     /**
      * @private
@@ -1252,17 +1248,13 @@ var ViewEditorManager = Widget.extend({
         }).then(function (result) {
             var res_id = result && result[0].id;
             if (res_id) {
-                var options = {
-                    keep_state: true,
-                    disable_edition: true,
-                };
                 self.do_action({
                     type: 'ir.actions.act_window',
                     res_model: 'ir.model.fields',
                     res_id: res_id,
                     views: [[false, 'form']],
                     target: 'current',
-                }, options);
+                });
             }
         });
     },
@@ -1271,17 +1263,13 @@ var ViewEditorManager = Widget.extend({
      * @param {OdooEvent} event
      */
     _onOpenViewForm: function () {
-        var options = {
-            keep_state: true,
-            disable_edition: true,
-        };
         this.do_action({
             type: 'ir.actions.act_window',
             res_model: 'ir.ui.view',
             res_id: this.view_id,
             views: [[false, 'form']],
             target: 'current',
-        }, options);
+        });
     },
     /**
      * @private
