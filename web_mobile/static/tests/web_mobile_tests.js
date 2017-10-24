@@ -138,7 +138,7 @@ QUnit.module('web_mobile', {
 
         assert.strictEqual(rpcCount, 2, "an extra rpc should be done on click");
         assert.ok(rpcDone, "a read rpc should have been done");
-        assert.deepEqual(addContactRecord, [{
+        assert.deepEqual(addContactRecord, {
             "city": "city",
             "country_id": "country_id",
             "email": "email",
@@ -159,7 +159,7 @@ QUnit.module('web_mobile', {
             "title": "title",
             "website": "website",
             "zip": "zip"
-        }], "all data should be correctly passed");
+        }, "all data should be correctly passed");
 
         mobile.methods.addContact = __addContact;
 
