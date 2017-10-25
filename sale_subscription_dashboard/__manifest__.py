@@ -16,7 +16,7 @@ It adds dashboards to :
     'category': 'Accounting & Finance',
     'data': [
         'views/sale_subscription_dashboard_views.xml',
-        'views/sale_subscription_dashboard_templates.xml',
+        'views/assets.xml',
     ],
     'demo': [
     ],

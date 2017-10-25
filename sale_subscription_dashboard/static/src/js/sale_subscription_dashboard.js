@@ -89,19 +89,22 @@ var sale_subscription_dashboard_abstract = Widget.extend(ControlPanelMixin, {
         }
 
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/companies_check', 'call', {
-            'company_ids': company_ids,
-        }).done(function (response) {
-            if (response.result === true) {
-                self.currency_id = response.currency_id;
-                self.filters.company_ids = company_ids;
-                self.$el.empty();
-                self.render_dashboard();
-            } else {
-                Dialog.alert(self, response.error_message, {
-                    title: _t('Warning'),
-                });
-            }
+        return self._rpc({
+                route: '/sale_subscription_dashboard/companies_check',
+                params: {
+                    company_ids: company_ids
+                },
+            }).then(function(response) {
+                if (response.result === true) {
+                    self.currency_id = response.currency_id;
+                    self.filters.company_ids = company_ids;
+                    self.$el.empty();
+                    self.render_dashboard();
+                } else {
+                    Dialog.alert(self, response.error_message, {
+                        title: _t('Warning'),
+                    });
+                }
         });
     },
 
@@ -271,17 +274,19 @@ var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.exte
 
     fetch_data: function() {
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/fetch_data', 'call', {
-        }).done(function (result) {
-            self.stat_types = result.stat_types;
-            self.forecast_stat_types = result.forecast_stat_types;
-            self.currency_id = result.currency_id;
-            self.contract_templates = result.contract_templates;
-            self.tags = result.tags;
-            self.companies = result.companies;
-            self.has_mrr = result.has_mrr;
-            self.has_def_revenues = result.has_def_revenues;
-            self.has_template = result.has_template;
+        return self._rpc({
+                route: '/sale_subscription_dashboard/fetch_data',
+                params: {},
+            }).then(function(result) {
+                self.stat_types = result.stat_types;
+                self.forecast_stat_types = result.forecast_stat_types;
+                self.currency_id = result.currency_id;
+                self.contract_templates = result.contract_templates;
+                self.tags = result.tags;
+                self.companies = result.companies;
+                self.has_mrr = result.has_mrr;
+                self.has_def_revenues = result.has_def_revenues;
+                self.has_template = result.has_template;
         });
     },
 
@@ -417,13 +422,16 @@ var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.
     fetch_computed_stat: function() {
 
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/compute_stat', 'call', {
-            'stat_type': this.selected_stat,
-            'start_date': this.start_date.format('YYYY-MM-DD'),
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-            'filters': this.filters,
-        }).done(function (result) {
-            self.value = result;
+        self._rpc({
+                route: '/sale_subscription_dashboard/compute_stat',
+                params: {
+                    stat_type: this.selected_stat,
+                    start_date: this.start_date.format('YYYY-MM-DD'),
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    filters: this.filters,
+                },
+            }).done(function(result) {
+                self.value = result;
         });
     },
 
@@ -464,47 +472,55 @@ var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.
     render_detailed_dashboard_stats_history: function() {
 
         var self = this;
-        ajax.jsonRpc('/sale_subscription_dashboard/get_stats_history', 'call', {
-            'stat_type': this.selected_stat,
-            'start_date': this.start_date.format('YYYY-MM-DD'),
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-            'filters': this.filters,
-        }).done(function (result) {
-            // Rounding of result
-            _.map(result, function(v, k, dict) {dict[k] = Math.round(v * 100) / 100;});
-            var html = QWeb.render('sale_subscription_dashboard.stats_history', {
-                stats_history: result,
-                stat_type: self.selected_stat,
-                stat_types: self.stat_types,
-                currency_id: self.currency_id,
-                rate: self.compute_rate,
-                get_color_class: get_color_class,
-                value: Math.round(self.value * 100) / 100,
-                format_number: self.format_number,
-            });
-            self.$('#o-stat-history-box').empty();
-            self.$('#o-stat-history-box').append(html);
+        self._rpc({
+                route: '/sale_subscription_dashboard/get_stats_history',
+                params: {
+                    stat_type: this.selected_stat,
+                    start_date: this.start_date.format('YYYY-MM-DD'),
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    filters: this.filters,
+                },
+            }).then(function(result) {
+                // Rounding of result
+                _.map(result, function(v, k, dict) {
+                    dict[k] = Math.round(v * 100) / 100;
+                });
+                var html = QWeb.render('sale_subscription_dashboard.stats_history', {
+                    stats_history: result,
+                    stat_type: self.selected_stat,
+                    stat_types: self.stat_types,
+                    currency_id: self.currency_id,
+                    rate: self.compute_rate,
+                    get_color_class: get_color_class,
+                    value: Math.round(self.value * 100) / 100,
+                    format_number: self.format_number,
+                });
+                self.$('#o-stat-history-box').empty();
+                self.$('#o-stat-history-box').append(html);
         });
         addLoader(this.$('#o-stat-history-box'));
     },
 
     render_detailed_dashboard_stats_by_plan: function() {
         var self = this;
-        ajax.jsonRpc('/sale_subscription_dashboard/get_stats_by_plan', 'call', {
-            'stat_type': this.selected_stat,
-            'start_date': this.start_date.format('YYYY-MM-DD'),
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-            'filters': this.filters,
-        }).done(function (result) {
-            var html = QWeb.render('sale_subscription_dashboard.stats_by_plan', {
-                stats_by_plan: result,
-                stat_type: self.selected_stat,
-                stat_types: self.stat_types,
-                currency_id: self.currency_id,
-                value: self.value,
-                format_number: self.format_number,
-            });
-            self.$('.o_stats_by_plan').replaceWith(html);
+        self._rpc({
+                route: '/sale_subscription_dashboard/get_stats_by_plan',
+                params: {
+                    stat_type: this.selected_stat,
+                    start_date: this.start_date.format('YYYY-MM-DD'),
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    filters: this.filters,
+                },
+            }).then(function(result) {
+                var html = QWeb.render('sale_subscription_dashboard.stats_by_plan', {
+                    stats_by_plan: result,
+                    stat_type: self.selected_stat,
+                    stat_types: self.stat_types,
+                    currency_id: self.currency_id,
+                    value: self.value,
+                    format_number: self.format_number,
+                });
+                self.$('.o_stats_by_plan').replaceWith(html);
         });
         addLoader(this.$('.o_stats_by_plan'));
     },
@@ -518,15 +534,18 @@ var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.
         addLoader(this.$('#stat_chart_div'));
 
         var self = this;
-        ajax.jsonRpc('/sale_subscription_dashboard/compute_graph', 'call', {
-            'stat_type': this.selected_stat,
-            'start_date': this.start_date.format('YYYY-MM-DD'),
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-            'points_limit': 0,
-            'filters': this.filters,
-        }).done(function(result){
-            load_chart('#stat_chart_div', self.stat_types[self.selected_stat].name, result, true);
-            self.$('#stat_chart_div div.o_loader').hide();
+        self._rpc({
+                route: '/sale_subscription_dashboard/compute_graph',
+                params: {
+                    stat_type: this.selected_stat,
+                    start_date: this.start_date.format('YYYY-MM-DD'),
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    points_limit: 0,
+                    filters: this.filters,
+                },
+            }).then(function(result) {
+                load_chart('#stat_chart_div', self.stat_types[self.selected_stat].name, result, true);
+                self.$('#stat_chart_div div.o_loader').hide();
         });
     },
 
@@ -535,14 +554,17 @@ var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.
         addLoader(this.$('#mrr_growth_chart_div'));
         var self = this;
 
-        ajax.jsonRpc('/sale_subscription_dashboard/compute_graph_mrr_growth', 'call', {
-            'start_date' : this.start_date.format('YYYY-MM-DD'),
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-	    'points_limit': 30,
-            'filters': this.filters,
-        }).done(function(result){
-            self.load_chart_mrr_growth_stat('#mrr_growth_chart_div', result);
-            self.$('#mrr_growth_chart_div div.o_loader').hide();
+        self._rpc({
+                route: '/sale_subscription_dashboard/compute_graph_mrr_growth',
+                params: {
+                    start_date: this.start_date.format('YYYY-MM-DD'),
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    points_limit: 0,
+                    filters: this.filters,
+                },
+            }).then(function(result) {
+                self.load_chart_mrr_growth_stat('#mrr_growth_chart_div', result);
+                self.$('#mrr_growth_chart_div div.o_loader').hide();
         });
     },
 
@@ -709,12 +731,16 @@ var sale_subscription_dashboard_forecast = sale_subscription_dashboard_abstract.
         addLoader(this.$('#forecast_chart_div_mrr, #forecast_chart_div_contracts'));
 
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/get_default_values_forecast', 'call', {
-            'forecast_type': forecast_type,
-            'end_date': moment().format('YYYY-MM-DD'),
-            'filters': this.filters,
-        }).done(function(result){
-            self.values[forecast_type] = result;
+        return self._rpc({
+                route: '/sale_subscription_dashboard/get_default_values_forecast',
+                params: {
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    forecast_type: forecast_type,
+                    points_limit: 0,
+                    filters: this.filters,
+                },
+            }).then(function(result) {
+                self.values[forecast_type] = result;
         });
     },
 
@@ -856,17 +882,20 @@ var SaleSubscriptionDashboardStatBox = Widget.extend({
 
     compute_graph: function() {
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/compute_graph_and_stats', 'call', {
-            'stat_type': this.stat_type,
-            'start_date' : this.start_date.format('YYYY-MM-DD'),
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-            'points_limit': 30,
-            'filters': this.filters,
-        }).done(function(result){
-            self.value = result.stats.value_2;
-            self.perc = result.stats.perc;
-            self.color = get_color_class(result.stats.perc, self.stat_types[self.stat_type].dir);
-            self.computed_graph = result.graph;
+        return self._rpc({
+                route: '/sale_subscription_dashboard/compute_graph_and_stats',
+                params: {
+                    stat_type: this.stat_type,
+                    start_date: this.start_date.format('YYYY-MM-DD'),
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    points_limit: 30,
+                    filters: this.filters,
+                },
+            }).then(function(result) {
+                self.value = result.stats.value_2;
+                self.perc = result.stats.perc;
+                self.color = get_color_class(result.stats.perc, self.stat_types[self.stat_type].dir);
+                self.computed_graph = result.graph;  
         });
     },
 
@@ -926,21 +955,24 @@ var SaleSubscriptionDashboardForecastBox = Widget.extend({
     compute_numbers: function() {
 
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/get_default_values_forecast', 'call', {
-            'forecast_type': this.stat_type,
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-            'filters': this.filters,
-        }).done(function(result){
-            self.computed_graph = compute_forecast_values(
-                result.starting_value,
-                result.projection_time,
-                'linear',
-                result.churn,
-                result.linear_growth,
-                0
-            );
-            self.value = self.computed_graph[self.computed_graph.length - 1][1];
-        });
+        return self._rpc({
+                route: '/sale_subscription_dashboard/get_default_values_forecast',
+                params: {
+                    forecast_type: this.stat_type,
+                    end_date: this.end_date.format('YYYY-MM-DD'),
+                    filters: this.filters,
+                },
+            }).then(function(result) {
+                self.computed_graph = compute_forecast_values(
+                    result.starting_value,
+                    result.projection_time,
+                    'linear',
+                    result.churn,
+                    result.linear_growth,
+                    0
+                );
+                self.value = self.computed_graph[self.computed_graph.length - 1][1];
+            });
     },
 
     format_number: function(value) {
@@ -970,11 +1002,13 @@ var sale_subscription_dashboard_salesman = sale_subscription_dashboard_abstract.
 
     fetch_salesmen: function() {
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/fetch_salesmen', 'call', {
-        }).then(function (result) {
-            self.salesman_ids = result.salesman_ids;
-            self.salesman = result.default_salesman || {};
-            self.currency_id = result.currency_id;
+        return self._rpc({
+                route: '/sale_subscription_dashboard/fetch_salesmen',
+                params: {},
+            }).then(function(result) {
+                self.salesman_ids = result.salesman_ids;
+                self.salesman = result.default_salesman || {};
+                self.currency_id = result.currency_id;
         });
     },
 
@@ -997,11 +1031,14 @@ var sale_subscription_dashboard_salesman = sale_subscription_dashboard_abstract.
         var self = this;
         addLoader(this.$('#mrr_growth_salesman'));
 
-        ajax.jsonRpc('/sale_subscription_dashboard/get_values_salesman', 'call', {
-            'start_date': this.start_date.format('YYYY-MM-DD'),
-            'end_date': this.end_date.format('YYYY-MM-DD'),
-            'salesman_id': this.salesman.id,
-        }).done(function(result){
+        self._rpc({
+            route: '/sale_subscription_dashboard/get_values_salesman',
+            params: {
+                start_date: this.start_date.format('YYYY-MM-DD'),
+                end_date: this.end_date.format('YYYY-MM-DD'),
+                salesman_id: this.salesman.id,
+            },
+        }).then(function(result){
             load_chart_mrr_salesman('#mrr_growth_salesman', result);
             self.$('#mrr_growth_salesman div.o_loader').hide();
 
@@ -1161,11 +1198,14 @@ var sale_subscription_dashboard_cohort = sale_subscription_dashboard_abstract.ex
 
     fetch_cohort_report: function() {
         var self = this;
-        return ajax.jsonRpc('/sale_subscription_dashboard/fetch_cohort_report', 'call', {
-            'date_start': this.date_start.format('YYYY-MM-DD'),
-            'cohort_period': this.cohort_period,
-            'cohort_interest': this.cohort_interest,
-            'filters': this.filters,
+        return self._rpc({
+            route: '/sale_subscription_dashboard/fetch_cohort_report',
+            params: {
+                date_start: this.date_start.format('YYYY-MM-DD'),
+                cohort_period: this.cohort_period,
+                cohort_interest: this.cohort_interest,
+                filters: this.filters
+            }
         }).then(function (result) {
             self.cohort_report = result.cohort_report;
             self.contract_templates = result.contract_templates;
@@ -1493,4 +1533,8 @@ core.action_registry.add('sale_subscription_dashboard_detailed', sale_subscripti
 core.action_registry.add('sale_subscription_dashboard_forecast', sale_subscription_dashboard_forecast);
 core.action_registry.add('sale_subscription_dashboard_salesman', sale_subscription_dashboard_salesman);
 
+return {sale_subscription_dashboard_main: sale_subscription_dashboard_main,
+        sale_subscription_dashboard_salesman: sale_subscription_dashboard_salesman,
+        sale_subscription_dashboard_cohort: sale_subscription_dashboard_cohort
+    };
 });
