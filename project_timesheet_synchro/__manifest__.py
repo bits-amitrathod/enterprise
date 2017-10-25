@@ -16,6 +16,7 @@ If you use the external timesheet application, this module alows you to synchron
     'depends': ['hr_timesheet'],
     'data': [
         'views/templates.xml',
+        'views/assets.xml',
         'views/timesheet_views.xml',
     ],
     'qweb': [

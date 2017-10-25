@@ -27,6 +27,7 @@ odoo.define('project_timeshee.ui', function (require ) {
     //Main widget to instantiate the app
     var ProjectTimesheet = Widget.extend(mixins.ServiceProvider, {
         template: "app",
+        xmlDependencies: ['/project_timesheet_synchro/static/src/xml/project_timesheet.xml'],
         cssLibs: [
             '/web/static/lib/nvd3/nv.d3.css'
         ],
@@ -75,7 +76,6 @@ odoo.define('project_timeshee.ui', function (require ) {
         willStart: function() {
             var self = this;
             var defs = [
-                ajax.loadXML('static/src/xml/project_timesheet.xml', core.qweb),
                 ajax.loadLibs(this)
             ];
             if(self.isDesktop) {
@@ -93,6 +93,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                 self.sanitize_all_ids();
                 defs.push($.Deferred().resolve());
             }
+            defs.push(this._super.apply(this, arguments));
             return $.when.apply($, defs);
         },
         start: function() {
