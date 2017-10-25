@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_cfdi_33_mx" inherit_id="l10n_mx_edi.report_invoice_document_mx">
+        <xpath expr="//div[hasclass('complement-details')]/div[10]" position="replace">
+            <div class="digital-stamp-content">
+                <span>Emitter certificate:</span> <span t-esc="xml.get('noCertificado', xml.get('NoCertificado'))"/>
+                <span> | Expedition place:</span> <span t-esc="xml.get('LugarExpedicion')"/>
+                <span> | Fiscal Regime:</span>
+                    <t t-if="xml.get('version', '') == '3.2'"> <span t-esc="xml.Emisor.RegimenFiscal.get('Regimen')"/></t>
+                    <t t-if="xml.get('Version', '') == '3.3'"> <span t-esc="xml.Emisor.get('RegimenFiscal', '')"/></t>
+                <span> | Emission Date:</span> <span t-esc="xml.get('fecha', xml.get('Fecha', '')).replace('T', ' ')"/>
+                <span> | Certification Date:</span> <span t-esc="tfd.get('FechaTimbrado', '').replace('T', ' ')"/>
+                <span> | Fiscal Folio:</span> <span t-esc="tfd.get('UUID')"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('complement-details')]/div[1]" position="replace">
+            <span t-esc="xml.get('sello', xml.get('Sello', 'No identificado'))"/>
+        </xpath>
+        <xpath expr="//div[hasclass('complement-details')]/div[3]" position="replace">
+            <span t-esc="tfd.get('selloSAT', tfd.get('SelloSAT', 'No identificado'))"/>
+        </xpath>
+        <xpath expr="//t[@t-if='o.l10n_mx_edi_cfdi_uuid']//div[hasclass('col-xs-2')][2]" position="replace">
+            <div class="col-xs-2">
+                <strong>Payment Type:</strong>
+                <p t-esc="xml.get('formaDePago', xml.get('MetodoPago'))"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
