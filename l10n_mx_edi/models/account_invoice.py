@@ -636,9 +636,11 @@ class AccountInvoice(models.Model):
             tfd_node = inv.l10n_mx_edi_get_tfd_etree(tree)
             if tfd_node is not None:
                 inv.l10n_mx_edi_cfdi_uuid = tfd_node.get('UUID')
-            inv.l10n_mx_edi_cfdi_amount = tree.get('total')
-            inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
-            inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
+            inv.l10n_mx_edi_cfdi_amount = tree.get('Total', tree.get('total'))
+            inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get(
+                'Rfc', tree.Emisor.get('rfc'))
+            inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get(
+                'Rfc', tree.Receptor.get('rfc'))
             certificate = tree.get('noCertificado', tree.get('NoCertificado'))
             inv.l10n_mx_edi_cfdi_certificate_id = self.env['l10n_mx_edi.certificate'].sudo().search(
                 [('serial_number', '=', certificate)], limit=1)

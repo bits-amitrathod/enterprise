@@ -243,8 +243,10 @@ class AccountPayment(models.Model):
             tfd_node = rec.l10n_mx_edi_get_tfd_etree(tree)
             if tfd_node is not None:
                 rec.l10n_mx_edi_cfdi_uuid = tfd_node.get('UUID')
-            rec.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
-            rec.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
+            rec.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get(
+                'Rfc', tree.Emisor.get('rfc'))
+            rec.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get(
+                'Rfc', tree.Receptor.get('rfc'))
             certificate = tree.get('noCertificado', tree.get('NoCertificado'))
             rec.l10n_mx_edi_cfdi_certificate_id = self.env['l10n_mx_edi.certificate'].sudo().search(
                 [('serial_number', '=', certificate)], limit=1)
