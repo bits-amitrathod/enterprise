@@ -120,7 +120,7 @@ class MrpMpsReport(models.TransientModel):
         forecasted = product.mps_forecasted
         date = datetime.datetime.now()
         indirect = self.get_indirect(product)[product.id]
-        display = _('To Reveive / To Supply / Produce')
+        display = _('To Receive / To Supply / Produce')
         buy_type = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)
         mo_type = self.env.ref('mrp.route_warehouse0_manufacture', raise_if_not_found=False)
         lead_time = 0

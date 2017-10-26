@@ -457,10 +457,10 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
             this.ringbacktone.pause();
             if (response.status_code === 404 || response.status_code === 488) {
                 this._triggerError(
-                    _.str.sprintf(_t('The number is incorrect, the user credentials') +
-                    _t('could be wrong or the connection cannot be made.') +
-                    _t(' Please check your configuration.</br> (Reason receives :%s)',
-                        response.reason_phrase)),
+                    _.str.sprintf(_t('The number is incorrect, the user credentials ' +
+                                     'could be wrong or the connection cannot be made. ' +
+                                     'Please check your configuration.</br> (Reason received: %s)'),
+                        response.reason_phrase),
                     true);
             }
         }

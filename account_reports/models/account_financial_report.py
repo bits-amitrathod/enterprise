@@ -23,7 +23,7 @@ class ReportAccountFinancialReport(models.Model):
     comparison = fields.Boolean('Allow comparison', default=True, help='display the comparison filter')
     cash_basis = fields.Boolean('Use cash basis', help='if true, report will always use cash basis, if false, user can choose from filter inside the report')
     analytic = fields.Boolean('Allow analytic filter', help='display the analytic filter')
-    hierarchy_option = fields.Boolean('Enable the hiarchy option', help='Display the hierarchy choice in the report options')
+    hierarchy_option = fields.Boolean('Enable the hierarchy option', help='Display the hierarchy choice in the report options')
     show_journal_filter = fields.Boolean('Allow filtering by journals', help='display the journal filter in the report')
     unfold_all_filter = fields.Boolean('Show unfold all filter', help='display the unfold all options in report')
     company_id = fields.Many2one('res.company', string='Company')
