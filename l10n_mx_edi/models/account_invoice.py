@@ -930,6 +930,13 @@ class AccountInvoice(models.Model):
         result = super(AccountInvoice, self).invoice_validate()
         version = self.l10n_mx_edi_get_pac_version()
         for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
+            if record.type == 'out_refund' and not record.refund_invoice_id.l10n_mx_edi_cfdi_uuid:
+                record.message_post(
+                    body='<p style="color:red">' + _(
+                        'The invoice related has no valid fiscal folio. For this '
+                        'reason, this refund didn\'t generate a fiscal document.') + '</p>',
+                    subtype='account.mt_invoice_validated')
+                continue
             record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-%s.xml' % (
                 record.journal_id.code, record.number, version.replace('.', '-'))).replace('/', '')
             record._l10n_mx_edi_retry()
