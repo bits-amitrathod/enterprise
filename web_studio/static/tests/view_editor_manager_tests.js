@@ -435,6 +435,62 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('label edition', function(assert) {
+        assert.expect(6);
+
+        var arch = "<form>" +
+            "<sheet>" +
+                "<group>" +
+                    "<label for='display_name' string='Kikou'/>" +
+                    "<div><field name='display_name' nolabel='1'/></div>" +
+                "</group>" +
+            "</sheet>" +
+        "</form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0].target, {
+                        tag: 'label',
+                        attrs: {
+                            for: 'display_name',
+                        },
+                    }, "the target should be set in edit_view");
+                    assert.deepEqual(args.operations[0].new_attrs, {string: 'Yeah'},
+                        "the string attribute should be set in edit_view");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        var $label = vem.$('.o_web_studio_form_view_editor label[data-node-id="1"]');
+        assert.strictEqual($label.text(), "Kikou",
+            "the label should be correctly set");
+
+        $label.click();
+        assert.ok($label.hasClass('o_clicked'), "the label should be clickable");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_label').length, 1,
+            "the sidebar should now display the label properties");
+        var $labelInput = vem.$('.o_web_studio_sidebar_content.o_display_label input[name="string"]');
+        assert.strictEqual($labelInput.val(), "Kikou", "the label name in sidebar should be set");
+        $labelInput.val('Yeah').trigger('change');
+
+        vem.destroy();
+    });
+
     QUnit.module('Kanban');
 
     QUnit.test('empty kanban editor', function(assert) {

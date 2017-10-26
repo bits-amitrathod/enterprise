@@ -761,11 +761,6 @@ class WebStudioController(http.Controller):
             if not node.get('subview_xpath'):
                 expr = expr + '[not(ancestor::field)]'
 
-        # Special case when we have <label/><div/> instead of <field>
-        # TODO: This is very naive, couldn't the js detect such a situation and
-        #       tell us to anchor the xpath on another element ?
-        if node['tag'] == 'label':
-            expr = expr + '/following-sibling::div'
         # If we receive a more specific xpath because we are editing an inline
         # view, we add it in front of the generated xpath.
         if node.get('subview_xpath'):

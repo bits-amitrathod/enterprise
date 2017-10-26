@@ -469,6 +469,23 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
      * @override
      * @private
      */
+    _renderTagLabel: function (node) {
+        var self = this;
+        var $result = this._super.apply(this, arguments);
+        $result.attr('data-node-id', this.node_id++);
+        this.setSelectable($result);
+        $result.click(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            self.selected_node_id = $result.data('node-id');
+            self.trigger_up('node_clicked', {node: node});
+        });
+        return $result;
+    },
+    /**
+     * @override
+     * @private
+     */
     _renderTagNotebook: function (node) {
         var self = this;
         var $result = this._super.apply(this, arguments);
