@@ -299,6 +299,6 @@ class account_report_followup_all(models.AbstractModel):
         options = informations['options']
         for partner_id in options.get('partners_to_show'):
             options['partner_id'] = partner_id
-            map_partner_manager[partner_id] = self.get_report_manager(options).id
+            map_partner_manager[partner_id] = self.with_context(keep_summary=True).get_report_manager(options).id
         informations['map_partner_manager'] = map_partner_manager
         return informations
