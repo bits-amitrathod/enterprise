@@ -80,10 +80,10 @@ class view(models.Model):
             domain = [('key', '=', xml_id), '|', ('website_id', '=', self.env.context['website_id']), ('website_id', '=', False)]
             if 'version_id' in self.env.context:
                 domain += ['|', ('version_id', '=', self.env.context['version_id']), ('version_id', '=', False)]
-            xml_id = self.search(domain, order='website_id,version_id', limit=1).id
-        else:
-            xml_id = super(view, self).get_view_id(xml_id)
-        return xml_id
+            v = self.search(domain, order='website_id,version_id', limit=1)
+            if v:
+                return v.id
+        return super(view, self).get_view_id(xml_id)
 
     #To take the right inheriting views
     @api.model
