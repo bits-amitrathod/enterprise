@@ -60,18 +60,19 @@ if records:
                                 <field name="payment_type" invisible="1"/>
                                 <field name="journal_id" invisible="1"/>
                                 <field name="payment_method_id" invisible="1"/>
+                                <field name="state" invisible="1"/>
 
-                                <field name="partner_type" widget="selection" required="1"/>
-                                <field name="partner_id" required="1"/>
+                                <field name="partner_type" widget="selection" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="partner_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                                 <label for="amount"/>
                                 <div>
-                                    <field name="amount" class="oe_inline" required="1"/>
-                                    <field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency" class="oe_inline"/>
+                                    <field name="amount" class="oe_inline" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                    <field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                                 </div>
                             </group>
                             <group>
-                                <field name="payment_date"/>
-                                <field name="communication"/>
+                                <field name="payment_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="communication" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             </group>
                         </group></form>
                     </field>

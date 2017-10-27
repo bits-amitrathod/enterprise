@@ -57,6 +57,10 @@ QUnit.module('ViewEditorManager', {
                         string: "Display Name",
                         type: "char"
                     },
+                    char_field: {
+                        string:"A char",
+                        type: "char",
+                    },
                     m2o: {
                         string: "M2O",
                         type: "many2one",
@@ -324,6 +328,46 @@ QUnit.module('ViewEditorManager', {
             "the chatter should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar input[name="email_alias"]').val(), "coucou",
             "the email alias in sidebar should be fetched");
+
+        vem.destroy();
+    });
+
+    QUnit.test('fields without value and label (outside of groups) are shown in form', function(assert) {
+        assert.expect(6);
+
+        this.data.coucou.records = [{
+            id: 1,
+            display_name: "Kikou petite perruche",
+        }];
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<group>" +
+                            "<field name='id'/>" +
+                            "<field name='m2o'/>" +
+                        "</group>" +
+                        "<field name='display_name'/>" +
+                        "<field name='char_field'/>" +
+                    "</sheet>" +
+                "</form>",
+            res_id: 1,
+        });
+
+        assert.ok(!vem.$('.o_web_studio_form_view_editor [name="id"]').hasClass('o_web_studio_widget_empty'),
+            "non empty field in group should label should not be special");
+        assert.ok(!vem.$('.o_web_studio_form_view_editor [name="m2o"]').hasClass('o_web_studio_widget_empty'),
+            "empty field in group should have without label should not be special");
+        assert.ok(vem.$('.o_web_studio_form_view_editor [name="m2o"]').hasClass('o_field_empty'),
+            "empty field in group should have without label should still have the normal empty class");
+        assert.ok(!vem.$('.o_web_studio_form_view_editor [name="display_name"]').hasClass('o_web_studio_widget_empty'),
+            "non empty field without label should not be special");
+        assert.ok(vem.$('.o_web_studio_form_view_editor [name="char_field"]').hasClass('o_web_studio_widget_empty'),
+            "empty field without label should be special");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [name="char_field"]').text(), "A char",
+            "empty field without label should have its string as label");
 
         vem.destroy();
     });

@@ -54,9 +54,14 @@
                 }
             }
             .o_inner_group {
-                border-collapse: separate;
-                border: @-web-studio-form-edition-gap solid transparent;
                 transition: border-color 0.5s;
+                padding: @-web-studio-form-edition-gap*0.5;
+                border-collapse: separate;
+                border: @-web-studio-form-edition-gap*0.5 solid fade(@odoo-brand-optional, 10%);
+
+                tr:not(.o_web_studio_hovered) td > *:not(.o_horizontal_separator) {
+                    opacity: 0.5;
+                }
 
                 tr:not(.o_web_studio_new_line) {
                     td {
@@ -67,21 +72,8 @@
                             min-width: 140px;
                         }
                     }
-
-                    &.o_clicked {
-                        outline: 2px solid @odoo-brand-optional;
-                    }
                 }
 
-                &.o_clicked{
-                    padding: @-web-studio-form-edition-gap*0.5;
-                    outline: 2px solid @odoo-brand-optional;
-                    border: @-web-studio-form-edition-gap*0.5 solid fade(@odoo-brand-optional, 10%);
-
-                    tr:not(.o_web_studio_hovered) td > *:not(.o_horizontal_separator) {
-                        opacity: 0.5;
-                    }
-                }
             }
         }
         .o_field_image img {
@@ -94,13 +86,14 @@
         }
         .o_web_studio_hovered {
             outline: 1px dashed @odoo-brand-optional;
+            outline-offset: -1px;
             cursor: pointer;
         }
         .o_clicked {
             outline: 2px solid @odoo-brand-optional;
-            &.btn{
+            outline-offset: -2px;
+            &.btn {
                 outline: 2px solid darken(@odoo-brand-optional, 5%);
-                outline-offset: -2px;
             }
         }
         .o_web_studio_button_hook {

@@ -424,7 +424,7 @@ class WebStudioController(http.Controller):
             'report_type': 'qweb-pdf',
             'report_name': view.name,
         })
-        # Add in the print menu (ir_values_id field)
+        # Add in the print menu
         report.create_action()
 
         return {
@@ -691,6 +691,12 @@ class WebStudioController(http.Controller):
         if report:
             if 'groups_id' in values:
                 values['groups_id'] = [(6, 0, values['groups_id'])]
+            if 'display_in_print' in values:
+                if values['display_in_print']:
+                    report.create_action()
+                else:
+                    report.unlink_action()
+                values.pop('display_in_print')
             report.write(values)
 
     @http.route('/web_studio/edit_view_arch', type='json', auth='user')
@@ -962,9 +968,6 @@ class WebStudioController(http.Controller):
                 eval_attr.append(group_xmlid.complete_name)
             eval_attr = ",".join(eval_attr)
             new_attrs['groups'] = eval_attr
-        else:
-            # TOFIX
-            new_attrs['groups'] = ''
 
         xpath_node = self._get_xpath_node(arch, operation)
 

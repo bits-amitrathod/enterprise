@@ -155,17 +155,13 @@ var ReportEditor = ReportAction.extend({
      * @param {OdooEvent} event
      */
     _onOpenReportForm: function () {
-        var options = {
-            keep_state: true,
-            disable_edition: true,
-        };
         this.do_action({
             type: 'ir.actions.act_window',
             res_model: this.res_model,
             res_id: this.res_id,
             views: [[false, 'form']],
             target: 'current',
-        }, options);
+        });
     },
     /**
      * @param {OdooEvent} event

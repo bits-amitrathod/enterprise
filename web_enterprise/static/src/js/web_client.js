@@ -235,7 +235,7 @@ return AbstractWebClient.extend({
             .then(function (result) {
                 return self.action_mutex.exec(function () {
                     var completed = $.Deferred();
-                    $.when(self.do_action(result, {
+                    $.when(self._openMenu(result, {
                         clear_breadcrumbs: true,
                         action_menu_id: ev.data.menu_id,
                     })).fail(function () {
@@ -264,7 +264,7 @@ return AbstractWebClient.extend({
             .then(function (result) {
                 return self.action_mutex.exec(function () {
                     var completed = $.Deferred();
-                    $.when(self.do_action(result, {
+                    $.when(self._openMenu(result, {
                         clear_breadcrumbs: true,
                     })).always(function () {
                         completed.resolve();
@@ -279,6 +279,18 @@ return AbstractWebClient.extend({
             }).always(function () {
                 self.$el.removeClass('o_mobile_menu_opened');
             });
+    },
+    /**
+     * Open the action linked to a menu.
+     * This function is mostly used to allow override in other modules.
+     *
+     * @private
+     * @param {Object} action
+     * @param {Object} options
+     * @returns {Deferred}
+     */
+    _openMenu: function (action, options) {
+        return this.do_action(action, options);
     },
     toggle_app_switcher: function (display) {
         this.$el.toggleClass('o_app_switcher_background', display);

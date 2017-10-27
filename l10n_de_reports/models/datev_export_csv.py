@@ -23,11 +23,11 @@ class AccountMoveL10NDe(models.Model):
                 move.l10n_de_datev_main_account_id = invoice[0].account_id
                 continue
             # If move belongs to a bank journal, return the journal's account (debit/credit should normally be the same)
-            if move.journal_id == 'bank' and move.journal_id.default_debit_account_id:
+            if move.journal_id.type == 'bank' and move.journal_id.default_debit_account_id:
                 move.l10n_de_datev_main_account_id = move.journal_id.default_debit_account_id
                 continue
             # If the move is an automatic exchange rate entry, take the gain/loss account set on the exchange journal
-            elif move.journal_id == 'general' and move.journal_id == self.env.user.company_id.currency_exchange_journal_id:
+            elif move.journal_id.type == 'general' and move.journal_id == self.env.user.company_id.currency_exchange_journal_id:
                 accounts = [
                     move.journal_id.default_debit_account_id,
                     move.journal_id.default_credit_account_id,

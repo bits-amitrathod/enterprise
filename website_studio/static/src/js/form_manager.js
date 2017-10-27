@@ -33,12 +33,6 @@ var FormManager = Widget.extend({
      *                              the action currently edited
      *                           - clear_breadcrumbs: a boolean
      *                              to reset the breadcrumbs
-     *                           - disable_edition: a boolean
-     *                              to tell the webclient that
-     *                              the action is not a navigation
-     *                              we want to navigation in Studio with,
-     *                              but it's an action we want to open
-     *                              normally (because it is used by Studio).
      */
     init: function (parent, context, options) {
         this._super.apply(this, arguments);

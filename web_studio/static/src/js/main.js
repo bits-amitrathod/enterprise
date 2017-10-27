@@ -255,7 +255,6 @@ var Main = Widget.extend({
         return def.then(function (result) {
             return self.do_action('action_web_studio_main', {
                 action: result,
-                disable_edition: true,
             });
         });
     },
@@ -295,7 +294,6 @@ var Main = Widget.extend({
             }
             return self.do_action('action_web_studio_main', {
                 action: result,
-                disable_edition: true,
             });
         });
     },
@@ -351,7 +349,6 @@ var Main = Widget.extend({
             self.do_action('action_web_studio_main', {
                 action: result,
                 active_view: view_type,
-                disable_edition: true,
             });
         });
     },
