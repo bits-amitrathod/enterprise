@@ -372,6 +372,69 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('notebook edition', function(assert) {
+        assert.expect(8);
+
+        var arch = "<form>" +
+            "<sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+                "<notebook>" +
+                    "<page string='Kikou'>" +
+                        "<field name='id'/>" +
+                    "</page>" +
+                "</notebook>" +
+            "</sheet>" +
+        "</form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].node.tag, 'page',
+                        "a page should be added");
+                    assert.strictEqual(args.operations[0].node.attrs.string, 'New Page',
+                        "the string attribute should be set");
+                    assert.strictEqual(args.operations[0].position, 'inside',
+                        "a page should be added inside the notebook");
+                    assert.strictEqual(args.operations[0].target.tag, 'notebook',
+                        "the target should be the notebook in edit_view");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_notebook li').length, 2,
+            "there should be one existing page and a fake one");
+
+        // click on existing tab
+        var $page = vem.$('.o_notebook li:first');
+        $page.click();
+        assert.ok($page.hasClass('o_clicked'), "the page should be clickable");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_page').length, 1,
+            "the sidebar should now display the page properties");
+        var $pageInput = vem.$('.o_web_studio_sidebar_content.o_display_page input[name="string"]');
+        assert.strictEqual($pageInput.val(), "Kikou", "the page name in sidebar should be set");
+
+        // add a new page
+        vem.$('.o_notebook li:eq(1) > a').click();
+
+        vem.destroy();
+    });
+
     QUnit.module('Kanban');
 
     QUnit.test('empty kanban editor', function(assert) {

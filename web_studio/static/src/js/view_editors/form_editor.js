@@ -480,7 +480,8 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             self.trigger_up('view_change', {
                 type: 'add',
                 structure: 'page',
-                node: node.children[node.children.length - 1], // Get last page in this notebook
+                position: 'inside',
+                node: node,
             });
         });
         $result.find('ul.nav-tabs').append($addTag);

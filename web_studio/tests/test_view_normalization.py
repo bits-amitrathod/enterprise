@@ -482,7 +482,7 @@ class TestViewNormalization(TransactionCase):
                 <attribute name="help">PAGE 1 HELP</attribute>
                 <attribute name="zzz">PAGE 1 ZZZ</attribute>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="after">
+              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
                 <page name="PAGE_2" string="AWESOME PAGE 2"/>
               </xpath>
             </data>
@@ -511,7 +511,7 @@ class TestViewNormalization(TransactionCase):
                 <attribute name="help">PAGE 1 HELP</attribute>
                 <attribute name="string">PAGE 1</attribute>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="after">
+              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
                 <page name="PAGE_2" string="AWESOME PAGE 2"/>
               </xpath>
             </data>
