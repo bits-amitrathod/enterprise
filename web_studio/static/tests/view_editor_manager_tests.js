@@ -257,6 +257,52 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('many2one field edition', function (assert) {
+        assert.expect(3);
+
+        this.data.product.records = [{
+            id: 42,
+            display_name: "A very good product",
+        }];
+        this.data.coucou.records = [{
+            id: 1,
+            display_name: "Kikou petite perruche",
+            m2o: 42,
+        }];
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<field name='m2o'/>" +
+                    "</sheet>" +
+                "</form>",
+            res_id: 1,
+            mockRPC: function (route, args) {
+                if (args.method === 'get_formview_action') {
+                    throw new Error("The many2one form view should not be opened");
+                }
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+
+        // edit the many2one
+        vem.$('.o_web_studio_form_view_editor [data-node-id]').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should now display the field properties");
+        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_clicked'),
+            "the column should have the clicked style");
+        vem.destroy();
+    });
+
     QUnit.test('invisible form editor', function(assert) {
         assert.expect(6);
 

@@ -276,6 +276,9 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             widget.$el.removeClass('o_field_empty').addClass('o_web_studio_widget_empty');
             widget.$el.text(widget.string);
         }
+        // remove all events on the widget as we only want to click for edition
+        widget.$el.off();
+
         return widget;
     },
     /**
