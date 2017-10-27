@@ -692,7 +692,8 @@ class AccountInvoice(models.Model):
         text: Text to remove extra characters
         size: Cut the string in size len
         Ex. 'Product ABC (small size)' - 'Product ABC small size'"""
-        text = text or ""
+        if not text:
+            return None
         for char in AccountInvoice.__check_cfdi_re.sub('', text):
             text = text.replace(char, ' ')
         return text.strip()[:size]
