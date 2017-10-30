@@ -8,7 +8,6 @@
 # Martin Trigaux <mat@odoo.com>, 2017
 # Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
 # Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
-# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2017
 # Saban Yildiz <sabany@projetgrup.com>, 2017
 # UNIBRAVO SOFTWARE <unibravo@gmail.com>, 2017
 # Ramiz Deniz Öner <deniz@denizoner.com>, 2017
@@ -48,7 +47,7 @@ msgstr "${object.display_name}"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_percentage_satisfaction
 msgid "% Happy"
-msgstr "% Mutluluk"
+msgstr "% Memnuniyet"
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
@@ -390,7 +389,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_assign_method
 msgid "Assignation Method"
-msgstr "Görevlendirme Methodu"
+msgstr "Atama Methodu"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_user_id
@@ -404,7 +403,7 @@ msgstr "Atanan"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Assignee"
-msgstr "Görevlendirilen"
+msgstr "Atanan"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_template_id
@@ -427,8 +426,8 @@ msgid ""
 "\tRandomly: randomly but everyone gets the same amount\n"
 "\tBalanced: to the person with the least amount of open tickets"
 msgstr ""
-"Yeni talepler için görevlendirme methodu:\n"
-"\tManuel: manuel\n"
+"Yeni talepler için atama metodu:\n"
+"\tManuel: elle atama\n"
 "\tRastgele: rastgele fakat herkes aynı sayıda talep alır\n"
 "\tDengeli: en düşük açık talebe sahip kişiye"
 
@@ -580,7 +579,7 @@ msgstr "Kapatılmış Talep Analizi"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_is_close
 msgid "Closing Kanban Stage"
-msgstr "Kanban Aşamasını Kapatıyor"
+msgstr "Kanban Aşamasını Kapatır"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_color
@@ -973,7 +972,7 @@ msgstr "Yüksek öncelik"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_time_hours
 msgid "Hours"
-msgstr "Saatl "
+msgstr "Saat"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_time_hours
@@ -1107,7 +1106,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_livechat
 msgid "Live chat"
-msgstr "Canlı sohbet"
+msgstr "Canlı Yardım"
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
@@ -1521,7 +1520,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_access_token
 msgid "Security Token"
-msgstr "Güvenlik Belirteçi"
+msgstr "Güvenlik Token'ı"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -1553,7 +1552,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Send emails to"
-msgstr "Epostalar gönder : "
+msgstr "Eposta gönder : "
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_sequence
@@ -1819,7 +1818,7 @@ msgstr "Şu anda hesabınız herhangi bir talep yok."
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:171
 #, python-format
 msgid "This dashboard will activate once you have created your first ticket."
-msgstr "Bu Pano ilk talep oluşturulduğunda aktif olacaktır."
+msgstr "Bu Panel ilk talep oluşturulduğunda aktif olacaktır."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
@@ -1854,7 +1853,7 @@ msgstr "Talep Analizi"
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_assigned
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_assigned
 msgid "Ticket Assigned"
-msgstr "Talep Görevlendirildi"
+msgstr "Talep Atandı"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_new
@@ -1954,7 +1953,7 @@ msgstr "Bu öncelik seviyesindeki talepleri hesaba katılmayacak."
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_assign_hours
 msgid "Time to first assignation (hours)"
-msgstr "İlk görevlendirmeye kadar geçen süre (saat)"
+msgstr "İlk atamaya kadar geçen süre (saat)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
@@ -2000,7 +1999,7 @@ msgstr "Talep Gönderilecek URL"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Unassigned Tickets"
-msgstr "Görevlendirilmemiş Talepler"
+msgstr "Ataması Yapılmamış Talepler"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -2112,7 +2111,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Your teams will appear here."
-msgstr "Ekib üyeleriniz burada görünecek."
+msgstr "Ekip üyeleriniz burada görünecek."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form

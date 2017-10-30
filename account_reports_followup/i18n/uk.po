@@ -39,6 +39,18 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Шановний %(partner_name)s,\n"
+"\n"
+"Незважаючи на кілька нагадувань, Ваш рахунок все ще не налаштований.\n"
+"\n"
+"Якщо повна оплата не буде здійснена протягом наступних 8 днів, судовий позов про відшкодування боргу буде прийнято без попередження.\n"
+"\n"
+"Я сподіваюсь, що такі заходи виявляться непотрібними, деталі належних платежів наведено нижче.\n"
+"\n"
+"У разі будь-яких запитань щодо цього питання, не соромтеся звертатися до нашої бухгалтерії.\n"
+"\n"
+"З найкращими побажаннями,\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line1
@@ -52,6 +64,14 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Шановний %(partner_name)s,\n"
+"\n"
+"Виключення буде зроблене, якщо у нас виникла помилка, здається, що така сума залишається неоплаченою. Будь ласка, вжийте відповідних заходів для здійснення цього платежу протягом наступних 8 днів.\n"
+"\n"
+"Якщо ваш платіж буде здійснено після відправлення цієї пошти, проігноруйте це повідомлення. Не соромтеся звертатися до нашої бухгалтерії.\n"
+"\n"
+"З найкращими побажаннями,\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line2
@@ -70,6 +90,19 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Шановний%(partner_name)s,\n"
+"\n"
+"Ми розчаровані тим, що, незважаючи на те, що було надіслано нагадування, оплата вашого рахунку серйозно затримується.\n"
+"\n"
+"Необхідно негайно здійснити платіж, в іншому випадку нам доведеться розглянути можливість зупинки вашого рахунку, що означає, що ми більше не зможемо надавати вашій компанії (товари/послуги).\n"
+"Будь ласка, вжийте відповідних заходів для здійснення цього платежу протягом наступних 8 днів.\n"
+"\n"
+"Якщо виникають проблеми з оплатою рахунків, про які ми не знаємо, не соромтеся звертатися до нашої бухгалтерії, щоби ми могли швидко вирішити цю проблему.\n"
+"\n"
+"Детальні відомості про платежі наведено нижче.\n"
+"\n"
+"З найкращими побажаннями,\n"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -257,11 +290,13 @@ msgid ""
 "                possible to use print and e-mail templates to send specific messages to\n"
 "                the customer."
 msgstr ""
+"Для кожного кроку вкажіть, які дії потрібно виконати, і затримки в днях. Для\n"
+"                відправлення конкретних повідомлень клієнтам можна використовувати шаблони друку та електронної пошти."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
 msgid "Gives the sequence order when displaying a list of follow-up lines."
-msgstr ""
+msgstr "Дає порядок послідовності при відображенні списку наступних рядків."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_id
@@ -338,6 +373,8 @@ msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
 msgstr ""
+"Ніяких нагадувань для компанії не визначено \"%s\".\n"
+" Будь ласка, визначіть одну."
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
@@ -351,6 +388,8 @@ msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
 msgstr ""
+"За бажанням, ви можете призначити користувача цього поля, що зробить його "
+"відповідальним за дію."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
@@ -425,6 +464,9 @@ msgid ""
 "the reminder.  Could be negative if you want to send a polite alert "
 "beforehand."
 msgstr ""
+"Кількість днів, що настають після закінчення строку подання рахунку-фактури,"
+" перед тим як надсилати нагадування. Це може бути негативним, якщо ви хочете"
+" відправити ввічливе попередження заздалегідь."
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line3
@@ -443,6 +485,14 @@ msgid ""
 "                        same customer, the actions of the most \n"
 "                        overdue invoice will be executed."
 msgstr ""
+"Щоб нагадати клієнтам про сплату рахунків, можна\n"
+"                        визначити різні дії залежно від того, наскільки\n"
+"                        клієнт прострочив оплату. Ці дії накладаються на\n"
+"                        наступні рівні, які спрацьовують, коли термін\n"
+"                        дії рахунку минув певну\n"
+"                        кількість днів. Якщо є інші прострочені рахунки \n"
+"                        одного і того ж клієнта, \n"
+"                        дія найпростішого рахунку буде виконана."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
@@ -471,16 +521,18 @@ msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
 msgstr ""
+"Використовуйте це, якщо хочете бути впевненим потім у мінімальній кількості "
+"днів між двома нагадуваннями."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
 msgid "When processing, it will print a letter"
-msgstr ""
+msgstr "Під час обробки буде надруковано лист"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_email
 msgid "When processing, it will send an email"
-msgstr ""
+msgstr "Під час обробки буде надіслано електронний лист"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_manual_action
@@ -488,6 +540,7 @@ msgid ""
 "When processing, it will set the manual action to be taken for that "
 "customer. "
 msgstr ""
+"Під час обробки буде встановлено ручне виконання дії для цього клієнта."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -498,6 +551,11 @@ msgid ""
 "                            forget to translate in all languages you installed\n"
 "                            using to top right icon."
 msgstr ""
+"Write here the introduction in the letter,\n"
+"                            according to the level of the follow-up. You can\n"
+"                            use the following keywords in the text. Don't\n"
+"                            forget to translate in all languages you installed\n"
+"                            using to top right icon."
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/models/account_followup.py:64
@@ -506,6 +564,8 @@ msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
 "the percent character."
 msgstr ""
+"Ваш опис недійсний, використовуйте правильну легенду або %% якщо ви хочете "
+"використовувати процентний символ."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
