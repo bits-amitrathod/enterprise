@@ -12,9 +12,9 @@
 </div>
 
 <t t-name="AppSwitcher.Content">
-    <div t-if="widget.state.apps.length" class="o_apps">
-        <t t-set="focused_app_index" t-value="widget.get_app_index()"/>
-        <t t-foreach="widget.state.apps" t-as="app">
+    <div t-if="widget._state.apps.length" class="o_apps">
+        <t t-set="focused_app_index" t-value="widget.getAppIndex()"/>
+        <t t-foreach="widget._state.apps" t-as="app">
           <a
             t-att-class="'o_app o_menuitem' + ((focused_app_index === app_index)? ' o_focused' : '')"
             t-att-data-menu="app.id"
@@ -32,9 +32,9 @@
           </a>
         </t>
     </div>
-    <div t-if="widget.state.menu_items.length" class="o_menuitems">
-        <t t-set="focused_menu_index" t-value="widget.get_menu_index()"/>
-        <t t-foreach="widget.state.menu_items" t-as="menu">
+    <div t-if="widget._state.menuItems.length" class="o_menuitems">
+        <t t-set="focused_menu_index" t-value="widget.getMenuIndex()"/>
+        <t t-foreach="widget._state.menuItems" t-as="menu">
             <a
               t-att-class="'o_menuitem' + ((focused_menu_index === menu_index)? ' o_focused' : '')"
               t-att-href="menu.href ? menu.href : ('#menu_id='+menu.id+'&amp;action_id='+menu.action)"
@@ -43,7 +43,7 @@
             </a>
         </t>
     </div>
-    <t t-if="widget.state.apps.length + widget.state.menu_items.length === 0">
+    <t t-if="widget._state.apps.length + widget._state.menuItems.length === 0">
         <div class="o_no_result">No result</div>
     </t>
     <div class="o_application_switcher_footer">
