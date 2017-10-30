@@ -110,7 +110,10 @@ class purchase_order(models.Model):
         taxes = line.taxes_id
         if line.product_id:
             taxes = line.product_id.taxes_id
-        company_taxes = [tax_rec.id for tax_rec in taxes if tax_rec.company_id.id == company.id]
+        company_taxes = [tax_rec for tax_rec in taxes if tax_rec.company_id.id == company.id]
+        if sale_id:
+            so = self.env["sale.order"].browse(sale_id)
+            company_taxes = so.fiscal_position_id.map_tax(company_taxes, line.product_id, so.partner_id)
         return {
             'name': line.product_id and line.product_id.name or line.name,
             'order_id': sale_id,
@@ -120,5 +123,5 @@ class purchase_order(models.Model):
             'price_unit': price,
             'customer_lead': line.product_id and line.product_id.sale_delay or 0.0,
             'company_id': company.id,
-            'tax_id': [(6, 0, company_taxes)],
+            'tax_id': [(6, 0, company_taxes.ids)],
         }
