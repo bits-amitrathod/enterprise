@@ -88,7 +88,7 @@ class BpostRequest():
         # Surprisingly, bpost does not require to send other data while asking for prices;
         # they simply return a price grid for all activated products for this account.
         code, response = self._send_request('rate', None, carrier)
-        if code != 201 and response:
+        if code == 401 and response:
             # If the authentication fails, the server returns plain HTML instead of XML
             error_page = html.fromstring(response)
             error_message = error_page.body.text_content()
