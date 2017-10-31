@@ -131,6 +131,11 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             }
             values.related = this.fieldSelector.chain.join('.');
             values.ttype = selectedField.type;
+            if (_.contains(['many2one', 'many2many', 'one2many'], selectedField.type)) {
+                values.relation = selectedField.relation;
+            } else if (selectedField.type === 'selection') {
+                values.selection = selectedField.selection;
+            }
         }
         this.trigger('field_default_values_saved', values);
     },

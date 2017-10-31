@@ -71,6 +71,12 @@ QUnit.module('ViewEditorManager', {
             product: {
                 fields: {
                     display_name: {string: "Display Name", type: "char", searchable: true},
+                    m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
+                },
+            },
+            partner: {
+                fields: {
+                    display_name: {string: "Display Name", type: "char"},
                 },
             },
         };
@@ -1060,7 +1066,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a related field', function(assert) {
-        assert.expect(6);
+        assert.expect(9);
 
 
         this.data.coucou.fields.related_field = {
@@ -1076,10 +1082,17 @@ QUnit.module('ViewEditorManager', {
             arch: "<tree><field name='display_name'/></tree>",
             mockRPC: function (route, args) {
                 if (route === '/web_studio/edit_view') {
+                    if (nbEdit === 0) {
+                        assert.strictEqual(args.operations[0].node.field_description.related,
+                            'm2o.display_name', "related arg should be correct");
+                        fieldsView.arch = "<tree><field name='display_name'/><field name='related_field'/></tree>";
+                    } else if (nbEdit === 1) {
+                        assert.strictEqual(args.operations[1].node.field_description.related,
+                            'm2o.m2o', "related arg should be correct");
+                        assert.strictEqual(args.operations[1].node.field_description.relation,
+                            'partner', "relation arg should be correct for m2o");
+                    }
                     nbEdit++;
-                    assert.strictEqual(args.operations[0].node.field_description.related,
-                        'm2o.display_name', "related arg should be correct");
-                    fieldsView.arch = "<tree><field name='display_name'/><field name='related_field'/></tree>";
                     return $.when({
                         fields_views: {
                             list: fieldsView,
@@ -1111,7 +1124,16 @@ QUnit.module('ViewEditorManager', {
         $('.o_field_selector_popover li[data-name=display_name]').click();
         $('.modal-footer .btn-primary:first').click(); // confirm
 
-        assert.strictEqual(nbEdit, 1, "should have edited the view");
+        // create a new many2one related field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
+        $('.modal-footer .btn-primary:first').click(); // confirm
+
+        assert.strictEqual(nbEdit, 2, "should have edited the view");
 
         vem.destroy();
     });
