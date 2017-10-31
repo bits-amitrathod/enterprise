@@ -85,7 +85,7 @@ AppSwitcher.include({
      * @override
      */
     start: function () {
-        bus.on('studio_toggled', this, this._toggleStudioMode);
+        bus.on('studio_toggled', this, this.toggleStudioMode);
         return this._super.apply(this, arguments);
     },
     /**
@@ -108,6 +108,29 @@ AppSwitcher.include({
     },
 
     //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {boolean} [display]
+     */
+    toggleStudioMode: function (display) {
+        this._inStudioMode = display;
+        if (!this.in_DOM) {
+            return;
+        }
+        if (display) {
+            this.on_detach_callback();  // de-bind hanlders on appswitcher
+            this.in_DOM = true;  // avoid effect of on_detach_callback
+            this._renderNewApp();
+        } else {
+            this._$newApp.remove();
+            this.on_attach_callback();
+        }
+    },
+
+    //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
 
@@ -121,24 +144,6 @@ AppSwitcher.include({
         this._render();
         this._$newApp = $(QWeb.render('web_studio.AppCreator.NewApp'));
         this._$newApp.appendTo(this.$('.o_apps'));
-    },
-    /**
-     * @private
-     * @param {boolean} [display]
-     */
-    _toggleStudioMode: function (display) {
-        this._inStudioMode = display;
-        if (!this.in_DOM) {
-            return;
-        }
-        if (display) {
-            this.on_detach_callback();  // de-bind hanlders on appswitcher
-            this.in_DOM = true;  // avoid effect of on_detach_callback
-            this._renderNewApp();
-        } else {
-            this._$newApp.remove();
-            this.on_attach_callback();
-        }
     },
 
     //--------------------------------------------------------------------------
