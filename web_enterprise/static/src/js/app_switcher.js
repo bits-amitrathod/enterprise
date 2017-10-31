@@ -31,6 +31,8 @@ var AppSwitcher = Widget.extend({
             this.update({search: e.target.value, focus: 0});
         },
         'click .o_menuitem': 'on_menuitem_click',
+        'compositionstart': 'on_compositionstart',
+        'compositionend': 'on_compositionend',
     },
     init: function (parent, menu_data) {
         this._super.apply(this, arguments);
@@ -48,6 +50,7 @@ var AppSwitcher = Widget.extend({
             apps: _.where(this.menu_data, {is_app: true}),
             menu_items: [],
             focus: null,  // index of focused element
+            isComposing: false, // composing mode for input (e.g. japanese)
         };
     },
     process_menu_data: function(menu_data) {
@@ -88,6 +91,9 @@ var AppSwitcher = Widget.extend({
         core.bus.on("keydown", this, this.on_keydown);
         this.state = this.get_initial_state();
         this.$input.val('');
+        if (!is_mobile()) {
+            this.$input.focus(); // focus on search bar at page loading
+        }
         this.render();
     },
     on_detach_callback: function () {
@@ -155,6 +161,12 @@ var AppSwitcher = Widget.extend({
                 }
         }
     },
+    on_compositionstart: function(event) {
+        this.state.isComposing = true;
+    },
+    on_compositionend: function(event) {
+        this.state.isComposing = false;
+    },
     on_menuitem_click: function (e) {
         e.preventDefault();
         var menu_id = $(e.currentTarget).data('menu');
@@ -211,7 +223,9 @@ var AppSwitcher = Widget.extend({
         this.$main_content.html(QWeb.render('AppSwitcher.Content', { widget: this }));
         var $focused = this.$main_content.find('.o_focused');
         if ($focused.length && !is_mobile()) {
-            $focused.focus();
+            if (!this.state.isComposing) {
+                $focused.focus();
+            }
             this.$el.scrollTo($focused, {offset: {top:-0.5*this.$el.height()}});
         }
 
