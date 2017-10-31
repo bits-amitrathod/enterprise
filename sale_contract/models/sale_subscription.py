@@ -407,8 +407,20 @@ class SaleSubscriptionLine(models.Model):
             if line.analytic_account_id.pricelist_id:
                 line.price_subtotal = line_sudo.analytic_account_id.pricelist_id.currency_id.round(line.price_subtotal)
 
-    @api.onchange('product_id', 'quantity')
+    @api.onchange('product_id')
     def onchange_product_id(self):
+        product = self.product_id
+        partner = self.analytic_account_id.partner_id
+        if partner.lang:
+            self.product_id.with_context(lang=partner.lang)
+
+        name = product.display_name
+        if product.description_sale:
+            name += '\n' + product.description_sale
+        self.name = name
+
+    @api.onchange('product_id', 'quantity')
+    def onchange_product_quantity(self):
         domain = {}
         contract = self.analytic_account_id
         company_id = contract.company_id.id
@@ -424,11 +436,6 @@ class SaleSubscriptionLine(models.Model):
 
             product = self.product_id.with_context(context)
             self.price_unit = product.price
-
-            name = product.display_name
-            if product.description_sale:
-                name += '\n' + product.description_sale
-            self.name = name
 
             if not self.uom_id:
                 self.uom_id = product.uom_id.id
