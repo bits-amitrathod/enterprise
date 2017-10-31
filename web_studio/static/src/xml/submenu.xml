@@ -18,7 +18,9 @@
                     </t>
                 </span>
             </li>
-            <li><a href="#" class="o_web_studio_reset_default_background">Reset Default Background</a></li>
+            <li t-if="widget.menu_data.background_image">
+                <a href="#" class="o_web_studio_reset_default_background">Reset Default Background</a>
+            </li>
             <li><a href="#" class="o_web_studio_import">Import</a></li>
             <li><a href="#" class="o_web_studio_export">Export</a></li>
         </ul>

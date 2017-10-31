@@ -257,6 +257,9 @@ WebClient.include({
                 bus.trigger('studio_toggled', 'app_creator', this.studio_info);
             } else {
                 var action = this.action_manager.get_inner_action();
+                if (!action) {
+                    return;
+                }
                 if (action.action_descr.tag === 'action_web_studio_app_creator') {
                     // special case for the app_creator, which stays in app_creator mode
                     bus.trigger('studio_toggled', 'app_creator', this.studio_info);
