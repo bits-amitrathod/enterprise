@@ -44,6 +44,7 @@
 			<xsd:element name="OverridePaperlessIndicator" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="ShipperMemo" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="MultiCurrencyInvoiceLineTotal" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="HazardousMaterialsIndicator" type="xsd:string" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="UPSPremiumCareFormType">
@@ -245,16 +246,7 @@
 			<xsd:element name="EMailAddress" type="xsd:string" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<!--
-	<xsd:complexType name="CompanyInfoType">
-		<xsd:sequence>
-			<xsd:element name="Name" type="xsd:string"/>
-			<xsd:element name="AttentionName" type="xsd:string"/>
-			<xsd:element name="TaxIdentificationNumber" type="xsd:string" minOccurs="0"/>
-			<xsd:element name="Phone" type="IF:PhoneType" minOccurs="0"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	-->
+
 	<xsd:complexType name="PhoneType">
 		<xsd:sequence>
 			<xsd:element name="Number" type="xsd:string"/>
@@ -301,6 +293,7 @@
 			<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="PreDepartureITNNumber" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="ExemptionLegend" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="EEIShipmentReferenceNumber" type="xsd:string" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="EEIInformationType">

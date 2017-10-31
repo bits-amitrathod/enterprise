@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0" xmlns:common="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0" xmlns:ups="http://www.ups.com/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xsd:schema targetNamespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ups="http://www.ups.com/XMLSchema" xmlns:common="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0" elementFormDefault="qualified" version="201707">
 	<xsd:element name="Request" type="common:RequestType"/>
 	<xsd:element name="Response" type="common:ResponseType"/>
 	<xsd:element name="ClientInformation" type="common:ClientInformationType"/>
@@ -33,6 +33,7 @@
 		<xsd:sequence>
 			<xsd:element name="ResponseStatus" type="common:CodeDescriptionType"/>
 			<xsd:element name="Alert" type="common:CodeDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="AlertDetail" type="common:DetailType" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element name="TransactionReference" type="common:TransactionReferenceType" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
@@ -40,6 +41,25 @@
 		<xsd:sequence>
 			<xsd:element name="Code" type="xsd:string"/>
 			<xsd:element name="Description" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DetailType">
+		<xsd:sequence>
+			<xsd:element name="Code" type="xsd:string"/>
+			<xsd:element name="Description" type="xsd:string"/>
+			<xsd:element name="ElementLevelInformation" type="common:ElementLevelInformationType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElementLevelInformationType">
+		<xsd:sequence>
+			<xsd:element name="Level" type="xsd:string"/>
+			<xsd:element name="ElementIdentifier" type="common:ElementIdentifierType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElementIdentifierType">
+		<xsd:sequence>
+			<xsd:element name="Code" type="xsd:string"/>
+			<xsd:element name="Value" type="xsd:string"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>
