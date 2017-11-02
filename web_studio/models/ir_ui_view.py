@@ -401,6 +401,10 @@ class View(models.Model):
             # Invisible element
             target_node = node.getparent().getparent()  # /node/attributes/attribute
             reanchor_position = 'attributes'
+        elif node.tag == 'page':
+            # a page is always put inside its corresponding notebook
+            target_node = node.getparent()
+            reanchor_position = 'inside'
         else:
             # Visible element
             while prev is not None or nxt is not None:

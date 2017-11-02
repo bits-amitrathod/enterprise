@@ -4,6 +4,7 @@ from binascii import a2b_base64
 import logging
 import re
 import requests
+from lxml import html
 from xml.etree import ElementTree as etree
 from werkzeug.urls import url_join
 
@@ -87,7 +88,13 @@ class BpostRequest():
         # Surprisingly, bpost does not require to send other data while asking for prices;
         # they simply return a price grid for all activated products for this account.
         code, response = self._send_request('rate', None, carrier)
-        xml_response = etree.fromstring(response)
+        if code == 401 and response:
+            # If the authentication fails, the server returns plain HTML instead of XML
+            error_page = html.fromstring(response)
+            error_message = error_page.body.text_content()
+            raise UserError(_("Authentication error -- wrong credentials\n(Detailed error: %s)") % error_message)
+        else:
+            xml_response = etree.fromstring(response)
 
         # Find price by product and country
         price = 0.0

@@ -89,7 +89,7 @@ class res_partner(models.Model):
         date = 'date' in context and context['date'] or time.strftime('%Y-%m-%d')
 
         cr.execute(
-            "SELECT l.partner_id, l.followup_line_id, l.date_maturity, l.date, l.id, fl.delay "\
+            "SELECT l.partner_id, l.followup_line_id, l.date_maturity, l.date, l.id, COALESCE(fl.delay, 0) "\
             "FROM account_move_line AS l "\
                 "LEFT JOIN account_account AS a "\
                 "ON (l.account_id=a.id) "\

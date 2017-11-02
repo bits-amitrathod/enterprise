@@ -71,6 +71,12 @@ QUnit.module('ViewEditorManager', {
             product: {
                 fields: {
                     display_name: {string: "Display Name", type: "char", searchable: true},
+                    m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
+                },
+            },
+            partner: {
+                fields: {
+                    display_name: {string: "Display Name", type: "char"},
                 },
             },
         };
@@ -257,6 +263,52 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('many2one field edition', function (assert) {
+        assert.expect(3);
+
+        this.data.product.records = [{
+            id: 42,
+            display_name: "A very good product",
+        }];
+        this.data.coucou.records = [{
+            id: 1,
+            display_name: "Kikou petite perruche",
+            m2o: 42,
+        }];
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<field name='m2o'/>" +
+                    "</sheet>" +
+                "</form>",
+            res_id: 1,
+            mockRPC: function (route, args) {
+                if (args.method === 'get_formview_action') {
+                    throw new Error("The many2one form view should not be opened");
+                }
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+
+        // edit the many2one
+        vem.$('.o_web_studio_form_view_editor [data-node-id]').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should now display the field properties");
+        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_clicked'),
+            "the column should have the clicked style");
+        vem.destroy();
+    });
+
     QUnit.test('invisible form editor', function(assert) {
         assert.expect(6);
 
@@ -368,6 +420,125 @@ QUnit.module('ViewEditorManager', {
             "empty field without label should be special");
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor [name="char_field"]').text(), "A char",
             "empty field without label should have its string as label");
+
+        vem.destroy();
+    });
+
+    QUnit.test('notebook edition', function(assert) {
+        assert.expect(8);
+
+        var arch = "<form>" +
+            "<sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                "</group>" +
+                "<notebook>" +
+                    "<page string='Kikou'>" +
+                        "<field name='id'/>" +
+                    "</page>" +
+                "</notebook>" +
+            "</sheet>" +
+        "</form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].node.tag, 'page',
+                        "a page should be added");
+                    assert.strictEqual(args.operations[0].node.attrs.string, 'New Page',
+                        "the string attribute should be set");
+                    assert.strictEqual(args.operations[0].position, 'inside',
+                        "a page should be added inside the notebook");
+                    assert.strictEqual(args.operations[0].target.tag, 'notebook',
+                        "the target should be the notebook in edit_view");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_notebook li').length, 2,
+            "there should be one existing page and a fake one");
+
+        // click on existing tab
+        var $page = vem.$('.o_notebook li:first');
+        $page.click();
+        assert.ok($page.hasClass('o_clicked'), "the page should be clickable");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_page').length, 1,
+            "the sidebar should now display the page properties");
+        var $pageInput = vem.$('.o_web_studio_sidebar_content.o_display_page input[name="string"]');
+        assert.strictEqual($pageInput.val(), "Kikou", "the page name in sidebar should be set");
+
+        // add a new page
+        vem.$('.o_notebook li:eq(1) > a').click();
+
+        vem.destroy();
+    });
+
+    QUnit.test('label edition', function(assert) {
+        assert.expect(6);
+
+        var arch = "<form>" +
+            "<sheet>" +
+                "<group>" +
+                    "<label for='display_name' string='Kikou'/>" +
+                    "<div><field name='display_name' nolabel='1'/></div>" +
+                "</group>" +
+            "</sheet>" +
+        "</form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0].target, {
+                        tag: 'label',
+                        attrs: {
+                            for: 'display_name',
+                        },
+                    }, "the target should be set in edit_view");
+                    assert.deepEqual(args.operations[0].new_attrs, {string: 'Yeah'},
+                        "the string attribute should be set in edit_view");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        var $label = vem.$('.o_web_studio_form_view_editor label[data-node-id="1"]');
+        assert.strictEqual($label.text(), "Kikou",
+            "the label should be correctly set");
+
+        $label.click();
+        assert.ok($label.hasClass('o_clicked'), "the label should be clickable");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_label').length, 1,
+            "the sidebar should now display the label properties");
+        var $labelInput = vem.$('.o_web_studio_sidebar_content.o_display_label input[name="string"]');
+        assert.strictEqual($labelInput.val(), "Kikou", "the label name in sidebar should be set");
+        $labelInput.val('Yeah').trigger('change');
 
         vem.destroy();
     });
@@ -895,7 +1066,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a related field', function(assert) {
-        assert.expect(6);
+        assert.expect(9);
 
 
         this.data.coucou.fields.related_field = {
@@ -911,10 +1082,17 @@ QUnit.module('ViewEditorManager', {
             arch: "<tree><field name='display_name'/></tree>",
             mockRPC: function (route, args) {
                 if (route === '/web_studio/edit_view') {
+                    if (nbEdit === 0) {
+                        assert.strictEqual(args.operations[0].node.field_description.related,
+                            'm2o.display_name', "related arg should be correct");
+                        fieldsView.arch = "<tree><field name='display_name'/><field name='related_field'/></tree>";
+                    } else if (nbEdit === 1) {
+                        assert.strictEqual(args.operations[1].node.field_description.related,
+                            'm2o.m2o', "related arg should be correct");
+                        assert.strictEqual(args.operations[1].node.field_description.relation,
+                            'partner', "relation arg should be correct for m2o");
+                    }
                     nbEdit++;
-                    assert.strictEqual(args.operations[0].node.field_description.related,
-                        'm2o.display_name', "related arg should be correct");
-                    fieldsView.arch = "<tree><field name='display_name'/><field name='related_field'/></tree>";
                     return $.when({
                         fields_views: {
                             list: fieldsView,
@@ -946,7 +1124,16 @@ QUnit.module('ViewEditorManager', {
         $('.o_field_selector_popover li[data-name=display_name]').click();
         $('.modal-footer .btn-primary:first').click(); // confirm
 
-        assert.strictEqual(nbEdit, 1, "should have edited the view");
+        // create a new many2one related field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
+        $('.modal-footer .btn-primary:first').click(); // confirm
+
+        assert.strictEqual(nbEdit, 2, "should have edited the view");
 
         vem.destroy();
     });

@@ -197,6 +197,7 @@
         <record id="mod_111_title_7" model="account.financial.html.report.line">
             <field name="name">Premios por la participación en juegos</field>
             <field name="code">aeat_mod_111_title_7</field>
+            <field name="financial_report_id" ref="mod_111"/>
             <field name="sequence" eval="19"/>
             <field name="level" eval="2"/>
         </record>
@@ -250,6 +251,7 @@
             <field name="name">[16] Nº de perceptores</field>
             <field name="code">aeat_mod_111_16</field>
             <field name="parent_id" ref='mod_111_title_9'/>
+            <field name="figure_type">no_unit</field>
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="24"/>
             <field name="level" eval="4"/>

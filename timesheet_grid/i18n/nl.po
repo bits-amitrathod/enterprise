@@ -11,10 +11,10 @@
 # Pol Van Dingenen <pol.vandingenen@vanroey.be>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2017-10-24 09:24+0000\n"
+"PO-Revision-Date: 2017-10-24 09:24+0000\n"
 "Last-Translator: Pol Van Dingenen <pol.vandingenen@vanroey.be>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -260,7 +260,7 @@ msgid ""
 "timesheet"
 msgstr ""
 "Indien aangevinkt, verzend een e-mail naar alle managers die hun urenstaten "
-"niet gevalideerd hebben"
+"niet bevestigd hebben"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
@@ -325,6 +325,14 @@ msgid "Month"
 msgstr "Maand"
 
 #. module: timesheet_grid
+#: code:addons/timesheet_grid/models/models.py:133
+#, python-format
+msgid ""
+"Multiple timesheet entries match the modified value. Please change the "
+"search options or modify the entries individually."
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Team"
 msgstr "Mijn Team"
@@ -371,8 +379,7 @@ msgstr ""
 #, python-format
 msgid "Only a Timesheets Officer is allowed to modify a validated entry."
 msgstr ""
-"Alleen een urenstaat functionaris is toegestaan om gevalideerde ingaven aan "
-"te passen."
+"Alleen een urenstaat functionaris kan een bevestigde boeking aanpassen."
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_manager

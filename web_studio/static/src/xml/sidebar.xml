@@ -363,6 +363,9 @@
         <div t-if="widget.state.node.tag === 'page'" class="o_web_studio_sidebar_content o_display_page">
             <t t-call="web_studio.ViewEditorSidebar.page"/>
         </div>
+        <div t-if="widget.state.node.tag === 'label'" class="o_web_studio_sidebar_content o_display_label">
+            <t t-call="web_studio.ViewEditorSidebar.label"/>
+        </div>
         <div t-if="widget.state.node.tag === 'group'" class="o_web_studio_sidebar_content o_display_group">
             <t t-call="web_studio.ViewEditorSidebar.group"/>
         </div>
@@ -649,6 +652,18 @@
         </t>
 
     </t>
+    <t t-call="web_studio.Sidebar.Toolbox">
+        <t t-call="web_studio.Sidebar.Remove"/>
+    </t>
+</t>
+
+<!-- LabelEditor -->
+<t t-name="web_studio.ViewEditorSidebar.label">
+    <div class="o_web_studio_sidebar_text">
+        <label for="string">Label</label>
+        <input id="string" name="string" type="text"
+            t-att-value="widget.state.attrs.string"/>
+    </div>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Remove"/>
     </t>

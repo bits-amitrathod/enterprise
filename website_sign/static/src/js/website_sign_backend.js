@@ -808,11 +808,11 @@ odoo.define('website_sign.template', function(require) {
 
                     var defSignatureItems = self._rpc({
                             model: 'signature.item',
-                            method: 'read',
-                            args: [[template.id]],
+                            method: 'search_read',
+                            args: [[['template_id', '=', template.id]]],
                         })
-                        .then(function(signature_items) {
-                            self.signature_items = signature_items[0];
+                        .then(function (signature_items) {
+                            self.signature_items = signature_items;
                         });
                     var defIrAttachments = self._rpc({
                             model: 'ir.attachment',

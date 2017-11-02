@@ -35,6 +35,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         'focus .o_display_field input[data-type="attributes"][name="domain"]': '_onDomainEditor',
         'change .o_display_field [data-type="default_value"]': '_onDefaultValueChanged',
         'change .o_display_page input':                      '_onElementChanged',
+        'change .o_display_label input':                     '_onElementChanged',
         'change .o_display_group input':                     '_onElementChanged',
         'change .o_display_button input':                    '_onElementChanged',
         'change .o_display_button select':                   '_onElementChanged',

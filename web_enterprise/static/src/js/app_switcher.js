@@ -14,6 +14,8 @@ var AppSwitcher = Widget.extend({
     events: {
         'click .o_menuitem': '_onMenuitemClick',
         'input input.o_menu_search_input': '_onMenuSearchInput',
+        'compositionstart': '_onCompositionStart',
+        'compositionend': '_onCompositionEnd',
     },
     /**
      * @override
@@ -84,6 +86,7 @@ var AppSwitcher = Widget.extend({
             apps: _.where(this._menuData, {is_app: true}),
             menuItems: [],
             focus: null,
+            isComposing: false,     // composing mode for input (e.g. japanese)
         };
     },
     /**
@@ -160,7 +163,9 @@ var AppSwitcher = Widget.extend({
         this.$mainContent.html(QWeb.render('AppSwitcher.Content', { widget: this }));
         var $focused = this.$mainContent.find('.o_focused');
         if ($focused.length && !config.device.isMobile) {
-            $focused.focus();
+            if (!this.state.isComposing) {
+                $focused.focus();
+            }
             this.$el.scrollTo($focused, {offset: {top:-0.5*this.$el.height()}});
         }
 
@@ -291,6 +296,20 @@ var AppSwitcher = Widget.extend({
                     this.$input.focus();
                 }
         }
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onCompositionStart: function(ev) {
+        this.state.isComposing = true;
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onCompositionEnd: function(ev) {
+        this.state.isComposing = false;
     },
     /**
      * @private

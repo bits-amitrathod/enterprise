@@ -131,7 +131,7 @@ class WebsiteSign(http.Controller):
 
         fonts = []
         for filename in font_filenames:
-            font_file = open(fonts_directory + '/' + filename, 'r')
+            font_file = open(fonts_directory + '/' + filename, 'rb')
             font = base64.b64encode(font_file.read())
             fonts.append(font)
         return fonts

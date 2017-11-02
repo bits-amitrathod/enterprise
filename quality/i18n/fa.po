@@ -2,18 +2,12 @@
 # This file contains the translation of the following modules:
 # * quality
 # 
-# Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Zahed Alfak <tamass4116@gmail.com>, 2016
-# Hamid Darabi <hamid.darabi@gmail.com>, 2016
-# Faraz Sadri <ifarazir@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Faraz Sadri <ifarazir@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
 "Language-Team: Persian (https://www.transifex.com/odoo/teams/41243/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +32,7 @@ msgid "% of the operation"
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr ""
 
@@ -50,13 +44,27 @@ msgid ""
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_view_form
-msgid "<span class=\"o_stat_text\">Quality Check</span>"
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+msgid ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
-msgid "<span>Quality Alerts</span>"
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid ""
+"<span class=\"o_stat_text\">AVG:</span>\n"
+"                                <span class=\"o_stat_text\">STD:</span>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+msgid "<span class=\"o_stat_text\">Quality Alert</span>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_alert_view_form
+msgid "<span class=\"o_stat_text\">Quality Check</span>"
 msgstr ""
 
 #. module: quality
@@ -70,6 +78,16 @@ msgid "<span>to </span>"
 msgstr ""
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
+msgid "<strong>Operation :</strong>"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
+msgid "<strong>Product :</strong>"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_defaults
 msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
@@ -79,12 +97,12 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
 msgid "Accept Emails From"
-msgstr "قبول ایمیل دریافتی از طرف"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_active
 msgid "Active"
-msgstr "فعال"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_done
@@ -98,9 +116,10 @@ msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_ids
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_ids
 #: model:ir.ui.menu,name:quality.menu_quality_alerts
 msgid "Alerts"
-msgstr "اخطارها"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_id
@@ -130,26 +149,32 @@ msgstr ""
 #. module: quality
 #: selection:quality.point,measure_frequency_type:0
 msgid "All Operations"
-msgstr "همه عملیات ها"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_search
 msgid "Archived"
-msgstr "بایگانی شده"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_average
+msgid "Average"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 msgid "Cancel"
-msgstr "لغو"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_check_id
+#: model:ir.model.fields,field_description:quality.field_quality_point_check_ids
 msgid "Check"
-msgstr "چک"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_count
-msgid "Check count"
+msgid "Check Count"
 msgstr ""
 
 #. module: quality
@@ -168,7 +193,7 @@ msgid "Checks"
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "Checks In Progress"
 msgstr ""
 
@@ -178,14 +203,19 @@ msgid "Click here to add a new Quality Control Points"
 msgstr ""
 
 #. module: quality
+#: model:ir.actions.act_window,help:quality.quality_tag_action
+msgid "Click to add a new tag."
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_color
 msgid "Color"
-msgstr "رنگ"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_tag_color
 msgid "Color Index"
-msgstr "رنگ پس زمینه"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_company_id
@@ -193,12 +223,17 @@ msgstr "رنگ پس زمینه"
 #: model:ir.model.fields,field_description:quality.field_quality_check_company_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_company_id
 msgid "Company"
-msgstr "شرکت"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_configuration
 msgid "Configuration"
-msgstr "پیکربندی"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
+msgid "Confirm Measure"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -231,6 +266,11 @@ msgid "Control Type"
 msgstr ""
 
 #. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
+msgid "Correct Measure"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_corrective
 msgid "Corrective Action"
 msgstr ""
@@ -241,15 +281,21 @@ msgid "Corrective Actions"
 msgstr ""
 
 #. module: quality
+#: model:ir.actions.act_window,help:quality.quality_alert_action_check
+msgid "Create Quality Alerts."
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_check_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_point_create_uid
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_reason_create_uid
 #: model:ir.model.fields,field_description:quality.field_quality_tag_create_uid
 msgid "Created by"
-msgstr "ایجاد شده توسط"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_date
@@ -257,20 +303,21 @@ msgstr "ایجاد شده توسط"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_check_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_point_create_date
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_reason_create_date
 #: model:ir.model.fields,field_description:quality.field_quality_tag_create_date
 msgid "Created on"
-msgstr "ایجاد شده در"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Creation Date"
-msgstr "تاریخ ایجاد"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_dashboard
 msgid "Dashboard"
-msgstr "داشبورد"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_date_assign
@@ -285,12 +332,12 @@ msgstr ""
 #. module: quality
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Day(s)"
-msgstr "روز"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_defaults
 msgid "Default Values"
-msgstr "مقادیر پیش فرض"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
@@ -316,7 +363,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_description
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Description"
-msgstr "توصیف"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
@@ -329,15 +376,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_check_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_point_display_name
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_reason_display_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_display_name
 msgid "Display Name"
-msgstr "نام نمایشی"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Done"
-msgstr "انجام شد"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
@@ -355,7 +403,13 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 #: selection:quality.check,quality_state:0
 msgid "Failed"
-msgstr "به شکست انجامید"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_failure_message
+#: model:ir.model.fields,field_description:quality.field_quality_point_failure_message
+msgid "Failure Message"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_folded
@@ -372,7 +426,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 msgid "Group By"
-msgstr "گروه‌بندی برمبنای"
+msgstr ""
 
 #. module: quality
 #: model:ir.module.category,description:quality.module_category_quality
@@ -382,7 +436,7 @@ msgstr ""
 #. module: quality
 #: selection:quality.alert,priority:0
 msgid "High"
-msgstr "بالا"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_id
@@ -390,10 +444,11 @@ msgstr "بالا"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_check_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_id
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id
 #: model:ir.model.fields,field_description:quality.field_quality_reason_id
 #: model:ir.model.fields,field_description:quality.field_quality_tag_id
 msgid "ID"
-msgstr "شناسه"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_parent_thread_id
@@ -405,11 +460,16 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 msgid "In Progress"
-msgstr "در حال پیشرفت"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "In progress"
+msgstr ""
+
+#. module: quality
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid "Instructions"
 msgstr ""
 
 #. module: quality
@@ -418,32 +478,35 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_check___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_point___last_update
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_reason___last_update
 #: model:ir.model.fields,field_description:quality.field_quality_tag___last_update
 msgid "Last Modified on"
-msgstr "آخرین به‌روزرسانی در تاریخ "
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_alert_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_check_write_uid
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_point_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_reason_write_uid
 #: model:ir.model.fields,field_description:quality.field_quality_tag_write_uid
 msgid "Last Updated by"
-msgstr "آخرین به روز رسانی توسط"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_alert_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_check_write_date
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_point_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_reason_write_date
 #: model:ir.model.fields,field_description:quality.field_quality_tag_write_date
 msgid "Last Updated on"
-msgstr "آخرین به روز رسانی در"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_lot_id
@@ -454,7 +517,7 @@ msgstr ""
 #. module: quality
 #: selection:quality.alert,priority:0
 msgid "Low"
-msgstr "پایین"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
@@ -464,17 +527,22 @@ msgstr ""
 #. module: quality
 #: model:res.groups,name:quality.group_quality_manager
 msgid "Manager"
-msgstr "مدیر"
+msgstr ""
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_tolerance_max
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_max
 msgid "Max Tolerance"
 msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure
-#: selection:quality.point,test_type:0
 msgid "Measure"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
+msgid "Measure Frequency Unit"
 msgstr ""
 
 #. module: quality
@@ -483,11 +551,12 @@ msgid "Measure Success"
 msgstr ""
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
-msgid "Measure frequency unit"
+#: model:ir.ui.view,arch_db:quality.quality_point_view_form
+msgid "Message If Failure"
 msgstr ""
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_tolerance_min
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_min
 msgid "Min Tolerance"
 msgstr ""
@@ -495,16 +564,11 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Miscellaneous"
-msgstr "متفرقه"
+msgstr ""
 
 #. module: quality
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Month(s)"
-msgstr "ماه"
-
-#. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
-msgid "More <i class=\"fa fa-caret-down\"/>"
 msgstr ""
 
 #. module: quality
@@ -517,24 +581,26 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_name
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_name
 #: model:ir.model.fields,field_description:quality.field_quality_check_name
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_name
 #: model:ir.model.fields,field_description:quality.field_quality_reason_name
 #: model:ir.model.fields,field_description:quality.field_quality_tag_name
 msgid "Name"
-msgstr "نام"
+msgstr ""
 
 #. module: quality
-#: code:addons/quality/models/quality.py:22
-#: code:addons/quality/models/quality.py:79
-#: code:addons/quality/models/quality.py:80
-#: code:addons/quality/models/quality.py:189
-#: code:addons/quality/models/quality.py:243
-#: code:addons/quality/models/quality.py:244
-#: code:addons/quality/models/quality.py:324
-#: code:addons/quality/models/quality.py:358
-#: code:addons/quality/models/quality.py:359
+#: code:addons/quality/models/quality.py:30
+#: code:addons/quality/models/quality.py:116
+#: code:addons/quality/models/quality.py:117
+#: code:addons/quality/models/quality.py:230
+#: code:addons/quality/models/quality.py:297
+#: code:addons/quality/models/quality.py:298
+#: code:addons/quality/models/quality.py:402
+#: code:addons/quality/models/quality.py:437
+#: code:addons/quality/models/quality.py:438
+#: code:addons/quality/models/quality.py:478
 #, python-format
 msgid "New"
-msgstr "جدید"
+msgstr ""
 
 #. module: quality
 #: selection:quality.check,measure_success:0
@@ -559,26 +625,32 @@ msgstr ""
 #. module: quality
 #: selection:quality.alert,priority:0
 msgid "Normal"
-msgstr "عادی"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_note
 #: model:ir.model.fields,field_description:quality.field_quality_point_note
 #: model:ir.model.fields,field_description:quality.field_quality_point_reason
 msgid "Note"
-msgstr "یادداشت"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Notes"
-msgstr "یادداشت‌ها"
+msgstr ""
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_picking_id
 #: model:ir.model.fields,field_description:quality.field_quality_check_picking_id
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Operation"
-msgstr "عملیات"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
+msgid "Operation Type"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_force_thread_id
@@ -591,7 +663,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
 msgid "Owner"
-msgstr "مالک‌"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_parent_model_id
@@ -619,34 +691,24 @@ msgid "Pass"
 msgstr ""
 
 #. module: quality
-#: selection:quality.point,test_type:0
-msgid "Pass - Fail"
-msgstr ""
-
-#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 #: selection:quality.check,quality_state:0
 msgid "Passed"
 msgstr ""
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_stock_picking_check_todo
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_todo
 msgid "Pending checks"
 msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_value
 msgid "Percentage"
-msgstr "درصد"
+msgstr ""
 
 #. module: quality
 #: selection:quality.point,measure_frequency_type:0
 msgid "Periodically"
-msgstr ""
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
-msgid "Picking Type"
 msgstr ""
 
 #. module: quality
@@ -671,25 +733,25 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_priority
 msgid "Priority"
-msgstr "اولویت"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_product_tmpl_id
 #: model:ir.model.fields,field_description:quality.field_quality_check_product_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_product_tmpl_id
 msgid "Product"
-msgstr "محصول"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_product_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_product_id
 msgid "Product Variant"
-msgstr "گونه محصول"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
 msgid "Project Name"
-msgstr "نام پروژه"
+msgstr ""
 
 #. module: quality
 #: model:ir.module.category,name:quality.module_category_quality
@@ -698,10 +760,11 @@ msgid "Quality"
 msgstr ""
 
 #. module: quality
-#: code:addons/quality/models/quality.py:282
-#: code:addons/quality/models/quality.py:295
+#: code:addons/quality/models/quality.py:360
+#: code:addons/quality/models/quality.py:373
 #: model:ir.model,name:quality.model_quality_alert
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_calendar
+#: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 #, python-format
 msgid "Quality Alert"
 msgstr ""
@@ -710,6 +773,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_graph
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_pivot
 msgid "Quality Alert Analysis"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_count
+msgid "Quality Alert Count"
 msgstr ""
 
 #. module: quality
@@ -746,16 +814,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:quality.quality_alert_action_team
 #: model:ir.ui.menu,name:quality.menu_quality_alert
 #: model:ir.ui.menu,name:quality.menu_quality_alert_report
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "Quality Alerts"
 msgstr ""
 
 #. module: quality
-#: model:ir.actions.act_window,help:quality.quality_alert_action_check
-msgid "Quality Alerts can be created. I know this is difficult to believe."
-msgstr ""
-
-#. module: quality
-#: code:addons/quality/models/quality.py:369
+#: code:addons/quality/models/quality.py:455
 #: model:ir.model,name:quality.model_quality_check
 #, python-format
 msgid "Quality Check"
@@ -768,12 +832,25 @@ msgid "Quality Check Analysis"
 msgstr ""
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_fail
+msgid "Quality Check Fail"
+msgstr ""
+
+#. module: quality
+#: code:addons/quality/models/quality.py:321
+#: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
+#, python-format
+msgid "Quality Check Failed"
+msgstr ""
+
+#. module: quality
 #: model:ir.actions.act_window,help:quality.quality_check_action_main
 #: model:ir.actions.act_window,help:quality.quality_check_action_team
 msgid "Quality Check is the execution of a quality control in some point"
 msgstr ""
 
 #. module: quality
+#: code:addons/quality/models/quality.py:337
 #: model:ir.actions.act_window,name:quality.quality_check_action_main
 #: model:ir.actions.act_window,name:quality.quality_check_action_picking
 #: model:ir.actions.act_window,name:quality.quality_check_action_report
@@ -784,6 +861,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
+#, python-format
 msgid "Quality Checks"
 msgstr ""
 
@@ -795,7 +873,7 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_control
 msgid "Quality Control"
-msgstr "کنترل کیفیت"
+msgstr ""
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_point_action
@@ -835,6 +913,12 @@ msgid "Quality Tag"
 msgstr ""
 
 #. module: quality
+#: model:ir.actions.act_window,name:quality.quality_tag_action
+#: model:ir.ui.menu,name:quality.menu_config_quality_tags
+msgid "Quality Tags"
+msgstr ""
+
+#. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_team_action_config
 msgid "Quality Teams"
 msgstr ""
@@ -852,11 +936,6 @@ msgid "Randomly"
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_point_view_form
-msgid "Reason"
-msgstr "علت"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_force_thread_id
 msgid "Record Thread ID"
 msgstr ""
@@ -864,12 +943,12 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_name
 msgid "Reference"
-msgstr "مرجع‌"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_reporting
 msgid "Reporting"
-msgstr "گزارش"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_user_id
@@ -877,7 +956,7 @@ msgstr "گزارش"
 #: model:ir.model.fields,field_description:quality.field_quality_point_user_id
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Responsible"
-msgstr "پاسخگو"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_reason_id
@@ -886,36 +965,37 @@ msgid "Root Cause"
 msgstr ""
 
 #. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_point_view_form
-msgid "SPC"
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_sequence
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_sequence
+#: model:ir.model.fields,field_description:quality.field_quality_point_sequence
+msgid "Sequence"
 msgstr ""
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_sequence
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_sequence
-msgid "Sequence"
-msgstr "دنباله"
-
-#. module: quality
-#: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
+#: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "Settings"
-msgstr "تنظیمات"
+msgstr ""
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_9329
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
-msgstr "مرحله"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point_standard_deviation
+msgid "Standard Deviation"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 msgid "State"
-msgstr "استان"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_quality_state
 msgid "Status"
-msgstr "وضعیت"
+msgstr ""
 
 #. module: quality
 #: model:ir.model,name:quality.model_stock_move
@@ -924,15 +1004,17 @@ msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_tag_ids
+#: model:ir.ui.view,arch_db:quality.quality_tag_view_search
+#: model:ir.ui.view,arch_db:quality.quality_tag_view_tree
 msgid "Tags"
-msgstr "برچسب‌ها"
+msgstr ""
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_9307
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
-msgstr "تیم"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_tree
@@ -942,6 +1024,13 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_test_type
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_technical_name
+msgid "Technical name"
+msgstr ""
+
+#. module: quality
+#: model:ir.model,name:quality.model_quality_point_test_type
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
 msgid "Test Type"
 msgstr ""
 
@@ -982,7 +1071,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_title
 msgid "Title"
-msgstr "عنوان"
+msgstr ""
 
 #. module: quality
 #: selection:quality.check,quality_state:0
@@ -997,13 +1086,13 @@ msgstr ""
 #. module: quality
 #: model:ir.model,name:quality.model_stock_picking
 msgid "Transfer"
-msgstr "انتقال"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_norm_unit
 #: model:ir.model.fields,field_description:quality.field_quality_point_norm_unit
 msgid "Unit of Measure"
-msgstr "واحد اندازه گیری"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_tag_color
@@ -1013,12 +1102,12 @@ msgstr ""
 #. module: quality
 #: model:res.groups,name:quality.group_quality_user
 msgid "User"
-msgstr "کاربر"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 msgid "Validate"
-msgstr "معتبر سازی"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_partner_id
@@ -1028,15 +1117,26 @@ msgstr ""
 #. module: quality
 #: selection:quality.alert,priority:0
 msgid "Very High"
-msgstr "خیلی زیاد"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check_warning_message
+msgid "Warning Message"
+msgstr ""
 
 #. module: quality
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Week(s)"
-msgstr "هفته"
+msgstr ""
 
 #. module: quality
-#: code:addons/quality/models/stock_move.py:48
+#: code:addons/quality/models/quality.py:273
+#, python-format
+msgid "You measured %.2f %s and it should be between %.2f and %.2f %s."
+msgstr ""
+
+#. module: quality
+#: code:addons/quality/models/stock_picking.py:63
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr ""

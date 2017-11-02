@@ -234,7 +234,7 @@ class UPSRequest():
         return result
 
     def save_label(self, image64, label_file_type='GIF'):
-        img_decoded = base64.decodestring(image64)
+        img_decoded = base64.decodebytes(image64.encode('utf-8'))
         if label_file_type == 'GIF':
             # Label format is GIF, so need to rotate and convert as PDF
             image_string = io.BytesIO(img_decoded)
