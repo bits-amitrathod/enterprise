@@ -5,11 +5,12 @@
             <t t-set="recurring_products" t-value="[line.recurring_product for line in layout_category['lines']]"/>
             <t t-set="recurring_products_titles"
                t-value="(layout_category_size == 1 and page_size == 1) and True in recurring_products and False in recurring_products"/>
-            <t t-foreach="quotation._split_subscription_lines().items()" t-as="template_content">
+            <t t-foreach="quotation._get_subscription_lines().items()" t-as="template_content">
                 <t t-set="template" t-value="template_content[0]"/>
                 <t t-set="template_lines" t-value="template_content[1]"/>
                 <tr t-if="recurring_products_titles" class="active">
-                    <td colspan="7">Subscription - <t t-esc="template.name"/></td>
+                    <td t-if="template" colspan="7">Subscription - <t t-esc="template.name"/></td>
+                    <td t-else="1" colspan="7">Subscription</td>
                 </tr>
                 <tr t-foreach="layout_category['lines']" t-as="line">
                     <t t-if="line in template_lines">
