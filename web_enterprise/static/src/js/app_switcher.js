@@ -163,7 +163,7 @@ var AppSwitcher = Widget.extend({
         this.$mainContent.html(QWeb.render('AppSwitcher.Content', { widget: this }));
         var $focused = this.$mainContent.find('.o_focused');
         if ($focused.length && !config.device.isMobile) {
-            if (!this.state.isComposing) {
+            if (!this._state.isComposing) {
                 $focused.focus();
             }
             this.$el.scrollTo($focused, {offset: {top:-0.5*this.$el.height()}});
@@ -302,14 +302,14 @@ var AppSwitcher = Widget.extend({
      * @param {MouseEvent} ev
      */
     _onCompositionStart: function(ev) {
-        this.state.isComposing = true;
+        this._state.isComposing = true;
     },
     /**
      * @private
      * @param {MouseEvent} ev
      */
     _onCompositionEnd: function(ev) {
-        this.state.isComposing = false;
+        this._state.isComposing = false;
     },
     /**
      * @private
