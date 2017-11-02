@@ -28,7 +28,7 @@ class ProjectForecast(models.Model):
     active = fields.Boolean(default=True)
     employee_id = fields.Many2one('hr.employee', "Employee", default=_default_employee_id, required=True, group_expand='_read_group_employee_ids')
     user_id = fields.Many2one('res.users', string="User", related='employee_id.user_id', store=True, readonly=True)
-    project_id = fields.Many2one('project.project', string="Project")
+    project_id = fields.Many2one('project.project', string="Project", required=True)
     task_id = fields.Many2one(
         'project.task', string="Task", domain="[('project_id', '=', project_id)]",
         group_expand='_read_forecast_tasks')
@@ -39,8 +39,8 @@ class ProjectForecast(models.Model):
 
     time = fields.Float(string="%", help="Percentage of working time", compute='_compute_time', store=True, digits=(16, 2))
 
-    start_date = fields.Date(default=fields.Date.today, required="True")
-    end_date = fields.Date(default=default_end_date, required="True")
+    start_date = fields.Date(default=fields.Date.today, required=True)
+    end_date = fields.Date(default=default_end_date, required=True)
 
     # consolidation color and exclude
     color = fields.Integer(string="Color", compute='_compute_color')
@@ -48,6 +48,10 @@ class ProjectForecast(models.Model):
 
     # resource
     resource_hours = fields.Float(string="Planned hours", default=0)
+
+    _sql_constraints = [
+        ('check_start_date_lower_end_date', 'CHECK(end_date >= start_date)', 'Forecast end date should be greater or equal to its start date'),
+    ]
 
     @api.one
     @api.depends('project_id', 'task_id', 'employee_id')
@@ -57,7 +61,7 @@ class ProjectForecast(models.Model):
         name = []
         if "employee_id" not in group:
             name.append(self.employee_id.name)
-        if ("project_id" not in group and self.project_id):
+        if ("project_id" not in group):
             name.append(self.project_id.name)
         if ("task_id" not in group and self.task_id):
             name.append(self.task_id.name)
@@ -96,15 +100,31 @@ class ProjectForecast(models.Model):
 
     @api.one
     @api.constrains('task_id', 'project_id')
-    def _task_id_in_project(self):
-        if self.project_id and self.task_id and (self.task_id not in self.project_id.tasks):
+    def _check_task_in_project(self):
+        if self.task_id and (self.task_id not in self.project_id.tasks):
             raise ValidationError(_("Your task is not in the selected project."))
 
-    @api.one
-    @api.constrains('start_date', 'end_date')
-    def _start_date_lower_end_date(self):
-        if self.start_date > self.end_date:
-            raise ValidationError(_("The start-date must be lower than end-date."))
+    @api.constrains('start_date', 'end_date', 'project_id', 'task_id', 'employee_id', 'active')
+    def _check_overlap(self):
+        self.env.cr.execute("""
+            SELECT F1.id, F1.start_date, F1.end_date 
+            FROM project_forecast F1
+            INNER JOIN project_forecast F2
+                ON F1.employee_id = F2.employee_id AND F1.project_id = F2.project_id
+            WHERE F1.id != F2.id 
+                AND (F1.task_id = F2.task_id OR (F1.task_id IS NULL AND F2.task_id IS NULL))
+                AND (
+                    F1.start_date BETWEEN F2.start_date AND F2.end_date
+                    OR
+                    F1.end_date BETWEEN F2.start_date AND F2.end_date
+                    OR
+                    F2.start_date BETWEEN F1.start_date AND F1.end_date
+                )
+                AND F1.active = 't'
+                AND F1.id IN %s
+        """, (tuple(self.ids),))
+        if self.env.cr.fetchall():
+            raise ValidationError(_('Forecast should not overlap existing forecasts.')) 
 
     @api.onchange('task_id')
     def _onchange_task_id(self):
