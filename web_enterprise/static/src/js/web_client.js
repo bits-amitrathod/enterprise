@@ -17,14 +17,8 @@ return AbstractWebClient.extend({
         app_clicked: 'on_app_clicked',
         menu_clicked: 'on_menu_clicked',
         scrollTo: 'scrollTo',
-        show_app_switcher: function () {
-            this.toggle_app_switcher(true);
-        },
-        hide_app_switcher: function () {
-            // Restore the url
-            $.bbq.pushState(this.url, 2); // merge_mode 2 to replace the current state
-            this.toggle_app_switcher(false);
-        },
+        show_app_switcher: '_onShowAppSwitcher',
+        hide_app_switcher: '_onHideAppSwitcher',
     }),
     start: function () {
         core.bus.on('change_menu_section', this, function (menu_id) {
@@ -338,6 +332,16 @@ return AbstractWebClient.extend({
             callbacks: [{widget: this.app_switcher}],
         });
         this.app_switcher_displayed = true;
+    },
+    _onShowAppSwitcher: function () {
+        this.toggle_app_switcher(true);
+    },
+    _onHideAppSwitcher: function () {
+        if (this.action_manager.get_inner_action() !== null) {
+            // Restore the url
+            $.bbq.pushState(this.url, 2); // merge_mode 2 to replace the current state
+            this.toggle_app_switcher(false);
+        }
     },
     // --------------------------------------------------------------
     // Scrolltop handling

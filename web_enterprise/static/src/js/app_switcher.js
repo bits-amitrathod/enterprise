@@ -291,6 +291,17 @@ var AppSwitcher = Widget.extend({
             case $.ui.keyCode.PAGE_DOWN:
             case $.ui.keyCode.PAGE_UP:
                 break;
+            case $.ui.keyCode.ESCAPE:
+                // clear text on search, hide it if no content before ESC
+                // hide app switcher if there is an inner action
+                this._state = this._getInitialState();
+                this._state.isSearching = $input.val().length > 0;
+                $input.val("");
+                this._update({focus: 0, search: $input.val()});
+                if (!this._state.isSearching) {
+                    this.trigger_up('hide_app_switcher');
+                }
+                break;
             default:
                 if (!this.$input.is(':focus')) {
                     this.$input.focus();
