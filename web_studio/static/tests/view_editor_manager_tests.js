@@ -74,11 +74,13 @@ QUnit.module('ViewEditorManager', {
                     display_name: {string: "Display Name", type: "char", searchable: true},
                     m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
                     partner_ids: {string: "Partners", type: "one2many", relation: "partner", searchable: true},
+                    coucou_id: {string: "coucou", type: "many2one", relation: "coucou"},
                 },
                 records: [{
                     id: 37,
                     display_name: 'xpad',
                     m2o: 7,
+                    partner_ids: [4],
                 }, {
                     id: 42,
                     display_name: 'xpod',
@@ -1519,38 +1521,7 @@ QUnit.module('ViewEditorManager', {
                 "</sheet>" +
             "</form>",
             model: "coucou",
-            data: {
-                coucou: {
-                    fields: {
-                        display_name: {
-                            string: "Display Name",
-                            type: "char",
-                        },
-                        product_ids: {
-                            string: "product",
-                            type: "one2many",
-                            relation: "product",
-                        }
-                    },
-                },
-                product: {
-                    fields: {
-                        coucou: {
-                            string: "coucou_id",
-                            type: "many2one",
-                            retlation: "coucou",
-                        },
-                        display_name: {
-                            string: "Display Name",
-                            type: "char",
-                        },
-                        price: {
-                            string: "Price",
-                            type: "integer",
-                        }
-                    }
-                },
-            },
+            data: this.data,
             archs: {
                 "product,false,list": '<tree><field name="display_name"/></tree>'
             },
@@ -1573,38 +1544,7 @@ QUnit.module('ViewEditorManager', {
                 "</sheet>" +
             "</form>",
             model: "coucou",
-            data: {
-                coucou: {
-                    fields: {
-                        display_name: {
-                            string: "Display Name",
-                            type: "char",
-                        },
-                        product_ids: {
-                            string: "product",
-                            type: "one2many",
-                            relation: "product",
-                        }
-                    },
-                },
-                product: {
-                    fields: {
-                        coucou: {
-                            string: "coucou",
-                            type: "many2one",
-                            retlation: "coucou",
-                        },
-                        display_name: {
-                            string: "Display Name",
-                            type: "char",
-                        },
-                        price: {
-                            string: "Price",
-                            type: "integer",
-                        }
-                    }
-                },
-            },
+            data: this.data,
             archs: {
                 "product,false,list": '<tree><field name="display_name"/></tree>'
             },
@@ -1621,7 +1561,7 @@ QUnit.module('ViewEditorManager', {
                     "<sheet>" +
                         "<field name='display_name'/>" +
                         "<field name='product_ids'>" +
-                            "<tree><field name='coucou'/><field name='display_name'/></tree>" +
+                            "<tree><field name='coucou_id'/><field name='display_name'/></tree>" +
                         "</field>" +
                     "</sheet>" +
                     "</form>";
@@ -1637,21 +1577,17 @@ QUnit.module('ViewEditorManager', {
                             relation: "product",
                             views: {
                                 list: {
-                                    arch: "<tree><field name='coucou'/><field name='display_name'/></tree>",
+                                    arch: "<tree><field name='coucou_id'/><field name='display_name'/></tree>",
                                     fields: {
-                                        coucou: {
+                                        coucou_id: {
                                             string: "coucou",
                                             type: "many2one",
-                                            retlation: "coucou",
+                                            relation: "coucou",
                                         },
                                         display_name: {
                                             string: "Display Name",
                                             type: "char",
                                         },
-                                        price: {
-                                            string: "Price",
-                                            type: "integer",
-                                        }
                                     },
                                 },
                             },
@@ -1675,6 +1611,96 @@ QUnit.module('ViewEditorManager', {
         testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields .o_web_studio_field_many2one'), $('.o_web_studio_hook'));
         assert.strictEqual(vem.$('.o_web_studio_view_renderer thead tr [data-node-id]').length, 2,
             "there should be 2 nodes after the drag and drop.");
+        vem.destroy();
+    });
+
+    QUnit.test('edit one2many form view (2 level)', function(assert) {
+        assert.expect(2);
+        this.data.coucou.records = [{
+            id: 11,
+            display_name: 'Coucou 11',
+            product_ids: [37],
+        }];
+        var fieldsView;
+        var vem = createViewEditorManager({
+            arch: "<form>" +
+                "<sheet>" +
+                    "<field name='display_name'/>" +
+                    "<field name='product_ids'>" +
+                        "<form>" +
+                            "<sheet>" +
+                                "<group>" +
+                                    "<field name='partner_ids'>" +
+                                        "<form><sheet><group><field name='display_name'/></group></sheet></form>" +
+                                    "</field>" +
+                                "</group>" +
+                            "</sheet>" +
+                        "</form>" +
+                    "</field>" +
+                "</sheet>" +
+            "</form>",
+            model: "coucou",
+            data: this.data,
+            res_id: 11,
+            archs: {
+                "product,false,list": "<tree><field name='display_name'/></tree>",
+                "partner,false,list": "<tree><field name='display_name'/></tree>",
+            },
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    // We need to create the fieldsView here because the fieldsViewGet in studio
+                    // has a specific behaviour so cannot use the mock server fieldsViewGet
+                    assert.ok(true, "should edit the view to add the one2many field");
+                    fieldsView.arch = "<form>" +
+                        "<sheet>" +
+                            "<field name='display_name'/>" +
+                            "<field name='product_ids'/>" +
+                        "</sheet>" +
+                    "</form>";
+                    fieldsView.fields.product_ids.views = {
+                        form: {
+                            arch: "<form><sheet><group><field name='partner_ids'/></group></sheet></form>",
+                            fields: {
+                                partner_ids: {
+                                    string: "partners",
+                                    type: "one2many",
+                                    relation: "partner",
+                                    views: {
+                                        form: {
+                                            arch: "<form><sheet><group><field name='display_name'/></group></sheet></form>",
+                                            fields: {
+                                                display_name: {
+                                                    string: "Display Name",
+                                                    type: "char",
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    };
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        vem.$('.o_web_studio_view_renderer .o_field_one2many').click();
+        $(vem.$('.o_web_studio_view_renderer .o_field_one2many .o_web_studio_editX2Many[data-type="form"]')).click();
+        vem.$('.o_web_studio_view_renderer .o_field_one2many').click();
+        $(vem.$('.o_web_studio_view_renderer .o_field_one2many .o_web_studio_editX2Many[data-type="form"]')).click();
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+        assert.strictEqual(vem.$('.o_field_char').eq(0).text(), 'jean',
+            "the partner view form should be displayed.");
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_char'), $('.o_web_studio_hook'));
         vem.destroy();
     });
 
