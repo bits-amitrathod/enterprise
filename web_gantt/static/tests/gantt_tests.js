@@ -192,5 +192,84 @@ QUnit.module('Views', {
         });
     });
 
+    QUnit.test('gantt view readonly', function (assert) {
+        assert.expect(1);
+        var done = assert.async();
+
+        createAsyncView({
+            View: GanttView,
+            model: 'task',
+            data: this.data,
+            arch: '<gantt edit="false" date_start="start" date_stop="stop" progress="progress"></gantt>',
+            archs: {
+                'task,false,form':
+                    '<form string="Task">' +
+                        '<field name="name"/>' +
+                        '<field name="start"/>' +
+                        '<field name="stop"/>' +
+                        '<field name="user_id" context="{\'employee_id\': start}"/>' +
+                    '</form>',
+            },
+            viewOptions: {
+                initialDate: initialDate,
+                action: {name: "Forecasts"}
+            },
+        }).then(function (gantt) {
+
+            // create a task
+            gantt.$('.gantt_task_cell').first().click();
+            $('.modal .modal-body input:first').val('new task').trigger('input');
+
+            // save it
+            $('.modal .modal-footer button.btn-primary').click();
+
+            // open formViewDialog
+            gantt.$('.gantt_cell.gantt_last_cell').click();
+
+            assert.ok(gantt.$('.o_form_readonly'),
+                "the form dialog should be in readonly mode");
+
+            gantt.destroy();
+            done();
+        });
+    });
+
+    QUnit.test('gantt view disabled create', function (assert) {
+        assert.expect(2);
+        var done = assert.async();
+
+        createAsyncView({
+            View: GanttView,
+            model: 'task',
+            data: this.data,
+            arch: '<gantt create="false" date_start="start" date_stop="stop" progress="progress"></gantt>',
+            archs: {
+                'task,false,form':
+                    '<form string="Task">' +
+                        '<field name="name"/>' +
+                        '<field name="start"/>' +
+                        '<field name="stop"/>' +
+                        '<field name="user_id" context="{\'employee_id\': start}"/>' +
+                    '</form>',
+            },
+            viewOptions: {
+                initialDate: initialDate,
+                action: {name: "Forecasts"}
+            },
+        }).then(function (gantt) {
+
+            assert.notOk($('body').hasClass('modal-open'),
+                "no form dialog should be displayed initially");
+
+            // try create a task
+            gantt.$('.gantt_task_cell').first().click();
+
+            assert.notOk($('body').hasClass('modal-open'),
+                "no form dialog should be displayed when trying to create a task");
+
+            gantt.destroy();
+            done();
+        });
+    });
 });
 });

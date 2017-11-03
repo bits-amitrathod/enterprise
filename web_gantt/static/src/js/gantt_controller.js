@@ -78,19 +78,19 @@ var GanttController = AbstractController.extend({
     _createTask: function (id, startDate) {
         var task = gantt.getTask(id);
 
-        var end_date;
+        var endDate;
         switch (this.model.get().scale) {
             case "day":
-                end_date = startDate.clone().add(4, "hour");
+                endDate = startDate.clone().add(4, "hour");
                 break;
             case "week":
-                end_date = startDate.clone().add(2, "day");
+                endDate = startDate.clone().add(2, "day");
                 break;
             case "month":
-                end_date = startDate.clone().add(4, "day");
+                endDate = startDate.clone().add(4, "day");
                 break;
             case "year":
-                end_date = startDate.clone().add(2, "month");
+                endDate = startDate.clone().add(2, "month");
                 break;
         }
 
@@ -107,10 +107,10 @@ var GanttController = AbstractController.extend({
         get_create(task);
 
         context["default_"+this.model.mapping.date_start] = startDate.format("YYYY-MM-DD HH:mm:ss");
-        if(this.model.mapping.date_stop) {
-            context["default_"+this.model.mapping.date_stop] = end_date.format("YYYY-MM-DD HH:mm:ss");
+        if (this.model.mapping.date_stop) {
+            context["default_"+this.model.mapping.date_stop] = endDate.format("YYYY-MM-DD HH:mm:ss");
         } else { // We assume date_delay is given
-            context["default_"+this.model.mapping.date_delay] = gantt.calculateDuration(startDate, end_date);
+            context["default_"+this.model.mapping.date_delay] = gantt.calculateDuration(startDate, endDate);
         }
 
         context.id = 0;
@@ -121,16 +121,19 @@ var GanttController = AbstractController.extend({
      * Dialog to edit/display a task.
      *
      * @private
-     * @param {Object} task
+     * @param {Object}  task
+     * @param {boolean} [readonly=false]
      */
-    _displayTask: function (task) {
-        var task_id = _.isString(task.id) ? parseInt(_.last(task.id.split("_")), 10) : task.id;
+    _displayTask: function (task, readonly) {
+        var taskId = _.isString(task.id) ? parseInt(_.last(task.id.split("_")), 10) : task.id;
+        readonly = readonly ? readonly : false;
 
         new dialogs.FormViewDialog(this, {
             res_model: this.modelName,
-            res_id: task_id,
+            res_id: taskId,
             context: task,
-            on_saved: this.reload.bind(this)
+            on_saved: this.reload.bind(this),
+            readonly: readonly
         }).open();
     },
     /**
@@ -168,20 +171,22 @@ var GanttController = AbstractController.extend({
      * @param {MouseEvent} event
      */
     _onCreateClick: function (event) {
-        var id = event.target.parentElement.attributes.task_id.value;
-        var class_date = _.find(event.target.classList, function (e) {
-            return e.indexOf("date_") > -1;
-        });
-        var start_date = moment(new Date(parseInt(class_date.split("_")[1], 10))).utc();
+        if (this.activeActions.create) {
+            var id = event.target.parentElement.attributes.task_id.value;
+            var classDate = _.find(event.target.classList, function (e) {
+                return e.indexOf("date_") > -1;
+            });
+            var startDate = moment(new Date(parseInt(classDate.split("_")[1], 10))).utc();
 
-        this._createTask(id, start_date);
+            this._createTask(id, startDate);   
+        }
     },
     /**
      * @private
      * @param {OdooEvent} event
      */
     _onTaskChanged: function (event) {
-        var task_obj = event.data.task;
+        var taskObj = event.data.task;
         var success = event.data.success;
         var fail = event.data.fail;
         var fields = this.model.fields;
@@ -199,8 +204,8 @@ var GanttController = AbstractController.extend({
 
         // Now we try to write the new values in the dataset. Note that it may fail
         // if the constraints defined on the model aren't met.
-        var start = task_obj.start_date;
-        var end = task_obj.end_date;
+        var start = taskObj.start_date;
+        var end = taskObj.end_date;
         var data = {};
         data[this.model.mapping.date_start] = time.auto_date_to_str(start, fields[this.model.mapping.date_start].type);
         if (this.model.mapping.date_stop) {
@@ -218,12 +223,12 @@ var GanttController = AbstractController.extend({
             var duration = gantt.calculateDuration(start, end);
             data[this.model.mapping.date_delay] = duration;
         }
-        var task_id = parseInt(task_obj.id.split("gantt_task_").slice(1)[0], 10);
+        var taskId = parseInt(taskObj.id.split("gantt_task_").slice(1)[0], 10);
 
         this._rpc({
                 model: this.model.modelName,
                 method: 'write',
-                args: [task_id, data],
+                args: [taskId, data],
             })
             .then(success, fail);
     },
@@ -233,8 +238,10 @@ var GanttController = AbstractController.extend({
      * @private
      */
     _onTaskCreate: function () {
-        var start_date = moment(new Date()).utc();
-        this._createTask(0, start_date);
+        if (this.activeActions.create) {
+            var startDate = moment(new Date()).utc();
+            this._createTask(0, startDate);
+        }
     },
     /**
      * Dialog to edit/display a task.
@@ -243,7 +250,8 @@ var GanttController = AbstractController.extend({
      * @param {OdooEvent} event
      */
     _onTaskDisplay: function (event) {
-        this._displayTask(event.data);
+        var readonly = !this.activeActions.edit;
+        this._displayTask(event.data, readonly);
     },
 
 
