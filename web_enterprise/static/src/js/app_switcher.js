@@ -563,7 +563,7 @@ AppSwitcher.include({
      * @private
      * @param {MouseEvent} ev
      */
-    _enterpriseHidePanel: function (ev) {
+    _onEnterpriseHidePanel: function (ev) {
         ev.preventDefault();
         utils.set_cookie('oe_instance_hide_panel', true, 24*60*60);
         $('.database_expiration_panel').hide();
@@ -631,7 +631,7 @@ AppSwitcher.include({
     /**
      * @private
      */
-    enterprise_upsell: function () {
+    _onEnterpriseUpsell: function () {
         var self = this;
         var limitDate = new moment().subtract(15, 'days').format("YYYY-MM-DD");
         this._rpc({
