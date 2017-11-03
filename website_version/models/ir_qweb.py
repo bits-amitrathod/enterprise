@@ -38,6 +38,8 @@ class QWeb(models.AbstractModel):
             version_id = self.env.context.get('version_id')
             domain += version_id and ['|', ('version_id', '=', False), ('version_id', '=', version_id)] or [('version_id', '=', False)]
 
-            id_or_xml_id = self.env["ir.ui.view"].search(domain, order='website_id, version_id', limit=1).id
+            version_specific_view = self.env["ir.ui.view"].search(domain, order='website_id, version_id', limit=1)
+            if version_specific_view:
+                id_or_xml_id = version_specific_view.id
 
         return super(QWeb, self).render(id_or_xml_id, values, **options)
