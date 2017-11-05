@@ -27,15 +27,15 @@
 # Shark McGnark <peculiarcheese@gmail.com>, 2017
 # Richard Mathot <rim@odoo.com>, 2017
 # fr trans <e2ftrans1@yahoo.com>, 2017
-# Florian Hatat <mininet@wanadoo.fr>, 2017
 # fr rev <e2ffr02@hotmail.com>, 2017
+# Florian Hatat <mininet@wanadoo.fr>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: fr rev <e2ffr02@hotmail.com>, 2017\n"
+"Last-Translator: Florian Hatat <mininet@wanadoo.fr>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,8 +88,8 @@ msgid ""
 "<span class=\"o_stat_text\">AVG:</span>\n"
 "                                <span class=\"o_stat_text\">STD:</span>"
 msgstr ""
-"<span class=\"o_stat_text\">MOY. :</span>\n"
-"                                <span class=\"o_stat_text\">VAR :</span>"
+"MOYENNE :\n"
+"                                <span class=\"o_stat_text\"><span class=\"o_stat_text\">ÉCART TYPE :</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
@@ -582,7 +582,7 @@ msgstr "Mesure"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
 msgid "Measure Frequency Unit"
-msgstr "Mesurer l'unité de fréquence"
+msgstr "Unité de fréquence de mesure"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
@@ -822,7 +822,7 @@ msgstr "Alerte qualité"
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_graph
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_pivot
 msgid "Quality Alert Analysis"
-msgstr "Analyse d'alerte qualité"
+msgstr "Analyse des alertes qualité"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_count
@@ -899,7 +899,7 @@ msgstr "Échec du contrôle qualité"
 #: model:ir.actions.act_window,help:quality.quality_check_action_team
 msgid "Quality Check is the execution of a quality control in some point"
 msgstr ""
-"Le contrôle qualité correspond à l'exécution du contrôle qualité sur "
+"Le contrôle qualité correspond à l'exécution d'une assurance qualité sur "
 "certains points"
 
 #. module: quality
@@ -921,7 +921,7 @@ msgstr "Contrôles qualité"
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_check_action_spc
 msgid "Quality Checks SPC"
-msgstr "SPC de contrôles qualité"
+msgstr "MSP de contrôles qualité"
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_control
@@ -1042,7 +1042,7 @@ msgstr "Étape"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_standard_deviation
 msgid "Standard Deviation"
-msgstr "Écart-type"
+msgstr "Écart type"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -1202,7 +1202,8 @@ msgstr "Semaine(s)"
 #, python-format
 msgid "You measured %.2f %s and it should be between %.2f and %.2f %s."
 msgstr ""
-"Vous avez mesuré %.2f %s et cette valeur doit être entre %.2f et %.2f %s."
+"Vous avez mesuré %.2f %s et cette valeur doit être comprise entre %.2f et "
+"%.2f %s."
 
 #. module: quality
 #: code:addons/quality/models/stock_picking.py:63
