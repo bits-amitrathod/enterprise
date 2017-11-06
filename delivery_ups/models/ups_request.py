@@ -185,7 +185,7 @@ class UPSRequest():
         return re.sub('[^0-9]','', phone)
 
     def check_required_value(self, shipper, ship_from, ship_to, order=False, picking=False):
-        required_field = {'city': 'City', 'zip': 'ZIP code', 'country_id': 'Country', 'phone': 'Phone'}
+        required_field = {'city': 'City', 'zip': 'ZIP code', 'country_id': 'Country'}
         # Check required field for shipper
         res = [required_field[field] for field in required_field if not shipper[field]]
         if shipper.country_id.code in ('US', 'CA', 'IE') and not shipper.state_id.code:
@@ -212,18 +212,22 @@ class UPSRequest():
             res.append('State')
         if not ship_to.street and not ship_to.street2:
             res.append('Street')
-        if res:
-            return _("The recipient address is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res)
-        if len(self._clean_phone_number(ship_to.phone)) < 10:
-            return _(UPS_ERROR_MAP.get('120213'))
         if order:
+            phone = ship_to.mobile or ship_to.phone or order.mobile or order.phone
             if not order.order_line:
                 return _("Please provide at least one item to ship.")
             for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):
                 return _("The estimated price cannot be computed because the weight of your product is missing.")
         if picking:
+            phone = ship_to.mobile or ship_to.phone or picking.sale_id.partner_id.mobile or picking.sale_id.partner_id.phone
             for move in picking.move_lines.filtered(lambda move: not move.product_id.weight):
                 return _("The delivery cannot be done because the weight of your product is missing.")
+        if not phone:
+            res.append('Phone')
+        if res:
+            return _("The recipient address is missing or wrong.\n(Missing field(s) : %s)") % ",".join(res)
+        if len(self._clean_phone_number(phone)) < 10:
+            return _(UPS_ERROR_MAP.get('120213'))
         return False
 
     def get_error_message(self, error_code, description):
@@ -415,7 +419,7 @@ class UPSRequest():
         shipment.ShipTo.Address.CountryCode = ship_to.country_id.code or ''
         if ship_to.country_id.code in ('US', 'CA', 'IE'):
             shipment.ShipTo.Address.StateProvinceCode = ship_to.state_id.code or ''
-        shipment.ShipTo.Phone.Number = self._clean_phone_number(ship_to.phone)
+        shipment.ShipTo.Phone.Number = self._clean_phone_number(shipment_info['phone'])
         if not ship_to.commercial_partner_id.is_company:
             shipment.ShipTo.Address.ResidentialAddressIndicator = suds.null()
 
