@@ -336,9 +336,14 @@ class View(models.Model):
         if target_node.tag == 'attribute':
             target_node = target_node.getparent().getparent()
 
-        if target_node.get('name'):
-            expr = '//%s' % self._identify_node(target_node)
+        root = target_node.getroottree()
+        el_name = target_node.get('name')
 
+        if el_name and root.xpath('count(//*[@name="%s"])' % el_name) == 1:
+            # there are cases when there are multiple instances of the same
+            # named element in the same view, but for different reasons
+            # i.e.: sub-views and kanban views
+            expr = '//%s' % self._identify_node(target_node)
         else:
             ancestors = [
                 self._identify_node(n)
@@ -357,25 +362,14 @@ class View(models.Model):
         sibling elements (absolute identifier)
         """
         if node.get('name'):
-            node_str = 'templates//' if self._is_templates_node(node) else ''
-            node_str += '%s[@name=\'%s\']' % (node.tag, node.get('name'))
+            node_str = '%s[@name=\'%s\']' % (node.tag, node.get('name'))
         else:
             node_str = '%s[%s]' % (
                 node.tag,
                 len(list(node.itersiblings(tag=node.tag, preceding=True))) + 1
             )
 
-
         return node_str
-
-    def _is_templates_node(self, node):
-        """
-        Checks if the node in the view is inside a templates element
-        so that //templates might be prepended to the xpath generated in
-        _closest_node_to_xpath
-        """
-        ancestors = node.iterancestors()
-        return len([x for x in ancestors if x.tag == 'templates']) > 0
 
     def _closest_node_to_xpath(self, node, old_view):
         """
