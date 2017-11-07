@@ -62,7 +62,7 @@ var ActivityGraph = AbstractField.extend({
                 .transition().duration(1200)
                 .call(self.chart);
 
-            window.dispatchEvent(new Event('resize'));
+            $(window).trigger('resize');
         });
     },
 });
