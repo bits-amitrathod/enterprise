@@ -9,7 +9,7 @@
         <field name="employee_id"/>
         <field name="project_id"/>
         <field name="task_id"/>
-        <field name="resource_hours"/>
+        <field name="resource_time"/>
       </tree>
     </field>
   </record>
@@ -37,11 +37,18 @@
                             context="{'default_project_id': project_id,
                                       'default_employee_id': employee_id}"/>
                     </group>
-                    <group>
-                        <field name="start_date" groups="base.group_no_one"/>
-                        <field name="end_date" groups="base.group_no_one"/>
-                        <field name="resource_hours" widget="float_time" invisible="context.get('view_grid_add_line')"/>
+                    <group invisible="context.get('view_grid_add_line')">
+                        <field name="forecast_uom" invisible="1"/>
+                        <field name="resource_hours" widget="float_time" attrs="{'invisible': [('forecast_uom', '=', 'day')]}"/>
+                        <label for="resource_time" attrs="{'invisible': [('forecast_uom', '=', 'hour')]}"/>
+                        <div attrs="{'invisible': [('forecast_uom', '=', 'hour')]}">
+                            <field name="resource_time" class="oe_inline"/> day(s)
+                        </div>
                         <field name="time" string="% Time" invisible="context.get('view_grid_add_line')"/>
+                    </group>
+                    <group groups="base.group_no_one">
+                        <field name="start_date"/>
+                        <field name="end_date" readonly="1"/>
                     </group>
                 </group>
             </sheet>
@@ -103,7 +110,7 @@
     <field name="model">project.forecast</field>
     <field name="arch" type="xml">
       <pivot string="Forecast Analysis">
-        <field name="resource_hours" type="measure"/>
+        <field name="resource_time" type="measure"/>
         <field name="time" type="measure"/>
       </pivot>
     </field>
@@ -117,7 +124,7 @@
                 <field name="project_id" type="row"/>
                 <field name="employee_id" type="col"/>
                 <field name="time" type="measure"/>
-                <field name="resource_hours" type="measure"/>
+                <field name="resource_time" type="measure"/>
              </graph>
          </field>
     </record>
@@ -131,11 +138,11 @@
                 <field name="task_id" type="row" section="1"/>
                 <field name="employee_id" type="row"/>
                 <field name="start_date" type="col">
-                    <range name="week" string="Week" span="month" step="day"/>
-                    <range name="month" string="Month" span="month" step="week"/>
-                    <range name="year" string="Year" span="year" step="month"/>
+                    <range name="week" string="Week" span="month" step="day" invisible="context.get('forecast_hide_range_week')"/>
+                    <range name="month" string="Month" span="month" step="week" invisible="context.get('forecast_hide_range_month')"/>
+                    <range name="year" string="Year" span="year" step="month" invisible="context.get('forecast_hide_range_year')"/>
                 </field>
-                <field name="resource_hours" type="measure"/>
+                <field name="resource_time" type="measure"/>
             </grid>
         </field>
     </record>
@@ -149,11 +156,11 @@
                 <field name="project_id" type="row"/>
                 <field name="task_id" type="row"/>
                 <field name="start_date" type="col">
-                    <range name="week" string="Week" span="month" step="day"/>
-                    <range name="month" string="Month" span="month" step="week"/>
-                    <range name="year" string="Year" span="year" step="month"/>
+                    <range name="week" string="Week" span="month" step="day" invisible="context.get('forecast_hide_range_week')"/>
+                    <range name="month" string="Month" span="month" step="week" invisible="context.get('forecast_hide_range_month')"/>
+                    <range name="year" string="Year" span="year" step="month" invisible="context.get('forecast_hide_range_year')"/>
                 </field>
-                <field name="resource_hours" type="measure"/>
+                <field name="resource_time" type="measure"/>
             </grid>
         </field>
     </record>
@@ -166,11 +173,11 @@
                 <field name="project_id" type="row" section="1"/>
                 <field name="task_id" type="row"/>
                 <field name="start_date" type="col">
-                    <range name="week" string="Week" span="week" step="day"/>
-                    <range name="month" string="Month" span="month" step="day"/>
-                    <range name="year" string="Year" span="year" step="month"/>
+                    <range name="week" string="Week" span="week" step="day" invisible="context.get('forecast_hide_range_week')"/>
+                    <range name="month" string="Month" span="month" step="week" invisible="context.get('forecast_hide_range_month')"/>
+                    <range name="year" string="Year" span="year" step="month" invisible="context.get('forecast_hide_range_year')"/>
                 </field>
-                <field name="resource_hours" type="measure"/>
+                <field name="resource_time" type="measure"/>
             </grid>
         </field>
     </record>
@@ -188,6 +195,7 @@
         <field name="view_mode">grid,gantt,tree,form</field>
         <field name="context">{
             'search_default_future': 1,
+            'group_by': ['employee_id', 'task_id'],
         }</field>
     </record>
 
@@ -198,12 +206,20 @@
         <field name="act_window_id" ref="project_forecast_action_by_user"/>
     </record>
 
+    <record id="project_forecast_action_server_by_user" model="ir.actions.server">
+        <field name="name">Forecast: view by employee</field>
+        <field name="model_id" ref="project_forecast.model_project_forecast"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_view_forecast('project_forecast.project_forecast_action_by_user')</field>
+    </record>
+
     <record id="project_forecast_action_by_project" model="ir.actions.act_window">
         <field name="name">Forecast by project</field>
         <field name="res_model">project.forecast</field>
         <field name="view_mode">grid,gantt,tree,form</field>
         <field name="context">{
             'search_default_future': 1,
+            'group_by': ['project_id', 'employee_id'],
         }</field>
     </record>
 
@@ -214,6 +230,13 @@
         <field name="act_window_id" ref="project_forecast_action_by_project"/>
     </record>
 
+    <record id="project_forecast_action_server_by_project" model="ir.actions.server">
+        <field name="name">Forecast: view by project</field>
+        <field name="model_id" ref="project_forecast.model_project_forecast"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_view_forecast('project_forecast.project_forecast_action_by_project')</field>
+    </record>
+
     <menuitem id="project_forecast_menu" name="Forecast"
         parent="project.menu_main_pm"
         sequence="2"/>
@@ -222,13 +245,13 @@
         name="By Employee"
         parent="project_forecast.project_forecast_menu"
         sequence="10"
-        action="project_forecast_action_by_user"/>
+        action="project_forecast_action_server_by_user"/>
 
     <menuitem id="project_forecast_group_by_project"
         name="By Project"
         parent="project_forecast.project_forecast_menu"
         sequence="20"
-        action="project_forecast_action_by_project"/>
+        action="project_forecast_action_server_by_project"/>
 
     <record id="project_forecast_action_report_activities" model="ir.actions.act_window">
         <field name="name">Forecast Analysis</field>

@@ -244,7 +244,7 @@ class Base(models.AbstractModel):
         raise UserError(_("Can not use fields of type %s as grid columns") % field.type)
 
     def _get_date_column_label(self, date, field, span, step):
-        """ 
+        """
             :param date: date of period beginning (datetime object)
             :param field: odoo.field object of the current model
         """

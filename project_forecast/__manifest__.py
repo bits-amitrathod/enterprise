@@ -13,6 +13,7 @@
         'security/project_forecast_security.xml',
         'views/project_forecast_views.xml',
         'views/project_views.xml',
+        'views/res_config_settings_views.xml',
         'data/project_forecast_data.xml',
     ],
     'demo': [

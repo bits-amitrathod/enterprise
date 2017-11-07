@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-from datetime import date
-from dateutil.relativedelta import relativedelta
 
 from odoo import api, exceptions, fields, models, _
-
 from odoo.exceptions import UserError
-from odoo.tools.safe_eval import safe_eval
 
 
 class Project(models.Model):
@@ -26,16 +22,8 @@ class Project(models.Model):
         return super(Project, self).unlink()
 
     def action_view_project_forecast(self):
-        action = self.env.ref('project_forecast.project_forecast_action_from_project').read()[0]
-        context = {}
-        if action.get('context'):
-            eval_context = self.env['ir.actions.actions']._get_eval_context()
-            eval_context.update({'active_id': self.id})
-            context = safe_eval(action['context'], eval_context)
-        # add the default employee (for creation)
-        context['default_employee_id'] = self.user_id.employee_ids[:1].id
-        action['context'] = context
-        return action
+        Forecast = self.env['project.forecast'].with_context(active_id=self.id)
+        return Forecast.action_view_forecast('project_forecast.project_forecast_action_from_project')
 
 
 class Task(models.Model):
