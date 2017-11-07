@@ -72,6 +72,7 @@ QUnit.module('ViewEditorManager', {
                 fields: {
                     display_name: {string: "Display Name", type: "char", searchable: true},
                     m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
+                    partner_ids: {string: "Partners", type: "one2many", relation: "partner", searchable: true},
                 },
             },
             partner: {
@@ -1066,7 +1067,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a related field', function(assert) {
-        assert.expect(9);
+        assert.expect(12);
 
 
         this.data.coucou.fields.related_field = {
@@ -1091,6 +1092,11 @@ QUnit.module('ViewEditorManager', {
                             'm2o.m2o', "related arg should be correct");
                         assert.strictEqual(args.operations[1].node.field_description.relation,
                             'partner', "relation arg should be correct for m2o");
+                    } else if (nbEdit === 2) {
+                        assert.strictEqual(args.operations[2].node.field_description.related,
+                            'm2o.partner_ids', "related arg should be correct");
+                        assert.strictEqual(args.operations[2].node.field_description.relational_model,
+                            'product', "relational model arg should be correct for o2m");
                     }
                     nbEdit++;
                     return $.when({
@@ -1133,7 +1139,16 @@ QUnit.module('ViewEditorManager', {
         $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
         $('.modal-footer .btn-primary:first').click(); // confirm
 
-        assert.strictEqual(nbEdit, 2, "should have edited the view");
+        // create a new one2many related field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.o_field_selector_popover li[data-name=partner_ids]').click();
+        $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
+        $('.modal-footer .btn-primary:first').click(); // confirm
+
+        assert.strictEqual(nbEdit, 3, "should have edited the view");
 
         vem.destroy();
     });

@@ -22,7 +22,7 @@ class MrpProductionWorkcenterLine(models.Model):
     current_quality_check_id = fields.Many2one('quality.check', "Current Quality Check", store=True)
 
     # QC-related fields
-    allow_producing_quantity_change = fields.Boolean('Allow Changes to Producing Quantity', default=True)
+    allow_producing_quantity_change = fields.Boolean('Allow Changes to the Produced Quantity', default=True)
     component_id = fields.Many2one('product.product', compute='_compute_component_id', readonly=True)
     component_tracking = fields.Selection(related='component_id.tracking')
     component_remaining_qty = fields.Float('Remaining Quantity for Component', compute='_compute_component_id', readonly=True,digits=dp.get_precision('Product Unit of Measure'))

@@ -452,9 +452,22 @@ class WebStudioController(http.Controller):
         # Get current model
         model = request.env['ir.model'].search([('model', '=', values.pop('model_name'))])
         values['model_id'] = model.id
+
         # For many2one and many2many fields
         if values.get('relation_id'):
             values['relation'] = request.env['ir.model'].browse(values.pop('relation_id')).model
+        # For related one2many fields
+        if values.get('related') and values.get('ttype') == 'one2many':
+            field_name = values.get('related').split('.')[-1]
+            field = request.env['ir.model.fields'].search([
+                ('name', '=', field_name),
+                ('model', '=', values.pop('relational_model')),
+            ])
+            field.ensure_one()
+            values.update(
+                relation=field.relation,
+                relation_field=field.relation_field,
+            )
         # For one2many fields
         if values.get('relation_field_id'):
             field = request.env['ir.model.fields'].browse(values['relation_field_id'])
@@ -462,6 +475,7 @@ class WebStudioController(http.Controller):
                 relation=field.model_id.model,
                 relation_field=field.name,
             )
+        # For selection fields
         if values.get('selection'):
             values['selection'] = ustr(values['selection'])
         # Create new field

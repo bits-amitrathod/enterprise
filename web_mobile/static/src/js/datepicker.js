@@ -40,11 +40,12 @@ web_datepicker.DateWidget.include({
         var self = this;
         this.$el.on('click', function () {
             mobile.methods.requestDateTimePicker({
-                'value': self.getValue(),
+                'value': self.getValue() ? self.getValue().format("YYYY-MM-DD HH:mm:ss") : false,
                 'type': self.type_of_date,
+                'ignore_timezone': true,
             }).then(function (response) {
-                self.setValue(response.data);
-                self.commit_value();
+                self.$input.val(response.data);
+                self.changeDatetime();
             });
         });
     },

@@ -154,6 +154,7 @@ class ProviderUPS(models.Model):
                 'total_qty': sum(sml.qty_done for sml in picking.move_line_ids),
                 'ilt_monetary_value': '%d' % invoice_line_total,
                 'itl_currency_code': self.env.user.company_id.currency_id.name,
+                'phone': picking.partner_id.mobile or picking.partner_id.phone or picking.sale_id.partner_id.mobile or picking.sale_id.partner_id.phone,
             }
             ups_service_type = picking.ups_service_type or self.ups_default_service_type
             ups_carrier_account = picking.ups_carrier_account

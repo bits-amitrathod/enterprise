@@ -11,6 +11,14 @@ class SaleOrder(models.Model):
             return 'form_save'
         return super(SaleOrder, self)._get_payment_type()
 
+    def _get_subscription_lines(self):
+        """ Extract lines related to subscriptions. """
+        self.ensure_one()
+        res = dict()
+        for line in self.order_line.filtered('recurring_product'):
+            res.setdefault(line.product_id.subscription_template_id, self.env['sale.order.line'])
+            res[line.product_id.subscription_template_id] |= line
+        return res
 
 class SaleOrderLine(models.Model):
     _name = "sale.order.line"
