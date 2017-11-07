@@ -43,8 +43,8 @@ web_datepicker.DateWidget.include({
                 'value': self.getValue(),
                 'type': self.type_of_date,
             }).then(function (response) {
-                self.setValue(response.data);
-                self.commit_value();
+                self.$input.val(response.data);
+                self.changeDatetime();
             });
         });
     },
