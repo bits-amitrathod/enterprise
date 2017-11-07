@@ -148,7 +148,7 @@ class SDDMandate(models.Model):
 
     def _check_debtor_account(self):
         if any([not record.partner_bank_id for record in self]):
-            raise UserError(_("A debtor account is required to valide a SEPA Direct Debit mandate."))
+            raise UserError(_("A debtor account is required to validate a SEPA Direct Debit mandate."))
         if any([record.partner_bank_id.acc_type != 'iban' for record in self]):
             raise UserError(_("SEPA Direct Debit scheme only accepts IBAN account numbers. Please select an IBAN-compliant debtor account for this mandate."))
 
