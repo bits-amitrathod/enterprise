@@ -23,7 +23,7 @@
             <field name="model">account.analytic.line</field>
             <field name="priority">4567</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Add a Task">
                     <sheet>
                         <group>
                             <group>
@@ -32,14 +32,11 @@
                                 <field name="user_id" invisible="1" groups="hr_timesheet.group_timesheet_manager"/>
                                 <field name="employee_id" groups="hr_timesheet.group_timesheet_manager"/>
                             </group>
-                            <group>
+                            <group invisible="context.get('view_grid_add_line')">
                                 <field name="date"/>
                                 <field name="unit_amount" string="Time Spent" widget="float_time"/>
                             </group>
                         </group>
-                        <field name="name" nolabel="1" widget="text"
-                               placeholder="Describe your activity"
-                               colspan="4"/>
                     </sheet>
                 </form>
             </field>
@@ -58,23 +55,6 @@
                     </field>
                     <field name="unit_amount" type="measure"
                            widget="float_time"/>
-                    <empty>
-                        <p class="oe_view_nocontent_create">
-                            Click to add projects and tasks
-                        </p>
-                        <p>You will be able to register your working hours on the given task.</p>
-                        <p>
-                            <a href="https://www.odoo.com/page/timesheet-mobile-app?platform=chrome" class="oe_view_nocontent_img_link">
-                                <img src="/timesheet_grid/static/img/logo_chrome_store.png" style="width:30px;" alt="Chrome Plugin"/> Get Chrome plugin
-                            </a>
-                            <a href="https://www.odoo.com/page/timesheet-mobile-app?platform=ios" class="oe_view_nocontent_img_link">
-                                <img src="/timesheet_grid/static/img/logo_apple_store.png" style="width:30px;" alt="Apple App"/> Get iOS app
-                            </a>
-                            <a href="https://www.odoo.com/page/timesheet-mobile-app?platform=android" class="oe_view_nocontent_img_link">
-                                <img src="/timesheet_grid/static/img/logo_google_play.png" style="width:30px;" alt="Android App"/> Get Android app
-                            </a>
-                        </p>
-                    </empty>
                 </grid>
             </field>
         </record>
@@ -152,7 +132,10 @@
             <field name="priority">10</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='unit_amount']" position="before">
-                    <button type="object" name="action_validate_timesheet" string="Validate"/>
+                    <button type="object" class="btn-primary" name="action_validate_timesheet" string="Validate"/>
+                </xpath>
+                <xpath expr="/grid" position="attributes">
+                    <attribute name="create">false</attribute>
                 </xpath>
             </field>
         </record>
@@ -197,7 +180,7 @@
             Menus and Actions
         -->
         <record id="hr_timesheet.act_hr_timesheet_line" model="ir.actions.act_window">
-            <field name="name">My Timesheet</field>
+            <field name="name">My Timesheets</field>
             <field name="res_model">account.analytic.line</field>
             <field name="view_mode">grid,tree,form</field>
             <field name="context">{
