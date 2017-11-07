@@ -221,26 +221,28 @@
                             </t>
 
                             <div class="o_assignation_kanban_record">
-                                <ul>
-                                    <li>
-                                        <a type="open">
-                                            <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" class="oe_kanban_image"/>
-                                        </a>
-                                    </li>
-                                    <li t-att-class="button_state">
-                                        <button name="toggle_active" type="object">
-                                            <span t-attf-class="fa {{button_icon}}"/>
-                                        </button>
-                                    </li>
-                                </ul>
-                                <ul class="o_assignation_body">
-                                    <li><a type="open"><b><field name="name"/></b></a></li>
-                                    <li><a type="open"><field name="team_id"/></a></li>
-                                </ul>
-                                <div class="o_assignation_leads_count">
-                                    <field name="maximum_user_leads" invisible="1"/>
-                                    <field name="leads_count" widget="gauge"
-                                           options="{'max_field': 'maximum_user_leads'}"/>
+                                <div class="o_kanban_record_top">
+                                    <ul class="nav">
+                                        <li>
+                                            <a type="open">
+                                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" class="oe_kanban_image"/>
+                                            </a>
+                                        </li>
+                                        <li t-att-class="button_state">
+                                            <button name="toggle_active" type="object">
+                                                <span t-attf-class="fa {{button_icon}}"/>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <ul class="nav o_assignation_body">
+                                        <li><a type="open"><b><field name="name"/></b></a></li>
+                                        <li><a type="open"><field name="team_id"/></a></li>
+                                    </ul>
+                                    <div class="o_assignation_leads_count">
+                                        <field name="maximum_user_leads" invisible="1"/>
+                                        <field name="leads_count" widget="gauge"
+                                               options="{'max_field': 'maximum_user_leads'}"/>
+                                    </div>
                                 </div>
                             </div>
                         </t>

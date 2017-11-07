@@ -1,15 +1,12 @@
-.o_assignation_kanban_record {
-    .o-flex-display();
+.o_kanban_view .o_kanban_record.o_assignation_kanban_record {
+    .o_kanban_record_top {
+        width: 100%;
 
-    > * {
-        margin: 0;
-        .o-flex(1, 0, auto);
+        > .o_assignation_body {
+            .o-flex(1, 1, auto);
+        }
     }
-    > ul.o_assignation_body {
-        .o-flex(1, 1, 100%);
 
-        padding: 0 0.5em;
-    }
     // ported straight from HTML
     .o_assignation_button_active, .o_assignation_button_inactive {
         text-align: center;
