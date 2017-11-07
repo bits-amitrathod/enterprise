@@ -66,6 +66,7 @@ QUnit.module('ViewEditorManager', {
                         type: "many2one",
                         relation: 'product',
                     },
+                    product_ids: {string: "Products", type: "one2many", relation: "product", searchable: true},
                 },
             },
             product: {
@@ -74,11 +75,26 @@ QUnit.module('ViewEditorManager', {
                     m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
                     partner_ids: {string: "Partners", type: "one2many", relation: "partner", searchable: true},
                 },
+                records: [{
+                    id: 37,
+                    display_name: 'xpad',
+                    m2o: 7,
+                }, {
+                    id: 42,
+                    display_name: 'xpod',
+                }],
             },
             partner: {
                 fields: {
                     display_name: {string: "Display Name", type: "char"},
                 },
+                records: [{
+                    id: 4,
+                    display_name: "jean",
+                }, {
+                    id: 7,
+                    display_name: "jacques",
+                }],
             },
         };
     }
@@ -1602,6 +1618,55 @@ QUnit.module('ViewEditorManager', {
         testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields .o_web_studio_field_many2one'), $('.o_web_studio_hook'));
         assert.strictEqual(vem.$('.o_web_studio_view_renderer thead tr [data-node-id]').length, 2,
             "there should be 2 nodes after the drag and drop.");
+        vem.destroy();
+    });
+
+    QUnit.test('edit one2many list view that uses parent key', function(assert) {
+        assert.expect(3);
+
+        this.data.coucou.records = [{
+            id: 11,
+            display_name: 'Coucou 11',
+            product_ids: [37],
+        }];
+
+        var vem = createViewEditorManager({
+            arch: "<form>" +
+                "<sheet>" +
+                    "<field name='display_name'/>" +
+                    "<field name='product_ids'>" +
+                        "<form>" +
+                            "<sheet>" +
+                                "<field name='m2o'" +
+                                " attrs=\"{'invisible': [('parent.display_name', '=', 'coucou')]}\"" +
+                                " domain=\"[('display_name', '=', parent.display_name)]\"/>" +
+                            "</sheet>" +
+                        "</form>" +
+                    "</field>" +
+                "</sheet>" +
+            "</form>",
+            model: "coucou",
+            data: this.data,
+            res_id: 11,
+            archs: {
+                "product,false,list": '<tree><field name="display_name"/></tree>'
+            },
+        });
+
+        // edit the x2m form view
+        vem.$('.o_web_studio_form_view_editor .o_field_one2many').click();
+        vem.$('.o_web_studio_form_view_editor .o_field_one2many .o_web_studio_editX2Many[data-type="form"]').click();
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_field_widget[name="m2o"]').text(), "jacques",
+            "the x2m form view should be correctly rendered");
+        vem.$('.o_web_studio_form_view_editor .o_field_widget[name="m2o"]').click();
+
+        // open the domain editor
+        assert.strictEqual($('.modal .o_domain_selector').length, 0,
+            "the domain selector should not be opened");
+        vem.$('.o_web_studio_sidebar_content input[name="domain"]').trigger('focusin');
+        assert.strictEqual($('.modal .o_domain_selector').length, 1,
+            "the domain selector should be correctly opened");
+
         vem.destroy();
     });
 

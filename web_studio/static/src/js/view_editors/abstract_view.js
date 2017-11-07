@@ -51,7 +51,9 @@ AbstractView.include({
                 var state = model.get(handle);
                 var params = _.extend({}, self.rendererParams, options);
                 var editor = new Renderer(parent, state, params);
-
+                // the editor needs to have a reference to its BasicModel
+                // instance to reuse it in x2m edition
+                editor.model = model;
                 model.setParent(editor);
                 return editor;
             });

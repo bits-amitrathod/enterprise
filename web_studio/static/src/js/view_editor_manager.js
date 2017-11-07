@@ -1000,13 +1000,31 @@ var ViewEditorManager = Widget.extend({
             fieldsInfo = fieldsView.fieldsInfo;
         }
         this.x2mModel = fields[this.x2mField].relation;
+
         var data = x2mData || this.editor.state.data[this.x2mField];
+        if (viewType === 'form' && data.count) {
+            // the x2m data is a datapoint type list and we need the datapoint
+            // type record to open the form view with an existing record
+            data = data.data[0];
+        }
+
+        // WARNING: these attributes are critical when editing a x2m !
+        //
+        // A x2m view can use a special variable `parent` (in a field domain for
+        // example) which refers to the parent datapoint data (this is added in
+        // the context, see @_getEvalContext).
+        // When editing x2m view, the view is opened as if it was the main view
+        // and a new view means a new basic model (the reference to the parent
+        // will thus lost). This is why we reuse the same model and specify a
+        // `parentID` (see @_onOpenOne2ManyRecord in FormController).
+
         this.view_env = {
-            modelName: this.x2mModel,
-            ids: data.res_ids,
-            domain: data.domain,
+            currentId: data.res_id,
             context: data.getContext(),
-            groupBy: data.groupedBy,
+            ids: data.res_ids,
+            model: this.editor.model,  // reuse the same BasicModel instance
+            modelName: this.x2mModel,
+            parentID: this.editor.state.id,
         };
         this.x2mEditorPath.push({
             view_type: this.view_type,
