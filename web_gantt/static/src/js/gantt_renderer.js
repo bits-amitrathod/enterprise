@@ -63,6 +63,7 @@ return AbstractRenderer.extend({
         gantt.config.round_dnd_dates = false;
         gantt.config.drag_links = false;
         gantt.config.drag_progress = false;
+        gantt.config.drag_resize = true;
         gantt.config.grid_width = 250;
         gantt.config.row_height = 30;
         gantt.config.duration_unit = "hour";
@@ -88,14 +89,15 @@ return AbstractRenderer.extend({
         gantt.config.end_date = this.state.end_date;
 
         // dnd by date
-        if (this.round_dnd_dates) {
-            gantt.config.round_dnd_dates = true;
-        }
+        gantt.config.round_dnd_dates = !!this.round_dnd_dates;
 
         // Set resizing of tasks
-        if (this.drag_resize === '0' || this.drag_resize === 'false') {
+        if (this.drag_resize === '0' || this.drag_resize === 'false' || this.edit === 'false') {
             gantt.config.drag_resize = false;
         }
+
+        // Set drag_move of tasks
+        gantt.config.drag_move = this.edit ? JSON.parse(this.edit) : true;
 
         // Configure the duration_unit
         if (this.duration_unit) {
