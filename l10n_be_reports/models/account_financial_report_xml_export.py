@@ -113,7 +113,7 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
             quarter = '3'
         elif ctx_date_from == '10-01' and ctx_date_to == '12-31':
             quarter = '4'
-        elif ctx_date_from != '01-01' and ctx_date_to != '12-31':
+        elif ctx_date_from != '01-01' or ctx_date_to != '12-31':
             month = context.date_from[5:7]
 
         xml_data = context.get_report_obj().with_context(no_format=True, date_from=date_from, date_to=date_to).get_lines(context, get_xml_data=True)
