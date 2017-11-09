@@ -38,7 +38,7 @@ var ContactSync = Widget.extend({
             method: 'read',
             args: [this.res_id, fieldNames],
         }).then(function (r) {
-            mobile.methods.addContact(r);
+            mobile.methods.addContact(r[0]);
         });
     },
 });
