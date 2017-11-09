@@ -17,9 +17,8 @@ class website_hr_contract_salary(http.Controller):
                 ('access_token_end_date', '>=', fields.Date.today()),
                 ('access_token_consumed', '=', False),
             ], limit=1)
-            if contract:
-                return contract
-        return request.not_found()
+            return contract
+        return request.env['hr.contract']
 
     def _check_employee_access_right(self, contract_id):
         try:
@@ -27,12 +26,14 @@ class website_hr_contract_salary(http.Controller):
             contract.check_access_rights('read')
             contract.check_access_rule('read')
         except AccessError:
-            return request.not_found()
+            return request.env['hr.contract']
         return contract
 
     @http.route(['/salary_package/contract/<int:contract_id>'], type='http', auth="user", website=True)
     def salary_package(self, contract_id=None, **kw):
         contract = self._check_employee_access_right(contract_id)
+        if not contract:
+            return request.not_found()
         values = self.get_salary_package_values(contract)
         values.update({'need_personal_information': False, 'submit': True})
         return request.render("hr_contract_salary.salary_package", values)
@@ -40,6 +41,8 @@ class website_hr_contract_salary(http.Controller):
     @http.route(['/salary_package/contract/<string:token>'], type='http', auth='public', website=True)
     def salary_package_applicant(self, token=None, **kw):
         contract = self._check_token_validity(token)
+        if not contract:
+            return request.not_found()
         values = self.get_salary_package_values(contract)
         values.update({
             'need_personal_information': True,
@@ -158,7 +161,6 @@ class website_hr_contract_salary(http.Controller):
     @http.route(['/salary_package/compute_net/'], type='json', auth='public')
     def compute_net(self, contract_id=None, token=None, advantages=None, **kw):
         # Make a savepoint to discard the temporary contract and payslip
-        result = {}
         request.env.cr.savepoint()
 
         if token:
@@ -190,6 +192,14 @@ class website_hr_contract_salary(http.Controller):
 
         payslip.compute_sheet()
 
+        result = self.get_compute_results(new_contract, payslip)
+
+        request.env.cr.rollback()
+
+        return result
+
+    def get_compute_results(self, new_contract, payslip):
+        result = {}
         result.update({
             'BASIC': round(payslip.get_salary_line_total('BASIC'), 2),
             'SALARY': round(payslip.get_salary_line_total('SALARY'), 2),
@@ -243,7 +253,6 @@ class website_hr_contract_salary(http.Controller):
             'monthly_total': monthly_total,
             'employee_total_cost': round(new_contract.final_yearly_costs, 2),
         })
-        request.env.cr.rollback()
 
         return result
 

@@ -74,7 +74,7 @@
                                                         </t>
                                                         <t t-if="contract.available_cars_amount &lt; max_unused_cars">
                                                             <t t-foreach="can_be_requested_models" t-as="model">
-                                                                <option t-att-value="'new-'+str(model.id)" t-att-selected="contract.new_car and contract.new_car_model_id.id == model.id"><t t-esc="model.name_get()[0][1] + u' \u2022 New'"/></option>
+                                                                <option t-att-value="'new-'+str(model.id)" t-att-selected="contract.new_car and contract.new_car_model_id.id == model.id"><t t-esc="model.name_get()[0][1] + u' \u2022 New Car'"/></option>
                                                             </t>
                                                         </t>
                                                     </select>
@@ -478,9 +478,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" name="employee_total_cost" title="Full time equivalent employer cost">
                                         <div class="row">
-                                            <label class="col-sm-7 control-label">Employee Total Cost</label>
+                                            <label class="col-sm-7 control-label">Employer Cost</label>
                                             <div class="col-sm-5">
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="employee_total_cost" class="form-control"/>
@@ -490,7 +490,7 @@
                                         </div>
                                     </div>
                                     <t t-if="submit">
-                                        <button type="button" id="hr_cs_submit" class="btn hr_cs_btn_submit">Review Contract &amp; Sign</button>
+                                        <button type="button" id="hr_cs_submit" class="btn hr_cs_btn_submit" name="submit1">Review Contract &amp; Sign</button>
                                     </t>
                                 </div>
                             </div>
@@ -804,7 +804,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button type="button" id="hr_cs_submit" class="hr_cs_btn_submit btn">Review Contract &amp; Sign</button>
+                                    <button type="button" id="hr_cs_submit" class="hr_cs_btn_submit btn" name="submit1">Review Contract &amp; Sign</button>
                                 </div>
                             </div>
                         </div>
