@@ -47,6 +47,14 @@
                 <field name="workorder_id" attrs="{'invisible': [('production_id', '=', False)]}" options="{'no_create': True, 'no_open': True}" domain="[('production_id', '=', production_id)]" groups="mrp.group_mrp_routings"/>
                 <!-- <field name="repair_id"/> -->
             </xpath>
+            <xpath expr="//div[hasclass('oe_chatter')]" position="after">
+                <div invisible="not context.get('discard_on_footer_button', False)">
+                    <footer class="oe_edit_only">
+                        <button special="save" string="Save" class="oe_highlight"/>
+                        <button string="Discard" special="cancel"/>
+                    </footer>
+                </div>
+            </xpath>
             <field name="equipment_id" position="attributes">
                 <attribute name="domain">['|', ('workcenter_id', '=', False), ('workcenter_id.order_ids', 'in', workorder_id)]</attribute>
             </field>

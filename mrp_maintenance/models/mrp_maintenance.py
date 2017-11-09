@@ -120,7 +120,11 @@ class MrpProductionWorkcenterLine(models.Model):
             'view_mode': 'form',
             'res_model': 'maintenance.request',
             'type': 'ir.actions.act_window',
-            'context': {'default_workorder_id': self.id, 'default_production_id': self.production_id.id},
+            'context': {
+                'default_workorder_id': self.id,
+                'default_production_id': self.production_id.id,
+                'discard_on_footer_button': True,
+            },
             'target': 'new',
             'domain': [('workorder_id', '=', self.id)]
         }

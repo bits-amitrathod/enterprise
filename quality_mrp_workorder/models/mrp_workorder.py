@@ -57,5 +57,6 @@ class MrpProductionWorkcenterLine(models.Model):
             'default_workorder_id': self.id,
             'default_production_id': self.production_id.id,
             'default_workcenter_id': self.workcenter_id.id,
+            'discard_on_footer_button': True,
         }
         return action
