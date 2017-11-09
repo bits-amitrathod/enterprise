@@ -6,6 +6,9 @@ var ListRenderer = require('web.ListRenderer');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
 
+var ViewEditorManager = require('web_studio.ViewEditorManager');
+var ViewEditorSidebar = require('web_studio.ViewEditorSidebar');
+
 var createViewEditorManager = function (params) {
     var $target = $('#qunit-fixture');
     if (params.debug) {
@@ -45,8 +48,6 @@ var createViewEditorManager = function (params) {
     vem.appendTo($client_action);
     return vem;
 };
-
-var ViewEditorManager = require('web_studio.ViewEditorManager');
 
 QUnit.module('ViewEditorManager', {
     beforeEach: function () {
@@ -1010,8 +1011,20 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a monetary field without currency_id', function(assert) {
-        assert.expect(3);
+        assert.expect(7);
 
+        // we can't drag components twice in tests as there is a throttle so we
+        // monkey patch the function to remove the delay
+        var throttle = _.throttle;
+        _.throttle = function (func, wait, options) {
+            return throttle(func, 0, options);
+        };
+
+        this.data.product.fields.monetary_field = {
+            string: 'Monetary',
+            type: 'monetary',
+            searchable: true,
+        };
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
@@ -1027,37 +1040,62 @@ QUnit.module('ViewEditorManager', {
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
             "there should be one node");
 
-        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'));
-
+        // add a monetary field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), vem.$('th.o_web_studio_hook').first());
         assert.strictEqual($('.modal-body').text(), "This field type cannot be dropped on this model.",
             "this should trigger an alert");
-
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
             "there should still be one node");
+        $('.modal-footer .btn-primary:first').click(); // confirm
+        assert.strictEqual($('.modal').length, 0, "there should be no modal anymore");
+
+        // add a related monetary field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), vem.$('th.o_web_studio_hook').first());
+        assert.strictEqual($('.modal .o_field_selector').length, 1,
+            "a modal with a field selector should be opened to selected the related field");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.o_field_selector_popover li[data-name=monetary_field]').click();
+        $('.modal-footer .btn-primary:first').click(); // confirm
+        assert.strictEqual($('.modal-body').text(), "This field type cannot be dropped on this model.",
+            "this should trigger an alert");
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should still be one node");
+
+        _.throttle = throttle;
 
         vem.destroy();
     });
 
     QUnit.test('add a monetary field with currency_id', function(assert) {
-        assert.expect(3);
+        assert.expect(5);
 
-        this.data.coucou.fields.currency_id = {
+        this.data.product.fields.monetary_field = {
+            string: 'Monetary',
+            type: 'monetary',
+            searchable: true,
+        };
+
+        this.data.coucou.fields.x_currency_id = {
             string: "Currency",
             type: 'many2one',
             relation: "res.currency",
         };
 
+        var arch = "<tree><field name='display_name'/></tree>";
         var fieldsView;
+        var nbEdit = 0;
+
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
-            arch: "<tree><field name='display_name'/></tree>",
+            arch: arch,
             mockRPC: function (route) {
                 if (route === '/web_studio/edit_view') {
+                    nbEdit++;
                     // the server sends the arch in string but it's post-processed
                     // by the ViewEditorManager
-                    assert.ok(true, "should edit the view to add the monetary field");
-                    fieldsView.arch = "<tree><field name='display_name'/><field name='currency_id'/></tree>";
+                    fieldsView.arch = arch;
                     return $.when({
                         fields_views: {
                             list: fieldsView,
@@ -1068,16 +1106,25 @@ QUnit.module('ViewEditorManager', {
             },
         });
 
-        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
-            "there should be one node");
-
         // used to generate the new fields view in mockRPC
         fieldsView = $.extend(true, {}, vem.fields_view);
 
+        // add a monetary field
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'));
+        assert.strictEqual(nbEdit, 1, "the view should have been updated");
+        assert.strictEqual($('.modal').length, 0, "there should be no modal");
 
-        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
-            "there should be two nodes");
+        // add a related monetary field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), vem.$('th.o_web_studio_hook').first());
+        assert.strictEqual($('.modal .o_field_selector').length, 1,
+            "a modal with a field selector should be opened to selected the related field");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.o_field_selector_popover li[data-name=monetary_field]').click();
+        $('.modal-footer .btn-primary:first').click(); // confirm
+        assert.strictEqual(nbEdit, 2, "the view should have been updated");
 
         vem.destroy();
     });

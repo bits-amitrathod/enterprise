@@ -608,7 +608,13 @@ var ViewEditorManager = Widget.extend({
                 def_field_values = $.Deferred();
                 var dialog = new NewFieldDialog(this, this.model_name, field_description.ttype, this.fields).open();
                 dialog.on('field_default_values_saved', this, function (values) {
-                    def_field_values.resolve(values);
+                    if (values.related && values.ttype === 'monetary') {
+                        if (this._hasCurrencyField()) {
+                            def_field_values.resolve(values);
+                        }
+                    } else {
+                        def_field_values.resolve(values);
+                    }
                     dialog.close();
                 });
                 dialog.on('closed', this, function () {
@@ -617,17 +623,9 @@ var ViewEditorManager = Widget.extend({
             }
             if (field_description.ttype === 'monetary') {
                 def_field_values = $.Deferred();
-                // find currency_id on the current model : a monetary field can
-                // not be added if such a field does not exist on the model
-                var currencyField = _.findWhere(this.fields, {
-                    type: 'many2one',
-                    relation: 'res.currency',
-                    name: 'currency_id',
-                });
-                if (currencyField) {
+                if (this._hasCurrencyField()) {
                     def_field_values.resolve();
                 } else {
-                    Dialog.alert(self, _t('This field type cannot be dropped on this model.'));
                     def_field_values.reject();
                 }
             }
@@ -751,6 +749,23 @@ var ViewEditorManager = Widget.extend({
                 },
             },
         });
+    },
+    /**
+     * Find a currency field on the current model ; a monetary field can not be
+     * added if such a field does not exist on the model.
+     *
+     * @private
+     * @return {boolean} the presence of a currency field
+     */
+    _hasCurrencyField: function () {
+        var currencyField = _.find(this.fields, function (field) {
+            return field.type === 'many2one' && field.relation === 'res.currency' &&
+                (field.name === 'currency_id' || field.name === 'x_currency_id');
+        });
+        if (!currencyField) {
+            Dialog.alert(this, _t('This field type cannot be dropped on this model.'));
+        }
+        return !!currencyField;
     },
     /**
      * Makes a RPC to modify the studio view in order to add the x2m view
