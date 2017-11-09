@@ -125,9 +125,26 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
 
         date_from = options['date'].get('date_from')
         date_to = options['date'].get('date_to')
+
         ctx = self.set_context(options)
         ctx.update({'no_format': True, 'date_from': date_from, 'date_to': date_to, 'get_xml_data': True})
         xml_data = self.with_context(ctx).get_lines(options)
+
+        ctx_date_from = date_from[5:10]
+        ctx_date_to = date_to[5:10]
+        month = None
+        quarter = None
+        if ctx_date_from == '01-01' and ctx_date_to == '03-31':
+            quarter = '1'
+        elif ctx_date_from == '04-01' and ctx_date_to == '06-30':
+            quarter = '2'
+        elif ctx_date_from == '07-01' and ctx_date_to == '09-30':
+            quarter = '3'
+        elif ctx_date_from == '10-01' and ctx_date_to == '12-31':
+            quarter = '4'
+        elif ctx_date_from != '01-01' or ctx_date_to != '12-31':
+            month = date_from[5:7]
+
         xml_data.update({
             'company_name': company.name,
             'company_vat': company_vat,
@@ -139,8 +156,9 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
             'country': country,
             'email': email,
             'phone': phone.replace('/', '').replace('.', '').replace('(', '').replace(')', '').replace(' ', ''),
-            'year': options['date'].get('date_from')[0:4],
-            'month': options['date'].get('date_from')[5:7],
+            'year': date_from[0:4],
+            'month': month,
+            'quarter': quarter,
             'comments': self.get_report_manager(options).summary or '',
             'issued_by': issued_by,
             'dnum': dnum,
@@ -158,8 +176,15 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
         <EmailAddress>%(email)s</EmailAddress>
         <Phone>%(phone)s</Phone>
     </ns2:Representative>""" % (xml_data)
-        data_comp_period = '\n\t\t<ns2:Declarant>\n\t\t\t<VATNumber>%(vatnum)s</VATNumber>\n\t\t\t<Name>%(company_name)s</Name>\n\t\t\t<Street>%(street)s</Street>\n\t\t\t<PostCode>%(post_code)s</PostCode>\n\t\t\t<City>%(city)s</City>\n\t\t\t<CountryCode>%(country)s</CountryCode>\n\t\t\t<EmailAddress>%(email)s</EmailAddress>\n\t\t\t<Phone>%(phone)s</Phone>\n\t\t</ns2:Declarant>' % (xml_data)
-        data_comp_period += '\n\t\t<ns2:Period>\n\t\t\t<ns2:Month>%(month)s</ns2:Month> \n\t\t\t<ns2:Year>%(year)s</ns2:Year>\n\t\t</ns2:Period>' % (xml_data)
+        data_comp_period = '\n\t\t<ns2:Declarant>\n\t\t\t<VATNumber>%(vatnum)s</VATNumber>\n\t\t\t<Name>%(company_name)s</Name>\n\t\t\t<Street>%(street)s</Street>\n\t\t\t<PostCode>%(post_code)s</PostCode>\n\t\t\t<City>%(city)s</City>\n\t\t\t<CountryCode>%(country)s</CountryCode>\n\t\t\t<EmailAddress>%(email)s</EmailAddress>\n\t\t\t<Phone>%(phone)s</Phone>\n\t\t</ns2:Declarant>'
+        data_comp_period += '\n\t\t<ns2:Period>\n'
+        if month:
+            data_comp_period += '\t\t\t<ns2:Month>%(month)s</ns2:Month>\n'
+        elif quarter:
+            data_comp_period += '\t\t\t<ns2:Quarter>%(quarter)s</ns2:Quarter>\n'
+        data_comp_period += '\t\t\t<ns2:Year>%(year)s</ns2:Year>\n\t\t</ns2:Period>'
+        data_comp_period %= xml_data
+
         data_clientinfo = ''
         seq = 0
         for line in xml_data['lines']:

@@ -188,7 +188,6 @@ class AccountInvoice(models.Model):
         :param cfdi: The cfdi as etree
         :return: the TimbreFiscalDigital node
         '''
-        self.ensure_one()
         if not hasattr(cfdi, 'Complemento'):
             return None
         attribute = 'tfd:TimbreFiscalDigital[1]'
@@ -221,7 +220,6 @@ class AccountInvoice(models.Model):
         :param cfdi_as_tree: The cfdi converted as a tree
         :return: A string computed with the invoice data called the cadena
         '''
-        self.ensure_one()
         xslt_root = etree.parse(tools.file_open(xslt_path))
         return str(etree.XSLT(xslt_root)(cfdi_as_tree))
 
