@@ -609,7 +609,7 @@ class HelpdeskTicket(models.Model):
                 ticket.sla_active = False
                 prev_stage_ids = self.env['helpdesk.stage'].search([('sequence', '<', ticket.sla_id.stage_id.sequence)])
                 next_stage_ids = self.env['helpdesk.stage'].search([('sequence', '>=', ticket.sla_id.stage_id.sequence)])
-                stage_id_tracking_value = self.env['mail.tracking.value'].search([('field', '=', 'stage_id'),
+                stage_id_tracking_value = self.env['mail.tracking.value'].sudo().search([('field', '=', 'stage_id'),
                                                                                   ('old_value_integer', 'in', prev_stage_ids.ids),
                                                                                   ('new_value_integer', 'in', next_stage_ids.ids),
                                                                                   ('mail_message_id.model', '=', 'helpdesk.ticket'),
