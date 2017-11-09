@@ -112,7 +112,7 @@ class purchase_order(models.Model):
             taxes = line.product_id.taxes_id
         company_taxes = [tax_rec for tax_rec in taxes if tax_rec.company_id.id == company.id]
         if sale_id:
-            so = self.env["sale.order"].browse(sale_id)
+            so = self.env["sale.order"].sudo(company.intercompany_user_id).browse(sale_id)
             company_taxes = so.fiscal_position_id.map_tax(company_taxes, line.product_id, so.partner_id)
         return {
             'name': line.product_id and line.product_id.name or line.name,
