@@ -134,7 +134,7 @@
         <field name="name">3b. Leveringen naar/diensten in landen binnen de EU (omzet)</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_nl.tag_nl_13')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_nl.tag_nl_13'), ref('l10n_nl.tag_nl_40'), ref('l10n_nl.tag_nl_41')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="financial_report_line_nl_01_03"/>
         <field name="show_domain">never</field>
