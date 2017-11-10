@@ -18,7 +18,7 @@ class Company(models.Model):
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
     ], string='Frequency', required=True, default="weeks")
-    timesheet_mail_employee_nextdate = fields.Datetime('Next cron date for manager reminder', readonly=True)
+    timesheet_mail_employee_nextdate = fields.Datetime('Next scheduled date for manager reminder', readonly=True)
 
     # reminder for manager
     timesheet_mail_manager_allow = fields.Boolean("Manager Reminder", default=True,
@@ -28,7 +28,7 @@ class Company(models.Model):
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
     ], string='Frequency', required=True, default="weeks")
-    timesheet_mail_manager_nextdate = fields.Datetime('Next cron date for manager reminder', readonly=True)
+    timesheet_mail_manager_nextdate = fields.Datetime('Next scheduled date for manager reminder', readonly=True)
 
     @api.model
     def create(self, values):

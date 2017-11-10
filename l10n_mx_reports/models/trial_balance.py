@@ -69,12 +69,6 @@ class MxReportAccountTrial(models.AbstractModel):
         if self.env.user.company_id.country_id.code.upper() == 'MX':
             # TODO: something like: and all([c.country_id.code == 'MX' for c in options.companies]):
             afrl_obj = self.env['account.financial.html.report.line']
-            company_id = self.env.context.get('company_id') or self.env.user.company_id
-            for period_number, period in enumerate(reversed(comparison_table)):
-                res = self.with_context(date_from_aml=period['date_from'], date_to=period['date_to'], date_from=period['date_from'] and company_id.compute_fiscalyear_dates(fields.datetime.strptime(period['date_from'], "%Y-%m-%d"))['date_from'] or None).group_by_account_id(options, None)
-                for account in res:
-                    grouped_accounts[account][period_number]['debit'] -= res[account]['initial_bal']['debit']
-                    grouped_accounts[account][period_number]['credit'] -= res[account]['initial_bal']['credit']
 
             lines = []
             afr_lines = afrl_obj.search([

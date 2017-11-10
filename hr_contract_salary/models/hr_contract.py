@@ -35,7 +35,7 @@ class HrContract(models.Model):
     def _get_access_token_end_date(self):
         today = fields.Date.today()
         validity = self.env['ir.config_parameter'].sudo().get_param('hr_contract_salary.access_token_validity', default=30)
-        return fields.Date.to_string(fields.Date.from_string(today) + timedelta(days=validity))
+        return fields.Date.to_string(fields.Date.from_string(today) + timedelta(days=int(validity)))
 
     def action_accept_package(self):
         if self.origin_contract_id.employee_id:
