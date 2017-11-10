@@ -5,6 +5,7 @@ var concurrency = require('web.concurrency');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
+var framework = require('web.framework');
 var session = require('web.session');
 var view_registry = require('web.view_registry');
 var Widget = require('web.Widget');
@@ -46,20 +47,21 @@ var Editors = {
 var ViewEditorManager = Widget.extend({
     className: 'o_web_studio_view_editor',
     custom_events: {
-        'sidebar_tab_changed': '_onSidebarTabChanged',
-        'node_clicked': '_onNodeClicked',
-        'unselect_element': '_onUnselectElement',
-        'view_change': '_onViewChange',
-        'email_alias_change': '_onEmailAliasChange',
-        'default_value_change': '_onDefaultValueChange',
-        'toggle_form_invisible': '_onShowInvisibleToggled',
-        'open_xml_editor': '_onOpenXMLEditor',
         'close_xml_editor': '_onCloseXMLEditor',
-        'save_xml_editor': '_onSaveXMLEditor',
-        'open_view_form': '_onOpenViewForm',
+        'default_value_change': '_onDefaultValueChange',
+        'drag_component' : '_onComponentDragged',
+        'email_alias_change': '_onEmailAliasChange',
+        'field_renamed': '_onFieldRenamed',
+        'node_clicked': '_onNodeClicked',
         'open_defaults': '_onOpenDefaults',
         'open_field_form': '_onOpenFieldForm',
-        'drag_component' : '_onComponentDragged',
+        'open_view_form': '_onOpenViewForm',
+        'open_xml_editor': '_onOpenXMLEditor',
+        'save_xml_editor': '_onSaveXMLEditor',
+        'sidebar_tab_changed': '_onSidebarTabChanged',
+        'toggle_form_invisible': '_onShowInvisibleToggled',
+        'unselect_element': '_onUnselectElement',
+        'view_change': '_onViewChange',
     },
     /**
      * @override
@@ -79,11 +81,16 @@ var ViewEditorManager = Widget.extend({
         this.fields = this.fields_view.fields;
         this.view_type = this.fields_view.type;
         this.view_id = this.fields_view.view_id;
+
         this.mode = 'edition';  // the other mode is 'rendering' in XML editor
         this.editor = undefined;
         this.sidebar = undefined;
+
         this.operations = [];
         this.operations_undone = [];
+
+        this.renamingAllowedFields = []; // those fields can be renamed
+
         this.expr_attrs = {
             'field': ['name'],
             'label': ['for'],
@@ -92,13 +99,14 @@ var ViewEditorManager = Widget.extend({
             'div': ['name'],
             'filter': ['name'],
         };
+
         this.view_env = params.view_env;
         this.chatter_allowed = params.chatter_allowed;
         this.studio_view_id = params.studio_view_id;
         this.studio_view_arch = params.studio_view_arch;
         this.x2mEditorPath = params.x2mEditorPath || [];
 
-        this._apply_changes_mutex = new concurrency.Mutex();
+        this._operationsMutex = new concurrency.Mutex();
 
         bus.on('undo_clicked', this, this.undo);
         bus.on('redo_clicked', this, this.redo);
@@ -163,7 +171,7 @@ var ViewEditorManager = Widget.extend({
 
         var def;
         if (from_xml) {
-            def = this._apply_changes_mutex.exec(this._editViewArch.bind(
+            def = this._operationsMutex.exec(this._editViewArch.bind(
                 this,
                 last_op.view_id,
                 last_op.new_arch
@@ -171,14 +179,13 @@ var ViewEditorManager = Widget.extend({
                 self.trigger_up('studio_error', {error: 'view_rendering'});
             });
         } else {
-            def = this._apply_changes_mutex.exec(this._editView.bind(
+            def = this._operationsMutex.exec(this._editView.bind(
                 this,
                 this.view_id,
                 this.studio_view_arch,
                 _.filter(this.operations, function (el) {return el.type !== 'replace_arch'; })
             ));
         }
-
         return def.then(function (result) {
             if (!result.fields_views) {
                 // the operation can't be applied
@@ -187,21 +194,16 @@ var ViewEditorManager = Widget.extend({
                     return $.Deferred().reject();
                 });
             }
-            var view_type = self.view_type;
-            var fields = self.fields;
-            if (self.x2mField) {
-                view_type = self.mainViewType;
-                fields = self.mainFields;
-            }
+
+            // the studio_view could have been created at the first edition so
+            // studio_view_id must be updated
+            self.studio_view_id = result.studio_view_id;
+
             // transform arch from string to object
             result.fields_views = _.mapObject(result.fields_views, data_manager._postprocess_fvg.bind(data_manager));
-
-            // "/web_studio/edit_view" returns "fields" only when we created a
-            // new field ; otherwise, use the same ones that shouldn't have changed.
-            fields = $.extend(true, {}, result.fields || fields);
-
             // add necessary keys on fields_views
-            data_manager.processViews(result.fields_views, fields);
+            data_manager.processViews(result.fields_views, result.fields);
+
             if (self.x2mField) {
                 self.view_type = self.mainViewType;
             }
@@ -242,13 +244,7 @@ var ViewEditorManager = Widget.extend({
         // If we are editing an x2m field, we specify the xpath needed in front
         // of the one generated by the default route.
         if (this.x2mField && op.target) {
-            var subviewXpath = this._getSubviewXpath(this.x2mEditorPath);
-            // If the xpath_info last element is the same than the subview type
-            // we remove it since it will be added by the subviewXpath.
-            if (op.target.xpath_info && op.target.xpath_info[0].tag === this.x2mViewType) {
-                op.target.xpath_info.shift();
-            }
-            op.target.subview_xpath = subviewXpath;
+            this._setSubViewXPath(op);
         }
         this.operations.push(op);
         this.operations_undone = [];
@@ -315,6 +311,7 @@ var ViewEditorManager = Widget.extend({
             view_type: this.view_type,
             model_name: modelName,
             fields: this.fields,
+            renamingAllowedFields: this.renamingAllowedFields,
             state: state,
             isEditingX2m: !!this.x2mField,
         };
@@ -420,6 +417,7 @@ var ViewEditorManager = Widget.extend({
         var newState;
         if (mode) {
             newState = {
+                renamingAllowedFields: this.renamingAllowedFields,
                 mode: mode,
                 show_invisible: this.sidebar.state.show_invisible,
             };
@@ -631,6 +629,9 @@ var ViewEditorManager = Widget.extend({
         }
         // When the field values is selected, close the dialog and update the view
         $.when(def_field_values).then(function (values) {
+            if (field_description) {
+                self.renamingAllowedFields.push(field_description.name);
+            }
             self.do({
                 type: type,
                 target: {
@@ -814,7 +815,7 @@ var ViewEditorManager = Widget.extend({
      * @param {Object} new_attrs
      */
     _editElementAttributes: function (type, node, xpath_info, new_attrs) {
-        this.do({
+        var newOp = {
             type: type,
             target: {
                 tag: node.tag,
@@ -824,7 +825,27 @@ var ViewEditorManager = Widget.extend({
             position: 'attributes',
             node: node,
             new_attrs: new_attrs,
-        });
+        };
+        if (node.tag === 'field' && new_attrs.string &&
+            _.contains(this.renamingAllowedFields, node.attrs.name)) {
+            if (this.x2mField) {
+                this._setSubViewXPath(newOp);
+            }
+            this.operations.push(newOp);
+
+            // find a new name that doesn't exist yet, acording to the label
+            var baseName = 'x_studio_' + this._slugify(new_attrs.string);
+            var newName = baseName;
+            var index = 1;
+            while (newName in this.fields) {
+                newName = baseName + '_' + index;
+                index++;
+            }
+
+            this._renameField(node.attrs.name, newName);
+        } else {
+            this.do(newOp);
+        }
     },
     /**
      * The point of this function is to receive a list of customize operations
@@ -1005,7 +1026,6 @@ var ViewEditorManager = Widget.extend({
     _instantiateX2mEditor: function () {
         var self = this;
         this.mainViewType = this.view_type;
-        this.mainFields = this.fields;
         return this._setX2mParameters().then(function () {
             return self.updateEditor();
         });
@@ -1060,6 +1080,7 @@ var ViewEditorManager = Widget.extend({
             modelName: this.x2mModel,
             parentID: this.editor.state.id,
         };
+        this.renamingAllowedFields = [];
         this.x2mEditorPath.push({
             view_type: this.view_type,
             x2mField: this.x2mField,
@@ -1121,6 +1142,43 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
+     * Rename field.
+     *
+     * @private
+     * @param {string} oldName
+     * @param {string} newName
+     * @returns {Deferred}
+     */
+    _renameField: function (oldName, newName) {
+        var self = this;
+        return this._operationsMutex.exec(function () {
+            // blockUI is used to prevent the user from doing any operation
+            // because the hooks are still related to the old field name
+            framework.blockUI();
+            self.sidebar.$('input').attr('disabled', true);
+            self.sidebar.$('select').attr('disabled', true);
+
+            return self._rpc({
+                route: '/web_studio/rename_field',
+                params: {
+                    studio_view_id: self.studio_view_id,
+                    studio_view_arch: self.studio_view_arch,
+                    model: self.x2mModel ? self.x2mModel : self.model_name,
+                    old_name: oldName,
+                    new_name: newName,
+                },
+            }).then(function () {
+                self._updateOperations(oldName, newName);
+                var oldFieldIndex = self.renamingAllowedFields.indexOf(oldName);
+                self.renamingAllowedFields.splice(oldFieldIndex, 1);
+                self.renamingAllowedFields.push(newName);
+            }).always(function () {
+                framework.unblockUI();
+                return self.applyChanges();
+            });
+        });
+    },
+    /**
      * @private
      */
     _resetSidebarMode: function () {
@@ -1159,6 +1217,21 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
+     * Modifies in place the operation to add `subview_xpath` on the target key.
+     *
+     * @private
+     * @param {Object} op
+     */
+    _setSubViewXPath: function (op) {
+        var subviewXpath = this._getSubviewXpath(this.x2mEditorPath);
+        // If the xpath_info last element is the same than the subview type
+        // we remove it since it will be added by the subviewXpath.
+        if (op.target.xpath_info && op.target.xpath_info[0].tag === this.x2mViewType) {
+            op.target.xpath_info.shift();
+        }
+        op.target.subview_xpath = subviewXpath;
+    },
+    /**
      * Changes the widget variables to match the x2m field data.
      * The rpc is done in order to get the relational fields info of the x2m
      * being edited.
@@ -1175,6 +1248,38 @@ var ViewEditorManager = Widget.extend({
             data_manager.processViews(self.fields_views, fields);
             self.fields = fields;
         });
+    },
+    /**
+     * Slugifies a string (used to transform a label into a field name)
+     * Source: https://gist.github.com/mathewbyrne/1280286
+     *
+     * @private
+     * @param {string} text
+     * @returns {string}
+     */
+    _slugify: function (text) {
+        return text.toString().toLowerCase().trim()
+            .replace(/[^\w\s-]/g, '') // remove non-word [a-z0-9_], non-whitespace, non-hyphen characters
+            .replace(/[\s_-]+/g, '_') // swap any length of whitespace, underscore, hyphen characters with a single _
+            .replace(/^-+|-+$/g, ''); // remove leading, trailing -
+    },
+    /**
+     * Updates the list of operations after a field renaming (i.e. replace all
+     * occurences of @oldName by @newName).
+     *
+     * @private
+     * @param {string} oldName
+     * @param {string} newName
+     */
+    _updateOperations: function (oldName, newName) {
+        var strOperations = JSON.stringify(this.operations);
+        // We only want to replace exact matches of the field name, but it can
+        // be preceeded/followed by other characters, like parent.my_field or in
+        // a domain like [('...', '...', my_field)] etc.
+        // Note that negative lookbehind is not correctly handled in JS ...
+        var chars = '[^\\w\\u007F-\\uFFFF]';
+        var re = new RegExp('(' + chars + '|^)' + oldName + '(' + chars + '|$)', 'g');
+        this.operations = JSON.parse(strOperations.replace(re, '$1' + newName + '$2'));
     },
 
     //--------------------------------------------------------------------------
@@ -1224,6 +1329,13 @@ var ViewEditorManager = Widget.extend({
         var value = event.data.value;
         var modelName = this.x2mModel ? this.x2mModel : this.model_name;
         this._setEmailAlias(modelName, value);
+    },
+    /**
+     * @private
+     * @param {OdooEvent} event
+     */
+    _onFieldRenamed: function (event) {
+        this._renameField(event.data.oldName, event.data.newName);
     },
     /**
      * Toggle editor sidebar.
@@ -1333,6 +1445,8 @@ var ViewEditorManager = Widget.extend({
      */
     _onOpenXMLEditor: function () {
         var self = this;
+
+        this.renamingAllowedFields = [];
 
         this.XMLEditor = new XMLEditor(this, this.view_id, {
             position: 'left',

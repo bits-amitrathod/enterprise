@@ -471,6 +471,14 @@
             <input id="placeholder" name="placeholder" type="text" placeholder="Placeholder Text" data-type="attributes"
                 t-att-value="widget.state.attrs.placeholder"/>
         </div>
+        <div class="o_web_studio_sidebar_text" t-if="widget.debug">
+            <label for="name">Technical Name</label>
+            <div class="input-group">
+                <span class="input-group-addon" t-if="widget.isRenamingAllowed(widget.state.attrs.name)">x_studio_</span>
+                <input t-if="widget.isRenamingAllowed(widget.state.attrs.name)" id="id" name="name" type="text" data-type="field_name" t-att-value="widget.state.attrs.name.replace('x_studio_', '')"/>
+                <span t-else="1"><t t-esc="widget.state.attrs.name"/></span>
+            </div>
+        </div>
         <div t-if="_.contains(['list', 'form', 'kanban'], widget.view_type)" class="o_web_studio_sidebar_select">
             <label for="widget">Widget</label>
             <select id="widget" name="widget">

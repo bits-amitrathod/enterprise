@@ -131,4 +131,66 @@ tour.register('web_studio_new_app_tour', {
     position: 'bottom',
 }]);
 
+tour.register('web_studio_tests_tour', {
+    test: true,
+    url: "/web?studio=app_creator&debug=",
+}, [{
+    trigger: '.o_web_studio_new_app',
+},{
+    // the next 6 steps are here to create a new app
+    trigger: '.o_web_studio_app_creator_next',
+}, {
+    trigger: '.o_web_studio_app_creator_name > input',
+    run: 'text ' + utils.randomString(6),
+}, {
+    trigger: '.o_web_studio_selectors .o_web_studio_selector:eq(2)',
+}, {
+    trigger: '.o_web_studio_app_creator_next.is_ready',
+}, {
+    trigger: '.o_web_studio_app_creator_menu > input',
+    run: 'text ' + utils.randomString(6),
+}, {
+    trigger: '.o_web_studio_app_creator_next.is_ready',
+}, {
+    // add an existing field (display_name)
+    trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+}, {
+    // click on the field
+    trigger: '.o_web_studio_form_view_editor td.o_td_label:first',
+}, {
+    // rename the label
+    trigger: '.o_web_studio_sidebar_content.o_display_field input[name="string"]',
+    run: 'text My Coucou Field',
+}, {
+    // verify that the field name has changed and change it
+    trigger: 'input[data-type="field_name"][value="my_coucou_field"]',
+    run: 'text coucou',
+}, {
+    // click on "Add" tab
+    trigger: '.o_web_studio_sidebar .o_web_studio_new',
+}, {
+    // add a new field
+    trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+}, {
+    // click on the new field
+    trigger: '.o_web_studio_form_view_editor td.o_td_label:eq(1)',
+}, {
+    // rename the field with the same name
+    trigger: 'input[data-type="field_name"]',
+    run: 'text coucou',
+}, {
+    // an alert dialog should be opened
+    trigger: '.modal-footer > button:first',
+}, {
+    // rename the label
+    trigger: '.o_web_studio_sidebar_content.o_display_field input[name="string"]',
+    run: 'text COUCOU',
+}, {
+    // verify that the field name has changed (post-fixed by _1)
+    trigger: 'input[data-type="field_name"][value="coucou_1"]',
+    run: 'text coucou_2',
+}]);
+
 });

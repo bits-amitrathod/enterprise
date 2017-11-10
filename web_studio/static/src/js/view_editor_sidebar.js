@@ -32,6 +32,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         'change .o_display_view select':                     '_onViewChanged',
         'change .o_display_field input[data-type="attributes"]': '_onElementChanged',
         'change .o_display_field select':                    '_onElementChanged',
+        'change .o_display_field input[data-type="field_name"]': '_onFieldNameChanged',
         'focus .o_display_field input[data-type="attributes"][name="domain"]': '_onDomainEditor',
         'change .o_display_field [data-type="default_value"]': '_onDefaultValueChanged',
         'change .o_display_page input':                      '_onElementChanged',
@@ -57,6 +58,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @param {Object} params.fields_in_view
      * @param {Object} params.fields_not_in_view
      * @param {boolean} params.isEditingX2m
+     * @param {Array} params.renamingAllowedFields
      */
     init: function (parent, params) {
         this._super.apply(this, arguments);
@@ -66,6 +68,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         this.view_type = params.view_type;
         this.model_name = params.model_name;
         this.isEditingX2m = params.isEditingX2m;
+        this.renamingAllowedFields = params.renamingAllowedFields;
 
         this.fields = params.fields;
         this.orderered_fields = _.sortBy(this.fields, function (field) {
@@ -147,6 +150,13 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      */
     domainToStr: function (domain) {
         return Domain.prototype.arrayToString(domain);
+    },
+    /**
+     * @param {string} fieldName
+     * @returns {boolean} if the field can be renamed
+     */
+    isRenamingAllowed: function (fieldName) {
+        return _.contains(this.renamingAllowedFields, fieldName);
     },
     /**
      * @param {String} value
@@ -511,6 +521,36 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     _onFieldChanged: function () {
         StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
         this._changeFieldGroup();
+    },
+    /**
+     * Renames the field after confirmation from user.
+     *
+     * @private
+     * @param {Event} ev
+     */
+    _onFieldNameChanged: function (ev) {
+        var $input = $(ev.currentTarget);
+        var attribute = $input.attr('name');
+        if (!attribute) {
+            return;
+        }
+        var newName = 'x_studio_' + $input.val();
+        var message;
+        if (newName.match(/[^a-z0-9_]/g) || newName.length >= 54) {
+            message = _.str.sprintf(_t('The new name can contain only a to z lower letters, numbers and _, with ' +
+                'a maximum of 53 characters.'));
+            Dialog.alert(this, message);
+            return;
+        }
+        if (newName in this.fields) {
+            message = _.str.sprintf(_t('A field with the same name already exists.'));
+            Dialog.alert(this, message);
+            return;
+        }
+        this.trigger_up('field_renamed', {
+            oldName: this.state.node.attrs.name,
+            newName: newName,
+        });
     },
     /**
      * @private

@@ -580,7 +580,6 @@ class WebStudioController(http.Controller):
     def edit_view(self, view_id, studio_view_arch, operations=None):
         IrModelFields = request.env['ir.model.fields']
         view = request.env['ir.ui.view'].browse(view_id)
-        field_created = False
 
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.fromstring(studio_view_arch, parser=parser)
@@ -627,7 +626,6 @@ class WebStudioController(http.Controller):
                     ], limit=1)
                     if not field:
                         field = self.create_new_field(op['node']['field_description'])
-                        field_created = True
                     op['node']['attrs']['name'] = field.name
                 if op['node'].get('tag') == 'filter' and op['target']['tag'] == 'group' and op['node']['attrs'].get('create_group'):
                     op['node']['attrs'].pop('create_group')
@@ -673,12 +671,23 @@ class WebStudioController(http.Controller):
 
         fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         view_type = 'list' if view.type == 'tree' else view.type
-        result = {'fields_views': {view_type: fields_view}}
 
-        if field_created:
-            result['fields'] = ViewModel.fields_get()
+        return {
+            'fields_views': {view_type: fields_view},
+            'fields': ViewModel.fields_get(),
+            'studio_view_id': studio_view.id,
+        }
 
-        return result
+    @http.route('/web_studio/rename_field', type='json', auth='user')
+    def rename_field(self, studio_view_id, studio_view_arch, model, old_name, new_name):
+        studio_view = request.env['ir.ui.view'].browse(studio_view_id)
+
+        # a field cannot be renamed if it appears in a view ; we thus reset the
+        # studio view before all operations to be able to rename the field
+        studio_view.arch_db = studio_view_arch
+
+        field_id = request.env['ir.model.fields']._get(model, old_name)
+        field_id.write({'name': new_name})
 
     def _create_studio_view(self, view, arch):
         # We have to play with priorities. Consider the following:
