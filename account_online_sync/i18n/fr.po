@@ -18,13 +18,16 @@
 # Eloïse Stilmant <est@odoo.com>, 2017
 # leemannd <denis.leemann@camptocamp.com>, 2017
 # Florent de Labarre <florent@iguanayachts.com>, 2017
+# fr trans <e2ftrans1@yahoo.com>, 2017
+# fr trans <e2ffr05@hotmail.com>, 2017
+# e2f_fr_t5 <e2f_fr_t5@outlook.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Florent de Labarre <florent@iguanayachts.com>, 2017\n"
+"Last-Translator: e2f_fr_t5 <e2f_fr_t5@outlook.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,7 +88,7 @@ msgstr "Une erreur est survenue durant la synchronisation en ligne"
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "Associate to journal"
-msgstr ""
+msgstr "Associer au journal"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_balance
@@ -161,7 +164,7 @@ msgstr "Nom affiché"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_sync_date
 msgid "Fetch transaction from"
-msgstr ""
+msgstr "Rapatrier la transaction depuis"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_id
@@ -176,11 +179,15 @@ msgid ""
 "ID of the banking institution in third party server used for debugging "
 "purpose"
 msgstr ""
+"Identifiant de l’établissement bancaire du serveur tiers utilisé à des fins "
+"de débogage"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_provider_account_identifier
 msgid "ID used to identify provider account in third party server"
 msgstr ""
+"Identifiant permettant d’identifier le compte du fournisseur sur le serveur "
+"tiers"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_journal
@@ -275,7 +282,7 @@ msgstr "Identifiant en ligne"
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_online_provider_account
 msgid "Online Provider Account"
-msgstr ""
+msgstr "Compte de fournisseur en ligne"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -293,7 +300,7 @@ msgstr "Synchronisation en ligne"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_account_online_journal_id
 msgid "Online account"
-msgstr ""
+msgstr "Compte en ligne"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_online_identifier
@@ -355,7 +362,7 @@ msgstr "Synchroniser maintenant"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_message
 msgid "Techhnical message from third party provider that can help debugging"
-msgstr ""
+msgstr "Message technique d’un fournisseur tiers pouvant aider au débogage"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:58
@@ -366,24 +373,24 @@ msgstr "L'erreur suivante est apparue durant la synchronisation: %s"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_action_required
 msgid "True if user needs to take action by updating account"
-msgstr ""
+msgstr "Vrai si l’utilisateur doit intervenir, en mettant à jour le compte"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:122
 #, python-format
 msgid "Unimplemented"
-msgstr ""
+msgstr "Inappliqué"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Update Credentials"
-msgstr ""
+msgstr "Mettre à jour les identifiants"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_journal_synchronization_status
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_status
 msgid "Update status of provider account"
-msgstr ""
+msgstr "Mettre à jour le statut du compte du fournisseur"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -393,7 +400,7 @@ msgstr "Voir le problème"
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_wizard
 msgid "Wizard for online account synchronization"
-msgstr ""
+msgstr "Assistant pour la synchronisation de compte en ligne"
 
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
@@ -403,7 +410,7 @@ msgstr "Yodlee"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_balance
 msgid "balance of the account sent by the third party provider"
-msgstr ""
+msgstr "solde du compte envoyé par le fournisseur tiers"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -411,22 +418,25 @@ msgid ""
 "bank accounts have been retrieved.\n"
 "                  You can associate those bank accounts to a journal in order to automatically retrieve the latest statements from your bank."
 msgstr ""
+"les comptes bancaires ont été récupérés.\n"
+"                  Vous pouvez associer ces comptes bancaires à un journal afin de récupérer automatiquement les derniers relevés de votre banque."
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_online_identifier
 msgid "id use to identify account in provider system"
 msgstr ""
+"Identifiant permettant d’identifier le compte dans le système du fournisseur"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_provider_name
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_name
 msgid "name of the banking institution"
-msgstr ""
+msgstr "nom de l’établissement bancaire"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_number_added
 msgid "number of accounts added from call to new_institution"
-msgstr ""
+msgstr "nombre de comptes ajoutés de l’appel à la nouvelle_institution"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_count_account_online_journal
@@ -434,3 +444,5 @@ msgid ""
 "technical field used to hide account_online_journal_id if no institution has"
 " been loaded in the system"
 msgstr ""
+"champ technique utilisé pour masquer account_online_journal_id si aucune "
+"institution n'a été chargée dans le système"
