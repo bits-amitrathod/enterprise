@@ -50,7 +50,7 @@ msgstr "<strong>Land:</strong>"
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
 msgid "<strong>Creditor identifier:</strong>"
-msgstr ""
+msgstr "<strong>Crediteur identificatie:</strong>"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -118,7 +118,7 @@ msgstr "<strong>Postcode:</strong>"
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:151
 #, python-format
-msgid "A debtor account is required to valide a SEPA Direct Debit mandate."
+msgid "A debtor account is required to validate a SEPA Direct Debit mandate."
 msgstr ""
 
 #. module: account_sepa_direct_debit
@@ -241,7 +241,7 @@ msgstr "Creditor identifier"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_config_settings_sdd_creditor_identifier
-msgid "Creditor identifier of your company withing SEPA scheme."
+msgid "Creditor identifier of your company within SEPA scheme."
 msgstr ""
 
 #. module: account_sepa_direct_debit
@@ -310,7 +310,7 @@ msgstr "Debiteur informatie"
 #: model:ir.ui.menu,name:account_sepa_direct_debit.account_sepa_direct_debit_customer_mandates_menu
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sdd_res_partner_view
 msgid "Direct Debit Mandates"
-msgstr ""
+msgstr "Auto incasso mandaten"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_journal_dashboard_kanban_view
@@ -332,7 +332,7 @@ msgstr "Incassobetalingen te innen"
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_view_account_payment_invoice_form_inherit
 msgid "Direct Debit collecting method available"
-msgstr ""
+msgstr "Incasso betalingsmethode beschikbaar"
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,name:account_sepa_direct_debit.action_sdd_payments_to_collect
@@ -387,11 +387,12 @@ msgstr "Bestandsnaam van originele document."
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_debtor_id_code
 msgid "Free reference identifying the debtor in your company."
 msgstr ""
+"Vrije referentie waarmee de debiteur van uw bedrijf wordt geïdentificeerd."
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,name:account_sepa_direct_debit.action_sdd_account_payment_generate_xml
 msgid "Generate Direct Debit XML"
-msgstr ""
+msgstr "Genereer incasso XML"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_generate_xml_form
@@ -441,12 +442,14 @@ msgstr "Identifier"
 #, python-format
 msgid "Invalid creditor identifier. Make sure you made no typo."
 msgstr ""
+"Ongeldige crediteur identificatie. Controleer of u geen typefout heeft "
+"gemaakt."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/res_company.py:40
 #, python-format
 msgid "Invalid creditor identifier. Wrong format."
-msgstr ""
+msgstr "Ongeldige crediteur identificatie: Verkeerd formaat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_account_invoice
@@ -456,7 +459,7 @@ msgstr "Factuur"
 #. module: account_sepa_direct_debit
 #: model:mail.message.subtype,description:account_sepa_direct_debit.sdd_mt_invoice_paid_with_mandate
 msgid "Invoice paid via direct debit."
-msgstr ""
+msgstr "Factuur betaald via auto incasso."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_paid_invoice_ids
@@ -489,6 +492,8 @@ msgstr "Dagboek voor automatische incassos"
 msgid ""
 "Journal to use to receive SEPA Direct Debit payments from this mandate."
 msgstr ""
+"Dagboek welke wordt gebruikt om SEPA automatische incasso's te ontvangen van"
+" dit mandaat."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_download_xml_wizard___last_update
@@ -517,7 +522,7 @@ msgstr "Laatst bijgewerkt op"
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_view_account_payment_search
 msgid "Linked to a revoked direct debit mandate"
-msgstr ""
+msgstr "Gelinkt aan ingetrokken automatische incasso mandaat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_view_account_invoice_search
@@ -591,6 +596,8 @@ msgid ""
 "Once this invoice has been paid with Direct Debit, contains the mandate that"
 " allowed the payment."
 msgstr ""
+"Wanneer de factuur is betaald met auto incasso bevat deze de mandaat dat de "
+"betaling toestond."
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_xml_archive_tree_act
@@ -611,6 +618,8 @@ msgid ""
 "Only IBAN account numbers can receive SEPA Direct Debit payments. Please "
 "select a journal associated to one."
 msgstr ""
+"Alleen IBAN rekeningen kunnen SEPA automatische incasso betalingen "
+"ontvangen. Selecteer een dagboek met zo'n rekening."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:88
@@ -756,7 +765,7 @@ msgstr "Betalingen voor meerdere facturen registreren"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_generate_xml_wizard_required_collection_date
 msgid "Required collection date"
-msgstr ""
+msgstr "Gewenste incassodatum"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form

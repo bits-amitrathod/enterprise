@@ -3,17 +3,18 @@
 # * mrp_account
 # 
 # Translators:
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# Bole <bole@dajmi5.com>, 2016
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2016
+# Bole <bole@dajmi5.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Tina Milas <tina@uvid.hr>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Đurđica Žarković <durdica.zarkovic@storm.hr>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Vladimir Olujić <olujic.vladimir@storm.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,10 +50,15 @@ msgstr "<strong>Jedinična cijena</strong>"
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_mrp_workcenter_costs_hour_account_id
 msgid "Analytic Account"
-msgstr "Analitički konto"
+msgstr "Konto analitike"
 
 #. module: mrp_account
-#: model:ir.actions.report.xml,name:mrp_account.action_cost_struct_mrp_production
+#: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
+msgid "Code"
+msgstr "Šifra"
+
+#. module: mrp_account
+#: model:ir.actions.report,name:mrp_account.action_cost_struct_mrp_production
 #: model:ir.ui.view,arch_db:mrp_account.mrp_production_form_inherit_view6
 #: model:ir.ui.view,arch_db:mrp_account.product_product_inherit_form_view_cost_structure
 msgid "Cost Analysis"
@@ -66,10 +72,10 @@ msgstr "Trošak ubilježen"
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Cost Structure"
-msgstr "Cost Structure"
+msgstr "Struktura troška"
 
 #. module: mrp_account
-#: model:ir.actions.report.xml,name:mrp_account.action_cost_struct_product_template
+#: model:ir.actions.report,name:mrp_account.action_cost_struct_product_template
 msgid "Cost Structure Analysis"
 msgstr "Analiza strukture troškova"
 
@@ -104,8 +110,8 @@ msgid "Costing Information"
 msgstr "Postavke troškova"
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure_display_name
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure_display_name
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure_display_name
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure_display_name
 msgid "Display Name"
 msgstr "Naziv za prikaz"
 
@@ -119,14 +125,14 @@ msgstr ""
 "proizvodnim nalozima."
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure_id
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure_id
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure_id
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure_id
 msgid "ID"
 msgstr "ID"
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure___last_update
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure___last_update
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure___last_update
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure___last_update
 msgid "Last Modified on"
 msgstr "Zadnja promjena"
 
@@ -219,11 +225,11 @@ msgid "manufacturing order(s)."
 msgstr "proizvodni nalog(zi)."
 
 #. module: mrp_account
-#: model:ir.model,name:mrp_account.model_report_mrp_cost_structure
-msgid "report.mrp_cost_structure"
-msgstr "report.mrp_cost_structure"
+#: model:ir.model,name:mrp_account.model_report_mrp_account_mrp_cost_structure
+msgid "report.mrp_account.mrp_cost_structure"
+msgstr "report.mrp_account.mrp_cost_structure"
 
 #. module: mrp_account
-#: model:ir.model,name:mrp_account.model_report_product_template_cost_structure
-msgid "report.product_template_cost_structure"
-msgstr "report.product_template_cost_structure"
+#: model:ir.model,name:mrp_account.model_report_mrp_account_product_template_cost_structure
+msgid "report.mrp_account.product_template_cost_structure"
+msgstr "report.mrp_account.product_template_cost_structure"

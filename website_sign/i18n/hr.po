@@ -3,21 +3,22 @@
 # * website_sign
 # 
 # Translators:
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
-# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
 # Bole <bole@dajmi5.com>, 2017
 # Davor Bojkić <davor.bojkic@storm.hr>, 2017
-# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017
+# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
 # Tina Milas <tina@uvid.hr>, 2017
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017
+# Stjepan Lovasić <stjepan.lovasic@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~14+e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:33+0000\n"
-"PO-Revision-Date: 2017-02-15 11:33+0000\n"
-"Last-Translator: Tina Milas <tina@uvid.hr>, 2017\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Stjepan Lovasić <stjepan.lovasic@gmail.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,6 +85,61 @@ msgid ""
 "        \n"
 "        "
 msgstr ""
+"\n"
+"            <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
+"\n"
+"            <div style=\"width:90%; max-width:600px; margin:auto; font-size:10pt; padding:20px 0; font-family:'Lato', serif;\">\n"
+"                <div style=\"background-color:#EFEDED; padding: 20px;\">\n"
+"                    % if ctx['template_type'] == \"request\":\n"
+"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) zahtjeva vaš potpis na ovom dokumentu :\n"
+"                    % endif\n"
+"                    % if ctx['template_type'] == \"follower\":\n"
+"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) vas je dodao kao pratitelja ovom zahtjevu za potpis :\n"
+"                    % endif\n"
+"                    % if ctx['template_type'] == \"completed\":\n"
+"                        Ovaj dokument je završen i potpisan od strane svih :\n"
+"                    % endif\n"
+"\n"
+"                    <h1 style=\"font-size:1.25em; margin:15px 0 25px 0;\">${object['reference']}</h1>\n"
+"                    \n"
+"                    <div style=\"margin:0 -15px\">\n"
+"                        <a style=\"float:left; display:inline-block; margin:0 15px 10px 15px; padding:5px 10px; border-radius: 3px; background-color:#5C6ED0; text-align:center; text-decoration:none; color:#F7FBFD;\" href=${ctx['link']}>\n"
+"                            % if ctx['template_type'] == \"request\":\n"
+"                                Potpiši dokument\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"follower\":\n"
+"                                Pregledaj zahtjev za potpisom\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"completed\":\n"
+"                                Pregledaj potpisani dokument\n"
+"                            % endif\n"
+"                        </a>\n"
+"                        \n"
+"                        <div style=\"font-size:0.8em; color:#999999; margin:0 15px 10px 15px\">\n"
+"                            % if ctx['template_type'] == \"request\":\n"
+"                                <strong style=\"font-weight:bold; color:black;\">Upozorenje: ne prosljeđujte ovaj mail!</strong><br/>\n"
+"                                Kontakti kojima prosljedite mail moći će pristupiti dokumentu i potpisati ga s vašim podacima.\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"follower\":\n"
+"                                Biti ćete obaviješteni kada dokument potpišu svi koji su uključeni.\n"
+"                            % endif\n"
+"                        </div>\n"
+"                        <div style=\"clear:both;\"/>\n"
+"                    </div>\n"
+"                    \n"
+"                    % if ctx['msgbody']:\n"
+"                    <div style=\"background-color:white; padding:10px;\">\n"
+"                        ${ctx['msgbody']|safe}\n"
+"                    </div>\n"
+"                    % endif\n"
+"                </div>\n"
+"                \n"
+"                <div style=\"font-size:0.8em; margin-top:10px;\">\n"
+"                    <span style=\"color:#428BCA;\">Poslano sa <strong style=\"font-weight:bold;\">Odoo Sign</strong></span>\n"
+"                </div>\n"
+"            </div>\n"
+"        \n"
+"        "
 
 #. module: website_sign
 #: model:mail.template,subject:website_sign.website_sign_mail_template
@@ -102,10 +158,10 @@ msgstr "<span>(1.0 = maksimalna veličina stranice)</span>"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1058
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1109
 #, python-format
 msgid "A copy has been sent to the new followers."
-msgstr "Primjerak je poslan novim sljedbenicima."
+msgstr "Primjerak je poslan novim pratiteljima."
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_search
@@ -115,35 +171,35 @@ msgstr "Aktivan"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:182
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:200
 #, python-format
 msgid "Add Initials"
 msgstr "Dodaj inicijale"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:191
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:209
 #, python-format
 msgid "Add on all pages"
 msgstr "Dodaj na svim stranicama"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:187
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:205
 #, python-format
 msgid "Add once"
 msgstr "Dodaj jednom"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:652
+#: code:addons/website_sign/static/src/js/website_sign_common.js:662
 #, python-format
 msgid "Adopt Your Signature"
 msgstr "Usvoji svoj potpis"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:657
+#: code:addons/website_sign/static/src/js/website_sign_common.js:667
 #, python-format
 msgid "Adopt and Sign"
 msgstr "Usvoji i potpiši"
@@ -195,10 +251,10 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:237
-#: code:addons/website_sign/static/src/js/website_sign_common.js:282
-#: code:addons/website_sign/static/src/js/website_sign_common.js:660
-#: code:addons/website_sign/static/src/js/website_sign_common.js:915
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:255
+#: code:addons/website_sign/static/src/js/website_sign_common.js:283
+#: code:addons/website_sign/static/src/js/website_sign_common.js:670
+#: code:addons/website_sign/static/src/js/website_sign_common.js:925
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
 #, python-format
 msgid "Cancel"
@@ -206,7 +262,7 @@ msgstr "Odustani"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1123
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1178
 #, python-format
 msgid "Cancel Request"
 msgstr "Otkaži zahtjev"
@@ -217,7 +273,7 @@ msgid "Canceled"
 msgstr "Otkazano"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:368
+#: code:addons/website_sign/models/signature_request.py:378
 #, python-format
 msgid "Canceled."
 msgstr "Otkazano."
@@ -246,7 +302,7 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:800
+#: code:addons/website_sign/static/src/js/website_sign_common.js:810
 #, python-format
 msgid "Click to start"
 msgstr "Klikni za početak"
@@ -266,7 +322,7 @@ msgstr "Tvrtka"
 #. module: website_sign
 #: selection:signature.request.item,state:0
 msgid "Completed"
-msgstr "Completed"
+msgstr "Završeno"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_completed_document
@@ -281,8 +337,8 @@ msgstr "Završeni potpisi"
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:363
-#: code:addons/website_sign/static/src/js/website_sign_common.js:444
-#: code:addons/website_sign/static/src/js/website_sign_common.js:456
+#: code:addons/website_sign/static/src/js/website_sign_common.js:449
+#: code:addons/website_sign/static/src/js/website_sign_common.js:461
 #, python-format
 msgid "Create: \""
 msgstr "Kreiraj: \""
@@ -308,7 +364,7 @@ msgstr "Kreirao"
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_last_action_date
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_template_create_date
 msgid "Created on"
-msgstr "Datum kreiranja"
+msgstr "Kreirano"
 
 #. module: website_sign
 #: model:signature.item.party,name:website_sign.signature_item_party_customer
@@ -317,7 +373,7 @@ msgstr "Kupac"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:135
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:151
 #, python-format
 msgid "Customize Field"
 msgstr "Prilagodi polje"
@@ -344,13 +400,8 @@ msgid "Delete"
 msgstr "Obriši"
 
 #. module: website_sign
-#: model:ir.ui.menu,name:website_sign.digital_signatures_menu
-msgid "Digital Signatures"
-msgstr "Digitalni potpisi"
-
-#. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1066
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1117
 #, python-format
 msgid "Discard"
 msgstr "Odbaci"
@@ -412,13 +463,13 @@ msgstr "Dokument za potpis"
 
 #. module: website_sign
 #: model:ir.actions.act_window,name:website_sign.signature_request_action
-#: model:ir.ui.menu,name:website_sign.menu_document
+#: model:ir.ui.menu,name:website_sign.digital_signatures_menu
 msgid "Documents"
 msgstr "Dokumenti"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:966
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1014
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "Download Document"
@@ -445,7 +496,7 @@ msgstr "Nacrti zahtjeva"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:118
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:124
 #, python-format
 msgid "Drag & Drop a field in the PDF"
 msgstr "Povuci i pusti polje u PDF-u"
@@ -459,7 +510,7 @@ msgstr "Nacrtaj"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:916
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:964
 #, python-format
 msgid "Duplicated Template"
 msgstr "Duplicirani predložak"
@@ -471,7 +522,7 @@ msgstr "Uredi polja"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:98
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:104
 #, python-format
 msgid "Edit template name"
 msgstr "Uredi naziv predloška"
@@ -489,15 +540,15 @@ msgstr "Zaposlenik"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:447
+#: code:addons/website_sign/static/src/js/website_sign_common.js:452
 #, python-format
 msgid "Enter email (and name if you want)"
-msgstr "Unesi e-mail (i ime ako želiš)"
+msgstr "Unesite e-mail (i ime ako želite)"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1160
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1203
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1170
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1218
 #, python-format
 msgid "Error"
 msgstr "Greška"
@@ -521,9 +572,13 @@ msgid "Favorites"
 msgstr "Omiljeni"
 
 #. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:6
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_name
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_name
+#, python-format
 msgid "Field Name"
-msgstr "Polje Naziv"
+msgstr "Naziv polja"
 
 #. module: website_sign
 #: model:ir.ui.menu,name:website_sign.signature_item_type_menu
@@ -532,7 +587,7 @@ msgstr "Vrste polja"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:62
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:68
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_reference
 #, python-format
 msgid "Filename"
@@ -540,7 +595,7 @@ msgstr "Naziv datoteke"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:893
+#: code:addons/website_sign/static/src/js/website_sign_common.js:903
 #, python-format
 msgid "Final Validation"
 msgstr "Finalna validacija"
@@ -574,7 +629,7 @@ msgstr "Visina"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:262
+#: code:addons/website_sign/static/src/js/website_sign_common.js:263
 #, python-format
 msgid "History"
 msgstr "Povijest"
@@ -582,17 +637,17 @@ msgstr "Povijest"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_id
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_party_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id_4117
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id_7338
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_id
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_id
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_id_4086
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_id_7307
 msgid "ID"
 msgstr "ID"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:35
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:41
 #, python-format
 msgid ""
 "If you leave your document without any fields, the signers will be requested"
@@ -667,7 +722,7 @@ msgstr "ŠIrina"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:77
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:83
 #, python-format
 msgid "Link to Share"
 msgstr "Link za podjelu"
@@ -686,14 +741,14 @@ msgstr "Dužina"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:15
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:21
 #, python-format
 msgid "Mandatory field"
 msgstr "Obavezno polje"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:56
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:62
 #, python-format
 msgid "Message"
 msgstr "Poruka"
@@ -711,11 +766,11 @@ msgstr "Višelinijski tekst"
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_multiline_text
 msgid "Multiline text"
-msgstr ""
+msgstr "Višelinijski tekst"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:404
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:426
 #, python-format
 msgid "Multiple Signature Requests"
 msgstr "Višestruki zahtjevi za potpis"
@@ -747,29 +802,29 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:377
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:399
 #, python-format
 msgid "New Document"
-msgstr "Novi Dokument"
+msgstr "Novi dokument"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:88
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:105
 #, python-format
 msgid "New Template"
 msgstr "Novi predložak"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:462
-#: code:addons/website_sign/static/src/js/website_sign_common.js:466
+#: code:addons/website_sign/static/src/js/website_sign_common.js:467
+#: code:addons/website_sign/static/src/js/website_sign_common.js:471
 #, python-format
 msgid "New: "
 msgstr "Novi:"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1168
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1228
 #, python-format
 msgid "Ok"
 msgstr "U redu"
@@ -778,7 +833,7 @@ msgstr "U redu"
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_kanban
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_kanban
 msgid "Open"
-msgstr "Otvori"
+msgstr "Otvoreno"
 
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
@@ -839,7 +894,7 @@ msgstr "Napredak"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:147
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:164
 #, python-format
 msgid "Remove"
 msgstr "Ukloni"
@@ -847,11 +902,11 @@ msgstr "Ukloni"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_request_item_infos
 msgid "Request Item Infos"
-msgstr ""
+msgstr "Zatraži informacije o stavkama"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:65
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:79
 #, python-format
 msgid "Request a Signature"
 msgstr "Zatraži potpis"
@@ -863,22 +918,22 @@ msgstr "Obavezno"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1142
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1202
 #, python-format
 msgid "Resend the invitation"
 msgstr "Ponovno pošaljite pozivnicu"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1087
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1142
 #, python-format
 msgid "Resent !"
 msgstr "Ponovno poslano!"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:6
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:25
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:12
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:31
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_responsible_id
 #, python-format
 msgid "Responsible"
@@ -897,7 +952,7 @@ msgstr "Uloga"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:97
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
 msgstr "Spremljeno"
@@ -924,9 +979,9 @@ msgstr "Odaberi odgovorne"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:234
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:740
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1050
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:252
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:775
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1098
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
 #, python-format
 msgid "Send"
@@ -934,29 +989,29 @@ msgstr "Pošalji"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:230
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:248
 #, python-format
 msgid "Send Signature Request"
 msgstr "Pošalji zahtjev za potpis"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1116
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:88
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1171
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:94
 #, python-format
 msgid "Send a copy"
 msgstr "Pošalji kopiju"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:40
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:46
 #, python-format
 msgid "Send a copy to"
 msgstr "Pošalji kopiju na"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1044
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1092
 #, python-format
 msgid "Send a copy to third parties"
 msgstr "Pošalji kopiju trećim osobama"
@@ -970,7 +1025,7 @@ msgstr "Pošalji poruku..."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:270
+#: code:addons/website_sign/static/src/js/website_sign_common.js:271
 #, python-format
 msgid "Send note"
 msgstr "Pošalji poruku"
@@ -987,7 +1042,7 @@ msgstr "Poslan zahtjev"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:746
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:781
 #, python-format
 msgid "Share"
 msgstr "Podjeli"
@@ -999,7 +1054,7 @@ msgstr "Podijeli link"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:75
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:81
 #, python-format
 msgid ""
 "Share this link and Odoo will create a new document per person who clicks on"
@@ -1012,14 +1067,15 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1105
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1160
+#: model:ir.ui.menu,name:website_sign.menu_document
 #, python-format
 msgid "Sign"
 msgstr "Potpiši"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1100
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1155
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "Sign Document"
@@ -1064,7 +1120,7 @@ msgstr "Potpis stavke"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:52
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature_request_id
@@ -1112,7 +1168,7 @@ msgstr "Potpisan."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:287
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:307
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_request_item_ids
 #, python-format
 msgid "Signers"
@@ -1127,22 +1183,22 @@ msgstr "Na taj način možete zatvoriti prozor i vratiti se kasnije."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1143
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1153
 #, python-format
 msgid "Some fields have still to be completed !"
 msgstr "Neka polja još treba dovršiti!"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:905
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:953
 #, python-format
 msgid "Somebody is already filling a document which uses this template"
 msgstr "Netko već puni dokument koji koristi ovaj predložak"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1159
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1202
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1169
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1217
 #, python-format
 msgid "Sorry, an error occured, please try to fill the document again."
 msgstr ""
@@ -1156,7 +1212,7 @@ msgstr "Specijalizirani tip za potpis polja"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:948
+#: code:addons/website_sign/static/src/js/website_sign_common.js:958
 #, python-format
 msgid "Start Using Odoo Sign Now"
 msgstr "Počnite sada koristiti Odoo prijavu"
@@ -1176,16 +1232,16 @@ msgstr "Stil"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:50
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:56
 #, python-format
 msgid "Subject"
 msgstr "Predmet"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:373
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1058
-#: code:addons/website_sign/static/src/js/website_sign_common.js:276
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:395
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1109
+#: code:addons/website_sign/static/src/js/website_sign_common.js:277
 #, python-format
 msgid "Success"
 msgstr "Uspjeh"
@@ -1203,7 +1259,7 @@ msgstr "Tekst"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:942
+#: code:addons/website_sign/static/src/js/website_sign_common.js:952
 #, python-format
 msgid "Thank You !"
 msgstr "Hvala vam!"
@@ -1224,7 +1280,7 @@ msgstr "Dokument se sada ne može popuniti"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:102
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:108
 #, python-format
 msgid ""
 "This template is used by some signature requests.\n"
@@ -1254,7 +1310,7 @@ msgstr "Za potpisati"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:82
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:88
 #, python-format
 msgid ""
 "To be able to share, there must be only one responsible for all fields !"
@@ -1274,7 +1330,7 @@ msgstr "Vrsta partnera koji može pristupiti određenom polju potpisa"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:56
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:70
 #, python-format
 msgid "Upload a PDF Template"
 msgstr "Pridruži PDF predložak"
@@ -1287,7 +1343,7 @@ msgstr "Pridruži PDF ugovora za potpis."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:898
+#: code:addons/website_sign/static/src/js/website_sign_common.js:908
 #, python-format
 msgid "Validate & Send"
 msgstr "Potvrdi i pošalji"
@@ -1305,11 +1361,11 @@ msgstr "Vrijednost"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
 msgid "View"
-msgstr "Pogled"
+msgstr "Pogledaj"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:967
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1015
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "View History"
@@ -1326,14 +1382,14 @@ msgid "Waiting for completion"
 msgstr "Čeka se završetak"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:358
+#: code:addons/website_sign/models/signature_request.py:368
 #, python-format
 msgid "Waiting for signatures."
 msgstr "Čeka potpise."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:1143
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1153
 #, python-format
 msgid "Warning"
 msgstr "Upozorenje"
@@ -1352,9 +1408,9 @@ msgstr "Širina"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:305
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:42
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:90
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:325
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:48
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:96
 #, python-format
 msgid "Write email or search contact..."
 msgstr "Napišite e-mail ili pretražite kontakte..."
@@ -1379,7 +1435,7 @@ msgstr "Vaš e-mail "
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:276
+#: code:addons/website_sign/static/src/js/website_sign_common.js:277
 #, python-format
 msgid "Your message has been sent."
 msgstr "Vaša poruka je poslana."
@@ -1394,14 +1450,14 @@ msgstr "Vaše ime "
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_common.js:943
+#: code:addons/website_sign/static/src/js/website_sign_common.js:953
 #, python-format
 msgid "Your signature has been saved."
 msgstr "Vaš potpis je spremljen."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:104
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:110
 #, python-format
 msgid "click here"
 msgstr "klikni ovdje"
@@ -1430,7 +1486,7 @@ msgstr "za brzinsko testiranje aplikacije."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:104
+#: code:addons/website_sign/static/src/xml/website_sign_backend.xml:110
 #, python-format
 msgid "to start a new template from this one !"
 msgstr "započeti novi predložak iz ovoga!"
