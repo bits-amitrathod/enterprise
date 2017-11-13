@@ -449,9 +449,8 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
      * @private
      * @param {Object} response
      */
-    _onProgress: function (response) {
-        // some version of asterisk don't send ringing but trying or both
-        if (!this.onCall && (response.reason_phrase === "Ringing" || response.reason_phrase === "Trying")) {
+    _onProgress: function () {
+        if (!this.onCall) {
             this.onCall = 'ringing';
             this.trigger_up('sip_ringing');
             this.ringbacktone.play();
