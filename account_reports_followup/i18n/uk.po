@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-22 13:06+0000\n"
-"PO-Revision-Date: 2017-07-13 09:15+0000\n"
+"PO-Revision-Date: 2017-10-23 12:58+0000\n"
 "Last-Translator: Bohdan Lisnenko\n"
 "Language-Team: Ukrainian (http://www.transifex.com/odoo/odoo-9/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgid ""
 "In case of any queries concerning this matter, do not hesitate to contact our accounting department.\n"
 "\n"
 "Best Regards,\n"
-msgstr ""
+msgstr "\nШановний %(partner_name)s,\n\nНезважаючи на кілька нагадувань, Ваш рахунок все ще не налаштований.\n\nЯкщо повна оплата не буде здійснена протягом наступних 8 днів, судовий позов про відшкодування боргу буде прийнято без попередження.\n\nЯ сподіваюсь, що такі заходи виявляться непотрібними, деталі належних платежів наведено нижче.\n\nУ разі будь-яких запитань щодо цього питання, не соромтеся звертатися до нашої бухгалтерії.\n\nЗ найкращими побажаннями,\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
@@ -65,7 +65,7 @@ msgid ""
 "Would your payment have been carried out after this mail was sent, please ignore this message. Do not hesitate to contact our accounting department.  \n"
 "\n"
 "Best Regards,\n"
-msgstr ""
+msgstr "\nШановний %(partner_name)s,\n\nВиключення буде зроблене, якщо у нас виникла помилка, здається, що така сума залишається неоплаченою. Будь ласка, вжийте відповідних заходів для здійснення цього платежу протягом наступних 8 днів.\n\nЯкщо ваш платіж буде здійснено після відправлення цієї пошти, проігноруйте це повідомлення. Не соромтеся звертатися до нашої бухгалтерії.\n\nЗ найкращими побажаннями,\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line2
@@ -83,7 +83,7 @@ msgid ""
 "Details of due payments is printed below.\n"
 "\n"
 "Best Regards,\n"
-msgstr ""
+msgstr "\nШановний%(partner_name)s,\n\nМи розчаровані тим, що, незважаючи на те, що було надіслано нагадування, оплата вашого рахунку серйозно затримується.\n\nНеобхідно негайно здійснити платіж, в іншому випадку нам доведеться розглянути можливість зупинки вашого рахунку, що означає, що ми більше не зможемо надавати вашій компанії (товари/послуги).\nБудь ласка, вжийте відповідних заходів для здійснення цього платежу протягом наступних 8 днів.\n\nЯкщо виникають проблеми з оплатою рахунків, про які ми не знаємо, не соромтеся звертатися до нашої бухгалтерії, щоби ми могли швидко вирішити цю проблему.\n\nДетальні відомості про платежі наведено нижче.\n\nЗ найкращими побажаннями,\n"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -92,52 +92,52 @@ msgid ""
 "                                <b>%(date)s</b>: Current Date\n"
 "                                <b>%(user_signature)s</b>: User Name\n"
 "                                <b>%(company_name)s</b>: User's Company Name"
-msgstr ""
+msgstr "<b>%(partner_name)s</b>: Назва партнера\n                                <b>%(date)s</b>: Поточна дата\n                                <b>%(user_signature)s</b>: Ім'я користувача\n                                <b>%(company_name)s</b>: Назва компанії-користувача"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "<i class=\"fa fa-circle\" style=\"color: green;\"/> Good Debtor"
-msgstr ""
+msgstr "<i class=\"fa fa-circle\" style=\"color: green;\"/> Хороший боржник"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "<i class=\"fa fa-circle\" style=\"color: grey;\"/> Normal Debtor"
-msgstr ""
+msgstr "<i class=\"fa fa-circle\" style=\"color: grey;\"/>Нормальний боржник"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "<i class=\"fa fa-circle\" style=\"color: red;\"/> Bad Debtor"
-msgstr ""
+msgstr "<i class=\"fa fa-circle\" style=\"color: red;\"/> Поганий боржник"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_report_context_followup
 msgid "A particular context for the followup report"
-msgstr ""
+msgstr "Певний контекст для звіту про нагадування"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
 msgid "A progress bar for followup reports"
-msgstr ""
+msgstr "Індикатор відслідковування звітів"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
 msgid "Account Follow-up"
-msgstr ""
+msgstr "Облік нагадувань"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_note
 msgid "Action To Do"
-msgstr ""
+msgstr "Дія, яку необхідно зробити"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "After"
-msgstr ""
+msgstr "Після"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_responsible_id
 msgid "Assign a Responsible"
-msgstr ""
+msgstr "Призначте відповідального"
 
 #. module: account_reports_followup
 #: selection:res.partner,trust:0
@@ -157,7 +157,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
 msgid "Click to define follow-up levels and their related actions."
-msgstr ""
+msgstr "Натисніть, щоб визначити рівні нагадувань та пов'язані з ними дії."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_company_id
@@ -172,7 +172,7 @@ msgstr "Назва компанії"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_config_settings_inherit
 msgid "Configure your follow-up levels"
-msgstr ""
+msgstr "Налаштуйте ваші рівні нагадувань"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
@@ -189,12 +189,12 @@ msgstr "Дата створення"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
 msgid "Customer Payment Promise"
-msgstr ""
+msgstr "Обіцяний платіж клієнта"
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup.line:0
 msgid "Days of the follow-up levels must be different"
-msgstr ""
+msgstr "Дні рівнів нагадувань повинні бути різні"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_trust
@@ -210,7 +210,7 @@ msgstr "Назва для відображення"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Do it Later"
-msgstr ""
+msgstr "Зробити це пізніше"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
@@ -220,7 +220,7 @@ msgstr "Виконано"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
 msgid "Due Days"
-msgstr ""
+msgstr "Повні дні"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_followup_id
@@ -230,7 +230,7 @@ msgstr "Послідовності дій"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_name
 msgid "Follow-Up Action"
-msgstr ""
+msgstr "Дія нагадування"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_followup_line_ids
@@ -242,7 +242,7 @@ msgstr "Післядія"
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup_line
 msgid "Follow-up Criteria"
-msgstr ""
+msgstr "Критерії нагадувань"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_line_id
@@ -252,18 +252,18 @@ msgstr "Рівень послідовності дій"
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
 msgid "Follow-up Levels"
-msgstr ""
+msgstr "Рівні нагадувань"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
 msgid "Follow-up Responsible"
-msgstr ""
+msgstr "Відповідальний за нагадування"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
-msgstr ""
+msgstr "Кроки нагадувань"
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -271,12 +271,12 @@ msgid ""
 "For each step, specify the actions to be taken and delay in days. It is\n"
 "                possible to use print and e-mail templates to send specific messages to\n"
 "                the customer."
-msgstr ""
+msgstr "Для кожного кроку вкажіть, які дії потрібно виконати, і затримки в днях. Для\n                відправлення конкретних повідомлень клієнтам можна використовувати шаблони друку та електронної пошти."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
 msgid "Gives the sequence order when displaying a list of follow-up lines."
-msgstr ""
+msgstr "Дає порядок послідовності при відображенні списку наступних рядків."
 
 #. module: account_reports_followup
 #: selection:res.partner,trust:0
@@ -325,19 +325,19 @@ msgstr "Рівень"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Log a Note"
-msgstr ""
+msgstr "Записати примітку"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Manual Action"
-msgstr ""
+msgstr "Основна дія"
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup_report.py:57
 #, python-format
 msgid "Manual action done\n"
-msgstr ""
+msgstr "Основна дія зроблена\n"
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup.py:107
@@ -345,7 +345,7 @@ msgstr ""
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
-msgstr ""
+msgstr "Ніяких нагадувань для компанії не визначено \"%s\".\n Будь ласка, визначіть одну."
 
 #. module: account_reports_followup
 #: selection:res.partner,trust:0
@@ -355,14 +355,14 @@ msgstr "Нормальний боржник"
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
 msgid "Only one follow-up per company is allowed"
-msgstr ""
+msgstr "Дозволяється лише одне нагадування про компанію"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
-msgstr ""
+msgstr "За бажанням, ви можете призначити користувача цього поля, що зробить його відповідальним за дію."
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_partner
@@ -377,47 +377,47 @@ msgstr "Записи партнерів"
 #. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
-msgstr ""
+msgstr "Нагадування платежів"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
 msgid "Payment Note"
-msgstr ""
+msgstr "Призначення платежу"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Print Letter"
-msgstr ""
+msgstr "Роздрукувати лист"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_description
 msgid "Printed Message"
-msgstr ""
+msgstr "Роздруковане повідомлення"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_filter
 msgid "Search Follow-up"
-msgstr ""
+msgstr "Знайти нагадування"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_letter
 msgid "Send a Letter"
-msgstr ""
+msgstr "Відправити лист"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Send a Letter or Email"
-msgstr ""
+msgstr "Відправити лист або електронну пошту"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_email
 msgid "Send an Email"
-msgstr ""
+msgstr "Відправити електронну пошту"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Send by email"
-msgstr ""
+msgstr "Відіслано по email"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -440,7 +440,7 @@ msgid ""
 "The number of days after the due date of the invoice to wait before sending "
 "the reminder.  Could be negative if you want to send a polite alert "
 "beforehand."
-msgstr ""
+msgstr "Кількість днів, що настають після закінчення строку подання рахунку-фактури, перед тим як надсилати нагадування. Це може бути негативним, якщо ви хочете відправити ввічливе попередження заздалегідь."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
@@ -453,7 +453,7 @@ msgid ""
 "                        number of days. If there are other overdue invoices for the \n"
 "                        same customer, the actions of the most \n"
 "                        overdue invoice will be executed."
-msgstr ""
+msgstr "Щоб нагадати клієнтам про сплату рахунків, можна\n                        визначити різні дії залежно від того, наскільки\n                        клієнт прострочив оплату. Ці дії накладаються на\n                        наступні рівні, які спрацьовують, коли термін\n                        дії рахунку минув певну\n                        кількість днів. Якщо є інші прострочені рахунки \n                        одного і того ж клієнта, \n                        дія найпростішого рахунку буде виконана."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
@@ -468,29 +468,29 @@ msgstr "Всього Дебет"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
 msgid "Urging reminder email"
-msgstr ""
+msgstr "Лист термінового нагадування"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
 msgid "Urging reminder letter"
-msgstr ""
+msgstr "Лист термінового нагадування"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
 msgid "When processing, it will print a letter"
-msgstr ""
+msgstr "Під час обробки буде надруковано лист"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_email
 msgid "When processing, it will send an email"
-msgstr ""
+msgstr "Під час обробки буде надіслано електронний лист"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_manual_action
 msgid ""
 "When processing, it will set the manual action to be taken for that "
 "customer. "
-msgstr ""
+msgstr "Під час обробки буде встановлено ручне виконання дії для цього клієнта."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -500,7 +500,7 @@ msgid ""
 "                            use the following keywords in the text. Don't\n"
 "                            forget to translate in all languages you installed\n"
 "                            using to top right icon."
-msgstr ""
+msgstr "Write here the introduction in the letter,\n                            according to the level of the follow-up. You can\n                            use the following keywords in the text. Don't\n                            forget to translate in all languages you installed\n                            using to top right icon."
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup.py:58
@@ -508,7 +508,7 @@ msgstr ""
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
 "the percent character."
-msgstr ""
+msgstr "Ваш опис недійсний, використовуйте правильну легенду або %% якщо ви хочете використовувати процентний символ."
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_config_settings
@@ -518,9 +518,9 @@ msgstr "account.config.settings"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "days overdue, do the following actions:"
-msgstr ""
+msgstr "дні прострочено, виконайте наступні дії:"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "e.g. Call the customer, check if it's paid, ..."
-msgstr ""
+msgstr "наприклад, зателефонуйте клієнту, перевірте, чи він сплатив, ..."
