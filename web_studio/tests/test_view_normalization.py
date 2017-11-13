@@ -30,7 +30,7 @@ class TestViewNormalization(TransactionCase):
                             <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
                         </h1>
                         <div class="o_row">
-                            <field name="parent_id" placeholder="Company" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'default_supplier': supplier, 'default_customer': customer}" attrs="{'invisible': [('is_company','=', True),('parent_id', '=', False)]}" on_change="onchange_parent_id(parent_id)"/>
+                            <field name="parent_id" placeholder="Company" domain="[('is_company', '=', True)]" context="{'default_is_company': True}" attrs="{'invisible': [('is_company','=', True),('parent_id', '=', False)]}" on_change="onchange_parent_id(parent_id)"/>
                         </div>
                     </div>
 
@@ -66,7 +66,7 @@ class TestViewNormalization(TransactionCase):
 
                     <notebook colspan="4">
                         <page string="Contacts &amp; Addresses" autofocus="autofocus">
-                            <field name="child_ids" mode="kanban" context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang,}">
+                            <field name="child_ids" mode="kanban" context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id}">
                                 <kanban>
                                     <field name="color"/>
                                     <field name="name"/>

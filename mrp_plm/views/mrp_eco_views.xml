@@ -488,7 +488,7 @@
                         </page>
                         <page string="BoM Changes" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type', 'in', ('product','routing'))]}" help="Changes made on the new revision bill of materials">
                             <field name="bom_change_ids">
-                                <tree decoration-danger="type=='remove'" decoration-info="type=='add'">
+                                <tree decoration-danger="change_type=='remove'" decoration-info="change_type=='add'">
                                     <field name="change_type"/>
                                     <field name="product_id"/>
                                     <field name="upd_product_qty"/>
@@ -523,7 +523,7 @@
                         </page>
                         <page string="Routing Changes" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type','in', ('product', 'bom'))]}" help="Changes made on the routing.">
                             <field name="routing_change_ids" context="{'default_routing_id': routing_id}">
-                                <tree decoration-danger="type=='remove'" decoration-info="type=='add'">
+                                <tree decoration-danger="change_type=='remove'" decoration-info="change_type=='add'">
                                     <field name="change_type"/>
                                     <field name="workcenter_id"/>
                                     <field name="upd_time_cycle_manual"/>
