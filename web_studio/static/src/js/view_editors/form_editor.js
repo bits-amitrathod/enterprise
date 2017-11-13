@@ -223,7 +223,12 @@ var FormEditor =  FormRenderer.extend({
         var $result = this._super.apply(this, arguments);
         $result.attr('data-node-id', this.node_id++);
         $result.click(function(event) {
+            // it is still possible (until saas-16) to add notebook inside groups
+            // but there is a behavioral conflict when clicking on page in groups
             event.preventDefault();
+            event.stopPropagation();
+            $(this).find('a').tab('show');
+
             if (!self.silent) {
                 self.selected_node_id = $result.data('node-id');
                 self.trigger_up('node_clicked', {node: page});
