@@ -481,8 +481,8 @@ class WebStudioController(http.Controller):
         view_type = 'tree' if view_type == 'list' else view_type  # list is stored as tree in db
         try:
             request.env[res_model].fields_view_get(view_type=view_type)
-        except UserError as e:
-            return e.name
+        except UserError:
+            return False
         self.edit_action(action_type, action_id, args)
         return True
 

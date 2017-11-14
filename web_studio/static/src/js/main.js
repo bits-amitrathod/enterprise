@@ -115,12 +115,8 @@ var Main = Widget.extend({
                         });
                     },
                 };
-                // TODO find better way to check which view_type is being access
-                if (result.indexOf('gantt') !== -1) {
-                    params.view_type = 'gantt';
-                    new NewViewDialog(self, params).open();
-                } else if (result.indexOf('Calendar') !== -1) {
-                    params.view_type = 'calendar';
+                if (view_type === 'gantt' || view_type === 'calendar') {
+                    params.view_type = view_type;
                     new NewViewDialog(self, params).open();
                 } else {
                     Dialog.alert(self, result);
