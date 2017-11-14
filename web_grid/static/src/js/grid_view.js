@@ -12,7 +12,7 @@ var _lt = core._lt;
 
 var GridView = AbstractView.extend({
     display_name: _lt('Grid'),
-    icon: 'fa-tasks',
+    icon: 'fa-th',
     config: {
         Model: GridModel,
         Controller: GridController,
