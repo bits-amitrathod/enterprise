@@ -30,6 +30,7 @@ class QualityPoint(models.Model):
         ('scroll', 'Scroll to specific page')], string="Worksheet",
         default="noupdate")
     worksheet_page = fields.Integer('Worksheet Page')
+    # Used with type register_consumed_materials the product raw to encode.
     component_id = fields.Many2one('product.product', 'Component')
 
     @api.onchange('product_id')
@@ -81,6 +82,7 @@ class QualityCheck(models.Model):
     move_line_id = fields.Many2one('stock.move.line', 'Move Line')
     qty_done = fields.Float('Done', default=1.0, digits=dp.get_precision('Product Unit of Measure'))
     lot_id = fields.Many2one('stock.production.lot', 'Lot')
+    component_is_byproduct = fields.Boolean('Register a by product', default=False)
 
     # Computed fields
     title = fields.Char('Title', compute='_compute_title')

@@ -63,7 +63,10 @@ class MrpProductionWorkcenterLine(models.Model):
             else:
                 wo.test_type = ''
             if wo.test_type == 'register_consumed_materials' and wo.quality_state == 'none':
-                moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == wo.component_id)
+                if wo.current_quality_check_id.component_is_byproduct:
+                    moves = wo.production_id.move_finished_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == wo.component_id)
+                else:
+                    moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == wo.component_id)
                 move = moves[0]
                 lines = wo.active_move_line_ids.filtered(lambda l: l.move_id in moves)
                 completed_lines = lines.filtered(lambda l: l.lot_id) if wo.component_tracking != 'none' else lines
@@ -74,7 +77,99 @@ class MrpProductionWorkcenterLine(models.Model):
         if self.is_user_working and self.working_state != 'blocked':
             self.button_pending()
 
+    def _create_subsequent_checks(self):
+        """ When processing a step with regiter a consumed material
+        that's a lot we will some times need to create a new
+        intermediate check.
+        e.g.: Register 2 product A tracked by SN. We will register one
+        with the current checks but we need to generate a second step
+        for the second SN. Same for lot if the user wants to use more
+        than one lot.
+        """
+        # Create another quality check if necessary
+        parent_id = self.current_quality_check_id
+        if parent_id.parent_id:
+            parent_id = parent_id.parent_id
+        subsequent_substeps = self.env['quality.check'].search([('parent_id', '=', parent_id.id), ('id', '>', self.current_quality_check_id.id)])
+        if self.component_remaining_qty > 0 and not subsequent_substeps:
+            # Creating quality checks
+            quality_check_data = {
+                'workorder_id': self.id,
+                'product_id': self.product_id.id,
+                'parent_id': parent_id.id,
+                'component_is_byproduct': parent_id.component_is_byproduct,
+                'finished_product_sequence': self.qty_produced,
+                'qty_done': self.component_remaining_qty if self.component_tracking != 'serial' else 1.0,
+            }
+            if self.current_quality_check_id.point_id:
+                quality_check_data.update({
+                    'point_id': self.current_quality_check_id.point_id.id,
+                    'team_id': self.current_quality_check_id.point_id.team_id.id,
+                })
+            else:
+                quality_check_data.update({
+                    'component_id': self.current_quality_check_id.component_id.id,
+                    'team_id': self.current_quality_check_id.team_id.id,
+                })
+            self.env['quality.check'].create(quality_check_data)
+
+    def _update_active_move_line(self):
+        """ This function is only used when the check is regiter a
+        component. It will update the active move lines in order to set
+        the lot and the quantity used. Tge active move lines created
+        are matched with the real move lines during the
+        record_production call.
+        Behavior is different when the product is a raw material or a
+        finished product.
+        - Raw material: try to use the already existing move lines.
+        - Finished product: always create a new active move lines since
+        they were not automatically generated before.
+        If the move line already exists for this check then update it.
+        """
+        # Get the move lines associated with our component
+        moves = self.env['stock.move']
+        if self.current_quality_check_id.component_is_byproduct:
+            moves |= self.production_id.move_finished_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == self.component_id)
+        else:
+            moves = self.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == self.component_id)
+        move = moves[0]
+
+        lines_without_lots = self.active_move_line_ids.filtered(lambda l: l.move_id in moves and not l.lot_id)
+        # Compute the theoretical quantity for the current production
+        self.component_remaining_qty -= float_round(self.qty_done, precision_rounding=move.product_uom.rounding)
+        # Assign move line to quality check if necessary
+        if not self.move_line_id:
+            if self.component_tracking == 'none' or self.current_quality_check_id.component_is_byproduct:
+                self.move_line_id = self.env['stock.move.line'].create({
+                    'move_id': move.id,
+                    'product_id': move.product_id.id,
+                    'lot_id': False,
+                    'product_uom_qty': 0.0,
+                    'product_uom_id': move.product_uom.id,
+                    'qty_done': float_round(self.qty_done, precision_rounding=move.product_uom.rounding),
+                    'workorder_id': self.id,
+                    'done_wo': False,
+                    'location_id': move.location_id.id,
+                    'location_dest_id': move.location_dest_id.id,
+                })
+                self.active_move_line_ids += self.move_line_id
+            else:
+                self.move_line_id = lines_without_lots[0]
+            # If tracked by lot, put the remaining quantity in (only) one move line
+            if move.product_id.tracking == 'lot' and not self.current_quality_check_id.component_is_byproduct:
+                lines_without_lots[1::].unlink()
+                if self.component_remaining_qty > 0:
+                    self.move_line_id.copy(default={'qty_done': self.component_remaining_qty})
+
+        # Write the lot and qty to the move line
+        self.move_line_id.write({'lot_id': self.lot_id.id, 'qty_done': float_round(self.qty_done, precision_rounding=move.product_uom.rounding)})
+
     def _next(self, state='pass'):
+        """ This function:
+        - first: fullfill related move line with right lot and validated quantity.
+        - second: Generate new quality check for remaining quantity and link them to the original check.
+        - third: Pass to the next check or return a failure message.
+        """
         self.ensure_one()
         if self.qty_producing <= 0 or self.qty_producing > self.qty_remaining:
             raise UserError(_('Please ensure the quantity to produce is nonnegative and does not exceed the remaining quantity.'))
@@ -84,62 +179,11 @@ class MrpProductionWorkcenterLine(models.Model):
                 raise UserError(_('Please enter a Lot/SN.'))
             if self.component_tracking == 'none' and self.qty_done <= 0:
                 raise UserError(_('Please enter a positive quantity.'))
-            # Get the move lines associated with our component
-            moves = self.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == self.component_id)
-            move = moves[0]
-            lines_without_lots = self.active_move_line_ids.filtered(lambda l: l.move_id in moves and not l.lot_id)
-            # Compute the theoretical quantity for the current production
-            self.component_remaining_qty -= float_round(self.qty_done, precision_rounding=move.product_uom.rounding)
-            # Assign move line to quality check if necessary
-            if not self.move_line_id:
-                if self.component_tracking == 'none':
-                    self.move_line_id = self.env['stock.move.line'].create({
-                        'move_id': move.id,
-                        'product_id': move.product_id.id,
-                        'lot_id': False,
-                        'product_uom_qty': 0.0,
-                        'product_uom_id': move.product_uom.id,
-                        'qty_done': float_round(self.qty_done, precision_rounding=move.product_uom.rounding),
-                        'workorder_id': self.id,
-                        'done_wo': False,
-                        'location_id': move.location_id.id,
-                        'location_dest_id': move.location_dest_id.id,
-                    })
-                    self.active_move_line_ids += self.move_line_id
-                else:
-                    self.move_line_id = lines_without_lots[0]
-                # If tracked by lot, put the remaining quantity in (only) one move line
-                if move.product_id.tracking == 'lot':
-                    lines_without_lots[1::].unlink()
-                    if self.component_remaining_qty > 0:
-                        self.move_line_id.copy(default={'qty_done': self.component_remaining_qty})
-                # Write the lot and qty to the move line
-                self.move_line_id.write({'lot_id': self.lot_id.id, 'qty_done': float_round(self.qty_done, precision_rounding=move.product_uom.rounding)})
-                # Create another quality check if necessary
-                parent_id = self.current_quality_check_id
-                if parent_id.parent_id:
-                    parent_id = parent_id.parent_id
-                subsequent_substeps = self.env['quality.check'].search([('parent_id', '=', parent_id.id), ('id', '>', self.current_quality_check_id.id)])
-                if self.component_remaining_qty > 0 and not subsequent_substeps:
-                    # Creating quality checks
-                    quality_check_data = {
-                        'workorder_id': self.id,
-                        'product_id': self.product_id.id,
-                        'parent_id': parent_id.id,
-                        'finished_product_sequence': self.qty_produced,
-                        'qty_done': self.component_remaining_qty if self.component_tracking != 'serial' else 1.0,
-                    }
-                    if self.current_quality_check_id.point_id:
-                        quality_check_data.update({
-                            'point_id': self.current_quality_check_id.point_id.id,
-                            'team_id': self.current_quality_check_id.point_id.team_id.id,
-                        })
-                    else:
-                        quality_check_data.update({
-                            'component_id': self.current_quality_check_id.component_id.id,
-                            'team_id': self.current_quality_check_id.team_id.id,
-                        })
-                    self.env['quality.check'].create(quality_check_data)
+
+            self._update_active_move_line()
+
+            self._create_subsequent_checks()
+
         self.current_quality_check_id.write({
             'quality_state': state,
             'user_id': self.env.user.id,
@@ -285,6 +329,7 @@ class MrpProductionWorkcenterLine(models.Model):
                                                        '|', ('product_id', '=', production.product_id.id),
                                                        '&', ('product_id', '=', False), ('product_tmpl_id', '=', production.product_id.product_tmpl_id.id)])
             for point in points:
+                # Check if we need a quality control for this point
                 if point.check_execute_now():
                     if point.component_id:
                         component_list.append(point.component_id.id)
@@ -328,6 +373,29 @@ class MrpProductionWorkcenterLine(models.Model):
                     # if and only if the produced quantities at the time they were created are equal.
                     'finished_product_sequence': wo.qty_produced,
                 })
+
+            # If last step add all the by_product since they are not consumed by a specific operation.
+            if not wo.next_work_order_id:
+                finished_moves = production.move_finished_ids.filtered(lambda m: not m.workorder_id)
+                tracked_by_products = finished_moves.mapped('product_id').filtered(lambda product: product.tracking != 'none' and product != production.product_id)
+                for by_product in tracked_by_products:
+                    moves = finished_moves.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == by_product)
+                    if by_product.tracking == 'serial':
+                        qty_done = 1.0
+                    else:
+                        qty_done = float_round(sum(moves.mapped('unit_factor')) * wo.qty_producing, precision_rounding=moves[0].product_uom.rounding)
+                    self.env['quality.check'].create({
+                        'workorder_id': wo.id,
+                        'product_id': production.product_id.id,
+                        'component_id': by_product.id,
+                        'team_id': quality_team_id,
+                        # Fill in the full quantity by default
+                        'qty_done': qty_done,
+                        'component_is_byproduct': True,
+                        # Two steps are from the same production
+                        # if and only if the produced quantities at the time they were created are equal.
+                        'finished_product_sequence': wo.qty_produced,
+                    })
 
             # Set default quality_check
             wo.skip_completed_checks = False
