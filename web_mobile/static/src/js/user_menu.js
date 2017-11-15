@@ -55,7 +55,7 @@ UserMenu.include({
             });
          } else {
              mobile.methods.showToast({
-                 "message": _t("No shortcut for App Switcher")
+                 "message": _t("No shortcut for Home Menu")
              });
          }
          },

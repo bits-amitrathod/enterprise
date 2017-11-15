@@ -1,4 +1,4 @@
-odoo.define('website.app_switcher', function (require) {
+odoo.define('website.home_menu', function (require) {
     'use strict';
 
     var session = require('web.session');

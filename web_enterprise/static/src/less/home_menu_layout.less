@@ -1,24 +1,24 @@
-@o-app-switcher-container-size: 850px;
+@o-home-menu-container-size: 850px;
 
-.o_application_switcher {
+.o_home_menu {
     height: 100%;
     overflow: auto;
     .o-flex-display();
     .o-flex-flow(column, nowrap);
     .o-align-items(center);
 
-    .o_application_switcher_scrollable {
+    .o_home_menu_scrollable {
         .o-flex-display();
         .o-flex-flow(column, nowrap);
         .o-align-items(center);
         .o-flex(1, 0, auto);
         width: 100%;
-        max-width: @o-app-switcher-container-size;
+        max-width: @o-home-menu-container-size;
 
         .o_apps {
             .o-flex(0, 0, auto);
             width: 100%;
-            max-width: @o-app-switcher-container-size;
+            max-width: @o-home-menu-container-size;
             .clearfix();
 
             .o_app {
@@ -70,7 +70,7 @@
             .o-flex(1, 0, auto);
         }
     }
-    .o_application_switcher_footer {
+    .o_home_menu_footer {
         .o-flex-display();
         .o-flex(1, 0, auto);
         align-items: flex-end;

@@ -168,7 +168,7 @@ class WebStudioController(http.Controller):
     @http.route('/web_studio/create_new_menu', type='json', auth='user')
     def create_new_menu(self, app_name=False, menu_name=False, model_id=False, is_app=False, parent_id=None, icon=None):
         """ Create a new menu @menu_name, linked to a new action associated to the model_id
-            @param model_id: if not set, the action associated to this menu is the appswitcher
+            @param model_id: if not set, the action associated to this menu is the home menu
                 except if @is_app is True that will create a new model
             @param is_app: if True, create an extra menu (app, without parent)
             @param parent_id: the parent of the new menu.

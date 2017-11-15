@@ -1,9 +1,9 @@
-@o_app_switcher_menu_shadow: 0 1px 0 fade(black, 45%);
+@o_home_studio_menu_shadow: 0 1px 0 fade(black, 45%);
 
-.o_app_switcher_background {
+.o_home_menu_background {
     // Fallback for browsers that doesn't support css gradients
     background-position: center;
-    background-image: url(/web_enterprise/static/src/img/application-switcher-bg.jpg);
+    background-image: url(/web_enterprise/static/src/img/home-menu-bg.jpg);
     .o-background-size(cover);
 
     // Prefer css gradient over images
@@ -11,7 +11,7 @@
 
     // When applied on webclient (note: we do not specify the webclient class
     // here to avoid breaking studio custom style)
-    &:not(.o_app_switcher_background_custom) .o_main_navbar {
+    &:not(.o_home_menu_background_custom) .o_main_navbar {
         background-color: transparent;
         border-color: transparent;
 
@@ -19,12 +19,12 @@
             background-color: fade(black, 10%);
         }
         .oe_topbar_avatar {
-            box-shadow: @o_app_switcher_menu_shadow;
+            box-shadow: @o_home_studio_menu_shadow;
         }
 
         &, & > ul > li {
             > a {
-                text-shadow: @o_app_switcher_menu_shadow;
+                text-shadow: @o_home_studio_menu_shadow;
 
                 &:hover, &:focus {
                     background-color: fade(black, 0%);
@@ -34,14 +34,14 @@
     }
 }
 
-.o_application_switcher {
+.o_home_menu {
     font-size: @odoo-font-size-base-touch;
 
     .o_menu_search.o_bar_hidden input {
         cursor: default;
     }
 
-    .o_application_switcher_scrollable {
+    .o_home_menu_scrollable {
 
         .o_apps {
             margin-top: 10px;
@@ -119,7 +119,7 @@
             margin-top: 10px;
         }
 
-        .o_application_switcher_footer {
+        .o_home_menu_footer {
             .user-select(none);
             > img {
                 width: 96px;

@@ -81,7 +81,7 @@ ActionManager.include({
         }
         return def.fail(function () {
             self.clear_action_stack();
-            self.trigger_up('show_app_switcher');
+            self.trigger_up('show_home_menu');
         }).always(this.clear_action_stack.bind(this, to_destroy));
     },
 });

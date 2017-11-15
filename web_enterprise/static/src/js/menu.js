@@ -16,7 +16,7 @@ var Menu = Widget.extend({
     template: 'Menu',
     menusTemplate: 'Menu.sections',
     events: {
-        'click .o_menu_toggle': '_onToggleAppSwitcher',
+        'click .o_menu_toggle': '_onToggleHomeMenu',
         'mouseover .o_menu_sections > li:not(.open)': '_onMouseOverMenu',
         'click .o_menu_brand': '_onAppNameClicked',
     },
@@ -24,7 +24,7 @@ var Menu = Widget.extend({
     init: function (parent, menu_data) {
         var self = this;
         this._super.apply(this, arguments);
-        this.appswitcher_displayed = true;
+        this.home_menu_displayed = true;
         this.backbutton_displayed = false;
 
         this.$menu_sections = {};
@@ -72,20 +72,20 @@ var Menu = Widget.extend({
 
         return this._super.apply(this, arguments);
     },
-    toggle_mode: function (appswitcher, overapp) {
-        this.appswitcher_displayed = !!appswitcher;
-        this.backbutton_displayed = this.appswitcher_displayed && !!overapp;
+    toggle_mode: function (home_menu, overapp) {
+        this.home_menu_displayed = !!home_menu;
+        this.backbutton_displayed = this.home_menu_displayed && !!overapp;
 
-        this.$menu_toggle.toggleClass('fa-chevron-left', this.appswitcher_displayed)
-                         .toggleClass('fa-th', !this.appswitcher_displayed);
-        if (this.appswitcher_displayed && !this.backbutton_displayed) {
+        this.$menu_toggle.toggleClass('fa-chevron-left', this.home_menu_displayed)
+                         .toggleClass('fa-th', !this.home_menu_displayed);
+        if (this.home_menu_displayed && !this.backbutton_displayed) {
             this.$menu_toggle.removeAttr('accesskey');
         } else {
             this.$menu_toggle.attr('accesskey', 'h');
         }
-        this.$menu_toggle.toggleClass('hidden', this.appswitcher_displayed && !this.backbutton_displayed);
-        this.$menu_brand_placeholder.toggleClass('hidden', this.appswitcher_displayed);
-        this.$section_placeholder.toggleClass('hidden', this.appswitcher_displayed);
+        this.$menu_toggle.toggleClass('hidden', this.home_menu_displayed && !this.backbutton_displayed);
+        this.$menu_brand_placeholder.toggleClass('hidden', this.home_menu_displayed);
+        this.$section_placeholder.toggleClass('hidden', this.home_menu_displayed);
     },
     change_menu_section: function (primary_menu_id) {
         if (!this.$menu_sections[primary_menu_id]) {
@@ -232,9 +232,9 @@ var Menu = Widget.extend({
      * @private
      * @param {MouseEvent} ev
      */
-    _onToggleAppSwitcher: function (ev) {
+    _onToggleHomeMenu: function (ev) {
         ev.preventDefault();
-        this.trigger_up(this.appswitcher_displayed ? 'hide_app_switcher' : 'show_app_switcher');
+        this.trigger_up(this.home_menu_displayed ? 'hide_home_menu' : 'show_home_menu');
         this.$el.parent().removeClass('o_mobile_menu_opened');
     },
 });

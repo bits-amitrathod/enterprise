@@ -8,19 +8,19 @@ var utils = require('web_studio.utils');
 
 var _t = core._t;
 
-tour.register('web_studio_appswitcher_background_tour', {
+tour.register('web_studio_home_menu_background_tour', {
     url: "/web",
 }, [{
     trigger: '.o_web_studio_navbar_item',
     content: _t('Want to customize the background? Let’s activate <b>Odoo Studio</b>.'),
     position: 'bottom',
-    extra_trigger: '.o_application_switcher',
+    extra_trigger: '.o_home_menu',
 }, {
-    trigger: '.o_web_studio_appswitcher_menu a',
+    trigger: '.o_web_studio_home_studio_menu a',
     content: _t('Click here.'),
     position: 'right',
 }, {
-    trigger: '.o_web_studio_appswitcher_menu ul.dropdown-menu li:eq(0)',
+    trigger: '.o_web_studio_home_studio_menu ul.dropdown-menu li:eq(0)',
     content: _t('Change the <b>background</b>, make it yours.'),
     position: 'bottom',
 }]);

@@ -1,11 +1,11 @@
-odoo.define('web_studio.AppSwitcher', function (require) {
+odoo.define('web_studio.HomeMenu', function (require) {
 "use strict";
 
 var core = require('web.core');
 var session = require('web.session');
 var WebClient = require('web.WebClient');
 var web_client = require('web.web_client');
-var AppSwitcher = require('web_enterprise.AppSwitcher');
+var HomeMenu = require('web_enterprise.HomeMenu');
 
 var bus = require('web_studio.bus');
 
@@ -13,12 +13,12 @@ var QWeb = core.qweb;
 
 /*
  * Notice:
- *  some features (like seeing the appswitcher background) are available
+ *  some features (like seeing the home menu background) are available
  *  even the user is not a system user, this is why there are two different
  *  includes in this file.
  */
 
-AppSwitcher.include({
+HomeMenu.include({
     /**
      * @override
      */
@@ -41,7 +41,7 @@ AppSwitcher.include({
         return this._super.apply(this, arguments);
     },
     /**
-     * Put the appswitcher background as the cover of current `$el`.
+     * Put the home menu background as the cover of current `$el`.
      *
      * @private
      */
@@ -62,14 +62,14 @@ AppSwitcher.include({
 
 WebClient.include({
     /**
-     * Adds a class on the webclient on top of the o_app_switcher_background
-     * class to inform that the appswitcher is customized.
+     * Adds a class on the webclient on top of the o_home_menu_background
+     * class to inform that the home menu is customized.
      *
      * @override
      */
-    toggle_app_switcher: function (display) {
+    toggle_home_menu: function (display) {
         this._super.apply(this, arguments);
-        this.$el.toggleClass('o_app_switcher_background_custom', display && !!this.menu_data.background_image);
+        this.$el.toggleClass('o_home_menu_background_custom', display && !!this.menu_data.background_image);
     },
 });
 
@@ -77,8 +77,8 @@ if (!session.is_system) {
     return;
 }
 
-AppSwitcher.include({
-    events: _.extend(AppSwitcher.prototype.events, {
+HomeMenu.include({
+    events: _.extend(HomeMenu.prototype.events, {
         'click .o_web_studio_new_app': '_onNewApp',
     }),
     /**
@@ -121,7 +121,7 @@ AppSwitcher.include({
             return;
         }
         if (display) {
-            this.on_detach_callback();  // de-bind hanlders on appswitcher
+            this.on_detach_callback();  // de-bind hanlders on home menu
             this.in_DOM = true;  // avoid effect of on_detach_callback
             this._renderNewApp();
         } else {

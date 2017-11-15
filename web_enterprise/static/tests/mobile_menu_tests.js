@@ -60,7 +60,7 @@ QUnit.module('web_enterprise mobile_menu_tests', {
 
     QUnit.module('Burger Menu');
 
-    QUnit.test('Burger Menu on appswitcher', function (assert) {
+    QUnit.test('Burger Menu on home menu', function (assert) {
         assert.expect(1);
 
         function createParent (params) {

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
-<div t-name="AppSwitcher" class="o_application_switcher">
+<div t-name="HomeMenu" class="o_home_menu">
     <div class="o_menu_search o_bar_hidden hidden-xs">
         <span class="fa fa-search fa-2x o_menu_search_icon"/>
         <input type="text" placeholder="Search..." class="o_menu_search_input" onfocus="this.value = this.value;"/>
     </div>
-    <div class="o_application_switcher_scrollable">
-        <t t-call="AppSwitcher.Content"/>
+    <div class="o_home_menu_scrollable">
+        <t t-call="HomeMenu.Content"/>
     </div>
 </div>
 
-<t t-name="AppSwitcher.Content">
+<t t-name="HomeMenu.Content">
     <div t-if="widget._state.apps.length" class="o_apps">
         <t t-set="focused_app_index" t-value="widget.getAppIndex()"/>
         <t t-foreach="widget._state.apps" t-as="app">
@@ -46,7 +46,7 @@
     <t t-if="widget._state.apps.length + widget._state.menuItems.length === 0">
         <div class="o_no_result">No result</div>
     </t>
-    <div class="o_application_switcher_footer">
+    <div class="o_home_menu_footer">
         <img src="/web/static/src/img/logo_inverse_white_206px.png"/>
     </div>
 </t>

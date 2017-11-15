@@ -9,7 +9,7 @@ var data_manager = require('web.data_manager');
 var dom = require('web.dom');
 var session = require('web.session');
 
-var AppSwitcher = require('web_enterprise.AppSwitcher');
+var HomeMenu = require('web_enterprise.HomeMenu');
 var Menu = require('web_enterprise.Menu');
 
 return AbstractWebClient.extend({
@@ -17,8 +17,8 @@ return AbstractWebClient.extend({
         app_clicked: 'on_app_clicked',
         menu_clicked: 'on_menu_clicked',
         scrollTo: 'scrollTo',
-        show_app_switcher: '_onShowAppSwitcher',
-        hide_app_switcher: '_onHideAppSwitcher',
+        show_home_menu: '_onShowHomeMenu',
+        hide_home_menu: '_onHideHomeMenu',
     }),
     start: function () {
         core.bus.on('change_menu_section', this, function (menu_id) {
@@ -91,13 +91,13 @@ return AbstractWebClient.extend({
         return this.instanciate_menu_widgets().then(function () {
             $(window).bind('hashchange', self.on_hashchange);
 
-            // Listen to 'scroll' event in app_switcher and propagate it on main bus
-            self.app_switcher.$el.on('scroll', core.bus.trigger.bind(core.bus, 'scroll'));
+            // Listen to 'scroll' event in home_menu and propagate it on main bus
+            self.home_menu.$el.on('scroll', core.bus.trigger.bind(core.bus, 'scroll'));
 
             // If the url's state is empty, we execute the user's home action if there is one (we
-            // show the app switcher if not)
+            // show the home menu if not)
             // If it is not empty, we trigger a dummy hashchange event so that `self.on_hashchange`
-            // will take care of toggling the app switcher and loading the action.
+            // will take care of toggling the home menu and loading the action.
             if (_.isEmpty($.bbq.getState(true))) {
                 return self._rpc({
                         model: 'res.users',
@@ -108,11 +108,11 @@ return AbstractWebClient.extend({
                         var data = result[0];
                         if(data.action_id) {
                             return self.do_action(data.action_id[0]).then(function() {
-                                self.toggle_app_switcher(false);
+                                self.toggle_home_menu(false);
                                 self.menu.change_menu_section(self.menu.action_id_to_primary_menu_id(data.action_id[0]));
                             });
                         } else {
-                            self.toggle_app_switcher(true);
+                            self.toggle_home_menu(true);
                         }
                     });
             } else {
@@ -130,16 +130,16 @@ return AbstractWebClient.extend({
             // Here, we instanciate every menu widgets and we immediately append them into dummy
             // document fragments, so that their `start` method are executed before inserting them
             // into the DOM.
-            if (self.app_switcher) {
-                self.app_switcher.destroy();
+            if (self.home_menu) {
+                self.home_menu.destroy();
             }
             if (self.menu) {
                 self.menu.destroy();
             }
-            self.app_switcher = new AppSwitcher(self, menu_data);
+            self.home_menu = new HomeMenu(self, menu_data);
             self.menu = new Menu(self, menu_data);
 
-            defs.push(self.app_switcher.appendTo(document.createDocumentFragment()));
+            defs.push(self.home_menu.appendTo(document.createDocumentFragment()));
             defs.push(self.menu.prependTo(self.$el));
             return $.when.apply($, defs);
         });
@@ -153,14 +153,14 @@ return AbstractWebClient.extend({
     // do_*
     // --------------------------------------------------------------
     /**
-     * Extends do_action() to toggle the appswitcher off if the action isn't displayed in a dialog
+     * Extends do_action() to toggle the home menu off if the action isn't displayed in a dialog
      */
     do_action: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function(action) {
-            if (self.menu.appswitcher_displayed && action.target !== 'new' &&
+            if (self.menu.home_menu_displayed && action.target !== 'new' &&
                 action.type !== 'ir.actions.act_window_close') {
-                    self.toggle_app_switcher(false);
+                    self.toggle_home_menu(false);
                 }
         });
     },
@@ -200,16 +200,16 @@ return AbstractWebClient.extend({
                                 }
                             }
                         }
-                        self.toggle_app_switcher(false);
-                    }).fail(self.toggle_app_switcher.bind(self, true));
+                        self.toggle_home_menu(false);
+                    }).fail(self.toggle_home_menu.bind(self, true));
                 } else if (state.menu_id) {
                     var action_id = self.menu.menu_id_to_action_id(state.menu_id);
                     return self.do_action(action_id, {clear_breadcrumbs: true}).then(function () {
                         core.bus.trigger('change_menu_section', state.menu_id);
-                        self.toggle_app_switcher(false);
+                        self.toggle_home_menu(false);
                     });
                 } else {
-                    self.toggle_app_switcher(true);
+                    self.toggle_home_menu(true);
                 }
             }
             self._current_state = stringstate;
@@ -233,7 +233,7 @@ return AbstractWebClient.extend({
                         clear_breadcrumbs: true,
                         action_menu_id: ev.data.menu_id,
                     })).fail(function () {
-                        self.toggle_app_switcher(true);
+                        self.toggle_home_menu(true);
                         completed.resolve();
                     }).done(function () {
                         self._on_app_clicked_done(ev)
@@ -249,7 +249,7 @@ return AbstractWebClient.extend({
     },
     _on_app_clicked_done: function(ev) {
         core.bus.trigger('change_menu_section', ev.data.menu_id);
-        this.toggle_app_switcher(false);
+        this.toggle_home_menu(false);
         return $.Deferred().resolve();
     },
     on_menu_clicked: function (ev) {
@@ -286,10 +286,10 @@ return AbstractWebClient.extend({
     _openMenu: function (action, options) {
         return this.do_action(action, options);
     },
-    toggle_app_switcher: function (display) {
-        this.$el.toggleClass('o_app_switcher_background', display);
+    toggle_home_menu: function (display) {
+        this.$el.toggleClass('o_home_menu_background', display);
 
-        if (display === this.app_switcher_displayed) {
+        if (display === this.home_menu_displayed) {
             return; // nothing to do (prevents erasing previously detached webclient content)
         }
         if (display) {
@@ -302,13 +302,13 @@ return AbstractWebClient.extend({
                 var $to_detach = self.$el.contents()
                         .not(self.menu.$el)
                         .not('.o_loading')
-                        .not('.o_in_appswitcher')
+                        .not('.o_in_home_menu')
                         .not('.o_notification_manager');
                 self.web_client_content = document.createDocumentFragment();
                 dom.detach([{widget: self.action_manager}], {$to_detach: $to_detach}).appendTo(self.web_client_content);
 
-                // Attach the app_switcher
-                self.append_app_switcher();
+                // Attach the home_menu
+                self.append_home_menu();
 
                 // Save and clear the url
                 self.url = $.bbq.getState();
@@ -317,30 +317,30 @@ return AbstractWebClient.extend({
                 self.menu.toggle_mode(true, self.action_manager.get_inner_action() !== null);
             });
         } else {
-            dom.detach([{widget: this.app_switcher}]);
+            dom.detach([{widget: this.home_menu}]);
             dom.append(this.$el, [this.web_client_content], {
                 in_DOM: true,
                 callbacks: [{widget: this.action_manager}],
             });
-            this.app_switcher_displayed = false;
+            this.home_menu_displayed = false;
             this.menu.toggle_mode(false, this.action_manager.get_inner_action() !== null);
         }
     },
-    append_app_switcher: function () {
-        dom.append(this.$el, [this.app_switcher.$el], {
+    append_home_menu: function () {
+        dom.append(this.$el, [this.home_menu.$el], {
             in_DOM: true,
-            callbacks: [{widget: this.app_switcher}],
+            callbacks: [{widget: this.home_menu}],
         });
-        this.app_switcher_displayed = true;
+        this.home_menu_displayed = true;
     },
-    _onShowAppSwitcher: function () {
-        this.toggle_app_switcher(true);
+    _onShowHomeMenu: function () {
+        this.toggle_home_menu(true);
     },
-    _onHideAppSwitcher: function () {
+    _onHideHomeMenu: function () {
         if (this.action_manager.get_inner_action() !== null) {
             // Restore the url
             $.bbq.pushState(this.url, 2); // merge_mode 2 to replace the current state
-            this.toggle_app_switcher(false);
+            this.toggle_home_menu(false);
         }
     },
     // --------------------------------------------------------------

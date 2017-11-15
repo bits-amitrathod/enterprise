@@ -1,4 +1,4 @@
-odoo.define('web_enterprise.AppSwitcher', function (require) {
+odoo.define('web_enterprise.HomeMenu', function (require) {
 "use strict";
 
 var config = require('web.config');
@@ -9,8 +9,8 @@ var Widget = require('web.Widget');
 var QWeb = core.qweb;
 var NBR_ICONS = 6;
 
-var AppSwitcher = Widget.extend({
-    template: 'AppSwitcher',
+var HomeMenu = Widget.extend({
+    template: 'HomeMenu',
     events: {
         'click .o_menuitem': '_onMenuitemClick',
         'input input.o_menu_search_input': '_onMenuSearchInput',
@@ -33,7 +33,7 @@ var AppSwitcher = Widget.extend({
     start: function () {
         this.$input = this.$('input');
         this.$menuSearch = this.$('.o_menu_search');
-        this.$mainContent = this.$('.o_application_switcher_scrollable');
+        this.$mainContent = this.$('.o_home_menu_scrollable');
         return this._super.apply(this, arguments);
     },
     /**
@@ -160,7 +160,7 @@ var AppSwitcher = Widget.extend({
      */
     _render: function () {
         this.$menuSearch.toggleClass('o_bar_hidden', !this._state.isSearching);
-        this.$mainContent.html(QWeb.render('AppSwitcher.Content', { widget: this }));
+        this.$mainContent.html(QWeb.render('HomeMenu.Content', { widget: this }));
         var $focused = this.$mainContent.find('.o_focused');
         if ($focused.length && !config.device.isMobile) {
             if (!this._state.isComposing) {
@@ -293,13 +293,13 @@ var AppSwitcher = Widget.extend({
                 break;
             case $.ui.keyCode.ESCAPE:
                 // clear text on search, hide it if no content before ESC
-                // hide app switcher if there is an inner action
+                // hide home menu if there is an inner action
                 this._state = this._getInitialState();
                 this._state.isSearching = $input.val().length > 0;
                 $input.val("");
                 this._update({focus: 0, search: $input.val()});
                 if (!this._state.isSearching) {
-                    this.trigger_up('hide_app_switcher');
+                    this.trigger_up('hide_home_menu');
                 }
                 break;
             default:
@@ -345,7 +345,7 @@ var AppSwitcher = Widget.extend({
     }
 });
 
-return AppSwitcher;
+return HomeMenu;
 
 });
 
@@ -355,12 +355,12 @@ odoo.define('web_enterprise.ExpirationPanel', function (require) {
 var core = require('web.core');
 var session = require('web.session');
 var utils = require('web.utils');
-var AppSwitcher = require('web_enterprise.AppSwitcher');
+var HomeMenu = require('web_enterprise.HomeMenu');
 
 var QWeb = core.qweb;
 
-AppSwitcher.include({
-    events: _.extend(AppSwitcher.prototype.events, {
+HomeMenu.include({
+    events: _.extend(HomeMenu.prototype.events, {
         'click .oe_instance_buy': '_onEnterpriseBuy',
         'click .oe_instance_renew': '_onEnterpriseRenew',
         'click .oe_instance_upsell': '_onEnterpriseUpsell',

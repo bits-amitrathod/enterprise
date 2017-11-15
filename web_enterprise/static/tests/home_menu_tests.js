@@ -1,9 +1,9 @@
-odoo.define('web_enterprise.app_switcher_tests', function (require) {
+odoo.define('web_enterprise.home_menu_tests', function (require) {
 "use strict";
 
 var testUtils = require('web.test_utils');
 var Widget = require('web.Widget');
-var AppSwitcher = require('web_enterprise.AppSwitcher');
+var HomeMenu = require('web_enterprise.HomeMenu');
 
 QUnit.module('web_enterprise', {
     beforeEach: function () {
@@ -65,42 +65,42 @@ QUnit.module('web_enterprise', {
     }
 }, function () {
 
-    QUnit.module('AppSwitcher');
+    QUnit.module('HomeMenu');
 
     QUnit.test('ESC Support', function (assert) {
         assert.expect(7);
 
-        var appSwitcherHidden = false;
+        var homeMenuHidden = false;
 
         var parent = testUtils.createParent({
             intercepts: {
-                hide_app_switcher: function () {
-                    appSwitcherHidden = true;
+                hide_home_menu: function () {
+                    homeMenuHidden = true;
                 },
             },
         });
 
-        var appSwitcher = new AppSwitcher(parent, this.data);
+        var homeMenu = new HomeMenu(parent, this.data);
 
-        appSwitcher.appendTo($('#qunit-fixture'));
-        appSwitcher.on_attach_callback(); // simulate action manager attached to dom
-        appSwitcher.$('input.o_menu_search_input').focus().click();
+        homeMenu.appendTo($('#qunit-fixture'));
+        homeMenu.on_attach_callback(); // simulate action manager attached to dom
+        homeMenu.$('input.o_menu_search_input').focus().click();
 
         // 1. search must be hidden by default
         assert.ok(
-            appSwitcher.$('div.o_menu_search').hasClass('o_bar_hidden'),
+            homeMenu.$('div.o_menu_search').hasClass('o_bar_hidden'),
             "search must be hidden by default");
 
-        appSwitcher.$('input.o_menu_search_input').val("dis").trigger('input');
+        homeMenu.$('input.o_menu_search_input').val("dis").trigger('input');
 
         // 2. search must be visible after some input
         assert.notOk(
-            appSwitcher.$('div.o_menu_search').hasClass('o_bar_hidden'),
+            homeMenu.$('div.o_menu_search').hasClass('o_bar_hidden'),
             "search must be visible after some input");
 
         // 3. search must contain the input text
         assert.strictEqual(
-            appSwitcher.$('input.o_menu_search_input').val(),
+            homeMenu.$('input.o_menu_search_input').val(),
             "dis",
             "search must contain the input text");
 
@@ -109,30 +109,30 @@ QUnit.module('web_enterprise', {
             keyCode: $.ui.keyCode.ESCAPE,
         });
 
-        appSwitcher.$('input.o_menu_search_input').trigger(escEvent);
+        homeMenu.$('input.o_menu_search_input').trigger(escEvent);
 
         // 4. search must have no text after ESC
         assert.strictEqual(
-            appSwitcher.$('input.o_menu_search_input').val(),
+            homeMenu.$('input.o_menu_search_input').val(),
             "",
             "search must have no text after ESC");
 
         // 5. search must still become visible after clearing some non-empty text
         assert.notOk(
-            appSwitcher.$('div.o_menu_search').hasClass('o_bar_hidden'),
+            homeMenu.$('div.o_menu_search').hasClass('o_bar_hidden'),
             "search must still become visible after clearing some non-empty text");
 
-        appSwitcher.$('input.o_menu_search_input').trigger(escEvent);
+        homeMenu.$('input.o_menu_search_input').trigger(escEvent);
 
         // 6. search must become invisible after ESC on empty text
         assert.ok(
-            appSwitcher.$('div.o_menu_search').hasClass('o_bar_hidden'),
+            homeMenu.$('div.o_menu_search').hasClass('o_bar_hidden'),
             "search must become invisible after ESC on empty text");
 
-        // 7. app switcher must be hidden after ESC on empty text
+        // 7. home menu must be hidden after ESC on empty text
         assert.ok(
-            appSwitcherHidden,
-            "app switcher must be hidden after ESC on empty text");
+            homeMenuHidden,
+            "home menu must be hidden after ESC on empty text");
 
         parent.destroy();
     });

@@ -71,14 +71,14 @@ WebClient.include({
         var action = this.action_manager.get_inner_action();
         var action_desc = action && action.action_descr || null;
         var def = $.Deferred();
-        if (this.app_switcher_displayed) {
+        if (this.home_menu_displayed) {
             this.action_manager.clear_action_stack();
             this.menu.toggle_mode(true, false);
             def.resolve();
         } else if (action_desc.tag === 'action_web_studio_app_creator') {
-            // we are not in the app_switcher but we want to display it
+            // we are not in the home_menu but we want to display it
             this.action_manager.clear_action_stack();
-            this.toggle_app_switcher(true);
+            this.toggle_home_menu(true);
             def.resolve();
         } else {
             def = this.action_manager.restoreActionStack(this.studio_action_manager.action_stack);
@@ -136,7 +136,7 @@ WebClient.include({
     current_action_updated: function (action) {
         this._super.apply(this, arguments);
 
-        // the method is overwritten by the debug manager to update to null if the appswitcher is
+        // the method is overwritten by the debug manager to update to null if the home menu is
         // displayed, but we don't need this in Studio ; we only need to update the action if there is one.
         if (action && !action.action_descr.keep_state && action.action_descr.tag !== 'action_web_studio_main') {
             this._updateStudioSystray(this._isStudioEditable(action));
@@ -246,9 +246,9 @@ WebClient.include({
      * @override
      * @param {Boolean} display
      */
-    toggle_app_switcher: function (display) {
+    toggle_home_menu: function (display) {
         if (display) {
-            // the Studio icon is enabled in the appswitcher (for the app creator)
+            // the Studio icon is enabled in the home menu (for the app creator)
             this._updateStudioSystray(true);
         }
 
@@ -318,9 +318,9 @@ WebClient.include({
     _on_app_clicked_done: function (ev) {
         if (this.studio_mode) {
             core.bus.trigger('change_menu_section', ev.data.menu_id);
-            // load the action before toggle the appswitcher
+            // load the action before toggle the home menu
             return this._openNavigatedActionInStudio(ev.data.options)
-                .then(this.toggle_app_switcher.bind(this, false));
+                .then(this.toggle_home_menu.bind(this, false));
         } else {
             return this._super.apply(this, arguments);
         }
@@ -439,7 +439,7 @@ WebClient.include({
                     }
                 }
             });
-            self.menu.toggle_mode(false);  // display app switcher button
+            self.menu.toggle_mode(false);  // display home menu button
         });
     },
     /**
@@ -457,15 +457,15 @@ WebClient.include({
         $.when(this.studio_mode && this._loadStudioInfo()).then(function (studio_info) {
             self.instanciate_menu_widgets().then(function () {
                 // reload previous state
-                self.menu.toggle_mode(self.app_switcher_displayed);
+                self.menu.toggle_mode(self.home_menu_displayed);
                 self.menu.change_menu_section(current_primary_menu); // entering the current menu
-                if (self.app_switcher_displayed) {
-                    self.append_app_switcher();
+                if (self.home_menu_displayed) {
+                    self.append_home_menu();
                 }
 
                 self.menu.switch_studio_mode(self.studio_mode, studio_info, action_desc, active_view);
                 self._updateStudioSystray(!!self.studio_mode);
-                self.app_switcher.toggleStudioMode(!!self.studio_mode);
+                self.home_menu.toggleStudioMode(!!self.studio_mode);
 
                 if (ev && ev.data.keep_open) {
                     self.menu.edit_menu.editMenu();
@@ -481,7 +481,7 @@ WebClient.include({
      */
     _onStudioMode: function () {
         var self = this;
-        this.studio_mode = !this.studio_mode && (this.app_switcher_displayed ? 'app_creator' : 'main');
+        this.studio_mode = !this.studio_mode && (this.home_menu_displayed ? 'app_creator' : 'main');
         var action = this.action_manager.get_inner_action();
         var action_desc = action && action.action_descr || null;
         var active_view = action && action.get_active_view();
@@ -493,7 +493,7 @@ WebClient.include({
             defs.push(this._loadStudioInfo());
             defs.push(this._setStudioActionManager());
 
-            if (this.app_switcher_displayed) {
+            if (this.home_menu_displayed) {
                 this.action_manager.clear_action_stack();
                 this.menu.toggle_mode(true, false);
             } else {
@@ -513,8 +513,8 @@ WebClient.include({
             if (self.studio_mode) {
                 self._updateStudioSystray(true);
             }
-            if (!self.studio_mode && self.app_switcher_displayed) {
-                self.trigger_up('show_app_switcher');
+            if (!self.studio_mode && self.home_menu_displayed) {
+                self.trigger_up('show_home_menu');
             }
         });
     },

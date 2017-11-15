@@ -81,11 +81,11 @@ Menu.include({
                     this.edit_menu.appendTo($main_navbar.find('.o_menu_sections'));
                 }
             } else {
-                // In app switcher
-                this.$app_switcher_menu = $(qweb.render('web_studio.AppSwitcherMenu', {
+                // In home menu
+                this.$home_studio_menu = $(qweb.render('web_studio.HomeStudioMenu', {
                     widget: this,
                 }));
-                this.$app_switcher_menu.appendTo($main_navbar);
+                this.$home_studio_menu.appendTo($main_navbar);
             }
 
             // Leave button
@@ -121,11 +121,11 @@ Menu.include({
     /**
      * @override
      */
-    toggle_mode: function (appswitcher) {
+    toggle_mode: function (home_menu) {
         this._super.apply(this, arguments);
 
-        if (!appswitcher && this.$app_switcher_menu) {
-            this.$app_switcher_menu.remove();
+        if (!home_menu && this.$home_studio_menu) {
+            this.$home_studio_menu.remove();
         }
     },
 
@@ -150,9 +150,9 @@ Menu.include({
             this.$leave_button.remove();
             this.$leave_button = undefined;
         }
-        if (this.$app_switcher_menu) {
-            this.$app_switcher_menu.remove();
-            this.$app_switcher_menu = undefined;
+        if (this.$home_studio_menu) {
+            this.$home_studio_menu.remove();
+            this.$home_studio_menu = undefined;
         }
     },
     /**
