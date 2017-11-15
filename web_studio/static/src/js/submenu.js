@@ -176,7 +176,7 @@ var SubMenu = Widget.extend({
                 clear_breadcrumbs: true,
                 disable_edition: true,
             });
-        } else if (_.contains(['automations', 'reports', 'acl', 'filters'], name)) {
+        } else if (_.contains(['automations', 'reports', 'acl', 'filters', 'translations'], name)) {
             var self = this;
             ajax.jsonRpc('/web_studio/get_studio_action', 'call', {
                 action_name: name,
