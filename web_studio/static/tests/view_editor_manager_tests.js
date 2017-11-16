@@ -7,7 +7,6 @@ var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
 
 var ViewEditorManager = require('web_studio.ViewEditorManager');
-var ViewEditorSidebar = require('web_studio.ViewEditorSidebar');
 
 var createViewEditorManager = function (params) {
     var $target = $('#qunit-fixture');
@@ -1013,13 +1012,6 @@ QUnit.module('ViewEditorManager', {
     QUnit.test('add a monetary field without currency_id', function(assert) {
         assert.expect(7);
 
-        // we can't drag components twice in tests as there is a throttle so we
-        // monkey patch the function to remove the delay
-        var throttle = _.throttle;
-        _.throttle = function (func, wait, options) {
-            return throttle(func, 0, options);
-        };
-
         this.data.product.fields.monetary_field = {
             string: 'Monetary',
             type: 'monetary',
@@ -1061,8 +1053,6 @@ QUnit.module('ViewEditorManager', {
             "this should trigger an alert");
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
             "there should still be one node");
-
-        _.throttle = throttle;
 
         vem.destroy();
     });
