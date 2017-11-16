@@ -4,7 +4,7 @@
     <template id="barcode_planner">
         <t t-call="web_planner.pages">
             <t t-call="web_planner.page">
-                <t t-set="page_title" t-value="'Welcome'"/>
+                <t t-set="page_title">Welcome</t>
                 <t t-set="hide_mark_as_done" t-value="True"/>
                 <i><p>
                     You've decided to implement barcodes in your company? Great idea. This tool will help you setup the environment to make it work.
@@ -24,10 +24,10 @@
                 </div>
             </t>
             <t t-call="web_planner.category">
-                <t t-set="menu_categorytitle" t-value="'Configuration'"/>
+                <t t-set="menu_categorytitle">Configuration</t>
                 <t t-set="menu_categoryclasses" t-value="'fa-cog'"/>
                 <t t-call="web_planner.page">
-                    <t t-set="page_title" t-value="'Choose Hardware'"/>
+                    <t t-set="page_title">Choose Hardware</t>
                     <h4>USB, Wireless or Bluetooth?</h4>
                     <p>Odoo supports most USB, Wireless and Bluetooth barcode scanners (as they all emulate a keyboard).</p>
                     <ul>
@@ -51,7 +51,7 @@
                     </div>
                 </t>
                 <t t-call="web_planner.page">
-                    <t t-set="page_title" t-value="'Scanner Configuration'"/>
+                    <t t-set="page_title">Scanner Configuration</t>
                     <h4>Keyboard layout</h4>
                     <p>Your barcode scanner needs to be configured to use the same keyboard layout as your operating system. Otherwise, your scanner won't translate characters correctly (replacing a 'A' with a 'Q' for example). Most scanners are configured by scanning the appropriate barcode in the user's manual.</p>
                     <h4>Automatic carriage return</h4>
@@ -64,7 +64,7 @@
                 </t>
 
                 <t t-call="web_planner.page">
-                    <t t-set="page_title" t-value="'Product Configuration'"/>
+                    <t t-set="page_title">Product Configuration</t>
                     <p><strong>The next step is to assign barcodes to your products,</strong> by setting the right value in the Barcode field of the Product form.</p>
                     <p>Here, you have three options:</p>
                     <ul>
@@ -87,7 +87,7 @@
 
                 <t t-if="is_multi_location">
                     <t t-call="web_planner.page">
-                        <t t-set="page_title" t-value="'Locations Barcodes'"/>
+                        <t t-set="page_title">Locations Barcodes</t>
                         <p>Naming the locations within your warehouse(s) is crucial for a good inventory management.</p>
                         <p>But better yet is to transform this naming into a barcode that can be scanned easily and without error.</p>
                         <p>
@@ -104,10 +104,10 @@
                 </t>
             </t>
             <t t-call="web_planner.category">
-                <t t-set="menu_categorytitle" t-value="'Use Cases'"/>
+                <t t-set="menu_categorytitle">Use Cases</t>
                 <t t-set="menu_categoryclasses" t-value="'fa-magnet'"/>
                 <t t-call="web_planner.page">
-                    <t t-set="page_title" t-value="'Delivery Orders'"/>
+                    <t t-set="page_title">Delivery Orders</t>
                     <p>There are two approaches to process delivery orders: you can either work on printed documents (and scan lines on the documents), or on a screen (and scan products directly).</p>
                     <p><strong>To process printed Delivery Orders:</strong></p>
                     <ul>
@@ -131,7 +131,7 @@
                 </t>
 
                 <t t-call="web_planner.page">
-                    <t t-set="page_title" t-value="'Making an Inventory'"/>
+                    <t t-set="page_title">Making an Inventory</t>
                     <p><strong>From the Barcode application:</strong></p>
                     <ul>
                         <li>Click on 'Inventory'</li>
@@ -142,7 +142,7 @@
                 </t>
                 <t t-if="is_multi_location">
                     <t t-call="web_planner.page">
-                        <t t-set="page_title" t-value="'Internal Transfers'"/>
+                        <t t-set="page_title">Internal Transfers</t>
                         <p>In Odoo, there are two types of internal transfers:</p>
                         <ul>
                             <li>Those initiated automatically by the system (for example, a quality control)</li>
@@ -159,7 +159,7 @@
                 </t>
 
                 <t t-call="web_planner.page">
-                    <t t-set="page_title" t-value="'Lots / Serial Numbers'"/>
+                    <t t-set="page_title">Lots / Serial Numbers</t>
                     <p><strong>Lots Numbers</strong> can be encoded from incoming shipments, internal moves and outgoing deliveries:</p>
                     <ul>
                         <li>In the barcode interface, scan the products you want create a lot from</li>
@@ -178,7 +178,7 @@
             </t>
 
             <t t-call="web_planner.category">
-                <t t-set="menu_categorytitle" t-value="'Go Live'"/>
+                <t t-set="menu_categorytitle">Go Live</t>
                 <t t-set="menu_categoryclasses" t-value="'fa-video-camera'"/>
                 <t t-call="web_planner.page">
                     <t t-set="page_title" t-value="'End'"/>
