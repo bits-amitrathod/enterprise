@@ -351,11 +351,11 @@ class MrpProductionWorkcenterLine(models.Model):
                                                  })
 
             # Generate quality checks associated with unreferenced components
-            bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', production.product_id.product_tmpl_id.id)])
-            bom_line_ids = bom_ids.mapped('bom_line_ids').filtered(lambda l: l.operation_id == wo.operation_id)
+            bom_id = production.bom_id
+            bom_line_ids = bom_id.bom_line_ids.filtered(lambda l: l.operation_id == wo.operation_id)
             # If last step, add bom lines not associated with any operation
             if not wo.next_work_order_id:
-                bom_line_ids += bom_ids.mapped('bom_line_ids').filtered(lambda l: not l.operation_id)
+                bom_line_ids += bom_id.bom_line_ids.filtered(lambda l: not l.operation_id)
             components = bom_line_ids.mapped('product_id').filtered(lambda product: product.tracking != 'none' and product.id not in component_list)
             quality_team_id = self.env['quality.alert.team'].search([], limit=1).id
             for component in components:
