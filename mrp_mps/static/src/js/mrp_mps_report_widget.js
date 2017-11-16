@@ -73,7 +73,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     on_change_quantity: function(e) {
         var self = this;
         var $input = $(e.target);
-        var target_values;
+        var target_value;
         try {
             target_value = field_utils.parse.integer($input.val().replace(String.fromCharCode(8209), '-'));
         } catch(err) {

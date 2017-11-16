@@ -13,7 +13,6 @@ class TestUi(odoo.tests.HttpCase):
     # using a test cursor like the resy of HTTPCase won't work
     registry_test_mode = False
 
-    @unittest.skip('pending fix for multi-cursor lock problem')
     def test_new_app(self):
         self.phantom_js("/web?studio=app_creator",
                         "odoo.__DEBUG__.services['web_tour.tour'].run('web_studio_new_app_tour')",

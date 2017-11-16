@@ -32,3 +32,17 @@ class MassMailing(models.Model):
                 done |= mass_mailing
         res.update(super(MassMailing, self - done).convert_links())
         return res
+
+    def _get_blacklist(self):
+        self.ensure_one()
+        target = self.env[self.mailing_model_real]
+        if not ('email' in target._fields or 'email_from' in target._fields):
+            return {}
+        return super(MassMailing, self)._get_blacklist()
+
+    def _get_seen_list(self):
+        self.ensure_one()
+        target = self.env[self.mailing_model_real]
+        if not ('email' in target._fields or 'email_from' in target._fields):
+            return set()
+        return super(MassMailing, self)._get_seen_list()

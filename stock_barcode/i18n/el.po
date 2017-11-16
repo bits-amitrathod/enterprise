@@ -6,6 +6,7 @@
 # Kostas Goutoudis <goutoudis@gmail.com>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
 # Stefanos Nikou <stefanos.nikou@gmail.com>, 2017
+# George Tarasidis <george_tarasidis@yahoo.com>, 2017
 # Costas Pittalis <cpittalis@gmail.com>, 2017
 msgid ""
 msgstr ""
@@ -94,8 +95,8 @@ msgid ""
 "<strong>Scan barcodes on products:</strong> suitable if all your products "
 "already have a barcode"
 msgstr ""
-"<strong>Σάρωση barcodes για τα προϊόντα:</strong> κατάλληλο εάν όλα τα "
-"προϊόντα σας έχουν ήδη ένα barcode"
+"<strong>Σάρωση barcodes για τα είδη:</strong> κατάλληλο εάν όλα τα είδη σας "
+"έχουν ήδη ένα barcode"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -116,9 +117,8 @@ msgid ""
 "<strong>The next step is to assign barcodes to your products,</strong> by "
 "setting the right value in the Barcode field of the Product form."
 msgstr ""
-"<strong>Το επόμενο βήμα είναι να εκχωρήσετε barcodes στα προϊόντα "
-"σας,</strong> θέτοντας τη σωστή τιμή στο πεδίο Barcode της φόρμας του "
-"προϊόντος."
+"<strong>Το επόμενο βήμα είναι να εκχωρήσετε barcodes στα είδη σας,</strong> "
+"θέτοντας τη σωστή τιμή στο πεδίο Barcode της φόρμας του είδους."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -217,6 +217,8 @@ msgid ""
 "Choose a USB barcode scanner if you plan to scan products at the computer "
 "station"
 msgstr ""
+"Επιλέξτε έναν USB σαρωτή Barcode εάν σκοπεύετε να σαρώσετε είδη στον σταθμό "
+"του υπολογιστή"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -226,7 +228,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Configure Product Barcodes"
-msgstr "Διαμόρφωση των Barcodes του Προϊόντος"
+msgstr "Διαμόρφωση των Barcodes του Είδους"
 
 #. module: stock_barcode
 #: model:web.planner,tooltip_planner:stock_barcode.planner_barcode
@@ -572,14 +574,14 @@ msgstr ""
 #: model:ir.actions.act_window,name:stock_barcode.stock_picking_action_form
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_picking_id
 msgid "Picking"
-msgstr "Συλλογή με"
+msgstr "Συλλογή"
 
 #. module: stock_barcode
 #. openerp-web
 #: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:113
 #, python-format
 msgid "Picking %s"
-msgstr ""
+msgstr "Συλλογή%s"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_web_planner
@@ -614,7 +616,7 @@ msgstr "Είδος"
 #: model:ir.actions.act_window,name:stock_barcode.product_action_barcodes
 #: model:ir.ui.view,arch_db:stock_barcode.product_view_list_barcodes
 msgid "Product Barcodes"
-msgstr "Barcodes Προϊόντος"
+msgstr "Barcodes Είδους"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_qty_done
@@ -624,7 +626,7 @@ msgstr "Ολοκληρωμένη Ποσότητα"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_qty_reserved
 msgid "Qty Reserved"
-msgstr ""
+msgstr "Κρατημένη Ποσότητα"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_qty_done
@@ -783,7 +785,7 @@ msgstr "Προς υλοποίηση"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_picking_type_kanban
 msgid "To Receive"
-msgstr "Να παραλάβω"
+msgstr "Για Παραλαβή"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_picking

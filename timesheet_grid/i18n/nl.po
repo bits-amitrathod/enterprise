@@ -66,6 +66,45 @@ msgid ""
 "</div>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
+"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            <p>Beste ${object.name},</p>\n"
+"            <p>Dit is een herinnering om de urenstaat van uw team voor de periode: ${ctx.get('date_start')} - ${ctx.get('date_stop')} te bevestigen.</p>\n"
+"            % if ctx.get('action_url'):\n"
+"                <center>\n"
+"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">Bevestig uw urenstaat</a>\n"
+"                </center>\n"
+"            % endif\n"
+"            <p>Met vriendelijke groet,</p>\n"
+"        </td>\n"
+"    </tr><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            % if user.signature\n"
+"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"            </p>\n"
+"            % endif\n"
+"            <p style=\"font-size: 11px;\"><strong>Verstuurt door\n"
+"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                <strong>${user.company_id.name}</strong>\n"
+"            </a> gebruik makend van<a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"            </strong></p>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"            </data>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -111,6 +150,46 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
+"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            <p>Beste ${object.name},</p>\n"
+"            <p>Dit is een herinnering om uw urenstaat voor de periode: : ${ctx.get('date_start')} - ${ctx.get('date_stop') in te dienen}.\n"
+"                Op dit moment heeft u ${ctx.get('timesheet_hours')} uren geschreven ${ctx.get('working_hours')} benodigd.\n"
+"            </p>\n"
+"            % if ctx.get('action_url'):\n"
+"                <center>\n"
+"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">Vul uw urenstaat</a>\n"
+"                </center>\n"
+"            % endif\n"
+"            <p>Met vriendelijke groet,</p>\n"
+"        </td>\n"
+"    </tr><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            % if user.signature\n"
+"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"            </p>\n"
+"            % endif\n"
+"            <p style=\"font-size: 11px;\"><strong>Verstuurd door\n"
+"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                <strong>${user.company_id.name}</strong>\n"
+"            </a> via <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"            </strong></p>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"            "
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -307,11 +386,6 @@ msgid "Let's create your first timesheet entry."
 msgstr "Laten we uw eerste urenstaat aanmaken."
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
-msgid "Line edition and creation from grid"
-msgstr "Lijn wijzigingen en aanmaken vanuit grid"
-
-#. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "Manager Reminder"
@@ -331,6 +405,8 @@ msgid ""
 "Multiple timesheet entries match the modified value. Please change the "
 "search options or modify the entries individually."
 msgstr ""
+"Meerdere urenstaat regels komen overeen met de aangepaste waardes. Veranderd"
+" de zoek opties of pas de regel individueel aan."
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -340,8 +416,8 @@ msgstr "Mijn Team"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_nextdate
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_nextdate
-msgid "Next cron date for manager reminder"
-msgstr "Volgende cron datum voor reminder beheerder"
+msgid "Next scheduled date for manager reminder"
+msgstr "Volgende geplande datum voor een manager herinnering "
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -473,6 +549,8 @@ msgid ""
 "Track your timesheets to invoice easily, or control costs. <i>It starts "
 "here.</i>"
 msgstr ""
+"Beheer eenvoudig uw te factureren urenstaten, of beheer kosten. <i>Het "
+"begint hier.</i>"
 
 #. module: timesheet_grid
 #. openerp-web
@@ -482,6 +560,8 @@ msgid ""
 "Use tasks to track the different type of activities. (e.g. Graphic Design, "
 "Programming, Project Management)"
 msgstr ""
+"Gebruik taken om verschillende activiteiten te volgen (bijv. Grafisch "
+"ontwerp, Programmeren, Project Management)"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_manager_id

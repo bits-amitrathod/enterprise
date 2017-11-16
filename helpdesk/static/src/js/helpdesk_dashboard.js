@@ -204,7 +204,7 @@ var HelpdeskDashboardController = KanbanController.extend({
         var self = this;
         var action_name = e.data.action_name;
         if (_.contains(['helpdesk_rating_today', 'helpdesk_rating_7days'], action_name)) {
-            return this._rpc({model: this.model, method: action_name})
+            return this._rpc({model: this.modelName, method: action_name})
                 .then(function (data) {
                     if (data) {
                     return self.do_action(data);

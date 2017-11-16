@@ -33,7 +33,7 @@
         <record id="mail_template_timesheet_reminder_user" model="mail.template">
             <field name="name">Timesheet: Employees Reminder</field>
             <field name="model_id" ref="hr.model_hr_employee"/>
-            <field name="email_from">${object.user_id.company_id.name} &lt;${(object.user_id.company_id.email or user.email)|safe}&gt;</field>
+            <field name="email_from">${object.user_id.company_id.partner_id.email_formatted|safe}</field>
             <field name="email_to">${object.work_email|safe}</field>
             <field name="subject">Reminder: please log your hours</field>
             <field name="body_html" type="html">
