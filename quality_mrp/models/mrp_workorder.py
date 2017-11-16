@@ -335,20 +335,22 @@ class MrpProductionWorkcenterLine(models.Model):
                 if point.check_execute_now():
                     if point.component_id:
                         component_list.append(point.component_id.id)
-                    moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == point.component_id)
+                    moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == point.component_id and m.workorder_id == wo)
                     qty_done = 1.0
                     if point.component_id and moves and point.component_id.tracking != 'serial':
                         qty_done = float_round(sum(moves.mapped('unit_factor')), precision_rounding=moves[0].product_uom.rounding)
-                    self.env['quality.check'].create({'workorder_id': wo.id,
-                                                  'point_id': point.id,
-                                                  'team_id': point.team_id.id,
-                                                  'product_id': production.product_id.id,
-                                                  # Fill in the full quantity by default
-                                                  'qty_done': qty_done,
-                                                  # Two steps are from the same production
-                                                  # if and only if the produced quantities at the time they were created are equal.
-                                                  'finished_product_sequence': wo.qty_produced,
-                                                 })
+                    # Do not generate qc for control point of type register_consumed_materials if the component is not consummed in this wo.
+                    if not point.component_id or moves:
+                        self.env['quality.check'].create({'workorder_id': wo.id,
+                                                          'point_id': point.id,
+                                                          'team_id': point.team_id.id,
+                                                          'product_id': production.product_id.id,
+                                                          # Fill in the full quantity by default
+                                                          'qty_done': qty_done,
+                                                          # Two steps are from the same production
+                                                          # if and only if the produced quantities at the time they were created are equal.
+                                                          'finished_product_sequence': wo.qty_produced,
+                                                          })
 
             # Generate quality checks associated with unreferenced components
             bom_id = production.bom_id
