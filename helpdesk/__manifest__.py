@@ -44,7 +44,6 @@ Features:
         'views/assets.xml',
         'views/helpdesk_portal_templates.xml',
         'views/res_partner_views.xml',
-        'wizard/helpdesk_ticket_merge_views.xml',
     ],
     'qweb': [
         "static/src/xml/helpdesk_team_templates.xml",
