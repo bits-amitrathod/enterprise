@@ -20,7 +20,7 @@
     ],
     "demo": [
         "demo/res_company_demo.xml",
-        "demo/account_invoice_demo.yml",
+        "demo/account_invoice_demo.xml",
         "demo/res_partner_demo.xml",
     ],
     "data": [
