@@ -55,6 +55,7 @@ var PhonecallTab = Widget.extend({
      */
     initPhonecall: function () {
         this.phonecallDetails.showCallDisplay();
+        this.trigger_up('toggleHangupButton');
     },
     /**
      * Called when the call is answered and then no more ringing.
