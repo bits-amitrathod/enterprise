@@ -505,7 +505,7 @@ class MarketingActivity(models.Model):
         return True
 
     def _execute_email(self, traces):
-        res_ids = traces.mapped('res_id')
+        res_ids = [r for r in set(traces.mapped('res_id'))]
 
         mailing = self.mass_mailing_id.with_context(
             default_marketing_activity_id=self.ids[0],
