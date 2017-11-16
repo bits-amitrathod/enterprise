@@ -33,7 +33,7 @@ ControlPanel.include({
                     self.nodes.$searchview_buttons.toggle(self.searchview_displayed);
                 });
         }
-        if(!is_hidden && config.device.size_class <= config.device.SIZES.XS) {
+        if(searchview && !is_hidden && config.device.size_class <= config.device.SIZES.XS) {
             this.$enable_searchview.insertAfter(this.nodes.$searchview);
             this.searchview_displayed = false;
             this.nodes.$searchview_buttons.hide();
