@@ -16,9 +16,9 @@ odoo.define('website_sign.views_custo', function(require) {
         /**
          * @override
          */
-        start: function () {
+        init: function () {
             this._super.apply(this, arguments);
-            if (this.modelName !== "signature.request") {
+            if (this.modelName === "signature.request") {
                 this.draggable = false;
             }
         },
