@@ -900,7 +900,6 @@ odoo.define('website_sign.template', function(require) {
 
         refresh_cp: function() {
             this.update_control_panel({
-                breadcrumbs: this.getParent().get_breadcrumbs(),
                 cp_content: this.cp_content
             });
         },
@@ -1058,7 +1057,6 @@ odoo.define('website_sign.DocumentBackend', function (require) {
 
         refresh_cp: function () {
             this.update_control_panel({
-                breadcrumbs: this.getParent().get_breadcrumbs(),
                 cp_content: this.cp_content,
             });
         },

@@ -89,7 +89,6 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
             this.renderButtons();
         }
         var status = {
-            breadcrumbs: this.actionManager.get_breadcrumbs(),
             cp_content: {$buttons: this.$buttons, $searchview_buttons: this.$searchview_buttons, $pager: this.$pager, $searchview: this.$searchview},
         };
         return this.update_control_panel(status, {clear: true});

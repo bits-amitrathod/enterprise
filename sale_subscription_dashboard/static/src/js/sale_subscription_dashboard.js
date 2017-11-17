@@ -167,7 +167,6 @@ var sale_subscription_dashboard_abstract = Widget.extend(ControlPanelMixin, {
                     $searchview: self.$searchview,
                     $searchview_buttons: self.$searchview_buttons,
                 },
-                breadcrumbs: self.getParent().get_breadcrumbs(),
             });
         });
     },
@@ -823,9 +822,7 @@ var sale_subscription_dashboard_forecast = sale_subscription_dashboard_abstract.
     },
 
     update_cp: function() { // Redefinition to not show anything in controlpanel for forecast dashboard
-        this.update_control_panel({
-            breadcrumbs: this.getParent().get_breadcrumbs(),
-        });
+        this.update_control_panel({});
     },
 });
 
@@ -1160,7 +1157,6 @@ var sale_subscription_dashboard_salesman = sale_subscription_dashboard_abstract.
             cp_content: {
                 $searchview: this.$searchview,
             },
-            breadcrumbs: this.getParent().get_breadcrumbs(),
         });
     },
 });
@@ -1316,7 +1312,6 @@ var sale_subscription_dashboard_cohort = sale_subscription_dashboard_abstract.ex
                 $searchview: this.$searchview,
                 $searchview_buttons: this.$searchview_buttons,
             },
-            breadcrumbs: this.getParent().get_breadcrumbs(),
         });
 
     },
