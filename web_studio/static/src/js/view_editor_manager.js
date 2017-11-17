@@ -794,10 +794,9 @@ var ViewEditorManager = Widget.extend({
                 self.operations = [];
                 self.studio_view_arch = studio_view_arch;
                 var params = self.view.loadParams;
-                var context = new Context(params.context || {});
                 return self.loadViews(
                     self.model_name,
-                    context,
+                    params.context || {},
                     [[self.view_id, params.viewType]]
                 );
             }).then(function (viewInfo) {
