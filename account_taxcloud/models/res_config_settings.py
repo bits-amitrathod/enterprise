@@ -9,26 +9,9 @@ from .taxcloud_request import TaxCloudRequest
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    taxcloud_api_id = fields.Char(string='TaxCloud API ID')
-    taxcloud_api_key = fields.Char(string='TaxCloud API KEY')
+    taxcloud_api_id = fields.Char(string='TaxCloud API ID', default='', config_parameter='account_taxcloud.taxcloud_api_id')
+    taxcloud_api_key = fields.Char(string='TaxCloud API KEY', default='', config_parameter='account_taxcloud.taxcloud_api_key')
     tic_category_id = fields.Many2one(related='company_id.tic_category_id', string="Default TIC Code")
-
-    @api.multi
-    def set_values(self):
-        super(ResConfigSettings, self).set_values()
-        Param = self.env['ir.config_parameter'].sudo()
-        Param.set_param("account_taxcloud.taxcloud_api_id", (self.taxcloud_api_id or '').strip())
-        Param.set_param("account_taxcloud.taxcloud_api_key", (self.taxcloud_api_key or '').strip())
-
-    @api.model
-    def get_values(self):
-        res = super(ResConfigSettings, self).get_values()
-        params = self.env['ir.config_parameter'].sudo()
-        res.update(
-            taxcloud_api_id=params.get_param('account_taxcloud.taxcloud_api_id', default=''),
-            taxcloud_api_key=params.get_param('account_taxcloud.taxcloud_api_key', default=''),
-        )
-        return res
 
     @api.multi
     def sync_taxcloud_category(self):

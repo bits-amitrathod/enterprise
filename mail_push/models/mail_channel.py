@@ -52,7 +52,12 @@ class MailChannel(models.Model):
                         method(service_identities, message)
 
     def _get_default_fcm_credentials(self):
-        return self.env['res.config.settings'].sudo().get_fcm_credentials()
+        params = self.env['ir.config_parameter'].sudo()
+        return dict(
+            mail_push_notification=params.get_param('mail_push.mail_push_notification', default=False),
+            fcm_api_key=params.get_param('mail_push.fcm_api_key', default=''),
+            fcm_project_id=params.get_param('mail_push.fcm_project_id', default=''),
+        )
 
     @api.model
     def _push_notify_fcm(self, identities, message):
