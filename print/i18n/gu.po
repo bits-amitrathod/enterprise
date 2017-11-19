@@ -1,20 +1,18 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * print
-#
-# Translators:
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo 9.0\n"
+"Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 11:35+0000\n"
-"PO-Revision-Date: 2015-10-01 07:27+0000\n"
-"Last-Translator: Martin Trigaux\n"
-"Language-Team: Gujarati (http://www.transifex.com/odoo/odoo-9/language/gu/)\n"
-"Language: gu\n"
+"POT-Creation-Date: 2016-09-07 09:57+0000\n"
+"PO-Revision-Date: 2016-09-07 09:57+0000\n"
+"Language-Team: Gujarati (https://www.transifex.com/odoo/teams/41243/gu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: gu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: print
@@ -24,20 +22,15 @@ msgid ""
 "                <body>\n"
 "                      <p>Dear ${object.partner_id.name},</p>\n"
 "\n"
-"                      <p>During the last process of \"Print and Send\" "
-"documents, some mistakes appear. Here is a list of the failed Print Order "
-"you authored.</p>\n"
-"                      <p>Please, some errors have been detected. You can "
-"find them in <i>Settings > Print Orders</i>.</p>\n"
+"                      <p>During the last process of \"Print and Send\" documents, some mistakes appear. Here is a list of the failed Print Order you authored.</p>\n"
+"                      <p>Please, some errors have been detected. You can find them in <i>Settings > Print Orders</i>.</p>\n"
 "\n"
 "                      % if ctx.get('print_errors'):\n"
 "                            <p>\n"
 "                            Print Order ID  |    Error Message <br/>\n"
 "                            -------------------------------------- <br/>\n"
-"                                  % for print_order_id, error_text in ctx."
-"get('print_errors'):\n"
-"                                        ${print_order_id}    |    "
-"${error_text} <br/>\n"
+"                                  % for print_order_id, error_text in ctx.get('print_errors'):\n"
+"                                        ${print_order_id}    |    ${error_text} <br/>\n"
 "                                  % endfor\n"
 "                            </p>\n"
 "                      % endif\n"
@@ -62,7 +55,7 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_user_id
 msgid "Author"
-msgstr "લેખક"
+msgstr ""
 
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
@@ -73,7 +66,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Cancel"
-msgstr "રદ કરો"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_city
@@ -98,7 +91,7 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_country_id
 msgid "Country"
-msgstr "દેશ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_create_uid
@@ -120,18 +113,18 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_create_date
 msgid "Creation Date"
-msgstr "સર્જન તારીખ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_provider_balance
 msgid "Credit"
-msgstr "જમા"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_currency_id
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_currency_id
 msgid "Currency"
-msgstr "ચલણ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_base_config_settings_default_print_provider
@@ -156,7 +149,7 @@ msgstr ""
 #. module: print
 #: selection:print.order,state:0
 msgid "Draft"
-msgstr "ડ્રાફ્ટ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_environment
@@ -167,7 +160,7 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_error_message
 msgid "Error"
-msgstr "ભૂલ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_error_message
@@ -187,7 +180,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Group By..."
-msgstr "ગ્રુપ દ્વારા..."
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_id
@@ -197,7 +190,7 @@ msgstr "ગ્રુપ દ્વારા..."
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_id
 #: model:ir.model.fields,field_description:print.field_print_provider_id
 msgid "ID"
-msgstr "ઓળખ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_ink
@@ -208,7 +201,7 @@ msgstr ""
 #. module: print
 #: model:ir.model,name:print.model_account_invoice
 msgid "Invoice"
-msgstr "બિલ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
@@ -258,7 +251,7 @@ msgstr ""
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
 msgid "Lines"
-msgstr "લીટીઓ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_res_model
@@ -274,7 +267,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_partner_name
 #: model:ir.model.fields,field_description:print.field_print_provider_name
 msgid "Name"
-msgstr "નામ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_nbr_pages
@@ -321,7 +314,7 @@ msgstr ""
 #: model:ir.model,name:print.model_res_partner
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Partner"
-msgstr "ભાગીદાર"
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -492,13 +485,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_state
 #: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
 msgid "State"
-msgstr "અવસ્થા"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_state
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Status"
-msgstr "સ્થિતિ"
+msgstr ""
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_street
@@ -532,8 +525,8 @@ msgstr ""
 #: code:addons/print/models/print_provider.py:186
 #, python-format
 msgid ""
-"The document you want to print and send is not printable. There is no report "
-"action (ir.actions.report.xml) for the model %s."
+"The document you want to print and send is not printable. There is no report"
+" action (ir.actions.report.xml) for the model %s."
 msgstr ""
 
 #. module: print
@@ -548,9 +541,8 @@ msgstr ""
 msgid ""
 "This invoice was sent by post with the provider %(provider_name)s at the "
 "following address.                     <br/><br/> %(partner_name)s <br/> "
-"%(partner_street)s <br/> %(partner_city)s "
-"%(partner_zip)s                     <br/>%(partner_country)sprovider_name<i>"
-"%s</i>"
+"%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
+"                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
 
 #. module: print
