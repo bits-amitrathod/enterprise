@@ -13,7 +13,7 @@
     'data': [
         'data/timesheet_data.xml',
         'security/timesheet_security.xml',
-        'views/views.xml',
+        'views/hr_timesheet_views.xml',
         'views/res_config_settings_views.xml',
         'views/timesheet_templates.xml',
         'wizard/timesheet_validation_views.xml',
