@@ -291,7 +291,7 @@ return AbstractRenderer.extend({
                 h('tbody', {class: {o_grid_section: true}}, [
                     h('tr', [
                         h('th', {}, [
-                            (grid.__label || [])[1] || "\u00A0"
+                            (grid.__label || [])[1] || _t('Unknown')
                         ])
                     ].concat(
                         _(columns).map(function (column, column_index) {
