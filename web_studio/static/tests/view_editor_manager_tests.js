@@ -42,6 +42,14 @@ var createViewEditorManager = function (params) {
         view_env: env,
         studio_view_id: params.studioViewID,
     });
+
+    // also destroy to parent widget to avoid memory leak
+    var originalDestroy = ViewEditorManager.prototype.destroy;
+    vem.destroy = function () {
+        vem.destroy = originalDestroy;
+        widget.destroy();
+    };
+
     vem.appendTo($client_action);
     return vem;
 };
