@@ -85,7 +85,7 @@
                 </div>
                 <div class="workorder_actions">
                     <div class="o_workorder_bar_content">
-                        <button name="action_menu" type="object" class="btn-default o_workorder_icon_btn" string="" icon="fa-th"/>
+                        <button name="action_menu" type="object" class="btn-default o_workorder_icon_btn" string="" icon="fa-bars"/>
                         <button name="button_pending" type="object" class="btn-default mr8" attrs="{'invisible': ['|', ('is_user_working', '=', False), ('working_state', '=', 'blocked')]}" string="Pause"/>
                         <button name="button_start" type="object" class="btn-warning" attrs="{'invisible': ['|', ('is_user_working', '=', True), ('working_state', '=', 'blocked')]}" string="Continue"/>
                         <button name="button_unblock" type="object" context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': [('working_state', '!=', 'blocked')]}" string="Unblock" class="btn-danger"/>
