@@ -505,13 +505,16 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('label edition', function(assert) {
-        assert.expect(6);
+        assert.expect(9);
 
         var arch = "<form>" +
             "<sheet>" +
                 "<group>" +
                     "<label for='display_name' string='Kikou'/>" +
                     "<div><field name='display_name' nolabel='1'/></div>" +
+                "</group>" +
+                "<group>" +
+                    "<field name='char_field'/>" +
                 "</group>" +
             "</sheet>" +
         "</form>";
@@ -521,6 +524,9 @@ QUnit.module('ViewEditorManager', {
             model: 'coucou',
             arch: arch,
             mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
                 if (route === '/web_studio/edit_view') {
                     assert.deepEqual(args.operations[0].target, {
                         tag: 'label',
@@ -556,6 +562,13 @@ QUnit.module('ViewEditorManager', {
         var $labelInput = vem.$('.o_web_studio_sidebar_content.o_display_label input[name="string"]');
         assert.strictEqual($labelInput.val(), "Kikou", "the label name in sidebar should be set");
         $labelInput.val('Yeah').trigger('change');
+
+        var $fieldLabel = vem.$('.o_web_studio_form_view_editor label:contains("A char")');
+        assert.strictEqual($fieldLabel.length, 1, "there should be a label for the field");
+        $fieldLabel.click();
+        assert.notOk($fieldLabel.hasClass('o_clicked'), "the field label should not be clickable");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
+            "the sidebar should now display the field properties");
 
         vem.destroy();
     });
