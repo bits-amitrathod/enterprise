@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare, float_round
 
 import json
 
@@ -62,7 +63,11 @@ class StockPicking(models.Model):
 
     @api.multi
     def get_po_to_split_from_barcode(self, barcode):
-        ''' Returns the 'Split lot' action for the PO matching the barcode '''
+        """ Returns the lot wizard's action for the move line matching
+        the barcode. This method is intended to be called by the
+        `picking_barcode_handler` javascript widget when the user scans
+        the barcode of a tracked product.
+        """
         product_id = self.env['product.product'].search([('barcode', '=', barcode)])
         candidates = self.env['stock.move.line'].search([
             ('picking_id', 'in', self.ids),
@@ -97,20 +102,25 @@ class StockPicking(models.Model):
             return self.get_po_to_split_from_barcode(barcode)
 
     def _check_product(self, product, qty=1.0):
-        corresponding_po = self.move_line_ids.filtered(lambda r: r.product_id.id == product.id and not r.result_package_id and not r.location_processed)
-        if corresponding_po:
-            corresponding_po = corresponding_po[0]
-            if not corresponding_po.lots_visible:#product.tracking=='none':
-                new_po = False
-                last_po = False
-                for po in corresponding_po:
-                    last_po = po
-                    if po.product_uom_qty > po.qty_done:
-                        new_po = po
-                        break
-                corresponding_po = new_po or last_po
-                corresponding_po.qty_done += qty
+        """ This method is called when the user scans a product. Its goal
+        is to find a candidate move line (or create one, if necessary)
+        and process it by incrementing its `qty_done` field with the
+        `qty` parameter.
+        """
+        # Get back the move line to increase. If multiple are found, chose
+        # arbitrary the first one. Filter out the ones processed by
+        # `_check_location` and the ones already having a # destination
+        # package.
+        corresponding_ml = self.move_line_ids.filtered(lambda ml: ml.product_id.id == product.id and not ml.result_package_id and not ml.location_processed and not ml.lots_visible)
+        corresponding_ml = corresponding_ml[0] if corresponding_ml else False
+
+        if corresponding_ml:
+            corresponding_ml.qty_done += qty
         else:
+            # If a candidate is not found, we create one here. If the move
+            # line we add here is linked to a tracked product, we don't
+            # set a `qty_done`: a next scan of this product will open the
+            # lots wizard.
             picking_type_lots = (self.picking_type_id.use_create_lots or self.picking_type_id.use_existing_lots)
             self.move_line_ids += self.move_line_ids.new({
                 'product_id': product.id,
@@ -119,12 +129,6 @@ class StockPicking(models.Model):
                 'location_dest_id': self.location_dest_id.id,
                 'qty_done': (product.tracking == 'none' and picking_type_lots) and qty or 0.0,
                 'product_uom_qty': 0.0,
-                # TDE FIXME: those fields are compute without inverse: unnecessary ?
-                'from_loc': self.location_id.name,
-                'to_loc': self.location_dest_id.name,
-                'fresh_record': False,
-                'state':'assigned',
-                'lots_visible': product.tracking != 'none' and picking_type_lots,
             })
         return True
 
@@ -135,104 +139,66 @@ class StockPicking(models.Model):
         return corresponding_po and True or False
 
     def _check_destination_package(self, package):
-        #put in pack logic
-        corresponding_po = self.move_line_ids.filtered(lambda r: not r.result_package_id and r.qty_done > 0)
-        for packop in corresponding_po:
-            qty_done = packop.qty_done
-            if qty_done < packop.product_uom_qty:
-                if not packop.pack_lot_ids:
-                    packop.product_uom_qty = packop.product_uom_qty - qty_done
-                    packop.qty_done = 0.0
-                    self.move_line_ids += self.move_line_ids.new({
-                        'product_id': packop.product_id.id,
-                        'package_id': packop.package_id.id,
-                        'product_uom_id': packop.product_uom_id.id,
-                        'location_id': packop.location_id.id,
-                        'location_dest_id': packop.location_dest_id.id,
-                        'qty_done': qty_done,
-                        'product_uom_qty': qty_done,
-                        # TDE FIXME: those fields are compute without inverse: unnecessary ?
-                        'from_loc': packop.location_id.name + (packop.package_id and (' : ' + packop.package_id.name) or ''),
-                        'to_loc': packop.location_dest_id.name + ' : ' + package.name,
-                        'result_package_id': package.id,
-                        'lots_visible': packop.product_id.tracking != 'none',
-                    })
-                else:
-                    self.move_line_ids += self.move_line_ids.new({
-                        'product_id': packop.product_id.id,
-                        'package_id': packop.package_id.id,
-                        'product_uom_id': packop.product_uom_id.id,
-                        'location_id': packop.location_id.id,
-                        'location_dest_id': packop.location_dest_id.id,
-                        'qty_done': 0.0,
-                        'product_uom_qty': packop.product_uom_qty - qty_done,
-                        # TDE FIXME: those fields are compute without inverse: unnecessary ?
-                        'from_loc': packop.from_loc,
-                        'to_loc': packop.to_loc,
-                        'lots_visible': packop.product_id.tracking != 'none',
-                    })
-                    packop.result_package_id = package.id
-                    packop.to_loc = packop.location_dest_id.name + ' : ' + package.name
-                    packop.product_uom_qty = qty_done
-            else:
-                packop.result_package_id = package
-                packop.to_loc = packop.location_dest_id.name + ' : ' + package.name
-        corresponding_pack_po = self.move_line_ids.filtered(lambda r: not r.result_package_id and r.qty_done > 0)
-        for packop in corresponding_pack_po:
-            packop.to_loc = packop.location_dest_id.name + ' : ' + package.name
-            packop.result_package_id = package.id
+        """ This method is called when the user scans a package currently
+        located in (or in any of the children of) the destination location
+        of the picking. Its goal is to set this package as a destination
+        package for all the processed move lines not having a destination
+        package.
+        """
+        corresponding_ml = self.move_line_ids.filtered(lambda ml: not ml.result_package_id and float_compare(ml.qty_done, 0, precision_rounding=ml.product_uom_id.rounding) == 1)
+        # If the user processed the whole reservation (or more), simply
+        # write the `package_id` field.
+        # If the user processed less than the reservation, split the
+        # concerned move line in two: one where the `package_id` field
+        # is set with the processed quantity as `qty_done` and another
+        # one with the initial values.
+        for ml in corresponding_ml:
+            rounding = ml.product_uom_id.rounding
+            if float_compare(ml.qty_done, ml.product_uom_qty, precision_rounding=rounding) == -1:
+                self.move_line_ids += self.move_line_ids.new({
+                    'product_id': ml.product_id.id,
+                    'package_id': ml.package_id.id,
+                    'product_uom_id': ml.product_uom_id.id,
+                    'location_id': ml.location_id.id,
+                    'location_dest_id': ml.location_dest_id.id,
+                    'qty_done': 0.0,
+                    'move_id': ml.move_id.id,
+                })
+            ml.result_package_id = package.id
         return True
 
     def _check_destination_location(self, location):
-        corresponding_po = self.move_line_ids.filtered(lambda r: not r.location_processed and r.qty_done > 0)
-        for packop in corresponding_po:
-            qty_done = packop.qty_done
-            if qty_done < packop.product_uom_qty:
-                if not packop.pack_lot_ids:
-                    packop.product_uom_qty = packop.product_uom_qty - qty_done
-                    packop.qty_done = 0.0
-                    self.move_line_ids += self.move_line_ids.new({
-                        'package_id': packop.package_id.id,
-                        'product_id': packop.product_id.id,
-                        'product_uom_id': packop.product_uom_id.id,
-                        'location_id': packop.location_id.id,
-                        'location_dest_id': location.id,
-                        'qty_done': qty_done,
-                        'product_uom_qty': qty_done,
-                        # TDE FIXME: those fields are compute without inverse: unnecessary ?
-                        'from_loc': packop.location_id.name + (packop.package_id and (' : ' + packop.package_id.name) or ''),
-                        'to_loc': location.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or ''),
-                        'location_processed': True,
-                        'result_package_id': packop.result_package_id.id,
-                        'lots_visible': packop.product_id.tracking != 'none',
-                    })
-                else:
-                    self.move_line_ids += self.move_line_ids.new({
-                        'product_id': packop.product_id.id,
-                        'package_id': packop.package_id.id,
-                        'product_uom_id': packop.product_uom_id.id,
-                        'location_id': packop.location_id.id,
-                        'location_dest_id': packop.location_dest_id.id,
-                        'qty_done': 0.0,
-                        'product_uom_qty': packop.product_uom_qty - qty_done,
-                        # TDE FIXME: those fields are compute without inverse: unnecessary ?
-                        'from_loc': packop.from_loc,
-                        'to_loc': packop.to_loc,
-                        'lots_visible': packop.product_id.tracking != 'none',
-                    })
-                    packop.location_processed = True
-                    packop.location_dest_id = location.id
-                    packop.to_loc = packop.location_dest_id.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or '')
-                    packop.product_uom_qty = qty_done
-            else:
-                packop.location_dest_id = location.id
-                packop.to_loc = packop.location_dest_id.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or '')
-                packop.location_processed = True
-        corresponding_pack_po = self.move_line_ids.filtered(lambda r: not r.location_processed and r.qty_done > 0)
-        for packop in corresponding_pack_po:
-            packop.location_dest_id = location.id
-            packop.to_loc = packop.location_dest_id.name + (packop.result_package_id and (' : '  + packop.result_package_id.name) or '')
-            packop.location_processed = True
+        """ This method is called when the user scans a location. Its goal
+        is to find the move lines previously processed and write the scanned
+        location as their `location_dest_id` field.
+        """
+        # Get back the move lines the user processed. Filter out the ones where
+        # this method was already applied thanks to `location_processed`.
+        corresponding_ml = self.move_line_ids.filtered(lambda ml: not ml.location_processed and float_compare(ml.qty_done, 0, precision_rounding=ml.product_uom_id.rounding) == 1)
+
+        # If the user processed the whole reservation (or more), simply
+        # write the `location_dest_id` and `location_processed` fields
+        # on the concerned move line.
+        # If the user processed less than the reservation, split the
+        # concerned move line in two: one where the `location_dest_id`
+        # and `location_processed` fields are set with the processed
+        # quantity as `qty_done` and another one with the initial values.
+        for ml in corresponding_ml:
+            rounding = ml.product_uom_id.rounding
+            if float_compare(ml.qty_done, ml.product_uom_qty, precision_rounding=rounding) == -1:
+                self.move_line_ids += self.move_line_ids.new({
+                    'product_id': ml.product_id.id,
+                    'package_id': ml.package_id.id,
+                    'product_uom_id': ml.product_uom_id.id,
+                    'location_id': ml.location_id.id,
+                    'location_dest_id': ml.location_dest_id.id,
+                    'qty_done': 0.0,
+                    'move_id': ml.move_id.id,
+                })
+            ml.update({
+                'location_processed': True,
+                'location_dest_id': location.id,
+            })
         return True
 
     def on_barcode_scanned(self, barcode):
