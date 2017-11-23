@@ -204,7 +204,7 @@ var GanttView = View.extend({
             if (self.type === "consolidate" || self.type === "planning") {
                 if (task.is_group) {
                     text = self._consolidation_children(task);
-                } else {
+                } else if (self.fields_view.arch.attrs.consolidation) {
                     text = task.consolidation + "<span class=\"half_opacity\"> " + self.fields[self.fields_view.arch.attrs.consolidation].string + "</span>";
                 }
             }
