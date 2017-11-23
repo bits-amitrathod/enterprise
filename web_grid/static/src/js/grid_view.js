@@ -18,6 +18,7 @@ var GridView = AbstractView.extend({
         Controller: GridController,
         Renderer: GridRenderer,
     },
+    viewType: 'grid',
     init: function (viewInfo, params) {
         var self = this;
         this._super.apply(this, arguments);

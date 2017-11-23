@@ -62,6 +62,7 @@ var GanttView = AbstractView.extend({
         Controller: GanttController,
         Renderer: GanttRenderer,
     },
+    viewType: 'gantt',
     /**
      * @override
      */
