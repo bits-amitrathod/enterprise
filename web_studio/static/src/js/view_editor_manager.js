@@ -262,9 +262,10 @@ var ViewEditorManager = Widget.extend({
     instantiateEditor: function (params) {
         params = params || {};
         var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
+        var chatterAllowed = this.x2mField ? false : this.chatter_allowed;
         var editorParams = _.defaults(params, {
             mode: 'readonly',
-            chatter_allowed: this.chatter_allowed,
+            chatter_allowed: chatterAllowed,
             show_invisible: this.sidebar && this.sidebar.state.show_invisible,
             arch: fields_view.arch,
         });
@@ -1003,7 +1004,7 @@ var ViewEditorManager = Widget.extend({
         this.mainViewType = this.view_type;
         this.mainFields = this.fields;
         return this._setX2mParameters().then(function () {
-            return self.updateEditor({chatter_allowed: false});
+            return self.updateEditor();
         });
     },
     /**

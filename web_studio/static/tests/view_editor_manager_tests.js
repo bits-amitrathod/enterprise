@@ -43,6 +43,7 @@ var createViewEditorManager = function (params) {
         fields_view: fieldsView,
         view_env: env,
         studio_view_id: params.studioViewID,
+        chatter_allowed: params.chatter_allowed,
     });
 
     // also destroy to parent widget to avoid memory leak
@@ -1622,8 +1623,8 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
-    QUnit.test('edit one2many form view (2 level)', function(assert) {
-        assert.expect(2);
+    QUnit.test('edit one2many form view (2 level) and check chatter allowed', function(assert) {
+        assert.expect(4);
         this.data.coucou.records = [{
             id: 11,
             display_name: 'Coucou 11',
@@ -1654,6 +1655,7 @@ QUnit.module('ViewEditorManager', {
                 "product,false,list": "<tree><field name='display_name'/></tree>",
                 "partner,false,list": "<tree><field name='display_name'/></tree>",
             },
+            chatter_allowed: true,
             mockRPC: function (route) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
@@ -1700,8 +1702,12 @@ QUnit.module('ViewEditorManager', {
                 return this._super.apply(this, arguments);
             },
         });
+        assert.strictEqual(vem.$('.o_web_studio_add_chatter').length, 1,
+            "should be possible to add a chatter");
         vem.$('.o_web_studio_view_renderer .o_field_one2many').click();
         $(vem.$('.o_web_studio_view_renderer .o_field_one2many .o_web_studio_editX2Many[data-type="form"]')).click();
+        assert.strictEqual(vem.$('.o_web_studio_add_chatter').length, 0,
+            "should not be possible to add a chatter");
         vem.$('.o_web_studio_view_renderer .o_field_one2many').click();
         $(vem.$('.o_web_studio_view_renderer .o_field_one2many .o_web_studio_editX2Many[data-type="form"]')).click();
         // used to generate the new fields view in mockRPC
