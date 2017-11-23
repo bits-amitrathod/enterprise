@@ -15,8 +15,8 @@ from odoo.tools import topological_sort
 # list of models to export (the order ensures that dependencies are satisfied)
 MODELS_TO_EXPORT = [
     'res.groups', 'ir.model', 'ir.model.fields', 'ir.ui.view', 'ir.actions.act_window',
-    'ir.actions.report.xml', 'mail.template', 'ir.actions.server', 'ir.ui.menu',
-    'ir.filters', 'base.action.rule', 'ir.model.access', 'ir.rule',
+    'ir.actions.act_window.view', 'ir.actions.report.xml', 'mail.template', 'ir.actions.server',
+    'ir.ui.menu', 'ir.filters', 'base.action.rule', 'ir.model.access', 'ir.rule',
 ]
 # list of fields to export by model
 FIELDS_TO_EXPORT = {
@@ -28,8 +28,9 @@ FIELDS_TO_EXPORT = {
     'ir.actions.act_window': [
         'auto_search', 'context', 'domain', 'filter', 'groups_id', 'help', 'limit', 'multi', 'name',
         'res_model', 'search_view_id', 'src_model', 'target', 'type', 'usage', 'view_id',
-        'view_ids', 'view_mode', 'view_type'
+        'view_mode', 'view_type'
     ],
+    'ir.actions.act_window.view': ['act_window_id', 'multi', 'sequence', 'view_id', 'view_mode'],
     'ir.actions.report.xml': [
         'attachment', 'attachment_use', 'groups_id', 'model', 'multi', 'name', 'report_name',
         'report_type'
