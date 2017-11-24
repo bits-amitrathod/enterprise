@@ -198,7 +198,7 @@ class MarketingCampaign(models.Model):
 
     def execute_activities(self):
         for campaign in self:
-            self.marketing_activity_ids.execute()
+            campaign.marketing_activity_ids.execute()
 
 
 class MarketingActivity(models.Model):
