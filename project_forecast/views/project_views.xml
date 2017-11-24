@@ -8,11 +8,6 @@
             <xpath expr="/kanban" position="inside">
                 <field name="allow_forecast"/>
             </xpath>
-            <xpath expr="//div[hasclass('o_kanban_manage_reports')]/div[last()]" position="after">
-                <div attrs="{'invisible': [('allow_forecast', '=', False)]}">
-                    <a name="view_monthly_forecast" type="object">Forecast</a>
-                </div>
-            </xpath>
             <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="inside">
                 <a t-if="record.allow_forecast.raw_value" class="o_project_kanban_box" name="view_monthly_forecast" type="object">
                     <div>
