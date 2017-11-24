@@ -37,21 +37,6 @@
             .o_web_studio_list_view_editor, > div.table-responsive, .o_kanban_view {
                 padding: 12px;
             }
-
-            // TO REMOVE: hack to display old views in studio (for missing renderers)
-            .o_web_studio_old_view_renderer {
-                position: relative;
-                height: 100%;
-                .o_view_manager_content {
-                    position: relative; // override position: absolute
-                    .o_calendar_sidebar_container {
-                        display: none;
-                    }
-                }
-                .o_web_studio_overlay {
-                    .o-position-absolute(0, 0, 0, 0);
-                }
-            }
         }
 
         .o_web_studio_sidebar {
