@@ -78,9 +78,11 @@ var SubMenu = Widget.extend({
      * @param {Object} options
      */
     _addAction: function (options) {
-        this.$('.o_menu_sections li a.active').removeClass('active');
         this.studio_actions.push(options);
-        this.renderElement();
+        if (this.$el) {
+            this.$('.o_menu_sections li a.active').removeClass('active');
+            this.renderElement();
+        }
     },
     /**
      * @private

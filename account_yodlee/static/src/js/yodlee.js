@@ -180,7 +180,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
                                 init_call: this.init_call, 
                                 number_added: this.refresh_info.numberAccountAdded,
                                 transactions: this.refresh_info.transactions,};
-                self.replaceElement($(QWeb.render('Success', local_dict)));
+                self._replaceElement($(QWeb.render('Success', local_dict)));
             }
         }
         else {
@@ -191,7 +191,7 @@ var YodleeAccountConfigurationWidget = Widget.extend({
                 fields = this.refresh_info.providerAccount;
                 self.parse_image();
             }
-            this.replaceElement($(QWeb.render('YodleeLoginTemplate', {widget: fields})));
+            this._replaceElement($(QWeb.render('YodleeLoginTemplate', {widget: fields})));
         }
         this.bind_button();
     },

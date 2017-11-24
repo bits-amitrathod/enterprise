@@ -108,7 +108,7 @@ var PlaidAccountConfigurationWidget = Widget.extend({
                                 init_call: this.init_call, 
                                 number_added: this.resp_json.numberAccountAdded,
                                 transactions: this.resp_json.transactions,};
-                self.replaceElement($(QWeb.render('Success', local_dict)));
+                self._replaceElement($(QWeb.render('Success', local_dict)));
             }
         }
         else {
@@ -118,7 +118,7 @@ var PlaidAccountConfigurationWidget = Widget.extend({
                 local_dict.call = 'mfa';
                 local_dict.mfa = this.resp_json;
             }
-            self.replaceElement($(QWeb.render('PlaidLogin', local_dict)));
+            self._replaceElement($(QWeb.render('PlaidLogin', local_dict)));
         }
         self.bind_button();
     },

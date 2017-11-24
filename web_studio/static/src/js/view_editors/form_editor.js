@@ -141,6 +141,20 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         return def;
     },
     /**
+     * @override
+     * @private
+     */
+    _postProcessField: function (widget, node) {
+        this._super.apply(this, arguments);
+        // make empty widgets appear if there is no label
+        if (!widget.isSet() && (!node.has_label || node.attrs.nolabel)) {
+            widget.$el.removeClass('o_field_empty').addClass('o_web_studio_widget_empty');
+            widget.$el.text(widget.string);
+        }
+        // remove all events on the widget as we only want to click for edition
+        widget.$el.off();
+    },
+    /**
      * Process a field node, in particular, bind an click handler on $el to edit
      * its field attributes.
      *
@@ -270,22 +284,6 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
 
         $buttonhook.prependTo($buttonbox);
         return $buttonbox;
-    },
-    /**
-     * @override
-     * @private
-     */
-    _renderFieldWidget: function (node) {
-        var widget = this._super.apply(this, arguments);
-        // make empty widgets appear if there is no label
-        if (!widget.isSet() && (!node.has_label || node.attrs.nolabel)) {
-            widget.$el.removeClass('o_field_empty').addClass('o_web_studio_widget_empty');
-            widget.$el.text(widget.string);
-        }
-        // remove all events on the widget as we only want to click for edition
-        widget.$el.off();
-
-        return widget;
     },
     /**
      * @override
