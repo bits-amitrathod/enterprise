@@ -8,13 +8,15 @@
 # Sanne Kristensen <sanne@vkdata.dk>, 2017
 # Morten Schou <ms@msteknik.dk>, 2017
 # Jesper Carstensen <jc@danodoo.dk>, 2017
+# Laerke Mathiasen <lhm@flexerp.dk>, 2017
+# JonathanStein <jstein@image.dk>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Jesper Carstensen <jc@danodoo.dk>, 2017\n"
+"POT-Creation-Date: 2017-11-21 17:08+0000\n"
+"PO-Revision-Date: 2017-11-21 17:08+0000\n"
+"Last-Translator: JonathanStein <jstein@image.dk>, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,17 +26,10 @@ msgstr ""
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:202
+#: code:addons/voip/static/src/js/user_agent.js:207
 #, python-format
 msgid " Please check your configuration."
-msgstr ""
-
-#. module: voip
-#. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:469
-#, python-format
-msgid " Please check your configuration.</br> (Reason receives :%s)"
-msgstr ""
+msgstr "Kontrollér venligst din opsætning."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_report_nbr
@@ -49,7 +44,7 @@ msgstr "Aktivitet"
 #. module: voip
 #: model:ir.model,name:voip.model_mail_activity_type
 msgid "Activity Type"
-msgstr ""
+msgstr "Aktivitetstype"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_sip_always_transfer
@@ -68,7 +63,7 @@ msgstr "Backspace"
 #: code:addons/voip/static/src/xml/dialing_panel.xml:35
 #, python-format
 msgid "CONTACTS"
-msgstr ""
+msgstr "KONTAKTER"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_call_date
@@ -644,28 +639,31 @@ msgstr "The URL of your WebSocket"
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/dialing_panel.js:391
+#: code:addons/voip/static/src/js/dialing_panel.js:403
 #, python-format
 msgid "The customer is temporary unavailable. Please try later."
 msgstr "Kunden er midlertidig ikke tilgængelig. Prøv venligst senere."
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:467
+#: code:addons/voip/static/src/js/user_agent.js:460
 #, python-format
-msgid "The number is incorrect, the user credentials"
+msgid ""
+"The number is incorrect, the user credentials could be wrong or the "
+"connection cannot be made. Please check your configuration.</br> (Reason "
+"received: %s)"
 msgstr ""
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/dialing_panel.js:154
+#: code:addons/voip/static/src/js/dialing_panel.js:157
 #, python-format
 msgid "The phonecall has no number"
 msgstr "Opkaldet har ikke noget nummer"
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:160
+#: code:addons/voip/static/src/js/user_agent.js:163
 #, python-format
 msgid ""
 "The server configuration could be wrong. Please check your configuration."
@@ -752,17 +750,19 @@ msgstr ""
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:91
+#: code:addons/voip/static/src/js/dialing_panel.js:168
+#: code:addons/voip/static/src/js/dialing_panel.js:255
+#: code:addons/voip/static/src/js/dialing_panel.js:276
 #, python-format
-msgid ""
-"Your browser could not support WebRTC. Please check your configuration."
+msgid "You are already in a call"
 msgstr ""
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:468
+#: code:addons/voip/static/src/js/user_agent.js:94
 #, python-format
-msgid "could be wrong or the connection cannot be made."
+msgid ""
+"Your browser could not support WebRTC. Please check your configuration."
 msgstr ""
 
 #. module: voip
@@ -821,7 +821,7 @@ msgstr "overfør til din eksterne telefon"
 #. module: voip
 #: model:ir.model,name:voip.model_voip_configurator
 msgid "voip.configurator"
-msgstr ""
+msgstr "voip.configurator"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_phonecall
