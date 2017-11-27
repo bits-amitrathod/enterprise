@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import calendar
 import datetime
+from dateutil.relativedelta import relativedelta
 
 from .test_common import TestContractCommon
 from openerp.exceptions import ValidationError
 from openerp.tools import mute_logger, float_utils
+from openerp import fields
 
 
 class TestContract(TestContractCommon):
@@ -56,3 +58,13 @@ class TestContract(TestContractCommon):
         self.assertEqual(len(self.contract.recurring_invoice_line_ids), 2, 'website_contract: number of lines after adding pro-rated discounted option does not add up')
         # there should be no discount on the contract line in this case
         self.assertEqual(self.contract.recurring_total, 70, 'website_contract: price after adding pro-rated discounted option does not add up')
+
+    def test_auto_close(self):
+        """Ensure a 15 days old 'online payment' subscription gets closed if no token is set."""
+        self.contract_tmpl_3.payment_mandatory = True
+        self.contract.write({
+            'recurring_next_date': fields.Date.to_string(datetime.date.today() - relativedelta(days=15)),
+            'template_id': self.contract_tmpl_3.id,
+        })
+        self.contract.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
+        self.assertEqual(self.contract.state, 'close', 'website_contrect: subscription with online payment and no payment method set should get closed after 15 days')
