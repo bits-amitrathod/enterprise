@@ -75,7 +75,6 @@ class ProviderBpost(models.Model):
                 carrier_price = quote_currency.compute(shipping['price'], order_currency)
             carrier_tracking_ref = shipping['tracking_code']
             # bpost does not seem to handle multipackage
-            picking.number_of_packages = 1
             logmessage = (_("Shipment created into bpost <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))
             picking.message_post(body=logmessage, attachments=[('Label-bpost-%s.%s' % (carrier_tracking_ref, "A6"), shipping['label'])])
             shipping_data = {'exact_price': carrier_price,
