@@ -356,7 +356,7 @@ class MrpProductionWorkcenterLine(models.Model):
             move_raw_ids = production.move_raw_ids.filtered(lambda m: m.operation_id == wo.operation_id)
             # If last step, add move lines not associated with any operation
             if not wo.next_work_order_id:
-                move_raw_ids += move_raw_ids.filtered(lambda m: not m.operation_id)
+                move_raw_ids += production.move_raw_ids.filtered(lambda m: not m.operation_id)
             components = move_raw_ids.mapped('product_id').filtered(lambda product: product.tracking != 'none' and product.id not in component_list)
             quality_team_id = self.env['quality.alert.team'].search([], limit=1).id
             for component in components:
