@@ -353,12 +353,11 @@ class MrpProductionWorkcenterLine(models.Model):
                                                           })
 
             # Generate quality checks associated with unreferenced components
-            bom_id = production.bom_id
-            bom_line_ids = bom_id.bom_line_ids.filtered(lambda l: l.operation_id == wo.operation_id)
-            # If last step, add bom lines not associated with any operation
+            move_raw_ids = production.move_raw_ids.filtered(lambda m: m.operation_id == wo.operation_id)
+            # If last step, add move lines not associated with any operation
             if not wo.next_work_order_id:
-                bom_line_ids += bom_id.bom_line_ids.filtered(lambda l: not l.operation_id)
-            components = bom_line_ids.mapped('product_id').filtered(lambda product: product.tracking != 'none' and product.id not in component_list)
+                move_raw_ids += move_raw_ids.filtered(lambda m: not m.operation_id)
+            components = move_raw_ids.mapped('product_id').filtered(lambda product: product.tracking != 'none' and product.id not in component_list)
             quality_team_id = self.env['quality.alert.team'].search([], limit=1).id
             for component in components:
                 moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == component)
