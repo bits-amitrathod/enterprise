@@ -45,10 +45,10 @@ class WebStudioController(http.Controller):
                 'default_model_id': model.id,
                 'search_default_model_id': model.id,
             },
-            'help': """ <p class="oe_view_nocontent_create">
-                Click to add a new access control list.
+            'help': _("""<p class="o_view_nocontent_smiling_face">
+                Add a new access control list
             </p>
-            """,
+            """),
         }
 
     def _get_studio_action_automations(self, model, **kwargs):
@@ -63,10 +63,10 @@ class WebStudioController(http.Controller):
                 'default_model_id': model.id,
                 'search_default_model_id': model.id,
             },
-            'help': """ <p class="oe_view_nocontent_create">
-                Click to add a new automated action.
+            'help': _(""" <p class="o_view_nocontent_smiling_face">
+                Add a new automated action
             </p>
-            """,
+            """),
         }
 
     def _get_studio_action_filters(self, model, **kwargs):
@@ -81,10 +81,10 @@ class WebStudioController(http.Controller):
                 'default_model_id': model.model,
                 'search_default_model_id': model.model,
             },
-            'help': """ <p class="oe_view_nocontent_create">
-                Click to add a new filter.
+            'help': _(""" <p class="o_view_nocontent_smiling_face">
+                Add a new filter
             </p>
-            """,
+            """),
         }
 
     def _get_studio_action_reports(self, model, **kwargs):
@@ -99,10 +99,10 @@ class WebStudioController(http.Controller):
                 'default_model': model.model,
                 'search_default_model': model.model,
             },
-            'help': """ <p class="oe_view_nocontent">
-                Click to add a new report.
+            'help': _(""" <p class="o_view_nocontent_empty_report">
+                Add a new report
             </p>
-            """,
+            """),
         }
 
     def _get_studio_action_translations(self, model, **kwargs):

@@ -185,8 +185,8 @@
         <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
         <field name="help" type="html">
-            <p>
-              Create Quality Alerts.
+            <p class="o_view_nocontent_smiling_face">
+              Create a new quality alert
             </p>
         </field>
     </record>
@@ -197,8 +197,8 @@
         <field name="view_type">form</field>
         <field name="view_mode">graph,pivot,kanban,tree,form,calendar</field>
         <field name="help" type="html">
-            <p>
-              No quality alerts.
+            <p class="o_view_nocontent_empty_folder">
+              No quality alert
             </p>
         </field>
     </record>
@@ -438,8 +438,11 @@
             'search_default_progress': "1"}
         </field>
         <field name="help" type="html">
-            <p>
-              Quality Check is the execution of a quality control in some point
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quality check
+            </p><p>
+              Note that the easiest way to create a quality check is to do it directly from a logistic operation,
+              thanks to the use of quality control points.
             </p>
         </field>
     </record>
@@ -461,8 +464,11 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form,pivot,graph</field>
         <field name="help" type="html">
-            <p>
-              Quality Check is the execution of a quality control in some point
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quality check
+            </p><p>
+              Note that the easiest way to create a quality check is to do it directly from a logistic operation,
+              thanks to the use of quality control points.
             </p>
         </field>
     </record>
@@ -482,8 +488,8 @@
         <field name="view_type">form</field>
         <field name="view_mode">graph,pivot,kanban,tree,form</field>
         <field name="help" type="html">
-            <p>
-              No quality checks.
+            <p class="o_view_nocontent_empty_folder">
+                No quality checks found
             </p>
         </field>
     </record>
@@ -630,9 +636,10 @@
         <field name="view_mode">kanban,form</field>
         <field name="view_id" ref="quality_alert_team_dashboard_view_kanban" />
         <field name="help" type="html">
-            <p>
+            <p class="o_view_nocontent_empty_folder">
+            </p><p>
               Quality Teams group the different quality alerts/checks
-                according to the roles (teams) that need them.
+              according to the roles (teams) that need them.
             </p>
       </field>
     </record>
@@ -672,8 +679,8 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
-          <p class="oe_view_nocontent_create">
-            Click to add a new tag.
+          <p class="o_view_nocontent_smiling_face">
+            Add a new tag
           </p>
         </field>
     </record>
@@ -715,7 +722,9 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form</field>
         <field name="help" type="html">
-            <p>
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quality alert stage
+            </p><p>
               Quality Alert stages define the different steps a quality alert should go through.
             </p>
         </field>
@@ -827,11 +836,8 @@
         <field name="view_mode">tree,kanban,form</field>
         <field name="search_view_id" ref="quality_point_view_search"/>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Click here to add a new Quality Control Points
-            </p><p>
-              Quality Control Points are places in your logistics process
-                where you want to do quality control.
+            <p class="o_view_nocontent_smiling_face">
+              Create a new quality control point
             </p>
         </field>
     </record>

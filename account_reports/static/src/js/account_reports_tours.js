@@ -41,7 +41,7 @@ Tour.register('account_followup_reports_widgets', {
         },
         {
             content: 'check that message telling that mail has been sent is shown',
-            trigger: '.alert:contains(The followup report was successfully emailed !)',
+            trigger: '.alert:contains(The follow-up report was successfully emailed!)',
             run: function() {}
         },
         {
@@ -87,7 +87,7 @@ Tour.register('account_followup_reports_widgets', {
         },
         {
             content: 'Check that we have nothing to display',
-            trigger: '.alert-info:contains(No followup to send ! You have skipped 1 partners)'
+            trigger: '.alert-info:contains(No follow-up to send! You have skipped 1 partner(s))'
         },
 
      ]

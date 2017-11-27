@@ -636,8 +636,8 @@ class MrpEco(models.Model):
             'views': [(attachment_view.id, 'kanban'), (False, 'form')],
             'view_mode': 'kanban,tree,form',
             'view_type': 'form',
-            'help': _('''<p class="oe_view_nocontent_create">
-                        Click to upload files to your ECO, that will be applied to the product later
+            'help': _('''<p class="o_view_nocontent_smiling_face">
+                        Upload files to your ECO, that will be applied to the product later
                     </p><p>
                         Use this feature to store any files, like drawings or specifications.
                     </p>'''),

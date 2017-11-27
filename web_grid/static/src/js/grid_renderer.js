@@ -225,7 +225,7 @@ return AbstractRenderer.extend({
             return [];
         }
         return h('div.o_grid_nocontent_container', [
-                   h('div.oe_view_nocontent oe_edit_only',
+                   h('div.o_view_nocontent oe_edit_only',
                        _.map(this.noContentHelper.children, this._convertToVNode.bind(this))
                    )
                ]);

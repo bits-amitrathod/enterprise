@@ -21,7 +21,7 @@ tour.register('helpdesk_tour', {
 }, {
     trigger: '.o-kanban-button-new',
     content: _t('Let\'s create your first ticket.'),
-    position: 'right',
+    position: 'bottom',
     width: 200,
 }, {
     trigger: 'input.field_name',

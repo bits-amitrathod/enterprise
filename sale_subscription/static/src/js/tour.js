@@ -25,7 +25,7 @@ tour.register('sale_subscription_tour', {
 {
     trigger: '.o-kanban-button-new',
     content: _t('Let\'s create your first subscription template.'),
-    position: 'right',
+    position: 'bottom',
     width: 200,
 },
 {

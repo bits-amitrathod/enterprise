@@ -56,8 +56,8 @@ QUnit.module('Views', {
                     '<field name="unit_amount" type="measure" widget="float_time"/>' +
                     '<button string="Action" type="action" name="action_name"/>' +
                     '<empty>' +
-                        '<p class="oe_view_nocontent_create">' +
-                            'Click to add projects and tasks' +
+                        '<p class="o_view_nocontent_smiling_face">' +
+                            'Add projects and tasks' +
                         '</p>' +
                         '<p>you will be able to register your working hours on the given task</p>' +
                         '<p><a href="some-link"><img src="some-image" alt="alt text"/></a></p>' +
@@ -118,7 +118,7 @@ QUnit.module('Views', {
                 "should have rendered a cell with project name");
             assert.ok(grid.$('th div:contains(BS task)').length,
                 "should have rendered a cell with task name");
-            assert.notOk(grid.$('.o_grid_nocontent_container p:contains(Click to add projects and tasks)').length,
+            assert.notOk(grid.$('.o_grid_nocontent_container p:contains(Add projects and tasks)').length,
                 "should not have rendered a no content helper");
 
             assert.notOk(grid.$('td.o_grid_current').length, "should not have any cell marked current");
@@ -126,7 +126,7 @@ QUnit.module('Views', {
 
             return concurrency.delay(0);
         }).then(function () {
-            assert.ok(grid.$('.o_grid_nocontent_container p:contains(Click to add projects and tasks)').length,
+            assert.ok(grid.$('.o_grid_nocontent_container p:contains(Add projects and tasks)').length,
                 "should have rendered a no content helper");
             assert.strictEqual(grid.$('.o_grid_nocontent_container p a img').length, 1,
                 "should have rendered a no content helper with an image in a link");
@@ -166,7 +166,7 @@ QUnit.module('Views', {
                 '</field>'+
                 '<field name="unit_amount" type="measure" widget="float_time"/>' +
                 '<empty>' +
-                    '<p class="oe_view_nocontent_create">' +
+                    '<p class="o_view_nocontent_smiling_face">' +
                         'Click to add projects and tasks' +
                     '</p>' +
                     '<p>you will be able to register your working hours on the given task</p>' +
