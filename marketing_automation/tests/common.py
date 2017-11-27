@@ -23,7 +23,7 @@ class MarketingCampaignTestBase(common.TransactionCase):
             'groups_id': [(6, 0, [self.ref('base.group_user'), self.ref('marketing_automation.group_marketing_automation_user')])]
         })
 
-        self.test_model = self.env.ref('mail.model_mail_test_simple')
+        self.test_model = self.env.ref('test_mail.model_mail_test_simple')
         TestModel = self.env['mail.test.simple']
         self.test_rec0 = TestModel.create({'name': 'Invalid'})
         self.test_rec1 = TestModel.create({'name': 'Test_1'})
