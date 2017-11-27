@@ -600,7 +600,7 @@ class AccountInvoice(models.Model):
             inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
             inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
             inv.l10n_mx_edi_cfdi_certificate_id = self.env['l10n_mx_edi.certificate'].sudo().search(
-                [('serial_number', '=', tree.attrib['noCertificado'])], limit=1)
+                [('serial_number', '=', tree.get('noCertificado', ''))], limit=1)
 
     @api.multi
     def _l10n_mx_edi_create_taxes_cfdi_values(self):
