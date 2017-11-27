@@ -37,7 +37,6 @@ class SaleOrder(models.Model):
 
         tax_values = response['values']
 
-        raise_warning = False
         for index, line in enumerate(self.order_line):
             if line.price_unit >= 0.0:
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.product_uom_qty
@@ -46,7 +45,6 @@ class SaleOrder(models.Model):
                 else:
                     tax_rate = tax_values[index] / price * 100
                 if len(line.tax_id.ids) > 1 or float_compare(line.tax_id.amount, tax_rate, precision_digits=3):
-                    raise_warning = True
                     tax_rate = float_round(tax_rate, precision_digits=3)
                     tax = self.env['account.tax'].sudo().search([
                         ('amount', '=', tax_rate),
@@ -61,7 +59,4 @@ class SaleOrder(models.Model):
                             'description': 'Sales Tax',
                         })
                     line.tax_id = tax
-        if raise_warning:
-            return {'warning': _('The tax rates have been updated, you may want to check it before validation')}
-        else:
-            return True
+        return True
