@@ -68,6 +68,7 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
             'company_ids': tuple(context.get('company_ids')),
         }
         self.env.cr.execute(query, params)
+
         for record in self.env.cr.dictfetchall():
             currency_id = self.env.user.company_id.currency_id
             if not currency_id.is_zero(record['turnover']):
