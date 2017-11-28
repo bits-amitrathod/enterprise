@@ -4,13 +4,14 @@
 import json
 import logging
 
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.fields import Datetime
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -198,7 +199,7 @@ class MarketingCampaign(models.Model):
 
     def execute_activities(self):
         for campaign in self:
-            self.marketing_activity_ids.execute()
+            campaign.marketing_activity_ids.execute()
 
 
 class MarketingActivity(models.Model):
@@ -439,7 +440,9 @@ class MarketingActivity(models.Model):
 
         if self.validity_duration:
             duration = relativedelta(**{self.validity_duration_type: self.validity_duration_number})
-            invalid_traces = traces.filtered(lambda trace: not trace.schedule_date or trace.schedule_date + duration < Datetime.now())
+            invalid_traces = traces.filtered(
+                lambda trace: not trace.schedule_date or datetime.strptime(trace.schedule_date, DATETIME_FORMAT) + duration < datetime.now()
+            )
             invalid_traces.action_cancel()
             traces = traces - invalid_traces
 

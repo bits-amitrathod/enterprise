@@ -98,11 +98,11 @@ class AccountBankStatementImport(models.TransientModel):
                     statementLine['type'] = 'normal'
                     statementLine['globalisation'] = int(line[124])
                     if statementLine['globalisation'] > 0:
-                        if statementLine['globalisation'] in statement['globalisation_stack']:
-                            statement['globalisation_stack'].remove(statementLine['globalisation'])
+                        if statementLine['ref_move'] in statement['globalisation_stack']:
+                            statement['globalisation_stack'].remove(statementLine['ref_move'])
                         else:
                             statementLine['type'] = 'globalisation'
-                            statement['globalisation_stack'].append(statementLine['globalisation'])
+                            statement['globalisation_stack'].append(statementLine['ref_move'])
                             globalisation_comm[statementLine['ref_move']] = statementLine['communication']
                     if not statementLine.get('communication'):
                         statementLine['communication'] = globalisation_comm.get(statementLine['ref_move'], '')
@@ -190,7 +190,7 @@ class AccountBankStatementImport(models.TransientModel):
                 elif line['type'] == 'communication':
                     statement['coda_note'] = "\n".join([statement['coda_note'], line['type'].title() + ' with Ref. ' + str(line['ref']), 'Ref: ', 'Communication: ' + line['communication'], ''])
                 elif line['type'] == 'normal'\
-                        or (line['type'] == 'globalisation' and line['globalisation'] in statement['globalisation_stack'] and line['transaction_type'] in [1, 2]):
+                        or (line['type'] == 'globalisation' and line['ref_move'] in statement['globalisation_stack'] and line['transaction_type'] in [1, 2]):
                     note = []
                     if line.get('counterpartyName'):
                         note.append(_('Counter Party') + ': ' + line['counterpartyName'])

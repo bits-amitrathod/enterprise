@@ -73,6 +73,11 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 if (hook.type !== 'page' && !$(this).parents('.o_group').length) {
                     is_nearest_hook = true;
                 }
+            } else if ($($helper.context).data('structure') === 'group') {
+                // a group cannot be placed inside a group
+                if (hook.type !== 'insideGroup' && !$(this).parents('.o_group').length) {
+                    is_nearest_hook = true;
+                }
             } else {
                 is_nearest_hook = true;
             }
@@ -356,7 +361,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         });
         // Add hook for groups that have not yet content.
         if (!node.children.length) {
-            formEditorHook = this._renderHook(node, 'inside', 'tr');
+            formEditorHook = this._renderHook(node, 'inside', 'tr', 'insideGroup');
             formEditorHook.appendTo($result);
             this.setSelectable($result);
         } else {
@@ -475,14 +480,19 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     _renderTagLabel: function (node) {
         var self = this;
         var $result = this._super.apply(this, arguments);
-        $result.attr('data-node-id', this.node_id++);
-        this.setSelectable($result);
-        $result.click(function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            self.selected_node_id = $result.data('node-id');
-            self.trigger_up('node_clicked', {node: node});
-        });
+
+        // only handle label tags, not labels associated to fields (already
+        // handled in @_renderInnerGroup with @_processField)
+        if (node.tag === 'label') {
+            $result.attr('data-node-id', this.node_id++);
+            this.setSelectable($result);
+            $result.click(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                self.selected_node_id = $result.data('node-id');
+                self.trigger_up('node_clicked', {node: node});
+            });
+        }
         return $result;
     },
     /**

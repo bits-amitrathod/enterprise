@@ -335,28 +335,29 @@ class MrpProductionWorkcenterLine(models.Model):
                 if point.check_execute_now():
                     if point.component_id:
                         component_list.append(point.component_id.id)
-                    moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == point.component_id)
+                    moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == point.component_id and m.workorder_id == wo)
                     qty_done = 1.0
                     if point.component_id and moves and point.component_id.tracking != 'serial':
                         qty_done = float_round(sum(moves.mapped('unit_factor')), precision_rounding=moves[0].product_uom.rounding)
-                    self.env['quality.check'].create({'workorder_id': wo.id,
-                                                  'point_id': point.id,
-                                                  'team_id': point.team_id.id,
-                                                  'product_id': production.product_id.id,
-                                                  # Fill in the full quantity by default
-                                                  'qty_done': qty_done,
-                                                  # Two steps are from the same production
-                                                  # if and only if the produced quantities at the time they were created are equal.
-                                                  'finished_product_sequence': wo.qty_produced,
-                                                 })
+                    # Do not generate qc for control point of type register_consumed_materials if the component is not consummed in this wo.
+                    if not point.component_id or moves:
+                        self.env['quality.check'].create({'workorder_id': wo.id,
+                                                          'point_id': point.id,
+                                                          'team_id': point.team_id.id,
+                                                          'product_id': production.product_id.id,
+                                                          # Fill in the full quantity by default
+                                                          'qty_done': qty_done,
+                                                          # Two steps are from the same production
+                                                          # if and only if the produced quantities at the time they were created are equal.
+                                                          'finished_product_sequence': wo.qty_produced,
+                                                          })
 
             # Generate quality checks associated with unreferenced components
-            bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', production.product_id.product_tmpl_id.id)])
-            bom_line_ids = bom_ids.mapped('bom_line_ids').filtered(lambda l: l.operation_id == wo.operation_id)
-            # If last step, add bom lines not associated with any operation
+            move_raw_ids = production.move_raw_ids.filtered(lambda m: m.operation_id == wo.operation_id)
+            # If last step, add move lines not associated with any operation
             if not wo.next_work_order_id:
-                bom_line_ids += bom_ids.mapped('bom_line_ids').filtered(lambda l: not l.operation_id)
-            components = bom_line_ids.mapped('product_id').filtered(lambda product: product.tracking != 'none' and product.id not in component_list)
+                move_raw_ids += production.move_raw_ids.filtered(lambda m: not m.operation_id)
+            components = move_raw_ids.mapped('product_id').filtered(lambda product: product.tracking != 'none' and product.id not in component_list)
             quality_team_id = self.env['quality.alert.team'].search([], limit=1).id
             for component in components:
                 moves = wo.move_raw_ids.filtered(lambda m: m.state not in ('done', 'cancel') and m.product_id == component)

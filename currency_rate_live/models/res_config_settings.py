@@ -5,6 +5,7 @@ from lxml import etree, objectify
 import json
 from dateutil.relativedelta import relativedelta
 import re
+import logging
 
 import requests
 import suds.client
@@ -17,6 +18,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 BANXICO_DATE_FORMAT = '%Y-%m-%d'
 
+_logger = logging.getLogger(__name__)
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
@@ -29,7 +31,7 @@ class ResCompany(models.Model):
         default='manually', string='Interval Unit')
     currency_next_execution_date = fields.Date(string="Next Execution Date")
     currency_provider = fields.Selection([
-        ('yahoo', 'Yahoo'),
+        ('yahoo', 'Yahoo (DISCONTINUED)'),
         ('ecb', 'European Central Bank'),
         ('fta', 'Federal Tax Administration (Switzerland)'),
         ('banxico', 'Mexican Bank'),
@@ -66,7 +68,8 @@ class ResCompany(models.Model):
         res = True
         for company in self:
             if company.currency_provider == 'yahoo':
-                res = company._update_currency_yahoo()
+                _logger.warning("Call to the discontinued Yahoo currency rate web service.")
+                raise UserError(_("The Yahoo currency rate web service has been discontinued. Please select another currency rate provider."))
             elif company.currency_provider == 'ecb':
                 res = company._update_currency_ecb()
             elif company.currency_provider == 'fta':
@@ -166,45 +169,6 @@ class ResCompany(models.Model):
                 currency = Currency.search([('name', '=', currency_code)], limit=1)
                 if currency:
                     CurrencyRate.create({'currency_id': currency.id, 'rate': rate, 'name': fields.Date.today(), 'company_id': company.id})
-        return True
-
-    def _update_currency_yahoo(self):
-        ''' This method is used to update the currencies by using Yahoo service provider.
-            Rates are given against the company currency, which will be also updated to a rate of 1
-        '''
-        Currency = self.env['res.currency']
-        CurrencyRate = self.env['res.currency.rate']
-        currencies = Currency.search([])
-        for company in self:
-            base_currency = company.currency_id.name
-            currency_pairs = ','.join(base_currency + x.name for x in currencies if base_currency != x.name)
-
-            yql_base_url = "https://query.yahooapis.com/v1/public/yql"
-            yql_query = 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("' + currency_pairs + '")'
-            yql_query_url = yql_base_url + "?q=" + yql_query + "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
-            try:
-                url = requests.get(yql_query_url)
-                url.raise_for_status()
-                result = url.content
-            except:
-                #connection error, the request wasn't successful
-                return False
-            data = json.loads(result.decode('utf-8'))
-            if not data.get('query') or not data['query'].get('results'):
-                #result is None, web service not available for the moment.
-                return False
-            #If we requested the rate for only one currency, the result is not a list. That happens if we
-            #have only a foreign currency + the company one for example
-            rates = len(currencies) < 3 and [data['query']['results']['rate']] or data['query']['results']['rate']
-            for rate in rates:
-                #If one of the currency asked is unrecognized: name will be 'N/A' and it must be ignored
-                if rate['Name'] != 'N/A':
-                    currency_code = rate['Name'].split('/')[-1]
-                    currency = Currency.search([('name', '=', currency_code)], limit=1)
-                    if currency:
-                        CurrencyRate.create({'currency_id': currency.id, 'rate': rate['Rate'], 'name': fields.Date.today(), 'company_id': company.id})
-            if company.currency_id.rate != 1.0:
-                CurrencyRate.create({'currency_id': company.currency_id.id, 'rate': 1.0, 'name': fields.Date.today(), 'company_id': company.id})
         return True
 
     def _update_currency_banxico(self):

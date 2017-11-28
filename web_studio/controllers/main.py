@@ -470,7 +470,7 @@ class WebStudioController(http.Controller):
             )
         # For one2many fields
         if values.get('relation_field_id'):
-            field = request.env['ir.model.fields'].browse(values['relation_field_id'])
+            field = request.env['ir.model.fields'].browse(values.pop('relation_field_id'))
             values.update(
                 relation=field.model_id.model,
                 relation_field=field.name,
@@ -661,7 +661,6 @@ class WebStudioController(http.Controller):
         # Normalize the view
         studio_view = self._get_studio_view(view)
         ViewModel = request.env[view.model]
-
         try:
             normalized_view = studio_view.normalize()
             self._set_studio_view(view, normalized_view)
@@ -1274,7 +1273,7 @@ class WebStudioController(http.Controller):
         return model_id.id
 
     @http.route('/web_studio/create_inline_view', type='json', auth='user')
-    def create_inline_view(self, model, view_id, field_name, subview_type):
+    def create_inline_view(self, model, view_id, field_name, subview_type, subview_xpath):
         inline_view = request.env[model].load_views([[False, subview_type]])
         view = request.env['ir.ui.view'].browse(view_id)
         studio_view = self._get_studio_view(view)
@@ -1283,6 +1282,8 @@ class WebStudioController(http.Controller):
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.fromstring(studio_view.arch_db, parser=parser)
         expr = "//field[@name='%s']" % field_name
+        if subview_xpath:
+            expr = subview_xpath + expr
         position = 'inside'
         xpath_node = arch.find('xpath[@expr="%s"][@position="%s"]' % (expr, position))
         if xpath_node is None:  # bool(node) == False if node has no children

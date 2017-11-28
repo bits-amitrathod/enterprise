@@ -201,7 +201,7 @@ class report_account_followup_report(models.AbstractModel):
             msg_id = partner.message_post(body=msg, subtype='account_reports.followup_logged_action')
             email = self.env['mail.mail'].with_context(default_mail_message_id=msg_id).create({
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,
-                'body_html': append_content_to_html(body_html, self.env.user.signature, plaintext=False),
+                'body_html': append_content_to_html(body_html, self.env.user.signature or '', plaintext=False),
                 'email_from': self.env.user.email or '',
                 'email_to': email,
                 'body': msg,

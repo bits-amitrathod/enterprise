@@ -64,20 +64,18 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <t t-if="not account.template_id">
-                                <tr t-foreach="account.recurring_invoice_line_ids" t-as="line">
-                                    <td class="line-description"><span t-field="line.name"/></td>
-                                    <td/>
-                                    <td><t t-esc="line.quantity"/> <span t-field="line.uom_id" data-oe-readonly="1"/></td>
-                                    <td t-if="not line.discount"><span t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                                    <td t-if="line.discount">
-                                        <s t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/><br/>
-                                        <div><strong t-esc="line.price_unit*(100.0-line.discount)/100.0" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></div>
-                                    </td>
-                                    <td><span t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
-                                    <td/>
-                                </tr>
-                            </t>
+                            <tr t-foreach="account.recurring_invoice_line_ids" t-as="line">
+                                <td class="line-description"><span t-field="line.name"/></td>
+                                <td/>
+                                <td><t t-esc="line.quantity"/> <span t-field="line.uom_id" data-oe-readonly="1"/></td>
+                                <td t-if="not line.discount"><span t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
+                                <td t-if="line.discount">
+                                    <s t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/><br/>
+                                    <div><strong t-esc="line.price_unit*(100.0-line.discount)/100.0" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></div>
+                                </td>
+                                <td><span t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/></td>
+                                <td/>
+                            </tr>
                         </tbody>
                     </table>
                     <div t-if="account.state in ['pending','close']" id="payment_message">

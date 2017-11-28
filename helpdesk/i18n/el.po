@@ -159,6 +159,26 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"    <div style=\"margin-left:30px;align=center;\">\n"
+"        Αυτό είναι ένα αυτόματο μήνυμα:<br/>\n"
+"        Αγαπητή/ε ${object.sudo().partner_id.name or 'Madam, Sir'},\n"
+"    </div>\n"
+"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
+"        Το αίτημα σας\n"
+"        % if object.access_token:\n"
+"        <a href=\"/helpdesk/ticket/${object.id}/${object.access_token}\">${object.name}</a>\n"
+"        % endif\n"
+"        έχει ληφθεί και εξετάζεται από την ομάδα της\n"
+"          ${object.team_id.name or ''}.\n"
+"        Η αναφορά του αιτήματός σας είναι ${object.id}.\n"
+"        <br/>Για να προσθέσετε επιπλέον σχόλια, απαντήστε σε αυτό το email .\n"
+"    </div><br/>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">Ευχαριστούμε </span>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\"> Η ομάδα της ${object.team_id.name or 'Helpdesk'}.</span>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #. openerp-web
@@ -182,7 +202,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> View documentation"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/> Προβολή Τεκμηρίωσης"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
@@ -244,7 +264,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong>Message and communication history</strong>"
-msgstr ""
+msgstr "<strong>Ιστορικό μηνυμάτων και επικοινωνίας</strong>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_defaults
@@ -523,6 +543,8 @@ msgstr ""
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_stage_action
 msgid "Click to create a stage in your helpdesk pipeline."
 msgstr ""
+"Κάντε κλικ για να προσθέσετε ένα στάδιο στη Ροή Πληροφοριών του Γραφείο "
+"Βοήθειας."
 
 #. module: helpdesk
 #. openerp-web
@@ -1390,7 +1412,7 @@ msgstr "Αναφορές"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Restore"
-msgstr ""
+msgstr "Επαναφορά"
 
 #. module: helpdesk
 #. openerp-web
@@ -1567,6 +1589,8 @@ msgid ""
 "Specific team that uses this stage. Other teams will not be able to see or "
 "use this stage."
 msgstr ""
+"Ειδική ομάδα που χρησιμοποιεί αυτό το στάδιο. Άλλες ομάδες δεν θα μπορούν να"
+" δουν ή να χρησιμοποιήσουν αυτό το στάδιο."
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
@@ -2001,6 +2025,7 @@ msgstr ""
 #, python-format
 msgid "Use the breadcrumbs to go back to the Kanban view."
 msgstr ""
+"Χρησιμοποιήστε τα ίχνοι πλοήγησης για να επιστρέψετε στην προβολή Kanban."
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_user

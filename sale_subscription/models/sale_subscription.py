@@ -692,8 +692,9 @@ class SaleSubscriptionLine(models.Model):
     def onchange_uom_id(self):
         if not self.uom_id:
             self.price_unit = 0.0
+            return {'domain': {'uom_id': [('category_id', '=', self.product_id.uom_id.category_id.id)]}}
         else:
-            self.onchange_product_id()
+            return self.onchange_product_quantity()  # don't forward port
 
     def get_template_option_line(self):
         """ Return the account.analytic.invoice.line.option which has the same product_id as

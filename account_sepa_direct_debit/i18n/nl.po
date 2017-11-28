@@ -120,6 +120,8 @@ msgstr "<strong>Postcode:</strong>"
 #, python-format
 msgid "A debtor account is required to validate a SEPA Direct Debit mandate."
 msgstr ""
+"Een debiteuren rekening is benodigd om een SEPA incasso mandaat te "
+"bevestigen."
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
@@ -169,7 +171,7 @@ msgstr "Annuleer"
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
 msgid "Click to create a direct debit customer mandate."
-msgstr ""
+msgstr "Klik om een automatische incasso mandaat te maken."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_download_xml_form
@@ -237,12 +239,12 @@ msgstr "Aangemaakt op"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_config_settings_sdd_creditor_identifier
 msgid "Creditor identifier"
-msgstr "Creditor identifier"
+msgstr "KVK nummer"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_config_settings_sdd_creditor_identifier
 msgid "Creditor identifier of your company within SEPA scheme."
-msgstr ""
+msgstr "KVK nummer van u bedrijf voor het SEPA schema."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -537,7 +539,7 @@ msgstr "Mandaat formulier"
 #. module: account_sepa_direct_debit
 #: sql_constraint:sdd.mandate:0
 msgid "Mandate identifier must be unique ! Please choose another one."
-msgstr ""
+msgstr "Mandaat nummer moet uniek zijn! Kies een andere."
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.server,name:account_sepa_direct_debit.sdd_mandate_state_cron_ir_actions_server
@@ -574,6 +576,10 @@ msgid ""
 "mandate and still needs their XML file to be generated and sent to the bank "
 "to debit the customer's account."
 msgstr ""
+"Aantal incasso betalingen welke geïncasseerd moeten worden voor dit mandaat,"
+" dit is het aantal betalingen dat gegenereerd en geboekt zijn dankzij dit "
+"mandaat en waar nog geen XML bestand voor gegenereerd en verstuurd is naar "
+"de bank van het debit bankrekening nummer."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_paid_invoices_nber
@@ -589,6 +595,11 @@ msgid ""
 "                    then only have to generate a SEPA Direct Debit (SDD) XML file containing this operation\n"
 "                    and send it to your bank to effectively get paid."
 msgstr ""
+"Als een factuur is gemaakt\n"
+"                    in Odoo voor een klant met een actief incasso mandaat op de factuurdatum,\n"
+"                    zal bij de bevestiging automatisch de betalingen gemaakt worden, en zult u een\n"
+"                    SEPA Direct Debit (SDD) XML bestand moeten genereren welke deze betaling bevat\n"
+"en naar uw bank versturen om betaald te krijgen."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_invoice_sdd_paying_mandate_id
@@ -605,6 +616,8 @@ msgid ""
 "Once you have, you will be able to keep track here of all the files\n"
 "                    you created this way, and what their precise content was."
 msgstr ""
+"Als je dat hebt, ben je in staat om je bestanden te beheren welke je\n"
+"                    op deze manier hebt aangemaakt en wat de exacte inhoud was."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_one_off
@@ -883,7 +896,7 @@ msgstr ""
 #: code:addons/account_sepa_direct_debit/models/res_company.py:26
 #, python-format
 msgid "The creditor identifier exceeds the maximum length of 35 characters."
-msgstr ""
+msgstr "Het KVK nummer is langer dan de maximale lengte van 35 karakters."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:147

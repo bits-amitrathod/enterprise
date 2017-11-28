@@ -274,6 +274,8 @@ odoo.define('project_timeshee.ui', function (require ) {
                     var sv_projects = sv_data.projects.datas;
 
                     _.each(sv_projects, function(sv_project) {
+                        self.clean_export_data_id(sv_project);
+
                         // Check if the project exists in LS.
                         // If it does we simply update the name, otherwise we copy the project in LS.
                         var ls_project = _.findWhere(self.data.projects, {id : sv_project[0]});
@@ -290,6 +292,8 @@ odoo.define('project_timeshee.ui', function (require ) {
                     self.save_user_data();
 
                     _.each(sv_tasks, function(sv_task) {
+                        self.clean_export_data_id(sv_task);
+
                         var ls_task = _.findWhere(self.data.tasks, {id : sv_task[0]});
                         if (_.isUndefined(ls_task)) {
                             self.data.tasks.push({
@@ -305,6 +309,8 @@ odoo.define('project_timeshee.ui', function (require ) {
                     self.save_user_data();
 
                     _.each(sv_aals, function(sv_aal) {
+                        self.clean_export_data_id(sv_aal);
+
                         // First, check that the aal is related to a project. If not we don't import it.
                         if (!_.isUndefined(sv_aal[8])) {
                             var ls_aal = _.findWhere(self.data.account_analytic_lines, {id : sv_aal[0]});
@@ -559,6 +565,18 @@ odoo.define('project_timeshee.ui', function (require ) {
                 id = id.replace('project_timesheet_synchro', '__export__');
             }
             return id;
+        },
+        /**
+         * Ensure that the xml id contains a dot.
+         * This is required because the 'export_data' Python method
+         * doesn't prefix the xml_id by dot if the module name is
+         * an empty string.
+         */
+        clean_export_data_id: function(sv_data) {
+            if (sv_data[0].indexOf('.') === -1) {
+                // Convert 'project_project_x' to '.project_project_x'
+                sv_data[0] = '.'.concat(sv_data[0]);
+            }
         },
         clean_xml_ids: function() {
             var self = this;

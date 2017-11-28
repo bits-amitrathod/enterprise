@@ -37,7 +37,6 @@ var DialingPanel = Widget.extend({
     custom_events:{
         'muteCall': '_onMuteCall',
         'unmuteCall': '_onUnmuteCall',
-        'sip_ringing': '_onSipRinging',
         'sip_accepted': '_onSipAccepted',
         'sip_cancel': '_onSipRejected',
         'sip_rejected': '_onSipRejected',
@@ -46,6 +45,7 @@ var DialingPanel = Widget.extend({
         'sip_error_resolved': '_onSipErrorResolved',
         'sip_customer_unavailable': '_onSipCustomerUnavailable',
         'sip_incoming_call': '_onSipIncomingCall',
+        'toggleHangupButton': '_onToggleHangupButton',
     },
     /**
      * @constructor
@@ -163,6 +163,9 @@ var DialingPanel = Widget.extend({
             }
             this.activeTab.initPhonecall(phonecall);
             this.userAgent.makeCall(number);
+            this.inCall = true;
+        } else {
+            this.do_notify(_t('You are already in a call'));
         }
     },
     /**
@@ -187,6 +190,13 @@ var DialingPanel = Widget.extend({
     /**
      * @private
      */
+    _toggleCallButton: function () {
+        this.$callButton.addClass('o_dial_call_button');
+        this.$callButton.removeClass('o_dial_hangup_button');
+    },
+    /**
+     * @private
+     */
     _toggleDisplay: function () {
         if (this.shown) {
             if (!this.folded) {
@@ -206,13 +216,8 @@ var DialingPanel = Widget.extend({
      * @private
      */
     _toggleHangupButton: function () {
-        if (this.$callButton.hasClass('o_dial_call_button')) {
-            this.$callButton.removeClass('o_dial_call_button');
-            this.$callButton.addClass('o_dial_hangup_button');
-        } else {
-            this.$callButton.addClass('o_dial_call_button');
-            this.$callButton.removeClass('o_dial_hangup_button');
-        }
+        this.$callButton.removeClass('o_dial_call_button');
+        this.$callButton.addClass('o_dial_hangup_button');
     },
     /**
      * @private
@@ -246,6 +251,8 @@ var DialingPanel = Widget.extend({
             this.activeTab.callFromActivityWidget(params).done(function () {
                 self._makeCall(params.number);
             });
+        } else {
+            this.do_notify(_t('You are already in a call'));
         }
     },
     /**
@@ -265,6 +272,8 @@ var DialingPanel = Widget.extend({
             this.activeTab.callFromPhoneWidget(params).done(function (phonecall) {
                 self._makeCall(params.number, phonecall);
             });
+        } else {
+            this.do_notify(_t('You are already in a call'));
         }
     },
 
@@ -383,7 +392,7 @@ var DialingPanel = Widget.extend({
      */
     _onSipBye: function () {
         this.inCall = false;
-        this._toggleHangupButton();
+        this._toggleCallButton();
         this.activeTab.hangupPhonecall();
     },
     /**
@@ -401,7 +410,8 @@ var DialingPanel = Widget.extend({
         var self = this;
         var message = event.data.msg;
         this.inCall = false;
-        this._toggleHangupButton();
+        this._toggleCallButton();
+
         if (event.data.temporary) {
             this.$().block({message: message});
             this.$('.blockOverlay').on("click", function () {self._onSipErrorResolved();});
@@ -455,14 +465,7 @@ var DialingPanel = Widget.extend({
     _onSipRejected: function () {
         this.inCall = false;
         this.activeTab.rejectPhonecall();
-        this._toggleHangupButton();
-    },
-    /**
-     * @private
-     */
-    _onSipRinging: function () {
-        this._toggleHangupButton();
-        this.inCall = true;
+        this._toggleCallButton();
     },
     /**
      * @private
@@ -484,6 +487,12 @@ var DialingPanel = Widget.extend({
         } else {
             this._onToggleDisplay();
         }
+    },
+    /**
+     * @private
+     */
+    _onToggleHangupButton: function () {
+        this._toggleHangupButton();
     },
     /**
      * @private

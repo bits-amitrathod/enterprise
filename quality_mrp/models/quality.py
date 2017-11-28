@@ -15,7 +15,7 @@ class TestType(models.Model):
         if value:
             return []
         else:
-            return [('technical_name', 'not in', ['register_consumed_materials'])]
+            return [('technical_name', 'not in', ['register_consumed_materials', 'dummy', 'picture'])]
 
 class QualityPoint(models.Model):
     _inherit = "quality.point"

@@ -47,7 +47,7 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
             }
         }
         if (this.sipSession) {
-            if (this.onCall === 'ringing') {
+            if (!this.onCall) {
                 this.sipSession.cancel();
             } else {
                 this.sipSession.bye();
@@ -60,11 +60,10 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
      * @param {string} number
      */
     makeCall: function (number) {
+        this.ringbacktone.play();
         if (this.mode === "demo") {
             var response = {'reason_phrase': "Ringing"};
             var self = this;
-            this.trigger_up('sip_ringing');
-            this.ringbacktone.play();
             this.timerAccepted = setTimeout(function(){
                 self._onAccepted(response);
             },3000);
@@ -255,8 +254,6 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
         }
         //Bind action when the call is answered
         this.sipSession.on('accepted',_.bind(this._onAccepted,this));
-        //Bind action when the call is in progress to catch the ringing phase
-        this.sipSession.on('progress', _.bind(this._onProgress,this));
         //Bind action when the call is rejected by the customer
         this.sipSession.on('rejected',_.bind(this._onRejected,this));
         //Bind action when the user hangup the call while ringing
@@ -446,19 +443,6 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
         });
     },
     /**
-     * Triggered when the call reached the called end and start ringing.
-     *
-     * @private
-     * @param {Object} response
-     */
-    _onProgress: function () {
-        if (!this.onCall) {
-            this.onCall = 'ringing';
-            this.trigger_up('sip_ringing');
-            this.ringbacktone.play();
-        }
-    },
-    /**
      * Handles the sip session rejection.
      *
      * @private
@@ -473,10 +457,10 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
             this.ringbacktone.pause();
             if (response.status_code === 404 || response.status_code === 488) {
                 this._triggerError(
-                    _.str.sprintf(_t('The number is incorrect, the user credentials') +
-                    _t('could be wrong or the connection cannot be made.') +
-                    _t(' Please check your configuration.</br> (Reason receives :%s)',
-                        response.reason_phrase)),
+                    _.str.sprintf(_t('The number is incorrect, the user credentials ' +
+                                     'could be wrong or the connection cannot be made. ' +
+                                     'Please check your configuration.</br> (Reason received: %s)'),
+                        response.reason_phrase),
                     true);
             }
         }

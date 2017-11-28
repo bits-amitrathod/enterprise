@@ -102,7 +102,9 @@ class BpostRequest():
         bpost_delivery_type = carrier.bpost_domestic_deliver_type if carrier.bpost_delivery_nature == 'Domestic' else carrier.bpost_international_deliver_type
         for delivery_method in xml_response.findall('ns1:deliveryMethod/[@name="home or office"]/ns1:product/[@name="%s"]/ns1:price' % bpost_delivery_type, ns):
             if delivery_method.attrib['countryIso2Code'] == country.code:
-                price = float(self._get_price_by_weight(_grams(weight), delivery_method))
+                price = float(self._get_price_by_weight(_grams(weight), delivery_method))/100
+                sale_price_digits = self.env['decimal.precision'].precision_get('Product Price')
+                price = float_round(price, precision_digits=sale_price_digits)
         if not price:
             raise UserError(_("bpost did not return prices for this destination country."))
 

@@ -575,8 +575,11 @@ return AbstractRenderer.extend({
                 if (!task_stop) {
                     task_stop = moment(task_start).clone().add(1, 'hours').toDate();
                 }
-            } else { // we assume date_duration is defined
+            } else {
                 // FIXME this code branch is not tested
+                if (!mapping.date_delay) {
+                    return false;
+                }
                 var field = self.state.fields[mapping.date_delay];
                 var tmp = field_utils.format[field.type](task[mapping.date_delay], field);
                 if (!tmp) {
