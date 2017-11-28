@@ -1,19 +1,13 @@
 odoo.define('web_studio.SystrayItem', function (require) {
 "use strict";
 
-var session = require('web.session');
 var SystrayMenu = require('web.SystrayMenu');
 var Widget = require('web.Widget');
 
 
 /*
  * Menu item appended in the systray part of the navbar
- * Instantiate this widget iff user is admin
  */
-
-if (!session.is_system) {
-    return;
-}
 
 var SystrayItem = Widget.extend({
     events: {

@@ -3,7 +3,6 @@ odoo.define('web_studio.EditMenu', function (require) {
 
 var config = require('web.config');
 var core = require('web.core');
-var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var FieldManagerMixin = require('web.FieldManagerMixin');
 var form_common = require('web.view_dialogs');

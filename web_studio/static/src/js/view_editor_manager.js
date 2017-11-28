@@ -2,7 +2,6 @@ odoo.define('web_studio.ViewEditorManager', function (require) {
 "use strict";
 
 var concurrency = require('web.concurrency');
-var Context = require('web.Context');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
@@ -234,7 +233,7 @@ var ViewEditorManager = Widget.extend({
                 self.updateSidebar(self.sidebar.state.mode);
             }
         });
-},
+    },
     /**
      * @param {Object} op
      * @returns {Deferred}

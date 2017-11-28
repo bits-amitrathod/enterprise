@@ -3,7 +3,6 @@ odoo.define('web_studio.ReportEditor', function (require) {
 
 var ReportAction = require('report.client_action');
 var core = require('web.core');
-var data_manager = require('web.data_manager');
 var session = require('web.session');
 
 var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');

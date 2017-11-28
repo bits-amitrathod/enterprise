@@ -2,8 +2,7 @@
 <odoo>
 
 <data>
-    <template id="assets_backend" name="Web Studio Assets" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
+    <template id="web_studio.assets" name="Web Studio Assets">
             <script type="text/javascript" src="/web_studio/static/src/js/action_editor.js"></script>
             <script type="text/javascript" src="/web_studio/static/src/js/action_editor_sidebar.js"></script>
             <script type="text/javascript" src="/web_studio/static/src/js/action_editor_view.js"></script>
@@ -47,6 +46,7 @@
             <script type="text/javascript" src="/web_studio/static/src/js/view_editors/search_editor.js"></script>
             <script type="text/javascript" src="/web_studio/static/src/js/renderers/search_renderer.js"></script>
 
+            <t t-call="web.less_helpers"/>
             <link href="/web_studio/static/src/less/main.less" rel="stylesheet" type="text/less"/>
             <link href="/web_studio/static/src/less/icons.less" rel="stylesheet" type="text/less"/>
             <link href="/web_studio/static/src/less/mixins.less" rel="stylesheet" type="text/less"/>
@@ -66,6 +66,20 @@
             <link href="/web_studio/static/src/less/submenu.less" rel="stylesheet" type="text/less"/>
             <link href="/web_studio/static/src/less/view_editor_manager.less" rel="stylesheet" type="text/less"/>
             <link href="/web_studio/static/src/less/xml_editor.less" rel="stylesheet" type="text/less"/>
+    </template>
+
+    <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//t[@t-call-assets='web.assets_backend'][@t-js='false']" position="after">
+            <t t-call-assets="web_studio.assets" t-js="false" groups="base.group_system"/>
+        </xpath>
+        <xpath expr="//t[@t-call-assets='web.assets_backend'][@t-css='false']" position="after">
+            <t t-call-assets="web_studio.assets" t-css="false" groups="base.group_system"/>
+        </xpath>
+    </template>
+
+    <template id="js_tests_assets" inherit_id="web.js_tests_assets">
+        <xpath expr="." position="inside">
+            <t t-call-assets="web_studio.assets"/>
         </xpath>
     </template>
 

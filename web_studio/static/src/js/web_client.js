@@ -11,30 +11,6 @@ var bus = require('web_studio.bus');
 
 var _t = core._t;
 
-if (!session.is_system) {
-    // Studio is only available for the Administrator, so display a notification
-    // if another user tries to access it through the url
-    WebClient.include({
-        show_application: function () {
-            var self = this;
-            return this._super.apply(this, arguments).then(function () {
-                var qs = $.deparam.querystring();
-                if (qs.studio !== undefined) {
-                    var msg = _t("Studio is only available for the Administrator");
-                    self.notification_manager.notify(_t("Access error"), msg, true);
-                    // Remove studio from the url, without reloading
-                    delete qs.studio;
-                    var l = window.location;
-                    var url = l.protocol + "//" + l.host + l.pathname + '?' + $.param(qs) + l.hash;
-                    window.history.pushState({ path:url }, '', url);
-                }
-            });
-        },
-    });
-
-    return;
-}
-
 WebClient.include({
     custom_events: _.extend({}, WebClient.prototype.custom_events, {
         'click_studio_mode': '_onStudioMode',

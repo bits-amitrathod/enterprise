@@ -3,7 +3,6 @@ odoo.define('web_studio.AppCreator', function (require) {
 
 var config = require('web.config');
 var core = require('web.core');
-var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var framework = require('web.framework');
 var Widget = require('web.Widget');

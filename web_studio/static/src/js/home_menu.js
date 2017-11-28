@@ -73,10 +73,6 @@ WebClient.include({
     },
 });
 
-if (!session.is_system) {
-    return;
-}
-
 HomeMenu.include({
     events: _.extend(HomeMenu.prototype.events, {
         'click .o_web_studio_new_app': '_onNewApp',

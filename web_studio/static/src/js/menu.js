@@ -2,7 +2,6 @@ odoo.define('web_studio.Menu', function (require) {
 "use strict";
 
 var core = require('web.core');
-var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var framework = require('web.framework');
 var Menu = require('web_enterprise.Menu');
