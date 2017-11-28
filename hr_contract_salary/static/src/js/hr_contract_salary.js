@@ -3,12 +3,12 @@ odoo.define('hr_contract_salary', function (require) {
 
 var ajax = require('web.ajax');
 var base = require('web_editor.base');
+var concurrency = require('web.concurrency');
 var Widget = require('web.Widget');
 var core = require('web.core');
 var _t = core._t;
 
 var SalaryPackageWidget = Widget.extend({
-    template: 'hr_contract_salary.salary_package',
     events: {
         "change .advantage_input": "onchange_advantage",
         "change input[name='mobility']": "onchange_mobility",
@@ -57,6 +57,14 @@ var SalaryPackageWidget = Widget.extend({
         if(!eco_checks.val()) {eco_checks.val(0.0);}
         $('b[role="presentation"]').hide();
         $('.select2-arrow').append('<i class="fa fa-chevron-down"></i>');
+        this.update_gross = _.debounce(this.update_gross, 1000);
+        this.dp = new concurrency.DropPrevious();
+    },
+
+    willStart: function() {
+        var def1 = this._super();
+        var def2 = this.update_gross_to_net_computation();
+        return $.when(def1, def2);
     },
 
     get_personal_info: function() {
@@ -144,7 +152,7 @@ var SalaryPackageWidget = Widget.extend({
 
     update_gross_to_net_computation: function () {
         var self = this;
-        ajax.jsonRpc('/salary_package/compute_net/', 'call', {
+        return ajax.jsonRpc('/salary_package/compute_net/', 'call', {
             'contract_id': parseInt($("input[name='contract']")[0].id),
             'token': $("input[name='token']").val(),
             'advantages': this.get_advantages(),
@@ -199,26 +207,30 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     onchange_advantage: function() {
-        var self = this;
         $("div[name='net']").addClass("hidden");
         $("div[name='compute_net']").removeClass("hidden");
         $("a[name='details']").addClass("hidden");
         $("a[name='recompute']").removeClass("hidden");
         $("input[name='NET']").addClass('o_outdated');
-        ajax.jsonRpc('/salary_package/update_gross/', 'call', {
+        this.update_gross();
+    },
+
+    update_gross: function() {
+        var self = this;
+        return this.dp.add(ajax.jsonRpc('/salary_package/update_gross/', 'call', {
             'contract_id': parseInt($("input[name='contract']")[0].id),
             'token': $("input[name='token']").val(),
             'advantages': this.get_advantages(),
-        }).then(function(data) {
+        })).then(function(data) {
             $("input[name='wage']").val(data['new_gross']);
-            self.compute_net();
+            return self.dp.add(self.compute_net());
         });
     },
 
     compute_net: function() {
         $("a[name='recompute']").addClass("hidden");
         $("a[name='details']").removeClass("hidden");
-        this.update_gross_to_net_computation();
+        return this.update_gross_to_net_computation();
     },
 
     onchange_mobility: function(event) {
