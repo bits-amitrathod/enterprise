@@ -51,7 +51,7 @@ class AccountInvoice(models.Model):
 
         raise_warning = False
         for index, line in enumerate(self.invoice_line_ids):
-            if line.price_unit >= 0.0:
+            if line.price_unit >= 0.0 and line.quantity >= 0.0:
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0) * line.quantity
                 if not price:
                     tax_rate = 0.0
