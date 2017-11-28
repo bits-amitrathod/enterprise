@@ -16,16 +16,11 @@ odoo.define('website_sign.views_custo', function(require) {
         /**
          * @override
          */
-        start: function () {
-            var def = this._super.apply(this, arguments);
-            if (this.modelName !== "signature.request") {
-                return def;
+        init: function () {
+            this._super.apply(this, arguments);
+            if (this.modelName === "signature.request") {
+                this.draggable = false;
             }
-
-            var self = this;
-            return def.done(function () {
-                self.$el.sortable("destroy");
-            });
         },
     });
 

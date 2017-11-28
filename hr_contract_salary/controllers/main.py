@@ -17,9 +17,8 @@ class website_hr_contract_salary(http.Controller):
                 ('access_token_end_date', '>=', fields.Date.today()),
                 ('access_token_consumed', '=', False),
             ], limit=1)
-            if contract:
-                return contract
-        return request.not_found()
+            return contract
+        return request.env['hr.contract']
 
     def _check_employee_access_right(self, contract_id):
         try:
@@ -27,12 +26,14 @@ class website_hr_contract_salary(http.Controller):
             contract.check_access_rights('read')
             contract.check_access_rule('read')
         except AccessError:
-            return request.not_found()
+            return request.env['hr.contract']
         return contract
 
     @http.route(['/salary_package/contract/<int:contract_id>'], type='http', auth="user", website=True)
     def salary_package(self, contract_id=None, **kw):
         contract = self._check_employee_access_right(contract_id)
+        if not contract:
+            return request.not_found()
         values = self.get_salary_package_values(contract)
         values.update({'need_personal_information': False, 'submit': True})
         return request.render("hr_contract_salary.salary_package", values)
@@ -40,6 +41,8 @@ class website_hr_contract_salary(http.Controller):
     @http.route(['/salary_package/contract/<string:token>'], type='http', auth='public', website=True)
     def salary_package_applicant(self, token=None, **kw):
         contract = self._check_token_validity(token)
+        if not contract:
+            return request.not_found()
         values = self.get_salary_package_values(contract)
         values.update({
             'need_personal_information': True,
@@ -158,7 +161,6 @@ class website_hr_contract_salary(http.Controller):
     @http.route(['/salary_package/compute_net/'], type='json', auth='public')
     def compute_net(self, contract_id=None, token=None, advantages=None, **kw):
         # Make a savepoint to discard the temporary contract and payslip
-        result = {}
         request.env.cr.savepoint()
 
         if token:
@@ -190,6 +192,14 @@ class website_hr_contract_salary(http.Controller):
 
         payslip.compute_sheet()
 
+        result = self.get_compute_results(new_contract, payslip)
+
+        request.env.cr.rollback()
+
+        return result
+
+    def get_compute_results(self, new_contract, payslip):
+        result = {}
         result.update({
             'BASIC': round(payslip.get_salary_line_total('BASIC'), 2),
             'SALARY': round(payslip.get_salary_line_total('SALARY'), 2),
@@ -198,18 +208,18 @@ class website_hr_contract_salary(http.Controller):
             'GROSS': round(payslip.get_salary_line_total('GROSS'), 2),
             'REP.FEES': round(payslip.get_salary_line_total('REP.FEES'), 2),
             'P.P': round(payslip.get_salary_line_total('P.P'), 2),
-            'PP.RED':
-                round(payslip.get_salary_line_total('PPRed.0'), 2) +
-                round(payslip.get_salary_line_total('PPRed.1'), 2) +
-                round(payslip.get_salary_line_total('Ch.A'), 2) +
-                round(payslip.get_salary_line_total('Red.Iso'), 2) +
-                round(payslip.get_salary_line_total('Red.Iso.Par'), 2) +
-                round(payslip.get_salary_line_total('Red.Dis'), 2) +
-                round(payslip.get_salary_line_total('Red.Seniors'), 2) +
-                round(payslip.get_salary_line_total('Red.Juniors'), 2) +
-                round(payslip.get_salary_line_total('Sp.handicap'), 2) +
-                round(payslip.get_salary_line_total('Red.Spouse.Net'), 2) +
-                round(payslip.get_salary_line_total('Red.Spouse.Oth.Net'), 2),
+            'PP.RED': round(
+                payslip.get_salary_line_total('PPRed.0') +
+                payslip.get_salary_line_total('PPRed.1') +
+                payslip.get_salary_line_total('Ch.A') +
+                payslip.get_salary_line_total('Red.Iso') +
+                payslip.get_salary_line_total('Red.Iso.Par') +
+                payslip.get_salary_line_total('Red.Dis') +
+                payslip.get_salary_line_total('Red.Seniors') +
+                payslip.get_salary_line_total('Red.Juniors') +
+                payslip.get_salary_line_total('Sp.handicap') +
+                payslip.get_salary_line_total('Red.Spouse.Net') +
+                payslip.get_salary_line_total('Red.Spouse.Oth.Net'), 2),
             'M.ONSS': round(payslip.get_salary_line_total('M.ONSS.1'), 2) or round(payslip.get_salary_line_total('M.ONSS.2'), 2),
             'MEAL_V_EMP': round(payslip.get_salary_line_total('MEAL_V_EMP'), 2),
             'ATN.CAR.2': round(payslip.get_salary_line_total('ATN.CAR.2'), 2),
@@ -232,7 +242,7 @@ class website_hr_contract_salary(http.Controller):
         double_holidays_net = payslip.get_salary_line_total('NET') * 0.92
 
         monthly_nature = round(transport_advantage + new_contract.internet + new_contract.mobile + new_contract.mobile_plus, 2)
-        monthly_cash = round(new_contract.commission_on_target + new_contract.meal_voucher_amount + new_contract.representation_fees, 2)
+        monthly_cash = round(new_contract.commission_on_target + new_contract.meal_voucher_amount * 20.0, 2)
         yearly_cash = round(new_contract.eco_checks + thirteen_month_net + double_holidays_net, 2)
         monthly_total = round(monthly_nature + monthly_cash + yearly_cash / 12.0 + payslip.get_salary_line_total('NET') - new_contract.representation_fees, 2)
 
@@ -243,7 +253,6 @@ class website_hr_contract_salary(http.Controller):
             'monthly_total': monthly_total,
             'employee_total_cost': round(new_contract.final_yearly_costs, 2),
         })
-        request.env.cr.rollback()
 
         return result
 

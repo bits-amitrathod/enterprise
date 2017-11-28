@@ -51,6 +51,10 @@ var SalaryPackageWidget = Widget.extend({
         $("#hr_contract_salary select").select2({
             minimumResultsForSearch: -1
         });
+        var fuel_card_input = $("input[name='fuel_card_input']");
+        if(!fuel_card_input.val()) {fuel_card_input.val(0.0);}
+        var eco_checks = $("input[name='eco_checks']");
+        if(!eco_checks.val()) {eco_checks.val(0.0);}
         $('b[role="presentation"]').hide();
         $('.select2-arrow').append('<i class="fa fa-chevron-down"></i>');
     },
@@ -86,7 +90,7 @@ var SalaryPackageWidget = Widget.extend({
             'phone': $("input[name='phone']").val(),
             'national_number': $("input[name='national_number']").val(),
             'nationality': parseInt($("select[name='nationality']").val()),
-            'certificate': $("select[name='certificate']").val(),
+            'certificate': $("input[name='certificate']").val(),
             'certificate_name': $("input[name='certificate_name']").val(),
             'certificate_school': $("input[name='certificate_school']").val(),
             'bank_account': $("input[name='bank_account']").val(),
@@ -140,54 +144,59 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     update_gross_to_net_computation: function () {
+        var self = this;
         ajax.jsonRpc('/salary_package/compute_net/', 'call', {
             'contract_id': parseInt($("input[name='contract']")[0].id),
             'token': $("input[name='token']").val(),
             'advantages': this.get_advantages(),
         }).then(function(data) {
-            $("input[name='wage']").val(data['BASIC']);
-            $("input[name='wage_with_holidays']").val(data['wage_with_holidays']);
-            $("input[name='SALARY']").val(data['SALARY']);
-            $("input[name='ONSS']").val(- data['ONSS']);
-            $("input[name='GROSS']").val(data['GROSS']);
-            $("input[name='P.P']").val(- data['P.P']);
-            $("input[name='PP.RED']").val(data['PP.RED']);
-            $("input[name='M.ONSS']").val(- data['M.ONSS']);
-            $("input[name='EMP.BONUS']").val(data['EMP.BONUS']);
-            $("input[name='MEAL_V_EMP']").val(- data['MEAL_V_EMP']);
-            $("input[name='ATN.CAR.1']").val(- data['ATN.CAR.2']);
-            $("input[name='ATN.INT.1']").val(- data['ATN.INT.2']);
-            $("input[name='ATN.MOB.1']").val(- data['ATN.MOB.2']);
-            $("input[name='ATN.CAR.2']").val(- data['ATN.CAR.2']);
-            $("input[name='ATN.INT.2']").val(- data['ATN.INT.2']);
-            $("input[name='ATN.MOB.2']").val(- data['ATN.MOB.2']);
-            $("input[name='NET']").val(data['NET']);
-            $("input[name='monthly_nature']").val(data['monthly_nature']);
-            $("input[name='monthly_cash']").val(data['monthly_cash']);
-            $("input[name='yearly_cash']").val(data['yearly_cash']);
-            $("input[name='monthly_total']").val(data['monthly_total']);
-            $("input[name='employee_total_cost']").val(data['employee_total_cost']);
-            $("input[name='holidays_compensation_input']").val(data['holidays_compensation']);
-            $("span[name='compensation_amount']").html(data['holidays_compensation']);
-            $("input[name='car_employee_deduction']").val(data['company_car_total_depreciated_cost']);
-            var mobile_atn_div = $("div[name='mobile_atn']");
-            var internet_atn_div = $("div[name='internet_atn']");
-            var company_car_atn_div = $("div[name='company_car_atn']");
-            var employment_bonus_div = $("div[name='employment_bonus']");
-            var withholding_tax_reduction_div = $("div[name='withholding_tax_reduction']");
-            var miscellaneous_onss_div = $("div[name='m_onss_div']");
-            var representation_fees_div = $("div[name='representation_fees_div']");
-            data['ATN.MOB.2'] ? mobile_atn_div.removeClass('hidden') : mobile_atn_div.addClass('hidden');
-            data['ATN.INT.2'] ? internet_atn_div.removeClass('hidden') : internet_atn_div.addClass('hidden');
-            data['ATN.CAR.2'] ? company_car_atn_div.removeClass('hidden') : company_car_atn_div.addClass('hidden');
-            data['EMP.BONUS'] ? employment_bonus_div.removeClass('hidden') : employment_bonus_div.addClass('hidden');
-            data['PP.RED'] ? withholding_tax_reduction_div.removeClass('hidden') : withholding_tax_reduction_div.addClass('hidden');
-            data['M.ONSS'] ? miscellaneous_onss_div.removeClass('hidden') : miscellaneous_onss_div.addClass('hidden');
-            data['REP.FEES'] ? representation_fees_div.removeClass('hidden') : representation_fees_div.addClass('hidden');
-            $("div[name='compute_loading']").addClass("hidden");
-            $("div[name='net']").removeClass("hidden").hide().slideDown( "slow" );
-            $("input[name='NET']").removeClass('o_outdated');
+            self.update_gross_to_net_modal(data);
         });
+    },
+
+    update_gross_to_net_modal: function(data) {
+        $("input[name='wage']").val(data['BASIC']);
+        $("input[name='wage_with_holidays']").val(data['wage_with_holidays']);
+        $("input[name='SALARY']").val(data['SALARY']);
+        $("input[name='ONSS']").val(- data['ONSS']);
+        $("input[name='GROSS']").val(data['GROSS']);
+        $("input[name='P.P']").val(- data['P.P']);
+        $("input[name='PP.RED']").val(data['PP.RED']);
+        $("input[name='M.ONSS']").val(- data['M.ONSS']);
+        $("input[name='EMP.BONUS']").val(data['EMP.BONUS']);
+        $("input[name='MEAL_V_EMP']").val(- data['MEAL_V_EMP']);
+        $("input[name='ATN.CAR.1']").val(- data['ATN.CAR.2']);
+        $("input[name='ATN.INT.1']").val(- data['ATN.INT.2']);
+        $("input[name='ATN.MOB.1']").val(- data['ATN.MOB.2']);
+        $("input[name='ATN.CAR.2']").val(- data['ATN.CAR.2']);
+        $("input[name='ATN.INT.2']").val(- data['ATN.INT.2']);
+        $("input[name='ATN.MOB.2']").val(- data['ATN.MOB.2']);
+        $("input[name='NET']").val(data['NET']);
+        $("input[name='monthly_nature']").val(data['monthly_nature']);
+        $("input[name='monthly_cash']").val(data['monthly_cash']);
+        $("input[name='yearly_cash']").val(data['yearly_cash']);
+        $("input[name='monthly_total']").val(data['monthly_total']);
+        $("input[name='employee_total_cost']").val(data['employee_total_cost']);
+        $("input[name='holidays_compensation_input']").val(data['holidays_compensation']);
+        $("span[name='compensation_amount']").html(data['holidays_compensation']);
+        $("input[name='car_employee_deduction']").val(data['company_car_total_depreciated_cost']);
+        var mobile_atn_div = $("div[name='mobile_atn']");
+        var internet_atn_div = $("div[name='internet_atn']");
+        var company_car_atn_div = $("div[name='company_car_atn']");
+        var employment_bonus_div = $("div[name='employment_bonus']");
+        var withholding_tax_reduction_div = $("div[name='withholding_tax_reduction']");
+        var miscellaneous_onss_div = $("div[name='m_onss_div']");
+        var representation_fees_div = $("div[name='representation_fees_div']");
+        data['ATN.MOB.2'] ? mobile_atn_div.removeClass('hidden') : mobile_atn_div.addClass('hidden');
+        data['ATN.INT.2'] ? internet_atn_div.removeClass('hidden') : internet_atn_div.addClass('hidden');
+        data['ATN.CAR.2'] ? company_car_atn_div.removeClass('hidden') : company_car_atn_div.addClass('hidden');
+        data['EMP.BONUS'] ? employment_bonus_div.removeClass('hidden') : employment_bonus_div.addClass('hidden');
+        data['PP.RED'] ? withholding_tax_reduction_div.removeClass('hidden') : withholding_tax_reduction_div.addClass('hidden');
+        data['M.ONSS'] ? miscellaneous_onss_div.removeClass('hidden') : miscellaneous_onss_div.addClass('hidden');
+        data['REP.FEES'] ? representation_fees_div.removeClass('hidden') : representation_fees_div.addClass('hidden');
+        $("div[name='compute_loading']").addClass("hidden");
+        $("div[name='net']").removeClass("hidden").hide().slideDown( "slow" );
+        $("input[name='NET']").removeClass('o_outdated');
     },
 
     onchange_advantage: function() {
@@ -317,7 +326,7 @@ var SalaryPackageWidget = Widget.extend({
         $("input[name='NET']").removeClass('o_outdated');
     },
 
-    submit_salary_package: function(event) {
+    check_form_validity: function() {
         var required_empty_input = _.find($("input:required"), function(input) {return input.value === ''; });
         var required_empty_select = _.find($("select:required"), function(select) {return $(select).val() === ''; });
         var email = $("input[name='email']").val();
@@ -352,7 +361,11 @@ var SalaryPackageWidget = Widget.extend({
         $(".alert").delay(4000).slideUp(200, function() {
             $(this).alert('close');
         });
-        if (!invalid_email && !required_empty_input && !required_empty_select) {
+        return !invalid_email && !required_empty_input && !required_empty_select;
+    },
+
+    submit_salary_package: function(event) {
+        if (this.check_form_validity()) {
             ajax.jsonRpc('/salary_package/submit/', 'call', {
                 'contract_id': parseInt($("input[name='contract']")[0].id),
                 'token': $("input[name='token']").val(),

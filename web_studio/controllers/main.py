@@ -465,7 +465,7 @@ class WebStudioController(http.Controller):
             )
         # For one2many fields
         if values.get('relation_field_id'):
-            field = request.env['ir.model.fields'].browse(values['relation_field_id'])
+            field = request.env['ir.model.fields'].browse(values.pop('relation_field_id'))
             values.update(
                 relation=field.model_id.model,
                 relation_field=field.name,
