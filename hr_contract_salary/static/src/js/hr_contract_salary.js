@@ -133,7 +133,6 @@ var SalaryPackageWidget = Widget.extend({
             'representation_fees': parseFloat($("input[name='representation_fees']")[0].value) || 0.0,
             'car_id': car_id,
             'new_car': new_car,
-            'requested_model_id': parseInt($('div#new_company_car select').val()),
             'public_transport_employee_amount': parseFloat($("input[name='public_transport_employee_amount']")[0].value) || 0.0,
             'others_reimbursed_amount': parseFloat($("input[name='others_reimbursed_amount']")[0].value) || 0.0,
             'personal_info': personal_info,
