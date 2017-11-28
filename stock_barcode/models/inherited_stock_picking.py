@@ -89,6 +89,7 @@ class StockPicking(models.Model):
             'context': action_ctx}
 
     def new_product_scanned(self, barcode):
+        # TODO: remove this method in master, it's not used anymore
         product_id = self.env['product.product'].search([('barcode', '=', barcode)])
         if not product_id or product_id.tracking == 'none':
             return self.on_barcode_scanned(barcode)

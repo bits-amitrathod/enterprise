@@ -68,33 +68,6 @@ FormController.include({
         }
         return this._super.apply(this, arguments);
     },
-    _barcodeWithoutCandidate: function (record, barcode, activeBarcode) {
-        if (activeBarcode.widget === 'picking_barcode_handler'){
-            var self = this;
-            return this.saveRecord(this.handle, {stayInEdit: true, reload: false}).then(function () {
-                return self._rpc({
-                    model: 'stock.picking',
-                    method: 'new_product_scanned',
-                    args: [[record.data.id], barcode],
-                }).done(function (action) {
-                    if (action !== undefined){
-                        // the function returns an action (wizard)
-                        self._barcodeStopListening();
-                        self.do_action(action, {
-                            on_close: function() {
-                                self._barcodeStartListening();
-                                self.update({}, {reload: true});
-                            }
-                        });
-                    }
-                    else {
-                        self.update({}, {reload: true});
-                    }
-                });
-            });
-        }
-        return this._super.apply(this, arguments);
-    },
     /**
      *
      * @see _barcodeAddX2MQuantity
