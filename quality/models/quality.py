@@ -48,8 +48,8 @@ class QualityPoint(models.Model):
     active = fields.Boolean(default=True)
     check_count = fields.Integer(compute="_compute_check_count")
     check_ids = fields.One2many('quality.check', 'point_id')
-    test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', required=True,
-                                   default=_get_default_test_type_id)
+    test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', help="Defines the type of the quality control point.",
+                                   required=True, default=_get_default_test_type_id)
     test_type = fields.Char(related='test_type_id.technical_name')
     note = fields.Html('Note')
     reason = fields.Html('Note')
