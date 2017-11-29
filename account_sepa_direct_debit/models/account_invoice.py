@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    sdd_paying_mandate_id = fields.Many2one(comodel_name='sdd.mandate', help="Once this invoice has been paid with Direct Debit, contains the mandate that allowed the payment.")
+    sdd_paying_mandate_id = fields.Many2one(comodel_name='sdd.mandate', help="Once this invoice has been paid with Direct Debit, contains the mandate that allowed the payment.", copy=False)
 
     def invoice_validate(self):
         """ Overridden to automatically trigger the payment of the invoice if a
@@ -16,6 +16,8 @@ class AccountInvoice(models.Model):
         """
         super(AccountInvoice, self).invoice_validate()
         for record in self:
+            if record.residual == 0:
+                continue
             usable_mandate = record._get_usable_mandate()
             if usable_mandate:
                 record.sdd_paying_mandate_id = usable_mandate
