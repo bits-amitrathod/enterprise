@@ -7,30 +7,20 @@ from odoo import api, fields, models
 class MailActivityType(models.Model):
     _inherit = 'mail.activity.type'
 
-    create_voip_phonecall = fields.Boolean(
-        'Generates a voip phonecall',
-        help='If set to true, when an activity of this type is scheduled, a voip phonecall is created'
-    )
+    category = fields.Selection(selection_add=[('phonecall', 'Phonecall')])
 
 
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
+
     phone = fields.Char('Phone')
     mobile = fields.Char('Mobile')
     voip_phonecall_id = fields.Many2one('voip.phonecall', 'Linked Voip Phonecall')
-    is_call_type = fields.Boolean(
-        'Is it a call type activity?', compute='_compute_is_call_type',
-    )
-
-    @api.depends('activity_type_id')
-    def _compute_is_call_type(self):
-        for activity in self:
-            activity.is_call_type = activity.activity_type_id.create_voip_phonecall
 
     @api.model
     def create(self, values):
         activity = super(MailActivity, self).create(values)
-        if activity.activity_type_id.create_voip_phonecall:
+        if activity.activity_type_id.category == 'phonecall':
             numbers = activity._compute_phonenumbers()
             if numbers['phone'] or numbers['mobile']:
                 activity.phone = numbers['phone']
