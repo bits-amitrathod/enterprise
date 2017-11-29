@@ -442,6 +442,19 @@ class MrpProductionWorkcenterLine(models.Model):
         self.ensure_one()
         return self._next()
 
+    def action_open_manufacturing_order(self):
+        self.record_production()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'mrp.production',
+            'views': [[self.env.ref('mrp.mrp_production_form_view').id, 'form']],
+            'res_id': self.production_id.id,
+            'target': 'main',
+            'flags': {
+                'headless': False,
+            },
+        }
+
     def do_finish(self):
         self.record_production()
         action = self.env.ref('mrp_workorder.mrp_workorder_action_tablet').read()[0]
