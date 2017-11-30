@@ -1,6 +1,7 @@
 odoo.define('web_studio.ViewEditorManager_tests', function (require) {
 "use strict";
 
+var ace = require('web_editor.ace');
 var concurrency = require('web.concurrency');
 var core = require('web.core');
 var ListRenderer = require('web.ListRenderer');
@@ -1282,15 +1283,31 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('open XML editor in read-only', function(assert) {
-        assert.expect(1);
+        assert.expect(5);
+        var done = assert.async();
+
+        // the XML editor button is only available in debug mode
+        var initialDebugMode = core.debug;
+        core.debug = true;
+
+        // the XML editor lazy loads its libs and its templates so its start
+        // method is monkey-patched to know when the widget has started
+        var XMLEditorDef = $.Deferred();
+        var aceStart = ace.prototype.start;
+        ace.prototype.start = function () {
+            return aceStart.apply(this, arguments).then(function () {
+                XMLEditorDef.resolve();
+            });
+        };
 
         var arch = "<form><sheet><field name='display_name'/></sheet></form>";
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
             arch: arch,
-            mockRPC: function (route) {
+            mockRPC: function (route, args) {
                 if (route === '/web_editor/get_assets_editor_resources') {
+                    assert.strictEqual(args.key, 1, "the correct view should be fetched");
                     return $.when({
                         views: [{
                             active: true,
@@ -1306,13 +1323,28 @@ QUnit.module('ViewEditorManager', {
             viewID: 1,
         });
 
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_form_readonly.o_web_studio_form_view_editor').length, 1,
+            "the form editor should be displayed");
+
+        // open the XML editor
         vem.$('.o_web_studio_sidebar_header [name="view"]').click();
+        assert.strictEqual(vem.$('.o_web_studio_sidebar .o_web_studio_xml_editor').length, 1,
+            "there should be a button to open the XML editor");
         vem.$('.o_web_studio_sidebar .o_web_studio_xml_editor').click();
 
-        assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_form_readonly').length, 1,
+        assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_form_readonly:not(.o_web_studio_form_view_editor)').length, 1,
             "the form should be in read-only");
 
-        vem.destroy();
+        XMLEditorDef.then(function () {
+            assert.strictEqual(vem.$('.o_ace_view_editor').length, 1, "the XML editor should be opened");
+
+            // restore monkey-patched elements
+            core.debug = initialDebugMode;
+            ace.prototype.start = aceStart;
+
+            vem.destroy();
+            done();
+        });
     });
 
     QUnit.test('new button in buttonbox', function(assert) {
