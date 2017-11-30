@@ -22,7 +22,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             "You can do anything, but not everything.",
     ];
     var SANITIZERREGEX = /\./g; // Since it will be used in a loop, we don't want to compile the regex at each iteration.
-    var MODULE_KEY = '__export__.'; // Xml_id prefix.
+    var MODULE_KEY = '__import__.'; // Xml_id prefix.
 
     //Main widget to instantiate the app
     var ProjectTimesheet = Widget.extend(mixins.ServiceProvider, {

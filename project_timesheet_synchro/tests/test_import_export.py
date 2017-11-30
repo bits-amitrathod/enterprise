@@ -10,10 +10,10 @@ class TestImportExport(common.TransactionCase):
     def test_import_export_general(self):
         test_analytic_lines = [
             {
-                "id": "__export__.admin1433780253119_aal1",
+                "id": "__import__.admin1433780253119_aal1",
                 "date": "2015-06-08",
-                "project_id": "__export__.admin1433780253119_project1",
-                "task_id": "__export__.admin1433780253119_task1",
+                "project_id": "__import__.admin1433780253119_project1",
+                "task_id": "__import__.admin1433780253119_task1",
                 "desc": "description",
                 "unit_amount": "2.00",
                 "write_date": "2015-06-08 16:17:59",
@@ -25,15 +25,15 @@ class TestImportExport(common.TransactionCase):
         test_tasks = [
             {
                 "name": "task",
-                "id": "__export__.admin1433780253119_task1",
-                "project_id": "__export__.admin1433780253119_project1",
+                "id": "__import__.admin1433780253119_task1",
+                "project_id": "__import__.admin1433780253119_project1",
                 "to_sync": True,
                 "sync_problem": False,
             }
         ]
         test_projects = [{
             "name": "project",
-            "id": "__export__.admin1433780253119_project1",
+            "id": "__import__.admin1433780253119_project1",
             "to_sync": True,
             "sync_problem": False,
         }]
@@ -60,7 +60,7 @@ class TestImportExport(common.TransactionCase):
         test_projects = [
             {
                 "name": "project",
-                "id": "__export__.admin1433780253119_project1",
+                "id": "__import__.admin1433780253119_project1",
                 "to_sync": True,
                 "sync_problem": False,
             }
