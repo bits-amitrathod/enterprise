@@ -2,6 +2,7 @@ odoo.define('web_studio.ViewEditorManager_tests', function (require) {
 "use strict";
 
 var concurrency = require('web.concurrency');
+var core = require('web.core');
 var ListRenderer = require('web.ListRenderer');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
@@ -1542,7 +1543,11 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('edit one2many list view', function(assert) {
-        assert.expect(3);
+        assert.expect(9);
+
+        // the 'More' button is only available in debug mode
+        var initialDebugMode = core.debug;
+        core.debug = true;
 
         var fieldsView;
         var vem = createViewEditorManager({
@@ -1557,9 +1562,15 @@ QUnit.module('ViewEditorManager', {
             archs: {
                 "product,false,list": '<tree><field name="display_name"/></tree>'
             },
-            mockRPC: function (route) {
+            mockRPC: function (route, args) {
                 if (route === '/web_studio/get_default_value') {
+                    assert.step(args.model_name);
                     return $.when({});
+                }
+                if (args.method === 'search_read' && args.model === 'ir.model.fields') {
+                    assert.deepEqual(args.kwargs.domain, [['model', '=', 'product'], ['name', '=', 'coucou_id']],
+                        "the model should be correctly set when editing field properties");
+                    return $.when([]);
                 }
                 if (route === '/web_studio/edit_view') {
                     // We need to create the fieldsView here because the fieldsViewGet in studio
@@ -1612,6 +1623,7 @@ QUnit.module('ViewEditorManager', {
             },
         });
         vem.$('.o_web_studio_view_renderer .o_field_one2many').click();
+        assert.verifySteps(['coucou']);
         $(vem.$('.o_web_studio_view_renderer .o_field_one2many .o_web_studio_editX2Many')[0]).click();
         assert.strictEqual(vem.$('.o_web_studio_view_renderer thead tr [data-node-id]').length, 1,
             "there should be 1 nodes in the x2m editor.");
@@ -1620,11 +1632,22 @@ QUnit.module('ViewEditorManager', {
         testUtils.dragAndDrop(vem.$('.o_web_studio_existing_fields .o_web_studio_field_many2one'), $('.o_web_studio_hook'));
         assert.strictEqual(vem.$('.o_web_studio_view_renderer thead tr [data-node-id]').length, 2,
             "there should be 2 nodes after the drag and drop.");
+
+        // click on a field in the x2m list view
+        vem.$('.o_web_studio_view_renderer [data-node-id]:first').click();
+        assert.verifySteps(['coucou', 'product'], "the model should be the x2m relation");
+
+        // edit field properties
+        assert.strictEqual(vem.$('.o_web_studio_sidebar .o_web_studio_parameters').length, 1,
+            "there should be button to edit the field properties");
+        vem.$('.o_web_studio_sidebar .o_web_studio_parameters').click();
+
+        core.debug = initialDebugMode;
         vem.destroy();
     });
 
     QUnit.test('edit one2many form view (2 level) and check chatter allowed', function(assert) {
-        assert.expect(4);
+        assert.expect(6);
         this.data.coucou.records = [{
             id: 11,
             display_name: 'Coucou 11',
@@ -1656,9 +1679,14 @@ QUnit.module('ViewEditorManager', {
                 "partner,false,list": "<tree><field name='display_name'/></tree>",
             },
             chatter_allowed: true,
-            mockRPC: function (route) {
+            mockRPC: function (route, args) {
                 if (route === '/web_studio/get_default_value') {
                     return $.when({});
+                }
+                if (args.method === 'name_search' && args.model === 'ir.model.fields') {
+                    assert.deepEqual(args.kwargs.args, [['relation', '=', 'partner'], ['ttype', '=', 'many2one'], ['store', '=', true]],
+                        "the domain should be correctly set when searching for a related field for new button");
+                    return $.when([]);
                 }
                 if (route === '/web_studio/edit_view') {
                     // We need to create the fieldsView here because the fieldsViewGet in studio
@@ -1715,6 +1743,13 @@ QUnit.module('ViewEditorManager', {
         assert.strictEqual(vem.$('.o_field_char').eq(0).text(), 'jean',
             "the partner view form should be displayed.");
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_char'), $('.o_web_studio_hook'));
+
+        // add a new button
+        vem.$('.o_web_studio_form_view_editor .o_web_studio_button_hook').click();
+        assert.strictEqual($('.modal .o_web_studio_new_button_dialog').length, 1,
+            "there should be an opened modal to add a button");
+        $('.modal .o_web_studio_new_button_dialog .js_many2one_field input').click();
+
         vem.destroy();
     });
 
