@@ -40,134 +40,131 @@ var AbstractComponent = Widget.extend({
         return this._super.apply(this, arguments);
     },
 });
-
 var NotebookComponent = AbstractComponent.extend({
     structure: 'notebook',
     label: _t('Tabs'),
-    ttype: 'tabs',
+    type: 'tabs',
     className: 'o_web_studio_field_tabs',
 });
 var GroupComponent = AbstractComponent.extend({
     structure: 'group',
     label: _t('Columns'),
-    ttype: 'columns',
+    type: 'columns',
     className: 'o_web_studio_field_columns',
 });
 var FilterComponent = AbstractComponent.extend({
     structure: 'filter',
     label: _t('Filter'),
-    ttype: 'filter',
+    type: 'filter',
     className: 'o_web_studio_filter',
 });
 var FilterSeparatorComponent = AbstractComponent.extend({
     structure: 'separator',
     label: _t('Separator'),
-    ttype: 'separator',
+    type: 'separator',
     className: 'o_web_studio_filter_separator',
 });
 var AbstractNewFieldComponent = AbstractComponent.extend({
     structure: 'field',
-    ttype: false,
+    type: false,
     /**
      * @override
      */
     start: function () {
-        this.description = this.ttype;
+        this.description = this.type;
         this.$el.data('field_description', {
-            ttype: this.ttype,
+            type: this.type,
             field_description: 'New ' + this.label,
         });
         return this._super();
     },
 });
 var CharFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'char',
+    type: 'char',
     label: _t('Text'),
     className: 'o_web_studio_field_char',
 });
 var TextFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'text',
+    type: 'text',
     label: _t('Multiline Text'),
     className: 'o_web_studio_field_text',
 });
 var IntegerFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'integer',
+    type: 'integer',
     label: _t('Integer number'),
     className: 'o_web_studio_field_integer',
 });
 var DecimalFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'float',
+    type: 'float',
     label: _t('Decimal Number'),
     className: 'o_web_studio_field_float',
 });
 var HtmlFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'html',
+    type: 'html',
     label: _t('Html'),
     className: 'o_web_studio_field_html',
 });
 var MonetaryFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'monetary',
+    type: 'monetary',
     label: _t('Monetary'),
     className: 'o_web_studio_field_monetary',
 });
 var DateFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'date',
+    type: 'date',
     label: _t('Date'),
     className: 'o_web_studio_field_date',
 });
 var DatetimeFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'datetime',
+    type: 'datetime',
     label: _t('Date & Time'),
     className: 'o_web_studio_field_datetime',
 });
 var BooleanFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'boolean',
+    type: 'boolean',
     label: _t('Checkbox'),
     className: 'o_web_studio_field_boolean',
 });
 var SelectionFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'selection',
+    type: 'selection',
     label: _t('Selection'),
     className: 'o_web_studio_field_selection',
 });
 var BinaryFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'binary',
+    type: 'binary',
     label: _t('File'),
     className: 'o_web_studio_field_binary',
 });
-
 var Many2manyFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'many2many',
+    type: 'many2many',
     label: _t('Many2many'),
     className: 'o_web_studio_field_many2many',
 });
 var One2manyFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'one2many',
+    type: 'one2many',
     label: _t('One2many'),
     className: 'o_web_studio_field_one2many',
 });
 var Many2oneFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'many2one',
+    type: 'many2one',
     label: _t('Many2one'),
     className: 'o_web_studio_field_many2one',
 });
-
 var ExistingFieldComponent = AbstractComponent.extend({
     /**
      * @override
      * @param {Widget} parent
      * @param {String} name
      * @param {String} field_description
-     * @param {String} ttype
+     * @param {String} type
      * @param {Boolean} store
      */
-    init: function (parent, name, field_description, ttype, store) {
+    init: function (parent, name, field_description, type, store) {
         this._super(parent);
         this.structure = 'field';
         this.label = field_description;
         this.description = name;
-        this.className = 'o_web_studio_field_' + ttype;
-        this.ttype = ttype;
+        this.className = 'o_web_studio_field_' + type;
+        this.type = type;
         this.store = store;
     },
     /**
@@ -177,13 +174,12 @@ var ExistingFieldComponent = AbstractComponent.extend({
         this.$el.data('new_attrs',{
             name: this.description,
             label: this.label,
-            ttype: this.ttype,
+            type: this.type,
             store: this.store ? "true":"false",
         });
         return this._super.apply(this, arguments);
     },
 });
-
 var AbstractNewWidgetComponent = AbstractNewFieldComponent.extend({
     attrs: {},
     /**
@@ -195,25 +191,25 @@ var AbstractNewWidgetComponent = AbstractNewFieldComponent.extend({
     },
 });
 var ImageWidgetComponent = AbstractNewWidgetComponent.extend({
-    ttype: 'binary',
+    type: 'binary',
     label: _t('Image'),
     className: 'o_web_studio_field_picture',
     attrs: {widget: 'image'},
 });
 var TagWidgetComponent = AbstractNewWidgetComponent.extend({
-    ttype: 'many2many',
+    type: 'many2many',
     label: _t('Tags'),
     className: 'o_web_studio_field_tags',
     attrs: {widget: 'many2many_tags'},
 });
 var PriorityWidgetComponent = AbstractNewWidgetComponent.extend({
-    ttype: 'selection',
+    type: 'selection',
     label: _t('Priority'),
     className: 'o_web_studio_field_priority',
     attrs: {widget: 'priority'},
 });
 var RelatedFieldComponent = AbstractNewFieldComponent.extend({
-    ttype: 'related',
+    type: 'related',
     label: _t('Related Field'),
     className: 'o_web_studio_field_related',
 });

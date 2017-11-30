@@ -69,9 +69,9 @@ var SearchEditor = SearchRenderer.extend(EditorMixin, {
             // We check if the field dropped is a groupabble field
             // if dropped in the group_by table
             if (table_type === 'group_by' && is_field_droppable) {
-                var ttype = $($helper.context).data('new_attrs').ttype;
+                var type = $($helper.context).data('new_attrs').type;
                 var store = $($helper.context).data('new_attrs').store;
-                is_field_droppable =  _.contains(this.GROUPABLE_TYPES, ttype) && store === 'true';
+                is_field_droppable =  _.contains(this.GROUPABLE_TYPES, type) && store === 'true';
             }
             if (is_field_droppable || is_component_droppable){
                 $nearest_form_hook.addClass('o_web_studio_nearest_hook');

@@ -18,12 +18,13 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     /**
      * @constructor
      * @param {String} model_name
-     * @param {String} ttype
+     * @param {Object} field
      * @param {Object} fields
      */
-    init: function (parent, model_name, ttype, fields) {
+    init: function (parent, model_name, field, fields) {
         this.model_name = model_name;
-        this.ttype = ttype;
+        this.type = field.type;
+        this.field = field;
         this.fields = fields;
         var options = {
             title: _t('Add a field'),
@@ -53,7 +54,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
 
         this.$modal.addClass('o_web_studio_field_modal');
 
-        if (this.ttype === 'one2many') {
+        if (this.type === 'one2many') {
             defs.push(this.model.makeRecord('ir.model.fields', [{
                 name: 'field',
                 relation: 'ir.model.fields',
@@ -70,7 +71,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 self.many2one_field.nodeOptions.no_create_edit = !config.debug;
                 self.many2one_field.appendTo(self.$('.o_many2one_field'));
             }));
-        } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
+        } else if (_.contains(['many2many', 'many2one'], this.type)) {
             defs.push(this.model.makeRecord('ir.model', [{
                 name: 'model',
                 relation: 'ir.model',
@@ -83,7 +84,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 self.many2one_model.nodeOptions.no_create_edit = !config.debug;
                 self.many2one_model.appendTo(self.$('.o_many2one_model'));
             }));
-        } else if (this.ttype === 'related') {
+        } else if (this.type === 'related') {
             // This restores default modal height (bootstrap) and allows field selector to overflow
             this.$el.css("overflow", "visible").closest(".modal-dialog").css("height", "auto");
             var field_options = {
@@ -107,12 +108,12 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
      */
     _onSave: function() {
         var values = {};
-        if (this.ttype === 'one2many') {
+        if (this.type === 'one2many') {
             values.relation_field_id = this.many2one_field.value.res_id;
-        } else if (_.contains(['many2many', 'many2one'], this.ttype)) {
+        } else if (_.contains(['many2many', 'many2one'], this.type)) {
             values.relation_id = this.many2one_model.value.res_id;
             values.field_description = this.many2one_model.m2o_value;
-        } else if (this.ttype === 'selection') {
+        } else if (this.type === 'selection') {
             values.selection = [];
             var selection_list = _.map(this.$('#selectionItems').val().split("\n"),function(value) {
                 value = value.trim();
@@ -124,14 +125,14 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             values.selection = _.map(selection_list, function(value) {
                 return [value, value];
             });
-        } else if (this.ttype === 'related') {
+        } else if (this.type === 'related') {
             var selectedField = this.fieldSelector.getSelectedField();
             if (!selectedField) {
                 Dialog.alert(this, _t('You cannot create an empty related field.'));
                 return;
             }
             values.related = this.fieldSelector.chain.join('.');
-            values.ttype = selectedField.type;
+            values.type = selectedField.type;
             if (_.contains(['many2one', 'many2many'], selectedField.type)) {
                 values.relation = selectedField.relation;
             } else if (selectedField.type === 'one2many') {

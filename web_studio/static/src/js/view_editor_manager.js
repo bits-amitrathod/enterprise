@@ -601,11 +601,11 @@ var ViewEditorManager = Widget.extend({
             });
             // Fields with requirements
             // Open Dialog to precise the required fields for this field.
-            if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.ttype)) {
+            if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.type)) {
                 def_field_values = $.Deferred();
-                var dialog = new NewFieldDialog(this, modelName, field_description.ttype, this.fields).open();
+                var dialog = new NewFieldDialog(this, modelName, field_description, this.fields).open();
                 dialog.on('field_default_values_saved', this, function (values) {
-                    if (values.related && values.ttype === 'monetary') {
+                    if (values.related && values.type === 'monetary') {
                         if (this._hasCurrencyField()) {
                             def_field_values.resolve(values);
                         }
@@ -618,7 +618,7 @@ var ViewEditorManager = Widget.extend({
                     def_field_values.reject();
                 });
             }
-            if (field_description.ttype === 'monetary') {
+            if (field_description.type === 'monetary') {
                 def_field_values = $.Deferred();
                 if (this._hasCurrencyField()) {
                     def_field_values.resolve();
@@ -938,7 +938,7 @@ var ViewEditorManager = Widget.extend({
                         name: fieldName,
                         field_description: _t('Stage'),
                         model_name: modelName,
-                        ttype: 'many2one',
+                        type: 'many2one',
                         relation_id: relationID,
                     },
                 },

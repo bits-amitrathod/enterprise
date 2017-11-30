@@ -453,6 +453,10 @@ class WebStudioController(http.Controller):
         model = request.env['ir.model'].search([('model', '=', values.pop('model_name'))])
         values['model_id'] = model.id
 
+        # Field type is called ttype in the database
+        if values.get('type'):
+            values['ttype'] = values.pop('type')
+
         # For many2one and many2many fields
         if values.get('relation_id'):
             values['relation'] = request.env['ir.model'].browse(values.pop('relation_id')).model

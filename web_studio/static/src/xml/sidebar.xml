@@ -695,12 +695,12 @@
 </t>
 
 <div t-name="web_studio.NewFieldDialog" class="o_web_studio_field_dialog_form">
-    <t t-if="widget.ttype === 'selection'">
+    <t t-if="widget.type === 'selection'">
         <label>Enter one value per line:</label>
         <textarea name="selectionItems" id="selectionItems" rows='4' placeholder="Value A&#10;Value B&#10;Value C"></textarea>
     </t>
     <t t-else="">
-        <t t-if="_.contains(['one2many', 'related'], widget.ttype)">
+        <t t-if="_.contains(['one2many', 'related'], widget.type)">
             <label>Select a related field:</label>
             <span class="o_many2one_field"/>
         </t>
