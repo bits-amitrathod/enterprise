@@ -136,11 +136,8 @@ class website_hr_contract_salary(http.Controller):
 
     @http.route(['/salary_package/update_gross/'], type="json", auth="public")
     def update_gross(self, contract_id=None, token=None, advantages=None, **kw):
-        # Make a savepoint to discard the temporary contract and payslip
 
         result = {}
-
-        request.env.cr.savepoint()
 
         if token:
             contract = self._check_token_validity(token)
@@ -160,8 +157,6 @@ class website_hr_contract_salary(http.Controller):
 
     @http.route(['/salary_package/compute_net/'], type='json', auth='public')
     def compute_net(self, contract_id=None, token=None, advantages=None, **kw):
-        # Make a savepoint to discard the temporary contract and payslip
-        request.env.cr.savepoint()
 
         if token:
             contract = self._check_token_validity(token)
