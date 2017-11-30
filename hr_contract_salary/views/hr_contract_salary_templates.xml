@@ -484,8 +484,9 @@
                                             <label class="col-sm-7 control-label">Employer Cost</label>
                                             <div class="col-sm-5">
                                                 <div class="input-group">
-                                                    <input type="text" disabled="disabled" name="employee_total_cost" class="form-control"/>
+                                                    <input type="text" disabled="disabled" name="employee_total_cost" class="form-control" t-att-value="contract.final_yearly_costs"/>
                                                     <div class="input-group-addon">€</div>
+                                                    <input type="text" disabled="disabled" name="fixed_yearly_costs" class="form-control hidden" t-att-value="contract.final_yearly_costs"/>
                                                 </div>
                                             </div>
                                         </div>

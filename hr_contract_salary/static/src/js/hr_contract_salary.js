@@ -145,6 +145,7 @@ var SalaryPackageWidget = Widget.extend({
             'others_reimbursed_amount': parseFloat($("input[name='others_reimbursed_amount']")[0].value) || 0.0,
             'personal_info': personal_info,
             'meal_voucher_amount': has_meal_voucher ? parseFloat($("input[name='meal_voucher_amount']")[0].value) || 0.0 : 0.0,
+            'final_yearly_costs': parseFloat($("input[name='fixed_yearly_costs']")[0].value),
         };
         return advantages;
 

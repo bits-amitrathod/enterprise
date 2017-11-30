@@ -144,9 +144,8 @@ class website_hr_contract_salary(http.Controller):
         else:
             contract = self._check_employee_access_right(contract_id)
 
-        final_yearly_costs = contract.final_yearly_costs
         new_contract = self.create_new_contract(contract, advantages)
-        new_gross = new_contract._get_gross_from_employer_costs(final_yearly_costs)
+        new_gross = new_contract._get_gross_from_employer_costs(advantages['final_yearly_costs'])
         new_contract.wage = new_gross
 
         result.update({'new_gross': round(new_gross, 2)})
@@ -163,10 +162,9 @@ class website_hr_contract_salary(http.Controller):
         else:
             contract = self._check_employee_access_right(contract_id)
 
-        final_yearly_costs = contract.final_yearly_costs
         new_contract = self.create_new_contract(contract, advantages)
         #  Update gross to keep a fixed employer cost
-        new_gross = new_contract._get_gross_from_employer_costs(final_yearly_costs)
+        new_gross = new_contract._get_gross_from_employer_costs(advantages['final_yearly_costs'])
         new_contract.wage = new_gross
 
         # generate a payslip corresponding to only this contract
