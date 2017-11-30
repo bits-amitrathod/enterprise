@@ -18,13 +18,13 @@ Quality Control
 * Define your stages for the quality alerts
 """,
     'data': [
-        'data/quality_demo.xml',
+        'data/quality_control_data.xml',
         'views/quality_templates.xml',
         'views/quality_views.xml',
         'views/stock_picking_views.xml',
     ],
     'demo': [
-        'data/quality_demo.xml',
+        'data/quality_control_demo.xml',
     ],
     'application': True,
     'license': 'OEEL-1',

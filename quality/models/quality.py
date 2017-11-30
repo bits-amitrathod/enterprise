@@ -24,6 +24,10 @@ class QualityPoint(models.Model):
     def __get_default_team_id(self):
         return self.env['quality.alert.team'].search([], limit=1).id
 
+    def _get_default_test_type_id(self):
+        domain = self._get_type_default_domain()
+        return self.env['quality.point.test_type'].search(domain, limit=1).id
+
     name = fields.Char(
         'Reference', copy=False, default=lambda self: _('New'),
         readonly=True, required=True)
@@ -45,7 +49,7 @@ class QualityPoint(models.Model):
     check_count = fields.Integer(compute="_compute_check_count")
     check_ids = fields.One2many('quality.check', 'point_id')
     test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', required=True,
-            default=lambda self: self.env['quality.point.test_type'].search([('technical_name', '=', 'passfail')]))
+                                   default=_get_default_test_type_id)
     test_type = fields.Char(related='test_type_id.technical_name')
     note = fields.Html('Note')
     reason = fields.Html('Note')
@@ -71,6 +75,9 @@ class QualityPoint(models.Model):
         # TDE FIXME: make true multi
         self.ensure_one()
         return False
+
+    def _get_type_default_domain(self):
+        return []
 
 
 class QualityAlertTeam(models.Model):

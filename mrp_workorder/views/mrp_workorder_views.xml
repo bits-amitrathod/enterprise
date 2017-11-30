@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="mrp_workorder_view_form_inherit_quality" model="ir.ui.view">
-        <field name="name">mrp.workorder.view.form.inherit.quality</field>
+    <record id="mrp_workorder_view_form_inherit_workorder" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.form.inherit.workorder</field>
         <field name="model">mrp.workorder</field>
         <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
         <field name="arch" type="xml">
@@ -9,22 +9,6 @@
                 <button name="record_production" type="object" string="Done" class="btn-success" attrs="{'invisible': ['|', '|', ('state', '!=', 'progress'), ('is_user_working', '=', False), ('quality_check_todo','=', True)]}"/>
                 <field name="quality_check_todo" invisible="1"/>
             </button>
-            <button name="record_production" position="before">
-                <button name="check_quality" attrs="{'invisible': ['|', ('quality_check_todo', '=', False), ('state', 'in', ('pending', 'ready'))]}" type="object" string="Quality Checks" class="oe_highlight"/>
-                <field name="check_ids" invisible="1"/>
-            </button>
-            <div name="button_box" position="inside">
-                <button name="open_quality_alert_wo" type="object" class="oe_stat_button" icon="fa-bell" attrs="{'invisible': [('quality_alert_count', '=', 0)]}" context="{'search_default_workorder_id': active_id}">
-                    <div class="o_field_widget o_stat_info">
-                        <span class="o_stat_value"><field name="quality_alert_count"/></span>
-                        <span class="o_stat_text">Quality Alert</span>
-                    </div>
-                </button>
-                <button name="%(quality_check_action_wo)d" attrs="{'invisible': [('check_ids', '=', [])]}" type="action" class="oe_stat_button" icon="fa-check">
-                    <span class="o_stat_text text-success" attrs="{'invisible': [('quality_check_fail', '=', True)]}">Quality Checks</span>
-                    <span class="o_stat_text text-danger" attrs="{'invisible': [('quality_check_fail', '!=', True)]}">Quality Checks</span>
-                </button>
-            </div>
             <xpath expr="//header" position="replace">
                 <field name="check_ids" invisible="1"/>
                 <field name="quality_check_fail" invisible="1"/>
@@ -47,15 +31,6 @@
                     </field>
                 </page>
             </notebook>
-            <xpath expr="//field[@name='qty_producing']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='final_lot_id']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='active_move_line_ids']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
         </field>
     </record>
 
@@ -75,7 +50,6 @@
                 <field name="is_last_step" invisible="1"/>
                 <field name="is_user_working" invisible="1"/>
                 <field name="is_produced" invisible="1"/>
-                <field name="measure_success" invisible="1"/>
                 <field name="move_line_id" invisible="1"/>
                 <field name="move_raw_ids" invisible="1"/>
                 <field name="quality_state" invisible="1"/>
@@ -122,13 +96,8 @@
                     </div>
                     <div class="o_workorder_bar_content o_workorder_bar_content_right">
                         <div attrs="{'invisible': ['|', ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}">
-                            <button name="do_fail" type="object" class="btn-danger" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
-                            <button name="do_fail" type="object" class="btn-danger" attrs="{'invisible': ['|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail')]}" string="Fail"/>
-                            <button name="do_pass" type="object" class="btn-success" attrs="{'invisible': ['|', ('quality_state', '!=', 'none'), ('test_type', '!=', 'passfail')]}" string="Pass"/>
-                            <button name="do_pass" type="object" class="btn-success" attrs="{'invisible': ['|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail')]}" string="Pass"/>
                             <button name="action_next" type="object" class="btn-primary" attrs="{'invisible': ['|', ('is_last_step', '=', True), '&amp;', '|', ('quality_state', '=', 'none'), ('test_type', '!=', 'passfail'), ('test_type', '!=', 'dummy')]}" string="Next"/>
                             <button name="action_next" type="object" class="btn-primary" attrs="{'invisible': ['|', ('is_last_step', '=', True), ('test_type', 'not in', ['register_consumed_materials', 'picture'])]}" string="Validate"/>
-                            <button name="do_measure" type="object" class="btn-primary" string="Validate" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
                             <button name="record_production" type="object" string="Record production" attrs="{'invisible': ['|', '|', '|', ('is_last_step', '!=', True), ('skipped_check_ids', '!=', []), ('is_last_lot', '=', True)]}" class="btn-primary"/>
                             <button name="do_finish" type="object" string="Mark as Done" icon="fa-check" attrs="{'invisible': ['|', '|', '|', ('is_last_step', '!=', True), ('skipped_check_ids', '!=', []), ('is_last_lot', '=', False)]}" class="btn-primary"/>
                             <button name="action_first_skipped_step" type="object" string="Finish steps" attrs="{'invisible': ['|', '|', '|', ('is_last_step', '!=', True), ('state', '!=', 'progress'), ('skipped_check_ids', '=', [])]}" class="btn-primary"/>
@@ -137,14 +106,6 @@
                 </div>
                 <div class="o_workorder_data">
                     <field class="o_workorder_note" name="note"/>
-                    <div class="workorder_picture">
-                        <field name="picture" widget="tablet_image" attrs="{'invisible': [('test_type', '!=', 'picture')], 'required': [('test_type', '=', 'picture')]}"/>
-                    </div>
-                    <div attrs="{'invisible': [('test_type', '!=', 'measure')]}" class="o_row mb8">
-                        <label for="measure" string="Measure:" />
-                        <field name="measure" attrs="{'required': [('test_type', '=', 'measure')]}" class="oe_inline"/>
-                        <field name="norm_unit"/>
-                    </div>
                     <h3 attrs="{'invisible': ['|', '|', ('current_quality_check_id', '!=', False), ('check_ids', '=', []), ('qty_producing', '=', 0)]}">
                         <field name="product_id" options="{'no_open': True}"/> -
                         <span attrs="{'invisible': ['|', ('tracking', '=', 'none'), ('lot_id', '=', False)]}">
@@ -212,8 +173,7 @@
                 <div class="row workorder_menu">
                     <div class="col-xs-6" id="workorder_maintenance_button">
                     </div>
-                    <div class="col-xs-6">
-                        <button name="button_quality_alert" type="object" class="btn btn-primary btn-block" string="Quality alert"/>
+                    <div class="col-xs-6" id="workorder_quality_button">
                     </div>
                 </div>
                 <footer></footer>
@@ -245,8 +205,8 @@
 
     <template id="quality_check_view_form_css" name="quality.check.view.form.css" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/quality_mrp/static/src/less/tablet_view.less"/>
-            <script type="text/javascript" src="/quality_mrp/static/src/js/quality_mrp.js"></script>
+            <link rel="stylesheet" href="/mrp_workorder/static/src/less/tablet_view.less"/>
+            <script type="text/javascript" src="/mrp_workorder/static/src/js/mrp_workorder.js"></script>
         </xpath>
     </template>
     <record id="mrp_workorder_view_kanban_inherit_quality" model="ir.ui.view">
@@ -259,7 +219,7 @@
             </kanban>
         </field>
     </record>
-    <record id="action_quality_mrp_show_steps" model="ir.actions.act_window">
+    <record id="action_mrp_workorder_show_steps" model="ir.actions.act_window">
         <field name="name">Steps</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_type">form</field>
@@ -273,7 +233,7 @@
         <field name="model">mrp.routing</field>
         <field name="arch" type="xml">
             <xpath expr="//button" position="before">
-                <button name="%(action_quality_mrp_show_steps)d" type="action" icon="fa-list-ul">
+                <button name="%(action_mrp_workorder_show_steps)d" type="action" icon="fa-list-ul">
                     Steps
                 </button>
             </xpath>

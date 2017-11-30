@@ -22,7 +22,7 @@ class MrpProductionWorkcenterLine(models.Model):
     current_quality_check_id = fields.Many2one('quality.check', "Current Quality Check", store=True)
 
     # QC-related fields
-    allow_producing_quantity_change = fields.Boolean('Allow Changes to the Produced Quantity', default=True)
+    allow_producing_quantity_change = fields.Boolean('Allow Changes to Producing Quantity', default=True)
     component_id = fields.Many2one('product.product', compute='_compute_component_id', readonly=True)
     component_tracking = fields.Selection(related='component_id.tracking')
     component_remaining_qty = fields.Float('Remaining Quantity for Component', compute='_compute_component_id', readonly=True,digits=dp.get_precision('Product Unit of Measure'))
@@ -33,11 +33,7 @@ class MrpProductionWorkcenterLine(models.Model):
     is_last_lot = fields.Boolean('Is Last lot', compute='_compute_is_last_lot')
     lot_id = fields.Many2one(related='current_quality_check_id.lot_id')
     move_line_id = fields.Many2one(related='current_quality_check_id.move_line_id')
-    measure = fields.Float(related='current_quality_check_id.measure')
-    measure_success = fields.Selection(related='current_quality_check_id.measure_success')
-    norm_unit = fields.Char(related='current_quality_check_id.norm_unit')
     note = fields.Html(related='current_quality_check_id.note')
-    picture = fields.Binary(related='current_quality_check_id.picture')
     skip_completed_checks = fields.Boolean('Skip Completed Checks', readonly=True)
     quality_state = fields.Selection(related='current_quality_check_id.quality_state')
     qty_done = fields.Float(related='current_quality_check_id.qty_done')
@@ -82,8 +78,6 @@ class MrpProductionWorkcenterLine(models.Model):
         self.ensure_one()
         if self.qty_producing <= 0 or self.qty_producing > self.qty_remaining:
             raise UserError(_('Please ensure the quantity to produce is nonnegative and does not exceed the remaining quantity.'))
-        if self.test_type == 'picture' and not self.picture:
-            raise UserError(_('Please upload a picture.'))
         elif self.test_type == 'register_consumed_materials':
             # Form validation
             if self.component_tracking != 'none' and not self.lot_id:
@@ -150,20 +144,10 @@ class MrpProductionWorkcenterLine(models.Model):
             'quality_state': state,
             'user_id': self.env.user.id,
             'control_date': datetime.now()})
-        old_check_id = self.current_quality_check_id
         if self.skip_completed_checks:
             self._change_quality_check(increment=1, children=1, checks=self.skipped_check_ids)
         else:
             self._change_quality_check(increment=1, children=1)
-        if state == 'fail' and old_check_id.failure_message:
-            return {
-                'type': 'ir.actions.act_window',
-                'res_model': 'quality.check',
-                'views': [[self.env.ref('quality_mrp.quality_check_failure_message').id, 'form']],
-                'name': _('Failure Message'),
-                'target': 'new',
-                'res_id': old_check_id.id,
-            }
 
     def action_skip(self):
         self.ensure_one()
@@ -266,7 +250,7 @@ class MrpProductionWorkcenterLine(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'mrp.workorder',
-            'views': [[self.env.ref('quality_mrp.mrp_workorder_view_form_tablet_menu').id, 'form']],
+            'views': [[self.env.ref('mrp_workorder.mrp_workorder_view_form_tablet_menu').id, 'form']],
             'name': _('Menu'),
             'target': 'new',
             'res_id': self.id,
@@ -289,37 +273,6 @@ class MrpProductionWorkcenterLine(models.Model):
     def _compute_quality_alert_count(self):
         for workorder in self:
             workorder.quality_alert_count = len(workorder.quality_alert_ids)
-
-    def open_quality_alert_wo(self):
-        self.ensure_one()
-        action = self.env.ref('quality.quality_alert_action_check').read()[0]
-        action['context'] = {
-            'default_product_id': self.product_id.id,
-            'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
-            'default_workorder_id': self.id,
-            'default_production_id': self.production_id.id,
-            'default_workcenter_id': self.workcenter_id.id,
-            }
-        action['domain'] = [('id', 'in', self.quality_alert_ids.ids)]
-        action['views'] = [(False, 'tree'),(False,'form')]
-        if self.quality_alert_count == 1:
-            action['views'] = [(False, 'form')]
-            action['res_id'] = self.quality_alert_ids.id
-        return action
-
-    def button_quality_alert(self):
-        self.ensure_one()
-        action = self.env.ref('quality.quality_alert_action_check').read()[0]
-        action['target'] = 'new'
-        action['views'] = [(False, 'form')]
-        action['context'] = {
-            'default_product_id': self.product_id.id,
-            'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
-            'default_workorder_id': self.id,
-            'default_production_id': self.production_id.id,
-            'default_workcenter_id': self.workcenter_id.id,
-        }
-        return action
 
     def _create_checks(self):
         for wo in self:
@@ -397,17 +350,6 @@ class MrpProductionWorkcenterLine(models.Model):
             self._create_checks()
         return res
 
-    def check_quality(self):
-        self.ensure_one()
-        checks = self.check_ids.filtered(lambda x: x.quality_state == 'none')
-        if checks:
-            action_rec = self.env.ref('quality.quality_check_action_small')
-            if action_rec:
-                action = action_rec.read([])[0]
-                action['context'] = dict(self.env.context, active_model='mrp.workorder')
-                action['res_id'] = checks[0].id
-                return action
-
     # --------------------------
     # Buttons from quality.check
     # --------------------------
@@ -419,7 +361,7 @@ class MrpProductionWorkcenterLine(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'mrp.workorder',
-            'views': [[self.env.ref('quality_mrp.mrp_workorder_view_form_tablet').id, 'form']],
+            'views': [[self.env.ref('mrp_workorder.mrp_workorder_view_form_tablet').id, 'form']],
             'res_id': self.id,
             'target': 'fullscreen',
             'flags': {
@@ -429,27 +371,11 @@ class MrpProductionWorkcenterLine(models.Model):
         }
 
     def action_next(self):
-        self.ensure_one();
-        return self._next()
-
-    def do_fail(self):
         self.ensure_one()
-        return self._next('fail')
+        return self._next()
 
     def do_finish(self):
         self.record_production()
-        action = self.env.ref('quality_mrp.mrp_workorder_action_tablet').read()[0]
+        action = self.env.ref('mrp_workorder.mrp_workorder_action_tablet').read()[0]
         action['domain'] = [('state', 'not in', ['done', 'cancel', 'pending']), ('workcenter_id', '=', self.workcenter_id.id)]
         return action
-
-    def do_pass(self):
-        self.ensure_one()
-        return self._next('pass')
-
-    def do_measure(self):
-        self.ensure_one()
-        point_id = self.current_quality_check_id.point_id
-        if self.measure < point_id.tolerance_min or self.measure > point_id.tolerance_max:
-            return self.do_fail()
-        else:
-            return self.do_pass()
