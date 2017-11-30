@@ -21,6 +21,9 @@ class website_hr_contract_salary(http.Controller):
         return request.env['hr.contract']
 
     def _check_employee_access_right(self, contract_id):
+        contract_sudo = request.env['hr.contract'].sudo().browse(contract_id)
+        if not contract_sudo.employee_id:
+            return contract_sudo
         try:
             contract = request.env['hr.contract'].browse(contract_id)
             contract.check_access_rights('read')
@@ -91,7 +94,7 @@ class website_hr_contract_salary(http.Controller):
         personal_info = advantages['personal_info']
 
         if not contract.employee_id:
-            contract.employee_id = request.env['hr.employee'].create({
+            contract.employee_id = request.env['hr.employee'].sudo().create({
                 'name': 'Simulation Employee',
             })
         if personal_info:
@@ -251,17 +254,17 @@ class website_hr_contract_salary(http.Controller):
 
     @http.route(['/salary_package/onchange_mobile/'], type='json', auth='public')
     def onchange_mobile(self, contract_id, advantages, **kw):
-        amount = request.env['hr.contract']._get_mobile_amount(advantages['has_mobile'], advantages['international_communication'])
+        amount = request.env['hr.contract'].sudo()._get_mobile_amount(advantages['has_mobile'], advantages['international_communication'])
         return {'mobile': amount}
 
     @http.route(['/salary_package/onchange_internet/'], type='json', auth='public')
     def onchange_internet(self, contract_id, advantages, **kw):
-        amount = request.env['hr.contract']._get_internet_amount(advantages['has_internet'])
+        amount = request.env['hr.contract'].sudo()._get_internet_amount(advantages['has_internet'])
         return {'internet': amount}
 
     @http.route(['/salary_package/onchange_public_transport/'], type='json', auth='public')
     def onchange_public_transport(self, contract_id, advantages, **kw):
-        amount = request.env['hr.contract']._get_public_transport_reimbursed_amount(advantages['public_transport_employee_amount'])
+        amount = request.env['hr.contract'].sudo()._get_public_transport_reimbursed_amount(advantages['public_transport_employee_amount'])
         return {'amount': round(amount, 2)}
 
     @http.route(['/salary_package/submit/'], type='json', auth='public')
