@@ -261,9 +261,10 @@ var ViewEditorManager = Widget.extend({
     instantiateEditor: function (params) {
         params = params || {};
         var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
+        var chatterAllowed = this.x2mField ? false : this.chatter_allowed;
         var editorParams = _.defaults(params, {
             mode: 'readonly',
-            chatter_allowed: this.chatter_allowed,
+            chatter_allowed: chatterAllowed,
             show_invisible: this.sidebar && this.sidebar.state.show_invisible,
             arch: fields_view.arch,
         });
@@ -309,9 +310,10 @@ var ViewEditorManager = Widget.extend({
             mode: defaultMode,
             attrs: defaultMode === 'view' ? fields_view.arch.attrs : {},
         });
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
         var params = {
             view_type: this.view_type,
-            model_name: this.model_name,
+            model_name: modelName,
             fields: this.fields,
             state: state,
             isEditingX2m: !!this.x2mField,
@@ -446,11 +448,12 @@ var ViewEditorManager = Widget.extend({
                     attrs: attrs,
                 });
 
+                var modelName = this.x2mModel ? this.x2mModel : this.model_name;
                 if (node.tag === 'field') {
-                    def = this._getDefaultValue(this.model_name, node.attrs.name);
+                    def = this._getDefaultValue(modelName, node.attrs.name);
                 }
                 if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
-                    def = this._getEmailAlias(this.model_name);
+                    def = this._getEmailAlias(modelName);
                 }
                 break;
         }
@@ -511,7 +514,8 @@ var ViewEditorManager = Widget.extend({
      * @param {String} type
      */
     _addButton: function (data) {
-        var dialog = new NewButtonBoxDialog(this, this.model_name).open();
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
+        var dialog = new NewButtonBoxDialog(this, modelName).open();
         dialog.on('saved', this, function (result) {
             if (data.add_buttonbox) {
                 this.operations.push({type: 'buttonbox'});
@@ -590,17 +594,18 @@ var ViewEditorManager = Widget.extend({
         // The field doesn't exist: field_description is the definition of the new field.
         // No need to have field_description of an existing field
         if (field_description) {
+            var modelName = this.x2mModel ? this.x2mModel : this.model_name;
             // "extend" avoids having the same reference in "this.operations"
             // We can thus modify it without editing previous existing operations
             field_description = _.extend({}, field_description, {
                 name: 'x_studio_field_' + utils.randomString(5),
-                model_name: this.x2mModel ? this.x2mModel : this.model_name,
+                model_name: modelName,
             });
             // Fields with requirements
             // Open Dialog to precise the required fields for this field.
             if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.ttype)) {
                 def_field_values = $.Deferred();
-                var dialog = new NewFieldDialog(this, this.model_name, field_description.ttype, this.fields).open();
+                var dialog = new NewFieldDialog(this, modelName, field_description.ttype, this.fields).open();
                 dialog.on('field_default_values_saved', this, function (values) {
                     if (values.related && values.ttype === 'monetary') {
                         if (this._hasCurrencyField()) {
@@ -891,10 +896,11 @@ var ViewEditorManager = Widget.extend({
     _enableStages: function () {
         var self = this;
         data_manager.invalidate();
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
         this._rpc({
             route: '/web_studio/create_stages_model',
             params: {
-                model_name: this.model_name,
+                model_name: modelName,
             },
         }).then(function (relationID) {
             var fieldName = 'x_stage_id';
@@ -910,7 +916,7 @@ var ViewEditorManager = Widget.extend({
                     field_description: {
                         name: fieldName,
                         field_description: _t('Stage'),
-                        model_name: self.model_name,
+                        model_name: modelName,
                         ttype: 'many2one',
                         relation_id: relationID,
                     },
@@ -1001,7 +1007,7 @@ var ViewEditorManager = Widget.extend({
         this.mainViewType = this.view_type;
         this.mainFields = this.fields;
         return this._setX2mParameters().then(function () {
-            return self.updateEditor({chatter_allowed: false});
+            return self.updateEditor();
         });
     },
     /**
@@ -1202,7 +1208,8 @@ var ViewEditorManager = Widget.extend({
      */
     _onDefaultValueChange: function (event) {
         var data = event.data;
-        this._setDefaultValue(this.model_name, data.field_name, data.value)
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
+        this._setDefaultValue(modelName, data.field_name, data.value)
             .fail(function () {
                 if (data.on_fail) {
                     data.on_fail();
@@ -1215,7 +1222,8 @@ var ViewEditorManager = Widget.extend({
      */
     _onEmailAliasChange: function (event) {
         var value = event.data.value;
-        this._setEmailAlias(this.model_name, value);
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
+        this._setEmailAlias(modelName, value);
     },
     /**
      * Toggle editor sidebar.
@@ -1270,13 +1278,14 @@ var ViewEditorManager = Widget.extend({
      * @param {OdooEvent} event
      */
     _onOpenDefaults: function () {
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
         this.do_action({
             name: _t('Default Values'),
             type: 'ir.actions.act_window',
             res_model: 'ir.default',
             target: 'current',
             views: [[false, 'list'], [false, 'form']],
-            domain: [['field_id.model', '=', this.model_name]],
+            domain: [['field_id.model', '=', modelName]],
         });
     },
     /**
@@ -1286,13 +1295,14 @@ var ViewEditorManager = Widget.extend({
     _onOpenFieldForm: function (event) {
         var self = this;
         var field_name = event.data.field_name;
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
         this._rpc({
             model: 'ir.model.fields',
             method: 'search_read',
             fields: ['id'],
-            domain: [['model', '=', this.model_name], ['name', '=', field_name]],
+            domain: [['model', '=', modelName], ['name', '=', field_name]],
         }).then(function (result) {
-            var res_id = result && result[0].id;
+            var res_id = result.length && result[0].id;
             if (res_id) {
                 self.do_action({
                     type: 'ir.actions.act_window',

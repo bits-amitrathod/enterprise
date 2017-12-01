@@ -11,6 +11,7 @@ from werkzeug.urls import url_join
 
 from odoo import _
 from odoo.exceptions import UserError
+from odoo.tools import float_round
 
 _logger = logging.getLogger(__name__)
 
@@ -103,7 +104,7 @@ class BpostRequest():
         for delivery_method in xml_response.findall('ns1:deliveryMethod/[@name="home or office"]/ns1:product/[@name="%s"]/ns1:price' % bpost_delivery_type, ns):
             if delivery_method.attrib['countryIso2Code'] == country.code:
                 price = float(self._get_price_by_weight(_grams(weight), delivery_method))/100
-                sale_price_digits = self.env['decimal.precision'].precision_get('Product Price')
+                sale_price_digits = carrier.env['decimal.precision'].precision_get('Product Price')
                 price = float_round(price, precision_digits=sale_price_digits)
         if not price:
             raise UserError(_("bpost did not return prices for this destination country."))

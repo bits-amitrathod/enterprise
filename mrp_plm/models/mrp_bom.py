@@ -19,14 +19,19 @@ class MrpBom(models.Model):
 
     @api.multi
     def _compute_eco_data(self):
-        eco_data = self.env['mrp.eco'].read_group([
+        eco_inprogress_data = self.env['mrp.eco'].read_group([
             ('product_tmpl_id', 'in', self.mapped('product_tmpl_id').ids),
             ('state', '=', 'progress')],
             ['product_tmpl_id'], ['product_tmpl_id'])
-        result = dict((data['product_tmpl_id'][0], data['product_tmpl_id_count']) for data in eco_data)
+        eco_data = self.env['mrp.eco'].read_group([
+            ('bom_id', 'in', self.ids),
+            ('stage_id.folded', '=', False)],
+            ['bom_id'], ['bom_id'])
+        result_inprogress = dict((data['product_tmpl_id'][0], data['product_tmpl_id_count']) for data in eco_inprogress_data)
+        result = dict((data['bom_id'][0], data['bom_id_count']) for data in eco_data)
         for bom in self:
-            bom.eco_count = len(bom.eco_ids)
-            bom.eco_inprogress_count = result.get(bom.product_tmpl_id.id, 0)
+            bom.eco_count = result.get(bom.id, 0)
+            bom.eco_inprogress_count = result_inprogress.get(bom.product_tmpl_id.id, 0)
 
     @api.one
     def _compute_revision_ids(self):

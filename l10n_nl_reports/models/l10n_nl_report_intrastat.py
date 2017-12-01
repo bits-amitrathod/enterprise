@@ -29,21 +29,18 @@ class ReportL10nNLIntrastat(models.AbstractModel):
         lines = []
         company_id = self.env.user.company_id
 
-        tag_ids = [self.env.ref('l10n_nl.tag_nl_13').id]
         country_ids = (self.env.ref('base.europe').country_ids - company_id.country_id).ids
 
         query = """
             SELECT l.partner_id, p.name, p.vat, c.code,
-                   SUM(CASE WHEN pt.type != 'service' THEN l.credit - l.debit ELSE 0 END) as amount_product,
-                   SUM(CASE WHEN pt.type = 'service' THEN l.credit - l.debit ELSE 0 END) as amount_service
+                   SUM(CASE WHEN tt.account_account_tag_id = %(product_tag)s THEN l.credit - l.debit ELSE 0 END) as amount_product,
+                   SUM(CASE WHEN tt.account_account_tag_id = %(service_tag)s THEN l.credit - l.debit ELSE 0 END) as amount_service
             FROM account_move_line l
             LEFT JOIN res_partner p ON l.partner_id = p.id AND p.customer = true
             LEFT JOIN res_country c ON p.country_id = c.id
-            LEFT JOIN product_product pp ON l.product_id = pp.id
-            LEFT JOIN product_template pt ON pp.product_tmpl_id = pt.id
             LEFT JOIN account_move_line_account_tax_rel amlt ON l.id = amlt.account_move_line_id
             LEFT JOIN account_tax_account_tag tt on amlt.account_tax_id = tt.account_tax_id
-            WHERE tt.account_account_tag_id IN %(tags)s
+            WHERE tt.account_account_tag_id IN (%(product_tag)s, %(service_tag)s)
             AND c.id IN %(country_ids)s
             AND l.date >= %(date_from)s
             AND l.date <= %(date_to)s
@@ -53,7 +50,8 @@ class ReportL10nNLIntrastat(models.AbstractModel):
         """
 
         params = {
-            'tags': tuple(tag_ids),
+            'product_tag': self.env.ref('l10n_nl.tag_nl_40').id,
+            'service_tag': self.env.ref('l10n_nl.tag_nl_41').id,
             'country_ids': tuple(country_ids),
             'date_from': self._context['date_from'],
             'date_to': self._context['date_to'],
