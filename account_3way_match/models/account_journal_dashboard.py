@@ -24,7 +24,7 @@ class AccountJournal(models.Model):
         remains unchanged).
         """
         if self.type == 'purchase':
-            return ("""SELECT state, amount_total, currency_id AS currency
+            return ("""SELECT state, residual_signed as amount_total, currency_id AS currency
                    FROM account_invoice
                    WHERE journal_id = %(journal_id)s
                    AND (release_to_pay = 'yes' OR date_due < %(today)s)
