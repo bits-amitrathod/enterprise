@@ -3,7 +3,7 @@ odoo.define('web_studio.ViewEditorManager_tests', function (require) {
 
 var ace = require('web_editor.ace');
 var concurrency = require('web.concurrency');
-var core = require('web.core');
+var config = require('web.config');
 var ListRenderer = require('web.ListRenderer');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
@@ -1287,8 +1287,8 @@ QUnit.module('ViewEditorManager', {
         var done = assert.async();
 
         // the XML editor button is only available in debug mode
-        var initialDebugMode = core.debug;
-        core.debug = true;
+        var initialDebugMode = config.debug;
+        config.debug = true;
 
         // the XML editor lazy loads its libs and its templates so its start
         // method is monkey-patched to know when the widget has started
@@ -1339,7 +1339,7 @@ QUnit.module('ViewEditorManager', {
             assert.strictEqual(vem.$('.o_ace_view_editor').length, 1, "the XML editor should be opened");
 
             // restore monkey-patched elements
-            core.debug = initialDebugMode;
+            config.debug = initialDebugMode;
             ace.prototype.start = aceStart;
 
             vem.destroy();
@@ -1578,8 +1578,8 @@ QUnit.module('ViewEditorManager', {
         assert.expect(9);
 
         // the 'More' button is only available in debug mode
-        var initialDebugMode = core.debug;
-        core.debug = true;
+        var initialDebugMode = config.debug;
+        config.debug = true;
 
         var fieldsView;
         var vem = createViewEditorManager({
@@ -1674,7 +1674,7 @@ QUnit.module('ViewEditorManager', {
             "there should be button to edit the field properties");
         vem.$('.o_web_studio_sidebar .o_web_studio_parameters').click();
 
-        core.debug = initialDebugMode;
+        config.debug = initialDebugMode;
         vem.destroy();
     });
 
