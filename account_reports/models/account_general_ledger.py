@@ -263,10 +263,14 @@ class report_account_general_ledger(models.AbstractModel):
         grouped_accounts = self.with_context(date_from_aml=dt_from, date_from=dt_from and company_id.compute_fiscalyear_dates(datetime.strptime(dt_from, "%Y-%m-%d"))['date_from'] or None).group_by_account_id(options, line_id)
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
         unfold_all = context.get('print_mode') and len(options.get('unfolded_lines')) == 0
+        sum_debit = sum_credit = sum_balance = 0
         for account in sorted_accounts:
             debit = grouped_accounts[account]['debit']
             credit = grouped_accounts[account]['credit']
             balance = grouped_accounts[account]['balance']
+            sum_debit += debit
+            sum_credit += credit
+            sum_balance += balance
             amount_currency = '' if not account.currency_id else self.format_value(grouped_accounts[account]['amount_currency'], currency=account.currency_id)
             lines.append({
                 'id': 'account_%s' % (account.id,),
@@ -361,6 +365,15 @@ class report_account_general_ledger(models.AbstractModel):
                         'action_id': 'account,%s' % (account.id,),
                     })
                 lines += domain_lines
+
+        if not line_id:
+            lines.append({
+                'id': 'general_ledger_total_%s' % company_id.id,
+                'name': _('Total'),
+                'class': 'o_account_reports_domain_total',
+                'level': 0,
+                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(sum_debit), self.format_value(sum_credit), self.format_value(sum_balance)]],
+            })
 
         journals = [j for j in options.get('journals') if j.get('selected')]
         if len(journals) == 1 and journals[0].get('type') in ['sale', 'purchase'] and not line_id:
