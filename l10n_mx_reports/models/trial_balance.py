@@ -45,33 +45,54 @@ class MxReportAccountTrial(models.AbstractModel):
         return buttons
 
     def _post_process(self, grouped_accounts, initial_balances, options, comparison_table):
-        if self.env.user.company_id.country_id.code.upper() == 'MX':
-            # TODO: something like: and all([c.country_id.code == 'MX' for c in options.companies]):
-            afrl_obj = self.env['account.financial.html.report.line']
-
-            lines = []
-            afr_lines = afrl_obj.search([
-                ('parent_id', '=', False),
-                ('code', 'ilike', 'MX_COA_%')], order='code')
-            for line in afr_lines:
-                childs = self._get_lines_second_level(
-                    line.children_ids, grouped_accounts, initial_balances, options, comparison_table)
-                if not childs:
-                    continue
-                cols = ['']
-                if not options.get('coa_only'):
-                    cols += ['' for p in range(len(comparison_table))] * 2 + ['']
+        afrl_obj = self.env['account.financial.html.report.line']
+        lines = []
+        n_cols = len(comparison_table) * 2 + 2
+        total = [0.0] * n_cols
+        afr_lines = afrl_obj.search([
+            ('parent_id', '=', False),
+            ('code', 'ilike', 'MX_COA_%')], order='code')
+        for line in afr_lines:
+            childs = self._get_lines_second_level(
+                line.children_ids, grouped_accounts, initial_balances, options, comparison_table)
+            if not childs:
+                continue
+            cols = ['']
+            if not options.get('coa_only'):
+                cols = cols * n_cols
+                child_cols = [c['columns'] for c in childs if c.get('level') == 2]
+                total_line = []
+                for col in range(n_cols):
+                    total_line += [sum(a[col] for a in child_cols)]
+                    total[col] += total_line[col]
+                for child in childs:
+                    child['columns'] = [{'name': self.format_value(v)} for v in child['columns']]
+            lines.append({
+                'id': 'hierarchy_' + line.code,
+                'name': line.name,
+                'columns': [{'name': v} for v in cols],
+                'level': 1,
+                'unfoldable': False,
+                'unfolded': True,
+            })
+            lines.extend(childs)
+            if not options.get('coa_only'):
                 lines.append({
-                    'id': 'hierarchy_' + line.code,
-                    'name': line.name,
-                    'columns': [{'name': v} for v in cols],
-                    'level': 1,
-                    'unfoldable': False,
-                    'unfolded': True,
+                    'id': 'total_%s' % line.code,
+                    'name': _('Total %s') % line.name[2:],
+                    'level': 0,
+                    'class': 'hierarchy_total',
+                    'columns': [{'name': self.format_value(v)} for v in total_line],
                 })
-                lines.extend(childs)
-            return lines
-        return super(MxReportAccountTrial, self)._post_process(grouped_accounts, initial_balances, options, comparison_table)
+        if not options.get('coa_only'):
+            lines.append({
+                'id': 'hierarchy_total',
+                'name': _('Total'),
+                'level': 0,
+                'class': 'hierarchy_total',
+                'columns': [{'name': self.format_value(v)} for v in total],
+            })
+        return lines
 
     @api.model
     def _get_lines_second_level(self, lines_child, grouped_accounts,
@@ -85,15 +106,20 @@ class MxReportAccountTrial(models.AbstractModel):
                 comparison_table)
             if not account_lines:
                 continue
-            cols = ['']
+            cols = [{'name': ''}]
             if not options.get('coa_only'):
-                cols += ['' for p in range(len(comparison_table))] * 2 + ['']
+                n_cols = len(comparison_table) * 2 + 2
+                child_cols = [c['columns'] for c in account_lines if c.get('level') == 3]
+                cols = []
+                for col in range(n_cols):
+                    cols += [sum(a[col] for a in child_cols)]
             lines.append({
-                'id': 'hierarchy_' + child.code,
+                'id': 'level_one_%s' % child.id,
                 'name': child.name,
-                'columns': [{'name': v} for v in cols],
+                'columns': cols,
                 'level': 2,
-                'unfoldable': False,
+                'class': 'hierarchy_total' if not options.get('coa_only') else '',
+                'unfoldable': True,
                 'unfolded': True,
             })
             lines.extend(account_lines)
@@ -110,35 +136,63 @@ class MxReportAccountTrial(models.AbstractModel):
         domain = safe_eval(line.domain or '[]')
         domain.append((('deprecated', '=', False)))
         account_ids = self.env['account.account'].search(domain, order='code')
-        for account in account_ids:
-            #skip accounts with all periods = 0 and no initial balance
-            non_zero = False
-            for period in range(len(comparison_table)):
-                if account in grouped_accounts and (
-                  not is_zero(grouped_accounts[account][period]['balance']) or not is_zero(initial_balances.get(account, 0))):
-                    non_zero = True
-            if not non_zero and not options.get('coa_only'):
+        tags = account_ids.mapped('tag_ids').filtered(
+            lambda r: r.color == 4).sorted(key=lambda a: a.name)
+        for tag in tags:
+            accounts = account_ids.search([('tag_ids', 'in', [tag.id])])
+            if not options.get('coa_only'):
+                # skip accounts with all periods = 0 and no initial balance
+                accounts = [a for a in accounts if a in grouped_accounts and (
+                    not is_zero(initial_balances.get(a, 0)) or not is_zero(
+                        sum([grouped_accounts[a][p]['balance']
+                            for p in range(len(comparison_table))])))]
+            name = tag.name
+            name = name[:98] + "..." if len(name) > 100 else name
+            cols = [{'name': ''}]
+            childs = self._get_lines_fourth_level(accounts, grouped_accounts, initial_balances, options, comparison_table)
+            if not childs:
                 continue
+            if not options.get('coa_only'):
+                n_cols = len(comparison_table) * 2 + 2
+                child_cols = [c['columns'] for c in childs]
+                cols = []
+                for col in range(n_cols):
+                    cols += [sum(a[col] for a in child_cols)]
+            lines.append({
+                'id': 'level_two_%s' % tag.id,
+                'parent_id': 'level_one_%s' % line.id,
+                'name': name,
+                'columns': cols,
+                'level': 3,
+                'unfoldable': True,
+                'unfolded': True,
+                'tag_id': tag.id,
+            })
+            lines.extend(childs)
+        return lines
+
+    def _get_lines_fourth_level(self, accounts, grouped_accounts, initial_balances, options, comparison_table):
+        lines = []
+        for account in accounts:
             name = account.code + " " + account.name
             name = name[:98] + "..." if len(name) > 100 else name
             tag = account.tag_ids.filtered(lambda r: r.color == 4)
             nature = dict(tag.fields_get()['nature']['selection']).get(tag.nature, '')
-            cols = [nature]
+            cols = [{'name': nature}]
             if not options.get('coa_only'):
-                cols = [self.format_value(initial_balances.get(account, 0.0))]
+                cols = [initial_balances.get(account, 0.0)]
                 total_periods = 0
                 for period in range(len(comparison_table)):
                     amount = grouped_accounts[account][period]['balance']
                     total_periods += amount
-                    cols += [self.format_value(grouped_accounts[account][period]['debit']),
-                             self.format_value(grouped_accounts[account][period]['credit'])]
-                cols += [self.format_value(initial_balances.get(account, 0.0) + total_periods)]
+                    cols += [grouped_accounts[account][period]['debit'],
+                             grouped_accounts[account][period]['credit']]
+                cols += [initial_balances.get(account, 0.0) + total_periods]
             lines.append({
                 'id': account.id,
-                'parent_id': 'hierarchy_' + line.code,
+                'parent_id': 'level_two_%s' % tag.id,
                 'name': name,
-                'columns': [{'name': v} for v in cols],
-                'unfoldable': False,
+                'columns': cols,
                 'caret_options': 'account.account',
             })
         return lines
@@ -164,23 +218,17 @@ class MxReportAccountTrial(models.AbstractModel):
         company = self.env.user.company_id
         xml_data = self.get_lines(options)
         accounts = []
-        account_obj = self.env['account.account']
         account_lines = [l for l in xml_data
-                         if l.get('caret_options') == 'account.account' and
-                         l.get('show', True)]
+                         if l.get('level') in [2, 3] and l.get('show', True)]
         for line in account_lines:
-            account = account_obj.browse(line['id'])
-            tag = account.tag_ids.filtered(lambda r: r.color == 4)
-            if not tag:
-                continue
             cols = line.get('columns', [])
             initial, debit, credit, end = (
-                cols[0].get('name') or 0.0,
-                cols[-3].get('name') or 0.0,
-                cols[-2].get('name') or 0.0,
-                cols[-1].get('name') or 0.0)
+                cols[0].get('name', 0.0),
+                cols[-3].get('name', 0.0),
+                cols[-2].get('name', 0.0),
+                cols[-1].get('name', 0.0))
             accounts.append({
-                'number': account.code,
+                'number': line.get('name').split(' ', 1)[0],
                 'initial': str(initial),
                 'debit': str(debit),
                 'credit': str(credit),
