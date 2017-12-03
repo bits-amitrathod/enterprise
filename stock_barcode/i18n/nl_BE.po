@@ -1,21 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_barcode
-#
+# 
 # Translators:
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo 9.0\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 11:35+0000\n"
-"PO-Revision-Date: 2015-10-01 07:27+0000\n"
-"Last-Translator: Martin Trigaux\n"
-"Language-Team: Dutch (Belgium) (http://www.transifex.com/odoo/odoo-9/"
-"language/nl_BE/)\n"
-"Language: nl_BE\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"Language-Team: Dutch (Belgium) (https://www.transifex.com/odoo/teams/41243/nl_BE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: nl_BE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_barcode
@@ -27,8 +27,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
 ").\n"
-"                            Then, print it via the <i>Print</i> menu and "
-"stick it in a visible and convenient place."
+"                            Then, print it via the <i>Print</i> menu and stick it in a visible and convenient place."
 msgstr ""
 
 #. module: stock_barcode
@@ -39,18 +38,12 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"<strong>EAN-13 barcodes:</strong> used by most retail products, they cannot "
-"be made\n"
-"                            up without proper authorization: you must pay "
-"the International\n"
-"                            Article Numbering Association a fee in exchange "
-"for an EAN code\n"
-"                            sequence (that's why no two products in a store "
-"will ever have the\n"
-"                            same EAN code). Still, as Odoo supports any "
-"string as a barcode, so\n"
-"                            you can always define your own barcode format "
-"for internal use."
+"<strong>EAN-13 barcodes:</strong> used by most retail products, they cannot be made\n"
+"                            up without proper authorization: you must pay the International\n"
+"                            Article Numbering Association a fee in exchange for an EAN code\n"
+"                            sequence (that's why no two products in a store will ever have the\n"
+"                            same EAN code). Still, as Odoo supports any string as a barcode, so\n"
+"                            you can always define your own barcode format for internal use."
 msgstr ""
 
 #. module: stock_barcode
@@ -66,10 +59,8 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"<strong>Good location nomenclature:</strong> <i>warehouse short name - "
-"location short name - (Corridor X - Shelf Y - Height Z) </i><br/>\n"
-"                                Example: A032-025-133 (Note that you can use "
-"any string in the barcode field)"
+"<strong>Good location nomenclature:</strong> <i>warehouse short name - location short name - (Corridor X - Shelf Y - Height Z) </i><br/>\n"
+"                                Example: A032-025-133 (Note that you can use any string in the barcode field)"
 msgstr ""
 
 #. module: stock_barcode
@@ -136,7 +127,8 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"<strong>To process Delivery Orders from a computer or mobile device:</strong>"
+"<strong>To process Delivery Orders from a computer or mobile "
+"device:</strong>"
 msgstr ""
 
 #. module: stock_barcode
@@ -168,10 +160,11 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.actions.client,name:stock_barcode.stock_barcode_action_main_menu
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_inventory_line_product_barcode
-#: model:ir.model.fields,field_description:stock_barcode.field_stock_pack_operation_product_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line_product_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_scrap_product_barcode
 #: model:ir.ui.menu,name:stock_barcode.stock_barcode_menu
 msgid "Barcode"
-msgstr "Streepjescode"
+msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
@@ -201,9 +194,14 @@ msgid ""
 "(it helps avoid accidental double scanning). If you want to suppress this "
 "delay, you can configure your scanner to insert a carriage return symbol at "
 "the end of each barcode. This is usually the default configuration and can "
-"be explicitly configured by scanning a specific barcode in your scanner user "
-"manual ('CR suffix ON', 'Apply Enter for suffix', etc.)"
+"be explicitly configured by scanning a specific barcode in your scanner user"
+" manual ('CR suffix ON', 'Apply Enter for suffix', etc.)"
 msgstr ""
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
+msgid "Cancel"
+msgstr "Annuleren"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -218,7 +216,7 @@ msgid "Click on 'Inventory'"
 msgstr ""
 
 #. module: stock_barcode
-#: model:ir.ui.view,arch_db:stock_barcode.stock_config_view_form_inherit_stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Configure Product Barcodes"
 msgstr ""
 
@@ -233,18 +231,40 @@ msgid "Congratulations, you're ready to go live!"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_create_uid
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_create_uid
+msgid "Created by"
+msgstr "Aangemaakt door"
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_create_date
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_create_date
+msgid "Created on"
+msgstr "Aangemaakt op"
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_default_move_id
+msgid "Default Move"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_display_name
+msgid "Display Name"
+msgstr "Schermnaam"
+
+#. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:42
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:48
 #, python-format
 msgid ""
 "Do you want to permanently remove this message ?\n"
-"                It won't appear anymore, so make sure you don't need the "
-"barcodes sheet or you have a copy."
+"                It won't appear anymore, so make sure you don't need the barcodes sheet or you have a copy."
 msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:45
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:51
 #, python-format
 msgid "Don't show this message again"
 msgstr ""
@@ -259,13 +279,20 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"Go for a wireless scanner if you want to scan products at different locations"
+"Go for a wireless scanner if you want to scan products at different "
+"locations"
 msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Here, you have three options:"
 msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_id
+msgid "ID"
+msgstr "ID"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -305,22 +332,23 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_inventory_line_product_barcode
-#: model:ir.model.fields,help:stock_barcode.field_stock_pack_operation_product_barcode
+#: model:ir.model.fields,help:stock_barcode.field_stock_move_line_product_barcode
+#: model:ir.model.fields,help:stock_barcode.field_stock_scrap_product_barcode
 msgid "International Article Number used for product identification."
 msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:18
+#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:22
 #: model:ir.model,name:stock_barcode.model_stock_inventory
 #, python-format
 msgid "Inventory"
-msgstr "Voorraad"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_inventory_line
 msgid "Inventory Line"
-msgstr "Inventarislijn"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -328,10 +356,33 @@ msgid "Keyboard layout"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot___last_update
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line___last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_write_uid
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_write_date
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_write_date
+msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:51
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:57
 #, python-format
 msgid "Leave it"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model,name:stock_barcode.model_stock_barcode_lot_line
+msgid "Line of LN/SN scanned of a product"
 msgstr ""
 
 #. module: stock_barcode
@@ -341,13 +392,17 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
-msgid ""
-"Load all the Delivery Orders marked as \"To Do\", and open the first one."
+msgid "Load all the Delivery Orders marked as \"To Do\", and open the first one."
 msgstr ""
 
 #. module: stock_barcode
-#: model:ir.model.fields,field_description:stock_barcode.field_stock_pack_operation_location_processed
-msgid "Location processed"
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line_location_processed
+msgid "Location Processed"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_lot_name
+msgid "Lot"
 msgstr ""
 
 #. module: stock_barcode
@@ -358,6 +413,12 @@ msgid ""
 msgstr ""
 
 #. module: stock_barcode
+#: code:addons/stock_barcode/models/inherited_stock_picking.py:81
+#, python-format
+msgid "Lot/Serial Number Details"
+msgstr ""
+
+#. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Motorola CS3000:"
 msgstr ""
@@ -365,6 +426,11 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Motorola DS4208-SR:"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_move_line_id
+msgid "Move Line"
 msgstr ""
 
 #. module: stock_barcode
@@ -387,9 +453,10 @@ msgid "New Inventory"
 msgstr ""
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/controllers/main.py:70
+#: code:addons/stock_barcode/controllers/main.py:69
 #, python-format
-msgid "No internal picking type. Please configure one in warehouse settings."
+msgid ""
+"No internal operation type. Please configure one in warehouse settings."
 msgstr ""
 
 #. module: stock_barcode
@@ -413,23 +480,23 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"Note that Bluetooth connections are suitable for maximum 30 feet (10 meters) "
-"so you will have to scan products nearby the computer station."
+"Note that Bluetooth connections are suitable for maximum 30 feet (10 meters)"
+" so you will have to scan products nearby the computer station."
 msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"Now that all the flows have been tested and configured, it's time to go into "
-"production. Do a few delivery orders as an example with your workers and "
+"Now that all the flows have been tested and configured, it's time to go into"
+" production. Do a few delivery orders as an example with your workers and "
 "train them on your favorite process."
 msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"Odoo supports most USB, Wireless and Bluetooth barcode scanners (as they all "
-"emulate a keyboard)."
+"Odoo supports most USB, Wireless and Bluetooth barcode scanners (as they all"
+" emulate a keyboard)."
 msgstr ""
 
 #. module: stock_barcode
@@ -446,9 +513,6 @@ msgid ""
 "Once it's fully working, give us some feedback: we love to hear from our "
 "customer. It would be great if you can send a photo of your warehouse to"
 msgstr ""
-"Geef ons wat feedback, eenmaal alles werkt: we houden er van om van onze "
-"klanten te horen. Het zou geweldig zijn als u een foto van uw magazijn kan "
-"sturen naar"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -473,17 +537,17 @@ msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:17
+#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:21
 #: model:ir.actions.act_window,name:stock_barcode.stock_picking_action_kanban
 #: model:ir.actions.act_window,name:stock_barcode.stock_picking_type_action_kanban
 #, python-format
 msgid "Operations"
-msgstr "Bewerkingen"
+msgstr ""
 
 #. module: stock_barcode
-#: model:ir.model,name:stock_barcode.model_stock_pack_operation
+#: model:ir.model,name:stock_barcode.model_stock_move_line
 msgid "Packing Operation"
-msgstr "Verpakking bewerking"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -497,12 +561,13 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.actions.act_window,name:stock_barcode.stock_picking_action_form
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_picking_id
 msgid "Picking"
-msgstr "Picking"
+msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:39
+#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:113
 #, python-format
 msgid "Picking %s"
 msgstr ""
@@ -510,13 +575,20 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_web_planner
 msgid "Planner"
-msgstr "Planner"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
-"Print delivery orders of the day by selecting all documents from the \"To Do"
-"\" list and print \"Picking Lists\" from the top menu."
+"Print delivery orders of the day by selecting all documents from the \"To "
+"Do\" list and print \"Picking Lists\" from the top menu."
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:19
+#, python-format
+msgid "Print the barcode commands."
 msgstr ""
 
 #. module: stock_barcode
@@ -525,28 +597,54 @@ msgid "Print this barcode"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_product_id
+msgid "Product"
+msgstr "Product"
+
+#. module: stock_barcode
 #: model:ir.actions.act_window,name:stock_barcode.product_action_barcodes
 #: model:ir.ui.view,arch_db:stock_barcode.product_view_list_barcodes
 msgid "Product Barcodes"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_qty_done
+msgid "Qty Done"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_qty_reserved
+msgid "Qty Reserved"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_qty_done
+#: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
+msgid "Quantity Done"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_qty_reserved
+msgid "Quantity Reserved"
+msgstr ""
+
+#. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/stock_barcode.js:48
+#: code:addons/stock_barcode/static/src/js/stock_barcode.js:54
 #, python-format
 msgid "Remove it"
 msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:16
+#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:18
 #, python-format
 msgid "Scan a document to open it."
 msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:16
+#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:18
 #, python-format
 msgid "Scan a location to create a new transfer from this location."
 msgstr ""
@@ -598,11 +696,21 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
-msgid "Set barcodes at the initial importation of your products or"
+msgid "Set barcodes at the initial import of your products or"
 msgstr ""
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:275
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_stock_barcode_lot_id
+msgid "Stock Barcode Lot"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_stock_barcode_lot_line_ids
+msgid "Stock Barcode Lot Line"
+msgstr ""
+
+#. module: stock_barcode
+#: code:addons/stock_barcode/models/inherited_stock_picking.py:308
 #, python-format
 msgid ""
 "The barcode \"%(barcode)s\" doesn't correspond to a proper product, package "
@@ -610,16 +718,16 @@ msgid ""
 msgstr ""
 
 #. module: stock_barcode
-#. openerp-web
-#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:39
-#, python-format
-msgid "The picking is %s and cannot be edited."
+#: model:ir.model,name:stock_barcode.model_stock_picking_type
+msgid "The operation type determines the picking view"
 msgstr ""
 
 #. module: stock_barcode
-#: model:ir.model,name:stock_barcode.model_stock_picking_type
-msgid "The picking type determines the picking view"
-msgstr "De verzamelsoort bepaald de weergave van de levering"
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:114
+#, python-format
+msgid "The picking is %s and cannot be edited."
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -641,8 +749,8 @@ msgstr ""
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:55
 #, python-format
 msgid ""
-"There is no production lot for \"%(product)s\" corresponding to \"%(barcode)s"
-"\""
+"There is no production lot for \"%(product)s\" corresponding to "
+"\"%(barcode)s\""
 msgstr ""
 
 #. module: stock_barcode
@@ -661,22 +769,22 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_picking_type_kanban
 msgid "To Do"
-msgstr "Te doen"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_picking_type_kanban
 msgid "To Receive"
-msgstr "Te ontvangen"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_picking
 msgid "Transfer"
-msgstr "Overdragen"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_picking_type_kanban
 msgid "Transfers"
-msgstr "Transfers"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -696,6 +804,11 @@ msgid "Use our"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
+msgid "Validate Lot"
+msgstr ""
+
+#. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Validate the Transfer to finish it"
 msgstr ""
@@ -705,7 +818,7 @@ msgstr ""
 #: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:10
 #, python-format
 msgid ""
-"We have created a few demo data and barcodes for you to explore the "
+"We have created a few demo data with barcodes for you to explore the "
 "features. Print the"
 msgstr ""
 
@@ -734,7 +847,12 @@ msgid "Wireless and USB, laser, rational choice, about $50"
 msgstr ""
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:274
+#: model:ir.model,name:stock_barcode.model_stock_barcode_lot
+msgid "Wizard to scan SN/LN for specific product"
+msgstr ""
+
+#. module: stock_barcode
+#: code:addons/stock_barcode/models/inherited_stock_picking.py:307
 #, python-format
 msgid "Wrong barcode"
 msgstr ""
@@ -743,7 +861,14 @@ msgstr ""
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
 "You can set up a computer station or have the worker use a mobile device "
-"connected through wireless (phone, tablet or scanner with integrated screen)."
+"connected through wireless (phone, tablet or scanner with integrated "
+"screen)."
+msgstr ""
+
+#. module: stock_barcode
+#: code:addons/stock_barcode/wizard/stock_barcode_lot.py:55
+#, python-format
+msgid "You cannot scan two times the same serial number"
 msgstr ""
 
 #. module: stock_barcode
@@ -771,28 +896,14 @@ msgstr ""
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
 "Your barcode scanner needs to be configured to use the same keyboard layout "
-"as your operating system. Otherwise, your scanner won't translate characters "
-"correctly (replacing a 'A' with a 'Q' for example). Most scanners are "
+"as your operating system. Otherwise, your scanner won't translate characters"
+" correctly (replacing a 'A' with a 'Q' for example). Most scanners are "
 "configured by scanning the appropriate barcode in the user's manual."
-msgstr ""
-
-#. module: stock_barcode
-#. openerp-web
-#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:13
-#, python-format
-msgid "and check out what this module can do !"
 msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "available here"
-msgstr ""
-
-#. module: stock_barcode
-#. openerp-web
-#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:13
-#, python-format
-msgid "barcodes sheet"
 msgstr ""
 
 #. module: stock_barcode
@@ -808,7 +919,19 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "feedback@mail.odoo.com"
-msgstr "feedback@mail.odoo.com"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:14
+#, python-format
+msgid "stock barcodes sheet"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model,name:stock_barcode.model_stock_scrap
+msgid "stock.scrap"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -818,6 +941,13 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "this document"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:14
+#, python-format
+msgid "to check out what this module can do !"
 msgstr ""
 
 #. module: stock_barcode

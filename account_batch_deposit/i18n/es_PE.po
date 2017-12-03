@@ -1,118 +1,107 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_batch_deposit
-#
+# 
 # Translators:
-# Carlos Eduardo Rodriguez Rossi <crodriguez@samemotion.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo 9.0\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 11:34+0000\n"
-"PO-Revision-Date: 2016-06-15 16:08+0000\n"
-"Last-Translator: Carlos Eduardo Rodriguez Rossi <crodriguez@samemotion.com>\n"
-"Language-Team: Spanish (Peru) (http://www.transifex.com/odoo/odoo-9/language/"
-"es_PE/)\n"
-"Language: es_PE\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"Language-Team: Spanish (Peru) (https://www.transifex.com/odoo/teams/41243/es_PE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: es_PE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/account_payment.py:40
+#: code:addons/account_batch_deposit/models/account_payment.py:42
 #, python-format
 msgid ""
 "All payments to print as a deposit slip must belong to the same journal."
 msgstr ""
-"Todos los pagos que se imprimen como un recibo de depósito deben pertenecer "
-"al mismo diario."
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_amount
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
 msgid "Amount"
-msgstr "Cantidad"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
 msgid "Automatically generates references for batch deposits."
-msgstr "Automáticamente genera referencias para depósitos en lote."
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_journal_id
 msgid "Bank"
-msgstr "Banco"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Bank Journal"
-msgstr "Diario Bancario"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement
 msgid "Bank Statement"
-msgstr "Extracto Bancario"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Línea de Extracto Bancario"
+msgstr ""
 
 #. module: account_batch_deposit
-#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
+#: model:account.payment.method,name:account_batch_deposit.account_payment_method_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_batch_deposit
-#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
 #: model:ir.ui.view,arch_db:account_batch_deposit.account_journal_dashboard_kanban_view_inherited
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
-msgstr "Depósito en Lote"
+msgstr ""
+
+#. module: account_batch_deposit
+#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
+msgid "Batch Deposit Payment Method Selected"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
 msgid "Batch Deposit Sequence"
-msgstr "Secuencia de Depósito en Lote"
+msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/account_journal.py:41
+#: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
+#: model:ir.ui.menu,name:account_batch_deposit.menu_batch_deposit
+msgid "Batch Deposits"
+msgstr ""
+
+#. module: account_batch_deposit
+#: code:addons/account_batch_deposit/models/account_journal.py:44
 #, python-format
 msgid "Batch Deposits Sequence"
-msgstr "Secuencia de Depósitos en Lote"
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
-msgid "Batch deposit id"
-msgstr "Id de Depósito en Lote"
-
-#. module: account_batch_deposit
-#: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
-msgid "Batch deposit payment method selected"
-msgstr "Método de pago de depósito en lote seleccionado"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.actions.act_window,help:account_batch_deposit.action_batch_deposit
 msgid ""
-"Batch deposits allows you to group received checks before you deposit them "
-"to the bank.\n"
-"                    The amount deposited to your bank will then appear as a "
-"single transaction on your bank statement.\n"
-"                    When you proceed with the reconciliation, simply select "
-"the corresponding batch deposit to reconcile the payments."
+"Batch deposits allows you to group received checks before you deposit them to the bank.\n"
+"                    The amount deposited to your bank will then appear as a single transaction on your bank statement.\n"
+"                    When you proceed with the reconciliation, simply select the corresponding batch deposit to reconcile the payments."
 msgstr ""
-"Los depósitos en lote le permiten agrupar cheques recibidos antes de que los "
-"deposite en el banco.\n"
-"El monto depositado a su banco aparecerá como una transacciób simple en su "
-"extracto bancario.\n"
-"Cuando haga las reconciliaciones, simplemente selecciones el depósito por "
-"lote correspondiente para reconciliar los pagos."
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/account_journal_dashboard.py:13
+#: code:addons/account_batch_deposit/models/account_journal.py:69
 #: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
-msgstr "Crear Depósito en Lote"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_create_uid
@@ -126,8 +115,8 @@ msgstr "Creado en"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_currency_id
-msgid "Currency id"
-msgstr "Id de Moneda"
+msgid "Currency"
+msgstr "Moneda"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
@@ -139,7 +128,7 @@ msgstr "Cliente"
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_date
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
 msgid "Date"
-msgstr "Fecha"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_display_name
@@ -160,15 +149,15 @@ msgstr "ID"
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:94
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:137
 #, python-format
 msgid "Incorrect Operation"
-msgstr "Operación Incorrecta"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_journal
 msgid "Journal"
-msgstr "Diario"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit___last_update
@@ -189,31 +178,28 @@ msgstr "Ultima Actualización"
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
 msgid "Memo"
-msgstr "Memo"
+msgstr ""
 
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "New"
-msgstr "Nuevo"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_payment
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_payment_ids
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 msgid "Payments"
-msgstr "Pagos"
+msgstr ""
 
 #. module: account_batch_deposit
-#: code:addons/account_batch_deposit/account_payment.py:36
+#: code:addons/account_batch_deposit/models/account_payment.py:38
 #, python-format
 msgid ""
 "Payments to print as a deposit slip must have 'Batch Deposit' selected as "
 "payment method, not be part of an existing batch deposit and not have "
 "already been reconciled"
 msgstr ""
-"La impresión de pagos como recibo de depósito deben tener 'Depósito en Lote' "
-"seleccionado como método de pago, no ser parte de un depósito en lote "
-"existente y no estar reconciliado"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
@@ -221,58 +207,56 @@ msgid "Print"
 msgstr "Imprimir"
 
 #. module: account_batch_deposit
-#: model:ir.actions.report.xml,name:account_batch_deposit.action_print_batch_deposit
+#: model:ir.actions.report,name:account_batch_deposit.action_print_batch_deposit
 msgid "Print Batch Deposit"
-msgstr "Imprimir Depósito en Lote"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
 msgid "Print Batch Deposits"
-msgstr "Imprimir Depósitos en Lote"
+msgstr ""
 
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "Printed"
-msgstr "Impreso"
+msgstr ""
 
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "Reconciled"
-msgstr "Reconciliado"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_name
 msgid "Reference"
-msgstr "Referencia"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 msgid "Register Payment"
-msgstr "Registrar Pago"
+msgstr ""
 
 #. module: account_batch_deposit
 #. openerp-web
 #: code:addons/account_batch_deposit/static/src/xml/account_reconciliation.xml:8
 #, python-format
 msgid "Select a Batch Deposit"
-msgstr "Seleccionar un Depósito en Lote"
+msgstr ""
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_reconciliation_widgets.js:91
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:135
 #, python-format
 msgid ""
 "Some journal items from the selected batch deposit are already selected in "
 "another reconciliation : "
 msgstr ""
-"Algunos ítems del diario seleccionado para el depósito por lote ya se "
-"encuentran en otra reconciliación :"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_state
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "State"
-msgstr "Departamento"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
@@ -280,8 +264,6 @@ msgid ""
 "Technical feature used to know whether batch deposit was enabled as payment "
 "method."
 msgstr ""
-"Característica técnica usada para saber si el depósito en lote ha sido "
-"habilitado como un método de pago."
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
@@ -291,14 +273,14 @@ msgstr "Total"
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Unreconciled"
-msgstr "Sin Reconciliar"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 msgid "auto ..."
-msgstr "auto ..."
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_report_account_batch_deposit_print_batch_deposit
 msgid "report.account_batch_deposit.print_batch_deposit"
-msgstr "report.account_batch_deposit.print_batch_deposit"
+msgstr ""

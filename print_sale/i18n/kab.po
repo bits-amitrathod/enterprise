@@ -3,15 +3,14 @@
 # * print_sale
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Belkacem Mohammed <belkacem77@gmail.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Belkacem Mohammed <belkacem77@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Kabyle (https://www.transifex.com/odoo/teams/41243/kab/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,7 +61,7 @@ msgid "Created on"
 msgstr "Yerna di"
 
 #. module: print_sale
-#: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_currency_id
+#: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_currency_id
 msgid "Currency"
 msgstr "Tanfalit"
 
@@ -76,7 +75,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_ir_attachment_ids
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Documents"
-msgstr "Arraten"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_environment
@@ -122,7 +121,7 @@ msgstr "Aleqqem aneggaru di"
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_print_document_partner_line_wizard_ids
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_line_wizard_view_tree
 msgid "Lines"
-msgstr "Izirigen"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_paper_weight
@@ -147,12 +146,17 @@ msgstr ""
 #. module: print_sale
 #: selection:print.document.partner.wizard,provider_environment:0
 msgid "Production"
-msgstr "Afares"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_balance
 msgid "Provider Credit"
 msgstr ""
+
+#. module: print_sale
+#: model:ir.model,name:print_sale.model_sale_order
+msgid "Quotation"
+msgstr "Asuter n ssuma"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_partner_id
@@ -165,14 +169,9 @@ msgid "Recipients"
 msgstr ""
 
 #. module: print_sale
-#: model:ir.model,name:print_sale.model_sale_order
-msgid "Sales Order"
-msgstr "Taladna n uznuzu"
-
-#. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Send"
-msgstr "Azen"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.actions.act_window,name:print_sale.print_document_partner_action_multi
@@ -202,30 +201,25 @@ msgstr ""
 #. module: print_sale
 #: selection:print.document.partner.wizard,provider_environment:0
 msgid "Test"
-msgstr "Akayad"
+msgstr ""
 
 #. module: print_sale
-#: code:addons/print_sale/models/sale_order.py:17
+#: code:addons/print_sale/models/sale_order.py:23
 #, python-format
 msgid ""
-"This sale order was sent by post with the provider %(provider_name)s at the "
-"following address.                     <br/><br/> %(partner_name)s <br/> "
+"This sales order was sent by post with the provider %(provider_name)s at the"
+" following address.                     <br/><br/> %(partner_name)s <br/> "
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
 
 #. module: print_sale
-#: code:addons/print_sale/wizard/print_document_partner_wizard.py:73
+#: code:addons/print_sale/wizard/print_document_partner_wizard.py:67
 #, python-format
 msgid ""
 "Your credit provider is too small. Please, configure your account (> "
 "Settings > Print Provider), and put some credit on your account."
 msgstr ""
-
-#. module: print_sale
-#: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
-msgid "or"
-msgstr "neɣ"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_line_wizard
@@ -235,9 +229,4 @@ msgstr ""
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_wizard
 msgid "print.document.partner.wizard"
-msgstr ""
-
-#. module: print_sale
-#: model:ir.model,name:print_sale.model_print_order_line_wizard
-msgid "print.order.line.wizard"
 msgstr ""
