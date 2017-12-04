@@ -44,6 +44,24 @@ var DataImportStmt = BaseImport.DataImport.extend({
             this._super();
         }
     },
+    call_import: function(kwargs) {
+        var self = this;
+        return self._super.apply(this, arguments).done(function (message) {
+            if(message.length && message[0].type === 'bank_statement'){
+                self.statement_id = message[0].statement_id;
+            }
+        });
+    },
+    exit: function () {
+        this.do_action({
+            name: _t("Reconciliation on Bank Statements"),
+            context: {
+                'statement_ids': this.statement_id
+            },
+            type: 'ir.actions.client',
+            tag: 'bank_statement_reconciliation_view'
+        });
+    },
     
 });
 core.action_registry.add('import_bank_stmt', DataImportStmt);

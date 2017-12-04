@@ -152,6 +152,10 @@ class AccountBankStmtImportCSV(models.TransientModel):
                     self._cr.execute('ROLLBACK TO SAVEPOINT import_bank_stmt')
                 else:
                     self._cr.execute('RELEASE SAVEPOINT import_bank_stmt')
+                    res.append({
+                        'statement_id': statement.id,
+                        'type': 'bank_statement'
+                        })
             except psycopg2.InternalError:
                 pass
             return res
