@@ -46,7 +46,7 @@ class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
     _description = 'Ticket'
     _order = 'priority desc, id desc'
-    _inherit = ['mail.thread', 'utm.mixin', 'rating.mixin', 'mail.activity.mixin', 'portal.mixin']
+    _inherit = ['portal.mixin', 'mail.thread', 'utm.mixin', 'rating.mixin', 'mail.activity.mixin']
 
     @api.model
     def default_get(self, fields):
