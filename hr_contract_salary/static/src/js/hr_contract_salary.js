@@ -52,7 +52,11 @@ var SalaryPackageWidget = Widget.extend({
             minimumResultsForSearch: -1
         });
         var fuel_card_input = $("input[name='fuel_card_input']");
-        if(!fuel_card_input.val()) {fuel_card_input.val(0.0);}
+        var fuel_card_slider = $("input[name='fuel_card_slider']");
+        if(parseInt(fuel_card_input.val()) !== parseInt(fuel_card_slider.val())) {
+            fuel_card_input.val(0.0);
+            fuel_card_slider.val(0.0);
+        }
         var eco_checks = $("input[name='eco_checks']");
         if(!eco_checks.val()) {eco_checks.val(0.0);}
         $('b[role="presentation"]').hide();
