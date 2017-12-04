@@ -227,3 +227,6 @@ class ProviderUPS(models.Model):
             picking.message_post(body=_(u'Shipment N° %s has been cancelled' % picking.carrier_tracking_ref))
             picking.write({'carrier_tracking_ref': '',
                            'carrier_price': 0.0})
+
+    def _ups_get_default_custom_package_code(self):
+        return '02'

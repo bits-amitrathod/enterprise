@@ -405,6 +405,9 @@ class ProviderFedex(models.Model):
         else:
             raise UserError(result['errors_message'])
 
+    def _fedex_get_default_custom_package_code(self):
+        return 'YOUR_PACKAGING'
+
 
 def _convert_weight(weight, unit='KG'):
     ''' Convert picking weight (always expressed in KG) into the specified unit '''
