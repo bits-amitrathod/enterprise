@@ -21,6 +21,6 @@ Maintenance in MRP
         'views/mrp_views.xml'
     ],
     'demo': ['data/mrp_maintenance_demo.xml'],
-    'application': True,
+    'auto_install': True,
     'license': 'OEEL-1',
 }
