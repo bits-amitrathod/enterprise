@@ -42,6 +42,7 @@ var SalaryPackageWidget = Widget.extend({
         this.onchange_holidays();
         this.onchange_disabled_children();
         this.onchange_marital();
+        this.onchange_car_id();
         this.onchange_spouse_fiscal_status();
         this.onchange_other_dependent_people();
         $('body').attr('id', 'hr_contract_salary');
@@ -295,6 +296,21 @@ var SalaryPackageWidget = Widget.extend({
     onchange_car_id: function(event) {
         var car_value = $("select[name='select_car']").val();
         var car_option = car_value ? (car_value).split('-')[0] : '';
+        var vehicle_id = car_value ? parseInt((car_value).split('-')[1]) : '';
+        ajax.jsonRpc('/salary_package/onchange_car', 'call', {
+            'car_option': car_option,
+            'vehicle_id': vehicle_id,
+        }).then(function(data) {
+            for(var key in data) {
+                if (data[key]) {
+                    $("span[name='" + key + "']").html(data[key]);
+                    $("li[name='" + key + "']").removeClass('hidden');
+                } else {
+                    $("li[name='" + key + "']").addClass('hidden');
+                }
+            }
+        });
+        $("span[name='car_info']").removeClass("hidden");
         if (car_option === 'new') {
             $("span[name='new_car_message']").removeClass('hidden');
         } else {

@@ -78,6 +78,15 @@
                                                             </t>
                                                         </t>
                                                     </select>
+                                                    <span class="help-block mt8 hidden" name="car_info">
+                                                        <ul>
+                                                            <li name="door_number">Doors Number: <span name="door_number"/></li>
+                                                            <li name="fuel_type">Fuel Type: <span name="fuel_type"/></li>
+                                                            <li name="co2">CO2 Emission: <span name="co2"/></li>
+                                                            <li name="odometer">Last Odometer: <span name="odometer"/></li>
+                                                            <li name="immatriculation">Immatriculation Date: <span name="immatriculation"/></li>
+                                                        </ul>
+                                                    </span>
                                                     <!-- <span><t t-esc="contract.available_cars_amount"/></span> -->
                                                     <span class="help-block mt8">The cost of the car is depreciated over 5 years. For example, a new car may cost 500€/month the first year but its cost will decrease at each yearly appraisal to reach 100€/month after 5 years.</span>
                                                     <span t-if="contract.available_cars_amount &lt; max_unused_cars" class="help-block mt8" name="new_car_message">If you want to choose another car model, please contact your HR manager.</span>

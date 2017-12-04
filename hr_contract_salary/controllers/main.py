@@ -262,6 +262,22 @@ class website_hr_contract_salary(http.Controller):
         amount = request.env['hr.contract'].sudo()._get_internet_amount(advantages['has_internet'])
         return {'internet': amount}
 
+    @http.route(['/salary_package/onchange_car/'], type='json', auth='public')
+    def onchange_car(self, car_option, vehicle_id, **kw):
+        if car_option == "new":
+            vehicle = request.env['fleet.vehicle.model'].sudo().browse(vehicle_id)
+            co2 = vehicle.default_co2
+            fuel_type = vehicle.default_fuel_type
+            door_number = odometer = immatriculation = False
+        else:
+            vehicle = request.env['fleet.vehicle'].sudo().browse(vehicle_id)
+            co2 = vehicle.co2
+            fuel_type = vehicle.fuel_type
+            door_number = vehicle.doors
+            odometer = vehicle.odometer
+            immatriculation = vehicle.acquisition_date
+        return {'co2': co2, 'fuel_type': fuel_type, 'door_number': door_number, 'odometer': odometer, 'immatriculation': immatriculation}
+
     @http.route(['/salary_package/onchange_public_transport/'], type='json', auth='public')
     def onchange_public_transport(self, contract_id, advantages, **kw):
         amount = request.env['hr.contract'].sudo()._get_public_transport_reimbursed_amount(advantages['public_transport_employee_amount'])
