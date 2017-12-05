@@ -37,7 +37,7 @@
         try to use this method on an invoice for whose payment no mandate can be used.
     """,
 
-    'category': 'Accounting &amp; Finance',
+    'category': 'Accounting',
 
     'depends': ['account','base_iban'],
 
