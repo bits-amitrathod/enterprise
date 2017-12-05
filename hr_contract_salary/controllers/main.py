@@ -21,6 +21,9 @@ class website_hr_contract_salary(http.Controller):
         return request.env['hr.contract']
 
     def _check_employee_access_right(self, contract_id):
+        contract_sudo = request.env['hr.contract'].sudo().browse(contract_id)
+        if not contract_sudo.employee_id:
+            return contract_sudo
         try:
             contract = request.env['hr.contract'].browse(contract_id)
             contract.check_access_rights('read')
@@ -91,7 +94,7 @@ class website_hr_contract_salary(http.Controller):
         personal_info = advantages['personal_info']
 
         if not contract.employee_id:
-            contract.employee_id = request.env['hr.employee'].create({
+            contract.employee_id = request.env['hr.employee'].sudo().create({
                 'name': 'Simulation Employee',
             })
         if personal_info:
@@ -136,20 +139,16 @@ class website_hr_contract_salary(http.Controller):
 
     @http.route(['/salary_package/update_gross/'], type="json", auth="public")
     def update_gross(self, contract_id=None, token=None, advantages=None, **kw):
-        # Make a savepoint to discard the temporary contract and payslip
 
         result = {}
-
-        request.env.cr.savepoint()
 
         if token:
             contract = self._check_token_validity(token)
         else:
             contract = self._check_employee_access_right(contract_id)
 
-        final_yearly_costs = contract.final_yearly_costs
         new_contract = self.create_new_contract(contract, advantages)
-        new_gross = new_contract._get_gross_from_employer_costs(final_yearly_costs)
+        new_gross = new_contract._get_gross_from_employer_costs(advantages['final_yearly_costs'])
         new_contract.wage = new_gross
 
         result.update({'new_gross': round(new_gross, 2)})
@@ -160,18 +159,15 @@ class website_hr_contract_salary(http.Controller):
 
     @http.route(['/salary_package/compute_net/'], type='json', auth='public')
     def compute_net(self, contract_id=None, token=None, advantages=None, **kw):
-        # Make a savepoint to discard the temporary contract and payslip
-        request.env.cr.savepoint()
 
         if token:
             contract = self._check_token_validity(token)
         else:
             contract = self._check_employee_access_right(contract_id)
 
-        final_yearly_costs = contract.final_yearly_costs
         new_contract = self.create_new_contract(contract, advantages)
         #  Update gross to keep a fixed employer cost
-        new_gross = new_contract._get_gross_from_employer_costs(final_yearly_costs)
+        new_gross = new_contract._get_gross_from_employer_costs(advantages['final_yearly_costs'])
         new_contract.wage = new_gross
 
         # generate a payslip corresponding to only this contract
@@ -258,17 +254,33 @@ class website_hr_contract_salary(http.Controller):
 
     @http.route(['/salary_package/onchange_mobile/'], type='json', auth='public')
     def onchange_mobile(self, contract_id, advantages, **kw):
-        amount = request.env['hr.contract']._get_mobile_amount(advantages['has_mobile'], advantages['international_communication'])
+        amount = request.env['hr.contract'].sudo()._get_mobile_amount(advantages['has_mobile'], advantages['international_communication'])
         return {'mobile': amount}
 
     @http.route(['/salary_package/onchange_internet/'], type='json', auth='public')
     def onchange_internet(self, contract_id, advantages, **kw):
-        amount = request.env['hr.contract']._get_internet_amount(advantages['has_internet'])
+        amount = request.env['hr.contract'].sudo()._get_internet_amount(advantages['has_internet'])
         return {'internet': amount}
+
+    @http.route(['/salary_package/onchange_car/'], type='json', auth='public')
+    def onchange_car(self, car_option, vehicle_id, **kw):
+        if car_option == "new":
+            vehicle = request.env['fleet.vehicle.model'].sudo().browse(vehicle_id)
+            co2 = vehicle.default_co2
+            fuel_type = vehicle.default_fuel_type
+            door_number = odometer = immatriculation = False
+        else:
+            vehicle = request.env['fleet.vehicle'].sudo().browse(vehicle_id)
+            co2 = vehicle.co2
+            fuel_type = vehicle.fuel_type
+            door_number = vehicle.doors
+            odometer = vehicle.odometer
+            immatriculation = vehicle.acquisition_date
+        return {'co2': co2, 'fuel_type': fuel_type, 'door_number': door_number, 'odometer': odometer, 'immatriculation': immatriculation}
 
     @http.route(['/salary_package/onchange_public_transport/'], type='json', auth='public')
     def onchange_public_transport(self, contract_id, advantages, **kw):
-        amount = request.env['hr.contract']._get_public_transport_reimbursed_amount(advantages['public_transport_employee_amount'])
+        amount = request.env['hr.contract'].sudo()._get_public_transport_reimbursed_amount(advantages['public_transport_employee_amount'])
         return {'amount': round(amount, 2)}
 
     @http.route(['/salary_package/submit/'], type='json', auth='public')

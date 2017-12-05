@@ -3,12 +3,12 @@ odoo.define('hr_contract_salary', function (require) {
 
 var ajax = require('web.ajax');
 var base = require('web_editor.base');
+var concurrency = require('web.concurrency');
 var Widget = require('web.Widget');
 var core = require('web.core');
 var _t = core._t;
 
 var SalaryPackageWidget = Widget.extend({
-    template: 'hr_contract_salary.salary_package',
     events: {
         "change .advantage_input": "onchange_advantage",
         "change input[name='mobility']": "onchange_mobility",
@@ -42,6 +42,7 @@ var SalaryPackageWidget = Widget.extend({
         this.onchange_holidays();
         this.onchange_disabled_children();
         this.onchange_marital();
+        this.onchange_car_id();
         this.onchange_spouse_fiscal_status();
         this.onchange_other_dependent_people();
         $('body').attr('id', 'hr_contract_salary');
@@ -52,11 +53,23 @@ var SalaryPackageWidget = Widget.extend({
             minimumResultsForSearch: -1
         });
         var fuel_card_input = $("input[name='fuel_card_input']");
-        if(!fuel_card_input.val()) {fuel_card_input.val(0.0);}
+        var fuel_card_slider = $("input[name='fuel_card_slider']");
+        if(parseInt(fuel_card_input.val()) !== parseInt(fuel_card_slider.val())) {
+            fuel_card_input.val(0.0);
+            fuel_card_slider.val(0.0);
+        }
         var eco_checks = $("input[name='eco_checks']");
         if(!eco_checks.val()) {eco_checks.val(0.0);}
         $('b[role="presentation"]').hide();
         $('.select2-arrow').append('<i class="fa fa-chevron-down"></i>');
+        this.update_gross = _.debounce(this.update_gross, 1000);
+        this.dp = new concurrency.DropPrevious();
+    },
+
+    willStart: function() {
+        var def1 = this._super();
+        var def2 = this.update_gross_to_net_computation();
+        return $.when(def1, def2);
     },
 
     get_personal_info: function() {
@@ -133,11 +146,11 @@ var SalaryPackageWidget = Widget.extend({
             'representation_fees': parseFloat($("input[name='representation_fees']")[0].value) || 0.0,
             'car_id': car_id,
             'new_car': new_car,
-            'requested_model_id': parseInt($('div#new_company_car select').val()),
             'public_transport_employee_amount': parseFloat($("input[name='public_transport_employee_amount']")[0].value) || 0.0,
             'others_reimbursed_amount': parseFloat($("input[name='others_reimbursed_amount']")[0].value) || 0.0,
             'personal_info': personal_info,
             'meal_voucher_amount': has_meal_voucher ? parseFloat($("input[name='meal_voucher_amount']")[0].value) || 0.0 : 0.0,
+            'final_yearly_costs': parseFloat($("input[name='fixed_yearly_costs']")[0].value),
         };
         return advantages;
 
@@ -145,7 +158,7 @@ var SalaryPackageWidget = Widget.extend({
 
     update_gross_to_net_computation: function () {
         var self = this;
-        ajax.jsonRpc('/salary_package/compute_net/', 'call', {
+        return ajax.jsonRpc('/salary_package/compute_net/', 'call', {
             'contract_id': parseInt($("input[name='contract']")[0].id),
             'token': $("input[name='token']").val(),
             'advantages': this.get_advantages(),
@@ -200,26 +213,30 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     onchange_advantage: function() {
-        var self = this;
         $("div[name='net']").addClass("hidden");
         $("div[name='compute_net']").removeClass("hidden");
         $("a[name='details']").addClass("hidden");
         $("a[name='recompute']").removeClass("hidden");
         $("input[name='NET']").addClass('o_outdated');
-        ajax.jsonRpc('/salary_package/update_gross/', 'call', {
+        this.update_gross();
+    },
+
+    update_gross: function() {
+        var self = this;
+        return this.dp.add(ajax.jsonRpc('/salary_package/update_gross/', 'call', {
             'contract_id': parseInt($("input[name='contract']")[0].id),
             'token': $("input[name='token']").val(),
             'advantages': this.get_advantages(),
-        }).then(function(data) {
+        })).then(function(data) {
             $("input[name='wage']").val(data['new_gross']);
-            self.compute_net();
+            return self.dp.add(self.compute_net());
         });
     },
 
     compute_net: function() {
         $("a[name='recompute']").addClass("hidden");
         $("a[name='details']").removeClass("hidden");
-        this.update_gross_to_net_computation();
+        return this.update_gross_to_net_computation();
     },
 
     onchange_mobility: function(event) {
@@ -279,6 +296,21 @@ var SalaryPackageWidget = Widget.extend({
     onchange_car_id: function(event) {
         var car_value = $("select[name='select_car']").val();
         var car_option = car_value ? (car_value).split('-')[0] : '';
+        var vehicle_id = car_value ? parseInt((car_value).split('-')[1]) : '';
+        ajax.jsonRpc('/salary_package/onchange_car', 'call', {
+            'car_option': car_option,
+            'vehicle_id': vehicle_id,
+        }).then(function(data) {
+            for(var key in data) {
+                if (data[key]) {
+                    $("span[name='" + key + "']").html(data[key]);
+                    $("li[name='" + key + "']").removeClass('hidden');
+                } else {
+                    $("li[name='" + key + "']").addClass('hidden');
+                }
+            }
+        });
+        $("span[name='car_info']").removeClass("hidden");
         if (car_option === 'new') {
             $("span[name='new_car_message']").removeClass('hidden');
         } else {
