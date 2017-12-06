@@ -98,7 +98,7 @@ class AccountInvoice(models.Model):
         'if unkown and the XML will show "Unidentified".',
         default=lambda self: self.env.ref('l10n_mx_edi.payment_method_otros',
                                           raise_if_not_found=False))
-    l10n_mx_edi_uuid = fields.Char('Fiscal Folio', copy=False, readonly=True,
+    l10n_mx_edi_uuid = fields.Char('Fiscal Folio(UNUSED)', copy=False, readonly=True,
         help='Unused field to remove in master')
     l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False, readonly=True,
         help='Folio in electronic invoice, is returned by SAT when send to stamp.',
