@@ -2,20 +2,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
-import random
 
-from odoo import api, fields, models, _, SUPERUSER_ID
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from odoo.addons import decimal_precision as dp
-from math import sqrt
+from odoo import api, fields, models, _
+
 
 class TestType(models.Model):
     _name = "quality.point.test_type"
     _description = "Test Type"
 
+    # Used instead of selection field in order to hide a choice depending on the view.
     name = fields.Char('Name', required=True)
     technical_name = fields.Char('Technical name', required=True)
+
 
 class QualityPoint(models.Model):
     _name = "quality.point"
@@ -25,6 +23,10 @@ class QualityPoint(models.Model):
 
     def __get_default_team_id(self):
         return self.env['quality.alert.team'].search([], limit=1).id
+
+    def _get_default_test_type_id(self):
+        domain = self._get_type_default_domain()
+        return self.env['quality.point.test_type'].search(domain, limit=1).id
 
     name = fields.Char(
         'Reference', copy=False, default=lambda self: _('New'),
@@ -41,60 +43,16 @@ class QualityPoint(models.Model):
         'product.template', 'Product', required=True,
         domain="[('type', 'in', ['consu', 'product'])]")
     picking_type_id = fields.Many2one('stock.picking.type', "Operation Type", required=True)
-    measure_frequency_type = fields.Selection([
-        ('all', 'All Operations'),
-        ('random', 'Randomly'),
-        ('periodical', 'Periodically')], string="Frequency",
-        default='all', required=True)
-    measure_frequency_value = fields.Float('Percentage')  # TDE RENAME ?
-    measure_frequency_unit_value = fields.Integer('Frequency')  # TDE RENAME ?
-    measure_frequency_unit = fields.Selection([
-        ('day', 'Day(s)'),
-        ('week', 'Week(s)'),
-        ('month', 'Month(s)')], default="day")  # TDE RENAME ?
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id)
     user_id = fields.Many2one('res.users', 'Responsible')
     active = fields.Boolean(default=True)
     check_count = fields.Integer(compute="_compute_check_count")
     check_ids = fields.One2many('quality.check', 'point_id')
-    test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', required=True,
-            default=lambda self: self.env['quality.point.test_type'].search([('technical_name', '=', 'passfail')]))
+    test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', help="Defines the type of the quality control point.",
+                                   required=True, default=_get_default_test_type_id)
     test_type = fields.Char(related='test_type_id.technical_name')
-
-    norm = fields.Float('Norm', digits=dp.get_precision('Quality Tests'))  # TDE RENAME ?
-    tolerance_min = fields.Float('Min Tolerance', digits=dp.get_precision('Quality Tests'))
-    tolerance_max = fields.Float('Max Tolerance', digits=dp.get_precision('Quality Tests'))
-    norm_unit = fields.Char('Unit of Measure', default=lambda self: 'mm')  # TDE RENAME ?
     note = fields.Html('Note')
     reason = fields.Html('Note')
-    average = fields.Float(compute="_compute_standard_deviation_and_average")
-    failure_message = fields.Html('Failure Message')
-    standard_deviation = fields.Float(compute="_compute_standard_deviation_and_average")
-
-    def _compute_standard_deviation_and_average(self):
-        # The variance and mean are computed by the Welford’s method and used the Bessel's
-        # correction because are working on a sample.
-        points = self.filtered(lambda x: x.test_type == 'measure')
-        for point in points:
-            mean = 0.0
-            s = 0.0
-            n = 0
-            for check in point.check_ids:
-                n += 1
-                delta = check.measure - mean
-                mean += delta / n
-                delta2 = check.measure - mean
-                s += delta * delta2
-
-            if n > 1:
-                point.average = mean
-                point.standard_deviation = sqrt( s / ( n - 1))
-            elif n == 1:
-                point.average = mean
-                point.standard_deviation = 0.0
-            else:
-                point.average = 0.0
-                point.standard_deviation = 0.0
 
     def _compute_check_count(self):
         check_data = self.env['quality.check'].read_group([('point_id', 'in', self.ids)], ['point_id'], ['point_id'])
@@ -106,11 +64,6 @@ class QualityPoint(models.Model):
     def onchange_product_tmpl_id(self):
         self.product_id = self.product_tmpl_id.product_variant_ids.ids and self.product_tmpl_id.product_variant_ids[0]
 
-    @api.onchange('norm')
-    def onchange_norm(self):
-        if self.tolerance_max == 0.0:
-            self.tolerance_max = self.norm
-
     @api.model
     def create(self, vals):
         if 'name' not in vals or vals['name'] == _('New'):
@@ -118,44 +71,13 @@ class QualityPoint(models.Model):
         return super(QualityPoint, self).create(vals)
 
     @api.multi
-    def action_see_quality_checks(self):
-        self.ensure_one()
-        action = self.env.ref('quality.quality_check_action_main').read()[0]
-        action['domain'] = [('point_id', '=', self.id)]
-        action['context'] = {'default_point_id': self.id}
-        return action
-
-    @api.multi
-    def action_see_spc_control(self):
-        self.ensure_one()
-        action = self.env.ref('quality.quality_check_action_spc').read()[0]
-        if self.test_type == 'measure':
-            action['context'] = {'group_by': ['name', 'point_id'], 'graph_measure': ['measure'], 'graph_mode': 'line'}
-        action['domain'] = [('point_id', '=', self.id), ('quality_state', '!=', 'none')]
-        return action
-
-    @api.multi
     def check_execute_now(self):
         # TDE FIXME: make true multi
         self.ensure_one()
-        if self.measure_frequency_type == 'all':
-            return True
-        elif self.measure_frequency_type == 'random':
-            return (random.random() < self.measure_frequency_value / 100.0)
-        elif self.measure_frequency_type == 'periodical':
-            delta = False
-            if self.measure_frequency_unit == 'day':
-                delta = relativedelta(days=self.measure_frequency_unit_value)
-            elif self.measure_frequency_unit == 'week':
-                delta = relativedelta(weeks=self.measure_frequency_unit_value)
-            elif self.measure_frequency_unit == 'month':
-                delta = relativedelta(months=self.measure_frequency_unit_value)
-            date_previous = datetime.today() - delta
-            checks = self.env['quality.check'].search([
-                ('point_id', '=', self.id),
-                ('create_date', '>=', date_previous.strftime(DEFAULT_SERVER_DATETIME_FORMAT))], limit=1)
-            return not(bool(checks))
         return False
+
+    def _get_type_default_domain(self):
+        return []
 
 
 class QualityAlertTeam(models.Model):
@@ -185,14 +107,6 @@ class QualityAlertTeam(models.Model):
         alert_result = dict((data['team_id'][0], data['team_id_count']) for data in alert_data)
         for team in self:
             team.alert_count = alert_result.get(team.id, 0)
-
-    def get_alias_model_name(self, vals):
-        return vals.get('alias_model', 'quality.alert')
-
-    def get_alias_values(self):
-        values = super(QualityAlertTeam, self).get_alias_values()
-        values['alias_defaults'] = {'team_id': self.id}
-        return values
 
 
 class QualityReason(models.Model):
@@ -247,17 +161,6 @@ class QualityCheck(models.Model):
     alert_count = fields.Integer('# Quality Alerts', compute="_compute_alert_count")
     note = fields.Html(related='point_id.note', readonly=True)
     test_type = fields.Char(related="point_id.test_type", readonly=True)
-    norm_unit = fields.Char(related='point_id.norm_unit', readonly=True)
-    measure = fields.Float('Measure', default=0.0, digits=dp.get_precision('Quality Tests'), track_visibility='onchange')
-    measure_success = fields.Selection([
-        ('none', 'No measure'),
-        ('pass', 'Pass'),
-        ('fail', 'Fail')], string="Measure Success", compute="_compute_measure_success",
-        readonly=True, store=True)
-    failure_message = fields.Html(related='point_id.failure_message', readonly=True)
-    tolerance_min = fields.Float('Min Tolerance', related='point_id.tolerance_min', readonly=True)
-    tolerance_max = fields.Float('Max Tolerance', related='point_id.tolerance_max', readonly=True)
-    warning_message = fields.Text(compute='_compute_warning_message')
 
     @api.multi
     def _compute_alert_count(self):
@@ -265,26 +168,6 @@ class QualityCheck(models.Model):
         alert_result = dict((data['check_id'][0], data['check_id_count']) for data in alert_data)
         for check in self:
             check.alert_count = alert_result.get(check.id, 0)
-
-    @api.one
-    @api.depends('measure_success')
-    def _compute_warning_message(self):
-        if self.measure_success == 'fail':
-            self.warning_message = _('You measured %.2f %s and it should be between %.2f and %.2f %s.') % (
-                self.measure, self.norm_unit, self.point_id.tolerance_min,
-                self.point_id.tolerance_max, self.norm_unit
-            )
-
-    @api.one
-    @api.depends('measure')
-    def _compute_measure_success(self):
-        if self.point_id.test_type == 'passfail':
-            self.measure_success = 'none'
-        else:
-            if self.measure < self.point_id.tolerance_min or self.measure > self.point_id.tolerance_max:
-                self.measure_success = 'fail'
-            else:
-                self.measure_success = 'pass'
 
     @api.onchange('point_id')
     def _onchange_point_id(self):
@@ -313,84 +196,7 @@ class QualityCheck(models.Model):
                     'control_date': datetime.now()})
         return self.redirect_after_pass_fail()
 
-    @api.multi
-    def do_measure(self):
-        self.ensure_one()
-        if self.measure < self.point_id.tolerance_min or self.measure > self.point_id.tolerance_max:
-            return {
-                'name': _('Quality Check Failed'),
-                'type': 'ir.actions.act_window',
-                'res_model': 'quality.check',
-                'view_mode': 'form',
-                'view_id': self.env.ref('quality.quality_check_view_form_failure').id,
-                'target': 'new',
-                'res_id': self.id,
-                'context': self.env.context,
-            }
-        else:
-            return self.do_pass()
-
-    @api.multi
-    def correct_measure(self):
-        self.ensure_one()
-        return {
-            'name': _('Quality Checks'),
-            'type': 'ir.actions.act_window',
-            'res_model': 'quality.check',
-            'view_mode': 'form',
-            'view_id': self.env.ref('quality.quality_check_view_form_small').id,
-            'target': 'new',
-            'res_id': self.id,
-            'context': self.env.context,
-        }
-
-    @api.multi
-    def do_alert(self):
-        self.ensure_one()
-        alert = self.env['quality.alert'].create({
-            'check_id': self.id,
-            'product_id': self.product_id.id,
-            'product_tmpl_id': self.product_id.product_tmpl_id.id,
-            'lot_id': self.lot_id.id,
-            'user_id': self.user_id.id,
-            'team_id': self.team_id.id,
-            'company_id': self.company_id.id
-        })
-        return {
-            'name': _('Quality Alert'),
-            'type': 'ir.actions.act_window',
-            'res_model': 'quality.alert',
-            'views': [(self.env.ref('quality.quality_alert_view_form').id, 'form')],
-            'res_id': alert.id,
-            'context': {'default_check_id': self.id},
-        }
-
-    @api.multi
-    def action_see_alerts(self):
-        self.ensure_one()
-        if len(self.alert_ids) == 1:
-            return {
-                'name': _('Quality Alert'),
-                'type': 'ir.actions.act_window',
-                'res_model': 'quality.alert',
-                'views': [(self.env.ref('quality.quality_alert_view_form').id, 'form')],
-                'res_id': self.alert_ids.ids[0],
-                'context': {'default_check_id': self.id},
-            }
-        else:
-            action = self.env.ref('quality.quality_alert_action_check').read()[0]
-            action['domain'] = [('id', 'in', self.alert_ids.ids)]
-            return action
-
-    @api.multi
     def redirect_after_pass_fail(self):
-        check = self[0]
-        if check.picking_id:
-            checks = self.picking_id.check_ids.filtered(lambda x: x.quality_state == 'none')
-            if checks:
-                action = self.env.ref('quality.quality_check_action_small').read()[0]
-                action['res_id'] = checks.ids[0]
-                return action
         return {'type': 'ir.actions.act_window_close'}
 
 
@@ -448,34 +254,3 @@ class QualityAlert(models.Model):
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
         self.product_id = self.product_tmpl_id.product_variant_ids.ids and self.product_tmpl_id.product_variant_ids.ids[0]
-
-    @api.multi
-    def action_see_check(self):
-        return {
-            'name': _('Quality Check'),
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'quality.check',
-            'target': 'current',
-            'res_id': self.check_id.id,
-        }
-
-    @api.model
-    def _read_group_stage_ids(self, stages, domain, order):
-        """ Read group customization in order to display all the stages of the ECO type
-        in the Kanban view, even if there is no ECO in that stage
-        """
-        stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
-        return stages.browse(stage_ids)
-
-    @api.model
-    def message_new(self, msg_dict, custom_values=None):
-        """ Override, used with creation by email alias. The purpose of the override is
-        to use the subject for description and not for the name.
-        """
-        # We need to add the name in custom_values or it will use the subject.
-        custom_values['name'] = self.env['ir.sequence'].next_by_code('quality.alert') or _('New')
-        subject = msg_dict.get('subject', ''),
-        custom_values['description'] = subject[0]
-        return super(QualityAlert, self).message_new(msg_dict, custom_values)

@@ -7,16 +7,18 @@
     'category': 'Manufacturing',
     'sequence': 50,
     'summary': 'Quality Management with MRP',
-    'depends': ['quality_control', 'mrp'],
+    'depends': ['quality_control', 'mrp_workorder'],
     'description': """
-    Adds workcenters to Quality Control
+    Adds Quality Control to workorders.
 """,
     "data": [
-        'security/quality_mrp.xml',
+        'data/mrp_workorder_data.xml',
         'views/quality_views.xml',
-        'views/mrp_production_views.xml',
+        'views/mrp_workorder_views.xml',
     ],
-    "demo": [],
+    "demo": [
+        'data/mrp_workorder_demo.xml'
+    ],
     'auto_install': True,
     'license': 'OEEL-1',
 }

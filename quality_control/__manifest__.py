@@ -1,16 +1,15 @@
-
 # -*- encoding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Quality Base',
+    'name': 'Quality Control',
     'version': '1.0',
     'category': 'Manufacturing',
     'sequence': 50,
-    'summary': 'Basic Feature for Quality',
-    'depends': ['stock', 'decimal_precision'],
+    'summary': 'Quality Alerts and Control Points',
+    'depends': ['quality'],
     'description': """
-Quality Base
+Quality Control
 ===============
 * Define quality points that will generate quality checks on pickings,
   manufacturing orders or work orders (quality_mrp)
@@ -19,12 +18,14 @@ Quality Base
 * Define your stages for the quality alerts
 """,
     'data': [
-        'security/quality.xml',
-        'security/ir.model.access.csv',
-        'data/quality_data.xml',
+        'data/quality_control_data.xml',
+        'views/quality_templates.xml',
         'views/quality_views.xml',
+        'views/stock_picking_views.xml',
     ],
-    'demo': [],
-    'application': False,
+    'demo': [
+        'data/quality_control_demo.xml',
+    ],
+    'application': True,
     'license': 'OEEL-1',
 }

@@ -107,35 +107,9 @@ class MrpProduction(models.Model):
             action['res_id'] = production.id
         return action
 
+
 class MrpProductionWorkcenterLine(models.Model):
     _inherit = "mrp.workorder"
-
-    maintenance_request_count = fields.Integer(compute="_compute_maintenance_request")
-
-    @api.multi
-    def _compute_maintenance_request(self):
-        request_data = self.env['maintenance.request'].read_group([('workorder_id', 'in', self.ids)], ['workorder_id'], ['workorder_id'])
-        result = dict((data['workorder_id'][0], data['workorder_id_count']) for data in request_data)
-        for order in self:
-            order.maintenance_request_count = result.get(order.id, 0)
-
-    @api.multi
-    def open_maintenance_request_wo(self):
-        self.ensure_one()
-        action = {
-            'name': _('Maintenance Requests'),
-            'view_type': 'form',
-            'view_mode': 'kanban,tree,form,pivot,graph,calendar',
-            'res_model': 'maintenance.request',
-            'type': 'ir.actions.act_window',
-            'context': {'default_workorder_id': self.id,},
-            'domain': [('workorder_id', '=', self.id)],
-        }
-        if self.maintenance_request_count == 1:
-            res_id = self.env['maintenance.request'].search([('workorder_id', '=', self.id)])
-            action['view_mode'] = 'form'
-            action['res_id'] = res_id.id
-        return action
 
     @api.multi
     def button_maintenance_req(self):
@@ -146,7 +120,11 @@ class MrpProductionWorkcenterLine(models.Model):
             'view_mode': 'form',
             'res_model': 'maintenance.request',
             'type': 'ir.actions.act_window',
-            'context': {'default_workorder_id': self.id, 'default_production_id': self.production_id.id},
+            'context': {
+                'default_workorder_id': self.id,
+                'default_production_id': self.production_id.id,
+                'discard_on_footer_button': True,
+            },
             'target': 'new',
             'domain': [('workorder_id', '=', self.id)]
         }

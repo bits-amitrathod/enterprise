@@ -15,12 +15,12 @@ Maintenance in MRP
 * Equipments related to workcenters
 * MTBF, MTTR, ...
 """,
-    'depends': ['quality_mrp', 'maintenance'],
+    'depends': ['mrp_workorder', 'maintenance'],
     'data': [
         'views/maintenance_views.xml',
         'views/mrp_views.xml'
     ],
     'demo': ['data/mrp_maintenance_demo.xml'],
-    'application': True,
+    'auto_install': True,
     'license': 'OEEL-1',
 }

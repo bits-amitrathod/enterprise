@@ -19,6 +19,7 @@ class MrpProduction(models.Model):
         'Scheduled End Date', compute='_compute_date_planned',
         copy=False, store=True,
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]})
+    check_ids = fields.One2many('quality.check', 'production_id', string="Checks")
 
     @api.multi
     @api.depends('workorder_ids.date_planned_start', 'workorder_ids.date_planned_finished')
@@ -36,7 +37,6 @@ class MrpProduction(models.Model):
     def _get_start_date(self):
         return datetime.now()
 
-    @api.multi
     def button_plan(self):
         super(MrpProduction, self).button_plan()
         WorkOrder = self.env['mrp.workorder']
@@ -46,6 +46,8 @@ class MrpProduction(models.Model):
 
         # Schedule all work orders (new ones and those already created)
         for order in self:
+            if not order.workorder_ids.mapped('check_ids'):
+                order.workorder_ids._create_checks()
             start_date = order._get_start_date()
             from_date_set = False
             for workorder in order.workorder_ids:
@@ -79,6 +81,5 @@ class MrpProduction(models.Model):
                     if not to_date:
                         start_date = from_date + relativedelta(minutes=duration)
 
-    @api.multi
     def button_unplan(self):
         self.mapped('workorder_ids').write({'date_planned_start': False, 'date_planned_finished': False})

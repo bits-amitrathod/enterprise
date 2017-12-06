@@ -1,4 +1,4 @@
-odoo.define('quality_mrp.update_kanban', function (require) {
+odoo.define('mrp_workorder.update_kanban', function (require) {
 "use strict";
 
 var basic_fields = require('web.basic_fields');
@@ -17,7 +17,7 @@ ControlPanel.include({
     _render_breadcrumbs: function (breadcrumbs) {
         var found = false;
         _.each(breadcrumbs, function(data) {
-            if (data.action.action_descr.xml_id === "quality_mrp.mrp_workorder_action_tablet") {
+            if (data.action.action_descr.xml_id === "mrp_workorder.mrp_workorder_action_tablet") {
                 found = true;
             }
         });
@@ -56,7 +56,7 @@ var BackArrow = FieldInteger.extend({
             model: 'mrp.workorder',
             args: [self.recordData.id],
         }).then(function () {
-            self.do_action('quality_mrp.mrp_workorder_action_tablet', {
+            self.do_action('mrp_workorder.mrp_workorder_action_tablet', {
                 additional_context: {active_id: self.record.data.workcenter_id.res_id},
                 clear_breadcrumbs: true,
             });
