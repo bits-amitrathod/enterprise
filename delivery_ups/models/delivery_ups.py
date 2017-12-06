@@ -46,7 +46,7 @@ class ProviderUPS(models.Model):
                                                                         "and delivery fees will be charged on it.")
     ups_cod = fields.Boolean(string='Collect on Delivery',
         help='This value added service enables UPS to collect the payment of the shipment from your customer.')
-    ups_saturday_delivery = fields.Boolean(string='Saturday Delivery',
+    ups_saturday_delivery = fields.Boolean(string='UPS Saturday Delivery',
         help='This value added service will allow you to ship the package on saturday also.')
     ups_cod_funds_code = fields.Selection(selection=[
         ('0', "Check, Cashier's Check or MoneyOrder"),

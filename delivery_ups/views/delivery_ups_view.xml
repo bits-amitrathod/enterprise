@@ -24,7 +24,7 @@
                         </group>
                         <group string="Value Added Services" name="ups_vas">
                             <field name="ups_bill_my_account" attrs="{'invisible': [('delivery_type', '!=', 'ups')]}"/>
-                            <field name="ups_saturday_delivery" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_default_service_type', 'in', ['03','11','13','59','12','65','08'])]}"/>
+                            <field name="ups_saturday_delivery" string="Saturday Delivery" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_default_service_type', 'in', ['03','11','13','59','12','65','08'])]}"/>
                             <field name="ups_cod" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_default_service_type', '=', '96')]}"/>
                             <field name="ups_cod_funds_code" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_cod', '=', False)]}" widget="radio"/>
                         </group>

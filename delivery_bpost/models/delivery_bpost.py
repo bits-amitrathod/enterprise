@@ -13,7 +13,7 @@ class ProviderBpost(models.Model):
 
     delivery_type = fields.Selection(selection_add=[('bpost', 'bpost')])
     # Fields required to configure
-    bpost_account_number = fields.Char(string="Account Number", groups="base.group_system")
+    bpost_account_number = fields.Char(string="Bpost Account Number", groups="base.group_system")
     bpost_developer_password = fields.Char(string="Passphrase", groups="base.group_system")
     bpost_delivery_nature = fields.Selection([('Domestic', 'Domestic'), ('International', 'International')],
                                              default='Domestic', required=True)

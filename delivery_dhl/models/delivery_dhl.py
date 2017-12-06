@@ -66,7 +66,7 @@ class Providerdhl(models.Model):
                                          ('Z', 'Z - Destination Charges'),
                                          ],
                                         default='D',
-                                        string='Product')
+                                        string='DHL Product')
     dhl_dutiable = fields.Boolean(string="Dutiable Material", help="Check this if your package is dutiable.")
     dhl_label_image_format = fields.Selection([
         ('EPL2', 'EPL2'),
