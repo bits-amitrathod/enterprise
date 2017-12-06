@@ -87,7 +87,7 @@ class QualityCheck(models.Model):
     # Computed fields
     title = fields.Char('Title', compute='_compute_title')
     result = fields.Char('Result', compute='_compute_result')
-    quality_state_for_summary = fields.Char('Status', compute='_compute_result')
+    quality_state_for_summary = fields.Char('Quality Status', compute='_compute_result')
 
     # Used to group the steps belonging to the same production
     # We use a float because it is actually filled in by the produced quantity at the step creation.

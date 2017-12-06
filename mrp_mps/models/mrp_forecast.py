@@ -145,7 +145,7 @@ class SaleForecastIndirect(models.Model):
 
     date = fields.Date('Date', required=True)
     warehouse_id = fields.Many2one('stock.warehouse', 'Production Location')
-    product_origin_id = fields.Many2one('product.product', string='Product', required=True)
+    product_origin_id = fields.Many2one('product.product', string='Origin Product', required=True)
     product_id = fields.Many2one('product.product', string='Product', required=True)
     quantity = fields.Float('Indirect Quantity')
 

@@ -694,7 +694,7 @@ class MrpEcoBomChange(models.Model):
     _description = 'ECO Material changes'
 
     eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade')
-    eco_rebase_id = fields.Many2one('mrp.eco', 'Rebase', ondelete='cascade')
+    eco_rebase_id = fields.Many2one('mrp.eco', 'Eco Rebase', ondelete='cascade')
     rebase_id = fields.Many2one('mrp.eco', 'Rebase', ondelete='cascade')
     change_type = fields.Selection([('add', 'Add'), ('remove', 'Remove'), ('update', 'Update')], string='Type', required=True)
     product_id = fields.Many2one('product.product', 'Product', required=True)
