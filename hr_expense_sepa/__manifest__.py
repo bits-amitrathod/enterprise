@@ -6,7 +6,7 @@
     'description': """
         Enable the SEPA features in the payments of expenses
     """,
-    'category': 'Accounting &amp; Finance',
+    'category': 'Accounting',
     'version': '1.0',
     'depends': ['account_sepa', 'hr_expense'],
     'auto_install': True,

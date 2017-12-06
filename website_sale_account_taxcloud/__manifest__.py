@@ -4,7 +4,7 @@
     'summary': """""",
     'description': """
     """,
-    'category': 'Accounting &amp; Finance',
+    'category': 'Accounting',
     'depends': ['account_taxcloud', 'website_sale'],
     'data': [
         'views/res_config_settings_views.xml',

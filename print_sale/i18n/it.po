@@ -3,17 +3,14 @@
 # * print_sale
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Francesco Garganese <francesco.garganese@aeromnia.aero>, 2016
-# p_amoruso <p.amoruso@elvenstudio.it>, 2016
-# Paolo Valier <paolo.valier@hotmail.it>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2016\n"
+"POT-Creation-Date: 2017-10-02 11:50+0000\n"
+"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +36,7 @@ msgstr ""
 #. module: print_sale
 #: selection:print.document.partner.wizard,ink:0
 msgid "Black & White"
-msgstr "Bianco & Nero"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -49,7 +46,7 @@ msgstr "Annulla"
 #. module: print_sale
 #: selection:print.document.partner.wizard,ink:0
 msgid "Colour"
-msgstr "Colore"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_create_uid
@@ -64,7 +61,7 @@ msgid "Created on"
 msgstr "Creato il"
 
 #. module: print_sale
-#: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_currency_id
+#: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_currency_id
 msgid "Currency"
 msgstr "Valuta"
 
@@ -72,18 +69,18 @@ msgstr "Valuta"
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_display_name
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_display_name
 msgid "Display Name"
-msgstr "Nome Visualizzato"
+msgstr "Visualizza Nome"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_ir_attachment_ids
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Documents"
-msgstr "Documenti"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_environment
 msgid "Environment"
-msgstr "Ambiente"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_id
@@ -94,19 +91,19 @@ msgstr "ID"
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_ink
 msgid "Ink"
-msgstr "Inchiostro"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_is_sendable
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_is_sendable
 msgid "Is sendable"
-msgstr "È inviabile"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard___last_update
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard___last_update
 msgid "Last Modified on"
-msgstr "Ultima modifica il"
+msgstr "Data di ultima modifica"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_write_uid
@@ -124,12 +121,12 @@ msgstr "Ultima modifica il"
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_print_document_partner_line_wizard_ids
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_line_wizard_view_tree
 msgid "Lines"
-msgstr "Righe"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_paper_weight
 msgid "Paper Weight"
-msgstr "Grammatura Carta"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_print_document_partner_wizard_id
@@ -149,12 +146,17 @@ msgstr ""
 #. module: print_sale
 #: selection:print.document.partner.wizard,provider_environment:0
 msgid "Production"
-msgstr "Produzione"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_balance
 msgid "Provider Credit"
 msgstr ""
+
+#. module: print_sale
+#: model:ir.model,name:print_sale.model_sale_order
+msgid "Quotation"
+msgstr "Preventivo"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_partner_id
@@ -164,22 +166,17 @@ msgstr ""
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Recipients"
-msgstr "Destinatari"
-
-#. module: print_sale
-#: model:ir.model,name:print_sale.model_sale_order
-msgid "Sales Order"
-msgstr "Ordine di vendita"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Send"
-msgstr "Invia"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.actions.act_window,name:print_sale.print_document_partner_action_multi
 msgid "Send Documents by post"
-msgstr "Invia Documenti via posta"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.sale_order_view_form_inherit_print_sale
@@ -189,12 +186,12 @@ msgstr ""
 #. module: print_sale
 #: model:ir.actions.act_window,name:print_sale.print_order_wizard_action_print_sale
 msgid "Send by Post"
-msgstr "Invia per Posta"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.actions.act_window,name:print_sale.print_order_wizard_action_multi_print_sale
 msgid "Send by post"
-msgstr "Invia per posta"
+msgstr ""
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -204,30 +201,25 @@ msgstr ""
 #. module: print_sale
 #: selection:print.document.partner.wizard,provider_environment:0
 msgid "Test"
-msgstr "Test"
+msgstr ""
 
 #. module: print_sale
-#: code:addons/print_sale/models/sale_order.py:17
+#: code:addons/print_sale/models/sale_order.py:23
 #, python-format
 msgid ""
-"This sale order was sent by post with the provider %(provider_name)s at the "
-"following address.                     <br/><br/> %(partner_name)s <br/> "
+"This sales order was sent by post with the provider %(provider_name)s at the"
+" following address.                     <br/><br/> %(partner_name)s <br/> "
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
 
 #. module: print_sale
-#: code:addons/print_sale/wizard/print_document_partner_wizard.py:73
+#: code:addons/print_sale/wizard/print_document_partner_wizard.py:67
 #, python-format
 msgid ""
 "Your credit provider is too small. Please, configure your account (> "
 "Settings > Print Provider), and put some credit on your account."
 msgstr ""
-
-#. module: print_sale
-#: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
-msgid "or"
-msgstr "o"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_line_wizard
@@ -238,8 +230,3 @@ msgstr ""
 #: model:ir.model,name:print_sale.model_print_document_partner_wizard
 msgid "print.document.partner.wizard"
 msgstr ""
-
-#. module: print_sale
-#: model:ir.model,name:print_sale.model_print_order_line_wizard
-msgid "print.order.line.wizard"
-msgstr "print.order.line.wizard"

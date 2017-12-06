@@ -31,7 +31,7 @@
                                 <div id="hr_cs_configurator" class="col-md-9 col-lg-8">
 
                                     <!-- Section -->
-                                    <h2>Monthly Benefits</h2>
+                                    <h2>Monthly Benefit in Kind</h2>
 
                                     <!-- Transport -->
                                     <div class="form-group">
@@ -78,6 +78,15 @@
                                                             </t>
                                                         </t>
                                                     </select>
+                                                    <span class="help-block mt8 hidden" name="car_info">
+                                                        <ul>
+                                                            <li name="door_number">Doors Number: <span name="door_number"/></li>
+                                                            <li name="fuel_type">Fuel Type: <span name="fuel_type"/></li>
+                                                            <li name="co2">CO2 Emission: <span name="co2"/></li>
+                                                            <li name="odometer">Last Odometer: <span name="odometer"/></li>
+                                                            <li name="immatriculation">Immatriculation Date: <span name="immatriculation"/></li>
+                                                        </ul>
+                                                    </span>
                                                     <!-- <span><t t-esc="contract.available_cars_amount"/></span> -->
                                                     <span class="help-block mt8">The cost of the car is depreciated over 5 years. For example, a new car may cost 500€/month the first year but its cost will decrease at each yearly appraisal to reach 100€/month after 5 years.</span>
                                                     <span t-if="contract.available_cars_amount &lt; max_unused_cars" class="help-block mt8" name="new_car_message">If you want to choose another car model, please contact your HR manager.</span>
@@ -248,7 +257,7 @@
                                                 <div class="col-sm-2 text-right">
                                                     <div class="input-group">
                                                         <input class="form-control advantage_input hidden" type="text" t-att-value="contract.commission_on_target" disabled="disabled" name="commission_on_target"/>
-                                                        <input class="form-control advantage_input" type="text" t-att-value="contract.warrant_value_employee" disabled="disabled" name="warrant_value"/>
+                                                        <input class="form-control advantage_input" type="text" t-att-value="round(contract.warrant_value_employee / 12.0, 2)" disabled="disabled" name="warrant_value"/>
                                                         <div class="input-group-addon">€</div>
                                                     </div>
                                                 </div>
@@ -278,7 +287,7 @@
                                     </t>
 
                                     <!-- Representation Fees -->
-                                    <t t-if="contract.representation_fees">
+                                    <!-- <t t-if="contract.representation_fees"> -->
                                         <div class="form-group">
                                             <div class="row">
                                                 <label class="col-sm-3 control-label">
@@ -311,7 +320,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </t>
+                                    <!-- </t> -->
 
                                     <!-- Section -->
                                     <h2>Yearly Advantages in Cash</h2>
@@ -352,11 +361,11 @@
                                         </div>
                                     </div>
 
-                                    <!-- Double Holidays -->
+                                    <!-- Holiday Bonus -->
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-3 control-label">
-                                                <i class="fa fa-1x fa-suitcase fa-fw"/> Double Holidays
+                                                <i class="fa fa-1x fa-suitcase fa-fw"/> Holiday Bonus
                                             </label>
                                             <div class="col-sm-7">
                                                 <span class="help-block">You'll receive this amount around June. This amount may be different based on your working schedule and the number of worked days during the year.</span>
@@ -484,8 +493,9 @@
                                             <label class="col-sm-7 control-label">Employer Cost</label>
                                             <div class="col-sm-5">
                                                 <div class="input-group">
-                                                    <input type="text" disabled="disabled" name="employee_total_cost" class="form-control"/>
+                                                    <input type="text" disabled="disabled" name="employee_total_cost" class="form-control" t-att-value="contract.final_yearly_costs"/>
                                                     <div class="input-group-addon">€</div>
+                                                    <input type="text" disabled="disabled" name="fixed_yearly_costs" class="form-control hidden" t-att-value="contract.final_yearly_costs"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -883,7 +893,7 @@
                                     <!--  -->
                                     <div name="company_car_atn" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label"><i class="fa fa-1x fa-plus fa-fw"/> ATN Company Car</label>
+                                            <label class="col-sm-10 control-label"><i class="fa fa-1x fa-plus fa-fw"/> Benefit in Kind (Company Car)</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="250" disabled="disabled" name="ATN.CAR.1"/>
@@ -1035,6 +1045,20 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <t t-if="contract.commission_on_target">
+                                        <div class="form-group" name="warrant_value_employee_div">
+                                            <div class="row">
+                                                <label class="col-sm-10 control-label"><i class="fa fa-1x fa-plus fa-fw"/> Commissions on Target</label>
+                                                <div class="col-sm-2">
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" t-att-value="round(contract.warrant_value_employee / 12.0, 2)" disabled="disabled" name="warrant_value_employee"/>
+                                                        <div class="input-group-addon">€</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
 
                                     <!--  -->
                                     <div class="form-group">

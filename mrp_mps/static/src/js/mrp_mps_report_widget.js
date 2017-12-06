@@ -316,7 +316,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
         var session = this.getSession();
         var result = pyeval.eval_domains_and_contexts({
             contexts: [session.user_context],
-            domains: event.datadomains
+            domains: event.data.domains
         });
         this.domain = result.domain;
         this.get_html().then(this.re_renderElement.bind(this));

@@ -4,9 +4,8 @@
 # 
 # Translators:
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
 # Cas Vissers <casvissers@brahoo.nl>, 2017
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
 # Eric Geens <ericgeens@yahoo.com>, 2017
 msgid ""
 msgstr ""
@@ -239,12 +238,12 @@ msgstr "Aangemaakt op"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_config_settings_sdd_creditor_identifier
 msgid "Creditor identifier"
-msgstr "KVK nummer"
+msgstr "Crediteur identificatie "
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_config_settings_sdd_creditor_identifier
 msgid "Creditor identifier of your company within SEPA scheme."
-msgstr "KVK nummer van u bedrijf voor het SEPA schema."
+msgstr "Crediteur identificatie van u bedrijf voor het SEPA schema."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -294,12 +293,12 @@ msgstr "Debiteur"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_partner_bank_id
 msgid "Debtor Account"
-msgstr "Debiteur rekenening"
+msgstr "Debiteur rekening"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_debtor_id_code
 msgid "Debtor Identifier"
-msgstr "Debiteur identifier"
+msgstr "Debiteur indentificatie"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -312,7 +311,7 @@ msgstr "Debiteur informatie"
 #: model:ir.ui.menu,name:account_sepa_direct_debit.account_sepa_direct_debit_customer_mandates_menu
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sdd_res_partner_view
 msgid "Direct Debit Mandates"
-msgstr "Auto incasso mandaten"
+msgstr "Incasso mandaten"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_journal_dashboard_kanban_view
@@ -437,7 +436,7 @@ msgstr "Identificatie code"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_name
 msgid "Identifier"
-msgstr "Identifier"
+msgstr "Identificatie "
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/res_company.py:38
@@ -664,6 +663,8 @@ msgid ""
 "Original document into which the customer authorises the use of Direct Debit"
 " for his invoices."
 msgstr ""
+"Origineel document waarin de klant toestemming geeft om factureren te "
+"incasseren."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_payment_sdd_mandate_id
@@ -716,6 +717,7 @@ msgstr "Betalingen in dit XML bestand."
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "Payments generated for this mandate that have not yet been collected."
 msgstr ""
+"Betalingen gegenereerd door dit mandaat welke nog niet geïncasseerd zijn."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_payment_ids
@@ -752,6 +754,8 @@ msgid ""
 "Payments whose XML could not be generated because they had not been "
 "generated from a SEPA Direct Debit mandate."
 msgstr ""
+"Betalingen waarvoor de XML niet gegenereerd kon worden omdat deze niet door "
+"een SEPA incasso mandaat gemaakt zijn."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -764,6 +768,8 @@ msgid ""
 "Please do not pay it manually, the payment will be asked to your bank to be processed\n"
 "                        automatically."
 msgstr ""
+"Betaal niet handmatig, de betalingen wordt verstuurd naar uw bank om "
+"automatisch uitgevoerd te worden,."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -799,12 +805,12 @@ msgstr "SSD betaalbestanden"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_company_sdd_creditor_identifier
 msgid "SDD creditor identifier"
-msgstr "SSD crediteur identifier"
+msgstr "SSD crediteur Identificatie "
 
 #. module: account_sepa_direct_debit
 #: model:account.payment.method,name:account_sepa_direct_debit.payment_method_sdd
 msgid "SEPA Direct Debit"
-msgstr "SEPA Automatische Incasso"
+msgstr "SEPA automatische incasso"
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -816,6 +822,8 @@ msgstr "SEPA automatische incasso mandaat"
 msgid ""
 "SEPA Direct Debit creditor identifier of the company, given by the bank."
 msgstr ""
+"SEPA automatische incasso creditor indentifier van het bedrijf, wordt "
+"gegeven door de bank."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:153
@@ -824,12 +832,14 @@ msgid ""
 "SEPA Direct Debit scheme only accepts IBAN account numbers. Please select an"
 " IBAN-compliant debtor account for this mandate."
 msgstr ""
+"SEPA automatische incasso schema accepteert alleen IBAN rekeningnummers. "
+"Selecteer een debiteur met een correct IBAN nummer voor dit mandaat."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_download_xml_wizard_xml_file
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_xml_archive_xml_file
 msgid "SEPA XML file"
-msgstr "SEPA XML Bestand"
+msgstr "SEPA XML bestand"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_download_xml_wizard_xml_filename
@@ -852,6 +862,8 @@ msgstr "Sdd betaal mandaat"
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_generate_xml_wizard_payments_to_send_ids
 msgid "Set of payments to (try to) put into a SDD XML file."
 msgstr ""
+"Set van betalingen welke worden (geprobeerd) om te verwerken in een SSD XML "
+"bestand."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -866,7 +878,7 @@ msgstr "Startdatum"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_state
 msgid "State"
-msgstr "Staat / Provincie"
+msgstr "Status"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_payment_sdd_mandate_usable
@@ -874,6 +886,9 @@ msgid ""
 "Technical field used to inform the end user there is a SDD mandate that "
 "could be used to register that payment"
 msgstr ""
+"Technisch veld gebruikt om de gebruiker te informeren wanneer een incasso "
+"mandaat beschikbaar is welke zou kunnen worden gebruikt om een betaling te "
+"registreren."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:139
@@ -882,6 +897,8 @@ msgid ""
 "The bank account you select for payment must be related to a bank. Please "
 "fix it first."
 msgstr ""
+"De bankrekening welke u selecteer voor de betalingen moet gerelateerd zijn "
+"tot een bank. Stel een bank in op het rekeningnummer."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:141
@@ -896,7 +913,9 @@ msgstr ""
 #: code:addons/account_sepa_direct_debit/models/res_company.py:26
 #, python-format
 msgid "The creditor identifier exceeds the maximum length of 35 characters."
-msgstr "Het KVK nummer is langer dan de maximale lengte van 35 karakters."
+msgstr ""
+"De crediteur identificatie  is langer dan de maximale lengte van 35 "
+"karakters."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:147
@@ -905,6 +924,8 @@ msgid ""
 "The debtor identifier you specified exceeds the limitation of 35 characters "
 "imposed by SEPA regulation"
 msgstr ""
+"De debiteur identificatie welke u heeft ingegeven heeft te veel karakters, "
+"het SEPA limiet is 35 karakters."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:131
@@ -923,6 +944,12 @@ msgid ""
 "                            previously generated file or the bank encoded of their\n"
 "                            customer account does not have any BIC number defined."
 msgstr ""
+"De volgende betalingen konden niet worden vertaald naar een\n"
+"                            SEPA automatische incasso XML. Of ze behoren niet tot het bedrijf\n"
+"                            waar uw momenteel op ingelogd bent, ze zijn niet gerelateerd tot een \n"
+"                            mandaat, ze zijn reeds geïncasseerd in een\n"
+"                            gegenereerd bestand of de bank ingesteld op het \n"
+"                            de klant bankrekening heeft geen BIC nummer ingesteld."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_payment_sdd_mandate_id
@@ -936,6 +963,9 @@ msgid ""
 "                    specified time range. If no end date is specified,\n"
 "                    you will have to contact us to stop its use."
 msgstr ""
+"Het mandaat zal alleen gebruikt worden om facturen te betalen in\n"
+"                    de gespecificeerd tijdsbestek. Wanneer geen einddatum is ingesteld,\n"
+"                    moet u contact met ons opnemen om het te stoppen."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_state
@@ -945,6 +975,11 @@ msgid ""
 "- 'active' means that this mandate can be used to pay invoices. \n"
 "- 'closed' designates a mandate that has been marked as not to use anymore without invalidating the previous transactions done with it.- 'revoked' means the mandate has been signaled as fraudulent by the customer. It cannot be used anymore, and should not ever have been. You will probably need to refund the related invoices, if any.\n"
 msgstr ""
+"De status van het mandaat is in. \n"
+"- 'concept' betekend dat het mandaat nog bevestigd moet worden voor het gebruikt kan worden,\n"
+"- 'actief' betekend dat het mandaat kan worden gebruikt om facturen te betalen.\n"
+"- 'gesloten' betekend dat het mandaat gemarkeerd is als niet meer te gebruiken.\n"
+"- 'ingetrokken' betekend dat het mandaat is gesignaleerd als fraudeleus door de klant. Het kan niet meer gebruikt worden, en zou nooit gebruikt moeten zijn. U zult waarschijnlijk de gerelateerde facturen crediteren, wanneer deze bestaan.\n"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_name
@@ -957,6 +992,8 @@ msgid ""
 "This form grants our company the authorization to\n"
 "                    use direct debit to pay the invoices we send to you."
 msgstr ""
+"De formulier geeft ons bedrijf toestemming om\n"
+"                    facturen welke wij u sturen te incasseren."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:169
@@ -966,6 +1003,8 @@ msgid ""
 "This invoice cannot be paid via SEPA Direct Debit, as there is no valid "
 "mandate available for its customer at its creation date."
 msgstr ""
+"Deze factuur kan niet worden betaald met SEPA automatische incasso, dit "
+"omdat er geen correct mandaat beschikbaar is op de aanmaakdatum."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_report_invoice_document
@@ -994,6 +1033,8 @@ msgid ""
 "Trying to generate a Direct Debit XML file containing payments from another "
 "company than that file's creditor."
 msgstr ""
+"Proberen een automatische incasso XML bestand te maken welke betalingen van "
+"een bedrijf bevatten."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:114
@@ -1002,6 +1043,8 @@ msgid ""
 "Trying to generate a Direct Debit XML for payments coming from another "
 "payment method than SEPA Direct Debit."
 msgstr ""
+"Proberen een automatische incasso XML bestand te maken welke betalingen met "
+"een andere betalingsmethode dan SEPA automatische incasso."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:151
@@ -1009,6 +1052,8 @@ msgstr ""
 msgid ""
 "Trying to register a payment on a mandate belonging to a different partner."
 msgstr ""
+"Proberen een betaling te ontvangen voor een mandaat welke behoort tot een "
+"andere relatie."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_download_xml_form
@@ -1018,7 +1063,7 @@ msgstr "Kon geen data genereren voor de geselecteerde betalingen."
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "Validate"
-msgstr "Controleer"
+msgstr "Bevestig"
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/account_invoice.py:32
@@ -1042,6 +1087,8 @@ msgstr ""
 msgid ""
 "You must register this mandate's original document before validating it."
 msgstr ""
+"Uw moet het originele document van het mandaat vastleggen voordat u het kan "
+"valideren."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/wizard/sdd_xml_wizards.py:29
@@ -1050,6 +1097,9 @@ msgid ""
 "Your company must have a creditor identifier in order to issue SEPA Direct "
 "Debit payments requests. It can be defined in accounting module's settings."
 msgstr ""
+"Uw bedrijf moet een crediteur identificatie hebben om SEPA automatische "
+"incasso betalingen te versturen. Het kan ingesteld worden in het "
+"instellingen van de boekhouding module."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_res_config_settings

@@ -3,17 +3,14 @@
 # * mrp_account
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Manuela Silva <inactive+h_manuela_rodsilva@transifex.com>, 2016
-# Ricardo Martins <ricardo.nbs.martins@gmail.com>, 2016
-# Manuela Silva <manuela.silva@sky.com>, 2016
+# Martin Trigaux <mat@odoo.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0e\n"
+"Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Manuela Silva <manuela.silva@sky.com>, 2016\n"
+"POT-Creation-Date: 2017-09-20 11:33+0000\n"
+"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
 "Language-Team: Portuguese (https://www.transifex.com/odoo/teams/41243/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,10 +46,15 @@ msgstr ""
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_mrp_workcenter_costs_hour_account_id
 msgid "Analytic Account"
-msgstr "Conta de Analítica"
+msgstr "Conta Analítica"
 
 #. module: mrp_account
-#: model:ir.actions.report.xml,name:mrp_account.action_cost_struct_mrp_production
+#: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
+msgid "Code"
+msgstr ""
+
+#. module: mrp_account
+#: model:ir.actions.report,name:mrp_account.action_cost_struct_mrp_production
 #: model:ir.ui.view,arch_db:mrp_account.mrp_production_form_inherit_view6
 #: model:ir.ui.view,arch_db:mrp_account.product_product_inherit_form_view_cost_structure
 msgid "Cost Analysis"
@@ -66,22 +68,22 @@ msgstr ""
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Cost Structure"
-msgstr "Custo da estrutura"
+msgstr ""
 
 #. module: mrp_account
-#: model:ir.actions.report.xml,name:mrp_account.action_cost_struct_product_template
+#: model:ir.actions.report,name:mrp_account.action_cost_struct_product_template
 msgid "Cost Structure Analysis"
 msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Cost for"
-msgstr "Custo para"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Cost of Operations"
-msgstr "Custo das Operações"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
@@ -91,23 +93,23 @@ msgstr ""
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_mrp_workcenter_costs_hour
 msgid "Cost per hour"
-msgstr "Custo por hora"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Cost/hour"
-msgstr "Custo/hora"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_workcenter_view_inherit
 msgid "Costing Information"
-msgstr "Custo da Informação"
+msgstr ""
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure_display_name
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure_display_name
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure_display_name
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure_display_name
 msgid "Display Name"
-msgstr "Nome a Exibir"
+msgstr "Nome a Mostrar"
 
 #. module: mrp_account
 #: model:ir.model.fields,help:mrp_account.field_mrp_workcenter_costs_hour_account_id
@@ -115,35 +117,33 @@ msgid ""
 "Fill this only if you want automatic analytic accounting entries on "
 "production orders."
 msgstr ""
-"Preenche este só se você quiser lançar contabilidade analítica automática "
-"das ordens de produção"
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure_id
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure_id
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure_id
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure_id
 msgid "ID"
-msgstr "Id."
+msgstr "ID"
 
 #. module: mrp_account
-#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_cost_structure___last_update
-#: model:ir.model.fields,field_description:mrp_account.field_report_product_template_cost_structure___last_update
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_mrp_cost_structure___last_update
+#: model:ir.model.fields,field_description:mrp_account.field_report_mrp_account_product_template_cost_structure___last_update
 msgid "Last Modified on"
 msgstr "Última Modificação em"
 
 #. module: mrp_account
 #: model:ir.model,name:mrp_account.model_mrp_production
 msgid "Manufacturing Order"
-msgstr "Ordem de produção"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Operation"
-msgstr "Operação"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Operator"
-msgstr "Operador"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
@@ -153,7 +153,7 @@ msgstr "Quantidade"
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Raw Materials"
-msgstr "Matéria Prima"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
@@ -182,17 +182,17 @@ msgstr ""
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Total Cost"
-msgstr "Custo Total"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Unit Cost"
-msgstr "Custo à Unidade"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.model,name:mrp_account.model_mrp_workcenter
 msgid "Work Center"
-msgstr "Centro de Trabalho"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.model,name:mrp_account.model_mrp_workcenter_productivity
@@ -202,12 +202,12 @@ msgstr ""
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Working Time"
-msgstr "Tempo de Trabalho"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "hours"
-msgstr "horas"
+msgstr ""
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
@@ -215,11 +215,11 @@ msgid "manufacturing order(s)."
 msgstr ""
 
 #. module: mrp_account
-#: model:ir.model,name:mrp_account.model_report_mrp_cost_structure
-msgid "report.mrp_cost_structure"
+#: model:ir.model,name:mrp_account.model_report_mrp_account_mrp_cost_structure
+msgid "report.mrp_account.mrp_cost_structure"
 msgstr ""
 
 #. module: mrp_account
-#: model:ir.model,name:mrp_account.model_report_product_template_cost_structure
-msgid "report.product_template_cost_structure"
+#: model:ir.model,name:mrp_account.model_report_mrp_account_product_template_cost_structure
+msgid "report.mrp_account.product_template_cost_structure"
 msgstr ""

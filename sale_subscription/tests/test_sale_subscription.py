@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import calendar
 import datetime
+from dateutil.relativedelta import relativedelta
 
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 from odoo.tools import mute_logger, float_utils
+from odoo import fields
 
 
 class TestSubscription(TestSubscriptionCommon):
@@ -32,6 +34,17 @@ class TestSubscription(TestSubscriptionCommon):
         self.sale_order.action_confirm()
         self.assertTrue(len(self.subscription.recurring_invoice_line_ids.ids) == 1, 'sale_subscription: recurring_invoice_line_ids not created when confirming sale_order with recurring_product')
         self.assertEqual(self.sale_order.subscription_management, 'upsell', 'sale_subscription: so should be set to "upsell" if not specified otherwise')
+
+    def test_auto_close(self):
+        """Ensure a 15 days old 'online payment' subscription gets closed if no token is set."""
+        self.subscription_tmpl.payment_mandatory = True
+        self.subscription.write({
+            'recurring_next_date': fields.Date.to_string(datetime.date.today() - relativedelta(days=17)),
+            'recurring_total': 42,
+            'template_id': self.subscription_tmpl.id,
+        })
+        self.subscription.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
+        self.assertEqual(self.subscription.state, 'close', 'website_contrect: subscription with online payment and no payment method set should get closed after 15 days')
 
     def test_sub_creation(self):
         """ Test multiple subscription creation from single SO"""
