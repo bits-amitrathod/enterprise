@@ -51,7 +51,7 @@ class HelpdeskTicket(models.Model):
     task_id = fields.Many2one("project.task", string="Task", domain="[('project_id', '=', project_id)]", track_visibility="onchange", help="The task must have the same customer as this ticket.")
     timesheet_ids = fields.One2many('account.analytic.line', 'helpdesk_ticket_id', 'Timesheets')
     is_closed = fields.Boolean(related="task_id.stage_id.is_closed", string="Is Closed", readonly=True)
-    is_task_active = fields.Boolean(related="task_id.active", readonly=True)
+    is_task_active = fields.Boolean(related="task_id.active", string='Is Task Active', readonly=True)
     use_helpdesk_timesheet = fields.Boolean('Timesheet activated on Team', related='team_id.use_helpdesk_timesheet', readonly=True)
 
     @api.onchange('partner_id', 'project_id')
