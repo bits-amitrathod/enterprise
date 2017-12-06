@@ -245,6 +245,8 @@ class QualityCheck(models.Model):
 class QualityAlert(models.Model):
     _inherit = "quality.alert"
 
+    title = fields.Char('Title')
+
     def action_see_check(self):
         return {
             'name': _('Quality Check'),
@@ -264,13 +266,24 @@ class QualityAlert(models.Model):
         stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
 
+    @api.multi
+    @api.depends('name', 'title')
+    def name_get(self):
+        result = []
+        for record in self:
+            name = record.name + ' - ' + record.title if record.title else record.name
+            result.append((record.id, name))
+        return result
+
     @api.model
     def message_new(self, msg_dict, custom_values=None):
         """ Override, used with creation by email alias. The purpose of the override is
-        to use the subject for description and not for the name.
+        to use the subject for title and body for description instead of the name.
         """
         # We need to add the name in custom_values or it will use the subject.
         custom_values['name'] = self.env['ir.sequence'].next_by_code('quality.alert') or _('New')
-        subject = msg_dict.get('subject', ''),
-        custom_values['description'] = subject[0]
+        if msg_dict.get('subject'):
+            custom_values['title'] = msg_dict['subject']
+        if msg_dict.get('body'):
+            custom_values['description'] = msg_dict['body']
         return super(QualityAlert, self).message_new(msg_dict, custom_values)
