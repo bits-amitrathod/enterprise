@@ -13,21 +13,21 @@ class Company(models.Model):
     # reminder for employees
     timesheet_mail_employee_allow = fields.Boolean("Employee Reminder", default=True,
         help="If checked, send an email to all users who have not recorded their timesheet")
-    timesheet_mail_employee_delay = fields.Integer("Number of days", default=3)
+    timesheet_mail_employee_delay = fields.Integer("Number of days (for employee)", default=3)
     timesheet_mail_employee_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
-    ], string='Frequency', required=True, default="weeks")
-    timesheet_mail_employee_nextdate = fields.Datetime('Next scheduled date for manager reminder', readonly=True)
+    ], string='Frequency (for employee)', required=True, default="weeks")
+    timesheet_mail_employee_nextdate = fields.Datetime('Next scheduled date for employee reminder', readonly=True)
 
     # reminder for manager
     timesheet_mail_manager_allow = fields.Boolean("Manager Reminder", default=True,
         help="If checked, send an email to all managers who have not validated their timesheet")
-    timesheet_mail_manager_delay = fields.Integer("Number of days", default=7)
+    timesheet_mail_manager_delay = fields.Integer("Number of days (for manager)", default=7)
     timesheet_mail_manager_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
-    ], string='Frequency', required=True, default="weeks")
+    ], string='Frequency (for manager)', required=True, default="weeks")
     timesheet_mail_manager_nextdate = fields.Datetime('Next scheduled date for manager reminder', readonly=True)
 
     @api.model
