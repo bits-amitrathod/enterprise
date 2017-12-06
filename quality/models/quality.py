@@ -52,7 +52,7 @@ class QualityPoint(models.Model):
                                    required=True, default=_get_default_test_type_id)
     test_type = fields.Char(related='test_type_id.technical_name')
     note = fields.Html('Note')
-    reason = fields.Html('Note')
+    reason = fields.Html('Reason')
 
     def _compute_check_count(self):
         check_data = self.env['quality.check'].read_group([('point_id', 'in', self.ids)], ['point_id'], ['point_id'])
@@ -152,7 +152,7 @@ class QualityCheck(models.Model):
     product_id = fields.Many2one(
         'product.product', 'Product',
         domain="[('type', 'in', ['consu', 'product'])]", required=True)
-    picking_id = fields.Many2one('stock.picking', 'Operation')
+    picking_id = fields.Many2one('stock.picking', 'Picking')
     lot_id = fields.Many2one('stock.production.lot', 'Lot', domain="[('product_id', '=', product_id)]")
     user_id = fields.Many2one('res.users', 'Responsible', track_visibility='onchange')
     team_id = fields.Many2one('quality.alert.team', 'Team', required=True)
@@ -215,7 +215,7 @@ class QualityAlert(models.Model):
     tag_ids = fields.Many2many('quality.tag', string="Tags")
     date_assign = fields.Datetime('Date Assigned')
     date_close = fields.Datetime('Date Closed')
-    picking_id = fields.Many2one('stock.picking', 'Operation')
+    picking_id = fields.Many2one('stock.picking', 'Picking')
     action_corrective = fields.Text('Corrective Action')
     action_preventive = fields.Text('Preventive Action')
     user_id = fields.Many2one('res.users', 'Responsible', track_visibility='onchange', default=lambda self: self.env.user)

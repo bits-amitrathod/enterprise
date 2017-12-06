@@ -20,7 +20,7 @@ class QualityPoint(models.Model):
         ('periodical', 'Periodically')], string="Frequency",
         default='all', required=True)
     measure_frequency_value = fields.Float('Percentage')  # TDE RENAME ?
-    measure_frequency_unit_value = fields.Integer('Frequency')  # TDE RENAME ?
+    measure_frequency_unit_value = fields.Integer('Frequency Unit Value')  # TDE RENAME ?
     measure_frequency_unit = fields.Selection([
         ('day', 'Day(s)'),
         ('week', 'Week(s)'),
@@ -28,7 +28,7 @@ class QualityPoint(models.Model):
     norm = fields.Float('Norm', digits=dp.get_precision('Quality Tests'))  # TDE RENAME ?
     tolerance_min = fields.Float('Min Tolerance', digits=dp.get_precision('Quality Tests'))
     tolerance_max = fields.Float('Max Tolerance', digits=dp.get_precision('Quality Tests'))
-    norm_unit = fields.Char('Unit of Measure', default=lambda self: 'mm')  # TDE RENAME ?
+    norm_unit = fields.Char('Norm Unit', default=lambda self: 'mm')  # TDE RENAME ?
     average = fields.Float(compute="_compute_standard_deviation_and_average")
     standard_deviation = fields.Float(compute="_compute_standard_deviation_and_average")
 

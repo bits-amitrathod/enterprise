@@ -286,7 +286,7 @@
                         <label for="measure" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
                         <div attrs="{'invisible': [('test_type', '!=', 'measure')]}" class="o_row">
                             <field name="measure" attrs="{'required': [('test_type', '=', 'measure')]}"/>
-                            <field name="norm_unit"/>
+                            <field name="norm_unit" string="Unit of Measure"/>
                         </div>
                     </group>
                 </group>
@@ -800,7 +800,7 @@
                     <span attrs="{'invisible': [('measure_frequency_type', '=', 'all')]}">Every </span>
                     <field name="measure_frequency_value" nolabel="1" attrs="{'invisible': [('measure_frequency_type', '!=', 'random')]}"/>
                     <label for="measure_frequency_value" string="% of the operation" attrs="{'invisible': [('measure_frequency_type', '!=', 'random')]}"/>
-                    <field name="measure_frequency_unit_value" nolabel="1" attrs="{'invisible': [('measure_frequency_type', '!=', 'periodical')]}"/>
+                    <field name="measure_frequency_unit_value" string="Frequency" nolabel="1" attrs="{'invisible': [('measure_frequency_type', '!=', 'periodical')]}"/>
                     <field name="measure_frequency_unit" attrs="{'invisible': [('measure_frequency_type', '!=', 'periodical')]}"/>
                 </div>
             </xpath>
@@ -808,7 +808,7 @@
                 <label for="norm" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
                 <div class="o_row" attrs="{'invisible': [('test_type', '!=', 'measure')]}">
                     <field name="norm" attrs="{'required': [('test_type', '=', 'measure')]}"/>
-                    <field name="norm_unit" attrs="{'required': [('test_type', '=', 'measure')]}"/>
+                    <field name="norm_unit" string="Unit of Measure" attrs="{'required': [('test_type', '=', 'measure')]}"/>
                 </div>
                 <label for="tolerance_min" string="Tolerance" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
                 <div attrs="{'invisible': [('test_type', '!=', 'measure')]}" class="o_row">
