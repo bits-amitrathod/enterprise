@@ -32,6 +32,7 @@ var SalaryPackageWidget = Widget.extend({
 
     init: function(parent, options) {
         this._super(parent);
+        this.dp = new concurrency.DropPrevious();
         this.update_gross_to_net_computation();
         $("div#company_car select").val() === 'new' ? $("div#new_company_car").removeClass('hidden') : $("div#new_company_car").addClass('hidden')
         var transport_mode = _.find($("input[name='mobility']"), function(transport_mode) {
@@ -63,7 +64,6 @@ var SalaryPackageWidget = Widget.extend({
         $('b[role="presentation"]').hide();
         $('.select2-arrow').append('<i class="fa fa-chevron-down"></i>');
         this.update_gross = _.debounce(this.update_gross, 1000);
-        this.dp = new concurrency.DropPrevious();
     },
 
     willStart: function() {
