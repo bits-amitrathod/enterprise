@@ -48,7 +48,7 @@ class SignatureRequest(models.Model):
 
     color = fields.Integer()
     request_item_infos = fields.Binary(compute="_compute_request_item_infos")
-    last_action_date = fields.Datetime(related="message_ids.create_date", readonly=True)
+    last_action_date = fields.Datetime(related="message_ids.create_date", string="Last Action on", readonly=True)
 
     @api.one
     @api.depends('request_item_ids.state')
