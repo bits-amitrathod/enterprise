@@ -20,8 +20,8 @@ class ResConfigSettings(models.TransientModel):
     ebay_domain = fields.Selection([
         ('prod', 'Production'),
         ('sand', 'Sandbox'),
-    ], string='Mode', default='sand', required=True)
-    ebay_currency = fields.Many2one("res.currency", string='Currency',
+    ], string='eBay Mode', default='sand', required=True)
+    ebay_currency = fields.Many2one("res.currency", string='ebay Currency',
                                     domain=[('ebay_available', '=', True)], required=True)
     ebay_country = fields.Many2one("res.country", domain=[('ebay_available', '=', True)],
                                    string="Country")
@@ -29,7 +29,7 @@ class ResConfigSettings(models.TransientModel):
     ebay_zip_code = fields.Char(string="Zip")
     ebay_location = fields.Char(string="Location")
     ebay_out_of_stock = fields.Boolean("Out Of Stock", default=False)
-    ebay_sales_team = fields.Many2one("crm.team", string="Sales Channel")
+    ebay_sales_team = fields.Many2one("crm.team", string="ebay Sales Channel")
     ebay_gallery_plus = fields.Boolean("Gallery Plus", default=False)
 
     @api.multi
