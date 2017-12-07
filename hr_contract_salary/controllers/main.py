@@ -333,8 +333,8 @@ class website_hr_contract_salary(http.Controller):
         for item in items:
             new_value = new_contract
             for elem in item.name.split('.'):
-                if hasattr(new_value, elem):
-                    new_value = getattr(new_value, elem)
+                if elem in new_value:
+                    new_value = new_value[elem]
                 else:
                     new_value = ''
             if isinstance(new_value, models.BaseModel):
