@@ -406,7 +406,7 @@
     <record id="skr_bs_liabilities_b" model="account.financial.html.report.line">
         <field name="name">B. Sonderposten mit Rücklageanteil</field>
         <field name="code">SKR_BS_LIABILITIES_B</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_liabilities_total'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_B')])]"/>
         <field name="groupby">account_id</field>
@@ -432,7 +432,7 @@
     <record id="skr_bs_liabilities_e" model="account.financial.html.report.line">
         <field name="name">E. Rechnungsabgrenzungsposten</field>
         <field name="code">SKR_BS_LIABILITIES_E</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_liabilities_total'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_E')])]"/>
         <field name="groupby">account_id</field>
@@ -442,7 +442,7 @@
     <record id="skr_bs_liabilities_f" model="account.financial.html.report.line">
         <field name="name">F. Passive latente Steuern</field>
         <field name="code">SKR_BS_LIABILITIES_F</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_liabilities_total'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_F')])]"/>
         <field name="groupby">account_id</field>
@@ -454,7 +454,7 @@
     <record id="skr_bs_liabilities_a_i" model="account.financial.html.report.line">
         <field name="name">I. Gezeichnetes Kapital</field>
         <field name="code">SKR_BS_LIABILITIES_A1</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_a'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_I')])]"/>
         <field name="groupby">account_id</field>
@@ -464,7 +464,7 @@
     <record id="skr_bs_liabilities_a_ii" model="account.financial.html.report.line">
         <field name="name">II. Kapitalrücklage</field>
         <field name="code">SKR_BS_LIABILITIES_A2</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_a'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_II')])]"/>
         <field name="groupby">account_id</field>
@@ -482,7 +482,7 @@
     <record id="skr_bs_liabilities_a_iv" model="account.financial.html.report.line">
         <field name="name">IV. Gewinnvortrag/Verlustvortrag</field>
         <field name="code">SKR_BS_LIABILITIES_A4</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_a'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_IV')])]"/>
         <field name="groupby">account_id</field>
@@ -510,7 +510,7 @@
     <record id="skr_bs_liabilities_a_iii_1" model="account.financial.html.report.line">
         <field name="name">1. Gesetzliche Rücklage</field>
         <field name="code">SKR_BS_LIABILITIES_A31</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_a_iii'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_III_1')])]"/>
         <field name="groupby">account_id</field>
@@ -520,7 +520,7 @@
     <record id="skr_bs_liabilities_a_iii_2" model="account.financial.html.report.line">
         <field name="name">2. Rücklage für Anteile an einem herrschenden oder mehrheitlich beteiligten Unternehmen</field>
         <field name="code">SKR_BS_LIABILITIES_A32</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_a_iii'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_III_2')])]"/>
         <field name="groupby">account_id</field>
@@ -530,7 +530,7 @@
     <record id="skr_bs_liabilities_a_iii_3" model="account.financial.html.report.line">
         <field name="name">3. Satzungsmäßige Rücklagen</field>
         <field name="code">SKR_BS_LIABILITIES_A33</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_a_iii'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_III_3')])]"/>
         <field name="groupby">account_id</field>
@@ -540,7 +540,7 @@
     <record id="skr_bs_liabilities_a_iii_4" model="account.financial.html.report.line">
         <field name="name">4. Andere Gewinnrücklagen</field>
         <field name="code">SKR_BS_LIABILITIES_A34</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_a_iii'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_III_4')])]"/>
         <field name="groupby">account_id</field>
@@ -552,7 +552,7 @@
     <record id="skr_bs_liabilities_c_1" model="account.financial.html.report.line">
         <field name="name">1. Rückstellungen für Pensionen und ähnliche Verpflichtungen</field>
         <field name="code">SKR_BS_LIABILITIES_C1</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_c'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_C_1')])]"/>
         <field name="groupby">account_id</field>
@@ -562,7 +562,7 @@
     <record id="skr_bs_liabilities_c_2" model="account.financial.html.report.line">
         <field name="name">2. Steuerrückstellungen</field>
         <field name="code">SKR_BS_LIABILITIES_C2</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_c'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_C_2')])]"/>
         <field name="groupby">account_id</field>
@@ -572,7 +572,7 @@
     <record id="skr_bs_liabilities_c_3" model="account.financial.html.report.line">
         <field name="name">3. Sonstige Rückstellungen</field>
         <field name="code">SKR_BS_LIABILITIES_C3</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_c'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_C_3')])]"/>
         <field name="groupby">account_id</field>
@@ -584,7 +584,7 @@
     <record id="skr_bs_liabilities_d_1" model="account.financial.html.report.line">
         <field name="name">1. Anleihen, davon konvertibeln</field>
         <field name="code">SKR_BS_LIABILITIES_D1</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_1')])]"/>
         <field name="groupby">account_id</field>
@@ -594,7 +594,7 @@
     <record id="skr_bs_liabilities_d_2" model="account.financial.html.report.line">
         <field name="name">2. Verbindlichkeiten gegenüber Kreditinstituten</field>
         <field name="code">SKR_BS_LIABILITIES_D2</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_2')])]"/>
         <field name="groupby">account_id</field>
@@ -604,7 +604,7 @@
     <record id="skr_bs_liabilities_d_3" model="account.financial.html.report.line">
         <field name="name">3. Erhaltene Anzahlungen auf Bestellungen</field>
         <field name="code">SKR_BS_LIABILITIES_D3</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_3')])]"/>
         <field name="groupby">account_id</field>
@@ -614,7 +614,7 @@
     <record id="skr_bs_liabilities_d_4" model="account.financial.html.report.line">
         <field name="name">4. Verbindlichkeiten aus Lieferungen und Leistungen</field>
         <field name="code">SKR_BS_LIABILITIES_D4</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_4')])]"/>
         <field name="groupby">account_id</field>
@@ -624,7 +624,7 @@
     <record id="skr_bs_liabilities_d_5" model="account.financial.html.report.line">
         <field name="name">5. Verbindlichkeiten aus der Annahme gezogener Wechsel und der Ausstellung eigener Wechsel</field>
         <field name="code">SKR_BS_LIABILITIES_D5</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_5')])]"/>
         <field name="groupby">account_id</field>
@@ -634,7 +634,7 @@
     <record id="skr_bs_liabilities_d_6" model="account.financial.html.report.line">
         <field name="name">6. Verbindlichkeiten gegenüber verbundenen Unternehmen</field>
         <field name="code">SKR_BS_LIABILITIES_D6</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_6')])]"/>
         <field name="groupby">account_id</field>
@@ -644,7 +644,7 @@
     <record id="skr_bs_liabilities_d_7" model="account.financial.html.report.line">
         <field name="name">7. Verbindlichkeiten gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht</field>
         <field name="code">SKR_BS_LIABILITIES_D7</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_7')])]"/>
         <field name="groupby">account_id</field>
@@ -654,7 +654,7 @@
     <record id="skr_bs_liabilities_d_8" model="account.financial.html.report.line">
         <field name="name">8. Sonstige Verbindlichkeiten, davon aus Steuern, davon im Rahmen der sozialen Sicherheit</field>
         <field name="code">SKR_BS_LIABILITIES_D8</field>
-        <field name="formulas">balance = sum.balance</field>
+        <field name="formulas">balance = -sum.balance</field>
         <field name="parent_id" ref='skr_bs_liabilities_d'/>
         <field name="domain" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_D_8')])]"/>
         <field name="groupby">account_id</field>
