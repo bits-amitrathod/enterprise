@@ -48,12 +48,14 @@ msgid ""
 "${object.company_id.name or object.user_id.company_id.name or 'Helpdesk'}: "
 "Service Rating Request"
 msgstr ""
+"${object.project_id.company_id.name}: Anfrage zur Bewertung von "
+"Dienstleistungen"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.new_ticket_request_email_template
 #: model:mail.template,subject:helpdesk.solved_ticket_request_email_template
 msgid "${object.display_name}"
-msgstr ""
+msgstr "${object.display_name}"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_percentage_satisfaction
@@ -154,6 +156,23 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"    <div style=\"margin-left:30px;align=center;\">\n"
+"        Sehr geehrte(r) ${object.sudo().partner_id.name or 'Frau, Herr'},\n"
+"    </div>\n"
+"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
+"        Diese automatische Meldung informiert Sie, dass wir Ihr Ticket geschlossen haben. (reference ${object.id}).\n"
+"\n"
+"        Wir hoffen, dass die erbrachten Leistungen Ihren Erwartungen entsprochen haben.\n"
+"        Wenn Sie weitere Fragen oder Anmerkungen haben, zögern Sie nicht, auf diese E-Mail zu antworten, um Ihr Ticket erneut zu öffnen.\n"
+"\n"
+"        Vielen Dank für Ihre Mitarbeit. .\n"
+"    </div><br/>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">Beste Grüße, </span>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} Team.</span>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
@@ -178,6 +197,25 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"    <div style=\"margin-left:30px;align=center;\">\n"
+"        Dies ist eine automatische Nachricht:<br/>\n"
+"        Sehr geehrte(r) ${object.sudo().partner_id.name or 'Frau, Herr'},\n"
+"    </div>\n"
+"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
+"        Ihre Anfrage\n"
+"        % if object.access_token:\n"
+"        <a href=\"/helpdesk/ticket/${object.id}/${object.access_token}\">${object.name}</a>\n"
+"        % endif\n"
+"        ist bei uns eingegangen und wird von unserem ${object.team_id.name or ''} team bearbeitet.\n"
+"        Ihre Ticketnummer ist  ${object.id}.\n"
+"        <br/>Um zusätzliche Kommentare hinzuzufügen, antworten Sie auf diese E-Mail.\n"
+"    </div><br/>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">Vielen Dank </span>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} Team.</span>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #. openerp-web
@@ -187,6 +225,8 @@ msgid ""
 "<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
 "from here!"
 msgstr ""
+"<b>Sterne</b> makieren die  <b>Ticket-Priorität</b>. Du kannst es direkt "
+"hier ändern."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
@@ -196,12 +236,12 @@ msgstr "<i class=\"fa fa-arrow-circle-right \"/> Feedback ansehen"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/>Domainnamen konfigurieren"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> View documentation"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/>Dokumentation anzeigen"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
@@ -216,7 +256,7 @@ msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "<i/> Customer Satisfaction Ration:"
-msgstr ""
+msgstr "<i/>Kundenzufriedenheit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -234,6 +274,8 @@ msgid ""
 "<span class=\"text-muted\">NB: This will archive the selected tickets "
 "(Except the destination ticket)</span>"
 msgstr ""
+"<span class=\"text-muted\">NB: Dies archiviert das ausgewählte Ticket (Außer"
+" dem Zielticket)</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -282,6 +324,9 @@ msgid ""
 "            customers that specifies performance measures for support\n"
 "            by ticket priority."
 msgstr ""
+"Eine Service-Level-Vereinbarung ist ein Vertrag zwischen Ihnen und Ihrem "
+"Kunden , die Leistungsindikatoren für den Support festlegen sortiert nach "
+"Ticketpriorität."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket_kanban_state
@@ -291,6 +336,10 @@ msgid ""
 "* Blocked indicates something is preventing the progress of this issue\n"
 "* Ready for next stage indicates the issue is ready to be pulled to the next stage"
 msgstr ""
+"Der Kanban-Status eines Tickets weist auf besondere Situationen hin, die es zu beachten gibt\n"
+"* Normal ist die standard Situation\n"
+"* Blockiert zeigt an, dass etwas den Fortschritt dieses Problems behindert.\n"
+"* Bereit für die nächste Stufe zeigt an, dass das Ticket bereit ist, in die nächste Stufe gezogen zu werden."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_api
@@ -316,6 +365,8 @@ msgid ""
 "Add columns to configure <b>stages for your tickets</b>.<br/><i>e.g. "
 "Awaiting Customer Feedback, Customer Followup, ...</i>"
 msgstr ""
+"Hinzufügen von Spalten zur Konfiguration <b>von Stufen für Ihre "
+"Tickets</b>.<br/><i>e.g. warten auf Kundenfeedback, Kunden Followup, ...</i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
