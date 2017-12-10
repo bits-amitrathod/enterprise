@@ -45,12 +45,14 @@ msgid ""
 "${object.company_id.name or object.user_id.company_id.name or 'Helpdesk'}: "
 "Service Rating Request"
 msgstr ""
+"${object.project_id.company_id.name}: Anfrage zur Bewertung von "
+"Dienstleistungen"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.new_ticket_request_email_template
 #: model:mail.template,subject:helpdesk.solved_ticket_request_email_template
 msgid "${object.display_name}"
-msgstr ""
+msgstr "${object.display_name}"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_percentage_satisfaction
@@ -218,6 +220,9 @@ msgid ""
 "            customers that specifies performance measures for support\n"
 "            by ticket priority."
 msgstr ""
+"Eine Service-Level-Vereinbarung ist ein Vertrag zwischen Ihnen und Ihrem "
+"Kunden , die Leistungsindikatoren für den Support festlegen sortiert nach "
+"Ticketpriorität."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket_kanban_state
@@ -227,6 +232,10 @@ msgid ""
 "* Blocked indicates something is preventing the progress of this issue\n"
 "* Ready for next stage indicates the issue is ready to be pulled to the next stage"
 msgstr ""
+"Der Kanban-Status eines Tickets weist auf besondere Situationen hin, die es zu beachten gibt\n"
+"* Normal ist die standard Situation\n"
+"* Blockiert zeigt an, dass etwas den Fortschritt dieses Problems behindert.\n"
+"* Bereit für die nächste Stufe zeigt an, dass das Ticket bereit ist, in die nächste Stufe gezogen zu werden."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_api

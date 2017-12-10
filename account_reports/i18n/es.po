@@ -12,9 +12,9 @@
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 # Alejandro Die Sanchis <marketing@domatix.com>, 2016
 # Gafic SLP Albert Cabedo (GAFIC, SLP) <albertgafic@gmail.com>, 2016
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2016
 # Antonio Trueba <atgayol@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
-# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2016
 # Ivan Nieto <ivan.n.s@tuta.io>, 2016
 # oihane <oihanecruce@gmail.com>, 2016
 # Carles Antoli <carlesantoli@hotmail.com>, 2016
@@ -175,7 +175,7 @@ msgstr "<span class=\"o_stat_text\">Vencido</span>"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view_account_manager
 msgid "<span title=\"Latest Statement\">Latest Statement</span>"
-msgstr "<span title=\"Latest Statement\">Último Extracto</span>"
+msgstr "<span title=\"Latest Statement\">Último extracto</span>"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_all
@@ -190,8 +190,8 @@ msgstr ""
 msgid ""
 "<strong>Warning!</strong> No action needs to be taken for this partner."
 msgstr ""
-"<strong>¡Advertencia!</strong> Ninguna acción debe tomarse para este "
-"contacto."
+"<strong>¡Advertencia!</strong> No es necesaria ninguna acción con esta "
+"empresa.."
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.report_followup_all
@@ -318,7 +318,7 @@ msgstr "Anticipos hechos a proveedores"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_aged_partner
 msgid "Aged Partner Balances"
-msgstr "Balances Vencidos de Contactos"
+msgstr "Saldos vencidos de empresa"
 
 #. module: account_reports
 #. openerp-web
@@ -364,12 +364,12 @@ msgstr "Todos los diarios"
 #. module: account_reports
 #: selection:account.report.context.followup.all,partner_filter:0
 msgid "All partners in need of action"
-msgstr "Contactos que precisan una acción"
+msgstr "Empresas que precisan una acción"
 
 #. module: account_reports
 #: selection:account.report.context.followup.all,partner_filter:0
 msgid "All partners with overdue invoices"
-msgstr "Contactos con facturas vencidas"
+msgstr "Todas las empresas con facturas vencidas"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_financial_html_report_xml_export
@@ -1869,13 +1869,13 @@ msgstr "Menos Extractos Faltantes"
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:116
 #, python-format
 msgid "Minus Unreconciled Payments"
-msgstr "Menos Pagos No Reconciliados"
+msgstr "Menos pagos sin conciliar"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:143
 #, python-format
 msgid "Minus Unreconciled Statement Lines"
-msgstr "Menos líneas de Extractos No Reconciliados"
+msgstr "Menos líneas de extractos no conciliadas"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_regulator0
@@ -2191,12 +2191,12 @@ msgstr "Id Padre"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_context_followup_partner_id
 #, python-format
 msgid "Partner"
-msgstr "Contacto"
+msgstr "Empresa"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_context_followup_all_partner_filter
 msgid "Partner Filter"
-msgstr "Filtro Contacto"
+msgstr "Filtro empresa"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_partner_ledger.py:176
@@ -2206,24 +2206,24 @@ msgstr "Filtro Contacto"
 #: model:ir.ui.view,arch_db:account_reports.report_financial_line
 #, python-format
 msgid "Partner Ledger"
-msgstr "Libro de Contacto"
+msgstr "Libro mayor de empresas"
 
 #. module: account_reports
 #. openerp-web
 #: code:addons/account_reports/static/src/xml/account_report_backend.xml:7
 #, python-format
 msgid "Partners:"
-msgstr "Contactos:"
+msgstr "Empresas:"
 
 #. module: account_reports
 #: selection:account.partner.ledger.context,account_type:0
 msgid "Payable Accounts"
-msgstr "Cuentas por Pagar"
+msgstr "Cuentas a pagar"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_current_liabilities_payable
 msgid "Payables"
-msgstr "Por Pagar"
+msgstr "A pagar"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_context_followup_all_percentage
@@ -2273,7 +2273,7 @@ msgstr "Más Pagos No Conciliados"
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:129
 #, python-format
 msgid "Plus Unreconciled Statement Lines"
-msgstr "Más Líneas de Extractos No Reconciliados"
+msgstr "Más líneas de extractos no conciliadas"
 
 #. module: account_reports
 #. openerp-web
@@ -2281,7 +2281,7 @@ msgstr "Más Líneas de Extractos No Reconciliados"
 #: model:ir.ui.view,arch_db:account_reports.report_financial_body
 #, python-format
 msgid "Posted Entries Only"
-msgstr "Sólo Entradas Contabilizadas"
+msgstr "Sólo asientos validados"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_prepayements0
@@ -2310,12 +2310,12 @@ msgstr "Imprimir Carta"
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_pnl
 msgid "Profit And Loss"
-msgstr "Ganancias y Pérdidas"
+msgstr "Pérdidas y ganancias"
 
 #. module: account_reports
 #: model:account.financial.html.report,name:account_reports.account_financial_report_profitandloss0
 msgid "Profit and Loss"
-msgstr "Ganancias y Pérdidas"
+msgstr "Pérdidas y ganancias"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_generic_tax_report.py:109
@@ -2343,17 +2343,17 @@ msgstr "INGRESOS RETENIDOS"
 #. module: account_reports
 #: selection:account.partner.ledger.context,account_type:0
 msgid "Receivable Accounts"
-msgstr "Cuentas por Cobrar"
+msgstr "Cuentas a cobrar"
 
 #. module: account_reports
 #: selection:account.partner.ledger.context,account_type:0
 msgid "Receivable and Payable Accounts"
-msgstr "Cuentras por Cobrar y Pagar"
+msgstr "Cuentas a pagar y a cobrar"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_receivable0
 msgid "Receivables"
-msgstr "Por Cobrar"
+msgstr "A cobrar"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
@@ -2525,7 +2525,7 @@ msgstr "Mostrar jerarquías"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_context_followup_all_skipped_partners_ids
 msgid "Skipped partners"
-msgstr "Contactos omitidos"
+msgstr "Empresas omitidas"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_special_date_changer
@@ -2789,7 +2789,7 @@ msgstr "Líneas desplegadas"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_partner_unreconciled_aml_ids
 msgid "Unreconciled aml ids"
-msgstr "Ids AML irreconciliables"
+msgstr "aml ids sin conciliar"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_context_aged_payable_all_entries
@@ -2803,7 +2803,7 @@ msgstr "Ids AML irreconciliables"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_context_followup_all_entries
 #: model:ir.model.fields,field_description:account_reports.field_account_report_context_tax_all_entries
 msgid "Use all entries (not only posted ones)"
-msgstr "Usar todas las entradas (no sólo las contabilizados)"
+msgstr "Usar todos los asientos (no sólo los validados)"
 
 #. module: account_reports
 #: selection:account.financial.html.report.line,special_date_changer:0
