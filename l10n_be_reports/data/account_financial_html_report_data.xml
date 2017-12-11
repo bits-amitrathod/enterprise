@@ -6,7 +6,7 @@
 
         <record id="account_financial_report_be_balancesheet0" model="account.financial.html.report">
             <field name="name">Bilan</field>
-            <field name="debit_credit" eval="True"/>
+            <field name="unfold_all_filter" eval="True"/>
             <field name="date_range" eval="False" />
             <field name='parent_id' ref='l10n_be.account_reports_be_statements_menu'/>
         </record>
@@ -682,6 +682,7 @@
         <record id="account_financial_report_be_profitandloss0" model="account.financial.html.report">
             <field name="name">Compte de résultats</field>
             <field name="debit_credit" eval="False"/>
+            <field name="unfold_all_filter" eval="True"/>
             <field name='parent_id' ref='l10n_be.account_reports_be_statements_menu'/>
         </record>
 
