@@ -6,6 +6,7 @@ from . import account_payment
 from . import res_config_settings
 from . import account_invoice
 from . import certificate
+from . import ir_attachment
 from . import ir_view
 from . import mail_template
 from . import payment_method

@@ -5,6 +5,7 @@ import os
 
 from lxml import etree, objectify
 
+from odoo.exceptions import ValidationError
 from odoo.tools import misc
 
 from . import common
@@ -65,6 +66,27 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
                          invoice.message_ids.mapped('body'))
+
+        # -------------------------------------------------------
+        # Testing deletion of attachments (XML & PDF) once signed
+        # -------------------------------------------------------
+        xml_attachment = self.env['ir.attachment'].search([
+            ('res_id', '=', invoice.id),
+            ('res_model', '=', 'account.invoice'),
+            ('name', '=', invoice.l10n_mx_edi_cfdi_name)])
+        error_msg = 'You cannot delete a set of documents which has a legal'
+        with self.assertRaisesRegexp(ValidationError, error_msg):
+            xml_attachment.unlink()
+        # Creates a dummy PDF to attach it and then try to delete it
+        pdf_filename = '%s.pdf' % os.path.splitext(xml_attachment.name)[0]
+        pdf_attachment = self.env['ir.attachment'].with_context({}).create({
+            'name': pdf_filename,
+            'res_id': invoice.id,
+            'res_model': 'account.invoice',
+            'datas': base64.encodestring(b'%PDF-1.3'),
+        })
+        with self.assertRaisesRegexp(ValidationError, error_msg):
+            pdf_attachment.unlink()
 
         # ----------------
         # Testing discount
