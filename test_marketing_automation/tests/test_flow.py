@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 from odoo.fields import Datetime
 from odoo.tools import mute_logger
 
-from odoo.addons.marketing_automation.tests.common import MarketingCampaignTestBase
+from odoo.addons.test_marketing_automation.tests.common import MarketingCampaignTestBase
 
 
 class MarketingCampaignTest(MarketingCampaignTestBase):
