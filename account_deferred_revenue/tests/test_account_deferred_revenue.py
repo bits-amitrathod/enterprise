@@ -3,6 +3,7 @@
 from odoo import tools
 from odoo.tests import common
 from odoo.modules.module import get_module_resource
+from odoo.tools import float_compare
 
 
 class TestDeferredRevenue(common.TransactionCase):
@@ -58,7 +59,7 @@ class TestDeferredRevenue(common.TransactionCase):
         # I check data in move line and installment line.
         first_installment_line = recognition.depreciation_line_ids.sorted(lambda r: r.id)[0]
         first_move = first_installment_line.move_id
-        self.assertEqual(first_installment_line.amount, first_move.amount,
+        self.assertEqual(float_compare(first_installment_line.amount, first_move.amount, precision_digits=2), 0,
             'First installment line amount is incorrect.')
         self.assertEqual(first_installment_line.remaining_value, recognition.value - first_installment_line.amount,
             'Remaining value is incorrect.')
