@@ -487,31 +487,8 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
     },
 });
 
-ActionManager.include({
-    ir_actions_account_report_download: function(action, options) {
-        var self = this;
-        var c = crash_manager;
-        return $.Deferred(function (d) {
-            self.getSession().get_file({
-                url: '/account_reports',
-                data: action.data,
-                complete: framework.unblockUI,
-                success: function(){
-                    if (!self.dialog) {
-                        options.on_close();
-                    }
-                    self.dialog_stop();
-                    d.resolve();
-                },
-                error: function () {
-                    c.rpc_error.apply(c, arguments);
-                    d.reject();
-                }
-            });
-        });
-    }
-});
-
 core.action_registry.add('account_report', accountReportsWidget);
+
 return accountReportsWidget;
+
 });
