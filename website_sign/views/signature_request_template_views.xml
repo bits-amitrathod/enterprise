@@ -6,7 +6,7 @@
         <field name="model">signature.request.template</field>
         <field name="arch" type="xml">
             <kanban quick_create="false">
-                <field name="archived"/>
+                <field name="active"/>
                 <field name="attachment_id"/>
                 <field name="color"/>
                 <field name="create_date"/>
@@ -21,9 +21,9 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a type="open" groups="base.group_no_one">Open</a></li>
-                                    <li><a type="object" name="toggle_archived">
-                                        <t t-if="record.archived.value">Restore</t>
-                                        <t t-if="!record.archived.value">Archive</t>
+                                    <li><a type="object" name="toggle_active">
+                                        <t t-if="!record.active.raw_value">Restore</t>
+                                        <t t-if="record.active.raw_value">Archive</t>
                                     </a></li>
                                     <li><a type="delete" groups="base.group_no_one">Delete</a></li>
                                     <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
@@ -71,7 +71,7 @@
 
                     <group>
                         <group>
-                            <field name="archived"/>
+                            <field name="active"/>
                         </group>
                         <group>
                             <field name="favorited_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
@@ -90,8 +90,8 @@
         <field name="arch" type="xml">
             <search>
                 <field name="attachment_id"/>
-                <filter name="no_archives" string="Active" domain="[('archived', '=', False)]"/>
-                <filter name="archive" string="Archived" domain="[('archived', '=', True)]"/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                <filter name="archive" string="Archived" domain="[('active', '=', False)]"/>
                 <separator/>
                 <filter name="favorite" string="Favorites" domain="[('favorited_ids', '=', uid)]"/>
             </search>
@@ -103,7 +103,7 @@
         <field name="res_model">signature.request.template</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" ref="signature_request_template_view_search"/>
-        <field name="context" eval="{'search_default_no_archives': 1}"/>
+        <field name="context" eval="{'search_default_active': 1}"/>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">Upload a PDF of contract to sign.</p>
             <p>

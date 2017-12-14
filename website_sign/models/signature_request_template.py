@@ -14,7 +14,7 @@ class SignatureRequestTemplate(models.Model):
     attachment_id = fields.Many2one('ir.attachment', string="Attachment", required=True, ondelete='cascade')
     signature_item_ids = fields.One2many('signature.item', 'template_id', string="Signature Items")
 
-    archived = fields.Boolean(default=False, string="Archived")
+    active = fields.Boolean(default=True, string="Active", oldname='archived')
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
 
     share_link = fields.Char(string="Share Link")
@@ -34,11 +34,6 @@ class SignatureRequestTemplate(models.Model):
                 'id': self.id,
             },
         }
-        
-    @api.multi
-    def toggle_archived(self):
-        self.ensure_one()
-        self.archived = not self.archived
 
     @api.multi
     def toggle_favorited(self):

@@ -43,7 +43,7 @@ class SignatureRequest(models.Model):
     nb_closed = fields.Integer(string="Completed Signatures", compute="_compute_count", store=True)
     progress = fields.Integer(string="Progress", compute="_compute_count")
 
-    archived = fields.Boolean(string="Archived", default=False)
+    active = fields.Boolean(default=True, string="Active", oldname='archived')
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
 
     color = fields.Integer()
@@ -125,11 +125,6 @@ class SignatureRequest(models.Model):
             'type': 'ir.actions.act_url',
             'url': '/sign/download/%(request_id)s/%(access_token)s/completed' % {'request_id': self.id, 'access_token': self.access_token},
         }
-
-    @api.multi
-    def toggle_archived(self):
-        self.ensure_one()
-        self.archived = not self.archived
 
     @api.multi
     def toggle_favorited(self):
