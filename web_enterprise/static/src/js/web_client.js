@@ -293,8 +293,6 @@ return AbstractWebClient.extend({
         return this.do_action(action, options);
     },
     toggle_app_switcher: function (display) {
-        this.$el.toggleClass('o_app_switcher_background', display);
-
         if (display === this.app_switcher_displayed) {
             return; // nothing to do (prevents erasing previously detached webclient content)
         }
@@ -315,6 +313,7 @@ return AbstractWebClient.extend({
 
                 // Attach the app_switcher
                 self.append_app_switcher();
+                self.$el.addClass('o_app_switcher_background');
 
                 // Save and clear the url
                 self.url = $.bbq.getState();
@@ -329,6 +328,7 @@ return AbstractWebClient.extend({
                 callbacks: [{widget: this.action_manager}],
             });
             this.app_switcher_displayed = false;
+            this.$el.removeClass('o_app_switcher_background');
             this.menu.toggle_mode(false, this.action_manager.get_inner_action() !== null);
         }
     },
