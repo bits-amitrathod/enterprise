@@ -12,6 +12,7 @@
         'l10n_ch', 'account_reports'
     ],
     'data': [
+        'data/account_tax_data.xml',
         'data/account_financial_html_report_data.xml',
     ],
     'installable': True,

@@ -22,7 +22,7 @@
         <field name="code">CHTAX_200</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="2"/>
-        <field name="formulas">balance = CHTAX_301a.balance + CHTAX_311a.balance + CHTAX_341a.balance + CHTAX_381a.balance</field>
+        <field name="formulas">balance = CHTAX_301a.balance + CHTAX_302a.balance + CHTAX_311a.balance + CHTAX_341a.balance + CHTAX_342a.balance + CHTAX_381a.balance</field>
         <field name="parent_id" ref="financial_report_line_chtax_299"/>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -35,8 +35,20 @@
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="financial_report_line_chtax_200"/>
         <field name="show_domain">never</field>
+        <field name="hide_if_zero" eval="True"/>
         <field name="special_date_changer">strict_range</field>
     </record>
+    <record id="financial_report_line_chtax_302a" model="account.financial.html.report.line">
+        <field name="name">302a Chiffre d'affaires imposable a 7.7% (TS)</field>
+        <field name="code">CHTAX_302a</field>
+        <field name="sequence" eval="4"/>
+        <field name="level" eval="3"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_ch.vat_tag_302_a')])]"/>
+        <field name="formulas">balance = - sum.balance</field>
+        <field name="parent_id" ref="financial_report_line_chtax_200"/>
+        <field name="show_domain">never</field>
+        <field name="special_date_changer">strict_range</field>
+    </record>    
     <record id="financial_report_line_chtax_311a" model="account.financial.html.report.line">
         <field name="name">311a Chiffre d'affaires imposable a 2.5% (TR)</field>
         <field name="code">CHTAX_311a</field>
@@ -54,6 +66,18 @@
         <field name="sequence" eval="3"/>
         <field name="level" eval="3"/>
         <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_ch.vat_tag_341_a')])]"/>
+        <field name="formulas">balance = - sum.balance</field>
+        <field name="parent_id" ref="financial_report_line_chtax_200"/>
+        <field name="show_domain">never</field>
+        <field name="hide_if_zero" eval="True" />
+        <field name="special_date_changer">strict_range</field>
+    </record>
+    <record id="financial_report_line_chtax_342a" model="account.financial.html.report.line">
+        <field name="name">342a Chiffre d'affaires imposable a 3.7% (TS)</field>
+        <field name="code">CHTAX_342a</field>
+        <field name="sequence" eval="3"/>
+        <field name="level" eval="3"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_ch.vat_tag_342_a')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="financial_report_line_chtax_200"/>
         <field name="show_domain">never</field>
@@ -151,7 +175,7 @@
         <field name="code">CHTAX_399</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="1"/>
-        <field name="formulas">balance = CHTAX_301b.balance + CHTAX_311b.balance + CHTAX_341b.balance + CHTAX_381b.balance</field>
+        <field name="formulas">balance = CHTAX_301b.balance + CHTAX_302b.balance + CHTAX_311b.balance + CHTAX_341b.balance + CHTAX_342b.balance + CHTAX_381b.balance</field>
         <field name="financial_report_id" ref="financial_report_l10n_ch"/>
         <field name="special_date_changer">strict_range</field>
     </record>
@@ -161,6 +185,18 @@
         <field name="sequence" eval="1"/>
         <field name="level" eval="2"/>
         <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_ch.vat_tag_301_b')])]"/>
+        <field name="formulas">balance = - sum.balance</field>
+        <field name="parent_id" ref="financial_report_line_chtax_399"/>
+        <field name="show_domain">never</field>
+        <field name="hide_if_zero" eval="True" />
+        <field name="special_date_changer">strict_range</field>
+    </record>
+    <record id="financial_report_line_chtax_302b" model="account.financial.html.report.line">
+        <field name="name">302b TVA due a 7.7% (TS)</field>
+        <field name="code">CHTAX_302b</field>
+        <field name="sequence" eval="4"/>
+        <field name="level" eval="2"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_ch.vat_tag_302_b')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="financial_report_line_chtax_399"/>
         <field name="show_domain">never</field>
@@ -183,6 +219,18 @@
         <field name="sequence" eval="3"/>
         <field name="level" eval="2"/>
         <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_ch.vat_tag_341_b')])]"/>
+        <field name="formulas">balance = - sum.balance</field>
+        <field name="parent_id" ref="financial_report_line_chtax_399"/>
+        <field name="show_domain">never</field>
+        <field name="hide_if_zero" eval="True" />
+        <field name="special_date_changer">strict_range</field>
+    </record>
+    <record id="financial_report_line_chtax_342b" model="account.financial.html.report.line">
+        <field name="name">342b TVA due a 3.7% (TS)</field>
+        <field name="code">CHTAX_342b</field>
+        <field name="sequence" eval="3"/>
+        <field name="level" eval="2"/>
+        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_ch.vat_tag_342_b')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="financial_report_line_chtax_399"/>
         <field name="show_domain">never</field>
