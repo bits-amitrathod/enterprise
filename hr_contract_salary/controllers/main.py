@@ -83,8 +83,10 @@ class website_hr_contract_salary(http.Controller):
     def get_salary_package_values(self, contract):
         return {
             'contract': contract,
-            'available_cars': request.env['fleet.vehicle'].sudo().search(contract._get_available_cars_domain()),
-            'can_be_requested_models': request.env['fleet.vehicle.model'].sudo().search(contract._get_possible_model_domain()),
+            'available_cars': request.env['fleet.vehicle'].sudo().search(
+                contract._get_available_cars_domain()).sorted(key=lambda car: car.total_depreciated_cost),
+            'can_be_requested_models': request.env['fleet.vehicle.model'].sudo().search(
+                contract._get_possible_model_domain()).sorted(key=lambda model: model.default_total_depreciated_cost),
             'states': request.env['res.country.state'].search([]),
             'countries': request.env['res.country'].search([]),
         }
