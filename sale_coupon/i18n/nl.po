@@ -6,13 +6,14 @@
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
+# Cas Vissers <casvissers@brahoo.nl>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,6 +66,8 @@ msgid ""
 "<br>\n"
 "                You may choose to apply the program reward immediatly on the sales order or to propose the reward for a next order. In the second case a coupon will be generated at the order confirmation for the customer to use it later."
 msgstr ""
+"<br>\n"
+"U kunt ervoor kiezen om de beloning van het programma onmiddellijk toe te passen op de verkooporder of om de beloning bij een volgende bestelling voor te stellen. In het tweede geval wordt een coupon gegenereerd bij de orderbevestiging zodat de klant deze later kan gebruiken."
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
@@ -141,6 +144,9 @@ msgid ""
 " example, a retailer might tell frequent customers to enter the promotion "
 "code 'THX001' to receive a 10%% discount on their whole order."
 msgstr ""
+"Een promotiecode is een code die gekoppeld is aan een marketingkorting. Een "
+"verkoper kan bijvoorbeeld frequente klanten vertellen om de promotiecode "
+"'THX001' in te voeren om 10 %% korting op hun hele bestelling te ontvangen."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_program_type
@@ -152,6 +158,10 @@ msgid ""
 "                A coupon program generates coupons with a code that can be used to generate a discount on the current\n"
 "                order or create a coupon for a next order."
 msgstr ""
+"Een promotieprogramma kan een beperkte promotie-aanbieding zonder code zijn (automatisch toegepast)\n"
+"of met een code zijn (weergegeven op een tijdschrift bijvoorbeeld), die een korting op de huidige order kan genereren\n"
+"bestelt of maakt een kortingsbon voor een volgende bestelling.\n"
+"Een kortingsbonprogramma genereert kortingsbonnen met een code die kunnen worden gebruikt om een korting op de huidige order te genereren of maakt een kortingsbon voor een volgende bestelling."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_active
@@ -242,6 +252,8 @@ msgid ""
 "Automatically Applied - No code is required, if the program rules are met, the reward is applied (Except the global discount or the free shipping rewards which are not cumulative)\n"
 "Use a code - If the program rules are met, a valid code is mandatory for the reward to be applied\n"
 msgstr ""
+"Automatisch toegepast - Er is geen code vereist, als aan de programmaregels is voldaan, wordt de beloning toegepast (Exclusief de globale korting of de gratis verzendkosten die niet cumulatief zijn)\n"
+"Gebruik een code - als aan de programmaregels is voldaan, is een geldige code verplicht om de beloning te ontvangen.\n"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_partners_domain
@@ -771,6 +783,8 @@ msgid ""
 "Percentage - Entered percentage discount will be provided\n"
 "Amount - Entered fixed amount discount will be provided"
 msgstr ""
+"Percentage - Ingevoerde kortingspercentage wordt verstrekt\n"
+"Bedrag - Ingevoerde korting met vast bedrag wordt verstrekt"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_discount_specific_product_id
@@ -800,6 +814,9 @@ msgid ""
 "Product used in the sales order to apply the discount. Each coupon program "
 "has its own reward product for reporting purpose"
 msgstr ""
+"Producten gebruikt in het verkooporder om korting op toe te passen. Elk "
+"kortingsbon programma heeft een eigen beloningsproduct voor rapportage "
+"doeleinden."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_id
@@ -969,7 +986,7 @@ msgstr "Minimale hoeveelheid regel"
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_minimum_amount_tax_inclusion
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule_rule_minimum_amount_tax_inclusion
 msgid "Rule Minimum Amount Tax Inclusion"
-msgstr ""
+msgstr "Minimale hoeveelheid inclusief BTW bedrag regel"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
