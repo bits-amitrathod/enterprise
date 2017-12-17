@@ -38,17 +38,17 @@ msgstr "${object.subject}"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "+ International Communication"
-msgstr ""
+msgstr "+ International Kommunikation"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "+32 2 290 34 90"
-msgstr ""
+msgstr "+32 2 290 34 90"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "00.00.00-000.00"
-msgstr ""
+msgstr "00.00.00-000.00"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -76,6 +76,18 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div>\n"
+"                    <h2>Tillykke!</h2>\n"
+"                    <p>Du kan konfigurere din lønpakke ved at klikke på nedenstående link.</p>\n"
+"                    <br/><br/>\n"
+"                    <center>\n"
+"                        <a href=\"${ctx.get('salary_package_url')}\" target=\"_blank\" style=\"background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;\" class=\"o_default_snippet_text\">Konfigurér din pakke</a>\n"
+"                        <br/><br/><br/>\n"
+"                    </center>\n"
+"\n"
+"                </div>\n"
+"            "
 
 #. module: hr_contract_salary
 #: model:mail.template,body_html:hr_contract_salary.mail_template_data_notification_email_send_offer
@@ -154,6 +166,79 @@ msgid ""
 "                </html>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<html>\n"
+"                <head/>\n"
+"                % set record = ctx.get('record')\n"
+"                % set company = record and record.company_id or user.company_id\n"
+"                <body style=\"margin: 0; padding: 0;\">\n"
+"                <table border=\"0\" width=\"100%\" cellpadding=\"0\" bgcolor=\"#ededed\" style=\"padding: 20px; background-color: #ededed\" summary=\"o_mail_notification\">\n"
+"                    <tbody>\n"
+"\n"
+"                      <!-- HEADER -->\n"
+"                      <tr>\n"
+"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
+"                            <tr>\n"
+"                              <td valign=\"middle\">\n"
+"                                  <span style=\"font-size:20px; color:white; font-weight: bold;\">\n"
+"                                      ${object.record_name}\n"
+"                                  </span>\n"
+"                              </td>\n"
+"                              <td valign=\"middle\" align=\"right\">\n"
+"                                  <img src=\"/logo.png?company=${company.id}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${company.name}\"/>\n"
+"                              </td>\n"
+"                            </tr>\n"
+"                          </table>\n"
+"                        </td>\n"
+"                      </tr>\n"
+"\n"
+"                      <!-- CONTENT -->\n"
+"                      <tr>\n"
+"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\" style=\"min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;\">\n"
+"                            <tbody>\n"
+"                              <td valign=\"top\" style=\"font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;\">\n"
+"                                ${object.body | safe}\n"
+"                              </td>\n"
+"                            </tbody>\n"
+"                          </table>\n"
+"                        </td>\n"
+"                      </tr>\n"
+"\n"
+"                      <!-- FOOTER -->\n"
+"                      <tr>\n"
+"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
+"                            <tr>\n"
+"                              <td valign=\"middle\" align=\"left\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
+"                                ${company.name}<br/>\n"
+"                                ${company.phone or ''}\n"
+"                              </td>\n"
+"                              <td valign=\"middle\" align=\"right\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
+"                                % if company.email:\n"
+"                                <a href=\"mailto:${company.email}\" style=\"text-decoration:none; color: white;\">${company.email}</a><br/>\n"
+"                                % endif\n"
+"                                % if company.website:\n"
+"                                    <a href=\"${company.website}\" style=\"text-decoration:none; color: white;\">\n"
+"                                        ${company.website}\n"
+"                                    </a>\n"
+"                                % endif\n"
+"                              </td>\n"
+"                            </tr>\n"
+"                          </table>\n"
+"                        </td>\n"
+"                      </tr>\n"
+"                      <tr>\n"
+"                        <td align=\"center\">\n"
+"                            Drevet af <a target=\"_blank\" href=\"https://www.odoo.com\">Odoo</a>.\n"
+"                        </td>\n"
+"                      </tr>\n"
+"                    </tbody>\n"
+"                </table>\n"
+"                </body>\n"
+"                </html>\n"
+"            "
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -163,12 +248,12 @@ msgstr "<i class=\"fa fa-1x fa-car fa-fw\"/> Transport"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-crosshairs fa-fw fa-lg\"/> Commissions"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-crosshairs fa-fw fa-lg\"/> Provisioner"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-cutlery fa-fw\"/> Meal Vouchers"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-cutlery fa-fw\"/> Måltidskuponer"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -178,7 +263,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-globe fa-fw fa-lg\"/> Internet Subscription"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-globe fa-fw fa-lg\"/> Internet abonnement"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -228,7 +313,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-mobile fa-fw fa-lg\"/> Phone Subscription"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-mobile fa-fw fa-lg\"/> Telefonabonnement"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -248,7 +333,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Employment Bonus"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/> Ansættelsesbonus"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -273,7 +358,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-tint fa-fw\"/> Fuel Card"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-tint fa-fw\"/> Benzinkort"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
@@ -286,6 +371,8 @@ msgid ""
 "<span class=\"help-block mt8\" id=\"internet_tooltip\">Your internet "
 "subscription will be paid up to this amount.</span>"
 msgstr ""
+"<span class=\"help-block mt8\" id=\"internet_tooltip\">Dit "
+"internetabonnement vil blive betalt op til dette beløb.</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -293,6 +380,8 @@ msgid ""
 "<span class=\"help-block mt8\" id=\"mobile_tooltip\">Your mobile phone "
 "subscription will be paid up to this amount.</span>"
 msgstr ""
+"<span class=\"help-block mt8\" id=\"mobile_tooltip\">Dit mobilabonnement vil"
+" blive betalt op til dette beløb.</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -311,6 +400,9 @@ msgid ""
 "transportation to go to work. The approximative amount reimbursed by the "
 "employer is calculated accordingly.</span>"
 msgstr ""
+"<span class=\"help-block mt8\">Indtast det månedlige beløb du bruger på "
+"offentlig trafik til og fra arbejde. Det omtrentlige beløb til refusion fra "
+"arbejdsgiveren beregnes tilsvarende.</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -339,7 +431,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<span class=\"help-block\">This is a monthly net amount.</span>"
-msgstr ""
+msgstr "<span class=\"help-block\">Dette er et månedligt nettebeløb.</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -368,12 +460,12 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_applicant_view_form
 msgid "<span class=\"o_stat_text\">Contracts</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Kontrakter</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "<span class=\"o_stat_text\">Signature Requests</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Underskriftsanmodninger</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
@@ -393,7 +485,7 @@ msgstr "Aktiv"
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_additional_note
 msgid "Additional Note"
-msgstr ""
+msgstr "Yderligere Note"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -408,18 +500,18 @@ msgstr "Ansøger"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "BASIC SALARY"
-msgstr ""
+msgstr "GRUNDLØN"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "BE10 3631 0709 4104"
-msgstr ""
+msgstr "BE10 3631 0709 4104"
 
 #. module: hr_contract_salary
 #: selection:hr.employee,certificate:0
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Bachelor"
-msgstr ""
+msgstr "Bachelor"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -429,7 +521,7 @@ msgstr "Bank konto"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Batman"
-msgstr ""
+msgstr "Batman"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -505,12 +597,12 @@ msgstr "Land"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_applicant_view_form
 msgid "Create Offer"
-msgstr ""
+msgstr "Opret Tilbud"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Customize your salary"
-msgstr ""
+msgstr "Tilpas din løn"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_res_config_settings_access_token_validity
@@ -560,12 +652,12 @@ msgstr "Deaktiveret"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Disabled Children"
-msgstr ""
+msgstr "Handicappede Børn"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Disabled Spouse"
-msgstr ""
+msgstr "Handicappet Ægtefælle"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -600,12 +692,12 @@ msgstr "E-mail"
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_emergency_contact
 msgid "Emergency Contact"
-msgstr ""
+msgstr "Kontaktperson i Nødstilfælde"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_emergency_phone
 msgid "Emergency Phone"
-msgstr ""
+msgstr "Telefonnummer på Kontaktperson i Nødstilfælde"
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_employee
@@ -636,17 +728,17 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "GROSS SALARY"
-msgstr ""
+msgstr "BRUTTOLØN"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Gross"
-msgstr ""
+msgstr "Brutto"
 
 #. module: hr_contract_salary
 #: model:signature.item.party,name:hr_contract_salary.signature_item_party_job_responsible
 msgid "HR Responsible"
-msgstr ""
+msgstr "HR Ansvarlig"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
@@ -654,11 +746,13 @@ msgid ""
 "He/She will review your contract.<br/> Feel free to contact him/her if you "
 "have further questions."
 msgstr ""
+"Han/Hun vil gennemgå din kontrakt.<br/> Kontakt endelig vedkommende hvis du "
+"har yderligere spørgsmål."
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Hide <i class=\"fa fa-chevron-up\"/>"
-msgstr ""
+msgstr "Skjul <i class=\"fa fa-chevron-up\"/>"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_active_employee
@@ -674,11 +768,12 @@ msgstr ""
 msgid ""
 "If you want to choose another car model, please contact your HR manager."
 msgstr ""
+"Kontakt venligt din HR leder, hvis du ønsker at vælge en anden bilmodel."
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "In case of emergency"
-msgstr ""
+msgstr "I nødstilfælde"
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_job
@@ -703,23 +798,23 @@ msgstr "Civilstand"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Married / Legal Cohabitant"
-msgstr ""
+msgstr "Gift / Registreret Partner"
 
 #. module: hr_contract_salary
 #: selection:hr.employee,certificate:0
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Master"
-msgstr ""
+msgstr "Kandidat"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Advantages"
-msgstr ""
+msgstr "Månedlige Fordele"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Advantages in Cash"
-msgstr ""
+msgstr "Månedlige Fordele i Kontanter"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -734,12 +829,12 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Salary"
-msgstr ""
+msgstr "Månedlig Løn"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "NET SALARY"
-msgstr ""
+msgstr "NETTELØN"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -749,17 +844,17 @@ msgstr "Navn"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "National Identification Number"
-msgstr ""
+msgstr "Nationalt ID Nummer"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Nationality"
-msgstr ""
+msgstr "Nationalitet"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Nature"
-msgstr ""
+msgstr "Natur"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -769,12 +864,12 @@ msgstr "Netto"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Net calculation"
-msgstr ""
+msgstr "Nettoudregning"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job_signature_request_template_id
 msgid "New Contract Document Template"
-msgstr ""
+msgstr "Dokumentskabelon til Ny Kontrakt"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -788,12 +883,14 @@ msgid ""
 "No HR responsible defined on the job position. Please contact an "
 "administrator."
 msgstr ""
+"Ingen HR ansvarlig angivet for denne stilling. Kontakt venligst en "
+"administrator."
 
 #. module: hr_contract_salary
 #: code:addons/hr_contract_salary/models/hr_contract.py:110
 #, python-format
 msgid "No home address defined on the employee!"
-msgstr ""
+msgstr "Ingen hjemmeadresse angivet for denne medarbejder!"
 
 #. module: hr_contract_salary
 #: code:addons/hr_contract_salary/controllers/main.py:290
@@ -802,11 +899,13 @@ msgid ""
 "No signature template defined on the job position. Please contact the HR "
 "responsible."
 msgstr ""
+"Ingen underskriftsskabelon angivet for denne stilling. Kontakt venligst den "
+"HR ansvarlige."
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Number of Dependent Children"
-msgstr ""
+msgstr "Antal Afhængige Børn"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -882,7 +981,7 @@ msgstr "Afvis Anmodning"
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_signature_request_ids
 msgid "Requested Signatures"
-msgstr ""
+msgstr "Anmodede Underskrifter"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -908,7 +1007,7 @@ msgstr "Sikkerheds Token"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "Send Contract Link"
-msgstr ""
+msgstr "Send Link til Kontrakt"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
@@ -958,12 +1057,12 @@ msgstr "Vej"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Street 2"
-msgstr ""
+msgstr "Vej 2"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "TAXABLE INCOME"
-msgstr ""
+msgstr "SKATTEPLIGTIG INDKOMST"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1000,12 +1099,12 @@ msgstr "enkemand"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "With Income"
-msgstr ""
+msgstr "Med Indkomst"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Without Income"
-msgstr ""
+msgstr "Uden Indkomst"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1015,7 +1114,7 @@ msgstr "Årlige Fordele"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Yearly Advantages in Cash"
-msgstr ""
+msgstr "Årlige Fordele i Kontanter"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package

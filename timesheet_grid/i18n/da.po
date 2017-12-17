@@ -67,6 +67,45 @@ msgid ""
 "</div>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
+"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            <p>Kære ${object.name},</p>\n"
+"            <p>Dette er en venlig påmindelse om at godkende dit teams timer for perioden : ${ctx.get('date_start')} - ${ctx.get('date_stop')}.</p>\n"
+"            % if ctx.get('action_url'):\n"
+"                <center>\n"
+"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">Bekræft dine timesedler</a>\n"
+"                </center>\n"
+"            % endif\n"
+"            <p>Venlig hilsen,</p>\n"
+"        </td>\n"
+"    </tr><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            % if user.signature\n"
+"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"            </p>\n"
+"            % endif\n"
+"            <p style=\"font-size: 11px;\"><strong>Sendt af\n"
+"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                <strong>${user.company_id.name}</strong>\n"
+"            </a> vha. <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"            </strong></p>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"            </data>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -229,17 +268,17 @@ msgstr "Hyppighed"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Android app"
-msgstr ""
+msgstr "Få Android app"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Chrome plugin"
-msgstr ""
+msgstr "Få Chrome plugin"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get iOS app"
-msgstr ""
+msgstr "Få iOS app"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_id
@@ -250,7 +289,7 @@ msgstr "ID"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "If checked, send an email to all manager"
-msgstr ""
+msgstr "Hvis afkrydset, send en email til alle ledere"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_manager_allow
@@ -442,7 +481,7 @@ msgstr "Timesedler"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Timesheets Validation Date"
-msgstr ""
+msgstr "Dato for Godkendelse af Timesedler"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
