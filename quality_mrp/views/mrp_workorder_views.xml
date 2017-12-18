@@ -102,7 +102,7 @@
                         <div attrs="{'invisible': [('tracking', '=', 'none')]}">
                             <label for="final_lot_id" string="Lot:" attrs="{'invisible': [('tracking', '!=', 'lot')]}"/>
                             <label for="final_lot_id" string="SN:" attrs="{'invisible': [('tracking', '!=', 'serial')]}"/>
-                            <field name="final_lot_id" context="{'default_product_id': product_id}"/>
+                            <field name="final_lot_id" context="{'default_product_id': product_id}" domain="['|', '&amp;', ('product_id', '=', product_id), ('product_id.tracking', '!=', 'serial'), ('use_next_on_work_order_id', '=', id)]"/>
                         </div>
                     </div>
                     <div class="workorder_bar_right o_workorder_bar_content o_workorder_bar_content_right">
