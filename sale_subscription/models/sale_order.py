@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
             'name': template.name,
             'state': 'open',
             'template_id': template.id,
-            'partner_id': self.partner_id.id,
+            'partner_id': self.partner_invoice_id.id,
             'user_id': self.user_id.id,
             'date_start': fields.Date.today(),
             'description': self.note or template.description,
