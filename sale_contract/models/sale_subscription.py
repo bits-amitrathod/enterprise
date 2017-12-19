@@ -257,6 +257,7 @@ class SaleSubscription(osv.osv):
         return self._recurring_create_invoice(cr, uid, [], automatic=True, context=context)
 
     def _recurring_create_invoice(self, cr, uid, ids, automatic=False, context=None):
+        auto_commit = self.env.context.get('auto_commit', True)
         context = context or {}
         invoice_ids = []
         current_date = time.strftime('%Y-%m-%d')
@@ -284,10 +285,10 @@ class SaleSubscription(osv.osv):
                         else:
                             new_date = next_date + relativedelta(years=+interval)
                         self.write(cr, uid, [contract.id], {'recurring_next_date': new_date.strftime('%Y-%m-%d')}, context=context_company)
-                        if automatic:
+                        if automatic and auto_commit:
                             cr.commit()
                     except Exception:
-                        if automatic:
+                        if automatic and auto_commit:
                             cr.rollback()
                             _logger.exception('Fail to create recurring invoice for contract %s', contract.code)
                         else:
@@ -370,7 +371,7 @@ class SaleSubscription(osv.osv):
     def create(self, cr, uid, vals, context=None):
         if not vals.get('code', False):
             vals['code'] = self.pool['ir.sequence'].next_by_code(cr, uid, 'sale.subscription', context=context) or 'New'
-        if vals.get('name', 'New') == 'New':
+        if vals.get('name', 'New') == 'New' and not vals.get('analytic_account_id'):
             vals['name'] = vals['code']
         return super(SaleSubscription, self).create(cr, uid, vals, context=context)
 

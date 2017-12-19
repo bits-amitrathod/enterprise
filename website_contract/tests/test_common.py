@@ -7,6 +7,7 @@ class TestContractCommon(common.TransactionCase):
     def setUp(self):
         super(TestContractCommon, self).setUp()
         Contract = self.env['sale.subscription']
+        QuoteTemplate = self.env['sale.quote.template']
         Product = self.env['product.product']
         ProductTmpl = self.env['product.template']
         UomCat = self.env['product.uom.categ']
@@ -112,4 +113,11 @@ class TestContractCommon(common.TransactionCase):
             'partner_id': self.user_portal.partner_id.id,
             'template_id': self.contract_tmpl_1.id,
             'recurring_invoice_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'price_unit': self.product.list_price, 'uom_id': self.uom_base.id})],
+        })
+
+        # Test quote template
+        self.quote_template = QuoteTemplate.create({
+            'name': 'Subscription Quote Template',
+            'contract_template': self.contract_tmpl_3.id,
+            'quote_line': [(0, 0, {'name': self.product.name, 'product_id': self.product.id, 'product_uom_qty': 2, 'product_uom_id': self.product.uom_id.id, 'price_unit': self.product.list_price})],
         })

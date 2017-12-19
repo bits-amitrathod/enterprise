@@ -68,3 +68,36 @@ class TestContract(TestContractCommon):
         })
         self.contract.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
         self.assertEqual(self.contract.state, 'close', 'website_contrect: subscription with online payment and no payment method set should get closed after 15 days')
+
+    def test_aa_creation(self):
+        order = self.env['sale.order'].create({
+            'name': 'TestSOTemplate',
+            'partner_id': self.user_portal.partner_id.id,
+            'template_id': self.quote_template.id,
+        })
+
+        order.write(order.onchange_template_id(self.quote_template.id).get('value'))
+        order.action_confirm()
+        self.assertEqual(order.project_id.name,
+                         '%s - %s' % (order.partner_id.name, order.subscription_id.code),
+                         '''website_contract: analytic account created along subscription
+                         should be named as <Subscription code> - <Partner name>''')
+
+    def test_no_aa_renaming(self):
+        initial_aa_name = 'InitialName'
+        analytic = self.env['account.analytic.account'].create({
+            'partner_id': self.user_portal.partner_id.id,
+            'name': initial_aa_name
+        })
+        order = self.env['sale.order'].create({
+            'name': 'TestSOTemplate',
+            'partner_id': self.user_portal.partner_id.id,
+            'template_id': self.quote_template.id,
+            'project_id': analytic.id,
+        })
+
+        order.write(order.onchange_template_id(self.quote_template.id).get('value'))
+        order.action_confirm()
+        self.assertEqual(analytic.name,
+                         initial_aa_name,
+                         'website_contract: subscription creation should not rename an existing AA')

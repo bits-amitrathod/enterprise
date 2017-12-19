@@ -18,7 +18,9 @@ class SaleOrder(models.Model):
                 and any(self.order_line.mapped('product_id').mapped('recurring_invoice')):
             values = self._prepare_contract_data(payment_method_id=payment_method.id if self.require_payment else False)
             subscription = self.env['sale.subscription'].sudo().create(values)
-            subscription.name = self.partner_id.name + ' - ' + subscription.code
+            # Only rename newly-created AA
+            if not values.get('analytic_account_id'):
+                subscription.name = self.partner_id.name + ' - ' + subscription.code
 
             invoice_line_ids = []
             for line in self.order_line:
