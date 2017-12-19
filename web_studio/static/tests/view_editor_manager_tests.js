@@ -1722,6 +1722,49 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('add a selection field with widget priority', function(assert) {
+        assert.expect(5);
+
+        var arch = "<tree><field name='display_name'/></tree>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].node.field_description.type, "selection",
+                        "the type should be correctly set");
+                    assert.deepEqual(args.operations[0].node.field_description.selection, [['0','Normal'], ['1','Low'], ['2','High'], ['3','Very High']],
+                        "the selection should be correctly set");
+                    assert.strictEqual(args.operations[0].node.attrs.widget, "priority",
+                        "the widget should be correctly set");
+
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            list: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+        // add a priority field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_priority'), $('.o_web_studio_hook'));
+
+        assert.strictEqual($('.modal').length, 0, "there should be no modal");
+
+        vem.destroy();
+    });
+
     QUnit.module('X2Many');
 
     QUnit.test('display one2many without inline views', function(assert) {

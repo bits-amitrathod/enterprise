@@ -608,8 +608,16 @@ var ViewEditorManager = Widget.extend({
                 model_name: modelName,
             });
             // Fields with requirements
-            // Open Dialog to precise the required fields for this field.
-            if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.type)) {
+            if (field_description.type === 'selection' && new_attrs.widget === 'priority') {
+                // should not be translated at the creation
+                field_description.selection = [
+                    ['0', "Normal"],
+                    ['1', "Low"],
+                    ['2', "High"],
+                    ['3', "Very High"],
+                ];
+            } else if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.type)) {
+                // open dialog to precise the required fields for this field
                 def_field_values = $.Deferred();
                 var dialog = new NewFieldDialog(this, modelName, field_description, this.fields).open();
                 dialog.on('field_default_values_saved', this, function (values) {
@@ -625,8 +633,7 @@ var ViewEditorManager = Widget.extend({
                 dialog.on('closed', this, function () {
                     def_field_values.reject();
                 });
-            }
-            if (field_description.type === 'monetary') {
+            } else if (field_description.type === 'monetary') {
                 def_field_values = $.Deferred();
                 if (this._hasCurrencyField()) {
                     def_field_values.resolve();

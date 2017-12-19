@@ -137,7 +137,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         var self = this;
         var newSelection = [];
         this.$('.o_web_studio_selection_editor li').each(function (index, u) {
-            var value = $(u).data('value');
+            var value = u.dataset.value;
             var string = _.find(self.selection, function(el) {
                 return el[0] === value;
             })[1];
@@ -173,7 +173,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
      */
     _onEditSelectionValue: function (e) {
         var self = this;
-        var val = this.$(e.currentTarget).closest('li').data('value');
+        var val = this.$(e.currentTarget).closest('li')[0].dataset.value;
         var element = _.find(this.selection, function(el) {return el[0] === val; });
         new Dialog(this, {
             title: _t('Edit Value'),
@@ -211,7 +211,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         Dialog.confirm(self, msg, {
             title: _t("Warning"),
             confirm_callback: function () {
-                var val = $(e.target).closest('li').data('value');
+                var val = $(e.target).closest('li')[0].dataset.value;
                 var element = _.find(self.selection, function(el) {return el[0] === val; });
                 var index = self.selection.indexOf(element);
                 if (index >= 0) {
