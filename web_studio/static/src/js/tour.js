@@ -81,13 +81,16 @@ tour.register('web_studio_new_app_tour', {
     position: 'bottom',
     run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
 }, {
-    trigger: '.o_web_studio_field_dialog_form > textarea',
-    content: _t("Create your <b>drop down list</b>, one value per line. (e.g.: Romance, Polar, Fantasy, etc.)"),
+    trigger: '.o_web_studio_field_dialog_form > .o_web_studio_selection_new_value > input',
+    content: _t("Create your <b>selection values</b> (e.g.: Romance, Polar, Fantasy, etc.)"),
     position: 'top',
-    run: function (actions) {
-        actions.auto();
-        actions.auto('.modal-footer > button:eq(0)');
-    },
+    run: 'text ' + utils.randomString(6),
+}, {
+    trigger: '.o_web_studio_field_dialog_form > .o_web_studio_selection_new_value button',
+    auto: true,
+}, {
+    trigger: '.modal-footer > button:eq(0)',
+    auto: true,
 }, {
     trigger: '.o_web_studio_add_chatter',
     content: _t("Add a <b>chatter widget</b> to allow discussions on your document: by email or inline."),

@@ -711,6 +711,11 @@ class WebStudioController(http.Controller):
             'name': self._generate_studio_view_name(view),
         })
 
+    @http.route('/web_studio/edit_field', type='json', auth='user')
+    def edit_field(self, model_name, field_name, values):
+        field = request.env['ir.model.fields'].search([('model', '=', model_name), ('name', '=', field_name)])
+        return field.write(values)
+
     @http.route('/web_studio/edit_report', type='json', auth='user')
     def edit_report(self, report_id, values):
         report = request.env['ir.actions.report'].browse(report_id)

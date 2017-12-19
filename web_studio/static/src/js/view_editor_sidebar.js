@@ -30,6 +30,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         'click .o_web_studio_remove':                        '_onElementRemoved',
         'change .o_display_view input':                      '_onViewChanged',
         'change .o_display_view select':                     '_onViewChanged',
+        'click .o_web_studio_edit_selection_values':         '_onSelectionValues',
         'change .o_display_field input[data-type="attributes"]': '_onElementChanged',
         'change .o_display_field select':                    '_onElementChanged',
         'change .o_display_field input[data-type="field_name"]': '_onFieldNameChanged',
@@ -564,6 +565,16 @@ return Widget.extend(StandaloneFieldManagerMixin, {
     _onRainbowImageReset: function () {
         this.$('input#rainbow_img_url').val('');
         this.$('input#rainbow_img_url').trigger('change');
+    },
+    /**
+     * @private
+     * @param {Event} ev
+     */
+    _onSelectionValues: function (ev) {
+        ev.preventDefault();
+        this.trigger_up('field_edition', {
+            node: this.state.node,
+        });
     },
     /**
      * @private

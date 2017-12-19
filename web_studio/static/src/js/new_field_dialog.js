@@ -9,12 +9,19 @@ var ModelFieldSelector = require('web.ModelFieldSelector');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 
 var _t = core._t;
+var qweb = core.qweb;
 var Many2one = relational_fields.FieldMany2One;
 
 // TODO: refactor this file
 
 var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.NewFieldDialog',
+    events: {
+        'click .o_web_studio_selection_new_value button': '_onAddSelectionValue',
+        'keyup .o_web_studio_selection_new_value > input': '_onAddSelectionValue',
+        'click .o_web_studio_edit_selection_value': '_onEditSelectionValue',
+        'click .o_web_studio_remove_selection_value': '_onRemoveSelectionValue',
+    },
     /**
      * @constructor
      * @param {String} model_name
@@ -25,21 +32,44 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         this.model_name = model_name;
         this.type = field.type;
         this.field = field;
+
+        if (this.type === 'selection') {
+            this.selection = this.field.selection && this.field.selection.slice() || [];
+        }
+
         this.fields = fields;
         var options = {
-            title: _t('Add a field'),
+            title: _t('Field Properties'),
             size: 'small',
             buttons: [{
                 text: _t("Confirm"),
                 classes: 'btn-primary',
-                click: this._onSave.bind(this)
+                click: this._onSave.bind(this),
             }, {
                 text: _t("Cancel"),
-                close: true
+                close: true,
             }],
         };
         this._super(parent, options);
         StandaloneFieldManagerMixin.init.call(this);
+    },
+    /**
+     * @override
+     */
+    renderElement: function () {
+        this._super.apply(this, arguments);
+
+        if (this.type === 'selection') {
+           this.$('.o_web_studio_selection_editor').sortable({
+                axis: 'y',
+                containment: '.o_web_studio_field_dialog_form',
+                items: '> li',
+                helper: 'clone',
+                handle: 'div',
+                opacity: 0.6,
+                stop: this._resequenceSelection.bind(this),
+           });
+       }
     },
     /**
      * @override
@@ -99,14 +129,102 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         return $.when.apply($, defs);
     },
 
+    /**
+     * @private
+     * @param {Event} e
+     */
+    _resequenceSelection: function () {
+        var self = this;
+        var newSelection = [];
+        this.$('.o_web_studio_selection_editor li').each(function (index, u) {
+            var value = $(u).data('value');
+            var string = _.find(self.selection, function(el) {
+                return el[0] === value;
+            })[1];
+            newSelection.push([value, string]);
+        });
+        this.selection = newSelection;
+    },
+
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
 
     /**
      * @private
+     * @param {Event} e
      */
-    _onSave: function() {
+    _onAddSelectionValue: function (e) {
+        if (e.type === "keyup" && e.which !== $.ui.keyCode.ENTER) { return; }
+
+        var $input = this.$(".o_web_studio_selection_new_value input");
+        var string = $input.val().trim();
+
+        if (string && !_.find(this.selection, function(el) {return el[1] === string; })) {
+            // add a new element
+            this.selection.push([string, string]);
+        }
+        this.renderElement();
+        this.$('input').focus();
+    },
+    /**
+     * @private
+     * @param {Event} e
+     */
+    _onEditSelectionValue: function (e) {
+        var self = this;
+        var val = this.$(e.currentTarget).closest('li').data('value');
+        var element = _.find(this.selection, function(el) {return el[0] === val; });
+        new Dialog(this, {
+            title: _t('Edit Value'),
+            size: 'small',
+            $content: $(qweb.render('web_studio.SelectionValues.edit', {
+                debug: config.debug,
+                element: element,
+            })),
+            buttons: [
+                {text: _t('Confirm'), classes: 'btn-primary', close: true, click: function () {
+                    // the value edition is only available in debug mode
+                    var newValue = config.debug && this.$('input#o_selection_value').val() || val;
+                    var newString = this.$('input#o_selection_label').val();
+                    var index = self.selection.indexOf(element);
+                    if (index >= 0) {
+                        self.selection.splice(index, 1);
+                        self.selection.splice(index, 0, [newValue, newString]);
+                        self.renderElement();
+                    }
+                }},
+                {text: _t('Close'), close: true},
+            ],
+        }).open();
+    },
+    /**
+     * @private
+     * @param {Event} e
+     */
+    _onRemoveSelectionValue: function (e) {
+        var self = this;
+        var msg = _t(
+            "Do you really want to remove this value? " +
+            "All the records with this value will be updated accordingly."
+        );
+        Dialog.confirm(self, msg, {
+            title: _t("Warning"),
+            confirm_callback: function () {
+                var val = $(e.target).closest('li').data('value');
+                var element = _.find(self.selection, function(el) {return el[0] === val; });
+                var index = self.selection.indexOf(element);
+                if (index >= 0) {
+                    self.selection.splice(index, 1);
+                }
+                self.renderElement();
+            },
+        });
+    },
+    /**
+     * @private
+     */
+    _onSave: function () {
         var values = {};
         if (this.type === 'one2many') {
             values.relation_field_id = this.many2one_field.value.res_id;
@@ -114,17 +232,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             values.relation_id = this.many2one_model.value.res_id;
             values.field_description = this.many2one_model.m2o_value;
         } else if (this.type === 'selection') {
-            values.selection = [];
-            var selection_list = _.map(this.$('#selectionItems').val().split("\n"),function(value) {
-                value = value.trim();
-                if (value) {
-                    return value;
-                }
-            });
-            selection_list = _.reject(_.uniq(selection_list), _.isUndefined.bind());
-            values.selection = _.map(selection_list, function(value) {
-                return [value, value];
-            });
+            values.selection = JSON.stringify(this.selection);
         } else if (this.type === 'related') {
             var selectedField = this.fieldSelector.getSelectedField();
             if (!selectedField) {

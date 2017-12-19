@@ -1573,6 +1573,83 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('add a selection field', function (assert) {
+        assert.expect(16);
+
+        var fieldsView;
+        var arch = "<tree><field name='display_name'/></tree>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].node.field_description.selection,
+                        "[[\"Value 2\",\"Value 2\"],[\"Value 1\",\"My Value\"]]",
+                        "the selection should be set");
+                    assert.ok(true, "should have refreshed the view");
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_selection'), $('.o_web_studio_hook:first'));
+        assert.strictEqual($('.modal .o_web_studio_field_dialog_form').length, 1, "a modal should be opened");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor').length, 0, "there should be no selection editor");
+
+        // add a new value (with ENTER)
+        $('.modal .o_web_studio_selection_new_value input')
+            .val('Value 1')
+            .trigger($.Event('keyup', {which: $.ui.keyCode.ENTER}));
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 1, "there should be 1 selection value");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li span:contains(Value 1)').length, 1, "the value should be correctly set");
+
+        // add a new value (with button +)
+        $('.modal .o_web_studio_selection_new_value input').val('Value 2');
+        $('.modal .o_web_studio_selection_new_value button').click();
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 2, "there should be 2 selection values");
+
+        // edit the first value
+        $('.modal .o_web_studio_selection_editor li:first .o_web_studio_edit_selection_value').click();
+        assert.strictEqual($('.modal').length, 2, "a new modal should be opened");
+        assert.strictEqual($('.modal:eq(1) input#o_selection_label').val(), "Value 1",
+            "the value should be set in the edition modal");
+        $('.modal:eq(1) input#o_selection_label').val('My Value');
+        $('.modal:eq(1) button:contains(Confirm)').click();
+        assert.strictEqual($('.modal').length, 1, "the second modal should be closed");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li:first span:contains(My Value)').length, 1, "the value should have been updated");
+
+        // add a value and delete it
+        $('.modal .o_web_studio_selection_new_value input').val('Value 3');
+        $('.modal .o_web_studio_selection_new_value button').click();
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 3, "there should be 3 selection values");
+
+        $('.modal .o_web_studio_selection_editor > li:eq(2) .o_web_studio_remove_selection_value').click();
+        assert.strictEqual($('.modal').length, 2, "a new confirmation modal should be opened");
+        $('.modal:eq(1) button:contains(Ok)').click();
+        assert.strictEqual($('.modal').length, 1, "the confirmation modal should be closed");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 2, "there should be 2 selection values");
+
+        // reorder values
+        testUtils.dragAndDrop(
+            $('.modal .ui-sortable-handle').eq(1),
+            $('.modal .o_web_studio_selection_editor > li').first(),
+            {position: 'top'});
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li:first span:contains(Value 2)').length, 1, "the values should have been reordered");
+
+        $('.modal button:contains(Confirm)').click();
+        vem.destroy();
+    });
+
     QUnit.module('X2Many');
 
     QUnit.test('display one2many without inline views', function(assert) {

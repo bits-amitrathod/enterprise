@@ -51,6 +51,7 @@ var ViewEditorManager = Widget.extend({
         'default_value_change': '_onDefaultValueChange',
         'drag_component' : '_onComponentDragged',
         'email_alias_change': '_onEmailAliasChange',
+        'field_edition': '_onFieldEdition',
         'field_renamed': '_onFieldRenamed',
         'node_clicked': '_onNodeClicked',
         'open_defaults': '_onOpenDefaults',
@@ -1329,6 +1330,29 @@ var ViewEditorManager = Widget.extend({
         var value = event.data.value;
         var modelName = this.x2mModel ? this.x2mModel : this.model_name;
         this._setEmailAlias(modelName, value);
+    },
+    /**
+     * @private
+     * @param {OdooEvent} event
+     */
+    _onFieldEdition: function (event) {
+        var self = this;
+        var node = event.data.node;
+        var field = this.fields[node.attrs.name];
+        var dialog = new NewFieldDialog(this, this.model_name, field, this.fields).open();
+        dialog.on('field_default_values_saved', this, function (values) {
+            self._rpc({
+                route: '/web_studio/edit_field',
+                params: {
+                    model_name: self.model_name,
+                    field_name: field.name,
+                    values: values,
+                }
+            }).then(function () {
+                dialog.close();
+                self.applyChanges(false, false);
+            });
+        });
     },
     /**
      * @private
