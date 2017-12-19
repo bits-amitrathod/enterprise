@@ -661,6 +661,29 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('kanban editor with field widget', function(assert) {
+        assert.expect(1);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<kanban>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div class='o_kanban_record'>" +
+                                "<field name='display_name' widget='char'/>" +
+                            "</div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>",
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+
+        vem.destroy();
+    });
+
     QUnit.test('grouped kanban editor', function(assert) {
         assert.expect(4);
 

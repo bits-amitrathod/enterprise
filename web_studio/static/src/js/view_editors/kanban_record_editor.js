@@ -304,7 +304,7 @@ var KanbanRecordEditor = KanbanRecord.extend(EditorMixin, {
     _processWidget: function ($field, field_name) {
         var self = this;
         var widget = this._super.apply(this, arguments);
-        widget.off();
+        widget.$el.off();
 
         // make empty widgets appear
         if (this._isEmpty(widget.value)) {
