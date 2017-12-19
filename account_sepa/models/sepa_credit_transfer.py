@@ -309,9 +309,9 @@ class AccountSepaCreditTransfer(models.TransientModel):
         CdtTrfTxInf.append(self._get_CdtrAgt(payment.partner_bank_account_id))
         Cdtr = etree.SubElement(CdtTrfTxInf, "Cdtr")
         Nm = etree.SubElement(Cdtr, "Nm")
-        Nm.text = prepare_SEPA_string(payment.partner_id.name[:70])
+        Nm.text = prepare_SEPA_string((payment.partner_bank_account_id.acc_holder_name or payment.partner_id.name)[:70])
         if payment.payment_type == 'transfer':
-           CdtTrfTxInf.append(self._get_CdtrAcct(payment.destination_journal_id.bank_account_id))
+            CdtTrfTxInf.append(self._get_CdtrAcct(payment.destination_journal_id.bank_account_id))
         else:
             CdtTrfTxInf.append(self._get_CdtrAcct(payment.partner_bank_account_id))
         val_RmtInf = self._get_RmtInf(payment)

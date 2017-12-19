@@ -121,7 +121,7 @@ class AccountPayment(models.Model):
         MndtRltdInf = create_xml_node_chain(DrctDbtTxInf, ['DrctDbtTx','MndtRltdInf','MndtId'], self.sdd_mandate_id.name)[-2]
         create_xml_node(MndtRltdInf, 'DtOfSgntr', self.sdd_mandate_id.start_date)
         create_xml_node_chain(DrctDbtTxInf, ['DbtrAgt','FinInstnId','BIC'], self.sdd_mandate_id.partner_bank_id.bank_id.bic)
-        Dbtr = create_xml_node_chain(DrctDbtTxInf, ['Dbtr','Nm'], partner.name)[0]
+        Dbtr = create_xml_node_chain(DrctDbtTxInf, ['Dbtr','Nm'], self.sdd_mandate_id.partner_bank_id.acc_holder_name or partner.name)[0]
 
         if self.sdd_mandate_id.debtor_id_code:
             create_xml_node(Dbtr, 'Id', self.sdd_mandate_id.debtor_id_code)
