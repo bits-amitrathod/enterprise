@@ -330,7 +330,7 @@ class report_account_general_ledger(models.AbstractModel):
                         'action': line.get_model_id_and_name(),
                         'name': line.move_id.name if line.move_id.name else '/',
                         'footnotes': self.env.context['context_id']._get_footnotes('move_line_id', line.id),
-                        'columns': [datetime.strptime(line.date, DEFAULT_SERVER_DATE_FORMAT).strftime(date_format), name, partner_name, currency,
+                        'columns': [datetime.strptime(line.date, DEFAULT_SERVER_DATE_FORMAT).strftime(date_format).decode('utf-8'), name, partner_name, currency,
                                     line_debit != 0 and self._format(line_debit) or '',
                                     line_credit != 0 and self._format(line_credit) or '',
                                     self._format(progress)],
