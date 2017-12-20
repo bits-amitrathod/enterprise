@@ -20,6 +20,7 @@ on old forecasts.
         'report/timesheet_forecast_report_views.xml',
         'security/ir.model.access.csv',
         'data/project_timesheet_forecast_data.xml',
+        'views/project_forecast_views.xml',
     ],
     'auto_install': True,
 }

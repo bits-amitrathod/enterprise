@@ -7,5 +7,5 @@ from odoo import models
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    def _timesheet_find_project(self):
-        return super(SaleOrderLine, self.with_context(default_allow_forecast=True))._timesheet_find_project()
+    def _timesheet_create_project(self):
+        return super(SaleOrderLine, self.with_context(default_allow_forecast=True))._timesheet_create_project()
