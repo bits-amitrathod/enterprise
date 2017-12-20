@@ -70,11 +70,11 @@
                                                     <t t-set='max_unused_cars' t-value="contract.max_unused_cars"/>
                                                     <select name="select_car" class="form-control form-control-primary mt16 mb8 advantage_input">
                                                         <t t-foreach="available_cars" t-as="car">
-                                                            <option t-att-value="'old-'+str(car.id)" t-att-selected="not contract.new_car and contract.car_id.id == car.id"><t t-esc="car.name"/></option>
+                                                            <option t-att-value="'old-'+str(car.id)" t-att-selected="not contract.new_car and contract.car_id.id == car.id"><t t-esc="car.model_id.brand_id.name + '/' + car.model_id.name + '/' + car.license_plate + u' \u2022 ' + str(round(car.total_depreciated_cost, 2)) + u' € \u2022 ' + car._get_acquisition_date()"/></option>
                                                         </t>
                                                         <t t-if="contract.available_cars_amount &lt; max_unused_cars">
                                                             <t t-foreach="can_be_requested_models" t-as="model">
-                                                                <option t-att-value="'new-'+str(model.id)" t-att-selected="contract.new_car and contract.new_car_model_id.id == model.id"><t t-esc="model.name_get()[0][1] + u' \u2022 New Car'"/></option>
+                                                                <option t-att-value="'new-'+str(model.id)" t-att-selected="contract.new_car and contract.new_car_model_id.id == model.id"><t t-esc="model.name_get()[0][1] + u' €  \u2022 New Car'"/></option>
                                                             </t>
                                                         </t>
                                                     </select>
@@ -88,7 +88,7 @@
                                                         </ul>
                                                     </span>
                                                     <!-- <span><t t-esc="contract.available_cars_amount"/></span> -->
-                                                    <span class="help-block mt8">The cost of the car is depreciated over 5 years. For example, a new car may cost 500€/month the first year but its cost will decrease at each yearly appraisal to reach 100€/month after 5 years. So, your gross salary increases automatically.</span>
+                                                    <span class="help-block mt8">The cost of a car is depreciated by 8% per year, for 7 years. So, your gross salary increases automatically to keep the same employee budget. Once a car has 7 years, the car is fully depreciated and the only remaining costs are the maintenance, insurances and taxes.</span>
                                                     <span t-if="contract.available_cars_amount &lt; max_unused_cars" class="help-block mt8" name="new_car_message">If you want to choose another car model, please contact your HR manager.</span>
                                                 </div>
                                                 <div class="col-sm-2 mt24">
