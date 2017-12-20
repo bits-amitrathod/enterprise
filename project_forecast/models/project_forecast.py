@@ -85,7 +85,7 @@ class ProjectForecast(models.Model):
         if self.employee_id.resource_calendar_id:
             hours = self.employee_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
             if hours == 0:
-                raise UserError(_("You cannot set a user with no working time."))
+                raise UserError(_("This employee does not work during this period, therefore the task cannot be forecasted."))
             self.time = self.resource_hours * 100.0 / hours
         else:
             self.time = 0
