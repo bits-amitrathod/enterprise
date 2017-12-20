@@ -783,6 +783,10 @@
         <menuitem id="menu_action_account_report_coa" name="Trial Balance" action="action_account_report_coa" parent="account_reports_legal_statements_menu"/>
         <menuitem id="menu_action_account_report_partner_ledger" name="Partner Ledger" action="action_account_report_partner_ledger" parent="account_reports_legal_statements_menu"/>
         <menuitem id="menu_action_account_report_cj" name="Consolidated Journals" action="action_account_report_cj" parent="account_reports_legal_statements_menu"/>
+        <record id="account.menu_print_journal" model="ir.ui.menu">
+            <field name="parent_id" ref='account_reports_legal_statements_menu' />
+            <field name="sequence">20</field>
+        </record>
 
         <record id="account_financial_current_year_earnings0" model="account.financial.html.report.line">
             <field name="action_id" ref='action_account_report_pnl' />
