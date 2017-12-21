@@ -1,16 +1,17 @@
 odoo.define('voip.dialingPanel', function (require) {
 "use strict";
 
-var bus = require('bus.bus').bus;
+var DialingTab = require('voip.dialing_tab');
 var UserAgent = require('voip.user_agent');
+
 var basic_fields = require('web.basic_fields');
-var config = require('web.config');
 var core = require('web.core');
+var config = require('web.config');
 var real_session = require('web.session');
 var SystrayMenu = require('web.SystrayMenu');
 var WebClient = require('web.WebClient');
 var Widget = require('web.Widget');
-var DialingTab = require('voip.dialing_tab');
+
 var dialingPanel = null;
 var _t = core._t;
 var HEIGHT_OPEN = '480px';
@@ -91,9 +92,11 @@ var DialingPanel = Widget.extend({
         this.tabs.contacts.appendTo(this.$('.o_dial_contacts'));
         this.$el.hide();
         this.activeTab = this.tabs.nextActivities;
-        bus.on('transfer_call', this, this._onTransferCall);
-        bus.on('voip_onToggleDisplay', this, this._onToggleDisplay);
-        bus.on('notification', this, function (notifications) {
+
+        core.bus.on('transfer_call', this, this._onTransferCall);
+        core.bus.on('voip_onToggleDisplay', this, this._onToggleDisplay);
+
+        this.call('bus_service', 'getBus').on('notification', this, function (notifications) {
             _.each(notifications, function (notification) {
                 if (notification[1].type === 'refresh_voip') {
                     self._onNotifRefreshVoip();
@@ -524,7 +527,7 @@ var DialingPanel = Widget.extend({
 
 var transfer_call = function (parent, action) {
     var params = action.params || {};
-    bus.trigger('transfer_call', params.number);
+    core.bus.trigger('transfer_call', params.number);
     return { type: 'ir.actions.act_window_close' };
 };
 
@@ -556,7 +559,7 @@ var VoipTopButton = Widget.extend({
      */
     _onToggleDisplay: function (ev) {
         ev.preventDefault();
-        bus.trigger('voip_onToggleDisplay');
+        core.bus.trigger('voip_onToggleDisplay');
     },
 });
 

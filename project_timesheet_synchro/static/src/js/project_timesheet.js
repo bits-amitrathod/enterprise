@@ -8,7 +8,7 @@ odoo.define('project_timeshee.ui', function (require ) {
     var Widget = require('web.Widget');
     var time_module = require('web.time');
     var local_storage = require('web.local_storage');
-    var mixins = require('web.mixins');
+    var ServiceProviderMixin = require('web.ServiceProviderMixin');
 
     var MAX_AGE = 21; // Age limit in days for activities before they are removed from the app
     var DEFAULT_TIME_UNIT = 0.25;
@@ -25,7 +25,7 @@ odoo.define('project_timeshee.ui', function (require ) {
     var MODULE_KEY = '__import__.'; // Xml_id prefix.
 
     //Main widget to instantiate the app
-    var ProjectTimesheet = Widget.extend(mixins.ServiceProvider, {
+    var ProjectTimesheet = Widget.extend(ServiceProviderMixin, {
         template: "app",
         xmlDependencies: ['/project_timesheet_synchro/static/src/xml/project_timesheet.xml'],
         cssLibs: [
@@ -38,8 +38,8 @@ odoo.define('project_timeshee.ui', function (require ) {
         ],
         init: function(parent) {
             var self = this;
-            mixins.ServiceProvider.init.call(this);
             this._super(parent);
+            ServiceProviderMixin.init.call(this);
 
             // Mobile device detection
             if ( navigator.userAgent.match(/Android/i) ||

@@ -1,7 +1,6 @@
 odoo.define('voip.Activity', function (require) {
 "use strict";
 
-var ChatManager = require('mail.chat_manager');
 var MailActivity = require('mail.Activity');
 
 var Activity = MailActivity.include({
@@ -14,7 +13,8 @@ var Activity = MailActivity.include({
      */
     init: function () {
         this._super.apply(this, arguments);
-        ChatManager.bus.on('voip_reload_chatter', this, function () {
+        var chatBus = this.call('chat_manager', 'getChatBus');
+        chatBus.on('voip_reload_chatter', this, function () {
             this._reload({activity: true, thread: true});
         });
     },
