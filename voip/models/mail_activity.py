@@ -67,22 +67,30 @@ class MailActivity(models.Model):
 
     @api.multi
     def action_feedback(self, feedback=False):
-        self.ensure_one()
-        phonecall = self.voip_phonecall_id
-        user_id = self.user_id.partner_id.id
-        note = self.note
-        mail_message_id = super(MailActivity, self).action_feedback(feedback)
-        if phonecall:
-            vals = {
-                'state': 'done',
-                'mail_message_id': mail_message_id,
-                'note': feedback if feedback else note,
-            }
-            if not phonecall.call_date:
-                vals.update(call_date=fields.Datetime.now())
-            phonecall.write(vals)
-            self.env['bus.bus'].sendone(
-                (self._cr.dbname, 'res.partner', user_id),
-                {'type': 'refresh_voip'}
-            )
+        mail_message_id = False
+        phone_activities = self.filtered(lambda self: self.voip_phonecall_id)
+        if phone_activities:
+            remaining = self - phone_activities
+            for activity in phone_activities:
+                user_id = activity.user_id.partner_id.id
+                note = activity.note
+                mail_message_id = super(MailActivity, activity).action_feedback(feedback)
+
+                vals = {
+                    'state': 'done',
+                    'mail_message_id': mail_message_id,
+                    'note': feedback if feedback else note,
+                }
+                if not activity.voip_phonecall_id.call_date:
+                    vals.update(call_date=fields.Datetime.now())
+                activity.voip_phonecall_id.write(vals)
+                self.env['bus.bus'].sendone(
+                    (self._cr.dbname, 'res.partner', user_id),
+                    {'type': 'refresh_voip'}
+                )
+        else:
+            remaining = self
+        if remaining:
+            mail_message_id = super(MailActivity, remaining).action_feedback(feedback)
+
         return mail_message_id
