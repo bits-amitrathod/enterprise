@@ -207,7 +207,7 @@ class QualityAlert(models.Model):
 
     name = fields.Char('Name', default=lambda self: _('New'))
     description = fields.Html('Description')
-    stage_id = fields.Many2one('quality.alert.stage', 'Stage',
+    stage_id = fields.Many2one('quality.alert.stage', 'Stage', ondelete='restrict',
         group_expand='_read_group_stage_ids',
         default=lambda self: self.env['quality.alert.stage'].search([], limit=1).id, track_visibility="onchange")
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.user.company_id)

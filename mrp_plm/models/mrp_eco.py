@@ -156,7 +156,7 @@ class MrpEco(models.Model):
     user_id = fields.Many2one('res.users', 'Responsible', default=lambda self: self.env.user, track_visibility='onchange')
     type_id = fields.Many2one('mrp.eco.type', 'Type', required=True)
     stage_id = fields.Many2one(
-        'mrp.eco.stage', 'Stage', copy=False, domain="[('type_id', '=', type_id)]",
+        'mrp.eco.stage', 'Stage', ondelete='restrict', copy=False, domain="[('type_id', '=', type_id)]",
         group_expand='_read_group_stage_ids', track_visibility='onchange',
         default=lambda self: self.env['mrp.eco.stage'].search([('type_id', '=', self._context.get('default_type_id'))], limit=1))
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.user.company_id)
