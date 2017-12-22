@@ -173,9 +173,11 @@ class CalendarAppointmentType(models.Model):
             for ev in events.filtered(lambda ev: ev.start < end_dt_string and ev.stop > start_dt_string):
                 if ev.allday:
                     # allday events are considered to take the whole day in the related employee's timezone
-                    ev_start_dt = datetime.combine(fields.Date.from_string(ev.start_date), time.min).replace(tzinfo=employee_tz)
-                    ev_stop_dt = datetime.combine(fields.Date.from_string(ev.start_date), time.min).replace(tzinfo=employee_tz)
-                    if ev_start_dt.astimezone(pytz.UTC) < slot['UTC'][1] and ev_stop_dt.astimezone(pytz.UTC) > slot['UTC'][0]:
+                    ev_start_dt = datetime.combine(fields.Date.from_string(ev.start_date), time.min)
+                    ev_stop_dt = datetime.combine(fields.Date.from_string(ev.stop_date), time.max)
+                    ev_start_dt = employee_tz.localize(ev_start_dt).astimezone(pytz.UTC).replace(tzinfo=None)
+                    ev_stop_dt = employee_tz.localize(ev_stop_dt).astimezone(pytz.UTC).replace(tzinfo=None)
+                    if ev_start_dt < slot['UTC'][1] and ev_stop_dt > slot['UTC'][0]:
                         return False
                 elif ev.start_datetime < end_dt_string and ev.stop_datetime > start_dt_string:
                     return False
