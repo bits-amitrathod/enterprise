@@ -16,7 +16,7 @@
                         <thead>
                             <tr>
                                 <t t-foreach="timesheet_forecast_table['header']" t-as="header_val">
-                                    <th t-att-class="'o_right_bordered' if header_val_index in [timesheet_forecast_table['attrs']['timesheet_col_index'], timesheet_forecast_table['attrs']['forecast_col_index']] else ''">
+                                    <th t-att-class="'o_right_bordered' if header_val_index in [5,10] else ''">
                                         <span><t t-esc="header_val"/></span>
                                     </th>
                                 </t>
@@ -24,18 +24,29 @@
                         </thead>
                         <tbody>
                             <t t-foreach="timesheet_forecast_table['rows']" t-as="row">
-                                <tr t-att-class="'o_timesheet_forecast_' + row['meta'].get('type')">
-                                    <t t-foreach="row['row_values']" t-as="r_val">
-                                        <td t-att-class="'o_right_bordered' if r_val_index in [timesheet_forecast_table['attrs']['timesheet_col_index'], timesheet_forecast_table['attrs']['forecast_col_index']] else '' + ' text-center' if r_val_index != 0 else ''">
-                                            <t t-if="row['meta'].get('type') == 'sale_order' and r_val_index == 0">
-                                                <a t-att-data-oe-model="row['meta']['res_model']" t-att-data-oe-id="row['meta']['res_id']" class="o_timesheet_plan_redirect">
-                                                    <t t-esc="r_val"/>
-                                                </a>
+                                <t t-set="row_type" t-value="row[0].get('type')"/>
+                                <tr t-att-class="'o_timesheet_forecast_' + row_type">
+                                    <t t-foreach="row" t-as="row_value">
+                                        <td t-att-class="'o_right_bordered' if row_value_index in [5,10] else '' + ' text-center' if row_value_index != 0 else ''">
+                                            <t t-if="row_value_index == 0">
+                                                <t t-if="row_type == 'sale_order'">
+                                                    <a t-att-data-oe-model="row_value['res_model']" t-att-data-oe-id="row_value['res_id']" t-att-class="'o_timesheet_plan_redirect' if row_value['res_id'] else ''">
+                                                        <t t-esc="row_value.get('label')"/>
+                                                    </a>
+                                                </t>
+                                                <t t-if="row_type != 'sale_order'">
+                                                    <span><t t-esc="row_value.get('label')"/></span>
+                                                </t>
                                             </t>
-                                            <t t-if="row['meta'].get('type') != 'sale_order' or r_val_index != 0">
-                                                <span>
-                                                    <t t-esc="r_val"/>
-                                                </span>
+                                            <t t-if="row_value_index != 0">
+                                                <t t-if="row_value_index &gt; 10">
+                                                    <t t-if="row_type == 'sale_order'">
+                                                        <t t-esc="row_value" t-options="{'widget': 'float_time'}"/>
+                                                    </t>
+                                                </t>
+                                                <t t-if="row_value_index &lt;= 10">
+                                                    <t t-esc="row_value" t-options="{'widget': 'float_time'}"/>
+                                                </t>
                                             </t>
                                         </td>
                                     </t>
