@@ -25,28 +25,31 @@ msgid ""
 "  * No, you should not pay the bill, you have not received the products\n"
 "  * Exception, there is a difference between received and billed quantities."
 msgstr ""
+"* Si: hauríeu de pagar la factura, heu rebut els productes\n"
+"* No, no hauríeu de pagar la factura, no heu rebut els productes\n"
+"* Excepció, hi ha una diferència entre el rebut i els imports facturats."
 
 #. module: account_3way_match
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
 msgid "Bills in Exception"
-msgstr ""
+msgstr "Factures en excepció"
 
 #. module: account_3way_match
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
 msgid "Bills to Pay"
-msgstr ""
+msgstr "Factures a Pagar "
 
 #. module: account_3way_match
 #: selection:account.invoice,release_to_pay:0
 #: selection:account.invoice,release_to_pay_manual:0
 #: selection:account.invoice.line,can_be_paid:0
 msgid "Exception"
-msgstr ""
+msgstr "Excepció"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_force_release_to_pay
 msgid "Force status"
-msgstr ""
+msgstr "Estat Forçat"
 
 #. module: account_3way_match
 #: model:ir.model.fields,help:account_3way_match.field_account_invoice_force_release_to_pay
@@ -54,6 +57,7 @@ msgid ""
 "Indicates whether the 'Can be paid' status is defined automatically or "
 "manually."
 msgstr ""
+"Indica si l'estat \"Pot ser pagat\" es definit automàticament o manualment."
 
 #. module: account_3way_match
 #: model:ir.model,name:account_3way_match.model_account_invoice
@@ -68,25 +72,25 @@ msgstr "Línia de factura"
 #. module: account_3way_match
 #: model:ir.model,name:account_3way_match.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Diari"
 
 #. module: account_3way_match
 #: selection:account.invoice,release_to_pay:0
 #: selection:account.invoice,release_to_pay_manual:0
 #: selection:account.invoice.line,can_be_paid:0
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_line_can_be_paid
 msgid "Release to Pay"
-msgstr ""
+msgstr "Alliberat per pagar"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_release_to_pay
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_release_to_pay_manual
 msgid "Should be paid"
-msgstr ""
+msgstr "Hauria de ser pagat"
 
 #. module: account_3way_match
 #: model:ir.model.fields,help:account_3way_match.field_account_invoice_release_to_pay
@@ -97,16 +101,21 @@ msgid ""
 "  * Exception, there is a difference between received and billed quantities\n"
 "This status is defined automatically, but you can force it by ticking the 'Force Status' checkbox."
 msgstr ""
+"Aquest camp pot prendre els següents valors:\n"
+"  * Si: hauríeu de pagar la factura, heu rebut els productes\n"
+"  * No, no hauríeu de pagar la factura, no heu rebut els productes\n"
+"  * Excepció, hi ha una diferència entre el rebut i els imports facturats\n"
+"Aquest estat es defineix automàticament, però pot forçar-lo marcant el la casella \"Estat Forçat\"."
 
 #. module: account_3way_match
 #: model:product.product,name:account_3way_match.demo_product
 #: model:product.template,name:account_3way_match.demo_product_product_template
 msgid "VR Computer"
-msgstr ""
+msgstr "Ordinador VR"
 
 #. module: account_3way_match
 #: selection:account.invoice,release_to_pay:0
 #: selection:account.invoice,release_to_pay_manual:0
 #: selection:account.invoice.line,can_be_paid:0
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
