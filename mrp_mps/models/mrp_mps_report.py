@@ -4,6 +4,7 @@
 import datetime
 from dateutil import relativedelta
 import babel.dates
+import pytz
 
 from odoo import api, fields, models, _
 from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
@@ -120,6 +121,7 @@ class MrpMpsReport(models.TransientModel):
         result = []
         forecasted = product.mps_forecasted
         date = datetime.datetime.now()
+        local_tz = pytz.timezone(self.env.context.get('tz', 'UTC'))
         indirect = self.get_indirect(product)[product.id]
         display = _('To Supply / Produce')
         buy_type = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)
@@ -151,7 +153,8 @@ class MrpMpsReport(models.TransientModel):
                 name = _('Week %s') % date.strftime('%U')
             else:
                 date_to = date + relativedelta.relativedelta(days=1)
-                name = babel.dates.format_date(format="MMM d", date=date, locale=self._context.get('lang') or 'en_US')
+                name = babel.dates.format_date(
+                    format="MMM d", date=date.replace(tzinfo=pytz.utc).astimezone(local_tz), locale=self._context.get('lang') or 'en_US')
             forecasts = self.env['sale.forecast'].search([
                 ('date', '>=', date.strftime('%Y-%m-%d')),
                 ('date', '<', date_to.strftime('%Y-%m-%d')),
@@ -185,8 +188,8 @@ class MrpMpsReport(models.TransientModel):
             forecasted = to_supply - demand + initial - indirect_total
             result.append({
                 'period': name,
-                'date': date.strftime('%Y-%m-%d'),
-                'date_to': date_to.strftime('%Y-%m-%d'),
+                'date': date.replace(tzinfo=pytz.utc).astimezone(local_tz).strftime('%Y-%m-%d'),
+                'date_to': date_to.replace(tzinfo=pytz.utc).astimezone(local_tz).strftime('%Y-%m-%d'),
                 'initial': initial,
                 'demand': demand,
                 'mode': mode,
@@ -197,7 +200,7 @@ class MrpMpsReport(models.TransientModel):
                 'route_type': display,
                 'procurement_enable': True if not proc_dec and leadtime >= date else False,
                 'procurement_done': proc_dec,
-                'lead_time': leadtime.strftime('%Y-%m-%d'),
+                'lead_time': leadtime.replace(tzinfo=pytz.utc).astimezone(local_tz).strftime('%Y-%m-%d'),
             })
             initial = forecasted
             date = date_to
