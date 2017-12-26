@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import unittest
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, tagged
 
 
+@tagged('-standard', 'external')
 class TestDeliveryUSPS(TransactionCase):
 
     def setUp(self):
@@ -37,7 +37,6 @@ class TestDeliveryUSPS(TransactionCase):
                                                         'state_id': self.quebec.id,
                                                         'country_id': self.env.ref('base.ca').id})
 
-    @unittest.skip("USPS test disabled: We do not want to overload USPS with runbot's requests")
     def test_01_usps_basic_us_domestic_flow(self):
         SaleOrder = self.env['sale.order']
 
@@ -77,7 +76,6 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
         self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
-    @unittest.skip("USPS test disabled: We do not want to overload USPS with runbot's requests")
     def test_02_usps_basic_international_flow(self):
         SaleOrder = self.env['sale.order']
 
@@ -116,7 +114,6 @@ class TestDeliveryUSPS(TransactionCase):
         self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
         self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
-    @unittest.skip("USPS test disabled: We do not want to overload USPS with runbot's requests")
     def test_03_usps_ship_to_canada_flow(self):
         SaleOrder = self.env['sale.order']
 

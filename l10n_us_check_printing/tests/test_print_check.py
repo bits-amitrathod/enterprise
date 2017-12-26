@@ -3,10 +3,13 @@ from __future__ import division
 
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 from odoo.addons.l10n_us_check_printing.report import print_check
+from odoo.tests import tagged
 import time
 
 import math
 
+
+@tagged('post_install', '-at_install')
 class TestPrintCheck(AccountingTestCase):
 
     def setUp(self):

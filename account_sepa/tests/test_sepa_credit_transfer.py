@@ -5,7 +5,10 @@ from lxml import etree
 
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 from odoo.modules.module import get_module_resource
+from odoo.tests import tagged
 
+
+@tagged('post_install','-at_install')
 class TestSEPACreditTransfer(AccountingTestCase):
 
     def setUp(self):

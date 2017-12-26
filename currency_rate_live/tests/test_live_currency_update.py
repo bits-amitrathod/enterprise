@@ -1,8 +1,7 @@
-import unittest
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, tagged
 
 
-@unittest.skip("Currency rate live test disabled as it requires to contact external servers")
+@tagged('-standard', 'external')
 class CurrencyTestCase(TransactionCase):
 
     def setUp(self):

@@ -4,8 +4,7 @@ import odoo.tests
 from .common import TestInterCompanyRulesCommon
 
 
-@odoo.tests.common.at_install(False)
-@odoo.tests.common.post_install(True)
+@odoo.tests.tagged('post_install','-at_install')
 class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
 
     def test_00_inter_company_invoice_flow(self):

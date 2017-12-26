@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import unittest
-from odoo.tests import TransactionCase
+from odoo.tests import TransactionCase, tagged
 
 
+@tagged('-standard', 'external')
 class TestDeliveryBpost(TransactionCase):
 
     def setUp(self):
@@ -54,7 +54,6 @@ class TestDeliveryBpost(TransactionCase):
         self.iPadMini = self.env.ref('product.product_product_6')
         self.uom_unit = self.env.ref('product.product_uom_unit')
 
-    @unittest.skip("bpost test disabled: We do not want to overload bpost with runbot's requests")
     def test_01_bpost_basic_be_domestic_flow(self):
         SaleOrder = self.env['sale.order']
 
@@ -89,7 +88,6 @@ class TestDeliveryBpost(TransactionCase):
         self.assertIsNot(picking.carrier_tracking_ref, False, "bpost did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "bpost carrying price is probably incorrect")
 
-    @unittest.skip("bpost test disabled: We do not want to overload bpost with runbot's requests")
     def test_02_bpost_basic_europe_flow(self):
         SaleOrder = self.env['sale.order']
 

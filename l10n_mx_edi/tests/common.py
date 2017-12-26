@@ -2,9 +2,11 @@
 
 from odoo.tools.pycompat import imap
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
+from odoo.tests import tagged
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
+@tagged('post_install', '-at_install')
 class InvoiceTransactionCase(AccountingTestCase):
     def setUp(self):
         super(InvoiceTransactionCase, self).setUp()

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import unittest
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, tagged
 
 
+@tagged('-standard', 'external')
 class TestDeliveryUPS(TransactionCase):
 
     def setUp(self):
@@ -26,7 +26,6 @@ class TestDeliveryUPS(TransactionCase):
                              'street': 'Avenue Edmond Van Nieuwenhuyse',
                              'zip': '1160'})
 
-    @unittest.skip("UPS test disabled: We do not want to overload UPS with runbot's requests")
     def test_01_ups_basic_flow(self):
         SaleOrder = self.env['sale.order']
 
@@ -73,7 +72,6 @@ class TestDeliveryUPS(TransactionCase):
         self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
         self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
 
-    @unittest.skip("UPS test disabled: We do not want to overload UPS with runbot's requests")
     def test_02_ups_multipackage_flow(self):
         SaleOrder = self.env['sale.order']
 

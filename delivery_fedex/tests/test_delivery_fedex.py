@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import unittest
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, tagged
 from odoo.exceptions import UserError
 
 
@@ -14,6 +14,7 @@ SKIPPABLE_ERRORS = [ERROR_200, ERROR_200_BIS, ERROR_200_TER, ERROR_1000]
 SKIP_MSG = u"Test skipped due to FedEx server unavailability"
 
 
+@tagged('-standard', 'external')
 class TestDeliveryFedex(TransactionCase):
 
     def setUp(self):
@@ -35,7 +36,6 @@ class TestDeliveryFedex(TransactionCase):
         self.agrolait.write({'country_id': self.env.ref('base.be').id})
         self.delta_pc = self.env.ref('base.res_partner_4')
 
-    @unittest.skip("Fedex test disabled: We do not want to overload Fedex with runbot's requests")
     def test_01_fedex_basic_us_domestic_flow(self):
         try:
 
@@ -85,7 +85,6 @@ class TestDeliveryFedex(TransactionCase):
             else:
                 raise e
 
-    @unittest.skip("Fedex test disabled: We do not want to overload Fedex with runbot's requests")
     def test_02_fedex_basic_international_flow(self):
         try:
 
@@ -135,7 +134,6 @@ class TestDeliveryFedex(TransactionCase):
             else:
                 raise e
 
-    @unittest.skip("Fedex test disabled: We do not want to overload Fedex with runbot's requests")
     def test_03_fedex_multipackage_international_flow(self):
         try:
 

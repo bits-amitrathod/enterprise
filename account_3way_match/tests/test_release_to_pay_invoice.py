@@ -3,8 +3,10 @@
 
 from odoo import fields
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestReleaseToPayInvoice(AccountingTestCase):
 
     def check_release_to_pay_scenario(self, ordered_qty, scenario, invoicing_policy='receive', order_price=500.0):

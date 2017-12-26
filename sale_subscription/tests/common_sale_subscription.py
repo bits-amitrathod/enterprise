@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestSubscriptionCommon(AccountingTestCase):
 
     def setUp(self):
