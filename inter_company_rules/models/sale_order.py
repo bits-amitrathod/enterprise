@@ -118,6 +118,10 @@ class sale_order(models.Model):
 
         # fetch taxes by company not by inter-company user
         company_taxes = [tax_rec.id for tax_rec in taxes if tax_rec.company_id.id == company.id]
+        if purchase_id:
+            po = self.env["purchase.order"].sudo(company.intercompany_user_id).browse(purchase_id)
+            company_taxes = po.fiscal_position_id.map_tax(company_taxes, so_line.product_id, po.partner_id)
+
         return {
             'name': so_line.name,
             'order_id': purchase_id,
