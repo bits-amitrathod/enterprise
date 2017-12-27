@@ -746,8 +746,8 @@ class AccountInvoice(models.Model):
         elif version == '3.3':
             # In CFDI 3.3, the payment policy is PUE when the invoice is to be
             # paid directly, PPD otherwise
-            values['payment_policy'] = 'PPD' if term_ids.search([
-                ('days', '>', 0), ('id', 'in', term_ids.ids)], limit=1) else 'PUE'
+            values['payment_policy'] = 'PPD' if (
+                self.date_due != self.date_invoice) else 'PUE'
         domicile = self.journal_id.l10n_mx_address_issued_id or self.company_id
         values['domicile'] = '%s %s, %s' % (
                 domicile.city,

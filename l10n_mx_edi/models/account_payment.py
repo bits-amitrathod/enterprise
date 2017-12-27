@@ -216,7 +216,8 @@ class AccountPayment(models.Model):
                 'Some of the invoices that will be paid with this record '
                 'is not signed, and the UUID is required to indicate '
                 'the invoices that are paid with this CFDI'))
-        if not self.invoice_ids.filtered(lambda i: i.date_invoice != self.payment_date):
+        if not self.invoice_ids.filtered(
+                lambda i: i.date_due != i.date_invoice):
             return False
         return required
 
