@@ -388,6 +388,18 @@ class HelpdeskStage(models.Model):
         domain="[('model', '=', 'helpdesk.ticket')]",
         help="Automated email sent to the ticket's customer when the ticket reaches this stage.")
 
+    @api.multi
+    def unlink(self):
+        stages = self
+        default_team_id = self.env.context.get('default_team_id')
+        if default_team_id:
+            shared_stages = self.filtered(lambda x: len(x.team_ids) > 1 and default_team_id in x.team_ids.ids)
+            tickets = self.env['helpdesk.ticket'].with_context(active_test=False).search([('team_id', '=', default_team_id), ('stage_id', 'in', self.ids)])
+            if shared_stages and not tickets:
+                shared_stages.write({'team_ids': [(3, default_team_id)]})
+                stages = self.filtered(lambda x: x not in shared_stages)
+        return super(HelpdeskStage, stages).unlink()
+
 
 class HelpdeskSLA(models.Model):
     _name = "helpdesk.sla"
