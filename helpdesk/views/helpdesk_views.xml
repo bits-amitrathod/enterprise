@@ -387,6 +387,7 @@
                                     <span class="fa fa-bars fa-lg"/>
                                 </a>
                                 <div class="dropdown-menu" role="menu">
+                                    <a name="%(portal.portal_share_action)d" type="action" class="dropdown-item" role="menuitem">Share</a>
                                     <t t-if="widget.editable"><a type="edit" class="dropdown-item" role="menuitem">Edit</a></t>
                                     <t t-if="widget.deletable"><a type="delete" class="dropdown-item" role="menuitem">Delete</a></t>
                                     <a name="toggle_active" type="object" class="dropdown-item" role="menuitem" t-if="! record.active.value">Restore</a>
@@ -899,5 +900,4 @@
 
     <menuitem id="helpdesk_ticket_menu_main" action="helpdesk_ticket_action_main_tree"
         sequence="10" parent="helpdesk.menu_helpdesk_root"/>
-
 </odoo>

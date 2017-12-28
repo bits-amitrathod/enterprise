@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import http
+from odoo.exceptions import AccessError
 from odoo.http import request
 from odoo.tools.translate import _
 from odoo.addons.portal.controllers.portal import get_records_pager, pager as portal_pager, CustomerPortal
@@ -19,11 +20,18 @@ class CustomerPortal(CustomerPortal):
             values['title'] = _("Salesperson")
         return values
 
+    def _ticket_get_page_view_values(self, ticket, access_token, **kwargs):
+        values = {
+            'page_name': 'ticket',
+            'ticket': ticket,
+        }
+        return self._get_page_view_values(ticket, access_token, values, 'my_tickets_history', False, **kwargs)
+
     @http.route(['/my/tickets', '/my/tickets/page/<int:page>'], type='http', auth="user", website=True)
     def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, search=None, search_in='content', **kw):
         values = self._prepare_portal_layout_values()
         user = request.env.user
-        domain = ['|', ('user_id', '=', user.id), ('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]
+        domain = ['|', ('user_id', '=', user.id), ('message_partner_ids', 'child_of', user.partner_id.commercial_partner_id.id)]
 
         searchbar_sortings = {
             'date': {'label': _('Newest'), 'order': 'create_date desc'},
@@ -87,17 +95,14 @@ class CustomerPortal(CustomerPortal):
 
     @http.route([
         "/helpdesk/ticket/<int:ticket_id>",
-        "/helpdesk/ticket/<int:ticket_id>/<token>"
+        "/helpdesk/ticket/<int:ticket_id>/<token>",
+        '/my/ticket/<int:ticket_id>'
     ], type='http', auth="public", website=True)
-    def tickets_followup(self, ticket_id, token=None):
-        Ticket = False
-        if token:
-            Ticket = request.env['helpdesk.ticket'].sudo().search([('id', '=', ticket_id), ('access_token', '=', token)])
-        else:
-            Ticket = request.env['helpdesk.ticket'].browse(ticket_id)
-        if not Ticket:
+    def tickets_followup(self, ticket_id=None, access_token=None, **kw):
+        try:
+            ticket_sudo = self._document_check_access('helpdesk.ticket', ticket_id, access_token)
+        except AccessError:
             return request.redirect('/my')
-        values = {'ticket': Ticket}
-        history = request.session.get('my_tickets_history', [])
-        values.update(get_records_pager(history, Ticket))
+
+        values = self._ticket_get_page_view_values(ticket_sudo, access_token, **kw)
         return request.render("helpdesk.tickets_followup", values)

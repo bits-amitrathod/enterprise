@@ -79,9 +79,6 @@ class HelpdeskTicket(models.Model):
         return stages.search(search_domain, order=order)
 
     name = fields.Char(string='Subject', required=True, index=True)
-    access_token = fields.Char(
-        'Security Token', copy=False, default=lambda self: str(uuid.uuid4()),
-        required=True)
     team_id = fields.Many2one('helpdesk.team', string='Helpdesk Team', default=_default_team_id, index=True)
     description = fields.Text()
     active = fields.Boolean(default=True)
@@ -127,10 +124,10 @@ class HelpdeskTicket(models.Model):
     sla_active = fields.Boolean(string='SLA active', compute='_compute_sla_fail', store=True)
     sla_fail = fields.Boolean(string='Failed SLA Policy', compute='_compute_sla_fail', store=True)
 
-    def _compute_portal_url(self):
-        super(HelpdeskTicket, self)._compute_portal_url()
+    def _compute_access_url(self):
+        super(HelpdeskTicket, self)._compute_access_url()
         for ticket in self:
-            ticket.portal_url = '/helpdesk/ticket/%s' % ticket.id
+            ticket.access_url = '/my/ticket/%s' % ticket.id
 
     def _onchange_team_get_values(self, team):
         return {
@@ -302,23 +299,6 @@ class HelpdeskTicket(models.Model):
             result.append((ticket.id, "%s (#%d)" % (ticket.name, ticket.id)))
         return result
 
-    @api.model_cr_context
-    def _init_column(self, column_name):
-        """ Initialize the value of the given column for existing rows.
-
-            Overridden here because we need to generate different access tokens
-            and by default _init_column calls the default method once and stores
-            its result for every record.
-        """
-        if column_name != 'access_token':
-            super(HelpdeskTicket, self)._init_column(column_name)
-        else:
-            query = """UPDATE %(table_name)s
-                          SET %(column_name)s = md5(md5(random()::varchar || id::varchar) || clock_timestamp()::varchar)::uuid::varchar
-                        WHERE %(column_name)s IS NULL
-                    """ % {'table_name': self._table, 'column_name': column_name}
-            self.env.cr.execute(query)
-
     # Method to called by CRON to update SLA & statistics
     @api.model
     def recompute_all(self):
@@ -453,30 +433,6 @@ class HelpdeskTicket(models.Model):
         if leftover:
             res.update(super(HelpdeskTicket, leftover)._notify_get_reply_to(default=default, records=None, company=company, doc_names=doc_names))
         return res
-
-    @api.multi
-    def get_access_action(self, access_uid=None):
-        """ Instead of the classic form view, redirect to website for portal users
-        that can read the ticket if the team is available on website. """
-        self.ensure_one()
-        user, record = self.env.user, self
-        if access_uid:
-            user = self.env['res.users'].sudo().browse(access_uid)
-            record = self.sudo(user)
-
-        if user.share:
-            try:
-                record.check_access_rule('read')
-            except AccessError:
-                pass
-            else:
-                return {
-                    'type': 'ir.actions.act_url',
-                    'url': '/helpdesk/ticket/%s/%s' % (self.id, self.access_token),
-                    'target': 'self',
-                    'res_id': self.id,
-                }
-        return super(HelpdeskTicket, self).get_access_action(access_uid)
 
     # ------------------------------------------------------------
     # Rating Mixin
