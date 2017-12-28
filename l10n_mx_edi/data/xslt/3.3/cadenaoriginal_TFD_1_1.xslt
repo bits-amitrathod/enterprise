@@ -1,83 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:tdCFDI="http://www.sat.gob.mx/sitio_internet/cfd/tipoDatos/tdCFDI" targetNamespace="http://www.sat.gob.mx/TimbreFiscalDigital" elementFormDefault="qualified" attributeFormDefault="unqualified">
-  <xs:import namespace="http://www.sat.gob.mx/sitio_internet/cfd/tipoDatos/tdCFDI" schemaLocation="http://www.sat.gob.mx/sitio_internet/cfd/tipoDatos/tdCFDI/tdCFDI.xsd"/>
-  <xs:element name="TimbreFiscalDigital">
-        <xs:annotation>
-            <xs:documentation>Complemento requerido para el Timbrado Fiscal Digital que da validez al Comprobante fiscal digital por Internet y al comprobante de retenciones.</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:attribute name="Version" use="required" fixed="1.1">
-                <xs:annotation>
-                    <xs:documentation>Atributo requerido para la expresión de la versión del estándar del Timbre Fiscal Digital</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="UUID" use="required" id="UUID">
-                <xs:annotation>
-                    <xs:documentation>Atributo requerido para expresar los 36 caracteres del folio fiscal (UUID) de la transacción de timbrado conforme al estándar RFC 4122</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:whiteSpace value="collapse"/>
-                        <xs:length value="36"/>
-                        <xs:pattern value="[a-f0-9A-F]{8}-[a-f0-9A-F]{4}-[a-f0-9A-F]{4}-[a-f0-9A-F]{4}-[a-f0-9A-F]{12}"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
-            <xs:attribute name="FechaTimbrado" use="required" type="tdCFDI:t_FechaH">
-                <xs:annotation>
-                    <xs:documentation>Atributo requerido para expresar la fecha y hora, de la generación del timbre por la certificación digital del SAT. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora de la Zona Centro del Sistema de Horario en México.</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="RfcProvCertif" use="required" type="tdCFDI:t_RFC_PM">
-                <xs:annotation>
-                    <xs:documentation>Atributo requerido para expresar el RFC del proveedor de certificación de comprobantes fiscales digitales que genera el timbre fiscal digital.</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="Leyenda" use="optional">
-                <xs:annotation>
-                    <xs:documentation>Atributo opcional para registrar información que el SAT comunique a los usuarios del CFDI.</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:whiteSpace value="collapse"/>
-            <xs:minLength value="12"/>
-            <xs:maxLength value="150"/>
-            <xs:pattern value="([A-Z]|[a-z]|[0-9]| |Ñ|ñ|!|&quot;|%|&amp;|&apos;|´|-|:|;|&gt;|=|&lt;|@|_|,|\{|\}|`|~|á|é|í|ó|ú|Á|É|Í|Ó|Ú|ü|Ü){1,150}"/>
-          </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
-            <xs:attribute name="SelloCFD" use="required">
-                <xs:annotation>
-                    <xs:documentation>Atributo requerido para contener el sello digital del comprobante fiscal o del comprobante de retenciones, que se ha timbrado. El sello debe ser expresado como una cadena de texto en formato Base 64.</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
-      <xs:attribute name="NoCertificadoSAT" use="required">
-        <xs:annotation>
-          <xs:documentation>Atributo requerido para expresar el número de serie del certificado del SAT usado para generar el sello digital del Timbre Fiscal Digital.</xs:documentation>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:length value="20"/>
-            <xs:whiteSpace value="collapse"/>
-            <xs:pattern value="[0-9]{20}"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
-      <xs:attribute name="SelloSAT" use="required">
-        <xs:annotation>
-          <xs:documentation>Atributo requerido para contener el sello digital del Timbre Fiscal Digital, al que hacen referencia las reglas de la Resolución Miscelánea vigente. El sello debe ser expresado como una cadena de texto en formato Base 64.</xs:documentation>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:whiteSpace value="collapse"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
-    </xs:complexType>
-    </xs:element>
-</xs:schema>
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital">
+    <!-- Con el siguiente método se establece que la salida deberá ser en texto -->
+    <xsl:output method="text" version="1.0" encoding="UTF-8" indent="no"/>
+    <xsl:template name="Requerido">
+        <xsl:param name="valor"/>|<xsl:call-template name="ManejaEspacios">
+            <xsl:with-param name="s" select="$valor"/>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template name="Opcional">
+        <xsl:param name="valor"/>
+        <xsl:if test="$valor">|<xsl:call-template name="ManejaEspacios"><xsl:with-param name="s" select="$valor"/></xsl:call-template></xsl:if>
+    </xsl:template>
+    <!-- Normalizador de espacios en blanco -->
+    <xsl:template name="ManejaEspacios">
+        <xsl:param name="s"/>
+        <xsl:value-of select="normalize-space(string($s))"/>
+    </xsl:template>
+    <!-- Aquí iniciamos el procesamiento de la cadena original con su | inicial y el terminador || -->
+    <xsl:template match="/">|<xsl:apply-templates select="/tfd:TimbreFiscalDigital"/>||</xsl:template>
+    <!--  Aquí iniciamos el procesamiento de los datos incluidos en el comprobante -->
+    <xsl:template match="tfd:TimbreFiscalDigital">
+        <!-- Iniciamos el tratamiento de los atributos del Timbre-->
+        <xsl:call-template name="Requerido">
+            <xsl:with-param name="valor" select="./@Version"/>
+        </xsl:call-template>
+        <xsl:call-template name="Requerido">
+            <xsl:with-param name="valor" select="./@UUID"/>
+        </xsl:call-template>
+        <xsl:call-template name="Requerido">
+            <xsl:with-param name="valor" select="./@FechaTimbrado"/>
+        </xsl:call-template>
+        <xsl:call-template name="Requerido">
+            <xsl:with-param name="valor" select="./@RfcProvCertif"/>
+        </xsl:call-template>
+        <xsl:call-template name="Opcional">
+            <xsl:with-param name="valor" select="./@Leyenda"/>
+        </xsl:call-template>
+        <xsl:call-template name="Requerido">
+            <xsl:with-param name="valor" select="./@SelloCFD"/>
+        </xsl:call-template>
+        <xsl:call-template name="Requerido">
+            <xsl:with-param name="valor" select="./@NoCertificadoSAT"/>
+        </xsl:call-template>
+    </xsl:template>
+</xsl:stylesheet>

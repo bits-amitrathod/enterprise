@@ -21,8 +21,7 @@ from odoo.tools.float_utils import float_repr
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdiv32'
 CFDI_TEMPLATE_33 = 'l10n_mx_edi.cfdiv33'
 CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal.xslt'
-CFDI_XSLT_CADENA_TFD = 'l10n_mx_edi/data/xslt/%s/cadenaoriginal_TFD_1_0.xslt'
-CFDI_XSLT_CADENA_TFD_11 = 'l10n_mx_edi/data/xslt/%s/cadenaoriginal_TFD_1_1.xslt'
+CFDI_XSLT_CADENA_TFD = 'l10n_mx_edi/data/xslt/3.3/cadenaoriginal_TFD_1_1.xslt'
 # Mapped from original SAT state to l10n_mx_edi_sat_status selection value
 # https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl
 CFDI_SAT_QR_STATE = {
@@ -223,11 +222,11 @@ class AccountInvoice(models.Model):
     def _get_l10n_mx_edi_cadena(self):
         self.ensure_one()
         #get the xslt path
-        version = self.l10n_mx_edi_get_pac_version()
-        xslt_path = CFDI_XSLT_CADENA % version
+        xslt_path = CFDI_XSLT_CADENA_TFD
         #get the cfdi as eTree
         cfdi = base64.decodestring(self.l10n_mx_edi_cfdi)
         cfdi = self.l10n_mx_edi_get_xml_etree(cfdi)
+        cfdi = self.l10n_mx_edi_get_tfd_etree(cfdi)
         #return the cadena
         return self.l10n_mx_edi_generate_cadena(xslt_path, cfdi)
 
