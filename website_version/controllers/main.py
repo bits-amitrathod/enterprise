@@ -54,7 +54,7 @@ class Versioning_Controller(Website):
         view = request.env['ir.ui.view'].browse(view_id)
         Version = request.env['website_version.version']
         website_id = request.website.id
-        versions = Version.search([('website_id', '=', website_id), '|', ('view_ids.key', '=', view.key), ('view_ids.key', '=', 'website.footer_default')])
+        versions = Version.search([('website_id', '=', website_id), '|', ('view_ids.key', '=', view.key), ('view_ids.key', '=', 'website.footer_custom')])
         current_version_id = request.context.get('version_id')
         check = False
         result = []
@@ -140,7 +140,7 @@ class Versioning_Controller(Website):
         icp = request.env['ir.config_parameter'].sudo()
         v = view.browse(view_id)
         website_id = request.website.id
-        tab_version = version.search_read([('website_id', '=', website_id), '|', ('view_ids.key', '=', v.key), ('view_ids.key', '=', 'website.footer_default')], ['id', 'name'])
+        tab_version = version.search_read([('website_id', '=', website_id), '|', ('view_ids.key', '=', v.key), ('view_ids.key', '=', 'website.footer_custom')], ['id', 'name'])
         tab_goal = goal.search_read([], ['id', 'name'])
         #Check if all the parameters are set to communicate with Google analytics
         if icp.get_param('google_management_token'):

@@ -34,7 +34,7 @@ odoo.define('website_version.tour', function (require) {
         extra_trigger:  'html:not(:has(a[data-action="edit"]:visible)) #snippet_structure .oe_snippet .oe_snippet_thumbnail',
         trigger:  "#snippet_structure .oe_snippet:eq(1) .oe_snippet_thumbnail",
         position: "bottom",
-        run: "drag_and_drop",
+        run: "drag_and_drop #wrap",
     }, {
         content:  _t("Click in the content text and start editing it."),
         extra_trigger:  '.oe_overlay_options .oe_options',
@@ -50,7 +50,7 @@ odoo.define('website_version.tour', function (require) {
         content:  _t("Drag the <em>'Features'</em> block and drop it below the banner."),
         trigger:  "#snippet_structure .oe_snippet:eq(6) .oe_snippet_thumbnail",
         position: "bottom",
-        run: "drag_and_drop",
+        run: "drag_and_drop #wrap",
     }, {
         content:  _t("Publish your page by clicking on the <em>'Save'</em> button."),
         extra_trigger:  '.oe_overlay_options .oe_options',
