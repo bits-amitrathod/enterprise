@@ -14,6 +14,7 @@ from odoo.addons.l10n_mx_edi.models import account_invoice
 
 CFDI_TEMPLATE = 'l10n_mx_edi_cfdi_33.cfdiv33'
 CFDI_XSLT_CADENA = 'l10n_mx_edi_cfdi_33/data/%s/cadenaoriginal.xslt'
+CFDI_XSLT_CADENA_TFD = 'l10n_mx_edi_cfdi_33/data/xslt/%s/cadenaoriginal_TFD.xslt'
 
 _logger = logging.getLogger(__name__)
 
@@ -186,10 +187,11 @@ class AccountInvoice(models.Model):
         version = self.l10n_mx_edi_get_pac_version('')
         if version == '3.2':
             return super(AccountInvoice, self)._get_l10n_mx_edi_cadena()
-        xslt_path = CFDI_XSLT_CADENA % version
+        xslt_path = CFDI_XSLT_CADENA_TFD % version
         #get the cfdi as eTree
         cfdi = base64.decodestring(self.l10n_mx_edi_cfdi)
         cfdi = self.l10n_mx_edi_get_xml_etree(cfdi)
+        cfdi = self.l10n_mx_edi_get_tfd_etree(cfdi)
         #return the cadena
         return self.l10n_mx_edi_generate_cadena(xslt_path, cfdi)
 
