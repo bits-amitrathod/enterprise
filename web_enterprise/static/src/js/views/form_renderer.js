@@ -18,15 +18,23 @@ var MobileFormRenderer = FormRenderer.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * In mobile, buttons displayed in the statusbar are folded in a dropdown.
+     * In mobile, buttons/widget tag displayed in the statusbar are folded in a dropdown.
      *
      * @override
      * @private
      */
     _renderHeaderButtons: function (node) {
         var $headerButtons = $();
-        var buttonChildren = _.filter(node.children, {tag: 'button'});
-        var buttons = _.map(buttonChildren, this._renderHeaderButton.bind(this));
+        var self = this;
+        var buttons = [];
+        _.each(node.children, function (child) {
+            if (child.tag === 'button') {
+                buttons.push(self._renderHeaderButton(child));
+            }
+            if (child.tag === 'widget') {
+                buttons.push(self._renderTagWidget(child));
+            }
+        });
 
         if (buttons.length) {
             $headerButtons = $(qweb.render('StatusbarButtons'));
