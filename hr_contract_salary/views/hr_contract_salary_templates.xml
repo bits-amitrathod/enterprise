@@ -89,7 +89,7 @@
                                                     </span>
                                                     <!-- <span><t t-esc="contract.available_cars_amount"/></span> -->
                                                     <span class="help-block mt8">The cost of a car is depreciated by 8% per year, for 7 years. So, your gross salary increases automatically to keep the same employee budget. Once a car has 7 years, the car is fully depreciated and the only remaining costs are the maintenance, insurances and taxes.</span>
-                                                    <span t-if="contract.available_cars_amount &lt; max_unused_cars" class="help-block mt8" name="new_car_message">If you want to choose another car model, please contact your HR manager.</span>
+                                                    <span t-if="contract.available_cars_amount &lt; max_unused_cars" class="help-block mt8" name="new_car_message">This cost simulation is only for information. If you want to choose another car model, please contact your HR manager.</span>
                                                 </div>
                                                 <div class="col-sm-2 mt24">
                                                     <div class="input-group">
@@ -356,7 +356,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
-                                                    <input class="form-control text-right" type="text" t-att-value="contract.thirteen_month" disabled="disabled"/>
+                                                    <input class="form-control text-right" type="text" t-att-value="contract.thirteen_month" disabled="disabled" name="thirteen_month"/>
                                                     <div class="input-group-addon">€</div>
                                                 </div>
                                             </div>
@@ -374,7 +374,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
-                                                    <input class="form-control" type="text" t-att-value="contract.double_holidays" disabled="disabled"/>
+                                                    <input class="form-control" type="text" t-att-value="contract.double_holidays" disabled="disabled" name="double_holidays"/>
                                                     <div class="input-group-addon">€</div>
                                                 </div>
                                             </div>

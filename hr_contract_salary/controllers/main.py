@@ -227,6 +227,8 @@ class website_hr_contract_salary(http.Controller):
             'holidays_compensation': round(new_contract.holidays_compensation, 2),
             'wage_with_holidays': round(new_contract.wage_with_holidays, 2),
             'company_car_total_depreciated_cost': round(new_contract.company_car_total_depreciated_cost, 2),
+            'thirteen_month': round(new_contract.thirteen_month, 2),
+            'double_holidays': round(new_contract.double_holidays, 2),
         })
 
         if new_contract.transport_mode == "public_transport":
