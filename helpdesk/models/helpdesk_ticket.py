@@ -465,7 +465,7 @@ class HelpdeskTicket(models.Model):
             else:
                 return {
                     'type': 'ir.actions.act_url',
-                    'url': '/ticket/%s' % self.id,
+                    'url': '/helpdesk/ticket/%s/%s' % (self.id, self.access_token),
                     'target': 'self',
                     'res_id': self.id,
                 }
