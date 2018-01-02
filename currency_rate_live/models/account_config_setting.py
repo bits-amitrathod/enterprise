@@ -2,11 +2,10 @@
 
 import datetime
 from lxml import etree
-import json
 from dateutil.relativedelta import relativedelta
 import re
 import requests
-import urllib
+import re
 import logging
 
 from odoo import api, fields, models
@@ -26,7 +25,12 @@ class ResCompany(models.Model):
         ('monthly', 'Monthly')],
         default='manually', string='Interval Unit')
     currency_next_execution_date = fields.Date(string="Next Execution Date")
-    currency_provider = fields.Selection([('yahoo', 'Yahoo (DISCONTINUED)'), ('ecb', 'European Central Bank'), ('fta', 'Federal Tax Administration (Switzerland)')], default='ecb', string='Service Provider')
+    currency_provider = fields.Selection([
+        ('yahoo', 'Yahoo (DISCONTINUED)'),
+        ('ecb', 'European Central Bank'),
+        ('fta', 'Federal Tax Administration (Switzerland)')
+    ], default='ecb', string='Service Provider')
+
     last_currency_sync_date = fields.Date(string="Last Sync Date", readonly=True)
 
     @api.model
@@ -74,6 +78,15 @@ class ResCompany(models.Model):
         for currency in self.env['res.currency'].search([]):
             available_currencies[currency.name] = currency
 
+        # make sure that the CHF is enabled
+        if not available_currencies.get('CHF'):
+            chf_currency = self.env['res.currency'].with_context(active_test=False).search([('name', '=', 'CHF')])
+            if chf_currency:
+                chf_currency.write({'active': True})
+            else:
+                chf_currency = self.env['res.currency'].create({'name': 'CHF'})
+            available_currencies['CHF'] = chf_currency
+ 
         request_url = 'http://www.afd.admin.ch/publicdb/newdb/mwst_kurse/wechselkurse.php'
         try:
             parse_url = requests.request('GET', request_url)

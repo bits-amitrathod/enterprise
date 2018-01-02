@@ -134,7 +134,7 @@ class SignatureItemType(models.Model):
         ('textarea', "Multiline Text"),
     ], required=True, default='text')
 
-    tip = fields.Char(required=True, default="fill in")
+    tip = fields.Char(required=True, default="fill in", translate=True)
     placeholder = fields.Char()
 
     default_width = fields.Float(string="Default Width", digits=(4, 3), required=True, default=0.150)

@@ -253,9 +253,9 @@ class HelpdeskTeam(models.Model):
 
         result['today']['success'] = (result['today']['success'] * 100) / (result['today']['count'] or 1)
         result['7days']['success'] = (result['7days']['success'] * 100) / (result['7days']['count'] or 1)
-        result['my_all']['hours'] = result['my_all']['hours'] / (result['my_all']['count'] or 1)
-        result['my_high']['hours'] = result['my_high']['hours'] / (result['my_high']['count'] or 1)
-        result['my_urgent']['hours'] = result['my_urgent']['hours'] / (result['my_urgent']['count'] or 1)
+        result['my_all']['hours'] = round(result['my_all']['hours'] / (result['my_all']['count'] or 1), 2)
+        result['my_high']['hours'] = round(result['my_high']['hours'] / (result['my_high']['count'] or 1), 2)
+        result['my_urgent']['hours'] = round(result['my_urgent']['hours'] / (result['my_urgent']['count'] or 1), 2)
 
         if self.env['helpdesk.team'].search([('use_rating', '=', True), '|', ('member_ids', 'in', self._uid), ('member_ids', '=', False)]):
             result['rating_enable'] = True

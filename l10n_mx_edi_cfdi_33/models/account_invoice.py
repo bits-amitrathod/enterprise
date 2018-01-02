@@ -55,13 +55,13 @@ class AccountInvoice(models.Model):
         'invoices re-signed or invoices that are redone due to payment in '
         'advance will need this field filled, the format is: \nOrigin Type|'
         'UUID1, UUID2, ...., UUIDn.\nWhere the origin type could be:\n'
-        '- 01: Nota de crédito\n'
-        '- 02: Nota de débito de los documentos relacionados\n'
-        '- 03: Devolución de mercancía sobre facturas o traslados previos\n'
-        '- 04: Sustitución de los CFDI previos\n'
+        u'- 01: Nota de crédito\n'
+        u'- 02: Nota de débito de los documentos relacionados\n'
+        u'- 03: Devolución de mercancía sobre facturas o traslados previos\n'
+        u'- 04: Sustitución de los CFDI previos\n'
         '- 05: Traslados de mercancias facturados previamente\n'
         '- 06: Factura generada por los traslados previos\n'
-        '- 07: CFDI por aplicación de anticipo')
+        u'- 07: CFDI por aplicación de anticipo')
 
     @api.multi
     @api.depends('l10n_mx_edi_cfdi_name')
