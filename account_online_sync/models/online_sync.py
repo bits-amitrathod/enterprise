@@ -4,6 +4,7 @@ import datetime
 from odoo import api, fields, models
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
+from odoo.tools import float_is_zero
 
 """
 This module manage an "online account" for a journal. It can't be used in standalone,
@@ -255,7 +256,8 @@ class AccountBankStatement(models.Model):
             balance_start = previous_statement.balance_end_real
         # For first synchronization, an opening bank statement line is created to fill the missing bank statements
         all_statement = self.search_count([('journal_id', '=', journal.id)])
-        if all_statement == 0 and end_amount - total != 0 and balance_start == None:
+        digits_rounding_precision = journal.currency_id.rounding
+        if all_statement == 0 and not float_is_zero(end_amount - total, precision_rounding=digits_rounding_precision) and balance_start == None:
             lines.append((0, 0, {
                 'date': transactions and (transactions[0]['date']) or datetime.datetime.now(),
                 'name': _("Opening statement: first synchronization"),

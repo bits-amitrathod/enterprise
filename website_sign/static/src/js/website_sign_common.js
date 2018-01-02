@@ -1216,17 +1216,21 @@ odoo.define('website_sign.document_signing', function(require) {
 
     function initDocumentToSign() {
         return session.session_bind(session.origin).then(function () {
-            var documentPage = new SignableDocument(null);
-
-            return documentPage.attachTo($('body')).then(function() {
-                // Geolocation
-                var askLocation = ($('#o_sign_ask_location_input').length > 0);
-                if(askLocation && navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        var coords = _.pick(position.coords, ['latitude', 'longitude']);
-                        ajax.jsonRpc('/sign/save_location/' + documentPage.requestID + '/' + documentPage.accessToken, 'call', coords);
-                    });
-                }
+            // Manually add 'website_sign' to module list and load the
+            // translations.
+            session.module_list.push('website_sign');
+            return session.load_translations().then(function () {
+                var documentPage = new SignableDocument(null);
+                return documentPage.attachTo($('body')).then(function() {
+                    // Geolocation
+                    var askLocation = ($('#o_sign_ask_location_input').length > 0);
+                    if(askLocation && navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            var coords = _.pick(position.coords, ['latitude', 'longitude']);
+                            ajax.jsonRpc('/sign/save_location/' + documentPage.requestID + '/' + documentPage.accessToken, 'call', coords);
+                        });
+                    }
+                });
             });
         });
     }

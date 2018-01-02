@@ -26,6 +26,8 @@ class TaxCloudRequest(object):
 
     def verify_address(self, partner):
         # Ensure that the partner address is as accurate as possible (with zip4 field for example)  
+        zip_match = re.match(r"^\D*(\d{5})\D*(\d{4})?", partner.zip or '')
+        zips = list(zip_match.groups()) if zip_match else []
         address_to_verify = {
             'apiLoginID': self.api_login_id,
             'apiKey': self.api_key,
@@ -33,8 +35,8 @@ class TaxCloudRequest(object):
             'Address2': partner.street2 or '',
             'City': partner.city,
             "State": partner.state_id.code,
-            "Zip5": re.sub('[^0-9]', '', partner.zip or ''),
-            "Zip4": ""
+            "Zip5": zips.pop(0) if zips else '',
+            "Zip4": zips.pop(0) if zips else '',
         }
         res = requests.post("https://api.taxcloud.com/1.0/TaxCloud/VerifyAddress", data=address_to_verify).json()
         if int(res.get('ErrNumber', False)):
