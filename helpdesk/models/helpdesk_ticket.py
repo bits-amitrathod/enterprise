@@ -379,7 +379,7 @@ class HelpdeskTicket(models.Model):
             self.message_subscribe(partner_ids)
         return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)
 
-    def _message_post_after_hook(self, message):
+    def _message_post_after_hook(self, message, values):
         if self.partner_email and not self.partner_id:
             # we consider that posting a message with a specified recipient (not a follower, a specific one)
             # on a document without customer means that it was created through the chatter using
@@ -390,7 +390,7 @@ class HelpdeskTicket(models.Model):
                     ('partner_id', '=', False),
                     ('partner_email', '=', new_partner.email),
                     ('stage_id.fold', '=', False)]).write({'partner_id': new_partner.id})
-        return super(HelpdeskTicket, self)._message_post_after_hook(message)
+        return super(HelpdeskTicket, self)._message_post_after_hook(message, values)
 
     @api.multi
     def _track_template(self, tracking):
