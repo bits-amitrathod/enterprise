@@ -245,7 +245,7 @@ models.Order = models.Order.extend({
 
     apply_reward: function(reward){
         var client = this.get_client();
-        var product, order_total, spendable;
+        var product, product_price, order_total, spendable;
         var lrounding, crounding;
 
         if (!client) {
@@ -301,8 +301,9 @@ models.Order = models.Order.extend({
                 return;
             }
 
-            if ( round_pr( spendable * product.price, crounding ) > order_total ) {
-                spendable = round_pr( Math.floor(order_total / product.price), lrounding);
+            product_price = product.get_price(this.pricelist, 1);
+            if ( round_pr( spendable * product_price, crounding ) > order_total ) {
+                spendable = round_pr( Math.floor(order_total / product_price), lrounding);
             }
 
             if ( spendable < 0.00001 ) {
