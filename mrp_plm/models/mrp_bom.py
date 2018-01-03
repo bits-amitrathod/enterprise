@@ -73,7 +73,8 @@ class MrpBom(models.Model):
         action['domain'] = [('bom_id', '=', self.id)]
         action['context'] = {
             'default_bom_id': self.id,
-            'default_product_tmpl_id': self.product_tmpl_id.id
+            'default_product_tmpl_id': self.product_tmpl_id.id,
+            'default_type': 'bom'
         }
         return action
 
