@@ -65,6 +65,8 @@ class website_crm_score(models.Model):
         domain = [('running', '=', True)]
         if ids:
             domain.append(('id', 'in', ids))
+        elif self.ids:
+            domain.append(('id', 'in', self.ids))
         scores = self.search(domain)
 
         # Sort rule to unlink before scoring
@@ -85,7 +87,7 @@ class website_crm_score(models.Model):
             where_clause += """ AND (id NOT IN (SELECT lead_id FROM crm_lead_score_rel WHERE score_id = %s)) """
             where_params.append(score.id)
 
-            if not self.event_based and not lead_ids:
+            if not score.event_based and not lead_ids:
                 if score.last_run:
                     # Only check leads that are newer than the last matching lead.
                     where_clause += """ AND (create_date > %s) """

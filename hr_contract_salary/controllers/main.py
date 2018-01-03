@@ -83,8 +83,10 @@ class website_hr_contract_salary(http.Controller):
     def get_salary_package_values(self, contract):
         return {
             'contract': contract,
-            'available_cars': request.env['fleet.vehicle'].sudo().search(contract._get_available_cars_domain()),
-            'can_be_requested_models': request.env['fleet.vehicle.model'].sudo().search(contract._get_possible_model_domain()),
+            'available_cars': request.env['fleet.vehicle'].sudo().search(
+                contract._get_available_cars_domain()).sorted(key=lambda car: car.total_depreciated_cost),
+            'can_be_requested_models': request.env['fleet.vehicle.model'].sudo().search(
+                contract._get_possible_model_domain()).sorted(key=lambda model: model.default_total_depreciated_cost),
             'states': request.env['res.country.state'].search([]),
             'countries': request.env['res.country'].search([]),
         }
@@ -225,6 +227,8 @@ class website_hr_contract_salary(http.Controller):
             'holidays_compensation': round(new_contract.holidays_compensation, 2),
             'wage_with_holidays': round(new_contract.wage_with_holidays, 2),
             'company_car_total_depreciated_cost': round(new_contract.company_car_total_depreciated_cost, 2),
+            'thirteen_month': round(new_contract.thirteen_month, 2),
+            'double_holidays': round(new_contract.double_holidays, 2),
         })
 
         if new_contract.transport_mode == "public_transport":

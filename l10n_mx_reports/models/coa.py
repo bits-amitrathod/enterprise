@@ -94,11 +94,15 @@ class MXReportAccountCoa(models.AbstractModel):
         xml_data = self.get_lines(options)
         accounts = []
         account_lines = [l for l in xml_data
-                         if l.get('caret_options') == 'account.account']
-        account_obj = self.env['account.account']
+                         if l.get('level') in [2, 3]]
+        tag_obj = self.env['account.account.tag']
         for line in account_lines:
-            account = account_obj.browse(line['id'])
-            tag = account.tag_ids.filtered(lambda r: r.color == 4)
+            if line.get('level') == 2:
+                parent = line
+                print_parent = True
+                continue
+            tag_id = line.get('tag_id', False)
+            tag = tag_obj.browse(tag_id)
             if not tag:
                 msg = _(
                     'This XML could not be generated because some accounts '
@@ -107,10 +111,21 @@ class MXReportAccountCoa(models.AbstractModel):
                     '"Misconfigured Accounts", please configure your tag and '
                     'try generate the report XML again.')
                 raise ValidationError(msg)
+            if print_parent:
+                name = parent.get('name').split(' ', 1)
+                accounts.append({
+                    'code': name[0],
+                    'number': name[0],
+                    'name': name[-1],
+                    'level': '1',
+                    'nature': tag.nature
+                })
+                print_parent = False
+            name = line.get('name').split(' ', 1)
             accounts.append({
-                'code': tag.name[:6],
-                'number': account.code,
-                'name': account.name,
+                'code': name[0],
+                'number': name[0],
+                'name': name[-1],
                 'level': '2',
                 'nature': tag.nature,
             })

@@ -79,8 +79,12 @@ class MrpCostStructure(models.AbstractModel):
 
     @api.model
     def get_report_values(self, docids, data=None):
-        productions = self.env['mrp.production'].browse(docids)
-        res = self.get_lines(productions)
+        productions = self.env['mrp.production']\
+            .browse(docids)\
+            .filtered(lambda p: p.state != 'cancel')
+        res = None
+        if all([production.state == 'done' for production in productions]):
+            res = self.get_lines(productions)
         return {'lines': res}
 
 

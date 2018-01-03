@@ -28,8 +28,8 @@
                                 <field name="keep_archives" groups="base.group_no_one"/>
                                 <label for="reply_to"/>
                                 <div>
-                                    <field name="reply_to_mode" widget="radio" attrs="{'invisible': [('mailing_model_real', 'in', ['mail.mass_mailing.contact', 'res.partner'])]}"/>
-                                    <field name="reply_to" attrs="{'required': [('reply_to_mode', '=', 'email')]}"/>
+                                    <field name="reply_to_mode" widget="radio" attrs="{'invisible': [('mailing_model_real', '=', 'mail.mass_mailing.contact')]}"/>
+                                    <field name="reply_to" attrs="{'required': [('reply_to_mode', '=', 'email')], 'invisible': [('reply_to_mode', '!=', 'email')]}"/>
                                 </div>
                             </group>
                         </group>

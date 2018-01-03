@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class AccountBankStatementLine(models.Model):
@@ -17,8 +17,7 @@ class AccountBankStatementLine(models.Model):
         res = super(AccountBankStatementLine, self).process_reconciliation(
             counterpart_aml_dicts=counterpart_aml_dicts,
             payment_aml_rec=payment_aml_rec, new_aml_dicts=new_aml_dicts)
-        version = self.env['account.invoice'].l10n_mx_edi_get_pac_version()
-        if version != '3.3' or self.company_id.country_id != self.env.ref('base.mx'):
+        if not self.l10n_mx_edi_is_required():
             return res
         payments = res.line_ids.mapped('payment_id')
         payment_method = self.l10n_mx_edi_payment_method_id.id or self.journal_id.l10n_mx_edi_payment_method_id.id
@@ -27,3 +26,14 @@ class AccountBankStatementLine(models.Model):
         })
         payments._l10n_mx_edi_retry()
         return res
+
+    @api.multi
+    def l10n_mx_edi_is_required(self):
+        self.ensure_one()
+        # TODO remove this crappy hack and make a bridge module for l10n_mx_edi and point_of_sale
+        if getattr(self, 'pos_statement_id', False):
+            # payments from pos not must generate payment complement: pos is tolerated not supported
+            return False
+        version = self.env['account.invoice'].l10n_mx_edi_get_pac_version()
+        country = self.env.ref('base.mx')
+        return version == '3.3' and self.company_id.country_id == country

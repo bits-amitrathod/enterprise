@@ -263,7 +263,8 @@ class AccountBankStatement(models.Model):
         previous_statement = self.search([('journal_id', '=', journal.id)], order="date desc, id desc", limit=1)
         # For first synchronization, an opening bank statement line is created to fill the missing bank statements
         all_statement = self.search_count([('journal_id', '=', journal.id)])
-        if all_statement == 0 and end_amount - total != 0:
+        digits_rounding_precision = journal.currency_id.rounding
+        if all_statement == 0 and not float_is_zero(end_amount - total, precision_rounding=digits_rounding_precision):
             lines.append((0, 0, {
                 'date': transactions and (transactions[0]['date']) or datetime.datetime.now(),
                 'name': _("Opening statement: first synchronization"),

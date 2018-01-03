@@ -32,9 +32,6 @@
     <record id="account.menu_partner_ledger" model="ir.ui.menu">
         <field name="active" eval="False"/>
     </record>
-    <record id="account.menu_print_journal" model="ir.ui.menu">
-        <field name="active" eval="False"/>
-    </record>
 
     <function model="ir.actions.report" name="unlink" eval="[ref('account.action_report_print_overdue')], {'install_mode': True}"/>
 

@@ -287,8 +287,6 @@ return AbstractWebClient.extend({
         return this.do_action(action, options);
     },
     toggle_home_menu: function (display) {
-        this.$el.toggleClass('o_home_menu_background', display);
-
         if (display === this.home_menu_displayed) {
             return; // nothing to do (prevents erasing previously detached webclient content)
         }
@@ -309,6 +307,7 @@ return AbstractWebClient.extend({
 
                 // Attach the home_menu
                 self.append_home_menu();
+                self.$el.addClass('o_home_menu_background');
 
                 // Save and clear the url
                 self.url = $.bbq.getState();
@@ -323,6 +322,7 @@ return AbstractWebClient.extend({
                 callbacks: [{widget: this.action_manager}],
             });
             this.home_menu_displayed = false;
+            this.$el.removeClass('o_home_menu_background');
             this.menu.toggle_mode(false, this.action_manager.get_inner_action() !== null);
         }
     },

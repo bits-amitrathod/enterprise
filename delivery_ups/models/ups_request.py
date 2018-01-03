@@ -132,7 +132,6 @@ class FixRequestNamespacePlug(MessagePlugin):
         self.root = root
 
     def marshalled(self, context):
-        context.envelope.getChild('Body').getChild(self.root).getChild('Request').prefix = 'ns0'
         context.envelope = context.envelope.prune()
 
 
@@ -213,7 +212,7 @@ class UPSRequest():
         if not ship_to.street and not ship_to.street2:
             res.append('Street')
         if order:
-            phone = ship_to.mobile or ship_to.phone or order.mobile or order.phone
+            phone = ship_to.mobile or ship_to.phone or order.partner_id.mobile or order.partner_id.phone
             if not order.order_line:
                 return _("Please provide at least one item to ship.")
             for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):

@@ -2,7 +2,6 @@
 
 import datetime
 from lxml import etree, objectify
-import json
 from dateutil.relativedelta import relativedelta
 import re
 import logging
@@ -89,6 +88,15 @@ class ResCompany(models.Model):
         available_currencies = {}
         for currency in self.env['res.currency'].search([]):
             available_currencies[currency.name] = currency
+
+        # make sure that the CHF is enabled
+        if not available_currencies.get('CHF'):
+            chf_currency = self.env['res.currency'].with_context(active_test=False).search([('name', '=', 'CHF')])
+            if chf_currency:
+                chf_currency.write({'active': True})
+            else:
+                chf_currency = self.env['res.currency'].create({'name': 'CHF'})
+            available_currencies['CHF'] = chf_currency
 
         request_url = 'http://www.afd.admin.ch/publicdb/newdb/mwst_kurse/wechselkurse.php'
         try:

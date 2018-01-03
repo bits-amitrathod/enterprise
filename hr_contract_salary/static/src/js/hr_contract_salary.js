@@ -169,6 +169,8 @@ var SalaryPackageWidget = Widget.extend({
 
     update_gross_to_net_modal: function(data) {
         $("input[name='wage']").val(data['BASIC']);
+        $("input[name='thirteen_month']").val(data['thirteen_month']);
+        $("input[name='double_holidays']").val(data['double_holidays']);
         $("input[name='wage_with_holidays']").val(data['wage_with_holidays']);
         $("input[name='SALARY']").val(data['SALARY']);
         $("input[name='ONSS']").val(- data['ONSS']);
