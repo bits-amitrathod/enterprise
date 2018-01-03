@@ -21,13 +21,16 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             'l10n_mx_edi', 'demo', 'pac_credentials', 'certificate.key'), 'rb').read()
         self.cert_password = '12345678a'
         self.l10n_mx_edi_basic_configuration()
-        self.xml_expected_str = misc.file_open(os.path.join(
-            'l10n_mx_edi', 'tests', 'expected_cfdi32.xml'), mode='rb').read()
-        self.xml_expected = objectify.fromstring(self.xml_expected_str)
         self.company_partner = self.env.ref('base.main_partner')
         self.payment_term = self.ref('account.account_payment_term_net')
         self.config_parameter = self.env.ref(
             'l10n_mx_edi.l10n_mx_edi_version_cfdi')
+        self.xml_expected_str = misc.file_open(os.path.join(
+            'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read().encode('UTF-8')
+        self.xml_expected = objectify.fromstring(self.xml_expected_str)
+        isr_tag = self.env['account.account.tag'].search(
+            [('name', '=', 'ISR')])
+        self.tax_negative.tag_ids |= isr_tag
 
     def l10n_mx_edi_basic_configuration(self):
         self.company.write({
@@ -37,14 +40,6 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.company.partner_id.write({
             'vat': 'ACO560518KW7',
             'country_id': self.env.ref('base.mx').id,
-            'state_id': self.env.ref('base.state_mx_jal').id,
-            'street_name': 'Company Street Juan & José & "Niño"',
-            'street2': 'Company Street 2',
-            'street_number': 'Company Internal Number',
-            'street_number2': 'Company Internal Number # 2',
-            'l10n_mx_edi_colony': 'Company Colony',
-            'l10n_mx_edi_locality': 'Company Locality',
-            'city': 'Company City',
             'zip': '37200',
             'property_account_position_id': self.fiscal_position.id,
         })
@@ -70,12 +65,6 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
                          invoice.message_ids.mapped('body'))
-        xml = invoice.l10n_mx_edi_get_xml_etree()
-        self.xml_merge_dynamic_items(xml, self.xml_expected)
-        self.assertEqualXML(xml, self.xml_expected)
-        xml_attach = base64.decodestring(invoice.l10n_mx_edi_cfdi)
-        self.assertEqual(xml_attach.splitlines()[0].lower(),
-                         b'<?xml version="1.0" encoding="utf-8"?>'.lower())
 
         # ----------------
         # Testing discount
@@ -92,24 +81,13 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         xml = invoice_disc.l10n_mx_edi_get_xml_etree()
         xml_expected_disc = objectify.fromstring(self.xml_expected_str)
         version = xml.get('version', xml.get('Version', ''))
-        if version == '3.2':
-            xml_expected_disc.attrib['subTotal'] = '500.00'
-            xml_expected_disc.attrib['descuento'] = '50.00'
-            # 500 - 10% + taxes(16%, -10%)
-            xml_expected_disc.attrib['total'] = '477.00'
-        elif version == '3.3':
+        if version == '3.3':
             xml_expected_disc.attrib['SubTotal'] = '500.00'
             xml_expected_disc.attrib['Descuento'] = '50.00'
             # 500 - 10% + taxes(16%, -10%)
             xml_expected_disc.attrib['Total'] = '477.00'
         self.xml_merge_dynamic_items(xml, xml_expected_disc)
-        if version == '3.2':
-            xml_expected_disc.attrib['folio'] = xml.attrib['folio']
-            xml_expected_disc.attrib['serie'] = xml.attrib['serie']
-            for concepto in xml_expected_disc.Conceptos:
-                concepto.Concepto.attrib['valorUnitario'] = '500.0'
-                concepto.Concepto.attrib['importe'] = '500.0'
-        elif version == '3.3':
+        if version == '3.3':
             xml_expected_disc.attrib['Folio'] = xml.attrib['Folio']
             xml_expected_disc.attrib['Serie'] = xml.attrib['Serie']
             for concepto in xml_expected_disc.Conceptos:
@@ -163,10 +141,6 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled",
                             invoice.message_ids.mapped('body'))
 
-    def test_l10n_mx_edi_invoice_basic_sf(self):
-        self.account_settings.create({'l10n_mx_edi_pac': 'solfact'}).execute()
-        self.test_l10n_mx_edi_invoice_basic()
-
     def test_multi_currency(self):
         invoice = self.create_invoice()
         usd_rate = 20.0
@@ -211,13 +185,10 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqualXML(xml_addenda, xml_expected)
 
     def test_l10n_mx_edi_invoice_basic_33(self):
-        isr_tag = self.env['account.account.tag'].search(
-            [('name', '=', 'ISR')])
         self.config_parameter.value = '3.3'
         self.xml_expected_str = misc.file_open(os.path.join(
             'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read().encode('UTF-8')
         self.xml_expected = objectify.fromstring(self.xml_expected_str)
-        self.tax_negative.tag_ids |= isr_tag
         self.test_l10n_mx_edi_invoice_basic()
 
         # -----------------------

@@ -17,5 +17,5 @@ class MailTemplate(models.Model):
                 continue
             attachment = invoice.l10n_mx_edi_retrieve_last_attachment()
             if attachment:
-                res[invoice.id]['attachments'].append((attachment.name, attachment.datas))
+                res[invoice.id].setdefault('attachments', []).append((attachment.name, attachment.datas))
         return res

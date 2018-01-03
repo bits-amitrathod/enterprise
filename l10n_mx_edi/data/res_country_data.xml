@@ -756,6 +756,8 @@
         <field name="arch" type="xml">
             <form>
                 <div class="o_address_format">
+                    <field name="parent_id" invisible="1"/>
+                    <field name="type" invisible="1"/>
                     <field name="street" invisible="1"/>
                     <field name="street_name" placeholder="Street Name..." attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                     <div class="o_row">

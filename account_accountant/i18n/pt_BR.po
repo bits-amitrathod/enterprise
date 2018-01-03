@@ -9,14 +9,14 @@
 # Martin Trigaux <mat@odoo.com>, 2017
 # danimaribeiro <danimaribeiro@gmail.com>, 2017
 # André Augusto Firmino Cordeiro <a.cordeito@gmail.com>, 2017
-# Silmar <pinheirosilmar@gmail.com>, 2017
+# SILMAR PINHEIRO VIANA <pinheirosilmar@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:49+0000\n"
 "PO-Revision-Date: 2017-10-02 11:49+0000\n"
-"Last-Translator: Silmar <pinheirosilmar@gmail.com>, 2017\n"
+"Last-Translator: SILMAR PINHEIRO VIANA <pinheirosilmar@gmail.com>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +37,7 @@ msgstr "Tags de Conta"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Account used when transferring between banks"
-msgstr ""
+msgstr "Conta usada quando transferindo entre bancos"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_partner_view_form
@@ -57,7 +57,7 @@ msgstr "Cancelar"
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_change_lock_date
 msgid "Change lock date"
-msgstr ""
+msgstr "Mudar a data da tranca"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_uid
@@ -82,7 +82,7 @@ msgstr "Relatórios Financeiros"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Period Closing"
-msgstr ""
+msgstr "Fechando Período Fiscal"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -92,12 +92,12 @@ msgstr "Ano Fiscal"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_day
 msgid "Fiscalyear Last Day"
-msgstr ""
+msgstr "Último Dia do Ano Fiscal"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid "Fiscalyear Last Month"
-msgstr ""
+msgstr "Último Mês do Ano Fiscal"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_id
@@ -107,7 +107,7 @@ msgstr "ID"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Inter-Banks Transfers"
-msgstr ""
+msgstr "Transferências interbancárias"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_transfer_account_id
@@ -121,7 +121,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last Day"
-msgstr ""
+msgstr "Último Dia"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date___last_update
@@ -141,7 +141,7 @@ msgstr "Última atualização em"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last day of your fiscal year, for automatic opening entries"
-msgstr ""
+msgstr "Último dia de seu ano fiscal, para entradas de abertura automáticas"
 
 #. module: account_accountant
 #. openerp-web
@@ -154,7 +154,7 @@ msgstr "Vamos iniciar com uma fatura de cliente"
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_lock_date
 msgid "Lock Date for All Users"
-msgstr ""
+msgstr "Travar a Data para Todos os Usuários"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_period_lock_date
@@ -165,24 +165,24 @@ msgstr "Bloqueio Data para não Conselheiros"
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_action_change_lock_date
 msgid "Lock Dates"
-msgstr ""
+msgstr "Travar Datas"
 
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_view_account_change_lock_date
 msgid "Lock your Fiscal Period"
-msgstr ""
+msgstr "Travar seu Período Fiscal"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Lock your fiscal period"
-msgstr ""
+msgstr "Travar seu período fiscal"
 
 #. module: account_accountant
 #. openerp-web
 #: code:addons/account_accountant/static/src/js/tour.js:17
 #, python-format
 msgid "Make your system ready to invoice in a few steps."
-msgstr ""
+msgstr "Fazer seu sistema preparado para faturar em alguns passos"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
@@ -212,6 +212,9 @@ msgid ""
 " this date. Use it for period locking inside an open fiscal year, for "
 "example."
 msgstr ""
+"Somente os usuários com o papel 'Conselheiro' podem editar contas anteriores"
+" e inclusive desta data. Use-o para dentro de bloquear um período dentro do "
+"ano fiscal aberto, por exemplo."
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_product_product_categories
@@ -232,7 +235,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Record cost of goods sold in your journal entries"
-msgstr ""
+msgstr "Gravar custo de bens vendidos em suas entradas de diário"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -244,7 +247,7 @@ msgstr "Salvar"
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid ""
 "The last day of the month will be taken if the chosen day doesn't exist."
-msgstr ""
+msgstr "O último dia do mês será escolhido se o dia escolhido não existir."
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_transfer_account_id
@@ -267,7 +270,7 @@ msgstr ""
 #: code:addons/account_accountant/static/src/js/tour.js:21
 #, python-format
 msgid "When you're ready, close this planner to continue the tour."
-msgstr ""
+msgstr "Quando estiver pronto, feche esse planejador para continuar o tour."
 
 #. module: account_accountant
 #. openerp-web

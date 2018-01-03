@@ -157,13 +157,13 @@ class AccountInvoice(models.Model):
         'invoices re-signed or invoices that are redone due to payment in '
         'advance will need this field filled, the format is: \nOrigin Type|'
         'UUID1, UUID2, ...., UUIDn.\nWhere the origin type could be:\n'
-        '- 01: Nota de crédito\n'
-        '- 02: Nota de débito de los documentos relacionados\n'
-        '- 03: Devolución de mercancía sobre facturas o traslados previos\n'
-        '- 04: Sustitución de los CFDI previos\n'
+        u'- 01: Nota de crédito\n'
+        u'- 02: Nota de débito de los documentos relacionados\n'
+        u'- 03: Devolución de mercancía sobre facturas o traslados previos\n'
+        u'- 04: Sustitución de los CFDI previos\n'
         '- 05: Traslados de mercancias facturados previamente\n'
         '- 06: Factura generada por los traslados previos\n'
-        '- 07: CFDI por aplicación de anticipo')
+        u'- 07: CFDI por aplicación de anticipo')
 
     # -------------------------------------------------------------------------
     # HELPERS
@@ -636,9 +636,11 @@ class AccountInvoice(models.Model):
             tfd_node = inv.l10n_mx_edi_get_tfd_etree(tree)
             if tfd_node is not None:
                 inv.l10n_mx_edi_cfdi_uuid = tfd_node.get('UUID')
-            inv.l10n_mx_edi_cfdi_amount = tree.get('total')
-            inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
-            inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
+            inv.l10n_mx_edi_cfdi_amount = tree.get('Total', tree.get('total'))
+            inv.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get(
+                'Rfc', tree.Emisor.get('rfc'))
+            inv.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get(
+                'Rfc', tree.Receptor.get('rfc'))
             certificate = tree.get('noCertificado', tree.get('NoCertificado'))
             inv.l10n_mx_edi_cfdi_certificate_id = self.env['l10n_mx_edi.certificate'].sudo().search(
                 [('serial_number', '=', certificate)], limit=1)
@@ -744,8 +746,8 @@ class AccountInvoice(models.Model):
         elif version == '3.3':
             # In CFDI 3.3, the payment policy is PUE when the invoice is to be
             # paid directly, PPD otherwise
-            values['payment_policy'] = 'PPD' if term_ids.search([
-                ('days', '>', 0), ('id', 'in', term_ids.ids)], limit=1) else 'PUE'
+            values['payment_policy'] = 'PPD' if (
+                self.date_due != self.date_invoice) else 'PUE'
         domicile = self.journal_id.l10n_mx_address_issued_id or self.company_id
         values['domicile'] = '%s %s, %s' % (
                 domicile.city,

@@ -201,9 +201,10 @@ class AccountPayment(models.Model):
     def l10n_mx_edi_is_required(self):
         self.ensure_one()
         version = self.env['account.invoice'].l10n_mx_edi_get_pac_version()
-        required = (self.payment_type == 'inbound' and
-                self.company_id.country_id == self.env.ref('base.mx') and
-                version == '3.3')
+        required = (
+            self.payment_type == 'inbound' and version == '3.3' and
+            self.company_id.country_id == self.env.ref('base.mx') and
+            self.invoice_ids.filtered(lambda i: i.type == 'out_invoice'))
         if not required:
             return required
         if not self.invoice_ids:
@@ -216,7 +217,8 @@ class AccountPayment(models.Model):
                 'Some of the invoices that will be paid with this record '
                 'is not signed, and the UUID is required to indicate '
                 'the invoices that are paid with this CFDI'))
-        if not self.invoice_ids.filtered(lambda i: i.date_invoice != self.payment_date):
+        if not self.invoice_ids.filtered(
+                lambda i: i.date_due != i.date_invoice):
             return False
         return required
 
@@ -243,8 +245,10 @@ class AccountPayment(models.Model):
             tfd_node = rec.l10n_mx_edi_get_tfd_etree(tree)
             if tfd_node is not None:
                 rec.l10n_mx_edi_cfdi_uuid = tfd_node.get('UUID')
-            rec.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get('rfc')
-            rec.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get('rfc')
+            rec.l10n_mx_edi_cfdi_supplier_rfc = tree.Emisor.get(
+                'Rfc', tree.Emisor.get('rfc'))
+            rec.l10n_mx_edi_cfdi_customer_rfc = tree.Receptor.get(
+                'Rfc', tree.Receptor.get('rfc'))
             certificate = tree.get('noCertificado', tree.get('NoCertificado'))
             rec.l10n_mx_edi_cfdi_certificate_id = self.env['l10n_mx_edi.certificate'].sudo().search(
                 [('serial_number', '=', certificate)], limit=1)

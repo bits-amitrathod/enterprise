@@ -407,6 +407,12 @@ class DHLProvider():
         return False
 
     def _remove_accents(self, input_str):
+        ''' Remove all the accented characters from a string
+        :param input_str str(P3)/unicode(P2): A text that may contain accents.
+        :return: The same text with the accented characters mapped to their
+                 "unaccented" counterpart.
+        :rtype: str (P3) or unicode (P2)
+        '''
         nfkd_form = unicodedata.normalize('NFKD', input_str)
-        only_ascii = nfkd_form.encode('ASCII', 'ignore')
+        only_ascii = nfkd_form.encode('ASCII', 'ignore').decode('utf-8')
         return only_ascii

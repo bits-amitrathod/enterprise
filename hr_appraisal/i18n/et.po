@@ -7,6 +7,7 @@
 # Wanradt Koell <wanradt@gmail.com>, 2017
 # Martin Trigaux <mat@odoo.com>, 2017
 # Rivo Zängov <eraser@eraser.ee>, 2017
+# Eneli Õigus <enelioigus@gmail.com>, 2017
 # Egon Raamat <egon@avalah.ee>, 2017
 msgid ""
 msgstr ""
@@ -41,41 +42,56 @@ msgid ""
 "                \n"
 "            "
 msgstr ""
+"\n"
+"                \n"
+"                <div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); \">\n"
+"                    <p>Lugupeetud ${ctx.get('employee').name},</p>\n"
+"                    % if ctx.get('employee').id == object.employee_id.id:\n"
+"                        <p>Palun täitke ära järgmine küsitlus, andes oma hinnangu.</p>\n"
+"                    % else:\n"
+"                        <p>Palun täitke ära järgmine küsitlus, mis on seotud ${object.employee_id.name} hindamisega.</p>\n"
+"                    % endif\n"
+"                    <p><a href=\"__URL__\">Vajuta siia küsitluse avamiseks.</a></p>\n"
+"                    <p>Postita oma vastus hindamiseks kuni : ${object.date_close}</p>\n"
+"                    <p>Täname osalemast!</p>\n"
+"                </div>\n"
+"                \n"
+"            "
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid ") Answers"
-msgstr ") Vastused"
+msgstr ") vastused"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid ") Sent Appraisal"
-msgstr ""
+msgstr ") saadetud hindamine"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "<strong><span>Final Interview: </span></strong>"
-msgstr ""
+msgstr "<strong><span>Viimane intervjuu: </span></strong>"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_1
 msgid "Ability to cope with multidisciplinarity of team"
-msgstr ""
+msgstr "Võime toime tulla tiimi multidistsiplinaarsusega"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_6
 msgid "Ability to follow and complete work as instructed"
-msgstr ""
+msgstr "Võime järgida ja viia töö lõpuni vastavalt juhistele."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_5
 msgid "Ability to manage planning resources, risks, budgets and deadlines"
-msgstr ""
+msgstr "Võima hallata ressursse, riske, eelarveid ja jälgida tähtaegasid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_action_plan
 msgid "Action Plan"
-msgstr ""
+msgstr "Tegevuskava"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_6_1
@@ -83,6 +99,7 @@ msgid ""
 "Actions by Executive management show genuine interest in the well-being of "
 "employees"
 msgstr ""
+"Juhatuse tegevused, näitamaks üles siirast huvi töötajate heaolu vastu"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_active
@@ -95,21 +112,23 @@ msgid ""
 "Adaptability: Ability to adapt oneself to organizational changes while "
 "keeping efficiency"
 msgstr ""
+"Kohanemisvõime: võime kohaneda organisatsiooni muudatustega, säilitades "
+"tõhususe"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_3
 msgid "Additional Comments"
-msgstr ""
+msgstr "Lisamärkused"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_7
 msgid "Additional comments"
-msgstr ""
+msgstr "Lisamärkused"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_11
 msgid "Analytical and synthetic mind"
-msgstr ""
+msgstr "Analüütiline ja sünteetiline mõtlemine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_survey_completed_ids
@@ -127,7 +146,7 @@ msgstr "Vastused"
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_tree
 msgid "Appraisal"
-msgstr "Hinnang"
+msgstr "Hindamine"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.action_appraisal_report_all
@@ -140,60 +159,60 @@ msgstr "Hindamise analüüsid"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_collaborators_ids
 msgid "Appraisal Collaborators"
-msgstr ""
+msgstr "Hindamise koostööpartnerid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_colleagues_ids
 msgid "Appraisal Colleagues"
-msgstr ""
+msgstr "Hindamise kolleegid"
 
 #. module: hr_appraisal
 #: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_new
 #: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_new
 msgid "Appraisal Created"
-msgstr ""
+msgstr "Hindamine loodud"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_date_close
 msgid "Appraisal Deadline"
-msgstr ""
+msgstr "Hindamise tähtaeg"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Appraisal Form..."
-msgstr ""
+msgstr "Hindamisankeet ..."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_frequency_unit
 msgid "Appraisal Frequency"
-msgstr ""
+msgstr "Hindamissagedus"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_manager_ids
 msgid "Appraisal Manager"
-msgstr ""
+msgstr "Hindamisjuht"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:118
 #, python-format
 msgid "Appraisal Meeting For %s"
-msgstr ""
+msgstr "Kohtumine hindamaks %s"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_1
 msgid "Appraisal Process"
-msgstr ""
+msgstr "Hindamisprotsess"
 
 #. module: hr_appraisal
 #: model:mail.template,subject:hr_appraisal.send_appraisal_template
 msgid "Appraisal Regarding"
-msgstr ""
+msgstr "Hindamine seoses"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_frequency
 msgid "Appraisal Repeat Every"
-msgstr ""
+msgstr "Korda hindamist iga"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:212
@@ -202,51 +221,51 @@ msgstr ""
 #: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_sent
 #, python-format
 msgid "Appraisal Sent"
-msgstr ""
+msgstr "Hindamine saadetud"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_appraisal_report
 msgid "Appraisal Statistics"
-msgstr ""
+msgstr "Hindamise statistika"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_3
 msgid "Appraisal for Period"
-msgstr ""
+msgstr "Perioodi hindamine"
 
 #. module: hr_appraisal
 #: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_sent
 msgid "Appraisal sent"
-msgstr ""
+msgstr "Hindamine saadetud"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
 msgid "Appraisal to start"
-msgstr ""
+msgstr "Alusta hindamist"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
 msgid "Appraisal(s)"
-msgstr ""
+msgstr "Hindamine(hindamised)"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:161
 #, python-format
 msgid "Appraisal(s) form have been sent"
-msgstr ""
+msgstr "Hindamis(t)e ankeet on saadetud"
 
 #. module: hr_appraisal
 #: model:ir.actions.server,name:hr_appraisal.ir_cron_scheduler_appraisal_ir_actions_server
 #: model:ir.cron,cron_name:hr_appraisal.ir_cron_scheduler_appraisal
 #: model:ir.cron,name:hr_appraisal.ir_cron_scheduler_appraisal
 msgid "Appraisal: run employee appraisal"
-msgstr ""
+msgstr "Hindamine: käivita töötaja hindamine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_count
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
 msgid "Appraisals"
-msgstr ""
+msgstr "Hindamised"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_department_appraisals_to_process_count
@@ -256,7 +275,7 @@ msgstr "Hindamised töösse"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_5
 msgid "Appraiser"
-msgstr ""
+msgstr "Hindaja"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -266,17 +285,17 @@ msgstr "Arhiveeritud"
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "At the conclusion of the appraisal time period"
-msgstr ""
+msgstr "Hindamisperioodi lõppedes"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "At the outset of the appraisal time period"
-msgstr ""
+msgstr "Hindamisperioodi alguses"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "At the supervisor's appraisal date"
-msgstr ""
+msgstr "Juhendaja hindamise tähtaeg"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -293,46 +312,46 @@ msgstr "Tühistatud"
 #. module: hr_appraisal
 #: model:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
 msgid "Click to create a new appraisal."
-msgstr ""
+msgstr "Loo uus hindamine."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_collaborators_appraisal
 msgid "Collaborator"
-msgstr ""
+msgstr "Koostööpartner"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_collaborators_survey_id
 msgid "Collaborator's Appraisal"
-msgstr ""
+msgstr "Koostööpartneri hindamine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_collaborators_ids
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_by_collaborators
 msgid "Collaborators"
-msgstr ""
+msgstr "Koostööpartnerid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_colleagues_survey_id
 msgid "Colleague's Appraisal"
-msgstr ""
+msgstr "Kolleegi hindamine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_colleagues_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_colleagues_ids
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_by_colleagues
 msgid "Colleagues"
-msgstr ""
+msgstr "Kolleegid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_color
 msgid "Color Index"
-msgstr "Värvi index"
+msgstr "Värvi indeks"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_9
 msgid ""
 "Communication skills (written & verbally): clearness, concision, exactitude"
-msgstr ""
+msgstr "Suhtlemisoskus (kirjalik ja suuline): selgus, konkreetsus, täpsus"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_company_id
@@ -345,17 +364,20 @@ msgid ""
 "Compared to similar jobs in other companies where I could work, my total "
 "compensation..."
 msgstr ""
+"Võrreldes sarnaste ametikohtadega teistes ettevõtetes, kus ma võiksin "
+"töötada, minu kogu hüvitis ..."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_3
 msgid ""
 "Compliance to internal rules and processes (timesheets completion, etc.)"
 msgstr ""
+"Sise-eeskirjadele ja protsessidele vastavus (töögraafiku täitmine, jne)"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_4
 msgid "Continuous Improvement"
-msgstr ""
+msgstr "Järjepidev arenemine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_create_date
@@ -375,12 +397,12 @@ msgstr "Loodud"
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "Creation Month"
-msgstr ""
+msgstr "Loomise kuu"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_14
 msgid "Creativity and forward looking aptitude"
-msgstr ""
+msgstr "Loovus ja tulevikku vaatav suhtumine"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -388,11 +410,13 @@ msgid ""
 "Critical or key elements of performance and professional development needs "
 "(if any), should also be noted at this time"
 msgstr ""
+"Too siin välja tulemuslikkuse ja professionaalse arengu vajaduse kriitilised"
+" elemendid või võtmeelemendid (kui neid on)"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_8
 msgid "Customer commitment"
-msgstr ""
+msgstr "Kliendi pühendumus"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_1_2
@@ -402,7 +426,7 @@ msgstr "Kuupäev"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_4
 msgid "Date of review"
-msgstr ""
+msgstr "Läbivaatamise kuupäev"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_deadline
@@ -412,17 +436,18 @@ msgstr "Tähtaeg"
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "Deadline:"
-msgstr ""
+msgstr "Tähtaeg:"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_7
 msgid "Decision making"
-msgstr ""
+msgstr "Otsuse tegemine"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_2
 msgid "Delegation: Ability to efficiently assign tasks to other people"
 msgstr ""
+"Delegeerimine: võime efektiivselt määrata ülesandeid teistele inimestele"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -432,7 +457,7 @@ msgstr "Kustuta"
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_1
 msgid "Demonstrates genuine concern for me as a person"
-msgstr ""
+msgstr "Näitab välja siirast muret minu kui indiviidi vastu"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_department_id
@@ -444,7 +469,7 @@ msgstr "Osakond"
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Did not meet standards and expectations"
-msgstr ""
+msgstr "Ei vastanud standarditele ja ootustele"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_display_name
@@ -469,12 +494,12 @@ msgstr "Muuda"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_3
 msgid "Effectiveness"
-msgstr ""
+msgstr "Efektiivsus"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_mail_template_id
 msgid "Email Template for Appraisal"
-msgstr ""
+msgstr "Hindamise e-kirja põhi"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_employee
@@ -485,44 +510,44 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Employee"
-msgstr "Tootaja"
+msgstr "Töötaja"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_employee_appraisal
 msgid "Employee Appraisal"
-msgstr ""
+msgstr "Töötaja hindamine"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_1
 #: model:survey.survey,title:hr_appraisal.appraisal_form
 msgid "Employee Appraisal Form"
-msgstr ""
+msgstr "Töötaja hindamise ankeet"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_5
 msgid "Employee Comments"
-msgstr ""
+msgstr "Töötaja kommentaarid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_employee
 msgid "Employee Name"
-msgstr ""
+msgstr "Töötaja nimi"
 
 #. module: hr_appraisal
 #: model:survey.survey,title:hr_appraisal.opinion_form
 msgid "Employee Opinion Form"
-msgstr ""
+msgstr "Töötaja arvamuse ankeet"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_3
 msgid "Employee Performance in Key Areas"
-msgstr ""
+msgstr "Töötaja sooritus võtmevaldkondades"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_colleagues_survey_id
 msgid "Employee's Appraisal"
-msgstr ""
+msgstr "Töötaja hindamine"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -532,12 +557,12 @@ msgstr "Töötaja nimi"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_1
 msgid "Engagement"
-msgstr ""
+msgstr "Seotus"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_2
 msgid "Enthusiasm & implication toward projects/assignments"
-msgstr ""
+msgstr "Entusiasm ning mõju projektidele/ülesannetele"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_2
@@ -553,7 +578,7 @@ msgstr "Sündmus"
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Exceeds standards and expectations"
-msgstr ""
+msgstr "Ületab standardid ja ootused"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
@@ -563,17 +588,17 @@ msgstr "Laiendatud filtrid"
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Final Evaluation"
-msgstr ""
+msgstr "Lõplik hindamine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_date_final_interview
 msgid "Final Interview"
-msgstr ""
+msgstr "Lõplik intervjuu"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "Final Interview Date"
-msgstr ""
+msgstr "Intervjuu lõplik kuupäev"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -588,12 +613,12 @@ msgstr "Rühmitamine"
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Group by..."
-msgstr ""
+msgstr "Rühmita ..."
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_department
 msgid "HR Department"
-msgstr ""
+msgstr "Personaliosakond"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.opinion_1
@@ -603,11 +628,14 @@ msgid ""
 "engagement and effectiveness, the continuous improvement and openness in "
 "action in thecompany..."
 msgstr ""
+"Tema otseseseks aruandeks kutsutakse inimesi Odoo kaudu  andma tagasisidet "
+"oma juhendajate juhtimise kohta ja avaldama arvamust nende enda kaasamisest "
+"ning tõhususest, jätkuvast arengust ning tegevuste avatusest ettevõttes ... "
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_1
 msgid "I am proud to tell others I work here"
-msgstr ""
+msgstr "Ma olen uhke, et saan teistele öelda, et töötan siin"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_5
@@ -615,11 +643,12 @@ msgid ""
 "I am willing to put in a great deal of effort beyond what is expected to "
 "help my workgroup succeed"
 msgstr ""
+"Ma olen valmis panustama nõutust rohkem, et minu töögrupp oleks edukas."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_4
 msgid "I believe the information that I get from the person I report to."
-msgstr ""
+msgstr "Ma usun saadud informatsioon inimeselt, kellele ma aru annan."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_2
@@ -627,11 +656,13 @@ msgid ""
 "I consistently acquire new knowledge, skills or understanding through "
 "contact with my supervisor. He helps me growing my compete"
 msgstr ""
+"Ma omandan pidevalt uusi teadmisi, oskusi või mõistan olukordi paremini "
+"juhendajaga konsulteerides. Ta aitab kasvatada minu konkurentsivõimet."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_3_2
 msgid "I have enough work"
-msgstr ""
+msgstr "Mul on piisavalt tööd"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_6_2
@@ -639,11 +670,13 @@ msgid ""
 "I have the same opportunity to succeed as others with similar experiences, "
 "performance and educational background"
 msgstr ""
+"Mul on võrdsed võimalused õnnestumiseks teiste sarnase kogemusega, soorituse"
+" ja haridusega inimestega."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_5_1
 msgid "I know the company's values and live them"
-msgstr ""
+msgstr "Ma tean ettevõtte väärtusi ning jälgin neid"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_3_3
@@ -651,11 +684,13 @@ msgid ""
 "I mostly work on value-added tasks for the company, the products or the "
 "services"
 msgstr ""
+"Ma saan enamasti töötada ettevõttele väärtust loovate ülesannetega, toodete "
+"või teenustega"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_6_4
 msgid "I understand the company strategy and how my workgroup supports it"
-msgstr ""
+msgstr "Ma mõistan ettevõtte strateegiat ning saan aru oma töögrupi panusest."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_3
@@ -663,11 +698,13 @@ msgid ""
 "I would prefer to remain with this company even if a comparable job were "
 "available in another company"
 msgstr ""
+"Ma eelistan jääda selle ettevõtte juurde ka siis, kui teises ettevõttes "
+"oleks pakkuda võrdväärne töökoht"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_3_1
 msgid "I'm efficient at work and my achievements are successful"
-msgstr ""
+msgstr "Olen tööl tõhus ning minu saavutused on edukad"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_id
@@ -681,6 +718,8 @@ msgid ""
 "Identify professional, performance, or project objectives you recommend for employee’s continued career development\n"
 "over the coming year."
 msgstr ""
+"Selgita ametialaseid, soorituslikke või projekti eesmärke, mida soovitate "
+"töötajatele järgmiseks aastaks karjääri redelil ronimiseks."
 
 #. module: hr_appraisal
 #: model:survey.question,comments_message:hr_appraisal.appraisal_1_1
@@ -707,7 +746,7 @@ msgstr ""
 #: model:survey.question,comments_message:hr_appraisal.opinion_2_6
 #: model:survey.question,comments_message:hr_appraisal.opinion_2_7
 msgid "If other, please specify:"
-msgstr ""
+msgstr "Kui muu, siis palun täpsustage:"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_action_plan
@@ -715,21 +754,22 @@ msgid ""
 "If the evaluation does not meet the expectations, you can propose an action "
 "plan"
 msgstr ""
+"Kui hindamine ei vasta ootustele, siis võite teha tegevuskava ettepaneku"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "In progress Evaluations"
-msgstr ""
+msgstr "Käimasolevad hindamised"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_5
 msgid "Initiative and self autonomy"
-msgstr ""
+msgstr "Algatusvõime ja autonoomia"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_final_interview
 msgid "Interview"
-msgstr ""
+msgstr "Intervjuu"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -738,6 +778,9 @@ msgid ""
 "coming year, including major employee responsibilities and corresponding benchmarks against which results will be\n"
 "evaluated."
 msgstr ""
+"Töötaja ja juhendaja (hindaja) ühine vastutus on koostada teostatav tööplaan"
+" uueks aastaks, sisaldades töötaja suurimaid vastutusalasid ja vastavaid "
+"võrdlemise kriteeriume, mille tulemusi hinnatakse."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -746,6 +789,10 @@ msgid ""
 "(internal and/or external customers, peers). In case of collaboration with Odoo SA Belgium, the supervisor must\n"
 "receive completed evaluation form from the employee's Belgian project manager."
 msgstr ""
+"Järelvalve eest vastutav isik on kohustatud koguma tagasisidet asjakohastest"
+" allikatest (sise- ja/või väliskliendid, kontaktid). Tehes koostööd Odoo SA "
+"Belgium ettevõttega, peab juhendaja saama täidetud hindamise ankeedi "
+"töötajate Belgia projektijuhilt."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal___last_update
@@ -766,12 +813,12 @@ msgstr "Viimati uuendatud"
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Late Activities"
-msgstr "Ületähtaja tegevused"
+msgstr "Viimased tegevused"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_2
 msgid "Leadership"
-msgstr ""
+msgstr "Juhtimine"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_3
@@ -779,11 +826,13 @@ msgid ""
 "Leadership: create a challenging and motivating work environment aligned "
 "with the company's strategy"
 msgstr ""
+"Juhtimine: luua väljakutsuv ning motiveeriv töökeskkond, mis on kooskõlas "
+"ettevõtte strateegiaga"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_4
 msgid "Leadership: sustain subordinates in their professional growth"
-msgstr ""
+msgstr "Juhtimine: säilitada alluvate ametialane areng"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_3
@@ -791,6 +840,8 @@ msgid ""
 "Listens and takes into account all ideas and do his best to put in place the"
 " best of these"
 msgstr ""
+"Kuulab ja võtab arvesse kõiki ideid ning annab endast parimad, et säravamad "
+"ideed ellu viia"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_manager_appraisal
@@ -803,18 +854,18 @@ msgstr "Juhataja"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_manager_survey_id
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_manager_survey_id
 msgid "Manager's Appraisal"
-msgstr ""
+msgstr "Juhi hindamine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_by_manager
 msgid "Managers"
-msgstr ""
+msgstr "Juhid"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Meet standards and expectations"
-msgstr ""
+msgstr "Vastab standarditele ja ootustele"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_meeting_id
@@ -825,7 +876,7 @@ msgstr "Kohtumine"
 #: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_meeting
 #: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_meeting
 msgid "Meeting Scheduled"
-msgstr ""
+msgstr "Kohtumine planeeritud"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_6
@@ -849,11 +900,13 @@ msgid ""
 "My best achievements have been communicated to the community, internally or "
 "to customers"
 msgstr ""
+"Minu parimaid saavutusi kommunikeeritakse kogukonnale, ettevõttesiseselt või"
+" klientidele"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_2
 msgid "My job provides me with a sense of personal accomplishment"
-msgstr ""
+msgstr "Minu töö annab mulle tunde isiklikust saavutusest"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_1
@@ -861,6 +914,8 @@ msgid ""
 "My work contributes towards the continuous improvement of the company, our "
 "services or products"
 msgstr ""
+"Minu töö aitab kaasa ettevõtte järjepidevale arengule, meie teenustele või "
+"toodetele"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_tree
@@ -871,37 +926,37 @@ msgstr "Nimi"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_1_1
 msgid "Name of your direct supervisor"
-msgstr ""
+msgstr "Teie otsese juhendaja nimi"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_date
 msgid "Next Appraisal Date"
-msgstr ""
+msgstr "Järgmine hindamise kuupäev"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_count_completed_survey
 msgid "Number of Answers"
-msgstr ""
+msgstr "Vastuste arv"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_count_sent_survey
 msgid "Number of Sent Forms"
-msgstr ""
+msgstr "Saadetud ankeetide arv"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_1
 msgid "Objectives"
-msgstr ""
+msgstr "Eesmärgid"
 
 #. module: hr_appraisal
 #: model:res.groups,name:hr_appraisal.group_hr_appraisal_user
 msgid "Officer"
-msgstr ""
+msgstr "Ametnik"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_5
 msgid "Openness"
-msgstr ""
+msgstr "Avatus"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_4
@@ -909,11 +964,13 @@ msgid ""
 "Our workgroup identifies and reduces waste of time in our activities and "
 "processes"
 msgstr ""
+"Meie töögrupp tuvastab ning vähendab aja raiskamist meie tegevustes ja "
+"protsessides"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "Overall Purpose Of Employee Appraisal"
-msgstr ""
+msgstr "Töötajate hindamise üleüldine eesmärk"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_3
@@ -921,17 +978,18 @@ msgid ""
 "Overall, I believe the quality of products and/or services my workgroup "
 "delivers is improving"
 msgstr ""
+"Kokkuvõttes usun, et minu töögrupi toodete ja teenuste kvaliteet paraneb"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_periodic_appraisal
 #: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_configuration
 msgid "Periodic Appraisal"
-msgstr ""
+msgstr "Perioodiline hindamine"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_periodic_appraisal_created
 msgid "Periodic Appraisal has been created"
-msgstr ""
+msgstr "Perioodiline hindamine on loodud"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -941,7 +999,7 @@ msgstr "Perioodilisus"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_4_2
 msgid "Personal Performance Objectives"
-msgstr ""
+msgstr "Isiklikud saavutuste eesmärgid"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -951,27 +1009,27 @@ msgstr "Plaan"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_2
 msgid "Position Title"
-msgstr ""
+msgstr "Ametinimetus"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_4_1
 msgid "Professional Development Objectives"
-msgstr ""
+msgstr "Ametialase arengu eesmärgid"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_4
 msgid "Professional Development and Performance Plan"
-msgstr ""
+msgstr "Ametialase arengu ja saavutuste plaan"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_4_3
 msgid "Project Objectives"
-msgstr ""
+msgstr "Projekti eesmärgid"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_12
 msgid "Promptness and attendance record"
-msgstr ""
+msgstr "Kiireloomulisus ja kohalviibimise kirje"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_related_partner_id
@@ -991,7 +1049,7 @@ msgstr "Raporteerimine"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_2
 msgid "Results"
-msgstr ""
+msgstr "Tulemused"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_1
@@ -999,63 +1057,66 @@ msgid ""
 "Results of the bottom-up survey and mitigation actions to face technical, "
 "organizational, structural and/or relational issues"
 msgstr ""
+"Alt-üles uuringu tulemused ja leevendusmeetmed tehniliste, "
+"organisatsiooniliste, struktuuriliste ja/või suhete probleemide "
+"lahendamiseks"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "Schedule The Final Interview"
-msgstr ""
+msgstr "Planeerige lõplik intervjuu"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Search Appraisal"
-msgstr ""
+msgstr "Otsi hindamist"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Select Appraisal Reviewer..."
-msgstr ""
+msgstr "Vali hindamise ülevaataja ..."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_employee_survey_id
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_self_survey_id
 msgid "Self Appraisal"
-msgstr ""
+msgstr "Enese hindamine"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 msgid "Send Appraisal Form To"
-msgstr ""
+msgstr "Saada hindamise ankeet"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_survey_sent_ids
 msgid "Sent Forms"
-msgstr ""
+msgstr "Saadetud ankeedid"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Show all records which has next action date is before today"
 msgstr ""
-"Näita kõiki andmeid, millel on järgmise tegevuse kuupäev on ennem tänast "
+"Näita kõiki andmeid, millel on järgmise tegevuse kuupäev ennem tänast "
 "kuupäeva"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Significantly below standards and expectations"
-msgstr ""
+msgstr "Oluliselt madalam standarditest ja ootustest"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid ""
 "Significantly exceeds standards and expectations required of the position"
-msgstr ""
+msgstr "Ületab oluliselt nõutud standardeid ja ootusi antud ametile"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Start Appraisal and Send Forms"
-msgstr ""
+msgstr "Alusta hindamist ja saada ankeedid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_state
@@ -1072,18 +1133,18 @@ msgstr "Teema"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_3_2
 msgid "Supervisors only"
-msgstr ""
+msgstr "Ainult juhendajatele"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_survey_user_input
 msgid "Survey User Input"
-msgstr ""
+msgstr "Uuringus osalenud kasutaja sisend"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_4
 msgid ""
 "Taking everything into account, how satisfied are you with your current job?"
-msgstr ""
+msgstr "Kui rahul olete oma praeguse tööga kõike arvesse võttes?"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_4
@@ -1091,11 +1152,13 @@ msgid ""
 "Team spirit: ability to work efficiently with peers, manage the conflicts "
 "with diplomacy"
 msgstr ""
+"Meeskonnavaim: võime efektiivselt töötada kaaslastega, võime lahendada "
+"konflikte diplomaatiliselt"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_10
 msgid "Technical skills regarding to the job requirements"
-msgstr ""
+msgstr "Töö nõuded tehnilistele oskustele"
 
 #. module: hr_appraisal
 #: model:survey.question,validation_error_msg:hr_appraisal.appraisal_1_1
@@ -1122,7 +1185,7 @@ msgstr ""
 #: model:survey.question,validation_error_msg:hr_appraisal.opinion_2_6
 #: model:survey.question,validation_error_msg:hr_appraisal.opinion_2_7
 msgid "The answer you entered has an invalid format."
-msgstr ""
+msgstr "Sisestatud vastus on vales vormingus."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.opinion_1
@@ -1130,6 +1193,8 @@ msgid ""
 "The appraiser should rate the employee's major work accomplishments and "
 "performance according to the metric provided below"
 msgstr ""
+"Hindaja peaks hindama töötaja olulisi tööülesannete saavutusi ja toimivust "
+"vastavalt allpool tootud kriteeriumitele"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_3
@@ -1137,12 +1202,14 @@ msgid ""
 "The appraiser should rate the employee’s major work accomplishments and performance according to the metric provided\n"
 "below:"
 msgstr ""
+"Hindaja peaks hindama töötaja olulisi tööülesannete saavutusi ja toimivust vastavalt allpool tootud\n"
+"kriteeriumitele:"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_employee.py:76
 #, python-format
 msgid "The date of the next appraisal cannot be in the past"
-msgstr ""
+msgstr "Järgmise hindamise kuupäev ei saa olla minevikus"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_employee_appraisal_date
@@ -1150,6 +1217,8 @@ msgid ""
 "The date of the next appraisal is computed by the appraisal plan's dates "
 "(first appraisal + periodicity)."
 msgstr ""
+"Järgmise hindamise kuupäev arvutatakse hindamisplaani kuupäevade järgi "
+"(esimene hindamine + perioodilisus)"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1157,6 +1226,7 @@ msgid ""
 "The employee may choose to offer comments or explanation regarding the "
 "completed review."
 msgstr ""
+"Töötaja võib jätta kommentaare või selgitusi lõpetatud ülevaate kohta."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1165,6 +1235,9 @@ msgid ""
 "point for the supervisor’s evaluation. The employee can add examples of achievements for each criterion.\n"
 "Once the form had been filled, the employee send it to his supervisor."
 msgstr ""
+"Töötaja peab täitma enesehindamiseks hindamise ankeedi mustandi ja määrama\n"
+"juhendaja hindamise algusaja. Töötaja saab lisada näiteid saavutustest iga kriteeriumi juurde.\n"
+"Täidetud ankeedi saadab töötaja oma juhendajale."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.opinion_1
@@ -1173,12 +1246,15 @@ msgid ""
 "be handled by the HR manager and a brief summary of the data will be sent to"
 " the concerned supervisor, to his team and to the supervisor's supervisor."
 msgstr ""
+"Töötajad saadavad Odoo'le anonüümse vastuse. Andmeid töötleb personalijuht "
+"ning koostab lühikese ülevaate andmetest ning saadab selle seotud "
+"juhendajale, tema tiimile ja juhendaja juhendajale."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid ""
 "The supervisor send the form to the HR department in India and in Belgium"
-msgstr ""
+msgstr "Juhendaja saadab ankeedi personaliosakonnale Indiasse ja Belgiasse."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1186,31 +1262,33 @@ msgid ""
 "The supervisor synthesizes and integrates all input into the completed appraisal. The motivation of the evaluation\n"
 "is explained in the ad hoc fields."
 msgstr ""
+"Juhendaja vaatab üle ning integreerib saadud sisendi lõplikku hinnangusse. "
+"Hindamise motivatsioon on kirjeldatud ad hoc väljadel."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_color
 msgid "This color will be used in the kanban view."
-msgstr ""
+msgstr "Seda värvi kasutatakse kanban vaates."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_collaborators_appraisal
 msgid "This employee will be appraised by his collaborators"
-msgstr ""
+msgstr "Seda töötajat hindavad tema koostööpartnerid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_colleagues_appraisal
 msgid "This employee will be appraised by his colleagues"
-msgstr ""
+msgstr "Seda töötajat hindavad tema kolleegid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_manager_appraisal
 msgid "This employee will be appraised by his managers"
-msgstr ""
+msgstr "Seda töötajat hindavad tema juhid"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_employee_appraisal
 msgid "This employee will do a self-appraisal"
-msgstr ""
+msgstr "See töötaja teeb enesehindamise"
 
 #. module: hr_appraisal
 #: model:survey.question,constr_error_msg:hr_appraisal.appraisal_1_1
@@ -1237,12 +1315,12 @@ msgstr ""
 #: model:survey.question,constr_error_msg:hr_appraisal.opinion_2_6
 #: model:survey.question,constr_error_msg:hr_appraisal.opinion_2_7
 msgid "This question requires an answer."
-msgstr ""
+msgstr "See küsimus vajab vastust."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_15
 msgid "Time management: projects/tasks are completed on time"
-msgstr ""
+msgstr "Aja planeerimine: projektid/ülesanded on lõpuni viidud õigeaegselt"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:212
@@ -1250,7 +1328,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #, python-format
 msgid "To Start"
-msgstr ""
+msgstr "Alustamiseks"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1258,23 +1336,25 @@ msgid ""
 "To assist employees in their professional growth, through the identification of strengths and opportunities for\n"
 "development"
 msgstr ""
+"Töötajate ametialase arengu saavutamine töötaja tugevuste ja võimaluste "
+"identifitseerimise kaudu"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "To initiate a clear and open communication of performance expectations"
-msgstr ""
+msgstr "Teha algust selge ja avatud suhtlusega ootuste osas sooritusele"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Today Activities"
-msgstr ""
+msgstr "Tänased tegevused"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_5_1
 msgid ""
 "Use the following space to make any comments regarding the above performance"
 " evaluation."
-msgstr ""
+msgstr "Kasutage seda ala, et kommenteerida soorituse hinnangut."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_2
@@ -1282,11 +1362,13 @@ msgid ""
 "What I did several months ago is still of use to the company, the services "
 "or the products today"
 msgstr ""
+"Minu mitu kuud tagasi tehtud teenused või tooted on tänase päevani kasutusel"
+" ettevõttes"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_2
 msgid "Work Plan"
-msgstr ""
+msgstr "Tööplaan"
 
 #. module: hr_appraisal
 #: selection:hr.employee,appraisal_frequency_unit:0
@@ -1297,7 +1379,7 @@ msgstr "Aasta"
 #: code:addons/hr_appraisal/models/hr_appraisal.py:205
 #, python-format
 msgid "You cannot delete appraisal which is in '%s' state"
-msgstr ""
+msgstr "Hindamine, mille staatus on'%s', ei saa kustutada"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
@@ -1306,13 +1388,16 @@ msgid ""
 "            to whom and the evaluation deadline. Once you have defined it,\n"
 "            change the stage to send it and view the results."
 msgstr ""
+"Saate valida, milliseid ankeete saadetakse (töötaja, juht, koostööpartner "
+"või kolleeg), kellele ja millal on hindamise tähtaeg. Pärast kirjeldamist on"
+" võimalik muuta saatmise etappi ja vaadata tulemusi."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_collaborators_survey_id
 msgid "collaborate's Appraisal"
-msgstr ""
+msgstr "Koostööpartnerite hinnangud"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "oe_kanban_text_red"
-msgstr ""
+msgstr "oe_kanban_tekst_punane"

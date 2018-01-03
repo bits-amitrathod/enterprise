@@ -53,7 +53,7 @@ class MrpProductionWorkcenterLine(models.Model):
 
     @api.depends('current_quality_check_id', 'qty_producing')
     def _compute_component_id(self):
-        for wo in self:
+        for wo in self.filtered(lambda w: w.state not in ('done', 'cancel')):
             if wo.current_quality_check_id.point_id:
                 wo.component_id = wo.current_quality_check_id.point_id.component_id
                 wo.test_type = wo.current_quality_check_id.point_id.test_type

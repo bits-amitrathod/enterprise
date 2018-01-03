@@ -9,14 +9,14 @@
 # Jarnhold Nattestad <nattestads@gmail.com>, 2017
 # Jesper Carstensen <jc@danodoo.dk>, 2017
 # Ejner Sønniksen <ejner@vkdata.dk>, 2017
-# Laerke Mathiasen <lhm@flexerp.dk>, 2017
+# lhmflexerp <lhm@flexerp.dk>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-24 09:24+0000\n"
 "PO-Revision-Date: 2017-10-24 09:24+0000\n"
-"Last-Translator: Laerke Mathiasen <lhm@flexerp.dk>, 2017\n"
+"Last-Translator: lhmflexerp <lhm@flexerp.dk>, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,6 +67,45 @@ msgid ""
 "</div>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
+"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            <p>Kære ${object.name},</p>\n"
+"            <p>Dette er en venlig påmindelse om at godkende dit teams timer for perioden : ${ctx.get('date_start')} - ${ctx.get('date_stop')}.</p>\n"
+"            % if ctx.get('action_url'):\n"
+"                <center>\n"
+"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">Bekræft dine timesedler</a>\n"
+"                </center>\n"
+"            % endif\n"
+"            <p>Venlig hilsen,</p>\n"
+"        </td>\n"
+"    </tr><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            % if user.signature\n"
+"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"            </p>\n"
+"            % endif\n"
+"            <p style=\"font-size: 11px;\"><strong>Sendt af\n"
+"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                <strong>${user.company_id.name}</strong>\n"
+"            </a> vha. <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"            </strong></p>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"            </data>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -164,7 +203,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Click to add projects and tasks"
-msgstr ""
+msgstr "Klik for at tilføje projekter og opgaver"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_company
@@ -186,12 +225,12 @@ msgstr "Oprettet den"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
-msgstr ""
+msgstr "Dato frem til hvilken medarbejderens timesedler er bekræftede"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Describe your activity"
-msgstr ""
+msgstr "Beskriv din aktivitet"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_display_name
@@ -229,17 +268,17 @@ msgstr "Hyppighed"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Android app"
-msgstr ""
+msgstr "Få Android app"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Chrome plugin"
-msgstr ""
+msgstr "Få Chrome plugin"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get iOS app"
-msgstr ""
+msgstr "Få iOS app"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_id
@@ -250,7 +289,7 @@ msgstr "ID"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "If checked, send an email to all manager"
-msgstr ""
+msgstr "Hvis afkrydset, send en email til alle ledere"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_manager_allow
@@ -258,6 +297,8 @@ msgid ""
 "If checked, send an email to all managers who have not validated their "
 "timesheet"
 msgstr ""
+"Hvis afkrydset så send en email til alle ledere, der ikke har bekræftet "
+"deres timeseddel"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
@@ -305,7 +346,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "Manager Reminder"
-msgstr ""
+msgstr "Lederpåmindelse"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
@@ -336,7 +377,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
-msgstr ""
+msgstr "Ikke Bekræftet"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_delay
@@ -414,7 +455,7 @@ msgstr "Tidsskema linie"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_manager_id
 msgid "Timesheet Responsible"
-msgstr ""
+msgstr "Timeseddelansvarlig"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
@@ -440,12 +481,12 @@ msgstr "Timesedler"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Timesheets Validation Date"
-msgstr ""
+msgstr "Dato for Godkendelse af Timesedler"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
 msgid "To Validate"
-msgstr ""
+msgstr "Til Bekræftelse"
 
 #. module: timesheet_grid
 #. openerp-web
@@ -455,6 +496,8 @@ msgid ""
 "Track your timesheets to invoice easily, or control costs. <i>It starts "
 "here.</i>"
 msgstr ""
+"Spor dine timesedler for nem fakturering eller udgiftskontrol. <i>Det "
+"starter her.</i>"
 
 #. module: timesheet_grid
 #. openerp-web
@@ -464,11 +507,14 @@ msgid ""
 "Use tasks to track the different type of activities. (e.g. Graphic Design, "
 "Programming, Project Management)"
 msgstr ""
+"Anvend opgaver til at spore de forskellige typer af aktiviteter. (fx Grafisk"
+" Design, Programmering, Projektledelse)"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_manager_id
 msgid "User responsible of timesheet validation. Should be Timesheet Manager."
 msgstr ""
+"Bruger ansvarlig for validering af timesedler. Bør være Timeseddel Leder."
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_validate
@@ -480,22 +526,22 @@ msgstr "Validér"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Validate Timesheets"
-msgstr ""
+msgstr "Bekræft Timesedler"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Validate the timesheets of the selected employees up to"
-msgstr ""
+msgstr "Bekræft de valgte medarbejderes timesedler frem til"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_timesheet_validation_line_validate
 msgid "Validate this employee's timesheet up to the chosen date"
-msgstr ""
+msgstr "Bekræft denne medarbejders timeseddel frem til den valgte dato"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_date
 msgid "Validate up to"
-msgstr ""
+msgstr "Bekræft frem til"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -555,7 +601,7 @@ msgstr "dage"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_config_settings
 msgid "res.config.settings"
-msgstr ""
+msgstr "res.config.settings"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_validation
@@ -565,4 +611,4 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_validation_line
 msgid "timesheet.validation.line"
-msgstr ""
+msgstr "timesheet.validation.line"

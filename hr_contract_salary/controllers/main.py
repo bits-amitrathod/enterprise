@@ -83,8 +83,10 @@ class website_hr_contract_salary(http.Controller):
     def get_salary_package_values(self, contract):
         return {
             'contract': contract,
-            'available_cars': request.env['fleet.vehicle'].sudo().search(contract._get_available_cars_domain()),
-            'can_be_requested_models': request.env['fleet.vehicle.model'].sudo().search(contract._get_possible_model_domain()),
+            'available_cars': request.env['fleet.vehicle'].sudo().search(
+                contract._get_available_cars_domain()).sorted(key=lambda car: car.total_depreciated_cost),
+            'can_be_requested_models': request.env['fleet.vehicle.model'].sudo().search(
+                contract._get_possible_model_domain()).sorted(key=lambda model: model.default_total_depreciated_cost),
             'states': request.env['res.country.state'].search([]),
             'countries': request.env['res.country'].search([]),
         }
@@ -225,6 +227,8 @@ class website_hr_contract_salary(http.Controller):
             'holidays_compensation': round(new_contract.holidays_compensation, 2),
             'wage_with_holidays': round(new_contract.wage_with_holidays, 2),
             'company_car_total_depreciated_cost': round(new_contract.company_car_total_depreciated_cost, 2),
+            'thirteen_month': round(new_contract.thirteen_month, 2),
+            'double_holidays': round(new_contract.double_holidays, 2),
         })
 
         if new_contract.transport_mode == "public_transport":
@@ -238,7 +242,7 @@ class website_hr_contract_salary(http.Controller):
         double_holidays_net = payslip.get_salary_line_total('NET') * 0.92
 
         monthly_nature = round(transport_advantage + new_contract.internet + new_contract.mobile + new_contract.mobile_plus, 2)
-        monthly_cash = round(new_contract.commission_on_target + new_contract.meal_voucher_amount * 20.0, 2)
+        monthly_cash = round(new_contract.commission_on_target + new_contract.meal_voucher_amount * 20.0 + new_contract.fuel_card, 2)
         yearly_cash = round(new_contract.eco_checks + thirteen_month_net + double_holidays_net, 2)
         monthly_total = round(monthly_nature + monthly_cash + yearly_cash / 12.0 + payslip.get_salary_line_total('NET') - new_contract.representation_fees, 2)
 
@@ -333,8 +337,8 @@ class website_hr_contract_salary(http.Controller):
         for item in items:
             new_value = new_contract
             for elem in item.name.split('.'):
-                if hasattr(new_value, elem):
-                    new_value = getattr(new_value, elem)
+                if elem in new_value:
+                    new_value = new_value[elem]
                 else:
                     new_value = ''
             if isinstance(new_value, models.BaseModel):

@@ -54,7 +54,6 @@ class SDDTest(AccountingTestCase):
             'name': 'invoice to client',
             'account_id': account_receivable.id,
             'type': 'out_invoice',
-            'date_invoice': time.strftime('%Y') + '-12-22',
         })
 
         self.env['account.invoice.line'].create({

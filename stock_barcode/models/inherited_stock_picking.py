@@ -136,7 +136,11 @@ class StockPicking(models.Model):
         corresponding_po = self.move_line_ids.filtered(lambda r: r.package_id.id == package.id and r.result_package_id.id == package.id)
         for po in corresponding_po:
             po.qty_done = po.product_uom_qty
-        return corresponding_po and True or False
+        if corresponding_po:
+            self.entire_package_detail_ids.filtered(lambda p: p.name == package.name).is_processed = True
+            return True
+        else:
+            return False
 
     def _check_destination_package(self, package):
         """ This method is called when the user scans a package currently

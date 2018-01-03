@@ -11,11 +11,9 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        res = True
         if self.fiscal_position_id.is_taxcloud:
-            res = self.validate_taxes_on_sales_order()
-        super(SaleOrder, self).action_confirm()
-        return res
+            self.validate_taxes_on_sales_order()
+        return super(SaleOrder, self).action_confirm()
 
     @api.multi
     def validate_taxes_on_sales_order(self):

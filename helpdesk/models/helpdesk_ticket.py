@@ -420,6 +420,8 @@ class HelpdeskTicket(models.Model):
 
         self.ensure_one()
         for group_name, group_method, group_data in groups:
+            if group_name == 'customer':
+                continue
             group_data['has_button_access'] = True
 
         if not self.user_id:
