@@ -25,6 +25,12 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.payment_term = self.ref('account.account_payment_term_net')
         self.config_parameter = self.env.ref(
             'l10n_mx_edi.l10n_mx_edi_version_cfdi')
+        self.xml_expected_str = misc.file_open(os.path.join(
+            'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read().encode('UTF-8')
+        self.xml_expected = objectify.fromstring(self.xml_expected_str)
+        isr_tag = self.env['account.account.tag'].search(
+            [('name', '=', 'ISR')])
+        self.tax_negative.tag_ids |= isr_tag
 
     def l10n_mx_edi_basic_configuration(self):
         self.company.write({
@@ -73,6 +79,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqual(invoice_disc.l10n_mx_edi_pac_status, "signed",
                          invoice.message_ids.mapped('body'))
         xml = invoice_disc.l10n_mx_edi_get_xml_etree()
+        xml_expected_disc = objectify.fromstring(self.xml_expected_str)
         version = xml.get('version', xml.get('Version', ''))
         if version == '3.3':
             xml_expected_disc.attrib['SubTotal'] = '500.00'
@@ -178,13 +185,10 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqualXML(xml_addenda, xml_expected)
 
     def test_l10n_mx_edi_invoice_basic_33(self):
-        isr_tag = self.env['account.account.tag'].search(
-            [('name', '=', 'ISR')])
         self.config_parameter.value = '3.3'
         self.xml_expected_str = misc.file_open(os.path.join(
             'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read().encode('UTF-8')
         self.xml_expected = objectify.fromstring(self.xml_expected_str)
-        self.tax_negative.tag_ids |= isr_tag
         self.test_l10n_mx_edi_invoice_basic()
 
         # -----------------------
