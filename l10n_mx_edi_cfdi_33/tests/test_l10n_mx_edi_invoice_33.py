@@ -146,6 +146,7 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         refund_id = result.get('domain')[1][2]
         refund = self.invoice_model.browse(refund_id)
         refund.action_invoice_open()
+        refund.refresh()
         xml = refund.l10n_mx_edi_get_xml_etree()
         self.assertEquals(xml.CfdiRelacionados.CfdiRelacionado.get('UUID'),
                           invoice.l10n_mx_edi_cfdi_uuid,
@@ -200,11 +201,98 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         self.xml_expected.attrib['Folio'] = xml.attrib['Folio']
         self.assertEqualXML(xml, self.xml_expected)
 
+    def test_l10n_mx_edi_invoice_basic(self):
+        # -----------------------
+        # Testing sign process
+        # -----------------------
+        invoice = self.create_invoice()
+        invoice.sudo().journal_id.l10n_mx_address_issued_id = self.company_partner.id
+        invoice.move_name = 'INV/2017/999'
+        invoice.action_invoice_open()
+        self.assertEqual(invoice.state, "open")
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
+
+        # ----------------
+        # Testing discount
+        # ----------------
+        invoice_disc = invoice.copy()
+        for line in invoice_disc.invoice_line_ids:
+            line.discount = 10
+            line.price_unit = 500
+        invoice_disc.compute_taxes()
+        invoice_disc.action_invoice_open()
+        self.assertEqual(invoice_disc.state, "open")
+        self.assertEqual(invoice_disc.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
+        xml = invoice_disc.l10n_mx_edi_get_xml_etree()
+
+        # -----------------------
+        # Testing re-sign process (recovery a previous signed xml)
+        # -----------------------
+        invoice.l10n_mx_edi_pac_status = "retry"
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "retry")
+        invoice.l10n_mx_edi_update_pac_status()
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
+        xml_attachs = invoice.l10n_mx_edi_retrieve_attachments()
+        self.assertEqual(len(xml_attachs), 2)
+        xml_1 = objectify.fromstring(base64.decodestring(xml_attachs[0].datas))
+        xml_2 = objectify.fromstring(base64.decodestring(xml_attachs[1].datas))
+        # TODO: Supports this case. Currently the xml date is changed.
+        # self.assertEqualXML(xml_1, xml_2)
+
+        # -----------------------
+        # Testing cancel PAC process
+        # -----------------------
+        invoice.sudo().journal_id.update_posted = True
+        invoice.action_invoice_cancel()
+        self.assertEqual(invoice.state, "cancel")
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, 'cancelled',
+                         invoice.message_ids.mapped('body'))
+        invoice.l10n_mx_edi_pac_status = "signed"
+
+        # -----------------------
+        # Testing cancel SAT process
+        # -----------------------
+        invoice.l10n_mx_edi_update_sat_status()
+        self.assertNotEqual(invoice.l10n_mx_edi_sat_status, "cancelled")
+
+        # Use a real UUID cancelled
+        xml_tfd = invoice.l10n_mx_edi_get_tfd_etree(xml)
+        xml_tfd.attrib['UUID'] = '0F481E0F-47A5-4647-B06B-8B471671F377'
+        xml.Emisor.attrib['rfc'] = 'VAU111017CG9'
+        xml.Receptor.attrib['rfc'] = 'IAL691030TK3'
+        xml.attrib['total'] = '1.16'
+        xml_attach = invoice.l10n_mx_edi_retrieve_last_attachment()
+        xml_attach.datas = base64.encodestring(etree.tostring(xml))
+        invoice.l10n_mx_edi_update_sat_status()
+        self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled",
+                         invoice.message_ids.mapped('body'))
+
+    def test_addenda(self):
+        invoice = self.create_invoice()
+        addenda_autozone = self.ref('l10n_mx_edi.l10n_mx_edi_addenda_autozone')
+        invoice.sudo().partner_id.l10n_mx_edi_addenda = addenda_autozone
+        invoice.message_ids.unlink()
+        invoice.action_invoice_open()
+        self.assertEqual(invoice.state, "open")
+        self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
+                         invoice.message_ids.mapped('body'))
+        xml_str = base64.decodestring(invoice.message_ids[-2].attachment_ids.datas)
+        xml = objectify.fromstring(xml_str)
+        xml_expected = objectify.fromstring(
+            '<ADDENDA10 xmlns:cfdi="http://www.sat.gob.mx/cfd/3" '
+            'DEPTID="DEPTID" VERSION="VERSION" BUYER="BUYER" VENDOR_ID="VENDOR_ID" POID="POID" PODATE="PODATE" EMAIL="EMAIL"/>')
+        xml_addenda = xml.Addenda.xpath('//ADDENDA10')[0]
+        self.assertEqualXML(xml_addenda, xml_expected)
+
     def xml_merge_dynamic_items(self, xml, xml_expected):
         if xml.get('version', xml.get('Version')) == '3.2':
             return super(TestL10nMxEdiInvoice33, self).xml_merge_dynamic_items()
         xml_expected.attrib['Fecha'] = xml.attrib['Fecha']
         xml_expected.attrib['Sello'] = xml.attrib['Sello']
+        xml_expected.attrib['Serie'] = xml.attrib['Serie']
 
         # Set elements dynamic of Pagos node
         payment = self.payment_model.l10n_mx_edi_get_payment_etree(xml)
