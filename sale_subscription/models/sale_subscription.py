@@ -645,7 +645,7 @@ class SaleSubscriptionLine(models.Model):
     uom_id = fields.Many2one('product.uom', string='Unit of Measure', required=True)
     price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
     discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'))
-    price_subtotal = fields.Float(compute='_compute_price_subtotal', string='Sub Total', digits=dp.get_precision('Account'))
+    price_subtotal = fields.Float(compute='_compute_price_subtotal', string='Sub Total', digits=dp.get_precision('Account'), store=True)
 
     @api.depends('price_unit', 'quantity', 'discount', 'analytic_account_id.pricelist_id')
     def _compute_price_subtotal(self):
