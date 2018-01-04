@@ -223,10 +223,11 @@ return AbstractWebClient.extend({
             .then(function (result) {
                 return self.action_mutex.exec(function () {
                     var completed = $.Deferred();
-                    $.when(self._openMenu(result, {
+                    var options = _.extend({}, ev.data.options, {
                         clear_breadcrumbs: true,
                         action_menu_id: ev.data.menu_id,
-                    })).fail(function () {
+                    });
+                    $.when(self._openMenu(result, options)).fail(function () {
                         self.toggle_home_menu(true);
                         completed.resolve();
                     }).done(function () {

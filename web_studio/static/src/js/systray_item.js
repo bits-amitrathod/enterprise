@@ -55,7 +55,7 @@ var SystrayItem = Widget.extend({
     _onClick: function (event) {
         event.preventDefault();
         this.disable();
-        this.trigger_up('click_studio_mode');
+        this.trigger_up('studio_icon_clicked');
     },
 });
 

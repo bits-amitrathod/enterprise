@@ -2,8 +2,6 @@ odoo.define('web_studio.Main', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Context = require('web.Context');
-var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var dom = require('web.dom');
 var form_common = require('web.view_dialogs');
@@ -37,16 +35,16 @@ var Main = Widget.extend({
      * @constructor
      * @param {Object} options
      * @param {Object} options.action - action description
-     * @param {String} options.active_view
-     * @param {Object} options.view_env - view environment
      * @param {Boolean} options.chatter_allowed
-     * @param {Object} options.x2mEditorPath
+     * @param {boolean} [options.noEdit] - do not edit a view
+     * @param {string} [options.viewType]
+     * @param {Object} [options.x2mEditorPath]
      */
     init: function (parent, context, options) {
         this._super.apply(this, arguments);
+        this.options = options;
         this.action = options.action;
-        this.active_view = options.active_view;
-        this.view_env = options.view_env;
+        this.viewType = options.viewType;
         this.chatter_allowed = options.chatter_allowed;
         // We set the x2mEditorPath since when we click on the studio breadcrumb
         // a new view_editor_manager is instantiated and then the previous
@@ -67,17 +65,26 @@ var Main = Widget.extend({
      * @override
      */
     start: function () {
+        var self = this;
         var def;
         this.set('title', _t('Studio'));
-        if (this.active_view) {
-            // directly edit the active view instead of the action
-            def = this._editView(this.active_view);
-        } else {
+        if (this.options.noEdit) {
+            // click on "Views" in menu
             var view_types = this.action.view_mode.split(',');
             this.action_editor = new ActionEditor(this, this.action, view_types);
             def = this.action_editor.appendTo(this.$el);
+        } else {
+            // directly edit the view instead of displaying all views
+            def = this._editView(this.viewType);
         }
-        return $.when(def, this._super.apply(this, arguments));
+        return $.when(def, this._super.apply(this, arguments)).then(function () {
+            self._pushState();
+            bus.trigger('studio_main', self.action);
+            if (!self.options.noEdit) {
+                // TODO: try to put it in editView
+                bus.trigger('edition_mode_entered', self.viewType);
+            }
+        });
     },
 
     //--------------------------------------------------------------------------
@@ -162,30 +169,39 @@ var Main = Widget.extend({
     _editView: function (view_type) {
         var self = this;
         var options = {};
-        var views = this.action.views.slice();
 
+        var views = this.action._views || this.action.views;
+        views = views.slice();
         // search is not in action.view
         options.load_filters = true;
         var searchview_id = this.action.search_view_id && this.action.search_view_id[0];
         views.push([searchview_id || false, 'search']);
 
-        var view = _.find(views, function (el) { return el[1] === view_type; });
-        var view_id = view && view[0];
+        var view = _.find(views, function (el) {
+            return el[1] === view_type;
+        });
+        if (!view) {
+            // see action manager
+            view = views[0];
+        }
+        var view_id = view[0];
+        self.viewType = view[1];
 
+        // add studio in loadViews context to retrieve groups server-side
+        var context = _.extend({}, this.action.context, {studio: true});
+        var loadViewDef = this.loadViews(this.action.res_model, context, views, options);
+
+        var arch_def = self._getStudioViewArch(self.action.res_model, self.viewType, view_id);
         // the default view needs to be created before `loadViews` or the
         // renderer will not be aware that a new view exists
-        var arch_def = this._getStudioViewArch(this.action.res_model, view_type, view_id);
         return arch_def.then(function (studio_view) {
-            // add studio in loadViews context to retrieve groups server-side
-            var context = new Context(_.extend({}, self.action.context, {studio: true}));
-            var view_def = self.loadViews(self.action.res_model, context, views, options);
-            return view_def.then(function (fields_views) {
-                var view_env = _.defaults({}, self.view_env, {
-                    currentId: self.view_env.ids && self.view_env.ids[0],
+            return loadViewDef.then(function (fields_views) {
+                var viewEnv = _.defaults({}, self.action.env, {
+                    currentId: self.action.env.ids && self.action.env.ids[0],
                 });
                 var params = {
-                    fields_view: fields_views[view_type],
-                    view_env: view_env,
+                    fields_view: fields_views[self.viewType],
+                    view_env: viewEnv,
                     chatter_allowed: self.chatter_allowed,
                     studio_view_id: studio_view.studio_view_id,
                     studio_view_arch: studio_view.studio_view_arch,
@@ -202,8 +218,6 @@ var Main = Widget.extend({
                         in_DOM: true,
                         callbacks: [{widget: self.view_editor}],
                     });
-
-                    bus.trigger('edition_mode_entered', view_type);
                 });
             });
         });
@@ -229,15 +243,41 @@ var Main = Widget.extend({
     },
     /**
      * @private
+     */
+    _pushState: function () {
+        // as there is no controller, we need to update the state manually
+        var state = {
+            action: this.action.id,
+            model: this.action.res_model,
+            view_type: this.viewType,
+        };
+        // TODO: necessary?
+        if (this.action.context) {
+            var active_id = this.action.context.active_id;
+            if (active_id) {
+                state.active_id = active_id;
+            }
+            var active_ids = this.action.context.active_ids;
+            // we don't push active_ids if it's a single element array containing the active_id
+            // to make the url shorter in most cases
+            if (active_ids && !(active_ids.length === 1 && active_ids[0] === active_id)) {
+                state.active_ids = this.action.context.active_ids.join(',');
+            }
+        }
+        this.trigger_up('push_state', {
+            state: state,
+            studioPushState: true,  // see action_manager @_onPushState
+        });
+    },
+    /**
      * @private
-     * @param {Integer} action_id
+     * @param {Integer} actionID
      * @returns {Deferred}
      */
-    _reloadAction: function (action_id) {
-        return data_manager.load_action(action_id).then(function (new_action) {
-            bus.trigger('action_changed', new_action);
-            return new_action;
-        });
+    _reloadAction: function (actionID) {
+        var def = $.Deferred();
+        this.trigger_up('reload_action', {actionID: actionID, def: def});
+        return def;
     },
     /**
      * @private
@@ -251,6 +291,7 @@ var Main = Widget.extend({
         return def.then(function (result) {
             return self.do_action('action_web_studio_main', {
                 action: result,
+                noEdit: true,
             });
         });
     },
@@ -290,6 +331,7 @@ var Main = Widget.extend({
             }
             return self.do_action('action_web_studio_main', {
                 action: result,
+                noEdit: true,
             });
         });
     },
@@ -328,7 +370,9 @@ var Main = Widget.extend({
      */
     _onEditView: function (event) {
         var view_type = event.data.view_type;
-        this._editView(view_type);
+        this._editView(view_type).then(function () {
+            bus.trigger('edition_mode_entered', view_type);
+        });
     },
     /**
      * @private
@@ -344,7 +388,7 @@ var Main = Widget.extend({
         def.then(function (result) {
             self.do_action('action_web_studio_main', {
                 action: result,
-                active_view: view_type,
+                viewType: view_type,
             });
         });
     },

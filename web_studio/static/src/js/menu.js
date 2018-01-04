@@ -26,7 +26,8 @@ Menu.include({
      */
     init: function () {
         this._super.apply(this, arguments);
-        bus.on('studio_toggled', this, this.switch_studio_mode.bind(this));
+        bus.on('studio_toggled', this, this.switchMode);
+        bus.on('studio_main', this, this._onStudioMain);
         this.widget = "image";
         this.company_id = session.company_id;
         this.fileupload_id = _.uniqueId('o_fileupload');
@@ -46,15 +47,14 @@ Menu.include({
 
     /**
      * Modifies the menu according to the Studio mode (black navbar,
-     * leave and notes buttons, etc.)
+     * leave and notes buttons, etc.).
+     *
+     * Note that the `studio_menu` is managed differently (see @_onStudioMain)
+     * because it needs to be updated more often with the navigation process.
+     *
      * @param {String} mode - 'main'/'app_creator' for Studio or false
-     * @param {Object} studio_info - mandatory if mode
-     *        - multi_lang
-     *        - dbuuid
-     * @param {Object} action - edited action, mandatory if mode = 'main'
-     * @param {Object} active_view - mandatory if mode = 'main'
      */
-    switch_studio_mode: function (mode, studio_info, action, active_view) {
+    switchMode: function (mode) {
         var self = this;
         var old_mode = this.studio_mode;
         if (old_mode === mode) {
@@ -71,10 +71,9 @@ Menu.include({
             }
 
             if (mode === 'main') {
-                var options = { multi_lang: studio_info.multi_lang };
-                this.studio_menu = new SubMenu(this, action, active_view, options);
-                this.studio_menu.insertAfter($main_navbar);
-
+                if (this.studio_menu) {
+                    this.studio_menu.$el.insertAfter(this.$('.o_main_navbar'));
+                }
                 if (this.current_primary_menu) {
                     this.edit_menu = new EditMenu.MenuItem(this, this.menu_data, this.current_primary_menu);
                     this.edit_menu.appendTo($main_navbar.find('.o_menu_sections'));
@@ -85,6 +84,9 @@ Menu.include({
                     widget: this,
                 }));
                 this.$home_studio_menu.appendTo($main_navbar);
+                if (this.studio_menu) {
+                    this.studio_menu.$el.detach();
+                }
             }
 
             // Leave button
@@ -98,7 +100,7 @@ Menu.include({
                 .click(function (event) {
                     event.preventDefault();
                     if (!$(this).hasClass('o_disabled')) {
-                        self.trigger_up('click_studio_mode');
+                        self.trigger_up('studio_icon_clicked');
                     }
                     $(this).addClass('o_disabled');
                 });
@@ -108,13 +110,17 @@ Menu.include({
             this.$notes = $('<div>')
                 .addClass('o_web_studio_notes')
                 .append($('<a>', {
-                    href: 'http://pad.odoo.com/p/customization-' + studio_info.dbuuid,
+                    href: 'http://pad.odoo.com/p/customization-' + session.dbuuid,
                     target: '_blank',
                     text: _t("Notes"),
                 }));
             this.$notes.appendTo($main_navbar);
         } else {
             this.$detached_systray.prependTo('.o_main_navbar');
+            if (this.studio_menu) {
+                this.studio_menu.destroy();
+                this.studio_menu = undefined;
+            }
         }
     },
     /**
@@ -136,10 +142,6 @@ Menu.include({
         if (this.edit_menu) {
             this.edit_menu.destroy();
             this.edit_menu = undefined;
-        }
-        if (this.studio_menu) {
-            this.studio_menu.destroy();
-            this.studio_menu = undefined;
         }
         if (this.$notes) {
             this.$notes.remove();
@@ -202,29 +204,6 @@ Menu.include({
         this.$('input.o_input_file').click();
     },
     /**
-     * Reset the background to default.
-     */
-    _onResetDefaultBackground: function () {
-        var self = this;
-        var message = _t('Are you sure you want to reset the background image?');
-  
-        Dialog.confirm(this, message, {
-            confirm_callback: function () {
-                framework.blockUI();
-                self._rpc({
-                    route: '/web_studio/reset_background_image',
-                    params: {
-                        context: session.user_context,
-                    },
-                }).then(function () {
-                    self.do_action('reload');
-                }).fail(function () {
-                    framework.unblockUI();
-                });
-            }
-        });
-    },
-    /**
      * Export all customizations done by Studio in a zip file containing Odoo
      * modules.
      *
@@ -265,6 +244,42 @@ Menu.include({
                 self.trigger_up('reload_menu_data'); // reload menus
             },
         });
+    },
+    /**
+     * Reset the background to default.
+     */
+    _onResetDefaultBackground: function () {
+        var self = this;
+        var message = _t('Are you sure you want to reset the background image?');
+
+        Dialog.confirm(this, message, {
+            confirm_callback: function () {
+                framework.blockUI();
+                self._rpc({
+                    route: '/web_studio/reset_background_image',
+                    params: {
+                        context: session.user_context,
+                    },
+                }).then(function () {
+                    self.do_action('reload');
+                }).fail(function () {
+                    framework.unblockUI();
+                });
+            }
+        });
+    },
+    /**
+     * Displays the Studio menu (a navbar below the main navbar).
+     *
+     * @private
+     * @param {Object} action
+     */
+    _onStudioMain: function (action) {
+        if (this.studio_menu) {
+            this.studio_menu.destroy();
+        }
+        this.studio_menu = new SubMenu(this, action);
+        this.studio_menu.insertAfter(this.$('.o_main_navbar'));
     },
 });
 

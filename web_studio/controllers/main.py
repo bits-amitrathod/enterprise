@@ -13,13 +13,6 @@ from odoo.tools import ustr
 
 class WebStudioController(http.Controller):
 
-    @http.route('/web_studio/init', type='json', auth='user')
-    def studio_init(self):
-        return {
-            'dbuuid': request.env['ir.config_parameter'].sudo().get_param('database.uuid'),
-            'multi_lang': bool(request.env['res.lang'].search_count([('code', '!=', 'en_US')])),
-        }
-
     @http.route('/web_studio/chatter_allowed', type='json', auth='user')
     def is_chatter_allowed(self, model):
         """ Returns True iff a chatter can be activated on the model's form views, i.e. if

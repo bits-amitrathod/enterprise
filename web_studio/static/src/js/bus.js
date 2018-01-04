@@ -11,8 +11,10 @@ var bus = new Bus();
  * `studio_toggled`
  *      Studio has been toggled
  *      @param mode: ['app_creator', 'main']
- *      @param action: the current action (which will be customized with Studio)
- *      @param active_view: the action active view
+ *
+ * `studio_main`
+ *      Studio main has been opened
+ *      @param action: the edited action
  *
  * `action_changed`
  *      the action used by Studio has been changed (updated server side).
@@ -32,18 +34,6 @@ var bus = new Bus();
  *      during the view edition, the button (un,re)do has become unavailable.
  *
  */
-
-bus.on('studio_toggled', null, function (mode) {
-    var qs = $.deparam.querystring();
-    if (mode) {
-        qs.studio = mode;
-    } else {
-        delete qs.studio;
-    }
-    var l = window.location;
-    var url = l.protocol + "//" + l.host + l.pathname + '?' + $.param(qs) + l.hash;
-    window.history.pushState({ path:url }, '', url);
-});
 
 return bus;
 
