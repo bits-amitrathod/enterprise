@@ -5,106 +5,84 @@ from odoo import fields
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 
 
-import logging
-_logger = logging.getLogger(__name__)
-
 class TestReleaseToPayInvoice(AccountingTestCase):
 
-    def setUp(self):
-        super(TestReleaseToPayInvoice, self).setUp()
-        self.PurchaseOrder = self.env['purchase.order']
-        self.PurchaseOrderLine = self.env['purchase.order.line']
-        self.AccountInvoice = self.env['account.invoice']
-        self.AccountInvoiceLine = self.env['account.invoice.line']
-        self.StockBackorderConfirmation = self.env['stock.backorder.confirmation']
-        self.StockPicking = self.env['stock.picking']
+    def check_release_to_pay_scenario(self, ordered_qty, scenario, invoicing_policy='receive', order_price=500.0):
+        """ Generic test function to check that each use scenario behaves properly.
+        """
+        partner = self.env.ref('base.res_partner_1')
+        product = self.env.ref('account_3way_match.demo_product')
 
-    def test_00_release_to_pay_invoice_flow(self):
-        self.partner_id = self.env.ref('base.res_partner_1')
-        self.product_id_1 = self.env.ref('account_3way_match.demo_product')
+        product.purchase_method = invoicing_policy
 
-        # Let's create a new Purchase Order ...
-        self.purchase_order = self.PurchaseOrder.create({
-            'partner_id': self.partner_id.id,
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': partner.id,
             'order_line': [
                 (0, 0, {
-                    'name': self.product_id_1.name,
-                    'product_id': self.product_id_1.id,
-                    'product_qty': 10.0,
-                    'product_uom': self.product_id_1.uom_po_id.id,
-                    'price_unit': 500.0,
+                    'name': product.name,
+                    'product_id': product.id,
+                    'product_qty': ordered_qty,
+                    'product_uom': product.uom_po_id.id,
+                    'price_unit': order_price,
                     'date_planned': fields.Datetime.now(),
                 })]
         })
+        purchase_order.button_confirm()
 
-        # ... confirm it ...
-        self.purchase_order.button_confirm()
+        back_orders_stack = []
+        invoices_list = []
+        total_qty_received = 0
+        for (action, params) in scenario:
+            if action == 'invoice':
+                new_invoice = self.env['account.invoice'].create({
+                    'partner_id': partner.id,
+                    'purchase_id': purchase_order.id,
+                    'account_id': partner.property_account_payable_id.id,
+                    'type': 'in_invoice'
+                })
 
-        # ... and create a new invoice corresponding to it.
-        self.invoice_1 = self.AccountInvoice.create({
-            'partner_id': self.partner_id.id,
-            'purchase_id': self.purchase_order.id,
-            'account_id': self.partner_id.property_account_payable_id.id,
-            'type': 'in_invoice'
-        })
+                new_invoice.purchase_order_change()
 
-        self.invoice_1.purchase_order_change()
-        for line in self.invoice_1.invoice_line_ids:
-            self.assertEquals(line.quantity, 0, "Vendor Bill: newly created bill's lines should have a null quantity.")
+                for invoice_line in new_invoice.invoice_line_ids:
+                    if 'price' in params:
+                        invoice_line.write({'price_unit': params['price']})
+                    invoice_line.write({'quantity': params['qty']})
 
-            # invoice_1 should contain only one line, for product_id_1
-            self.assertEquals(line.product_id, self.product_id_1, "Vendor Bill: newly created bill contains some line for another product.")
+                invoices_list.append(new_invoice)
 
-            # We update the ordered quantity of product_id_1 on invoice_2 (the previous assert assures we're on the right product)
-            line.write({'quantity': 3.0})
+                self.assertEquals(new_invoice.release_to_pay, params['rslt'], "Wrong invoice release to pay status for scenario " + str(scenario))
 
-        self.invoice_1.action_invoice_open()
+            elif action == 'receive':
+                picking = purchase_order.picking_ids[0] if not back_orders_stack else self.env['stock.picking'].search([('backorder_id', '=', back_orders_stack.pop(-1))])
+                picking.force_assign()
+                picking.move_line_ids.write({'qty_done': params['qty']})
+                picking.button_validate()
 
-        # Nothing has been received yet, but the invoice has been done. Its status must be 'no'.
-        self.assertEqual(self.invoice_1.release_to_pay, 'no', 'Vendor Bill: Vendor bill_status should be "No"')
+                total_qty_received += params['qty']
+                if total_qty_received != ordered_qty:
+                    back_order_confirmation = self.env['stock.backorder.confirmation'].create({
+                        'pick_ids': [(4, picking.id)]
+                    })
+                    back_order_confirmation.process()
+                    back_orders_stack.append(picking)
 
-        # We now receive 2 of the products we ordered...
-        self.picking_1 = self.purchase_order.picking_ids[0]
-        self.picking_1.force_assign()
-        self.picking_1.move_line_ids.write({'qty_done': 2.0})
-        self.picking_1.button_validate()
+                if 'rslt' in params:
+                    for (invoice_index, status) in params['rslt']:
+                        self.assertEquals(invoices_list[invoice_index].release_to_pay, status, "Wrong invoice release to pay status for scenario " + str(scenario))
 
-        # ... and create a back order.
-        self.stock_backorder_confirmation_1 = self.StockBackorderConfirmation.create({
-            'pick_ids': [(4, self.picking_1.id)]
-            })
-        self.stock_backorder_confirmation_1.process()
+    def test_3_way_match(self):
+        self.check_release_to_pay_scenario(10, [('receive',{'qty': 5}), ('invoice', {'qty': 5, 'rslt': 'yes'})], invoicing_policy='purchase')
+        self.check_release_to_pay_scenario(10, [('receive',{'qty': 5}), ('invoice', {'qty': 10, 'rslt': 'yes'})], invoicing_policy='purchase')
+        self.check_release_to_pay_scenario(10, [('invoice', {'qty': 10, 'rslt': 'yes'})], invoicing_policy='purchase')
+        self.check_release_to_pay_scenario(10, [('invoice', {'qty': 5, 'rslt': 'yes'}), ('receive',{'qty': 5}), ('invoice', {'qty': 6, 'rslt': 'exception'})], invoicing_policy='purchase')
+        self.check_release_to_pay_scenario(10, [('invoice', {'qty': 10, 'rslt': 'yes'}), ('invoice', {'qty': 10, 'rslt': 'no'})], invoicing_policy='purchase')
+        self.check_release_to_pay_scenario(10, [('receive',{'qty': 5}), ('invoice', {'qty': 5, 'rslt': 'yes'})])
+        self.check_release_to_pay_scenario(10, [('receive',{'qty': 5}), ('invoice', {'qty': 10, 'rslt': 'exception'})])
+        self.check_release_to_pay_scenario(10, [('invoice', {'qty': 5, 'rslt': 'no'})])
+        self.check_release_to_pay_scenario(10, [('invoice', {'qty': 5, 'rslt': 'no'}), ('receive', {'qty': 5, 'rslt': [(-1, 'yes')]})])
+        self.check_release_to_pay_scenario(10, [('invoice', {'qty': 5, 'rslt': 'no'}), ('receive', {'qty': 3, 'rslt': [(-1, 'exception')]})])
+        self.check_release_to_pay_scenario(10, [('invoice', {'qty': 5, 'rslt': 'no'}), ('receive', {'qty': 10, 'rslt': [(-1, 'yes')]})])
 
-        # Only part of what was billed got delivered, the invoice should be in exception state
-        self.assertEqual(self.invoice_1.release_to_pay, 'exception', 'Vendor Bill: Vendor bill_status should be "Exception"')
-
-        # Now, we create a second invoice for the same order (it will have a total of 0).
-        self.invoice_2 = self.AccountInvoice.create({
-            'partner_id': self.partner_id.id,
-            'purchase_id': self.purchase_order.id,
-            'account_id': self.partner_id.property_account_payable_id.id,
-            'type': 'in_invoice'
-        })
-        self.invoice_2.purchase_order_change()
-
-        for line in self.invoice_2.invoice_line_ids:
-            self.assertEquals(line.quantity, 0, "Vendor Bill: newly created bill's lines should have a null quantity.")
-
-            # invoice_2 should contain only one line, for product_id_1
-            self.assertEquals(line.product_id, self.product_id_1, "Vendor Bill: newly created bill contains some line for another product.")
-
-            # We update the ordered quantity of product_id_1 on invoice_2 (the previous assert assures we're on the right product)
-            line.write({'quantity': 7.0})
-
-        # invoice_2 should be in exception state, since received and billed quantities still differ
-        self.assertEqual(self.invoice_2.release_to_pay, 'exception', 'Vendor Bill: Vendor bill_status should be "Exception"')
-
-        # Finally, we receive the last 8 products ...
-        self.picking_2 = self.StockPicking.search([('backorder_id', '=', self.picking_1.id)])
-        self.picking_2.force_assign()
-        self.picking_2.move_line_ids.write({'qty_done': 8.0})
-        self.picking_2.button_validate()
-
-        # We received everything, in the same amount as on the bills, so both their status should be 'yes'
-        self.assertEqual(self.invoice_1.release_to_pay, 'yes', 'Vendor Bill: Vendor bill_status should be "Yes"')
-        self.assertEqual(self.invoice_2.release_to_pay, 'yes', 'Vendor Bill: Vendor bill_status should be "Yes"')
+        # Special use case : a price change between order and invoice should always put the bill in exception
+        self.check_release_to_pay_scenario(10, [('receive',{'qty': 5}), ('invoice', {'qty': 5, 'rslt': 'exception', 'price':42})])
+        self.check_release_to_pay_scenario(10, [('receive',{'qty': 5}), ('invoice', {'qty': 5, 'rslt': 'exception', 'price':42})], invoicing_policy='purchase')
