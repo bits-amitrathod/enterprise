@@ -712,11 +712,11 @@ class ProductTemplate(models.Model):
                 so_line._compute_tax_id()
             sale_order.action_confirm()
             if 'BuyerCheckoutMessage' in transaction:
-                sale_order.message_post(_('The Buyer Posted :\n') + transaction['BuyerCheckoutMessage'])
-                sale_order.picking_ids.message_post(_('The Buyer Posted :\n') + transaction['BuyerCheckoutMessage'])
+                sale_order.message_post(body=_('The Buyer Posted :\n') + transaction['BuyerCheckoutMessage'])
+                sale_order.picking_ids.message_post(body=_('The Buyer Posted :\n') + transaction['BuyerCheckoutMessage'])
             if 'ShippingServiceSelected' in transaction:
                 sale_order.picking_ids.message_post(
-                    _('The Buyer Chose The Following Delivery Method :\n') + shipping_name)
+                    body=_('The Buyer Chose The Following Delivery Method :\n') + shipping_name)
             sale_order.action_invoice_create(final=True)
 
     @api.one
