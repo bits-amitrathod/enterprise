@@ -31,7 +31,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.onchange('data_file')
     def _onchange_data_file(self):
-        file_content = self.data_file and base64.b64decode(self.data_file) or ""
+        file_content = self.data_file and base64.b64decode(self.data_file) or b""
         self.show_qif_date_format = self._check_qif(file_content)
 
     def _find_additional_data(self, *args):
