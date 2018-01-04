@@ -341,12 +341,29 @@
         </field>
     </record>
 
+    <record id="quick_create_ticket_form" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.quick_create</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="user_id" options="{'no_open': True}"/>
+                    <field name="partner_id" options="{'no_open': True}"/>
+                    <field name="priority" nolabel="1" widget="priority"/>
+                    <div class="pull-right"><field name="kanban_state" widget="state_selection"/></div>
+                </group>
+            </form>
+        </field>
+    </record>
+
     <record id="helpdesk_ticket_view_kanban" model="ir.ui.view">
         <field name="name">helpdesk.ticket.kanban</field>
         <field name="model">helpdesk.ticket</field>
         <field name="priority">10</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" class="o_kanban_small_column">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column" quick_create_view="helpdesk.quick_create_ticket_form">
                 <field name="stage_id"/>
                 <field name="user_id"/>
                 <field name="color"/>
