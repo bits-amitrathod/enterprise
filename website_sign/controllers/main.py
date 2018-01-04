@@ -165,9 +165,9 @@ class WebsiteSign(http.Controller):
 
         request_item.action_completed()
         request = request_item.signature_request_id
-        request._message_post(_('Signed.'), request_item.partner_id, type='comment', subtype='mt_comment')
+        request._message_post_as_creator(_('Signed.'), author=request_item.partner_id, type='comment', subtype='mt_comment')
         if request.state == 'signed':
-            request._message_post(_('Everybody Signed.'), type='comment', subtype='mt_comment')
+            request._message_post_as_creator(_('Everybody Signed.'), type='comment', subtype='mt_comment')
         return True
 
     @http.route(['/sign/get_notes/<int:id>/<token>'], type='json', auth='public')
@@ -196,7 +196,7 @@ class WebsiteSign(http.Controller):
         request_item = request.request_item_ids.filtered(lambda r: r.access_token == access_token)
         partner = request_item.partner_id if request_item else None
         if (partner or http.request.env.user.id == request.create_uid.id) and message:
-            request._message_post(message, partner, type='comment', subtype='mt_comment')
+            request._message_post_as_creator(message, author=partner, type='comment', subtype='mt_comment')
 
     @http.route(['/sign/save_location/<int:id>/<token>'], type='json', auth='public')
     def save_location(self, id, token, latitude=0, longitude=0):

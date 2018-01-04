@@ -346,10 +346,10 @@ class SignatureRequest(models.Model):
         output.close()
 
     @api.one
-    def _message_post(self, message, partner=None, type='comment', subtype=False):
+    def _message_post_as_creator(self, body, author=None, type='comment', subtype=False):
         return self.sudo(self.create_uid).message_post(
-            body=message,
-            author_id=(partner.id if partner else None),
+            body=body,
+            author_id=(author.id if author else None),
             message_type=type,
             subtype=subtype
         )
@@ -360,7 +360,7 @@ class SignatureRequest(models.Model):
         signature_request.set_signers(signers)
         if send:
             signature_request.action_sent(subject, message)
-            signature_request._message_post(_('Waiting for signatures.'), type='comment', subtype='mt_comment')
+            signature_request._message_post_as_creator(_('Waiting for signatures.'), type='comment', subtype='mt_comment')
         return {
             'id': signature_request.id,
             'token': signature_request.access_token,
@@ -370,7 +370,7 @@ class SignatureRequest(models.Model):
     @api.model
     def cancel(self, id):
         signature_request = self.browse(id)
-        signature_request._message_post(_('Canceled.'), type='comment', subtype='mt_comment')
+        signature_request._message_post_as_creator(_('Canceled.'), type='comment', subtype='mt_comment')
         return signature_request.action_canceled()
 
     @api.model
