@@ -560,14 +560,6 @@
                                                 <input type="date" name="birthdate" class="form-control" required="required" t-att-value="contract.employee_id.birthday"/>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group mt32">
-                                                <label class="hr_cs_control hr_cs_control_checkbox">Disabled
-                                                    <input type="checkbox" name="disabled" value="" class="advantage_input" t-att-checked="contract.employee_id.disabled"/>
-                                                    <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
-                                                </label>
-                                            </div>
-                                        </div>
                                     </div>
 
                                     <!-- Nationality -->
@@ -725,6 +717,13 @@
                                 </div>
 
                                 <div class="col-md-3 col-lg-offset-1" name="personal_info" t-att-style="'display: none;' if contract.employee_id.active else ''">
+
+                                    <div class="form-group">
+                                        <label class="hr_cs_control hr_cs_control_checkbox">Disabled
+                                            <input type="checkbox" name="disabled" value="" class="advantage_input" t-att-checked="contract.employee_id.disabled"/>
+                                            <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
+                                        </label>
+                                    </div>
 
                                     <!-- Marital Status -->
                                     <div class="form-group">
