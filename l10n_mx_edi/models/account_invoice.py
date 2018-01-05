@@ -974,12 +974,10 @@ class AccountInvoice(models.Model):
         '''Synchronize both systems: Odoo & PAC if the invoices need to be signed or cancelled.
         '''
         for record in self:
-            if record.l10n_mx_edi_pac_status == 'to_sign':
-                record._l10n_mx_edi_sign()
+            if record.l10n_mx_edi_pac_status in ('to_sign', 'retry'):
+                record._l10n_mx_edi_retry()
             elif record.l10n_mx_edi_pac_status == 'to_cancel':
                 record._l10n_mx_edi_cancel()
-            elif record.l10n_mx_edi_pac_status == 'retry':
-                record._l10n_mx_edi_retry()
 
     @api.multi
     def l10n_mx_edi_update_sat_status(self):
