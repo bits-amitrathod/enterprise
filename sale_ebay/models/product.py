@@ -197,7 +197,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _ebay_encode(self, string):
-        return escape(string.strip().encode('utf-8')) if string else ''
+        return escape(string.strip()) if string else ''
 
     # returns the checksum of the ean13, or -1 if the ean has not the correct length, ean must be a string
     def ean_checksum(self, ean):
