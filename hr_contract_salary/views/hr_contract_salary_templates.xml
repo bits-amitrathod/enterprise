@@ -290,12 +290,13 @@
                                                     <i class="fa fa-1x fa-crosshairs fa-fw fa-lg"/> Commissions
                                                 </label>
                                                 <div class="col-sm-7">
-                                                    <span class="help-block">This commission is only effective if the target is reached. The commissions are paid using warrants that you receive every three months.</span>
+                                                    <span class="help-block">This commission is only effective if the target is reached. The commissions are paid using warrants that you receive every three months. This results to a net warrant value of <t t-esc="round(contract.warrant_value_employee / 12.0, 2)"/></span>
                                                 </div>
                                                 <div class="col-sm-2 text-right">
                                                     <div class="input-group">
                                                         <input class="form-control advantage_input hidden" type="text" t-att-value="contract.commission_on_target" disabled="disabled" name="commission_on_target"/>
-                                                        <input class="form-control advantage_input" type="text" t-att-value="round(contract.warrant_value_employee / 12.0, 2)" disabled="disabled" name="warrant_value"/>
+                                                        <input class="form-control advantage_input hidden" type="text" t-att-value="round(contract.warrant_value_employee / 12.0, 2)" disabled="disabled" name="warrant_value"/>
+                                                        <input class="form-control advantage_input" type="text" t-att-value="round(contract.warrants_cost / 12.0, 2)" disabled="disabled" name="warrant_cost"/>
                                                         <div class="input-group-addon">€</div>
                                                     </div>
                                                 </div>
