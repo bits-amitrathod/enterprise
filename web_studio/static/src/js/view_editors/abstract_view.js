@@ -42,7 +42,8 @@ AbstractView.include({
      */
     _createStudioRenderer: function (parent, Renderer, options) {
         var self = this;
-        return this._loadSubviews(parent).then(function () {
+        var def = this._loadSubviews ? this._loadSubviews(parent) : $.when();
+        return def.then(function () {
             return $.when(
                 self._loadData(parent),
                 ajax.loadLibs(self)
