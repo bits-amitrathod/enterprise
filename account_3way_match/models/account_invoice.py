@@ -23,7 +23,7 @@ class AccountInvoice(models.Model):
              "This status is defined automatically, but you can force it by ticking the 'Force Status' checkbox.")
     release_to_pay_manual = fields.Selection(
         _release_to_pay_status_list,
-        string='Should be paid',
+        string='Should be paid Manual',
         help="  * Yes: you should pay the bill, you have received the products\n"
              "  * No, you should not pay the bill, you have not received the products\n"
              "  * Exception, there is a difference between received and billed quantities.")

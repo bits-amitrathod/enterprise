@@ -67,7 +67,7 @@ class team_user(models.Model):
 
     team_id = fields.Many2one('crm.team', string='SaleTeam', required=True, oldname='section_id')
     user_id = fields.Many2one('res.users', string='Saleman', required=True)
-    name = fields.Char(related='user_id.partner_id.display_name')
+    name = fields.Char(string="Name", related='user_id.partner_id.display_name')
     running = fields.Boolean(string='Running', default=True)
     team_user_domain = fields.Char('Domain', track_visibility='onchange')
     maximum_user_leads = fields.Integer('Leads Per Month')

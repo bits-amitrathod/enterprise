@@ -8,7 +8,7 @@ class PaymentTransaction(models.Model):
     _name = 'payment.transaction'
     _inherit = 'payment.transaction'
 
-    invoice_id = fields.Many2one('account.invoice', 'Invoice')
+    invoice_id = fields.Many2one('account.invoice', 'Payment Transaction Invoice')
 
 
 class PaymentToken(models.Model):

@@ -152,7 +152,7 @@ class QualityCheck(models.Model):
     product_id = fields.Many2one(
         'product.product', 'Product',
         domain="[('type', 'in', ['consu', 'product'])]", required=True)
-    picking_id = fields.Many2one('stock.picking', 'Operation')
+    picking_id = fields.Many2one('stock.picking', 'Picking')
     lot_id = fields.Many2one('stock.production.lot', 'Lot', domain="[('product_id', '=', product_id)]")
     user_id = fields.Many2one('res.users', 'Responsible', track_visibility='onchange')
     team_id = fields.Many2one('quality.alert.team', 'Team', required=True)
@@ -215,7 +215,7 @@ class QualityAlert(models.Model):
     tag_ids = fields.Many2many('quality.tag', string="Tags")
     date_assign = fields.Datetime('Date Assigned')
     date_close = fields.Datetime('Date Closed')
-    picking_id = fields.Many2one('stock.picking', 'Operation')
+    picking_id = fields.Many2one('stock.picking', 'Picking')
     action_corrective = fields.Text('Corrective Action')
     action_preventive = fields.Text('Preventive Action')
     user_id = fields.Many2one('res.users', 'Responsible', track_visibility='onchange', default=lambda self: self.env.user)

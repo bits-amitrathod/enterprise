@@ -43,7 +43,7 @@ class ProviderFedex(models.Model):
 
     fedex_developer_key = fields.Char(string="Developer Key", groups="base.group_system")
     fedex_developer_password = fields.Char(string="Password", groups="base.group_system")
-    fedex_account_number = fields.Char(string="Account Number", groups="base.group_system")
+    fedex_account_number = fields.Char(string="FedEx Account Number", groups="base.group_system")
     fedex_meter_number = fields.Char(string="Meter Number", groups="base.group_system")
     fedex_droppoff_type = fields.Selection([('BUSINESS_SERVICE_CENTER', 'BUSINESS_SERVICE_CENTER'),
                                             ('DROP_BOX', 'DROP_BOX'),
@@ -88,7 +88,7 @@ class ProviderFedex(models.Model):
                                               ('PNG', 'PNG'),
                                               ('ZPLII', 'ZPLII')],
                                              default='PDF', string="FEDEX Label File Type", oldname='x_fedex_label_file_type')
-    fedex_saturday_delivery = fields.Boolean(string="Saturday Delivery", help="""Special service:Saturday Delivery, can be requested on following days.
+    fedex_saturday_delivery = fields.Boolean(string="FedEx Saturday Delivery", help="""Special service:Saturday Delivery, can be requested on following days.
                                                                                  Thursday:\n1.FEDEX_2_DAY.\nFriday:\n1.PRIORITY_OVERNIGHT.\n2.FIRST_OVERNIGHT.
                                                                                  3.INTERNATIONAL_PRIORITY.\n(To Select Countries)""")
 

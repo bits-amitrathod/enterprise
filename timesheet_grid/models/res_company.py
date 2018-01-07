@@ -17,7 +17,7 @@ class Company(models.Model):
     timesheet_mail_employee_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
-    ], string='Frequency', required=True, default="weeks")
+    ], string='Employee Frequency', required=True, default="weeks")
     timesheet_mail_employee_nextdate = fields.Datetime('Next scheduled date for user reminder', readonly=True)
 
     # reminder for manager
