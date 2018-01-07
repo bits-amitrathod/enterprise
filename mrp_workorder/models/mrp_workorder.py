@@ -20,7 +20,6 @@ class MrpProductionWorkcenterLine(models.Model):
     quality_alert_count = fields.Integer(compute="_compute_quality_alert_count")
 
     current_quality_check_id = fields.Many2one('quality.check', "Current Quality Check", store=True)
-    tracking = fields.Selection(related='production_id.product_id.tracking')
 
     # QC-related fields
     allow_producing_quantity_change = fields.Boolean('Allow Changes to Producing Quantity', default=True)
