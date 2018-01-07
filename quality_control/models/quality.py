@@ -17,7 +17,7 @@ class QualityPoint(models.Model):
     measure_frequency_type = fields.Selection([
         ('all', 'All Operations'),
         ('random', 'Randomly'),
-        ('periodical', 'Periodically')], string="Frequency",
+        ('periodical', 'Periodically')], string="Type of Frequency",
         default='all', required=True)
     measure_frequency_value = fields.Float('Percentage')  # TDE RENAME ?
     measure_frequency_unit_value = fields.Integer('Frequency')  # TDE RENAME ?

@@ -52,7 +52,7 @@ class QualityPoint(models.Model):
                                    required=True, default=_get_default_test_type_id)
     test_type = fields.Char(related='test_type_id.technical_name')
     note = fields.Html('Note')
-    reason = fields.Html('Note')
+    reason = fields.Html('Reason')
 
     def _compute_check_count(self):
         check_data = self.env['quality.check'].read_group([('point_id', 'in', self.ids)], ['point_id'], ['point_id'])

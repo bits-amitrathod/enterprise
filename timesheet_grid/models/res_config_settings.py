@@ -10,7 +10,7 @@ class ResConfigSettings(models.TransientModel):
 
     reminder_user_allow = fields.Boolean("Employee Reminder", related='company_id.timesheet_mail_employee_allow',
         help="If checked, send an email to all users who have not recorded their timesheet")
-    reminder_user_delay = fields.Integer("Number of days", related='company_id.timesheet_mail_employee_delay')
+    reminder_user_delay = fields.Integer("Days to Remind User", related='company_id.timesheet_mail_employee_delay')
     reminder_user_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
@@ -18,7 +18,7 @@ class ResConfigSettings(models.TransientModel):
 
     reminder_manager_allow = fields.Boolean("Manager Reminder", related='company_id.timesheet_mail_manager_allow',
         help="If checked, send an email to all manager")
-    reminder_manager_delay = fields.Integer("Number of days", related='company_id.timesheet_mail_manager_delay')
+    reminder_manager_delay = fields.Integer("Days to Remind Manager", related='company_id.timesheet_mail_manager_delay')
     reminder_manager_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
