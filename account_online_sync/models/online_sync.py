@@ -101,7 +101,7 @@ class OnlineAccount(models.Model):
     _name = 'account.online.journal'
     _description = 'Interface for online account journal'
 
-    name = fields.Char(required=True)
+    name = fields.Char(string="Journal Name", required=True)
     account_online_provider_id = fields.Many2one('account.online.provider', ondelete='cascade', readonly=True)
     journal_ids = fields.One2many('account.journal', 'account_online_journal_id', string='Journal', domain=[('type', '=', 'bank')])
     account_number = fields.Char()
