@@ -14,7 +14,7 @@ class ResConfigSettings(models.TransientModel):
     reminder_user_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
-    ], string='Frequency', required=True, related='company_id.timesheet_mail_employee_interval')
+    ], string='User Reminder Frequency', required=True, related='company_id.timesheet_mail_employee_interval')
 
     reminder_manager_allow = fields.Boolean("Manager Reminder", related='company_id.timesheet_mail_manager_allow',
         help="If checked, send an email to all manager")
@@ -22,4 +22,4 @@ class ResConfigSettings(models.TransientModel):
     reminder_manager_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
-    ], string='Frequency', required=True, related='company_id.timesheet_mail_manager_interval')
+    ], string='Manager Reminder Frequency', required=True, related='company_id.timesheet_mail_manager_interval')
