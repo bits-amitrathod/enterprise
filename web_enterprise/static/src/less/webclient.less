@@ -1,47 +1,4 @@
 //------------------------------------------------------------------------------
-// Checkboxes
-//------------------------------------------------------------------------------
-div.o_checkbox {
-    @odoo-checkbox-size: 15px;
-
-    display: inline-block;
-    position: relative;
-    vertical-align: sub;
-
-    > input {
-        width: @odoo-checkbox-size;
-        height: @odoo-checkbox-size;
-        margin: 0; // bootstrap override
-
-        opacity: 0;
-        .o-position-absolute();
-        cursor: pointer;
-
-        + span {
-            display: block;
-            width: @odoo-checkbox-size;
-            height: @odoo-checkbox-size;
-            border: 1px solid @odoo-brand-secondary;
-            background-color: white;
-        }
-
-        &:checked + span {
-            background-repeat: no-repeat;
-            background-image: url(../img/checked.svg);
-            background-position: center center;
-        }
-
-        &:disabled + span {
-            border: 1px solid @gray-lighter-darker;
-        }
-
-        &:focus + span {
-            outline: 1px solid @odoo-brand-optional;
-        }
-    }
-}
-
-//------------------------------------------------------------------------------
 // Inputs and selects (note: put the o_input class to have the style)
 //------------------------------------------------------------------------------
 [type="text"], [type="password"], [type="number"], textarea, select {
