@@ -12,4 +12,5 @@
         'views/delivery_usps_template.xml',
     ],
     'license': 'OEEL-1',
+    'uninstall_hook': 'uninstall_hook',
 }

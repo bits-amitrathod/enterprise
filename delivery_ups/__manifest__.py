@@ -11,4 +11,5 @@
         'views/delivery_ups_view.xml'
     ],
     'license': 'OEEL-1',
+    'uninstall_hook': 'uninstall_hook',
 }

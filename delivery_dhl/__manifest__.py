@@ -11,4 +11,5 @@
         'views/delivery_dhl_view.xml',
     ],
     'license': 'OEEL-1',
+    'uninstall_hook': 'uninstall_hook',
 }
