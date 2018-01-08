@@ -91,22 +91,26 @@ class website_hr_contract_salary(http.Controller):
             'countries': request.env['res.country'].search([]),
         }
 
-    def create_new_contract(self, contract, advantages):
+    def create_new_contract(self, contract, advantages, no_write=False, **kw):
         # Generate a new contract with the current modifications
         personal_info = advantages['personal_info']
 
-        if not contract.employee_id:
-            contract.employee_id = request.env['hr.employee'].sudo().create({
+        if kw.get('employee'):
+            employee = kw.get('employee')
+        elif contract.employee_id:
+            employee = contract.employee_id
+        else:
+            employee = request.env['hr.employee'].sudo().create({
                 'name': 'Simulation Employee',
             })
         if personal_info:
-            contract.employee_id.update_personal_info(personal_info)
+            employee.update_personal_info(personal_info)
         new_contract = request.env['hr.contract'].sudo().new({
             'name': contract.name if contract.state == 'draft' else "Package Simulation",
             'job_id': contract.job_id.id,
             'company_id': contract.company_id.id,
             'currency_id': contract.company_id.currency_id.id,
-            'employee_id': contract.employee_id.id,
+            'employee_id': employee.id,
             'struct_id': contract.struct_id.id,
             'company_car_total_depreciated_cost': contract.company_car_total_depreciated_cost,
             'wage': advantages['wage'],
@@ -133,7 +137,7 @@ class website_hr_contract_salary(http.Controller):
             new_contract.car_id = advantages['car_id']
 
         vals = new_contract._convert_to_write(new_contract._cache)
-        if contract.state == 'draft':
+        if not no_write and contract.state == 'draft':
             contract.write(vals)
             return contract
         else:
@@ -294,7 +298,7 @@ class website_hr_contract_salary(http.Controller):
         else:
             contract = self._check_employee_access_right(contract_id)
 
-        new_contract = self.create_new_contract(contract, advantages)
+        new_contract = self.create_new_contract(contract, advantages, no_write=True, **kw)
 
         if new_contract.id != contract.id:
             new_contract.write({
@@ -321,7 +325,7 @@ class website_hr_contract_salary(http.Controller):
             signature_request_template.id,
             [
                 {'role': request.env.ref('website_sign.signature_item_party_employee').id, 'partner_id': new_contract.employee_id.address_home_id.id},
-                {'role': request.env.ref('hr_contract_salary.signature_item_party_job_responsible').id, 'partner_id': new_contract.job_id.hr_responsible_id.id}
+                {'role': request.env.ref('hr_contract_salary.signature_item_party_job_responsible').id, 'partner_id': new_contract.job_id.hr_responsible_id.partner_id.id}
             ],
             [new_contract.job_id.hr_responsible_id.id],
             'Signature Request - ' + new_contract.name,
@@ -360,7 +364,7 @@ class website_hr_contract_salary(http.Controller):
 
         new_contract.signature_request_ids += signature_request
 
-        return {'job_id': new_contract.job_id.id, 'request_id': res['id'], 'token': access_token, 'error': 0}
+        return {'job_id': new_contract.job_id.id, 'request_id': res['id'], 'token': access_token, 'error': 0, 'new_contract_id': new_contract.id}
 
 
 class WebsiteSign(WebsiteSign):
