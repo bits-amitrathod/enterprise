@@ -81,19 +81,17 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         xml = invoice_disc.l10n_mx_edi_get_xml_etree()
         xml_expected_disc = objectify.fromstring(self.xml_expected_str)
         version = xml.get('version', xml.get('Version', ''))
-        if version == '3.3':
-            xml_expected_disc.attrib['SubTotal'] = '500.00'
-            xml_expected_disc.attrib['Descuento'] = '50.00'
-            # 500 - 10% + taxes(16%, -10%)
-            xml_expected_disc.attrib['Total'] = '477.00'
+        xml_expected_disc.attrib['SubTotal'] = '500.00'
+        xml_expected_disc.attrib['Descuento'] = '50.00'
+        # 500 - 10% + taxes(16%, -10%)
+        xml_expected_disc.attrib['Total'] = '477.00'
         self.xml_merge_dynamic_items(xml, xml_expected_disc)
-        if version == '3.3':
-            xml_expected_disc.attrib['Folio'] = xml.attrib['Folio']
-            xml_expected_disc.attrib['Serie'] = xml.attrib['Serie']
-            for concepto in xml_expected_disc.Conceptos:
-                concepto.Concepto.attrib['ValorUnitario'] = '500.00'
-                concepto.Concepto.attrib['Importe'] = '500.00'
-                concepto.Concepto.attrib['Descuento'] = '50.00'
+        xml_expected_disc.attrib['Folio'] = xml.attrib['Folio']
+        xml_expected_disc.attrib['Serie'] = xml.attrib['Serie']
+        for concepto in xml_expected_disc.Conceptos:
+            concepto.Concepto.attrib['ValorUnitario'] = '500.00'
+            concepto.Concepto.attrib['Importe'] = '500.00'
+            concepto.Concepto.attrib['Descuento'] = '50.00'
         self.assertEqualXML(xml, xml_expected_disc)
 
         # -----------------------
@@ -127,19 +125,6 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         invoice.l10n_mx_edi_update_sat_status()
         self.assertNotEqual(invoice.l10n_mx_edi_sat_status, "cancelled")
-
-        # Use a real UUID cancelled, only with CFDI version 3.2
-        if version == '3.2':
-            xml_tfd = invoice.l10n_mx_edi_get_tfd_etree(xml)
-            xml_tfd.attrib['UUID'] = '0F481E0F-47A5-4647-B06B-8B471671F377'
-            xml.Emisor.attrib['rfc'] = 'VAU111017CG9'
-            xml.Receptor.attrib['rfc'] = 'IAL691030TK3'
-            xml.attrib['total'] = '1.16'
-            xml_attach = invoice.l10n_mx_edi_retrieve_last_attachment()
-            xml_attach.datas = base64.encodestring(etree.tostring(xml))
-            invoice.l10n_mx_edi_update_sat_status()
-            self.assertEqual(invoice.l10n_mx_edi_sat_status, "cancelled",
-                            invoice.message_ids.mapped('body'))
 
     def test_multi_currency(self):
         invoice = self.create_invoice()
@@ -185,7 +170,6 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEqualXML(xml_addenda, xml_expected)
 
     def test_l10n_mx_edi_invoice_basic_33(self):
-        self.config_parameter.value = '3.3'
         self.xml_expected_str = misc.file_open(os.path.join(
             'l10n_mx_edi', 'tests', 'expected_cfdi33.xml')).read().encode('UTF-8')
         self.xml_expected = objectify.fromstring(self.xml_expected_str)

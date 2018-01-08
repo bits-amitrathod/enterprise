@@ -103,13 +103,9 @@ class InvoiceTransactionCase(AccountingTestCase):
         self.invoice_line_model.create(invoice_line_dict)
 
     def xml_merge_dynamic_items(self, xml, xml_expected):
-        if xml.get('version', xml.get('Version')) == '3.2':
-            xml_expected.attrib['fecha'] = xml.attrib['fecha']
-            xml_expected.attrib['sello'] = xml.attrib['sello']
-        else:
-            xml_expected.attrib['Fecha'] = xml.attrib['Fecha']
-            xml_expected.attrib['Sello'] = xml.attrib['Sello']
-            xml_expected.attrib['Serie'] = xml.attrib['Serie']
+        xml_expected.attrib['Fecha'] = xml.attrib['Fecha']
+        xml_expected.attrib['Sello'] = xml.attrib['Sello']
+        xml_expected.attrib['Serie'] = xml.attrib['Serie']
         xml_expected.Complemento = xml.Complemento
 
     def xml2dict(self, xml):

@@ -19,7 +19,6 @@ from odoo.tools import float_round
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_repr
 
-CFDI_TEMPLATE = 'l10n_mx_edi.cfdiv32'
 CFDI_TEMPLATE_33 = 'l10n_mx_edi.cfdiv33'
 CFDI_XSLT_CADENA = 'l10n_mx_edi/data/%s/cadenaoriginal.xslt'
 CFDI_XSLT_CADENA_TFD = 'l10n_mx_edi/data/xslt/3.3/cadenaoriginal_TFD_1_1.xslt'
@@ -100,8 +99,6 @@ class AccountInvoice(models.Model):
         'if unkown and the XML will show "Unidentified".',
         default=lambda self: self.env.ref('l10n_mx_edi.payment_method_otros',
                                           raise_if_not_found=False))
-    l10n_mx_edi_uuid = fields.Char('Fiscal Folio(UNUSED)', copy=False, readonly=True,
-        help='Unused field to remove in master')
     l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False, readonly=True,
         help='Folio in electronic invoice, is returned by SAT when send to stamp.',
         compute='_compute_cfdi_values')
@@ -602,9 +599,8 @@ class AccountInvoice(models.Model):
                    'the SAT.'))
         allow = self - not_allow
         allow.write({'l10n_mx_edi_time_invoice': False})
-        if self.l10n_mx_edi_get_pac_version() == '3.3':
-            for record in allow.filtered('l10n_mx_edi_cfdi_uuid'):
-                record.l10n_mx_edi_origin = self._set_cfdi_origin('04', [record.l10n_mx_edi_cfdi_uuid])
+        for record in allow.filtered('l10n_mx_edi_cfdi_uuid'):
+            record.l10n_mx_edi_origin = self._set_cfdi_origin('04', [record.l10n_mx_edi_cfdi_uuid])
         return super(AccountInvoice, self - not_allow).action_invoice_draft()
 
     @api.model
@@ -747,20 +743,11 @@ class AccountInvoice(models.Model):
         values['rate'] = ('%.6f' % (
             invoice_currency.compute(1, mxn))) if self.currency_id.name != 'MXN' else False
 
-        version = self.l10n_mx_edi_get_pac_version()
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
 
         term_ids = self.payment_term_id.line_ids
-        if version == '3.2':
-            if len(term_ids.ids) > 1:
-                values['payment_policy'] = 'Pago en parcialidades'
-            else:
-                values['payment_policy'] = 'Pago en una sola exhibición'
-        elif version == '3.3':
-            # In CFDI 3.3, the payment policy is PUE when the invoice is to be
-            # paid directly, PPD otherwise
-            values['payment_policy'] = 'PPD' if (
-                self.date_due != self.date_invoice) else 'PUE'
+        values['payment_policy'] = 'PPD' if (
+            self.date_due != self.date_invoice) else 'PUE'
         domicile = self.journal_id.l10n_mx_address_issued_id or self.company_id
         values['domicile'] = '%s %s, %s' % (
                 domicile.city,
@@ -882,18 +869,10 @@ class AccountInvoice(models.Model):
         values['certificate'] = certificate_id.sudo().get_data()[0]
 
         # -Compute cfdi
-        if version == '3.2':
-            cfdi = qweb.render(CFDI_TEMPLATE, values=values)
-            node_sello = 'sello'
-            with tools.file_open('l10n_mx_edi/data/%s/cfdi.xsd' % version, 'rb') as xsd:
-                xsd_datas = xsd.read()
-        elif version == '3.3':
-            cfdi = qweb.render(CFDI_TEMPLATE_33, values=values)
-            node_sello = 'Sello'
-            attachment = self.env.ref('l10n_mx_edi.xsd_cached_cfdv33_xsd', False)
-            xsd_datas = base64.b64decode(attachment.datas) if attachment else b''
-        else:
-            return {'error': _('Unsupported version %s') % version}
+        cfdi = qweb.render(CFDI_TEMPLATE_33, values=values)
+        node_sello = 'Sello'
+        attachment = self.env.ref('l10n_mx_edi.xsd_cached_cfdv33_xsd', False)
+        xsd_datas = base64.b64decode(attachment.datas) if attachment else b''
 
         # -Compute cadena
         tree = self.l10n_mx_edi_get_xml_etree(cfdi)

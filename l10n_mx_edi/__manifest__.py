@@ -26,7 +26,6 @@ This module allows the creation of the EDI documents and the communication with 
     'data': [
         'security/ir.model.access.csv',
         'security/l10n_mx_edi_certificate.xml',
-        'data/3.2/cfdi.xml',
         'data/3.3/cfdi.xml',
         'data/3.3/payment10.xml',
         'data/account_data.xml',

@@ -34,6 +34,5 @@ class AccountBankStatementLine(models.Model):
         if getattr(self, 'pos_statement_id', False):
             # payments from pos not must generate payment complement: pos is tolerated not supported
             return False
-        version = self.env['account.invoice'].l10n_mx_edi_get_pac_version()
         country = self.env.ref('base.mx')
-        return version == '3.3' and self.company_id.country_id == country
+        return self.company_id.country_id == country

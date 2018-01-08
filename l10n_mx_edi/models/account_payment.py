@@ -200,9 +200,8 @@ class AccountPayment(models.Model):
     @api.multi
     def l10n_mx_edi_is_required(self):
         self.ensure_one()
-        version = self.env['account.invoice'].l10n_mx_edi_get_pac_version()
         required = (
-            self.payment_type == 'inbound' and version == '3.3' and
+            self.payment_type == 'inbound' and
             self.company_id.country_id == self.env.ref('base.mx') and
             self.invoice_ids.filtered(lambda i: i.type == 'out_invoice'))
         if not required:
