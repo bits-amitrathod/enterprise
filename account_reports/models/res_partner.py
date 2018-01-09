@@ -15,6 +15,15 @@ class ResPartner(models.Model):
                                            help="The date before which no action should be taken.")
     unreconciled_aml_ids = fields.One2many('account.move.line', 'partner_id', domain=[('reconciled', '=', False),
                                            ('account_id.deprecated', '=', False), ('account_id.internal_type', '=', 'receivable')])
+    total_due = fields.Monetary(compute='_compute_total_due', string="Total Due")
+
+    @api.multi
+    def _compute_total_due(self):
+        """ Returns the total due as will be displayed on the Followup Report """
+        today = fields.Date.context_today(self)
+        domain = self.get_followup_lines_domain(today)
+        for aml in self.env['account.move.line'].search(domain):
+            aml.partner_id.total_due += aml.amount_residual
 
     partner_ledger_label = fields.Char(compute='_compute_partner_ledger_label', help='The label to display on partner ledger button, in form view')
 
@@ -44,7 +53,7 @@ class ResPartner(models.Model):
         for res in results:
             if res[0]:
                 result.append(res[0])
-        return self.browse(result)
+        return self.browse(result).filtered(lambda r: r.total_due > 0)
 
     def get_followup_lines_domain(self, date, overdue_only=False, only_unblocked=False):
         domain = super(ResPartner, self).get_followup_lines_domain(date, overdue_only=overdue_only, only_unblocked=only_unblocked)

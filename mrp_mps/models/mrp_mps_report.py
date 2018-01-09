@@ -120,7 +120,7 @@ class MrpMpsReport(models.TransientModel):
         result = []
         forecasted = product.mps_forecasted
         date = datetime.datetime.now()
-        local_tz = pytz.timezone(self.env.context.get('tz', 'UTC'))
+        local_tz = pytz.timezone(self.env.context.get('tz') or 'UTC')
         indirect = self.get_indirect(product)[product.id]
         display = _('To Receive / To Supply / Produce')
         buy_type = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)

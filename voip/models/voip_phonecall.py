@@ -140,7 +140,7 @@ class VoipPhonecall(models.Model):
             ('in_queue', '=', True),
             ('user_id', '=', self.env.user.id),
             ('date_deadline', '<=', fields.Date.today())
-        ], order='sequence,date_deadline,id').get_info()
+        ], order='sequence,date_deadline,id', limit=100).get_info()
 
     @api.model
     def get_recent_list(self, search_expr=None, offset=0, limit=None):
