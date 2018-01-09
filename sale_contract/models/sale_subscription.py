@@ -123,7 +123,7 @@ class SaleSubscription(models.Model):
     @api.model
     def create(self, vals):
         vals['code'] = vals.get('code') or self.env.context.get('default_code') or self.env['ir.sequence'].next_by_code('sale.subscription') or 'New'
-        if vals.get('name', 'New') == 'New':
+        if vals.get('name', 'New') == 'New' and not vals.get('analytic_account_id'):
             vals['name'] = vals['code']
         return super(SaleSubscription, self).create(vals)
 
@@ -276,6 +276,7 @@ class SaleSubscription(models.Model):
 
     @api.returns('account.invoice')
     def _recurring_create_invoice(self, automatic=False):
+        auto_commit = self.env.context.get('auto_commit', True)
         AccountInvoice = self.env['account.invoice']
         invoices = []
         current_date = fields.Date.today()
@@ -296,10 +297,10 @@ class SaleSubscription(models.Model):
                     rule, interval = sub.recurring_rule_type, sub.recurring_interval
                     new_date = next_date + relativedelta(**{periods[rule]: interval})
                     sub.write({'recurring_next_date': new_date})
-                    if automatic:
+                    if automatic and auto_commit:
                         self.env.cr.commit()
                 except Exception:
-                    if automatic:
+                    if automatic and auto_commit:
                         self.env.cr.rollback()
                         _logger.exception('Fail to create recurring invoice for subscription %s', sub.code)
                     else:

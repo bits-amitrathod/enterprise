@@ -85,7 +85,20 @@ class MailChannel(models.Model):
         }
         data = {
             'data': payload,
-            'registration_ids': subscription_ids
+            'registration_ids': subscription_ids,
+            'priority': 'high',
+            'content_available': True,
+            # ios not supporting background push notification without notification data
+            'notification': {
+                'title': payload['subject'],
+                'body': "%s: %s" % (payload['author_name'], payload['body']),
+                'sound': 'default',
+                # tag : Identifier used to replace existing notifications in the notification drawer.
+                # If not specified, each request creates a new notification.
+                # If specified and a notification with the same tag is already being shown,
+                # the new notification replaces the existing one in the notification drawer.
+                'tag': "%s_%s" % (payload['model'], payload['res_id']),
+            },
         }
         res = {}
 
@@ -103,7 +116,7 @@ class MailChannel(models.Model):
                     _logger.warning("FCM Service Unavailable: retrying")
                     time.sleep(retry)
                     attempt = attempt + 1
-                    self._send_fcm_notification(subscription_ids, payload, dbname, uid, fcm_api_key, attempt=attempt)
+                    self._fcm_send_notification(subscription_ids, payload, dbname, uid, fcm_api_key, attempt=attempt)
                 else:
                     _logger.warning("FCM service not available try after some time")
         except ConnectionError:
