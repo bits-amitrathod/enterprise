@@ -93,3 +93,7 @@ class ProviderBpost(models.Model):
         if any(c.delivery_type != 'bpost' for c in self):
             raise UserError(_("You cannot compute a passphrase for non-bpost carriers."))
         return b64encode(("%s:%s" % (self.bpost_account_number, self.bpost_developer_password)).encode()).decode()
+
+    def _bpost_convert_weight(self, weight):
+        weight_uom_id = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
+        return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_kgm'), round=False)

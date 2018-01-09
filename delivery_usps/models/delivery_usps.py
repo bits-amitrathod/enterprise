@@ -5,6 +5,8 @@ from odoo.exceptions import UserError
 
 from .usps_request import USPSRequest
 
+import math
+
 
 class ProviderUSPS(models.Model):
     _inherit = 'delivery.carrier'
@@ -163,3 +165,10 @@ class ProviderUSPS(models.Model):
             picking.message_post(body=_(u'Shipment N° %s has been cancelled' % picking.carrier_tracking_ref))
             picking.write({'carrier_tracking_ref': '',
                            'carrier_price': 0.0})
+
+    def _usps_convert_weight(self, weight):
+        weight_uom_id = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
+        weight_in_pounds = weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_lb'))
+        pounds = int(math.floor(weight_in_pounds))
+        ounces = round((weight_in_pounds - pounds) * 16, 3)
+        return {'pound': pounds, 'ounce': ounces}

@@ -139,12 +139,12 @@ class ProviderFedex(models.Model):
         return srm.rate()
 
     def fedex_rate_shipment(self, order):
-        max_weight = _convert_weight(self.fedex_default_packaging_id.max_weight, self.fedex_weight_unit)
+        max_weight = self._fedex_convert_weight(self.fedex_default_packaging_id.max_weight, self.fedex_weight_unit)
         price = 0.0
 
         # Estimate weight of the sales order; will be definitely recomputed on the picking field "weight"
         est_weight_value = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line]) or 0.0
-        weight_value = _convert_weight(est_weight_value, self.fedex_weight_unit)
+        weight_value = self._fedex_convert_weight(est_weight_value, self.fedex_weight_unit)
 
         # Some users may want to ship very lightweight items; in order to give them a rating, we round the
         # converted weight of the shipping to the smallest value accepted by FedEx: 0.01 kg or lb.
@@ -229,7 +229,7 @@ class ProviderFedex(models.Model):
 
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id
 
-            net_weight = _convert_weight(picking.shipping_weight, self.fedex_weight_unit)
+            net_weight = self._fedex_convert_weight(picking.shipping_weight, self.fedex_weight_unit)
 
             # Commodities for customs declaration (international shipping)
             if self.fedex_service_type in ['INTERNATIONAL_ECONOMY', 'INTERNATIONAL_PRIORITY']:
@@ -244,7 +244,7 @@ class ProviderFedex(models.Model):
                     commodity_description = operation.product_id.name
                     commodity_number_of_piece = '1'
                     commodity_weight_units = self.fedex_weight_unit
-                    commodity_weight_value = _convert_weight(operation.product_id.weight * operation.qty_done, self.fedex_weight_unit)
+                    commodity_weight_value = self._fedex_convert_weight(operation.product_id.weight * operation.qty_done, self.fedex_weight_unit)
                     commodity_quantity = operation.qty_done
                     commodity_quantity_units = 'EA'
                     srm.commodities(_convert_curr_iso_fdx(commodity_currency.name), commodity_amount, commodity_number_of_piece, commodity_weight_units, commodity_weight_value, commodity_description, commodity_country_of_manufacture, commodity_quantity, commodity_quantity_units)
@@ -275,7 +275,7 @@ class ProviderFedex(models.Model):
 
                 for sequence, package in enumerate(picking.package_ids, start=1):
 
-                    package_weight = _convert_weight(package.shipping_weight, self.fedex_weight_unit)
+                    package_weight = self._fedex_convert_weight(package.shipping_weight, self.fedex_weight_unit)
                     srm.add_package(package_weight, sequence_number=sequence)
                     srm.set_master_package(net_weight, package_count, master_tracking_id=master_tracking_id)
                     request = srm.process_shipment()
@@ -409,14 +409,14 @@ class ProviderFedex(models.Model):
         return 'YOUR_PACKAGING'
 
 
-def _convert_weight(weight, unit='KG'):
-    ''' Convert picking weight (always expressed in KG) into the specified unit '''
-    if unit == 'KG':
-        return weight
-    elif unit == 'LB':
-        return weight / 0.45359237
-    else:
-        raise ValueError
+    def _fedex_convert_weight(self, weight, unit='KG'):
+        weight_uom_id = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
+        if unit == 'KG':
+            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_kgm'), round=False)
+        elif unit == 'LB':
+            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_lb'), round=False)
+        else:
+            raise ValueError
 
 def _convert_curr_fdx_iso(code):
     curr_match = {v: k for k, v in FEDEX_CURR_MATCH.items()}

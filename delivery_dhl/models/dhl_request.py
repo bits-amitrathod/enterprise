@@ -21,16 +21,10 @@ class DHLProvider():
         else:
             self.url = 'https://xmlpi-ea.dhl.com/XMLShippingServlet'
 
-    def _convert_weight(self, weight, weight_unit):
-        if weight_unit == "LB":
-            return round(weight * 2.20462, 3)
-        else:
-            return round(weight, 3)
-
     def _get_rate_param(self, order, carrier):
         res = {}
-        total_weight = self._convert_weight(sum([(line.product_id.weight * line.product_qty) for line in order.order_line]), carrier.dhl_package_weight_unit)
-        max_weight = self._convert_weight(carrier.dhl_default_packaging_id.max_weight, carrier.dhl_package_weight_unit)
+        total_weight = carrier._dhl_convert_weight(sum([(line.product_id.weight * line.product_qty) for line in order.order_line]), carrier.dhl_package_weight_unit)
+        max_weight = carrier._dhl_convert_weight(carrier.dhl_default_packaging_id.max_weight, carrier.dhl_package_weight_unit)
 
         res = {
             'carrier': carrier,
@@ -103,9 +97,9 @@ class DHLProvider():
             'recipient_streetLines': ('%s%s') % (picking.partner_id.street or '',
                                                  picking.partner_id.street2 or ''),
             'NumberOfPieces': len(picking.package_ids) or 1,
-            'weight_bulk': self._convert_weight(picking.weight_bulk, carrier.dhl_package_weight_unit),
+            'weight_bulk': carrier._dhl_convert_weight(picking.weight_bulk, carrier.dhl_package_weight_unit),
             'package_ids': picking.package_ids,
-            'total_weight': self._convert_weight(picking.shipping_weight, carrier.dhl_package_weight_unit),
+            'total_weight': carrier._dhl_convert_weight(picking.shipping_weight, carrier.dhl_package_weight_unit),
             'weight_unit': carrier.dhl_package_weight_unit[:1],
             'dimension_unit': carrier.dhl_package_dimension_unit[0],
             # For the rating API waits for CM and IN here for C and I...
@@ -133,7 +127,7 @@ class DHLProvider():
             'total_value': str(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines])),
             'is_dutiable': carrier.dhl_dutiable,
             'package_ids': picking.package_ids,
-            'total_weight': self._convert_weight(picking.weight_bulk, carrier.dhl_package_weight_unit),
+            'total_weight': carrier._dhl_convert_weight(picking.weight_bulk, carrier.dhl_package_weight_unit),
         }
 
     def send_shipping(self, picking, carrier):

@@ -79,7 +79,8 @@ class BpostRequest():
 
     def rate(self, order, carrier):
         weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0.0
-        return self._get_rate(carrier, weight, order.partner_shipping_id.country_id)
+        weight_in_kg = carrier._bpost_convert_weight(weight)
+        return self._get_rate(carrier, weight_in_kg, order.partner_shipping_id.country_id)
 
     def _get_rate(self, carrier, weight, country):
         '''@param carrier: a record of the delivery.carrier
@@ -133,7 +134,8 @@ class BpostRequest():
 
     def send_shipping(self, picking, carrier):
         # Get price of label
-        price = self._get_rate(carrier, picking.shipping_weight, picking.partner_id.country_id)
+        shipping_weight_in_kg = carrier._bpost_convert_weight(picking.shipping_weight)
+        price = self._get_rate(carrier, shipping_weight_in_kg, picking.partner_id.country_id)
 
         # Announce shipment to bpost
         reference_id = str(picking.name.replace("/", "", 2))[:50]
@@ -151,7 +153,7 @@ class BpostRequest():
                                'number': rn,
                                },
                   'is_domestic': carrier.bpost_delivery_nature == 'Domestic',
-                  'weight': str(_grams(picking.shipping_weight)),
+                  'weight': str(_grams(shipping_weight_in_kg)),
                   # domestic
                   'product': carrier.bpost_domestic_deliver_type,
                   'saturday': carrier.bpost_saturday,

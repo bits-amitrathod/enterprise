@@ -74,17 +74,19 @@ class USPSRequest():
         if order:
             if not order.order_line:
                 return _("Please provide at least one item to ship.")
-            tot_weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0
             for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital']):
                 return _('The estimated price cannot be computed because the weight of your product is missing.')
-            if tot_weight > 1.81437 and order.carrier_id.usps_service == 'First Class':     # max weight of FirstClass Service
+            tot_weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0
+            weight_uom_id = order.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
+            weight_in_pounds = weight_uom_id._compute_quantity(tot_weight, order.env.ref('product.product_uom_lb'))
+            if weight_in_pounds > 4 and order.carrier_id.usps_service == 'First Class':     # max weight of FirstClass Service
                 return _("Please choose another service (maximum weight of this service is 4 pounds)")
         return False
 
     def _usps_request_data(self, carrier, order):
         currency = carrier.env['res.currency'].search([('name', '=', 'USD')], limit=1)  # USPS Works in USDollars
         tot_weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0.0
-        total_weight = self._convert_weight(tot_weight)
+        total_weight = carrier._usps_convert_weight(tot_weight)
         total_value = sum([(line.price_unit * line.product_uom_qty) for line in order.order_line.filtered(lambda line: not line.is_delivery)]) or 0.0
 
         if order.currency_id.name == currency.name:
@@ -191,10 +193,10 @@ class USPSRequest():
             else:
                 quote_currency = picking.env['res.currency'].search([('name', '=', shipper_currency.name)], limit=1)
                 price = quote_currency.compute(line.product_id.lst_price * line.product_uom_qty, USD)
-            weight = self._convert_weight(line.product_id.weight * line.product_uom_qty)
+            weight = carrier._usps_convert_weight(line.product_id.weight * line.product_uom_qty)
             itemdetail.append(self._item_data(line, weight, price))
 
-        gross_weight = self._convert_weight(picking.shipping_weight)
+        gross_weight = carrier._usps_convert_weight(picking.shipping_weight)
         weight_in_ounces = picking.shipping_weight * 35.274
         shipping_detail = {
             'api': api,
@@ -320,13 +322,6 @@ class USPSRequest():
             else:
                 dict_response['ShipmentDeleted'] = True
         return dict_response
-
-    def _convert_weight(self, weight):
-        ''' weight always expressed in KG '''
-        weight_in_pounds = weight * 2.20462
-        pounds = int(math.floor(weight_in_pounds))
-        ounces = round((weight_in_pounds - pounds) * 16, 3)
-        return {'pound': pounds, 'ounce': ounces}
 
     def _api_url(self, delivery_nature, service):
         api = ''

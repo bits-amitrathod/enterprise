@@ -95,7 +95,7 @@ UPS_ERROR_MAP = {
 
 class Package():
     def __init__(self, carrier, weight, quant_pack=False, name=''):
-        self.weight = self._convert_weight(weight, carrier.ups_package_weight_unit)
+        self.weight = carrier._ups_convert_weight(weight, carrier.ups_package_weight_unit)
         self.weight_unit = carrier.ups_package_weight_unit
         self.name = name
         self.dimension_unit = carrier.ups_package_dimension_unit
@@ -105,14 +105,6 @@ class Package():
             self.dimension = {'length': carrier.ups_default_packaging_id.length, 'width': carrier.ups_default_packaging_id.width, 'height': carrier.ups_default_packaging_id.height}
         self.packaging_type = quant_pack and quant_pack.shipper_package_code or False
 
-    def _convert_weight(self, weight, unit='KGS'):
-        ''' Convert picking weight (always expressed in KGS) into the specified unit '''
-        if unit == 'KGS':
-            return weight
-        elif unit == 'LBS':
-            return weight / 0.45359237
-        else:
-            raise ValueError
 
 
 class LogPlugin(MessagePlugin):
