@@ -80,3 +80,26 @@ class TestContract(TestContractCommon):
         order.action_confirm()
         self.assertTrue(order.subscription_id, 'website_contract: subscription is not created at so confirmation')
         self.assertEqual(order.subscription_management, 'create', 'website_contract: subscription creation should set the so to "create"')
+        self.assertEqual(order.project_id.name,
+                         '%s - %s' % (order.partner_id.name, order.subscription_id.code),
+                         '''website_contract: analytic account created along subscription
+                         should be named as <Subscription code> - <Partner name>''')
+
+    def test_no_aa_renaming(self):
+        initial_aa_name = 'InitialName'
+        analytic = self.env['account.analytic.account'].create({
+            'partner_id': self.user_portal.partner_id.id,
+            'name': initial_aa_name
+        })
+        order = self.env['sale.order'].create({
+            'name': 'TestSOTemplate',
+            'partner_id': self.user_portal.partner_id.id,
+            'template_id': self.quote_template.id,
+            'project_id': analytic.id,
+        })
+
+        order.onchange_template_id()
+        order.action_confirm()
+        self.assertEqual(analytic.name,
+                         initial_aa_name,
+                         'website_contract: subscription creation should not rename an existing AA')
