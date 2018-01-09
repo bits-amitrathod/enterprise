@@ -154,7 +154,7 @@ class CrmPhonecall(models.Model):
             ('in_queue', '=', True),
             ('user_id', '=', self.env.user.id),
             ('date', '<=', fields.Datetime.now())],
-            order='sequence,date,id')
+            order='sequence,date,id', limit=100)
             .get_info()}
 
     @api.model
