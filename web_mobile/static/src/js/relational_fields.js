@@ -16,6 +16,19 @@ relational_fields.FieldMany2One.include({
     //--------------------------------------------------------------------------
 
     /**
+     * Don't bind autocomplete in the mobile app as it uses a different mechanism
+     * see @_invokeMobileDialog
+     *
+     * @private
+     * @override
+     */
+    _bindAutoComplete: function () {
+        if (mobile.methods.many2oneDialog) {
+            return;
+        }
+        return this._super.apply(this, arguments);
+    },
+    /**
      * @private
      */
     _invokeMobileDialog: function (term) {
@@ -43,17 +56,6 @@ relational_fields.FieldMany2One.include({
                 });
         });
     },
-    /**
-     * @override
-     * @private
-     */
-    _renderEdit: function () {
-        this._super.apply(this, arguments);
-        if (mobile.methods.many2oneDialog) {
-            this.$('input').prop('disabled', true);
-            this.$el.on('click', this._onMobileClick.bind(this));
-        }
-    },
 
     //--------------------------------------------------------------------------
     // Handlers
@@ -62,10 +64,14 @@ relational_fields.FieldMany2One.include({
     /**
      * We always open ManyToOne native dialog for select/update field value
      *
+     * @override
      * @private
      */
-    _onMobileClick: function () {
-        this._invokeMobileDialog('');
+    _onInputClick: function () {
+        if (mobile.methods.many2oneDialog) {
+            return this._invokeMobileDialog('');
+        }
+        this._super.apply(this, arguments);
     },
 });
 

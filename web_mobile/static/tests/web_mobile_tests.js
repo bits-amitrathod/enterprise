@@ -194,12 +194,15 @@ QUnit.module('web_mobile', {
 
         var $input = form.$('input');
 
-        assert.ok($input.prop('disabled'), "the many2one should be disabled in a mobile environment");
-        assert.strictEqual(mobileDialogCall, 0, "the many2one should be disabled in a mobile environment");
+        assert.strictEqual(mobileDialogCall, 0,
+            "the many2one mobile dialog shouldn't be called yet");
+        assert.notOk($input.hasClass('ui-autocomplete-input'),
+            "autocomplete should not be visible in a mobile environment");
 
         $input.click();
 
-        assert.strictEqual(mobileDialogCall, 1, "the many2one should call a special dialog in a mobile environment");
+        assert.strictEqual(mobileDialogCall, 1,
+            "the many2one should call a special dialog in a mobile environment");
 
         mobile.methods.addContact = __addContact;
         mobile.methods.many2oneDialog = __many2oneDialog;
