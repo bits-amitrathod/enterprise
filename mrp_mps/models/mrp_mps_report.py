@@ -63,7 +63,7 @@ class MrpMpsReport(models.TransientModel):
 
         products_to_calculate = {product: []}
         for inner_data in data:
-            products_to_calculate[product].append({'lead': 0.0, 
+            products_to_calculate[product].append({'lead': 0.0,
                                            'qty': inner_data['to_supply'],
                                            'date': datetime.datetime.strptime(inner_data['date'], '%Y-%m-%d'),
                                            })
@@ -77,8 +77,8 @@ class MrpMpsReport(models.TransientModel):
             product_qty = bom.product_uom_id._compute_quantity(bom.product_qty, product.uom_id)
             explored_boms, explored_lines = bom.explode(product, 1.0 / product_qty)
             for bom_line, line_data in explored_lines:
-                
-                # If the product is in the report, add it to the objects of the report immediately, 
+
+                # If the product is in the report, add it to the objects of the report immediately,
                 # else search further and add to products_to_calculate if you find something
                 if bom_line.product_id.mps_active:
                     for supply_line in product_lines:
@@ -126,7 +126,7 @@ class MrpMpsReport(models.TransientModel):
         local_tz = pytz.timezone(self.env.context.get('tz') or 'UTC')
         indirect = self.get_indirect(product)[product.id]
         display = _('To Receive / To Supply / Produce')
-        buy_type = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)
+        buy_type = self.env.ref('purchase_stock.route_warehouse0_buy', raise_if_not_found=False)
         mo_type = self.env.ref('mrp.route_warehouse0_manufacture', raise_if_not_found=False)
         lead_time = 0
         if buy_type and buy_type.id in product.route_ids.ids:

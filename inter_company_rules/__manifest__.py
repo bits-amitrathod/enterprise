@@ -11,7 +11,7 @@
 ''',
     'depends': [
         'sale_management',
-        'purchase',
+        'purchase_stock',
         'sale_stock',
         'sale_order_dates'
     ],
