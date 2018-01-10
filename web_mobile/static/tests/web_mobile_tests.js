@@ -163,8 +163,8 @@ QUnit.module('web_mobile', {
         form.destroy();
     });
 
-    QUnit.test("many2one in a mobile environment", function (assert) {
-        assert.expect(3);
+    QUnit.test("many2one in a mobile environment [REQUIRE FOCUS]", function (assert) {
+        assert.expect(4);
 
         var mobileDialogCall = 0;
 
@@ -189,10 +189,14 @@ QUnit.module('web_mobile', {
             data: this.data,
             model: 'partner',
             res_id: 2,
+            config: {device: {isMobile: true}},
             viewOptions: {mode: 'edit'},
         });
 
         var $input = form.$('input');
+
+        assert.notStrictEqual($input[0], document.activeElement,
+            "autofocus should be disabled");
 
         assert.strictEqual(mobileDialogCall, 0,
             "the many2one mobile dialog shouldn't be called yet");
