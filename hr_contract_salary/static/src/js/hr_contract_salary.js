@@ -417,6 +417,7 @@ var SalaryPackageWidget = Widget.extend({
     toggle_personal_information: function() {
         $("button[name='toggle_personal_information']").toggleClass('hidden');
         $("div[name='personal_info']").toggle(500);
+        $("div[name='personal_info_withholding_taxes']").toggle(500);
     }
 
 });

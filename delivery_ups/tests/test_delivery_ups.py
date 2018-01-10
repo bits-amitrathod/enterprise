@@ -124,7 +124,7 @@ class TestDeliveryUPS(TransactionCase):
         picking._put_in_pack()
         self.assertTrue(all([po.result_package_id is not False for po in picking.move_line_ids]), "Some products have not been put in packages")
         for p in picking.package_ids:
-            p.shipping_weight = p.weight  # we mock choose.delivery.package wizard
+            p.shipping_weight = p.with_context({'picking_id': picking.id}).weight  # we mock choose.delivery.package wizard
         self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
         picking.action_done()
