@@ -163,8 +163,8 @@ QUnit.module('web_mobile', {
         form.destroy();
     });
 
-    QUnit.test("many2one in a mobile environment", function (assert) {
-        assert.expect(3);
+    QUnit.test("many2one in a mobile environment [REQUIRE FOCUS]", function (assert) {
+        assert.expect(4);
 
         var mobileDialogCall = 0;
 
@@ -189,17 +189,24 @@ QUnit.module('web_mobile', {
             data: this.data,
             model: 'partner',
             res_id: 2,
+            config: {device: {isMobile: true}},
             viewOptions: {mode: 'edit'},
         });
 
         var $input = form.$('input');
 
-        assert.ok($input.prop('disabled'), "the many2one should be disabled in a mobile environment");
-        assert.strictEqual(mobileDialogCall, 0, "the many2one should be disabled in a mobile environment");
+        assert.notStrictEqual($input[0], document.activeElement,
+            "autofocus should be disabled");
+
+        assert.strictEqual(mobileDialogCall, 0,
+            "the many2one mobile dialog shouldn't be called yet");
+        assert.notOk($input.hasClass('ui-autocomplete-input'),
+            "autocomplete should not be visible in a mobile environment");
 
         $input.click();
 
-        assert.strictEqual(mobileDialogCall, 1, "the many2one should call a special dialog in a mobile environment");
+        assert.strictEqual(mobileDialogCall, 1,
+            "the many2one should call a special dialog in a mobile environment");
 
         mobile.methods.addContact = __addContact;
         mobile.methods.many2oneDialog = __many2oneDialog;

@@ -180,7 +180,7 @@ class TestDeliveryFedex(TransactionCase):
             picking._put_in_pack()
             self.assertTrue(all([po.result_package_id is not False for po in picking.move_line_ids]), "Some products have not been put in packages")
             for package in picking.move_line_ids.mapped('result_package_id'):
-                package.shipping_weight = package.weight  # we mock choose.delivery.package wizard
+                package.shipping_weight = package.with_context({'picking_id': picking.id}).weight  # we mock choose.delivery.package wizard
             self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
             picking.action_done()

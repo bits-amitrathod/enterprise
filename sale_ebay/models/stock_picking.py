@@ -8,8 +8,8 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.one
-    def do_transfer(self):
-        result = super(StockPicking, self).do_transfer()
+    def action_done(self):
+        result = super(StockPicking, self).action_done()
         self._ebay_update_carrier(transfered=True)
         return result
 
