@@ -177,7 +177,7 @@ var Menu = Widget.extend({
             this.$extraItemsToggle.find("> ul > *").appendTo(this.$section_placeholder);
             this.$extraItemsToggle.remove();
         }
-        if (config.device.size_class < config.device.SIZES.SM) {
+        if (config.device.isMobile) {
             return;
         }
 

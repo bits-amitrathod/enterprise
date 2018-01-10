@@ -19,7 +19,7 @@ ControlPanel.include({
     _update_search_view: function(searchview, is_hidden) {
         this._super.apply(this, arguments);
 
-        if (config.device.size_class <= config.device.SIZES.XS) {
+        if (config.device.isMobile) {
             this.$el.addClass('o_breadcrumb_full');
         }
 
@@ -33,7 +33,7 @@ ControlPanel.include({
                     self.nodes.$searchview_buttons.toggle(self.searchview_displayed);
                 });
         }
-        if(searchview && !is_hidden && config.device.size_class <= config.device.SIZES.XS) {
+        if(searchview && !is_hidden && config.device.isMobile) {
             this.$enable_searchview.insertAfter(this.nodes.$searchview);
             this.searchview_displayed = false;
             this.nodes.$searchview_buttons.hide();

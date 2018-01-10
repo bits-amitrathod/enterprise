@@ -1,6 +1,7 @@
 odoo.define('voip.tests', function (require) {
 "use strict";
 
+var config = require('web.config');
 var FormView = require('web.FormView');
 var ListView = require('web.ListView');
 var testUtils = require('web.test_utils');
@@ -45,8 +46,7 @@ QUnit.module('voip', {
             res_id: 1,
             config: {
                 device: {
-                    size_class: 1, // Screen SM
-                    SIZES: { XS: 0, SM: 1, MD: 2, LG: 3 },
+                    size_class: config.device.SIZES.SM,
                 }
             },
         });
@@ -90,8 +90,7 @@ QUnit.module('voip', {
             arch: '<tree editable="bottom"><field name="foo"  widget="phone"/></tree>',
             config: {
                 device: {
-                    size_class: 1, // Screen SM
-                    SIZES: { XS: 0, SM: 1, MD: 2, LG: 3 },
+                    size_class: config.device.SIZES.SM,
                 }
             },
         });
