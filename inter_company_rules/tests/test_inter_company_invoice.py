@@ -26,6 +26,7 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
             'code_digits': 6,
             'purchase_tax_id': False,
             'bank_account_code_prefix': 'COMP_A',
+            'cash_account_code_prefix': 'TANGO',
             'sale_tax_id': False
         }
 
