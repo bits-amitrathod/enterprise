@@ -158,8 +158,8 @@ class VoipPhonecall(models.Model):
         partner = self.env['res.partner'].browse(partner_id)
         phonecall = self.create({
             'name': partner.name,
-            'phone': partner.phone,
-            'mobile': partner.mobile,
+            'phone': partner.sanitized_phone,
+            'mobile': partner.sanitized_mobile,
             'partner_id': partner_id,
         })
         phonecall.init_call()
