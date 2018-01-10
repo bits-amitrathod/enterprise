@@ -82,7 +82,6 @@ class ResPartner(models.Model):
         ctx = self.env.context.copy()
         ctx.update({
             'model': 'account.followup.report',
-            'lang': self.lang,
         })
         return {
                 'name': _("Overdue Payments for %s") % self.display_name,
