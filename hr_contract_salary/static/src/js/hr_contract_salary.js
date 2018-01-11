@@ -107,7 +107,8 @@ var SalaryPackageWidget = Widget.extend({
             'certificate_name': $("input[name='certificate_name']").val(),
             'certificate_school': $("input[name='certificate_school']").val(),
             'bank_account': $("input[name='bank_account']").val(),
-            'emergency_info': $("input[name='emergency_info']").val(),
+            'emergency_person': $("input[name='emergency_person']").val(),
+            'emergency_phone_number': $("input[name='emergency_phone_number']").val(),
         };
     },
 

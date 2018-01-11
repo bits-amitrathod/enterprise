@@ -555,7 +555,7 @@
                                     </div>
 
                                     <!-- Birthday + Disabled -->
-                                    <div class="row">
+                                    <div class="row" name="birthdate">
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Birthdate</label>
@@ -586,7 +586,7 @@
                                     </div>
 
                                     <!-- Address -->
-                                    <div class="row">
+                                    <div class="row" name="address_info">
                                         <div class="col-sm-12">
                                             <h2>Address</h2>
                                         </div>
@@ -747,7 +747,7 @@
                                                 <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
                                             </label>
                                         </div>
-                                        <div class="form-group mb0">
+                                        <div class="form-group mb0" name="spouse_fiscal_status">
                                             <label class="control-label">Tax status for spouse</label>
                                             <select name="spouse_fiscal_status" class="form-control advantage_input">
                                                 <option value="without income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
