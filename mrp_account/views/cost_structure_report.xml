@@ -30,7 +30,7 @@
                             <tbody>
                                 <tr t-foreach="line['raw_material_moves']" t-as="m">
                                     <td>
-                                        <span t-att-res-id="m['bom_line_id']" res-model="mrp.bom.line" view-type="form" t-esc="m['product_id'].name"/>
+                                        <span t-att-res-id="m['bom_line_id']" res-model="mrp.bom.line" view-type="form" t-esc="m['product_id'].display_name"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="m['qty']" t-esc-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/> <span t-esc="m['product_id'].uom_id.name"/>
@@ -113,7 +113,7 @@
                                 <tbody>
                                     <tr t-foreach="line['scraps']" t-as="scrap">
                                         <td>
-                                            <span t-att-res-id="scrap.id" res-model="stock.move" view-type="form" t-esc="scrap.product_id.name"/>
+                                            <span t-att-res-id="scrap.id" res-model="stock.move" view-type="form" t-esc="scrap.product_id.display_name"/>
                                         </td>
                                         <td class="text-right">
                                             <span><t t-esc="scrap.product_uom_qty"/> <t t-esc="scrap.product_uom.name"/></span>
