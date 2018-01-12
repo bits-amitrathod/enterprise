@@ -76,13 +76,12 @@ class TestBatchDeposit(AccountingTestCase):
             'statement_id': bank_statement.id,
         })
         # Simulate the process of reconciling the statement line using the batch deposit
-        deposits_reconciliation_data = bank_statement.get_batch_deposits_data()
+        deposits_reconciliation_data = self.env['account.reconciliation.widget'].get_batch_deposits_data(bank_statement.ids)
         self.assertTrue(len(deposits_reconciliation_data), 1)
         self.assertTrue(deposits_reconciliation_data[0]['id'], deposit.id)
-        deposit_reconciliation_lines = bank_statement_line.get_move_lines_for_reconciliation_widget_by_batch_deposit_id(deposit.id)
+        deposit_reconciliation_lines = self.env['account.reconciliation.widget'].get_move_lines_by_batch_deposit(bank_statement_line.id, deposit.id)
         self.assertTrue(len(deposit_reconciliation_lines), 3)
         move_line_ids = [line['id'] for line in deposit_reconciliation_lines]
-        move_line_recs = self.env['account.move.line'].browse(move_line_ids)
-        bank_statement_line.process_reconciliation(payment_aml_rec=move_line_recs)
+        self.env['account.reconciliation.widget'].process_bank_statement_line(bank_statement_line.ids, [{"payment_aml_ids": move_line_ids}])
         self.assertTrue(all(payment.state == 'reconciled' for payment in self.payments))
         self.assertTrue(deposit.state == 'reconciled')

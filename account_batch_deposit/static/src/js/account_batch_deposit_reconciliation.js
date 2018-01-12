@@ -56,8 +56,8 @@ var Model = {
      */
     selectDeposit: function(handle, depositId) {
         return this._rpc({
-                model: 'account.bank.statement.line',
-                method: 'get_move_lines_for_reconciliation_widget_by_batch_deposit_id',
+                model: 'account.reconciliation.widget',
+                method: 'get_move_lines_by_batch_deposit',
                 args: [this.getLine(handle).id, depositId],
             })
             .then(this._addSelectedDepositLines.bind(this, handle, depositId));
@@ -165,7 +165,7 @@ var Model = {
     _updateBatchDeposits: function(statement_ids) {
         var self = this;
         return this._rpc({
-                model: 'account.bank.statement',
+                model: 'account.reconciliation.widget',
                 method: 'get_batch_deposits_data',
                 args: [statement_ids],
             })

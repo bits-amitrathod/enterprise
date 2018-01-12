@@ -3,11 +3,11 @@ odoo.define('account_batch_deposit.reconciliation_tests.data', function (require
 
 var data = require('account.reconciliation_tests.data');
 
-data.params.data["account.bank.statement"].get_batch_deposits_data = function (args) {
+data.params.data["account.reconciliation.widget"].get_batch_deposits_data = function (args) {
     return $.when();
 };
 
-data.params.data["account.bank.statement.line"].get_move_lines_for_reconciliation_widget_by_batch_deposit_id = function (args) {
+data.params.data["account.reconciliation.widget"].get_move_lines_by_batch_deposit = function (args) {
     return $.when(data.params.mv_lines['[5,"b",0,6]']);
 };
 
