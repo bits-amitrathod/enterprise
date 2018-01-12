@@ -257,7 +257,7 @@ class SaleSubscription(osv.osv):
         return self._recurring_create_invoice(cr, uid, [], automatic=True, context=context)
 
     def _recurring_create_invoice(self, cr, uid, ids, automatic=False, context=None):
-        auto_commit = self.env.context.get('auto_commit', True)
+        auto_commit = context.get('auto_commit', True)
         context = context or {}
         invoice_ids = []
         current_date = time.strftime('%Y-%m-%d')
