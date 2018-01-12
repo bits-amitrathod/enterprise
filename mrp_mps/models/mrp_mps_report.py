@@ -73,8 +73,9 @@ class MrpMpsReport(models.TransientModel):
             bom = BoM._bom_find(product=product) #TODO: how is it possible not to find a BoM here?
             if not bom:
                 break
-            # TODO: convert product UoM / Take into account security days on company level
-            explored_boms, explored_lines = bom.explode(product, 1.0 / bom.product_qty)
+            # TODO: Take into account security days on company level
+            product_qty = bom.product_uom_id._compute_quantity(bom.product_qty, product.uom_id)
+            explored_boms, explored_lines = bom.explode(product, 1.0 / product_qty)
             for bom_line, line_data in explored_lines:
                 
                 # If the product is in the report, add it to the objects of the report immediately, 
@@ -82,10 +83,11 @@ class MrpMpsReport(models.TransientModel):
                 if bom_line.product_id.mps_active:
                     for supply_line in product_lines:
                         lead = product.produce_delay + supply_line['lead']
+                        qty = bom_line.product_uom_id._compute_quantity(line_data['qty'], bom_line.product_id.uom_id)
                         self.env['sale.forecast.indirect'].create({
                             'product_origin_id': original_product.id,
                             'product_id': bom_line.product_id.id,
-                            'quantity': line_data['qty'] * supply_line['qty'],
+                            'quantity': qty * supply_line['qty'],
                             'date': supply_line['date'] - relativedelta.relativedelta(days=product.produce_delay)
                             #The date the product is needed (don't calculate its own lead time)
                         })
@@ -95,11 +97,12 @@ class MrpMpsReport(models.TransientModel):
                     bom = BoM._bom_find(product=bom_line.product_id) #If there is a child BoM, add them to the dictionary
                     if bom:
                         products_to_calculate.setdefault(bom_line.product_id, [])
+                        qty = bom_line.product_uom_id._compute_quantity(line_data['qty'], bom_line.product_id.uom_id)
                         for supply_line in product_lines:
                             lead = supply_line['lead'] + bom_line.product_id.produce_delay
                             products_to_calculate[bom_line.product_id].append({
                                   'lead': lead,
-                                  'qty': line_data['qty'] * supply_line['qty'],
+                                  'qty': qty * supply_line['qty'],
                                   'date': supply_line['date'] - relativedelta.relativedelta(days=product.produce_delay),
                                 })
         return True

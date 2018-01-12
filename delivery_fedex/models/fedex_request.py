@@ -81,7 +81,7 @@ class FedexRequest():
         # TODO fedex documentation asks for TIN number, but it seems to work without
 
         Address = self.client.factory.create('Address')
-        Address.StreetLines = ('%s %s') % (warehouse_partner.street or '', warehouse_partner.street2 or '')
+        Address.StreetLines = [warehouse_partner.street or '', warehouse_partner.street2 or '']
         Address.City = warehouse_partner.city or ''
         if warehouse_partner.country_id.code in STATECODE_REQUIRED_COUNTRIES:
             Address.StateOrProvinceCode = warehouse_partner.state_id.code or ''
@@ -100,7 +100,7 @@ class FedexRequest():
         Contact.PhoneNumber = recipient_partner.phone or ''
 
         Address = self.client.factory.create('Address')
-        Address.StreetLines = ('%s %s') % (recipient_partner.street or '', recipient_partner.street2 or '')
+        Address.StreetLines = [recipient_partner.street or '', recipient_partner.street2 or '']
         Address.City = recipient_partner.city or ''
         if recipient_partner.country_id.code in STATECODE_REQUIRED_COUNTRIES:
             Address.StateOrProvinceCode = recipient_partner.state_id.code or ''

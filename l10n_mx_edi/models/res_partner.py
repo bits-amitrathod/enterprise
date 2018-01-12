@@ -28,7 +28,6 @@ class ResPartner(models.Model):
 
         :return: XEXX010101000, XAXX010101000 or the customer vat depending of the country
         """
-        self.ensure_one()
         if self.country_id and self.country_id != self.env.ref('base.mx'):
             # Following Question 5 in legal Document.
             return 'XEXX010101000'

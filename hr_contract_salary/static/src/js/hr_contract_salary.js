@@ -103,11 +103,14 @@ var SalaryPackageWidget = Widget.extend({
             'phone': $("input[name='phone']").val(),
             'national_number': $("input[name='national_number']").val(),
             'nationality': parseInt($("select[name='nationality']").val()),
-            'certificate': $("input[name='certificate']").val(),
+            'certificate': _.find($("input[name='certificate']"), function(certificate) {
+                return certificate.checked;
+            }).value,
             'certificate_name': $("input[name='certificate_name']").val(),
             'certificate_school': $("input[name='certificate_school']").val(),
             'bank_account': $("input[name='bank_account']").val(),
-            'emergency_info': $("input[name='emergency_info']").val(),
+            'emergency_person': $("input[name='emergency_person']").val(),
+            'emergency_phone_number': $("input[name='emergency_phone_number']").val(),
         };
     },
 
