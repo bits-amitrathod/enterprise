@@ -119,7 +119,10 @@ class report_account_followup_report(models.AbstractModel):
             }
 
     def get_default_summary(self, options):
-        return self.env.user.company_id.overdue_msg or self.env['res.company'].default_get(['overdue_msg'])['overdue_msg']
+        partner = self.env['res.partner'].browse(options.get('partner_id'))
+        lang = partner.lang or self.env.user.lang or 'en_US'
+        return self.env.user.company_id.with_context(lang=lang).overdue_msg or\
+            self.env['res.company'].with_context(lang=lang).default_get(['overdue_msg'])['overdue_msg']
 
     def get_report_manager(self, options):
         domain = [('report_name', '=', 'account.followup.report'), ('partner_id', '=', options.get('partner_id'))]
@@ -144,6 +147,7 @@ class report_account_followup_report(models.AbstractModel):
             additional_context = {}
         partner = self.env['res.partner'].browse(options['partner_id'])
         additional_context['partner'] = partner
+        additional_context['lang'] = partner.lang or self.env.user.lang or 'en_US'
         additional_context['invoice_address_id'] = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice'])
         additional_context['today'] = fields.date.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
         if self.env.context.get('followup_line_id'):
@@ -156,7 +160,9 @@ class report_account_followup_report(models.AbstractModel):
         return super(report_account_followup_report, self).get_html(options, line_id=line_id, additional_context=additional_context)
 
     def get_pdf(self, options, minimal_layout=True):
-        return super(report_account_followup_report, self.with_context(keep_summary=True)).get_pdf(options, minimal_layout=False)
+        partner = self.env['res.partner'].browse(options.get('partner_id'))
+        lang = partner.lang or self.env.user.lang or 'en_US'
+        return super(report_account_followup_report, self.with_context(keep_summary=True, lang=lang)).get_pdf(options, minimal_layout=False)
 
     def get_report_name(self):
         return _('Followup Report')
