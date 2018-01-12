@@ -379,7 +379,7 @@ class HelpdeskTicket(models.Model):
             self.message_subscribe(partner_ids)
         return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)
 
-    def _message_post_after_hook(self, message, values):
+    def _message_post_after_hook(self, message, values, notif_layout):
         if self.partner_email and not self.partner_id:
             # we consider that posting a message with a specified recipient (not a follower, a specific one)
             # on a document without customer means that it was created through the chatter using
@@ -390,7 +390,7 @@ class HelpdeskTicket(models.Model):
                     ('partner_id', '=', False),
                     ('partner_email', '=', new_partner.email),
                     ('stage_id.fold', '=', False)]).write({'partner_id': new_partner.id})
-        return super(HelpdeskTicket, self)._message_post_after_hook(message, values)
+        return super(HelpdeskTicket, self)._message_post_after_hook(message, values, notif_layout)
 
     @api.multi
     def _track_template(self, tracking):
@@ -438,13 +438,13 @@ class HelpdeskTicket(models.Model):
         return [new_group] + groups
 
     @api.model
-    def message_get_reply_to(self, res_ids, default=None):
+    def _notify_get_reply_to(self, res_ids, default=None):
         res = {}
         for res_id in res_ids:
             if self.browse(res_id).team_id.alias_name and self.browse(res_id).team_id.alias_domain:
                 res[res_id] = self.browse(res_id).team_id.alias_name + '@' + self.browse(res_id).team_id.alias_domain
             else:
-                res[res_id] = super(HelpdeskTicket, self).message_get_reply_to([res_id])[res_id]
+                res[res_id] = super(HelpdeskTicket, self)._notify_get_reply_to([res_id])[res_id]
         return res
 
     @api.multi
