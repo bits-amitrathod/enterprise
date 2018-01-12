@@ -657,13 +657,13 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Field of Study</label>
-                                                <input type="text" name="certificate_name" class="form-control" placeholder="Computer Science" t-att-value="contract.employee_id.study_field"/>
+                                                <input type="text" name="certificate_name" class="form-control" placeholder="Computer Science" t-att-value="contract.employee_id.study_field" required="required"/>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">School</label>
-                                                <input type="text" name="certificate_school" class="form-control" t-att-value="contract.employee_id.study_school"/>
+                                                <input type="text" name="certificate_school" class="form-control" t-att-value="contract.employee_id.study_school" required="required"/>
                                             </div>
                                         </div>
                                     </div>
@@ -692,7 +692,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Bank account</label>
-                                                <input type="text" name="bank_account" class="form-control" placeholder="BE10 3631 0709 4104" t-att-value="contract.employee_id.bank_account_id.acc_number"/>
+                                                <input type="text" name="bank_account" class="form-control" placeholder="BE10 3631 0709 4104" t-att-value="contract.employee_id.bank_account_id.acc_number" required="required"/>
                                             </div>
                                         </div>
                                     </div>
@@ -705,13 +705,13 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Person to call</label>
-                                                <input type="text" name="emergency_person" class="form-control" placeholder="Batman" t-att-value="contract.employee_id.emergency_contact"/>
+                                                <input type="text" name="emergency_person" class="form-control" placeholder="Batman" t-att-value="contract.employee_id.emergency_contact" required="required"/>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Phone number</label>
-                                                <input type="text" name="emergency_phone_number" class="form-control" placeholder="+32 2 290 34 90" t-att-value="contract.employee_id.emergency_phone"/>
+                                                <input type="text" name="emergency_phone_number" class="form-control" placeholder="+32 2 290 34 90" t-att-value="contract.employee_id.emergency_phone" required="required"/>
                                             </div>
                                         </div>
                                     </div>
