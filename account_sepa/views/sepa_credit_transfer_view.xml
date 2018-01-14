@@ -11,8 +11,12 @@
                         <p class="oe_grey" colspan="4">
                            Click on the file to save it somewhere on your computer. Then upload that file on your bank's homebanking website to order the credit transfer.
                         </p>
-                        <field name="file" filename="filename"/>
-                        <field name="filename" invisible="True"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="file" filename="filename"/>
+                            <field name="filename" invisible="True"/>
+                        </group>
                     </group>
                     <group>
                       <div class="alert alert-warning" attrs="{'invisible': [('warning_message', '=', False)]}">
