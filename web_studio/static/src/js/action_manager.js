@@ -22,6 +22,7 @@ ActionManager.include({
     init: function () {
         this._super.apply(this, arguments);
         this.studioControllerIndex = undefined;
+        bus.on('edition_mode_entered', this, this._onEditionModeEntered);
         bus.on('studio_toggled', this, this._onStudioToggled);
     },
 
@@ -68,6 +69,7 @@ ActionManager.include({
         return this.doAction(action.id, {
             additional_context: action.context,
             index: index,
+            viewType: this.studioViewType,
         });
     },
 
@@ -172,6 +174,15 @@ ActionManager.include({
     // Handlers
     //--------------------------------------------------------------------------
 
+    /*
+     * @private
+     * @param {string} viewType
+     */
+    _onEditionModeEntered: function (viewType) {
+        if (viewType !== 'search') {
+            this.studioViewType = viewType;
+        }
+    },
     /**
      * Overrides to let the event bubble if the push_state comes from Studio.
      *

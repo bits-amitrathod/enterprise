@@ -164,6 +164,48 @@ QUnit.module('Studio Navigation', {
         actionManager.destroy();
     });
 
+    QUnit.test('switch view and close Studio', function (assert) {
+        assert.expect(3);
+
+        var actionManager = createActionManager({
+            actions: this.actions,
+            archs: this.archs,
+            data: this.data,
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_studio_view_arch') {
+                    return $.when();
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        actionManager.doAction(1);  // open a act_window_action
+
+        var action = actionManager.getCurrentAction();
+        actionManager.doAction('action_web_studio_main', {
+            action: action,
+            studio_clear_breadcrumbs: true,
+        });
+        bus.trigger('studio_toggled', 'main');
+
+        assert.strictEqual(actionManager.$('.o_web_studio_client_action .o_web_studio_kanban_view_editor').length, 1,
+            "the kanban view should be opened");
+        actionManager.doAction('action_web_studio_main', {
+            action: action,
+            pushState: false,
+            replace_last_action: true,
+            viewType: 'list',
+        });
+        actionManager.restoreStudioAction();  // simulate leaving Studio
+
+        assert.strictEqual(actionManager.$('.o_web_studio_client_action').length, 0,
+            "Studio should be closed");
+        assert.strictEqual(actionManager.$('.o_list_view').length, 1,
+            "the list view should be opened");
+
+        actionManager.destroy();
+    });
+
     QUnit.test('navigation in Studio with act_window', function (assert) {
         assert.expect(25);
 
