@@ -378,7 +378,7 @@ class HelpdeskStage(models.Model):
         if team_id:
             return [(4, team_id, 0)]
 
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, translate=True)
     sequence = fields.Integer('Sequence', default=10)
     is_close = fields.Boolean(
         'Closing Kanban Stage',
