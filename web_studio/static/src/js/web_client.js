@@ -1,36 +1,30 @@
 odoo.define('web_studio.WebClient', function (require) {
 "use strict";
 
-var ActionManager = require('web.ActionManager');
 var core = require('web.core');
 var session = require('web.session');
 var WebClient = require('web.WebClient');
 
-var SystrayItem = require('web_studio.SystrayItem');
 var bus = require('web_studio.bus');
+var SystrayItem = require('web_studio.SystrayItem');
 
 var _t = core._t;
 
 WebClient.include({
     custom_events: _.extend({}, WebClient.prototype.custom_events, {
-        'click_studio_mode': '_onStudioMode',
         'new_app_created': '_onNewAppCreated',
         'reload_menu_data': '_onReloadMenuData',
+        'studio_icon_clicked': '_onStudioIconClicked',
     }),
+
     /**
-     * @constructor
+     * @override
      */
     init: function () {
         this._super.apply(this, arguments);
-        this.studio_mode = false;
-        this.studio_info_def = null;
-        this.studio_action_manager = null;
 
-        bus.on('studio_toggled', this, function (mode) {
-            this.studio_mode = mode;
-            this._updateContext(!!mode);
-            this.$el.toggleClass('o_in_studio', !!mode);
-        });
+        // can either be 'app_creator' or 'main' while in Studio
+        this.studioMode = undefined;
     },
 
     //--------------------------------------------------------------------------
@@ -38,119 +32,59 @@ WebClient.include({
     //--------------------------------------------------------------------------
 
     /**
-     * @returns {Deferred}
-     */
-    closeStudio: function () {
-        this.edited_action = undefined;
-        this.studio_mode = false;
-
-        var action = this.action_manager.get_inner_action();
-        var action_desc = action && action.action_descr || null;
-        var def = $.Deferred();
-        if (this.home_menu_displayed) {
-            this.action_manager.clear_action_stack();
-            this.menu.toggle_mode(true, false);
-            def.resolve();
-        } else if (action_desc.tag === 'action_web_studio_app_creator') {
-            // we are not in the home_menu but we want to display it
-            this.action_manager.clear_action_stack();
-            this.toggle_home_menu(true);
-            def.resolve();
-        } else {
-            def = this.action_manager.restoreActionStack(this.studio_action_manager.action_stack);
-        }
-        return def;
-    },
-    /**
-     * @override
-     */
-    do_action: function (action, options) {
-        if (this.studio_mode === 'main' && action.target === 'new') {
-            // Wizards in the app creator can be opened (ex: Import wizard)
-            // TODO: what if we modify target = 'curent' to modify it?
-            this.do_warn("Studio", _t("Wizards are not editable with Studio."));
-            return $.Deferred().reject();
-        }
-
-        // The option `useStudioAM` can be used to tell the webclient that the
-        // action is part of the navigation process in Studio, so it shouldn't
-        // be threated as a normal action ; in this case, a *small hack*
-        // consists of using another action manager that makes the `do_action`
-        // and using this resulted action in Studio.
-        // @see on_menu_clicked, _openNavigatedActionInStudio
-        if (this.studio_mode) {
-            if (options.useStudioAM) {
-                // we are navigating inside Studio so the studio action manager
-                // is used
-                return this.studio_action_manager.do_action.apply(this, arguments);
-            } else {
-                // we are doing action inside Studio but as the currently edited
-                // action in Studio does not change, the state cannot change
-                options.keep_state = true;
-            }
-        }
-        if (this.studio_mode === 'main') {
-            // these are options used by Studio main action
-            options = options || {};
-            options.view_env = this.edited_action.widget.env;
-            options.chatter_allowed = this.studio_chatter_allowed;
-        }
-        return this._super.apply(this, arguments);
-    },
-    /**
-     * @override
-     */
-    do_push_state: function (state) {
-        if (this.studio_mode && typeof(state.action) === 'string' && state.action.indexOf('action_web_studio_') !== -1) {
-            return; // keep edited action in url when we enter in studio to allow restoring it on refresh
-        }
-        return this._super.apply(this, arguments);
-    },
-    /**
      * @override
      */
     current_action_updated: function (action) {
         this._super.apply(this, arguments);
 
-        // the method is overwritten by the debug manager to update to null if the home menu is
-        // displayed, but we don't need this in Studio ; we only need to update the action if there is one.
-        if (action && !action.action_descr.keep_state && action.action_descr.tag !== 'action_web_studio_main') {
+        // in Studio, the systray item is replaced by a "Close" button so no
+        // need to update it
+        if (!this.studioMode) {
             this._updateStudioSystray(this._isStudioEditable(action));
-            this.edited_action = action;
         }
     },
     /**
-     * @param {String} mode
-     * @param {Object} options
+     * @override
+     */
+    do_action: function (action, options) {
+        if (this.studioMode === 'main' && action.target === 'new') {
+            // Wizards in the app creator can be opened (ex: Import wizard)
+            // TODO: what if we modify target = 'curent' to modify it?
+            this.do_warn("Studio", _t("Wizards are not editable with Studio."));
+            return $.Deferred().reject();
+        }
+        if (this.studioMode && !action.studioNavigation) {
+            // we are doing action inside Studio but as the currently edited
+            // action in Studio does not change, the state cannot change
+            options = options || {};
+            options.pushState = false;
+        }
+        return this._super(action, options);
+    },
+    /**
+     * @override
+     */
+    on_app_clicked: function () {
+        var self = this;
+        if (this.studioMode) {
+            // used to avoid a flickering issue (see @toggle_home_menu)
+            this.openingMenu = true;
+        }
+        return this._super.apply(this, arguments).then(function () {
+            // this is normally done by _on_app_clicked_done but should also be
+            // done if the deferred is rejected
+            self.openingMenu = false;
+        });
+    },
+    /**
+     * Opens the App Creator action.
+     *
      * @returns {Deferred}
      */
-    openStudio: function (mode, options) {
-        options = options || {};
+    openAppCreator: function () {
         var self = this;
-        var action = options.action;
-        var action_options = {
-            clear_breadcrumbs: true,
-        };
-        var defs = [];
-        this.studio_mode = mode;
-        this.edited_action = action;
-        if (action) {
-            defs.push(session.rpc('/web_studio/chatter_allowed', {
-                model: action.action_descr.res_model,
-            }));
-            // we are editing an action, not in app creator mode
-            if (options.active_view) {
-                action_options.active_view = options.active_view;
-                defs.push(action.widget.switch_mode(options.active_view));
-            } else {
-                action_options.active_view = action.get_active_view();
-            }
-            action_options.action = action.action_descr;
-        }
-        return $.when.apply($, defs).then(function (chatter_allowed) {
-            self.studio_chatter_allowed = chatter_allowed;
-            // grep: action_web_studio_app_creator, action_web_studio_main
-            return self.do_action('action_web_studio_' + mode, action_options);
+        return this.do_action('action_web_studio_app_creator').then(function () {
+            self.menu.toggle_mode(true, false);  // hide the back button
         });
     },
     /**
@@ -158,94 +92,51 @@ WebClient.include({
      */
     show_application: function () {
         var self = this;
-        var _super = this._super.bind(this, arguments);
         var qs = $.deparam.querystring();
-        var studio_mode = _.contains(['main', 'app_creator'], qs.studio) ? qs.studio : false;
-        if (!studio_mode) {
-            return this._super.apply(this, arguments);
-        }
-        this._updateContext(true);
-        return this._loadStudioInfo().then(function (studio_info) {
-            self.studio_info = studio_info;
-            return _super().then(function () {
-                var action_descr;
-                var active_view;
-                var defs = [];
-                defs.push(self._setStudioActionManager());
-                if (studio_mode === 'main') {
-                    var action = self.action_manager.get_inner_action();
-                    if (action) {
-                        action_descr = action.action_descr;
-                        active_view = action.get_active_view();
-                        defs.push(self.openStudio('main', { action: action }));
-                    } else {
-                        return $.when();
-                    }
-                }
-                return $.when.apply($, defs).then(function () {
-                    bus.trigger('studio_toggled', studio_mode, studio_info, action_descr, active_view);
-                });
-            });
+        this.studioMode = _.contains(['main', 'app_creator'], qs.studio) ? qs.studio : false;
+        return this._super.apply(this, arguments).then(function () {
+            if (self.studioMode) {
+                self._updateContext();
+                return self._openStudio();
+            }
         });
     },
     /**
-     * Clicking on a menu/app while being in Studio mode pushed the action
-     * in another action manager and then open studio with this new action.
-     * This allows us to get everything without modifying the dom.
-     *
      * @override
-     */
-    on_menu_clicked: function () {
-        if (this.studio_mode) {
-            var last_action_stack = this.studio_action_manager.action_stack;
-            var last_state = $.bbq.getState(true);
-            return this._super.apply(this, arguments)
-                .then(this._openNavigatedActionInStudio.bind(this))
-                .fail(this._restoreStudioState.bind(this, last_action_stack, last_state));
-        }
-        return this._super.apply(this, arguments);
-    },
-    /**
-     * @see on_menu_clicked
-     * @override
-     */
-    on_app_clicked: function () {
-        if (this.studio_mode) {
-            var last_action_stack = this.studio_action_manager.action_stack;
-            var last_state = $.bbq.getState(true);
-            return this._super.apply(this, arguments)
-                .fail(this._restoreStudioState.bind(this, last_action_stack, last_state));
-        }
-        return this._super.apply(this, arguments);
-    },
-    /**
-     * @override
-     * @param {Boolean} display
      */
     toggle_home_menu: function (display) {
-        if (display) {
-            // the Studio icon is enabled in the home menu (for the app creator)
-            this._updateStudioSystray(true);
-        }
-
-        if (this.studio_mode) {
+        if (this.studioMode) {
             if (display) {
-                bus.trigger('studio_toggled', 'app_creator', this.studio_info);
+                // use case: we are in Studio main and we toggle the home menu
+                // --> will open the app_creator
+                this.studioMode = 'app_creator';
             } else {
-                var action = this.action_manager.get_inner_action();
-                if (!action) {
+                var action = this.action_manager.getCurrentAction();
+                if (action && action.tag === 'action_web_studio_app_creator') {
+                    // use case: Studio has been toggled and the app creator is
+                    // opened by clicking on the "New App" icon
+                    this.studioMode = 'app_creator';
+                } else {
+                    // use case: being on the HomeMenu in Studio mode and then
+                    // toggling the HomeMenu
+                    this.studioMode = 'main';
+                }
+                if (this.openingMenu) {
+                    // use case: navigating in an app from the app switcher
+                    // the first toggle_home_menu will be triggered when opening
+                    // a menu ; it must be prevented to avoid flickering
                     return;
                 }
-                if (action.action_descr.tag === 'action_web_studio_app_creator') {
-                    // special case for the app_creator, which stays in app_creator mode
-                    bus.trigger('studio_toggled', 'app_creator', this.studio_info);
-                } else {
-                    bus.trigger('studio_toggled', 'main', this.studio_info, this.edited_action.action_descr, this.edited_action.get_active_view());
-                }
+            }
+            this._toggleStudioMode();
+        } else {
+            if (display) {
+                // Studio icon is enabled in the home menu (to be able to always
+                // open the AppCreator)
+                this._updateStudioSystray(true);
             }
         }
-
-        return this._super.apply(this, arguments);
+        this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
@@ -253,23 +144,48 @@ WebClient.include({
     //--------------------------------------------------------------------------
 
     /**
+     * Closes Studio.
+     *
      * @private
+     * @returns {Deferred}
      */
-    _destroyStudioActionManager: function () {
-        this.studio_action_manager.destroy();
-        this.studio_action_manager = null;
+    _closeStudio: function () {
+        var self = this;
+        var def;
+        var action = this.action_manager.getCurrentAction();
+
+        if (this.home_menu_displayed) {
+            this.toggle_home_menu(true);
+            this.menu.toggle_mode(true, false);  // hide the back button
+        } else if (action.tag === 'action_web_studio_app_creator') {
+            // we are not in the home_menu but we want to display it
+            this.toggle_home_menu(true);
+            // use case: closing Studio from the AppCreator: remove the back
+            // button in the home menu to avoid going back in the AppCreator
+            // TODO: maybe clear the actionStack before instead?
+            this.menu.toggle_mode(true, false);
+        } else {
+            def = this.action_manager.restoreStudioAction();
+        }
+
+        return $.when(def).then(function () {
+            self._toggleStudioMode();
+            self.$el.toggleClass('o_in_studio', !!self.studioMode);
+        });
     },
     /**
-     * Studio is disabled by default in systray
-     * Add conditions here to enable it
+     * Studio is disabled by default in systray.
+     * Add conditions here to enable it.
+     *
+     * @private
+     * @returns {Boolean} the 'Studio editable' property of an action
      */
     _isStudioEditable: function (action) {
-        if (action && action.action_descr.xml_id) {
-            var descr = action.action_descr;
-            if (descr.type === 'ir.actions.act_window') {
+        if (action && action.xml_id) {
+            if (action.type === 'ir.actions.act_window') {
                 // we don't want to edit Settings as it is a special case of form view
                 // this is a heuristic to determine if the action is Settings
-                if (descr.res_model && descr.res_model.indexOf('settings') === -1) {
+                if (action.res_model && action.res_model.indexOf('settings') === -1) {
                     return true;
                 }
             }
@@ -277,110 +193,125 @@ WebClient.include({
         return false;
     },
     /**
-     * Performs the initial RPC for studio to get the global useful information.
+     * Opens the Studio main action with the AM current action.
      *
      * @private
+     * @param {string} [viewType]
      * @returns {Deferred}
      */
-    _loadStudioInfo: function () {
-        if (!this.studio_info_def) {
-            this.studio_info_def = session.rpc('/web_studio/init');
-        }
-        return this.studio_info_def;
+    _navigateInStudio: function (viewType) {
+        var self = this;
+        // the action has been processed by the AM
+        var action = this.action_manager.getCurrentAction();
+        var options = {
+            action: action,
+            studio_clear_breadcrumbs: true,  // see @_pushController in AM
+            viewType: viewType,
+        };
+        return this._openStudioMain(options).then(function () {
+            self.openingMenu = false;  // see @toggle_home_menu
+        });
     },
     /**
-     * @override
-     */
-    _on_app_clicked_done: function (ev) {
-        if (this.studio_mode) {
-            core.bus.trigger('change_menu_section', ev.data.menu_id);
-            // load the action before toggle the home menu
-            return this._openNavigatedActionInStudio(ev.data.options)
-                .then(this.toggle_home_menu.bind(this, false));
-        } else {
-            return this._super.apply(this, arguments);
-        }
-    },
-    /**
-     * @private
-     * @param {Object} options
-     * @returns {Deferred}
-     */
-    _openNavigatedActionInStudio: function (options) {
-        var action = this.studio_action_manager.get_inner_action();
-        if (!this._isStudioEditable(action)) {
-            this.do_warn("Studio", _t("This action is not editable by Studio"));
-            return $.Deferred().reject();
-        }
-        bus.trigger('action_changed', action.action_descr);
-        return this.openStudio('main', _.extend(options || {}, { action: action }));
-    },
-    /**
-     * @see on_menu_clicked for explanations about the Studio action manager use
-     * @private
      * @override
      */
     _openMenu: function (action, options) {
-        if (this.studio_mode) {
-            options.useStudioAM = true;
+        var self = this;
+        if (this.studioMode) {
+            if (!this._isStudioEditable(action)) {
+                this.do_warn("Studio", _t("This action is not editable by Studio"));
+                return $.Deferred().reject();
+            }
+            // tag the action for the actionManager
+            action.studioNavigation = true;
         }
-        return this._super.apply(this, arguments);
+        return this._super.apply(this, arguments).then(function () {
+            if (self.studioMode) {
+                return self._navigateInStudio(options.viewType);
+            }
+        });
     },
     /**
-     * Restore the Studio action manager to a previous state.
-     * This is useful when a do_action has been done on an action that couldn't
-     * be edited by Studio ; in this case, we restore it.
-     *
-     * @private
-     * @param {Array} action_stack
-     * @param {Object} state
-     */
-    _restoreStudioState: function (action_stack, state) {
-        var last_action = _.last(action_stack);
-        this.studio_action_manager.clear_action_stack();
-        this.studio_action_manager.action_stack = action_stack;
-        this.studio_action_manager.inner_action = last_action;
-        this.studio_action_manager.inner_widget = last_action && last_action.widget;
-        $.bbq.pushState(state, 2);
-    },
-    /**
-     * Create a new action manager that will be used to navigate in Studio.
-     *
      * @private
      * @returns {Deferred}
      */
-    _setStudioActionManager: function () {
-        var fragment = document.createDocumentFragment();
-        this.studio_action_manager = new ActionManager(this, {webclient: this});
+    _openStudio: function () {
+        var self = this;
+        var def;
 
-        // Save the current action stack to restore it when leaving studio.
-        // These actions cannot be destroyed (hence keep_alive) because when
-        // we leave Studio and restore the action stack, these action are re-used.
-        this.studio_action_manager.action_stack = this.action_manager.action_stack;
-        _.each(this.action_manager.action_stack, function (action) {
-            action.keep_alive = true;
+        if (this.studioMode === 'main') {
+            var action = this.action_manager.getCurrentAction();
+            var controller = this.action_manager.getCurrentController();
+            def = this._openStudioMain({
+                action: action,
+                viewType: controller.viewType,
+            });
+        } else {
+            // the app creator is not opened here, it's opened by clicking on
+            // the "New App" icon, when the HomeMenu is in `studio` mode.
+            this.menu.toggle_mode(true, false);  // hide the back button
+        }
+
+        return $.when(def).then(function () {
+            self.$el.toggleClass('o_in_studio', !!self.studioMode);
+            self._toggleStudioMode();
         });
-
-        // TODO after new views: this action manager will not be appended
-        // inside the dom and we don't need the views to be displayed so switch_mode
-        // should be monkey-patched to avoid RPCs.
-
-        return this.studio_action_manager.appendTo(fragment);
+    },
+    /**
+     * Opens the Studio main action with a specific action.
+     *
+     * @private
+     * @param {Object} options
+     * @param {Object} options.action
+     * @param {string} options.action.res_model
+     * @returns {Deferred}
+     */
+    _openStudioMain: function (options) {
+        var self = this;
+        return this._rpc({
+            route: '/web_studio/chatter_allowed',
+            params: {
+                model: options.action.res_model,
+            }
+        }).then(function (isChatterAllowed) {
+            options.chatter_allowed = isChatterAllowed;
+            return self.do_action('action_web_studio_main', options);
+        });
     },
     /**
      * @private
-     * @param {Boolean} in_studio
      */
-    _updateContext: function (in_studio) {
-        if (in_studio) {
-            // Write in user_context that we are in Studio
-            // This is used server-side to flag with Studio the ir.model.data of customizations
+    _toggleStudioMode: function () {
+        bus.trigger('studio_toggled', this.studioMode);
+
+        // update the URL query string with Studio
+        var qs = $.deparam.querystring();
+        if (this.studioMode) {
+            qs.studio = this.studioMode;
+        } else {
+            delete qs.studio;
+        }
+        var l = window.location;
+        var url = l.protocol + "//" + l.host + l.pathname + '?' + $.param(qs) + l.hash;
+        window.history.pushState({ path:url }, '', url);
+    },
+    /**
+     * Writes in user_context that we are in Studio.
+     * This is used server-side to flag with Studio the ir.model.data of
+     * customizations.
+     *
+     * @private
+     */
+    _updateContext: function () {
+        if (this.studioMode) {
             session.user_context.studio = 1;
         } else {
             delete session.user_context.studio;
         }
     },
     /**
+     * Enables or disables the Studio systray icon.
+     *
      * @private
      * @param {Boolean} show
      */
@@ -411,7 +342,7 @@ WebClient.include({
                     menu_id: ev.data.menu_id,
                     action_id: ev.data.action_id,
                     options: {
-                        active_view: 'form',
+                        viewType: 'form',
                     }
                 }
             });
@@ -426,75 +357,41 @@ WebClient.include({
         var self = this;
 
         var current_primary_menu = this.menu.current_primary_menu;
+        this.instanciate_menu_widgets().then(function () {
+            // reload previous state
+            self.menu.toggle_mode(self.home_menu_displayed);
+            self.menu.change_menu_section(current_primary_menu); // entering the current menu
+            if (self.home_menu_displayed) {
+                self.append_home_menu();
+            }
 
-        var action = this.edited_action;
-        var action_desc = action && action.action_descr || null;
-        var active_view = action && action.get_active_view();
-        $.when(this.studio_mode && this._loadStudioInfo()).then(function (studio_info) {
-            self.instanciate_menu_widgets().then(function () {
-                // reload previous state
-                self.menu.toggle_mode(self.home_menu_displayed);
-                self.menu.change_menu_section(current_primary_menu); // entering the current menu
-                if (self.home_menu_displayed) {
-                    self.append_home_menu();
-                }
+            self.menu.switchMode(self.studioMode);
+            self._updateStudioSystray(!!self.studioMode);
+            self.home_menu.toggleStudioMode(!!self.studioMode);
 
-                self.menu.switch_studio_mode(self.studio_mode, studio_info, action_desc, active_view);
-                self._updateStudioSystray(!!self.studio_mode);
-                self.home_menu.toggleStudioMode(!!self.studio_mode);
-
-                if (ev && ev.data.keep_open) {
-                    self.menu.edit_menu.editMenu();
-                }
-                if (ev && ev.data.def) {
-                    ev.data.def.resolve();
-                }
-            });
+            if (ev && ev.data.keep_open) {
+                self.menu.edit_menu.editMenu();
+            }
+            if (ev && ev.data.def) {
+                ev.data.def.resolve();
+            }
         });
     },
     /**
      * @private
      */
-    _onStudioMode: function () {
-        var self = this;
-        this.studio_mode = !this.studio_mode && (this.home_menu_displayed ? 'app_creator' : 'main');
-        var action = this.action_manager.get_inner_action();
-        var action_desc = action && action.action_descr || null;
-        var active_view = action && action.get_active_view();
+    _onStudioIconClicked: function () {
+        // the app creator will be opened if the home menu is displayed
+        var newMode = this.home_menu_displayed ? 'app_creator': 'main';
+        this.studioMode = this.studioMode ? false : newMode;
 
-        this._updateContext(!!this.studio_mode);
-
-        var defs = [];
-        if (this.studio_mode) {
-            defs.push(this._loadStudioInfo());
-            defs.push(this._setStudioActionManager());
-
-            if (this.home_menu_displayed) {
-                this.action_manager.clear_action_stack();
-                this.menu.toggle_mode(true, false);
-            } else {
-                defs.push(this.openStudio('main', { action: action}));
-            }
+        this._updateContext();
+        if (this.studioMode) {
+            this._openStudio();
         } else {
-            var def = $.Deferred();
-            defs.push(def);
-            this.closeStudio().always(function () {
-                self._destroyStudioActionManager();
-                def.resolve();
-            });
+            this._closeStudio();
         }
-        return $.when.apply($, defs).then(function (studio_info) {
-            self.studio_info = studio_info;
-            bus.trigger('studio_toggled', self.studio_mode, studio_info, action_desc, active_view);
-            if (self.studio_mode) {
-                self._updateStudioSystray(true);
-            }
-            if (!self.studio_mode && self.home_menu_displayed) {
-                self.trigger_up('show_home_menu');
-            }
-        });
     },
-
 });
 
 });

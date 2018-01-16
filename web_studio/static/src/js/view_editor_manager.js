@@ -69,7 +69,8 @@ var ViewEditorManager = Widget.extend({
      * @param {Widget} parent
      * @param {Object} params
      * @param {Object} params.fields_view
-     * @param {Object} params.view_env - view manager environment (id, context, etc.)
+     * @param {Object} params.view_env - action environment shared between views
+     *    (id, context, etc.)
      * @param {Object} [params.chatter_allowed]
      * @param {Object} [params.studio_view_id]
      * @param {Object} [params.studio_view_arch]

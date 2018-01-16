@@ -272,11 +272,9 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
             self.mps_show_line(event);
         });
         this.update_control_panel({
-            breadcrumbs: this.actionManager.get_breadcrumbs(),
             cp_content: {
                 $buttons: this.$buttons,
                 $searchview: this.searchview.$el,
-                // $searchview_buttons: this.$searchview_buttons,
                 $searchview_buttons: this.$searchview_buttons
             },
             searchview: this.searchview,

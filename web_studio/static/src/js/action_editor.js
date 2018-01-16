@@ -139,6 +139,8 @@ var ActionEditor = Widget.extend({
             res_id: this.action.id,
             views: [[false, 'form']],
             target: 'current',
+        }, {
+            replace_last_action: true,
         });
     },
 });

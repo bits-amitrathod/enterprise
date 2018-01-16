@@ -3,86 +3,209 @@ odoo.define('web_studio.ActionManager', function (require) {
 
 var ActionManager = require('web.ActionManager');
 
+var bus = require('web_studio.bus');
+
+/**
+ * Logic of the Studio action manager: the Studio client action (i.e.
+ * "action_web_studio_main") will always be pushed on top of another controller,
+ * which corresponds to the edited action by Studio.
+ */
+
 ActionManager.include({
+    custom_events: _.extend({}, ActionManager.prototype.custom_events, {
+        'reload_action': '_onReloadAction',
+    }),
+
+    /**
+     * @override
+     */
+    init: function () {
+        this._super.apply(this, arguments);
+        this.studioControllerIndex = undefined;
+        bus.on('studio_toggled', this, this._onStudioToggled);
+    },
 
     //--------------------------------------------------------------------------
     // Public
     //--------------------------------------------------------------------------
 
     /**
-     * Avoid clearing action with the `keep_alive` key.
-     *
-     * @override
-     * @param {Object} action_stack
-     */
-    clear_action_stack: function (action_stack) {
-        action_stack = action_stack && _.reject(action_stack, {keep_alive: true});
-        this._super(action_stack);
-    },
-    /**
-     * Avoid pushing the state if `keep_state` is in `action_descr`.
-     * This is used in Studio to keep a reloadable URL despite another action
-     * (ex: intern navigation inside Studio) has been pushed.
-     *
      * @override
      */
-    do_push_state: function () {
-        if (this.inner_action) {
-            var inner_action_descr = this.inner_action.get_action_descr();
-            if (inner_action_descr.keep_state) {
-                return;
-            }
-        }
-        this._super.apply(this, arguments);
-    },
-    /**
-     * Put keep state in the `action_descr` if it is in options.
-     * We want to have it in the `action_descr` (because it's the only
-     * parameter of `do_push_state`) but it's not always possible
-     * (ex: action described in XML).
-     *
-     * @override
-     * @param {Object} action
-     * @param {Object} options
-     */
-    do_action: function (action, options) {
-        if (_.isObject(action) && options && 'keep_state' in options) {
-            action.keep_state = options.keep_state;
+    clearUncommittedChanges: function () {
+        var currentController = this.getCurrentController();
+        if (currentController && !currentController.widget) {
+            // navigate with Studio will push a "fake" controller without widget
+            // (see @_executeWindowAction) before doAction on the Studio action
+            // but @_executeAction will call this function so no need to do
+            // anything in this case
+            return $.when();
         }
         return this._super.apply(this, arguments);
     },
     /**
-     * Restore the action stack.
+     * Restores the action currently edited by Studio.
      *
-     * @param {Object} action_stack
      * @returns {Deferred}
      */
-    restoreActionStack: function (action_stack) {
+    restoreStudioAction: function () {
         var self = this;
-        var def;
-        var to_destroy = this.action_stack;
-        var last_action = _.last(action_stack);
-        this.action_stack = action_stack;
+        var studioControllerIndex = this.studioControllerIndex;
+        var controllerID = this.controllerStack[studioControllerIndex];
+        var controller = this.controllers[controllerID];
+        var action = this.actions[controller.actionID];
 
-        if (last_action && last_action.action_descr.id) {
-            var view_type = last_action.get_active_view && last_action.get_active_view();
-            var res_id = parseInt($.deparam(window.location.hash.slice(1)).id);
+        // find the index in the controller stack of the first controller
+        // associated to the action to restore
+        var index = _.findIndex(this.controllerStack, function(controllerID) {
+            var controller = self.controllers[controllerID];
+            return controller.actionID === action.jsID;
+        });
 
-            // The action could have been modified (name, view_ids, etc.)
-            // so we need to use do_action to reload it.
-            def = this.do_action(last_action.action_descr.id, {
-                view_type: view_type,
-                replace_last_action: true,
-                res_id: res_id,
-                additional_context: last_action.action_descr.context,
-            });
-        } else {
-            def = $.Deferred().reject();
+        // reset to correctly update the breadcrumbs
+        this.studioControllerIndex = undefined;
+
+        return this.doAction(action.id, {
+            index: index,
+        });
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * Controllers pushed in the controller stack for actions flagged with
+     * 'studioNavigation' don't have an instantiated widget, so in this case,
+     * there is nothing to detach from the DOM (see @_executeWindowAction).
+     *
+     * @override
+     * @private
+     */
+    _detachCurrentController: function () {
+        var currentAction = this.getCurrentAction();
+        if (currentAction && !currentAction.studioNavigation) {
+            this._super.apply(this, arguments);
         }
-        return def.fail(function () {
-            self.clear_action_stack();
-            self.trigger_up('show_home_menu');
-        }).always(this.clear_action_stack.bind(this, to_destroy));
+    },
+    /**
+     * Overrides to deal with actions tagged for the Studio navigation by the
+     * WebClient.
+     *
+     * @override
+     * @private
+     */
+    _executeWindowAction: function (action, options) {
+        if (action.studioNavigation) {
+            // We don't call _pushController or super here to avoid destroying
+            // the previous actions ; they will be destroyed afterwards (see
+            // override of @_pushController). We just create a new controller
+            // and push it in the controller stack.
+            this._processStudioAction(action, options);
+            this.actions[action.jsID] = action;
+            var controller = {
+                actionID: action.jsID,
+                jsID: _.uniqueId('controller_'),
+            };
+            this.controllers[controller.jsID] = controller;
+            this.controllerStack.push(controller.jsID);
+
+            // as we are navigating through Studio (with a menu), reset the
+            // breadcrumb index
+            this.studioControllerIndex = 0;
+
+            return $.when(action);
+
+        }
+        return this._super.apply(this, arguments);
+    },
+    /*
+     * @override
+     * @private
+     */
+    _getBreadcrumbs: function () {
+        if (this.studioControllerIndex !== undefined) {
+            // do not display the breadcrumbs from the action edited by Studio
+            var stack = this.controllerStack;
+            this.controllerStack = stack.slice(this.studioControllerIndex + 1);
+            var result = this._super.apply(this, arguments);
+            this.controllerStack = stack;
+            return result;
+        }
+        return this._super.apply(this, arguments);
+    },
+    /**
+     * @override
+     * @private
+     */
+    _pushController: function (controller, options) {
+        var action = this.actions[controller.actionID];
+        if (action && action.tag === 'action_web_studio_main') {
+            if (options.studio_clear_breadcrumbs) {
+                // we actually don't want to destroy the whole controller stack
+                // but we want to keep the last controller, which is the one
+                // associated to the action edited by Studio
+                var length = this.controllerStack.length - 1;
+                var toDestroy = this.controllerStack.splice(0, length);
+                this._removeControllers(toDestroy);
+            }
+        }
+        return this._super.apply(this, arguments);
+    },
+    /**
+     * @_executeWindowAction is overridden when navigating in Studio but some
+     * processing in said function still needs to be done.
+     *
+     * @private
+     * @param {Object} action
+     * @param {Object} options
+     */
+    _processStudioAction: function (action, options) {
+        // needed by ViewEditorManager when instanciating the ViewEditor
+        action.env = this._generateActionEnv(action, options);
+        // needed in _createViewController
+        action.controllers = {};
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * Overrides to let the event bubble if the push_state comes from Studio.
+     *
+     * @override
+     * @private
+     */
+    _onPushState: function (ev) {
+        if (!ev.data.studioPushState) {
+            this._super.apply(this, arguments);
+        }
+    },
+    /**
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onReloadAction: function (ev) {
+        var self = this;
+        this._loadAction(ev.data.actionID).then(function (result) {
+            self._processStudioAction(result, {});
+            bus.trigger('action_changed', result);
+            if (ev.data.def) {
+                ev.data.def.resolve(result);
+            }
+        });
+    },
+    /**
+     * @private
+     * @param {string} mode
+     */
+    _onStudioToggled: function (mode) {
+        if (mode === 'main') {
+            // Studio has directly been opened on the action so the action to
+            // restore is not the last one (which is Studio) but the one before
+            this.studioControllerIndex = this.controllerStack.length - 2;
+        }
     },
 });
 

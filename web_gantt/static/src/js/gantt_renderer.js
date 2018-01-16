@@ -476,7 +476,7 @@ return AbstractRenderer.extend({
      */
     _ganttContainer: function (ganttTasks) {
         // horrible hack to make sure that something is in the dom with the required id.  The problem is that
-        // the view manager render the view in a document fragment. More explaination : GED
+        // the action manager renders the view in a document fragment. More explaination : GED
         var temp_div_with_id;
         if (this.$div_with_id){
             temp_div_with_id = this.$div_with_id;

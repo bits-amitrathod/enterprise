@@ -37,7 +37,7 @@ html {
                 height: auto;
             }
 
-            .o_view_manager_content {
+            > .o_view_controller {
                 position: absolute;  // Get the 100% height of its flex parent
                 top: 0;
                 right: 0;
@@ -49,11 +49,6 @@ html {
                         position: static;  // reset the height 100% distribution on flex item
                         height: auto;  // reset height inheritance
                     }
-                }
-
-                .o_view_manager_content {
-                    position: static;  // Reset position for nested view managers
-                    height: auto;  // reset height inheritance for nested view managers
                 }
             }
         }

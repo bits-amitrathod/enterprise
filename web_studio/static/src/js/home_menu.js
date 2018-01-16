@@ -152,7 +152,7 @@ HomeMenu.include({
      */
     _onNewApp: function (ev) {
         ev.preventDefault();
-        web_client.openStudio('app_creator').then(function () {
+        web_client.openAppCreator().then(function () {
             core.bus.trigger('toggle_mode', true, false);
         });
     },

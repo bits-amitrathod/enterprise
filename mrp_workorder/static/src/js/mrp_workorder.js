@@ -2,28 +2,15 @@ odoo.define('mrp_workorder.update_kanban', function (require) {
 "use strict";
 
 var basic_fields = require('web.basic_fields');
-var core = require('web.core');
 var field_registry = require('web.field_registry');
 var KanbanController = require('web.KanbanController');
 var KanbanRecord = require('web.KanbanRecord');
 var KanbanView = require('web.KanbanView');
 var view_registry = require('web.view_registry');
-var ControlPanel = require('web.ControlPanel');
 
 var FieldInteger = basic_fields.FieldInteger;
 var FieldBinaryImage = basic_fields.FieldBinaryImage;
 
-ControlPanel.include({
-    _render_breadcrumbs: function (breadcrumbs) {
-        var found = false;
-        _.each(breadcrumbs, function(data) {
-            if (data.action.action_descr.xml_id === "mrp_workorder.mrp_workorder_action_tablet") {
-                found = true;
-            }
-        });
-        return this._super( found ? [] : breadcrumbs)
-    },
-});
 
 KanbanRecord.include({
     _openRecord: function () {
@@ -71,7 +58,7 @@ var TabletImage = FieldBinaryImage.extend({
 var TabletKanbanController = KanbanController.extend({
     renderButtons: function ($node) {
         var self = this;
-        this.$buttons = $('<div/>')
+        this.$buttons = $('<div/>');
         this.$buttons.html('<button class="btn btn-default back-button"><i class="fa fa-arrow-left"/></button>');
         this.$buttons.on('click', function () {
             self.do_action('mrp.mrp_workcenter_kanban_action', {clear_breadcrumbs: true});
@@ -89,4 +76,5 @@ var TabletKanbanView = KanbanView.extend({
 field_registry.add('back_arrow', BackArrow);
 field_registry.add('tablet_image', TabletImage);
 view_registry.add('tablet_kanban_view', TabletKanbanView);
+
 });

@@ -16,6 +16,7 @@ return AbstractWebClient.extend({
     custom_events: _.extend({}, AbstractWebClient.prototype.custom_events, {
         app_clicked: 'on_app_clicked',
         menu_clicked: 'on_menu_clicked',
+        getScrollTop: '_onGetScrollTop',
         scrollTo: 'scrollTo',
         show_home_menu: '_onShowHomeMenu',
         hide_home_menu: '_onHideHomeMenu',
@@ -146,7 +147,7 @@ return AbstractWebClient.extend({
     },
 
     set_action_manager: function () {
-        this.action_manager = new ActionManager(this, {webclient: this});
+        this.action_manager = new ActionManager(this, session.user_context);
         return this.action_manager.appendTo(this.$el);
     },
     // --------------------------------------------------------------
@@ -164,12 +165,6 @@ return AbstractWebClient.extend({
                 }
         });
     },
-    do_push_state: function (state) {
-        if (!state.menu_id && this.menu) {
-            state.menu_id = this.menu.current_primary_menu;
-        }
-        this._super.apply(this, arguments);
-    },
     // --------------------------------------------------------------
     // URL state handling
     // --------------------------------------------------------------
@@ -185,16 +180,15 @@ return AbstractWebClient.extend({
             if (!_.isEqual(self._current_state, stringstate)) {
                 var state = $.bbq.getState(true);
                 if (state.action || (state.model && (state.view_type || state.id))) {
-                    state._push_me = false;  // no need to push state back...
-                    return self.action_manager.do_load_state(state, !!self._current_state).then(function () {
+                    return self.action_manager.loadState(state, !!self._current_state).then(function () {
                         if (state.menu_id) {
                             if (state.menu_id !== self.menu.current_primary_menu) {
                                 core.bus.trigger('change_menu_section', state.menu_id);
                             }
                         } else {
-                            var action = self.action_manager.get_inner_action();
+                            var action = self.action_manager.getCurrentAction();
                             if (action) {
-                                var menu_id = self.menu.action_id_to_primary_menu_id(action.get_action_descr().id);
+                                var menu_id = self.menu.action_id_to_primary_menu_id(action.id);
                                 if (menu_id) {
                                     core.bus.trigger('change_menu_section', menu_id);
                                 }
@@ -229,10 +223,11 @@ return AbstractWebClient.extend({
             .then(function (result) {
                 return self.action_mutex.exec(function () {
                     var completed = $.Deferred();
-                    $.when(self._openMenu(result, {
+                    var options = _.extend({}, ev.data.options, {
                         clear_breadcrumbs: true,
                         action_menu_id: ev.data.menu_id,
-                    })).fail(function () {
+                    });
+                    $.when(self._openMenu(result, options)).fail(function () {
                         self.toggle_home_menu(true);
                         completed.resolve();
                     }).done(function () {
@@ -293,8 +288,8 @@ return AbstractWebClient.extend({
         if (display) {
             var self = this;
             this.clear_uncommitted_changes().then(function() {
-                // Save the current scroll position of the action_manager
-                self.action_manager.setScrollTop(self.getScrollTop());
+                // Save the current scroll position
+                self.scrollTop = self.getScrollTop();
 
                 // Detach the web_client contents
                 var $to_detach = self.$el.contents()
@@ -313,7 +308,7 @@ return AbstractWebClient.extend({
                 self.url = $.bbq.getState();
                 self._ignore_hashchange = true;
                 $.bbq.pushState('#home', 2); // merge_mode 2 to replace the current state
-                self.menu.toggle_mode(true, self.action_manager.get_inner_action() !== null);
+                self.menu.toggle_mode(true, self.action_manager.getCurrentAction() !== null);
             });
         } else {
             dom.detach([{widget: this.home_menu}]);
@@ -321,9 +316,10 @@ return AbstractWebClient.extend({
                 in_DOM: true,
                 callbacks: [{widget: this.action_manager}],
             });
+            this.trigger_up('scrollTo', {offset: this.scrollTop || 0});
             this.home_menu_displayed = false;
             this.$el.removeClass('o_home_menu_background');
-            this.menu.toggle_mode(false, this.action_manager.get_inner_action() !== null);
+            this.menu.toggle_mode(false, this.action_manager.getCurrentAction() !== null);
         }
     },
     append_home_menu: function () {
@@ -337,7 +333,7 @@ return AbstractWebClient.extend({
         this.toggle_home_menu(true);
     },
     _onHideHomeMenu: function () {
-        if (this.action_manager.get_inner_action() !== null) {
+        if (this.action_manager.getCurrentAction() !== null) {
             // Restore the url
             $.bbq.pushState(this.url, 2); // merge_mode 2 to replace the current state
             this.toggle_home_menu(false);
@@ -376,6 +372,9 @@ return AbstractWebClient.extend({
             this.action_manager.el.scrollTop = offset.top;
         }
         this.action_manager.el.scrollLeft = offset.left;
+    },
+    _onGetScrollTop: function (ev) {
+        ev.data.callback(this.getScrollTop());
     },
 });
 
