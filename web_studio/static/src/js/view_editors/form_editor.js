@@ -149,7 +149,10 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         // make empty widgets appear if there is no label
         if (!widget.isSet() && (!node.has_label || node.attrs.nolabel)) {
             widget.$el.removeClass('o_field_empty').addClass('o_web_studio_widget_empty');
-            widget.$el.text(widget.string);
+            // statusbar needs to be rendered normally
+            if (node.attrs.widget !== 'statusbar') {
+                widget.$el.text(widget.string);
+            }
         }
         // remove all events on the widget as we only want to click for edition
         widget.$el.off();
@@ -254,6 +257,39 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                     .append($buttonbox_hook);
                 self.$('.o_form_sheet').prepend($buttonbox);
             }
+            // Add statusbar
+            if (!self.$('.o_statusbar_status').length) {
+                var $statusbar = $('<div>', {
+                    text: _t("Add a pipeline status bar"),
+                    class: 'o_web_studio_statusbar_hook',
+                }).click(function () {
+                    var values = {
+                        add_statusbar: !self.$('.o_form_statusbar').length,
+                        type: 'add',
+                        structure: 'field',
+                        field_description: {
+                            field_description: "Pipeline status bar",
+                            type: 'selection',
+                            selection: [
+                                ['status1', _t('First Status')],
+                                ['status2', _t('Second Status')],
+                                ['status3', _t('Third Status')],
+                            ],
+                            default_value: true,
+                        },
+                        target: {
+                            tag: 'header',
+                        },
+                        new_attrs: {
+                            widget: 'statusbar',
+                            options: "{'clickable': '1'}",
+                        },
+                        position: 'inside',
+                    };
+                    self.trigger_up('view_change', values);
+                });
+                self.$('.o_form_sheet_bg').prepend($statusbar);
+            }
         });
     },
     /**
@@ -284,6 +320,15 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
 
         $buttonhook.prependTo($buttonbox);
         return $buttonbox;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderFieldWidget: function (node) {
+        var $el = this._super.apply(this, arguments);
+        this._processField(node, $el);
+        return $el;
     },
     /**
      * @override
@@ -447,15 +492,6 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             formEditorHook.appendTo($result);
         }
         return $result;
-    },
-    /**
-     * @override
-     * @private
-     */
-    _renderTagField: function (node) {
-        var $el = this._super.apply(this, arguments);
-        this._processField(node, $el);
-        return $el;
     },
     /**
      * @override

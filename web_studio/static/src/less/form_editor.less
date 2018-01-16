@@ -27,6 +27,30 @@
                 }
             }
         }
+        .o_web_studio_statusbar_hook {
+            text-align: center;
+            color: @odoo-brand-optional;
+            background-color: lightgray;
+            font-weight: bold;
+            cursor: pointer;
+            height: 42px;
+            line-height: 42px;
+            opacity: 0.6;
+            .o-transition(opacity, 0.3s);
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+        .o_statusbar_status {
+            > .o_arrow_button {
+                // make the buttons look inactive in Studio
+                &:hover, &:active, &:focus {
+                    color: @gray;
+                    background-color: white;
+                }
+            }
+        }
 
         &.o_web_studio_form_view_editor {
             .o_web_studio_hook {
@@ -85,15 +109,19 @@
             }
         }
         .o_web_studio_hovered {
-            outline: 1px dashed @odoo-brand-optional;
-            outline-offset: -1px;
             cursor: pointer;
+            outline: 1px dashed @odoo-brand-optional;
+            &.not(.o_statusbar_status) {
+                outline-offset: -1px;
+            }
         }
         .o_clicked {
             outline: 2px solid @odoo-brand-optional;
-            outline-offset: -2px;
             &.btn {
                 outline: 2px solid darken(@odoo-brand-optional, 5%);
+            }
+            &.not(.o_statusbar_status) {
+                outline-offset: -2px;
             }
         }
         .o_web_studio_button_hook {
@@ -140,7 +168,6 @@
                 }
             }
             &:hover {
-                .o-flex(1, 0, 100%);
                 width: auto;
                 background-color: fade(white, 90%);
                 color: transparent;

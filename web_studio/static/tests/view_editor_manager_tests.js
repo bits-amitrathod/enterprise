@@ -601,6 +601,63 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('add a statusbar', function (assert) {
+        assert.expect(8);
+
+        var arch = "<form>" +
+            "<sheet>" +
+                "<group><field name='display_name'/></group>" +
+            "</sheet>" +
+        "</form>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations.length, 2,
+                        "there should be 2 operations (one for statusbar and one for the new field");
+                    assert.deepEqual(args.operations[0], {type: 'statusbar'});
+                    assert.deepEqual(args.operations[1].target, {tag: 'header'},
+                        "the target should be correctly set");
+                    assert.strictEqual(args.operations[1].position, 'inside',
+                        "the position should be correctly set");
+                    assert.deepEqual(args.operations[1].node.attrs, {widget: 'statusbar', options: "{'clickable': '1'}"},
+                        "the options should be correctly set");
+
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        var $statusbar = vem.$('.o_web_studio_form_view_editor .o_web_studio_statusbar_hook');
+        assert.deepEqual($statusbar.length, 1, "there should be a hook to add a statusbar");
+        $statusbar.click();
+
+        assert.deepEqual($('.o_web_studio_field_modal').length, 1,
+            "a modal should be open to create the new selection field");
+        assert.deepEqual($('.o_web_studio_selection_editor li').length, 3,
+            "there should be 3 pre-filled values for the selection field");
+        $('.modal-footer .btn-primary:first').click(); // confirm
+
+        vem.destroy();
+    });
+
     QUnit.module('Kanban');
 
     QUnit.test('empty kanban editor', function(assert) {

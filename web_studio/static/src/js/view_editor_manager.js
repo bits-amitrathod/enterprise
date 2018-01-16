@@ -595,8 +595,9 @@ var ViewEditorManager = Widget.extend({
      * @param {Object} xpath_info
      * @param {String} position
      * @param {Object} new_attrs
+     * @param {Object} data
      */
-    _addField: function (type, field_description, node, xpath_info, position, new_attrs) {
+    _addField: function (type, field_description, node, xpath_info, position, new_attrs, data) {
         var self = this;
         var def_field_values;
 
@@ -650,13 +651,17 @@ var ViewEditorManager = Widget.extend({
             if (field_description) {
                 self.renamingAllowedFields.push(field_description.name);
             }
+            if (data.add_statusbar) {
+                self.operations.push({type: 'statusbar'});
+            }
+            var target = data.target || {
+                tag: node.tag,
+                attrs: _.pick(node.attrs, self.expr_attrs[node.tag]),
+                xpath_info: xpath_info,
+            };
             self.do({
                 type: type,
-                target: {
-                    tag: node.tag,
-                    attrs: _.pick(node.attrs, self.expr_attrs[node.tag]),
-                    xpath_info: xpath_info,
-                },
+                target: target,
                 position: position,
                 node: {
                     tag: 'field',
@@ -1591,9 +1596,9 @@ var ViewEditorManager = Widget.extend({
                 break;
             case 'field':
                 var field_description = event.data.field_description;
-                new_attrs = _.pick(new_attrs, ['name', 'widget']);
+                new_attrs = _.pick(new_attrs, ['name', 'widget', 'options']);
                 this._addField(type, field_description, node, xpath_info, position,
-                    new_attrs);
+                    new_attrs, event.data);
                 break;
             case 'chatter':
                 this._addChatter(event.data);

@@ -195,6 +195,17 @@ tour.register('web_studio_tests_tour', {
     trigger: 'input[data-type="field_name"][value="coucou_1"]',
     run: 'text coucou_2',
 }, {
+    // add a statusbar
+    trigger: '.o_web_studio_statusbar_hook',
+}, {
+    trigger: '.modal-footer .btn.btn-primary',
+}, {
+    trigger: '.o_statusbar_status',
+}, {
+    // verify that a default value has been set for the statusbar
+    trigger: '.o_web_studio_sidebar select[name="default_value"]:contains(First Status)',
+}, {
+    // switch in list view
     trigger: '.o_web_studio_menu .o_web_studio_views_icons a[data-name="list"]',
 }, {
     // add an existing field (display_name)

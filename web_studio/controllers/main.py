@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from ast import literal_eval
 from copy import deepcopy
 from lxml import etree
 from odoo import http, models, _
@@ -483,8 +484,22 @@ class WebStudioController(http.Controller):
         # For selection fields
         if values.get('selection'):
             values['selection'] = ustr(values['selection'])
+
+        # Optional default value at creation
+        default_value = values.pop('default_value', False)
+
         # Create new field
-        return request.env['ir.model.fields'].create(values)
+        new_field = request.env['ir.model.fields'].create(values)
+
+        if default_value:
+            if new_field.ttype == 'selection':
+                if default_value is True:
+                    selection_values = literal_eval(new_field.selection)
+                    # take the first selection value as default one in this case
+                    default_value = len(selection_values) and selection_values[0][0]
+            self.set_default_value(new_field.model, new_field.name, default_value)
+
+        return new_field
 
     @http.route('/web_studio/add_view_type', type='json', auth='user')
     def add_view_type(self, action_type, action_id, res_model, view_type, args):
@@ -715,7 +730,15 @@ class WebStudioController(http.Controller):
     @http.route('/web_studio/edit_field', type='json', auth='user')
     def edit_field(self, model_name, field_name, values):
         field = request.env['ir.model.fields'].search([('model', '=', model_name), ('name', '=', field_name)])
-        return field.write(values)
+        field.write(values)
+
+        # remove default value if the value is not acceptable anymore
+        if field.ttype == 'selection':
+            current_default = request.env['ir.default'].get(model_name, field_name, company_id=True)
+            if current_default:
+                selection_values = literal_eval(field.selection)
+                if current_default not in [x[0] for x in selection_values]:
+                    request.env['ir.default'].discard_values(model_name, field_name, [current_default])
 
     @http.route('/web_studio/edit_report', type='json', auth='user')
     def edit_report(self, report_id, values):
@@ -1228,6 +1251,14 @@ class WebStudioController(http.Controller):
                 </div>
             """ % (field_id.name))
         )
+
+    def _operation_statusbar(self, arch, operation, model=None):
+        """ Create and insert a header as the first child of the form. """
+        xpath_node = etree.SubElement(arch, 'xpath', {
+            'expr': '//form/*[1]',
+            'position': 'before'
+        })
+        xpath_node.append(etree.Element('header'))
 
     @http.route('/web_studio/get_email_alias', type='json', auth='user')
     def get_email_alias(self, model_name):
