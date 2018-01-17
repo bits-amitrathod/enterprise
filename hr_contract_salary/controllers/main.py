@@ -347,11 +347,12 @@ class website_hr_contract_salary(http.Controller):
                     new_value = ''
             if isinstance(new_value, models.BaseModel):
                 new_value = ''
-            request.env['signature.item.value'].sudo().create({
-                'signature_item_id': item.id,
-                'signature_request_id': res['id'],
-                'value': new_value,
-            })
+            if new_value:
+                request.env['signature.item.value'].sudo().create({
+                    'signature_item_id': item.id,
+                    'signature_request_id': res['id'],
+                    'value': new_value,
+                })
 
         signature_request = request.env['signature.request'].browse(res['id']).sudo()
         signature_request.write({'state': 'sent'})
