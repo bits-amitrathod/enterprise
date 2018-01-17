@@ -104,7 +104,7 @@ class website_hr_contract_salary(http.Controller):
                 'name': 'Simulation Employee',
             })
         if personal_info:
-            employee.update_personal_info(personal_info)
+            employee.update_personal_info(personal_info, no_name_write=bool(kw.get('employee')))
         new_contract = request.env['hr.contract'].sudo().new({
             'name': contract.name if contract.state == 'draft' else "Package Simulation",
             'job_id': contract.job_id.id,
