@@ -39,6 +39,8 @@ class HrEmployee(models.Model):
 
         if self.address_home_id:
             partner = self.address_home_id
+            # We shouldn't modify the partner email like this
+            partner_values.pop('email', None)
             self.address_home_id.write(partner_values)
         else:
             partner = self.env['res.partner'].create(partner_values)
