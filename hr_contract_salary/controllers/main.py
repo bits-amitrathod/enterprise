@@ -334,7 +334,7 @@ class website_hr_contract_salary(http.Controller):
             False
         )
 
-        items = request.env['signature.item'].search([
+        items = request.env['signature.item'].sudo().search([
             ('template_id', '=', signature_request_template.id),
             ('name', '!=', '')
         ])
@@ -357,7 +357,7 @@ class website_hr_contract_salary(http.Controller):
         signature_request.write({'state': 'sent'})
         signature_request.request_item_ids.write({'state': 'sent'})
 
-        access_token = request.env['signature.request.item'].search([
+        access_token = request.env['signature.request.item'].sudo().search([
             ('signature_request_id', '=', res['id']),
             ('role_id', '=', request.env.ref('website_sign.signature_item_party_employee').id)
         ]).access_token
