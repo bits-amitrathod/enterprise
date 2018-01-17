@@ -20,7 +20,7 @@ class ResConfigSettings(models.TransientModel):
     ebay_domain = fields.Selection([
         ('prod', 'Production'),
         ('sand', 'Sandbox'),
-    ], string='Mode', default='sand', required=True, config_parameter='ebay_domain')
+    ], string='eBay Environment', default='sand', required=True, config_parameter='ebay_domain')
     ebay_currency = fields.Many2one("res.currency", string='ebay Currency',
                                     domain=[('ebay_available', '=', True)], required=True,
                                     default=lambda self: self.env['res.currency'].search([('ebay_available', '=', True)], limit=1).id,
