@@ -15,6 +15,7 @@ from odoo import _, api, fields, models, tools
 from odoo.tools.xml_utils import _check_with_xsd
 from odoo.tools import DEFAULT_SERVER_TIME_FORMAT
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_repr
 
 CFDI_TEMPLATE = 'l10n_mx_edi.cfdiv32'
 CFDI_TEMPLATE_33 = 'l10n_mx_edi.cfdiv33'
@@ -989,7 +990,8 @@ class AccountInvoice(models.Model):
                 continue
             supplier_rfc = inv.l10n_mx_edi_cfdi_supplier_rfc
             customer_rfc = inv.l10n_mx_edi_cfdi_customer_rfc
-            total = inv.l10n_mx_edi_cfdi_amount
+            total = float_repr(inv.l10n_mx_edi_cfdi_amount,
+                               precision_digits=inv.currency_id.decimal_places)
             uuid = inv.l10n_mx_edi_cfdi_uuid
             params = '"?re=%s&rr=%s&tt=%s&id=%s' % (
                 tools.html_escape(tools.html_escape(supplier_rfc or '')),
