@@ -68,7 +68,7 @@
             <field name="arch" type="xml">
                 <form string="Experiment Form">
                     <header>
-                        <field name="state" widget="statusbar" statusbar_visible="running,paused,ended" clickable="True"/>
+                        <field name="state" widget="statusbar" statusbar_visible="running,paused,ended" options="{'clickable': '1'}"/>
                     </header>
                     <sheet string="Exp">
                         <button icon="fa-line-chart" name="website_version.action_analytic" string="Statistics" action="action"
