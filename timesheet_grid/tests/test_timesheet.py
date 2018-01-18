@@ -7,11 +7,11 @@ from dateutil.relativedelta import relativedelta
 from odoo import fields
 
 from odoo.addons.web_grid.models import END_OF
-from odoo.addons.hr_timesheet.tests.test_timesheet import TestTimesheet
+from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 from odoo.exceptions import AccessError
 
 
-class TestTimesheetValidation(TestTimesheet):
+class TestTimesheetValidation(TestCommonTimesheet):
 
     def setUp(self):
         super(TestTimesheetValidation, self).setUp()
