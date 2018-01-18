@@ -11,9 +11,9 @@ class purchase_order(models.Model):
     auto_sale_order_id = fields.Many2one('sale.order', string='Source Sale Order', readonly=True, copy=False)
 
     @api.multi
-    def button_confirm(self):
+    def button_approve(self, force=False):
         """ Generate inter company sale order base on conditions."""
-        res = super(purchase_order, self).button_confirm()
+        res = super(purchase_order, self).button_approve(force=force)
         for order in self:
             # get the company from partner then trigger action of intercompany relation
             company_rec = self.env['res.company']._find_company_from_partner(order.partner_id.id)
