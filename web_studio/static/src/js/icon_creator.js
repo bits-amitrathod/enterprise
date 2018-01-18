@@ -18,15 +18,23 @@ var IconCreator = Widget.extend({
     },
     /**
      * @constructor
+     * @param {widget} parent
+     * @param {Object} [options]
+     * @param {string} [options.color]
+     * @param {string} [options.background_color]
+     * @param {string} [options.icon_class]
      */
-    init: function () {
+    init: function (parent, options) {
         this.COLORS = utils.COLORS;
         this.BG_COLORS = utils.BG_COLORS;
         this.ICONS = utils.ICONS;
 
-        this.color = this.COLORS[4];
-        this.background_color = this.BG_COLORS[5];
-        this.icon_class = this.ICONS[0];
+        options = options || {};
+
+        this.color = options.color || this.COLORS[4];
+        this.background_color = options.background_color ||  this.BG_COLORS[5];
+        this.icon_class = options.icon_class || this.ICONS[0];
+
 
         this.PALETTE_TEMPLATES = {
             'color':            'web_studio.IconCreator.IconColorPalette',
@@ -35,9 +43,10 @@ var IconCreator = Widget.extend({
         };
 
         // Upload related stuff
-        this.uploaded = false;
+        this.uploaded_image = options.webIconData;
+        this.uploaded = !!options.webIconData;
         this.uploaded_attachment_id = false;
-        this.widget = "image";
+        this.image_only = true;
         this.user_id = session.uid;
         this.fileupload_id = _.uniqueId('o_fileupload');
         $(window).on(this.fileupload_id, this._onUploadDone.bind(this));
@@ -136,12 +145,10 @@ var IconCreator = Widget.extend({
             widget: this,
         }));
         $el
-            .addClass('active')
             .find('.o_web_studio_selector_pointer')
             .before(this.$palette);
         this.$palette.on('mouseleave', function () {
             $(this).remove();
-            $el.removeClass('active');
         });
         this.$palette.find('.o_web_studio_selector').click(function (ev) {
             $el = $(ev.currentTarget);

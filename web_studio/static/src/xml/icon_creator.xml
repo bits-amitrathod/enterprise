@@ -6,7 +6,15 @@
         <div class="o_web_studio_uploaded_image"
             t-attf-style="background-image: url('#{widget.uploaded_image}');"/>
         <div class="o_web_studio_upload">
-            <a href="#" class="btn btn-secondary js_discard_upload">Discard Upload</a>
+            <a href="#" class="js_discard_upload">Design your Icon</a> <span class="text-muted">or</span> <a href="#" class="js_upload">upload one</a>
+            <span class="hide">
+                <t t-call="HiddenInputFile">
+                    <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                    <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                    <input type="hidden" name="model" value="res.users"/>
+                    <input type="hidden" name="id" t-att-value="widget.user_id"/>
+                </t>
+            </span>
         </div>
 
     </t>

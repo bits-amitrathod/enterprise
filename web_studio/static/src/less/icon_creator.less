@@ -47,14 +47,14 @@
         width: 225px;
         padding: 5px;
         box-shadow: 0 7px 16px -5px fade(black, 40%);
-        .o-position-absolute(auto, auto, 30px, -12px);
+        .o-position-absolute(auto, auto, auto, 40px);
+        z-index: 1;
 
         .o_web_studio_selector {
             display: inline-block;
             margin: 5px;
             border-radius: 0;
             border: 2px solid white;
-            z-index: 1;
             width: 30px;
             height: 30px;
             .transition-property(~'none');
@@ -69,7 +69,6 @@
 
     .o_web_studio_icons_library {
         width: 360px;
-        .o-position-absolute(25px, auto, auto, -170px);
         .o_web_studio_selector {
             font-size: 1.5em;
             box-shadow: none;
@@ -90,7 +89,6 @@
         position: relative;
         .o-transition(all, 0.3s);
         .transition-property(~'opacity, box-shadow');
-        z-index: 0;
 
         background-color: white;
 
@@ -102,10 +100,6 @@
             font-family: 'FontAwesome';
             color: @o-web-studio-text-light;
             .o-position-absolute(1px, -15px);
-        }
-
-        &.active {
-            z-index: 1;
         }
 
         .o_web_studio_selector_pointer {

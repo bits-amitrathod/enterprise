@@ -216,6 +216,26 @@ tour.register('web_studio_tests_tour', {
 }, {
     // enable stages
     trigger: '.o_web_studio_sidebar input[name=enable_stage]',
+}, {
+    // toggle the home menu
+    trigger: '.o_menu_toggle',
+}, {
+    // a invisible element cannot be used as a trigger so this small hack is
+    // mandatory for the next step
+    trigger: '.o_app[data-menu-xmlid*="studio"]:first',
+    run: function () {
+        this.$anchor.find('.o_web_studio_edit_icon').css('visibility', 'visible');
+    },
+}, {
+    // edit an app
+    trigger: '.o_app[data-menu-xmlid*="studio"]:first .o_web_studio_edit_icon',
+}, {
+    // design the icon
+    trigger: '.o_web_studio_selector[data-type="background_color"]',
+}, {
+    trigger: '.o_web_studio_palette > .o_web_studio_selector:first',
+}, {
+    trigger: '.modal-footer .btn.btn-primary',
 }]);
 
 });

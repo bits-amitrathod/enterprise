@@ -12,6 +12,7 @@
         visibility: hidden;
     }
     .o_app {
+        position: relative;
         &:not(.o_web_studio_new_app) {
             opacity: 0.5;
             .o_app_icon {
@@ -30,6 +31,23 @@
             }
             &:hover {
                 border-color: fade(white, 60%);
+            }
+        }
+        .o_web_studio_edit_icon {
+            visibility: hidden;
+            .o-position-absolute(@top: 10px, @right: 25px);
+            color: white;
+            background-color: @odoo-brand-optional;
+        }
+
+        &:hover {
+            .o_web_studio_edit_icon {
+                visibility: visible;
+                opacity: 0.6;
+
+                &:hover {
+                    opacity: 1;
+                }
             }
         }
     }

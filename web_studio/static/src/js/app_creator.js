@@ -186,7 +186,7 @@ var AppCreator = AbstractAction.extend(StandaloneFieldManagerMixin, {
             this.$left.append($appForm);
 
             if (!this.iconCreator) {
-                this.iconCreator = new IconCreator(this, 'edit');
+                this.iconCreator = new IconCreator(this);
             } else {
                 this.iconCreator.enableEdit();
             }

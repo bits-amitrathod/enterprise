@@ -209,16 +209,7 @@ class WebStudioController(http.Controller):
                 })]
             }
 
-            # set icon related fields (depending on the @icon received)
-            if isinstance(icon, int):
-                icon_id = request.env['ir.attachment'].browse(icon)
-                if not icon_id:
-                    raise UserError(_('The icon is not linked to an attachment'))
-                menu_values['web_icon_data'] = icon_id.datas
-            elif isinstance(icon, list) and len(icon) == 3:
-                menu_values['web_icon'] = ','.join(icon)
-            else:
-                raise UserError(_('The icon has not a correct format'))
+            menu_values.update(self._get_icon_fields(icon))
 
             new_context = dict(request.context)
             new_context.update({'ir.ui.menu.full_list': True})  # allows to create a menu without action
@@ -236,6 +227,23 @@ class WebStudioController(http.Controller):
             'menu_id': new_menu.id,
             'action_id': action.id,
         }
+
+    @http.route('/web_studio/edit_menu_icon', type='json', auth='user')
+    def edit_menu_icon(self, menu_id, icon):
+        values = self._get_icon_fields(icon)
+        request.env['ir.ui.menu'].browse(menu_id).write(values)
+
+    def _get_icon_fields(self, icon):
+        """ Get icon related fields (depending on the @icon received). """
+        if isinstance(icon, int):
+            icon_id = request.env['ir.attachment'].browse(icon)
+            if not icon_id:
+                raise UserError(_('The icon is not linked to an attachment'))
+            return {'web_icon_data': icon_id.datas}
+        elif isinstance(icon, list) and len(icon) == 3:
+            return {'web_icon': ','.join(icon)}
+        else:
+            raise UserError(_('The icon has not a correct format'))
 
     def create_blank_report(self):
         arch = etree.fromstring("""
