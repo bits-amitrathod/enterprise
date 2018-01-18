@@ -69,8 +69,8 @@ var GanttView = AbstractView.extend({
     init: function (viewInfo, params) {
         this._super.apply(this, arguments);
 
-        var arch = viewInfo.arch;
-        var fields = viewInfo.fields;
+        var arch = this.arch;
+        var fields = this.fields;
         var mapping = {name: 'name'};
 
         // gather the fields to get

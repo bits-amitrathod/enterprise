@@ -22,8 +22,8 @@ var GridView = AbstractView.extend({
     init: function (viewInfo, params) {
         var self = this;
         this._super.apply(this, arguments);
-        var arch = viewInfo.arch;
-        var fields = viewInfo.fields;
+        var arch = this.arch;
+        var fields = this.fields;
         var rowFields = [];
         var sectionField, colField, cellField, ranges, cellWidget;
         _.each(arch.children, function (child) {
