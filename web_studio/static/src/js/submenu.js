@@ -37,6 +37,8 @@ var SubMenu = Widget.extend({
         bus.on('redo_available', this, this._onToggleRedo.bind(this, true));
         bus.on('redo_not_available', this, this._onToggleRedo.bind(this, false));
 
+        bus.on('toggle_snack_bar', this, this._onToggleSnackBar);
+
         bus.on('edition_mode_entered', this, this._onEditionModeEntered);
         bus.on('edition_x2m_entered', this, this._onX2MEntered);
     },
@@ -234,6 +236,29 @@ var SubMenu = Widget.extend({
      */
     _onToggleRedo: function (display) {
         this.$('.o_web_studio_redo').toggleClass('o_web_studio_active', display);
+    },
+    /**
+     * @private
+     * @param {string} message
+     * @param {Boolean} [autoRemove] if true, the snackbar will be emptied after
+     *   a short period
+     */
+    _onToggleSnackBar: function (message, autoRemove) {
+        var self = this;
+        if (this.snackBarTimeout) {
+            clearTimeout(this.snackBarTimeout);
+        }
+        this.$('.o_web_studio_snackbar')
+            .empty()
+            .append($('<span>', {
+                text: message,
+            }));
+        if (autoRemove) {
+            this.snackBarTimeout = setTimeout(function () {
+                self.$('.o_web_studio_snackbar')
+                    .empty();
+            }, 3000);
+        }
     },
     /**
      * @private

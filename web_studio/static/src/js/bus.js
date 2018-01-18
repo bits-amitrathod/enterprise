@@ -24,6 +24,11 @@ var bus = new Bus();
  *      the view has entered in edition mode.
  *      @param view_type
  *
+ * `toggle_snack_bar`
+ *     a temporary message needs to be displayed.
+ *     @param message
+ *     @param [autoRemove]
+ *
  * `(un,re)do_clicked`
  *      during the view edition, the button (un,re)do has been clicked.
  *

@@ -176,6 +176,8 @@ var ViewEditorManager = Widget.extend({
 
         var last_op = this.operations.slice(-1)[0];
 
+        bus.trigger('toggle_snack_bar', _t('Saving...'));
+
         var def;
         if (from_xml) {
             def = this._operationsMutex.exec(this._editViewArch.bind(
@@ -245,6 +247,7 @@ var ViewEditorManager = Widget.extend({
                 // TODO: the sidebar will be updated by clicking on the node
                 self.updateSidebar(self.sidebar.state.mode);
             }
+            bus.trigger('toggle_snack_bar', _t('Saved'), true);
         });
     },
     /**
