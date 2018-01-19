@@ -202,7 +202,7 @@ class HrAppraisal(models.Model):
         for appraisal in self:
             if appraisal.state != 'new' and appraisal.state != 'cancel':
                 appraisal_state = dict(self.APPRAISAL_STATES)
-                raise UserError(_("You cannot delete appraisal which is in '%s' state") % (appraisal_state[appraisal.state]))
+                raise UserError(_("You cannot delete appraisal which is in %s state") % (appraisal_state[appraisal.state]))
         return super(HrAppraisal, self).unlink()
 
     @api.model

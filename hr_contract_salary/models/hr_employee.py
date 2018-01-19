@@ -22,10 +22,9 @@ class HrEmployee(models.Model):
         self.ensure_one()
         return self.contract_id.open_package_contract()
 
-    def update_personal_info(self, personal_info):
+    def update_personal_info(self, personal_info, no_name_write=False):
         self.ensure_one()
         partner_values = {
-            'name': personal_info['name'],
             'street': personal_info['street'],
             'street2': personal_info['street2'],
             'city': personal_info['city'],
@@ -34,10 +33,13 @@ class HrEmployee(models.Model):
             'country_id': personal_info['country'],
             'phone': personal_info['phone'],
             'email': personal_info['email'],
+            'type': 'other',
         }
 
         if self.address_home_id:
             partner = self.address_home_id
+            # We shouldn't modify the partner email like this
+            partner_values.pop('email', None)
             self.address_home_id.write(partner_values)
         else:
             partner = self.env['res.partner'].create(partner_values)
@@ -52,7 +54,6 @@ class HrEmployee(models.Model):
             })
 
         vals = {
-            'name': personal_info['name'],
             'gender': personal_info['gender'],
             'disabled': personal_info['disabled'],
             'marital': personal_info['marital'],
@@ -73,6 +74,9 @@ class HrEmployee(models.Model):
             'bank_account_id': bank_account.id,
             'address_home_id': partner.id,
         }
+        if not no_name_write:
+            vals['name'] = personal_info['name']
+
         if personal_info['birthdate'] != '':
             vals.update({'birthday': personal_info['birthdate']})
         self.write(vals)
