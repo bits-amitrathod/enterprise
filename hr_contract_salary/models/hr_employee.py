@@ -33,9 +33,8 @@ class HrEmployee(models.Model):
             'country_id': personal_info['country'],
             'phone': personal_info['phone'],
             'email': personal_info['email'],
+            'type': 'other',
         }
-        if not no_name_write:
-            partner_values['name'] = personal_info['name']
 
         if self.address_home_id:
             partner = self.address_home_id
