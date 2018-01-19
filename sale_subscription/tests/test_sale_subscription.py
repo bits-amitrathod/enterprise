@@ -4,10 +4,12 @@ import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
+from odoo.tests import tagged
 from odoo.tools import mute_logger, float_utils
 from odoo import fields
 
 
+@tagged('post_install', '-at_install')
 class TestSubscription(TestSubscriptionCommon):
 
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.models')
