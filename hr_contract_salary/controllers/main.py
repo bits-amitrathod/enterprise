@@ -135,6 +135,9 @@ class website_hr_contract_salary(http.Controller):
         else:
             new_contract.new_car = False
             new_contract.car_id = advantages['car_id']
+        new_contract.wage_with_holidays = advantages['wage']
+        new_contract.final_yearly_costs = advantages['final_yearly_costs']
+        new_contract._inverse_wage_with_holidays()
 
         vals = new_contract._convert_to_write(new_contract._cache)
         if not no_write and contract.state == 'draft':
