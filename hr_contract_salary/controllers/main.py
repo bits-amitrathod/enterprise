@@ -345,6 +345,8 @@ class website_hr_contract_salary(http.Controller):
                     new_value = new_value[elem]
                 else:
                     new_value = ''
+                if elem == 'holidays':
+                    new_value = new_value - 20.0
             if isinstance(new_value, models.BaseModel):
                 new_value = ''
             if new_value:
