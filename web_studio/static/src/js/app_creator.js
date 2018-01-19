@@ -41,7 +41,18 @@ var AppCreator = AbstractAction.extend(StandaloneFieldManagerMixin, {
      */
     start: function () {
         this._update();
+
+        // namespace the event to remove it easily (because of bind)
+        $('body').on('keypress.app_creator', this._onKeyPress.bind(this));
+
         return this._super.apply(this, arguments);
+    },
+    /**
+     * @override
+     */
+    destroy: function () {
+        $('body').off('keypress.app_creator');
+        this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
@@ -242,6 +253,14 @@ var AppCreator = AbstractAction.extend(StandaloneFieldManagerMixin, {
     _onFieldChanged: function () {
         StandaloneFieldManagerMixin._onFieldChanged.apply(this, arguments);
         this._checkFields(false);
+    },
+    /**
+     * @param {KeyEvent} ev
+     */
+    _onKeyPress: function (ev) {
+        if (ev.which === $.ui.keyCode.ENTER) {
+            this._onNext();
+        }
     },
     /**
      * @private
