@@ -349,6 +349,8 @@ class website_hr_contract_salary(http.Controller):
                     new_value = new_value - 20.0
             if isinstance(new_value, models.BaseModel):
                 new_value = ''
+            if isinstance(new_value, float):
+                new_value = round(new_value, 2)
             if new_value or (new_value == 0.0):
                 request.env['signature.item.value'].sudo().create({
                     'signature_item_id': item.id,
