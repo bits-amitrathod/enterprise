@@ -661,6 +661,38 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('kanban editor with widget', function(assert) {
+        assert.expect(4);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<kanban>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div class='o_kanban_record'>" +
+                                "<field name='display_name' widget='email'/>" +
+                            "</div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>",
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').length, 1,
+            "there should be one node");
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor .o_web_studio_hook').length, 1,
+            "there should be one hook");
+
+        vem.$('.o_web_studio_kanban_view_editor [data-node-id]').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('select[name="widget"]').val(), "email",
+            "the widget in sidebar should be correctly set");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
+            "the field should have the label Display Name in the sidebar");
+
+        vem.destroy();
+    });
+
     QUnit.test('grouped kanban editor', function(assert) {
         assert.expect(4);
 
