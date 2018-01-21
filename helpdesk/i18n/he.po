@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Yihya Hugirat <hugirat@gmail.com>, 2017
+# ExcaliberX <excaliberx@gmail.com>, 2018
+# שהאב חוסיין <shhab89@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Yihya Hugirat <hugirat@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-01-15 14:46+0000\n"
+"PO-Revision-Date: 2018-01-15 14:46+0000\n"
+"Last-Translator: שהאב חוסיין <shhab89@gmail.com>, 2018\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -442,6 +444,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
 msgid "Cancel"
 msgstr "בטל"
+
+#. module: helpdesk
+#: model:helpdesk.stage,name:helpdesk.stage_cancelled
+msgid "Cancelled"
+msgstr "בוטלה"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -983,6 +990,11 @@ msgid ""
 msgstr ""
 
 #. module: helpdesk
+#: model:helpdesk.stage,name:helpdesk.stage_in_progress
+msgid "In Progress"
+msgstr "בתהליך"
+
+#. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Incoming emails create tickets"
 msgstr ""
@@ -1085,7 +1097,7 @@ msgstr ""
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_manager
 msgid "Manager"
-msgstr ""
+msgstr "מנהל"
 
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
@@ -1541,6 +1553,11 @@ msgid "Show all records which has next action date is before today"
 msgstr ""
 
 #. module: helpdesk
+#: model:helpdesk.stage,name:helpdesk.stage_solved
+msgid "Solved"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_team_ids
 msgid ""
 "Specific team that uses this stage. Other teams will not be able to see or "
@@ -1903,7 +1920,7 @@ msgstr ""
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:74
 #, python-format
 msgid "Today"
-msgstr ""
+msgstr "היום"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
