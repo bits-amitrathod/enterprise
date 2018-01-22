@@ -336,7 +336,7 @@ class website_hr_contract_salary(http.Controller):
                 {'role': request.env.ref('website_sign.signature_item_party_employee').id, 'partner_id': new_contract.employee_id.address_home_id.id},
                 {'role': request.env.ref('hr_contract_salary.signature_item_party_job_responsible').id, 'partner_id': new_contract.job_id.hr_responsible_id.partner_id.id}
             ],
-            [new_contract.job_id.hr_responsible_id.id],
+            [new_contract.job_id.hr_responsible_id.partner_id.id],
             'Signature Request - ' + new_contract.name,
             'Signature Request - ' + new_contract.name,
             '',
