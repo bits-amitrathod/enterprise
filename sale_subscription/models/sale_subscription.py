@@ -23,7 +23,7 @@ class SaleSubscription(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(required=True, track_visibility="always")
-    code = fields.Char(string="Reference", required=True, track_visibility="onchange", index=True)
+    code = fields.Char(string="Reference", required=True, track_visibility="onchange", index=True, copy=False)
     state = fields.Selection([('draft', 'New'), ('open', 'In Progress'), ('pending', 'To Renew'),
                               ('close', 'Closed'), ('cancel', 'Cancelled')],
                              string='Status', required=True, track_visibility='onchange', copy=False, default='draft')

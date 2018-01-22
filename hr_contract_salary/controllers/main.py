@@ -129,12 +129,21 @@ class website_hr_contract_salary(http.Controller):
         new_contract.set_attribute_value('internet', advantages['has_internet'])
         new_contract.set_attribute_value('mobile', advantages['has_mobile'])
         new_contract.set_attribute_value('mobile_plus', advantages['international_communication'])
-        if advantages['new_car']:
-            new_contract.new_car = True
-            new_contract.new_car_model_id = advantages['car_id']
+        if advantages['transport_mode'] == 'company_car':
+            if advantages['new_car']:
+                new_contract.new_car = True
+                new_contract.new_car_model_id = advantages['car_id']
+            else:
+                new_contract.new_car = False
+                new_contract.car_id = advantages['car_id']
         else:
             new_contract.new_car = False
-            new_contract.car_id = advantages['car_id']
+            new_contract.new_car_model_id = False
+            new_contract.car_id = False
+
+        new_contract.wage_with_holidays = advantages['wage']
+        new_contract.final_yearly_costs = advantages['final_yearly_costs']
+        new_contract._inverse_wage_with_holidays()
 
         vals = new_contract._convert_to_write(new_contract._cache)
         if not no_write and contract.state == 'draft':
@@ -327,7 +336,7 @@ class website_hr_contract_salary(http.Controller):
                 {'role': request.env.ref('website_sign.signature_item_party_employee').id, 'partner_id': new_contract.employee_id.address_home_id.id},
                 {'role': request.env.ref('hr_contract_salary.signature_item_party_job_responsible').id, 'partner_id': new_contract.job_id.hr_responsible_id.partner_id.id}
             ],
-            [new_contract.job_id.hr_responsible_id.id],
+            [new_contract.job_id.hr_responsible_id.partner_id.id],
             'Signature Request - ' + new_contract.name,
             'Signature Request - ' + new_contract.name,
             '',
@@ -349,7 +358,9 @@ class website_hr_contract_salary(http.Controller):
                     new_value = new_value - 20.0
             if isinstance(new_value, models.BaseModel):
                 new_value = ''
-            if new_value:
+            if isinstance(new_value, float):
+                new_value = round(new_value, 2)
+            if new_value or (new_value == 0.0):
                 request.env['signature.item.value'].sudo().create({
                     'signature_item_id': item.id,
                     'signature_request_id': res['id'],
