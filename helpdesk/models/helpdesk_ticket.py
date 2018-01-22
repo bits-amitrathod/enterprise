@@ -473,8 +473,5 @@ class HelpdeskTicket(models.Model):
 
     # Rating Mixin
 
-    def rating_get_parent_model_name(self, vals):
-        return 'helpdesk.team'
-
-    def rating_get_parent_id(self):
-        return self.team_id.id
+    def rating_get_parent(self):
+        return 'team_id'
