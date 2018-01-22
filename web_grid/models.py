@@ -86,12 +86,9 @@ class Base(models.AbstractModel):
                     row.append(it)
                 else:
                     # generate de novo domain for the cell
-                    d = expression.normalize_domain([
-                        # TODO: how to convert value out of read to domain section?
-                        (f, '=', v if isinstance(v, (pycompat.string_types, bool, pycompat.integer_types, float)) else v[0])
-                        for f, v in r['values'].items()
-                    ])
-                    d = expression.AND([d, c['domain'], domain])
+                    # The domain of the cell is the combination of the domain of the row, the
+                    # column and the view.
+                    d = expression.AND([r['domain'], c['domain'], domain])
                     row.append(self._grid_make_empty_cell(d))
                 row[-1]['is_current'] = c.get('is_current', False)
 

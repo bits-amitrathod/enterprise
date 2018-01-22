@@ -69,7 +69,7 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
         send_ref = str(company.partner_id.id) + str(dt_from[5:7]) + str(dt_to[:4])
         starting_month = dt_from[5:7]
         ending_month = dt_to[5:7]
-        quarter = str(((int(starting_month) - 1) / 3) + 1)
+        quarter = str(((int(starting_month) - 1) // 3) + 1)
 
         date_from = dt_from[0:7] + '-01'
         date_to = dt_to[0:7] + '-' + str(calendar.monthrange(int(dt_to[0:4]), int(ending_month))[1])

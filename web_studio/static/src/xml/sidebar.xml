@@ -493,10 +493,10 @@
             <label for="default_value">Default value</label>
             <t t-if="widget.state.field.type === 'selection'">
                 <select id="default_value" name="default_value" data-type="default_value">
-                    <option t-att-selected="widget.default_value ? undefined : 'selected'"></option>
+                    <option t-att-selected="widget.state.default_value ? undefined : 'selected'"></option>
                     <option t-foreach="widget.state.field.selection" t-as="item"
                         t-att-value="item[0]"
-                        t-att-selected="widget.default_value ===  item[0] ? 'selected' : undefined">
+                        t-att-selected="widget.state.default_value ===  item[0] ? 'selected' : undefined">
                         <t t-esc="item[1]"/>
                     </option>
                 </select>

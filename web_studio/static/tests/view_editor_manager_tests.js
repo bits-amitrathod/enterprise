@@ -78,6 +78,11 @@ QUnit.module('ViewEditorManager', {
                         relation: 'product',
                     },
                     product_ids: {string: "Products", type: "one2many", relation: "product", searchable: true},
+                    priority: {
+                        string: "Priority",
+                        type: "selection",
+                        selection: [['1', "Low"], ['2', "Medium"], ['3', "High"]],
+                    },
                 },
             },
             product: {
@@ -661,8 +666,8 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
-    QUnit.test('kanban editor with field widget', function(assert) {
-        assert.expect(1);
+    QUnit.test('kanban editor with widget', function(assert) {
+        assert.expect(4);
 
         var vem = createViewEditorManager({
             data: this.data,
@@ -671,7 +676,7 @@ QUnit.module('ViewEditorManager', {
                     "<templates>" +
                         "<t t-name='kanban-box'>" +
                             "<div class='o_kanban_record'>" +
-                                "<field name='display_name' widget='char'/>" +
+                                "<field name='display_name' widget='email'/>" +
                             "</div>" +
                         "</t>" +
                     "</templates>" +
@@ -680,6 +685,15 @@ QUnit.module('ViewEditorManager', {
 
         assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').length, 1,
             "there should be one node");
+        assert.strictEqual(vem.$('.o_web_studio_kanban_view_editor .o_web_studio_hook').length, 1,
+            "there should be one hook");
+
+        vem.$('.o_web_studio_kanban_view_editor [data-node-id]').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('select[name="widget"]').val(), "email",
+            "the widget in sidebar should be correctly set");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
+            "the field should have the label Display Name in the sidebar");
 
         vem.destroy();
     });
@@ -1522,6 +1536,42 @@ QUnit.module('ViewEditorManager', {
             "should have edit the view 1 time");
         assert.verifySteps(['field', 'field'],
             "should have clicked again on the node after edition to reload the sidebar");
+
+        vem.destroy();
+    });
+
+    QUnit.test('default value in sidebar', function(assert) {
+        assert.expect(2);
+
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                    "<field name='priority'/>" +
+                "</group>" +
+            "</sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    if (args.field_name === 'display_name') {
+                        return $.when({default_value: 'yolo'});
+                    } else if (args.field_name === 'priority') {
+                        return $.when({default_value: '1'});
+                    }
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        vem.$('[name="display_name"]').click();
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field input[data-type="default_value"]').val(), "yolo",
+            "the sidebar should now display the field properties");
+
+        vem.$('[name="priority"]').click();
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select[data-type="default_value"]').val(), "1",
+            "the sidebar should now display the field properties");
 
         vem.destroy();
     });

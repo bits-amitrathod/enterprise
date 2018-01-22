@@ -25,7 +25,7 @@ class WebsiteSign(http.Controller):
         elif signature_request.create_uid.id != http.request.env.user.id:
             return http.request.not_found()
 
-        signature_item_types = http.request.env['signature.item.type'].search_read([])
+        signature_item_types = http.request.env['signature.item.type'].sudo().search_read([])
         if current_request_item:
             for item_type in signature_item_types:
                 if item_type['auto_field']:

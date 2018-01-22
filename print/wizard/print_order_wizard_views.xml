@@ -31,7 +31,16 @@
                         </div>
 
                         <group>
-                            <field name="print_order_line_wizard_ids" nolabel="1" create="0"/>
+                            <field name="print_order_line_wizard_ids" nolabel="1">
+                                <!-- Redefine the tree view here in order to be able to use 'force_save' -->
+                                <tree string="Print Order Lines" create="0" editable="bottom" decoration-danger="not res_sendable or not partner_has_address">
+                                    <field name="res_name" force_save="1"/>
+                                    <field name="partner_id" force_save="1"/>
+                                    <field name="partner_has_address" invisible="1" force_save="1"/>
+                                    <field name="res_sendable" invisible="1" force_save="1"/>
+                                    <field name="last_send_date" force_save="1"/>
+                                </tree>
+                            </field>
                         </group>
                     </sheet>
                     <footer>

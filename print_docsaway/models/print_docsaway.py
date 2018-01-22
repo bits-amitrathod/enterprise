@@ -369,7 +369,7 @@ class PrintOrder(models.Model):
                 'paper' : order.paper_weight
             }
             try:
-                response = order.provider_id._docsaway_send_document(address, printing_infos, order.attachment_id.datas)
+                response = order.provider_id._docsaway_send_document(address, printing_infos, order.attachment_id.datas.decode('utf-8'))
             except (DocsawayException, UserError) as e:
                 order.write({
                     'state' : 'error',

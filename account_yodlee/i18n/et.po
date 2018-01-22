@@ -24,7 +24,7 @@ msgstr ""
 #: code:addons/account_yodlee/models/yodlee.py:108
 #, python-format
 msgid "(Diagnostic: %r for URL %s)"
-msgstr ""
+msgstr "(Diagnostika: %r URL-ile%s)"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:410
@@ -35,6 +35,10 @@ msgid ""
 "  Please log in to the site to confirm and then complete the site addition "
 "process with the correct login information."
 msgstr ""
+"Konto on juba registreeritud (436): teie automaatset registreerimist ei "
+"õnnestunud lõpule viia, kuna leht andis märku, et teie konto on juba "
+"registreeritud. Palun logi lehele, et kinnitada ja seejärel lõpetada lehe "
+"lisamise protsess korrektse sisselogimise informatsiooniga."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:397
@@ -46,6 +50,10 @@ msgid ""
 " or contact its customer support to resolve this issue.  Once done, please "
 "update your account credentials in case they are changed."
 msgstr ""
+"Konto on lukus (407): meil ei õnnestunud uuendada teie kontot, kuna teie "
+"konto on lukustatud. Ilmselt on keegi või olete liiga palju kordi teinud "
+"sisselogimiskatseid lühikese perioodi jooksul. Palun külastage lehte või "
+"võtke probleemi lahendamiseks ühendust klienditeenindusega."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:424
@@ -55,6 +63,9 @@ msgid ""
 "at the site. Please log in at the site and confirm that your account is set "
 "up, then try again."
 msgstr ""
+"Kontot ei leitud (408): meil on kahju, kuid meil ei õnnestunud teie kontot "
+"leida. Palun logi lehele sisse ja kinnita, et teie konto on seadistatud, "
+"seejärel proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:402
@@ -65,6 +76,9 @@ msgid ""
 "been closed.  Please deactivate or delete the relevant account and try "
 "again."
 msgstr ""
+"Konto on suletud (422): meil ei õnnestu teie konto informatsiooni uuendada, "
+"kuna näib, et üks või mitu teie kontot on suletud. Palun deaktiveerige või "
+"kustutage seotud konto ja proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:399
@@ -73,22 +87,24 @@ msgid ""
 "Account Type Not Supported(417):The type of account we found is not "
 "currently supported.  Please remove this site and add as a  manual account."
 msgstr ""
+"Konto tüüp pole toetatud (417): leitud konto tüüpi hetkel ei toetata. Palun "
+"eemaldage see leht ja lisage konto käsitsi."
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_journal_yodlee_account_status
 msgid "Active/Inactive on Yodlee system"
-msgstr ""
+msgstr "Aktiivne/mitteaktiivne Yodlee süsteemis"
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_additional_status
 msgid "Additional information on status"
-msgstr ""
+msgstr "Lisainformatsioon staatuse kohta"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:432
 #, python-format
 msgid "An Error has occurred (code %s)"
-msgstr ""
+msgstr "Tekkis probleem (kood %s)"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:317
@@ -96,7 +112,7 @@ msgstr ""
 #, python-format
 msgid ""
 "An error has occurred while trying to refresh accounts (type not supported)"
-msgstr ""
+msgstr "Kontode uuendamisel tekkis probleem (tüüpi ei toetata)"
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_res_company
@@ -107,7 +123,7 @@ msgstr "Ettevõtted"
 #: code:addons/account_yodlee/models/yodlee.py:160
 #, python-format
 msgid "Could not retrieve login form for siteId: %s (%s)"
-msgstr ""
+msgstr "SiteId isselogimisvormi ei õnnestunud laadida: %s (%s)"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:394
@@ -117,6 +133,9 @@ msgid ""
 "because your username and/or password were reported to be incorrect.  Please"
 " re-verify your username and password."
 msgstr ""
+"Volitus on vaja üle kontrollida (402): meil ei õnnestunud teie kontot "
+"uuendada, kuna teie kasutajanimi ja/või parool on valed. Palun kinnitage "
+"uuesti oma kasutajanimi ja parool."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:400
@@ -125,6 +144,8 @@ msgid ""
 "Credential Re-Verification Required (420):The site has merged with another. "
 "Please re-verify your credentials at the site and update the same."
 msgstr ""
+"Uuesti tõendamine nõutud (420): leht on ühendatud teisega. Palun kinnitage "
+"lehe volitused uuesti ja värskendaga seda."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:311
@@ -133,12 +154,14 @@ msgid ""
 "Different error have occurred on different accounts, see provider account "
 "message for details"
 msgstr ""
+"Erinevad vead on ilmunud erinevatel kontodel. Vaata teenusepakkuja sõnumit "
+"üksikasjade jaoks."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:102
 #, python-format
 msgid "Error %s, message: %s, reference code: %s"
-msgstr ""
+msgstr "Viga %s, sõnum: %s, viitekood: %s"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:393
@@ -147,6 +170,8 @@ msgid ""
 "Home Value Not Found (511): The site is unable to provide home value for "
 "your property. We suggest you to delete this site."
 msgstr ""
+"Kodu väärtust ei leitud (511): lehel ei õnnestu pakkuda kodu väärtust teie "
+"varale. Me sooviteme teil kustutada see leht."
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_journal
@@ -161,6 +186,8 @@ msgid ""
 "is not English. Please visit the site and change the language setting to "
 "English."
 msgstr ""
+"Kehtetud keeleseaded (421): teie lehe konto keel pole inglise keel. Palun "
+"külasta lehte ja muuda keel inglise keeleks."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:416
@@ -171,6 +198,10 @@ msgid ""
 "introduced. Ensure your account settings in <Cobrand> are updated with this "
 "information."
 msgstr ""
+"MFA viga: nõutud on täiendava autentimise registreerimine (521): palun "
+"sisesta uus turvalisuse autentimise süsteem, <Account Name> on kasutusele "
+"võetud. Veenduge, et teie konto seadeid <Cobrand> on uuendatud selle "
+"informatsiooniga."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:419
@@ -179,6 +210,8 @@ msgid ""
 "MFA error: Authentication Information Expired (524):We're sorry, the "
 "authentication information you provided has expired. Please try again."
 msgstr ""
+"MFA viga: autentimise teave on aegunud (524): vabandame, kuid teie "
+"autentimise informatsioon on aegunud. Palun proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:415
@@ -188,6 +221,9 @@ msgid ""
 "indicates that the additional authentication information you provided is "
 "incorrect. Please try updating your account again."
 msgstr ""
+"MFA viga: autentimise teave on vale (520): vabandame, aga leht viitab "
+"sellele, et teie autentimise informatsioon on vale. Palun proovige uuesti "
+"oma kontot uuendada!"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:418
@@ -196,6 +232,8 @@ msgid ""
 "MFA error: Authentication Information Incorrect (523):We're sorry, the "
 "authentication information you  provided is incorrect. Please try again."
 msgstr ""
+"MFA viga: autentimise informatsioon on vale (523): vabandame, kuid teie "
+"esitatud autentimise informatsioon on vale. Palun proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:414
@@ -205,6 +243,9 @@ msgid ""
 "updated as your authentication information like security question and answer"
 " was unavailable or incomplete. Please update your account settings."
 msgstr ""
+"MFA viga: autentimise informatsioon on nõutud (519): teie kontot ei "
+"värskendatud, sest teie autentimisandmed nagu turvaküsimused ja vastused, "
+"olid kättesaamatud või puudulikud. Palun uuenda oma konto seadeid."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:413
@@ -214,6 +255,9 @@ msgid ""
 " updated as the required additional authentication information was "
 "unavailable. Please try now."
 msgstr ""
+"MFA viga: autentimise informatsioon pole saadaval (518): teie kontot ei "
+"uuendatud, kuna nõutav täiendav autentimise informatsioon ei olnud "
+"kättesaadav. Palun proovige nüüd uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:420
@@ -223,6 +267,9 @@ msgid ""
 "your account because your username/password or additional security "
 "credentials are incorrect. Please try again."
 msgstr ""
+"MFA viga: nõutud on volituste uuesti kontrollimine (526): meil ei õnnestunud"
+" uuendada teie kontot, kuna teie kasutanimi/parool või täiendavad "
+"turvavolitused on valed. Palun proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:431
@@ -232,6 +279,10 @@ msgid ""
 "for technical reasons. This type of error is usually resolved in a few days."
 " We apologize for the inconvenience. Please try again later."
 msgstr ""
+"MFA viga: konto uuendamise probleem (525): tehnilistel põhjustel meil ei "
+"õnnestunud uuendada teie kontot. Seda tüüpi viga lahendatakse tavaliselt "
+"mõne päeva jooksul. Vabandame tekkinud segaduste pärast. Palun proovige "
+"hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:417
@@ -241,6 +292,9 @@ msgid ""
 "required security information was unavailable or was not provided within the"
 " expected time. Please try again."
 msgstr ""
+"MFA viga: taotlus on aegunud (522): teie taotlus on aegunud, kuna nõutud "
+"turvateave ei olnud kättesaadav või ei olnud kättesaadav oodatud aja "
+"jooksul. Palun proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:429
@@ -250,6 +304,10 @@ msgid ""
 "update your account because your token is no longer valid at the site. "
 "Please update your information and try again, or contact customer support."
 msgstr ""
+"MFA viga: lehe seadme informatsioon on aegunud (509): vabandame, kuid meil "
+"ei õnnestu teie kontot uuendada, kuna teie lehe 'token' ei ole enam kehtiv. "
+"Palun uuendage oma informatsiooni ja proovige uuesti või võtke ühendust "
+"klienditeenindusega."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:385
@@ -259,6 +317,9 @@ msgid ""
 "session was already established at the same time.  If you are currently "
 "logged on to this account directly, please log off and try after some time"
 msgstr ""
+"Mitme kasutaja sisselogimine (416): püüdsime uuendada teie kontot, kuid "
+"teine sessioon loodi samal ajal. Kui te olete hetkel kontol sisse logitud, "
+"siis palun logige välja ja proovige mõne aja pärast."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:411
@@ -268,6 +329,9 @@ msgid ""
 " need to provide additional information. Please update your account and try "
 "again."
 msgstr ""
+"Uus sisselogimisteave on nõutud (506): vabandame, kuid lehele logimiseks "
+"peate esitama lisainformatsiooni. Palun uuendage oma kontot ja proovige "
+"uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:387
@@ -278,6 +342,9 @@ msgid ""
 "persists, please contact customer support at online@odoo.com for further "
 "assistance."
 msgstr ""
+"Kontot ei leitud (423): me ei suutnud leida kontot. Palun kinnitage, et teie"
+" konto informatsioon on hetkel kättesaadav ning kui probleem püsib, siis "
+"palun võtke ühendust klienditeenindusega e-kirja teel online@odoo.com."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:412
@@ -286,24 +353,26 @@ msgid ""
 "No Payees Found(512):Your request cannot be completed as no payees were "
 "found in your account."
 msgstr ""
+"Maksesaajat ei leitud (512): teie taotlust ei saa lõpule viia, kuna teie "
+"kontol ei leitud maksesaajat."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:48
 #, python-format
 msgid "Please configure an email in the company settings."
-msgstr ""
+msgstr "Palun seadistage e-posti aadress ettevõtte seadete alt."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:145
 #, python-format
 msgid "Please enter at least 3 characters for the search"
-msgstr ""
+msgstr "Palun sisestage otsingu jaoks vähemalt 3 tähemärki."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:198
 #, python-format
 msgid "Please fill all required fields"
-msgstr ""
+msgstr "Palun täitke kõik nõutud väljad"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:396
@@ -314,6 +383,10 @@ msgid ""
 "or contact its customer support to resolve this issue. Once done, please "
 "update your account credentials in case they are changed else try again."
 msgstr ""
+"Konto uuendamise probleem (406): me ei saanud teie kontot uuendada, kuna "
+"leht nõuab täiendavaid toiminguid. Palun külastage lehte või probleemi "
+"lahendamiseks võtke ühendust klienditeenindusega. Kui tehtud, siis uuendage "
+"oma konto volitusi, kui need on muutunud, muul juhul proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:430
@@ -322,6 +395,8 @@ msgid ""
 "Problem Updating Account (517) :We'resorry, there was a technical problem "
 "updating your account. Please try again."
 msgstr ""
+"Probleem konto uuendamisel (517): meil on tekkinud probleem teie konto "
+"uuendamisega. Vabandame! Palun proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:421
@@ -330,6 +405,8 @@ msgid ""
 "Problem Updating Account(401):We're sorry, your request timed out. Please "
 "try again."
 msgstr ""
+"Probleem konto uuendamisel (401): teie taotlus aegus. Vabandame! Palun "
+"proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:422
@@ -339,6 +416,9 @@ msgid ""
 "updating your account. This kind of error is usually resolved in a few days."
 " Please try again later."
 msgstr ""
+"Probleem konto uuendamisel (403): vabandame, kuid teie konto uuendamisel "
+"tekkis tehniline probleem. Sellist tüüpi viga lahendatakse tavaliselt mõne "
+"päeva jooksul. Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:423
@@ -347,6 +427,8 @@ msgid ""
 "Problem Updating Account(404):We're sorry, there was a technical problem "
 "updating your account. Please try again later."
 msgstr ""
+"Probleem konto uuendamisel (404): vabandame, kuid konto uuendamisel tekkis "
+"tehniline probleem. Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:381
@@ -355,6 +437,8 @@ msgid ""
 "Problem Updating Account(409): We could not update your account because the "
 "end site is experiencing technical difficulties."
 msgstr ""
+"Probleem konto uuendamisel (409): meil ei õnnestunud teie kontot uuendada, "
+"kuna lõpp-lehel on tehnilisi probleeme."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:383
@@ -363,6 +447,8 @@ msgid ""
 "Problem Updating Account(412): We could not update your account because the "
 "site is experiencing technical difficulties."
 msgstr ""
+"Probleem konto uuendamisel (412): meil ei õnnestunud uuendada teie kontot "
+"kuna lehel on tehnilisi probleeme."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:425
@@ -372,6 +458,9 @@ msgid ""
 "at the site because of a technical issue. This type of problem is usually "
 "resolved in a few days. Please try again later."
 msgstr ""
+"Probleem konto uuendamisel (413): vabandame, kuid meil ei õnnestunud "
+"tehniliste probleemide tõttu teie kontot uuendada. Sellist tüüpi probleem "
+"lahendatakse tavaliselt mõne päeva jooksul. Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:384
@@ -380,6 +469,8 @@ msgid ""
 "Problem Updating Account(415): We could not update your account because the "
 "site is experiencing technical difficulties."
 msgstr ""
+"Probleem konto uuendamisel (415): meil ei õnnestunud teie kontot uuendada, "
+"kuna lehel on tehnilisi probleeme."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:386
@@ -388,6 +479,8 @@ msgid ""
 "Problem Updating Account(418): We could not update your account because the "
 "site is experiencing technical difficulties. Please try later."
 msgstr ""
+"Probleem konto uuendamisel (418): meil ei õnnestunud uuendada teie kontot "
+"kuna lehel on tehnilisi probleeme. Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:426
@@ -397,6 +490,9 @@ msgid ""
 "because of unexpected variations at the site. This kind of problem is "
 "usually resolved in a few days. Please try again later."
 msgstr ""
+"Probleem konto uuendamisel (419): vabandame, kuid meil ei õnnestunud "
+"ootamatute erinevuste tõttu teie kontot uuendada. Sellist tüüpi probleem "
+"lahendatakse tavaliselt mõne päeva jooksul. Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:389
@@ -405,6 +501,8 @@ msgid ""
 "Problem Updating Account(425): We could not update your account because the "
 "site is experiencing technical difficulties. Please try later."
 msgstr ""
+"Probleem konto uuendamisel (425): meil ei õnnestunud uuendada teie kontot "
+"kuna lehel on tehnilisi probleeme. Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:390
@@ -414,6 +512,9 @@ msgid ""
 "technical reasons. This type of error is usually resolved in a few days. We "
 "apologize for the inconvenience."
 msgstr ""
+"Probleem konto uuendamisel (426): meil ei õnnestunud tehniliste probleemide "
+"tõttu teie kontot uuendada. Sellist tüüpi probleem lahendatakse tavaliselt "
+"mõne päeva jooksul. Vabandame ebamugavuste pärast!"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:427
@@ -423,6 +524,9 @@ msgid ""
 " data updates for this site, and it may take a few days to be successful as "
 "we get started. Please try again later."
 msgstr ""
+"Probleem konto uuendamisel (507): Yodlee alustas lehel andmete uuendamist "
+"ning see võib võtta aega mõned päevad enne, kui saame edukalt alustada. "
+"Vabandame! Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:392
@@ -432,6 +536,9 @@ msgid ""
 "information for your address. Please verify if the property address you have"
 " provided is correct."
 msgstr ""
+"Vara kirjet ei leitud (510): lehel ei õnnestunud leida teie vara "
+"omandiinformatsioon. Palun kontrollige, et antud vara aadress oleks "
+"korrektne."
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_provider
@@ -446,6 +553,9 @@ msgid ""
 "site requiring you to verify your personal information. Please log in to the"
 " site and update the fields required."
 msgstr ""
+"Uuesti üle kontrollimine nõutud (429): Meil ei õnnestunud teie kontot "
+"uuendada, kuna teie kontol on vaja personaalne informatsioon üle "
+"kontrollida. Palun logige lehele ja uuendage nõutud väljad."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:403
@@ -456,6 +566,10 @@ msgid ""
 "click through to your account overview page to update the account.  We "
 "apologize for the inconvenience."
 msgstr ""
+"Uuesti üle kontrollimine nõutud (427): Meil ei õnnestunud teie kontot "
+"uuendada, kuna leht nõuab uue reklaami vaatamist. Palun logige lehele ja "
+"vajutage konto ülevaate lehele, et uuendada kontot. Me vabandame tekkinud "
+"ebamugavuste pärast!"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:404
@@ -465,6 +579,9 @@ msgid ""
 "site requiring you to accept a new Terms & Conditions. Please log in to the "
 "site and read and accept the T&C."
 msgstr ""
+"Uuesti üle kontrollimine nõutud (428): Meil ei õnnestunud teie kontot "
+"uuendada, kuna enne tuleb nõustuda uute nõuete ja tingimustega. Palun logige"
+" lehele ja nõustuge nõuete ja tingimustega."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:407
@@ -474,6 +591,9 @@ msgid ""
 "Please complete your registration at the end site. Once completed, please "
 "complete adding this account."
 msgstr ""
+"Registreerimine nõuab tähelepanu (433): automaatne registreerimine ei ole "
+"täielik. Palun viige oma registreerimine lõpuni lehe lõpus. Kui lõpetatud, "
+"siis saate lõpetada selle konto lisamise."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:408
@@ -483,6 +603,9 @@ msgid ""
 "completed and requires further input from you.  Please re-verify your "
 "registration information to complete the process."
 msgstr ""
+"Registreerimine nõuab tähelepanu (434): automaatne registreerimine ei ole "
+"täielik ning vajab teilt täiendavat sisendinfot. Palun kinnitage uuesti oma "
+"registreerimise informatsioon, et lõpetada registreerimisprotsess."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:409
@@ -492,6 +615,9 @@ msgid ""
 "completed and requires further input from you.  Please re-verify your "
 "registration information to complete the process."
 msgstr ""
+"Registreerimine nõuab tähelepanu (435): automaatne registreerimine ei ole "
+"täielik ning vajab teilt täiendavat sisendinfot. Palun kinnitage uuesti oma "
+"registreerimise informatsioon, et lõpetada registreerimisprotsess."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:428
@@ -500,6 +626,8 @@ msgid ""
 "Request Timed Out (508): We are sorry, your request timed out due to "
 "technical reasons. Please try again."
 msgstr ""
+"Taotlus on aegunud (508): vabandame, aga teie taotlus aegus tänu "
+"tehnilistele põhjustele. Palun proovige uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:398
@@ -509,6 +637,9 @@ msgid ""
 "account. You may have selected a similar site under a different category by "
 "accident in which case you should select the correct site."
 msgstr ""
+"Nõutavat konto tüüpi ei leitud (414): meil ei õnnestunud leida teie soovitud"
+" kontot. Võimalik, et valisite ekslikult sarnase lehe erineva kategooria alt"
+" ning peaksite valima uuesti õige lehe."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:388
@@ -519,6 +650,9 @@ msgid ""
 "inconvenience.  This problem is typically resolved in a few hours. Please "
 "try later."
 msgstr ""
+"Lehel toimub hooldus (424): me ei saa uuendada teie kontot, kuna leht on "
+"ajutiselt maas. Vabandame tekkinud ebamugavuste pärast! Selline probleem "
+"laheneb tavaliselt paari tunni jooksul. Palun proovige hiljem uuesti."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:382
@@ -527,6 +661,8 @@ msgid ""
 "Site No Longer Available (411):The site no longer provides online services "
 "to its customers.  Please delete this account."
 msgstr ""
+"Leht pole enam saadaval (411): See leht ei paku enam klientidele online "
+"teenuseid. Palun kustutage see konto."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:406
@@ -536,6 +672,9 @@ msgid ""
 "updates. Please deactivate or delete your account. We apologize for the "
 "inconvenience."
 msgstr ""
+"Lehte enam ei toetata (430): seda lehte enam ei toetata andmete "
+"uuendamisega. Palun deaktiveerige või kustutage oma konto. Vabandame "
+"ebamugavuste pärast."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:391
@@ -545,18 +684,21 @@ msgid ""
 "used by this site. We apologize for any inconvenience. Check back "
 "periodically if this situation has changed."
 msgstr ""
+"Lehte ei toetata (505): me hetkel ei toeta selle lehe poolt kasutatavat "
+"turvasüsteemi. Vabandame ebamugavuste pärast! Vaadake perioodiliselt uuesti,"
+" kas olukord on muutunud."
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
 msgid "Technical field: scheduled time for yodlee to perform an update"
-msgstr ""
+msgstr "Tehniline väli: määra uuendamise aeg Yodlee süsteemi jaoks"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:273
 #: code:addons/account_yodlee/models/yodlee.py:274
 #, python-format
 msgid "Timeout: Could not retrieve accounts informations"
-msgstr ""
+msgstr "Aegunud: kontoteavet ei õnnestunud laadida"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:60
@@ -574,48 +716,50 @@ msgid ""
 "Update Request Canceled(405):Your account was not updated because you "
 "canceled the request."
 msgstr ""
+"Uuendamise taotlus on tühistatud (405): teie kontot ei uuendatud, kuna te "
+"tühistasite taotluse"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_account_status
 msgid "Yodlee Account Status"
-msgstr ""
+msgstr "Yodlee konto olek"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_additional_status
 msgid "Yodlee Additional Status"
-msgstr ""
+msgstr "Yodlee täiendav olek"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_last_attempted_refresh
 msgid "Yodlee Last Attempted Refresh"
-msgstr ""
+msgstr "Yodlee viimane värskendamise proov"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
 msgid "Yodlee Next Schedule Refresh"
-msgstr ""
+msgstr "Yodlee järgmine ajastatud värskendamine"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_status_code
 msgid "Yodlee Status Code"
-msgstr ""
+msgstr "Yodlee oleku kood"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_access_token
 msgid "Yodlee access token"
-msgstr ""
+msgstr "Yodlee juurdepääsukood"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_login
 msgid "Yodlee login"
-msgstr ""
+msgstr "Logi Yodlee'sse"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_password
 msgid "Yodlee password"
-msgstr ""
+msgstr "Yodlee parool"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_access_token
 msgid "access_token"
-msgstr ""
+msgstr "access_token"

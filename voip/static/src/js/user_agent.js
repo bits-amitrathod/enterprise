@@ -434,7 +434,7 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
                 };
                 self.dialog = Dialog.confirm(self, content, options);
                 self.dialog.on('closed', self, function () {
-                    if (inviteSession) {
+                    if (inviteSession && !self.onCall) {
                         inviteSession.reject();
                     }
                     self.incomingtone.pause();

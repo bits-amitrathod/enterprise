@@ -401,13 +401,19 @@ var SalaryPackageWidget = Widget.extend({
         return !invalid_email && !required_empty_input && !required_empty_select;
     },
 
+    get_form_info: function() {
+        return {
+            'contract_id': parseInt($("input[name='contract']")[0].id),
+            'token': $("input[name='token']").val(),
+            'advantages': this.get_advantages(),
+        };
+    },
+
     submit_salary_package: function(event) {
         if (this.check_form_validity()) {
-            ajax.jsonRpc('/salary_package/submit/', 'call', {
-                'contract_id': parseInt($("input[name='contract']")[0].id),
-                'token': $("input[name='token']").val(),
-                'advantages': this.get_advantages(),
-            }).then(function (data) {
+            ajax.jsonRpc('/salary_package/submit/', 'call',
+                this.get_form_info()
+            ).then(function (data) {
                 if (data['error']) {
                     $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + data['error_msg'] + "</div>");
                 } else {

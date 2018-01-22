@@ -130,7 +130,12 @@ class AccountPayment(models.Model):
             PstlAdr = create_xml_node(Dbtr, 'PstlAdr')
             if partner.country_id and partner.country_id.code:
                 create_xml_node(PstlAdr, 'Ctry', partner.country_id.code)
-            create_xml_node(PstlAdr, 'AdrLine', partner.contact_address)
+            n_line = 0
+            contact_address = partner.contact_address.replace('\n', ' ').strip()
+            while contact_address and n_line < 2:
+                create_xml_node(PstlAdr, 'AdrLine', contact_address[:70])
+                contact_address = contact_address[70:]
+                n_line = n_line + 1
 
         create_xml_node_chain(DrctDbtTxInf, ['DbtrAcct','Id','IBAN'], self.sdd_mandate_id.partner_bank_id.sanitized_acc_number)
 

@@ -210,3 +210,12 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         self.assertEquals(xml.CfdiRelacionados.CfdiRelacionado.get('UUID'),
                           invoice.l10n_mx_edi_cfdi_uuid,
                           'Invoice UUID is different to CFDI related')
+
+        # -----------------------
+        # Testing invoice without product to verify no traceback
+        # -----------------------
+        invoice = self.create_invoice()
+        invoice.invoice_line_ids[0].product_id = False
+        invoice.compute_taxes()
+        invoice.action_invoice_open()
+        self.assertEqual(invoice.state, "open")
