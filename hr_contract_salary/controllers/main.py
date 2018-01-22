@@ -129,12 +129,18 @@ class website_hr_contract_salary(http.Controller):
         new_contract.set_attribute_value('internet', advantages['has_internet'])
         new_contract.set_attribute_value('mobile', advantages['has_mobile'])
         new_contract.set_attribute_value('mobile_plus', advantages['international_communication'])
-        if advantages['new_car']:
-            new_contract.new_car = True
-            new_contract.new_car_model_id = advantages['car_id']
+        if advantages['transport_mode'] == 'company_car':
+            if advantages['new_car']:
+                new_contract.new_car = True
+                new_contract.new_car_model_id = advantages['car_id']
+            else:
+                new_contract.new_car = False
+                new_contract.car_id = advantages['car_id']
         else:
             new_contract.new_car = False
-            new_contract.car_id = advantages['car_id']
+            new_contract.new_car_model_id = False
+            new_contract.car_id = False
+
         new_contract.wage_with_holidays = advantages['wage']
         new_contract.final_yearly_costs = advantages['final_yearly_costs']
         new_contract._inverse_wage_with_holidays()
