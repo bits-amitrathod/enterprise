@@ -178,7 +178,7 @@ class PrintOrder(models.Model):
             :param bin_pdf : binary content of the pdf file
         """
         pages = 0
-        for match in re.compile(r"/Count\s+(\d+)").finditer(bin_pdf):
+        for match in re.compile(b"/Count\s+(\d+)").finditer(bin_pdf):
             pages = int(match.group(1))
         return pages
 

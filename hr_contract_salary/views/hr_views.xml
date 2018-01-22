@@ -27,7 +27,7 @@
             </xpath>
             <xpath expr="//button[@name='create_employee_from_applicant']" position="after">
                 <button string="Create Offer" name="create_offer" type="object"
-                        class="oe_highlight" attrs="{'invisible': [('default_contract_id', '=', False)]}"/>
+                        class="oe_highlight" attrs="{'invisible': [('default_contract_id', '=', False)]}" invisible="1"/>
             </xpath>
             <xpath expr="//button[@name='create_employee_from_applicant']" position="attributes">
                 <attribute name="attrs">{'invisible': ['|', '|', ('emp_id', '!=', False), ('active', '=', False), ('default_contract_id', '!=', False)]}</attribute>
@@ -60,9 +60,9 @@
                 </div>
             </div>
             <xpath expr="//field[@name='state']" position="before">
-                <button string="Preview Contract" name="open_package_contract" type="object" attrs="{'invisible': [('employee_id', '=', False)]}"/>
-                <button string="Send Offer" name="send_offer" id="send_offer1" type="object" class="oe_highlight" attrs="{'invisible': [('active_employee', '=', True)]}"/>
-                <button string="Send Contract Link" name="send_offer" id="send_offer2" type="object" attrs="{'invisible': [('active_employee', '=', False)]}" class="oe_highlight"/>
+                <button string="Preview Contract" name="open_package_contract" type="object" attrs="{'invisible': [('employee_id', '=', False)]}" invisible="1"/>
+                <button string="Send Offer" name="send_offer" id="send_offer1" type="object" class="oe_highlight" attrs="{'invisible': [('active_employee', '=', True)]}" invisible="1"/>
+                <button string="Send Contract Link" name="send_offer" id="send_offer2" type="object" attrs="{'invisible': [('active_employee', '=', False)]}" class="oe_highlight" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='type_id']" position="after">
                 <field name="origin_contract_id" attrs="{'invisible': [('origin_contract_id', '=', False)]}"/>
@@ -102,9 +102,6 @@
             <field name="state" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
-            <xpath expr="//button[@id='send_offer1']" position="replace"/>
-            <xpath expr="//button[@id='send_offer2']" position="replace"/>
-            <xpath expr="//button[@name='open_package_contract']" position="replace"/>
         </field>
     </record>
 

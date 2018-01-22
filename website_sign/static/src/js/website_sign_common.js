@@ -182,7 +182,7 @@ odoo.define('website_sign.PDFIframe', function (require) {
             });
         },
 
-        createSignatureItem: function(type, required, responsible, posX, posY, width, height, value) {
+        createSignatureItem: function(type, required, responsible, posX, posY, width, height, value, name) {
             var self = this;
             var readonly = this.readonlyFields || (responsible > 0 && responsible !== this.role) || !!value;
 

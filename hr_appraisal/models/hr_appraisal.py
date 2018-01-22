@@ -25,7 +25,7 @@ class HrAppraisal(models.Model):
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id)
     color = fields.Integer(string='Color Index', help='This color will be used in the kanban view.')
     employee_id = fields.Many2one('hr.employee', required=True, string='Employee', index=True)
-    department_id = fields.Many2one('hr.department', related='employee_id.department_id', string='Department', store=True)
+    department_id = fields.Many2one('hr.department', related='employee_id.department_id', string='Department', store=True, readonly=True)
     date_close = fields.Date(string='Appraisal Deadline', required=True)
     state = fields.Selection(APPRAISAL_STATES, string='Status', track_visibility='onchange', required=True, readonly=True, copy=False, default='new', index=True)
     manager_appraisal = fields.Boolean(string='Manager', help="This employee will be appraised by his managers")
@@ -202,7 +202,7 @@ class HrAppraisal(models.Model):
         for appraisal in self:
             if appraisal.state != 'new' and appraisal.state != 'cancel':
                 appraisal_state = dict(self.APPRAISAL_STATES)
-                raise UserError(_("You cannot delete appraisal which is in '%s' state") % (appraisal_state[appraisal.state]))
+                raise UserError(_("You cannot delete appraisal which is in %s state") % (appraisal_state[appraisal.state]))
         return super(HrAppraisal, self).unlink()
 
     @api.model

@@ -78,6 +78,11 @@ QUnit.module('ViewEditorManager', {
                         relation: 'product',
                     },
                     product_ids: {string: "Products", type: "one2many", relation: "product", searchable: true},
+                    priority: {
+                        string: "Priority",
+                        type: "selection",
+                        selection: [['1', "Low"], ['2', "Medium"], ['3', "High"]],
+                    },
                 },
             },
             product: {
@@ -1531,6 +1536,42 @@ QUnit.module('ViewEditorManager', {
             "should have edit the view 1 time");
         assert.verifySteps(['field', 'field'],
             "should have clicked again on the node after edition to reload the sidebar");
+
+        vem.destroy();
+    });
+
+    QUnit.test('default value in sidebar', function(assert) {
+        assert.expect(2);
+
+        var arch = "<form><sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                    "<field name='priority'/>" +
+                "</group>" +
+            "</sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    if (args.field_name === 'display_name') {
+                        return $.when({default_value: 'yolo'});
+                    } else if (args.field_name === 'priority') {
+                        return $.when({default_value: '1'});
+                    }
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        vem.$('[name="display_name"]').click();
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field input[data-type="default_value"]').val(), "yolo",
+            "the sidebar should now display the field properties");
+
+        vem.$('[name="priority"]').click();
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select[data-type="default_value"]').val(), "1",
+            "the sidebar should now display the field properties");
 
         vem.destroy();
     });

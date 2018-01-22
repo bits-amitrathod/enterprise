@@ -16,15 +16,10 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def action_invoice_open(self):
+        for invoice in self:
+            if invoice.fiscal_position_id.is_taxcloud and invoice.type in ['out_invoice', 'out_refund']:
+                invoice.validate_taxes_on_invoice()
         return super(AccountInvoice, self.with_context(taxcloud_authorize_transaction=True)).action_invoice_open()
-
-    @api.multi
-    def invoice_validate(self):
-        res = True
-        if self.fiscal_position_id.is_taxcloud and self.type in ['out_invoice', 'out_refund']:
-            res = self.validate_taxes_on_invoice()
-        super(AccountInvoice, self).invoice_validate()
-        return res
 
     def _get_partner(self):
         return self.partner_id
