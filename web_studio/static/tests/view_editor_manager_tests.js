@@ -29,7 +29,7 @@ var createViewEditorManager = function (params) {
         return this._super(route, args);
     };
     var mockServer = testUtils.addMockEnvironment(widget, params);
-    var fieldsView = mockServer.fieldsViewGet(params);
+    var fieldsView = testUtils.fieldsViewGet(mockServer, params);
     if (params.viewID) {
         fieldsView.view_id = params.viewID;
     }
@@ -43,6 +43,7 @@ var createViewEditorManager = function (params) {
     };
     var vem = new ViewEditorManager(widget, {
         fields_view: fieldsView,
+        viewType: fieldsView.type,
         view_env: env,
         studio_view_id: params.studioViewID,
         chatter_allowed: params.chatter_allowed,
@@ -493,6 +494,7 @@ QUnit.module('ViewEditorManager', {
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             form: fieldsView,
                         }
@@ -558,6 +560,7 @@ QUnit.module('ViewEditorManager', {
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             form: fieldsView,
                         }
@@ -809,6 +812,7 @@ QUnit.module('ViewEditorManager', {
                             "</templates>" +
                         "</kanban>";
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             kanban: fieldsView,
                         }
@@ -899,6 +903,7 @@ QUnit.module('ViewEditorManager', {
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             search: fieldsView,
                         }
@@ -1025,6 +1030,7 @@ QUnit.module('ViewEditorManager', {
                     // by the ViewEditorManager
                     fieldsView.arch = "<tree><field name='id'/></tree>";
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             list: fieldsView,
                         }
@@ -1150,6 +1156,7 @@ QUnit.module('ViewEditorManager', {
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             list: fieldsView,
                         },
@@ -1216,6 +1223,7 @@ QUnit.module('ViewEditorManager', {
                     }
                     nbEdit++;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             list: fieldsView,
                         },
@@ -1287,6 +1295,7 @@ QUnit.module('ViewEditorManager', {
                     assert.ok(true, "should edit the view to delete the field");
                     fieldsView.arch = "<tree><field name='display_name'/></tree>";
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             list: fieldsView,
                         },
@@ -1448,6 +1457,7 @@ QUnit.module('ViewEditorManager', {
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             form: fieldsView,
                         }
@@ -1511,6 +1521,7 @@ QUnit.module('ViewEditorManager', {
                     // by the ViewEditorManager
                     fieldsView.arch = arch;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             form: fieldsView,
                         }
@@ -1640,6 +1651,7 @@ QUnit.module('ViewEditorManager', {
                     assert.ok(true, "should have refreshed the view");
                     fieldsView.arch = arch;
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             list: fieldsView,
                         },
@@ -1721,6 +1733,11 @@ QUnit.module('ViewEditorManager', {
         var $one2many = vem.$('.o_field_one2many.o_field_widget');
         assert.strictEqual($one2many.children().length, 2,
             "The one2many widget should be displayed");
+
+        // TODO: mock loadViews(?) to add a `name` (this is the way Studio
+        // detects if the view is inline or not) and check if create_inline_view
+        // is correctly called
+
         vem.destroy();
     });
 
@@ -1736,14 +1753,13 @@ QUnit.module('ViewEditorManager', {
             arch: "<form>" +
                 "<sheet>" +
                     "<field name='display_name'/>" +
-                    "<field name='product_ids'/>" +
+                    "<field name='product_ids'>" +
+                        "<tree><field name='display_name'/></tree>" +
+                    "</field>" +
                 "</sheet>" +
             "</form>",
             model: "coucou",
             data: this.data,
-            archs: {
-                "product,false,list": '<tree><field name="display_name"/></tree>'
-            },
             mockRPC: function (route, args) {
                 if (route === '/web_studio/get_default_value') {
                     assert.step(args.model_name);
@@ -1796,6 +1812,7 @@ QUnit.module('ViewEditorManager', {
                         }
                     };
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             form: fieldsView,
                         },
@@ -1904,6 +1921,7 @@ QUnit.module('ViewEditorManager', {
                         },
                     };
                     return $.when({
+                        fields: fieldsView.fields,
                         fields_views: {
                             form: fieldsView,
                         },

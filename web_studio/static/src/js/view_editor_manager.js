@@ -69,6 +69,7 @@ var ViewEditorManager = Widget.extend({
      * @param {Widget} parent
      * @param {Object} params
      * @param {Object} params.fields_view
+     * @param {string} params.viewType
      * @param {Object} params.view_env - action environment shared between views
      *    (id, context, etc.)
      * @param {Object} [params.chatter_allowed]
@@ -79,10 +80,14 @@ var ViewEditorManager = Widget.extend({
         this._super.apply(this, arguments);
 
         this.fields_view = params.fields_view;
-        this.model_name = this.fields_view.model;
-        this.fields = this.fields_view.fields;
-        this.view_type = this.fields_view.type;
         this.view_id = this.fields_view.view_id;
+        this.model_name = this.fields_view.model;
+
+        this.fields = this._processFields(this.fields_view.fields);
+
+        // do not take it from the fields_view as it directly comes from the
+        // server and might be `tree` sometimes
+        this.view_type = params.viewType;
 
         this.mode = 'edition';  // the other mode is 'rendering' in XML editor
         this.editor = undefined;
@@ -201,16 +206,20 @@ var ViewEditorManager = Widget.extend({
             // studio_view_id must be updated
             self.studio_view_id = result.studio_view_id;
 
-            // transform arch from string to object
-            result.fields_views = _.mapObject(result.fields_views, data_manager._postprocess_fvg.bind(data_manager));
-            // add necessary keys on fields_views
-            data_manager.processViews(result.fields_views, result.fields);
-
             if (self.x2mField) {
                 self.view_type = self.mainViewType;
             }
+
+            // NOTE: fields & fields_view are from the base model here.
+            // fields will be updated accordingly if editing a x2m (see
+            // @_setX2mParameters).
+            self.fields = self._processFields(result.fields);
             self.fields_view = result.fields_views[self.view_type];
-            self.fields = self.fields_view.fields;
+            // TODO: this processing is normally done in data_manager so we need
+            // to duplicate it here ; it should be moved in init of
+            // abstract_view to avoid the duplication
+            self.fields_view.viewFields = self.fields_view.fields;
+            self.fields_view.fields = result.fields;
 
             // As the studio view arch is stored in this widget, if this view
             // is updated directly with the XML editor, the arch should be updated.
@@ -259,20 +268,6 @@ var ViewEditorManager = Widget.extend({
     instantiateEditor: function (params) {
         params = params || {};
         var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
-        var chatterAllowed = this.x2mField ? false : this.chatter_allowed;
-        var editorParams = _.defaults(params, {
-            mode: 'readonly',
-            chatter_allowed: chatterAllowed,
-            show_invisible: this.sidebar && this.sidebar.state.show_invisible,
-            arch: fields_view.arch,
-        });
-        var rendererParams = {
-            mode: 'readonly',
-        };
-
-        if (this.view_type === 'list') {
-            editorParams.hasSelectors = false;
-        }
 
         var def;
         // Different behaviour for the search view because
@@ -289,9 +284,22 @@ var ViewEditorManager = Widget.extend({
             this.view = new View(fields_view, this.view_env);
             if (this.mode === 'edition') {
                 var Editor = Editors[this.view_type];
+                var chatterAllowed = this.x2mField ? false : this.chatter_allowed;
+                var editorParams = _.defaults(params, {
+                    mode: 'readonly',
+                    chatter_allowed: chatterAllowed,
+                    show_invisible: this.sidebar && this.sidebar.state.show_invisible,
+                    arch: this.view.arch,
+                });
+
+                if (this.view_type === 'list') {
+                    editorParams.hasSelectors = false;
+                }
                 def = this.view.createStudioEditor(this, Editor, editorParams);
             } else {
-                def = this.view.createStudioRenderer(this, rendererParams);
+                def = this.view.createStudioRenderer(this, {
+                    mode: 'readonly',
+                });
             }
         }
         return def;
@@ -303,10 +311,9 @@ var ViewEditorManager = Widget.extend({
     instantiateSidebar: function (state) {
 
         var defaultMode = this._getDefaultSidebarMode();
-        var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
         state = _.defaults(state || {}, {
             mode: defaultMode,
-            attrs: defaultMode === 'view' ? fields_view.arch.attrs : {},
+            attrs: defaultMode === 'view' ? this.view.arch.attrs : {},
         });
         var modelName = this.x2mModel ? this.x2mModel : this.model_name;
         var params = {
@@ -426,11 +433,10 @@ var ViewEditorManager = Widget.extend({
         } else {
             newState = this.sidebar.state;
         }
-        var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
         switch (mode) {
             case 'view':
                 newState = _.extend(newState, {
-                    attrs: fields_view.arch.attrs,
+                    attrs: this.view.arch.attrs,
                 });
                 break;
             case 'new':
@@ -1010,7 +1016,12 @@ var ViewEditorManager = Widget.extend({
      * @return {Object} the fields_view of the x2m field
      */
     _getX2mFieldsView: function () {
-        var fields_view = this.fields_view;
+        // this is a crappy way of processing the arch received as string
+        // because we need a processed fields_view to find the x2m fields view
+        var View = view_registry.get(this.mainViewType);
+        var view = new View(this.fields_view, this.view_env);
+
+        var fields_view = view.fieldsView;
         _.each(this.x2mEditorPath, function (step) {
             var x2mField = fields_view.fieldsInfo[step.view_type][step.x2mField];
             fields_view = x2mField.views[step.x2mViewType];
@@ -1098,9 +1109,7 @@ var ViewEditorManager = Widget.extend({
         if (!(viewType in field.views) || field.views[viewType].name) {
             def = this._createInlineView(viewType, field.name);
         } else {
-            var arch = field.views[viewType].arch;
-            var view_fields = field.views[viewType].fields;
-            def = this._instantiateX2mEditor(viewType, arch, view_fields);
+            def = this._instantiateX2mEditor();
         }
         return def.then(function () {
             if (!fromBreadcrumb) {
@@ -1108,6 +1117,21 @@ var ViewEditorManager = Widget.extend({
             }
             self.updateSidebar('new');
         });
+    },
+    /**
+     * Processes the fields to write the field name inside the description. This
+     * name is mainly used in the sidebar.
+     *
+     * @private
+     * @param {Object} fields
+     * @returns {Object} a deep copy of fields with the key as attribute `name`
+     */
+    _processFields: function (fields) {
+        fields = $.extend(true, {}, fields);  // deep copy
+        _.each(fields, function (value, key) {
+            value.name = key;
+        });
+        return fields;
     },
     /**
      * @private
@@ -1120,14 +1144,14 @@ var ViewEditorManager = Widget.extend({
         // anymore, the parent node is also deleted (except if the parent is
         // the only remaining node and if we are editing a x2many subview)
         if (!this.x2mField) {
-            var parent_node = findParent(this.fields_view.arch, node, this.expr_attrs);
-            var is_root = !findParent(this.fields_view.arch, parent_node, this.expr_attrs);
+            var parent_node = findParent(this.view.arch, node, this.expr_attrs);
+            var is_root = !findParent(this.view.arch, parent_node, this.expr_attrs);
             if (parent_node.children.length === 1 && !is_root) {
                 node = parent_node;
                 // Since we changed the node being deleted, we recompute the xpath_info
                 // if necessary
                 if (node && _.isEmpty(_.pick(node.attrs, this.expr_attrs[node.tag]))) {
-                    xpath_info = findParentsPositions(this.fields_view.arch, node);
+                    xpath_info = findParentsPositions(this.view.arch, node);
                 }
             }
         }
@@ -1247,8 +1271,7 @@ var ViewEditorManager = Widget.extend({
             model: this.x2mModel,
             method: 'fields_get',
         }).then(function (fields) {
-            data_manager.processViews(self.fields_views, fields);
-            self.fields = fields;
+            self.fields = self._processFields(fields);
         });
     },
     /**
@@ -1372,15 +1395,14 @@ var ViewEditorManager = Widget.extend({
         var self = this;
         var node = event.data.node;
         var $node = event.data.$node;
-        // If the node is a x2many we offer the possibility to
-        // edit or create the subviews
-        var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
-        var field = fields_view.fields[node.attrs.name];
-        if (this.view_type === 'form' && field) {
+        if (this.view_type === 'form' && node.tag === 'field') {
+            var field = this.fields[node.attrs.name];
             var attrs = this.editor.state.fieldsInfo[this.editor.state.viewType][node.attrs.name];
             var isX2Many = _.contains(['one2many','many2many'], field.type);
             var notEditableWidgets = ['many2many_tags', 'hr_org_chart'];
             if (isX2Many && !_.contains(notEditableWidgets, attrs.widget)) {
+                // If the node is a x2many we offer the possibility to edit or
+                // create the subviews
                 var message = $(QWeb.render('web_studio.X2ManyEdit'));
                 var options = {
                     message: message,
@@ -1534,9 +1556,8 @@ var ViewEditorManager = Widget.extend({
         var new_attrs = event.data.new_attrs || {};
         var position = event.data.position || 'after';
         var xpath_info;
-        var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
         if (node && _.isEmpty(_.pick(node.attrs, this.expr_attrs[node.tag]))) {
-            xpath_info = findParentsPositions(fields_view.arch, node);
+            xpath_info = findParentsPositions(this.view.arch, node);
         }
         switch (structure) {
             case 'text':

@@ -201,6 +201,7 @@ var Main = Widget.extend({
                 });
                 var params = {
                     fields_view: fields_views[self.viewType],
+                    viewType: self.viewType,
                     view_env: viewEnv,
                     chatter_allowed: self.chatter_allowed,
                     studio_view_id: studio_view.studio_view_id,

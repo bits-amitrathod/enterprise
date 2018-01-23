@@ -3,6 +3,7 @@ odoo.define('web_studio.SearchRenderer', function (require) {
 
 var core = require('web.core');
 var session = require('web.session');
+var utils = require('web.utils');
 var Widget = require('web.Widget');
 
 var qweb = core.qweb;
@@ -20,6 +21,8 @@ var SearchRenderer = Widget.extend({
      */
     init: function (parent, fields_view) {
         this._super.apply(this, arguments);
+        // see SearchView init
+        fields_view = this._processFieldsView(_.clone(fields_view));
         this.arch = fields_view.arch;
         this.fields = fields_view.fields;
         this.model = fields_view.model;
@@ -72,6 +75,21 @@ var SearchRenderer = Widget.extend({
     // Private
     //--------------------------------------------------------------------------
 
+    /**
+     * Processes a fieldsView in place. In particular, parses its arch.
+     *
+     * @todo: this function is also defined in SearchView and AbstractView ; the
+     * code duplication could be removed once the SearchView will be rewritten.
+     * @private
+     * @param {Object} fv
+     * @param {string} fv.arch
+     * @returns {Object} the processed fieldsView
+     */
+    _processFieldsView: function (fv) {
+        var doc = $.parseXML(fv.arch).documentElement;
+        fv.arch = utils.xml_to_json(doc, true);
+        return fv;
+    },
     /**
      * Process each element of a 'group by' element
      *
