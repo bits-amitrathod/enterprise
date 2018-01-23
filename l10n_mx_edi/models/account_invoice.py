@@ -14,6 +14,7 @@ from suds.client import Client
 from odoo import _, api, fields, models, tools
 from odoo.tools.xml_utils import _check_with_xsd
 from odoo.tools import DEFAULT_SERVER_TIME_FORMAT
+from odoo.tools import float_round
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_repr
 
@@ -705,8 +706,6 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         precision_digits = self.env['decimal.precision'].precision_get('Account')
-        amount_untaxed = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit))
-        amount_discount = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit * l.discount / 100.0))
         partner_id = self.partner_id
         if self.partner_id.type != 'invoice':
             partner_id = self.partner_id.commercial_partner_id
@@ -723,8 +722,6 @@ class AccountInvoice(models.Model):
             'fiscal_position': self.company_id.partner_id.property_account_position_id,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
             'amount_total': '%0.*f' % (precision_digits, self.amount_total),
-            'amount_untaxed': '%0.*f' % (precision_digits, amount_untaxed),
-            'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
             'use_cfdi': self.l10n_mx_edi_usage,
             'conditions': self._get_string_cfdi(
                 self.payment_term_id.name, 1000) if self.payment_term_id else False,
@@ -759,9 +756,15 @@ class AccountInvoice(models.Model):
         )
 
         values['decimal_precision'] = precision_digits
-        values['subtotal_wo_discount'] = lambda l: l.quantity * l.price_unit
-        values['total_discount'] = lambda l, d: ('%.*f' % (
+        values['subtotal_wo_discount'] = lambda l: float_round(
+            l.quantity * l.price_unit, int(precision_digits))
+        get_discount = lambda l, d: ('%.*f' % (
             int(d), l.quantity * l.price_unit * l.discount / 100)) if l.discount else False
+        values['total_discount'] = get_discount
+        total_discount = sum([float(get_discount(p, precision_digits)) for p in self.invoice_line_ids])
+        values['amount_untaxed'] = '%.*f' % (
+            precision_digits, self.amount_untaxed + total_discount if total_discount else self.amount_untaxed)
+        values['amount_discount'] = '%.*f' % (precision_digits, total_discount) if total_discount else None
 
         values['taxes'] = self._l10n_mx_edi_create_taxes_cfdi_values()
 
