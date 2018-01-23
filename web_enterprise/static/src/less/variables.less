@@ -32,6 +32,11 @@
 @odoo-navbar-height: 46px;
 @odoo-navbar-inverse-link-hover-bg: darken(@odoo-brand-primary, 10%);
 
+// Needed for having no spacing between sheet and mail body in mass_mailing:
+// Different required cancel paddings between web and web_enterprise
+@odoo-sheet-cancel-tpadding: @odoo-horizontal-padding;
+@odoo-sheet-cancel-bpadding: @odoo-horizontal-padding + @odoo-sheet-vpadding;
+
 // ------------
 // Side chatter
 // ------------
