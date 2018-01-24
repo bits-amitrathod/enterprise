@@ -1,4 +1,4 @@
-odoo.define('account_batch_deposit.reconciliation_tests.data', function (require) {
+odoo.define('account_batch_payment.reconciliation_tests.data', function (require) {
 "use strict";
 
 var data = require('account.reconciliation_tests.data');
@@ -21,7 +21,7 @@ data.params.data_preprocess.batch_deposits = [{
 
 });
 
-odoo.define('account_batch_deposit.reconciliation_tests', function (require) {
+odoo.define('account_batch_payment.reconciliation_tests', function (require) {
 "use strict";
 
 var ReconciliationClientAction = require('account.ReconciliationClientAction');
@@ -35,7 +35,7 @@ QUnit.module('account', {
 }, function () {
     QUnit.module('Reconciliation');
 
-    QUnit.test('Reconciliation basic rendering with account_batch_deposit', function (assert) {
+    QUnit.test('Reconciliation basic rendering with account_batch_payment', function (assert) {
         assert.expect(4);
 
         var clientAction = new ReconciliationClientAction.StatementAction(null, this.params.options);

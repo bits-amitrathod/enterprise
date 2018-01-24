@@ -1,4 +1,4 @@
-odoo.define('account_batch_deposit.reconciliation', function (require) {
+odoo.define('account_batch_payment.reconciliation', function (require) {
 "use strict";
 
 var ReconciliationClientAction = require('account.ReconciliationClientAction');

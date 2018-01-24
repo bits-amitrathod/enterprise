@@ -7,8 +7,8 @@ PAY_LINES_PER_PAGE = 20
 
 
 class PrintBatchDeposit(models.AbstractModel):
-    _name = 'report.account_batch_deposit.print_batch_deposit'
-    _template = 'account_batch_deposit.print_batch_deposit'
+    _name = 'report.account_batch_payment.print_batch_deposit'
+    _template = 'account_batch_payment.print_batch_deposit'
 
     def get_pages(self, deposit):
         """ Returns the data structure used by the template
@@ -31,7 +31,7 @@ class PrintBatchDeposit(models.AbstractModel):
 
     @api.model
     def get_report_values(self, docids, data=None):
-        report_name = 'account_batch_deposit.print_batch_deposit'
+        report_name = 'account_batch_payment.print_batch_deposit'
         report = self.env['ir.actions.report']._get_report_from_name(report_name)
         return {
             'doc_ids': docids,

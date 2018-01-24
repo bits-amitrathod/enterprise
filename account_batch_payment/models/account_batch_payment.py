@@ -68,7 +68,7 @@ class AccountBatchDeposit(models.Model):
     def normalize_payments(self):
         # Make sure all payments have batch_deposit as payment method (a payment created via the form view of the
         # payment_ids many2many of the batch deposit form view cannot receive a default_payment_method in context)
-        self.payment_ids.write({'payment_method_id': self.env.ref('account_batch_deposit.account_payment_method_batch_deposit').id})
+        self.payment_ids.write({'payment_method_id': self.env.ref('account_batch_payment.account_payment_method_batch_deposit').id})
         # Since a batch deposit has no confirmation step (it can be used to select payments in a bank reconciliation
         # as long as state != reconciled), its payments need to be posted
         self.payment_ids.filtered(lambda r: r.state == 'draft').post()
@@ -80,4 +80,4 @@ class AccountBatchDeposit(models.Model):
                 continue
             deposit.payment_ids.write({'state': 'sent', 'payment_reference': deposit.name})
             deposit.write({'state': 'sent'})
-        return self.env.ref('account_batch_deposit.action_print_batch_deposit').report_action(self)
+        return self.env.ref('account_batch_payment.action_print_batch_deposit').report_action(self)
