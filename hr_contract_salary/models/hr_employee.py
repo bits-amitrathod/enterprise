@@ -54,6 +54,11 @@ class HrEmployee(models.Model):
             'other_disabled_juniors_dependent': personal_info['other_disabled_juniors_dependent'],
             'identification_id': personal_info['national_number'],
             'country_id': personal_info['nationality'],
+            'emergency_contact': personal_info['emergency_person'],
+            'emergency_phone': personal_info['emergency_phone_number'],
+            'certificate': personal_info['certificate'],
+            'study_field': personal_info['certificate_name'],
+            'study_school': personal_info['certificate_school'],
         }
 
     def update_personal_info(self, personal_info, no_name_write=False):
