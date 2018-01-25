@@ -2,6 +2,13 @@
 <odoo>
 
 <data>
+
+    <template id="assets_backend" name="Web Studio Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_studio/static/src/js/home_menu_all.js"></script>
+        </xpath>
+    </template>
+
     <template id="web_studio.assets" name="Web Studio Assets">
             <script type="text/javascript" src="/web_studio/static/src/js/action_editor.js"></script>
             <script type="text/javascript" src="/web_studio/static/src/js/action_editor_sidebar.js"></script>
