@@ -66,6 +66,7 @@ ActionManager.include({
         this.studioControllerIndex = undefined;
 
         return this.doAction(action.id, {
+            additional_context: action.context,
             index: index,
         });
     },

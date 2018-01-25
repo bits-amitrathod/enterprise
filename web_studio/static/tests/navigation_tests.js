@@ -238,6 +238,42 @@ QUnit.module('Studio Navigation', {
 
         actionManager.destroy();
     });
+
+    QUnit.test('keep action context when leaving Studio', function (assert) {
+        assert.expect(2);
+
+        this.actions[0].context = "{'active_id': 1}";
+        var nbLoadAction = 0;
+
+        var actionManager = createActionManager({
+            actions: this.actions,
+            archs: this.archs,
+            data: this.data,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_studio_view_arch') {
+                    return $.when();
+                } else if (route === '/web/action/load') {
+                    nbLoadAction++;
+                    if (nbLoadAction === 2) {
+                        assert.deepEqual(args.kwargs.additional_context, {
+                            active_id: 1,
+                        }, "the context should be correctly passed when leaving Studio");
+                    }
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        actionManager.doAction(1);  // open a act_window_action
+        actionManager.doAction('action_web_studio_main', {
+            action: actionManager.getCurrentAction(),
+            studio_clear_breadcrumbs: true,
+        });
+        bus.trigger('studio_toggled', 'main');
+        actionManager.restoreStudioAction();  // simulate leaving Studio
+        assert.strictEqual(nbLoadAction, 2, "the action should have been loaded twice");
+        actionManager.destroy();
+    });
 });
 
 });
