@@ -19,7 +19,7 @@ class AccountBankStatementLine(models.Model):
             payment_aml_rec=payment_aml_rec, new_aml_dicts=new_aml_dicts)
         if not self.l10n_mx_edi_is_required():
             return res
-        payments = res.line_ids.mapped('payment_id')
+        payments = res.mapped('line_ids.payment_id')
         payment_method = self.l10n_mx_edi_payment_method_id.id or self.journal_id.l10n_mx_edi_payment_method_id.id
         payments.write({
             'l10n_mx_edi_payment_method_id': payment_method,
