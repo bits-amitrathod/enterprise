@@ -368,6 +368,7 @@ class website_hr_contract_salary(http.Controller):
                 })
 
         signature_request = request.env['signature.request'].browse(res['id']).sudo()
+        signature_request.toggle_favorited()
         signature_request.action_sent()
         signature_request.write({'state': 'sent'})
         signature_request.request_item_ids.write({'state': 'sent'})
