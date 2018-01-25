@@ -141,6 +141,11 @@ class website_hr_contract_salary(http.Controller):
             new_contract.new_car_model_id = False
             new_contract.car_id = False
 
+        if advantages['transport_mode'] != 'public_transport':
+            new_contract.public_transport_employee_amount = False
+        if advantages['transport_mode'] != 'others':
+            new_contract.others_reimbursed_amount = False
+
         new_contract.wage_with_holidays = advantages['wage']
         new_contract.final_yearly_costs = advantages['final_yearly_costs']
         new_contract._inverse_wage_with_holidays()
