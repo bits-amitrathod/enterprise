@@ -259,7 +259,18 @@ class SignatureRequest(models.Model):
                 email_to = signer.partner_id.email,
                 link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': signer.access_token}
             )
-            template.send_mail(self.id, force_send=True)
+            mail_id = template.send_mail(self.id, force_send=False)
+            mail = self.env['mail.mail'].browse(mail_id)
+            attachment = self.env['ir.attachment'].create({
+                'name': self.reference,
+                'datas_fname': "%s.pdf" % self.reference,
+                'datas': self.completed_document,
+                'type': 'binary',
+                'res_model': 'mail.message',
+                'res_id': mail.mail_message_id.id,
+            })
+            mail.attachment_ids |= attachment
+            mail.send()
 
         for follower in self.follower_ids:
             template = mail_template.with_context(
