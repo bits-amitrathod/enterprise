@@ -16,7 +16,7 @@ class AccountInvoice(models.Model):
         """
         super(AccountInvoice, self).invoice_validate()
         for record in self:
-            if record.residual == 0:
+            if record.residual == 0 or record.type in ['out_refund', 'in_invoice']:
                 continue
             usable_mandate = record._get_usable_mandate()
             if usable_mandate:

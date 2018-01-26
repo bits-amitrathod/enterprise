@@ -213,6 +213,7 @@ class MxReportAccountTrial(models.AbstractModel):
                 'id': account.id,
                 'parent_id': 'level_two_%s' % tag.id,
                 'name': name,
+                'level': 4,
                 'columns': cols,
                 'caret_options': 'account.account',
             })

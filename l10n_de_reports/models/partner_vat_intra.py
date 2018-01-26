@@ -71,7 +71,7 @@ class ReportL10nDePartnerVatIntra(models.AbstractModel):
         return lines
 
     def get_report_name(self):
-        return _('Zusammenfassende Melfung')
+        return _('Zusammenfassende Meldung')
 
     def get_columns_name(self, options):
-        return [{}, {'name': _('Landerkennzeichen')}, {'name': _('Ust-IdNr.')}, {'name': _('Summe der Bemessungsgrundlagen'), 'class': 'number'}, {'name': _('Sonstige Leistungen (1) <br/>/ Dreiecksgeschafte (2)')}]
+        return [{}, {'name': _('Länderkennzeichen')}, {'name': _('Ust-IdNr.')}, {'name': _('Summe der Bemessungsgrundlagen'), 'class': 'number'}, {'name': _('Sonstige Leistungen (1) <br/>/ Dreiecksgeschäfte (2)')}]

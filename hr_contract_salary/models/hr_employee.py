@@ -22,9 +22,8 @@ class HrEmployee(models.Model):
         self.ensure_one()
         return self.contract_id.open_package_contract()
 
-    def update_personal_info(self, personal_info, no_name_write=False):
-        self.ensure_one()
-        partner_values = {
+    def get_partner_values(self, personal_info):
+        return {
             'street': personal_info['street'],
             'street2': personal_info['street2'],
             'city': personal_info['city'],
@@ -36,24 +35,8 @@ class HrEmployee(models.Model):
             'type': 'other',
         }
 
-        if self.address_home_id:
-            partner = self.address_home_id
-            # We shouldn't modify the partner email like this
-            partner_values.pop('email', None)
-            self.address_home_id.write(partner_values)
-        else:
-            partner = self.env['res.partner'].create(partner_values)
-
-        existing_bank_account = self.env['res.partner.bank'].search([('acc_number', '=', personal_info['bank_account'])])
-        if existing_bank_account:
-            bank_account = existing_bank_account
-        else:
-            bank_account = self.env['res.partner.bank'].create({
-                'acc_number': personal_info['bank_account'],
-                'partner_id': partner.id,
-            })
-
-        vals = {
+    def get_employee_values(self, personal_info):
+        return {
             'gender': personal_info['gender'],
             'disabled': personal_info['disabled'],
             'marital': personal_info['marital'],
@@ -71,9 +54,41 @@ class HrEmployee(models.Model):
             'other_disabled_juniors_dependent': personal_info['other_disabled_juniors_dependent'],
             'identification_id': personal_info['national_number'],
             'country_id': personal_info['nationality'],
-            'bank_account_id': bank_account.id,
-            'address_home_id': partner.id,
+            'emergency_contact': personal_info['emergency_person'],
+            'emergency_phone': personal_info['emergency_phone_number'],
+            'certificate': personal_info['certificate'],
+            'study_field': personal_info['certificate_name'],
+            'study_school': personal_info['certificate_school'],
         }
+
+    def update_personal_info(self, personal_info, no_name_write=False):
+        self.ensure_one()
+
+        # Update personal info on the partner
+        partner_values = self.get_partner_values(personal_info)
+
+        if self.address_home_id:
+            partner = self.address_home_id
+            # We shouldn't modify the partner email like this
+            partner_values.pop('email', None)
+            self.address_home_id.write(partner_values)
+        else:
+            partner = self.env['res.partner'].create(partner_values)
+
+        # Update personal info on the employee
+        vals = self.get_employee_values(personal_info)
+
+        existing_bank_account = self.env['res.partner.bank'].search([('acc_number', '=', personal_info['bank_account'])])
+        if existing_bank_account:
+            bank_account = existing_bank_account
+        else:
+            bank_account = self.env['res.partner.bank'].create({
+                'acc_number': personal_info['bank_account'],
+                'partner_id': partner.id,
+            })
+        vals['bank_account_id'] = bank_account.id
+        vals['address_home_id'] = partner.id
+
         if not no_name_write:
             vals['name'] = personal_info['name']
 
