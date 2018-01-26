@@ -7,7 +7,7 @@
     </template>
     <!-- QWeb Reports -->
     <record id="account.account_invoices" model="ir.actions.report">
-        <field name="attachment">object.l10n_mx_edi_is_required() and object.l10n_mx_edi_cfdi_name.replace('.xml', '.pdf') or (object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')</field>
+        <field name="attachment">object.l10n_mx_edi_is_required() and object.l10n_mx_edi_cfdi_name and object.l10n_mx_edi_cfdi_name.replace('.xml', '.pdf') or (object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')</field>
     </record>
     <template id="report_invoice_document_mx" inherit_id="account.report_invoice_document">
         <xpath expr="//div[1]" position="before">
@@ -55,9 +55,11 @@
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <div class="row" id='complement'>
                     <div class="barcode col-xs-3">
-                        <img t-att-src="'/report/barcode/QR/%s' % quote_plus('?') + keep_query(
+                        <img t-att-src="'/report/barcode/QR/%s' % quote_plus(
+                                'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?') + keep_query(
                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,
-                                tt=o.l10n_mx_edi_cfdi_amount, id=o.l10n_mx_edi_cfdi_uuid)"/>
+                                tt=o.l10n_mx_edi_cfdi_amount, id=o.l10n_mx_edi_cfdi_uuid,
+                                fe=xml.get('Sello', 'No identificado')[-8:])"/>
                     </div>
                     <div class="complement-details col-xs-9">
                         <div class="digital-stamp">

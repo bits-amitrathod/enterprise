@@ -295,6 +295,8 @@ class DocsawayProvider(models.Model):
             'PDFFile': PDFfile,
         }
         # complete facultative parameters
+        if address.get('company'):
+            request['Recipient']['company'] = address['company']
         if address.get('street2'):
             # avoid to return an error on facultative field
             if len(address.get('street2')) <= 50:
@@ -354,6 +356,7 @@ class PrintOrder(models.Model):
             # create params to send order to docsaway.
             address = {
                 'name' : order.partner_name,
+                'company' : order.partner_id.parent_name,
                 'street' : order.partner_street,
                 'street2' : order.partner_street2,
                 'state' : order.partner_state_id.name,
