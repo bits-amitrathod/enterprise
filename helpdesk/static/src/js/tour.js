@@ -59,8 +59,7 @@ tour.register('helpdesk_tour', {
     position: 'bottom',
     run: "drag_and_drop .o_kanban_group:eq(2) ",
 }, {
-    trigger: ".o_column_header",
-    extra_trigger: '.o_column_quick_create',
+    trigger: ".o_column_quick_create .o_quick_create_folded",
     content: _t('Add columns to configure <b>stages for your tickets</b>.<br/><i>e.g. Awaiting Customer Feedback, Customer Followup, ...</i>'),
     position: 'right',
 }, {

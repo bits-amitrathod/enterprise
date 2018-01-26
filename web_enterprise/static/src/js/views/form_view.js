@@ -7,25 +7,17 @@ odoo.define('web_enterprise.FormView', function (require) {
  */
 
 var config = require('web.config');
-var FormRenderer = require('web.FormRenderer');
 var FormView = require('web.FormView');
 var MobileFormRenderer = require('web_enterprise.MobileFormRenderer');
 
-FormView.include({
-    //--------------------------------------------------------------------------
-    // Public
-    //--------------------------------------------------------------------------
+if (!config.device.isMobile) {
+    return;
+}
 
-    /**
-     * Overrides to select the MobileFormRenderer in mobile instead of the
-     * FormRenderer.
-     *
-     * @override
-     */
-    getRenderer: function () {
-        this.config.Renderer = config.device.isMobile ? MobileFormRenderer : FormRenderer;
-        return this._super.apply(this, arguments);
-    }
+FormView.include({
+    config: _.extend({}, FormView.prototype.config, {
+        Renderer: MobileFormRenderer,
+    }),
 });
 
 });

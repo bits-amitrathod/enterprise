@@ -343,7 +343,7 @@ return AbstractWebClient.extend({
     // Scrolltop handling
     // --------------------------------------------------------------
     getScrollTop: function () {
-        if (config.device.size_class <= config.device.SIZES.XS) {
+        if (config.device.isMobile) {
             return this.el.scrollTop;
         } else {
             return this.action_manager.el.scrollTop;
@@ -358,15 +358,15 @@ return AbstractWebClient.extend({
      */
     scrollTo: function (ev) {
         var offset = {top: ev.data.offset, left: ev.data.offset_left || 0};
-        var xs_device = config.device.size_class <= config.device.SIZES.XS;
+        var isMobile = config.device.isMobile;
         if (!offset.top) {
             offset = dom.getPosition(document.querySelector(ev.data.selector));
-            if (!xs_device) {
+            if (!isMobile) {
                 // Substract the position of the action_manager as it is the scrolling part
                 offset.top -= dom.getPosition(this.action_manager.el).top;
             }
         }
-        if (xs_device) {
+        if (isMobile) {
             this.el.scrollTop = offset.top;
         } else {
             this.action_manager.el.scrollTop = offset.top;

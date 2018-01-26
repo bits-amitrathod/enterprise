@@ -1,6 +1,7 @@
 odoo.define('web_enterprise.relational_fields_tests', function (require) {
 "use strict";
 
+var config = require('web.config');
 var FormView = require('web.FormView');
 var testUtils = require('web.test_utils');
 
@@ -48,7 +49,11 @@ QUnit.module('relational_fields', {
                     '<field name="display_name"/>' +
                 '</form>',
             res_id: 1,
-            config: {device: {isMobile: true}},
+            config: {
+                device: {
+                    size_class: config.device.SIZES.XS,
+                },
+            },
         });
 
         assert.strictEqual(form.$('.o_statusbar_status > button:contains(aaa)').length, 1,
@@ -81,7 +86,11 @@ QUnit.module('relational_fields', {
                     '<header><field name="trululu" widget="statusbar"/></header>' +
                 '</form>',
             res_id: 4,
-            config: {device: {isMobile: true}},
+            config: {
+                device: {
+                    size_class: config.device.SIZES.XS,
+                },
+            },
         });
 
         assert.ok(form.$('.o_statusbar_status').hasClass('o_field_empty'),

@@ -17,7 +17,7 @@ var HEIGHT_OPEN = '480px';
 var HEIGHT_FOLDED = '0px';
 
 // As voip is not supported on mobile devices, we want to keep the standard phone widget
-if (config.device.size_class <= config.device.SIZES.XS) {
+if (config.device.isMobile) {
     return;
 }
 
@@ -478,7 +478,7 @@ var DialingPanel = Widget.extend({
      * @private
      */
     _onToggleFold: function (fold) {
-        if (config.device.size_class !== config.device.SIZES.XS) {
+        if (!config.device.isMobile) {
             if (this.folded) {
                 this._refreshPhonecallsStatus();
             }

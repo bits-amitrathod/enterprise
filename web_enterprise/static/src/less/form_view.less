@@ -60,9 +60,6 @@
     // Title & avatar
     .oe_title {
         color: @headings-color;
-        @media (max-width: @screen-xxs-max) {
-            word-break: break-all;
-        }
         @media (min-width: @screen-xs-min) {
             padding-right: @odoo-innergroup-rpadding;
         }
@@ -223,9 +220,6 @@
         &.o_inner_group {
             > tbody > tr > td {
                 padding: 0 @odoo-innergroup-rpadding 0 0;
-           }
-            @media (max-width: @screen-xxs-max) { // Not xs max to keep sm layout a bit further
-                .form-break-table();
             }
         }
 
@@ -246,11 +240,6 @@
                 white-space: normal;
             }
         }
-        @media (max-width: @screen-xxs-max) {
-            .o_td_label .o_form_label {
-                font-weight: normal;
-            }
-        }
     }
 
     // Labels
@@ -261,16 +250,6 @@
         }
         @media (max-width: @screen-xs-max) {
             font-size: @odoo-font-size-base-touch;
-        }
-        @media (max-width: @screen-xxs-max) {
-            margin-top: 3px;
-            font-size: @odoo-label-font-size-factor * @odoo-font-size-base-touch;
-            font-weight: normal;
-            color: @odoo-brand-secondary;
-
-            &.o_form_label_empty {
-                display: none;
-            }
         }
     }
 
@@ -540,45 +519,6 @@
     }
 }
 
-.form-break-table() {
-    display: block;
-    margin-bottom: @odoo-form-spacing-unit * 4;
-
-    > tbody {
-        display: block;
-
-        > tr {
-            .o-flex-display();
-            .o-flex-flow(row, wrap);
-
-            > td {
-                .o-flex(1, 0, auto);
-                display: block;
-                max-width: 100%;
-                padding: 0;
-
-                width: auto!important;  // !important is required to override the width computed in JS
-                &.o_td_label {
-                    width: 94%!important; // The label must be on its own line except if the form field is small enough (checkbox)
-                    line-height: @odoo-label-font-size-factor;
-                }
-
-                .o_field_widget {
-                    margin-bottom: @odoo-form-spacing-unit * 2;
-                    &.o_field_boolean {
-                        margin-right: 0;
-                    }
-                }
-
-                .o_input_dropdown {
-                    width: auto;
-                    max-width: 100%;
-                }
-            }
-        }
-    }
-}
-
 // Overriden style when form view in modal
 .modal .modal-dialog {
     .o_form_view {
@@ -591,6 +531,26 @@
     &.modal-sm .o_form_view {
         .o_group {
             .form-break-table();
+        }
+    }
+}
+
+// XXS form view specific rules
+.o_form_view.o_xxs_form_view {
+    .o_group {
+        .o_td_label .o_form_label {
+            font-weight: normal;
+        }
+    }
+
+    .o_form_label {
+        margin-top: 3px;
+        font-size: @odoo-label-font-size-factor * @odoo-font-size-base-touch;
+        font-weight: normal;
+        color: @odoo-brand-secondary;
+
+        &.o_form_label_empty {
+            display: none;
         }
     }
 }
