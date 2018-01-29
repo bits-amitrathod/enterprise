@@ -236,7 +236,7 @@ class StockPicking(models.Model):
 
             # Logic only for destination location
             location = self.env['stock.location'].search(['|', ('name', '=', barcode), ('barcode', '=', barcode)], limit=1)
-            if location and location.parent_left < self.location_dest_id.parent_right and location.parent_left >= self.location_dest_id.parent_left:
+            if location and location.search_count([('id', '=', location.id), ('id', 'child_of', self.location_dest_id.ids)]):
                 if self._check_destination_location(location):
                     return
         else:
@@ -266,7 +266,7 @@ class StockPicking(models.Model):
 
             if parsed_result['type'] == 'location':
                 location = self.env['stock.location'].search(['|', ('name', '=', parsed_result['code']), ('barcode', '=', parsed_result['code'])], limit=1)
-                if location and location.parent_left < self.location_dest_id.parent_right and location.parent_left >= self.location_dest_id.parent_left:
+                if location and location.search_count([('id', '=', location.id), ('id', 'child_of', self.location_dest_id.ids)]):
                     if self._check_destination_location(location):
                         return
 
