@@ -15,6 +15,7 @@ except ImportError:
     num2words = None
 
 from odoo import _, api, fields, models, tools
+from odoo.tools import float_round
 from odoo.tools.xml_utils import check_with_xsd
 from odoo.tools.misc import html_escape
 
@@ -613,19 +614,28 @@ class AccountInvoice(models.Model):
             'withholding': [],
             'transferred': [],
         }
-        for tax in self.tax_line_ids.filtered('tax_id'):
-            tax_dict = {
-                'name': (tax.tax_id.tag_ids[0].name
-                         if tax.tax_id.tag_ids else tax.tax_id.name).upper(),
-                'amount': round(abs(tax.amount or 0.0), 2),
-                'rate': round(abs(tax.tax_id.amount), 2),
-            }
-            if tax.amount >= 0:
-                values['total_transferred'] += abs(tax.amount or 0.0)
-                values['transferred'].append(tax_dict)
-            else:
-                values['total_withhold'] += abs(tax.amount or 0.0)
-                values['withholding'].append(tax_dict)
+        taxes = {}
+        for line in self.invoice_line_ids:
+            for tax in line.invoice_line_tax_ids:
+                amount = round(abs(tax.amount / 100 * float("%.2f" % line.price_subtotal)), 2)
+                if tax.amount not in taxes:
+                    taxes.update({tax.amount: {
+                        'name': (tax.tag_ids[0].name
+                                 if tax.tag_ids else tax.name).upper(),
+                        'amount': amount,
+                        'rate': round(abs(tax.amount), 2),
+                        'tax_amount': tax.amount,
+                    }})
+                else:
+                    taxes[tax.amount].update({
+                        'amount': taxes[tax.amount]['amount'] + amount
+                    })
+                if tax.amount >= 0:
+                    values['total_transferred'] += amount
+                else:
+                    values['total_withhold'] += amount
+        values['transferred'] = [tax for tax in taxes.values() if tax['tax_amount'] >= 0]
+        values['withholding'] = [tax for tax in taxes.values() if tax['tax_amount'] < 0]
         return values
 
     @staticmethod
@@ -644,8 +654,6 @@ class AccountInvoice(models.Model):
         '''
         self.ensure_one()
         precision_digits = self.env['decimal.precision'].precision_get('Account')
-        amount_untaxed = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit))
-        amount_discount = sum(self.invoice_line_ids.mapped(lambda l: l.quantity * l.price_unit * l.discount / 100.0))
         partner_id = self.partner_id
         if self.partner_id.type != 'invoice':
             partner_id = self.partner_id.commercial_partner_id
@@ -661,9 +669,6 @@ class AccountInvoice(models.Model):
             'customer': partner_id,
             'fiscal_position': self.company_id.partner_id.property_account_position_id.name,
             'payment_method': self.l10n_mx_edi_payment_method_id.code,
-            'amount_total': '%0.*f' % (precision_digits, self.amount_total),
-            'amount_untaxed': '%0.*f' % (precision_digits, amount_untaxed),
-            'amount_discount': '%0.*f' % (precision_digits, amount_discount) if amount_discount else None,
         }
 
         values.update(self._l10n_mx_get_serie_and_folio(self.number))
@@ -686,9 +691,22 @@ class AccountInvoice(models.Model):
                 domicile.country_id.name,
         )
 
-        values['subtotal_wo_discount'] = lambda l: l.quantity * l.price_unit
+        values['decimal_precision'] = precision_digits
+        subtotal_wo_discount = lambda l: float_round(
+            l.quantity * l.price_unit, int(precision_digits))
+        values['subtotal_wo_discount'] = subtotal_wo_discount
+        get_discount = lambda l, d: ('%.*f' % (
+            int(d), l.quantity * l.price_unit * l.discount / 100)) if l.discount else False
+        values['total_discount'] = get_discount
+        total_discount = sum([float(get_discount(p, precision_digits)) for p in self.invoice_line_ids])
+        values['amount_untaxed'] = '%.*f' % (
+            precision_digits, sum([subtotal_wo_discount(p) for p in self.invoice_line_ids]))
+        values['amount_discount'] = '%.*f' % (precision_digits, total_discount) if total_discount else None
 
         values['taxes'] = self._l10n_mx_edi_create_taxes_cfdi_values()
+        values['amount_total'] = '%0.*f' % (precision_digits,
+            float(values['amount_untaxed']) - float(values['amount_discount'] or 0) + (
+                values['taxes']['total_transferred'] or 0) - (values['taxes']['total_withhold'] or 0))
 
         if self.l10n_mx_edi_partner_bank_id:
             digits = [s for s in self.l10n_mx_edi_partner_bank_id.acc_number if s.isdigit()]
