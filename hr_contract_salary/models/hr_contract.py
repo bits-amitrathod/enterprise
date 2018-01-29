@@ -94,7 +94,7 @@ class HrContract(models.Model):
                 'default_template_id': template_id,
                 'default_composition_mode': 'comment',
                 'salary_package_url': base_url + path,
-                'custom_layout': "hr_contract_salary.mail_template_data_notification_email_send_offer",
+                'custom_layout': "mail.mail_notification_borders",
             }
             return {
                 'type': 'ir.actions.act_window',
