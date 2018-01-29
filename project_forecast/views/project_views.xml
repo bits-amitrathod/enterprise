@@ -9,7 +9,7 @@
                 <field name="allow_forecast"/>
             </xpath>
             <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="inside">
-                <a t-if="record.allow_forecast.raw_value" class="o_project_kanban_box" name="view_monthly_forecast" type="object">
+                <a t-if="record.allow_forecast.raw_value" class="o_project_kanban_box" name="action_view_project_forecast" type="object">
                     <div>
                         <span class="o_label">Forecast</span>
                     </div>
@@ -47,55 +47,11 @@
             </div>
             <button name="toggle_active" position="before">
                 <button class="oe_stat_button" type="object" attrs="{'invisible':[('allow_forecast', '=', False)]}"
-                    name="view_monthly_forecast" icon="fa-tasks">
+                    name="action_view_project_forecast" icon="fa-tasks">
                     <span>Forecast</span>
                 </button>
             </button>
         </field>
     </record>
-
-    <record id="view_project_set_dates" model="ir.ui.view">
-        <field name="name">Set dates on project</field>
-        <field name="model">project.project</field>
-        <field name="priority">5000</field>
-        <field name="arch" type="xml">
-            <form string="Project Dates">
-                <sheet>
-                    <p>
-                        Forecasting on a project requires that the project
-                        have start and end dates
-                        <group col="4">
-                            <field name="date_start" required="1"/>
-                            <field name="date" required="1"/>
-                        </group>
-                    </p>
-                </sheet>
-                <footer>
-                    <button string="View Forecast"
-                            type="object" name="view_monthly_forecast"
-                            class="btn-primary"/>
-                </footer>
-            </form>
-        </field>
-    </record>
-
-    <record id="task_view_form_inherit_project_forecast" model="ir.ui.view">
-        <field name="name">task.view.form.inherit.project.forecast</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_form2"/>
-        <field name="priority">32</field>
-        <field name="arch" type="xml">
-            <xpath expr="//header/field[@name='stage_id']" position="before">
-                <field name="allow_forecast" invisible="1"/>
-                <button name="create_forecast" string="Create a forecast" type="object"
-                    attrs="{'invisible':[('allow_forecast', '=', False)]}"/>
-            </xpath>
-            <button name="toggle_active" position="before">
-                <button class="oe_stat_button" type="action" attrs="{'invisible':[('allow_forecast', '=', False)]}"
-                        name="%(project_forecast_action_from_task)d" icon="fa-tasks">
-                    <span>Forecast</span>
-                </button>
-            </button>
-        </field>
-    </record>
+    
 </odoo>

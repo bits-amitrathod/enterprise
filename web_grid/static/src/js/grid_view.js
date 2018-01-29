@@ -7,12 +7,13 @@ var GridModel = require('web_grid.GridModel');
 var GridController = require('web_grid.GridController');
 var GridRenderer = require('web_grid.GridRenderer');
 var viewRegistry = require('web.view_registry');
+var pyeval = require('web.pyeval');
 
 var _lt = core._lt;
 
 var GridView = AbstractView.extend({
     display_name: _lt('Grid'),
-    icon: 'fa-tasks',
+    icon: 'fa-th',
     config: {
         Model: GridModel,
         Controller: GridController,
@@ -36,7 +37,7 @@ var GridView = AbstractView.extend({
                 }
                 if (child.attrs.type === 'col') {
                     colField = child.attrs.name;
-                    ranges = _.pluck(child.children, 'attrs');
+                    ranges = self._extract_ranges(child, params.context);
                 }
                 if (child.attrs.type === 'measure') {
                     cellField = child.attrs.name;
@@ -44,7 +45,6 @@ var GridView = AbstractView.extend({
                 }
             }
         });
-
 
         // model
         this.loadParams.ranges = ranges;
@@ -85,6 +85,30 @@ var GridView = AbstractView.extend({
         this.controllerParams.adjustment = arch.attrs.adjustment;
         this.controllerParams.adjustName = arch.attrs.adjust_name;
     },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * Extract the range to display on the view, and filter
+     * them according they should be visible or not (attribute 'invisible')
+     *
+     * @private
+     * @param {node} col_node - the node of 'col' in grid view arch definition
+     * @param {Object} context - the context used to instanciate the view
+     */
+     _extract_ranges: function(col_node, context) {
+        var ranges = [];
+        var pyevalContext = py.dict.fromJSON(context || {});
+        _.each(_.pluck(col_node.children, 'attrs'), function(range) {
+            if (range.invisible && pyeval.py_eval(range.invisible, {'context': pyevalContext})) {
+                return;
+            }
+            ranges.push(range);
+        });
+        return ranges;
+     },
 
 });
 

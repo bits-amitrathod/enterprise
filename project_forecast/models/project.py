@@ -21,47 +21,9 @@ class Project(models.Model):
             raise UserError(_('You cannot delete a project containing forecasts. You can either delete all the project\'s forecasts and then delete the project or simply deactivate the project.'))
         return super(Project, self).unlink()
 
-    @api.multi
-    def view_monthly_forecast(self):
-        self.env.cr.execute("""
-            SELECT count(*)
-            FROM project_forecast
-            WHERE project_id = %s
-              AND date_trunc('month', start_date) != date_trunc('month', end_date);
-        """, [self.id])
-        [count] = self.env.cr.fetchone()
-        if count:
-            raise exceptions.UserError(
-                _("Can only be used for forecasts not spanning multiple months, "
-                  "found %(forecast_count)d forecast(s) spanning across "
-                  "months in %(project_name)s") % {
-                    'forecast_count': count,
-                    'project_name': self.display_name,
-                }
-            )
-        context = dict(self.env.context, default_project_id=self.id, default_employee_id=self.user_id.employee_ids[:1].id)
-        # forecast grid requires start and end dates on the project
-        if not (self.date_start and self.date):
-            return {
-                'name': self.display_name,
-                'type': 'ir.actions.act_window',
-                'res_model': 'project.project',
-                'target': 'new',
-                'res_id': self.id,
-                'view_mode': 'form',
-                'view_id': self.env.ref('project_forecast.view_project_set_dates').id,
-                'context': context,
-            }
-
-        return {
-            'name': _("Forecast"),
-            'type': 'ir.actions.act_window',
-            'res_model': 'project.forecast',
-            'view_id': self.env.ref('project_forecast.project_forecast_grid').id,
-            'view_mode': 'grid',
-            'domain': [['project_id', '=', self.id]],
-            'context': context,
-        }
+    def action_view_project_forecast(self):
+        Forecast = self.env['project.forecast'].with_context(active_id=self.id)
+        return Forecast.action_view_forecast('project_forecast.project_forecast_action_from_project')
 
 
 class Task(models.Model):
@@ -80,20 +42,3 @@ class Task(models.Model):
         if self.env['project.forecast'].search([('task_id', 'in', self.ids)]):
             raise UserError(_('You cannot delete a task containing forecasts. You can either delete all the task\'s forecasts and then delete the task or simply deactivate the task.'))
         return super(Task, self).unlink()
-
-    @api.multi
-    def create_forecast(self):
-        view_id = self.env.ref('project_forecast.project_forecast_view_form').id
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'project.forecast',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': view_id,
-            'target': 'current',
-            'context': {
-                'default_project_id': self.project_id.id,
-                'default_task_id': self.id,
-                'default_employee_id': self.user_id.employee_ids[0].id if self.user_id.employee_ids else False,
-            }
-        }

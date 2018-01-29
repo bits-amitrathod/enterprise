@@ -10,6 +10,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import pycompat
+from odoo.tools.misc import format_date
 
 _GRID_TUP = [('grid', "Grid")]
 
@@ -183,10 +184,8 @@ class Base(models.AbstractModel):
             if context_anchor:
                 anchor = field.from_string(context_anchor)
 
-            labelize = self._get_date_formatter(
-                step, locale=self.env.context.get('lang', 'en_US'))
             r = self._grid_range_of(span, step, anchor)
-            period_prev, period_next = self._grid_pagination(field, span, step, anchor)
+            pagination = self._grid_pagination(field, span, step, anchor)
             return ColumnMetadata(
                 grouping='{}:{}'.format(name, step),
                 domain=[
@@ -194,19 +193,17 @@ class Base(models.AbstractModel):
                     (name, '>=', field.to_string(r.start)),
                     (name, '<=', field.to_string(r.end))
                 ],
-                prev=period_prev and {'grid_anchor': period_prev, 'default_%s' % name: period_prev},
-                next=period_next and {'grid_anchor': period_next, 'default_%s' % name: period_next},
-                initial=period_prev and period_next and {'grid_anchor': field.to_string(today), 'default_%s' % name: field.to_string(today)},
+                prev=pagination.get('prev'),
+                next=pagination.get('next'),
+                initial=pagination.get('initial'),
                 values=[{
                         'values': {
-                            name: (
-                                "%s/%s" % (field.to_string(d), field.to_string(d + self._grid_step_by(step))),
-                                labelize(d)
-                        )},
+                            name: self._get_date_column_label(d, field, span, step)
+                        },
                         'domain': ['&',
                                    (name, '>=', field.to_string(d)),
                                    (name, '<', field.to_string(d + self._grid_step_by(step)))],
-                        'is_current': d == today,
+                        'is_current': self._grid_date_is_current(field, span, step, d)
                     } for d in r.iter(step)
                 ],
                 format=lambda a: a and a[0],
@@ -246,11 +243,27 @@ class Base(models.AbstractModel):
             ]
         raise UserError(_("Can not use fields of type %s as grid columns") % field.type)
 
+    def _get_date_column_label(self, date, field, span, step):
+        """
+            :param date: date of period beginning (datetime object)
+            :param field: odoo.field object of the current model
+        """
+        locale = self.env.context.get('lang', 'en_US')
+        _labelize = self._get_date_formatter(step, locale=locale)
+        label = _labelize(date)
+        if step == 'week':
+            label = _("Week %(weeknumber)s\n%(week_start)s - %(week_end)s") % {
+                'weeknumber': label,
+                'week_start': format_date(self.env, date, locale, "MMM\u00A0dd"),
+                'week_end': format_date(self.env, date + self._grid_step_by(step) - relativedelta(days=1), locale, "MMM\u00A0dd")
+            }
+        return ("%s/%s" % (field.to_string(date), field.to_string(date + self._grid_step_by(step))), label)
+
     def _get_date_formatter(self, step, locale):
         """ Returns a callable taking a single positional date argument and
         formatting it for the step and locale provided.
         """
-        if hasattr(babel.dates, 'format_skeleton'):
+        if hasattr(babel.dates, 'format_skeleton') and step != 'week':
             def _format(d, _fmt=babel.dates.format_skeleton, _sk=SKELETONS[step], _l=locale):
                 result = _fmt(datetime=d, skeleton=_sk, locale=_l)
                 # approximate distribution over two lines, for better
@@ -287,11 +300,16 @@ class Base(models.AbstractModel):
 
     def _grid_pagination(self, field, span, step, anchor):
         if field.type == 'date':
+            today = field.from_string(field.context_today(self))
             diff = self._grid_step_by(span)
             period_prev = field.to_string(anchor - diff)
             period_next = field.to_string(anchor + diff)
-            return period_prev, period_next
-        return False, False
+            return {
+                'prev': {'grid_anchor': period_prev, 'default_%s' % field.name: period_prev},
+                'next': {'grid_anchor': period_next, 'default_%s' % field.name: period_next},
+                'initial': {'grid_anchor': field.to_string(today), 'default_%s' % field.name: field.to_string(today)}
+            }
+        return dict.fromkeys(['prev', 'initial', 'next'], False)
 
     def _grid_step_by(self, span):
         return STEP_BY.get(span)
@@ -301,10 +319,32 @@ class Base(models.AbstractModel):
                           self._grid_end_of(span, step, anchor))
 
     def _grid_start_of(self, span, step, anchor):
+        if step == 'week':
+            return anchor + START_OF_WEEK[span]
         return anchor + START_OF[span]
 
     def _grid_end_of(self, span, step, anchor):
+        if step == 'week':
+            return anchor + END_OF_WEEK[span]
         return anchor + END_OF[span]
+
+    def _grid_start_of_period(self, span, step, anchor):
+        if step == 'day':
+            return anchor
+        return anchor + START_OF[step]
+
+    def _grid_end_of_period(self, span, step, anchor):
+        if step == 'day':
+            return anchor
+        return anchor + END_OF[step]
+
+    def _grid_date_is_current(self, field, span, step, date):
+        today = field.from_string(field.context_today(self))
+        if step == 'day':
+            return today == date
+        elif step in ['week', 'month']:
+            return self._grid_start_of_period(span, step, date) <= today < self._grid_end_of_period(span, step, date)
+        return False
 
 
 ColumnMetadata = collections.namedtuple('ColumnMetadata', 'grouping domain prev next initial values format')
@@ -326,10 +366,20 @@ START_OF = {
     'month': relativedelta(day=1),
     'year': relativedelta(yearday=1),
 }
+START_OF_WEEK = {
+    'week': relativedelta(weekday=MO(-1)),
+    'month': relativedelta(day=1, weekday=MO(-1)),
+    'year': relativedelta(yearday=1, weekday=MO(-1)),
+}
 END_OF = {
     'week': relativedelta(weekday=SU),
     'month': relativedelta(months=1, day=1, days=-1),
     'year': relativedelta(years=1, yearday=1, days=-1),
+}
+END_OF_WEEK = {
+    'week': relativedelta(weekday=SU),
+    'month': relativedelta(months=1, day=1, days=-1, weekday=SU),
+    'year': relativedelta(years=1, yearday=1, days=-1, weekday=SU),
 }
 STEP_BY = {
     'day': relativedelta(days=1),
@@ -340,6 +390,7 @@ STEP_BY = {
 
 FORMAT = {
     'day': u"EEE\nMMM\u00A0dd",
+    'week': u'w',
     'month': u'MMMM\u00A0yyyy',
 }
 SKELETONS = {

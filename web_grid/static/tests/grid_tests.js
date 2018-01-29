@@ -51,7 +51,8 @@ QUnit.module('Views', {
                     '<field name="task_id" type="row"/>' +
                     '<field name="date" type="col">' +
                         '<range name="week" string="Week" span="week" step="day"/>' +
-                        '<range name="month" string="Month" span="month" step="day"/>' +
+                        '<range name="month" string="Month" span="month" step="day" invisible="context.get(\'hide_second_button\')"/>' +
+                        '<range name="year" string="Year" span="year" step="month"/>' +
                     '</field>'+
                     '<field name="unit_amount" type="measure" widget="float_time"/>' +
                     '<button string="Action" type="action" name="action_name"/>' +
@@ -570,6 +571,29 @@ QUnit.module('Views', {
             grid.destroy();
             done();
         });
+    });
+
+    QUnit.test('basic grid view, hide range button', function (assert) {
+        assert.expect(3);
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: this.arch,
+            currentDate: "2017-01-25",
+            mockRPC: function (route) {
+                return this._super.apply(this, arguments);
+            },
+            context: {'hide_second_button': true}
+        });
+
+        return concurrency.delay(0).then(function () {
+            assert.strictEqual(grid.$buttons.find('button.grid_arrow_range').length, 2, "should have only one range button displayed");
+            assert.strictEqual(grid.$buttons.find("button[data-name='week']").length, 1, "should have week button displayed");
+            assert.strictEqual(grid.$buttons.find("button[data-name='year']").length, 1, "should have year button displayed");
+            return concurrency.delay(0);
+        });
+
     });
 
 });
