@@ -260,7 +260,7 @@
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
             <search string="Tickets Search">
-                <field name="name"/>
+                <field name="display_name" filter_domain="['|', ('name', 'ilike', self), ('id', '=', self)]"/>
                 <field name="id"/>
                 <field name="tag_ids"/>
                 <field name="ticket_type_id"/>
@@ -332,10 +332,9 @@
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
             <tree string="Tickets">
-                <field name="name"/>
+                <field name="display_name"/>
                 <field name="partner_id"/>
                 <field name="user_id"/>
-                <field name="priority"/>
                 <field name="stage_id"/>
             </tree>
         </field>
@@ -464,7 +463,8 @@
                             type="object" attrs="{'invisible': ['|', ('partner_id', '=', False), ('partner_tickets', '&lt;=', 1)]}">
                             <field name="partner_tickets" string="Customer Tickets" widget="statinfo" />
                         </button>
-                        <button name="action_get_attachment_tree_view" class="oe_stat_button" icon="fa-book" type="object">
+                        <button name="action_get_attachment_tree_view" class="oe_stat_button" icon="fa-book" 
+                            type="object" attrs="{'invisible':  [('attachment_number', '=', 0)]}">
                             <field name="attachment_number" widget="statinfo" string="Documents"/>
                         </button>
                         <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
@@ -489,7 +489,7 @@
                             <field name="partner_id" class="field_partner_id"/>
                             <field name="partner_name" attrs="{'invisible': [('partner_id', '!=', False)]}"/>
                             <field name="partner_email"/>
-                            <field name="ticket_type_id" widget="selection"/>
+                            <field name="ticket_type_id"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </group>
                     </group>
@@ -514,7 +514,7 @@
         <field name="context">{'search_default_my_ticket': True, 'search_default_is_open': True}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create a new ticket
+                Create your first ticket.
             </p>
         </field>
     </record>
@@ -528,7 +528,7 @@
         <field name="context">{'search_default_is_open': True}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create a new ticket
+                Create your first ticket.
             </p>
         </field>
     </record>

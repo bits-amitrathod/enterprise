@@ -37,6 +37,7 @@ Features:
     'data': [
         'security/helpdesk_security.xml',
         'security/ir.model.access.csv',
+        'data/mail_data.xml',
         'data/helpdesk_data.xml',
         'data/helpdesk_cron.xml',
         'views/helpdesk_views.xml',

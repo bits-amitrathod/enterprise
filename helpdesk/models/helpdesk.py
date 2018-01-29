@@ -15,6 +15,9 @@ class HelpdeskTeam(models.Model):
     _description = "Helpdesk Team"
     _order = 'sequence,name'
 
+    def _default_stage_ids(self):
+        return [(0, 0, {'name': 'New', 'sequence': 0, 'template_id': self.env.ref('helpdesk.new_ticket_request_email_template', raise_if_not_found=False) or None})]
+
     name = fields.Char('Helpdesk Team', required=True, translate=True)
     description = fields.Text('About Team', translate=True)
     active = fields.Boolean(default=True)
@@ -25,7 +28,7 @@ class HelpdeskTeam(models.Model):
     color = fields.Integer('Color Index', default=1)
     stage_ids = fields.Many2many(
         'helpdesk.stage', relation='team_stage_rel', string='Stages',
-        default=[(0, 0, {'name': 'New', 'sequence': 0})],
+        default=_default_stage_ids,
         help="Stages the team will use. This team's tickets will only be able to be in these stages.")
     assign_method = fields.Selection([
         ('manual', 'Manually'),
@@ -174,6 +177,11 @@ class HelpdeskTeam(models.Model):
             if team.use_helpdesk_timesheet and helpdesk_timesheet_module.state not in ('installed', 'to install', 'to upgrade'):
                 helpdesk_timesheet_module.button_immediate_install()
                 module_installed = True
+
+            if team.use_rating:
+                for stage in self.stage_ids:
+                    if stage.is_close and  not stage.fold:
+                        stage.template_id = self.env.ref('helpdesk.rating_ticket_request_email_template', raise_if_not_found= False)
 
         # just in case we want to do something if we install a module. (like a refresh ...)
         return module_installed

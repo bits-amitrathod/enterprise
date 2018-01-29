@@ -195,7 +195,7 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_helpdesk_timesheet"/>
                                 <div class="text-muted">
-                                    Helpdesk contracts are managed using tasks. Choose a default project for these tasks.
+                                    Record timesheets on your tickets and reinvoice time to you customer through tasks.
                                 </div>
                                 <div id='helpdesk_timesheet' attrs="{'invisible': [('use_helpdesk_timesheet', '=', False)]}">
                                     <div class="text-warning mb4 mt16">
@@ -228,7 +228,7 @@
                             <div class="o_setting_right_pane">
                                 <label for="use_rating"/>
                                 <div class="text-muted">
-                                    Allow your customers to easily rate your services
+                                    Allow your customers to easily rate your services. Activate this option will add a default email template on non folded closing stages
                                 </div>
                                 <div id="use_rating" attrs="{'invisible': [('use_rating', '=', False)]}">
                                     <field name="percentage_satisfaction" invisible="1"/>
@@ -375,33 +375,6 @@
                                     </a>
                                 </div> -->
                             </div><div class="container o_kanban_card_manage_pane">
-                                <div class="row">
-                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
-                                        <div class="o_kanban_card_manage_title">
-                                            <span>View Tickets</span>
-                                        </div>
-                                        <div>
-                                            <a name="%(helpdesk.helpdesk_ticket_action_Archived)d" type="action">Archived</a>
-                                        </div>
-                                        <div name="sla_failed" attrs="{'invisible': [('use_sla', '=', False)]}" groups="helpdesk.group_use_sla">
-                                            <a name="%(helpdesk.helpdesk_ticket_action_slafailed)d" type="action">SLA Failed</a>
-                                        </div>
-                                        <div t-if="record.use_rating.raw_value">
-                                            <a name="action_unhappy_rating_ticket" type="object">Not Satisfied</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_reports">
-                                        <div class="o_kanban_card_manage_title">
-                                            <span>Reporting</span>
-                                        </div>
-                                        <div>
-                                            <a name="%(helpdesk.helpdesk_ticket_team_analysis_action)d" type="action">Opened Tickets Analysis</a>
-                                        </div>
-                                        <div>
-                                            <a name="%(helpdesk.helpdesk_ticket_action_team_performance)d" type="action">Performance Analysis</a>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
                                     <div class="col-xs-8">
