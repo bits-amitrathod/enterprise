@@ -35,6 +35,7 @@ class AccountBankStatementImport(models.TransientModel):
         ns = {k or 'ns': v for k, v in root.nsmap.iteritems()}
         curr_cache = {c['name']: c['id'] for c in self.env['res.currency'].search_read([], ['id', 'name'])}
         statement_list = []
+        currency = account_no = False
         for statement in root[0].findall('ns:Stmt', ns):
             statement_vals = {}
             statement_vals['name'] = statement.xpath('ns:Id/text()', namespaces=ns)[0]
