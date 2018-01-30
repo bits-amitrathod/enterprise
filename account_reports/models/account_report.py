@@ -202,7 +202,7 @@ class AccountReport(models.AbstractModel):
             domain.append(('move_id.state', '=', 'posted'))
         action = self.env.ref('account.action_move_line_select_tax_audit').read()[0]
         ctx = self.env.context.copy()
-        ctx.update({'active_id': active_id, 'search_default_account': 1, 'search_default_date': 1,})
+        ctx.update({'active_id': active_id, 'search_default_account': 1, 'search_default_date_filter': 1,})
         action = clean_action(action)
         action['domain'] = domain
         action['context'] = ctx
