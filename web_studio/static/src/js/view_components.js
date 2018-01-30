@@ -5,7 +5,7 @@ var core = require('web.core');
 var Registry = require('web.Registry');
 var Widget = require('web.Widget');
 
-var _t = core._t;
+var _lt = core._lt;
 
 var AbstractComponent = Widget.extend({
     structure: false,
@@ -42,25 +42,25 @@ var AbstractComponent = Widget.extend({
 
 var NotebookComponent = AbstractComponent.extend({
     structure: 'notebook',
-    label: _t('Tabs'),
+    label: _lt('Tabs'),
     ttype: 'tabs',
     className: 'o_web_studio_field_tabs',
 });
 var GroupComponent = AbstractComponent.extend({
     structure: 'group',
-    label: _t('Columns'),
+    label: _lt('Columns'),
     ttype: 'columns',
     className: 'o_web_studio_field_columns',
 });
 var FilterComponent = AbstractComponent.extend({
     structure: 'filter',
-    label: _t('Filter'),
+    label: _lt('Filter'),
     ttype: 'filter',
     className: 'o_web_studio_filter',
 });
 var FilterSeparatorComponent = AbstractComponent.extend({
     structure: 'separator',
-    label: _t('Separator'),
+    label: _lt('Separator'),
     ttype: 'separator',
     className: 'o_web_studio_filter_separator',
 });
@@ -81,73 +81,73 @@ var AbstractNewFieldComponent = AbstractComponent.extend({
 });
 var CharFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'char',
-    label: _t('Text'),
+    label: _lt('Text'),
     className: 'o_web_studio_field_char',
 });
 var TextFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'text',
-    label: _t('Multiline Text'),
+    label: _lt('Multiline Text'),
     className: 'o_web_studio_field_text',
 });
 var IntegerFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'integer',
-    label: _t('Integer number'),
+    label: _lt('Integer number'),
     className: 'o_web_studio_field_integer',
 });
 var DecimalFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'float',
-    label: _t('Decimal Number'),
+    label: _lt('Decimal Number'),
     className: 'o_web_studio_field_float',
 });
 var HtmlFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'html',
-    label: _t('Html'),
+    label: _lt('Html'),
     className: 'o_web_studio_field_html',
 });
 var MonetaryFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'monetary',
-    label: _t('Monetary'),
+    label: _lt('Monetary'),
     className: 'o_web_studio_field_monetary',
 });
 var DateFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'date',
-    label: _t('Date'),
+    label: _lt('Date'),
     className: 'o_web_studio_field_date',
 });
 var DatetimeFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'datetime',
-    label: _t('Date & Time'),
+    label: _lt('Date & Time'),
     className: 'o_web_studio_field_datetime',
 });
 var BooleanFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'boolean',
-    label: _t('Checkbox'),
+    label: _lt('Checkbox'),
     className: 'o_web_studio_field_boolean',
 });
 var SelectionFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'selection',
-    label: _t('Selection'),
+    label: _lt('Selection'),
     className: 'o_web_studio_field_selection',
 });
 var BinaryFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'binary',
-    label: _t('File'),
+    label: _lt('File'),
     className: 'o_web_studio_field_binary',
 });
 
 var Many2manyFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'many2many',
-    label: _t('Many2many'),
+    label: _lt('Many2many'),
     className: 'o_web_studio_field_many2many',
 });
 var One2manyFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'one2many',
-    label: _t('One2many'),
+    label: _lt('One2many'),
     className: 'o_web_studio_field_one2many',
 });
 var Many2oneFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'many2one',
-    label: _t('Many2one'),
+    label: _lt('Many2one'),
     className: 'o_web_studio_field_many2one',
 });
 
@@ -195,25 +195,25 @@ var AbstractNewWidgetComponent = AbstractNewFieldComponent.extend({
 });
 var ImageWidgetComponent = AbstractNewWidgetComponent.extend({
     ttype: 'binary',
-    label: _t('Image'),
+    label: _lt('Image'),
     className: 'o_web_studio_field_picture',
     attrs: {widget: 'image'},
 });
 var TagWidgetComponent = AbstractNewWidgetComponent.extend({
     ttype: 'many2many',
-    label: _t('Tags'),
+    label: _lt('Tags'),
     className: 'o_web_studio_field_tags',
     attrs: {widget: 'many2many_tags'},
 });
 var PriorityWidgetComponent = AbstractNewWidgetComponent.extend({
     ttype: 'selection',
-    label: _t('Priority'),
+    label: _lt('Priority'),
     className: 'o_web_studio_field_priority',
     attrs: {widget: 'priority'},
 });
 var RelatedFieldComponent = AbstractNewFieldComponent.extend({
     ttype: 'related',
-    label: _t('Related Field'),
+    label: _lt('Related Field'),
     className: 'o_web_studio_field_related',
 });
 var form_component_widget_registry = new Registry();
