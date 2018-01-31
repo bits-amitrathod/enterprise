@@ -146,10 +146,10 @@ class MrpEco(models.Model):
     @api.model
     def _get_type_selection(self):
         types = [
-            ('product', 'Product Only'),
-            ('bom', 'Bill of Materials')]
+            ('product', _('Product Only')),
+            ('bom', _('Bill of Materials'))]
         if self.user_has_groups('mrp.group_mrp_routings'):
-            types += [('routing', 'Routing'), ('both', 'BoM and Routing')]
+            types += [('routing', _('Routing')), ('both', _('BoM and Routing'))]
         return types
 
     name = fields.Char('Reference', copy=False, required=True)
