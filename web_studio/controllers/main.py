@@ -185,7 +185,7 @@ class WebStudioController(http.Controller):
                 'name': menu_name,
                 'res_model': model.model,
                 'help': """
-                    <p>
+                    <p class="o_view_nocontent_smiling_face">
                         This is your new action ; by default, it contains a list view and a form view.
                     </p>
                     <p>
