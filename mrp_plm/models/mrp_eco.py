@@ -11,7 +11,7 @@ class MrpEcoType(models.Model):
     _description = 'Manufacturing Process'
     _inherit = ['mail.alias.mixin', 'mail.thread']
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True, translate=True)
     sequence = fields.Integer('Sequence')
     alias_id = fields.Many2one('mail.alias', 'Alias', ondelete='restrict', required=True)
     nb_ecos = fields.Integer('ECOs', compute='_compute_nb')
@@ -117,7 +117,7 @@ class MrpEcoStage(models.Model):
             return (others[0].sequence or 0) + 1
         return 1
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True, translate=True)
     sequence = fields.Integer('Sequence', default=_get_sequence)
     folded = fields.Boolean('Folded in kanban view')
     allow_apply_change = fields.Boolean(string='Allow to apply changes', help='Allow to apply changes from this stage.')
