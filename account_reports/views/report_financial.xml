@@ -20,6 +20,9 @@
     <t t-if="line['caret_options'] == 'account.tax'">
         <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_tax">Audit</a></li>
     </t>
+    <li t-if="line['caret_options'] == 'account.analytic.account'" role="presentation">
+        <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_analytic_entries">Analytic Entries</a>
+    </li>
 </template>
 
 <template id="filter_info_template">
@@ -32,28 +35,54 @@
             <t t-if="options.get('all_entries')" groups="account.group_account_user">With Draft Entries</t><t t-if="options.get('all_entries') == False">Posted Entries Only</t>
         </div>
         <div class="col-xs-4">
-            <t t-if="options.get('multi_company')">
-                Companies:
-                <t t-set="company_value" t-value="'All'"/>
-                <t t-foreach="options['multi_company']" t-as="c">
-                    <t t-if="c.get('selected') == True">
-                        <t t-set="company_value" t-value="''"/>
-                        <t t-esc="c.get('name')"/>
+            <div class="col-xs-12">
+                <t t-if="options.get('multi_company')">
+                    Companies:
+                    <t t-set="company_value" t-value="'All'"/>
+                    <t t-foreach="options['multi_company']" t-as="c">
+                        <t t-if="c.get('selected') == True">
+                            <t t-set="company_value" t-value="''"/>
+                            <t t-esc="c.get('name')"/>
+                        </t>
                     </t>
+                    <t t-esc="company_value"/>
                 </t>
-                <t t-esc="company_value"/>
-            </t>
-            <t t-if="options.get('journals')">
-                Journals:
-                <t t-set="journal_value" t-value="'All'"/>
-                <t t-foreach="options['journals']" t-as="j">
-                    <t t-if="j.get('selected') == True">
-                        <t t-set="journal_value" t-value="''"/>
-                        <t t-esc="j.get('code')"/>
+            </div>
+            <div class="col-xs-12">
+                <t t-if="options.get('journals')">
+                    Journals:
+                    <t t-set="journal_value" t-value="'All'"/>
+                    <t t-foreach="options['journals']" t-as="j">
+                        <t t-if="j.get('selected') == True">
+                            <t t-set="journal_value" t-value="''"/>
+                            <t t-esc="j.get('code')"/>
+                        </t>
                     </t>
+                    <t t-esc="journal_value"/>
                 </t>
-                <t t-esc="journal_value"/>
-            </t>
+            </div>
+            <div class="col-xs-12">
+                <t t-if="options.get('analytic_accounts') != None">
+                    Analytic Accounts:
+                    <t t-set="analytic_account_value" t-value="'All'"/>
+                    <t t-foreach="options['selected_analytic_account_names']" t-as="analytic_account_name">
+                        <t t-set="analytic_account_value" t-value="''"/>
+                        <t t-esc="analytic_account_name"/>
+                    </t>
+                    <t t-esc="analytic_account_value"/>
+                </t>
+            </div>
+            <div class="col-xs-12">
+                <t t-if="options.get('analytic_tags') != None">
+                    Analytic Tags:
+                    <t t-set="analytic_tag_value" t-value="'All'"/>
+                    <t t-foreach="options['selected_analytic_tag_names']" t-as="analytic_tag_name">
+                        <t t-set="analytic_tag_value" t-value="''"/>
+                        <t t-esc="analytic_tag_name"/>
+                    </t>
+                    <t t-esc="analytic_tag_value"/>
+                </t>
+            </div>
         </div>
     </div>
 </template>

@@ -103,10 +103,11 @@ class AccountReport(models.AbstractModel):
     def get_options(self, previous_options=None):
         # Be sure that user has group analytic if a report tries to display analytic
         if self.filter_analytic:
-            self.filter_analytic = self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids and True or None
-            self.filter_analytic_tags = [] if self.filter_analytic else None
-            self.filter_analytic_accounts = [] if self.filter_analytic else None
-
+            self.filter_analytic_accounts = [] if self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids else None
+            self.filter_analytic_tags = [] if self.env.user.id in self.env.ref('analytic.group_analytic_tags').users.ids else None
+            #don't display the analytic filtering options if no option would be shown
+            if self.filter_analytic_accounts is None and self.filter_analytic_tags is None:
+                self.filter_analytic = None
         return self._build_options(previous_options)
 
     #TO BE OVERWRITTEN
@@ -299,7 +300,10 @@ class AccountReport(models.AbstractModel):
         # Check if report needs analytic
         if options.get('analytic') is not None:
             searchview_dict['analytic_accounts'] = self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids and [(t.id, t.name) for t in self.env['account.analytic.account'].search([])] or False
-            searchview_dict['analytic_tags'] = self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids and [(t.id, t.name) for t in self.env['account.analytic.tag'].search([])] or False
+            options['selected_analytic_account_names'] = [self.env['account.analytic.account'].browse(int(account)).name for account in options['analytic_accounts']]
+        if options.get('analytic_tags') is not None:
+            searchview_dict['analytic_tags'] = self.env.user.id in self.env.ref('analytic.group_analytic_tags').users.ids and [(t.id, t.name) for t in self.env['account.analytic.tag'].search([])] or False
+            options['selected_analytic_tag_names'] = [self.env['account.analytic.tag'].browse(int(tag)).name for tag in options['analytic_tags']]
         report_manager = self.get_report_manager(options)
         info = {'options': options,
                 'context': self.env.context,
@@ -336,7 +340,7 @@ class AccountReport(models.AbstractModel):
                 group_prefix = account_id.code and account_id.code[0:3] or False
                 group_key = group_prefix
 
-            current_group_level = line.get('caret_options') == 'account.account' and 4 or line.get('level', 4)
+            current_group_level = is_grouped_by_account and 4 or line.get('level', 4)
             while group_key:
                 #create hierarchy leaves if needed
                 if group_key not in hierarchy_list:

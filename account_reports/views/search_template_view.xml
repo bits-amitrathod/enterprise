@@ -7,8 +7,8 @@
             <span class="fa fa-calendar"/>
             <t t-if="options['date'].get('string') and options['date'].get('filter') != 'custom'"><t t-raw="options['date']['string']"/></t>
             <t t-if="options['date'].get('filter') == 'custom'">
-                <t t-if="options['date'].get('date')">Date: <span class="js_format_date"><t t-esc="options['date']['date']"/></span></t>    
-                <t t-if="options['date'].get('date_from')">From: <span class="js_format_date"><t t-esc="options['date']['date_from']"/></span> <br/><span class="o_reports_date_to">to: <span class="js_format_date"><t t-esc="options['date']['date_to']"/></span></span></t>    
+                <t t-if="options['date'].get('date')">Date: <span class="js_format_date"><t t-esc="options['date']['date']"/></span></t>
+                <t t-if="options['date'].get('date_from')">From: <span class="js_format_date"><t t-esc="options['date']['date_from']"/></span> <br/><span class="o_reports_date_to">to: <span class="js_format_date"><t t-esc="options['date']['date_to']"/></span></span></t>
             </t>
             <span class="caret"/>
         </a>
@@ -107,15 +107,15 @@
     <template id="search_template_extra_options">
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
             <span class="fa fa-filter"/> Options:
-            <t t-if="options.get('cash_basis') != None"> 
-                <t t-if="options['cash_basis']">Cash Basis,</t> 
-                <t t-if="not options['cash_basis']">Accrual Basis,</t> 
+            <t t-if="options.get('cash_basis') != None">
+                <t t-if="options['cash_basis']">Cash Basis,</t>
+                <t t-if="not options['cash_basis']">Accrual Basis,</t>
             </t>
             <t t-if="options.get('all_entries') != None" groups="account.group_account_user"> 
                 <t t-if="options['all_entries']">With Draft Entries,</t>
                 <t t-if="not options['all_entries']">Posted Entries Only,</t>
             </t>
-            <t t-if="options.get('unreconciled') != None"> 
+            <t t-if="options.get('unreconciled') != None">
                 <t t-if="options['unreconciled']">Only Show Unreconciled Entries</t>
             </t>
             <span class="caret"/>
@@ -132,7 +132,7 @@
     <template id="search_template_multi_company">
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
             <span class="fa fa-filter"/>
-            Companies: 
+            Companies:
             <t t-set="company_value" t-value="'All'"/>
             <t t-foreach="options['multi_company']" t-as="c">
                 <t t-if="c.get('selected') == True">
@@ -200,12 +200,12 @@
     </template>
 
     <template id="search_template_analytic">
-        <a type="button" class="dropdown-toggle account_analytic_filter" data-toggle="dropdown">
+        <a t-if="options.get('analytic')" type="button" class="dropdown-toggle account_analytic_filter" data-toggle="dropdown">
             <span class="fa fa-folder-open"/> Analytic
             <span class="caret"/>
         </a>
         <ul class="dropdown-menu o_filters_menu" role="menu">
-            <li style='margin-left: 10px; margin-right: 10px;'>
+            <li t-if="options.get('analytic_accounts') != None" style='margin-left: 10px; margin-right: 10px;'>
                 <b>Accounts</b><br />
                 <select class="js_account_reports_analytic_auto_complete" data-filter="analytic_accounts" multiple="multiple" style="min-width: 100px;">
                     <t t-foreach="analytic_accounts" t-as="a">
@@ -213,8 +213,7 @@
                     </t>
                 </select>
             </li>
-            <li class="divider"></li>
-            <li style='margin-left: 10px; margin-right: 10px;'>
+            <li t-if="options.get('analytic_tags') != None" style='margin-left: 10px; margin-right: 10px;'>
                 <b>Tags</b><br />
                 <select class="js_account_reports_analytic_auto_complete" data-filter="analytic_tags" multiple="multiple" style="min-width: 100px;">
                     <t t-foreach="analytic_tags" t-as="t">
@@ -245,7 +244,7 @@
         <div class="btn-group o_dropdown o_account_reports_filter_account_type" t-if="options.get('account_type') != None">
             <t t-call="account_reports.search_template_account_type"/>
         </div>
-        <div class="btn-group o_dropdown o_account_reports_filter_analytic" t-if="options.get('analytic') != None">
+        <div class="btn-group o_dropdown o_account_reports_filter_analytic" t-if="options.get('analytic') != None or options.get('analytic_tags') != None">
             <t t-call="account_reports.search_template_analytic"/>
         </div>
     </template>

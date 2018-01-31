@@ -22,7 +22,7 @@ class ReportAccountFinancialReport(models.Model):
     date_range = fields.Boolean('Based on date ranges', default=True, help='specify if the report use date_range or single date')
     comparison = fields.Boolean('Allow comparison', default=True, help='display the comparison filter')
     cash_basis = fields.Boolean('Use cash basis', help='if true, report will always use cash basis, if false, user can choose from filter inside the report')
-    analytic = fields.Boolean('Allow analytic filter', help='display the analytic filter')
+    analytic = fields.Boolean('Allow analytic filters', help='display the analytic filters')
     hierarchy_option = fields.Boolean('Enable the hierarchy option', help='Display the hierarchy choice in the report options')
     show_journal_filter = fields.Boolean('Allow filtering by journals', help='display the journal filter in the report')
     unfold_all_filter = fields.Boolean('Show unfold all filter', help='display the unfold all options in report')
@@ -65,7 +65,13 @@ class ReportAccountFinancialReport(models.Model):
         if self.show_journal_filter:
             self.filter_journals = True
         self.filter_all_entries = False
-        self.filter_analytic = True if self.analytic else None
+        self.filter_analytic = self.analytic
+        if self.analytic:
+            self.filter_analytic_accounts = [] if self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids else None
+            self.filter_analytic_tags = [] if self.env.user.id in self.env.ref('analytic.group_analytic_tags').users.ids else None
+            #don't display the analytic filtering options if no option would be shown
+            if self.filter_analytic_accounts is None and self.filter_analytic_tags is None:
+                self.filter_analytic = None
         self.filter_hierarchy = True if self.hierarchy_option else None
         return super(ReportAccountFinancialReport, self).get_options(previous_options)
 

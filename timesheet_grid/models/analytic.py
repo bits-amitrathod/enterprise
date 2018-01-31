@@ -26,13 +26,12 @@ class AnalyticLine(models.Model):
     @api.depends('date', 'employee_id.timesheet_validated')
     def _compute_timesheet_validated(self):
         for line in self:
-            # get most recent validation date on any of the line user's employees
-            validated_to = line.employee_id.timesheet_validated
-
-            if validated_to:
-                line.validated = line.date <= validated_to
+            if line.is_timesheet:
+                # get most recent validation date on any of the line user's employees
+                validated_to = line.employee_id.timesheet_validated
+                line.validated = line.date <= validated_to if validated_to else False
             else:
-                line.validated = False
+                line.validated = True
 
     @api.multi
     @api.depends('project_id')
