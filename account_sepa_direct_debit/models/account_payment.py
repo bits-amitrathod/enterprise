@@ -35,7 +35,7 @@ class AccountPayment(models.Model):
         for payment in self:
             payment.sdd_mandate_usable = bool(sdd_mandate_obj._get_usable_mandate(
                 payment.company_id.id or self.env.user.company_id.id,
-                payment.partner_id.id,
+                payment.partner_id.commercial_partner_id.id,
                 payment.payment_date))
 
     def generate_xml(self, company_id, required_collection_date):
@@ -152,7 +152,7 @@ class AccountPayment(models.Model):
 
     def _register_on_mandate(self, mandate):
         for record in self:
-            if mandate.partner_id != record.partner_id:
+            if mandate.partner_id != record.partner_id.commercial_partner_id:
                 raise UserError(_("Trying to register a payment on a mandate belonging to a different partner."))
 
             record.sdd_mandate_id = mandate
