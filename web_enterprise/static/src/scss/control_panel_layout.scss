@@ -1,18 +1,18 @@
-.o-when-not-full() {
+@mixin o-when-not-full {
     width: 0;
-    max-height: @breadcrumb-height;
+    max-height: $breadcrumb-height;
     transition: width 400ms ease, max-height 0ms ease 0ms;
 }
-.o-when-full() {
+@mixin o-when-full {
     width: 88%;
     max-height: 1000px;
     transition: width 400ms ease, max-height 0ms ease 400ms;
 }
 
-@media (max-width: @screen-xs-max) {
+@media (max-width: $screen-xs-max) {
     .o_control_panel {
         .breadcrumb  {
-            .o-when-not-full();
+            @include o-when-not-full;
             overflow: hidden;
             white-space: nowrap;
 
@@ -22,9 +22,10 @@
                 }
 
                 &.o_back_button {
-                    .btn;
-                    .btn-sm;
-                    .btn-default;
+                    // FIXME cannot extend from within a media query
+                    // @extend .btn; // FIXME was a mixin before scss convertion
+                    // @extend .btn-sm; // FIXME was a mixin before scss convertion
+                    // @extend .btn-default; // FIXME was a mixin before scss convertion
 
                     &:before {
                         font-family: FontAwesome;
@@ -43,7 +44,7 @@
         }
 
         .o_cp_searchview {
-            .o-when-full();
+            @include o-when-full;
 
             > div { // searchview or custom widget
                 width: 100%;
@@ -64,7 +65,7 @@
 
         .o_cp_left, .o_cp_right {
             width: auto; // override desktop rule width: 50%
-            .o-flex(1, 1, auto);
+            @include o-flex(1, 1, auto);
         }
 
         .o_cp_sidebar, .o_cp_switch_buttons {
@@ -77,14 +78,14 @@
 
         &.o_breadcrumb_full {
             .breadcrumb {
-                .o-when-full();
+                @include o-when-full;
             }
 
             .o_cp_searchview {
-                .o-when-not-full();
+                @include o-when-not-full;
 
                 > div { // searchview or custom widget
-                    max-height: @breadcrumb-height;
+                    max-height: $breadcrumb-height;
                     transition: max-height 0ms ease 0ms;
                 }
             }

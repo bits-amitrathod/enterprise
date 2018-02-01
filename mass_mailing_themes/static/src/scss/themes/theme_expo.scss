@@ -1,58 +1,56 @@
-// lessc@1.4.2
-
 // ============================
 // Mass Mailing "Theme EXPO"
 // ============================
 
-@o_mm_expo_color_alpha: #262b36;
-@o_mm_expo_color_beta: white;
-@o_mm_expo_color_gamma: #ff3c00;
-@o_mm_expo_color_delta: darken(@o_mm_expo_color_gamma, 5%);
-@o_mm_expo_color_epsilon: black;
-@o_mm_expo_color_zeta: #f4f0e7;
+$o-mm-expo-color-alpha: #262b36;
+$o-mm-expo-color-beta: white;
+$o-mm-expo-color-gamma: #ff3c00;
+$o-mm-expo-color-delta: darken($o-mm-expo-color-gamma, 5%);
+$o-mm-expo-color-epsilon: black;
+$o-mm-expo-color-zeta: #f4f0e7;
 
-.o_mm_expo_bg_beta () {
-    background-color: @o_mm_expo_color_alpha;
-    color: @o_mm_expo_color_beta;
+@mixin o-mm-expo-bg-beta {
+    background-color: $o-mm-expo-color-alpha;
+    color: $o-mm-expo-color-beta;
 
     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-        color: @o_mm_expo_color_beta;
+        color: $o-mm-expo-color-beta;
     }
 }
 
 .o_expo_theme {
     // ===== Colors =====
-     color: @o_mm_expo_color_epsilon;
+     color: $o-mm-expo-color-epsilon;
 
     .bg-beta {
-        .o_mm_expo_bg_beta;
+        @include o-mm-expo-bg-beta;
     }
 
     .text-beta {
-        color: @o_mm_expo_color_alpha;
+        color: $o-mm-expo-color-alpha;
     }
 
     .bg-delta {
-        background-color: @o_mm_expo_color_gamma;
-        color: @o_mm_expo_color_beta;
+        background-color: $o-mm-expo-color-gamma;
+        color: $o-mm-expo-color-beta;
     }
 
     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-        color: @o_mm_expo_color_epsilon;
+        color: $o-mm-expo-color-epsilon;
     }
 
     .btn.btn-primary {
-        color: @o_mm_expo_color_beta;
-        background-color: @o_mm_expo_color_gamma;
+        color: $o-mm-expo-color-beta;
+        background-color: $o-mm-expo-color-gamma;
     }
 
 
     // ===== Layout =====
     &.o_layout {
-        background-color: @o_mm_expo_color_beta;
+        background-color: $o-mm-expo-color-beta;
 
         > .o_mail_wrapper {
-            background-color: @o_mm_expo_color_zeta;
+            background-color: $o-mm-expo-color-zeta;
             border: none;
         }
     }
@@ -60,7 +58,7 @@
     // ===== Snippets (general) =====
     .o_mail_snippet_general {
         a, .btn.btn-link {
-            color: @o_mm_expo_color_delta;
+            color: $o-mm-expo-color-delta;
         }
     }
 
@@ -78,7 +76,7 @@
     .o_mail_block_event {
         margin: 0;
         .o_mail_snippet_general {
-           .o_mm_expo_bg_beta;
+           @include o-mm-expo-bg-beta;
        }
     }
     .o_mail_block_image {
@@ -95,11 +93,11 @@
             // Exceptionally overwrite this color class for this location.
             // Not a problem since these elements are not editable by the user.
             .bg-gray-lighter {
-                background-color: @o_mm_expo_color_beta;
+                background-color: $o-mm-expo-color-beta;
             }
         }
     }
     .o_mail_block_steps {
-        .o_mm_expo_bg_beta;
+        @include o-mm-expo-bg-beta;
     }
 }

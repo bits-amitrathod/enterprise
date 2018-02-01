@@ -1,11 +1,11 @@
 .o_form_view {
-    @media screen and (min-width: @o-screen-sidechatter-min) {
+    @media screen and (min-width: $o-screen-sidechatter-min) {
         .o_attachment_preview {
             display: block;
             flex: 1 0 auto;
             overflow: hidden;
-            width: @o-chatter-min-width + 200px;
-            border-left: 1px solid @gray-lighter-darker;
+            width: $o-chatter-min-width + 200px;
+            border-left: 1px solid $gray-lighter-darker;
 
             > .o_attachment_preview_container {
                 position: relative;
@@ -46,17 +46,17 @@
         // sheet instead of next to it
         > .o_form_sheet_bg > .oe_chatter {
             width: 100%;
-            max-width: @container-lg;
-            margin: @odoo-sheet-vpadding * 0.2 auto;
-            background-color: @odoo-view-background-color;
-            border: 1px solid @gray-lighter-darker;
+            max-width: $container-lg;
+            margin: $odoo-sheet-vpadding * 0.2 auto;
+            background-color: $odoo-view-background-color;
+            border: 1px solid $gray-lighter-darker;
             box-shadow: 0 5px 20px -15px black;
-            padding: @odoo-sheet-vpadding;
+            padding: $odoo-sheet-vpadding;
         }
     }
-    @media screen and (max-width: @screen-lg-max) {
+    @media screen and (max-width: $screen-lg-max) {
         .o_attachment_preview {
             display: none;
         }
     }
- }
+}

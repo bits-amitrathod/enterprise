@@ -1,13 +1,13 @@
-@o_home_studio_menu_shadow: 0 1px 0 fade(black, 45%);
+$o-home-studio-menu-shadow: 0 1px 0 rgba(black, 0.45);
 
 .o_home_menu_background {
     // Fallback for browsers that doesn't support css gradients
     background-position: center;
     background-image: url(/web_enterprise/static/src/img/home-menu-bg.jpg);
-    .o-background-size(cover);
+    @include o-background-size(cover);
 
     // Prefer css gradient over images
-    .o-skew-gradient(#77717e, #c9a8a9);
+    @include o-skew-gradient(#77717e, #c9a8a9);
 
     // When applied on webclient (note: we do not specify the webclient class
     // here to avoid breaking studio custom style)
@@ -16,18 +16,18 @@
         border-color: transparent;
 
         .open .dropdown-toggle {
-            background-color: fade(black, 10%);
+            background-color: rgba(black, 0.1);
         }
         .oe_topbar_avatar {
-            box-shadow: @o_home_studio_menu_shadow;
+            box-shadow: $o-home-studio-menu-shadow;
         }
 
         &, & > ul > li {
             > a {
-                text-shadow: @o_home_studio_menu_shadow;
+                text-shadow: $o-home-studio-menu-shadow;
 
                 &:hover, &:focus {
-                    background-color: fade(black, 0%);
+                    background-color: rgba(black, 0);
                 }
             }
         }
@@ -35,7 +35,7 @@
 }
 
 .o_home_menu {
-    font-size: @odoo-font-size-base-touch;
+    font-size: $odoo-font-size-base-touch;
     -webkit-overflow-scrolling: touch; // smooth scrolling in iOS app (Safari)
 
     .o_menu_search.o_bar_hidden input {
@@ -47,7 +47,7 @@
         .o_apps {
             margin-top: 10px;
 
-            .user-select(none);
+            @include user-select(none);
 
             .o_app {
                 background: transparent;
@@ -56,11 +56,11 @@
                 text-decoration: none;
                 text-align: center;
                 outline: none;
-                .o-transition(all, 0.3s);
+                @include o-transition(all, 0.3s);
 
                 .o_app_icon {
                     border-radius: 4%;
-                    .o-transition(all, 0.1s);
+                    @include o-transition(all, 0.1s);
                     box-shadow: 0 7px 15px -10px black;
                     -webkit-filter: grayscale(25%);
                     filter: grayscale(25%);
@@ -71,11 +71,11 @@
                 }
 
                 .o_caption {
-                    .o-text-overflow(block);
+                    @include o-text-overflow(block);
                     margin-top: 8px;
                     color: white;
                     font-weight: 400;
-                    text-shadow: 0 1px 1px fade(black, 45%);
+                    text-shadow: 0 1px 1px rgba(black, 0.45);
                 }
 
                 &:focus, &.o_focused, &:hover {
@@ -83,7 +83,7 @@
                         -webkit-filter: grayscale(0%);
                         filter: grayscale(0%);
                         box-shadow: 0 8px 15px -10px black;
-                        .o-transform(translateY(-1px));
+                        @include o-transform(translateY(-1px));
                     }
                 }
             }
@@ -94,34 +94,34 @@
 
             .o_menuitem {
                 padding: 2px;
-                .o-text-overflow();
-                color: @odoo-brand-lightsecondary;
+                @include o-text-overflow;
+                color: $odoo-brand-lightsecondary;
                 margin-bottom: 3px;
-                @media (min-width: @screen-sm-min) {
+                @media (min-width: $screen-sm-min) {
                     font-size: 20px;
                 }
                 outline: none;
                 width: 100%;
-                @media (max-width: @screen-xs-max) {
+                @media (max-width: $screen-xs-max) {
                     padding: 5px 0;
                 }
                 &:hover {
                     color: white;
                 }
                 &:focus, &.o_focused {
-                    background-color: fade(white, 5%);
+                    background-color: rgba(white, 0.05);
                 }
             }
         }
 
         .o_no_result {
-            color: @odoo-brand-lightsecondary;
+            color: $odoo-brand-lightsecondary;
             font-size: 22px;
             margin-top: 10px;
         }
 
         .o_home_menu_footer {
-            .user-select(none);
+            @include user-select(none);
             > img {
                 width: 96px;
                 margin-bottom: 30px;
@@ -135,7 +135,7 @@
     max-width: 768px;
     width: 100%;
     .alert {
-        @media (min-width: @screen-md-min) {
+        @media (min-width: $screen-md-min) {
             margin-top: 25px;
         }
         margin-bottom: 0px;

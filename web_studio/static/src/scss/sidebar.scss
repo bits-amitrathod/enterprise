@@ -1,23 +1,23 @@
 .o_web_studio_client_action .o_web_studio_sidebar {
-    .o-flex-display();
-    .o-flex-flow(column, nowrap);
+    @include o-flex-display;
+    @include o-flex-flow(column, nowrap);
     color: white;
-    background-color: @o-web-studio-bg-medium;
-    border-right: 3px solid @o-web-studio-bg-dark;
+    background-color: $o-web-studio-bg-medium;
+    border-right: 3px solid $o-web-studio-bg-dark;
 
     .o_web_studio_sidebar_header {
-        .o-flex-display();
-        .o-flex(0, 0, auto);
-        margin-bottom: @o-web-studio-sidebar-margin;
-        background-color: @o-web-studio-bg-dark;
+        @include o-flex-display;
+        @include o-flex(0, 0, auto);
+        margin-bottom: $o-web-studio-sidebar-margin;
+        background-color: $o-web-studio-bg-dark;
 
         > div {
-            .o-flex(1, 0, auto);
+            @include o-flex(1, 0, auto);
             text-align: center;
             padding: 14px 0;
-            color: @o-web-studio-bg-light;
-            background-color: @o-web-studio-bg-dark;
-            box-shadow: inset 1px 0 0 @o-web-studio-bg-medium;
+            color: $o-web-studio-bg-light;
+            background-color: $o-web-studio-bg-dark;
+            box-shadow: inset 1px 0 0 $o-web-studio-bg-medium;
             cursor: pointer;
 
             &.inactive {
@@ -26,11 +26,11 @@
             }
             &.active, &:first-child:last-child {
                 cursor: default;
-                background-color: @o-web-studio-bg-medium;
+                background-color: $o-web-studio-bg-medium;
             }
             &:not(.inactive):not(.active):hover {
                 color: white;
-                background-color: fade(@o-web-studio-bg-medium, 50%);
+                background-color: rgba($o-web-studio-bg-medium, 0.5);
             }
 
             > i {
@@ -41,7 +41,7 @@
 
     .o_web_studio_sidebar_content {
         overflow: auto;
-        padding: 0 @o-web-studio-sidebar-margin @o-web-studio-sidebar-margin;
+        padding: 0 $o-web-studio-sidebar-margin $o-web-studio-sidebar-margin;
 
         > :first-child {
             margin-top: 0;
@@ -52,7 +52,7 @@
         }
 
         > hr {
-            border-color: @o-web-studio-bg-dark;
+            border-color: $o-web-studio-bg-dark;
             border-width: 1px;
         }
 
@@ -64,19 +64,19 @@
                 font-size: 12px;
                 font-weight: normal;
                 margin: 4px 0 3px 2px;
-                color: @o-web-studio-text-inactive;
+                color: $o-web-studio-text-inactive;
             }
 
             input, select, textarea, div.input-group-addon {
-                color: @o-web-studio-text-inactive;
+                color: $o-web-studio-text-inactive;
                 border: 1px solid transparent;
-                background-color: @o-web-studio-bg-dark;
+                background-color: $o-web-studio-bg-dark;
                 padding: 4px 9px;
-                .o-transition(all, 0.3s);
-                .transition-property(~'background, border' );
+                @include o-transition(all, 0.3s);
+                @include transition-property(background, border);
                 &:focus {
-                    border-color: @o-web-studio-color-info;
-                    box-shadow: 0 0 1px 0 @o-web-studio-color-info;
+                    border-color: $o-web-studio-color-info;
+                    box-shadow: 0 0 1px 0 $o-web-studio-color-info;
                     color: white;
                 }
                 > option {
@@ -94,13 +94,13 @@
             }
 
             > button {
-                .o-web-studio-btn();
+                @include o-web-studio-btn;
             }
 
             // Specific style for each field type
             &.o_web_studio_sidebar_iscode {
                 input, textarea {
-                    font-family: @o-web-studio-font-family-monospace;
+                    font-family: $o-web-studio-font-family-monospace;
                     font-size: 11px;
                 }
                 textarea {
@@ -110,67 +110,67 @@
             }
 
             &.o_web_studio_sidebar_checkbox {
-                .o-web-studio-checkbox();
+                @include o-web-studio-checkbox;
                 & + .o_web_studio_sidebar_checkbox {
                     margin-top: 2px;
                 }
             }
 
             &.o_web_studio_sidebar_select {
-                .o-web-studio-select();
+                @include o-web-studio-select;
             }
 
             &.o_web_studio_sidebar_tags {
                 .o_field_widget {
-                    .o-flex-display();
-                    .o-flex-flow(row, wrap);
+                    @include o-flex-display;
+                    @include o-flex-flow(row, wrap);
                     width: 100%;
                 }
                 .o_field_many2one {
-                    .o-flex(0, 0, 100%);
+                    @include o-flex(0, 0, 100%);
                     > .o_input_dropdown {
                         > .o_dropdown_button {
                             right: 18px;
                             top: -2px;
                             font-size: 10px;
                             font-family: 'FontAwesome';
-                            color: @o-web-studio-text-inactive;
+                            color: $o-web-studio-text-inactive;
                             &:after {
                                 border: none;
                                 content: "\f078"
                             }
                         }
                         &:hover .o_dropdown_button {
-                            color: @o-web-studio-text-light;
+                            color: $o-web-studio-text-light;
                         }
                     }
                     > .o_external_button {
                         padding-right: 0;
                         background-color: transparent;
                         &:hover, &:focus, &:active {
-                            color: @o-web-studio-text-light;
+                            color: $o-web-studio-text-light;
                         }
                     }
                 }
                 .badge {
-                    .o-flex-display();
+                    @include o-flex-display;
                     align-items: baseline;
-                    max-width: @o-web-studio-sidebar-width - 2*@o-web-studio-sidebar-margin;
+                    max-width: $o-web-studio-sidebar-width - 2*$o-web-studio-sidebar-margin;
                     margin: 5px 5px 5px 0px;
                     cursor: default;
                     padding: 3px 5px;
                     border-radius: 3px;
                     .o_badge_text {
                         margin-right: 5px;
-                        .o-text-overflow();
+                        @include o-text-overflow;
                         font-weight: normal;
                     }
                     .o_delete:hover {
                         cursor: pointer;
-                        color: @o-web-studio-color-danger;
+                        color: $o-web-studio-color-danger;
                     }
                     &.o_tag_color_10 {
-                        background-color: @o-web-studio-color-info;
+                        background-color: $o-web-studio-color-info;
                     }
                     & + .badge {
                         margin-top: 1px
@@ -179,27 +179,27 @@
             }
         }
         .o_web_studio_field_type_container {
-            .o-flex-display();
-            .o-flex-flow(row, wrap);
-            .o-justify-content(space-between);
+            @include o-flex-display;
+            @include o-flex-flow(row, wrap);
+            @include o-justify-content(space-between);
         }
         .o_web_studio_component {
-            .o-text-overflow();
-            .size(49%, 32px);
+            @include o-text-overflow;
+            @include size(49%, 32px);
             position: relative;
             margin-bottom: 5px;
             padding: 3px 5px 0 0;
             max-width: 130px;
             border-radius: 2px;
-            background-color: @o-web-studio-bg-light;
+            background-color: $o-web-studio-bg-light;
             box-shadow: 0 1px 1px black;
-            color: @o-web-studio-bg-dark;
-            font: bold 11px/2.4 @font-family-serif;
+            color: $o-web-studio-bg-dark;
+            font: bold 11px/2.4 $font-family-serif;
             cursor: pointer;
             &:hover {
                 background-color: white;
                 &:before {
-                    background: @o-web-studio-bg-light;
+                    background: $o-web-studio-bg-light;
                 }
             }
             &.o_web_studio_debug:not(.ui-draggable-helper) {
@@ -207,44 +207,44 @@
                 line-height: 1.9;
             }
             .o_web_studio_component_description {
-                .o-text-overflow(block);
+                @include o-text-overflow(block);
                 padding: 2px;
                 background: white;
-                font: bold 10px/1 @o-web-studio-font-family-monospace;
+                font: bold 10px/1 $o-web-studio-font-family-monospace;
             }
             &:before {
-                .size(33px, 150%);
+                @include size(33px, 150%);
                 display: block;
                 float: left;
                 margin: -3px 5px 0 0;
-                border-right: 1px solid lighten(@o-web-studio-bg-dark, 50%);
-                background-color: darken(@o-web-studio-bg-light, 5%);
+                border-right: 1px solid lighten($o-web-studio-bg-dark, 50%);
+                background-color: darken($o-web-studio-bg-light, 5%);
                 content: "";
             }
             &:after {
-                .o-position-absolute(6px, auto, auto , 7px);
+                @include o-position-absolute(6px, auto, auto , 7px);
             }
             &.ui-draggable-helper {
                 background-color: white;
                 box-shadow: none;
                 border: 1px solid black;
-                z-index: @zindex-modal;
+                z-index: $zindex-modal;
                 .o_web_studio_component_description {
                     display: none;
                 }
                 &.ui-draggable-helper-ready {
                     opacity: 1!important;
                     line-height: 2;
-                    border: 2px solid @odoo-brand-optional;
+                    border: 2px solid $odoo-brand-optional;
                 }
             }
         }
 
         .o_web_studio_sidebar_toolbox {
-            .o-flex(1, 0, 100%);
+            @include o-flex(1, 0, 100%);
 
             > button.btn {
-                .o-flex(1, 1, auto);
+                @include o-flex(1, 1, auto);
             }
         }
 

@@ -6,8 +6,8 @@ html {
 
     .o_web_client {
         height: 100%;
-        .o-flex-display();
-        .o-flex-flow(column, nowrap);
+        @include o-flex-display;
+        @include o-flex-flow(column, nowrap);
 
         &.o_fullscreen {
             .o_main_navbar {
@@ -16,23 +16,23 @@ html {
         }
 
         .o_main_navbar {
-            .o-flex(0, 0, auto);
+            @include o-flex(0, 0, auto);
         }
 
         .o_control_panel {
-            .o-flex(0, 0, auto);
+            @include o-flex(0, 0, auto);
         }
 
         .o_content {
-            .o-flex(1, 1, auto);
-            @media (min-width: @screen-sm-min) {
+            @include o-flex(1, 1, auto);
+            @media (min-width: $screen-sm-min) {
                 overflow: auto;
                 height: 100%;
                 // iOS fix for scroll-x element inside scroll-y element
                 -webkit-overflow-scrolling: touch;
             }
             position: relative;  // Allow to redistribute the 100% height to its child
-            @media (max-width: @screen-xs-max) {
+            @media (max-width: $screen-xs-max) {
                 overflow: visible;
                 height: auto;
             }
@@ -45,7 +45,7 @@ html {
                 left: 0;
                 height: 100%;
                 &.o_field_widget {
-                    @media (max-width: @screen-xs-max) {
+                    @media (max-width: $screen-xs-max) {
                         position: static;  // reset the height 100% distribution on flex item
                         height: auto;  // reset height inheritance
                     }
@@ -54,7 +54,7 @@ html {
         }
     }
 
-    @media (max-width: @screen-xs-max) {
+    @media (max-width: $screen-xs-max) {
         .o_web_client {
             &.modal-open {
                 .o_content {
@@ -68,7 +68,7 @@ html {
         position: fixed;
         bottom: 0;
         right: 0;
-        z-index: @zindex-modal + 1;
+        z-index: $zindex-modal + 1;
     }
 }
 

@@ -6,7 +6,7 @@
         display: block;
     }
 }
-.o_account_reports_i_fa_toggle {
+@mixin o-account-reports-i-fa-toggle {
     i.fa {
         visibility: hidden;
     }
@@ -15,14 +15,14 @@
     }
 }
 
-.o_account_reports_lines(@border-width: 5px, @color: inherit, @font-weight: inherit, @border-top-style: initial, @border-bottom-style: initial) {
-    border-width: @border-width;
+@mixin o-account-reports-lines($border-width: 5px, $color: inherit, $font-weight: inherit, $border-top-style: initial, $border-bottom-style: initial) {
+    border-width: $border-width;
     border-left-style: hidden;
     border-right-style: hidden;
-    color: @color;
-    font-weight: @font-weight;
-    border-top-style: @border-top-style;
-    border-bottom-style: @border-bottom-style;
+    color: $color;
+    font-weight: $font-weight;
+    border-top-style: $border-top-style;
+    border-bottom-style: $border-bottom-style;
 }
 
 .o_form_view {
@@ -34,14 +34,14 @@
 }
 
 .o_account_reports_page {
-    background-color: @odoo-view-background-color;
-    color: @odoo-main-text-color;
+    background-color: $odoo-view-background-color;
+    color: $odoo-main-text-color;
     &.o_account_reports_no_print {
         padding-bottom: 125px;
-        margin: @odoo-horizontal-padding auto;
-        .o-webclient-padding(@top: @odoo-sheet-vpadding, @bottom: @odoo-sheet-vpadding);
+        margin: $odoo-horizontal-padding auto;
+        @include o-webclient-padding($top: $odoo-sheet-vpadding, $bottom: $odoo-sheet-vpadding);
         .o_account_reports_level0 {
-            .o_account_reports_lines(@border-width: 5px, @color: @odoo-brand-primary, @font-weight: bold, @border-top-style: double, @border-bottom-style: hidden);
+            @include o-account-reports-lines($border-width: 5px, $color: $odoo-brand-primary, $font-weight: bold, $border-top-style: double, $border-bottom-style: hidden);
         }
         .o_account_reports_table {
             white-space: nowrap;
@@ -144,7 +144,7 @@
     .o_account_reports_summary {
         padding-bottom: 40px;
         padding-top: 15px;
-        .o_account_reports_i_fa_toggle;
+        @include o-account-reports-i-fa-toggle;
     }
     .o_account_reports_unfolded td + td span {
         visibility: hidden;
@@ -224,14 +224,14 @@
     }
     b.o_account_reports_footnote_sup {
         margin-top: 10px;
-        color: @odoo-main-text-color;
+        color: $odoo-main-text-color;
     }
     ul.o_account_reports_domain_dropdown {
         margin-left: 70px
     }
     .total {
         font-weight: bold;
-        color: @odoo-main-text-color;
+        color: $odoo-main-text-color;
     }
     .o_account_reports_level0 {
         border-collapse: separate;
@@ -246,7 +246,7 @@
         }
     }
     .o_account_reports_level1 {
-        .o_account_reports_lines(@border-width: 2px, @border-top-style: hidden, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 2px, $border-top-style: hidden, $border-bottom-style: solid);
         &.total {
             border-top-style: solid;
             font-weight: bold;
@@ -256,7 +256,7 @@
         }
     }
     .o_account_reports_level2 {
-        .o_account_reports_lines(@border-width: 1px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 1px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 20px;
         }
@@ -266,7 +266,7 @@
         }
     }
     .o_account_reports_level3 {
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 30px;
         }
@@ -278,7 +278,7 @@
         .o_account_reports_caret_icon {
             margin-left: 15px;
         }
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 40px;
         }
@@ -287,37 +287,37 @@
         }
     }
     .o_account_reports_level5 {
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 50px;
         }
     }
     .o_account_reports_level6 {
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 60px;
         }
     }
     .o_account_reports_level7 {
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 70px;
         }
     }
     .o_account_reports_level8 {
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 80px;
         }
     }
     .o_account_reports_level9 {
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 90px;
         }
     }
     .o_account_reports_default_style {
-        .o_account_reports_lines(@border-width: 0px, @border-top-style: solid, @border-bottom-style: solid);
+        @include o-account-reports-lines($border-width: 0px, $border-top-style: solid, $border-bottom-style: solid);
         > td > span:last-child {
             margin-left: 50px;
         }

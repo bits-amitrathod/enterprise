@@ -1,12 +1,12 @@
 .o_datepickers_searchview {
-    .o-flex-display();
-    .o-align-items(center);
+    @include o-flex-display;
+    @include o-align-items(center);
 
     // Position relative is necessary to display the datepicker correctly when toggle
     // Requirement from the library.
     position: relative;
     > .o_datepicker {
-        .o-flex(1, 0, 90px);
+        @include o-flex(1, 0, 90px);
         margin: 0 10px;
         position: relative;
 
@@ -27,15 +27,15 @@
     }
 
     div.box {
-        .clearfix();
+        @include clearfix;
         padding: 10px;
-        color: @odoo-main-text-color;
-        background-color: @odoo-view-background-color;
+        color: $odoo-main-text-color;
+        background-color: $odoo-view-background-color;
         -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
         box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
         background-size: cover;
-        margin-top: @odoo-horizontal-padding;
-        margin-bottom: @odoo-horizontal-padding;
+        margin-top: $odoo-horizontal-padding;
+        margin-bottom: $odoo-horizontal-padding;
         position: relative;
 
         h1, h2, h3, h4 {
@@ -45,11 +45,11 @@
     }
 
     .o_stats_section {
-        .o-flex-display();
-        .o-flex-flow(row, wrap);
+        @include o-flex-display;
+        @include o-flex-flow(row, wrap);
 
         > div {
-            .o-flex(1, 1, 350px);
+            @include o-flex(1, 1, 350px);
         }
     }
 
@@ -64,8 +64,8 @@
         margin: 5px;
 
         .o_stat_box_header {
-            .o-flex-display();
-            .o-justify-content(space-between);
+            @include o-flex-display;
+            @include o-justify-content(space-between);
             min-height: 40px;
         }
 
@@ -87,11 +87,11 @@
         }
 
         .o_demo_label {
-            .o-position-absolute(@bottom: 0, @right: 0);
+            @include o-position-absolute($bottom: 0, $right: 0);
         }
 
         .o_graph {
-            .o-position-absolute(@top: 0, @left: 0);
+            @include o-position-absolute($top: 0, $left: 0);
             opacity: 0.3;
             padding: 20px 0px 0;
             width: 100%;
@@ -109,7 +109,7 @@
         }
 
         &:hover {
-            background-color: @odoo-brand-lightsecondary;
+            background-color: $odoo-brand-lightsecondary;
         }
     }
 
@@ -151,7 +151,7 @@
 
     &.o_cohort_dashboard {
         table tr {
-            @media (max-width: @screen-xs-max) {
+            @media (max-width: $screen-xs-max) {
                 td:nth-child(n+5), th:nth-child(n+5) {
                     display: none;
                 }
@@ -159,7 +159,7 @@
                     display: table-cell;
                 }
             }
-            @media (max-width: @screen-sm-max) {
+            @media (max-width: $screen-sm-max) {
                 td:nth-child(n+8), th:nth-child(n+8) {
                     display: none;
                 }
@@ -167,7 +167,7 @@
                     display: table-cell;
                 }
             }
-            @media (max-width: @screen-md-max) {
+            @media (max-width: $screen-md-max) {
                 td:nth-child(n+12), th:nth-child(n+12) {
                     display: none;
                 }
@@ -213,7 +213,7 @@
     .o_welcome_message {
         margin: 5px;
 
-        .o-flex-display();
+        @include o-flex-display;
         justify-content: center;
 
         .o_welcome_image {

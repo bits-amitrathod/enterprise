@@ -1,5 +1,5 @@
 .o_kanban_view.o_kanban_dashboard.o_helpdesk_kanban {
-    @sale-table-spacing: 10px;
+    $sale-table-spacing: 10px;
 
     .o_kanban_record {
         width: 420px;
@@ -7,18 +7,18 @@
     }
 
     .o_helpdesk_dashboard {
-        margin: (0 - @o-kanban-record-margin) (@o-kanban-record-margin - @odoo-horizontal-padding) @o-kanban-record-margin;
-        .o-flex(1, 0, 100%);
-        padding: 10px (@odoo-horizontal-padding - @sale-table-spacing);
+        margin: (0 - $o-kanban-record-margin) ($o-kanban-record-margin - $odoo-horizontal-padding) $o-kanban-record-margin;
+        @include o-flex(1, 0, 100%);
+        padding: 10px ($odoo-horizontal-padding - $sale-table-spacing);
 
-        background-color: @odoo-view-background-color;
+        background-color: $odoo-view-background-color;
         position: relative;
 
         .o_welcome_message {
             width: 100%;
-            .o-position-absolute(@left: 0, @top: 0);
-            .o-flex-display();
-            .o-justify-content(center);
+            @include o-position-absolute($left: 0, $top: 0);
+            @include o-flex-display;
+            @include o-justify-content(center);
 
             .o_welcome_image {
                 padding: 20px;
@@ -36,19 +36,19 @@
         > div {
             display: inline-block;
             vertical-align: top;
-            @media (min-width: @screen-sm-min) {
+            @media (min-width: $screen-sm-min) {
                 width: 50%;
             }
 
             > table {
                 margin-bottom: 0;
                 table-layout: fixed;
-                border-spacing: @sale-table-spacing 0px;
+                border-spacing: $sale-table-spacing 0px;
                 border-collapse: separate;
                 > tbody > tr > td {
                     vertical-align: middle;
                     text-align: center;
-                    border-top: 1px solid @odoo-view-background-color;
+                    border-top: 1px solid $odoo-view-background-color;
                     width: 25%;
 
                     height: 33px;
@@ -62,9 +62,9 @@
                     }
 
                     &.o_main {
-                        background-color: @odoo-brand-optional;
+                        background-color: $odoo-brand-optional;
                         &:hover {
-                            background-color: darken(@odoo-brand-optional, 10%);
+                            background-color: darken($odoo-brand-optional, 10%);
                         }
                         a {
                             color: white;
@@ -80,9 +80,9 @@
                         }
                     }
                     &.o_secondary {
-                        background-color: @odoo-brand-lightsecondary;
+                        background-color: $odoo-brand-lightsecondary;
                         &:hover {
-                            background-color: darken(@odoo-brand-lightsecondary, 10%);
+                            background-color: darken($odoo-brand-lightsecondary, 10%);
                         }
                         a {
                             color: black;
@@ -106,5 +106,5 @@
     height: 12px;
     width: 12px;
     border-radius: 6px;
-    color: @brand-danger;
+    color: $brand-danger;
 }

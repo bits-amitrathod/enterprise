@@ -1,17 +1,17 @@
 .o_kanban_view.o_kanban_dashboard.o_subscription_kanban {
 
     .o_kanban_record {
-        .o-flex-display();
+        @include o-flex-display;
         position: relative;
     }
 
     .o_subscription_kanban_main {
-        .o-flex(0, 0, auto);
-        padding: @odoo-horizontal-padding;
+        @include o-flex(0, 0, auto);
+        padding: $odoo-horizontal-padding;
         width: 70%; // for IE11 overflow issue
 
         // give space for manage section at the bottom
-        margin-bottom: @odoo-horizontal-padding/2 + 19px;
+        margin-bottom: $odoo-horizontal-padding/2 + 19px;
 
         .o_kanban_card_content {
             font-size: 12px;
@@ -23,7 +23,7 @@
         .o_subscription_kanban_manage {
             .o_kanban_manage_toggle_button {
                 font-size: 18px;
-                padding: @odoo-horizontal-padding/2 @odoo-horizontal-padding;
+                padding: $odoo-horizontal-padding/2 $odoo-horizontal-padding;
             }
         }
         .o_kanban_card_manage_pane .o_kanban_card_manage_title {
@@ -33,10 +33,10 @@
 
     .o_subscription_kanban_boxes {
         width: 30%;
-        .o-flex(0, 0, auto);
+        @include o-flex(0, 0, auto);
 
-        .o-flex-display();
-        .o-flex-flow(column, nowrap);
+        @include o-flex-display;
+        @include o-flex-flow(column, nowrap);
 
         > a:hover {
             text-decoration: none;
@@ -55,17 +55,17 @@
             position: relative;
             text-align: center;
             padding: 15px 0 15px 0;
-            .o-flex(1, 1, auto);
-            .o-flex-display();
-            .o-align-items(center);
-            .o-flex-flow(column, nowrap);
-            .o-justify-content(center);
+            @include o-flex(1, 1, auto);
+            @include o-flex-display;
+            @include o-align-items(center);
+            @include o-flex-flow(column, nowrap);
+            @include o-justify-content(center);
         }
         .o_subscription_kanban_box:nth-child(even) {
             background-color: grey;
         }
         .o_subscription_kanban_box:nth-child(odd) {
-            background-color: @odoo-brand-optional;
+            background-color: $odoo-brand-optional;
         }
     }
 }

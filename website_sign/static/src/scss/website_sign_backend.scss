@@ -1,7 +1,7 @@
 .o_web_client {
     .o_content {
         .favorite_sign_button {
-            color: @odoo-brand-secondary;
+            color: $odoo-brand-secondary;
             &:hover {
                 color: orange;
             }
@@ -9,22 +9,22 @@
             &.favorite_sign_button_enabled {
                 color: orange;
                 &:hover {
-                    color: @brand-danger;
+                    color: $brand-danger;
                 }
             }
         }
 
         .o_signers > span {
             &.o_sign_waiting {
-                color: @brand-danger;
+                color: $brand-danger;
             }
             &.o_sign_completed {
-                color: @brand-success;
+                color: $brand-success;
             }
 
             &:before {
                 content: ', ';
-                color: @odoo-main-text-color;
+                color: $odoo-main-text-color;
             }
             &:first-child:before {
                 content: '';
@@ -34,16 +34,16 @@
 
     /* Module pages */
     .o_sign_template, .o_sign_document {
-        .o-flex-display();
-        .o-flex-flow(column, nowrap);
-        .o-position-absolute(0, 0, 0, 0);
-        @media (max-width: @screen-xs-max) {
+        @include o-flex-display;
+        @include o-flex-flow(column, nowrap);
+        @include o-position-absolute(0, 0, 0, 0);
+        @media (max-width: $screen-xs-max) {
             position: static;
             .o_sign_pdf_iframe {
-                .o-flex(0, 0, 500px);
+                @include o-flex(0, 0, 500px);
             }
         }
-        background-color: @odoo-view-background-color;
+        background-color: $odoo-view-background-color;
     }
 
     /* Template edit view */
@@ -85,16 +85,16 @@
     .o_sign_create_partner {
         .fa-exclamation-circle {
             padding: 0 10px;
-            color: @brand-danger;
+            color: $brand-danger;
         }
         .fa-check-circle {
             padding-left: 10px;
-            color: @brand-success;
+            color: $brand-success;
         }
     }
 
     .o_sign_add_partner {
-        border-bottom: 1px dashed @odoo-brand-secondary;
+        border-bottom: 1px dashed $odoo-brand-secondary;
     }
 
     .o_sign_delete_field_button {

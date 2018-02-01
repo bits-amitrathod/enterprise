@@ -1,11 +1,11 @@
 .o_event_barcode_bg {
-    .o-flex-display();
-    .o-flex-flow(column, nowrap);
-    .o-justify-content(center);
-    .o-align-items(center);
+    @include o-flex-display;
+    @include o-flex-flow(column, nowrap);
+    @include o-justify-content(center);
+    @include o-align-items(center);
 
-    @media (min-width: @screen-sm-min) {
-        .o-position-absolute(0, 0, 0, 0);
+    @media (min-width: $screen-sm-min) {
+        @include o-position-absolute(0, 0, 0, 0);
     }
 }
 .o_event_barcode_main {
@@ -35,7 +35,7 @@
         -moz-box-shadow: 0px 0px 8px #7bc1f7;
         -webkit-box-shadow: 0px 0px 8px #7bc1f7;
     }
-    @media (min-width: @screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         flex: 0 0 auto;
         width: 550px;
         border-radius: 10px;
@@ -59,7 +59,7 @@
         background-color: #A2488A;
         padding-left: 10px;
         // Mobile: border radius top-left/right
-        @media (max-width: @screen-sm-max) {
+        @media (max-width: $screen-sm-max) {
             border-top-left-radius: 10px;
             -webkit-border-top-left-radius: 10px;
             -moz-border-radius-topleft: 10px;
@@ -68,7 +68,7 @@
             -moz-border-radius-topright: 10px;
         }
         // Otherwise: border radious top/bottom-left
-        @media (min-width: @screen-sm-max) {
+        @media (min-width: $screen-sm-max) {
             border-top-left-radius: 10px;
             -webkit-border-top-left-radius: 10px;
             -moz-border-radius-topleft: 10px;
@@ -97,7 +97,7 @@
         }
         // Mobile: border radius on bottom-left
         // Otherwise: no border radius
-        @media (max-width: @screen-sm-max) {
+        @media (max-width: $screen-sm-max) {
             border-bottom-left-radius: 10px;
             -webkit-border-bottom-left-radius: 10px;
             -moz-border-radius-bottomleft: 10px;
@@ -123,13 +123,13 @@
         background: #A2488A !important;
         color: white;
         // Mobile: border radius on bottom-right
-        @media (max-width: @screen-sm-max) {
+        @media (max-width: $screen-sm-max) {
             border-bottom-right-radius: 10px;
             -webkit-border-bottom-right-radius: 10px;
             -moz-border-radius-bottomright: 10px;
         }
         // Otherwise: border radius on top/bottom right
-        @media (min-width: @screen-sm-max) {
+        @media (min-width: $screen-sm-max) {
             border-top-right-radius: 10px;
             -webkit-border-top-right-radius: 10px;
             -moz-border-radius-topright: 10px;
@@ -147,15 +147,15 @@
             cursor: pointer;
         }
     }
-    @media (min-width: @screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         width: 550px;
     }
 }
 
-@notification-success-bg-color: #5BC236;
+$notification-success-bg-color: #5BC236;
 .o_notification_manager {
     .o_event_success {
         color: white;
-        background-color: @notification-success-bg-color;
+        background-color: $notification-success-bg-color;
     }
 }

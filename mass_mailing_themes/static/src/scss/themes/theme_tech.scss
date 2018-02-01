@@ -1,40 +1,38 @@
-// lessc@1.4.2
-
 // =========================
 // Mass Mailing "Theme Tech"
 // =========================
 
-@o_mm_tech_color_alpha: #333;
-@o_mm_tech_color_beta: white;
-@o_mm_tech_color_gamma: #59cdcd;
-@o_mm_tech_color_delta: #bdbdbd;
-@o_mm_tech_color_epsilon: black;
-@o_mm_tech_color_zeta: #a17e92;
+$o-mm-tech-color-alpha: #333;
+$o-mm-tech-color-beta: white;
+$o-mm-tech-color-gamma: #59cdcd;
+$o-mm-tech-color-delta: #bdbdbd;
+$o-mm-tech-color-epsilon: black;
+$o-mm-tech-color-zeta: #a17e92;
 
 .o_tech_theme {
     // ===== Colors =====
     .bg-beta {
-        background-color: @o_mm_tech_color_gamma;
+        background-color: $o-mm-tech-color-gamma;
 
         .btn.btn-primary {
-            color: @o_mm_tech_color_gamma;
-            background-color: @o_mm_tech_color_beta;
+            color: $o-mm-tech-color-gamma;
+            background-color: $o-mm-tech-color-beta;
         }
     }
     .text-beta {
-        color: @o_mm_tech_color_gamma;
+        color: $o-mm-tech-color-gamma;
     }
     .bg-delta {
-        background-color: @o_mm_tech_color_zeta;
+        background-color: $o-mm-tech-color-zeta;
     }
 
     // ===== Layout =====
     &.o_layout {
-        background-color: @o_mm_tech_color_alpha;
+        background-color: $o-mm-tech-color-alpha;
 
         .o_mail_wrapper_td {
             background-color: transparent;
-            color: @o_mm_tech_color_delta;
+            color: $o-mm-tech-color-delta;
             border: none;
         }
     }
@@ -42,8 +40,8 @@
     // ===== Snippets (general) =====
     .o_mail_snippet_general {
         .btn.btn-primary {
-            color: @o_mm_tech_color_beta;
-            background-color: @o_mm_tech_color_gamma;
+            color: $o-mm-tech-color-beta;
+            background-color: $o-mm-tech-color-gamma;
         }
 
         .o_mail_full_width_padding {
@@ -53,23 +51,23 @@
 
         a, .btn.btn-link {
             font-weight: normal;
-            color: @o_mm_tech_color_gamma;
+            color: $o-mm-tech-color-gamma;
         }
 
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-            color: darken(@o_mm_tech_color_beta, 10%);
+            color: darken($o-mm-tech-color-beta, 10%);
         }
 
         .bg-beta, .bg-delta {
             h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-                color: @o_mm_tech_color_beta;
+                color: $o-mm-tech-color-beta;
             }
         }
 
         .bg-beta {
             .btn.btn-primary {
-                color: @o_mm_tech_color_gamma;
-                background-color: @o_mm_tech_color_beta;
+                color: $o-mm-tech-color-gamma;
+                background-color: $o-mm-tech-color-beta;
             }
         }
     }
@@ -84,7 +82,7 @@
 
             > table {
                 max-width: 560px;
-                border-bottom: 1px solid darken(@o_mm_tech_color_beta, 60%);
+                border-bottom: 1px solid darken($o-mm-tech-color-beta, 60%);
             }
         }
 
@@ -95,7 +93,7 @@
         .o_mail_header_social {
             margin-right: 0px;
             a {
-                color: darken(@o_mm_tech_color_beta, 40%);
+                color: darken($o-mm-tech-color-beta, 40%);
             }
         }
     }
@@ -103,7 +101,7 @@
     .o_mail_block_footer_separator {
         .separator {
             height: 1px;
-            background-color: darken(@o_mm_tech_color_beta, 60%);
+            background-color: darken($o-mm-tech-color-beta, 60%);
         }
     }
 
@@ -112,13 +110,13 @@
         margin-right: 20px;
 
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-            color: @o_mm_tech_color_alpha;
+            color: $o-mm-tech-color-alpha;
         }
     }
 
     .o_mail_block_discount2 {
         .o_code {
-            color: @o_mm_tech_color_alpha;
+            color: $o-mm-tech-color-alpha;
         }
     }
 
@@ -131,12 +129,12 @@
         background-color: transparent;
 
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-            color: @o_mm_tech_color_alpha;
+            color: $o-mm-tech-color-alpha;
         }
 
         .o_mail_full_width_padding > tbody > tr  {
-            background-color: @o_mm_tech_color_beta;
-            color: @o_mm_tech_color_alpha;
+            background-color: $o-mm-tech-color-beta;
+            color: $o-mm-tech-color-alpha;
         }
     }
 
@@ -152,18 +150,18 @@
 
         .o_mail_footer_social {
             a {
-                color: darken(@o_mm_tech_color_beta, 40%);
+                color: darken($o-mm-tech-color-beta, 40%);
             }
         }
 
         .o_mail_footer_links a {
-            color: darken(@o_mm_tech_color_beta, 40%);
+            color: darken($o-mm-tech-color-beta, 40%);
         }
 
         .o_mail_footer_copy {
             font-weight: bold;
             font-size: 9px;
-            color: darken(@o_mm_tech_color_beta, 30%);
+            color: darken($o-mm-tech-color-beta, 30%);
         }
 
         &.o_mail_footer_social_left {

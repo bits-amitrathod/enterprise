@@ -18,8 +18,8 @@
     }
 
     thead {
-        color: @odoo-main-text-color;
-        background-color: @odoo-brand-lightsecondary;
+        color: $odoo-main-text-color;
+        background-color: $odoo-brand-lightsecondary;
         th {
             text-align: center;
             white-space: pre-line;
@@ -28,17 +28,17 @@
 
     tfoot, .o_grid_total {
         color: white;
-        background-color: @odoo-brand-primary;
+        background-color: $odoo-brand-primary;
         text-align: right;
     }
 
     tbody {
-        background-color: @odoo-view-background-color;
+        background-color: $odoo-view-background-color;
         text-align: right;
         th > div {
-            .o-flex-display();
+            @include o-flex-display;
             > div {
-                .o-flex(1, 1, auto);
+                @include o-flex(1, 1, auto);
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -50,28 +50,28 @@
                     content: " ";
                 }
                 &:last-child {
-                    .o-flex(100, 1, auto);
+                    @include o-flex(100, 1, auto);
                 }
             }
         }
         tr:nth-of-type(odd) th > div:after {
-            background-color: @table-bg-accent;
+            background-color: $table-bg-accent;
         }
 
         .o_grid_cell_information {
             cursor: pointer;
             opacity: 0;
-            .o-transition(opacity, 100ms, ease);
+            @include o-transition(opacity, 100ms, ease);
         }
         .o_grid_cell_container {
-            .o-flex-display();
-            .o-align-items(center);
+            @include o-flex-display;
+            @include o-align-items(center);
 
             &:hover {
-                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px @odoo-brand-optional;
+                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px $odoo-brand-optional;
 
                 &.o_grid_cell_readonly {
-                    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px @odoo-brand-lightsecondary;
+                    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px $odoo-brand-lightsecondary;
                     cursor: not-allowed;
                 }
 
@@ -82,11 +82,11 @@
 
             > i {
                 padding: 2px;
-                .o-flex(0, 0, auto);
+                @include o-flex(0, 0, auto);
             }
             > .o_grid_input, > .o_grid_show {
                 width: 100%;
-                .o-flex(1, 1, auto);
+                @include o-flex(1, 1, auto);
             }
 
             &.o_grid_cell_empty {
@@ -101,13 +101,13 @@
             text-align: right;
             &:focus {
                 opacity: 1 !important;
-                background-color: @odoo-view-background-color;
+                background-color: $odoo-view-background-color;
                 outline: none;
             }
             &.has-error {
-                color: @state-danger-text;
-                border-color: @state-danger-text;
-                background-color: @state-danger-bg;
+                color: $state-danger-text;
+                border-color: $state-danger-text;
+                background-color: $state-danger-bg;
             }
         }
 
@@ -115,26 +115,26 @@
         // row of the tbody) and the row labels of both title and regular rows
         &.o_grid_section {
             tr th {
-                padding-left: 3 * @table-condensed-cell-padding;
+                padding-left: 3 * $table-condensed-cell-padding;
             }
             tr:first-child {
                 th {
-                    padding-left: @table-condensed-cell-padding;
+                    padding-left: $table-condensed-cell-padding;
                     white-space: nowrap;
                     text-align: left;
                 }
-                color: lighten(@odoo-main-text-color, 15%);
-                background-color: lighten(@odoo-brand-lightsecondary, 4%);
+                color: lighten($odoo-main-text-color, 15%);
+                background-color: lighten($odoo-brand-lightsecondary, 4%);
             }
         }
     }
 
     .o_grid_current:not(.o_grid_total) {
-        background-color: fade(@odoo-brand-optional, 25%);
+        background-color: rgba($odoo-brand-optional, 0.25);
     }
 
     .o_grid_text_muted{
-        color: lighten(@odoo-main-text-color, 15%);
+        color: lighten($odoo-main-text-color, 15%);
         font-style: italic;
     }
 

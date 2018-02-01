@@ -1,18 +1,18 @@
 .ui-autocomplete .ui-menu-item {
     &.ui-state-focus {
-        background-color: @dropdown-link-hover-bg;
+        background-color: $dropdown-link-hover-bg;
     }
     &.ui-state-focus > a {
-        color: @dropdown-link-color;
+        color: $dropdown-link-color;
         &:hover {
-            color: @dropdown-link-color;
+            color: $dropdown-link-color;
         }
     }
     &.o_m2o_dropdown_option > a,
     &.ui-state-focus.o_m2o_dropdown_option > a {
-        color: @odoo-brand-optional;
+        color: $odoo-brand-optional;
         &:hover {
-            color: @odoo-brand-optional;
+            color: $odoo-brand-optional;
         }
     }
 }
@@ -37,12 +37,12 @@
 
 // Buttons used as dropdown toggler
 .o_dropdown_toggler_btn {
-    .btn-link;
-    .box-shadow(none)!important; // override box-shaddow of btn-group open
-    color: @odoo-main-text-color;
+    @extend .btn-link; // FIXME was a mixin before scss convertion
+    box-shadow: none !important; // override box-shaddow of btn-group open
+    color: $odoo-main-text-color;
     &:hover, &:focus {
-        color: darken(@odoo-main-text-color, 20%);
-        background-color: @odoo-brand-lightsecondary;
+        color: darken($odoo-main-text-color, 20%);
+        background-color: $odoo-brand-lightsecondary;
     }
     padding: 0;
 }

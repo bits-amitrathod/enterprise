@@ -1,27 +1,25 @@
-// lessc@1.4.2
-
 // ============================
 // Mass Mailing "Solar"
 // ============================
 
-@o_mm_solar_color_alpha: #EAECED;
-@o_mm_solar_color_beta: white;
-@o_mm_solar_color_gamma: #f2d13e;
-@o_mm_solar_color_delta: darken(@o_mm_solar_color_gamma, 5%);
-@o_mm_solar_color_epsilon: black;
-@o_mm_solar_color_zeta: #262b36;
+$o-mm-solar-color-alpha: #EAECED;
+$o-mm-solar-color-beta: white;
+$o-mm-solar-color-gamma: #f2d13e;
+$o-mm-solar-color-delta: darken($o-mm-solar-color-gamma, 5%);
+$o-mm-solar-color-epsilon: black;
+$o-mm-solar-color-zeta: #262b36;
 
 
-.o_mm_solar_bg_variant (@bg, @text) {
-    background-color: @bg;
-    color: @text;
+@mixin o-mm-solar-bg-variant($bg, $text) {
+    background-color: $bg;
+    color: $text;
 
     .o_mail_snippet_general {
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-            color: @text;
+            color: $text;
         }
         a, .btn.btn-link {
-            color: @text;
+            color: $text;
         }
     }
 }
@@ -30,17 +28,17 @@
 
     // ===== Colors =====
     .bg-beta {
-        .o_mm_solar_bg_variant(@o_mm_solar_color_gamma, @o_mm_solar_color_beta);
+        @include o-mm-solar-bg-variant($o-mm-solar-color-gamma, $o-mm-solar-color-beta);
     }
     .text-beta {
-        color: @o_mm_solar_color_gamma;
+        color: $o-mm-solar-color-gamma;
     }
     .bg-delta {
-        .o_mm_solar_bg_variant(@o_mm_solar_color_zeta, @o_mm_solar_color_beta);
+        @include o-mm-solar-bg-variant($o-mm-solar-color-zeta, $o-mm-solar-color-beta);
 
         .btn.btn-primary {
-            color: @o_mm_solar_color_gamma;
-            background-color: @o_mm_solar_color_beta;
+            color: $o-mm-solar-color-gamma;
+            background-color: $o-mm-solar-color-beta;
             font-weight: bold;
         }
     }
@@ -48,7 +46,7 @@
 
     // ===== Layout =====
     &.o_layout {
-        background-color: @o_mm_solar_color_alpha;
+        background-color: $o-mm-solar-color-alpha;
 
         > .o_mail_wrapper {
             background: rgba(0, 0, 0, 0);
@@ -65,22 +63,22 @@
 
     .o_mail_snippet_general {
         .btn.btn-primary {
-            background-color: @o_mm_solar_color_gamma;
-            color: @o_mm_solar_color_beta;
+            background-color: $o-mm-solar-color-gamma;
+            color: $o-mm-solar-color-beta;
         }
 
         a, .btn.btn-link {
-            color: @o_mm_solar_color_delta;
+            color: $o-mm-solar-color-delta;
         }
     }
 
     // ===== Snippets (specific) =====
     [class^="o_mail_block"]:not([class*="bg-"]) {
-        background-color: @o_mm_solar_color_beta;
-        color: @o_mm_solar_color_epsilon;
+        background-color: $o-mm-solar-color-beta;
+        color: $o-mm-solar-color-epsilon;
 
         &.o_mail_block_header_social, &.o_mail_block_header_text_social, &.o_mail_block_header_logo {
-            .o_mm_solar_bg_variant(@o_mm_solar_color_gamma, @o_mm_solar_color_beta);
+            @include o-mm-solar-bg-variant($o-mm-solar-color-gamma, $o-mm-solar-color-beta);
             .o_mail_snippet_general {
                 background: rgba(0,0,0,0);
                 background: transparent;
@@ -95,7 +93,7 @@
             }
         }
         &.o_mail_block_footer_social {
-            .o_mm_solar_bg_variant(@o_mm_solar_color_gamma, @o_mm_solar_color_beta);
+            @include o-mm-solar-bg-variant($o-mm-solar-color-gamma, $o-mm-solar-color-beta);
         }
     }
 
@@ -108,7 +106,7 @@
     }
 
     .o_mail_block_banner {
-        border-bottom: 5px solid @o_mm_solar_color_gamma;
+        border-bottom: 5px solid $o-mm-solar-color-gamma;
     }
 
     .o_mail_block_event {
@@ -142,30 +140,30 @@
 
             .separator {
                 height: 3px;
-                background-color: darken(@o_mm_solar_color_alpha, 10%);
+                background-color: darken($o-mm-solar-color-alpha, 10%);
                 border-bottom: 2px solid darken(white, 3%);
             }
         }
     }
 
     .o_mail_block_two_cols, .o_mail_block_three_cols {
-        @tmp-gap: 10px;
+        $tmp-gap: 10px;
 
         table {
             width: 110%;
-            max-width: (600+(@tmp-gap*2));
-            margin: auto (@tmp-gap*-1);
+            max-width: (600+($tmp-gap*2));
+            margin: auto ($tmp-gap*-1);
         }
 
         .o_mail_col_container {
-            padding: 0 0 (@tmp-gap*2);
-            margin: 0 @tmp-gap;
-            border-top: 1px solid darken(@o_mm_solar_color_beta, 10%);
-            border-bottom: 1px solid darken(@o_mm_solar_color_alpha, 5%);
-            background-color: @o_mm_solar_color_beta;
+            padding: 0 0 ($tmp-gap*2);
+            margin: 0 $tmp-gap;
+            border-top: 1px solid darken($o-mm-solar-color-beta, 10%);
+            border-bottom: 1px solid darken($o-mm-solar-color-alpha, 5%);
+            background-color: $o-mm-solar-color-beta;
 
             > * {
-                padding: 0 (@tmp-gap*2);
+                padding: 0 ($tmp-gap*2);
             }
 
             img {
@@ -218,4 +216,3 @@
         }
     }
 }
-

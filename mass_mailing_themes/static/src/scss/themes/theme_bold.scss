@@ -1,44 +1,42 @@
-// lessc@1.4.2
-
 // =========================
 // Mass Mailing "Theme Tech"
 // =========================
 
-@o_mm_bold_color_alpha: white;
-@o_mm_bold_color_beta: #222;
-@o_mm_bold_color_gamma: #59cdcd;
-@o_mm_bold_color_delta: #222;
-@o_mm_bold_color_epsilon: #111;
-@o_mm_bold_color_zeta: #a17e92;
+$o-mm-bold-color-alpha: white;
+$o-mm-bold-color-beta: #222;
+$o-mm-bold-color-gamma: #59cdcd;
+$o-mm-bold-color-delta: #222;
+$o-mm-bold-color-epsilon: #111;
+$o-mm-bold-color-zeta: #a17e92;
 
-@o_mm_bold_font: Georgia, "Times New Roman", Times, serif;
+$o-mm-bold-font: Georgia, "Times New Roman", Times, serif;
 
 .o_bold_theme {
-    font-family: @o_mm_bold_font;
+    font-family: $o-mm-bold-font;
 
     // ===== Colors =====
     .bg-beta {
-        background-color: @o_mm_bold_color_gamma;
+        background-color: $o-mm-bold-color-gamma;
 
         .btn.btn-primary {
-            color: @o_mm_bold_color_alpha;
-            background-color: @o_mm_bold_color_beta;
+            color: $o-mm-bold-color-alpha;
+            background-color: $o-mm-bold-color-beta;
         }
     }
     .text-beta {
-        color: @o_mm_bold_color_gamma;
+        color: $o-mm-bold-color-gamma;
     }
     .bg-delta {
-        background-color: @o_mm_bold_color_zeta;
+        background-color: $o-mm-bold-color-zeta;
     }
 
     // ===== Layout =====
     &.o_layout {
-        background-color: @o_mm_bold_color_alpha;
+        background-color: $o-mm-bold-color-alpha;
 
         > .o_mail_wrapper {
             background-color: transparent;
-            color: @o_mm_bold_color_delta;
+            color: $o-mm-bold-color-delta;
             border: none;
         }
     }
@@ -46,8 +44,8 @@
     // ===== Snippets (general) =====
     .o_mail_snippet_general {
         .btn.btn-primary {
-            color: @o_mm_bold_color_alpha;
-            background-color: @o_mm_bold_color_beta;
+            color: $o-mm-bold-color-alpha;
+            background-color: $o-mm-bold-color-beta;
         }
 
         .o_mail_full_width_padding {
@@ -56,23 +54,23 @@
         }
 
         a, .btn.btn-link {
-            color: darken(@o_mm_bold_color_gamma, 10%);
+            color: darken($o-mm-bold-color-gamma, 10%);
         }
 
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-            color:@o_mm_bold_color_beta;
+            color:$o-mm-bold-color-beta;
         }
 
         .bg-beta, .bg-delta {
             h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-                color: @o_mm_bold_color_beta;
+                color: $o-mm-bold-color-beta;
             }
         }
 
         .bg-beta {
             .btn.btn-primary {
-                color: @o_mm_bold_color_alpha;
-                background-color: @o_mm_bold_color_beta;
+                color: $o-mm-bold-color-alpha;
+                background-color: $o-mm-bold-color-beta;
             }
         }
     }
@@ -88,8 +86,8 @@
             > table {
                 padding: 0;
                 max-width: 560px;
-                border-top: 3px solid @o_mm_bold_color_beta;
-                border-bottom: 3px solid @o_mm_bold_color_beta;
+                border-top: 3px solid $o-mm-bold-color-beta;
+                border-bottom: 3px solid $o-mm-bold-color-beta;
                 td {
                     vertical-align: middle;
                 }
@@ -103,7 +101,7 @@
         .o_mail_header_social {
             margin-right: 0px;
             a {
-                color: @o_mm_bold_color_beta;
+                color: $o-mm-bold-color-beta;
             }
         }
     }
@@ -111,7 +109,7 @@
     .o_mail_block_footer_separator {
         .separator {
             height: 3px;
-            background-color: @o_mm_bold_color_beta;
+            background-color: $o-mm-bold-color-beta;
         }
     }
 
@@ -129,15 +127,15 @@
         margin-left: 20px;
         margin-right: 20px;
         background-color: transparent;
-        border-top: 3px solid @o_mm_bold_color_beta;
-        border-bottom: 3px solid @o_mm_bold_color_beta;
+        border-top: 3px solid $o-mm-bold-color-beta;
+        border-bottom: 3px solid $o-mm-bold-color-beta;
 
         .o_mail_full_width_padding {
             padding-left: 0;
             padding-right: 0;
             > tbody > tr  {
-                color: @o_mm_bold_color_beta;
-                background-color: @o_mm_bold_color_alpha;
+                color: $o-mm-bold-color-beta;
+                background-color: $o-mm-bold-color-alpha;
             }
         }
     }
@@ -154,18 +152,18 @@
 
         .o_mail_footer_social {
             a {
-                color: @o_mm_bold_color_beta;
+                color: $o-mm-bold-color-beta;
             }
         }
 
         .o_mail_footer_links a {
-            color: @o_mm_bold_color_beta;
+            color: $o-mm-bold-color-beta;
         }
 
         .o_mail_footer_copy {
             font-weight: bold;
             font-size: 9px;
-            color: darken(@o_mm_bold_color_beta, 30%);
+            color: darken($o-mm-bold-color-beta, 30%);
         }
 
         &.o_mail_footer_social_left {
