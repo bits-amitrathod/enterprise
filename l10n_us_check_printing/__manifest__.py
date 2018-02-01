@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'US Check Printing',
+    'name': 'US Checks Layout',
     'version': '1.0',
     'category': 'Localization',
     'summary': 'Print US Checks',
@@ -23,7 +23,6 @@ Supported formats
         'report/print_check_top.xml',
         'report/print_check_middle.xml',
         'report/print_check_bottom.xml',
-        'views/res_config_settings_views.xml',
     ],
     'installable': True,
     'auto_install': True,

@@ -28,6 +28,7 @@
             attachment="'check_'+(object.partner_id and object.partner_id.name or 'Internal')+'_'+(object.name)+'_top.pdf'"
             paperformat="l10n_us_check_printing.paperformat_check_us"
             print_report_name="'Check Top - %s' % (object.partner_id.name or '',)"
+            menu="False"
         />
 
         <report id="action_print_check_middle"
@@ -40,6 +41,7 @@
             attachment="'check_'+(object.partner_id and object.partner_id.name or 'Internal')+'_'+(object.name)+'_middle.pdf'"
             paperformat="l10n_us_check_printing.paperformat_check_us"
             print_report_name="'Check Middle - %s' % (object.partner_id.name or '',)"
+            menu="False"
         />
 
         <report id="action_print_check_bottom"
@@ -52,6 +54,7 @@
             attachment="'check_'+(object.partner_id and object.partner_id.name or 'Internal')+'_'+(object.name)+'_bottom.pdf'"
             paperformat="l10n_us_check_printing.paperformat_check_us"
             print_report_name="'Check Bottom - %s' % (object.partner_id.name or '',)"
+            menu="False"
         />
 
     </data>
