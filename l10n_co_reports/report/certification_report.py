@@ -61,7 +61,7 @@ class ReportCertificationReport(models.AbstractModel):
         bimonth = datetime.strptime(aml.date, DEFAULT_SERVER_DATE_FORMAT).month
         # month:   1   2   3   4   5   6   7   8   9   10  11   12
         # bimonth: \ 1 /   \ 2 /   \ 3 /   \ 4 /   \ 5 /    \ 6 /
-        bimonth = (bimonth + 1) / 2
+        bimonth = (bimonth + 1) // 2
         return bimonth
 
     def _get_bimonth_name(self, bimonth_index):
