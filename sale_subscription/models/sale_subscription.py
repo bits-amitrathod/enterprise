@@ -738,7 +738,7 @@ class SaleSubscriptionCloseReason(models.Model):
     _order = "sequence, id"
     _description = "Subscription Close Reason"
 
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, translate=True)
     sequence = fields.Integer(default=10)
 
 

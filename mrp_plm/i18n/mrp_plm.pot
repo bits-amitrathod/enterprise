@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-01-31 15:34+0000\n"
+"PO-Revision-Date: 2018-01-31 15:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -260,10 +260,12 @@ msgid "Bill of Material"
 msgstr ""
 
 #. module: mrp_plm
+#: code:addons/mrp_plm/models/mrp_eco.py:150
 #: model:ir.actions.act_window,help:mrp_plm.mrp_bom_action_kanban
 #: model:ir.actions.act_window,name:mrp_plm.mrp_bom_action_kanban
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_id
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_boms
+#, python-format
 msgid "Bill of Materials"
 msgstr ""
 
@@ -296,6 +298,12 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_revision
 msgid "BoM Revision"
+msgstr ""
+
+#. module: mrp_plm
+#: code:addons/mrp_plm/models/mrp_eco.py:152
+#, python-format
+msgid "BoM and Routing"
 msgstr ""
 
 #. module: mrp_plm
@@ -628,6 +636,11 @@ msgid "Edit Task"
 msgstr ""
 
 #. module: mrp_plm
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_effective
+msgid "Effective"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_effectivity
 msgid "Effectivity"
 msgstr ""
@@ -748,6 +761,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 #: selection:mrp.eco,kanban_state:0
 #: selection:mrp.eco,state:0
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_progress
 msgid "In Progress"
 msgstr ""
 
@@ -865,6 +879,11 @@ msgid "Name"
 msgstr ""
 
 #. module: mrp_plm
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_new
+msgid "New"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_id
 msgid "New Bill of Materials"
 msgstr ""
@@ -877,6 +896,11 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_new_operation_id
 msgid "New Consumed in Operation"
+msgstr ""
+
+#. module: mrp_plm
+#: model:mrp.eco.type,name:mrp_plm.ecotype0
+msgid "New Product Introduction"
 msgstr ""
 
 #. module: mrp_plm
@@ -1019,6 +1043,12 @@ msgid "Product"
 msgstr ""
 
 #. module: mrp_plm
+#: code:addons/mrp_plm/models/mrp_eco.py:149
+#, python-format
+msgid "Product Only"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
 msgid "Product Template"
 msgstr ""
@@ -1110,8 +1140,10 @@ msgid "Role"
 msgstr ""
 
 #. module: mrp_plm
+#: code:addons/mrp_plm/models/mrp_eco.py:152
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_id
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+#, python-format
 msgid "Routing"
 msgstr ""
 
@@ -1337,6 +1369,11 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_user_ids
 msgid "Users"
+msgstr ""
+
+#. module: mrp_plm
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_validated
+msgid "Validated"
 msgstr ""
 
 #. module: mrp_plm

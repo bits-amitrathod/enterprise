@@ -56,7 +56,10 @@ class TimesheetForecastController(SaleTimesheetController):
             for fc_slot in fc_months + ['total']:
                 timesheet_forecast_values[order_name_get]['forecast'][fc_slot] += sol_line_value['forecast'][fc_slot]
 
-        sol_task_planned_hour_mapping = {task.sudo().sale_line_id.id: task.planned_hours for task in request.env['project.task'].search([('sale_line_id', 'in', so_line_ids)])}
+        sol_task_planned_hour_mapping = {}
+        for task in request.env['project.task'].sudo().search([('sale_line_id', 'in', so_line_ids)]):
+            sol_task_planned_hour_mapping.setdefault(task.sale_line_id.id, 0.0)
+            sol_task_planned_hour_mapping[task.sale_line_id.id] += task.planned_hours
 
         # built the table : headers and rows
 

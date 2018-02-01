@@ -5,9 +5,9 @@
 # Translators:
 # Arma Gedonsky <armagedonsky@hot.ee>, 2017
 # Wanradt Koell <wanradt@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Rivo Zängov <eraser@eraser.ee>, 2017
+# Martin Trigaux, 2017
 # Eneli Õigus <enelioigus@gmail.com>, 2017
+# Rivo Zängov <eraser@eraser.ee>, 2017
 # Egon Raamat <egon@avalah.ee>, 2017
 msgid ""
 msgstr ""
@@ -47,12 +47,12 @@ msgstr ""
 "                <div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); \">\n"
 "                    <p>Lugupeetud ${ctx.get('employee').name},</p>\n"
 "                    % if ctx.get('employee').id == object.employee_id.id:\n"
-"                        <p>Palun täitke ära järgmine küsitlus, andes oma hinnangu.</p>\n"
+"                        <p>Palun täitke ära järgmine küsitlus ning andke oma hinnang.</p>\n"
 "                    % else:\n"
-"                        <p>Palun täitke ära järgmine küsitlus, mis on seotud ${object.employee_id.name} hindamisega.</p>\n"
+"                        <p>Järgmine küsitlus on seotud ${object.employee_id.name} hindamisega.</p>\n"
 "                    % endif\n"
-"                    <p><a href=\"__URL__\">Vajuta siia küsitluse avamiseks.</a></p>\n"
-"                    <p>Postita oma vastus hindamiseks kuni : ${object.date_close}</p>\n"
+"                    <p><a href=\"__URL__\">Küsitluse avamiseks vajuta siia.</a></p>\n"
+"                    <p>Ootame vastuseid kuni : ${object.date_close}</p>\n"
 "                    <p>Täname osalemast!</p>\n"
 "                </div>\n"
 "                \n"
@@ -567,7 +567,7 @@ msgstr "Entusiasm ning mõju projektidele/ülesannetele"
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_2
 msgid "Evaluation"
-msgstr "Hinnang"
+msgstr "Hinnangud"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_calendar_event

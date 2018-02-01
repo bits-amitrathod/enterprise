@@ -69,7 +69,7 @@
                                                             <field name="activity_type" />
                                                         </span>
                                                         <div>
-                                                            <span t-attf-class="o_ma_status_text o_ma_text_#{record.state.raw_value} text-uppercase"><t t-esc="record.state.raw_value" /></span>
+                                                            <span t-attf-class="o_ma_status_text o_ma_text_#{record.state.raw_value} text-uppercase"><t t-esc="record.state.value" /></span>
                                                             <t t-if="record.state_msg.raw_value">
                                                                 <span class="text-muted"> - <field name="state_msg" /></span>
                                                             </t>

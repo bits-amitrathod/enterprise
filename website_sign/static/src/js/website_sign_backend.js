@@ -2,6 +2,7 @@ odoo.define('website_sign.views_custo', function(require) {
     'use strict';
 
     var core = require('web.core');
+    var session = require('web.session');
     var KanbanController = require("web.KanbanController");
     var KanbanColumn = require("web.KanbanColumn");
     var KanbanRecord = require("web.KanbanRecord");
@@ -805,6 +806,7 @@ odoo.define('website_sign.template', function(require) {
                             model: 'signature.item',
                             method: 'search_read',
                             args: [[['template_id', '=', template.id]]],
+                            kwargs: {context: session.user_context},
                         })
                         .then(function (signature_items) {
                             self.signature_items = signature_items;
@@ -813,6 +815,7 @@ odoo.define('website_sign.template', function(require) {
                             model: 'ir.attachment',
                             method: 'read',
                             args: [[template.attachment_id[0]], ['mimetype', 'name', 'datas_fname']],
+                            kwargs: {context: session.user_context},
                         })
                         .then(function(attachment) {
                             attachment = attachment[0];
@@ -826,6 +829,7 @@ odoo.define('website_sign.template', function(require) {
             var defParties = this._rpc({
                     model: 'signature.item.party',
                     method: 'search_read',
+                    kwargs: {context: session.user_context},
                 })
                 .then(function(parties) {
                     self.signature_item_parties = parties;
@@ -834,6 +838,7 @@ odoo.define('website_sign.template', function(require) {
             var defItemTypes = this._rpc({
                     model: 'signature.item.type',
                     method: 'search_read',
+                    kwargs: {context: session.user_context},
                 })
                 .then(function(types) {
                     self.signature_item_types = types;
