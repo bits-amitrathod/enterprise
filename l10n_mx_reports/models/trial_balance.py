@@ -251,10 +251,10 @@ class MxReportAccountTrial(models.AbstractModel):
                 cols[-1].get('name', 0.0))
             accounts.append({
                 'number': line.get('name').split(' ', 1)[0],
-                'initial': str(initial),
-                'debit': str(debit),
-                'credit': str(credit),
-                'end': str(end),
+                'initial': "%.2f" % (initial),
+                'debit': "%.2f" % (debit),
+                'credit': "%.2f" % (credit),
+                'end': "%.2f" % (end),
             })
         date = fields.datetime.strptime(
             self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)

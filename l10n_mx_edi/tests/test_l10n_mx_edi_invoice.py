@@ -219,3 +219,39 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice.compute_taxes()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
+
+        # -----------------------
+        # Testing send payment by email
+        # -----------------------
+        invoice = self.create_invoice()
+        invoice.action_invoice_open()
+        ctx = {'active_model': 'account.invoice', 'active_ids': [invoice.id]}
+        register_payments = self.env['account.register.payments'].with_context(
+            ctx).create({
+                'payment_date': invoice.date,
+                'l10n_mx_edi_payment_method_id': self.env.ref(
+                    'l10n_mx_edi.payment_method_efectivo').id,
+                'payment_method_id': self.env.ref(
+                    "account.account_payment_method_manual_in").id,
+                'journal_id': invoice.journal_id.id,
+                'communication': invoice.number,
+                'amount': invoice.amount_total, })
+        payment = register_payments.create_payments()
+        payment = self.env['account.payment'].search(payment.get('domain', []))
+        self.assertEqual(payment.l10n_mx_edi_pac_status, "signed",
+                         payment.message_ids.mapped('body'))
+        default_template = self.env.ref(
+            'account.mail_template_data_payment_receipt')
+        wizard_mail = self.env['mail.compose.message'].with_context({
+            'default_template_id': default_template.id}).create({})
+        res = wizard_mail.onchange_template_id(
+            default_template.id, wizard_mail.composition_mode,
+            'account_payment', payment.id)
+        wizard_mail.write({'attachment_ids': res.get('value', {}).get(
+            'attachment_ids', [])})
+        wizard_mail.send_mail()
+        attachment = self.env['ir.attachment'].search([
+            ('res_id', '=', payment.id),
+            ('res_model', '=', 'account.payment')])
+        self.assertEqual(len(attachment), 2,
+                         'Documents not attached correctly')

@@ -1411,7 +1411,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('element removal', function(assert) {
-        assert.expect(8);
+        assert.expect(10);
 
         var editViewCount = 0;
         var arch = "<form><sheet>" +
@@ -1436,12 +1436,15 @@ QUnit.module('ViewEditorManager', {
                         assert.strictEqual(_.has(args.operations[0].target, 'xpath_info'), false,
                             'should not give xpath_info if we have the tag identifier attributes');
                     } else if (editViewCount === 2) {
-                        assert.strictEqual(args.operations[1].target.tag, 'group',
-                            'should compute correctly the parent node for the group');
+                        assert.strictEqual(_.has(args.operations[1].target, 'xpath_info'), false,
+                            'should not give xpath_info if we have the tag identifier attributes');
                     } else if (editViewCount === 3) {
-                        assert.strictEqual(args.operations[2].target.tag, 'notebook',
+                        assert.strictEqual(args.operations[2].target.tag, 'group',
+                            'should compute correctly the parent node for the group');
+                    } else if (editViewCount === 4) {
+                        assert.strictEqual(args.operations[3].target.tag, 'notebook',
                             'should delete the notebook because the last page is deleted');
-                        assert.strictEqual(_.last(args.operations[2].target.xpath_info).tag, 'notebook',
+                        assert.strictEqual(_.last(args.operations[3].target.xpath_info).tag, 'notebook',
                             'should have the notebook as xpath last element');
                     }
                     // the server sends the arch in string but it's post-processed
@@ -1467,6 +1470,13 @@ QUnit.module('ViewEditorManager', {
             "should display the correct message");
         $('.modal-dialog .btn-primary').click();
 
+        // remove other field so group is empty
+        vem.$('[name="m2o"]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        assert.strictEqual($('.modal-body').text(), "Are you sure you want to remove this field from the view?",
+            "should display the correct message");
+        $('.modal-dialog .btn-primary').click();
+
         // remove group
         vem.$('.o_group[data-node-id]').click();
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
@@ -1481,8 +1491,8 @@ QUnit.module('ViewEditorManager', {
             "should display the correct message");
         $('.modal-dialog .btn-primary').click();
 
-        assert.strictEqual(editViewCount, 3,
-            "should have edit the view 3 times");
+        assert.strictEqual(editViewCount, 4,
+            "should have edit the view 4 times");
         vem.destroy();
     });
 

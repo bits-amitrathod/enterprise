@@ -10,12 +10,12 @@ class MailTemplate(models.Model):
     def generate_email(self, res_ids, fields=None):
         self.ensure_one()
         res = super(MailTemplate, self).generate_email(res_ids, fields=fields)
-        if self.model != 'account.invoice':
+        if self.model not in ['account.invoice', 'account.payment']:
             return res
-        for invoice in self.env['account.invoice'].browse(res_ids):
-            if invoice.company_id.country_id != self.env.ref('base.mx'):
+        for record in self.env[self.model].browse(res_ids):
+            if record.company_id.country_id != self.env.ref('base.mx'):
                 continue
-            attachment = invoice.l10n_mx_edi_retrieve_last_attachment()
+            attachment = record.l10n_mx_edi_retrieve_last_attachment()
             if attachment:
-                res[invoice.id].setdefault('attachments', []).append((attachment.name, attachment.datas))
+                res[record.id].setdefault('attachments', []).append((attachment.name, attachment.datas))
         return res

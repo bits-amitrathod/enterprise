@@ -11,7 +11,7 @@ class MrpEcoType(models.Model):
     _description = 'Manufacturing Process'
     _inherit = ['mail.alias.mixin', 'mail.thread']
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True, translate=True)
     sequence = fields.Integer('Sequence')
     alias_id = fields.Many2one('mail.alias', 'Alias', ondelete='restrict', required=True)
     nb_ecos = fields.Integer('ECOs', compute='_compute_nb')
@@ -117,7 +117,7 @@ class MrpEcoStage(models.Model):
             return (others[0].sequence or 0) + 1
         return 1
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True, translate=True)
     sequence = fields.Integer('Sequence', default=_get_sequence)
     folded = fields.Boolean('Folded in kanban view')
     allow_apply_change = fields.Boolean(string='Allow to apply changes', help='Allow to apply changes from this stage.')
@@ -146,10 +146,10 @@ class MrpEco(models.Model):
     @api.model
     def _get_type_selection(self):
         types = [
-            ('product', 'Product Only'),
-            ('bom', 'Bill of Materials')]
+            ('product', _('Product Only')),
+            ('bom', _('Bill of Materials'))]
         if self.user_has_groups('mrp.group_mrp_routings'):
-            types += [('routing', 'Routing'), ('both', 'BoM and Routing')]
+            types += [('routing', _('Routing')), ('both', _('BoM and Routing'))]
         return types
 
     name = fields.Char('Reference', copy=False, required=True)

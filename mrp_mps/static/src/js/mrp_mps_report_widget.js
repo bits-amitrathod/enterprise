@@ -2,6 +2,7 @@ odoo.define('mrp_mps.mrp_mps_report', function (require) {
 'use strict';
 
 var core = require('web.core');
+var session = require('web.session');
 var Widget = require('web.Widget');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var SearchView = require('web.SearchView');
@@ -41,6 +42,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'ir.model.data',
                 method: 'get_object_reference',
                 args: ['product', 'product_template_search_view'],
+                kwargs: {context: session.user_context},
             })
             .then(function(view_id){
                 self.dataset = new data.DataSetSearch(this, 'product.product');
@@ -83,6 +85,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
             model: 'sale.forecast',
             method: 'save_forecast_data',
             args: [parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
+            kwargs: {context: session.user_context},
         })
         .then(function() {
             self.get_html().then(function() {
@@ -107,6 +110,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'sale.forecast',
                 method: 'generate_procurement',
                 args: [parseInt(target.data('product')), 1],
+                kwargs: {context: session.user_context},
             })
             .then(function(result){
                 if (result){
@@ -123,6 +127,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'sale.forecast',
                 method: 'change_forecast_mode',
                 args: [parseInt(target.data('product')), target.data('date'), target.data('date_to'), parseInt(target.data('value'))],
+                kwargs: {context: session.user_context},
             })
             .then(function(result){
                 self.get_html().then(function() {
@@ -149,12 +154,14 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'mrp.mps.report',
                 method: 'search',
                 args: [[]],
+                kwargs: {context: session.user_context},
             })
             .then(function(res){
                 return self._rpc({
                         model: 'mrp.mps.report',
                         method: 'write',
                         args: [res, {'period': self.period}],
+                        kwargs: {context: session.user_context},
                     })
                     .done(function(result){
                         self.get_html().then(function() {
@@ -170,6 +177,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'ir.model.data',
                 method: 'get_object_reference',
                 args: ['mrp_mps', 'mrp_mps_report_view_form'],
+                kwargs: {context: session.user_context},
             })
             .then(function(data){
                 return self.do_action({
@@ -196,6 +204,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'ir.model.data',
                 method: 'get_object_reference',
                 args: ['mrp_mps', 'product_product_view_form_mps'],
+                kwargs: {context: session.user_context},
             })
             .then(function(data){
                 return self.do_action({
@@ -221,6 +230,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
             model: 'sale.forecast',
             method: 'save_forecast_data',
             args: [parseInt($input.data('product')), target_value, $input.data('date'), $input.data('date_to'), $input.data('name')],
+            kwargs: {context: session.user_context},
         })
         .done(function(res){
             self.get_html().then(function() {
@@ -235,6 +245,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'mrp.mps.report',
                 method: 'update_indirect',
                 args: [product],
+                kwargs: {context: session.user_context},
             })
             .then(function(result){
                 self.get_html().then(function() {
@@ -249,6 +260,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                 model: 'mrp.mps.report',
                 method: 'get_html',
                 args: [this.domain],
+                kwargs: {context: session.user_context},
             })
             .then(function (result) {
                 self.html = result.html;
@@ -294,6 +306,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                     model: 'sale.forecast',
                     method: 'generate_procurement_all',
                     args: [],
+                    kwargs: {context: session.user_context},
                 })
                 .then(function(result){
                     self.get_html().then(function() {

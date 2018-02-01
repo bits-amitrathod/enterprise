@@ -1099,7 +1099,8 @@ var ViewEditorManager = Widget.extend({
         if (!this.x2mField) {
             var parent_node = findParent(this.fields_view.arch, node, this.expr_attrs);
             var is_root = !findParent(this.fields_view.arch, parent_node, this.expr_attrs);
-            if (parent_node.children.length === 1 && !is_root) {
+            var is_group = parent_node.tag === 'group';
+            if (parent_node.children.length === 1 && !is_root && !is_group) {
                 node = parent_node;
                 // Since we changed the node being deleted, we recompute the xpath_info
                 // if necessary
