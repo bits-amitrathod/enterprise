@@ -16,6 +16,7 @@ QUnit.module('web_mobile', {
                     name: {},
                     image: {},
                     parent_id: {string: "Parent", type: "many2one", relation: 'partner'},
+                    sibling_ids: {string: "Sibling", type: "many2many", relation: 'partner'},
                     phone: {},
                     mobile: {},
                     fax: {},
@@ -32,13 +33,13 @@ QUnit.module('web_mobile', {
                 },
                 records: [{
                     id: 1,
-                    name: 'coucou',
+                    name: 'coucou1',
                 }, {
                     id: 2,
-                    name: 'coucou',
+                    name: 'coucou2',
                 }, {
                     id: 11,
-                    name: 'coucou',
+                    name: 'coucou3',
                     image: 'image',
                     parent_id: 1,
                     phone: 'phone',
@@ -147,10 +148,10 @@ QUnit.module('web_mobile', {
             "id": 11,
             "image": "image",
             "mobile": "mobile",
-            "name": "coucou",
+            "name": "coucou3",
             "parent_id":  [
                 1,
-                "coucou",
+                "coucou1",
             ],
             "phone": "phone",
             "state_id": "state_id",
@@ -205,6 +206,67 @@ QUnit.module('web_mobile', {
         assert.strictEqual(mobileDialogCall, 1, "the many2one should call a special dialog in a mobile environment");
 
         mobile.methods.addContact = __addContact;
+        mobile.methods.many2oneDialog = __many2oneDialog;
+
+        form.destroy();
+    });
+
+    QUnit.test("many2many_tags in a mobile environment", function (assert) {
+        assert.expect(7);
+
+        var mobileDialogCall = 0;
+        var rpcReadCount = 0;
+
+        // override many2oneDialog to simulate a mobile environment
+        var __many2oneDialog = mobile.methods.many2oneDialog;
+
+        mobile.methods.many2oneDialog = function (args) {
+            mobileDialogCall++;
+            if (mobileDialogCall === 1) {
+                // mock a search on 'coucou3'
+                return $.when({'data': {'action': 'search', 'term': 'coucou3'}});
+            } else if (mobileDialogCall === 2) {
+                // then mock selection of first record found
+                assert.strictEqual(args.records.length, 2, "there should be 1 record and create action");
+                return $.when({'data': {'action': 'select', 'value': {'id': args.records[0].id}}});
+            }
+        };
+
+        var form = createView({
+            View: FormView,
+            arch:
+                '<form>' +
+                    '<sheet>' +
+                        '<field name="sibling_ids" widget="many2many_tags"/>' +
+                    '</sheet>' +
+                '</form>',
+            data: this.data,
+            model: 'partner',
+            res_id: 2,
+            viewOptions: {mode: 'edit'},
+            mockRPC: function (route, args) {
+                if (args.method === "read" && args.model === "partner") {
+                    if (rpcReadCount === 0) {
+                        assert.deepEqual(args.args[0], [2], "form should initially show partner 2");
+                    } else if (rpcReadCount === 1) {
+                        assert.deepEqual(args.args[0], [11], "partner 11 should have been selected");
+                    }
+                    rpcReadCount++;
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        var $input = form.$('input');
+
+        assert.ok($input.prop('disabled'), "the many2many_tags should be disabled in a mobile environment");
+        assert.strictEqual(mobileDialogCall, 0, "the many2many_tags should be disabled in a mobile environment");
+
+        $input.click();
+
+        assert.strictEqual(mobileDialogCall, 2, "the many2many_tags should call mobileDialog with and without search");
+        assert.strictEqual(rpcReadCount, 2, "there should be a read for current form record and selected sibling");
+
         mobile.methods.many2oneDialog = __many2oneDialog;
 
         form.destroy();
