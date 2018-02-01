@@ -2,7 +2,9 @@ odoo.define('web_mobile.widgets', function (require) {
 
 var mobile = require('web_mobile.rpc');
 var web_datepicker = require('web.datepicker');
+var formats = require('web.formats');
 var session = require('web.Session');
+var time = require('web.time');
 var form_relational = require('web.form_relational');
 var notification_manager = require('web.notification').NotificationManager;
 var common = require('web.form_common');
@@ -30,12 +32,17 @@ web_datepicker.DateWidget.include({
     setup_mobile_picker: function(){
         var self = this;
         this.$el.on('click', function() {
+            var value = false;
+            // from 10.0 to saas-15 we must convert UTC to browser tz to use in datepicker
+            if (self.get_value()) {
+                value = moment(time.auto_str_to_date(self.get_value())).format("YYYY-MM-DD HH:mm:ss");
+            }
             mobile.methods.requestDateTimePicker({
-                'value': self.get_value() ? moment(self.get_value()).format("YYYY-MM-DD HH:mm:ss") : false,
+                'value': value,
                 'type': self.type_of_date,
                 'ignore_timezone': true,
             }).then(function(response) {
-                self.set_value(response.data);
+                self.set_value(self.parse_client(response.data));
                 self.commit_value();
             });
         });

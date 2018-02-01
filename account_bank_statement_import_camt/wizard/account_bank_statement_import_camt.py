@@ -68,7 +68,8 @@ class AccountBankStatementImport(models.TransientModel):
                 instruc_amount = entry.xpath('ns:NtryDtls/ns:TxDtls/ns:AmtDtls/ns:InstdAmt/ns:Amt/text()', namespaces=ns)
                 instruc_curr = entry.xpath('ns:NtryDtls/ns:TxDtls/ns:AmtDtls/ns:InstdAmt/ns:Amt/@Ccy', namespaces=ns)
                 if instruc_amount and instruc_curr and instruc_curr[0] != currency and instruc_curr[0] in curr_cache:
-                    entry_vals['amount_currency'] = float(instruc_amount[0]) if entry_vals['amount'] > 0 else -float(instruc_amount[0])
+                    amount_currency = sum([float(x) for x in instruc_amount])
+                    entry_vals['amount_currency'] = amount_currency if entry_vals['amount'] > 0 else -amount_currency
                     entry_vals['currency_id'] = curr_cache[instruc_curr[0]]
 
                 # Date 0..1
