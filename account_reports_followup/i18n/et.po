@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-22 13:06+0000\n"
-"PO-Revision-Date: 2017-12-30 11:38+0000\n"
+"PO-Revision-Date: 2018-01-30 09:45+0000\n"
 "Last-Translator: Arma Gedonsky <armagedonsky@hot.ee>\n"
 "Language-Team: Estonian (http://www.transifex.com/odoo/odoo-9/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgid ""
 "In case of any queries concerning this matter, do not hesitate to contact our accounting department.\n"
 "\n"
 "Best Regards,\n"
-msgstr ""
+msgstr "\nLugupeetud %(partner_name)s\n\nVaatamata mitmetele meeldetuletustele, on teie kontol endiselt arveldamata.\n\nKui järgneva 8 päeva jooksul ei maksta kogusummat, siis võetakse võlgade sissenõudmiseks ette kohtumenetlus ilma eelneva teavituseta.\n\nLoodan, et see toiming osutub tarbetuks! Allpool on toodud välja maksete üksikasjad.\n\nKüsimuste korral võtke julgesti ühendust meie raamatupidamisosakonnaga.\n\nHeade soovidega!\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
@@ -65,7 +65,7 @@ msgid ""
 "Would your payment have been carried out after this mail was sent, please ignore this message. Do not hesitate to contact our accounting department.  \n"
 "\n"
 "Best Regards,\n"
-msgstr ""
+msgstr "\nLugupeetud %(partner_name)s\n\nErand tehakse siis kui tegemist on meiepoolse veaga, näib et järgmine summa jääb tasumata. Palun võtke ette asjakohased meetmed selle makse tegemiseks järgmise 8 päeva jooksul.\n\nKui teie makse on tehtud pärast selle sõnumi saatmist, siis ignoreerige seda sõnumit. Küsimuste korral võtke julgesti ühendust meie raamatupidamisosakonnaga.\n\nHeade soovidega!\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line2
@@ -83,7 +83,7 @@ msgid ""
 "Details of due payments is printed below.\n"
 "\n"
 "Best Regards,\n"
-msgstr ""
+msgstr "\nLugupeetud %(partner_name)s\n\nPettumusega teavitame, et hoolimata meeldetuletustest, on teie konto nüüd tõsiselt hilinenud maksetega.\n\nPalun teostage makse viivitamatult, sest vastasel korral peame kaaluma teie konto peatamist, mis tähendab, et me ei saa enam teie ettevõttele kaupu/teenuseid pakkuda. Palun võtke ette asjakohased meetmed makse tegemiseks järgneva 8 päeva jooksul. \n\nKui arve tasumisel esineb probleeme, millest me ei ole teadlikud, siis palun võtke ühendust meie raamatupidamisosakonnaga, et saaksime lahendada probleemi kiiresti.\n\nMakse tegemiseks leiate vajalikud andmed altpoolt.\n\nHeade soovidega!\n"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -122,22 +122,22 @@ msgstr "Tegumiriba järelaruannetele"
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
 msgid "Account Follow-up"
-msgstr ""
+msgstr "Konto järelmeetmed"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_note
 msgid "Action To Do"
-msgstr ""
+msgstr "Tegevused, mida teha"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "After"
-msgstr ""
+msgstr "Pärast"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_responsible_id
 msgid "Assign a Responsible"
-msgstr ""
+msgstr "Määra vastutaja"
 
 #. module: account_reports_followup
 #: selection:res.partner,trust:0
@@ -157,7 +157,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
 msgid "Click to define follow-up levels and their related actions."
-msgstr ""
+msgstr "Vajuta järelkontrolli tasemete kirjeldamiseks ja nendega seotud tegevuste."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_company_id
@@ -189,12 +189,12 @@ msgstr "Loodud"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
 msgid "Customer Payment Promise"
-msgstr ""
+msgstr "Kliendi maksmise lubadus"
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup.line:0
 msgid "Days of the follow-up levels must be different"
-msgstr ""
+msgstr "Järelkontrolli tasemete päevade arv peab olema erinev"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_trust
@@ -220,17 +220,17 @@ msgstr "Valmis"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
 msgid "Due Days"
-msgstr ""
+msgstr "Ületatud päevad"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_followup_id
 msgid "Follow Ups"
-msgstr ""
+msgstr "Järelkontrollid"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_name
 msgid "Follow-Up Action"
-msgstr ""
+msgstr "Järelkontrolli tegevused"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_followup_line_ids
@@ -242,12 +242,12 @@ msgstr "Järeltegevus"
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup_line
 msgid "Follow-up Criteria"
-msgstr ""
+msgstr "Järelkontrolli kriteeriumid"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_line_id
 msgid "Follow-up Level"
-msgstr ""
+msgstr "Järelkontrolli tase"
 
 #. module: account_reports_followup
 #: model:ir.ui.menu,name:account_reports_followup.account_followup_menu
@@ -257,13 +257,13 @@ msgstr "Järeltegevuse tasemed"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
 msgid "Follow-up Responsible"
-msgstr ""
+msgstr "Järelkontrolli vastutaja"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
-msgstr ""
+msgstr "Järelkontrolli sammud"
 
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
@@ -271,12 +271,12 @@ msgid ""
 "For each step, specify the actions to be taken and delay in days. It is\n"
 "                possible to use print and e-mail templates to send specific messages to\n"
 "                the customer."
-msgstr ""
+msgstr "Täpsustage iga etapi jaoks, milliseid meetmeid tuleb ette võtta ja mitu päeva viivitada. Klientidele\n                on võimalik saata konkreetseid sõnumeid kasutades prindi ja saada e-kiri malle."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
 msgid "Gives the sequence order when displaying a list of follow-up lines."
-msgstr ""
+msgstr "Annab järelkontrolli tegevuste nimekirja kuvamise järjekorra."
 
 #. module: account_reports_followup
 #: selection:res.partner,trust:0
@@ -315,7 +315,7 @@ msgstr "Viimati uuendatud"
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_date
 msgid "Latest Follow-up"
-msgstr ""
+msgstr "Hiliseim järelkontroll"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_report_context_followup_level
@@ -331,7 +331,7 @@ msgstr "Kirjuta logimärkus"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Manual Action"
-msgstr ""
+msgstr "Manuaalne tegevus"
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup_report.py:57
@@ -345,7 +345,7 @@ msgstr ""
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
-msgstr ""
+msgstr "Ettevõttele \"%s\" ei ole määratud järelkontrolli.\n Palun määrake üks."
 
 #. module: account_reports_followup
 #: selection:res.partner,trust:0
@@ -355,14 +355,14 @@ msgstr "Tavaline võlgnik"
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
 msgid "Only one follow-up per company is allowed"
-msgstr ""
+msgstr "Lubatud on ainult üks järelkontroll ettevõtte kohta."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
-msgstr ""
+msgstr "Kui määrate sellele valdkonnale kasutaja, siis saab temast tegevuse eest vastutav isik."
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_partner
@@ -377,12 +377,12 @@ msgstr "Partneri kirjed"
 #. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
-msgstr ""
+msgstr "Maksete järelkontrollid"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
 msgid "Payment Note"
-msgstr ""
+msgstr "Makse märkus"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
@@ -397,22 +397,22 @@ msgstr "Prinditud sõnum"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_filter
 msgid "Search Follow-up"
-msgstr ""
+msgstr "Otsi järelkontrolli"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_letter
 msgid "Send a Letter"
-msgstr ""
+msgstr "Saada kiri"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Send a Letter or Email"
-msgstr ""
+msgstr "Saada kiri või e-kiri"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_email
 msgid "Send an Email"
-msgstr ""
+msgstr "Saada e-kiri"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
@@ -440,7 +440,7 @@ msgid ""
 "The number of days after the due date of the invoice to wait before sending "
 "the reminder.  Could be negative if you want to send a polite alert "
 "beforehand."
-msgstr ""
+msgstr "Mitu päeva tuleks oodata enne meeldetuletuse saatmist pärast maksetähtaja möödumist. Võib olla ka negatiivne, kui soovite saata viisakat hoiatust enne maksetähtaja saabumist."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
@@ -453,7 +453,7 @@ msgid ""
 "                        number of days. If there are other overdue invoices for the \n"
 "                        same customer, the actions of the most \n"
 "                        overdue invoice will be executed."
-msgstr ""
+msgstr "Selleks, et klientidele meelde tuletada arve tasumist, võite\n                        määrata erinevad tegevused sõltuvalt kliendi hilinemisest.\n                        Tegevused on komplekteeritud järelkontrolli tasemeteks\n                        ja teostatakse, kui arve maksmise kuupäev on möödunud\n                        teatud arv päevi.\n                        Kui sellel kliendil on ka teisi tasumata arveid, siis \n                        kõige rohkem maksetähtaja ületanud arve kohta\n                        saadetakse meeldetuletus."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
@@ -468,29 +468,29 @@ msgstr "Deebetsumma"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
 msgid "Urging reminder email"
-msgstr ""
+msgstr "Sunnitud meeldetuletuskiri"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
 msgid "Urging reminder letter"
-msgstr ""
+msgstr "Sunnitud meeldetuletuskiri"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
 msgid "When processing, it will print a letter"
-msgstr ""
+msgstr "Kui on töötlemisel, siis prinditakse kiri"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_email
 msgid "When processing, it will send an email"
-msgstr ""
+msgstr "Kui on töötlemisel, siis saadetakse e-kiri"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_manual_action
 msgid ""
 "When processing, it will set the manual action to be taken for that "
 "customer. "
-msgstr ""
+msgstr "Kui on töötlemisel, siis määratakse manuaalne tegevus, mis tuleks kliendi osas ette võtta"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -500,7 +500,7 @@ msgid ""
 "                            use the following keywords in the text. Don't\n"
 "                            forget to translate in all languages you installed\n"
 "                            using to top right icon."
-msgstr ""
+msgstr "Kirjutage siia kirja sissejuhatus\n                            vastavalt järelkontrolli tasemele. Te võite\n                            kirjas kasutada järgmisi märksõnu. Ärge\n                            unustage tõlkida kõikides installeeritud keeltes\n                            kasutades üleval paremas nurgas asuvat ikooni."
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup.py:58
@@ -508,7 +508,7 @@ msgstr ""
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
 "the percent character."
-msgstr ""
+msgstr "Teie kirjeldus on kehtetu, kasutage õiget legendi või  %%, kui soovite kasutada protsendimärki."
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_config_settings
@@ -518,9 +518,9 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "days overdue, do the following actions:"
-msgstr ""
+msgstr "hilinenud päeva, tehke järgmisi toiminguid:"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "e.g. Call the customer, check if it's paid, ..."
-msgstr ""
+msgstr "nt helistage kliendile, kontrollige, kas on makstud ..."

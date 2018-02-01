@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-01 06:30+0000\n"
-"PO-Revision-Date: 2016-08-24 09:36+0000\n"
-"Last-Translator: Yaroslav Molochko <onorua@gmail.com>\n"
+"PO-Revision-Date: 2018-01-20 13:37+0000\n"
+"Last-Translator: Bohdan Lisnenko\n"
 "Language-Team: Ukrainian (http://www.transifex.com/odoo/odoo-9/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgid ""
 "                </body>\n"
 "              \n"
 "            "
-msgstr ""
+msgstr "\n                <body>\n                      <p>Шановний ${object.partner_id.name},</p>\n\n                      <p>Під час останнього процесу \"Друку та відправки\" документів з'явилися деякі помилки. Ось список невдалих команд друку, які ви задали.</p>\n                      <p>Будь-ласка, виявлено деякі помилки. Ви можете знайти їх у розділі Налаштування> Друк замовлень</i>.</p>\n\n                      % if ctx.get('print_errors'):\n                            <p>\n                            ID друку замовлень  |    Помилкове повідомлення <br/>\n                            -------------------------------------- <br/>\n                                  % for print_order_id, error_text in ctx.get('print_errors'):\n                                        ${print_order_id}    |    ${error_text} <br/>\n                                  % endfor\n                            </p>\n                      % endif\n                </body>\n              \n            "
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
@@ -55,7 +55,7 @@ msgstr "<b> Помилка кредиту :</b> Баланс вашого пос
 #: code:addons/print/wizard/print_order_wizard.py:63
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
-msgstr ""
+msgstr "Принаймні один із документів, який ви хочете надіслати, містить помилку."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_user_id
@@ -65,7 +65,7 @@ msgstr "Автор"
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Black & White"
-msgstr ""
+msgstr "Чорний та білий"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -91,7 +91,7 @@ msgstr "Розрахувати ціну"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
 msgid "Cost to Deliver"
-msgstr ""
+msgstr "Вартість доставки"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_country_id
@@ -134,7 +134,7 @@ msgstr "Валюта"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_base_config_settings_default_print_provider
 msgid "Default Print Provider"
-msgstr ""
+msgstr "Постачальник друку за умовчанням"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_display_name
@@ -149,7 +149,7 @@ msgstr "Назва для відображення"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Document Detail"
-msgstr ""
+msgstr "Детальний опис документа"
 
 #. module: print
 #: selection:print.order,state:0
@@ -180,7 +180,7 @@ msgstr "Невдача"
 #. module: print
 #: model:mail.template,subject:print.print_user_notify_failed_email_template
 msgid "Failed Print Orders"
-msgstr ""
+msgstr "Помилки при замовленні друку"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
@@ -201,7 +201,7 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:print.field_print_order_ink
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_ink
 msgid "Ink"
-msgstr ""
+msgstr "Чорнило"
 
 #. module: print
 #: model:ir.model,name:print.model_account_invoice
@@ -211,7 +211,7 @@ msgstr "Рахунок"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
 msgid "Is address valid"
-msgstr ""
+msgstr "Чи дійсна адреса"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin___last_update
@@ -227,12 +227,12 @@ msgstr "Остання модифікація"
 #: model:ir.model.fields,field_description:print.field_account_invoice_print_sent_date
 #: model:ir.model.fields,field_description:print.field_print_mixin_print_sent_date
 msgid "Last Postal Sent Date"
-msgstr ""
+msgstr "Дата останньої поштової відправки "
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_last_send_date
 msgid "Last Send Date"
-msgstr ""
+msgstr "Дата останньої відправки"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_uid
@@ -265,7 +265,7 @@ msgstr "Назва ролі"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "My Print Orders"
-msgstr ""
+msgstr "Мої замовлення на друк"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_name
@@ -276,17 +276,17 @@ msgstr "Назва"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_nbr_pages
 msgid "Number of Pages"
-msgstr ""
+msgstr "Кількість сторінок"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_res_id
 msgid "Object ID"
-msgstr ""
+msgstr "ID об'єкта"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Order Information"
-msgstr ""
+msgstr "Інформація про замовлення"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -296,12 +296,12 @@ msgstr "Замовлення"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Orders Failed"
-msgstr ""
+msgstr "Невдале замовлення"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Orders Waiting"
-msgstr ""
+msgstr "Очікуване замовлення"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_attachment_id
@@ -312,7 +312,7 @@ msgstr "PDF"
 #: model:ir.model.fields,field_description:print.field_print_order_paper_weight
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_paper_weight
 msgid "Paper Weight"
-msgstr ""
+msgstr "Вага паперу"
 
 #. module: print
 #: model:ir.model,name:print.model_res_partner
@@ -323,50 +323,50 @@ msgstr "Партнер"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Postal Order"
-msgstr ""
+msgstr "Поштове замовлення"
 
 #. module: print
 #: model:ir.ui.menu,name:print.root_print_menu
 msgid "Postal Printings"
-msgstr ""
+msgstr "Поштові роздруківки"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 #: model:ir.ui.view,arch_db:print.print_provider_view_tree
 msgid "Postal Provider"
-msgstr ""
+msgstr "Поштовий провайдер"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Postal Wizard Order"
-msgstr ""
+msgstr "Помічник поштового замовлення"
 
 #. module: print
 #: model:ir.model,name:print.model_print_mixin
 msgid "Print Mixin (Printable Object)"
-msgstr ""
+msgstr "Друкувати домішок (друкований об'єкт)"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
 msgid "Print Order"
-msgstr ""
+msgstr "Замовлення на друк"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_line_wizard_view_tree
 msgid "Print Order Lines"
-msgstr ""
+msgstr "Рядки замовлення на друк"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
 msgid "Print Order Wizard"
-msgstr ""
+msgstr "Помічник замовлення на друк"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_action
 #: model:ir.ui.menu,name:print.print_order_menu
 #: model:ir.ui.view,arch_db:print.print_order_view_tree
 msgid "Print Orders"
-msgstr ""
+msgstr "Замовлення на друк"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_provider_action
@@ -375,17 +375,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_id
 #: model:ir.ui.menu,name:print.print_provider_menu
 msgid "Print Provider"
-msgstr ""
+msgstr "Провайдер друку"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
 msgid "Print order ids"
-msgstr ""
+msgstr "Id замовлення на друк"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Printing Detail"
-msgstr ""
+msgstr "Друк деталей"
 
 #. module: print
 #: selection:print.provider,environment:0
@@ -401,12 +401,12 @@ msgstr "Провайдер"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_balance
 msgid "Provider Credit"
-msgstr ""
+msgstr "Кредит провайдера"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 msgid "Provider Information"
-msgstr ""
+msgstr "Інформація про провайдера"
 
 #. module: print
 #: selection:print.order,state:0
@@ -416,13 +416,13 @@ msgstr "Напоготові"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Recipient Address"
-msgstr ""
+msgstr "Адреса одержувача"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
 #: model:ir.model.fields,field_description:print.field_print_order_partner_id
 msgid "Recipient partner"
-msgstr ""
+msgstr "Одержувач-партенр"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -447,12 +447,12 @@ msgstr "Надіслати"
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action_multi_print
 msgid "Send Invoices by post"
-msgstr ""
+msgstr "Надсилання рахунків-фактур поштою"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.account_invoice_view_form_inherit_print
 msgid "Send Letter"
-msgstr ""
+msgstr "Відправлений лист"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -463,22 +463,22 @@ msgstr "Надіслати зараз"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Send Now Postal Wizard Order"
-msgstr ""
+msgstr "Надіслати поштовий помічник замовлення"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_sendnow_action_multi
 msgid "Send Now by post"
-msgstr ""
+msgstr "Надіслати зараз поштою"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action
 msgid "Send by Post"
-msgstr ""
+msgstr "Надіслати поштою"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_sent_date
 msgid "Sending Date"
-msgstr ""
+msgstr "Дата відправлення"
 
 #. module: print
 #: selection:print.order,state:0
@@ -510,12 +510,12 @@ msgstr "Вулиця2"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Technical Informations"
-msgstr ""
+msgstr "Технічна інформація"
 
 #. module: print
 #: selection:print.provider,environment:0
 msgid "Test"
-msgstr ""
+msgstr "Тест"
 
 #. module: print
 #: code:addons/print/models/print_provider.py:191
@@ -523,7 +523,7 @@ msgstr ""
 msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
 "file, or set up the Object ID and Model Name fields."
-msgstr ""
+msgstr "Документ не має асоційованого PDF-файлу: вам слід вибрати файл вкладення або налаштувати поля \"Назва об'єкта\" та \"Назва моделі\"."
 
 #. module: print
 #: code:addons/print/models/print_provider.py:186
@@ -531,13 +531,13 @@ msgstr ""
 msgid ""
 "The document you want to print and send is not printable. There is no report"
 " action (ir.actions.report.xml) for the model %s."
-msgstr ""
+msgstr "Документ, який ви хочете роздрукувати та надіслати, не можна роздрукувати. Дії звітності (і.actions.report.xml) для моделі відсутні%s."
 
 #. module: print
 #: code:addons/print/wizard/print_order_wizard.py:61
 #, python-format
 msgid "The document you want to send contains the following mistake : %s"
-msgstr ""
+msgstr "Документ, який ви хочете надіслати, містить таку помилку : %s"
 
 #. module: print
 #: code:addons/print/models/account_invoice.py:20
@@ -547,7 +547,7 @@ msgid ""
 "following address.                     <br/><br/> %(partner_name)s <br/> "
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
-msgstr ""
+msgstr "Цей рахунок-фактуру було надіслано поштою з провайдером%(provider_name)s на додану адресу.                     <br/><br/> %(partner_name)s <br/> %(partner_street)s <br/> %(partner_city)s %(partner_zip)s                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
@@ -557,7 +557,7 @@ msgstr "Поновити"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "When the error is resolved, please click on 'Reset to draft'."
-msgstr ""
+msgstr "Коли помилка буде вирішена, натисніть на кнопку «Повернути до чернетки»."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_zip
@@ -578,14 +578,14 @@ msgstr "або"
 #. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard
 msgid "print.order.line.wizard"
-msgstr ""
+msgstr "print.order.line.wizard"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_sendnow_wizard
 msgid "print.order.sendnow.wizard"
-msgstr ""
+msgstr "print.order.sendnow.wizard"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_wizard
 msgid "print.order.wizard"
-msgstr ""
+msgstr "print.order.wizard"
