@@ -4,20 +4,20 @@
 # 
 # Translators:
 # ТАрас <tratatuta@i.ua>, 2017
-# Bohdan Lisnenko <lem8r.ka11a@gmail.com>, 2017
-# Zoriana Zaiats <sorenabell@quintagroup.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Bohdan Lisnenko, 2017
+# Zoriana Zaiats, 2017
+# Martin Trigaux, 2017
 # LoganDowns <k0mna80@gmail.com>, 2017
 # Yaroslav Molochko <onorua@gmail.com>, 2017
 # Kateryna Onyshchenko <Katrona17@gmail.com>, 2017
-# Аліна Семенюк <alinasemeniuk1@gmail.com>, 2017
+# Alina Semeniuk <alinasemeniuk1@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Аліна Семенюк <alinasemeniuk1@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-01-30 08:43+0000\n"
+"PO-Revision-Date: 2018-01-30 08:43+0000\n"
+"Last-Translator: Alina Semeniuk <alinasemeniuk1@gmail.com>, 2017\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,6 +46,22 @@ msgid ""
 "        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
 "            "
 msgstr ""
+"\n"
+"        Оплата\n"
+"        Усі виплати здійснюються після його отримання. Якщо платіж не отримано або спосіб оплати відхилено, покупець позбавляє права власності на всі придбані товари. Якщо платіж не отримано, жодні товари не будуть доставлені.\n"
+"\n"
+"        Політика доставки\n"
+"        Доставка оплачується покупцем у розмірі, погодженому продавцем на час покупки. Якщо товар втрачається під час доставки, то загальна вартість товару, включаючи доставку, буде повернута покупцеві. Вартість доставки може подвоїтись, якщо ця доставка міжнародна. Якщо товар пошкоджений під час доставки, продавець не несе відповідальності.\n"
+"\n"
+"        Політика повернення товару та оплати \n"
+"        Суб'єкти мають право на повернення товару або оплати на підставі скарги. Якщо товар пошкоджено під час доставки, заміну товару буде відправлено безкоштовно. Якщо товар є незадовільним, необхідно подати письмове пояснення перед тим, як буде розглядатися товар для повернення коштів. Покупець повинен взяти до уваги опис товару, перш ніж вимагати відшкодування. Якщо товар відповідає опису продавцем, а покупець не задоволений, продавець не несе відповідальності за відшкодування. Обмін здійснюється в кожному окремому випадку.\n"
+"\n"
+"        Скасування\n"
+"        Товар може бути скасований до обробки платежу. Після обробки оплати покупець несе відповідальність за оплату.\n"
+"\n"
+"        Скарги\n"
+"        Будь-які скарги щодо товарів або продавців можуть надсилатися нашій службі підтримки: support@wesellyourstuff.com або за номером телефону (888) 555-0198. Немає гарантії резолюції. Кожна справа буде розглядатися індивідуально, і продавець буде також контактувати.\n"
+"            "
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_success
@@ -107,6 +123,62 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Шановний ${object.partner_id.name},</p>\n"
+"                <p>\n"
+"                    Ваша підписка (${ctx.get('code')}) була щойно оновлена\n"
+"                    %if ctx.get('total_amount') та ctx.get('payment_token'):\n"
+"                        оплата ${ctx['total_amount']} ${ctx['currency']} стягнена з ${ctx['payment_token']}\n"
+"                        .\n"
+"                    %endif\n"
+"                </p>\n"
+"                <p>Ви знайдете вашу прикріплений рахунок-фактуру.</p>\n"
+"                %if ctx.get('next_date'):\n"
+"                <p>\n"
+"                  Ваш наступний рахунок-фактура буде ${ctx.get('next_date')}.\n"
+"                </p>\n"
+"                %endif\n"
+"                <br/>\n"
+"                <p>Якщо у вас виникли будь-які запитання, не соромтеся зв'язатися з нами.</p>\n"
+"                <p>Дякуємо за ваш вибір ${object.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Надіслано\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> використовуючи <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_subscription_open
@@ -150,6 +222,71 @@ msgid ""
 "\n"
 "                <p>If you have any question, do not hesitate to contact us.</p>\n"
 "                <p>Thank you for choosing ${object.subscription_id.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Sent by\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
+msgstr ""
+
+#. module: sale_subscription
+#: model:mail.template,body_html:sale_subscription.email_payment_close
+msgid ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Hello ${object.partner_id.name},</p>\n"
+"                <p>\n"
+"                % if ctx.get('payment_token') and ctx.get('total_amount'):\n"
+"                  Our final attempt to process a payment for your subscription using your payment method\n"
+"                  ${ctx['payment_token']}\n"
+"                  for ${ctx['total_amount']} ${ctx.get('currency')} failed.\n"
+"                  % if ctx.get('error'):\n"
+"                    Your bank or credit institution gave the following details about the issue: <pre>${ctx['error']}</pre>.\n"
+"                  %endif\n"
+"                % else:\n"
+"                  Our final attempt to process a payment for your subscription failed because we have no payment method recorded for you.\n"
+"                % endif \n"
+"                </p>\n"
+"\n"
+"                <p>\n"
+"                  As your payment should have been made <strong>15 days ago</strong>, your subscription has been terminated.\n"
+"                </p>\n"
+"\n"
+"                <br/>\n"
+"                <p>Should you wish to resolve this issue, do not hesitate to contact us.</p>\n"
+"                <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
 "            </td>\n"
 "        </tr><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
@@ -234,10 +371,6 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
-
-#. module: sale_subscription
-#: model:mail.template,body_html:sale_subscription.email_payment_close
-msgid ""
 "\n"
 "<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
 "    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
@@ -261,27 +394,29 @@ msgid ""
 "    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
 "        <tbody><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"                <p>Hello ${object.partner_id.name},</p>\n"
+"                <p>Вітаємо ${object.partner_id.name},</p>\n"
 "                <p>\n"
-"                % if ctx.get('payment_token) and ctx.get('total_amount'):\n"
-"                  Our final attempt to process a payment for your subscription using your payment method\n"
+"                % if ctx.get('payment_token') and ctx.get('total_amount'):\n"
+"                  Ми не змогли обробити оплату за вашу підписку, використовуючи спосіб оплати\n"
 "                  ${ctx['payment_token']}\n"
-"                  for ${ctx['total_amount']} ${ctx.get('currency')} failed.\n"
+"                  for ${ctx['total_amount']} ${ctx.get('currency')}.\n"
 "                  % if ctx.get('error'):\n"
-"                    Your bank or credit institution gave the following details about the issue: <pre>${ctx['error']}</pre>.\n"
+"                    Ваш банк або кредитна установа надали наступну інформацію про проблему: <pre>${ctx['error']}</pre>.\n"
 "                  %endif\n"
 "                % else:\n"
-"                  Our final attempt to process a payment for your subscription failed because we have no payment method recorded for you.\n"
+"                  Ми не змогли обробити платіж за вашу підписку, оскільки для вас не зареєстровано способу оплати.\n"
 "                % endif \n"
 "                </p>\n"
 "\n"
 "                <p>\n"
-"                  As your payment should have been made <strong>15 days ago</strong>, your subscription has been terminated.\n"
+"                  Ваша підписка ${ctx.get('code')} досі дійсна, але буде <b>призупинена</b>\n"
+"                  на ${ctx.get('date_close')} якщо платіж не досягне успіху в середньому (ми пробуватимемо раз на день).\n"
+"                  Будь-ласка, двічі перевірте, чи є у вас достатньо коштів.\n"
 "                </p>\n"
 "\n"
 "                <br/>\n"
-"                <p>Should you wish to resolve this issue, do not hesitate to contact us.</p>\n"
-"                <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
+"                <p>Якщо у вас виникли питання, не соромтеся звертатися до нас.</p>\n"
+"                <p>Дякуємо за вибір ${object.company_id.name or 'us'}!</p>\n"
 "            </td>\n"
 "        </tr><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
@@ -289,16 +424,15 @@ msgid ""
 "                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
 "                </p>\n"
 "                % endif\n"
-"                <p style=\"font-size: 11px;\"><strong>Sent by\n"
+"                <p style=\"font-size: 11px;\"><strong>Надіслано\n"
 "                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
 "                    <strong>${user.company_id.name}</strong>\n"
-"                </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </a> використовуючи <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
 "                </strong></p>\n"
 "            </td>\n"
 "        </tr></tbody>\n"
 "    </table>\n"
 "</div>"
-msgstr ""
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -308,7 +442,7 @@ msgstr "&amp;nbsp;"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "(Not in"
-msgstr ""
+msgstr "(Not in"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -330,12 +464,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Automatic payments"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/>Автоматичні оплати"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Closable by customer"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/> Закривається клієнтом"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -370,7 +504,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "<span class=\"o_label\">Subscriptions</span>"
-msgstr ""
+msgstr "<span class=\"o_label\">Підписки</span>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -633,11 +767,6 @@ msgid "Configuration"
 msgstr "Налаштування"
 
 #. module: sale_subscription
-#: model:ir.actions.act_window,name:sale_subscription.sale_subscription_config_settings_action
-msgid "Configure Subscriptions"
-msgstr ""
-
-#. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:18
 #, python-format
@@ -751,6 +880,8 @@ msgid ""
 "Custom Domain\n"
 "        Access your Odoo Instance using your own domain."
 msgstr ""
+"Домен клієнта\n"
+"        Отримайте доступ до вашої версії Odoo за допомогою вашого власного домену."
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_custom_domain_yearly
@@ -779,6 +910,8 @@ msgid ""
 "Customized Module\n"
 "        Customize a module to better match your business process."
 msgstr ""
+"Налаштований модуль\n"
+"        Налаштуйте модуль, щоби краще відповідати вашим бізнес-процесам."
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_custom_module_yearly
@@ -795,6 +928,8 @@ msgid ""
 "Customized View\n"
 "        Customize one or more views (in a single module) to better suit your needs."
 msgstr ""
+"Індивідуальний перегляд\n"
+"        Налаштувати один або більше перглядів (в одному модулі), щоби краще відповідати вашим потребам."
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_custom_view
@@ -859,7 +994,7 @@ msgstr "Знижка (%)"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_date_from
 msgid "Discount Date"
-msgstr ""
+msgstr "Дата знижок"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_display_name
@@ -938,12 +1073,17 @@ msgid "History"
 msgstr "Історія"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_11674
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_4
+msgid "I don't use it"
+msgstr ""
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_6476
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id_11706
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id_6508
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_id
 msgid "ID"
@@ -954,11 +1094,15 @@ msgstr "ІД"
 msgid ""
 "If checked, the user will be able to close his account from the frontend"
 msgstr ""
+"Якщо цей пункт поначено, користувач зможе закрити свій обліковий запис з "
+"інтерфейсу"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
 msgstr ""
+"Якщо не встановлено, використовуватиметься токен платежу за замовчуванням "
+"партнера."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_date
@@ -1018,7 +1162,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "If you wish to reopen it, the"
-msgstr ""
+msgstr "Якщо ви бажаєте переапустити це, "
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1026,6 +1170,8 @@ msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period."
 msgstr ""
+"Якщо ви хочете перезапустити це, ви можете сплатити рахунок за поточний "
+"період виставлення рахунку."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:46
@@ -1236,6 +1382,8 @@ msgid ""
 "Odoo SAAS\n"
 "        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
 msgstr ""
+"Odoo SAAS\n"
+"        Доступ до вашої версії Odoo. Збережено на наших серверах: висока швидкість, висока надійність та щоденне резервне копіювання."
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_saas_yearly
@@ -1273,6 +1421,11 @@ msgid "Order Number"
 msgstr "Номер замовлення"
 
 #. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_5
+msgid "Other"
+msgstr "Інше"
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Partner"
 msgstr "Партнер"
@@ -1285,7 +1438,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_payment_token_id
 msgid "Payment Token"
-msgstr ""
+msgstr "Токен оплати"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_payment_transaction
@@ -1415,7 +1568,7 @@ msgstr "Референс"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Reference:"
-msgstr ""
+msgstr "Довідка:"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1533,13 +1686,6 @@ msgid "Save this template and the modifications you've made to it."
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_industry_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_industry_id
-#: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
-msgid "Sector of Activity"
-msgstr ""
-
-#. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
 msgid "See Subscriptions"
 msgstr "Переглянути підписки"
@@ -1559,6 +1705,7 @@ msgid "Sequence"
 msgstr "Послідовність"
 
 #. module: sale_subscription
+#: model:ir.actions.act_window,name:sale_subscription.sale_subscription_config_settings_action
 #: model:ir.ui.menu,name:sale_subscription.sale_subscription_config_settings_menu
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1642,7 +1789,6 @@ msgstr ""
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_count
-#: model:ir.model.fields,field_description:sale_subscription.field_project_project_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_subscription_count
 msgid "Subscription Count"
@@ -1702,9 +1848,24 @@ msgid "Subscription Templates"
 msgstr "Шаблони підписки"
 
 #. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_2
+msgid "Subscription does not meet my requirements"
+msgstr ""
+
+#. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_1
+msgid "Subscription is too expensive"
+msgstr ""
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.product_template_search_view_inherit_sale_subscription
 msgid "Subscription products"
 msgstr "Товари підписки"
+
+#. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
+msgid "Subscription reached its end date"
+msgstr ""
 
 #. module: sale_subscription
 #: model:mail.message.subtype,description:sale_subscription.subtype_state_change
@@ -1716,7 +1877,6 @@ msgstr "Стан підписки був змінинений"
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_filtered
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_res_partner
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_ids
-#: model:ir.model.fields,field_description:sale_subscription.field_project_project_subscription_ids
 #: model:ir.model.fields,field_description:sale_subscription.field_res_partner_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_res_users_subscription_count
 #: model:ir.module.category,name:sale_subscription.module_category_subscription_management
@@ -1727,6 +1887,7 @@ msgstr "Стан підписки був змінинений"
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_home_menu_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_home_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
+#: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.res_partner_view_inherit_sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -1999,6 +2160,10 @@ msgid ""
 " or directly insert them in the subscription to invoice it on the next "
 "invoice date."
 msgstr ""
+"Ви можете або створити комерційну пропозицію, яка буде знижена за поточний "
+"період виставлення рахунку (варіанти будуть додані, коли комерційна "
+"пропозиція буде підтверджена), або безпосередньо вставити її в підписку на "
+"рахунок-фактуру на наступній даті рахунка-фактури."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -2044,17 +2209,17 @@ msgstr "Ваш план"
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_subscription_open
 msgid "Your subscription ${object.subscription_id.code} is active!"
-msgstr ""
+msgstr "Ваша підписка ${object.subscription_id.code} активована!"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Your subscription is closed."
-msgstr ""
+msgstr "Ваша підписка відключена."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "by paying your invoice."
-msgstr ""
+msgstr "оплатою вашого рахунку-фактури."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2064,7 +2229,7 @@ msgstr "день(дні)"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "missing payments (from"
-msgstr ""
+msgstr "відсутні платежі (від"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2095,17 +2260,17 @@ msgstr "sale.subscription.close.reason.wizard"
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_wizard
 msgid "sale.subscription.wizard"
-msgstr ""
+msgstr "sale.subscription.wizard"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_wizard_option
 msgid "sale.subscription.wizard.option"
-msgstr ""
+msgstr "sale.subscription.wizard.option"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "to this day) will be automatically processed."
-msgstr ""
+msgstr "до цього дня) буде автоматично оброблено."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
