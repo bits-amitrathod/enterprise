@@ -3,8 +3,9 @@
 # * crm_voip
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Otgonbayar.A <gobi.mn@gmail.com>, 2017
+# Khishigbat Ganbold <khishigbat@asterisk-tech.mn>, 2017
 # BATKHUYAG GANBOLD <gbatkhuyag@gmail.com>, 2017
 # Tugsbiligt Lamjav <tugsbiligt@icloud.com>, 2017
 msgid ""
@@ -32,6 +33,11 @@ msgid ""
 "    a new call? </p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p>Сайн байна уу ${object.partner_id.name},</p>\n"
+"\n"
+"<p>'${object.name}' -н талаарх бидний яриа тасалдсан бололтой. Шинэ ярилцлага товлохын тулд та надад завтай цагаа илгээнэ үү? </p>\n"
+"<p>Хүндэтгэсэн,</p>"
 
 #. module: crm_voip
 #: model:mail.template,body_html:crm_voip.email_template_call_client_notAvailable
@@ -42,40 +48,48 @@ msgid ""
 "    please give me your availability in order to schedule a new call?</p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p>Сайн байна уу ${object.partner_id.name},</p>\n"
+"<p>Би дөнгөж сая тань руу '${object.name}' -н талаар хэлэлцэхээр \n"
+"залгасан юм. Шинэ ярилцлага товлохын тулд та надад завтай цагаа \n"
+"илгээнэ үү?</p>\n"
+"<p>Хүндэтгэсэн,</p>"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:87
 #, python-format
 msgid " about %s"
-msgstr "Тухай"
+msgstr "%s тухай"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_nbr
 msgid "# of Cases"
-msgstr "Хэрэгийн #"
+msgstr "Хэргийн #"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid ""
 "<span attrs=\"{'invisible': [('show_duration', '=', False)], "
 "'required':[('show_duration', '=',True)]}\">min(s)</span>"
-msgstr "минут"
+msgstr ""
+"<span attrs=\"{'invisible': [('show_duration', '=', False)], "
+"'required':[('show_duration', '=',True)]}\">минут</span>"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_voip_view
 msgid "<span class=\"o_stat_text\">Log a Call</span>"
-msgstr "Дуудлагын бүртгэл хийх"
+msgstr "<span class=\"o_stat_text\">Дуудлагын бүртгэл хийх</span>"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_voip_view
 msgid "<span class=\"o_stat_text\">Schedule Call</span>"
-msgstr "Дуудлагын хуваарь гаргах"
+msgstr "<span class=\"o_stat_text\">Дуудлага товлох</span>"
 
 #. module: crm_voip
 #: model:ir.actions.server,name:crm_voip.action_create_call_in_queue
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
 msgid "Add to Call Queue"
-msgstr "Дараагын дуудлагад нэмэх"
+msgstr "Дуудлагын хүлээлгэ рүү нэмэх"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_user_id
@@ -87,7 +101,7 @@ msgstr "Эзэн оноох"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:111
 #, python-format
 msgid "Backspace"
-msgstr ""
+msgstr "Арилгах"
 
 #. module: crm_voip
 #: model:ir.filters,name:crm_voip.filter_crm_phonecall_sales_team
@@ -113,7 +127,7 @@ msgstr "Залгах"
 #: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:85
 #, python-format
 msgid "Call %s min(s)"
-msgstr ""
+msgstr "Дуудлага %s минут үргэлжлэв"
 
 #. module: crm_voip
 #. openerp-web
@@ -387,7 +401,7 @@ msgstr ""
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_sequence
 msgid "Gives the sequence order when displaying a list of Phonecalls."
-msgstr ""
+msgstr "Утасны дуудлагын жагсаалтыг харуулах дарааллын эрэмбийг өгнө"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
@@ -420,7 +434,7 @@ msgstr "ID"
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 1 Week"
-msgstr "Долоо хоногын дотор"
+msgstr "1 долоо хоногийн дотор"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
@@ -448,11 +462,13 @@ msgid ""
 "In order to follow up on the call, you can trigger a request for\n"
 "          another call, a meeting or an opportunity."
 msgstr ""
+"Дуудлагыг шийдвэрлэхийн тулд дахин өөр дуудлага, уулзалт \n"
+"эсвэл боломжийн хүсэлт үүсгэх боломжтой."
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_lead_in_call_center_queue
 msgid "Is in the Call Queue"
-msgstr ""
+msgstr "Дуудлага хүлээлгэнд байна"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall___last_update
@@ -577,6 +593,9 @@ msgid ""
 "          history of the communication with a customer or to inform another\n"
 "          team member."
 msgstr ""
+"Odoo нь ирсэн дуудлагыг явуут дунд бүртгэх боломжоор хангадаг. \n"
+"Ингэснээр захиалагчтай хийсэн ярианы түүхийг хадгалж, \n"
+"багийн өөр гишүүнд мэдээллэх боломжтой."
 
 #. module: crm_voip
 #. openerp-web
@@ -588,7 +607,7 @@ msgstr "Боломж"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_pbx_ip
 msgid "PBX Server IP"
-msgstr ""
+msgstr "PBX серверийн IP"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_res_partner
@@ -601,12 +620,12 @@ msgstr "Харилцагч"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_id
 msgid "Partner id"
-msgstr ""
+msgstr "Харилцагчийн дугаар"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_image_small
 msgid "Partner image"
-msgstr ""
+msgstr "Харилцагчийн зураг"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_phone
@@ -628,7 +647,7 @@ msgstr "Хийх утасны дуудлагууд"
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall_report
 msgid "Phone Calls by user and team"
-msgstr ""
+msgstr "Хэрэглэгч ба багаарх утасны дуудлага"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_graph
@@ -650,12 +669,12 @@ msgstr "Хаагдсан Утасны Дуудлага"
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid ""
 "Phone calls which are in to do state and Phone calls which receive no answer"
-msgstr ""
+msgstr "\"Хийх\" төлөвтэй утасны дуудлагууд ба хариулаагүй утасны дуудлагууд"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Phone calls which receive no answer"
-msgstr ""
+msgstr "Хариулаагүй утасны дуудлагууд"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,name:crm_voip.crm_phonecall_view
@@ -669,7 +688,7 @@ msgstr "Утасны дуудлага"
 #. module: crm_voip
 #: model:ir.actions.act_window,name:crm_voip.action_report_crm_phonecall
 msgid "Phonecalls Analysis"
-msgstr ""
+msgstr "Утасны дуудлагын шинжилгээ"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
@@ -686,7 +705,7 @@ msgstr "Төлөвлөсөн орлого"
 #: code:addons/crm_voip/static/src/js/crm_voip.js:535
 #, python-format
 msgid "Please check if a phone number is given for the current phonecall"
-msgstr ""
+msgstr "Энэ дуудлагад утасны дугаар оруулсан эсэхийг шалгана уу"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_probability
@@ -704,26 +723,26 @@ msgstr "Үйлдвэрлэлийн"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:71
 #, python-format
 msgid "Refresh the Panel"
-msgstr ""
+msgstr "Самбарыг дахин шинэчлэх"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
 msgid "Remove from Call Queue"
-msgstr ""
+msgstr "Дуудлагын хүлээлгээс хасах"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:45
 #, python-format
 msgid "Remove from the queue"
-msgstr ""
+msgstr "Хүлээлгээс хасах"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:99
 #, python-format
 msgid "Reschedule Call"
-msgstr ""
+msgstr "Дуудлагыг дахин товлох"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_user_id
@@ -760,12 +779,12 @@ msgstr "Хадгалах"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Save and Open the Opportunity"
-msgstr ""
+msgstr "Боломжийг хадгалаад нээх"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_reschedule_option
 msgid "Schedule A New Call"
-msgstr ""
+msgstr "Шинэ дуудлага товлох"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
@@ -780,14 +799,14 @@ msgstr "Бусад дуудлагыг төлөвлөх"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
 msgid "Schedule a Call"
-msgstr ""
+msgstr "Дуудлага товлох"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:139
 #, python-format
 msgid "Scheduled Date:"
-msgstr ""
+msgstr "Товлосон огноо:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -799,7 +818,7 @@ msgstr "Хайх"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:64
 #, python-format
 msgid "Search Phone Calls..."
-msgstr ""
+msgstr "Утасны дуудлага хайх..."
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
@@ -858,19 +877,19 @@ msgstr "Автомат дуудлагыг зогсоох"
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_pbx_ip
 msgid "The IP adress of your PBX Server"
-msgstr ""
+msgstr "Таны PBX серверийн IP хаяг"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_wsServer
 msgid "The URL of your WebSocket"
-msgstr ""
+msgstr "Таны WebSocket - н URL "
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:422
 #, python-format
 msgid "The customer is temporary unavailable. Please try later."
-msgstr ""
+msgstr "Захиалагч түр хугацаагаар боломжгүй байна. Дараа дахин оролдоно уу."
 
 #. module: crm_voip
 #. openerp-web
@@ -886,6 +905,9 @@ msgid ""
 "When the call is over, the status is set to Held.\n"
 "If the call is not applicable anymore, the status can be set to Cancelled."
 msgstr ""
+"Хэргийг үүсгэх үед Хийх төлөвтэй болно.\n"
+"Дуудлага өндөрлөх үед Дууссан төлөвтэй болно.\n"
+"Хэрэв дуудлага нь хэрэггүй болвол Цуцласан төлөвт оруулж болно."
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
@@ -896,7 +918,7 @@ msgstr "Хийх"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.crm_phonecall_tree_view
 msgid "To Opportunity"
-msgstr ""
+msgstr "Боломж руу"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -925,7 +947,7 @@ msgstr "Шилжүүлэх"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_choice
 msgid "Transfer choice"
-msgstr ""
+msgstr "Шилжүүлэх сонголт"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
@@ -953,7 +975,7 @@ msgstr "Сануулга"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_wsServer
 msgid "WebSocket"
-msgstr ""
+msgstr "WebSocket"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_transfer_wizard.py:35
@@ -962,6 +984,7 @@ msgid ""
 "Wrong configuration for the call. There is no external phone number "
 "configured"
 msgstr ""
+"Дуудлагын тохиргоо буруу байна. Гадаад утасны дугаар тохируулаагүй байна"
 
 #. module: crm_voip
 #. openerp-web
@@ -974,22 +997,22 @@ msgstr "Австри"
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall
 msgid "crm.phonecall"
-msgstr ""
+msgstr "crm.phonecall"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall_log_wizard
 msgid "crm.phonecall.log.wizard"
-msgstr ""
+msgstr "crm.phonecall.log.wizard"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_phonecall_transfer_wizard
 msgid "crm.phonecall.transfer.wizard"
-msgstr ""
+msgstr "crm.phonecall.transfer.wizard"
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_crm_schedule_phonecall
 msgid "crm.schedule_phonecall"
-msgstr ""
+msgstr "crm.schedule_phonecall"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
@@ -1020,7 +1043,7 @@ msgstr "Шилжүүлэх сонголт"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_number
 msgid "transfer To"
-msgstr ""
+msgstr "шилжүүлэх"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
@@ -1030,9 +1053,9 @@ msgstr "Дуудлага шилжүүлэх"
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to another External Phone"
-msgstr ""
+msgstr "өөр гадны утас руу шилжүүлэх"
 
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to your external phone"
-msgstr ""
+msgstr "өөрийн гадны утас руу шилжүүлэх"
