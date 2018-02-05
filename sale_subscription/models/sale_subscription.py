@@ -6,6 +6,7 @@ import uuid
 import time
 import traceback
 
+from collections import Counter
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
@@ -64,14 +65,15 @@ class SaleSubscription(models.Model):
 
     def _compute_sale_order_count(self):
         raw_data = self.env['sale.order.line'].read_group(
-            [('subscription_id', '!=', False)],
+            [('subscription_id', 'in', self.ids)],
             ['subscription_id', 'order_id'],
-            ['subscription_id', 'order_id']
+            ['subscription_id', 'order_id'],
+            lazy=False,
         )
+        count = Counter(g['subscription_id'][0] for g in raw_data)
 
-        order_count = len([sub for sub in raw_data if sub["subscription_id"][0] in self.ids])
         for subscription in self:
-            subscription.sale_order_count = order_count
+            subscription.sale_order_count = count[subscription.id]
 
     def action_open_sales(self):
         self.ensure_one()
