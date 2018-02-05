@@ -216,7 +216,7 @@ QUnit.module('web_mobile', {
     });
 
     QUnit.test("many2many_tags in a mobile environment", function (assert) {
-        assert.expect(7);
+        assert.expect(6);
 
         var mobileDialogCall = 0;
         var rpcReadCount = 0;
@@ -263,7 +263,6 @@ QUnit.module('web_mobile', {
 
         var $input = form.$('input');
 
-        assert.ok($input.prop('disabled'), "the many2many_tags should be disabled in a mobile environment");
         assert.strictEqual(mobileDialogCall, 0, "the many2many_tags should be disabled in a mobile environment");
 
         $input.click();
