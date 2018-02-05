@@ -7,15 +7,15 @@
 # Egon Raamat <egon@avalah.ee>, 2017
 # Wanradt Koell <wanradt@gmail.com>, 2017
 # Arma Gedonsky <armagedonsky@hot.ee>, 2017
+# Eneli Õigus <enelioigus@gmail.com>, 2017
 # Rivo Zängov <eraser@eraser.ee>, 2017
-# Eneli Õigus <enelioigus@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Eneli Õigus <enelioigus@gmail.com>, 2018\n"
+"Last-Translator: Rivo Zängov <eraser@eraser.ee>, 2017\n"
 "Language-Team: Estonian (https://www.transifex.com/odoo/teams/41243/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -669,7 +669,7 @@ msgstr "SEPA mandaadi päritolu"
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:110
 #, python-format
 msgid "Paid Invoices"
-msgstr "Makstud arved"
+msgstr "Makstud müügiarved"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_paid_invoices_nber
@@ -793,12 +793,12 @@ msgstr "Tühistatud"
 #: model:ir.actions.act_window,name:account_sepa_direct_debit.account_sepa_direct_debit_xml_archive_tree_act
 #: model:ir.ui.menu,name:account_sepa_direct_debit.account_sepa_direct_debit_sdd_payment_files_menu
 msgid "SDD Payment Files"
-msgstr "'SDD' maksefail"
+msgstr "\"SDD\" maksefail"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_company_sdd_creditor_identifier
 msgid "SDD creditor identifier"
-msgstr "'SDD' kreeditori tunnus"
+msgstr "\"SDD\" kreeditori tunnus"
 
 #. module: account_sepa_direct_debit
 #: model:account.payment.method,name:account_sepa_direct_debit.payment_method_sdd
@@ -843,17 +843,17 @@ msgstr "SEPA XML faili nimi"
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_partner_sdd_mandate_ids
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_users_sdd_mandate_ids
 msgid "Sdd Mandate"
-msgstr "'Sdd' mandaat"
+msgstr "\"Sdd\" mandaat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_invoice_sdd_paying_mandate_id
 msgid "Sdd Paying Mandate"
-msgstr "'Sdd' maksmise mandaat"
+msgstr "\"Sdd\" maksmise mandaat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_generate_xml_wizard_payments_to_send_ids
 msgid "Set of payments to (try to) put into a SDD XML file."
-msgstr "Maksete komplekt, mis tuleks (proovida) panna 'SDD' XML faili."
+msgstr "Maksete komplekt, mis tuleks (proovida) panna \"SDD\" XML faili."
 
 #. module: account_sepa_direct_debit
 #: model:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -876,8 +876,8 @@ msgid ""
 "Technical field used to inform the end user there is a SDD mandate that "
 "could be used to register that payment"
 msgstr ""
-"Lõppkasutaja teavitamiseks kasutatav 'SDD' mandaat, mida saab kasutada makse"
-" registreerimiseks."
+"Lõppkasutaja teavitamiseks kasutatav \"SDD\" mandaat, mida saab kasutada "
+"makse registreerimiseks."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:139
@@ -960,10 +960,10 @@ msgid ""
 "- 'closed' designates a mandate that has been marked as not to use anymore without invalidating the previous transactions done with it.- 'revoked' means the mandate has been signaled as fraudulent by the customer. It cannot be used anymore, and should not ever have been. You will probably need to refund the related invoices, if any.\n"
 msgstr ""
 "Selle mandaadi staatus on sees.\n"
-"- 'mustand' tähendab, et mandaat on vaja kinnitada enne kasutamist.\n"
-"- 'aktiivne' tähendab, et seda mandaati saab kasutada arvete maksmiseks.\n"
-"- 'suletud' tähendab, et klient on mandaadist loobunud.\n"
-"- 'kehtetuks tunnistatud' puhul ontegemist pettusega ning seda ei saa enam kasutada. Tõenäoliselt tuleks tagastada raha seotud arvete eest, kui neid on.\n"
+"- \"mustand\" tähendab, et mandaat on vaja kinnitada enne kasutamist.\n"
+"- \"aktiivne\" tähendab, et seda mandaati saab kasutada arvete maksmiseks.\n"
+"- \"suletud\" tähendab, et klient on mandaadist loobunud.\n"
+"- \"kehtetuks tunnistatud\" puhul ontegemist pettusega ning seda ei saa enam kasutada. Tõenäoliselt tuleks tagastada raha seotud arvete eest, kui neid on.\n"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_name
@@ -1007,8 +1007,8 @@ msgid ""
 "payment if this option is set.\n"
 msgstr ""
 "Tõene ainul siis kui mandaati saab kasutada ainult ühe tehingu puhul. See "
-"muutub automaatselt 'aktiivne' staatusest 'suletud' staatuseks peale selle "
-"kasutamist.\n"
+"muutub automaatselt \"aktiivne\" staatusest \"suletud\" staatuseks peale "
+"selle kasutamist.\n"
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:111
@@ -1059,7 +1059,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_xml_archive_tree_act
 msgid "You haven't generated any SDD XML payment collection file yet."
-msgstr "Te ei ole veel loonud 'SDD' XML maksete kogumise faili."
+msgstr "Te ei ole veel loonud \"SDD\" XML maksete kogumise faili."
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:80

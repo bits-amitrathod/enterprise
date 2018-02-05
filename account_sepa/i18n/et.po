@@ -3,7 +3,7 @@
 # * account_sepa
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Egon Raamat <egon@avalah.ee>, 2017
 # Rivo Zängov <eraser@eraser.ee>, 2017
 # Arma Gedonsky <armagedonsky@hot.ee>, 2017
@@ -50,7 +50,7 @@ msgid ""
 "Click on the file to save it somewhere on your computer. Then upload that "
 "file on your bank's homebanking website to order the credit transfer."
 msgstr ""
-"Vajutage failil selle salvestamiseks arvutisse. Seejärel laadige fail oma "
+"Vajutage faili arvutisse salvestamiseks sellel. Seejärel laadige fail oma "
 "panga koduleheküljele pangaülekannete saamiseks."
 
 #. module: account_sepa
@@ -201,8 +201,8 @@ msgid ""
 "Payments to export as SEPA Credit Transfer must have 'SEPA Credit Transfer' "
 "selected as payment method and be posted"
 msgstr ""
-"Maksete eksportimiseks SEPA maksena peab olema valitud makseviisina 'SEPA "
-"makse' ja see olema ka postitatud"
+"Maksete eksportimiseks SEPA maksena peab olema valitud makseviisina \"SEPA "
+"makse\" ja see olema ka postitatud"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
@@ -240,7 +240,7 @@ msgstr "Saatmist ootavad SEPA pangaülekanded"
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_pain_version
 msgid "SEPA Pain Version"
-msgstr "SEPA 'Pain'-koodi versioon"
+msgstr "SEPA \"Pain\"-koodi versioon"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
@@ -284,7 +284,7 @@ msgid ""
 "The account %s, linked to partner '%s', is not of type IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
-"Konto %s, seotud partneriga '%s', ei ole IBAN-i tüüpi.\n"
+"Konto %s, seotud partneriga \"%s\", ei ole IBAN-i tüüpi.\n"
 "SEPA funktsioonide kasutamiseks on vaja kehtivat IBAN-i kontot."
 
 #. module: account_sepa
@@ -294,7 +294,7 @@ msgid ""
 "The account %s, of journal '%s', is not of type IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
-"Konto %s, andmikus '%s', ei ole IBAN-i tüüpi.\n"
+"Konto %s, andmikus \"%s\", ei ole IBAN-i tüüpi.\n"
 "SEPA funktsioonide kasutamiseks on vaja kehtivat IBAN-i kontot."
 
 #. module: account_sepa
@@ -304,7 +304,7 @@ msgid ""
 "The account '%s' (journal %s) requires a Bank Identification Code (BIC) to "
 "pay via SEPA. Please configure it first."
 msgstr ""
-"Konto '%s' (andmik %s) nõuab panga identifitseerimise koodi (BIC) SEPA "
+"Konto \"%s\" (andmik %s) nõuab panga identifitseerimise koodi (BIC) SEPA "
 "makseks. Palun esmalt seadista see."
 
 #. module: account_sepa
@@ -312,7 +312,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The amount of the payment '%s' is too high. The maximum permitted is %s."
-msgstr "Makse summa '%s' on liiga kõrge. Maksimaalne lubatud summa on %s."
+msgstr "Makse summa \"%s\" on liiga kõrge. Maksimaalne lubatud summa on %s."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:123
@@ -350,7 +350,7 @@ msgid ""
 "The journal '%s' requires a proper IBAN account to pay via SEPA. Please "
 "configure it first."
 msgstr ""
-"Andmik '%s' nõuab korrektset IBAN kontot SEPAga maksmiseks. Palun esmalt "
+"Andmik \"%s\" nõuab korrektset IBAN kontot SEPAga maksmiseks. Palun esmalt "
 "seadista see."
 
 #. module: account_sepa
@@ -360,8 +360,8 @@ msgid ""
 "The partner account '%s' requires a Bank Identification Code (BIC) to pay "
 "via SEPA. Please configure it first."
 msgstr ""
-"Partneri konto '%s' nõuab SEPA makseks panga identifitseerimise koodi (BIC)."
-" Palun esmalt seadista see."
+"Partneri konto \"%s\" nõuab SEPA makseks panga identifitseerimise koodi "
+"(BIC). Palun esmalt seadista see."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:17
@@ -391,7 +391,7 @@ msgstr "Tehing %s toimub mõnes teises valuutas kui EUR"
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:337
 #, python-format
 msgid "There is no Bank Identifier Code recorded for bank account '%s'"
-msgstr "Pangakontol '%s' ei ole salvestatud panga identifitseerimise koodi"
+msgstr "Pangakontol \"%s\" ei ole salvestatud panga identifitseerimise koodi"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:180
@@ -400,14 +400,14 @@ msgid ""
 "There is no Bank Identifier Code recorded for bank account '%s' of journal "
 "'%s'"
 msgstr ""
-"Pangakontol '%s' ei ole salvestatud panga identifitseerimise koodi andmikus "
-"'%s'"
+"Pangakontol \"%s\" ei ole salvestatud panga identifitseerimise koodi "
+"andmikus \"%s\""
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:78
 #, python-format
 msgid "There is no bank account selected for payment '%s'"
-msgstr "Makse '%s' jaoks ei ole valitud pangakontot"
+msgstr "Makse \"%s\" jaoks ei ole valitud pangakontot"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:178

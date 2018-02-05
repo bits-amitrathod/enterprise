@@ -48,7 +48,7 @@ relational_fields.FieldMany2One.include({
                         self._invokeMobileDialog(response.data.term);
                     }
                     if (response.data.action === 'select') {
-                        self._setValue(response.data.value.id);
+                        self._setValue({id: response.data.value.id});
                     }
                     if (response.data.action === 'action') {
                         self._callback_actions[response.data.value.action_id]();
