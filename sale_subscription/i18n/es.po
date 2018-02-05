@@ -5,11 +5,11 @@
 # Translators:
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
 # Ivan Nieto <ivan.n.s@tuta.io>, 2017
 # Alejandro Die Sanchis <marketing@domatix.com>, 2017
-# Antonio Trueba <atgayol@gmail.com>, 2017
+# Antonio Trueba, 2017
 # Gelo Joga Landoo <gj@landoo.es>, 2017
 # Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2017
 # RGB Consulting <odoo@rgbconsulting.com>, 2017
@@ -17,7 +17,7 @@
 # José Vicente <txusev@gmail.com>, 2017
 # Jose Manuel <admin@jaboweb.com>, 2017
 # Angel Moya - Domatix <angel.moya@domatix.com>, 2017
-# Gustavo Valverde <g.valverde02@gmail.com>, 2017
+# Gustavo Valverde, 2017
 # Ana Juaristi <ajuaristio@gmail.com>, 2017
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
 # Luis M. Triana <luis.triana@jarsa.com.mx>, 2017
@@ -32,10 +32,10 @@
 # Christopher Ormaza <chris.ormaza@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-01-30 08:43+0000\n"
+"PO-Revision-Date: 2018-01-30 08:43+0000\n"
 "Last-Translator: Christopher Ormaza <chris.ormaza@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
@@ -204,6 +204,71 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
+#: model:mail.template,body_html:sale_subscription.email_payment_close
+msgid ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Hello ${object.partner_id.name},</p>\n"
+"                <p>\n"
+"                % if ctx.get('payment_token') and ctx.get('total_amount'):\n"
+"                  Our final attempt to process a payment for your subscription using your payment method\n"
+"                  ${ctx['payment_token']}\n"
+"                  for ${ctx['total_amount']} ${ctx.get('currency')} failed.\n"
+"                  % if ctx.get('error'):\n"
+"                    Your bank or credit institution gave the following details about the issue: <pre>${ctx['error']}</pre>.\n"
+"                  %endif\n"
+"                % else:\n"
+"                  Our final attempt to process a payment for your subscription failed because we have no payment method recorded for you.\n"
+"                % endif \n"
+"                </p>\n"
+"\n"
+"                <p>\n"
+"                  As your payment should have been made <strong>15 days ago</strong>, your subscription has been terminated.\n"
+"                </p>\n"
+"\n"
+"                <br/>\n"
+"                <p>Should you wish to resolve this issue, do not hesitate to contact us.</p>\n"
+"                <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Sent by\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
+msgstr ""
+
+#. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_reminder
 msgid ""
 "\n"
@@ -269,129 +334,6 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
-
-#. module: sale_subscription
-#: model:mail.template,body_html:sale_subscription.email_payment_close
-msgid ""
-"\n"
-"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"        <tbody><tr>\n"
-"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
-"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
-"            </td>\n"
-"        </tr></tbody>\n"
-"    </table>\n"
-"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"        <tbody><tr>\n"
-"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
-"                <div>\n"
-"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
-"                </div>\n"
-"            </td>\n"
-"        </tr></tbody>\n"
-"    </table>\n"
-"</div>\n"
-"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"        <tbody><tr>\n"
-"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"                <p>Hello ${object.partner_id.name},</p>\n"
-"                <p>\n"
-"                % if ctx.get('payment_token) and ctx.get('total_amount'):\n"
-"                  Our final attempt to process a payment for your subscription using your payment method\n"
-"                  ${ctx['payment_token']}\n"
-"                  for ${ctx['total_amount']} ${ctx.get('currency')} failed.\n"
-"                  % if ctx.get('error'):\n"
-"                    Your bank or credit institution gave the following details about the issue: <pre>${ctx['error']}</pre>.\n"
-"                  %endif\n"
-"                % else:\n"
-"                  Our final attempt to process a payment for your subscription failed because we have no payment method recorded for you.\n"
-"                % endif \n"
-"                </p>\n"
-"\n"
-"                <p>\n"
-"                  As your payment should have been made <strong>15 days ago</strong>, your subscription has been terminated.\n"
-"                </p>\n"
-"\n"
-"                <br/>\n"
-"                <p>Should you wish to resolve this issue, do not hesitate to contact us.</p>\n"
-"                <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
-"            </td>\n"
-"        </tr><tr>\n"
-"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"                % if user.signature\n"
-"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
-"                </p>\n"
-"                % endif\n"
-"                <p style=\"font-size: 11px;\"><strong>Sent by\n"
-"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
-"                    <strong>${user.company_id.name}</strong>\n"
-"                </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
-"                </strong></p>\n"
-"            </td>\n"
-"        </tr></tbody>\n"
-"    </table>\n"
-"</div>"
-msgstr ""
-"\n"
-"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"        <tbody><tr>\n"
-"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
-"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
-"            </td>\n"
-"        </tr></tbody>\n"
-"    </table>\n"
-"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"        <tbody><tr>\n"
-"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
-"                <div>\n"
-"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
-"                </div>\n"
-"            </td>\n"
-"        </tr></tbody>\n"
-"    </table>\n"
-"</div>\n"
-"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
-"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
-"        <tbody><tr>\n"
-"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"                Hola ${object.partner_id.name},                <p>\n"
-"                % if ctx.get('payment_token) and ctx.get('total_amount'):\n"
-"                 Nuestro último intento para procesar el pago de su suscripción usando el método de pago \n"
-"                  ${ctx['payment_token']}\n"
-"                  for ${ctx['total_amount']} ${ctx.get('currency')} que nos indicó no se ha realizado con éxito.\n"
-"                  % if ctx.get('error'):\n"
-"                    Su entidad bancaria nos ha enviado el siguiente detalle sobre este error: <pre>${ctx['error']}</pre>.\n"
-"                  %endif\n"
-"                % else:\n"
-"                  Nuestro último intento para procesar el pago de su suscripción no se ha realizado con éxito ya que usted no tiene registrado ningún método de pago.\n"
-"                % endif \n"
-"                </p>\n"
-"\n"
-"                <p>\n"
-"                  Como el pago debería de haberse realizado<strong>hace 15 días</strong>, lamentamos comunicarle que su suscripción ha sido anulada.\n"
-"                </p>\n"
-"\n"
-"                <br/>\n"
-"                <p>Si desea resolver este problema, no dude en ponerse en contacto con nosotros.</p>\n"
-"                <p>Gracias por depositar su confianza en nosotros ${object.company_id.name or 'us'}!</p>\n"
-"            </td>\n"
-"        </tr><tr>\n"
-"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
-"                % if user.signature\n"
-"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
-"                </p>\n"
-"                % endif\n"
-"                <p style=\"font-size: 11px;\"><strong>Enviado por<a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
-"                    <strong>${user.company_id.name}</strong>\n"
-"                </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
-"                </strong></p>\n"
-"            </td>\n"
-"        </tr></tbody>\n"
-"    </table>\n"
-"</div>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -726,11 +668,6 @@ msgid "Configuration"
 msgstr "Configuración"
 
 #. module: sale_subscription
-#: model:ir.actions.act_window,name:sale_subscription.sale_subscription_config_settings_action
-msgid "Configure Subscriptions"
-msgstr ""
-
-#. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:18
 #, python-format
@@ -1037,12 +974,17 @@ msgid "History"
 msgstr "Historial"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_11674
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_4
+msgid "I don't use it"
+msgstr ""
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_6476
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id_11706
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id_6508
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_id
 msgid "ID"
@@ -1380,6 +1322,11 @@ msgid "Order Number"
 msgstr "Número de pedido"
 
 #. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_5
+msgid "Other"
+msgstr "Otro"
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Partner"
 msgstr "Empresa"
@@ -1640,13 +1587,6 @@ msgid "Save this template and the modifications you've made to it."
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_industry_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_industry_id
-#: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
-msgid "Sector of Activity"
-msgstr ""
-
-#. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
 msgid "See Subscriptions"
 msgstr "Ver suscripciones"
@@ -1666,6 +1606,7 @@ msgid "Sequence"
 msgstr "Secuencia"
 
 #. module: sale_subscription
+#: model:ir.actions.act_window,name:sale_subscription.sale_subscription_config_settings_action
 #: model:ir.ui.menu,name:sale_subscription.sale_subscription_config_settings_menu
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1751,7 +1692,6 @@ msgstr ""
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_count
-#: model:ir.model.fields,field_description:sale_subscription.field_project_project_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_subscription_count
 msgid "Subscription Count"
@@ -1811,9 +1751,24 @@ msgid "Subscription Templates"
 msgstr "Plantillas de la suscripción"
 
 #. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_2
+msgid "Subscription does not meet my requirements"
+msgstr ""
+
+#. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_1
+msgid "Subscription is too expensive"
+msgstr ""
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.product_template_search_view_inherit_sale_subscription
 msgid "Subscription products"
 msgstr "Productos de la suscripción"
+
+#. module: sale_subscription
+#: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
+msgid "Subscription reached its end date"
+msgstr ""
 
 #. module: sale_subscription
 #: model:mail.message.subtype,description:sale_subscription.subtype_state_change
@@ -1825,7 +1780,6 @@ msgstr "El estado de la suscripción ha cambiado"
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_filtered
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_res_partner
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_ids
-#: model:ir.model.fields,field_description:sale_subscription.field_project_project_subscription_ids
 #: model:ir.model.fields,field_description:sale_subscription.field_res_partner_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_res_users_subscription_count
 #: model:ir.module.category,name:sale_subscription.module_category_subscription_management
@@ -1836,6 +1790,7 @@ msgstr "El estado de la suscripción ha cambiado"
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_home_menu_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_home_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
+#: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.res_partner_view_inherit_sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban

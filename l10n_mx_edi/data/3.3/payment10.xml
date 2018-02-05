@@ -69,7 +69,7 @@
                         <t t-foreach="record.invoice_ids" t-as="invoice">
                             <t t-set="amount" t-value="[p for p in invoice._get_payments_vals() if p.get('account_payment_id', False) == record.id]"/>
                             <t t-set="amount" t-value="amount[0].get('amount', 0.0) if amount else 0.0"/>
-                            <t t-set="inv_rate" t-value="('%0.*f' % (decimal_precision, invoice.currency_id.with_context(date=invoice.date_invoice).compute(1, record.currency_id))) if record.currency_id != invoice.currency_id else False"/>
+                            <t t-set="inv_rate" t-value="('%.6f' % (invoice.currency_id.with_context(date=invoice.date_invoice).compute(1, record.currency_id))) if record.currency_id != invoice.currency_id else False"/>
                             <t t-set="inv_rate" t-value="1 if inv_rate and invoice.currency_id.name == 'MXN' else inv_rate"/>
                             <Pago10:DoctoRelacionado
                                 t-att-IdDocumento="invoice.l10n_mx_edi_cfdi_uuid"

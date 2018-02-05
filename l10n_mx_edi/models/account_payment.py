@@ -385,12 +385,10 @@ class AccountPayment(models.Model):
         self.ensure_one()
         # Based on "En caso de no contar con la hora se debe registrar 12:00:00"
         mxn = self.env.ref('base.MXN')
-        precision_digits = self.env['decimal.precision'].precision_get('Account')
         date = datetime.combine(
             fields.Datetime.from_string(self.payment_date),
             datetime.strptime('12:00:00', '%H:%M:%S').time()).strftime('%Y-%m-%dT%H:%M:%S')
-        rate = ('%0.*f' % (
-            precision_digits,
+        rate = ('%.6f' % (
             self.currency_id.with_context(date=self.payment_date).compute(
                 1, mxn))) if self.currency_id.name != 'MXN' else False
         return {

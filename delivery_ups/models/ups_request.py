@@ -176,7 +176,7 @@ class UPSRequest():
         return re.sub('[^0-9]','', phone)
 
     def check_required_value(self, shipper, ship_from, ship_to, order=False, picking=False):
-        required_field = {'city': 'City', 'zip': 'ZIP code', 'country_id': 'Country'}
+        required_field = {'city': 'City', 'zip': 'ZIP code', 'country_id': 'Country', 'phone': 'Phone'}
         # Check required field for shipper
         res = [required_field[field] for field in required_field if not shipper[field]]
         if shipper.country_id.code in ('US', 'CA', 'IE') and not shipper.state_id.code:
@@ -198,7 +198,7 @@ class UPSRequest():
         if len(self._clean_phone_number(ship_from.phone)) < 10:
             return _(UPS_ERROR_MAP.get('120313'))
         # Check required field for recipient address
-        res = [required_field[field] for field in required_field if not ship_to[field]]
+        res = [required_field[field] for field in required_field if field != 'phone' and not ship_to[field]]
         if ship_to.country_id.code in ('US', 'CA', 'IE') and not ship_to.state_id.code:
             res.append('State')
         if not ship_to.street and not ship_to.street2:
