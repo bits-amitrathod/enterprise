@@ -100,9 +100,14 @@ class AccountBankStatementImport(models.TransientModel):
                                       """, namespaces=ns)
                 entry_vals['ref'] = ref and ref[0] or False
                 unique_import_ref = entry.xpath('ns:AcctSvcrRef/text()', namespaces=ns)
-                entry_vals['unique_import_id'] = (unique_import_ref and
-                                                  (unique_import_ref[0] if not is_full_of_zeros(unique_import_ref[0]) else False) or
-                                                  statement_vals['name'] + '-' + str(sequence))
+                if unique_import_ref and not is_full_of_zeros(unique_import_ref[0]):
+                    entry_ref = entry.xpath('ns:NtryRef/text()', namespaces=ns)
+                    if entry_ref:
+                        entry_vals['unique_import_id'] = '{}-{}'.format(unique_import_ref[0], entry_ref[0])
+                    else:
+                        entry_vals['unique_import_id'] = unique_import_ref[0]
+                else:
+                    entry_vals['unique_import_id'] = '{}-{}'.format(statement_vals['name'], sequence)
 
                 transactions.append(entry_vals)
             statement_vals['transactions'] = transactions
