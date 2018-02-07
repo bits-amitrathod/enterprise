@@ -3,7 +3,7 @@
     <record id="mrp_workorder_view_form_inherit_workorder" model="ir.ui.view">
         <field name="name">mrp.workorder.view.form.inherit.workorder</field>
         <field name="model">mrp.workorder</field>
-        <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
         <field name="arch" type="xml">
             <button name="record_production" position="replace">
                 <button name="record_production" type="object" string="Done" class="btn-success" attrs="{'invisible': ['|', '|', ('state', '!=', 'progress'), ('is_user_working', '=', False), ('quality_check_todo','=', True)]}"/>
@@ -191,7 +191,7 @@
         <field name="view_mode">kanban,tree,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'kanban', 'view_id': ref('mrp.workcenter_line_kanban')}),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('mrp.mrp_production_workcenter_tree_view_inherit')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('mrp.mrp_production_workorder_tree_view_inherit')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('mrp_workorder_view_form_tablet')})]"/>
         <field name="target">fullscreen</field>
         <field name="domain">[('state', 'not in', ['done', 'cancel', 'pending']), ('workcenter_id','=',active_id)]</field>
