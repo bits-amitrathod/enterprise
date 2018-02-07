@@ -8,7 +8,7 @@ import base64
 from lxml import etree
 
 from openerp import models, fields, api, _
-from openerp.tools import float_round, DEFAULT_SERVER_DATE_FORMAT
+from openerp.tools import float_round, float_repr, DEFAULT_SERVER_DATE_FORMAT
 from openerp.exceptions import UserError, ValidationError
 
 
@@ -192,7 +192,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
         return etree.tostring(Document, pretty_print=True, xml_declaration=True, encoding='utf-8')
 
     def _get_CtrlSum(self, payments):
-        return str(float_round(sum(payment.amount for payment in payments), 2))
+        return float_repr(float_round(sum(payment.amount for payment in payments), 2), 2)
 
     def _get_company_PartyIdentification32(self, org_id=True, postal_address=True):
         """ Returns a PartyIdentification32 element identifying the current journal's company
@@ -271,7 +271,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
         EndToEndId.text = (PmtInfId.text + str(payment.id))[-30:]
         Amt = etree.SubElement(CdtTrfTxInf, "Amt")
         val_Ccy = payment.currency_id and payment.currency_id.name or payment.journal_id.company_id.currency_id.name
-        val_InstdAmt = str(float_round(payment.amount, 2))
+        val_InstdAmt = float_repr(float_round(payment.amount, 2), 2)
         max_digits = val_Ccy == 'EUR' and 11 or 15
         if len(re.sub('\.', '', val_InstdAmt)) > max_digits:
             raise ValidationError(_("The amount of the payment '%s' is too high. The maximum permitted is %s.") % (payment.name, str(9)*(max_digits-3)+".99"))
