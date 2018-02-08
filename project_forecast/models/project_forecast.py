@@ -225,7 +225,8 @@ class ProjectForecast(models.Model):
                 eval_context.update({'active_id': self._context.get('active_id')})
             context = safe_eval(action['context'], eval_context)
         # add the default employee (for creation)
-        context['default_employee_id'] = self.env.user.employee_ids[0].id
+        if self.env.user.employee_ids:
+            context['default_employee_id'] = self.env.user.employee_ids[0].id
         # hide range button for grid view
         company = self.company_id or self.env.user.company_id
         if company.forecast_span == 'day':
