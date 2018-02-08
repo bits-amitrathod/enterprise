@@ -23,7 +23,7 @@ QUnit.module('ActionManager', {
     QUnit.module('Account Report Downloard actions');
 
     QUnit.test('can execute account report download actions', function (assert) {
-        assert.expect(4);
+        assert.expect(5);
 
         var actionManager = createActionManager({
             actions: this.actions,
@@ -49,6 +49,7 @@ QUnit.module('ActionManager', {
 
         assert.verifySteps([
             '/web/action/load',
+            '/web/static/src/img/spin.png', // block UI image
             '/account_reports',
         ]);
 

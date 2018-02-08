@@ -14,9 +14,6 @@ QUnit.module('Studio', {}, function () {
 
         var $target = $('#qunit-fixture');
         var app_creator = new AppCreator(null);
-        $target.on('DOMNodeInserted.removeSRC', function () {
-            testUtils.removeSrcAttribute($target);
-        });
         app_creator.debug = false;
         app_creator.appendTo($target);
 
@@ -102,7 +99,6 @@ QUnit.module('Studio', {}, function () {
             true,
             "next button should be ready at step 3");
 
-        $target.off('DOMNodeInserted.removeSRC');
         app_creator.destroy();
     });
 });
