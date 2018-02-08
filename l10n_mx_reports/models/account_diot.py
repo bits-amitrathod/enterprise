@@ -88,7 +88,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             ('company_id', 'in', context['company_ids']),
             ('journal_id', 'in', journal_ids),
             ('account_id', 'not in', account_tax_ids.ids),
-            ('tax_ids', '!=', False),
+            ('tax_ids', 'in', tax_ids.ids),
         ]
         if context['date_from_aml']:
             base_domain.append(('date', '>=', context['date_from_aml']))
