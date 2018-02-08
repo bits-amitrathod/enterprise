@@ -114,7 +114,7 @@ QUnit.module('web_clearbit', {
             "name value should have been updated to \"Odoo\"");
         assert.strictEqual(form.$("input.o_field_widget").val(), "odoo.com",
             "website value should have been updated to \"odoo.com\"");
-        assert.strictEqual(form.$(".o_field_image img").attr("src"), "#test:data:image/png;base64,odoobase64",
+        assert.strictEqual(form.$(".o_field_image img").attr("data-src"), "data:image/png;base64,odoobase64",
             "image value should have been updated to \"odoobase64\"");
 
         $input.val("test").trigger("input");
