@@ -19,23 +19,24 @@ return {
      */
     setSelectable: function ($el) {
         var self = this;
-        $el.click(function() {
+        $el.click(function () {
             self.unselectedElements();
-            $(this).addClass('o_clicked');
+            $(this).addClass('o_web_studio_clicked');
         })
-        .mouseover(function(event) {
+        .mouseover(function () {
+            if (self.$('.ui-draggable-dragging').length) {
+                return;
+            }
             $(this).addClass('o_web_studio_hovered');
-            event.stopPropagation();
         })
-        .mouseout(function(event) {
+        .mouseout(function () {
             $(this).removeClass('o_web_studio_hovered');
-            event.stopPropagation();
         });
     },
     unselectedElements: function () {
         this.selected_node_id = false;
-        var $el = this.$('.o_clicked');
-        $el.removeClass('o_clicked');
+        var $el = this.$('.o_web_studio_clicked');
+        $el.removeClass('o_web_studio_clicked');
         if ($el.find('.blockUI')) {
             $el.find('.blockUI').parent().unblock();
         }

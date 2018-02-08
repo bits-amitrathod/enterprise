@@ -243,7 +243,7 @@ QUnit.module('ViewEditorManager', {
         // click on the field
         vem.$('.o_web_studio_list_view_editor [data-node-id]').click();
 
-        assert.ok(vem.$('.o_web_studio_list_view_editor [data-node-id]').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_list_view_editor [data-node-id]').hasClass('o_web_studio_clicked'),
             "the column should have the clicked style");
 
         assert.ok(vem.$('.o_web_studio_sidebar').find('.o_web_studio_properties').hasClass('active'),
@@ -305,7 +305,7 @@ QUnit.module('ViewEditorManager', {
             "the Properties tab should now be active");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
             "the sidebar should now display the field properties");
-        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_web_studio_clicked'),
             "the column should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('select[name="widget"]').val(), "",
             "the widget in sidebar should be empty");
@@ -354,7 +354,7 @@ QUnit.module('ViewEditorManager', {
 
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
             "the sidebar should now display the field properties");
-        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_web_studio_clicked'),
             "the column should have the clicked style");
         vem.destroy();
     });
@@ -421,7 +421,7 @@ QUnit.module('ViewEditorManager', {
             "the sidebar should display dropdown to change image size");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select#img_size option:selected').val(), "90",
             "the image size should be correctly selected");
-        assert.ok(vem.$('.o_web_studio_form_view_editor .o_field_image').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_field_image').hasClass('o_web_studio_clicked'),
             "image should have the clicked style");
 
         // change image size to large
@@ -480,7 +480,7 @@ QUnit.module('ViewEditorManager', {
         // Change widget from binary to image
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field select#widget').length, 1,
             "the sidebar should display dropdown to change widget");
-        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_form_view_editor [data-node-id]').hasClass('o_web_studio_clicked'),
             "binary field should have the clicked style");
 
         // change widget to image
@@ -556,7 +556,7 @@ QUnit.module('ViewEditorManager', {
             "the Properties tab should now be active");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_chatter').length, 1,
             "the sidebar should now display the chatter properties");
-        assert.ok(vem.$('.o_web_studio_form_view_editor .oe_chatter[data-node-id]').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_form_view_editor .oe_chatter[data-node-id]').hasClass('o_web_studio_clicked'),
             "the chatter should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar input[name="email_alias"]').val(), "coucou",
             "the email alias in sidebar should be fetched");
@@ -656,7 +656,7 @@ QUnit.module('ViewEditorManager', {
         // click on existing tab
         var $page = vem.$('.o_notebook li:first');
         $page.click();
-        assert.ok($page.hasClass('o_clicked'), "the page should be clickable");
+        assert.ok($page.hasClass('o_web_studio_clicked'), "the page should be clickable");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_page').length, 1,
             "the sidebar should now display the page properties");
         var $pageInput = vem.$('.o_web_studio_sidebar_content.o_display_page input[name="string"]');
@@ -721,7 +721,7 @@ QUnit.module('ViewEditorManager', {
             "the label should be correctly set");
 
         $label.click();
-        assert.ok($label.hasClass('o_clicked'), "the label should be clickable");
+        assert.ok($label.hasClass('o_web_studio_clicked'), "the label should be clickable");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_label').length, 1,
             "the sidebar should now display the label properties");
         var $labelInput = vem.$('.o_web_studio_sidebar_content.o_display_label input[name="string"]');
@@ -731,7 +731,7 @@ QUnit.module('ViewEditorManager', {
         var $fieldLabel = vem.$('.o_web_studio_form_view_editor label:contains("A char")');
         assert.strictEqual($fieldLabel.length, 1, "there should be a label for the field");
         $fieldLabel.click();
-        assert.notOk($fieldLabel.hasClass('o_clicked'), "the field label should not be clickable");
+        assert.notOk($fieldLabel.hasClass('o_web_studio_clicked'), "the field label should not be clickable");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
             "the sidebar should now display the field properties");
 
@@ -858,7 +858,7 @@ QUnit.module('ViewEditorManager', {
             "the Properties tab should now be active");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
             "the sidebar should now display the field properties");
-        assert.ok(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_kanban_view_editor [data-node-id]').hasClass('o_web_studio_clicked'),
             "the field should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('select[name="widget"]').val(), "",
             "the widget in sidebar should be empty");
@@ -1154,7 +1154,7 @@ QUnit.module('ViewEditorManager', {
             "the Properties tab should now be active");
         assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_field').length, 1,
             "the sidebar should now display the field properties");
-        assert.ok(vem.$('.o_web_studio_search_view_editor .o_web_studio_search_autocompletion_container [data-node-id]').hasClass('o_clicked'),
+        assert.ok(vem.$('.o_web_studio_search_view_editor .o_web_studio_search_autocompletion_container [data-node-id]').hasClass('o_web_studio_clicked'),
             "the field should have the clicked style");
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
             "the field should have the label Display Name in the sidebar");

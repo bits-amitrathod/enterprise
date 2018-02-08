@@ -52,10 +52,8 @@ return ListRenderer.extend(EditorMixin, {
                 h: this.nearest_hook_tolerance*2})
             .nearest({x: position.pageX, y: position.pageY}).eq(0);
         if ($nearest_list_hook.length) {
-            $nearest_list_hook.closest('table')
-                .find('tr')
-                .children(':nth-child(' + ($nearest_list_hook.index() + 1) + ')')
-                .addClass('o_web_studio_nearest_hook');
+            var $elements = this._getColumnElements($nearest_list_hook);
+            $elements.addClass('o_web_studio_nearest_hook');
             return true;
         }
         return false;
@@ -71,11 +69,51 @@ return ListRenderer.extend(EditorMixin, {
             }
         }
     },
+    /**
+     * In the list editor, we want to select the whole column, not only a single
+     * cell.
+     *
+     * @override
+     */
+    setSelectable: function ($el) {
+        EditorMixin.setSelectable.apply(this, arguments);
+
+        var self = this;
+        $el.click(function (ev) {
+            var $target = $(ev.currentTarget);
+            self.$('.o_web_studio_clicked').removeClass('o_web_studio_clicked');
+            var $elements = self._getColumnElements($target);
+            $elements.addClass('o_web_studio_clicked');
+        })
+        .mouseover(function (ev) {
+            if (self.$('.ui-draggable-dragging').length) {
+                return;
+            }
+            var $target = $(ev.currentTarget);
+            var $elements = self._getColumnElements($target);
+            $elements.addClass('o_web_studio_hovered');
+        })
+        .mouseout(function () {
+            self.$('.o_web_studio_hovered').removeClass('o_web_studio_hovered');
+        });
+    },
 
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
 
+    /**
+     * Get all elements associated to a table column.
+     *
+     * @private
+     * @param {jQuery} $target
+     * @returns {jQuery}
+     */
+    _getColumnElements: function ($target) {
+        return $target.closest('table')
+            .find('tr')
+            .children(':nth-child(' + ($target.index() + 1) + ')');
+    },
     /**
      * @override
      * @private
@@ -119,31 +157,7 @@ return ListRenderer.extend(EditorMixin, {
             },
         });
 
-        // HOVER
-        this.$('th, td').not('.o_web_studio_hook').hover(function (ev) {
-            var $el = $(ev.currentTarget);
-            self.$('.o_hover').removeClass('o_hover');
-
-            // add style on hovered column
-            $el.closest('table')
-                .find('tr')
-                .children(':nth-child(' + ($el.index() + 1) + ')')
-                .addClass('o_hover');
-        });
-        this.$('table').mouseleave(function () {
-            self.$('.o_hover').removeClass('o_hover');
-        });
-
-        // CLICK
-        this.$('th, td').click(function (ev) {
-            var $el = $(ev.currentTarget);
-            self.$('.o_clicked').removeClass('o_clicked');
-
-            $el.closest('table')
-                .find('tr')
-                .children(':nth-child(' + ($el.index() + 1) + ')')
-                .addClass('o_clicked');
-        });
+        this.setSelectable(this.$('th, td').not('.o_web_studio_hook'));
 
         return def;
     },
