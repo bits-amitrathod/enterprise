@@ -198,6 +198,16 @@ tour.register('web_studio_tests_tour', {
     // verify that the field name has changed (post-fixed by _1)
     trigger: 'input[data-type="field_name"][value="coucou_1"]',
     run: 'text coucou_2',
+}, {
+    trigger: '.o_web_studio_menu .o_web_studio_views_icons a[data-name="list"]',
+}, {
+    // add an existing field (display_name)
+    trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
+    run: 'drag_and_drop .o_web_studio_list_view_editor th.o_web_studio_hook:first',
+}, {
+    trigger: '.o_web_studio_list_view_editor th:contains("COUCOU")',
+}, {
+    trigger: '.o_web_studio_leave',
 }]);
 
 });

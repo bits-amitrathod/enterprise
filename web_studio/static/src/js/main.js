@@ -187,14 +187,13 @@ var Main = Widget.extend({
         var view_id = view[0];
         self.viewType = view[1];
 
-        // add studio in loadViews context to retrieve groups server-side
-        var context = _.extend({}, this.action.context, {studio: true});
-        var loadViewDef = this.loadViews(this.action.res_model, context, views, options);
-
-        var arch_def = self._getStudioViewArch(self.action.res_model, self.viewType, view_id);
         // the default view needs to be created before `loadViews` or the
         // renderer will not be aware that a new view exists
-        return arch_def.then(function (studio_view) {
+        var archDef = self._getStudioViewArch(self.action.res_model, self.viewType, view_id);
+        return archDef.then(function (studio_view) {
+            // add studio in loadViews context to retrieve groups server-side
+            var context = _.extend({}, self.action.context, {studio: true});
+            var loadViewDef = self.loadViews(self.action.res_model, context, views, options);
             return loadViewDef.then(function (fields_views) {
                 var viewEnv = _.defaults({}, self.action.env, {
                     currentId: self.action.env.ids && self.action.env.ids[0],
