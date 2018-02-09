@@ -65,7 +65,7 @@ class ReportAccountFinancialReport(models.Model):
         if self.show_journal_filter:
             self.filter_journals = True
         self.filter_all_entries = False
-        self.filter_analytic = self.analytic
+        self.filter_analytic = self.analytic or None
         if self.analytic:
             self.filter_analytic_accounts = [] if self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids else None
             self.filter_analytic_tags = [] if self.env.user.id in self.env.ref('analytic.group_analytic_tags').users.ids else None
