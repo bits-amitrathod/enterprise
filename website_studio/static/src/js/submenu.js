@@ -24,7 +24,7 @@ var WebsiteSubMenu = SubMenu.include({
         if ($menu.data('name') === 'website') {
             this._replaceAction('action_web_studio_form', title, {
                 action: this.action,
-                clear_breadcrumbs: true,
+                replace_last_action: true,
             });
         }
     },
