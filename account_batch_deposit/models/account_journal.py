@@ -31,7 +31,7 @@ class AccountJournal(models.Model):
             })
         return journal
 
-    @api.one
+    @api.multi
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         rec = super(AccountJournal, self).copy(default)

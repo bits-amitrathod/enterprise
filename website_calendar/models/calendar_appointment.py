@@ -58,6 +58,8 @@ class CalendarAppointmentType(models.Model):
         for appointment_type in self:
             appointment_type.website_url = '/website/calendar/%s/appointment' % (slug(appointment_type),)
 
+    @api.multi
+    @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         default = default or {}
         default['name'] = self.name + _(' (copy)')

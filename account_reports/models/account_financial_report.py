@@ -168,6 +168,7 @@ class ReportAccountFinancialReport(models.Model):
         return name
 
     @api.multi
+    @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         '''Copy the whole financial report hierarchy by duplicating each line recursively.
 
