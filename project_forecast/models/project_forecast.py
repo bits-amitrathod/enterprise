@@ -2,6 +2,7 @@
 
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta, MO, SU
+from lxml import etree
 
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import UserError, ValidationError
@@ -200,6 +201,22 @@ class ProjectForecast(models.Model):
     @api.onchange('start_date')
     def _onchange_start_date(self):
         self.end_date = self.with_context(default_start_date=self.start_date)._default_end_date()
+
+    # ----------------------------------------------------
+    # ORM overrides
+    # ----------------------------------------------------
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        """ Set the widget `float_time` on `resource_time` field on view, depending on company configuration (so it can not be a groups on inherited view) """
+        result = super(ProjectForecast, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+
+        if view_type in ['tree', 'form', 'grid'] and self.env.user.company_id.forecast_uom == 'hour':
+            doc = etree.XML(result['arch'])
+            for node in doc.xpath("//field[@name='resource_time']"):
+                node.set('widget', 'float_time')
+            result['arch'] = etree.tostring(doc, encoding='unicode')
+        return result
 
     # ----------------------------------------------------
     # Actions
