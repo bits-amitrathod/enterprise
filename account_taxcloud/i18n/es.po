@@ -33,17 +33,17 @@ msgstr ""
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Create Account &amp; Get Credentials"
-msgstr "<i class=\"fa fa-fw fa-arrow-right\"/>"
+msgstr "<i class=\"fa fa-fw fa-arrow-right\"/>Crear cuenta y obtener credenciales"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "API ID"
-msgstr ""
+msgstr "ID de la API"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "API KEY"
-msgstr "Clave API"
+msgstr "Clave de la API"
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_res_company
@@ -204,6 +204,15 @@ msgid ""
 "automatically assigns products to this TIC as a default, so unless you've "
 "changed an item's TIC in the past, it should already be set to 00000."
 msgstr ""
+"TaxCloud utiliza los Códigos de Información Tributable (TIC) para asegurarse"
+" de que cada producto del catálogo está sujeto a impuestos con la tarifa "
+"correcta (o que no están sujetos en caso de que estén exentos), por lo que "
+"es importante asegurarse de que a cada producto se le asigna un TIC. Si no "
+"encuentra la categoría tributaria correcta de un producto de su catálogo, "
+"puede asignarlo al TIC de «Bienes y Servicios Generales», 00000. TaxCloud "
+"asigna automáticamente los productos a este TIC por defecto, de manera que, "
+"a no ser que haya cambiado el TIC de un producto en el pasado, ya debería "
+"estar establecido en 00000."
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position_tax
@@ -227,6 +236,8 @@ msgstr "Plantilla de posición fiscal"
 #, python-format
 msgid "The configuration of TaxCloud is in the Accounting app, Settings menu."
 msgstr ""
+"La configuración de TaxCloud se encuentra en la aplicación de contabilidad, "
+"menú Preferencias."
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:119
@@ -235,6 +246,8 @@ msgid ""
 "The source document on the refund is not valid and thus the refunded cart "
 "won't be logged on your taxcloud account"
 msgstr ""
+"El documento de origen para el reembolso no es válido y por tanto el carrito"
+" reembolsado no se registrará en su cuenta taxcloud"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:89
@@ -242,6 +255,8 @@ msgstr ""
 msgid ""
 "The tax rates have been updated, you may want to check it before validation"
 msgstr ""
+"Las tasas tributarias se han actualizado, por si quiere comprobarlas antes "
+"de la validación"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_fiscal_position.py:99
@@ -249,7 +264,7 @@ msgstr ""
 #: code:addons/account_taxcloud/models/res_config_settings.py:40
 #, python-format
 msgid "Unable to retrieve taxes from TaxCloud: "
-msgstr ""
+msgstr "No se han podido recuperar los impuestos de TaxCloud:"
 
 #. module: account_taxcloud
 #: model:ir.actions.server,name:account_taxcloud.action_account_invoice_update_taxes

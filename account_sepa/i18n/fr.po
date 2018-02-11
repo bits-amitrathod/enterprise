@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Clo <clo@odoo.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Leo Schmitt <inactive+lschmitt@transifex.com>, 2017
 # Xavier Belmere <Info@cartmeleon.com>, 2017
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2017
@@ -14,14 +14,16 @@
 # Eloïse Stilmant <est@odoo.com>, 2017
 # Fabien Pinckaers <fp@openerp.com>, 2017
 # Quentin THEURET <odoo@kerpeo.com>, 2017
-# Florian Hatat <mininet@wanadoo.fr>, 2017
+# Florian Hatat, 2017
+# e2f <projects@e2f.com>, 2018
+# fr rev <e2ffr02@hotmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-24 09:23+0000\n"
 "PO-Revision-Date: 2017-10-24 09:23+0000\n"
-"Last-Translator: Florian Hatat <mininet@wanadoo.fr>, 2017\n"
+"Last-Translator: fr rev <e2ffr02@hotmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,7 +107,7 @@ msgstr "Nom du fichier"
 #. module: account_sepa
 #: model:ir.actions.server,name:account_sepa.action_account_download_sepa_sct_file
 msgid "Generate SEPA Credit Transfer XML"
-msgstr ""
+msgstr "Générer un fichier XML de virement SEPA"
 
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
@@ -147,7 +149,7 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
 msgid "Is Generic"
-msgstr ""
+msgstr "Est générique"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
@@ -182,6 +184,7 @@ msgid ""
 "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
 "in length."
 msgstr ""
+"Nom du créancier. Règle d'utilisation : longueur limitée à 70 caractères."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -232,7 +235,7 @@ msgstr "Transfert de crédit SEPA"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_search
 msgid "SEPA Credit Transfer Payments To Send"
-msgstr ""
+msgstr "Virements SEPA à envoyer"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_journal_dashboard.py:23
@@ -259,6 +262,10 @@ msgid ""
 "recommandations made by the EPC (European Payment Councile) and thus the XML"
 " created need some tweakenings."
 msgstr ""
+"Le virement SEPA peut avoir un format générique. Certains pays s'éloignent "
+"des recommandations SEPA formulées par le CEP (Conseil européen des "
+"paiements), auquel cas le fichier XML créé peut nécessiter quelques "
+"ajustements."
 
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
@@ -343,6 +350,9 @@ msgid ""
 "In particular, the reason why this payment file is not generic is the following:\n"
 "   "
 msgstr ""
+"Le fichier de paiement généré n'est pas un virement SEPA générique. Veuillez noter que certaines banques peuvent refuser celui-ci, car elles n'appliquent pas cette méthode.\n"
+"\n"
+"En particulier, la raison pour laquelle ce fichier de paiement n'est pas générique est comme suit :\n"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_payment.py:50

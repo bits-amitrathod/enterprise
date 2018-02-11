@@ -72,27 +72,27 @@ msgstr "<i class=\"fa fa-check-circle\"/> Beantwortet"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-envelope-open-o\"/> Not opened within"
-msgstr "<i class=\"fa fa-envelope-open-o\"/>"
+msgstr "<i class=\"fa fa-envelope-open-o\"/>Nicht geöffnet innerhalb von"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-envelope-open-o\"/> Opened after"
-msgstr "<i class=\"fa fa-envelope-open-o\"/>"
+msgstr "<i class=\"fa fa-envelope-open-o\"/>Geöffnet nach"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-exclamation-circle\"/> Mail bounced after"
-msgstr "<i class=\"fa fa-exclamation-circle\"/>"
+msgstr "<i class=\"fa fa-exclamation-circle\"/>E-Mail nicht zustellbar nach"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Clicked after"
-msgstr "<i class=\"fa fa-hand-pointer-o\"/>"
+msgstr "<i class=\"fa fa-hand-pointer-o\"/>Angeklickt nach"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Not clicked within"
-msgstr "<i class=\"fa fa-hand-pointer-o\"/>"
+msgstr "<i class=\"fa fa-hand-pointer-o\"/>Nicht angeklickt innerhalb von"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -107,12 +107,12 @@ msgstr "<i class=\"fa fa-plus-circle\"/> Untergeordnete Aktivität hinzufügen"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-reply\"/> Not replied within"
-msgstr "<i class=\"fa fa-reply\"/>"
+msgstr "<i class=\"fa fa-reply\"/>Keine Antwort innerhalb von"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-reply\"/> Replied after"
-msgstr "<i class=\"fa fa-reply\"/>"
+msgstr "<i class=\"fa fa-reply\"/>Antwort nach"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -122,7 +122,8 @@ msgid ""
 "activities selectable)</small>"
 msgstr ""
 "<small attrs=\"{'invisible': [('trigger_type', '=', 'begin')]}\" "
-"class=\"oe_edit_only text-muted\"/>"
+"class=\"oe_edit_only text-muted\">(Kampagne speichern, damit deren "
+"Aktivitäten ausgewählt werden können</small>)"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -194,13 +195,13 @@ msgstr ""
 #: model:mail.mass_mailing,name:marketing_automation.mass_mailing_after_7_days
 #: model:utm.source,name:marketing_automation.mass_mailing_after_7_days_utm_source
 msgid "After 7 days"
-msgstr ""
+msgstr "Nach 7 Tagen"
 
 #. module: marketing_automation
 #: model:marketing.activity,name:marketing_automation.marketing_activity_2
 #: model:utm.source,name:marketing_automation.marketing_activity_2_utm_source
 msgid "After 7 days (if not partner yet)"
-msgstr ""
+msgstr "Nach 7 Tagen (falls noch kein Partner)"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_search
@@ -453,6 +454,8 @@ msgstr "Fehler! Sie können keine rekursive Aktivitätshierarchie erstellen."
 msgid ""
 "Error! You can't define a child activity with a trigger of type 'begin'."
 msgstr ""
+"Fehler! Sie können keine untergeordnete Aktivität mit einem Auslöser des "
+"Typs „Beginnen“ definieren."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_exception
@@ -603,7 +606,7 @@ msgstr "E-Mail-Versand"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Mails sent and not bounced"
-msgstr ""
+msgstr "E-Mails gesendet und zugestellt"
 
 #. module: marketing_automation
 #: code:addons/marketing_automation/models/marketing_participant.py:149
@@ -706,7 +709,7 @@ msgstr "Statistik Massenmailing"
 #: model:marketing.activity,name:marketing_automation.marketing_activity_3
 #: model:utm.source,name:marketing_automation.marketing_activity_3_utm_source
 msgid "Message for sales person"
-msgstr ""
+msgstr "Nachricht für Verkaufsberater"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_model_id
@@ -750,17 +753,17 @@ msgstr "Keine Aktivität hinzugefügt"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Not clicked yet"
-msgstr ""
+msgstr "Noch nicht angeklickt"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Not opened yet"
-msgstr ""
+msgstr "Noch nicht geöffnet"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Not replied yet"
-msgstr ""
+msgstr "Noch keine Antwort"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_participant_model_id
@@ -773,7 +776,7 @@ msgstr "Objekt"
 #: model:utm.source,name:marketing_automation.marketing_activity_1_utm_source
 #: model:utm.source,name:marketing_automation.mass_mailing_offer_free_trial_utm_source
 msgid "Offer free trial"
-msgstr ""
+msgstr "Kostenlose Testversion anbieten"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_opened
@@ -834,7 +837,7 @@ msgstr "Teilnehmer"
 #: model:marketing.campaign,name:marketing_automation.marketing_campaign_1
 #: model:utm.campaign,name:marketing_automation.marketing_campaign_1_utm_campaign
 msgid "Partnership Offer"
-msgstr ""
+msgstr "Partnerschaftsangebot"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -847,6 +850,8 @@ msgstr "Durchführen"
 #, python-format
 msgid "Please save the campaign to add a child activity"
 msgstr ""
+"Bitte speichern Sie die Kampagne, um eine untergeordnete Aktivität "
+"hinzuzufügen."
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -990,7 +995,7 @@ msgstr "Senden nach"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_interval_standardized
 msgid "Send after (in hours)"
-msgstr ""
+msgstr "Gesendet nach (in Stunden)"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_sent
@@ -1088,6 +1093,8 @@ msgid ""
 "This Activity has a dependant child activity. 'DELETE ALL' will delete all "
 "child activities."
 msgstr ""
+"Diese Aktivität hat eine abhängige untergeordnete Aktivität. „ALLE LÖSCHEN“ "
+"löscht alle untergeordneten Aktivitäten."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_total_bounce
@@ -1169,7 +1176,7 @@ msgstr "Gültig für"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration
 msgid "Validity Duration"
-msgstr ""
+msgstr "Gültigkeitsdauer"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_validity_duration_type
