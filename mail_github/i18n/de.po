@@ -28,27 +28,27 @@ msgstr ""
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "(with"
-msgstr ""
+msgstr "(mit"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid ") on repository"
-msgstr ""
+msgstr ") im Verzeichnis"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid ", by"
-msgstr ""
+msgstr ", von"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "<b>State :</b>"
-msgstr "<b/>"
+msgstr "<b>Status:</b>"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "<b>Title :</b>"
-msgstr "<b/>"
+msgstr "<b>Titel:</b>"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
@@ -57,7 +57,12 @@ msgid ""
 "careful, only <i>Commit comment, Issues, Issue comment, Gollum, Pull "
 "request, Pull request review, Pull request review comment</i> and "
 "<i>Push</i> events are supported."
-msgstr "<i/><i/>"
+msgstr ""
+"Danach können Sie die Ereignisse auswählen, denen Sie in den Kanälen folgen "
+"möchten. Vorsicht, <i>verfassen Sie nur Kommentare, Probleme, "
+"Problemkommentare, Gollum, Pull-Anforderungen, Pull-Anforderungs-"
+"Überprüfungen, Pull-Anforderung, Zusammenfassungs-Kommentar und</i> <i>Push-"
+"Ereignisse</i> werden unterstützt."
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_channel_ids
@@ -67,18 +72,20 @@ msgstr "Kanäle"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "Channels allowed to follow repositories."
-msgstr ""
+msgstr "Kanälen, die Verzeichnissen folgen dürfen."
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "Commit"
-msgstr ""
+msgstr "Commit"
 
 #. module: mail_github
 #: model:ir.model.fields,help:mail_github.field_mail_channel_github_name
 msgid ""
 "Complete name of the github repository. e.i.: my-username/my-public-repo"
 msgstr ""
+"Vollständige Bezeichnung des GitHub-Verzeichnisses. z. B.: mein-benutzername"
+"/mein-öffentliches-verzei"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_create_uid
@@ -103,23 +110,23 @@ msgstr "Anzeigename"
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_enabled
 msgid "Enable listening to Github repositories"
-msgstr ""
+msgstr "Zugang zu GitHub-Verzeichnissen aktivieren"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_res_users_github_login
 msgid "GitHub Login"
-msgstr ""
+msgstr "GitHub-Login"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_view_form
 msgid "Github"
-msgstr ""
+msgstr "GitHub"
 
 #. module: mail_github
 #: model:ir.actions.act_window,name:mail_github.mail_channel_github_action
 #: model:ir.ui.menu,name:mail_github.mail_channel_menu_github
 msgid "Github Repositories"
-msgstr ""
+msgstr "GitHub-Verzeichnisse"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_id
@@ -152,63 +159,70 @@ msgid ""
 "Once the repository is created in Odoo, create it on Github. Then, copy "
 "'Payload URL' and 'Secret' in Github interface."
 msgstr ""
+"Sobald das Verzeichnis bei Odoo erstellt ist, erstellen Sie es auf GitHub. "
+"Dann kopieren Sie „Payload-URL“ und „Geheimnis“ in die GitHub-Schnittstelle."
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "PR"
-msgstr ""
+msgstr "PR"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_url_token
 msgid "Payload URL"
-msgstr ""
+msgstr "Payload-URL"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_repo_ids
 msgid "Repositories"
-msgstr ""
+msgstr "Verzeichnisse"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_github_repository_id
 msgid "Repository ID"
-msgstr ""
+msgstr "Verzeichnis-ID"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "Repository full name: user/repository."
-msgstr ""
+msgstr "Vollständiger Verzeichnisname: Benutzer / Verzeichnis."
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_name
 msgid "Repository name"
-msgstr ""
+msgstr "Verzeichnisname"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_secret
 msgid "Secret"
-msgstr ""
+msgstr "Geheimnis"
 
 #. module: mail_github
 #: model:ir.model.fields,help:mail_github.field_mail_channel_github_repo_ids
 msgid "The Github repositories the channel will follow"
-msgstr ""
+msgstr "Die GitHub-Verzeichnisse, denen der Kanal folgt"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "The signature to be pasted when setting up the webhook on Github"
 msgstr ""
+"Die Unterschrift wird beim Einrichten des Webhooks bei GitHub eingefügt."
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid ""
 "The webhook 'Content Type' should be set to <b>application/x-www-form-"
 "urlencoded</b>."
-msgstr "<b/>"
+msgstr ""
+"Der Webhook „Berichtsinhalt“ sollte auf <b>application/x-www-form-urlencoded"
+" gesetzt werden.</b>"
 
 #. module: mail_github
 #: model:ir.model.fields,help:mail_github.field_mail_channel_github_url_token
 msgid "URL to put as the payload target when configuring GitHub webhook"
 msgstr ""
+"URL wird genauso wie das Payload-Target beim Konfigurieren des GitHub-"
+"Webhooks eingefügt"
 
 #. module: mail_github
 #: model:ir.model,name:mail_github.model_res_users
@@ -218,63 +232,63 @@ msgstr "Benutzer"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "commented"
-msgstr ""
+msgstr "Kommentiert"
 
 #. module: mail_github
 #: code:addons/mail_github/controllers/main.py:174
 #, python-format
 msgid "commit"
-msgstr ""
+msgstr "Commit"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "commit(s) on"
-msgstr ""
+msgstr "Committen(s) auf"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "created a new"
-msgstr ""
+msgstr "Neues erstellt"
 
 #. module: mail_github
 #: code:addons/mail_github/controllers/main.py:197
 #, python-format
 msgid "issue"
-msgstr ""
+msgstr "Problem"
 
 #. module: mail_github
 #: model:ir.model,name:mail_github.model_mail_channel_github
 msgid "mail.channel.github"
-msgstr ""
+msgstr "mail.channel.github"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "modified the following"
-msgstr ""
+msgstr "Folgendes geändert"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "modifies wiki pages on repository"
-msgstr ""
+msgstr "Ändert Wiki-Seiten im Verzeichnis"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "on repository"
-msgstr ""
+msgstr "im Verzeichnis"
 
 #. module: mail_github
 #: code:addons/mail_github/controllers/main.py:211
 #: code:addons/mail_github/controllers/main.py:218
 #, python-format
 msgid "pull request"
-msgstr ""
+msgstr "Pull-Anforderung"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "push"
-msgstr ""
+msgstr "Push"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "remove the following"
-msgstr ""
+msgstr "Folgendes entfernen"

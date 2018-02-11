@@ -7,13 +7,14 @@
 # Richard Mathot <rim@odoo.com>, 2017
 # Martin Trigaux, 2017
 # Xavier Symons <xsy@openerp.com>, 2017
-# Cyrille de Lambert <cdelambert@teclib.com>, 2017
+# Cyrille de Lambert <cdelambert@auguria.net>, 2017
 # Quentin THEURET <odoo@kerpeo.com>, 2017
 # lap.odoo <lap@odoo.com>, 2017
 # Olivier Dony <odo@odoo.com>, 2017
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
 # Xavier Belmere <Info@cartmeleon.com>, 2017
+# fr rev <e2ffr02@hotmail.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -101,6 +102,8 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+"Erreur :\n"
+"%s"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_file_type
@@ -152,7 +155,7 @@ msgstr "Fedex International"
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
 msgid "Fedex Label Stock Type"
-msgstr ""
+msgstr "Type d'étiquette Fedex"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
@@ -178,7 +181,7 @@ msgstr "Site web de Fedex"
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
 msgid "Fedex Weight Unit"
-msgstr ""
+msgstr "Unité de poids Fedex"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
@@ -219,7 +222,7 @@ msgstr "Numéro de compteur"
 #: code:addons/delivery_fedex/models/delivery_fedex.py:379
 #, python-format
 msgid "No packages for this picking"
-msgstr ""
+msgstr "Aucun colis pour cette préparatio"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -359,7 +362,8 @@ msgstr "Envoi créé dans Fedex  <br/> <b>Numéro de suivi : </b>%s"
 msgid ""
 "Shipment created into Fedex<br/><b>Tracking Numbers:</b> "
 "%s<br/><b>Packages:</b> %s"
-msgstr "<br/><b/><br/><b/>"
+msgstr ""
+"Envoi créé dans Fedex<br/><b>Numéros de suivi :</b> %s<br/><b>Colis :</b> %s"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
@@ -373,6 +377,14 @@ msgid ""
 "                                                                                 3.INTERNATIONAL_PRIORITY.\n"
 "(To Select Countries)"
 msgstr ""
+"Service spécial : livraison le samedi, demande possible les jours suivants.\n"
+" Jeudi :\n"
+"1. FEDEX_2_DAY.\n"
+"Vendredi :\n"
+"1. PRIORITY_OVERNIGHT.\n"
+"2. FIRST_OVERNIGHT.\n"
+" 3.INTERNATIONAL_PRIORITY.\n"
+"(pour certains pays)"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -400,6 +412,8 @@ msgid ""
 "Warning:\n"
 "%s"
 msgstr ""
+"Avertissement :\n"
+"%s"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_file_type:0

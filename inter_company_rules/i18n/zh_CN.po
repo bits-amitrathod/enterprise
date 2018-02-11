@@ -11,13 +11,14 @@
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
 # 老窦 北京 <2662059195@qq.com>, 2018
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: 老窦 北京 <2662059195@qq.com>, 2018\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +77,7 @@ msgstr "在菜单:设置/用户/公司中,为公司(%s)配置正确的仓库"
 msgid ""
 "Create Invoices/Credit Notes when encoding invoices/credit notes made to "
 "this company"
-msgstr ""
+msgstr "在向该公司编码发票/信用票据时，创建发票/信用票据"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_po_from_so
@@ -88,21 +89,21 @@ msgstr "给该公司销售的时候创建采购订单"
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_so_from_po
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_so_from_po
 msgid "Create Sales Orders when buying to this company"
-msgstr ""
+msgstr "在向该公司购买的时候创建销售订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_warehouse_id
 msgid ""
 "Default value to set on Purchase Orders that will be created based on Sales "
 "Orders made to this company."
-msgstr ""
+msgstr "在该公司销售订单的基础上建立的采购订单的默认值"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_warehouse_id
 msgid ""
 "Default value to set on Purchase(Sales) Orders that will be created based on"
 " Sale(Purchase) Orders made to this company"
-msgstr ""
+msgstr "在该公司销售（采购）订单的基础上建立的采购（销售）订单的默认值"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_generate_invoices
@@ -110,6 +111,8 @@ msgid ""
 "Generate Customer/Vendor Bills (and credit notes) when encoding invoices (or credit notes) made to this company.\n"
 " e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
 msgstr ""
+"在向该公司编码发票（或信用票据）时，生成客户/供应商账单（和信用票据）。\n"
+" 例如：当该公司作为供应商创建供应商账单时，生成客户发票。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_po_from_so
@@ -124,6 +127,8 @@ msgid ""
 "Generate a Purchase Order when a Sales Order with this company as customer is created.\n"
 " The intercompany user must at least be Purchase User."
 msgstr ""
+"当该公司作为客户创建销售订单时生成采购订单。\n"
+" 公司间的用户至少有一个必须是采购用户。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_so_from_po
@@ -138,6 +143,8 @@ msgid ""
 "Generate a Sales Order when a Purchase Order with this company as vendor is created.\n"
 " The intercompany user must at least be Sale User."
 msgstr ""
+"当该公司作为供应商创建采购订单时生成销售订单。\n"
+" 公司间的用户至少有一个必须是销售用户。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_intercompany_user_id
@@ -224,12 +231,12 @@ msgstr "在选择的公司中,选择类型用来建立内部公司规则"
 #. module: inter_company_rules
 #: selection:res.config.settings,rule_type:0
 msgid "Send Invoices & Credit Notes"
-msgstr ""
+msgstr "发送发票和信用票据"
 
 #. module: inter_company_rules
 #: selection:res.config.settings,rule_type:0
 msgid "Send Sales & Purchase Orders"
-msgstr ""
+msgstr "发送销售和采购订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_invoice_id
@@ -268,7 +275,7 @@ msgstr "当该公司的销售订单或者采购订单由公司间的规则创建
 msgid ""
 "When a Sales Order or a Purchase Order is created by a multi company rule "
 "for this company, it will automatically validate it"
-msgstr ""
+msgstr "当该公司的销售订单或者采购订单由公司间的规则创建，规则就会自动验证订单"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -286,6 +293,9 @@ msgid ""
 "                    simultaneously with another option ('Create Sales Orders when buying to this\n"
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
+"您不能选择基于其他发票创建的发票 \n"
+" 同时还有其他选项（“购买该 \n"
+" 公司时创建销售订单”或“卖出该公司时创建采购订单”）！"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
