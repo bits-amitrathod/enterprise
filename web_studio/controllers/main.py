@@ -587,7 +587,7 @@ class WebStudioController(http.Controller):
         def create_binary_field(op):
             node = op.get('node')
             if node and node.get('tag') == 'field' and node.get('field_description'):
-                ttype = node['field_description'].get('ttype')
+                ttype = node['field_description'].get('type')
                 is_image = node['attrs'].get('widget') == 'image'
                 return ttype == 'binary' and not is_image
             return False
