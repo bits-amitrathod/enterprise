@@ -413,10 +413,10 @@ class HelpdeskTicket(models.Model):
         return super(HelpdeskTicket, self)._track_subtype(init_values)
 
     @api.multi
-    def _notification_recipients(self, message, groups):
+    def _notify_get_groups(self, message, groups):
         """ Handle salesman recipients that can convert leads into opportunities
         and set opportunities as won / lost. """
-        groups = super(HelpdeskTicket, self)._notification_recipients(message, groups)
+        groups = super(HelpdeskTicket, self)._notify_get_groups(message, groups)
 
         self.ensure_one()
         for group_name, group_method, group_data in groups:
@@ -425,7 +425,7 @@ class HelpdeskTicket(models.Model):
             group_data['has_button_access'] = True
 
         if not self.user_id:
-            take_action = self._notification_link_helper('assign')
+            take_action = self._notify_get_action_link('assign')
             helpdesk_actions = [{'url': take_action, 'title': _('Assign to me')}]
         else:
             helpdesk_actions = []
