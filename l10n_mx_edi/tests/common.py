@@ -114,7 +114,7 @@ class InvoiceTransactionCase(AccountingTestCase):
         def recursive_dict(element):
             return (element.tag,
                     dict((recursive_dict(e) for e in element.getchildren()),
-                         ____text=element.text, **element.attrib))
+                         ____text=(element.text or '').strip(), **element.attrib))
         return dict([recursive_dict(xml)])
 
     def assertEqualXML(self, xml_real, xml_expected):

@@ -95,8 +95,12 @@ class FedexRequest():
 
     def set_recipient(self, recipient_partner):
         Contact = self.client.factory.create('Contact')
-        Contact.PersonName = recipient_partner.name if not recipient_partner.is_company else ''
-        Contact.CompanyName = recipient_partner.name if recipient_partner.is_company else ''
+        if recipient_partner.is_company:
+            Contact.PersonName = ''
+            Contact.CompanyName = recipient_partner.name
+        else:
+            Contact.PersonName = recipient_partner.name
+            Contact.CompanyName = recipient_partner.parent_id.name or ''
         Contact.PhoneNumber = recipient_partner.phone or ''
 
         Address = self.client.factory.create('Address')

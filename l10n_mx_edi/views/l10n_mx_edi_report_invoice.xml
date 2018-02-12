@@ -55,11 +55,11 @@
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <div class="row" id='complement'>
                     <div class="barcode col-xs-3">
-                        <img t-att-src="'/report/barcode/QR/%s' % quote_plus(
-                                'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?') + keep_query(
+                        <img t-att-src="'/report/barcode/?type=QR&amp;value=%s' % quote_plus(
+                            'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(
                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,
                                 tt=o.l10n_mx_edi_cfdi_amount, id=o.l10n_mx_edi_cfdi_uuid,
-                                fe=xml.get('Sello', 'No identificado')[-8:])"/>
+                                fe=xml.get('Sello', 'No identificado')[-8:]))"/>
                     </div>
                     <div class="complement-details col-xs-9">
                         <div class="digital-stamp">
