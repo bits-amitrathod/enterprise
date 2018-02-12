@@ -414,28 +414,27 @@ class HelpdeskTicket(models.Model):
 
     @api.multi
     def _notify_get_groups(self, message, groups):
-        """ Handle salesman recipients that can convert leads into opportunities
-        and set opportunities as won / lost. """
+        """ Handle helpdesk users and managers recipients that can assign
+        tickets directly from notification emails. Also give access button
+        to portal and portal customers. If they are notified they should
+        probably have access to the document. """
         groups = super(HelpdeskTicket, self)._notify_get_groups(message, groups)
 
         self.ensure_one()
         for group_name, group_method, group_data in groups:
-            if group_name == 'customer':
+            if group_name in ('customer'):
                 continue
             group_data['has_button_access'] = True
 
-        if not self.user_id:
-            take_action = self._notify_get_action_link('assign')
-            helpdesk_actions = [{'url': take_action, 'title': _('Assign to me')}]
-        else:
-            helpdesk_actions = []
+        if self.user_id:
+            return groups
 
-        new_group = (
+        take_action = self._notify_get_action_link('assign')
+        helpdesk_actions = [{'url': take_action, 'title': _('Assign to me')}]
+        return [(
             'group_helpdesk_user', lambda partner: bool(partner.user_ids) and any(user.has_group('helpdesk.group_helpdesk_user') for user in partner.user_ids), {
                 'actions': helpdesk_actions,
-            })
-
-        return [new_group] + groups
+            })] + groups
 
     @api.model
     def _notify_get_reply_to(self, res_ids, default=None):
