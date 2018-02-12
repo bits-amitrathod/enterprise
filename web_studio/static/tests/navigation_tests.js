@@ -109,8 +109,8 @@ QUnit.module('Studio Navigation', {
         });
         bus.trigger('studio_toggled', 'main');
 
-        rpcs.push('/web/dataset/call_kw/partner');  // load_views with studio in context
         rpcs.push('/web_studio/get_studio_view_arch');
+        rpcs.push('/web/dataset/call_kw/partner');  // load_views with studio in context
         rpcs.push('/web/dataset/search_read');
         assert.verifySteps(rpcs, "should have opened the action in Studio");
 
@@ -190,8 +190,8 @@ QUnit.module('Studio Navigation', {
         });
         bus.trigger('studio_toggled', 'main');
 
-        rpcs.push('/web/dataset/call_kw/partner');  // load_views with studio in context
         rpcs.push('/web_studio/get_studio_view_arch');
+        rpcs.push('/web/dataset/call_kw/partner');  // load_views with studio in context
         rpcs.push('/web/dataset/search_read');
         assert.verifySteps(rpcs, "should have opened the action in Studio");
 
@@ -211,8 +211,8 @@ QUnit.module('Studio Navigation', {
             studio_clear_breadcrumbs: true,
         });
 
-        rpcs.push('/web/dataset/call_kw/pony');  // load_views with studio in context
         rpcs.push('/web_studio/get_studio_view_arch');
+        rpcs.push('/web/dataset/call_kw/pony');  // load_views with studio in context
         rpcs.push('/web/dataset/search_read');
         assert.verifySteps(rpcs, "should have opened the navigated action in Studio");
 

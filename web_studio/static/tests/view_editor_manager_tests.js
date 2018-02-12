@@ -1,6 +1,9 @@
 odoo.define('web_studio.ViewEditorManager_tests', function (require) {
 "use strict";
 
+var ChatManager = require('mail.ChatManager');
+var mailTestUtils = require('mail.testUtils');
+
 var ace = require('web_editor.ace');
 var concurrency = require('web.concurrency');
 var config = require('web.config');
@@ -9,6 +12,8 @@ var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
 
 var ViewEditorManager = require('web_studio.ViewEditorManager');
+
+var createBusService = mailTestUtils.createBusService;
 
 var createViewEditorManager = function (params) {
     var $target = $('#qunit-fixture');
@@ -62,6 +67,7 @@ var createViewEditorManager = function (params) {
 
 QUnit.module('ViewEditorManager', {
     beforeEach: function () {
+        this.services = [ChatManager, createBusService()];
         this.data = {
             coucou: {
                 fields: {
@@ -384,6 +390,7 @@ QUnit.module('ViewEditorManager', {
 
         var vem = createViewEditorManager({
             data: this.data,
+            services: this.services,
             model: 'coucou',
             arch: "<form>" +
                     "<sheet>" +

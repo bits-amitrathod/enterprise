@@ -298,7 +298,7 @@ class AccountReport(models.AbstractModel):
 
         searchview_dict = {'options': options, 'context': self.env.context}
         # Check if report needs analytic
-        if options.get('analytic') is not None:
+        if options.get('analytic_accounts') is not None:
             searchview_dict['analytic_accounts'] = self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids and [(t.id, t.name) for t in self.env['account.analytic.account'].search([])] or False
             options['selected_analytic_account_names'] = [self.env['account.analytic.account'].browse(int(account)).name for account in options['analytic_accounts']]
         if options.get('analytic_tags') is not None:

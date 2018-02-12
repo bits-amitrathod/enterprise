@@ -892,7 +892,7 @@ var SaleSubscriptionDashboardStatBox = Widget.extend({
                 self.value = result.stats.value_2;
                 self.perc = result.stats.perc;
                 self.color = get_color_class(result.stats.perc, self.stat_types[self.stat_type].dir);
-                self.computed_graph = result.graph;  
+                self.computed_graph = result.graph;
         });
     },
 
@@ -1081,27 +1081,27 @@ var sale_subscription_dashboard_salesman = sale_subscription_dashboard_abstract.
             var data_chart = [{
                 key: _t("MRR Growth"),
                 values: [
-                    { 
+                    {
                         "label" : _t("New MRR"),
                         "value" : result.new
-                    } , 
-                    { 
+                    } ,
+                    {
                         "label" : _t("Churned MRR"),
                         "value" : result.churn
-                    } , 
-                    { 
+                    } ,
+                    {
                         "label" : _t("Expansion MRR"),
                         "value" : result.up
-                    } , 
-                    { 
+                    } ,
+                    {
                         "label" : _t("Down MRR"),
                         "value" : result.down
-                    } , 
-                    { 
+                    } ,
+                    {
                         "label" : _t("Net New MRR"),
                         "value" : result.net_new
-                    } , 
-                    { 
+                    } ,
+                    {
                         "label" : _t("NRR"),
                         "value" : result.nrr
                     } ,
