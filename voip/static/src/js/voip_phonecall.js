@@ -61,8 +61,7 @@ var PhonecallWidget = Widget.extend({
             method: 'hangup_call',
             args: [this.id],
         }).then(function () {
-            var chatBus = self.call('chat_manager', 'getChatBus');
-            chatBus.trigger('voip_reload_chatter');
+            self.call('chat_manager', 'getChatBus').trigger('voip_reload_chatter');
         });
     },
     /**
@@ -269,8 +268,7 @@ var PhonecallDetails = Widget.extend({
             method: 'action_done',
             args: [[this.activity_id]],
         }).then(function () {
-            var chatBus = self.call('chat_manager', 'getChatBus');
-            chatBus.trigger('voip_reload_chatter');
+            self.call('chat_manager', 'getChatBus').trigger('voip_reload_chatter');
         });
     },
     /**

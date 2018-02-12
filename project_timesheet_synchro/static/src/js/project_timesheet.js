@@ -794,7 +794,7 @@ odoo.define('project_timeshee.ui', function (require ) {
 
             return this.zero_fill(hours) + ":" + this.zero_fill(minutes);
         },
-        // Takes a string as input and tries to parse it as a hh:mm duration/ By default, strings without ":" are considered to be hh. 
+        // Takes a string as input and tries to parse it as a hh:mm duration/ By default, strings without ":" are considered to be hh.
         // We use % 1 to avoid accepting NaN as an integer.
         validate_duration: function(hh_mm) {
             var time = hh_mm.split(":");
@@ -979,7 +979,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         on_interrupt_activity: function() {
             var self = this;
             var activity_id = JSON.parse(local_storage.getItem("pt_timer_activity_id"));
-            var activity = _.findWhere(this.getParent().data.account_analytic_lines , {id : activity_id}); 
+            var activity = _.findWhere(this.getParent().data.account_analytic_lines , {id : activity_id});
             clearInterval(this.timer_start);
             this.$(".pt_timer_clock").text("");
             var start_time = new Date(JSON.parse(local_storage.getItem("pt_start_timer_time")));
