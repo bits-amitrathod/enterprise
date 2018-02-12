@@ -34,13 +34,14 @@
 # fr rev <e2ffr04@hotmail.com>, 2017
 # Florian Hatat, 2017
 # e2f <projects@e2f.com>, 2018
+# fr trans <e2ftrans1@yahoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-15 14:46+0000\n"
 "PO-Revision-Date: 2018-01-15 14:46+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: fr trans <e2ftrans1@yahoo.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,37 +141,74 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
-"<?xml version=\"1.0\"?><div "
-"style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-"
-"family:Arial,Helvetica,sans-serif;font-size:14px;\"><table "
-"style=\"width:600px;margin:5px auto;\"><tbody><tr><td><a href=\"/\"><img "
-"src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-"
-"width:100px;\"/></a></td><td style=\"text-align:right;vertical-"
-"align:middle;\"></td></tr></tbody></table><table "
-"style=\"width:600px;margin:0px auto;background:white;border:1px solid "
-"#e1e1e1;\"><tbody><tr><td style=\"padding:15px 20px 10px "
-"20px;\"><p></p><p><strong></strong><strong></strong></p><p></p></td></tr><tr><td"
-" style=\"padding:10px 20px\"><table summary=\"o_mail_notification\" "
-"style=\"width:100%;border-top:1px solid #e1e1e1;\"><tr><td style=\"text-"
-"align:center;\"><h2 style=\"font-weight:300;font-size:18px;\"></h2><div "
-"style=\"text-color: #888888\"></div></td></tr><tr><td style=\"padding:10px "
-"10px;\"><table style=\"width:100%;text-align:center;\"><tr><td><a "
-"href=\"/rating/${access_token}/10\"><img alt=\"Satisfied\" "
-"src=\"/rating/static/src/img/rating_10.png\" "
-"title=\"Satisfied\"/></a></td><td><a href=\"/rating/${access_token}/5\"><img"
-" alt=\"Not satisfied\" src=\"/rating/static/src/img/rating_5.png\" "
-"title=\"Not satisfied\"/></a></td><td><a "
-"href=\"/rating/${access_token}/1\"><img alt=\"Highly Dissatisfied\" "
-"src=\"/rating/static/src/img/rating_1.png\" title=\"Highly "
-"Dissatisfied\"/></a></td></tr></table></td></tr></table></td></tr><tr><td "
-"style=\"padding:15px 20px 10px 20px;\"></td></tr></tbody></table><table "
-"style=\"width:600px;margin:auto;text-align:center;font-"
-"size:12px;\"><tbody><tr><td style=\"padding-"
-"top:10px;color:#afafaf;\"><p><b></b></p><p><a target=\"_blank\" "
-"href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-"
-"decoration:none;\"></a><a href=\"${object.team_id.company_id.website}\" "
-"style=\"color:#875A7B;text-"
-"decoration:none;\"></a></p></td></tr></tbody></table></div>"
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
+"% set access_token = object.rating_get_access_token()\n"
+"    <table style=\"width:600px;margin:5px auto;\">\n"
+"        <tbody>\n"
+"            <tr><td>\n"
+"                <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
+"            </td><td style=\"text-align:right;vertical-align:middle;\">\n"
+"                    Enquête de satisfaction\n"
+"            </td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"    <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
+"        <tbody>\n"
+"            <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
+"                <p>Bonjour,</p>\n"
+"                <p>Merci de prendre un instant pour évaluer nos services associés au ticket « <strong>${object.name}</strong> »\n"
+"                   attribué à <strong>${object.rating_get_rated_partner_id().name}</strong>.</p>\n"
+"                <p>N'hésitez pas à nous faire part de vos commentaires, car ils nous permettront de nous améliorer.</p>\n"
+"            </td></tr>\n"
+"            <tr><td style=\"padding:10px 20px\">\n"
+"                <table summary=\"o_mail_notification\" style=\"width:100%;border-top:1px solid #e1e1e1;\">\n"
+"                    <tr>\n"
+"                        <td style=\"text-align:center;\">\n"
+"                            <h2 style=\"font-weight:300;font-size:18px;\">\n"
+"                                Donnez-nous votre avis sur notre service :\n"
+"                            </h2>\n"
+"                            <div style=\"text-color: #888888\">(cliquez sur l'un de ces smileys)</div>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px;\">\n"
+"                            <table style=\"width:100%;text-align:center;\">\n"
+"                                <tr>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/10\">\n"
+"                                            <img alt=\"Satisfied\" src=\"/rating/static/src/img/rating_10.png\" title=\"Satisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/5\">\n"
+"                                            <img alt=\"Not satisfied\" src=\"/rating/static/src/img/rating_5.png\" title=\"Not satisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/1\">\n"
+"                                            <img alt=\"Highly Dissatisfied\" src=\"/rating/static/src/img/rating_1.png\" title=\"Highly Dissatisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </table>\n"
+"            </td></tr>\n"
+"            <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '') | safe}</td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"    <table style=\"width:600px;margin:auto;text-align:center;font-size:12px;\">\n"
+"        <tbody>\n"
+"            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
+"                <p>Nous vous avons envoyé cette enquête pour les clients, car votre ticket est passé à l'étape <b>${object.stage_id.name}</b></p>\n"
+"                <p>E-mail envoyé automatiquement par l'<a target=\"_blank\" href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">assistance Odoo</a> pour <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
+"            </td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
@@ -193,11 +231,23 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
-"<?xml version=\"1.0\"?><div style=\"max-width:600px; height:auto; margin-"
-"left:30px;\"><div style=\"margin-left:30px;align=center;\"></div><div style"
-"=\"margin-left:30px;align=center;\" width=\"60%\"></div><br/><span style"
-"=\"margin-left:30px;font-weight:normal;\"></span><span style=\"margin-"
-"left:30px;font-weight:normal;\"></span></div>"
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"    <div style=\"margin-left:30px;align=center;\">\n"
+"        Cher/chère ${object.sudo().partner_id.name or 'Madam, Sir'},\n"
+"    </div>\n"
+"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
+"        Ce message automatique vous a été envoyé pour vous informer que nous avons fermé votre ticket (référence ${object.id}).\n"
+"\n"
+"        Nous espérons que les services fournis ont répondu à vos attentes.\n"
+"        Si vous avez d'autres questions ou commentaires, n'hésitez pas à répondre à cet e-mail pour rouvrir votre ticket.\n"
+"\n"
+"        Nous vous remercions pour votre coopération.\n"
+"    </div><br/>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">Cordialement, </span>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">L'équipe ${object.team_id.name or 'Helpdesk'}.</span>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
@@ -278,14 +328,16 @@ msgstr "<i>Pas encore de retour client.</i>"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.view_partner_form_inherit_helpdesk
 msgid "<span class=\"o_stat_text\"> Tickets</span>"
-msgstr "<span class=\"o_stat_text\"/>"
+msgstr "<span class=\"o_stat_text\">Tickets</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
 msgid ""
 "<span class=\"text-muted\">NB: This will archive the selected tickets "
 "(Except the destination ticket)</span>"
-msgstr "<span class=\"text-muted\"/>"
+msgstr ""
+"<span class=\"text-muted\">Remarque : Cela archivera les tickets "
+"sélectionnés (sauf le ticket de destination)</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -300,17 +352,17 @@ msgstr "<span>Voir les Tickets</span>"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Description</strong>"
-msgstr "<strong class=\"col-md-2\"/>"
+msgstr "<strong class=\"col-md-2\">Description</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Reported by</strong>"
-msgstr "<strong class=\"col-md-2\"/>"
+msgstr "<strong class=\"col-md-2\">Rapporté par</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Reported on</strong>"
-msgstr "<strong class=\"col-md-2\"/>"
+msgstr "<strong class=\"col-md-2\">Date du signalement</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -565,6 +617,8 @@ msgstr "Cliquer pour créer un nouveau ticket."
 #, python-format
 msgid "Click here and select \"Helpdesk Teams\" for further configuration."
 msgstr ""
+"Cliquez ici et sélectionnez « Équipes d'assistance » pour approfondir la "
+"configuration."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.email_template_action_helpdesk
@@ -585,7 +639,10 @@ msgstr "Cliquez ici pour voir les Incidents de cette équipe. "
 msgid ""
 "Click these cards to open their form view, or <b>drag &amp; drop</b> them "
 "through the different stages of this team."
-msgstr "<b/>"
+msgstr ""
+"Cliquez sur ces cartes pour ouvrir la vue formulaire correspondante ou <b"
+">faites-les glisser et déposez-les</b> dans les différentes phases de cette "
+"équipe."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -682,6 +739,8 @@ msgstr "Configuration des stratégies SLA"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Connect third party application and create tickets using web services"
 msgstr ""
+"Connecter une application tierce et créer des tickets en utilisant des "
+"services Web"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_res_partner
@@ -691,7 +750,7 @@ msgstr "Contact"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_create_new_ticket
 msgid "Create a new ticket"
-msgstr ""
+msgstr "Créer un ticket"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -823,13 +882,13 @@ msgstr "Description"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Description for customer portal"
-msgstr ""
+msgstr "Description pour le portail client"
 
 #. module: helpdesk
 #: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
 #, python-format
 msgid "Description from ticket %s: %s"
-msgstr ""
+msgstr "Description à partir du ticket %s : %s"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -855,7 +914,7 @@ msgstr "Nom à afficher"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_portal_show_rating
 msgid "Display Rating on Customer Portal"
-msgstr ""
+msgstr "Afficher l'évaluation sur le portail client"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -977,7 +1036,7 @@ msgstr "Equipe Helpdesk"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "Helpdesk Team Satisfaction"
-msgstr ""
+msgstr "Satisfaction quant à l'équipe d'assistance"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1016,6 +1075,8 @@ msgid ""
 "Helpdesk contracts are managed using tasks. Choose a default project for "
 "these tasks."
 msgstr ""
+"Les contrats d'assistance sont gérés à l'aide de tâches. Choisissez un "
+"projet par défaut pour ces tâches."
 
 #. module: helpdesk
 #: model:ir.actions.server,name:helpdesk.helpdesk_team_action_settings
@@ -1027,7 +1088,7 @@ msgstr "Assistance: Configuration des équipes"
 #: model:ir.cron,cron_name:helpdesk.helpdesk_sla_cron
 #: model:ir.cron,name:helpdesk.helpdesk_sla_cron
 msgid "Helpdesk: compute SLAs"
-msgstr ""
+msgstr "Assistance : calculer les SLA"
 
 #. module: helpdesk
 #. openerp-web
@@ -1196,7 +1257,7 @@ msgstr "Priorité basse"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Managed by"
-msgstr ""
+msgstr "Géré par"
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_manager
@@ -1211,17 +1272,17 @@ msgstr "Manuellement"
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_actions_act_window_merge_tickets
 msgid "Merge Selected Tickets"
-msgstr ""
+msgstr "Fusionner les tickets sélectionnés"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
 msgid "Merge Tickets"
-msgstr ""
+msgstr "Fusionner les tickets"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_ticket_id
 msgid "Merge into an existing ticket"
-msgstr ""
+msgstr "Fusionner avec un ticket existant"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_priority
@@ -1231,7 +1292,7 @@ msgstr "Priorité Minimale"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_stage_id
 msgid "Minimum stage a ticket needs to reach in order to satisfy this SLA."
-msgstr ""
+msgstr "Étape minimale qu'un ticket doit atteindre pour satisfaire à ce SLA."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1286,7 +1347,7 @@ msgstr "Nom"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_ticket_name
 msgid "New ticket name"
-msgstr ""
+msgstr "Nom du nouveau ticket"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:27
@@ -1298,7 +1359,7 @@ msgstr "Le plus récent"
 #: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
 #, python-format
 msgid "No description"
-msgstr ""
+msgstr "Aucune description"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_high_priorities
@@ -1442,7 +1503,7 @@ msgstr "Productivité"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Publish this team's ratings on your website"
-msgstr ""
+msgstr "Publier les évaluations de cette équipe sur votre site Web"
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_question
@@ -1467,12 +1528,12 @@ msgstr "Évaluations"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Reach In"
-msgstr ""
+msgstr "Au bout de"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Reach Stage"
-msgstr ""
+msgstr "Atteindre une étape"
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
@@ -1591,13 +1652,13 @@ msgstr "Chercher dans Tout"
 #: code:addons/helpdesk/controllers/portal.py:33
 #, python-format
 msgid "Search in Customer"
-msgstr ""
+msgstr "Rechercher dans Client"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:32
 #, python-format
 msgid "Search in Messages"
-msgstr ""
+msgstr "Rechercher dans Messages"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_access_token
@@ -1622,14 +1683,14 @@ msgstr "Self-Service"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Sell &amp; Track Hours"
-msgstr ""
+msgstr "Heures de vente et de suivi"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:173
 #, python-format
 msgid "Send an email to"
-msgstr ""
+msgstr "Envoyer un e-mail à"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1647,6 +1708,7 @@ msgstr "Séquence"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Set up your Service Level Agreements to track performance"
 msgstr ""
+"Configurer vos contrats de niveau de service pour suivre les performances"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
@@ -1674,7 +1736,7 @@ msgstr ""
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_solved
 msgid "Solved"
-msgstr ""
+msgstr "Résolu"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_team_ids
@@ -1803,17 +1865,17 @@ msgstr "Objectif"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_helpdesk_target_rating
 msgid "Target Customer Rating"
-msgstr ""
+msgstr "Évaluation de la clientèle cible"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_helpdesk_id
 msgid "Target Helpdesk Team"
-msgstr ""
+msgstr "Équipe d'assistance cible"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_stage_id
 msgid "Target Stage"
-msgstr ""
+msgstr "Étape cible"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_helpdesk_target_success
@@ -1823,7 +1885,7 @@ msgstr "Taux de réussite ciblé"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_helpdesk_target_closed
 msgid "Target Tickets to Close"
-msgstr ""
+msgstr "Tickets cibles à fermer"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_team_id
@@ -1857,12 +1919,12 @@ msgstr "Modèles"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
 msgid "The following ticket has been merged into this one:"
-msgstr ""
+msgstr "Ce ticket a été fusionné avec celui-ci :"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
 msgid "The following tickets have been merged into this one:"
-msgstr ""
+msgstr "Les tickets suivants ont été fusionnés avec celui-ci :"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
@@ -1915,7 +1977,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
 msgid "This required to have project module installed."
-msgstr ""
+msgstr "Cela nécessite l'installation du module de projet."
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk.py:345
@@ -1926,7 +1988,7 @@ msgstr "Cet objectif n'existe pas."
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
 msgid "This ticket has been merged into the following ticket:"
-msgstr ""
+msgstr "Ce ticket a été fusionné avec le ticket suivant :"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
@@ -2026,11 +2088,13 @@ msgid ""
 "Tickets in this stage are considered as done. This is used notably when "
 "computing SLAs and KPIs on tickets."
 msgstr ""
+"Les tickets à cette étape sont considérés comme terminés. Ils servent "
+"notamment à compiler les SLA et les KPI des tickets."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_ticket_ids
 msgid "Tickets to Merge"
-msgstr ""
+msgstr "Tickets à fusionner"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -2050,7 +2114,7 @@ msgstr "Temps de la première affectation (heures)"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
 msgid "Timesheet on Ticket"
-msgstr ""
+msgstr "Feuille de temps sur le ticket"
 
 #. module: helpdesk
 #. openerp-web
@@ -2154,7 +2218,7 @@ msgstr "Voir les tickets hautes priorités en échec"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "View this teams ratings this page:<br/>"
-msgstr "<br/>"
+msgstr "Afficher les évaluations de ces équipes pour cette page :<br/>"
 
 #. module: helpdesk
 #. openerp-web
@@ -2186,6 +2250,9 @@ msgid ""
 "balanced assignation, tickets are assigned to the user with the least amount"
 " of open tickets."
 msgstr ""
+"Avec l'attribution aléatoire, chaque utilisateur obtient le même nombre de "
+"tickets. Avec l'attribution équilibrée, les tickets sont attribués à "
+"l'utilisateur qui possède le moins de tickets ouverts."
 
 #. module: helpdesk
 #. openerp-web
@@ -2224,7 +2291,7 @@ msgstr "eLearning"
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket_merge
 msgid "helpdesk.ticket.merge"
-msgstr ""
+msgstr "helpdesk.ticket.merge"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -2246,7 +2313,7 @@ msgstr "recherche d'équipe"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:173
 #, python-format
 msgid "to create a ticket."
-msgstr ""
+msgstr "pour créer un ticket."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form

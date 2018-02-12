@@ -129,6 +129,7 @@ class StockPicking(models.Model):
                 'location_dest_id': self.location_dest_id.id,
                 'qty_done': (product.tracking == 'none' and picking_type_lots) and qty or 0.0,
                 'product_uom_qty': 0.0,
+                'date': fields.datetime.now(),
             })
         return True
 
@@ -167,6 +168,7 @@ class StockPicking(models.Model):
                     'location_dest_id': ml.location_dest_id.id,
                     'qty_done': 0.0,
                     'move_id': ml.move_id.id,
+                    'date': fields.datetime.now(),
                 })
             ml.result_package_id = package.id
         return True
@@ -198,6 +200,7 @@ class StockPicking(models.Model):
                     'location_dest_id': ml.location_dest_id.id,
                     'qty_done': 0.0,
                     'move_id': ml.move_id.id,
+                    'date': fields.datetime.now(),
                 })
             ml.update({
                 'location_processed': True,

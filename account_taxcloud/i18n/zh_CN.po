@@ -7,16 +7,17 @@
 # Ted Wang <feiyuwang2012@gmail.com>, 2017
 # liAnGjiA <liangjia@qq.com>, 2017
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # waveyeung <waveyeung@qq.com>, 2017
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,12 +33,12 @@ msgstr "<i class=\"fa fa-fw fa-arrow-right\"/>创建账号 &amp; 获取授权"
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "API ID"
-msgstr ""
+msgstr "API ID"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "API KEY"
-msgstr ""
+msgstr "API Key"
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_res_company
@@ -57,7 +58,7 @@ msgstr "创建时间"
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "Default Category"
-msgstr ""
+msgstr "默认类别"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_res_company_tic_category_id
@@ -71,12 +72,12 @@ msgstr "默认TIC 代码"
 msgid ""
 "Default TICs(Taxability information codes) code to get sales tax from "
 "TaxCloud by product category."
-msgstr ""
+msgstr "默认 TIC （征税信息代码）代码，用于按产品类别从 TaxCloud 获取销售税。"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "Default TaxCloud category for new products"
-msgstr ""
+msgstr "新产品的默认 TaxCloud 类别"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category_display_name
@@ -170,19 +171,19 @@ msgstr "TaxCloud API KEY"
 #: model:ir.actions.act_window,name:account_taxcloud.account_taxcloud_tic_category_action
 #: model:ir.ui.menu,name:account_taxcloud.menu_taxcloud_tic_category_action
 msgid "TaxCloud Categories"
-msgstr ""
+msgstr "TaxCloud 类别"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "TaxCloud Categories (TIC)"
-msgstr ""
+msgstr "TaxCloud 类别 (TIC)"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_product_tic_category_id
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_template_tic_category_id
 #: model:ir.ui.view,arch_db:account_taxcloud.product_template_taxcloud_inherit_form
 msgid "TaxCloud Category"
-msgstr ""
+msgstr "TaxCloud 类别"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,help:account_taxcloud.field_product_product_tic_category_id
@@ -196,6 +197,10 @@ msgid ""
 "automatically assigns products to this TIC as a default, so unless you've "
 "changed an item's TIC in the past, it should already be set to 00000."
 msgstr ""
+"TaxCloud 使用征税信息代码 (TIC) "
+"确保以正确的税率向目录中每个项目征税（或者，对于免税项目，不征收任何税），因此有必要确保为每个项目都分配一个 "
+"TIC。如果您无法为目录中的项目找到正确的税务类别，可将其分配到“一般商品和服务”TIC (00000)。TaxCloud 会自动将产品分配到此 TIC"
+" 作为默认值，因此除非您更改过项目的 TIC ，否则它应该已被设置为 00000。"
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position_tax
@@ -218,7 +223,7 @@ msgstr "财政状况模板"
 #: code:addons/account_taxcloud/models/res_config_settings.py:40
 #, python-format
 msgid "The configuration of TaxCloud is in the Accounting app, Settings menu."
-msgstr ""
+msgstr "TaxCloud 的配置位于“会计”应用的“设置”菜单中。"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:119
@@ -226,7 +231,7 @@ msgstr ""
 msgid ""
 "The source document on the refund is not valid and thus the refunded cart "
 "won't be logged on your taxcloud account"
-msgstr ""
+msgstr "有关退款的源单据无效，因此已退款的购物车将不会记录在您的 taxcloud 账户中"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:89
@@ -241,12 +246,12 @@ msgstr "税率已被更新，你可能需要先验证检查"
 #: code:addons/account_taxcloud/models/res_config_settings.py:40
 #, python-format
 msgid "Unable to retrieve taxes from TaxCloud: "
-msgstr ""
+msgstr "无法从 TaxCloud 检索税款："
 
 #. module: account_taxcloud
 #: model:ir.actions.server,name:account_taxcloud.action_account_invoice_update_taxes
 msgid "Update taxes with Taxcloud"
-msgstr ""
+msgstr "使用 Taxcloud 更新税款"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_is_taxcloud

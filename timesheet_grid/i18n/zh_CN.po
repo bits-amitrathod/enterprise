@@ -3,22 +3,23 @@
 # * timesheet_grid
 # 
 # Translators:
-# Jeffery CHEN <jeffery9@gmail.com>, 2017
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
 # liAnGjiA <liangjia@qq.com>, 2017
 # Liping Wang <lynn.config@gmail.com>, 2017
 # Yaorong Li <55yaorong.li@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Xu Lei <xulei8@qq.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
 # liulixia <liu.lixia@elico-corp.com>, 2017
 # Maie <m@maie.name>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-24 09:24+0000\n"
 "PO-Revision-Date: 2017-10-24 09:24+0000\n"
-"Last-Translator: Maie <m@maie.name>, 2017\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,6 +70,30 @@ msgid ""
 "</div>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?><data><div "
+"style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top "
+"/100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" "
+"style=\"width:600px;border-"
+"collapse:collapse;background:inherit;color:inherit\"><tbody><tr><td "
+"valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-"
+"size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; "
+"height: auto; width: 80px;\" "
+"alt=\"${user.company_id.name}\"/></td></tr></tbody></table></div><div "
+"style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top "
+"/100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" "
+"style=\"width:600px ;text-align:justify; margin:0 auto; border-"
+"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
+"style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p></p><p></p><center><a"
+" href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; "
+"padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-"
+"size: 14px;\" "
+"class=\"o_default_snippet_text\"></a></center><p></p></td></tr><tr><td "
+"style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
+"14px;\"></p><p style=\"font-size: 11px;\"><strong><a "
+"href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; "
+"color: #875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style"
+"=\"text-decoration:none; color: "
+"#875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div></data>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -114,6 +139,28 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat "
+"top /100%;color:#777777\"><table cellpadding=\"0\" cellspacing=\"0\" "
+"style=\"width:600px;border-"
+"collapse:collapse;background:inherit;color:inherit\"><tbody><tr><td "
+"style=\"padding:10px 10px 10px 5px;font-size: 12px\" valign=\"center\" "
+"width=\"200\"><img alt=\"${user.company_id.name}\" src=\"/logo.png\" "
+"style=\"padding: 0px; margin: 0px; height: auto; width: "
+"80px;\"/></td></tr></tbody></table></div><div "
+"style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top "
+"/100%;color:#777777\"><table cellpadding=\"0\" cellspacing=\"0\" "
+"style=\"width:600px ;text-align:justify; margin:0 auto; border-"
+"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
+"style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p/><p/><center><a "
+"class=\"o_default_snippet_text\" href=\"${ctx.get('action_url')}\" style"
+"=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: "
+"#fff; border-radius: 5px; font-size: 14px;\"/></center><p/></td></tr><tr><td"
+" style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
+"14px;\"/><p style=\"font-size: 11px;\"><strong><a "
+"href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; "
+"color: #875A7B;\"><strong/></a><a href=\"www.odoo.com\" style=\"text-"
+"decoration:none; color: "
+"#875A7B;\"><strong/></a></strong></p></td></tr></tbody></table></div>"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -156,7 +203,7 @@ msgstr "取消"
 #: code:addons/timesheet_grid/static/src/js/tour.js:22
 #, python-format
 msgid "Choose a <b>project name</b>. (e.g. name of a customer, or product)"
-msgstr ""
+msgstr "<b/>"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
@@ -456,7 +503,7 @@ msgstr "待验证"
 msgid ""
 "Track your timesheets to invoice easily, or control costs. <i>It starts "
 "here.</i>"
-msgstr ""
+msgstr "<i/>"
 
 #. module: timesheet_grid
 #. openerp-web
