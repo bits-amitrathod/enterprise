@@ -76,7 +76,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         journal = self.env['account.journal'].browse(journal_id)
         lines = []
         #Start amount
-        use_foreign_currency = bool(journal.currency_id)
+        use_foreign_currency = journal.currency_id and journal.currency_id != journal.company_id.currency_id or False
         account_ids = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]))
         lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', account_ids),
                                                                         ('date', '<=', self.env.context['date_to']),
