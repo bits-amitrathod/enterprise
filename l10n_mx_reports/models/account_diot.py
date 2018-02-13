@@ -380,9 +380,9 @@ class MxReportPartnerLedger(models.AbstractModel):
             data[1] = columns[1]['name']
             data[2] = columns[2]['name'] if columns[0]['name'] == '04' else ''
             data[3] = columns[2]['name'] if columns[0]['name'] != '04' else ''
-            data[4] = u''.join(line.get('name', '')).encode('utf-8').strip()
-            data[5] = columns[3]['name']
-            data[6] = u''.join(columns[4]['name']).encode('utf-8').strip()
+            data[4] = u''.join(line.get('name', '')).encode('utf-8').strip() if columns[0]['name'] != '04' else ''
+            data[5] = columns[3]['name'] if columns[0]['name'] != '04' else ''
+            data[6] = u''.join(columns[4]['name']).encode('utf-8').strip() if columns[0]['name'] != '04' else ''
             data[7] = int(columns[5]['name']) if columns[5]['name'] else ''
             data[13] = int(columns[6]['name']) if columns[6]['name'] else ''
             data[18] = int(columns[7]['name']) if columns[7]['name'] else ''
