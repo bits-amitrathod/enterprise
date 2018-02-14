@@ -46,7 +46,7 @@
                 <input t-if="column['blocked'] == True" type="checkbox" name="blocked" value="True" checked="checked" />
             </t>
             <t t-if="column.get('blocked') == None">
-                <t t-raw="column.get('name')"/>
+                <t t-esc="column.get('name')"/>
             </t>
         </span>
     </xpath>
@@ -66,6 +66,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right o_account_reports_history" role="menu">
                     <t t-foreach="model.get_history(partner)" t-as='msg'>
+                        <!-- This t-raw is safe because msg.body is sanitized -->
                         <li role="presentation" style='margin-left: 5px'><t t-esc='msg.date' /> (<t t-esc='msg.author_id.sudo().name' />) : <t t-raw='msg.body' /></li>
                         <li role="presentation" class="divider"></li>
                     </t>
@@ -85,7 +86,7 @@
     </xpath>
     <xpath expr="//div[@class='o_account_reports_summary_edit']" position="replace">
         <div t-if="context.get('print_mode') != True" class="o_account_reports_summary_edit">
-                <textarea name="summary"><t t-if="report.get('summary')" t-raw="report['summary']" /></textarea>
+                <textarea name="summary"><t t-if="report.get('summary')" t-esc="report['summary']" /></textarea>
                 <button t-att-data-id="partner.id" class="btn btn-primary js_account_report_save_summary">Save</button>
         </div>
     </xpath>
