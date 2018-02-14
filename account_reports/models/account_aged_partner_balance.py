@@ -18,7 +18,8 @@ class report_account_aged_partner(models.AbstractModel):
         columns = [{}]
         columns += [
             {'name': v, 'class': 'number', 'style': 'white-space:nowrap;'}
-            for v in [_("Not due on: %s") % format_date(self.env, options['date']['date']), _("1 - 30"), _("31 - 60"), _("61 - 90"), _("91 - 120"), _("Older"), _("Total")]
+            for v in [_("JRNL"), _("Account"), _("Reference"), _("Not due on: %s") % format_date(self.env, options['date']['date']),
+                      _("1 - 30"), _("31 - 60"), _("61 - 90"), _("91 - 120"), _("Older"), _("Total")]
         ]
         return columns
 
@@ -45,7 +46,9 @@ class report_account_aged_partner(models.AbstractModel):
                 'id': 'partner_%s' % (values['partner_id'],),
                 'name': values['name'],
                 'level': 2,
-                'columns': [{'name': self.format_value(sign * v)} for v in [values['direction'], values['4'], values['3'], values['2'], values['1'], values['0'], values['total']]],
+                'columns': [{'name': ''}] * 3 + [{'name': self.format_value(sign * v)} for v in [values['direction'], values['4'],
+                                                                                                 values['3'], values['2'],
+                                                                                                 values['1'], values['0'], values['total']]],
                 'trust': values['trust'],
                 'unfoldable': True,
                 'unfolded': 'partner_%s' % (values['partner_id'],) in options.get('unfolded_lines'),
@@ -61,28 +64,21 @@ class report_account_aged_partner(models.AbstractModel):
                         caret_type = 'account.payment'
                     vals = {
                         'id': aml.id,
-                        'name': aml.move_id.name if aml.move_id.name else '/',
+                        'name': aml.date_maturity or aml.date,
                         'caret_options': caret_type,
                         'level': 4,
                         'parent_id': 'partner_%s' % (values['partner_id'],),
-                        'columns': [{'name': v} for v in [line['period'] == 6-i and self.format_value(sign * line['amount']) or '' for i in range(7)]],
+                        'columns': [{'name': v} for v in [aml.journal_id.code, aml.account_id.code, self._format_aml_name(aml)]] +\
+                                   [{'name': v} for v in [line['period'] == 6-i and self.format_value(sign * line['amount']) or '' for i in range(7)]],
                     }
                     lines.append(vals)
-                vals = {
-                    'id': values['partner_id'],
-                    'class': 'o_account_reports_domain_total',
-                    'name': _('Total '),
-                    'parent_id': 'partner_%s' % (values['partner_id'],),
-                    'columns': [{'name': self.format_value(sign * v)} for v in [values['direction'], values['4'], values['3'], values['2'], values['1'], values['0'], values['total']]],
-                }
-                lines.append(vals)
         if total and not line_id:
             total_line = {
                 'id': 0,
                 'name': _('Total'),
                 'class': 'total',
                 'level': 'None',
-                'columns': [{'name': self.format_value(sign * v)} for v in [total[6], total[4], total[3], total[2], total[1], total[0], total[5]]],
+                'columns': [{'name': ''}] * 3 + [{'name': self.format_value(sign * v)} for v in [total[6], total[4], total[3], total[2], total[1], total[0], total[5]]],
             }
             lines.append(total_line)
         return lines

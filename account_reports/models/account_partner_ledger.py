@@ -165,19 +165,12 @@ class ReportPartnerLedger(models.AbstractModel):
                         line_credit = line.credit
                     progress_before = progress
                     progress = progress + line_debit - line_credit
-                    name = '-'.join(
-                        (line.move_id.name not in ['', '/'] and [line.move_id.name] or []) +
-                        (line.ref not in ['', '/', False] and [line.ref] or []) +
-                        ([line.name] if line.name and line.name not in ['', '/'] else [])
-                    )
-                    if len(name) > 35 and not self.env.context.get('no_format'):
-                        name = name[:32] + "..."
                     caret_type = 'account.move'
                     if line.invoice_id:
                         caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'
                     elif line.payment_id:
                         caret_type = 'account.payment'
-                    domain_columns = [line.journal_id.code, line.account_id.code, name, line.date_maturity,
+                    domain_columns = [line.journal_id.code, line.account_id.code, self._format_aml_name(line), line.date_maturity,
                                       line.full_reconcile_id.name, self.format_value(progress_before),
                                       line_debit != 0 and self.format_value(line_debit) or '',
                                       line_credit != 0 and self.format_value(line_credit) or '']
