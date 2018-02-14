@@ -730,7 +730,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('enable stages in kanban editor', function (assert) {
-        assert.expect(6);
+        assert.expect(7);
 
         this.data.x_coucou_stage = {
             fields: {},
@@ -753,10 +753,15 @@ QUnit.module('ViewEditorManager', {
             data: this.data,
             model: 'coucou',
             arch: arch,
+            session: {
+                user_context: {studio: 1},
+            },
             mockRPC: function (route, args) {
                 if (route === '/web_studio/create_stages_model') {
                     assert.strictEqual(args.model_name, 'coucou',
                         "should create the stages model for the current model");
+                    assert.strictEqual(args.context.studio, 1,
+                        "studio should be correctly set in the context");
                     return $.when();
                 }
                 if (route === '/web_studio/get_default_value') {
