@@ -66,10 +66,14 @@
                         t-att-CertPago="pay_certificate"
                         t-att-CadPago="pay_string"
                         t-att-SelloPago="pay_stamp">
+                        <t t-set="write_off" t-value="record.move_line_ids.filtered(lambda l: l.account_id == record.writeoff_account_id and l.name == record.writeoff_label).debit"/>
                         <t t-foreach="record.invoice_ids" t-as="invoice">
                             <t t-set="amount" t-value="[p for p in invoice._get_payments_vals() if p.get('account_payment_id', False) == record.id]"/>
                             <t t-set="amount" t-value="amount[0].get('amount', 0.0) if amount else 0.0"/>
-                            <t t-set="inv_rate" t-value="('%.6f' % (invoice.currency_id.with_context(date=invoice.date_invoice).compute(1, record.currency_id))) if record.currency_id != invoice.currency_id else False"/>
+                            <t t-set="balance" t-value="invoice.residual + amount"/>
+                            <t t-set="amount" t-value="amount - write_off"/>
+                            <t t-set="residual" t-value="balance - amount if balance - amount &gt; 0 else 0"/>
+                            <t t-set="inv_rate" t-value="('%.6f' % (invoice.currency_id.with_context(date=invoice.date_invoice).compute(1, record.currency_id, round=False))) if record.currency_id != invoice.currency_id else False"/>
                             <t t-set="inv_rate" t-value="1 if inv_rate and invoice.currency_id.name == 'MXN' else inv_rate"/>
                             <Pago10:DoctoRelacionado
                                 t-att-IdDocumento="invoice.l10n_mx_edi_cfdi_uuid"
@@ -79,9 +83,9 @@
                                 t-att-TipoCambioDR="inv_rate"
                                 MetodoDePagoDR="PPD"
                                 t-att-NumParcialidad="len(invoice.payment_ids.filtered(lambda p: p.state != 'draft').ids)"
-                                t-att-ImpSaldoAnt="'%0.*f' % (decimal_precision, invoice.residual + amount)"
+                                t-att-ImpSaldoAnt="'%0.*f' % (decimal_precision, balance)"
                                 t-att-ImpPagado="'%0.*f' % (decimal_precision, amount)"
-                                t-att-ImpSaldoInsoluto="'%0.*f' % (decimal_precision, invoice.residual)"/>
+                                t-att-ImpSaldoInsoluto="'%0.*f' % (decimal_precision, residual)"/>
                         </t>
                         <t t-if="total_transferred or total_withhold">
                             <Pago10:Impuestos
