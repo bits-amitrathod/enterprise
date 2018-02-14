@@ -67,7 +67,7 @@ class SaleSubscriptionWizardOption(models.TransientModel):
     name = fields.Char(string="Description")
     wizard_id = fields.Many2one('sale.subscription.wizard', required=True, ondelete="cascade")
     product_id = fields.Many2one('product.product', required=True, domain="[('recurring_invoice', '=', True)]", ondelete="cascade")
-    uom_id = fields.Many2one('product.uom', string="Unit of Measure", required=True, ondelete="cascade")
+    uom_id = fields.Many2one('uom.uom', string="Unit of Measure", required=True, ondelete="cascade")
     quantity = fields.Float(default=1.0)
 
     @api.onchange("product_id")

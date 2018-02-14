@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductUoM(models.Model):
-    _inherit = 'product.uom'
+    _inherit = 'uom.uom'
 
     l10n_mx_edi_code_sat_id = fields.Many2one(
         'l10n_mx_edi.product.sat.code', 'Code SAT',

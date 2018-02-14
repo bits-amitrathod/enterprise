@@ -649,7 +649,7 @@ class SaleSubscriptionLine(models.Model):
     analytic_account_id = fields.Many2one('sale.subscription', string='Subscription')
     name = fields.Text(string='Description', required=True)
     quantity = fields.Float(string='Quantity', help="Quantity that will be invoiced.", default=1.0)
-    uom_id = fields.Many2one('product.uom', string='Unit of Measure', required=True)
+    uom_id = fields.Many2one('uom.uom', string='Unit of Measure', required=True)
     price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
     discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'))
     price_subtotal = fields.Float(compute='_compute_price_subtotal', string='Sub Total', digits=dp.get_precision('Account'), store=True)

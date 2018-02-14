@@ -40,7 +40,7 @@ class MrpProduction(models.Model):
     def button_plan(self):
         super(MrpProduction, self).button_plan()
         WorkOrder = self.env['mrp.workorder']
-        ProductUom = self.env['product.uom']
+        ProductUom = self.env['uom.uom']
         for order in self.filtered(lambda x: x.state == 'planned'):
             order.workorder_ids.write({'date_planned_start': False, 'date_planned_finished': False})
 

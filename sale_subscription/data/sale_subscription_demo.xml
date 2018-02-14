@@ -2,15 +2,15 @@
 <odoo>
     <data noupdate="1">
         <!-- Time Units -->
-        <record id="uom_categ_time" model="product.uom.categ">
+        <record id="uom_categ_time" model="uom.category">
             <field name="name">Time</field>
         </record>
-        <record id="subscription_uom_month" model="product.uom">
+        <record id="subscription_uom_month" model="uom.uom">
             <field name="name">Month(s)</field>
             <field ref="uom_categ_time" name="category_id"/>
             <field name="factor" eval="1.0"/>
         </record>
-        <record id="subscription_uom_year" model="product.uom">
+        <record id="subscription_uom_year" model="uom.uom">
             <field name="name">Year(s)</field>
             <field ref="uom_categ_time" name="category_id"/>
             <field name="factor_inv" eval="10.0"/>
