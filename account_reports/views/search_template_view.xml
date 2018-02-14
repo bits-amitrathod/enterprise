@@ -286,9 +286,6 @@
         <div class="btn-group o_dropdown o_account_reports_filter_date_cmp" t-if="options.get('comparison') != None">
             <t t-call="account_reports.search_template_comparison"/>
         </div>
-        <div class="btn-group o_dropdown o_account_reports_filter_bool" t-if="options.get('cash_basis') != None or options.get('all_entries') != None or options.get('unfold_all') != None">
-            <t t-call="account_reports.search_template_extra_options"/>
-        </div>
         <div class="btn-group o_dropdown o_account_reports_filter_multi_company" t-if="options.get('multi_company') != None">
             <t t-call="account_reports.search_template_multi_company"/>
         </div>
@@ -306,6 +303,9 @@
         </div>
         <div class="btn-group o_dropdown o_account_reports_filter_partner" t-if="options.get('partner')">
             <t t-call="account_reports.search_template_partner"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_bool" t-if="options.get('cash_basis') != None or options.get('all_entries') != None or options.get('unfold_all') != None">
+            <t t-call="account_reports.search_template_extra_options"/>
         </div>
     </template>
 
