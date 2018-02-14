@@ -103,12 +103,12 @@ class account_context_coa(models.TransientModel):
         temp = self.get_full_date_names(self.date_to, self.date_from)
         if not isinstance(temp, unicode):
             temp = temp.decode("utf-8")
-        columns = [_('Debit') + '<br/>' + temp, _('Credit')]
+        columns = [_('Debit') + '\n' + temp, _('Credit')]
         if self.comparison and (self.periods_number == 1 or self.date_filter_cmp == 'custom'):
-            columns += [_('Debit') + '<br/>' + self.get_cmp_date(), _('Credit')]
+            columns += [_('Debit') + '\n' + self.get_cmp_date(), _('Credit')]
         else:
             for period in self.get_cmp_periods(display=True):
-                columns += [_('Debit') + '<br/>' + str(period), _('Credit')]
+                columns += [_('Debit') + '\n' + str(period), _('Credit')]
         return columns
 
     @api.multi

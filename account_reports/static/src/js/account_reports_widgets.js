@@ -119,7 +119,7 @@ var ReportWidget = Widget.extend({
         e.stopPropagation();
         e.preventDefault();
         var context_id = $(e.target).parents("div.o_account_reports_page").data("context");
-        var summary = $(e.target).siblings("textarea[name='summary']").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
+        var summary = $(e.target).siblings("textarea[name='summary']").val();
         if (summary) // If it isn't empty, display it normally
             $(e.target).parents("div.o_account_reports_summary").html(QWeb.render("savedSummary", {summary : summary}));
         else // If it's empty, delete the summary and display the default placeholder
@@ -139,7 +139,7 @@ var ReportWidget = Widget.extend({
             var column = $(e.target).parents('td').index();
             var $content = $(QWeb.render("footnoteForm", {target_id: target_id, type: type, column: column}));
             var save = function () {
-                var note = $content.find(".o_account_reports_footnote_note").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' '); // Get the note and strip off extra spaces and line returns
+                var note = $content.find(".o_account_reports_footnote_note").val();
                 return  self.context_model.call('get_next_footnote_number', [[parseInt(context_id, 10)]]).then(function (footNoteSeqNum) { // Get the next sequence number
                     curFootNoteTarget.after(QWeb.render("supFootNoteSeqNum", {footNoteSeqNum: footNoteSeqNum})); // Render the link to the footnote in the report
                     return self.context_model.query(['footnotes_manager_id']) // Store the footnote
@@ -158,7 +158,7 @@ var ReportWidget = Widget.extend({
         e.preventDefault();
         var $el = $(e.target);
         var height = Math.max($el.height(), 100); // Compute the height that will be needed
-        var text = $el.html().replace(/\s+/g, ' ').replace(/\r?\n/g, '').replace(/<br>/g, '\n').replace(/(\n\s*)+$/g, ''); // Remove unnecessary spaces and line returns
+        var text = $el.html();
         var par = $el.parents("div.o_account_reports_summary");
         $el.parents("div.o_account_reports_summary").html(QWeb.render("editSummary", {summary: text})); // Render the textarea
         par.find("textarea").height(height); // Give it the right height
@@ -170,7 +170,7 @@ var ReportWidget = Widget.extend({
         if ($(e.target).parents("p.footnote").length > 0) { // If it's to edit a footnote at the bottom
             $(e.target).parents('.footnote').attr('class', 'o_account_reports_footnote_edit');
             var $el = $(e.target).parents('.o_account_reports_footnote_edit').find('span.text');
-            var text = $el.html().replace(/\s+/g, ' ').replace(/\r?\n/g, '').replace(/<br>/g, '\n').replace(/(\n\s*)+$/g, ''); // Remove unnecessary spaces and line returns
+            var text = $el.html();
             text = text.split('.'); // The text needs to be split into the number of the footnote and the actually content of the footnot
             var num = text[0];
             text = text[1];
@@ -181,7 +181,7 @@ var ReportWidget = Widget.extend({
         e.stopPropagation();
         e.preventDefault();
         var context_id = $(e.target).parents("div.o_account_reports_page").data("context");
-        var text = $(e.target).siblings('textarea').val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' '); // Remove unnecessary spaces and line returns
+        var text = $(e.target).siblings('textarea').val();
         var footNoteSeqNum = $(e.target).parents('p.o_account_reports_footnote_edit').text().split('.')[0];
         if ($(e.target).parents("p.o_account_reports_footnote_edit").length > 0) {
             $(e.target).parents("p.o_account_reports_footnote_edit").attr('class', 'footnote'); // Remove textarea and change back class name

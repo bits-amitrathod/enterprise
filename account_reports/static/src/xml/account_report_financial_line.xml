@@ -25,7 +25,7 @@
     </t>
     <t t-name="savedFootNote">
         <p class="footnote" t-att-id="'footnote'+num">
-            <span class='text'><t t-raw="num+'. '+note"/></span>
+            <span class='text'><t t-esc="num+'. '+note"/></span>
             <span class='o_account_reports_footnote_icons'><i class="fa fa-fw fa-pencil-square"></i><i class="fa fa-fw fa-trash-o"></i> </span>
         </p>
     </t>
@@ -56,7 +56,7 @@
     <t t-name="savedSummary">
         <i class="fa fa-fw fa-pencil o_account_reports_edit_summary_pencil"></i>
         <div class="o_account_reports_saved_summary" role="alert">
-            <span><t t-raw="summary" /></span>
+            <span style="white-space:pre-wrap;"><t t-esc="summary" /></span>
         </div>
     </t>
     <t t-name="fiscalYearAlert">
@@ -111,14 +111,14 @@
                 <t t-set="column" t-value="column + 1" />
                 <td t-att-class="types[column - 1] == 'number' and  'text-right' or types[column - 1] == 'text' and  'text-left' or 'text-center'" style="white-space: nowrap;">
                     <t t-if="typeof c == 'string' || typeof c == 'number'"><span>
-                        <t t-raw="c"/>
+                        <t t-esc="c"/>
                         <t t-if="l.footnotes[column] != undefined">
                             <t t-set='footNoteSeqNum' t-value="l.footnotes[column]" />
                             <t t-call="supFootNoteSeqNum" />
                         </t>
                     </span></t>
                     <t t-if="typeof c != 'string' &amp; typeof c != 'number'"><span t-att-style="c[1]">
-                        <t t-raw="c[0]"/>
+                        <t t-esc="c[0]"/>
                         <t t-if="l.footnotes[column] != undefined">
                             <t t-set='footNoteSeqNum' t-value="l.footnotes[column]" />
                             <t t-call="supFootNoteSeqNum" />
