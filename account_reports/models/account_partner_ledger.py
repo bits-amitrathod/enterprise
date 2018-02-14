@@ -27,17 +27,23 @@ class ReportPartnerLedger(models.AbstractModel):
         return templates
 
     def get_columns_name(self, options):
-        return [
+        columns = [
             {},
             {'name': _('JRNL')},
             {'name': _('Account')},
             {'name': _('Ref')},
+            {'name': _('Due Date'), 'class': 'date'},
             {'name': _('Matching Number')},
             {'name': _('Initial Balance'), 'class': 'number'},
             {'name': _('Debit'), 'class': 'number'},
-            {'name': _('Credit'), 'class': 'number'},
-            {'name': _('Balance'), 'class': 'number'},
-        ]
+            {'name': _('Credit'), 'class': 'number'}]
+
+        if self.user_has_groups('base.group_multi_currency'):
+            columns.append({'name': _('Amount Currency'), 'class': 'number'})
+
+        columns.append({'name': _('Balance'), 'class': 'number'})
+
+        return columns
 
     def set_context(self, options):
         ctx = super(ReportPartnerLedger, self).set_context(options)
@@ -128,15 +134,19 @@ class ReportPartnerLedger(models.AbstractModel):
             total_debit += debit
             total_credit += credit
             total_balance += balance
+            columns = [self.format_value(initial_balance), self.format_value(debit), self.format_value(credit)]
+            if self.user_has_groups('base.group_multi_currency'):
+                columns.append('')
+            columns.append(self.format_value(balance))
             lines.append({
                 'id': 'partner_' + str(partner.id),
                 'name': partner.name,
-                'columns': [{'name': v} for v in [self.format_value(initial_balance), self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
+                'columns': [{'name': v} for v in columns],
                 'level': 2,
                 'trust': partner.trust,
                 'unfoldable': True,
                 'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
-                'colspan': 5,
+                'colspan': 6,
             })
             if 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all:
                 progress = initial_balance
@@ -167,14 +177,18 @@ class ReportPartnerLedger(models.AbstractModel):
                         caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'
                     elif line.payment_id:
                         caret_type = 'account.payment'
+                    domain_columns = [line.journal_id.code, line.account_id.code, name, line.date_maturity,
+                                      line.full_reconcile_id.name, self.format_value(progress_before),
+                                      line_debit != 0 and self.format_value(line_debit) or '',
+                                      line_credit != 0 and self.format_value(line_credit) or '']
+                    if self.user_has_groups('base.group_multi_currency'):
+                        domain_columns.append(self.format_value(line.amount_currency, currency=line.currency_id) if line.amount_currency != 0 else '')
+                    domain_columns.append(self.format_value(progress))
                     domain_lines.append({
                         'id': line.id,
                         'parent_id': 'partner_' + str(partner.id),
                         'name': line.date,
-                        'columns': [{'name': v} for v in [line.journal_id.code, line.account_id.code, name, line.full_reconcile_id.name, self.format_value(progress_before),
-                                    line_debit != 0 and self.format_value(line_debit) or '',
-                                    line_credit != 0 and self.format_value(line_credit) or '',
-                                    self.format_value(progress)]],
+                        'columns': [{'name': v} for v in domain_columns],
                         'caret_options': caret_type,
                         'level': 4,
                     })
@@ -185,17 +199,21 @@ class ReportPartnerLedger(models.AbstractModel):
                         'action': 'view_too_many',
                         'action_id': 'partner,%s' % (partner.id,),
                         'name': _('There are more than 80 items in this list, click here to see all of them'),
-                        'colspan': 8,
+                        'colspan': 10 if self.user_has_groups('base.group_multi_currency') else 9,
                         'columns': [{}],
                     })
                 lines += domain_lines
         if not line_id:
+            total_columns = ['', '', '', '', '', self.format_value(total_initial_balance), self.format_value(total_debit), self.format_value(total_credit)]
+            if self.user_has_groups('base.group_multi_currency'):
+                total_columns.append('')
+            total_columns.append(self.format_value(total_balance))
             lines.append({
                 'id': 'grouped_partners_total',
                 'name': _('Total'),
                 'level': 0,
                 'class': 'o_account_reports_domain_total',
-                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(total_initial_balance), self.format_value(total_debit), self.format_value(total_credit), self.format_value(total_balance)]],
+                'columns': [{'name': v} for v in total_columns],
             })
         return lines
 
