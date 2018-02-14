@@ -136,7 +136,9 @@ class BanxicoTest(TransactionCase):
             self.usd, self.eur, self.cad, self.jpy, self.gbp]
         self.foreign_expected_rates = [
             21.7204, 23.0649, 16.4474, 0.1889, 26.3893]
-        self.company.currency_id = self.mxn
+        self.mxn.active = True
+        for currency in self.foreign_currencies:
+            currency.active = True
 
     def set_rate(self, currency, rate):
         currency.rate_ids.unlink()
@@ -152,6 +154,7 @@ class BanxicoTest(TransactionCase):
         self.test_banxico_currency_update()
 
     def test_banxico_currency_update(self):
+        self.company.currency_id = self.mxn
         # Using self.usd.rate=1 and self.mxn.rate != 1
         self.set_rate(self.usd, 1.0)
         self.assertEqual(self.usd.rate, 1.0)
@@ -159,7 +162,7 @@ class BanxicoTest(TransactionCase):
         self.assertEqual(self.mxn.rate, 10.0)
         with patch('suds.client.Client', new=serviceClientMock):
             self.company.update_currency_rates()
-        self.assertEqual(self.usd.rate, 1.0)
+        self.assertNotEqual(self.usd.rate, 1.0)
         self.assertNotEqual(self.mxn.rate, 10.0)
         foreigns1 = [foreign_currency._convert(1.0, self.mxn, company=self.company, date=fields.Date.today())
                      for foreign_currency in self.foreign_currencies]
