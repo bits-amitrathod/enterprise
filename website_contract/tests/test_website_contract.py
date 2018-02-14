@@ -69,6 +69,124 @@ class TestContract(TestContractCommon):
         self.contract.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
         self.assertEqual(self.contract.state, 'close', 'website_contrect: subscription with online payment and no payment method set should get closed after 15 days')
 
+    # Mocking for 'test_auto_payment_with_token'
+    # Necessary to have a valid and done transaction when the cron on subscription passes through
+    def _mock_subscription_do_payment(self, payment_method, invoice, two_steps_sec=True):
+        tx_obj = self.env['payment.transaction']
+        reference = "CONTRACT-%s-%s" % (self.id, datetime.datetime.now().strftime('%y%m%d_%H%M%S'))
+        values = {
+            'amount': invoice.amount_total,
+            'acquirer_id': self.acquirer.id,
+            'type': 'server2server',
+            'currency_id': invoice.currency_id.id,
+            'reference': reference,
+            'payment_method_id': payment_method.id,
+            'partner_id': invoice.partner_id.id,
+            'partner_country_id': invoice.partner_id.country_id.id,
+            'invoice_id': invoice.id,
+            'state': 'done',
+        }
+        tx = tx_obj.create(values)
+        return tx
+
+    # Mocking for 'test_auto_payment_with_token'
+    # Otherwise the whole sending mail process will be triggered
+    # And we are not here to test that flow, and it is a heavy one
+    def _mock_subscription_send_success_mail(self, tx, invoice):
+        self.mock_send_success_count += 1
+        return 666
+
+    # Mocking for 'test_auto_payment_with_token'
+    # Avoid account_id is False when creating the invoice
+    def _mock_prepare_invoice_data(self, cr, uid, contract, context=None):
+        invoice = self.original_prepare_invoice_data(contract)
+        invoice['account_id'] = self.account_receivable.id
+        return invoice
+
+    # Mocking for 'test_auto_payment_with_token'
+    # Avoid account_id is False when creating the invoice
+    def _mock_prepare_invoice_line(self, cr, uid, line, fiscal_position, context=None):
+        line_values = self.original_prepare_invoice_line(line, fiscal_position)
+        line_values['account_id'] = self.account_receivable.id
+        return line_values
+
+    def test_auto_payment_with_token(self):
+        from mock import patch
+
+        self.company = self.env['res.company'].search([], limit=1)
+
+        self.account_type_receivable = self.env['account.account.type'].create(
+            {'name': 'receivable',
+             'type': 'receivable'})
+
+        self.account_receivable = self.env['account.account'].create(
+            {'name': 'Ian Anderson',
+             'code': 'IA',
+             'user_type_id': self.account_type_receivable.id,
+             'company_id': self.company.id,
+             'reconcile': True})
+
+        self.sale_journal = self.env['account.journal'].create(
+            {'name': 'reflets.info',
+            'code': 'ref',
+            'type': 'sale',
+            'company_id': self.company.id,
+            'sequence_id': self.env['ir.sequence'].search([], limit=1).id,
+            'default_credit_account_id': self.account_receivable.id,
+            'default_debit_account_id': self.account_receivable.id})
+
+        self.partner = self.env['res.partner'].create(
+            {'name': 'Stevie Nicks',
+             'email': 'sti@fleetwood.mac',
+             'property_account_receivable_id': self.account_receivable.id,
+             'property_account_payable_id': self.account_receivable.id,
+             'company_id': self.company.id,
+             'customer': True})
+
+        self.acquirer = self.env['payment.acquirer'].create(
+            {'name': 'The Wire',
+            'provider': 'transfer',
+            'company_id': self.company.id,
+            'auto_confirm': 'none',
+            'environment': 'test',
+            'view_template_id': self.env['ir.ui.view'].search([('type', '=', 'qweb')], limit=1).id})
+
+        self.payment_method = self.env['payment.method'].create(
+            {'name': 'Jimmy McNulty',
+             'partner_id': self.partner.id,
+             'acquirer_id': self.acquirer.id,
+             'acquirer_ref': 'Omar Little'})
+
+        self.original_prepare_invoice_data = self.contract._prepare_invoice_data
+        self.original_prepare_invoice_line = self.contract._prepare_invoice_line
+
+        patchers = [
+            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription._prepare_invoice_line', wraps=self._mock_prepare_invoice_line, create=True),
+            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription._prepare_invoice_data', wraps=self._mock_prepare_invoice_data, create=True),
+            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription._do_payment', wraps=self._mock_subscription_do_payment, create=True),
+            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription.send_success_mail', wraps=self._mock_subscription_send_success_mail, create=True),
+        ]
+
+        for patcher in patchers:
+            patcher.start()
+
+        self.contract_tmpl_3.payment_mandatory = True
+
+        self.contract.write({
+            'partner_id': self.partner.id,
+            'recurring_next_date': fields.Date.to_string(datetime.date.today()),
+            'template_id': self.contract_tmpl_3.id,
+            'company_id': self.company.id,
+            'payment_method_id': self.payment_method.id
+        })
+        self.mock_send_success_count = 0
+        self.contract.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
+        self.assertEqual(self.mock_send_success_count, 1, 'website_contract: a mail to the invoice recipient should have been sent')
+        self.assertEqual(self.contract.state, 'open', 'website_contract: subscription with online payment and a payment method set should stay opened when transaction succeeds')
+
+        for patcher in patchers:
+            patcher.stop()
+
     def test_aa_creation(self):
         order = self.env['sale.order'].create({
             'name': 'TestSOTemplate',
