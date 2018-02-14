@@ -13,7 +13,7 @@ class TestMpsCommon(common.TransactionCase):
         super(TestMpsCommon, self).setUp()
 
         category_id = self.ref('product.product_category_5')
-        uom_id = self.ref('product.product_uom_unit')
+        uom_id = self.ref('uom.product_uom_unit')
         # Create product computer desk and computer desk head.
         # ----------------------------------------------------
         self.computerdesk = self.env['product.product'].create({

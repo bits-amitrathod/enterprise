@@ -412,9 +412,9 @@ class ProviderFedex(models.Model):
     def _fedex_convert_weight(self, weight, unit='KG'):
         weight_uom_id = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
         if unit == 'KG':
-            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_kgm'), round=False)
+            return weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_kgm'), round=False)
         elif unit == 'LB':
-            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_lb'), round=False)
+            return weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_lb'), round=False)
         else:
             raise ValueError
 

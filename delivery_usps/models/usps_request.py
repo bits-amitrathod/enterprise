@@ -78,7 +78,7 @@ class USPSRequest():
                 return _('The estimated price cannot be computed because the weight of your product is missing.')
             tot_weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0
             weight_uom_id = order.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
-            weight_in_pounds = weight_uom_id._compute_quantity(tot_weight, order.env.ref('product.product_uom_lb'))
+            weight_in_pounds = weight_uom_id._compute_quantity(tot_weight, order.env.ref('uom.product_uom_lb'))
             if weight_in_pounds > 4 and order.carrier_id.usps_service == 'First Class':     # max weight of FirstClass Service
                 return _("Please choose another service (maximum weight of this service is 4 pounds)")
         return False

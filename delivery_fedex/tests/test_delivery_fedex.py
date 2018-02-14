@@ -22,7 +22,7 @@ class TestDeliveryFedex(TransactionCase):
 
         self.iPadMini = self.env.ref('product.product_product_6')
         self.iMac = self.env.ref('product.product_product_8')
-        self.uom_unit = self.env.ref('product.product_uom_unit')
+        self.uom_unit = self.env.ref('uom.product_uom_unit')
 
         self.your_company = self.env.ref('base.main_partner')
         self.your_company.write({'country_id': self.env.ref('base.us').id,

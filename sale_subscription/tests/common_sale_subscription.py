@@ -29,7 +29,7 @@ class TestSubscriptionCommon(AccountingTestCase):
             'type': 'service',
             'recurring_invoice': True,
             'subscription_template_id': self.subscription_tmpl.id,
-            'uom_id': self.ref('product.product_uom_unit'),
+            'uom_id': self.ref('uom.product_uom_unit'),
         })
         self.product = Product.create({
             'product_tmpl_id': self.product_tmpl.id,
@@ -41,7 +41,7 @@ class TestSubscriptionCommon(AccountingTestCase):
             'type': 'service',
             'recurring_invoice': True,
             'subscription_template_id': self.subscription_tmpl_2.id,
-            'uom_id': self.ref('product.product_uom_unit'),
+            'uom_id': self.ref('uom.product_uom_unit'),
         })
         self.product2 = Product.create({
             'product_tmpl_id': self.product_tmpl_2.id,
@@ -53,7 +53,7 @@ class TestSubscriptionCommon(AccountingTestCase):
             'type': 'service',
             'recurring_invoice': True,
             'subscription_template_id': self.subscription_tmpl_2.id,
-            'uom_id': self.ref('product.product_uom_unit'),
+            'uom_id': self.ref('uom.product_uom_unit'),
         })
         self.product3 = Product.create({
             'product_tmpl_id': self.product_tmpl_3.id,

@@ -148,6 +148,6 @@ class Providerdhl(models.Model):
     def _dhl_convert_weight(self, weight, unit):
         weight_uom_id = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
         if unit == 'LB':
-            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_lb'), round=False)
+            return weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_lb'), round=False)
         else:
-            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_kgm'), round=False)
+            return weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_kgm'), round=False)

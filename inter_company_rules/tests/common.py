@@ -34,8 +34,8 @@ class TestInterCompanyRulesCommon(common.SavepointCase):
         # Create a new product named product_consultant
         cls.product_consultant = cls.env['product.product'].create({
             'name': 'Service',
-            'uom_id': cls.env.ref('product.product_uom_hour').id,
-            'uom_po_id': cls.env.ref('product.product_uom_hour').id,
+            'uom_id': cls.env.ref('uom.product_uom_hour').id,
+            'uom_po_id': cls.env.ref('uom.product_uom_hour').id,
             'categ_id': cls.env.ref('product.product_category_all').id,
             'type': 'service',
             'company_id': False

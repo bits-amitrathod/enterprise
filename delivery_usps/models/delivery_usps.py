@@ -168,7 +168,7 @@ class ProviderUSPS(models.Model):
 
     def _usps_convert_weight(self, weight):
         weight_uom_id = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
-        weight_in_pounds = weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_lb'))
+        weight_in_pounds = weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_lb'))
         pounds = int(math.floor(weight_in_pounds))
         ounces = round((weight_in_pounds - pounds) * 16, 3)
         return {'pound': pounds, 'ounce': ounces}

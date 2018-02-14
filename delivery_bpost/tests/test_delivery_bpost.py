@@ -52,14 +52,14 @@ class TestDeliveryBpost(TransactionCase):
                                  'country_id': self.env.ref('base.us').id,
                                  'phone': '+1 (650) 691-3277  '})
         self.iPadMini = self.env.ref('product.product_product_6')
-        self.uom_unit = self.env.ref('product.product_uom_unit')
+        self.uom_unit = self.env.ref('uom.product_uom_unit')
 
     def test_01_bpost_basic_be_domestic_flow(self):
         SaleOrder = self.env['sale.order']
 
         sol_vals = {'product_id': self.iPadMini.id,
                     'name': "[A1232] iPad Mini",
-                    'product_uom': self.env.ref('product.product_uom_unit').id,
+                    'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
 
@@ -93,7 +93,7 @@ class TestDeliveryBpost(TransactionCase):
 
         sol_vals = {'product_id': self.iPadMini.id,
                     'name': "[A1232] iPad Mini",
-                    'product_uom': self.env.ref('product.product_uom_unit').id,
+                    'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
 

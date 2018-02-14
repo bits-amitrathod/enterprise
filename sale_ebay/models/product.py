@@ -693,7 +693,7 @@ class ProductTemplate(models.Model):
                 if not shipping_product:
                     shipping_product = self.env['product.template'].create({
                         'name': shipping_name,
-                        'uom_id': self.env.ref('product.product_uom_unit').id,
+                        'uom_id': self.env.ref('uom.product_uom_unit').id,
                         'type': 'service',
                         'categ_id': self.env.ref('sale_ebay.product_category_ebay').id,
                     })
@@ -702,7 +702,7 @@ class ProductTemplate(models.Model):
                     'name': shipping_name,
                     'product_id': shipping_product.product_variant_ids[0].id,
                     'product_uom_qty': 1,
-                    'product_uom': self.env.ref('product.product_uom_unit').id,
+                    'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'price_unit': currency.compute(
                             float(transaction['ShippingServiceSelected']['ShippingServiceCost']['value']),
                             company_id.currency_id),

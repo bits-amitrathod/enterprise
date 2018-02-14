@@ -4,7 +4,7 @@
         <!-- volume is always sent in milliliter to blackbox -->
         <record id="product_uom_millilitre" model="product.uom">
             <field name="name">Milliliter(s)</field>
-            <field name="category_id" ref="product.product_uom_categ_vol"/>
+            <field name="category_id" ref="uom.product_uom_categ_vol"/>
             <field name="factor">1000</field>
             <field name="uom_type">smaller</field>
         </record>
@@ -19,8 +19,8 @@
             <field name="standard_price">0.0</field>
             <field name="list_price">0.0</field>
             <field name="type">consu</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="taxes_id" eval="[(6, 0, [ref('zero_vat_work_in_out')])]"/>
         </record>
         <record id="product_product_work_out" model="product.product">
@@ -28,8 +28,8 @@
             <field name="standard_price">0.0</field>
             <field name="list_price">0.0</field>
             <field name="type">consu</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="taxes_id" eval="[(6, 0, [ref('zero_vat_work_in_out')])]"/>
         </record>
 

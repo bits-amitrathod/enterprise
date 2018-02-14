@@ -234,8 +234,8 @@ class ProviderUPS(models.Model):
     def _ups_convert_weight(self, weight, unit='KGS'):
         weight_uom_id = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
         if unit == 'KGS':
-            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_kgm'), round=False)
+            return weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_kgm'), round=False)
         elif unit == 'LBS':
-            return weight_uom_id._compute_quantity(weight, self.env.ref('product.product_uom_lb'), round=False)
+            return weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_lb'), round=False)
         else:
             raise ValueError

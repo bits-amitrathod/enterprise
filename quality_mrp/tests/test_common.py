@@ -11,6 +11,6 @@ class TestQualityMrpCommon(common.TransactionCase):
 
         self.product_id = self.ref('product.product_product_27')
         self.product_tmpl_id = self.ref('product.product_product_27_product_template')
-        self.product_uom_id = self.ref('product.product_uom_unit')
+        self.product_uom_id = self.ref('uom.product_uom_unit')
         self.picking_type_id = self.ref('mrp.picking_type_manufacturing')
         self.bom_id = self.ref('mrp.mrp_bom_laptop_cust')

@@ -11,7 +11,7 @@ class TestDeliveryUPS(TransactionCase):
 
         self.iPadMini = self.env.ref('product.product_product_6')
         self.iMac = self.env.ref('product.product_product_8')
-        self.uom_unit = self.env.ref('product.product_uom_unit')
+        self.uom_unit = self.env.ref('uom.product_uom_unit')
 
         # Add a full address to "Your Company" and "Agrolait"
         self.your_company = self.env.ref('base.main_partner')

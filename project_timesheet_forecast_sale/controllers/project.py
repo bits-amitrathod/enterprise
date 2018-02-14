@@ -149,7 +149,7 @@ class TimesheetForecastController(SaleTimesheetController):
                 }
             }
         """
-        hour_rounding = request.env.ref('product.product_uom_hour').rounding
+        hour_rounding = request.env.ref('uom.product_uom_hour').rounding
         # default values (per task per employee)
         result = {}
 
