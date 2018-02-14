@@ -7,7 +7,7 @@ import re
 
 from datetime import datetime, timedelta
 from ebaysdk.exception import ConnectionError
-from ebaysdk.trading import Connection as Trading
+from odoo.addons.sale_ebay.tools.ebaysdk import Trading
 from xml.sax.saxutils import escape
 
 from odoo import models, fields, api, _
