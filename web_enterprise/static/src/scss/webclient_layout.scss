@@ -24,6 +24,7 @@ html {
         }
 
         .o_content {
+            direction: ltr; //Define direction attribute here so when rtlcss preprocessor run, it converts it to rtl
             flex: 1 1 auto;
             @include media-breakpoint-up(md) {
                 overflow: auto;
@@ -44,6 +45,7 @@ html {
                 bottom: 0;
                 left: 0;
                 height: 100%;
+                direction: ltr;
                 &.o_field_widget {
                     @include media-breakpoint-down(sm) {
                         position: static;  // reset the height 100% distribution on flex item
