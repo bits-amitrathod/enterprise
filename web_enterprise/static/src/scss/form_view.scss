@@ -38,7 +38,18 @@
         border-bottom: 1px solid $gray-lighter-dark;
 
         > .o_form_sheet {
-            @extend .container; // FIXME was a mixin before scss convertion
+            // Mimic a .container (TODO improve)
+            @include container-fixed;
+            @media (min-width: $screen-sm-min) {
+              width: $container-sm;
+            }
+            @media (min-width: $screen-md-min) {
+              width: $container-md;
+            }
+            @media (min-width: $screen-lg-min) {
+              width: $container-lg;
+            }
+
             background-color: $odoo-view-background-color;
             border: 1px solid $gray-lighter-darker;
             box-shadow: 0 5px 20px -15px black;
@@ -145,7 +156,13 @@
                 margin-left: $odoo-statbutton-spacing; // To create the button padding left (firefox bug)
             }
 
-            > .o_stat_info { // contains the value and text
+            // Some buttons only display text without using StatInfo template
+            > span {
+                @include o-text-overflow(block);
+                white-space: normal; // text on several lines if needed
+            }
+
+            > .o_stat_info, > span { // contains the value and text
                 display: inline-block;
                 vertical-align: middle;
                 font-weight: 500;
@@ -168,13 +185,6 @@
                         display: inline;
                     }
                 }
-            }
-
-            // Some buttons only display text without using StatInfo template
-            > span {
-                @include o-text-overflow(block);
-                @extend .o_stat_info; // layout // FIXME was a mixin before scss convertion
-                white-space: normal; // text on several lines if needed
             }
 
             &.o_button_more {
@@ -257,7 +267,17 @@
     // Chatter
     > .oe_chatter {
         @include o-flex(1000, 0, auto);
-        @extend .container; // FIXME was a mixin before scss convertion
+        // Mimic a .container (TODO improve)
+        @include container-fixed;
+        @media (min-width: $screen-sm-min) {
+          width: $container-sm;
+        }
+        @media (min-width: $screen-md-min) {
+          width: $container-md;
+        }
+        @media (min-width: $screen-lg-min) {
+          width: $container-lg;
+        }
         padding: $grid-gutter-width*0.25 0;
     }
 

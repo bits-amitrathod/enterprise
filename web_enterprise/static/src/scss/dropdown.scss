@@ -34,15 +34,3 @@
         }
     }
 }
-
-// Buttons used as dropdown toggler
-.o_dropdown_toggler_btn {
-    @extend .btn-link; // FIXME was a mixin before scss convertion
-    box-shadow: none !important; // override box-shaddow of btn-group open
-    color: $odoo-main-text-color;
-    &:hover, &:focus {
-        color: darken($odoo-main-text-color, 20%);
-        background-color: $odoo-brand-lightsecondary;
-    }
-    padding: 0;
-}
