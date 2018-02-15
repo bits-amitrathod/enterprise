@@ -46,7 +46,7 @@ class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
     _description = 'Ticket'
     _order = 'priority desc, id desc'
-    _inherit = ['mail.thread', 'utm.mixin', 'rating.mixin', 'mail.activity.mixin', 'portal.mixin']
+    _inherit = ['portal.mixin', 'mail.thread', 'utm.mixin', 'rating.mixin', 'mail.activity.mixin']
 
     @api.model
     def default_get(self, fields):
@@ -465,7 +465,7 @@ class HelpdeskTicket(models.Model):
             else:
                 return {
                     'type': 'ir.actions.act_url',
-                    'url': '/ticket/%s' % self.id,
+                    'url': '/helpdesk/ticket/%s/%s' % (self.id, self.access_token),
                     'target': 'self',
                     'res_id': self.id,
                 }
