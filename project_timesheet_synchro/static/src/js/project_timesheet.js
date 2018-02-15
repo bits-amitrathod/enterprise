@@ -75,7 +75,7 @@ odoo.define('project_timeshee.ui', function (require ) {
         willStart: function() {
             var self = this;
             var defs = [
-                ajax.loadXML('static/src/xml/project_timesheet.xml', core.qweb),
+                ajax.loadXML('/project_timesheet_synchro/static/src/xml/project_timesheet.xml', core.qweb),
                 ajax.loadLibs(this)
             ];
             if(self.isDesktop) {
@@ -91,7 +91,6 @@ odoo.define('project_timeshee.ui', function (require ) {
                 self.server = local_storage.getItem('pt_current_server') ? local_storage.getItem('pt_current_server') : "$no_server$";
                 self.get_user_data(self.user, self.server);
                 self.sanitize_all_ids();
-                defs.push($.Deferred().resolve());
             }
             return $.when.apply($, defs);
         },
