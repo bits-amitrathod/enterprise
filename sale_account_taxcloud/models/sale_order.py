@@ -31,7 +31,7 @@ class SaleOrder(models.Model):
         response = request.get_all_taxes_values()
 
         if response.get('error_message'):
-            raise ValidationError(response['error_message'])
+            raise ValidationError(_('Unable to retrieve taxes from TaxCloud: ')+'\n'+response['error_message']+'\n\n'+_('The configuration of TaxCloud is in the Accounting app, Settings menu.'))
 
         tax_values = response['values']
 
