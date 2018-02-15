@@ -208,6 +208,18 @@ tour.register('web_studio_tests_tour', {
     trigger: '.o_web_studio_list_view_editor th:contains("COUCOU")',
 }, {
     trigger: '.o_web_studio_leave',
+}, {
+    // re-open studio
+    trigger: '.o_web_studio_navbar_item',
+}, {
+    // edit action
+    trigger: '.o_web_studio_menu .o_menu_sections a[data-name="views"]',
+}, {
+    // add a kanban
+    trigger: '.o_web_studio_view_category .o_web_studio_view_type.o_web_studio_inactive[data-type="kanban"] .o_web_studio_thumbnail',
+}, {
+    // enable stages
+    trigger: '.o_web_studio_sidebar input[name=enable_stage]',
 }]);
 
 });

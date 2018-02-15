@@ -804,6 +804,7 @@ var ViewEditorManager = Widget.extend({
                 field_name: field_name,
                 subview_type: subviewType,
                 subview_xpath: subviewXpath,
+                context: session.user_context,
             },
         });
         return def
@@ -936,6 +937,7 @@ var ViewEditorManager = Widget.extend({
         this._rpc({
             route: '/web_studio/create_stages_model',
             params: {
+                context: session.user_context,
                 model_name: modelName,
             },
         }).then(function (relationID) {

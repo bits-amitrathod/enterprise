@@ -157,7 +157,7 @@ class ProjectForecast(models.Model):
     @api.constrains('start_date', 'end_date', 'project_id', 'task_id', 'employee_id', 'active')
     def _check_overlap(self):
         self.env.cr.execute("""
-            SELECT F1.id, F1.start_date, F1.end_date
+            SELECT F1.id, F1.start_date, F1.end_date, F1.project_id, F1.task_id
             FROM project_forecast F1
             INNER JOIN project_forecast F2
                 ON F1.employee_id = F2.employee_id AND F1.project_id = F2.project_id
@@ -173,8 +173,17 @@ class ProjectForecast(models.Model):
                 AND F1.active = 't'
                 AND F1.id IN %s
         """, (tuple(self.ids),))
-        if self.env.cr.fetchall():
-            raise ValidationError(_('Forecast should not overlap existing forecasts.'))
+        data = self.env.cr.dictfetchall()
+
+        project_ids = [item['project_id'] for item in data if item.get('project_id')]
+        task_ids = [item['task_id'] for item in data if item.get('task_id')]
+        if data:
+            project_names = self.env['project.project'].browse(project_ids).mapped('name')
+            task_names = self.env['project.task'].browse(task_ids).mapped('name')
+            message = _('Forecast should not overlap existing forecasts. To solve this, check the project(s): %s.') % (' ,'.join(project_names),)
+            if task_names:
+                message = _('%s Task(s): %s' % (message, ' ,'.join(task_names),))
+            raise ValidationError(message)
 
     @api.onchange('task_id')
     def _onchange_task_id(self):
@@ -216,7 +225,8 @@ class ProjectForecast(models.Model):
                 eval_context.update({'active_id': self._context.get('active_id')})
             context = safe_eval(action['context'], eval_context)
         # add the default employee (for creation)
-        context['default_employee_id'] = self.env.user.employee_ids[0].id
+        if self.env.user.employee_ids:
+            context['default_employee_id'] = self.env.user.employee_ids[0].id
         # hide range button for grid view
         company = self.company_id or self.env.user.company_id
         if company.forecast_span == 'day':
