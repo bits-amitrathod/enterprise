@@ -281,6 +281,10 @@ class ResConfigSettings(models.TransientModel):
 
     @api.onchange('currency_interval_unit')
     def onchange_currency_interval_unit(self):
+        #as the onchange is called upon each opening of the settings, we avoid overwriting
+        #the next execution date if it has been already set
+        if self.company_id.currency_next_execution_date:
+            return
         if self.currency_interval_unit == 'daily':
             next_update = relativedelta(days=+1)
         elif self.currency_interval_unit == 'weekly':
