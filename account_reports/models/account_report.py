@@ -790,10 +790,10 @@ class AccountReport(models.AbstractModel):
 
         body = body.replace(b'<body class="o_account_reports_body_print">', b'<body class="o_account_reports_body_print">' + body_html)
         if minimal_layout:
-            header = self.env['ir.actions.report'].render_template("web.internal_layout", values=rcontext)
-            footer = ''
+            header = ''
+            footer = self.env['ir.actions.report'].render_template("web.internal_layout", values=rcontext)
             spec_paperformat_args = {'data-report-margin-top': 10, 'data-report-header-spacing': 10}
-            header = self.env['ir.actions.report'].render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=header))
+            footer = self.env['ir.actions.report'].render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=footer))
         else:
             rcontext.update({
                     'css': '',
