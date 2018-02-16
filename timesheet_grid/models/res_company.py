@@ -13,7 +13,7 @@ class Company(models.Model):
     # reminder for employees
     timesheet_mail_employee_allow = fields.Boolean("Employee Reminder", default=True,
         help="If checked, send an email to all users who have not recorded their timesheet")
-    timesheet_mail_employee_delay = fields.Integer("Employee Reminder Days", default=3)
+    timesheet_mail_employee_delay = fields.Integer("Employee Reminder Days", default=1)
     timesheet_mail_employee_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
@@ -23,7 +23,7 @@ class Company(models.Model):
     # reminder for manager
     timesheet_mail_manager_allow = fields.Boolean("Manager Reminder", default=True,
         help="If checked, send an email to all managers who have not validated their timesheet")
-    timesheet_mail_manager_delay = fields.Integer("Manager Reminder Days", default=7)
+    timesheet_mail_manager_delay = fields.Integer("Manager Reminder Days", default=3)
     timesheet_mail_manager_interval = fields.Selection([
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
