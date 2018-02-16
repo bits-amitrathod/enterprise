@@ -68,7 +68,7 @@ class ProjectForecast(models.Model):
     stage_id = fields.Many2one(related='task_id.stage_id', string="Task stage")
     tag_ids = fields.Many2many(related='task_id.tag_ids', string="Task tags")
 
-    time = fields.Float(string="%", help="Percentage of working time", compute='_compute_time', store=True, digits=(16, 2))
+    time = fields.Float(string="Allocated time / Time span", help="Percentage of working time", compute='_compute_time', store=True, digits=(16, 2))
 
     start_date = fields.Date(default=_default_start_date, required=True)
     end_date = fields.Date(default=_default_end_date, required=True)
