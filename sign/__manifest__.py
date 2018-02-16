@@ -4,12 +4,12 @@
     'name': 'Sign',
     'version': '1.0',
     'category': 'Document Management',
-    'summary': "Send documents to sign online, receive and archive filled copies (esign)",
+    'summary': "Send documents to sign online and handle filled copies",
     'description': """
 Sign and complete your documents easily. Customize your documents with text and signature fields and send them to your recipients.\n
 Let your customers follow the signature process easily.
     """,
-    'website': 'http://www.odoo.com',
+    'website': 'https://www.odoo.com/page/sign',
     'depends': ['mail', 'document', 'portal', 'sms'],
     'data': [
         'security/security.xml',

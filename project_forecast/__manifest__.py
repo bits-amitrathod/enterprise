@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Project Forecast",
-    'summary': """Resource management for Project""",
+    'name': "Forecast",
+    'summary': """Forecast your resources on project tasks""",
     'description': """
     Schedule your teams across projects and estimate deadlines more accurately.
     """,

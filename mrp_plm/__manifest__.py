@@ -6,7 +6,8 @@
     'version': '1.0',
     'category': 'Manufacturing',
     'sequence': 50,
-    'summary': """Bill of Materials, Routings, Versions, Engineering Change Orders""",
+    'summary': """Manage engineering change orders on products, bills of material and routings""",
+    'website': 'https://www.odoo.com/page/mrp-plm',
     'depends': ['mrp'],
     'description': """
 Product Life Management

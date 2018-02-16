@@ -3,10 +3,10 @@
 
 
 {
-    'name': 'Subscription Management',
+    'name': 'Subscriptions',
     'version': '1.1',
     'category': 'Sales',
-    'summary': 'Recurring invoicing, renewals',
+    'summary': 'Generate recurring invoices and manage renewals',
     'description': """
 This module allows you to manage subscriptions.
 

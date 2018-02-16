@@ -3,11 +3,12 @@
 
 
 {
-    'name': 'Appointment Scheduling',
+    'name': 'Appointments',
     'version': '1.0',
     'category': 'Website',
     'sequence': 131,
-    'summary': 'Schedule Appointments with Clients',
+    'summary': 'Schedule appointments with clients',
+    'website': 'https://www.odoo.com/page/appointments',
     'description': """
 Allow clients to Schedule Appointments through your Website
 -------------------------------------------------------------

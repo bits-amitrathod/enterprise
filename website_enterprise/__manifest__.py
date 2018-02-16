@@ -2,9 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Website Enterprise',
-    'category': 'Website',
+    'category': 'Technical Settings',
+    'summary': 'Get the enterprise look and feel',
     'description': """
-Override community website features
+This module overrides community website features and introduces enterprise look and feel.
     """,
     'depends': ['website'],
     'data': [

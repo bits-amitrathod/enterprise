@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': "Warehouse Management Barcode Scanning",
-    'summary': "Add barcode scanning facilities to Warehouse Management.",
+    'name': "Barcode",
+    'summary': "Use barcode scanners to process logistics operations",
     'description': """
         This module adds support for barcodes scanning to the warehouse management system.
     """,
