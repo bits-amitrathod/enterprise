@@ -9,6 +9,12 @@
         <title>Odoo Project Timesheet</title>
         <link rel="shortcut icon" href="static/src/img/favicon.ico" type="image/x-icon"/>
 
+        <script type="text/javascript">
+            var odoo = {
+                session_info: <t t-raw="session_info"/>,
+            };
+        </script>
+
         <t t-call-assets="web.assets_common"/>
         <t t-call-assets="web.assets_backend"/>
         <t t-call-assets="web_editor.summernote"/>
