@@ -18,13 +18,14 @@
 # Anja Funk <anja.funk@afimage.de>, 2016
 # Constantin Ehrenstein <transifex@skiller.eu>, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f FFE <e2f_de_FFE@outlook.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-29 14:58+0000\n"
 "PO-Revision-Date: 2016-09-29 14:58+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: e2f FFE <e2f_de_FFE@outlook.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -147,7 +148,7 @@ msgstr "Aboauftrag schließen"
 #. module: sale_contract
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_close_reason_wizard_action
 msgid "Close/Cancel Reason"
-msgstr ""
+msgstr "Grund für Beendigung / Abbruch"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
@@ -169,7 +170,7 @@ msgstr "Code"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_commercial_partner_id
 msgid "Commercial Partner"
-msgstr ""
+msgstr "Kommerzieller Partner"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_company_id
@@ -253,6 +254,9 @@ msgid ""
 "Upselling: The Sales Order added lines to the subscription\n"
 "Renewal: The Sales Order replaced the subscription's content with its own"
 msgstr ""
+"Erstellung: Der Verkaufsauftrag hat das Abonnement erstellt\n"
+"Upselling: Der Verkaufsauftrag hat Zeilen zum Abonnement hinzugefügt\n"
+"Verlängerung: Der Verkaufsauftrag ersetzt den Inhalt des Abonnements durch seinen eigenen"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_credit
@@ -340,7 +344,7 @@ msgstr "Das Enddatum ist im nächsten Monat"
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "End date passed"
-msgstr ""
+msgstr "Enddatum ist abgelaufen"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
@@ -361,6 +365,8 @@ msgstr "Gruppiert nach..."
 #: model:ir.module.category,description:sale_contract.module_category_contract_management
 msgid "Helps you handle subscriptions and recurring invoicing."
 msgstr ""
+"Hilft Ihnen bei der Verwaltung von Abonnements und wiederkehrenden "
+"Rechnungen."
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9158
@@ -379,6 +385,9 @@ msgid ""
 "If set in advance, the subscription will be set to pending 1 month before "
 "the date and will be closed on the date set in this field."
 msgstr ""
+"Wenn es im Voraus festgelegt wird, wird das Abonnement einen Monat vor dem "
+"Datum auf unerledigt gesetzt und zu dem in diesem Feld festgelegten Datum "
+"storniert."
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_product_template_recurring_invoice
@@ -394,6 +403,9 @@ msgid ""
 "If set, subscriptions with this template will invoice in this journal; "
 "otherwise the sales journal with the lowest sequence is used."
 msgstr ""
+"Falls festgelegt, werden Abonnements mit dieser Vorlage in diesem Journal in"
+" Rechnung gestellt. Andernfalls wird das Verkaufsjournal mit der niedrigsten"
+" Sequenz verwendet."
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_active
@@ -466,7 +478,7 @@ msgstr "Zuletzt aktualisiert am"
 #. module: sale_contract
 #: model:res.groups,name:sale_contract.group_sale_contract_manager
 msgid "Manage Subscriptions"
-msgstr ""
+msgstr "Abonnements verwalten"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_line_quantity
@@ -644,7 +656,7 @@ msgstr "Verkauf über Abonnement"
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_template
 msgid "Sale Subscription Template"
-msgstr ""
+msgstr "Vorlage für Verkaufsabonnement"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_list
@@ -665,7 +677,7 @@ msgstr "Verkäufer"
 #. module: sale_contract
 #: model:res.groups,name:sale_contract.group_sale_contract_view
 msgid "See Subscriptions"
-msgstr ""
+msgstr "Abonnements ansehen"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_sequence
@@ -695,7 +707,7 @@ msgstr "Startmonat"
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
 msgid "Start Subscription"
-msgstr ""
+msgstr "Abonnement starten"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_state
@@ -705,7 +717,7 @@ msgstr "Status"
 #. module: sale_contract
 #: model:mail.message.subtype,name:sale_contract.subtype_state_change
 msgid "State Change"
-msgstr ""
+msgstr "Statuswechsel"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_state
@@ -736,7 +748,7 @@ msgstr "Aboauftrag"
 #: model:ir.ui.view,arch_db:sale_contract.view_subcription_report_graph
 #: model:ir.ui.view,arch_db:sale_contract.view_subcription_report_pivot
 msgid "Subscription Analysis"
-msgstr ""
+msgstr "Abonnementanalyse"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_form
@@ -763,7 +775,7 @@ msgstr "Abonnement Produkte"
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_report
 msgid "Subscription Statistics"
-msgstr ""
+msgstr "Abonnementstatistik"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_template_id
@@ -787,7 +799,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_list
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_search
 msgid "Subscription Templates"
-msgstr ""
+msgstr "Vorlage für Abonnements"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.product_template_search_view_inherit_sale_contract
@@ -822,7 +834,7 @@ msgstr "Abonnements"
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_action_pending
 #: model:ir.ui.menu,name:sale_contract.menu_sale_subscription_pending
 msgid "Subscriptions to Renew"
-msgstr ""
+msgstr "Zu erneuernde Aboaufträge"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_close_reason
@@ -865,6 +877,9 @@ msgid ""
 "                can be selected by the salespeople to quickly configure the\n"
 "                terms and conditions of the subscription."
 msgstr ""
+"Vorlagen werden verwendet, um Abonnements vorzubereiten, die\n"
+"von den Verkäufern gewählt werden können, um die Geschäftsbedingungen\n"
+"des Abonnements schnell zu konfigurieren."
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_recurring_next_date
@@ -872,6 +887,8 @@ msgid ""
 "The next invoice will be created on this date then the period will be "
 "extended."
 msgstr ""
+"Die nächste Rechnung wird an diesem Datum erstellt, dann wird der Zeitraum "
+"verlängert."
 
 #. module: sale_contract
 #: model:ir.actions.act_window,help:sale_contract.product_action_subscription
@@ -892,7 +909,7 @@ msgstr ""
 #. module: sale_contract
 #: model:res.groups,comment:sale_contract.group_sale_contract_manager
 msgid "The user will have write access to Subscriptions."
-msgstr ""
+msgstr "Der Benutzer hat Schreibrechte für Abonnements."
 
 #. module: sale_contract
 #: code:addons/sale_contract/models/sale_order.py:83
@@ -979,12 +996,15 @@ msgid ""
 "            a physical product, a consumable or a service you offer to\n"
 "            customers."
 msgstr ""
+"Sie müssen für alles, was Sie verkaufen, ein Produkt definieren.\n"
+"Ein reales Produkt, Verbrauchsmaterial oder eine Dienstleistung, \n"
+"die Sie anbieten."
 
 #. module: sale_contract
 #: code:addons/sale_contract/models/sale_subscription.py:167
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
-msgstr ""
+msgstr "Sie müssen für das Abonnement %s zuerst einen Kunden wählen."
 
 #. module: sale_contract
 #: model:ir.actions.act_window,help:sale_contract.sale_subscription_action_pending

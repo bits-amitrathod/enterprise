@@ -29,13 +29,14 @@
 # lap.odoo <lap@odoo.com>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f Production <e2f_prod@outlook.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 09:14+0000\n"
 "PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: e2f Production <e2f_prod@outlook.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,6 +65,15 @@ msgid ""
 "        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
 "            "
 msgstr ""
+"\n"
+" Paiement\n"
+" Tous les paiements sont dus à la réception. En cas de non-réception d'un paiement ou de refus du mode de paiement, l'acheteur renonce à la propriété de tous les articles achetés. En l'absence de paiement, les articles ne seront pas expédiés.\n"
+"\n"
+" Politiques d'expédition\n"
+" Les frais de port sont réglés par l'acheteur conformément au montant indiqué par le vendeur au moment de l'achat. En cas de perte d'un article pendant le transport, le coût total de l'article, y compris l'expédition, seront remboursés à l'acheteur par le vendeur. Les frais d'expédition peuvent doubler en cas d'expédition à l'étranger. Si un article est endommagé pendant le transport, le vendeur ne pourra en être tenu pour responsable.\n"
+"\n"
+" Politique de retour/remboursement\n"
+" Les articles peuvent faire l'objet d'un remboursement ou d'un retour en fonction de la réclamation. Si un article est endommagé pendant le transport, un autre article sera envoyé gratuitement. Si un article ne satisfait pas l'acheteur, ce dernier doit fournir une explication écrite avant que l'article puisse être renvoyé pour remboursement. L'acheteur doit tenir compte de la description de l'article avant de demander un remboursement. Si l'article correspond à la description du vendeur et que l'acheteur n'est pas satisfait, le vendeur n'est pas tenu de le rembourser.    "
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_payment_success
@@ -807,6 +817,8 @@ msgid ""
 "Custom Domain\n"
 "        Access your Odoo Instance using your own domain."
 msgstr ""
+"Domaine personnalisé\n"
+" Accédez à votre instance Odoo en utilisant votre propre nom de domaine."
 
 #. module: website_contract
 #: model:sale.quote.option,name:website_contract.sugg_line_12
@@ -831,6 +843,8 @@ msgid ""
 "Customized Module\n"
 "        Customize a module to better match your business process."
 msgstr ""
+"Module personnalisé\n"
+" Personnalisez un module pour correspondre au mieux à votre processus métier."
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_view
@@ -839,6 +853,8 @@ msgid ""
 "Customized View\n"
 "        Customize one or more views (in a single module) to better suit your needs."
 msgstr ""
+"Vue personnalisée\n"
+" Personnalisez une ou plusieurs vues (dans un seul module) pour mieux répondre à vos besoins."
 
 #. module: website_contract
 #: model:product.product,name:website_contract.odoo_custom_view
@@ -864,7 +880,7 @@ msgstr "Description"
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_wizard_date_from
 msgid "Discount Date"
-msgstr ""
+msgstr "Date de remise"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_display_name
@@ -916,6 +932,8 @@ msgstr ""
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
 msgstr ""
+"En l'absence de configuration, le jeton de paiement par défaut du partenaire"
+" sera utilisé."
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_order_contract_template
@@ -964,7 +982,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "If you wish to reopen it, the"
-msgstr ""
+msgstr "Si vous souhaitez le réactiver, le"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -972,6 +990,8 @@ msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period."
 msgstr ""
+"Si vous souhaitez le réactiver, vous pouvez payer votre facture pour la "
+"période de facturation en cours."
 
 #. module: website_contract
 #: code:addons/website_contract/controllers/main.py:47
@@ -1116,6 +1136,8 @@ msgid ""
 "Odoo SAAS\n"
 "        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
 msgstr ""
+"SaaS Odoo\n"
+" Accédez à votre instance Odoo. Stockage sur nos serveurs : grande vitesse, haute fiabilité et sauvegardes quotidiennes."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract_pricing
@@ -1610,6 +1632,10 @@ msgid ""
 " or directly insert them in the subscription to invoice it on the next "
 "invoice date."
 msgstr ""
+"Vous pouvez soit créer un devis qui fera l'objet d'une remise pour la "
+"période de facturation en cours (les options seront ajoutées une fois le "
+"devis confirmé) soit les insérer directement dans l'abonnement pour que cela"
+" figure sur la prochaine facture."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.portal_my_contracts
@@ -1657,7 +1683,7 @@ msgstr "Votre abonnement ${object.subscription_id.code} est actif!"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Your subscription is closed."
-msgstr ""
+msgstr "Votre abonnement est résilié."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1679,7 +1705,7 @@ msgstr "jour(s)"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "missing payments (from"
-msgstr ""
+msgstr "paiements manquants (de"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1701,7 +1727,7 @@ msgstr "sale.subscription.wizard.option"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "to this day) will be automatically processed."
-msgstr ""
+msgstr "à ce jour) seront automatiquement traités."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract

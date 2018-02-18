@@ -4,20 +4,21 @@
 # 
 # Translators:
 # Xavier Belmere <Info@cartmeleon.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Clo <clo@odoo.com>, 2016
 # Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2016
 # David Halgand <david.halgand@gmail.com>, 2016
 # Olivier Dony <odo@odoo.com>, 2016
 # Sébastien Le Ray <sebastien-github@orniz.org>, 2017
 # Lucas Deliege <lud@openerp.com>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-29 14:58+0000\n"
 "PO-Revision-Date: 2016-09-29 14:58+0000\n"
-"Last-Translator: Lucas Deliege <lud@openerp.com>, 2017\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,6 +79,9 @@ msgid ""
 "Can only be used for forecasts not spanning multiple months, found "
 "%(forecast_count)d forecast(s) spanning across months in %(project_name)s"
 msgstr ""
+"Uniquement utilisable pour les prévisions qui ne s'étendent pas sur "
+"plusieurs mois. %(forecast_count)d prévision(s) s'étendant sur plusieurs "
+"mois ont été trouvées pour %(project_name)s."
 
 #. module: project_forecast_grid
 #: model:ir.model.fields,field_description:project_forecast_grid.field_project_forecast_assignment_create_uid
@@ -125,6 +129,8 @@ msgstr ""
 msgid ""
 "Forecasting over a project only supports monthly forecasts (got step {})"
 msgstr ""
+"Seule la création de prévisions mensuelles est prise en charge (étape reçue "
+": {})"
 
 #. module: project_forecast_grid
 #: model:ir.ui.menu,name:project_forecast_grid.project_forecast_gantt
@@ -144,6 +150,10 @@ msgid ""
 " field and the 'resource_hours' cell field, got respectively "
 "%(column_field)r and %(cell_field)r"
 msgstr ""
+"L'ajustement de la grille pour les prévisions de projet prend uniquement en "
+"charge le champ de la colonne « start_date » et le champ de la cellule « "
+"resource_hours ». Les valeurs reçues étaient respectivement %(column_field)r"
+" et %(cell_field)r."
 
 #. module: project_forecast_grid
 #: model:ir.model.fields,field_description:project_forecast_grid.field_project_forecast_assignment_id
@@ -229,4 +239,4 @@ msgstr "project.forecast"
 #. module: project_forecast_grid
 #: model:ir.model,name:project_forecast_grid.model_project_forecast_assignment
 msgid "project.forecast.assignment"
-msgstr ""
+msgstr "project.forecast.assignment"

@@ -22,13 +22,14 @@
 # Dejan Dinic, 2017
 # Andi, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f FFE <e2f_de_FFE@outlook.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 09:14+0000\n"
 "PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: e2f FFE <e2f_de_FFE@outlook.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,6 +58,21 @@ msgid ""
 "        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
 "            "
 msgstr ""
+"\n"
+"Zahlung\n"
+" Alle Zahlungen sind bei Erhalt fällig. Wenn eine Zahlung nicht eingeht oder die Zahlungsmethode abgelehnt wird, ist der Käufer nicht länger Eigentümer der gekauften Artikeln. Wenn keine Zahlung empfangen wird, werden keine Artikel versendet.\n"
+"\n"
+" Versandrichtlinien\n"
+" Der Versand wird vom Käufer in der Höhe bezahlt, die der Verkäufer zum Zeitpunkt des Kaufs vereinbart hat. Wenn ein Artikel während des Versands verloren geht, werden dem Käufer die Gesamtkosten des Artikels, einschließlich Versand, vom Verkäufer zurückerstattet. Bei internationalem Versand können sich die Versandkosten verdoppeln. Wenn ein Artikel während des Versands beschädigt wird, wird der Verkäufer nicht verantwortlich gemacht.\n"
+"\n"
+" Rückgaberecht\n"
+" Alle Artikel haben bei Beschwerden Anspruch auf Erstattung oder Rücksendung. Wenn ein Artikel während des Versands beschädigt wird, wird ein Ersatzartikel kostenlos versandt. Wenn ein Artikel nicht gefällt, ist eine schriftliche Erklärung erforderlich, bevor der Artikel für eine Rückerstattung in Frage kommt. Der Käufer muss die Beschreibung des Artikels berücksichtigen, bevor er eine Rückerstattung anfordert. Wenn der Artikel mit der Beschreibung des Verkäufers übereinstimmt und der Käufer nicht zufrieden ist, ist der Verkäufer nicht für die Rückerstattung verantwortlich. Umtausch wird von Fall zu Fall gewährt.\n"
+"\n"
+" Stornierung\n"
+" Ein Artikel kann storniert werden, bis die Zahlung verarbeitet wurde. Sobald die Zahlung verarbeitet wurde, ist der Käufer für die Zahlung verantwortlich.\n"
+"\n"
+" Beschwerden\n"
+" Beschwerden über Artikel oder Verkäufer können an unser Support-Team gesendet werden: support@wesellyourstuff.com oder (888) 555-0198. Es gibt keine Garantie für eine Lösung. Jeder Fall wird einzeln betrachtet, und der Verkäufer wird dazu mit einbezogen."
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_payment_success
@@ -436,17 +452,17 @@ msgstr "&amp;times;"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "(Not in"
-msgstr ""
+msgstr "(Nicht in"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "(Wrong address?)"
-msgstr ""
+msgstr "(Falsche Adresse?)"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "). After this date, you can reopen your account up to"
-msgstr ""
+msgstr "). Nach diesem Datum können Sie Ihr Konto wieder eröffnen bis zum"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -544,7 +560,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_uuid
 msgid "Account UUID"
-msgstr ""
+msgstr "Konto-UUID"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -577,7 +593,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
 msgid "Add in Subscription"
-msgstr ""
+msgstr "Dem Abonnement hinzufügen"
 
 #. module: website_contract
 #: code:addons/website_contract/controllers/main.py:46
@@ -647,7 +663,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Change plan"
-msgstr ""
+msgstr "Abonnement ändern"
 
 #. module: website_contract
 #: model:ir.actions.act_window,help:website_contract.sale_subscription_action_filtered
@@ -667,7 +683,7 @@ msgstr "Schließen"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Close your account"
-msgstr ""
+msgstr "Ihr Konto schließen"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -685,7 +701,7 @@ msgstr "Abgeschlossen"
 #: code:addons/website_contract/controllers/main.py:260
 #, python-format
 msgid "Closing text : "
-msgstr ""
+msgstr "Beendigungstext:"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_color
@@ -738,7 +754,7 @@ msgstr "Verträge"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
 msgid "Create & View Quotation"
-msgstr ""
+msgstr "Angebot erstellen und anzeigen"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_create_uid
@@ -763,7 +779,7 @@ msgstr "Aktuelles Abonnement"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Current plan:"
-msgstr ""
+msgstr "Aktuelles Abonnement"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -774,7 +790,7 @@ msgstr ""
 #: model:product.product,name:website_contract.odoo_custom_domain
 #: model:product.template,name:website_contract.odoo_custom_domain_product_template
 msgid "Custom Domain"
-msgstr ""
+msgstr "Benutzerdefinierte Domäne"
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_domain
@@ -785,6 +801,8 @@ msgid ""
 "Custom Domain\n"
 "        Access your Odoo Instance using your own domain."
 msgstr ""
+"Benutzerdefinierte Domain\n"
+"Greifen Sie auf Ihr Odoo Instance über Ihre eigene Domain zu."
 
 #. module: website_contract
 #: model:sale.quote.option,name:website_contract.sugg_line_12
@@ -798,7 +816,7 @@ msgstr ""
 #: model:product.product,name:website_contract.odoo_custom_module
 #: model:product.template,name:website_contract.odoo_custom_module_product_template
 msgid "Customized Module"
-msgstr ""
+msgstr "Benutzerdefiniertes Modul"
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_module
@@ -809,6 +827,8 @@ msgid ""
 "Customized Module\n"
 "        Customize a module to better match your business process."
 msgstr ""
+"Benutzerdefiniertes Modul\n"
+"Definieren Sie ein Modul, um es optimal auf Ihre Geschäftsprozesse anzupassen."
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_view
@@ -817,6 +837,8 @@ msgid ""
 "Customized View\n"
 "        Customize one or more views (in a single module) to better suit your needs."
 msgstr ""
+"Benutzerdefinierte Ansicht\n"
+"Definieren Sie eine oder mehrere Ansichten (in einem einzelnen Modul), um sie optimal auf Ihre Bedürfnisse anzupassen."
 
 #. module: website_contract
 #: model:product.product,name:website_contract.odoo_custom_view
@@ -842,7 +864,7 @@ msgstr "Beschreibung"
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_wizard_date_from
 msgid "Discount Date"
-msgstr ""
+msgstr "Rabattdatum"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_display_name
@@ -885,11 +907,14 @@ msgstr "ID"
 msgid ""
 "If checked, the user will be able to close his account from the frontend"
 msgstr ""
+"Wenn aktiviert, kann der Benutzer sein Konto vom Frontend aus schließen"
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
 msgstr ""
+"Wenn nicht festgelegt, wird das Standard-Zahlungstoken des Partners "
+"verwendet."
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_order_contract_template
@@ -911,6 +936,9 @@ msgid ""
 "If set, payments will be made automatically and invoices will not be "
 "generated if payment attempts are unsuccessful."
 msgstr ""
+"Wenn diese Einstellung aktiviert ist, werden Zahlungen automatisch "
+"ausgeführt und Rechnungen werden nicht generiert, wenn die Zahlungsversuche "
+"fehlschlagen."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -918,6 +946,8 @@ msgid ""
 "If you close your account, it will remain active until your next invoice "
 "date ("
 msgstr ""
+"Wenn Sie Ihr Konto schließen, bleibt es bis zu Ihrem nächsten Rechnungsdatum"
+" aktiv ("
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -930,7 +960,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "If you wish to reopen it, the"
-msgstr ""
+msgstr "Wenn Sie es wieder öffnen möchten, das"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -938,6 +968,8 @@ msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period."
 msgstr ""
+"Wenn Sie es erneut öffnen möchten, können Sie Ihre Rechnung für den "
+"aktuellen Rechnungszeitraum bezahlen."
 
 #. module: website_contract
 #: code:addons/website_contract/controllers/main.py:47
@@ -956,6 +988,8 @@ msgstr ""
 msgid ""
 "Insert the options directly, they will be invoiced on the next invoice date."
 msgstr ""
+"Fügen Sie die Optionen direkt ein; sie werden am nächsten Rechnungsdatum in "
+"Rechnung gestellt."
 
 #. module: website_contract
 #: selection:sale.subscription.template.option,portal_access:0
@@ -971,12 +1005,12 @@ msgstr "Rechnung"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_success
 msgid "Invoice for subscription ${ctx.get('code')}"
-msgstr ""
+msgstr "Rechnung für Abonnement ${ctx.get('code')}"
 
 #. module: website_contract
 #: model:mail.template,report_name:website_contract.email_payment_success
 msgid "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
-msgstr ""
+msgstr "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_is_authorized
@@ -1077,6 +1111,8 @@ msgid ""
 "Odoo SAAS\n"
 "        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
 msgstr ""
+"Odoo SAAS\n"
+"Zugriff auf Ihre Odoo-Instanz. Gespeichert auf unseren Servern: hohe Geschwindigkeit, hohe Zuverlässigkeit und tägliche Backups."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract_pricing
@@ -1136,7 +1172,7 @@ msgstr "Zahlungstransaktion"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_reminder
 msgid "Payment reminder for subscription ${object.code}"
-msgstr ""
+msgstr "Zahlungserinnerung für Abonnement ${object.code}"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_form_inherit_sale_contract
@@ -1259,7 +1295,7 @@ msgstr "Verkauf über Abonnement"
 #. module: website_contract
 #: model:ir.model,name:website_contract.model_sale_subscription_template
 msgid "Sale Subscription Template"
-msgstr ""
+msgstr "Vorlage für Verkaufsabonnement"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_sale_order_count
@@ -1374,7 +1410,7 @@ msgstr "Vorlage"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_close
 msgid "Termination of subscription ${object.code}"
-msgstr ""
+msgstr "Beendigung des Abonnements ${object.code}"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1455,6 +1491,8 @@ msgid ""
 "UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be "
 "unique!"
 msgstr ""
+"UUIDs (Universally Unique IDentifier) ​​für Verkauf über Abonnements sollten"
+" eindeutig sein!"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1525,6 +1563,8 @@ msgid ""
 "We always listen to our customer. Could you specify the reason for "
 "cancelling your subscription?"
 msgstr ""
+"Die Meinung unserer Kunden ist uns sehr wichtig. Könnten Sie den Grund für "
+"die Kündigung Ihres Abonnements angeben?"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_website_url
@@ -1557,11 +1597,15 @@ msgid ""
 " or directly insert them in the subscription to invoice it on the next "
 "invoice date."
 msgstr ""
+"Sie können entweder ein Angebot erstellen, das für den aktuellen "
+"Rechnungszeitraum abgezinst wird (die Optionen werden hinzugefügt, wenn das "
+"Angebot bestätigt wird) oder Sie können sie direkt in das Abonnement "
+"einfügen, um sie am nächsten Rechnungsdatum abzurechnen."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.portal_my_contracts
 msgid "You don't have any subscriptions yet."
-msgstr ""
+msgstr "Sie haben noch keine Abonnements."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.modal_add
@@ -1596,12 +1640,12 @@ msgstr ""
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_contract_open
 msgid "Your subscription ${object.subscription_id.code} is active!"
-msgstr ""
+msgstr "Ihr Abonnement ${object.subscription_id.code}  ist aktiv!"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Your subscription is closed."
-msgstr ""
+msgstr "Ihr Abonnement ist beendet."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1611,7 +1655,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "by paying your invoice."
-msgstr ""
+msgstr "indem Sie Ihre Rechnung bezahlen."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1623,7 +1667,7 @@ msgstr "day(s)"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "missing payments (from"
-msgstr ""
+msgstr "fehlende Zahlungen (von"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1635,7 +1679,7 @@ msgstr "month(s)"
 #. module: website_contract
 #: model:ir.model,name:website_contract.model_sale_subscription_wizard
 msgid "sale.subscription.wizard"
-msgstr ""
+msgstr "sale.subscription.wizard"
 
 #. module: website_contract
 #: model:ir.model,name:website_contract.model_sale_subscription_wizard_option
