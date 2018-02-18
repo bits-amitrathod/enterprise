@@ -18,13 +18,14 @@
 # Malte Jansen <work@maltejansen.de>, 2017
 # Nico Dor <nicolas.dorweiler@gmail.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# Katharina Moritz <kmo@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-24 09:24+0000\n"
 "PO-Revision-Date: 2017-10-24 09:24+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: Katharina Moritz <kmo@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,12 +73,12 @@ msgstr "Zugewiesene Interessenten"
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_assigned_leads_count
 msgid "Assigned Leads Count"
-msgstr "Anzahl zugewiesener Leads"
+msgstr "Anzahl zugewiesener Interessenten"
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_team_user_leads_count
 msgid "Assigned Leads this last month"
-msgstr "Zugewiesene Leads im letzten Monat"
+msgstr "Zugewiesene Interessenten im letzten Monat"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_capacity
@@ -111,34 +112,34 @@ msgstr "Erstellt am"
 #. module: website_crm_score
 #: model:ir.actions.server,name:website_crm_score.action_score_now
 msgid "Crm Score: Apply marked scores"
-msgstr "CRM-Score: Markierte Scores anwenden"
+msgstr "CRM-Punktzahl: Markierte Punktzahl anwenden"
 
 #. module: website_crm_score
 #: model:ir.actions.server,name:website_crm_score.ir_cron_lead_assign_ir_actions_server
 #: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_assign
 #: model:ir.cron,name:website_crm_score.ir_cron_lead_assign
 msgid "Crm Score: lead assignation"
-msgstr "CRM-Score: Lead-Zuweisung"
+msgstr "CRM-Punktzahl: Interessenten-Zuweisung"
 
 #. module: website_crm_score
 #: model:ir.actions.server,name:website_crm_score.ir_cron_lead_scoring_ir_actions_server
 #: model:ir.cron,cron_name:website_crm_score.ir_cron_lead_scoring
 #: model:ir.cron,name:website_crm_score.ir_cron_lead_scoring
 msgid "Crm Score: lead scoring "
-msgstr "CRM-Score: Lead-Scoring"
+msgstr "CRM-Punktzahl: Interessenten-Bewertung"
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_website_crm_score_last_run
 msgid "Date from the last scoring on all leads."
-msgstr "Datum der letzten Bewertung aller Leads."
+msgstr "Datum der letzten Bewertung aller Interessenten."
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_crm_lead_assign_date
 msgid ""
 "Date when the lead has been assigned via the auto-assignation mechanism"
 msgstr ""
-"Datum, an dem der Lead über den Mechanismus zur automatischen Zuweisung "
-"zugewiesen wurde."
+"Datum, an dem der Interessent über den Mechanismus zur automatischen "
+"Zuweisung zugewiesen wurde."
 
 #. module: website_crm_score
 #: selection:website.crm.score,rule_type:0
@@ -163,7 +164,7 @@ msgstr "Domain"
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_event_based
 msgid "Event-based rule"
-msgstr "Eventbasierte Regel"
+msgstr "Ereignisbasierte Regel"
 
 #. module: website_crm_score
 #: model:ir.model,name:website_crm_score.model_ir_http
@@ -185,7 +186,7 @@ msgstr "Sprache"
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_crm_lead_lang_id
 msgid "Language from the website when lead has been created"
-msgstr "Sprache der Website, bei der Lead erstellt wurde."
+msgstr "Sprache der Website, bei der Interessent erstellt wurde."
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user___last_update
@@ -232,23 +233,23 @@ msgstr "Interessenten"
 #. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.team_user
 msgid "Leads Assignation"
-msgstr "Zuweisung der Leads"
+msgstr "Zuweisung der Interessenten"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_leads_count
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_leads_count
 msgid "Leads Count"
-msgstr "Anzahl der Leads"
+msgstr "Anzahl der Interessenten"
 
 #. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.leads_menu
 msgid "Leads Management"
-msgstr "Verwaltung der Leads"
+msgstr "Verwaltung der Interessenten"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_maximum_user_leads
 msgid "Leads Per Month"
-msgstr "Leads pro Monat"
+msgstr "Interessenten pro Monat"
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,help:website_crm_score.team_user_action
@@ -257,29 +258,30 @@ msgid ""
 "and set filters to auto assign your leads."
 msgstr ""
 "Verknüpfen Sie Benutzer mit dem Verkaufsteam, legen Sie eine Kapazität von "
-"jeweils 30 Tagen pro Lead fest sowie Filter zum automatischen Zuweisen von "
-"Leads."
+"jeweils 30 Tagen pro Interessenten fest sowie Filter zum automatischen "
+"Zuweisen von Interessenten."
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_crm_lead_score_pageview_ids
 msgid "List of (tracked) pages seen by the owner of this lead"
 msgstr ""
-"Liste der (verfolgten) Seiten, die vom Inhaber dieses Leads gesehen wurden."
+"Liste der (verfolgten) Seiten, die vom Besitzer dieses Interessenten gesehen"
+" wurden."
 
 #. module: website_crm_score
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_team_user_form
 msgid "Maximum Leads / 30 days"
-msgstr "Maximale Leads pro 30 Tage"
+msgstr "Maximale Interessenten pro 30 Tage"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_min_for_assign
 msgid "Minimum score"
-msgstr "Mindestscore"
+msgstr "Mindestpunktzahl"
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_crm_team_min_for_assign
 msgid "Minimum score to be automatically assign (>=)"
-msgstr "Mindestscore zum automatischen Zuweisen (>=)"
+msgstr "Mindestpunktzahl zum automatischen Zuweisen (>=)"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score_name
@@ -301,17 +303,17 @@ msgstr "Verkaufschancen"
 #: model:ir.ui.view,arch_db:website_crm_score.crm_score_pageview_graph
 #: model:ir.ui.view,arch_db:website_crm_score.website_crm_pageview_tree
 msgid "Page Views"
-msgstr "Seitenansichten"
+msgstr "Seitenaufrufe"
 
 #. module: website_crm_score
 #: model:ir.ui.view,arch_db:website_crm_score.lead_score_form
 msgid "Page views"
-msgstr "Seitenansichten"
+msgstr "Seitenaufrufe"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user_percentage_leads
 msgid "Percentage leads"
-msgstr "Prozentzahl der Leads"
+msgstr "Prozentzahl der Interessenten"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team_ratio
@@ -375,7 +377,7 @@ msgstr "Punktzahl"
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_score_form
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_score_tree
 msgid "Scores"
-msgstr "Scores"
+msgstr "Punktzahl"
 
 #. module: website_crm_score
 #: model:ir.ui.view,arch_db:website_crm_score.lead_score_form
@@ -387,7 +389,7 @@ msgstr "Bewertung"
 #. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.pageview_menu
 msgid "Scoring Page Views"
-msgstr "Bewertung der Seitenansichten"
+msgstr "Bewertung der Seitenaufrufe"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_lead_score_ids
@@ -404,16 +406,16 @@ msgid ""
 "\n"
 "Actions are done in sql and bypass the access rights and orm mechanism (create `score`, write `active`, unlink `crm_lead`)"
 msgstr ""
-"Die Bewertung fügt eine Punktzahl für den „Wert“ dieses Leads hinzu.\n"
-" „Archivieren“ legt für den Lead „active = False“ fest (archiviert).\n"
-" „Löschen“ löscht den Lead dauerhaft.\n"
+"Die Bewertung fügt eine Punktzahl für den „Wert“ dieses Interessenten hinzu.\n"
+" „Archiv“ legt für den Interessenten „aktiv = falsch“ fest (archiviert).\n"
+" „Löschen“ löscht den Interessenten dauerhaft.\n"
 "\n"
-" Aktionen werden in SQL durchgeführt und umgehen die Zugriffsrechte und ORM-Mechanismen („Score“ erstellen, „aktive“ schreiben, Verknüpfung „crm_lead“ aufheben)."
+"Aktionen werden in SQL durchgeführt und umgehen die Zugriffsrechte und ORM-Mechanismen („Punktzahl“ erstellen, „aktiv“ schreiben, Verknüpfung „crm_lead“ aufheben)."
 
 #. module: website_crm_score
 #: model:ir.ui.view,arch_db:website_crm_score.crm_score_pageview_filter
 msgid "Search PageViews"
-msgstr "Seitenansichten durchsuchen"
+msgstr "Seitenaufrufe durchsuchen"
 
 #. module: website_crm_score
 #: model:ir.ui.menu,name:website_crm_score.team
@@ -436,7 +438,7 @@ msgstr "Seite verfolgen"
 #. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.crm_score_views_action_graph
 msgid "Unassigned leads"
-msgstr "Nicht zugewiesene Leads"
+msgstr "Nicht zugewiesene Interessenten"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_url
@@ -449,8 +451,8 @@ msgid ""
 "Use sales channels to organize your sales departments.\n"
 "                    Each channel will work with a separate pipeline."
 msgstr ""
-"Mit Verkaufskanälen können Sie Ihre Vertriebsabteilungen organisieren.\n"
-" Jeder Kanal stellt dabei eine separate Pipeline dar."
+"Mit Vertriebskanälen können Sie Ihre Vertriebsabteilungen organisieren.\n"
+"Jeder Kanal stellt dabei eine separate Pipeline dar."
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_user_id
@@ -470,7 +472,7 @@ msgstr "Wert"
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview_view_date
 msgid "Viewing Date"
-msgstr "Datum der Ansicht"
+msgstr "Datum des Aufrufs"
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.website_crm_score_pageviews
@@ -486,9 +488,9 @@ msgid ""
 "events"
 msgstr ""
 "Wenn das Kontrollkästchen aktiviert ist, wird die Regel jedes Mal neu "
-"überprüft, auch bei Leads, die bereits geprüft wurden. Diese Option bringt "
-"Leistungseinbußen mit sich. Daher sollte sie nur auf Regeln angewandt "
-"werden, die von dynamischen Ereignissen abhängen."
+"überprüft, auch bei Interessenten, die bereits geprüft wurden. Diese Option "
+"bringt Leistungseinbußen mit sich. Daher sollte sie nur auf Regeln angewandt"
+" werden, die von dynamischen Ereignissen abhängen."
 
 #. module: website_crm_score
 #: model:ir.ui.view,arch_db:website_crm_score.sales_team_form_view_assign
@@ -534,12 +536,12 @@ msgstr "team.user"
 #: code:addons/website_crm_score/static/src/xml/track_page.xml:9
 #, python-format
 msgid "to better score your leads:"
-msgstr "zur besseren Bewertung Ihrer Leads:"
+msgstr "zur besseren Bewertung Ihrer Interessenten:"
 
 #. module: website_crm_score
 #: model:ir.model,name:website_crm_score.model_website_crm_pageview
 msgid "website.crm.pageview"
-msgstr "website.crm.pageansicht"
+msgstr "website.crm.pageview"
 
 #. module: website_crm_score
 #: model:ir.model,name:website_crm_score.model_website_crm_score

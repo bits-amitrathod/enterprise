@@ -22,13 +22,15 @@
 # nthnnl <nathan070@me.com>, 2017
 # Florian Hatat, 2017
 # e2f <projects@e2f.com>, 2018
+# fr trans <e2ffr05@hotmail.com>, 2018
+# fr rev <e2ffr02@hotmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: fr rev <e2ffr02@hotmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,7 +65,7 @@ msgstr "%s %s de réduction sur le montant total"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_created_coupon_email_template
 msgid ") during your next purchase to receive this discount:"
-msgstr ""
+msgstr ") lors de votre prochain achat pour recevoir cette remise :"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_coupon_program
@@ -71,14 +73,19 @@ msgid ""
 "<br>\n"
 "                A coupon is applied by entering a valid code if the program rules are met and if the\n"
 "                reward is already in the order lines."
-msgstr "<br>"
+msgstr ""
+"<br>\n"
+"                Pour appliquer un coupon, un code valide doit être saisi, les règles du programme doivent être respectées et la\n"
+"                remise doit déjà figurer dans les lignes de commande."
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_promo_program
 msgid ""
 "<br>\n"
 "                You may choose to apply the program reward immediatly on the sales order or to propose the reward for a next order. In the second case a coupon will be generated at the order confirmation for the customer to use it later."
-msgstr "<br>"
+msgstr ""
+"<br>\n"
+"                 Vous pouvez appliquer la récompense de programme directement sur le bon de commande ou la proposer lors d'une prochaine commande. Dans le second cas, un coupon sera généré lors de la confirmation de la commande, que le client pourra utiliser ultérieurement."
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
@@ -87,24 +94,30 @@ msgid ""
 "                        <b>Apply on Current Order -</b> Reward will be applied on current order.<br/>\n"
 "                        <b>Apply on Next Order -</b> Generate a coupon for a next order.\n"
 "                    </span>"
-msgstr "<span class=\"oe_grey\"><b/><br/><b/></span>"
+msgstr ""
+"<span class=\"oe_grey\">\n"
+"                        <b>Appliquer sur la commande en cours :</b> la récompense sera appliquée sur la commande en cours.<br/>\n"
+"                        <b>Appliquer sur une commande ultérieure :</b> un coupon sera généré pour une commande ultérieure.\n"
+"                    </span>"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form
 msgid "<span class=\"oe_grey\">if 0, infinite use</span>"
-msgstr "<span class=\"oe_grey\"/>"
+msgstr "<span class=\"oe_grey\">si 0, utilisation illimitée</span>"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "<span class=\"oe_grey\">if 0, no limit</span>"
-msgstr "<span class=\"oe_grey\"/>"
+msgstr "<span class=\"oe_grey\">si 0, aucune limite</span>"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
 msgid ""
 "<span> Orders</span>\n"
 "                    <span class=\"oe_grey\"> if 0, infinite use</span>"
-msgstr "<span/><span class=\"oe_grey\"/>"
+msgstr ""
+"<span> Commandes</span>\n"
+"                    <span class=\"oe_grey\"> si 0, utilisation illimitée</span>"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.view_sale_coupon_program_kanban
@@ -114,18 +127,18 @@ msgstr "<strong/>"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.view_sale_coupon_program_kanban
 msgid "<strong>Coupons</strong>"
-msgstr "<strong/>"
+msgstr "<strong>Coupons</strong>"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.view_sale_coupon_program_kanban
 msgid "<strong>Sales</strong>"
-msgstr "<strong/>"
+msgstr "<strong>Ventes</strong>"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:71
 #, python-format
 msgid "A Coupon is already applied for the same reward"
-msgstr ""
+msgstr "Un coupon correspondant à cette récompense a déjà été appliqué"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_coupon_program
@@ -138,12 +151,12 @@ msgstr "Une combinaison des points précédents."
 #: code:addons/sale_coupon/models/sale_coupon_program.py:138
 #, python-format
 msgid "A minimum of %s %s should be purchased to get the reward"
-msgstr ""
+msgstr "Un minimum de %s %s doit être acheté pour obtenir la récompense"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_active
 msgid "A program is available for the customers when active"
-msgstr ""
+msgstr "Un programme est disponible pour les clients lorsqu'il est actif"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_promo_code
@@ -167,6 +180,12 @@ msgid ""
 "                A coupon program generates coupons with a code that can be used to generate a discount on the current\n"
 "                order or create a coupon for a next order."
 msgstr ""
+"Un programme promotionnel peut être une offre promotionnelle limitée sans code (appliquée automatiquement)\n"
+"                ou avec un code (publié dans un magazine, par exemple) permettant de générer une remise sur la commande\n"
+"                en cours ou de créer un coupon pour une commande ultérieure.\n"
+"\n"
+"                Un programme de coupons permet de générer des coupons avec un code, qui peuvent être utilisés pour générer une remise sur la commande\n"
+"                en cours ou créer un coupon pour une commande ultérieure."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_active
@@ -189,28 +208,28 @@ msgstr "Coupons appliqués"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order_no_code_promo_program_ids
 msgid "Applied Immediate Promo Programs"
-msgstr ""
+msgstr "Programmes promotionnels appliqués immédiatement"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order_code_promo_program_id
 msgid "Applied Promo Program"
-msgstr ""
+msgstr "Programme promotionnel appliqué"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_sales_order_id
 msgid "Applied on order"
-msgstr ""
+msgstr "Appliqué sur la commande"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_order_promo_code
 msgid "Applied program code"
-msgstr ""
+msgstr "Code de programme appliqué"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_apply_code_view_form
 #: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
 msgid "Apply Coupon"
-msgstr ""
+msgstr "Appliquer un coupon"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
@@ -220,22 +239,22 @@ msgstr "Appliquer la remise"
 #. module: sale_coupon
 #: selection:sale.coupon.program,promo_applicability:0
 msgid "Apply On Current Order"
-msgstr ""
+msgstr "Appliquer sur la commande en cours"
 
 #. module: sale_coupon
 #: selection:sale.coupon.program,promo_applicability:0
 msgid "Apply On Next Order"
-msgstr ""
+msgstr "Appliquer sur une commande ultérieure"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_apply_code_view_form
 msgid "Apply coupon"
-msgstr ""
+msgstr "Appliquer un coupon"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
 msgid "Apply on First"
-msgstr ""
+msgstr "Appliquer sur la première"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:82
@@ -257,6 +276,8 @@ msgid ""
 "Automatically Applied - No code is required, if the program rules are met, the reward is applied (Except the global discount or the free shipping rewards which are not cumulative)\n"
 "Use a code - If the program rules are met, a valid code is mandatory for the reward to be applied\n"
 msgstr ""
+"Appliqué automatiquement : aucun code requis. Si les règles du programme sont respectées, la récompense est appliquée (à l'exception des remises globales ou des récompenses de livraison gratuite, qui ne sont pas cumulables).\n"
+"Utiliser un code : si les règles du programme sont respectées, un code valide est obligatoire pour appliquer la récompense.\n"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_partners_domain
@@ -296,7 +317,7 @@ msgstr "Fermé"
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_search
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_search
 msgid "Closed Programs"
-msgstr ""
+msgstr "Programmes clôturés"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_code
@@ -331,7 +352,7 @@ msgstr "Coupon"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_coupon_count
 msgid "Coupon Count"
-msgstr ""
+msgstr "Nombre de coupons"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_program_action_coupon_program
@@ -369,12 +390,15 @@ msgid ""
 "Coupon program will be applied based on given sequence if multiple programs "
 "are defined on same condition(For minimum amount)"
 msgstr ""
+"Le programme de coupons sera appliqué en fonction d'une séquence donnée si "
+"plusieurs programmes sont définis selon une condition identique (pour un "
+"montant minimum)"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_rule_partners_domain
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule_rule_partners_domain
 msgid "Coupon program will work for selected customers only"
-msgstr ""
+msgstr "Le programme de coupons sera réservé à certains clients uniquement"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_action
@@ -442,6 +466,9 @@ msgid ""
 "Free Product - Free product will be provide as reward \n"
 "Free Shipping - Free shipping will be provided as reward (Need delivery module)"
 msgstr ""
+"Remise : la récompense sera appliquée sous forme de remise.\n"
+"Produit gratuit : un produit sera offert à titre de récompense. \n"
+"Livraison gratuite : la livraison sera offerte à titre de récompense (module Livraison nécessaire)."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_discount_apply_on
@@ -486,7 +513,7 @@ msgstr "Date de fin"
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_apply_code_action
 msgid "Enter Coupon Code"
-msgstr ""
+msgstr "Saisir le coupon"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_created_coupon_email_template
@@ -520,7 +547,7 @@ msgstr "Montant fixe"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_partner_id
 msgid "For Customer"
-msgstr ""
+msgstr "Pour le client"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_reward_product_id
@@ -577,7 +604,7 @@ msgstr "Coupons générés"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_generate_generation_type
 msgid "Generation Type"
-msgstr ""
+msgstr "Type de création"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:73
@@ -610,7 +637,7 @@ msgstr "Partenaire invalide."
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order_line_is_reward_line
 msgid "Is a program reward line"
-msgstr ""
+msgstr "Est une ligne de récompense de programme"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon___last_update
@@ -650,23 +677,25 @@ msgstr "Montant maximum de réduction"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_maximum_use_number
 msgid "Maximum Use Number"
-msgstr ""
+msgstr "Nombre d'utilisations maximum"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_discount_max_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward_discount_max_amount
 msgid "Maximum amount of discount that can be provided"
-msgstr ""
+msgstr "Nombre maximum de remises pouvant être offertes"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_maximum_use_number
 msgid "Maximum number of sales orders in which reward can be provided"
 msgstr ""
+"Nombre maximum de bons de commande sur lesquels la récompense peut être "
+"appliquée"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Minimum Purchase Of"
-msgstr ""
+msgstr "Achat minimum de"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_min_quantity
@@ -741,6 +770,9 @@ msgid ""
 "Cheapest product - Discount on cheapest product of the order\n"
 "Specific product - Discount on selected specific product"
 msgstr ""
+"Sur la commande : appliquer la remise sur la commande entière.\n"
+"Produit le moins cher : appliquer la remise sur le produit le moins cher de la commande.\n"
+"Produit spécifique : appliquer la remise sur un produit spécifique au choix."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_rule_products_domain
@@ -751,18 +783,18 @@ msgstr "À l'achat du produit sélectionné, recevez une récompense"
 #. module: sale_coupon
 #: selection:sale.coupon.reward,discount_apply_on:0
 msgid "On Specific Product"
-msgstr ""
+msgstr "Sur un produit spécifique"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_search
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_search
 msgid "Opened Programs"
-msgstr ""
+msgstr "Programmes en cours"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_order_count
 msgid "Order Count"
-msgstr ""
+msgstr "Nombre de commandes"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_order_id
@@ -781,6 +813,8 @@ msgid ""
 "Percentage - Entered percentage discount will be provided\n"
 "Amount - Entered fixed amount discount will be provided"
 msgstr ""
+"Pourcentage : le pourcentage saisi sera appliqué comme remise.\n"
+"Quantité : le montant fixe saisi sera appliqué comme remise."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_discount_specific_product_id
@@ -795,11 +829,13 @@ msgid ""
 "Product that will be discounted if the discount is applied on a specific "
 "product"
 msgstr ""
+"Le produit dont le prix sera réduit si la remise est appliquée sur un "
+"produit spécifique"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_discount_line_product_id
 msgid "Product used in the sales order to apply the discount."
-msgstr ""
+msgstr "Le produit utilisé dans le bon de commande pour appliquer la remise."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_discount_line_product_id
@@ -808,6 +844,9 @@ msgid ""
 "Product used in the sales order to apply the discount. Each coupon program "
 "has its own reward product for reporting purpose"
 msgstr ""
+"Le produit utilisé pour appliquer la remise sur le bon de commande. Tous les"
+" programmes de coupons possèdent un produit de récompense spécifique afin de"
+" permettre leur différenciation."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_id
@@ -822,12 +861,12 @@ msgstr "Nom du programme"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_program_type
 msgid "Program Type"
-msgstr ""
+msgstr "Type de programme"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_promo_code_usage
 msgid "Promo Code Usage"
-msgstr ""
+msgstr "Utilisation du code promotionnel"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:136
@@ -861,7 +900,7 @@ msgstr "Programme de promotion"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
 msgid "Promotion Program Name..."
-msgstr ""
+msgstr "Nom du programme promotionnel…"
 
 #. module: sale_coupon
 #: model:ir.ui.menu,name:sale_coupon.menu_promotion_type_config
@@ -872,12 +911,13 @@ msgstr "Campagnes de promotion"
 #. module: sale_coupon
 #: selection:sale.coupon.program,program_type:0
 msgid "Promotional Program"
-msgstr ""
+msgstr "Programme promotionnel"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_promo_program
 msgid "Promotional offers limited in time or a limited order number."
 msgstr ""
+"Offres promotionnelles à durée limitée ou à nombre de commandes limité."
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_coupon_program
@@ -947,19 +987,19 @@ msgstr "Description de la récompense"
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_discount_line_product_id
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_reward_discount_line_product_id
 msgid "Reward Line Product"
-msgstr ""
+msgstr "Produit de ligne de récompense"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_reward_product_id
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward_reward_product_id
 msgid "Reward Product"
-msgstr ""
+msgstr "Produit de récompense"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_reward_product_quantity
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward_reward_product_quantity
 msgid "Reward product quantity"
-msgstr ""
+msgstr "Quantité du produit de récompense"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
@@ -970,13 +1010,13 @@ msgstr "Récompense"
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_minimum_amount
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule_rule_minimum_amount
 msgid "Rule Minimum Amount"
-msgstr ""
+msgstr "Montant minimum fixé par la règle"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_minimum_amount_tax_inclusion
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule_rule_minimum_amount_tax_inclusion
 msgid "Rule Minimum Amount Tax Inclusion"
-msgstr ""
+msgstr "Montant minimum fixé par la règle pour l'inclusion des taxes"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
@@ -986,22 +1026,22 @@ msgstr "Vente"
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon
 msgid "Sales Coupon"
-msgstr ""
+msgstr "Coupon de vente"
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_program
 msgid "Sales Coupon Program"
-msgstr ""
+msgstr "Programme de coupons de vente"
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_reward
 msgid "Sales Coupon Reward"
-msgstr ""
+msgstr "Récompense de coupon de vente"
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_rule
 msgid "Sales Coupon Rule"
-msgstr ""
+msgstr "Règle de coupon de vente"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_order_action
@@ -1022,17 +1062,17 @@ msgstr "Bons de commandes"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Select company"
-msgstr ""
+msgstr "Sélectionner l'entreprise"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
 msgid "Select customer"
-msgstr ""
+msgstr "Sélectionner le client"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Select product"
-msgstr ""
+msgstr "Sélectionner le produit"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
@@ -1049,6 +1089,8 @@ msgstr "Séquence"
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_promo_program
 msgid "Specific offers based on a customers group or a product set."
 msgstr ""
+"Offres spécifiques réservées à un groupe de clients ou à un ensemble de "
+"produits."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program_rule_date_from
@@ -1086,7 +1128,7 @@ msgstr "Le code coupon doit être unique! "
 #: code:addons/sale_coupon/models/sale_coupon.py:67
 #, python-format
 msgid "The coupon program for %s is in draft or closed state"
-msgstr ""
+msgstr "Le programme de coupons pour %s est clôturé ou à l'état de brouillon."
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:77
@@ -1099,7 +1141,7 @@ msgstr "Le client n'a pas accès à cette récompense. "
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_discount_fixed_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward_discount_fixed_amount
 msgid "The discount in fixed amount"
-msgstr ""
+msgstr "La remise sous forme de montant fixe"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_discount_percentage
@@ -1110,7 +1152,7 @@ msgstr "La réduction en pourcentage, entre 1 et 100 "
 #. module: sale_coupon
 #: sql_constraint:sale.coupon.program:0
 msgid "The program code must be unique!"
-msgstr ""
+msgstr "Le code du programme doit être unique."
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:140
@@ -1132,16 +1174,18 @@ msgid ""
 "The reward products should be in the sales order lines to apply the "
 "discount."
 msgstr ""
+"Les produits de récompense doivent figurer dans les lignes de bon de "
+"commande pour appliquer la remise."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_order_id
 msgid "The sales order from which coupon is generated"
-msgstr ""
+msgstr "Le bon de commande à partir duquel le coupon est généré"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_sales_order_id
 msgid "The sales order on which the coupon is applied"
-msgstr ""
+msgstr "Le bon de commande sur lequel le coupon est appliqué"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_rules.py:32
@@ -1154,6 +1198,8 @@ msgstr "La date de début doit être avant la date de fin"
 #, python-format
 msgid "This coupon %s exists but the origin sales order is not validated yet."
 msgstr ""
+"Le coupon %s existe, mais le bon de commande dont il provient n'a pas encore"
+" été validé."
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:61
@@ -1170,7 +1216,7 @@ msgstr "Unité de mesure"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
 msgid "Update Promotions"
-msgstr ""
+msgstr "Mettre à jour les promotions"
 
 #. module: sale_coupon
 #: selection:sale.coupon.program,promo_code_usage:0
@@ -1180,7 +1226,9 @@ msgstr "Utiliser un code"
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_coupon_program
 msgid "Using coupon programs allows you to propose to your customers:<br>"
-msgstr "<br>"
+msgstr ""
+"L'utilisation de programmes de coupons vous permet de proposer à vos clients"
+" :<br>"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_promo_program
@@ -1208,13 +1256,13 @@ msgstr "Durée de validité"
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_validity_duration
 msgid "Validity duration for a coupon after its generation"
-msgstr ""
+msgstr "Durée de validité d'un coupon après sa création"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:101
 #, python-format
 msgid "You can not delete a program in active state"
-msgstr ""
+msgstr "Vous ne pouvez pas supprimer un programme actif"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:79
@@ -1224,6 +1272,10 @@ msgid ""
 "products should be recorded on the sales order. (Example: You need to have 3"
 " T-shirts on your sales order if the promotion is 'Buy 2, Get 1 Free'."
 msgstr ""
+"Votre bon de commande ne comporte pas le nombre de produits requis. Tous les"
+" produits doivent apparaître sur le bon de commande. (Par exemple, dans le "
+"cas d'une promotion de type « 2 t-shirts achetés = 1 offert », les 3 "
+"t-shirts doivent apparaître sur votre bon de commande."
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:156
@@ -1234,13 +1286,18 @@ msgid ""
 "recorded on the sales order (Example: You need to have 3 T-shirts on your "
 "sales order if the promotion is 'Buy 2, Get 1 Free'."
 msgstr ""
+"Votre bon de commande ne comporte pas le nombre de produits requis. Si la "
+"récompense est associée à un certain nombre de produits, assurez-vous que "
+"tous les produits apparaissent sur le bon de commande (par exemple, dans le "
+"cas d'une promotion de type « 2 t-shirts achetés = 1 offert », les 3 "
+"t-shirts doivent apparaître sur votre bon de commande."
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_apply_code
 msgid "sale.coupon.apply.code"
-msgstr ""
+msgstr "sale.coupon.apply.code"
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_generate
 msgid "sale.coupon.generate"
-msgstr ""
+msgstr "sale.coupon.generate"

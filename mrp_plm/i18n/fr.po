@@ -61,12 +61,12 @@ msgstr "Nb. pièces jointes"
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product_eco_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_eco_count
 msgid "# ECOs"
-msgstr ""
+msgstr "Nombre d'OMT"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_eco_inprogress_count
 msgid "# ECOs in progress"
-msgstr ""
+msgstr "Nombre d'OMT en cours"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_kanban
@@ -94,7 +94,12 @@ msgid ""
 "                    </p><p>\n"
 "                        Use this feature to store any files, like drawings or specifications.\n"
 "                    </p>"
-msgstr "<p class=\"oe_view_nocontent_create\"/><p/>"
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+" Cliquez pour importer des fichiers dans votre OMT. Ils seront appliqués au produit ultérieurement\n"
+" \n"
+"</p><p> Utilisez cette fonctionnalité pour stocker des fichiers,comme des dessins ou des spécifications.\n"
+"</p>"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/product.py:38
@@ -115,7 +120,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "<span>Bill of Materials</span><br/>"
-msgstr "<span/><br/>"
+msgstr "<span>Nomenclature</span><br/>"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
@@ -186,37 +191,37 @@ msgstr "Tous"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "All Approvals have be done"
-msgstr ""
+msgstr "Toutes les approbations ont été effectuées"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
 msgid "All Validations"
-msgstr ""
+msgstr "Toutes les validations"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_allow_change_stage
 msgid "Allow Change Stage"
-msgstr ""
+msgstr "Autoriser le changement d'étape"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_allow_apply_change
 msgid "Allow to apply changes"
-msgstr ""
+msgstr "Autoriser l'application de changements"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage_allow_apply_change
 msgid "Allow to apply changes from this stage."
-msgstr ""
+msgstr "Autoriser l'application de changements à partir de cette étape."
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Apply Changes"
-msgstr ""
+msgstr "Appliquer les modifications"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Apply Rebase"
-msgstr ""
+msgstr "Appliquer la refonte"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type
@@ -226,17 +231,17 @@ msgstr "Appliqué sur"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_approval_roles
 msgid "Approval Roles"
-msgstr ""
+msgstr "Rôles d'approbation"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_stage_id_10066
 msgid "Approval Stage"
-msgstr ""
+msgstr "Étape de l'approbation"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_approval_type
 msgid "Approval Type"
-msgstr ""
+msgstr "Type d'approbation"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_ids
@@ -244,12 +249,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Approvals"
-msgstr ""
+msgstr "Approbations"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_approval_ids
 msgid "Approvals by stage"
-msgstr ""
+msgstr "Approbations par étape"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -269,7 +274,7 @@ msgstr "Approuvé par"
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
 msgid "Approves, but the approval is optional"
-msgstr ""
+msgstr "Approuve, mais l'approbation est facultative"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -318,7 +323,7 @@ msgstr "Bloqué"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_is_blocking
 msgid "Blocking Stage"
-msgstr ""
+msgstr "Étape de blocage"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -328,23 +333,23 @@ msgstr "Nomenclature"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "BoM Changes"
-msgstr ""
+msgstr "Modifications de la nomenclature"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_rebase_ids
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "BoM Rebase"
-msgstr ""
+msgstr "Refonte de la nomenclature"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_revision
 msgid "BoM Revision"
-msgstr ""
+msgstr "Révision de la nomenclature"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "BoM:"
-msgstr ""
+msgstr "Nomenclature :"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_user_can_approve
@@ -354,32 +359,32 @@ msgstr "Peut Approuver"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_user_can_reject
 msgid "Can Reject"
-msgstr ""
+msgstr "Peut refuser"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
 msgid "Changes"
-msgstr ""
+msgstr "Modifications"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Changes made in previous eco"
-msgstr ""
+msgstr "Modifications apportées au précédent OMT"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Changes made on old bill of materials"
-msgstr ""
+msgstr "Modifications apportées à l'ancienne nomenclature"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Changes made on the new revision bill of materials"
-msgstr ""
+msgstr "Modifications apportées à la nouvelle nomenclature révisée"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Changes made on the routing."
-msgstr ""
+msgstr "Modifications apportées à l'acheminement."
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_tag_action
@@ -412,7 +417,7 @@ msgstr "Commenté"
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
 msgid "Comments only"
-msgstr ""
+msgstr "Commentaires seulement"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_company_id
@@ -429,12 +434,12 @@ msgstr "Configuration"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_conflict
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,state:0
 msgid "Conflict"
-msgstr ""
+msgstr "Conflit"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Conflict Resolved"
-msgstr ""
+msgstr "Conflit résolu"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_operation_change
@@ -450,7 +455,7 @@ msgstr "Créer une Alerte"
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_type_action_dashboard
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_type_action_form
 msgid "Create ECO Types"
-msgstr ""
+msgstr "Créer des types d'OMT"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_action
@@ -463,7 +468,7 @@ msgstr ""
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_action_report
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_action_routing
 msgid "Create Engineering Change Orders"
-msgstr ""
+msgstr "Créer des ordres de modification technique"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_create_uid
@@ -498,6 +503,8 @@ msgstr "Tableau de bord"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_effectivity
 msgid "Date on which the changes should be applied. For reference only."
 msgstr ""
+"Date à laquelle les modifications doivent être appliquées. Pour référence "
+"seulement."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_defaults
@@ -512,17 +519,19 @@ msgstr "Supprimer"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Description of the change and its reason ..."
-msgstr ""
+msgstr "Description de la modification et de son motif…"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_bom_change_ids
 msgid "Difference between old BoM and new BoM revision"
 msgstr ""
+"Différence entre l'ancienne nomenclature et la nouvelle nomenclature révisée"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_routing_change_ids
 msgid "Difference between old routing and new routing revision"
 msgstr ""
+"Différence entre l'ancien acheminement et le nouvel acheminement révisé"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_display_name
@@ -555,78 +564,80 @@ msgstr "Durée"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_eco_id
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
 msgid "ECO"
-msgstr ""
+msgstr "OMT"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_graph
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_pivot
 msgid "ECO Analysis"
-msgstr ""
+msgstr "Analyse OMT"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_ids
 msgid "ECO BoM Changes"
-msgstr ""
+msgstr "Modifications de la nomenclature OMT"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
 msgid "ECO Material changes"
-msgstr ""
+msgstr "Modifications du matériel OMT"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_ids
 msgid "ECO Routing Changes"
-msgstr ""
+msgstr "Modifications de l'acheminement OMT"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_eco_stage_id
 msgid "ECO Stage"
-msgstr ""
+msgstr "Étape OMT"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_stage_action
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_stages
 msgid "ECO Stages"
-msgstr ""
+msgstr "Étapes OMT"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_tag_action
 #: model:ir.model,name:mrp_plm.model_mrp_eco_tag
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_tag
 msgid "ECO Tags"
-msgstr ""
+msgstr "Étiquettes OMT"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_type_action_form
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_types
 msgid "ECO Types"
-msgstr ""
+msgstr "Types OMT"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "ECO approvals"
-msgstr ""
+msgstr "Approbations OMT"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_bom_change_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
 msgid "ECO details"
-msgstr ""
+msgstr "Informations OMT"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
 msgid "ECO stages give the different stages for the Engineering Change Orders"
 msgstr ""
+"Les étapes OMT donnent les différentes étapes des ordres de modification "
+"technique"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_eco_ids
 msgid "ECO to be applied"
-msgstr ""
+msgstr "OMT à appliquer"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "ECO(s)"
-msgstr ""
+msgstr "OMT"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_ecos
@@ -639,29 +650,29 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_routing_view_form_inherit_plm
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 msgid "ECOs"
-msgstr ""
+msgstr "OMT"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_kanban
 msgid "Eco"
-msgstr ""
+msgstr "OMT"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:671
 #, python-format
 msgid "Eco BoM"
-msgstr ""
+msgstr "Nomenclature OMT"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:683
 #, python-format
 msgid "Eco Routing"
-msgstr ""
+msgstr "Acheminement OMT"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
 msgid "Eco Routing changes"
-msgstr ""
+msgstr "Modifications de l'acheminement OMT"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -671,12 +682,12 @@ msgstr "Modifié la Tâche"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_effectivity
 msgid "Effectivity"
-msgstr ""
+msgstr "Entrée en vigueur"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_effectivity_date
 msgid "Effectivity Date"
-msgstr ""
+msgstr "Date d'entrée en vigueur"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
@@ -687,17 +698,17 @@ msgstr "Alias d'email"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_eco_id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_eco_id
 msgid "Engineering Change"
-msgstr ""
+msgstr "Modification technique"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco
 msgid "Engineering Change Order"
-msgstr ""
+msgstr "Ordre de modification technique"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_stage
 msgid "Engineering Change Order Stage"
-msgstr ""
+msgstr "Étape de l'ordre de modification technique"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action
@@ -711,12 +722,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_routing
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_ecos
 msgid "Engineering Change Orders"
-msgstr ""
+msgstr "Ordres de modification technique"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
 msgid "Engineering Changes"
-msgstr ""
+msgstr "Modifications techniques"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -736,7 +747,7 @@ msgstr "Replié en vue kanban"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_effectivity_date
 msgid "For reference only."
-msgstr ""
+msgstr "Pour référence seulement."
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -751,7 +762,7 @@ msgstr "Regrouper par..."
 #. module: mrp_plm
 #: model:ir.module.category,description:mrp_plm.module_category_plm
 msgid "Helps you manage your product's lifecycles."
-msgstr ""
+msgstr "Vous aide à gérer le cycle de vie de vos produits."
 
 #. module: mrp_plm
 #: selection:mrp.eco,priority:0
@@ -785,6 +796,8 @@ msgid ""
 "If the active field is set to False, it will allow you to hide the "
 "engineering change order without removing it."
 msgstr ""
+"Si le champ actif est défini sur False, vous pourrez masquer l'ordre de "
+"modification technique sans le supprimer."
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -800,17 +813,17 @@ msgstr "En cours"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_approved
 msgid "Is Approved"
-msgstr ""
+msgstr "Est approuvé"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
 msgid "Is Rejected"
-msgstr ""
+msgstr "Est refusé"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
 msgid "Is required to approve"
-msgstr ""
+msgstr "Est nécessaire pour l'approbation"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_kanban_state
@@ -871,12 +884,12 @@ msgstr "Gestionnaire"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_upd_time_cycle_manual
 msgid "Manual Duration Change"
-msgstr ""
+msgstr "Modification de la durée manuelle"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_type
 msgid "Manufacturing Process"
-msgstr ""
+msgstr "Processus de fabrication"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_master_data
@@ -886,7 +899,7 @@ msgstr "Données de base"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
 msgid "Mrp Eco Tags"
-msgstr ""
+msgstr "Étiquettes OMT MRP"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -896,7 +909,7 @@ msgstr "Mes activités"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
-msgstr ""
+msgstr "Mes ordres de modification"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
@@ -913,37 +926,37 @@ msgstr "Nom"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_bom_id
 msgid "New Bill of Materials"
-msgstr ""
+msgstr "Nouvelles nomenclatures"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_current_bom_id
 msgid "New Bom"
-msgstr ""
+msgstr "Nouvelle nomenclature"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_new_operation_id
 msgid "New Consumed in Operation"
-msgstr ""
+msgstr "Nouvellement consommé dans l'opération"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_new_uom_id
 msgid "New Product UoM"
-msgstr ""
+msgstr "Nouvelle nomenclature de produit"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_routing_id
 msgid "New Routing"
-msgstr ""
+msgstr "Nouvel acheminement"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_new_time_cycle_manual
 msgid "New manual duration"
-msgstr ""
+msgstr "Nouvelle durée manuelle"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_new_product_qty
 msgid "New revision quantity"
-msgstr ""
+msgstr "Nouvelle quantité révisée"
 
 #. module: mrp_plm
 #: selection:mrp.eco,priority:0
@@ -964,12 +977,14 @@ msgstr "Note"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_old_time_cycle_manual
 msgid "Old manual duration"
-msgstr ""
+msgstr "Ancienne durée manuelle"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage_final_stage
 msgid "Once the changes are applied, the ECOs will be moved to this stage."
 msgstr ""
+"Une fois que les modifications seront appliquées, l'OMT sera déplacé à cette"
+" étape."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_force_thread_id
@@ -996,7 +1011,7 @@ msgstr "Gestion Cycle Vie Produits"
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_type_action_dashboard
 msgid "PLM Dashboard"
-msgstr ""
+msgstr "Tableau de bord PLM"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_parent_model_id
@@ -1035,37 +1050,37 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_previous_bom_id
 msgid "Previous BoM"
-msgstr ""
+msgstr "Ancienne nomenclature"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_old_operation_id
 msgid "Previous Consumed in Operation"
-msgstr ""
+msgstr "Anciennement consommé dans l'opération"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_previous_change_ids
 msgid "Previous ECO Changes"
-msgstr ""
+msgstr "Anciennes modifications de l'OMT"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Previous Eco Bom Changes"
-msgstr ""
+msgstr "Anciennes modifications de la nomenclature OMT"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_old_uom_id
 msgid "Previous Product UoM"
-msgstr ""
+msgstr "Ancienne nomenclature de produit"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_previous_routing_id
 msgid "Previous Routing"
-msgstr ""
+msgstr "Ancien acheminement"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_old_product_qty
 msgid "Previous revision quantity"
-msgstr ""
+msgstr "Ancienne quantité révisée"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_priority
@@ -1100,12 +1115,14 @@ msgstr "Quantité"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_rebase_id
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,state:0
 msgid "Rebase"
-msgstr ""
+msgstr "Refonte"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rebase new revision of BoM with previous eco bom and old bom changes."
 msgstr ""
+"Refonte de la nomenclature à partir de l'ancienne nomenclature OMT et des "
+"anciennes modifications apportées."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_force_thread_id
@@ -1146,7 +1163,7 @@ msgstr "Rapport"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_required_user_ids
 msgid "Requested Users"
-msgstr ""
+msgstr "Utilisateurs requis"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_user_id
@@ -1156,13 +1173,13 @@ msgstr "Responsable"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rev :"
-msgstr ""
+msgstr "Rév. :"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_revision_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_revision_ids
 msgid "Revision"
-msgstr ""
+msgstr "Révision"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_name
@@ -1179,17 +1196,17 @@ msgstr "Gammes"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Routing Changes"
-msgstr ""
+msgstr "Modifications de l'acheminement"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_new_routing_revision
 msgid "Routing Revision"
-msgstr ""
+msgstr "Révision de l'acheminement"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Routing:"
-msgstr ""
+msgstr "Acheminement :"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_routing
@@ -1234,7 +1251,7 @@ msgstr "Court Résumé"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_allow_apply_change
 msgid "Show Apply Change"
-msgstr ""
+msgstr "Afficher les modifications appliquées"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -1279,7 +1296,7 @@ msgstr "Etapes"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Start New Revision"
-msgstr ""
+msgstr "Entamer la nouvelle révision"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -1296,7 +1313,7 @@ msgstr "État"
 #: code:addons/mrp_plm/models/mrp_eco.py:345
 #, python-format
 msgid "Successfully Rebased !"
-msgstr ""
+msgstr "Refonte réussie !"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1304,6 +1321,8 @@ msgid ""
 "System will automatically resolved the conflict(s) and apply changes. Do you"
 " agree?"
 msgstr ""
+"Le système résoudra automatiquement les conflits et appliquera les "
+"modifications. Voulez-vous continuer ?"
 
 #. module: mrp_plm
 #: sql_constraint:mrp.eco.tag:0
@@ -1320,11 +1339,14 @@ msgstr "Étiquettes"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_user_can_approve
 msgid "Technical field to check if approval by current user is required"
 msgstr ""
+"Champ technique à vérifier si l'approbation par l'utilisateur actuel est "
+"nécessaire"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_user_can_reject
 msgid "Technical field to check if reject by current user is possible"
 msgstr ""
+"Champ technique à vérifier si le refus par l'utilisateur actuel est possible"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_approval_template_id
@@ -1334,12 +1356,12 @@ msgstr "Modèle"
 #. module: mrp_plm
 #: model:res.groups,comment:mrp_plm.group_plm_manager
 msgid "The PLM manager manages products lifecycle management"
-msgstr ""
+msgstr "Le gestionnaire PLM gère le cycle de vie des produits"
 
 #. module: mrp_plm
 #: model:res.groups,comment:mrp_plm.group_plm_user
 msgid "The PLM user uses products lifecycle management"
-msgstr ""
+msgstr "L'utilisateur PLM utilise le cycle de vie des produits"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_model_id
@@ -1384,13 +1406,15 @@ msgid ""
 "There is no available image to be set as cover. Add an image as an "
 "attachment to the the engineering order."
 msgstr ""
+"Aucune image disponible à définir comme couverture. Ajouter une image en "
+"pièce jointe à l'ordre de fabrication."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_validation
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
 msgid "To Apply"
-msgstr ""
+msgstr "À appliquer"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,state:0
@@ -1443,27 +1467,27 @@ msgstr "Version"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Waiting Any Validation"
-msgstr ""
+msgstr "En attente de validation"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_approvals
 msgid "Waiting Approvals"
-msgstr ""
+msgstr "En attente d'approbation"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Waiting My Validation"
-msgstr ""
+msgstr "En attente de ma validation"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Waiting for Approvals"
-msgstr ""
+msgstr "En attente d'approbation"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_nb_approvals_my
 msgid "Waiting my Approvals"
-msgstr ""
+msgstr "En attente de mon approbation"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_workcenter_id
@@ -1486,12 +1510,16 @@ msgstr "Messages d'Ordre de Travail"
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
 msgstr ""
+"Vous ne pouvez pas modifier l'étape, car des approbations sont nécessaires "
+"pour ce processus."
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:477
 #, python-format
 msgid "You cannot change the stage, as approvals are still required."
 msgstr ""
+"Vous ne pouvez pas modifier l'étape, car des approbations sont encore "
+"nécessaires."
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
@@ -1506,12 +1534,12 @@ msgstr "mrp.bom.line"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval
 msgid "mrp.eco.approval"
-msgstr ""
+msgstr "mrp.eco.approval"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval_template
 msgid "mrp.eco.approval.template"
-msgstr ""
+msgstr "mrp.eco.approval.template"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban

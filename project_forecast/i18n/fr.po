@@ -8,23 +8,25 @@
 # Eloïse Stilmant <est@odoo.com>, 2017
 # Xavier Belmere <Info@cartmeleon.com>, 2017
 # Micky Jault <micky037@hotmail.fr>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Clo <clo@odoo.com>, 2017
 # David Halgand <david.halgand@gmail.com>, 2017
 # Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2017
 # Sébastien Le Ray <sebastien-github@orniz.org>, 2017
 # Fabien Pinckaers <fp@openerp.com>, 2017
-# Benoît Fontaine <benoitfontaine.ba@gmail.com>, 2017
+# Linekio <benoitfontaine.ba@gmail.com>, 2017
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
-# Florian Hatat <mininet@wanadoo.fr>, 2017
+# Florian Hatat, 2017
+# e2f <projects@e2f.com>, 2018
+# fr rev <e2ffr02@hotmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Florian Hatat <mininet@wanadoo.fr>, 2017\n"
+"Last-Translator: fr rev <e2ffr02@hotmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,6 +67,8 @@ msgid ""
 "A project must have an end date to use a forecast grid, found no end date "
 "for {project.display_name}"
 msgstr ""
+"Un projet doit avoir une date de fin pour utiliser une grille de prévisions."
+" Aucune date de fin n'a été trouvée pour {project.display_name}"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_active
@@ -121,6 +125,9 @@ msgid ""
 "Can only be used for forecasts not spanning multiple months, found "
 "%(forecast_count)d forecast(s) spanning across months in %(project_name)s"
 msgstr ""
+"Uniquement utilisable pour les prévisions qui ne s'étendent pas sur "
+"plusieurs mois. %(forecast_count)d prévision(s) s'étendant sur plusieurs "
+"mois ont été trouvées pour %(project_name)s"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_color
@@ -238,6 +245,8 @@ msgstr ""
 msgid ""
 "Forecasting over a project only supports monthly forecasts (got step {})"
 msgstr ""
+"Seule la création de prévisions mensuelles est prise en charge (étape reçue "
+": {})"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -267,6 +276,10 @@ msgid ""
 " field and the 'resource_hours' cell field, got respectively "
 "%(column_field)r and %(cell_field)r"
 msgstr ""
+"L'ajustement de la grille pour les prévisions de projet prend uniquement en "
+"charge le champ de la colonne « start_date » et le champ de la cellule « "
+"resource_hours ». Les valeurs reçues étaient respectivement %(column_field)r"
+" et %(cell_field)r"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -360,7 +373,7 @@ msgstr "Prévision de projet"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
 msgid "Project Forecast By Project"
-msgstr ""
+msgstr "Prévision de projet par projet"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
@@ -370,7 +383,7 @@ msgstr "Prévision de projet par utilisateur"
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
 msgid "Project Forecast: Archive/Restore forecasts"
-msgstr ""
+msgstr "Prévision de projet : archiver/restaurer des prévisions"
 
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.action_generate_forecast
@@ -459,7 +472,7 @@ msgstr "project.forecast"
 #. module: project_forecast
 #: model:ir.model,name:project_forecast.model_project_forecast_assignment
 msgid "project.forecast.assignment"
-msgstr ""
+msgstr "project.forecast.assignment"
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:68

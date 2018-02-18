@@ -7,7 +7,8 @@
 # Martin Trigaux, 2017
 # RGB Consulting <odoo@rgbconsulting.com>, 2017
 # Antonio Trueba, 2017
-# luis galaviz galindo <luisg-96@hotmail.com>, 2017
+# José Matias Zuazo <jose.zuazo@tpsistemas.com.ar>, 2017
+# e2f_EPV Translator <e2f_EPV@outlook.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -37,7 +38,11 @@ msgid ""
 "                    You can create a new ticket by typing <b>/helpdesk \"ticket title\"</b>.<br>\n"
 "                    You can search ticket by typing <b>/helpdesk_search \"Keywords1 Keywords2 etc\"</b><br>\n"
 "                    "
-msgstr "<br><br><b></b><br><b></b><br>"
+msgstr ""
+"<br><br>\n"
+"                    Puede crear un nuevo tique escribiendo <b>/helpdesk \"título del tique\"</b>.<br>\n"
+"                    Puede buscar un tique escribiendo  <b>/helpdesk_search \"palabraclave1 palabraclave2...\"</b><br>\n"
+"                    "
 
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
@@ -53,7 +58,7 @@ msgstr "Configurar respuestas automáticas"
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:37
 #, python-format
 msgid "Create a new helpdesk ticket"
-msgstr "Crear un nuevo ticket de helpdesk"
+msgstr "Crear un nuevo ticket en la mesa de ayuda"
 
 #. module: website_helpdesk_livechat
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:72
@@ -69,12 +74,12 @@ msgstr "Canal de discusión"
 #. module: website_helpdesk_livechat
 #: model:ir.model,name:website_helpdesk_livechat.model_helpdesk_team
 msgid "Helpdesk Team"
-msgstr "ayuda de servicio de asistencia"
+msgstr "Equipo de la mesa de ayuda"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team_is_canned_response
 msgid "Is Canned Response"
-msgstr ""
+msgstr "Es una respuesta prestablecida"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team_feature_livechat_channel_id
@@ -84,7 +89,7 @@ msgstr "Canal de chat en vivo"
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team_feature_livechat_web_page
 msgid "Live Chat Test Page"
-msgstr ""
+msgstr "Página de prueba del chat en vivo"
 
 #. module: website_helpdesk_livechat
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:101
@@ -100,7 +105,7 @@ msgstr ""
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:76
 #, python-format
 msgid "Search for a helpdesk ticket"
-msgstr ""
+msgstr "Buscar un tique del servicio de asistencia"
 
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
@@ -109,23 +114,27 @@ msgid ""
 "the live website chatter. Simply ype ':' followed by the shortcut label to "
 "get selectable canned reponses."
 msgstr ""
+"Establezca respuestas predefinidas con accesos rápidos. Esto es válido tanto"
+" para el editor de correos como para el chat en vivo de la página web. "
+"Introduzca simplemente: \":\" seguido de la etiqueta de acceso rápido para "
+"obtener una selección de respuestas prestablecidas."
 
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "Setup the"
-msgstr ""
+msgstr "Configurar el"
 
 #. module: website_helpdesk_livechat
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:42
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:81
 #, python-format
 msgid "Something is missing or wrong in command"
-msgstr ""
+msgstr "El comando está incompleto o no es válido"
 
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "Test the livechat widget from this page:<br/>"
-msgstr "<br/>"
+msgstr "Pruebe el widget de chat en vivo de esta página:<br/>"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,help:website_helpdesk_livechat.field_helpdesk_team_feature_livechat_web_page
@@ -139,13 +148,14 @@ msgstr ""
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "Use predefined answers in the mail composer"
-msgstr ""
+msgstr "Usar respuestas predefinidas en el editor de correos"
 
 #. module: website_helpdesk_livechat
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:99
 #, python-format
 msgid "We found some matched ticket(s) related to the search query: %s"
 msgstr ""
+"Hemos encontrado uno o varios tiques que coinciden con su búsqueda: %s"
 
 #. module: website_helpdesk_livechat
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:51
@@ -165,9 +175,13 @@ msgstr "Está en el canal <b>#%s</b>."
 msgid ""
 "You can search ticket by typing <b>/helpdesk_search \"Keywords1 Keywords2 "
 "etc\"</b><br>"
-msgstr "<b></b><br>"
+msgstr ""
+"Puede buscar tiques escribiendo <b>\"/helpdesk_search \"palabraclave1 "
+"palabraclave2...\"</b><br>"
 
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "channel to define auto-popup rules and geolocation filters"
 msgstr ""
+"canal para definir las reglas de las ventanas emergentes automáticas y los "
+"filtros de geolocalización"

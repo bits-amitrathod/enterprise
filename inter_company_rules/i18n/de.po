@@ -11,13 +11,14 @@
 # Ermin Trevisan <trevi@twanda.com>, 2017
 # Malte Jansen <work@maltejansen.de>, 2017
 # e2f <projects@e2f.com>, 2018
+# Katharina Moritz <kmo@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: Katharina Moritz <kmo@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,7 +71,7 @@ msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
 msgstr ""
-"Konfigurieren Sie im Menü das richtige Lager für das Unternehmen(%s): "
+"Konfigurieren Sie im Menü das richtige Lager für das Unternehmen (%s): "
 "Einstellungen/Benutzer/Unternehmen"
 
 #. module: inter_company_rules
@@ -79,8 +80,8 @@ msgid ""
 "Create Invoices/Credit Notes when encoding invoices/credit notes made to "
 "this company"
 msgstr ""
-"Erstellung von Rechnungen / Gutschriften beim Kodieren von Rechnungen / "
-"Gutschriften für dieses Unternehmen"
+"Rechnungen/Gutschriften beim Kodieren von Rechnungen/Gutschriften für dieses"
+" Unternehmen erstellen"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_po_from_so
@@ -119,7 +120,7 @@ msgid ""
 " e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
 msgstr ""
 "Fertigen Sie beim Erstellen von Rechnungen (oder Gutschriften) für dieses Unternehmen Kunden- und Lieferantenrechnungen (und Gutschriften) an.\n"
-" z.B.: Erstellen Sie eine Kundenrechnung, wenn eine Lieferantenrechnung mit diesem Unternehmen als Lieferant generiert wird."
+" z. B.: Erstellen Sie eine Kundenrechnung, wenn eine Lieferantenrechnung mit diesem Unternehmen als Lieferant generiert wird."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_po_from_so
@@ -137,7 +138,7 @@ msgid ""
 " The intercompany user must at least be Purchase User."
 msgstr ""
 "Generieren Sie einen Beschaffungsauftrag, wenn ein Verkaufsauftrag mit diesem Unternehmen als Kunde erstellt wird.\n"
-" Der konzerninterne Benutzer muss mindestens ein Erwerbsbenutzer sein."
+"Der unternehmensinterne Benutzer muss mindestens ein Erwerbsbenutzer sein."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_so_from_po
@@ -155,7 +156,7 @@ msgid ""
 " The intercompany user must at least be Sale User."
 msgstr ""
 "Generieren Sie einen Verkaufsauftrag, wenn ein Beschaffungsauftrag mit diesem Unternehmen als Lieferant erstellt wird.\n"
-" Der konzerninterne Benutzer muss mindestens ein Vertriebsbenutzer sein."
+"Der unternehmensinterne Benutzer muss mindestens ein Vertriebsbenutzer sein."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_intercompany_user_id
@@ -185,17 +186,15 @@ msgstr "Rechnung"
 #: code:addons/inter_company_rules/models/account_invoice.py:81
 #, python-format
 msgid "Please define %s journal for this company: \"%s\" (id:%d)."
-msgstr ""
-"Bitte legen Sie ein %s Geschäftsbuch für dieses Unternehmen fest: \"%s\" "
-"(id:%d)."
+msgstr "Bitte legen Sie %s Journal für dieses Unternehmen fest: %s (id:%d)."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:39
 #, python-format
 msgid "Provide at least one user for inter company relation for % "
 msgstr ""
-"Stellen Sie mindestens einen Benutzer für die konzerninternen Beziehungn für"
-" % zur Verfügung"
+"Geben Sie mindestens einen Benutzer für die unternehmensinternen Beziehungn "
+"für % an"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/account_invoice.py:44
@@ -203,8 +202,7 @@ msgstr ""
 #, python-format
 msgid "Provide one user for intercompany relation for % "
 msgstr ""
-"Stellen Sie einen Benutzer für die konzerninternen Beziehungen für % zur "
-"Verfügung"
+"Geben Sie einen Benutzer für die unternehmensinternen Beziehungen für % an"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
@@ -221,8 +219,8 @@ msgstr "Angebot"
 msgid ""
 "Responsible user for creation of documents triggered by intercompany rules."
 msgstr ""
-"Verantwortlicher Benutzer für die Erstellung von Dokumenten, die sich aus "
-"den konzerninternen Regeln ergeben."
+"Verantwortlicher Benutzer für die Erstellung von Dokumenten, die von "
+"unternehmensinternen Regeln ausgelöst werden."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_rule_type
@@ -242,14 +240,15 @@ msgstr "Wählen Sie das Unternehmen"
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rules_company_id
 msgid "Select company to setup Inter company rules."
-msgstr "Wählen Sie ein Unternehmen, um konzerninterne Regeln aufzustellen."
+msgstr ""
+"Wählen Sie ein Unternehmen, um unternehmensinterne Regeln aufzustellen."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rule_type
 msgid "Select the type to setup inter company rules in selected company."
 msgstr ""
-"Wählen Sie den Typ, um konzerninterne Regeln im ausgewählten Unternehmen "
-"aufzustellen."
+"Wählen Sie den Typ, um unternehmensinterne Regeln im ausgewählten "
+"Unternehmen aufzustellen."
 
 #. module: inter_company_rules
 #: selection:res.config.settings,rule_type:0
@@ -293,7 +292,7 @@ msgid ""
 "            company rule for this company, it will automatically validate it."
 msgstr ""
 "Wird ein Verkaufs- oder Beschaffungsauftrag durch eine Multi-Firmenregel\n"
-" dieses Unternehmens erstellt, wird es automatisch validiert."
+"dieses Unternehmens erstellt, wird er automatisch validiert."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_validation
@@ -302,7 +301,7 @@ msgid ""
 "for this company, it will automatically validate it"
 msgstr ""
 "Wird ein Verkaufs- oder Beschaffungsauftrag durch eine Multi-Firmenregel "
-"dieses Unternehmens erstellt, wird es automatisch validiert."
+"dieses Unternehmens erstellt, wird er automatisch validiert."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -311,8 +310,8 @@ msgid ""
 "You cannot create SO from PO because sale price list currency is different "
 "than purchase price list currency."
 msgstr ""
-"Sie können keine SO aus einer PO erstellen, da die "
-"Verkaufspreislistenwährung von der Kaufpreislistenwährung abweicht."
+"Sie können keinen Verkaufsauftrag aus einem Verkaufsauftrag erstellen, da "
+"die Verkaufspreislistenwährung von der Kaufpreislistenwährung abweicht."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/res_company.py:32
@@ -323,8 +322,8 @@ msgid ""
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
 "Sie können Rechnungen basierend auf anderen Rechnungen\n"
-" nicht simultan mit anderen Optionen erstellen („Verkaufsaufträge beim Kauf für dieses\n"
-" Unternehmen erstellen“ oder „Beschaffungsaufträge beim Verkauf für dieses Unternehmen erstellen“)!"
+"nicht simultan mit anderen Optionen erstellen („Verkaufsaufträge beim Kauf für dieses\n"
+"Unternehmen erstellen“ oder „Beschaffungsaufträge beim Verkauf für dieses Unternehmen erstellen“)!"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
