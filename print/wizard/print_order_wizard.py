@@ -110,7 +110,7 @@ class PrintOrderLineWizard(models.TransientModel):
     print_order_wizard_id = fields.Many2one('print.order.wizard', 'Print Order Wizard')
     res_id = fields.Integer('Resource ID', readonly=True)
     res_name = fields.Char('Document', readonly=True)
-    res_sendable = fields.Boolean('Document sensable', readonly=True)
+    res_sendable = fields.Boolean('Document Can Be Sent', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Recipient partner', readonly=True)
     partner_has_address = fields.Boolean("Partner has an addess", readonly=True)
     last_send_date = fields.Datetime("Last Send Date", readonly=True)
