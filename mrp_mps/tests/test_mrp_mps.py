@@ -37,7 +37,7 @@ class TestMpsReport(TestMpsCommon):
             })]
         })
         inventory.action_start()
-        inventory.action_done()
+        inventory.action_validate()
 
 
         # ----------------------------------------------------------------------------------------------------

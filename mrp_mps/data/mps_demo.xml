@@ -41,7 +41,7 @@
         </record>
 
         <function model="stock.inventory" name="action_start" eval="[[ref('mps_stock_inventory_0')]]"/>
-        <function model="stock.inventory" name="action_done" eval="[[ref('mps_stock_inventory_0')]]"/>
+        <function model="stock.inventory" name="action_validate" eval="[[ref('mps_stock_inventory_0')]]"/>
 
         <record id="sale_forecast4" model="sale.forecast">
             <field name="date" eval="(DateTime.today() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
