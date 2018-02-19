@@ -29,7 +29,7 @@
                     <group>
                         <field name="user_id"/>
                         <field name="project_id" domain="[('allow_forecast', '=', True)]"/>
-                        <field name="task_id"/>
+                        <field name="task_id" context="{'default_project_id': project_id}"/>
                     </group>
                     <group>
                         <field name="start_date"/>
