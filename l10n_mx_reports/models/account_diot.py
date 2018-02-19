@@ -2,8 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from __future__ import division
 
-from datetime import datetime, timedelta
-
 from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare
@@ -69,11 +67,6 @@ class MxReportPartnerLedger(models.AbstractModel):
         partners = {}
         results = self.do_query(options, line_id)
         mx_country = self.env.ref('base.mx')
-        initial_bal_date_to = datetime.strptime(self.env.context[
-            'date_from_aml'], DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
-        initial_bal_results = self.with_context(
-            date_to=initial_bal_date_to.strftime(
-                DEFAULT_SERVER_DATE_FORMAT)).do_query(options, line_id)
         context = self.env.context
         journal_ids = []
         for company in self.env['res.company'].browse(
@@ -101,8 +94,6 @@ class MxReportPartnerLedger(models.AbstractModel):
             domain.append(('partner_id', '=', partner_id))
             partner = self.env['res.partner'].browse(partner_id)
             partners[partner] = result
-            partners[partner]['initial_bal'] = initial_bal_results.get(
-                partner.id, {'balance': 0, 'debit': 0, 'credit': 0})
             if not context.get('print_mode'):
                 #  fetch the 81 first amls. The report only displays the first
                 # 80 amls. We will use the 81st to know if there are more than
@@ -145,13 +136,8 @@ class MxReportPartnerLedger(models.AbstractModel):
         if line_id:
             line_id = line_id.replace('partner_', '')
         context = self.env.context
-        company_id = context.get('company_id') or self.env.user.company_id
-        grouped_partners = self.with_context(
-            date_from_aml=context['date_from'], date_from=context[
-                'date_from'] and company_id.compute_fiscalyear_dates(
-                    datetime.strptime(
-                        context['date_from'], DEFAULT_SERVER_DATE_FORMAT))[
-                            'date_from'] or None).group_by_partner_id(options, line_id)
+        grouped_partners = self.with_context(date_from_aml=context[
+            'date_from']).group_by_partner_id(options, line_id)
         # Aml go back to the beginning of the user chosen range but the
         # amount on the partner line should go back to either the beginning of
         # the fy or the beginning of times depending on the partner
