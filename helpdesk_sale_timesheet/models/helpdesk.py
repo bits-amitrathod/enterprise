@@ -7,7 +7,8 @@ from odoo import api, fields, models
 class HelpdeskTicket(models.Model):
     _inherit = 'helpdesk.ticket'
 
-    is_overdue = fields.Boolean('Is overdue', compute="_compute_is_overdue", help="It will be overdue if sale order's delivered quantity is exceed than ordered quantity")
+    is_overdue = fields.Boolean('Is overdue', compute="_compute_is_overdue",
+        help="Indicates more support time has been delivered thant the ordered quantity")
 
     @api.depends('task_id.sale_line_id')
     def _compute_is_overdue(self):
