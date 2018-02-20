@@ -289,7 +289,7 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='sale_condition']" position="inside">
-                <field name="recurring_invoice"  attrs="{'invisible': True}"/>
+                <field name="recurring_invoice"  attrs="{'invisible': [('type', '!=', 'service')]}"/>
             </xpath>
         </field>
     </record>
