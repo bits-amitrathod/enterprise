@@ -36,7 +36,7 @@ class MrpProduction(models.Model):
 
     @api.multi
     def button_plan(self):
-        super(MrpProduction, self).button_plan()
+        res = super(MrpProduction, self).button_plan()
         WorkOrder = self.env['mrp.workorder']
         ProductUom = self.env['product.uom']
         for order in self.filtered(lambda x: x.state == 'planned'):
@@ -76,6 +76,7 @@ class MrpProduction(models.Model):
                     to_date = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id.plan_hours(duration / 60.0, from_date)
                     if not to_date:
                         start_date = from_date + relativedelta(minutes=duration)
+        return res
 
     @api.multi
     def button_unplan(self):
