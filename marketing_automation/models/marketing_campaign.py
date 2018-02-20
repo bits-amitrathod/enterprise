@@ -319,7 +319,8 @@ class MarketingActivity(models.Model):
     @api.constrains('trigger_type', 'parent_id')
     def _check_trigger_begin(self):
         if any(activity.trigger_type == 'begin' and activity.parent_id for activity in self):
-            raise ValidationError(_("Error! You can't define a child activity with a trigger of type 'begin'."))
+            raise ValidationError(
+                _('Error! You can\'t define a child activity with a trigger of type "beginning of campaign".'))
 
     @api.model
     def create(self, values):
