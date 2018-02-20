@@ -45,7 +45,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
         for wiz in self:
             warning_message = self._context.get('warning_message', '')
             if warning_message:
-                wiz.warning_message = _('The generated payment file is not a generic SEPA credit transfer. Be aware that some banks may reject it because it is not implemented on their side.\n\nIn particular, the reason why this payment file is not generic is the following:\n   ') + warning_message 
+                wiz.warning_message = _('The generated payment file is not a generic SEPA credit transfer. Be aware that some banks may reject it because it is not implemented on their side.\n\nIn particular, the reason why this payment file is not generic is the following:\n   ') + warning_message
 
     journal_id = fields.Many2one('account.journal', string="Journal", readonly=True)
     bank_account_id = fields.Many2one('res.partner.bank', string="Bank Account", readonly=True)
@@ -311,7 +311,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
         Nm = etree.SubElement(Cdtr, "Nm")
         Nm.text = prepare_SEPA_string(payment.partner_id.name[:70])
         if payment.payment_type == 'transfer':
-           CdtTrfTxInf.append(self._get_CdtrAcct(payment.destination_journal_id.bank_account_id))
+            CdtTrfTxInf.append(self._get_CdtrAcct(payment.destination_journal_id.bank_account_id))
         else:
             CdtTrfTxInf.append(self._get_CdtrAcct(payment.partner_bank_account_id))
         val_RmtInf = self._get_RmtInf(payment)

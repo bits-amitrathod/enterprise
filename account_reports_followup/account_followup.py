@@ -207,7 +207,6 @@ class res_partner(models.Model):
         ctx = self.env.context.copy()
         ctx.update({
             'model': 'account.followup.report', 
-            'lang': self.lang,
             'followup_line_id': partners_data.get(self.id) and partners_data[self.id][0] or False,
         })
         return {

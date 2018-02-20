@@ -66,7 +66,7 @@ class report_account_coa(models.AbstractModel):
                         for account_sum in sorted_accounts:
                             #a column of a hierarchy line is the sum of the same columns for all accounts involved
                             if account_sum.code[:level + 1] == title_index:
-                                init_bal += initial_balances.get(account, 0.0)
+                                init_bal += initial_balances.get(account_sum, 0.0)
                                 for p in range(len(comparison_table)):
                                     total[p] += grouped_accounts[account_sum][p]['balance']
                             if account_sum.code[:level + 1] > title_index:
