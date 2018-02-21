@@ -404,9 +404,7 @@ class HelpdeskTicket(models.Model):
     @api.multi
     def _track_subtype(self, init_values):
         self.ensure_one()
-        if 'user_id' in init_values and self.user_id:
-            return 'helpdesk.mt_ticket_assigned'
-        elif 'stage_id' in init_values and self.stage_id.sequence < 1:
+        if 'stage_id' in init_values and self.stage_id.sequence < 1:
             return 'helpdesk.mt_ticket_new'
         elif 'stage_id' in init_values and self.stage_id.sequence >= 1:
             return 'helpdesk.mt_ticket_stage'
