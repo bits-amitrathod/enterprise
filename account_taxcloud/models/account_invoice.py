@@ -101,15 +101,15 @@ class AccountInvoice(models.Model):
                         invoice.id,
                     )
                 else:
-                    request.set_invoice_items_detail(self)
-                    origin_invoice = self.env['account.invoice'].search([('number', '=', self.origin)], limit=1)
+                    request.set_invoice_items_detail(invoice)
+                    origin_invoice = self.env['account.invoice'].search([('number', '=', invoice.origin)], limit=1)
                     if origin_invoice:
                         request.client.service.Returned(
                             request.api_login_id,
                             request.api_key,
                             origin_invoice.id,
                             request.cart_items,
-                            fields.Datetime.from_string(self.date_invoice)
+                            fields.Datetime.from_string(invoice.date_invoice)
                         )
                     else:
                         _logger.warning(_("The source document on the refund is not valid and thus the refunded cart won't be logged on your taxcloud account"))
