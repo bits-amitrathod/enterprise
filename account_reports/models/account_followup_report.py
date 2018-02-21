@@ -257,7 +257,7 @@ class account_report_context_followup(models.TransientModel):
     footnotes = fields.Many2many('account.report.footnote', 'account_context_footnote_followup', string='Footnotes')
     partner_id = fields.Many2one('res.partner', string='Partner')
     invoice_address_id = fields.Many2one('res.partner', compute='_get_invoice_address', string='Invoice Address')
-    summary = fields.Char(default=lambda s: s.env.user.company_id.overdue_msg and s.env.user.company_id.overdue_msg.replace('\n', '<br />') or s.env['res.company'].default_get(['overdue_msg'])['overdue_msg'])
+    summary = fields.Char(default=lambda s: s.env.user.company_id.overdue_msg or s.env['res.company'].default_get(['overdue_msg'])['overdue_msg'])
 
     @api.multi
     def change_next_action(self, date, note):

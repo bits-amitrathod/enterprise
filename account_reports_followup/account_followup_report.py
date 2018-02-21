@@ -49,8 +49,8 @@ class account_report_context_followup(models.TransientModel):
     _inherit = "account.report.context.followup"
 
     level = fields.Many2one('account_followup.followup.line')
-    summary = fields.Char(default=lambda s: (s.level and s.level.description.replace('\n', '<br />')) 
-        or (s.env.user.company_id.overdue_msg and s.env.user.company_id.overdue_msg.replace('\n', '<br />')) 
+    summary = fields.Char(default=lambda s: (s.level and s.level.description) 
+        or s.env.user.company_id.overdue_msg 
         or s.env['res.company'].default_get(['overdue_msg'])['overdue_msg'])
 
     @api.multi
@@ -71,7 +71,7 @@ class account_report_context_followup(models.TransientModel):
     def create(self, vals):
         if 'level' in vals:
             partner = self.env['res.partner'].browse(vals['partner_id'])
-            summary = (self.env['account_followup.followup.line'].with_context(lang=partner.lang).browse(vals['level']).description or '').replace('\n', '<br />')
+            summary = self.env['account_followup.followup.line'].with_context(lang=partner.lang).browse(vals['level']).description or ''
             try:
                 formatted_summary = summary % {'partner_name': partner.name,
                                                'date': time.strftime('%Y-%m-%d'),

@@ -105,7 +105,7 @@ var FollowupReportWidget = ReportWidget.extend({
         $content.find('.o_account_reports_followup_next_action_date_button').bind('click', changeDate);
         
         var save = function () {
-            var note = $content.find(".o_account_reports_next_action_note").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
+            var note = $content.find(".o_account_reports_next_action_note").val();
             var date = nextActionDatePicker.get_value();
             var target_id = $content.find("#target_id").val();
             return new Model('account.report.context.followup').call('change_next_action', [[parseInt(target_id)], date, note])
@@ -216,7 +216,7 @@ var FollowupReportWidget = ReportWidget.extend({
         var paymentDatePicker = new datepicker.DateWidget(this);
         paymentDatePicker.appendTo($content.find('div.o_account_reports_payment_date_picker'));
         var save = function () {
-            var note = $content.find("#internalNote").val().replace(/\r?\n/g, '<br />').replace(/\s+/g, ' ');
+            var note = $content.find("#internalNote").val();
             var date = paymentDatePicker.get_value();
             return new Model('account.move.line').call('write', [[parseInt($content.find("#target_id").val())], {expected_pay_date: date, internal_note: note}]).then(function () {
                 return self.getParent().restart({});

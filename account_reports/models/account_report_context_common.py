@@ -270,7 +270,7 @@ class AccountReportContextCommon(models.TransientModel):
                 return str(dt_to.year - 1) + ' - ' + str(dt_to.year)
         if not dt_from:
             return _('As of %s') % (date_to,)
-        return _('From %s <br/> to  %s') % (date_from, date_to)
+        return (_('From %s <br/> to  %s')).replace('<br/>', '\n') % (date_from, date_to)
 
     def _get_month(self, index):
         return [
@@ -304,7 +304,7 @@ class AccountReportContextCommon(models.TransientModel):
         columns = []
         if self.date_filter_cmp == 'custom':
             if display:
-                return [_('Comparison<br />') + self.get_cmp_date(), '%']
+                return [(_('Comparison<br />')).replace('<br />', '\n') + self.get_cmp_date(), '%']
             else:
                 if not self.get_report_obj().get_report_type().date_range:
                     return [[False, self.date_to_cmp]]

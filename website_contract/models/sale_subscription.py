@@ -282,6 +282,7 @@ class SaleSubscription(models.Model):
                     if contract.template_id.payment_mandatory and contract.recurring_total and automatic:
                         try:
                             payment_token = contract.payment_token_id
+                            tx = None
                             if payment_token:
                                 invoice_values = contract.with_context(lang=contract.partner_id.lang)._prepare_invoice()
                                 new_invoice = self.env['account.invoice'].with_context(context_company).create(invoice_values)
@@ -304,49 +305,50 @@ class SaleSubscription(models.Model):
                                     if auto_commit:
                                         cr.rollback()
                                     new_invoice.unlink()
-                            amount = contract.recurring_total
-                            date_close = datetime.datetime.strptime(contract.recurring_next_date, "%Y-%m-%d") + relativedelta(days=15)
-                            close_contract = current_date >= date_close.strftime('%Y-%m-%d')
-                            email_context = self.env.context.copy()
-                            email_context.update({
-                                'payment_token': contract.payment_token_id and contract.payment_token_id.name,
-                                'renewed': False,
-                                'total_amount': amount,
-                                'email_to': contract.partner_id.email,
-                                'code': contract.code,
-                                'currency': contract.pricelist_id.currency_id.name,
-                                'date_end': contract.date,
-                                'date_close': date_close.date()
-                            })
-                            if close_contract:
-                                _, template_id = imd_res.get_object_reference('website_contract', 'email_payment_close')
-                                template = template_res.browse(template_id)
-                                template.with_context(email_context).send_mail(contract.id)
-                                _logger.debug("Sending Contract Closure Mail to %s for contract %s and closing contract", contract.partner_id.email, contract.id)
-                                msg_body = 'Automatic payment failed after multiple attempts. Contract closed automatically.'
-                                contract.message_post(body=msg_body)
-                            else:
-                                _, template_id = imd_res.get_object_reference('website_contract', 'email_payment_reminder')
-                                msg_body = 'Automatic payment failed. Contract set to "To Renew".'
-                                if (datetime.datetime.today() - datetime.datetime.strptime(contract.recurring_next_date, '%Y-%m-%d')).days in [0, 3, 7, 14]:
+
+                            if tx is None or tx.state != 'done':
+                                amount = contract.recurring_total
+                                date_close = datetime.datetime.strptime(contract.recurring_next_date, "%Y-%m-%d") + relativedelta(days=15)
+                                close_contract = current_date >= date_close.strftime('%Y-%m-%d')
+                                email_context = self.env.context.copy()
+                                email_context.update({
+                                    'payment_token': contract.payment_token_id and contract.payment_token_id.name,
+                                    'renewed': False,
+                                    'total_amount': amount,
+                                    'email_to': contract.partner_id.email,
+                                    'code': contract.code,
+                                    'currency': contract.pricelist_id.currency_id.name,
+                                    'date_end': contract.date,
+                                    'date_close': date_close.date()
+                                })
+                                if close_contract:
+                                    _, template_id = imd_res.get_object_reference('website_contract', 'email_payment_close')
                                     template = template_res.browse(template_id)
                                     template.with_context(email_context).send_mail(contract.id)
-                                    _logger.debug("Sending Payment Failure Mail to %s for contract %s and setting contract to pending", contract.partner_id.email, contract.id)
-                                    msg_body += ' E-mail sent to customer.'
-                                contract.message_post(body=msg_body)
-                            contract.write({'state': 'close' if close_contract else 'pending'})
+                                    _logger.debug("Sending Contract Closure Mail to %s for contract %s and closing contract", contract.partner_id.email, contract.id)
+                                    msg_body = 'Automatic payment failed after multiple attempts. Contract closed automatically.'
+                                    contract.message_post(body=msg_body)
+                                else:
+                                    _, template_id = imd_res.get_object_reference('website_contract', 'email_payment_reminder')
+                                    msg_body = 'Automatic payment failed. Contract set to "To Renew".'
+                                    if (datetime.datetime.today() - datetime.datetime.strptime(contract.recurring_next_date, '%Y-%m-%d')).days in [0, 3, 7, 14]:
+                                        template = template_res.browse(template_id)
+                                        template.with_context(email_context).send_mail(contract.id)
+                                        _logger.debug("Sending Payment Failure Mail to %s for contract %s and setting contract to pending", contract.partner_id.email, contract.id)
+                                        msg_body += ' E-mail sent to customer.'
+                                        contract.message_post(body=msg_body)
+                                contract.write({'state': 'close' if close_contract else 'pending'})
                             if auto_commit:
                                 cr.commit()
                         except Exception:
                             if auto_commit:
                                 cr.rollback()
                             # we assume that the payment is run only once a day
+                            traceback_message = traceback.format_exc()
+                            _logger.error(traceback_message)
                             last_tx = self.env['payment.transaction'].search([('reference', 'like', 'CONTRACT-%s-%s' % (contract.id, datetime.date.today().strftime('%y%m%d')))], limit=1)
                             error_message = "Error during renewal of contract %s (%s)" % (contract.code, 'Payment recorded: %s' % last_tx.reference if last_tx and last_tx.state == 'done' else 'No payment recorded.')
-                            traceback_message = traceback.format_exc()
                             _logger.error(error_message)
-                            _logger.error(traceback_message)
-
                     # invoice only
                     else:
                         try:
