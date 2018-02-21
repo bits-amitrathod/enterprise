@@ -399,7 +399,7 @@ class AccountReport(models.AbstractModel):
                 return '%s - %s' % ((dt_to.year - 1), dt_to.year)
         if not dt_from:
             return _('As of %s') % (format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)),)
-        return _('From %s <br/> to  %s') % (format_date(self.env, dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)), format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
+        return _('From %s <br/> to  %s').replace('<br/>', '\n') % (format_date(self.env, dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)), format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
 
     def apply_date_filter(self, options):
         if not options.get('date'):

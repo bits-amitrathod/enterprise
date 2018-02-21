@@ -25,7 +25,7 @@
 <template id="filter_info_template">
     <div class="row print_only" style='margin-top: 20px; margin-bottom: 20px;'>
         <div class="col-xs-4">
-            <t t-if="options.get('date') and options['date'].get('string')"><t t-raw="options['date']['string']"/></t>
+            <t t-if="options.get('date') and options['date'].get('string')"><t t-esc="options['date']['string']"/></t>
         </div>
         <div class="col-xs-4">
             <t t-if="options.get('cash_basis')">Cash Basis</t><t t-if="options.get('cash_basis') == False">Accrual Basis<br/></t>
@@ -109,7 +109,7 @@
             <t t-foreach="line.get('columns')" t-as="column">
                 <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[column_index+line.get('colspan', 1)].get('class', '')))" t-att-style="column.get('style', lines.get('columns_header')[column_index+line.get('colspan', 1)].get('style', ''))">
                     <span class="o_account_report_column_value">
-                        <t t-raw="column.get('name')"/>
+                        <t t-esc="column.get('name')"/>
                     </span>
                 </td>
             </t>
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <div class="o_account_reports_summary_edit">
-                <textarea name="summary"><t t-if="report.get('summary')" t-raw="report['summary']" /></textarea>
+                <textarea name="summary"><t t-if="report.get('summary')" t-esc="report['summary']" /></textarea>
                 <button class="btn btn-primary js_account_report_save_summary">Save</button>
             </div>
             <div class="table-responsive">
@@ -140,7 +140,7 @@
                         <tr>
                             <t t-foreach="lines.get('columns_header')" t-as="column_header">
                                 <th t-att-class="'o_account_report_column_header ' + (column_header.get('class', ''))" t-att-style="column_header.get('style', '')">
-                                    <t t-raw="column_header.get('name')"/>
+                                    <t t-esc="column_header.get('name')"/>
                                 </th>
                             </t>
                         </tr>
@@ -206,11 +206,11 @@
             </th>
             <t t-foreach="model.reverse(options['comparison'].get('periods'))" t-as="column_header">
                 <th t-att-class="'o_account_report_column_header text-center'" colspan="2">
-                    <t t-raw="column_header.get('string')"/>
+                    <t t-esc="column_header.get('string')"/>
                 </th>
             </t>
             <th t-att-class="'o_account_report_column_header text-center'" colspan="2">
-                <t t-raw="options['date'].get('string')"/>
+                <t t-esc="options['date'].get('string')"/>
             </th>
             <th t-att-class="'o_account_report_column_header'">
             </th>
