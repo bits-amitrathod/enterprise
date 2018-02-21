@@ -125,7 +125,6 @@ class TestSubscription(TestSubscriptionCommon):
             {'name': 'The Wire',
             'provider': 'transfer',
             'company_id': self.company.id,
-            'auto_confirm': 'none',
             'environment': 'test',
             'view_template_id': self.env['ir.ui.view'].search([('type', '=', 'qweb')], limit=1).id})
 
