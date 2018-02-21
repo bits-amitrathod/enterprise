@@ -228,10 +228,9 @@ class TimesheetForecastController(SaleTimesheetController):
     def plan_stat_button(self, domain, res_model='account.analytic.line'):
         action = super(TimesheetForecastController, self).plan_stat_button(domain, res_model=res_model)
         if res_model == 'project.forecast':
-            action = request.env.ref('project_forecast.project_forecast_action_by_project').read()[0]
+            action = request.env['project.forecast'].action_view_forecast('project_forecast.project_forecast_action_by_project')
             action.update({
                 'name': _('Forecast'),
                 'domain': domain,
-                'context': request.env.context,  # erase original context to avoid default filter
             })
         return action
