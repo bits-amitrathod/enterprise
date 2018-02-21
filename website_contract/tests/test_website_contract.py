@@ -98,14 +98,14 @@ class TestContract(TestContractCommon):
 
     # Mocking for 'test_auto_payment_with_token'
     # Avoid account_id is False when creating the invoice
-    def _mock_prepare_invoice_data(self, cr, uid, contract, context=None):
-        invoice = self.original_prepare_invoice_data(contract)
+    def _mock_prepare_invoice_data(self):
+        invoice = self.original_prepare_invoice_data()
         invoice['account_id'] = self.account_receivable.id
         return invoice
 
     # Mocking for 'test_auto_payment_with_token'
     # Avoid account_id is False when creating the invoice
-    def _mock_prepare_invoice_line(self, cr, uid, line, fiscal_position, context=None):
+    def _mock_prepare_invoice_line(self, line, fiscal_position):
         line_values = self.original_prepare_invoice_line(line, fiscal_position)
         line_values['account_id'] = self.account_receivable.id
         return line_values
@@ -151,7 +151,7 @@ class TestContract(TestContractCommon):
             'environment': 'test',
             'view_template_id': self.env['ir.ui.view'].search([('type', '=', 'qweb')], limit=1).id})
 
-        self.payment_method = self.env['payment.method'].create(
+        self.payment_method = self.env['payment.token'].create(
             {'name': 'Jimmy McNulty',
              'partner_id': self.partner.id,
              'acquirer_id': self.acquirer.id,
@@ -161,10 +161,10 @@ class TestContract(TestContractCommon):
         self.original_prepare_invoice_line = self.contract._prepare_invoice_line
 
         patchers = [
-            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription._prepare_invoice_line', wraps=self._mock_prepare_invoice_line, create=True),
-            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription._prepare_invoice_data', wraps=self._mock_prepare_invoice_data, create=True),
-            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription._do_payment', wraps=self._mock_subscription_do_payment, create=True),
-            patch('openerp.addons.website_contract.models.sale_subscription.SaleSubscription.send_success_mail', wraps=self._mock_subscription_send_success_mail, create=True),
+            patch('odoo.addons.website_contract.models.sale_subscription.SaleSubscription._prepare_invoice_line', wraps=self._mock_prepare_invoice_line, create=True),
+            patch('odoo.addons.website_contract.models.sale_subscription.SaleSubscription._prepare_invoice_data', wraps=self._mock_prepare_invoice_data, create=True),
+            patch('odoo.addons.website_contract.models.sale_subscription.SaleSubscription._do_payment', wraps=self._mock_subscription_do_payment, create=True),
+            patch('odoo.addons.website_contract.models.sale_subscription.SaleSubscription.send_success_mail', wraps=self._mock_subscription_send_success_mail, create=True),
         ]
 
         for patcher in patchers:
@@ -177,7 +177,7 @@ class TestContract(TestContractCommon):
             'recurring_next_date': fields.Date.to_string(datetime.date.today()),
             'template_id': self.contract_tmpl_3.id,
             'company_id': self.company.id,
-            'payment_method_id': self.payment_method.id
+            'payment_token_id': self.payment_method.id
         })
         self.mock_send_success_count = 0
         self.contract.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
