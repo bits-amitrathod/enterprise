@@ -525,6 +525,7 @@ class SaleSubscription(models.Model):
                     if subscription.template_id.payment_mandatory and subscription.recurring_total and automatic:
                         try:
                             payment_token = subscription.payment_token_id
+                            tx = None
                             if payment_token:
                                 invoice_values = subscription.with_context(lang=subscription.partner_id.lang)._prepare_invoice()
                                 new_invoice = self.env['account.invoice'].with_context(context_company).create(invoice_values)
@@ -547,48 +548,49 @@ class SaleSubscription(models.Model):
                                     if auto_commit:
                                         cr.rollback()
                                     new_invoice.unlink()
-                            amount = subscription.recurring_total
-                            date_close = datetime.datetime.strptime(subscription.recurring_next_date, "%Y-%m-%d") + relativedelta(days=15)
-                            close_subscription = current_date >= date_close.strftime('%Y-%m-%d')
-                            email_context = self.env.context.copy()
-                            email_context.update({
-                                'payment_token': subscription.payment_token_id and subscription.payment_token_id.name,
-                                'renewed': False,
-                                'total_amount': amount,
-                                'email_to': subscription.partner_id.email,
-                                'code': subscription.code,
-                                'currency': subscription.pricelist_id.currency_id.name,
-                                'date_end': subscription.date,
-                                'date_close': date_close.date()
-                            })
-                            if close_subscription:
-                                _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_close')
-                                template = template_res.browse(template_id)
-                                template.with_context(email_context).send_mail(subscription.id)
-                                _logger.debug("Sending Subscription Closure Mail to %s for subscription %s and closing subscription", subscription.partner_id.email, subscription.id)
-                                msg_body = 'Automatic payment failed after multiple attempts. Subscription closed automatically.'
-                                subscription.message_post(body=msg_body)
-                            else:
-                                _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_reminder')
-                                msg_body = 'Automatic payment failed. Subscription set to "To Renew".'
-                                if (datetime.datetime.today() - datetime.datetime.strptime(subscription.recurring_next_date, '%Y-%m-%d')).days in [0, 3, 7, 14]:
+                            if tx is None or tx.state != 'done':
+                                amount = subscription.recurring_total
+                                date_close = datetime.datetime.strptime(subscription.recurring_next_date, "%Y-%m-%d") + relativedelta(days=15)
+                                close_subscription = current_date >= date_close.strftime('%Y-%m-%d')
+                                email_context = self.env.context.copy()
+                                email_context.update({
+                                    'payment_token': subscription.payment_token_id and subscription.payment_token_id.name,
+                                    'renewed': False,
+                                    'total_amount': amount,
+                                    'email_to': subscription.partner_id.email,
+                                    'code': subscription.code,
+                                    'currency': subscription.pricelist_id.currency_id.name,
+                                    'date_end': subscription.date,
+                                    'date_close': date_close.date()
+                                })
+                                if close_subscription:
+                                    _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_close')
                                     template = template_res.browse(template_id)
                                     template.with_context(email_context).send_mail(subscription.id)
-                                    _logger.debug("Sending Payment Failure Mail to %s for subscription %s and setting subscription to pending", subscription.partner_id.email, subscription.id)
-                                    msg_body += ' E-mail sent to customer.'
-                                subscription.message_post(body=msg_body)
-                            subscription.write({'state': 'close' if close_subscription else 'pending'})
+                                    _logger.debug("Sending Subscription Closure Mail to %s for subscription %s and closing subscription", subscription.partner_id.email, subscription.id)
+                                    msg_body = 'Automatic payment failed after multiple attempts. Subscription closed automatically.'
+                                    subscription.message_post(body=msg_body)
+                                else:
+                                    _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_reminder')
+                                    msg_body = 'Automatic payment failed. Subscription set to "To Renew".'
+                                    if (datetime.datetime.today() - datetime.datetime.strptime(subscription.recurring_next_date, '%Y-%m-%d')).days in [0, 3, 7, 14]:
+                                        template = template_res.browse(template_id)
+                                        template.with_context(email_context).send_mail(subscription.id)
+                                        _logger.debug("Sending Payment Failure Mail to %s for subscription %s and setting subscription to pending", subscription.partner_id.email, subscription.id)
+                                        msg_body += ' E-mail sent to customer.'
+                                    subscription.message_post(body=msg_body)
+                                subscription.write({'state': 'close' if close_subscription else 'pending'})
                             if auto_commit:
                                 cr.commit()
                         except Exception:
                             if auto_commit:
                                 cr.rollback()
                             # we assume that the payment is run only once a day
+                            traceback_message = traceback.format_exc()
+                            _logger.error(traceback_message)
                             last_tx = self.env['payment.transaction'].search([('reference', 'like', 'SUBSCRIPTION-%s-%s' % (subscription.id, datetime.date.today().strftime('%y%m%d')))], limit=1)
                             error_message = "Error during renewal of subscription %s (%s)" % (subscription.code, 'Payment recorded: %s' % last_tx.reference if last_tx and last_tx.state == 'done' else 'No payment recorded.')
-                            traceback_message = traceback.format_exc()
                             _logger.error(error_message)
-                            _logger.error(traceback_message)
 
                     # invoice only
                     else:
