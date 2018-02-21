@@ -101,6 +101,7 @@ class TestContract(TestContractCommon):
     def _mock_prepare_invoice_data(self):
         invoice = self.original_prepare_invoice_data()
         invoice['account_id'] = self.account_receivable.id
+        invoice['partner_bank_id'] = False
         return invoice
 
     # Mocking for 'test_auto_payment_with_token'
