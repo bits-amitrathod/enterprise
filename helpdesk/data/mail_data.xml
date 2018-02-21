@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="1">
+<odoo><data noupdate="1">
 
-<record id="new_ticket_request_email_template" model="mail.template">
+    <!-- Ticket related subtypes for messaging / Chatter -->
+    <record id="mt_ticket_new" model="mail.message.subtype">
+        <field name="name">Ticket Created</field>
+        <field name="sequence">0</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="default" eval="False"/>
+        <field name="hidden" eval="True"/>
+        <field name="description">Ticket created</field>
+    </record>
+    <record id="mt_ticket_assigned" model="mail.message.subtype">
+        <field name="name">Ticket Assigned</field>
+        <field name="sequence">5</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="description">Ticket created</field>
+    </record>
+    <record id="mt_ticket_stage" model="mail.message.subtype">
+        <field name="name">Stage Changed</field>
+        <field name="sequence">10</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="description">Status Changed</field>
+    </record>
+
+    <!-- Team related subtypes for messaging / Chatter -->
+    <record id="mt_team_ticket_new" model="mail.message.subtype">
+        <field name="name">Ticket Created</field>
+        <field name="sequence">0</field>
+        <field name="res_model">helpdesk.team</field>
+        <field name="default" eval="True"/>
+        <field name="parent_id" eval="ref('mt_ticket_new')"/>
+        <field name="relation_field">team_id</field>
+    </record>
+    <record id="mt_team_ticket_assigned" model="mail.message.subtype">
+        <field name="name">Ticket Assigned</field>
+        <field name="sequence">5</field>
+        <field name="res_model">helpdesk.team</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="parent_id" eval="ref('mt_ticket_assigned')"/>
+        <field name="relation_field">team_id</field>
+    </record>
+    <record id="mt_team_ticket_stage" model="mail.message.subtype">
+        <field name="name">Ticket Stage Changed</field>
+        <field name="sequence">10</field>
+        <field name="res_model">helpdesk.team</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="parent_id" eval="ref('mt_ticket_stage')"/>
+        <field name="relation_field">team_id</field>
+    </record>
+
+    <record id="new_ticket_request_email_template" model="mail.template">
         <field name="name">New Ticket Request</field>
         <field name="email_from">${object.user_id.email_formatted | safe}</field>
         <field name="subject">${object.display_name}</field>
@@ -134,5 +188,5 @@
 </div>
         </field>
     </record>
-
-    </odoo>
+</data>
+</odoo>

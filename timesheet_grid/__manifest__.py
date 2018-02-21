@@ -11,7 +11,7 @@
     'version': '1.0',
     'depends': ['web_grid', 'hr_timesheet'],
     'data': [
-        'data/timesheet_data.xml',
+        'data/mail_data.xml',
         'security/timesheet_security.xml',
         'views/hr_timesheet_views.xml',
         'views/res_config_settings_views.xml',
