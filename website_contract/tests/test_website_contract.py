@@ -80,7 +80,7 @@ class TestContract(TestContractCommon):
             'type': 'server2server',
             'currency_id': invoice.currency_id.id,
             'reference': reference,
-            'payment_method_id': payment_method.id,
+            'payment_token_id': payment_method.id,
             'partner_id': invoice.partner_id.id,
             'partner_country_id': invoice.partner_id.country_id.id,
             'invoice_id': invoice.id,
