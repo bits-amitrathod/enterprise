@@ -24,7 +24,7 @@ var GanttController = AbstractController.extend({
 
     init: function (parent, model, renderer, params) {
         this._super.apply(this, arguments);
-        this.set('title', params.title);
+        this.set('title', this.displayName);
         this.context = params.context;
     },
 
@@ -32,6 +32,13 @@ var GanttController = AbstractController.extend({
     // Public
     //--------------------------------------------------------------------------
 
+    /**
+     * @override
+     * @returns {string}
+     */
+    getTitle: function () {
+        return this.get('title');
+    },
     /**
      * Render the buttons according to the GanttView.buttons template and add
      * listeners on it. Set this.$buttons with the produced jQuery element
@@ -144,7 +151,7 @@ var GanttController = AbstractController.extend({
         var self = this;
         this.model.setFocusDate(focusDate);
         this.reload().then(function () {
-            self.set({'title': 'Forecast (' + self.model.get().date_display + ')'});
+            self.set('title', self.displayName + ' (' + self.model.get().date_display + ')');
         });
     },
     /**
@@ -155,7 +162,7 @@ var GanttController = AbstractController.extend({
         var self = this;
         this.model.setScale(scale);
         this.reload().then(function () {
-            self.set({'title': 'Forecast (' + self.model.get().date_display + ')'});
+            self.set('title', self.displayName + ' (' + self.model.get().date_display + ')');
         });
     },
 
@@ -178,7 +185,7 @@ var GanttController = AbstractController.extend({
             });
             var startDate = moment(new Date(parseInt(classDate.split("_")[1], 10))).utc();
 
-            this._createTask(id, startDate);   
+            this._createTask(id, startDate);
         }
     },
     /**
