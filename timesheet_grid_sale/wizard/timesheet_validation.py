@@ -17,7 +17,8 @@ class ValidationWizard(models.TransientModel):
         validable_employees = self.validation_line_ids.filtered('validate').mapped('employee_id')
         oldest_last_validation_date = None
         if validable_employees:
-            oldest_last_validation_date = min(validable_employees.mapped('timesheet_validated'))
+            timesheet_validated = validable_employees.mapped('timesheet_validated')
+            oldest_last_validation_date = False if False in timesheet_validated else min(validable_employees.mapped('timesheet_validated'))
         res = super(ValidationWizard, self).action_validate()
 
         # normally this would be done through a computed field, or triggered
