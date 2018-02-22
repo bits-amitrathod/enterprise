@@ -10,6 +10,7 @@ var InventoryBarcodeHandler = AbstractField.extend({
 
         this.trigger_up('activeBarcode', {
             name: this.name,
+            notifyChange: false,
             fieldName: 'line_ids',
             quantity: 'product_qty',
             setQuantityWithKeypress: true,

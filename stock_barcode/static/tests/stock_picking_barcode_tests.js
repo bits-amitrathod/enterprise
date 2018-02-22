@@ -175,5 +175,65 @@ QUnit.test('scan a product tracked by lot', function (assert) {
     form.destroy();
 });
 
+QUnit.test('scan a product verify onChange', function (assert) {
+    assert.expect(7);
+
+    this.data.stock_picking.onchanges = {
+        move_line_ids: function () {},
+    };
+    this.data['stock.move.line'].onchanges = {
+        qty_done: function () {},
+    };
+    var form = createView({
+        View: FormView,
+        model: 'stock_picking',
+        data: this.data,
+        arch: '<form string="Products">' +
+                '<field name="_barcode_scanned" widget="picking_barcode_handler"/>' +
+                '<sheet>' +
+                    '<notebook>' +
+                        '<page string="Operations">' +
+                            '<field name="display_name"/>' +
+                            '<field name="move_line_ids">' +
+                                '<tree>' +
+                                    '<field name="product_id"/>' +
+                                    '<field name="product_qty"/>' +
+                                    '<field name="qty_done"/>' +
+                                    '<field name="product_barcode"/>' +
+                                '</tree>' +
+                            '</field>' +
+                        '</page>' +
+                    '</notebook>' +
+                '</sheet>' +
+            '</form>',
+        res_id: 2,
+        mockRPC: function (route, args) {
+            assert.step(args.method);
+            return this._super.apply(this, arguments);
+        },
+        viewOptions: {
+            mode: 'edit',
+        },
+    });
+
+    assert.strictEqual(form.$('.o_data_row .o_data_cell:nth(2)').text(), '0.0',
+        "quantity done should be 0");
+
+    assert.strictEqual(form.activeBarcode._barcode_scanned.notifyChange, false,
+        "_barcode_scanned should not notify change");
+
+    // trigger a change on a field to be able to check that the record is correctly
+    // saved before calling get_po_to_split_from_barcode
+    form.$('.o_field_widget[name="display_name"]').val('new value').trigger('input');
+    _.each(['5','4','3','9','8','2','6','7','1','2','5','2','Enter'], triggerKeypressEvent);
+    assert.strictEqual(form.$('.o_data_row .o_data_cell:nth(2)').text(), '1.0',
+        "quantity done should be 1");
+    // We won't be able to block onchange calls on x2many since the notifyChange
+    // is not propagated in basic model.
+    assert.verifySteps(['read', 'read', 'onchange']);
+
+    form.destroy();
+});
+
 });
 });
