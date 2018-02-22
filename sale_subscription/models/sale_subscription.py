@@ -30,7 +30,7 @@ class SaleSubscription(models.Model):
                              string='Status', required=True, track_visibility='onchange', copy=False, default='draft')
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     company_id = fields.Many2one('res.company', string="Company", default=lambda s: s.env['res.company']._company_default_get(), required=True)
-    partner_id = fields.Many2one('res.partner', string='Customer', required=True)
+    partner_id = fields.Many2one('res.partner', string='Customer', required=True, auto_join=True)
     tag_ids = fields.Many2many('account.analytic.tag', string='Tags')
     date_start = fields.Date(string='Start Date', default=fields.Date.today)
     date = fields.Date(string='End Date', track_visibility='onchange', help="If set in advance, the subscription will be set to pending 1 month before the date and will be closed on the date set in this field.")
