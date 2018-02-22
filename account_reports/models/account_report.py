@@ -355,7 +355,7 @@ class AccountReport(models.AbstractModel):
                     }
 
                 #sum line values in hierarchy leaves
-                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in pycompat.izip(hierarchy_list[group_key]['values']['columns'], [c['no_format_name'] for c in columns])]
+                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in pycompat.izip(hierarchy_list[group_key]['values']['columns'], [c.get('no_format_name', 0) for c in columns])]
 
                 #loop on
                 if account_id.group_id:
