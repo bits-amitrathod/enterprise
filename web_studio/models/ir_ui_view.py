@@ -8,6 +8,7 @@ from lxml.builder import E
 from odoo import models
 import json
 import uuid
+import random
 
 from odoo.tools import pycompat
 
@@ -226,6 +227,10 @@ class View(models.Model):
 
                 elif line.startswith('+'):
                     node = next(new_view_iterator)
+
+                    if node.tag in ('group', 'page') and 'name' not in node.attrib:
+                        uid = str(uuid.UUID(int=random.getrandbits(128)))[:6]
+                        node.attrib['name'] = 'studio_%s_%s' % (node.tag, uid)
 
                     if node.tag == 'attributes':
                         continue

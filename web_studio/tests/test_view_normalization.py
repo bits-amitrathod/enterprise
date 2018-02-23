@@ -1,3 +1,4 @@
+import random
 import textwrap
 from odoo.http import _request_stack
 from odoo.tests.common import TransactionCase
@@ -773,6 +774,74 @@ class TestViewNormalization(TransactionCase):
             </data>
             """, 'gantt'
         )
+
+    # test that unnamed groups/pages are given a pseudo-random name attribute
+    def test_view_normalization_24(self):
+        random.seed("https://i.redd.it/pnyr50lf0jh01.png")
+        self._test_view_normalization("""
+            <data>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="after">
+                  <group>
+                    <p>hello world!</p>
+                  </group>
+                  <group>
+                    <p>foo bar baz</p>
+                  </group>
+                  <group>
+                    <p>spam eggs bacon</p>
+                  </group>
+                </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="after">
+                <group name="studio_group_a9eb51">
+                  <p>hello world!</p>
+                </group>
+                <group name="studio_group_70d54a">
+                  <p>foo bar baz</p>
+                </group>
+                <group name="studio_group_71063a">
+                  <p>spam eggs bacon</p>
+                </group>
+              </xpath>
+            </data>
+        """)
+        random.seed()
+
+    # test that unnamed pages are given a pseudo-random name attribute
+    def test_view_normalization_25(self):
+        random.seed("https://i.redd.it/pnyr50lf0jh01.png")
+        self._test_view_normalization("""
+            <data>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                  <page>
+                    <p>hello world!</p>
+                  </page>
+                  <page>
+                    <p>foo bar baz</p>
+                  </page>
+                  <page>
+                    <p>spam eggs bacon</p>
+                  </page>
+                </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page name="studio_page_a9eb51">
+                  <p>hello world!</p>
+                </page>
+                <page name="studio_page_70d54a">
+                  <p>foo bar baz</p>
+                </page>
+                <page name="studio_page_71063a">
+                  <p>spam eggs bacon</p>
+                </page>
+              </xpath>
+            </data>
+        """)
+        random.seed()
 
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
