@@ -10,8 +10,8 @@ var LotBarcodeHandler = AbstractField.extend({
 
         this.trigger_up('activeBarcode', {
             name: this.name,
-            fieldName: 'produce_line_ids',
-            quantity: 'product_qty',
+            fieldName: 'stock_barcode_lot_line_ids',
+            quantity: 'qty_done',
             setQuantityWithKeypress: true,
             commands: {
                 'O-CMD.MAIN-MENU': _.bind(this.do_action, this, 'stock_barcode.stock_barcode_action_main_menu', {clear_breadcrumbs: true}),
