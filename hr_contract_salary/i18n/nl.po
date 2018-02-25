@@ -6,15 +6,15 @@
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
 # Cas Vissers <casvissers@brahoo.nl>, 2017
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Eric Geens <ericgeens@yahoo.com>, 2017
 # Melroy van den Berg <webmaster1989@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-02-19 14:22+0000\n"
+"PO-Revision-Date: 2018-02-19 14:22+0000\n"
 "Last-Translator: Melroy van den Berg <webmaster1989@gmail.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -275,18 +275,21 @@ msgstr "<i class=\"fa fa-1x fa-male fa-fw fa-lg\"/>Vertegenwoordigerskosten"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Company Car"
-msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN bedrijfsauto"
+msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Company Car)"
+msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/>Voordeel alle aard (bedrijfsauto)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Internet"
-msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Internet"
+msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Internet)"
+msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/>Voordeel alle aard (Internet)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Phone Subscription"
-msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/>ATN telefoon abonnement"
+msgid ""
+"<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Phone Subscription)"
+msgstr ""
+"<i class=\"fa fa-1x fa-minus fa-fw\"/>Voordeel alle aard (telefoon "
+"abonnement)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -315,18 +318,23 @@ msgstr "<i class=\"fa fa-1x fa-mobile fa-fw fa-lg\"/> Telefoon abonnement"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Company Car"
-msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/> Bedrijfsauto"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind (Company Car)"
+msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>Voordeel alle aard (bedrijfauto)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Internet"
-msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Internet"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind (Internet)"
+msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>Voordeel alle aard (internet)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Phone Subscription"
-msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/> Telefoon abonnement"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind Phone (Subscription)"
+msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/> Voordeel alle aard (abonnement)"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Commissions on Target"
+msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>Commissies bij doelen"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -345,8 +353,8 @@ msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>Weerhouden van BTW aftrekken"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-suitcase fa-fw\"/> Double Holidays"
-msgstr "<i class=\"fa fa-1x fa-suitcase fa-fw\"/> Dubbele vakanties"
+msgid "<i class=\"fa fa-1x fa-suitcase fa-fw\"/> Holiday Bonus"
+msgstr "<i class=\"fa fa-1x fa-suitcase fa-fw\"/>Vakantie bonus"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -407,15 +415,12 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
-"<span class=\"help-block mt8\">The cost of the car is depreciated over 5 "
-"years. For example, a new car may cost 500€/month the first year but its "
-"cost will decrease at each yearly appraisal to reach 100€/month after 5 "
-"years.</span>"
+"<span class=\"help-block mt8\">The cost of a car is depreciated by 8% per "
+"year, for 7 years. So, your gross salary increases automatically to keep the"
+" same employee budget. Once a car has 7 years, the car is fully depreciated "
+"and the only remaining costs are the maintenance, insurances and "
+"taxes.</span>"
 msgstr ""
-"<span class=\"help-block mt8\">De kost van de auto wordt afgeschreven over 5"
-" jaar. Bijvoorbeeld, een nieuwe auto kan 500€/maand kosten voor het eerste "
-"jaar maar zal elk jaar dalen om na 5 jaar nog maar 100€/maand te "
-"kosten.</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -429,18 +434,9 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
-"<span class=\"help-block\">This commission is only effective if the target "
-"is reached. The commissions are paid using warrants that you receive every "
-"three months.</span>"
+"<span class=\"help-block\">This is a monthly net amount, taken into account "
+"in your payslip.</span>"
 msgstr ""
-"<span class=\"help-block\">De commissie wordt alleen uitgekeerd als de "
-"doelstellingen zijn bereikt. De commissie wordt betaald door middel van een "
-"borg welke u iedere 3 maanden ontvangt </span>"
-
-#. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<span class=\"help-block\">This is a monthly net amount.</span>"
-msgstr "<span class=\"help-block\">Dit is het maandelijkse netto bedrag.</span>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -545,6 +541,11 @@ msgstr "Batman"
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Birthdate"
 msgstr "Geboortedatum"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "CO2 Emission: <span name=\"co2\"/>"
+msgstr "CO2 emissie: <span name=\"co2\"/>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -702,6 +703,11 @@ msgid "Document Template"
 msgstr "Documentsjabloon"
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Doors Number: <span name=\"door_number\"/>"
+msgstr "Deurnummer: <span name=\"door_number\"/>"
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_employee_view_form
 msgid "Education"
 msgstr "Opleiding"
@@ -733,8 +739,8 @@ msgstr "Arbeidsovereenkomst"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Employee Total Cost"
-msgstr "Medewerker totaal kosten"
+msgid "Employer Cost"
+msgstr "Kost werknemer"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -746,6 +752,16 @@ msgstr "Vrouw"
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Field of Study"
 msgstr "Vakgebieden"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Fuel Type: <span name=\"fuel_type\"/>"
+msgstr "Soort benzine: <span name=\"fuel_type\"/>"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Full time equivalent employer cost"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -787,10 +803,8 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid ""
-"If you want to choose another car model, please contact your HR manager."
-msgstr ""
-"Indien u een ander model auto wilt, neem dan contact op met uw HR manager."
+msgid "Immatriculation Date: <span name=\"immatriculation\"/>"
+msgstr "Inschrijvingsdatum: <span name=\"immatriculation\"/>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -801,6 +815,11 @@ msgstr "Bij nood"
 #: model:ir.model,name:hr_contract_salary.model_hr_job
 msgid "Job Position"
 msgstr "Functie"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Last Odometer: <span name=\"odometer\"/>"
+msgstr "Laatste Odometer: <span name=\"odometer\"/>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -840,8 +859,13 @@ msgstr "Maandelijkse bonussen in cash"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Monthly Benefits"
-msgstr "Maandelijkse secundaire voorwaarden"
+msgid "Monthly Advantages in Net"
+msgstr "Maandelijkse netto voordelen"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Monthly Benefit in Kind"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1107,6 +1131,21 @@ msgid ""
 msgstr ""
 "Het aantal dagen die je krijgt op basis van het werkrooster, het aantal "
 "dagen gebruikt in je vorige baan en het aantal maanden hiervoor gewerkt."
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"This commission is only effective if the target is reached. The commissions "
+"are paid using warrants that you receive every three months. This results to"
+" a net warrant value of"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"This cost simulation is only for information. If you want to choose another "
+"car model, please contact your HR manager."
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package

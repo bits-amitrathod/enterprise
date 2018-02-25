@@ -9,13 +9,14 @@
 # Martin Trigaux, 2017
 # Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Ana Juaristi <ajuaristio@gmail.com>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Ana Juaristi <ajuaristio@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-02-19 14:22+0000\n"
+"PO-Revision-Date: 2018-02-19 14:22+0000\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +49,7 @@ msgstr "Banco central europeo"
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
 msgid "Federal Tax Administration (Switzerland)"
-msgstr "Administración Federal de Impuestos (Suiza)"
+msgstr "Administración Tributaria Federal (Suiza)"
 
 #. module: currency_rate_live
 #: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
@@ -106,7 +107,15 @@ msgid "Service Provider"
 msgstr "Proveedor de servicio"
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:77
+#: code:addons/currency_rate_live/models/res_config_settings.py:71
+#, python-format
+msgid ""
+"The Yahoo currency rate web service has been discontinued. Please select "
+"another currency rate provider."
+msgstr ""
+
+#. module: currency_rate_live
+#: code:addons/currency_rate_live/models/res_config_settings.py:79
 #, python-format
 msgid ""
 "Unable to connect to the online exchange rate platform. The web service may "
@@ -123,8 +132,8 @@ msgstr "Semanalmente"
 
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
-msgid "Yahoo"
-msgstr "Yahoo"
+msgid "Yahoo (DISCONTINUED)"
+msgstr ""
 
 #. module: currency_rate_live
 #: model:ir.model,name:currency_rate_live.model_res_config_settings

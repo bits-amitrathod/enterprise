@@ -8,9 +8,9 @@
 # Alejandro Die Sanchis <marketing@domatix.com>, 2017
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
 # Antonio Trueba, 2017
-# Ana Juaristi <ajuaristio@gmail.com>, 2017
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2017
-# Vicent Cubells <vicent.cubells@tecnativa.com>, 2017
+# Ana Juaristi <ajuaristio@gmail.com>, 2017
 # Martin Trigaux, 2017
 # Eduardo Magdalena <emagdalena@close2circle.com>, 2017
 # e2f <projects@e2f.com>, 2018
@@ -32,28 +32,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_bill_my_account
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order_ups_bill_my_account
 msgid "Bill My Account"
-msgstr ""
+msgstr "Facturar a Mi Cuenta"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_cod_funds_code
 msgid "COD Funding Option"
-msgstr ""
+msgstr "Opción de pago contra reembolso"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_delivery_carrier
 msgid "Carrier"
-msgstr "Forma de envío"
+msgstr "Transportista"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order_ups_carrier_account
 #: model:ir.model.fields,field_description:delivery_ups.field_stock_picking_ups_carrier_account
 msgid "Carrier Account"
-msgstr ""
+msgstr "Cuenta del transportista"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_cod_funds_code:0
 msgid "Cashier's Check or MoneyOrder"
-msgstr ""
+msgstr "Cheque de caja o giro"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_package_dimension_unit:0
@@ -63,12 +63,12 @@ msgstr "Centímetros"
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_cod_funds_code:0
 msgid "Check, Cashier's Check or MoneyOrder"
-msgstr ""
+msgstr "Cheque, cheque de caja o giro"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_cod
 msgid "Collect on Delivery"
-msgstr ""
+msgstr "Pago contra reembolso"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
@@ -82,6 +82,8 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+"Error:\n"
+"%s"
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier_ups_bill_my_account
@@ -90,6 +92,8 @@ msgid ""
 "If checked, ecommerce users will be prompted their UPS account number\n"
 "and delivery fees will be charged on it."
 msgstr ""
+"Si el pago es mediante cheque, se pedirá a los usuarios del comercio electrónico su número de cuenta de UPS\n"
+"y se cargarán en ella los gastos del envío."
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_package_dimension_unit:0
@@ -135,7 +139,7 @@ msgstr "SPL"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_saturday_delivery
 msgid "Saturday Delivery"
-msgstr ""
+msgstr "Entrega en sábado"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/delivery_ups.py:226
@@ -149,7 +153,9 @@ msgstr "El envío Nº %s ha sido cancelado"
 msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> "
 "%s<br/><b>Packages:</b> %s"
-msgstr "<br/><b/><br/><b/>"
+msgstr ""
+"Envío creado en los <b>números de seguimiento de UPS:</b><br/><b> %s "
+"Paquetes:</b><br/> %s"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:196
@@ -159,7 +165,7 @@ msgid ""
 "(Missing field(s) : %s)"
 msgstr ""
 "La dirección de su compañía falta o es errónea.\n"
-"(Missing field(s) : %s)"
+"(Campo(s) faltante : %s)"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:206
@@ -169,7 +175,7 @@ msgid ""
 "(Missing field(s) : %s)"
 msgstr ""
 "La dirección de su almacén falta o es errónea.\n"
-"(Missing field(s) : %s)"
+"(Campo(s) faltante : %s)"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:226
@@ -206,6 +212,8 @@ msgid ""
 "This value added service enables UPS to collect the payment of the shipment "
 "from your customer."
 msgstr ""
+"Este servicio de valor añadido permite a UPS recibir el pago del envío "
+"directamente desde su cliente"
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier_ups_saturday_delivery
@@ -213,6 +221,8 @@ msgid ""
 "This value added service will allow you to ship the package on saturday "
 "also."
 msgstr ""
+"Este servicio de valor añadido le permitirá también enviar el paquete en "
+"sábado."
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_stock_picking
@@ -244,7 +254,7 @@ msgstr "Tipo de Paquete Predeterminado de UPS"
 #: model:ir.ui.view,arch_db:delivery_ups.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_ups.res_config_settings_view_form_stock
 msgid "UPS Delivery Methods"
-msgstr "Métodos de entrega de UPS"
+msgstr "Formas de envío de UPS"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_label_file_type
@@ -266,7 +276,7 @@ msgstr "Tipo de Servicio UPS"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_shipper_number
 msgid "UPS Shipper Number"
-msgstr "Número envío UPS"
+msgstr "Número de envío UPS"
 
 #. module: delivery_ups
 #: model:product.product,name:delivery_ups.product_product_delivery_ups_us
@@ -287,12 +297,12 @@ msgstr "Unidades para tamaño de Paquete UPS"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_package_weight_unit
 msgid "Ups Package Weight Unit"
-msgstr ""
+msgstr "Unidad de peso de los paquete de UPS"
 
 #. module: delivery_ups
 #: model:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
 msgid "Value Added Services"
-msgstr ""
+msgstr "Servicios de valor añadido"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0

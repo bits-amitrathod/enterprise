@@ -135,33 +135,56 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
-"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 "
-"auto; background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: "
-"12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: "
-"auto; width: 80px;\" "
-"alt=\"${user.company_id.name}\"></td></tr></tbody></table><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr "
-"width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium "
-"none;clear:both;display:block;font-size:0px;min-height:1px;line-"
-"height:0;margin:15px "
-"auto;padding:0\"></div></td></tr></tbody></table></div><div "
-"style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; "
-"background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify;"
-" margin:0 auto; border-collapse:collapse; background:inherit; "
-"color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: "
-"14px;\"><p></p><p></p><p></p><p></p><br/><p></p><p></p></td></tr><tr><td "
-"style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
-"14px;\"></p><p style=\"font-size: 11px;\"><strong><a "
-"href=\"${user.company_id.website}\" style=\"text-decoration:none; color: "
-"#875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-"
-"decoration:none; color: "
-"#875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div>"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" 尊敬的 ${object.partner_id.name}，您的订阅（${ctx.get('code')}）已更新\n"
+" %if ctx.get('total_amount') and ctx.get('payment_token')：<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
+" 通过使用 ${ctx['payment_token']} 支付 ${ctx['total_amount']} ${ctx['currency']} \n"
+"。\n"
+" %endif\n"
+" \n"
+" 会给您开具发票。\n"
+" %if ctx.get('next_date')：\n"
+" \n"
+" 您的下一张发票将在 ${ctx.get('next_date')。\n"
+" \n"
+" %endif\n"
+" \n"
+" 如果您有任何疑问或不满，敬请直接联系我们。\n"
+" 感谢您选择 ${object.company_id.name or 'us'}！% if user.signature\n"
+" ${user.signature | safe}\n"
+" \n"
+" % endif\n"
+" 由\n"
+" \n"
+" ${user.company_id.name}\n"
+" 使用 Odoo 发送\n"
+" \n"
+" \n"
+" \n"
+" \n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\"></div></td></tr></tbody></table></div><div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p></p><p></p><p></p><p></p><br/><p></p><p></p></td></tr><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: 14px;\"></p><p style=\"font-size: 11px;\"><strong><a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_subscription_open
@@ -222,40 +245,61 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
-"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 "
-"auto; background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: "
-"12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: "
-"auto; width: 80px;\" "
-"alt=\"${user.company_id.name}\"></td></tr></tbody></table><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr "
-"width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium "
-"none;clear:both;display:block;font-size:0px;min-height:1px;line-"
-"height:0;margin:15px "
-"auto;padding:0\"></div></td></tr></tbody></table></div><div "
-"style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; "
-"background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify;"
-" margin:0 auto; border-collapse:collapse; background:inherit; "
-"color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: "
-"14px;\"><p></p><p></p><p><a style=\"text-decoration:none; color: #875A7B;\" "
-"href=\"/my/home\"></a><p style=\"text-align: center;\"><a style=\"padding: "
-"5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-"
-"color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: "
-"0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: "
-"pointer; white-space: nowrap; background-image: none; background-color: "
-"#875A7B; border: 1px solid #875A7B; border-radius:3px\" "
-"href=\"/my/subscription/${object.subscription_id.id}/${object.subscription_id.uuid}\"></a></p><p></p><ul><li></li></ul><p></p><p></p><p></p></td></tr><tr><td"
-" style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
-"14px;\"></p><p style=\"font-size: 11px;\"><strong><a "
-"href=\"${user.company_id.website}\" style=\"text-decoration:none; color: "
-"#875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-"
-"decoration:none; color: "
-"#875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div><li></li><li></li>"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" 尊敬的 ${object.subscription_id.partner_id.name}，\n"
+" 您的订阅 ${object.subscription_id.name} 已激活！\n"
+"\n"
+" 您可以通过浏览我们的 Online Portal 或单击此链接\n"
+" 查看订阅\n"
+"\n"
+" 使用此页面方便管理订阅：\n"
+"，在线查看订阅<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
+" <li>添加或删除选项</li>\n"
+" <li>将您的周期从每月更改为每年</li>\n"
+" 联系销售代表\n"
+" \n"
+" 您可公开访问此链接或与他人共享，从而给予其管理此订阅的权利。\n"
+"\n"
+" 如果您有任何疑问或不满，请直接联系我们。\n"
+" 感谢您选择 ${object.subscription_id.company_id.name or 'us'}！\n"
+" \n"
+" \n"
+" \n"
+" % if user.signature\n"
+" ${user.signature | safe}\n"
+" \n"
+" % endif\n"
+" 由\n"
+" \n"
+" ${user.company_id.name}\n"
+" 使用 Odoo 发送\n"
+" \n"
+" \n"
+" \n"
+" \n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\"></div></td></tr></tbody></table></div><div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p></p><p></p><p><a style=\"text-decoration:none; color: #875A7B;\" href=\"/my/home\"></a><p style=\"text-align: center;\"><a style=\"padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px\" href=\"/my/subscription/${object.subscription_id.id}/${object.subscription_id.uuid}\"></a></p><p></p><ul><li></li></ul><p></p><p></p><p></p></td></tr><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: 14px;\"></p><p style=\"font-size: 11px;\"><strong><a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_close
@@ -321,33 +365,62 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
-"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 "
-"auto; background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: "
-"12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: "
-"auto; width: 80px;\" "
-"alt=\"${user.company_id.name}\"></td></tr></tbody></table><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr "
-"width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium "
-"none;clear:both;display:block;font-size:0px;min-height:1px;line-"
-"height:0;margin:15px "
-"auto;padding:0\"></div></td></tr></tbody></table></div><div "
-"style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; "
-"background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify;"
-" margin:0 auto; border-collapse:collapse; background:inherit; "
-"color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: "
-"14px;\"><p></p><p><pre></pre></p><p><strong></strong></p><br/><p></p><p></p></td></tr><tr><td"
-" style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
-"14px;\"></p><p style=\"font-size: 11px;\"><strong><a "
-"href=\"${user.company_id.website}\" style=\"text-decoration:none; color: "
-"#875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-"
-"decoration:none; color: "
-"#875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div>"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" 您好 ${object.partner_id.name}，\n"
+" \n"
+" % if ctx.get('payment_token') and ctx.get('total_amount')：<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
+" 我们最后尝试使用付款方式\n"
+" ${ctx['payment_token']}\n"
+" 为您的订阅付款${ctx['total_amount']} ${ctx.get('currency')} 失败了 。\n"
+" % if ctx.get('error'):\n"
+" 关于此问题，您的银行或信贷机构提供以下详细信息：${ctx['error']}.\n"
+" %endif\n"
+" % else:\n"
+" 我们最终尝试为您的订阅付款失败，是因为我们尚未记录您的付款方式。\n"
+" % endif \n"
+" \n"
+"\n"
+" \n"
+" 因为您应该在 15 天前进行付款，所以您的订阅已终止。\n"
+" \n"
+"\n"
+" \n"
+" 如果期望解决此问题，请直接练习我们。\n"
+" 感谢您选择 ${object.company_id.name or 'us'} ！% if user.signature\n"
+" ${user.signature | safe}\n"
+" \n"
+" % endif\n"
+" 由\n"
+" \n"
+" ${user.company_id.name}\n"
+" 使用 Odoo 发送\n"
+" \n"
+" \n"
+" \n"
+" \n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\"></div></td></tr></tbody></table></div><div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p></p><p><pre></pre></p><p><strong></strong></p><br/><p></p><p></p></td></tr><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: 14px;\"></p><p style=\"font-size: 11px;\"><strong><a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_reminder
@@ -415,33 +488,64 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
-"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 "
-"auto; background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: "
-"12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: "
-"auto; width: 80px;\" "
-"alt=\"${user.company_id.name}\"></td></tr></tbody></table><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr "
-"width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium "
-"none;clear:both;display:block;font-size:0px;min-height:1px;line-"
-"height:0;margin:15px "
-"auto;padding:0\"></div></td></tr></tbody></table></div><div "
-"style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; "
-"background: #FFFFFF repeat top /100%;color:#777777\"><table "
-"cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify;"
-" margin:0 auto; border-collapse:collapse; background:inherit; "
-"color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: "
-"14px;\"><p></p><p><pre></pre></p><p><b></b></p><br/><p></p><p></p></td></tr><tr><td"
-" style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
-"14px;\"></p><p style=\"font-size: 11px;\"><strong><a "
-"href=\"${user.company_id.website}\" style=\"text-decoration:none; color: "
-"#875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-"
-"decoration:none; color: "
-"#875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div>"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+" \n"
+"\n"
+"\n"
+" \n"
+" \n"
+" \n"
+" 您好 ${object.partner_id.name}，\n"
+" \n"
+" % if ctx.get('payment_token') and ctx.get('total_amount')：<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
+" 不能使用您的付款方式\n"
+" ${ctx['payment_token']}\n"
+" 为您的订阅付款 ${ctx['total_amount']} ${ctx.get('currency')}。\n"
+" % if ctx.get('error'):\n"
+" 关于此问题，您的银行或信贷机构提供以下详细信息：${ctx['error']}。\n"
+" %endif\n"
+" % else:\n"
+" 我们尚未记录您的付款方式，所以无法为您的订阅付款。\n"
+" % endif \n"
+" \n"
+"\n"
+" \n"
+" 您的订阅仍然有效，但是会\n"
+" 在 ${ctx.get('date_close')} 暂停，除非付款在此时成功（我们将每天尝试一次）。\n"
+" 请再次确认您有足够的资金。\n"
+" \n"
+"\n"
+" \n"
+" 如果有任何疑问或不满，请直接联系我们。\n"
+" 感谢您选择 ${object.company_id.name or 'us'}！% if user.signature\n"
+" ${user.signature | safe}\n"
+" \n"
+" % endif\n"
+" 由\n"
+" \n"
+" ${user.company_id.name}\n"
+" 使用 Odoo 发送\n"
+" \n"
+" \n"
+" \n"
+" \n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\"><div><hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\"></div></td></tr></tbody></table></div><div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p></p><p><pre></pre></p><p><b></b></p><br/><p></p><p></p></td></tr><tr><td style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: 14px;\"></p><p style=\"font-size: 11px;\"><strong><a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -1099,7 +1203,7 @@ msgstr "历史"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_4
 msgid "I don't use it"
-msgstr ""
+msgstr "我不使用它"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_6476
@@ -1587,7 +1691,7 @@ msgstr "参照："
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Register a payment method with"
-msgstr ""
+msgstr "注册付款方式，请填写"
 
 #. module: sale_subscription
 #: selection:sale.order,subscription_management:0
@@ -1597,7 +1701,7 @@ msgstr "续约"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Renewal Quotation"
-msgstr ""
+msgstr "续约报价单"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_interval
@@ -1620,7 +1724,7 @@ msgstr "报告"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_sale_order_count
 msgid "Sale Order Count"
-msgstr ""
+msgstr "销售订单个数"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription
@@ -1630,7 +1734,7 @@ msgstr "销售订阅"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_dashboard
 msgid "Sale Subscription Dashboard"
-msgstr ""
+msgstr "销售订阅仪表板"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_template
@@ -1642,14 +1746,14 @@ msgstr "销售订阅模板"
 #: model:ir.cron,cron_name:sale_subscription.account_analytic_cron_for_invoice
 #: model:ir.cron,name:sale_subscription.account_analytic_cron_for_invoice
 msgid "Sale Subscription: generate recurring invoices and payments"
-msgstr ""
+msgstr "销售订阅：生成经常性发票和付款"
 
 #. module: sale_subscription
 #: model:ir.actions.server,name:sale_subscription.account_analytic_cron_ir_actions_server
 #: model:ir.cron,cron_name:sale_subscription.account_analytic_cron
 #: model:ir.cron,name:sale_subscription.account_analytic_cron
 msgid "Sale Subscription: subscriptions expiration"
-msgstr ""
+msgstr "销售订阅：订阅过期"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_list
@@ -1690,14 +1794,14 @@ msgstr "销售员"
 msgid ""
 "Save and you're all set!<br/>Simply sell this product to create a "
 "subscription automatically or create a subscription manually!"
-msgstr "<br/>"
+msgstr "保存，已设置完毕！只<br/>需简单销售此产品，便可自动创建订阅或手动创建订阅！"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:47
 #, python-format
 msgid "Save this template and the modifications you've made to it."
-msgstr ""
+msgstr "保存此模版以及对此模版所做的修改。"
 
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
@@ -1711,7 +1815,7 @@ msgstr "查看订阅"
 msgid ""
 "Select your newly created template. Every sale of this product will generate"
 " a new subscription!"
-msgstr ""
+msgstr "选择新建的模板每次销售此产品都将生成新的订阅！"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_sequence
@@ -1799,19 +1903,19 @@ msgstr "订阅分析"
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_close_reason
 msgid "Subscription Close Reason"
-msgstr ""
+msgstr "订阅关闭原因"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_subscription_count
 msgid "Subscription Count"
-msgstr ""
+msgstr "订阅个数"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_line
 msgid "Subscription Line"
-msgstr ""
+msgstr "订阅行"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1826,7 +1930,7 @@ msgstr "订阅管理"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Subscription Manager"
-msgstr ""
+msgstr "订阅经理"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product_recurring_invoice
@@ -1864,12 +1968,12 @@ msgstr "订阅模板"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_2
 msgid "Subscription does not meet my requirements"
-msgstr ""
+msgstr "订阅不符合我的要求"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_1
 msgid "Subscription is too expensive"
-msgstr ""
+msgstr "订阅不划算"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.product_template_search_view_inherit_sale_subscription
@@ -1879,12 +1983,12 @@ msgstr "订阅产品"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
 msgid "Subscription reached its end date"
-msgstr ""
+msgstr "订阅达到结束日期"
 
 #. module: sale_subscription
 #: model:mail.message.subtype,description:sale_subscription.subtype_state_change
 msgid "Subscription state has changed"
-msgstr ""
+msgstr "订阅状态已更改"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action
@@ -1918,21 +2022,23 @@ msgid ""
 "Subscriptions can be automatically generated from sales orders of Sales or eCommerce\n"
 "                apps. To do so, set a Subscription Template on your Subscription Products."
 msgstr ""
+"销售的销售订单或电子商务\n"
+" 应用可自动生成订阅。为此，请在订阅产品上设置订阅模板"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Subscriptions in progress"
-msgstr ""
+msgstr "正在进行中的订阅"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Subscriptions not assigned"
-msgstr ""
+msgstr "尚未指派的订阅"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Subscriptions that are not assigned to an account manager."
-msgstr ""
+msgstr "尚未指派给客户经理的订阅。"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_pending
@@ -1984,6 +2090,9 @@ msgid ""
 "                can be selected by the salespeople to quickly configure the\n"
 "                terms and conditions of the subscription."
 msgstr ""
+"可使用模版来预示订阅\n"
+" 销售人员可选择此模版来快速配置\n"
+" 订阅的条款"
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_close
@@ -2007,7 +2116,7 @@ msgid ""
 "The discount applied when creating a sales order will be computed as the "
 "ratio between the full invoicing period of the subscription and the period "
 "between this date and the next invoicing date."
-msgstr ""
+msgstr "创建销售订单时应用的折扣将按照此订阅整个结算周期与此日期到下个结算日期的期间的比率进行计算。"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_website_url
@@ -2019,7 +2128,7 @@ msgstr "通过网站访问单据的完整URL。"
 msgid ""
 "The next invoice will be created on this date then the period will be "
 "extended."
-msgstr ""
+msgstr "将在此日期上创建下一张发票，那么期间将会延长。"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
@@ -2032,12 +2141,12 @@ msgstr "产品表单中包含了简化销售的信息：价格，询价单中的
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_view
 msgid "The user will have read access to subscriptions."
-msgstr ""
+msgstr "用户将拥有读取订阅的权限。"
 
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_manager
 msgid "The user will have write access to Subscriptions."
-msgstr ""
+msgstr "用户将拥有书写订阅的权限。"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:311
@@ -2112,6 +2221,9 @@ msgid ""
 "                work done, expenses and/or sales orders. Odoo will automatically manage\n"
 "                the alerts for the renewal of the subscriptions to the right salesperson."
 msgstr ""
+"使用订阅来跟踪任务、问题、工时表或基于\n"
+" 已完成工作、费用和/或销售订单的结算。Odoo 会自动管理\n"
+" 订阅更新的警告，以确保交给正确的销售人员 。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2125,7 +2237,7 @@ msgstr "有效期至"
 msgid ""
 "Want recurring billing via subscription management ? Get started by clicking"
 " here"
-msgstr ""
+msgstr "想要通过订阅管理获得经常性账单吗？点击此处开始"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2187,7 +2299,7 @@ msgstr "你必须首先选择一个订阅的客户 %s!"
 #: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
 msgid ""
 "You will find here all the products related to this subscription template."
-msgstr ""
+msgstr "您将在此处找到所有与订阅模版相关的产品。"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -2196,6 +2308,8 @@ msgid ""
 "            end date is passed or the working effort is higher than the\n"
 "            maximum authorized one."
 msgstr ""
+"您将在此处找到working effort\n"
+" 结束日期已过或实际工作时间远远大于最大估计时间的待更新合约。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2205,7 +2319,7 @@ msgstr "你的计划"
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_subscription_open
 msgid "Your subscription ${object.subscription_id.code} is active!"
-msgstr ""
+msgstr "已激活您的订阅 ${object.subscription_id.code}！"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2225,7 +2339,7 @@ msgstr "天"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "missing payments (from"
-msgstr ""
+msgstr "缺失的付款（来自"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2236,7 +2350,7 @@ msgstr "月"
 #: model:product.product,name:sale_subscription.odoo_saas
 #: model:product.template,name:sale_subscription.odoo_saas_product_template
 msgid "odoo_custom_module"
-msgstr ""
+msgstr "odoo_custom_module"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_payment_token
@@ -2251,7 +2365,7 @@ msgstr "res.config.settings"
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_close_reason_wizard
 msgid "sale.subscription.close.reason.wizard"
-msgstr ""
+msgstr "sale.subscription.close.reason.wizard"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_wizard
@@ -2266,7 +2380,7 @@ msgstr "销售.订阅.行.可选"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "to this day) will be automatically processed."
-msgstr ""
+msgstr "至今天）将自动处理。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription

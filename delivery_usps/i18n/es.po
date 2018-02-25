@@ -6,25 +6,26 @@
 # Humberto Garza De Koster <garzadekoster@gmail.com>, 2017
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
 # Lina Maria Avendaño Carvajal <lina8823@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Ana Juaristi <ajuaristio@gmail.com>, 2017
+# Martin Trigaux, 2017
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Gelo Joga Landoo <gj@landoo.es>, 2017
 # RGB Consulting <odoo@rgbconsulting.com>, 2017
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
+# Ana Juaristi <ajuaristio@gmail.com>, 2017
 # Daniel Blanco <daniel@blancomartin.com.ar>, 2017
 # Ivan Nieto <ivan.n.s@tuta.io>, 2017
 # José Vicente <txusev@gmail.com>, 2017
 # Alejandro Die Sanchis <marketing@domatix.com>, 2017
-# Antonio Trueba <atgayol@gmail.com>, 2017
-# Vicent Cubells <vicent.cubells@tecnativa.com>, 2017
+# Antonio Trueba, 2017
 # Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2017\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,12 +46,12 @@ msgstr "Cuenta validada"
 #. module: delivery_usps
 #: model:ir.model,name:delivery_usps.model_delivery_carrier
 msgid "Carrier"
-msgstr "Forma de envío"
+msgstr "Transportista"
 
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_account_validated
 msgid "Check this box if your account is validated by USPS"
-msgstr "Haga click en esta casilla si su cuenta ha sido validada por USPS"
+msgstr "Haga clic en esta casilla si su cuenta ha sido validada por USPS"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:64
@@ -87,6 +88,8 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+"Error:\n"
+"%s"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
@@ -248,6 +251,8 @@ msgstr ""
 msgid ""
 "Please choose another service (maximum weight of this service is 4 pounds)"
 msgstr ""
+"Escoja otro servicio (el peso máximo de este servicio es aproximadamente 2 "
+"kg)"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:69
@@ -292,6 +297,8 @@ msgstr "Prioridad"
 #, python-format
 msgid "Recipient address cannot be found. Please check the address exists."
 msgstr ""
+"No se ha encontrado la dirección del destinatario. Compruebe que la "
+"dirección existe."
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_container:0
@@ -383,7 +390,7 @@ msgid ""
 "The recipient address is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
-"La dirección del destinatario no esta o es errónea (Campo(s) faltante(s) : \n"
+"La dirección del destinatario no está o es errónea (Campo faltante(s) : \n"
 "%s)"
 
 #. module: delivery_usps
@@ -391,6 +398,8 @@ msgstr ""
 #, python-format
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
+"El servicio de USPS seleccionado (%s) no puede usarse para enviar este "
+"paquete."
 
 #. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
@@ -421,7 +430,7 @@ msgstr "Configuración USPS"
 #: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
 msgid "USPS Delivery Methods"
-msgstr ""
+msgstr "Métodos de envío de USPS"
 
 #. module: delivery_usps
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_domestic
@@ -436,6 +445,8 @@ msgid ""
 "USPS Domestic is used only to ship inside of the U.S.A. Please change the "
 "delivery method into USPS International."
 msgstr ""
+"El servicio USPS Nacional se utiliza solo para hacer envíos dentro de EE. "
+"UU. Cambie el modo de envío a USPS Internacional."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_first_class_mail_type
@@ -455,6 +466,8 @@ msgid ""
 "USPS International is used only to ship outside of the U.S.A. Please change "
 "the delivery method into USPS Domestic."
 msgstr ""
+"USPS Internacional se utiliza solo para hacer envíos fuera de EE. UU. Cambie"
+" el modo de envío a USPS Nacional."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_label_file_type
@@ -479,10 +492,10 @@ msgstr "ID Usuario USPS"
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_size_container
 msgid "Usps Size Container"
-msgstr ""
+msgstr "Contenedor de tamaños Usps"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:373
 #, python-format
 msgid "Your company or recipient ZIP code is incorrect."
-msgstr ""
+msgstr "Su compañía o el código zip del destinatario es incorrecto."

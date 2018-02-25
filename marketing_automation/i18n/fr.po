@@ -19,6 +19,7 @@
 # Lucas Deliege <lud@odoo.com>, 2017
 # Alexis de Lattre <alexis@via.ecp.fr>, 2017
 # Elias Alouane <e.alouane@ahktunis.org>, 2017
+# fr trans <e2ffr05@hotmail.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -72,7 +73,7 @@ msgstr "<i class=\"fa fa-check-circle\"/> Répondu"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-envelope-open-o\"/> Not opened within"
-msgstr "<i class=\"fa fa-envelope-open-o\"/>"
+msgstr "<i class=\"fa fa-envelope-open-o\"/> Non ouvert en"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -82,17 +83,17 @@ msgstr "Ouvert après"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-exclamation-circle\"/> Mail bounced after"
-msgstr "<i class=\"fa fa-exclamation-circle\"/>"
+msgstr "<i class=\"fa fa-exclamation-circle\"/> E-mail rejeté après"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Clicked after"
-msgstr "<i class=\"fa fa-hand-pointer-o\"/>"
+msgstr "<i class=\"fa fa-hand-pointer-o\"/> Clic après"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Not clicked within"
-msgstr "<i class=\"fa fa-hand-pointer-o\"/>"
+msgstr "<i class=\"fa fa-hand-pointer-o\"/> Pas de clic en"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -107,7 +108,7 @@ msgstr "<i class=\"fa fa-plus-circle\"/> Ajouter une activité enfant"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-reply\"/> Not replied within"
-msgstr "<i class=\"fa fa-reply\"/>"
+msgstr "<i class=\"fa fa-reply\"/> Pas de réponse en"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -122,7 +123,8 @@ msgid ""
 "activities selectable)</small>"
 msgstr ""
 "<small attrs=\"{'invisible': [('trigger_type', '=', 'begin')]}\" "
-"class=\"oe_edit_only text-muted\"/>"
+"class=\"oe_edit_only text-muted\">(enregistrez la campagne pour qu'il soit "
+"possible de sélectionner ses activités)</small>"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -198,7 +200,7 @@ msgstr "Après 7 jours"
 #: model:marketing.activity,name:marketing_automation.marketing_activity_2
 #: model:utm.source,name:marketing_automation.marketing_activity_2_utm_source
 msgid "After 7 days (if not partner yet)"
-msgstr ""
+msgstr "Après 7 jours (si pas encore partenaire)"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_search
@@ -448,6 +450,8 @@ msgstr "Erreur ! Impossible de créer une hiérarchie d'activité récursive."
 msgid ""
 "Error! You can't define a child activity with a trigger of type 'begin'."
 msgstr ""
+"Erreur ! Vous ne pouvez pas définir une activité enfant avec un déclencheur "
+"de type « begin »."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_exception
@@ -600,7 +604,7 @@ msgstr "Publipostage"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Mails sent and not bounced"
-msgstr ""
+msgstr "E-mails envoyés et non rejetés"
 
 #. module: marketing_automation
 #: code:addons/marketing_automation/models/marketing_participant.py:149
@@ -703,7 +707,7 @@ msgstr "Statistiques du publipostage"
 #: model:marketing.activity,name:marketing_automation.marketing_activity_3
 #: model:utm.source,name:marketing_automation.marketing_activity_3_utm_source
 msgid "Message for sales person"
-msgstr ""
+msgstr "Message pour le responsable des ventes"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_model_id
@@ -747,7 +751,7 @@ msgstr "Aucune activité ajoutée"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Not clicked yet"
-msgstr ""
+msgstr "Pas encore de clic"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
@@ -770,7 +774,7 @@ msgstr "Objet"
 #: model:utm.source,name:marketing_automation.marketing_activity_1_utm_source
 #: model:utm.source,name:marketing_automation.mass_mailing_offer_free_trial_utm_source
 msgid "Offer free trial"
-msgstr ""
+msgstr "Proposer un essai gratuit"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_opened
@@ -831,7 +835,7 @@ msgstr "Participants"
 #: model:marketing.campaign,name:marketing_automation.marketing_campaign_1
 #: model:utm.campaign,name:marketing_automation.marketing_campaign_1_utm_campaign
 msgid "Partnership Offer"
-msgstr ""
+msgstr "Offre de partenariat"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -1084,6 +1088,8 @@ msgid ""
 "This Activity has a dependant child activity. 'DELETE ALL' will delete all "
 "child activities."
 msgstr ""
+"Cette activité est associée à une activité enfant qui dépend d'elle. « "
+"DELETE ALL » supprimera toutes les activités enfant."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_total_bounce

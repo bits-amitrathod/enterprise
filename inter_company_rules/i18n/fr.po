@@ -8,6 +8,7 @@
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2017
 # Fabien Pinckaers <fp@openerp.com>, 2017
 # Félix Desjardins <felixinx@gmail.com>, 2017
+# fr rev <e2ffr02@hotmail.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -42,13 +43,13 @@ msgstr "Bon de commande généré automatiquement"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_generated
 msgid "Auto Generated Sales Order"
-msgstr "Ordre de vente généré automatiquement"
+msgstr "Commande client générée automatiquement"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_auto_validation
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
 msgid "Auto-validate Sales/Purchase Orders"
-msgstr "Valider automatiquement les bons de commande/ordres de vente"
+msgstr "Valider automatiquement les commandes fournisseurs/clients"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_company
@@ -90,7 +91,7 @@ msgstr "Créer des bons des commandes lors de ventes à cette société"
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_so_from_po
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_so_from_po
 msgid "Create Sales Orders when buying to this company"
-msgstr "Créer des ordres de vente lors d'achats à cette société"
+msgstr "Créer des commandes clients lors d'achats à cette société"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_warehouse_id
@@ -98,8 +99,8 @@ msgid ""
 "Default value to set on Purchase Orders that will be created based on Sales "
 "Orders made to this company."
 msgstr ""
-"La valeur par défaut à faire figurer sur les bons de commande, en fonction "
-"des ordres de vente de cette entreprise."
+"La valeur par défaut à faire figurer sur les commandes fournisseurs, en "
+"fonction des commandes clients de cette entreprise."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_warehouse_id
@@ -107,8 +108,8 @@ msgid ""
 "Default value to set on Purchase(Sales) Orders that will be created based on"
 " Sale(Purchase) Orders made to this company"
 msgstr ""
-"La valeur par défaut à faire figurer sur les bons de commande (ordres de "
-"vente), en fonction des ordres de vente (bons de commande) de cette "
+"La valeur par défaut à faire figurer sur les commandes fournisseurs "
+"(clients), en fonction des commandes clients (fournisseurs) de cette "
 "entreprise."
 
 #. module: inter_company_rules
@@ -135,7 +136,7 @@ msgid ""
 "Generate a Purchase Order when a Sales Order with this company as customer is created.\n"
 " The intercompany user must at least be Purchase User."
 msgstr ""
-"Générer un bon de commande lors de la création d'un ordre d'achat pour cette entreprise en tant que client.\n"
+"Générer une commande fournisseur lors de la création d'une commande client pour cette entreprise en tant que client.\n"
 " L'utilisateur interentreprises doit au moins être un utilisateur Achats."
 
 #. module: inter_company_rules
@@ -153,7 +154,7 @@ msgid ""
 "Generate a Sales Order when a Purchase Order with this company as vendor is created.\n"
 " The intercompany user must at least be Sale User."
 msgstr ""
-"Générer un ordre de vente lors de la création d'un bon de commande pour cette entreprise en tant que fournisseur.\n"
+"Générer une commande client lors de la création d'une commande fournisseur pour cette entreprise en tant que fournisseur.\n"
 " L'utilisateur interentreprises doit au moins être un utilisateur Ventes."
 
 #. module: inter_company_rules
@@ -252,7 +253,7 @@ msgstr "Envoyer les factures et les avoirs"
 #. module: inter_company_rules
 #: selection:res.config.settings,rule_type:0
 msgid "Send Sales & Purchase Orders"
-msgstr "Envoyer les bons de commande et les ordres de ventes"
+msgstr "Envoyer commandes fournisseurs et clients"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_invoice_id
@@ -267,7 +268,7 @@ msgstr "Origine du bon de commande"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_sale_order_id
 msgid "Source Sales Order"
-msgstr "Ordre de vente source"
+msgstr "Commande client source"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_warehouse_id
@@ -294,8 +295,8 @@ msgid ""
 "When a Sales Order or a Purchase Order is created by a multi company rule "
 "for this company, it will automatically validate it"
 msgstr ""
-"Quand un ordre de vente ou un bon de commande est créé par une règle multi "
-"entreprises pour cette entreprises, la validation est automatique"
+"Quand une commande client ou fournisseur est créée par une règle multi "
+"entreprises pour cette entreprise, la validation est automatique"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -317,7 +318,7 @@ msgid ""
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
 "Vous ne pouvez pas choisir de créer des factures basées sur d'autres factures\n"
-" en même temps qu'une autre option (« Créer des ordres de vente lors d'achats à cette entreprise » ou « Créer des bons de commande lors de ventes à cette entreprise »)."
+" en même temps qu'une autre option (« Créer des commandes clients lors d'achats à cette entreprise » ou « Créer des commandes fournisseurs lors de ventes à cette entreprise »)."
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings

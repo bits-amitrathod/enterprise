@@ -57,7 +57,7 @@ msgstr "活动类型"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_sip_always_transfer
 msgid "Always Redirect to Handset"
-msgstr ""
+msgstr "一直重定向到话筒"
 
 #. module: voip
 #. openerp-web
@@ -81,20 +81,20 @@ msgstr "呼叫日期"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_name
 msgid "Call Name"
-msgstr ""
+msgstr "呼叫名称"
 
 #. module: voip
 #: code:addons/voip/models/voip_phonecall.py:192
 #, python-format
 msgid "Call from "
-msgstr ""
+msgstr "由谁呼叫"
 
 #. module: voip
 #: code:addons/voip/models/voip_phonecall.py:182
 #: code:addons/voip/models/voip_phonecall.py:224
 #, python-format
 msgid "Call to "
-msgstr ""
+msgstr "向谁呼叫"
 
 #. module: voip
 #. openerp-web
@@ -131,7 +131,7 @@ msgstr "已取消"
 #. module: voip
 #: model:ir.actions.act_window,help:voip.voip_phonecall_view
 msgid "Click to log the summary of a phonecall."
-msgstr ""
+msgstr "单击记录电话摘要。"
 
 #. module: voip
 #. openerp-web
@@ -232,7 +232,7 @@ msgstr "时长"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_phonecall_duration
 msgid "Duration in minutes."
-msgstr ""
+msgstr "时长长短。"
 
 #. module: voip
 #. openerp-web
@@ -244,7 +244,7 @@ msgstr "输入号码..."
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity_type_create_voip_phonecall
 msgid "Generates a voip phonecall"
-msgstr ""
+msgstr "生成语音电话"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_phonecall_sequence
@@ -280,7 +280,7 @@ msgstr "ID"
 msgid ""
 "If set to true, when an activity of this type is scheduled, a voip phonecall"
 " is created"
-msgstr ""
+msgstr "如果设置为真，当计划该类型活动时，则创建语音电话"
 
 #. module: voip
 #: selection:voip.phonecall.log.wizard,reschedule_option:0
@@ -308,6 +308,8 @@ msgid ""
 "In order to follow up on the call, you can trigger a request for\n"
 "        another call, a meeting."
 msgstr ""
+"为了跟进电话，您可以对 \n"
+" 其他呼叫、会议触发请求。"
 
 #. module: voip
 #: selection:voip.phonecall,type:0
@@ -324,7 +326,7 @@ msgstr "电话来自"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity_is_call_type
 msgid "Is it a call type activity?"
-msgstr ""
+msgstr "这是呼叫类型活动吗？"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_configurator___last_update
@@ -355,17 +357,17 @@ msgstr "最后更新时间"
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_activity_id
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_log_wizard_activity_id
 msgid "Linked Activity"
-msgstr ""
+msgstr "链接活动"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_mail_message_id
 msgid "Linked Chatter Message"
-msgstr ""
+msgstr "链接聊天信息"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity_voip_phonecall_id
 msgid "Linked Voip Phonecall"
-msgstr ""
+msgstr "链接语音电话"
 
 #. module: voip
 #. openerp-web
@@ -377,7 +379,7 @@ msgstr "日志"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_log_wizard_phonecall_id
 msgid "Logged Phonecall"
-msgstr ""
+msgstr "记录来电"
 
 #. module: voip
 #. openerp-web
@@ -396,7 +398,7 @@ msgstr "手机"
 #: model:ir.model.fields,field_description:voip.field_res_partner_sanitized_mobile
 #: model:ir.model.fields,field_description:voip.field_res_users_sanitized_mobile
 msgid "Mobile number sanitized"
-msgstr ""
+msgstr "消除移动号码"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_config_settings_mode
@@ -418,7 +420,7 @@ msgstr "我的电话"
 #: code:addons/voip/static/src/xml/dialing_panel.xml:32
 #, python-format
 msgid "NEXT ACTIVITIES"
-msgstr ""
+msgstr "下一步活动"
 
 #. module: voip
 #. openerp-web
@@ -445,6 +447,9 @@ msgid ""
 "        history of the communication with a customer or to inform another\n"
 "        team member."
 msgstr ""
+"Odoo 允许您在运行过程中记录呼入电话以便追踪 \n"
+" 与客户之间沟通的历史记录或通知其他 \n"
+" 团队的成员。"
 
 #. module: voip
 #. openerp-web
@@ -478,7 +483,7 @@ msgstr "电话"
 #: model:ir.model.fields,field_description:voip.field_res_partner_sanitized_phone
 #: model:ir.model.fields,field_description:voip.field_res_users_sanitized_phone
 msgid "Phone number sanitized"
-msgstr ""
+msgstr "消除电话号码"
 
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_phonecall_view
@@ -491,7 +496,7 @@ msgstr "电话"
 #. module: voip
 #: model:ir.model,name:voip.model_voip_phonecall_report
 msgid "Phonecalls by user"
-msgstr ""
+msgstr "电话用户"
 
 #. module: voip
 #. openerp-web
@@ -526,7 +531,7 @@ msgstr "生产"
 #: code:addons/voip/static/src/xml/dialing_panel.xml:29
 #, python-format
 msgid "RECENT"
-msgstr ""
+msgstr "最近"
 
 #. module: voip
 #. openerp-web
@@ -538,7 +543,7 @@ msgstr "刷新面板"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_sip_ignore_incoming
 msgid "Reject All Incoming Calls"
-msgstr ""
+msgstr "拒绝所有呼入电话"
 
 #. module: voip
 #. openerp-web
@@ -574,7 +579,7 @@ msgstr "安排"
 #. module: voip
 #: model:ir.ui.view,arch_db:voip.res_config_settings_view_form
 msgid "Schedule &amp; make calls from CRM app"
-msgstr ""
+msgstr "从 CRM 应用中安排并打出电话"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_log_wizard_reschedule_option
@@ -659,7 +664,7 @@ msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.</br> (Reason "
 "received: %s)"
-msgstr "</br>"
+msgstr "号码不正确，有可能是用户证书出错或没有进行连接。请检查你的配置</br>（收到的原因：%）"
 
 #. module: voip
 #. openerp-web
@@ -683,13 +688,16 @@ msgid ""
 "When the call is over, the status is set to Held.\n"
 "If the call is not applicable anymore, the status can be set to Cancelled."
 msgstr ""
+"在创建呼叫时，将状态设置为待做。\n"
+" 在呼叫结束时，状态设置为已保留。\n"
+" 如果不再适用呼叫，状态设置为已取消。"
 
 #. module: voip
 #. openerp-web
 #: code:addons/voip/static/src/js/user_agent.js:201
 #, python-format
 msgid "The websocket uri could be wrong."
-msgstr ""
+msgstr "网络连接 uri 可能是错误的。"
 
 #. module: voip
 #: model:ir.ui.view,arch_db:voip.view_voip_case_phonecalls_filter
@@ -705,7 +713,7 @@ msgstr "明天"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_transfer_wizard_transfer_choice
 msgid "Transfer Choice"
-msgstr ""
+msgstr "转移选择"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_type
@@ -760,7 +768,7 @@ msgstr "错误配置的呼叫。没有配置外接电话号码"
 #: code:addons/voip/static/src/js/dialing_panel.js:276
 #, python-format
 msgid "You are already in a call"
-msgstr ""
+msgstr "您已经在通话中"
 
 #. module: voip
 #. openerp-web
@@ -789,7 +797,7 @@ msgstr "res.config.settings"
 #: code:addons/voip/static/src/xml/voip_phonecall.xml:94
 #, python-format
 msgid "sec"
-msgstr ""
+msgstr "秒"
 
 #. module: voip
 #. openerp-web
@@ -831,14 +839,14 @@ msgstr "voip.configurator"
 #. module: voip
 #: model:ir.model,name:voip.model_voip_phonecall
 msgid "voip.phonecall"
-msgstr ""
+msgstr "voip.phonecall"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_phonecall_log_wizard
 msgid "voip.phonecall.log.wizard"
-msgstr ""
+msgstr "voip.phonecall.log.wizard"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_phonecall_transfer_wizard
 msgid "voip.phonecall.transfer.wizard"
-msgstr ""
+msgstr "voip.phonecall.transfer.wizard"

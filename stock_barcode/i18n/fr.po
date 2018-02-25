@@ -8,25 +8,30 @@
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
 # Leo Schmitt <inactive+lschmitt@transifex.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Quentin THEURET <odoo@kerpeo.com>, 2017
-# Florian Hatat <mininet@wanadoo.fr>, 2017
+# Florian Hatat, 2017
 # Xavier Symons <xsy@openerp.com>, 2017
 # Lucas Deliege <lud@odoo.com>, 2017
 # lap.odoo <lap@odoo.com>, 2017
-# Lu Lu <inactive+Lulucmy@transifex.com>, 2017
+# Lu Lu, 2017
 # Xavier Belmere <Info@cartmeleon.com>, 2017
 # Stéphane GUILLY <stephane.guilly@laposte.net>, 2017
 # Guilhaume Bordiau <github@guilhaume.fr>, 2017
 # Bertrand LATOUR <divoir@gmail.com>, 2017
 # zoe <yann.hoareau@migs.re>, 2017
+# fr rev <e2ffr02@hotmail.com>, 2018
+# e2f <projects@e2f.com>, 2018
+# fr trans <e2ffr05@hotmail.com>, 2018
+# Frédéric LIETART <stuff@tifred.fr>, 2018
+# Lionel Sausin <ls@numerigraphe.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: zoe <yann.hoareau@migs.re>, 2017\n"
+"POT-Creation-Date: 2018-02-19 14:22+0000\n"
+"PO-Revision-Date: 2018-02-19 14:22+0000\n"
+"Last-Translator: Lionel Sausin <ls@numerigraphe.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -265,15 +270,27 @@ msgstr "Annuler"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Choose Hardware"
+msgstr "Choisir l'appareil"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
 "Choose a USB barcode scanner if you plan to scan products at the computer "
 "station"
 msgstr ""
+"Choisissez un lecteur de codes-barres USB si vous avez prévu de scanner les "
+"produits au poste informatique"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Click on 'Inventory'"
 msgstr "Cliquez sur \"Inventaire\""
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Configuration"
+msgstr "Configuration"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
@@ -305,7 +322,12 @@ msgstr "Créé le"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_default_move_id
 msgid "Default Move"
-msgstr ""
+msgstr "Mouvement par défaut"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Delivery Orders"
+msgstr "Livraisons"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_display_name
@@ -339,6 +361,11 @@ msgid ""
 msgstr ""
 "Pour l'équipe Odoo,<br/>\n"
 "Fabien Pinckaers, Fondateur"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Go Live"
+msgstr "Passer en direct"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -405,6 +432,11 @@ msgid "Inateck BCST-20:"
 msgstr "Inateck BCST-20:"
 
 #. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Internal Transfers"
+msgstr "Transferts internes"
+
+#. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_inventory_line_product_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_move_line_product_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_scrap_product_barcode
@@ -453,12 +485,12 @@ msgstr "Dernière mise à jour le"
 #: code:addons/stock_barcode/static/src/js/stock_barcode.js:57
 #, python-format
 msgid "Leave it"
-msgstr ""
+msgstr "Laisser"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_barcode_lot_line
 msgid "Line of LN/SN scanned of a product"
-msgstr ""
+msgstr "Ligne de numéro de lot/série scannée d'un produit"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -475,7 +507,12 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line_location_processed
 msgid "Location Processed"
-msgstr ""
+msgstr "Traité à l'emplacement"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Locations Barcodes"
+msgstr "Codes-barres des emplacements"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_lot_name
@@ -493,10 +530,20 @@ msgstr ""
 "de ce produit."
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:81
+#: code:addons/stock_barcode/models/inherited_stock_picking.py:86
 #, python-format
 msgid "Lot/Serial Number Details"
-msgstr ""
+msgstr "Détails du numéro de lot/série"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Lots / Serial Numbers"
+msgstr "Numéros de lot/série"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Making an Inventory"
+msgstr "Établir un inventaire"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -555,7 +602,7 @@ msgstr "Aucun lot trouvé"
 #: code:addons/stock_barcode/controllers/main.py:23
 #, python-format
 msgid "No picking corresponding to barcode %(barcode)s"
-msgstr ""
+msgstr "Aucune préparation ne correspond au code-barres %(barcode)s"
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/controllers/main.py:21
@@ -570,6 +617,9 @@ msgid ""
 "Note that Bluetooth connections are suitable for maximum 30 feet (10 meters)"
 " so you will have to scan products nearby the computer station."
 msgstr ""
+"Notez que les connexions Bluetooth offrent une portée de 10 mètres maximum, "
+"ce qui signifie que vous devrez scanner les produits à proximité du poste "
+"informatique."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -588,6 +638,8 @@ msgid ""
 "Odoo supports most USB, Wireless and Bluetooth barcode scanners (as they all"
 " emulate a keyboard)."
 msgstr ""
+"Odoo prend en charge la plupart des lecteurs de codes-barres Bluetooth, sans"
+" fil et USB (étant donné qu'ils émulent tous un clavier)."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -695,7 +747,7 @@ msgstr ""
 #: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:19
 #, python-format
 msgid "Print the barcode commands."
-msgstr ""
+msgstr "Imprimer les commandes de code-barres."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -714,14 +766,19 @@ msgid "Product Barcodes"
 msgstr "Code-barres d'article"
 
 #. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Product Configuration"
+msgstr "Configuration d'article"
+
+#. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_qty_done
 msgid "Qty Done"
-msgstr ""
+msgstr "Qté traitée"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_qty_reserved
 msgid "Qty Reserved"
-msgstr ""
+msgstr "Qté réservée"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_qty_done
@@ -739,7 +796,7 @@ msgstr "Quantité réservée"
 #: code:addons/stock_barcode/static/src/js/stock_barcode.js:54
 #, python-format
 msgid "Remove it"
-msgstr ""
+msgstr "Retirer"
 
 #. module: stock_barcode
 #. openerp-web
@@ -813,18 +870,24 @@ msgstr "Emplacement scanné"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Scanner Configuration"
+msgstr "Configuration du lecteur"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Set barcodes at the initial import of your products or"
 msgstr ""
+"Définir les codes-barres lors de l'importation initiale des produits ou"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_stock_barcode_lot_id
 msgid "Stock Barcode Lot"
-msgstr ""
+msgstr "Code-barres de lot en stock"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_stock_barcode_lot_line_ids
 msgid "Stock Barcode Lot Line"
-msgstr ""
+msgstr "Ligne de code-barres de lot en stock"
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:308
@@ -923,11 +986,18 @@ msgid ""
 "USB only, omnidirectional (eliminates the need to align bar code and "
 "scanner), rugged design, about $250"
 msgstr ""
+"USB uniquement, omnidirectionnel (permet de lire le code-barres dans "
+"n'importe quel sens), conception robuste, environ 250 $"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "USB, Wireless or Bluetooth?"
 msgstr "USB, sans-fil ou bluetooth?"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Use Cases"
+msgstr "Cas d'utilisation"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -937,7 +1007,7 @@ msgstr "Utilisez notre"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
 msgid "Validate Lot"
-msgstr ""
+msgstr "Valider le lot"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -952,6 +1022,13 @@ msgid ""
 "We have created a few demo data with barcodes for you to explore the "
 "features. Print the"
 msgstr ""
+"Nous avons créé des données de démonstration avec des codes-barres pour vous"
+" laisser explorer les différentes fonctionnalités. Imprimer le"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
+msgid "Welcome"
+msgstr "Bienvenue"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -979,12 +1056,12 @@ msgstr "Quel format du scanner?"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Wireless and USB, laser, rational choice, about $50"
-msgstr ""
+msgstr "USB ou sans fil, laser, le choix rationnel, environ 50 $"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_barcode_lot
 msgid "Wizard to scan SN/LN for specific product"
-msgstr ""
+msgstr "Assistant pour scanner le numéro de lot/série d'un produit spécifique"
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:307
@@ -999,12 +1076,15 @@ msgid ""
 "connected through wireless (phone, tablet or scanner with integrated "
 "screen)."
 msgstr ""
+"Vous pouvez configurer un poste informatique ou demander au personnel "
+"d'utiliser un appareil mobile avec connexion sans fil (téléphone, tablette "
+"ou lecteur avec écran intégré)."
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/wizard/stock_barcode_lot.py:55
 #, python-format
 msgid "You cannot scan two times the same serial number"
-msgstr ""
+msgstr "Vous ne pouvez pas scanner le même numéro de série deux fois"
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:23
@@ -1052,7 +1132,7 @@ msgstr "disponible ici"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "compact wireless, about $250"
-msgstr ""
+msgstr "compact et sans fil, environ 250 $"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -1069,7 +1149,7 @@ msgstr "feedback@mail.odoo.com"
 #: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:14
 #, python-format
 msgid "stock barcodes sheet"
-msgstr ""
+msgstr "feuille de codes-barres de stock"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_scrap
@@ -1091,7 +1171,7 @@ msgstr "ce document"
 #: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:14
 #, python-format
 msgid "to check out what this module can do !"
-msgstr ""
+msgstr "pour découvrir ce dont ce module est capable !"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner

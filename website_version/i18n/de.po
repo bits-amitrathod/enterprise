@@ -21,6 +21,7 @@
 # Christian Körner <fipes.de@gmail.com>, 2017
 # Marvin Elia Hoppe <marvin_elia@web.de>, 2017
 # Henry Mineehen <info@mineehen.de>, 2017
+# Katharina Moritz <kmo@e2f.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -196,7 +197,7 @@ msgid ""
 "                    You can also launch A/B tests to analyse the performance of different versions."
 msgstr ""
 "Mit einer Version können mehrere Seiten geändert werden, ohne die Änderungen direkt zu veröffentlichen.\n"
-" Sie können auch A/B-Tests starten, um die Leistung verschiedener Versionen zu analysieren."
+"Sie können auch A-/B-Tests starten, um die Leistung verschiedener Versionen zu analysieren."
 
 #. module: website_version
 #. openerp-web
@@ -206,8 +207,9 @@ msgid ""
 "All the modifications you will do, will be saved in this version. Drag the "
 "Cover block and drop it in your page."
 msgstr ""
-"Alle Veränderungen die Sie machen werden, werden in dieser Version "
-"gespeichert. Ziehen Sie den Titelblock und legen Sie ihn auf Ihrer Seite ab."
+"Alle Veränderungen, die Sie machen werden, werden in dieser Version "
+"gespeichert. Ziehen Sie den Titelbaustein und legen Sie ihn auf Ihrer Seite "
+"ab."
 
 #. module: website_version
 #: model:ir.ui.view,arch_db:website_version.user_navbar_version
@@ -219,7 +221,7 @@ msgstr "Alle Versionen"
 #, python-format
 msgid "An exception occured during the google analytics request: %s"
 msgstr ""
-"Eine Ausnahme ist aufgetreten wahrend der Google Analytics Anfrage: %s"
+"Eine Ausnahme ist aufgetreten wahrend der Google Analytics-Anfrage: %s"
 
 #. module: website_version
 #. openerp-web
@@ -234,7 +236,7 @@ msgstr ""
 #: code:addons/website_version/static/src/xml/version_templates.xml:47
 #, python-format
 msgid "Authorize Google"
-msgstr "Autorisiere Google"
+msgstr "Google autorisieren"
 
 #. module: website_version
 #: model:ir.ui.view,arch_db:website_version.homepage_default_2
@@ -304,15 +306,17 @@ msgid ""
 "Click on <b>\"Tracking Code\"</b>.\n"
 "                                    <br/><br/>"
 msgstr ""
-"Klicken <b>Sie auf „Tracking-Code“.\n"
-"</b><br/><br/>"
+"Klicken Sie auf <b>Tracking-Code</b>.\n"
+"<br/><br/>"
 
 #. module: website_version
 #: model:ir.ui.view,arch_db:website_version.view_website_form_extend
 msgid ""
 "Click on Authorize Google.\n"
 "                                    <br/><br/>"
-msgstr "Klicken Sie<br/><br/> auf „Google authorisieren“.\n"
+msgstr ""
+"Klicken Sie auf „Google autorisieren“.\n"
+"<br/><br/>"
 
 #. module: website_version
 #. openerp-web
@@ -326,7 +330,7 @@ msgstr "Klick Sie auf neue Version"
 #: code:addons/website_version/static/src/js/website_version.tour.versioning.js:63
 #, python-format
 msgid "Click on Publish Version"
-msgstr "Klicken Sie auf „Version veröffentlichen“."
+msgstr "Klicken Sie auf „Veröffentliche Version“."
 
 #. module: website_version
 #. openerp-web
@@ -340,7 +344,9 @@ msgstr "Klicken Sie auf die Schaltfläche „Veröffentlichen“."
 msgid ""
 "Click on Save.\n"
 "                                    <br/><br/>"
-msgstr "Klicken Sie<br/><br/> auf „Speichern“.\n"
+msgstr ""
+"Klicken Sie auf „Speichern“.\n"
+"<br/><br/>"
 
 #. module: website_version
 #. openerp-web
@@ -437,8 +443,8 @@ msgid ""
 "Copy the <b>\"Tracking ID\"</b> and paste it in the field Google Analytics key.\n"
 "                                    <br/><br/>"
 msgstr ""
-"Kopieren Sie die <b>„Tracking-ID“</b><br/><br/> und fügen Sie sie in das "
-"Feld „Google Analytics Key“ hinzu.\n"
+"Kopieren Sie die <b>„Tracking-ID“</b> und fügen Sie sie in das Feld „Google Analytics Key“ ein.\n"
+"<br/><br/>"
 
 #. module: website_version
 #: model:ir.ui.view,arch_db:website_version.view_website_form_extend
@@ -446,8 +452,8 @@ msgid ""
 "Copy the <b>\"View ID\"</b> and paste it in the field View ID.\n"
 "                                    <br/><br/>"
 msgstr ""
-"Kopieren Sie die <b>„Anzeige-ID“</b><br/><br/> und fügen Sie sie in das Feld"
-" „Anzeige-ID“ ein.\n"
+"Kopieren Sie die <b>„Ansicht-ID“</b> und fügen Sie sie in das Feld „Ansicht-ID“ ein.\n"
+"<br/><br/>"
 
 #. module: website_version
 #. openerp-web
@@ -495,7 +501,7 @@ msgstr ""
 #. module: website_version
 #: model:website_version.goals,name:website_version.goal_bounces
 msgid "Decrease Bounces"
-msgstr "Bounces verringern"
+msgstr "Unzustellbarkeit verringern"
 
 #. module: website_version
 #: model:ir.ui.view,arch_db:website_version.view_experiment_kanban
@@ -836,7 +842,7 @@ msgid ""
 "Odoo uses Google Analytics to track the performances of an A/B testing "
 "experiment comparing several versions."
 msgstr ""
-"Odoo verwendet Google Analytics, um die Ergebnisse eines A/B-Tests zu "
+"Odoo verwendet Google Analytics, um die Ergebnisse eines A-/B-Tests zu "
 "verfolgen, bei dem mehrere Versionen verglichen werden."
 
 #. module: website_version
@@ -867,7 +873,7 @@ msgstr "Seite"
 #. module: website_version
 #: model:website_version.goals,name:website_version.goal_pageviews
 msgid "Page Views"
-msgstr "Seitenansichten"
+msgstr "Seitenaufrufe"
 
 #. module: website_version
 #: selection:website_version.experiment,state:0
@@ -966,7 +972,7 @@ msgstr "Sitzungsdauer"
 #. module: website_version
 #: model:ir.ui.view,arch_db:website_version.version_form_view
 msgid "Snap"
-msgstr "Snap"
+msgstr "Einrasten"
 
 #. module: website_version
 #: model:ir.ui.view,arch_db:website_version.experiment_search
@@ -1265,7 +1271,9 @@ msgstr "Sie müssen mindestens eine Version im Experiment auswählen."
 #: code:addons/website_version/static/src/js/menu_version.js:200
 #, python-format
 msgid "You must select at least one version which is not Master."
-msgstr "Sie müssen mindestens eine Version auswählen, die nicht Master ist."
+msgstr ""
+"Sie müssen mindestens eine Version auswählen, die nicht die Masterversion "
+"ist."
 
 #. module: website_version
 #. openerp-web
@@ -1275,7 +1283,7 @@ msgid ""
 "You need Administration/Settings rights to configure Google Analytics "
 "access."
 msgstr ""
-"Sie benötigen Verwaltungs- und Einstellungsrechte, um den Google Analytics "
+"Sie benötigen Verwaltungs- und Einstellungsrechte, um den Google Analytics-"
 "Zugang zu konfigurieren."
 
 #. module: website_version

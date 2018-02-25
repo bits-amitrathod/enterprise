@@ -22,13 +22,14 @@
 # Gustavo Valverde, 2017
 # Miguel Orueta <mo@landoo.es>, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f_EPV Translator <e2f_EPV@outlook.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: e2f_EPV Translator <e2f_EPV@outlook.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,7 +90,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
 msgid "<strong>Environment</strong>"
-msgstr "<strong/>"
+msgstr "<strong>Entorno</strong>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -99,7 +100,7 @@ msgstr "<strong>Nombre</strong>"
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
 msgid "<strong>Provider</strong>"
-msgstr "<strong/>"
+msgstr "<strong>Proveedor</strong>"
 
 #. module: print
 #: code:addons/print/wizard/print_order_wizard.py:70
@@ -210,7 +211,7 @@ msgstr "Detalle del documento"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
 msgid "Document sensable"
-msgstr ""
+msgstr "Documento válido para envío"
 
 #. module: print
 #: selection:print.order,state:0
@@ -392,7 +393,7 @@ msgstr "Empresa"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
 msgid "Partner has an addess"
-msgstr ""
+msgstr "La empresa tiene una dirección"
 
 #. module: print
 #: code:addons/print/wizard/print_order_wizard.py:71
@@ -401,6 +402,8 @@ msgid ""
 "Please check the document is in a correct state, and that its partner has a "
 "correct postal address."
 msgstr ""
+"Compruebe que el documento se encuentra en estado correcto y que la empresa "
+"tiene una dirección postal correcta."
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -466,7 +469,7 @@ msgstr "Imprimir Proveedor"
 #: model:ir.cron,cron_name:print.ir_cron_print_scheduler_action
 #: model:ir.cron,name:print.ir_cron_print_scheduler_action
 msgid "Print: queue manager"
-msgstr ""
+msgstr "Imprimir: gestor de colas"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -615,6 +618,8 @@ msgid ""
 "The currency will be used for amount, balance account, print order price, "
 "..."
 msgstr ""
+"La divisa se usará para el importe, el balance de cuentas, la impresión del "
+"precio del pedido..."
 
 #. module: print
 #: code:addons/print/models/print_provider.py:226
@@ -633,12 +638,14 @@ msgid ""
 "The document you want to print and send is not printable. There is no report"
 " action (ir.actions.report) for the model %s."
 msgstr ""
+"El documento que desea imprimir y enviar no se puede imprimir. No hay "
+"ninguna acción de informe (ir.actions.report) para el modelo %s."
 
 #. module: print
 #: code:addons/print/wizard/print_order_wizard.py:68
 #, python-format
 msgid "The document you want to send contains a mistake."
-msgstr ""
+msgstr "El documento que desea enviar contiene un error."
 
 #. module: print
 #: code:addons/print/models/account_invoice.py:26

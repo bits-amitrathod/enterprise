@@ -3,14 +3,14 @@
 # * currency_rate_live
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2018-02-19 14:22+0000\n"
+"PO-Revision-Date: 2018-02-19 14:22+0000\n"
+"Last-Translator: Martin Trigaux, 2017\n"
 "Language-Team: Faroese (https://www.transifex.com/odoo/teams/41243/fo/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -101,7 +101,15 @@ msgid "Service Provider"
 msgstr ""
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:77
+#: code:addons/currency_rate_live/models/res_config_settings.py:71
+#, python-format
+msgid ""
+"The Yahoo currency rate web service has been discontinued. Please select "
+"another currency rate provider."
+msgstr ""
+
+#. module: currency_rate_live
+#: code:addons/currency_rate_live/models/res_config_settings.py:79
 #, python-format
 msgid ""
 "Unable to connect to the online exchange rate platform. The web service may "
@@ -115,7 +123,7 @@ msgstr ""
 
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
-msgid "Yahoo"
+msgid "Yahoo (DISCONTINUED)"
 msgstr ""
 
 #. module: currency_rate_live

@@ -6,6 +6,7 @@
 # Gustavo Valverde, 2017
 # Ivan Nieto <ivan.n.s@tuta.io>, 2017
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2017
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Martin Trigaux, 2017
 # Antonio Trueba, 2017
 # Pablo Rojas <rojaspablo88@gmail.com>, 2017
@@ -13,13 +14,15 @@
 # Gelo Joga Landoo <gj@landoo.es>, 2017
 # oihane <oihanecruce@gmail.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f_EPV Translator <e2f_EPV@outlook.com>, 2018
+# ES R1 <e2fes@hotmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: ES R1 <e2fes@hotmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,10 +64,10 @@ msgid ""
 "<i>Push</i> events are supported."
 msgstr ""
 "Después de eso, podrá elegir los eventos que quiera seguir en los canales. "
-"Cuidado, solo se permite <i>Introducir</i> <i>un comentario, Incidencias, "
-"Emitir un comentario, Gollum, Hacer una solicitud, Hacer una revisión de la "
-"solicitud, Hacer un comentario</i> de la revisión de la solicitud, "
-"Introducir eventos."
+"Cuidado, solo se permite <i>Comentario de confirmación, Incidencias, "
+"Comentario de la incidencia, Gollum, Solicitud de extracción, Revisión de la"
+" solicitud de extracción, Comentario de la revisión de la solicitud de "
+"extracción</i> y <i>Publicar</i> eventos."
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_channel_ids
@@ -138,7 +141,7 @@ msgstr "ID"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "Issue"
-msgstr "Incidencia"
+msgstr "Asunto"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github___last_update
@@ -161,8 +164,8 @@ msgid ""
 "Once the repository is created in Odoo, create it on Github. Then, copy "
 "'Payload URL' and 'Secret' in Github interface."
 msgstr ""
-"Una vez que se crea el repositorio en Odoo, créelo en Github. Después, copie"
-" \"Cargar URL\" y \"Secreto\" en la interfaz de Github."
+"Una vez que se crea el repositorio en Odoo, puede crearlo en Github. "
+"Después, copie \"Cargar URL\" y \"Secreto\" en la interfaz de Github."
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
@@ -182,12 +185,12 @@ msgstr "Repositorios"
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_github_repository_id
 msgid "Repository ID"
-msgstr "Identificación del repositorio"
+msgstr "ID del repositorio"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "Repository full name: user/repository."
-msgstr "Nombre completo del repositorio: user/repository."
+msgstr "Nombre completo del repositorio: usuario/repositorio."
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_name
@@ -238,17 +241,17 @@ msgstr "comentado"
 #: code:addons/mail_github/controllers/main.py:174
 #, python-format
 msgid "commit"
-msgstr "introducir"
+msgstr "confirmación"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "commit(s) on"
-msgstr "introduce en"
+msgstr "confirmación(es) en"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "created a new"
-msgstr "creado uno nuevo"
+msgstr "ha creado un nuevo"
 
 #. module: mail_github
 #: code:addons/mail_github/controllers/main.py:197
@@ -264,7 +267,7 @@ msgstr "mail.channel.github"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "modified the following"
-msgstr "modificado el siguiente"
+msgstr "ha modificado el siguiente"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
@@ -281,12 +284,12 @@ msgstr "en el repositorio"
 #: code:addons/mail_github/controllers/main.py:218
 #, python-format
 msgid "pull request"
-msgstr "hacer una solicitud"
+msgstr "solicitud de extracción"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "push"
-msgstr "realizar"
+msgstr "publicar"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification

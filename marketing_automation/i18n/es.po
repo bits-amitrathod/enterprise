@@ -6,10 +6,11 @@
 # RGB Consulting <odoo@rgbconsulting.com>, 2017
 # Martin Trigaux, 2017
 # Sergio Flores <vitavitae1@gmail.com>, 2017
-# e2f_es_ t6 <e2f_es_t6@outlook.com>, 2017
 # e2f_EPV Translator <e2f_EPV@outlook.com>, 2017
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
+# e2f_es_ t6 <e2f_es_t6@outlook.com>, 2017
 # Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2017
+# ES R1 <e2fes@hotmail.com>, 2017
 # Ana Juaristi <ajuaristio@gmail.com>, 2017
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
 # Ivan Nieto <ivan.n.s@tuta.io>, 2017
@@ -71,7 +72,7 @@ msgstr "<i class=\"fa fa-check-circle\"/> Respondido"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-envelope-open-o\"/> Not opened within"
-msgstr "<i class=\"fa fa-envelope-open-o\"/>Sin abrir desde"
+msgstr "<i class=\"fa fa-envelope-open-o\"/>Sin abrir en"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -82,7 +83,7 @@ msgstr "<i class=\"fa fa-envelope-open-o\"/>Abierto después de"
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-exclamation-circle\"/> Mail bounced after"
 msgstr ""
-"<i class=\"fa fa-exclamation-circle\"/>Correo electrónico rebotado después "
+"<i class=\"fa fa-exclamation-circle\"/> Correo electrónico rebotado después "
 "de"
 
 #. module: marketing_automation
@@ -93,7 +94,7 @@ msgstr "<i class=\"fa fa-hand-pointer-o\"/>Seleccionado después de"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Not clicked within"
-msgstr "<i class=\"fa fa-hand-pointer-o\"/>No seleccionado desde"
+msgstr "<i class=\"fa fa-hand-pointer-o\"/> No seleccionado en"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -103,12 +104,12 @@ msgstr "<i class=\"fa fa-pie-chart\"/>Detalles de correo electrónico"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-plus-circle\"/> Add child activity"
-msgstr "<i class=\"fa fa-plus-circle\"/> Añadir actividad subordinada"
+msgstr "<i class=\"fa fa-plus-circle\"/> Añadir actividad secundaria"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-reply\"/> Not replied within"
-msgstr "<i class=\"fa fa-reply\"/>No respondido desde"
+msgstr "<i class=\"fa fa-reply\"/> No respondido en el plazo"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -122,8 +123,8 @@ msgid ""
 "[('trigger_type', '=', 'begin')]}\">(save the campaign to make its "
 "activities selectable)</small>"
 msgstr ""
-"<small attrs=\"{'invisible': [('trigger_type', '=', 'begin')]}\" "
-"class=\"oe_edit_only text-muted\">(guardar la campaña para que puedan "
+"<small class=\"oe_edit_only text-muted\" attrs=\"{'invisible': "
+"[('trigger_type', '=', 'begin')]}\">(guardar la campaña para que puedan "
 "seleccionarse sus actividades)</small>"
 
 #. module: marketing_automation
@@ -199,7 +200,7 @@ msgstr "Después de 7 días"
 #: model:marketing.activity,name:marketing_automation.marketing_activity_2
 #: model:utm.source,name:marketing_automation.marketing_activity_2_utm_source
 msgid "After 7 days (if not partner yet)"
-msgstr "Después de 7 días (si todavía no es cliente)"
+msgstr "Después de 7 días (si todavía no es socio)"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_search
@@ -258,7 +259,7 @@ msgstr "Cancelado"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_child_ids
 msgid "Child Activities"
-msgstr "Actividades subordinadas"
+msgstr "Actividades secundarias"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -269,20 +270,20 @@ msgstr "Haga clic aquí para añadir una nueva actividad"
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Click on 'Edit' button to add new activity in workflow."
 msgstr ""
-"Haga clic en el botón de \"Editar\" para añadir una nueva actividad en el "
+"Haga clic en el botón de \"Editar\" para añadir una nueva actividad al "
 "flujo."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_clicked
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Clicked"
-msgstr "Seleccionado"
+msgstr "Seleccionada"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_search
 #: selection:marketing.participant,state:0
 msgid "Completed"
-msgstr "Completado"
+msgstr "Completada"
 
 #. module: marketing_automation
 #: model:ir.ui.menu,name:marketing_automation.marketing_automation_configuration_menu
@@ -295,7 +296,7 @@ msgstr "Configuración"
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_participant_create_uid
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr "Creada por"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_create_date
@@ -303,7 +304,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_participant_create_date
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr "Creada el"
 
 #. module: marketing_automation
 #: model:ir.model.fields,help:marketing_automation.field_marketing_trace_exception
@@ -315,7 +316,7 @@ msgstr ""
 #: model:ir.model.fields,help:marketing_automation.field_marketing_trace_clicked
 msgid "Date when customer clicked on at least one tracked link"
 msgstr ""
-"Fecha en la que el cliente hizo clic en al menos un link de seguimiento"
+"Fecha en la que el cliente hizo clic en al menos un enlace de seguimiento"
 
 #. module: marketing_automation
 #: model:ir.model.fields,help:marketing_automation.field_marketing_trace_opened
@@ -335,7 +336,7 @@ msgstr "Fecha en la que el correo fue respondido por primera vez."
 #. module: marketing_automation
 #: model:ir.model.fields,help:marketing_automation.field_marketing_trace_bounced
 msgid "Date when this email has bounced."
-msgstr "Fecha en que este correo ha sido devuelto."
+msgstr "Fecha en la que el correo ha sido rebotado."
 
 #. module: marketing_automation
 #: selection:marketing.activity,interval_type:0
@@ -370,7 +371,7 @@ msgstr "Suprimir todo"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_child_ids
 msgid "Direct child traces"
-msgstr "Seguimientos directos subordinados"
+msgstr "Seguimientos secundarios directos"
 
 #. module: marketing_automation
 #. openerp-web
@@ -449,8 +450,8 @@ msgstr "¡Error! No puede crear una jerarquía recursiva de Actividad."
 msgid ""
 "Error! You can't define a child activity with a trigger of type 'begin'."
 msgstr ""
-"¡Error! No se puede definir una actividad infantil con una actividad de tipo"
-" \"comenzar\"."
+"¡Error! No se puede definir una actividad secundaria con una actividad de "
+"tipo \"comenzar\"."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_exception
@@ -502,7 +503,7 @@ msgstr "ID"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "It will be generated automatically once you save this record."
-msgstr "Se generará automáticamente cuando usted haya guardado este registro."
+msgstr "Se generará automáticamente cuando haya guardado este registro."
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -541,12 +542,12 @@ msgstr "Última sincronización de actividades"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Launch a Test"
-msgstr "Lanzar un test"
+msgstr "Iniciar una prueba"
 
 #. module: marketing_automation
 #: model:ir.actions.act_window,name:marketing_automation.marketing_participant_action_launch_test
 msgid "Launch a test"
-msgstr "Lanzar un test"
+msgstr "Iniciar una prueba"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.mass_mailing_view_form_marketing_activity
@@ -601,7 +602,7 @@ msgstr "Envío de correo"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Mails sent and not bounced"
-msgstr "Correos electrónicos enviados y no rebotados"
+msgstr "Correos electrónicos enviados y no devueltos"
 
 #. module: marketing_automation
 #: code:addons/marketing_automation/models/marketing_participant.py:149
@@ -832,7 +833,7 @@ msgstr "Participantes"
 #: model:marketing.campaign,name:marketing_automation.marketing_campaign_1
 #: model:utm.campaign,name:marketing_automation.marketing_campaign_1_utm_campaign
 msgid "Partnership Offer"
-msgstr "Oferta de cliente"
+msgstr "Oferta de asociación"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -844,12 +845,12 @@ msgstr "Realizar"
 #: code:addons/marketing_automation/static/src/js/marketing_automation_one2many.js:189
 #, python-format
 msgid "Please save the campaign to add a child activity"
-msgstr "Guarde la campaña y añada una actividad infantil"
+msgstr "Guarde la campaña y añada una actividad secundaria"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Please save the campaign to add child activity"
-msgstr "Por favor, guarde la campaña para añadir la actividad subordinada"
+msgstr "Guarde la campaña para añadir la actividad secundaria"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_processed
@@ -901,7 +902,7 @@ msgstr "Registros"
 #: selection:marketing.trace,state:0
 #, python-format
 msgid "Rejected"
-msgstr "Rechazada"
+msgstr "Rechazado"
 
 #. module: marketing_automation
 #: code:addons/marketing_automation/models/marketing_campaign.py:470
@@ -1085,8 +1086,8 @@ msgid ""
 "This Activity has a dependant child activity. 'DELETE ALL' will delete all "
 "child activities."
 msgstr ""
-"Esta actividad tiene una actividad infantil dependiente. La opción \"BORRAR "
-"TODO\" eliminará todas las actividades infantiles."
+"Esta actividad tiene una actividad secundaria dependiente. La opción "
+"\"BORRAR TODO\" eliminará todas las actividades secundarias."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity_total_bounce
@@ -1217,4 +1218,4 @@ msgstr "comienzo de la campaña"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "e.g. eCommerce Offers"
-msgstr "p. ej., Ofertas de comercio electrónico"
+msgstr "p. ej.: ofertas de la tienda del sitio web"

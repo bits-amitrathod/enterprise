@@ -7,10 +7,10 @@
 # Paolo Valier, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-02-19 14:22+0000\n"
+"PO-Revision-Date: 2018-02-19 14:22+0000\n"
 "Last-Translator: Paolo Valier, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_data_notification_email_send_offer
 msgid "${object.subject}"
-msgstr ""
+msgstr "${object.subject}"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -52,7 +52,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "150 €"
-msgstr ""
+msgstr "150 €"
 
 #. module: hr_contract_salary
 #: model:mail.template,body_html:hr_contract_salary.mail_template_send_offer
@@ -186,17 +186,18 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Company Car"
+msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Company Car)"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Internet"
+msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Internet)"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Phone Subscription"
+msgid ""
+"<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Phone Subscription)"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -226,17 +227,22 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Company Car"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind (Company Car)"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Internet"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind (Internet)"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Phone Subscription"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind Phone (Subscription)"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Commissions on Target"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -256,7 +262,7 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-suitcase fa-fw\"/> Double Holidays"
+msgid "<i class=\"fa fa-1x fa-suitcase fa-fw\"/> Holiday Bonus"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -267,7 +273,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-tint fa-fw\"/> Fuel Card"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-tint fa-fw\"/> Carta Carburante"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
@@ -309,10 +315,11 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
-"<span class=\"help-block mt8\">The cost of the car is depreciated over 5 "
-"years. For example, a new car may cost 500€/month the first year but its "
-"cost will decrease at each yearly appraisal to reach 100€/month after 5 "
-"years.</span>"
+"<span class=\"help-block mt8\">The cost of a car is depreciated by 8% per "
+"year, for 7 years. So, your gross salary increases automatically to keep the"
+" same employee budget. Once a car has 7 years, the car is fully depreciated "
+"and the only remaining costs are the maintenance, insurances and "
+"taxes.</span>"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -325,14 +332,8 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
-"<span class=\"help-block\">This commission is only effective if the target "
-"is reached. The commissions are paid using warrants that you receive every "
-"three months.</span>"
-msgstr ""
-
-#. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<span class=\"help-block\">This is a monthly net amount.</span>"
+"<span class=\"help-block\">This is a monthly net amount, taken into account "
+"in your payslip.</span>"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -432,6 +433,11 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "CO2 Emission: <span name=\"co2\"/>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Cash"
 msgstr ""
 
@@ -448,7 +454,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "City"
-msgstr ""
+msgstr "Città"
 
 #. module: hr_contract_salary
 #: model:ir.actions.act_window,help:hr_contract_salary.action_hr_contract_templates
@@ -539,7 +545,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Details"
-msgstr ""
+msgstr "Dettagli"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -577,6 +583,11 @@ msgid "Document Template"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Doors Number: <span name=\"door_number\"/>"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_employee_view_form
 msgid "Education"
 msgstr ""
@@ -584,7 +595,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_emergency_contact
@@ -608,7 +619,7 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Employee Total Cost"
+msgid "Employer Cost"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -620,6 +631,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_study_field
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Field of Study"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Fuel Type: <span name=\"fuel_type\"/>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Full time equivalent employer cost"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -658,8 +679,7 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid ""
-"If you want to choose another car model, please contact your HR manager."
+msgid "Immatriculation Date: <span name=\"immatriculation\"/>"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -671,6 +691,11 @@ msgstr ""
 #: model:ir.model,name:hr_contract_salary.model_hr_job
 msgid "Job Position"
 msgstr "Posizione lavorativa"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Last Odometer: <span name=\"odometer\"/>"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -710,7 +735,12 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Monthly Benefits"
+msgid "Monthly Advantages in Net"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Monthly Benefit in Kind"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -829,7 +859,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Phone number"
-msgstr ""
+msgstr "Numero di telefono"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -967,6 +997,21 @@ msgstr ""
 msgid ""
 "The number of days you get depends on your working schedule, the number of "
 "days used in your previous job and the number of months worked previously."
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"This commission is only effective if the target is reached. The commissions "
+"are paid using warrants that you receive every three months. This results to"
+" a net warrant value of"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"This cost simulation is only for information. If you want to choose another "
+"car model, please contact your HR manager."
 msgstr ""
 
 #. module: hr_contract_salary

@@ -5,17 +5,18 @@
 # Translators:
 # Wanradt Koell <wanradt@gmail.com>, 2017
 # Arma Gedonsky <armagedonsky@hot.ee>, 2017
-# Eneli Õigus <enelioigus@gmail.com>, 2017
-# Egon Raamat <egon@avalah.ee>, 2017
-# Rivo Zängov <eraser@eraser.ee>, 2017
+# Marek Pontus, 2017
 # Martin Trigaux, 2017
+# Rivo Zängov <eraser@eraser.ee>, 2017
+# Egon Raamat <egon@avalah.ee>, 2017
+# Eneli Õigus <enelioigus@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:49+0000\n"
 "PO-Revision-Date: 2017-10-02 11:49+0000\n"
-"Last-Translator: Martin Trigaux, 2017\n"
+"Last-Translator: Eneli Õigus <enelioigus@gmail.com>, 2017\n"
 "Language-Team: Estonian (https://www.transifex.com/odoo/teams/41243/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +27,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_account_group
 msgid "Account Groups"
-msgstr "Kontode grupid"
+msgstr "Kontogrupid"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.account_tag_menu
@@ -36,7 +37,7 @@ msgstr "Kontode sildid"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Account used when transferring between banks"
-msgstr "Konto pankadevaheliseks kanneteks"
+msgstr "Konto pankadevahelisteks ülekanneteks"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_partner_view_form
@@ -46,12 +47,12 @@ msgstr "Raamatupidamine"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_use_anglo_saxon
 msgid "Anglo-Saxon Accounting"
-msgstr "Anglo-Saksi raamatupidamine"
+msgstr "anglo-saksi raamatupidamine"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
 msgid "Cancel"
-msgstr "Loobu"
+msgstr "Tühista"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_change_lock_date
@@ -71,7 +72,7 @@ msgstr "Loodud"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_display_name
 msgid "Display Name"
-msgstr "Näidatav nimi"
+msgstr "Näidatav nimetus"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_account_financial_reports_tree
@@ -81,22 +82,22 @@ msgstr "Finantsaruanded"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Period Closing"
-msgstr "Finants perioodi lõppemine"
+msgstr "Aruandeperioodi sulgemine"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Year"
-msgstr "Finantsaasta"
+msgstr "Aruandeaasta"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_day
 msgid "Fiscalyear Last Day"
-msgstr "Finantsaasta viimane päev"
+msgstr "Aruandeaasta viimane päev"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid "Fiscalyear Last Month"
-msgstr "Finantsaasta viimane kuu"
+msgstr "Aruandeaasta viimane kuu"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_id
@@ -113,7 +114,8 @@ msgstr "Pankadevahelised ülekanded"
 msgid ""
 "Intermediary account used when moving money from a liquidity account to "
 "another"
-msgstr "Vahekonto, mida kasutatakse kui maksed on teel"
+msgstr ""
+"Vahekonto, mida kasutatakse kui maksed on teel ühelt rahakontolt teisele"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -128,7 +130,7 @@ msgstr "Viimati muudetud"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_write_uid
 msgid "Last Updated by"
-msgstr "Viimati uuendatud"
+msgstr "Viimati uuendanud"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_write_date
@@ -138,26 +140,26 @@ msgstr "Viimati uuendatud"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last day of your fiscal year, for automatic opening entries"
-msgstr "Viimane päev finantsaastal automaatsete avamiskannete tegemiseks"
+msgstr "Viimane päev aruandeaastal automaatsete avamiskannete tegemiseks"
 
 #. module: account_accountant
 #. openerp-web
 #: code:addons/account_accountant/static/src/js/tour.js:26
 #, python-format
 msgid "Let's start with a new customer invoice."
-msgstr "Alustame uue kliendiarve koostamisega."
+msgstr "Alustame uue müügiarve koostamisega."
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_lock_date
 msgid "Lock Date for All Users"
-msgstr "Lukustus kuupäev kõikidele kasutajatele"
+msgstr "Sulgemise kuupäev kõikidele kasutajatele"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_period_lock_date
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_period_lock_date
 msgid "Lock Date for Non-Advisers"
-msgstr "Lukustus kuupäev kõikidele mitte Adviser õigustes"
+msgstr "Sulgemise kuupäev kõigile kasutajatele v.a. Nõustaja"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_action_change_lock_date
@@ -167,19 +169,19 @@ msgstr "Lukustatud kuupäevad"
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_view_account_change_lock_date
 msgid "Lock your Fiscal Period"
-msgstr "Lukusta finantsperiood"
+msgstr "Lukusta aruandeperiood"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Lock your fiscal period"
-msgstr "Lukusta finantsperiood"
+msgstr "Lukusta aruandeperiood"
 
 #. module: account_accountant
 #. openerp-web
 #: code:addons/account_accountant/static/src/js/tour.js:17
 #, python-format
 msgid "Make your system ready to invoice in a few steps."
-msgstr "Tee enda süsteem valmis mõne sammuga arveldamiseks."
+msgstr "Valmista süsteem mõne sammuga ette arvete loomiseks."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
@@ -188,9 +190,8 @@ msgid ""
 "No users, including Advisers, can edit accounts prior to and inclusive of "
 "this date. Use it for fiscal year locking for example."
 msgstr ""
-"Mitte ükski kasutaja, kaasarvatud Adviser õigustes, ei saa muuta kontosid "
-"alates selle kuupäevast (kaasaarvatud). Kasuta seda finantsaasta "
-"lukustamiseks näiteks."
+"Mitte ükski kasutaja, kaasaarvatud Nõustaja õigustes, ei saa muuta kontosid "
+"peale seda kuupäeva. Kasuta seda näiteks aruandeaasta sulgemiseks."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_period_lock_date
@@ -199,9 +200,8 @@ msgid ""
 "of this date. Use it for period locking inside an open fiscal year, for "
 "example."
 msgstr ""
-"Ainult Adviser õigustes kasutaja saab muuta kontosid alates selle kuupäevast"
-" (kaasaarvatud). Kasuta seda finantsaasta sees perioodi lukustamiseks "
-"näiteks."
+"Ainult Nõustaja õigustes kasutaja saab muuta kontosid peale seda kuupäeva. "
+"Kasuta seda näiteks aruandeaasta sees perioodi sulgemiseks."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_period_lock_date
@@ -210,14 +210,13 @@ msgid ""
 " this date. Use it for period locking inside an open fiscal year, for "
 "example."
 msgstr ""
-"Ainult Adviser õigustes kasutaja saab muuta kontosid alates selle kuupäevast"
-" (kaasaarvatud). Kasuta seda finantsaasta sees perioodi lukustamiseks "
-"näiteks."
+"Ainult Nõustaja õigustes kasutaja saab muuta kontosid peale seda kuupäeva. "
+"Kasuta seda näiteks aruandeaasta sees perioodi sulgemiseks."
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_product_product_categories
 msgid "Product Categories"
-msgstr "Toodete kategooriad"
+msgstr "Toote kategooriad"
 
 #. module: account_accountant
 #. openerp-web
@@ -227,8 +226,8 @@ msgid ""
 "Ready to discover your new favorite <b>accounting app</b>? Get started by "
 "clicking here."
 msgstr ""
-"Oled valmis avastama uut lemmik <b>raamatupidamise äppi</b>? Vajuta siia "
-"alustamiseks."
+"Oled valmis avastama uut lemmik <b>raamatupidamise moodulit</b>? Vajuta siia"
+" alustamiseks."
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -279,8 +278,8 @@ msgid ""
 "Your reports are available in real time. <i>No need to close a fiscal year "
 "to get a Profit &amp; Loss statement or view the Balance Sheet.</i>"
 msgstr ""
-"Teie aruanded on saadav reaalajas. <i>Ei ole vaja sulgeda perioode "
-"kasumiaruande või bilansi vaatamiseks.</i>"
+"Teie aruanded on saadaval reaalajas. <i>Kasumiaruande saamiseks või bilansi "
+"vaatamiseks ei ole vaja sulgeda aruandeperioodi.</i>"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_res_config_settings

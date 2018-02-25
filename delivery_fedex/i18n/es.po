@@ -5,7 +5,7 @@
 # Translators:
 # Lina Maria Avendaño Carvajal <lina8823@gmail.com>, 2017
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
-# Ivan Nieto <ivan.n.s@tuta.io>, 2017
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Alejandro Die Sanchis <marketing@domatix.com>, 2017
 # Gafic SLP Albert Cabedo (GAFIC, SLP) <albertgafic@gmail.com>, 2017
 # Antonio Trueba, 2017
@@ -30,7 +30,7 @@ msgstr ""
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid ", click on \"Get Production Key\" and follow all the steps."
-msgstr ", click en \"Obtener Clave de Producción\" y seguir los pasos."
+msgstr ", clic en \"Obtener Clave de Producción\" y seguir los pasos."
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -38,8 +38,8 @@ msgid ""
 "<br/>According to your needs, you will need to contact different "
 "certifications :"
 msgstr ""
-"<br/>De acuerdo a tus necesidades, necesitarás tomar contacto con diferentes"
-" certifiactiones :"
+"<br/>De acuerdo a sus necesidades, necesitará ponerse en contacto con "
+"diferentes certifiaciones :"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_account_number
@@ -98,6 +98,8 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+"Error:\n"
+"%s"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_file_type
@@ -128,7 +130,7 @@ msgstr "FIRST_OVERNIGHT"
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
 msgid "FedEx Delivery Methods"
-msgstr "Métodos de entrega de FedEx"
+msgstr "Formas de envío de FedEx"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -149,12 +151,12 @@ msgstr "Fedex Internacional"
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
 msgid "Fedex Label Stock Type"
-msgstr ""
+msgstr "Tipo de etiqueta de las existencias de FedEx"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
 msgid "Fedex Service Type"
-msgstr ""
+msgstr "Tipo de servicio de FedEx"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -175,12 +177,12 @@ msgstr "Sitio web Fedex"
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
 msgid "Fedex Weight Unit"
-msgstr ""
+msgstr "Unidad de peso de FedEx"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
 msgid "Fedex drop-off type"
-msgstr "Tipo drop-off Fedex"
+msgstr "Tipo de lugar de entrega Fedex"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -216,12 +218,12 @@ msgstr "Número de metros"
 #: code:addons/delivery_fedex/models/delivery_fedex.py:379
 #, python-format
 msgid "No packages for this picking"
-msgstr ""
+msgstr "No hay paquetes para este albarán"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Once your account is created, go to"
-msgstr "Una vez su cuenta esta creada, vaya a"
+msgstr "Una vez que su cuenta está creada, vaya a"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
@@ -336,7 +338,7 @@ msgstr "STOCK_4X9_TRAILING_DOC_TAB"
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
 msgid "Saturday Delivery"
-msgstr ""
+msgstr "Entrega en sábado"
 
 #. module: delivery_fedex
 #: code:addons/delivery_fedex/models/delivery_fedex.py:402
@@ -356,7 +358,9 @@ msgstr "Envío creado en Fedex <br/> <b>Número de rastreo: </b>%s"
 msgid ""
 "Shipment created into Fedex<br/><b>Tracking Numbers:</b> "
 "%s<br/><b>Packages:</b> %s"
-msgstr "<br/><b/><br/><b/>"
+msgstr ""
+"Envío creado en los <b>números de seguimiento de FedEx:</b><br/><b> %s "
+"Paquetes:</b><br/> %s"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
@@ -370,6 +374,14 @@ msgid ""
 "                                                                                 3.INTERNATIONAL_PRIORITY.\n"
 "(To Select Countries)"
 msgstr ""
+"Servicio especial:la entrega en sábado se puede solicitar los siguientes días.\n"
+" Jueves:\n"
+"1. FEDEX_2_DAY.\n"
+"Viernes:\n"
+"1. PRIORITY_OVERNIGHT.\n"
+"2. FIRST_OVERNIGHT.\n"
+" 3.INTERNATIONAL_PRIORITY.\n"
+"(Seleccionar el país)"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -397,6 +409,8 @@ msgid ""
 "Warning:\n"
 "%s"
 msgstr ""
+"Advertencia:\n"
+"%s"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_file_type:0
