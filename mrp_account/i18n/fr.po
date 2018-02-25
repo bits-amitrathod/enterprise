@@ -66,7 +66,7 @@ msgstr "Analyse des coûts"
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_mrp_workcenter_productivity_cost_already_recorded
 msgid "Cost Recorded"
-msgstr ""
+msgstr "Coût enregistré"
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
@@ -76,7 +76,7 @@ msgstr "Structure de coût"
 #. module: mrp_account
 #: model:ir.actions.report.xml,name:mrp_account.action_cost_struct_product_template
 msgid "Cost Structure Analysis"
-msgstr ""
+msgstr "Analyse de la structure des coûts"
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
@@ -86,12 +86,12 @@ msgstr "Coût pour"
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Cost of Operations"
-msgstr ""
+msgstr "Coût des opérations"
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Cost of Scraps"
-msgstr ""
+msgstr "Coût des rebuts"
 
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_mrp_workcenter_costs_hour
@@ -169,11 +169,13 @@ msgstr "Rebut"
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "Some of the Manufacturing Order(s) selected are not done yet"
 msgstr ""
+"Un ou plusieurs ordres de fabrication sélectionnés ne sont pas encore "
+"terminé."
 
 #. module: mrp_account
 #: model:ir.model.fields,help:mrp_account.field_mrp_workcenter_costs_hour
 msgid "Specify cost of work center per hour."
-msgstr ""
+msgstr "Spécifier le coût du poste de charge par heure."
 
 #. module: mrp_account
 #: model:ir.model.fields,help:mrp_account.field_mrp_workcenter_productivity_cost_already_recorded
@@ -183,6 +185,11 @@ msgid ""
 " multiple times and only consider new entries in the work centers time "
 "lines."
 msgstr ""
+"Champ technique automatiquement vérifié lorsqu'une production en cours "
+"enregistre des pièces comptables relatives à ses coûts. Ainsi, le système "
+"peut enregistrer le coût d'une production à plusieurs reprises et ne prendre"
+" en compte que les nouvelles pièces dans les calendriers des postes de "
+"charge."
 
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
@@ -217,7 +224,7 @@ msgstr "heures"
 #. module: mrp_account
 #: model:ir.ui.view,arch_db:mrp_account.mrp_cost_structure
 msgid "manufacturing order(s)."
-msgstr ""
+msgstr "ordre(s) de fabrications."
 
 #. module: mrp_account
 #: model:ir.model,name:mrp_account.model_report_mrp_cost_structure
