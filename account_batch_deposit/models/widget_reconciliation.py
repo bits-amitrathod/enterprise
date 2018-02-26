@@ -11,8 +11,6 @@ class AccountReconciliation(models.AbstractModel):
     ####################################################
 
     @api.model
-    # model: 'account.bank.statement.line',
-    # method: 'get_move_lines_for_reconciliation_widget_by_batch_deposit_id',
     def get_move_lines_by_batch_deposit(self, st_line_id, batch_deposit_id):
         """ As get_move_lines_for_bank_statement_line, but returns lines from a batch deposit """
         st_line = self.env['account.bank.statement.line'].browse(st_line_id)
@@ -24,8 +22,6 @@ class AccountReconciliation(models.AbstractModel):
         return self._prepare_move_lines(move_lines, target_currency=target_currency, target_date=st_line.date)
 
     @api.model
-    # model: 'account.bank.statement',
-    # method: 'get_batch_deposits_data',
     def get_batch_deposits_data(self, bank_statement_ids):
         """ Return a list of dicts containing informations about unreconciled batch deposits """
 
