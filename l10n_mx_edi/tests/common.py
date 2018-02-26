@@ -40,6 +40,7 @@ class InvoiceTransactionCase(AccountingTestCase):
             'l10n_mx_edi.payment_method_efectivo')
         self.account_payment = self.env['res.partner.bank'].create({
             'acc_number': '123456789',
+            'partner_id': self.partner_agrolait.id,
         })
         self.rate_model = self.env['res.currency.rate']
         self.mxn = self.env.ref('base.MXN')
