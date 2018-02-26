@@ -20,7 +20,7 @@
             <label for="ebay_use" string="Sell on eBay"/>
           </div>
         </div>
-        <page name="sales" position="after">
+        <xpath expr="//notebook[last()]" position="inside">
           <page string="eBay" name="ebay_sale" attrs="{'invisible':[('ebay_use','=',False)]}">
             <group>
               <field name="ebay_url" readonly="True" attrs="{'invisible': [('ebay_url','=', False)]}" widget="url"/>
@@ -89,7 +89,7 @@
             <label for="ebay_description"/>
             <field name="ebay_description" placeholder="Describe the product characteristics..."/>
           </page>
-        </page>
+        </xpath>
         </data>
       </field>
     </record>

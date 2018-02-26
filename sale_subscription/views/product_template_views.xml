@@ -3,10 +3,11 @@
     <record id="product_template_search_view_inherit_sale_subscription" model="ir.ui.view">
         <field name="name">product.template.search.inherit</field>
         <field name="model">product.template</field>
+        <field name="mode">primary</field>
         <field name="inherit_id" ref="product.product_template_search_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//filter[@name='filter_to_sell']" position="after">
-                <filter name="filter_recurring" string="Subscription products" domain="[('recurring_invoice', '=', True)]"/>
+            <xpath expr="//filter[@name='consumable']" position="after">
+                <filter name="filter_recurring" string="Subscription Products" domain="[('recurring_invoice', '=', True)]"/>
             </xpath>
         </field>
     </record>
@@ -20,13 +21,12 @@
                 <attribute name="attrs">{'invisible': [('sale_ok', '=', False), ('recurring_invoice', '=', False)]}</attribute>
                 <attribute name="class">page_sales</attribute>
             </page>
-            <group name="invoicing" position="after">
-                <group name="subscription" string="Subscription">
-                    <field name="recurring_invoice" attrs="{'invisible': [('type', '!=', 'service')]}"/>
+            <xpath expr="//group[@name='invoicing']" position="after">
+                <group name="subscription" string="Subscriptions" attrs="{'invisible': [('type', '!=', 'service')]}">
+                    <field name="recurring_invoice" />
                     <field name="subscription_template_id" class="field_sub_template_id" attrs="{'invisible': [('recurring_invoice', '=', False)]}"/>
                 </group>
-            </group>
-
+            </xpath>
         </field>
     </record>
 
