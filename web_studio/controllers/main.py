@@ -418,7 +418,7 @@ class WebStudioController(http.Controller):
         view.key = new_view_xml_id
         # Create report
         report = request.env['ir.actions.report'].create({
-            'name': _('%s Report' % (model.name)),
+            'name': _('%s Report') % model.name,
             'model': model.model,
             'report_type': 'qweb-pdf',
             'report_name': view.name,
