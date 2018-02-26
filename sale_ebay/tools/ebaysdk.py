@@ -30,7 +30,6 @@ def smart_encode_request_data(value):
 
 class Trading(Connection):
     def build_request(self, verb, data, verb_attrs, files=None):
-        import pudb;pu.db
         self.verb = verb
         self._request_dict = data
         self._request_id = uuid.uuid4()
