@@ -1093,7 +1093,7 @@ class WebStudioController(http.Controller):
         """
         model_id = request.env['ir.model'].search([('model', '=', model)])
         if not model_id:
-            raise UserError(_('The model %s does not exist.' % model))
+            raise UserError(_('The model %s does not exist.') % model)
 
         if not operation.get('field'):
             raise UserError(_('Please specify a field.'))
@@ -1103,7 +1103,7 @@ class WebStudioController(http.Controller):
             ('name', '=', operation['field'])
         ])
         if not field_id:
-            raise UserError(_('The field %s does not exist.' % operation['field']))
+            raise UserError(_('The field %s does not exist.') % operation['field'])
 
         # add field at the beginning
         etree.SubElement(arch, 'xpath', {
@@ -1136,7 +1136,7 @@ class WebStudioController(http.Controller):
         """
         model_id = request.env['ir.model'].search([('model', '=', model)])
         if not model_id:
-            raise UserError(_('The model %s does not exist.' % model))
+            raise UserError(_('The model %s does not exist.') % model)
 
         if operation.get('field'):
             field_id = request.env['ir.model.fields'].search([
@@ -1144,7 +1144,7 @@ class WebStudioController(http.Controller):
                 ('name', '=', operation['field'])
             ])
             if not field_id:
-                raise UserError(_('The field %s does not exist.' % operation['field']))
+                raise UserError(_('The field %s does not exist.') % operation['field'])
 
         else:
             field_id = request.env['ir.model.fields'].search([
