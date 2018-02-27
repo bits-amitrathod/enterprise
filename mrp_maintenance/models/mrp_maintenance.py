@@ -39,7 +39,7 @@ class MaintenanceEquipment(models.Model):
                 equipment.mtbf = 0
             equipment.latest_failure_date = maintenance and maintenance[0].create_date or False
             if equipment.mtbf:
-                equipment.estimated_next_failure = fields.Datetime.from_string(self.latest_failure_date) + relativedelta(days=self.mtbf)
+                equipment.estimated_next_failure = fields.Datetime.from_string(equipment.latest_failure_date) + relativedelta(days=equipment.mtbf)
             else:
                 equipment.estimated_next_failure = False
 
