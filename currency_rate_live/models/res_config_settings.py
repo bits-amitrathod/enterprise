@@ -109,7 +109,9 @@ class ResCompany(models.Model):
 
         for company in self:
             base_currency = company.currency_id.name
-            base_currency_rate = rates_dict[base_currency]
+            base_currency_rate = rates_dict.get(base_currency)
+            if not base_currency_rate:
+                raise UserError(_("Your main currency %s is unsupported by this exchange rate provider. Please choose another one.") % base_currency)
 
             for currency, rate in rates_dict.items():
                 company_rate = rate / base_currency_rate
