@@ -55,10 +55,10 @@
 
     <template id="search_template_comparison">
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="fa fa-bar-chart"/> Comparison: <br/>
+            <span class="fa fa-bar-chart"/> Comparison:
             <t t-if="options['comparison'].get('string') and options['comparison'].get('filter') != 'custom'"><t t-esc="options['comparison']['string']"/></t>
             <t t-if="options['comparison'].get('filter') == 'custom'">
-                <t t-if="options['comparison'].get('date_from')"><span class="o_reports_date_to">From: <span class="js_format_date"><t t-esc="options['comparison']['date_from']"/></span></span> <br/><span class="o_reports_date_to">to: <span class="js_format_date"><t t-esc="options['comparison']['date_to']"/></span></span></t>
+                <t t-if="options['comparison'].get('date_from')"><span class="o_reports_date_to"><span class="js_format_date"><t t-esc="options['comparison']['date_from']"/></span></span> <span class="o_reports_date_to"> - <span class="js_format_date"><t t-esc="options['comparison']['date_to']"/></span></span></t>
                 <t t-if="options['comparison'].get('date')">Date: <span class="js_format_date"><t t-esc="options['comparison']['date']"/></span></t>
             </t>
             <span class="caret"/>
@@ -106,18 +106,20 @@
 
     <template id="search_template_extra_options">
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+            <t t-set="display_options" t-value="[]"/>
             <span class="fa fa-filter"/> Options:
             <t t-if="options.get('cash_basis') != None">
-                <t t-if="options['cash_basis']">Cash Basis,</t>
-                <t t-if="not options['cash_basis']">Accrual Basis,</t>
+                <t t-if="options['cash_basis']" t-set="display_options" t-value="display_options + ['Cash Basis']"/>
+                <t t-else="" t-set="display_options" t-value="display_options + ['Accrual Basis']"/>
             </t>
             <t t-if="options.get('all_entries') != None" groups="account.group_account_user"> 
-                <t t-if="options['all_entries']">With Draft Entries,</t>
-                <t t-if="not options['all_entries']">Posted Entries Only,</t>
+                <t t-if="options['all_entries']" t-set="display_options" t-value="display_options + ['With Draft Entries']"/>
+                <t t-else="" t-set="display_options" t-value="display_options + ['Posted Entries Only']"/>
             </t>
             <t t-if="options.get('unreconciled') != None">
-                <t t-if="options['unreconciled']">Only Show Unreconciled Entries</t>
+                <t t-if="options['unreconciled']" t-set="display_options" t-value="display_options + ['Only Show Unreconciled Entries']"/>
             </t>
+            <t t-esc="', '.join(display_options)"/>
             <span class="caret"/>
         </a>
         <ul class="dropdown-menu o_filters_menu" role="menu">
@@ -133,14 +135,13 @@
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
             <span class="fa fa-filter"/>
             Companies:
-            <t t-set="company_value" t-value="'All'"/>
-            <t t-foreach="options['multi_company']" t-as="c">
-                <t t-if="c.get('selected') == True">
-                    <t t-set="company_value" t-value="''"/>
-                    <t t-esc="c.get('name')"/>
-                </t>
+            <t t-set="selected_companies" t-value="', '.join(company.get('name') for company in options['multi_company'] if company.get('selected'))"/>
+            <t t-if="selected_companies">
+                <t t-esc="selected_companies"/>
             </t>
-            <t t-esc="company_value"/>
+            <t t-else="">
+                All
+            </t>
             <span class="caret"/>
         </a>
         <ul class="dropdown-menu o_filters_menu" role="menu">
@@ -154,14 +155,13 @@
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
             <span class="fa fa-book"/>
             Journals:
-            <t t-set="journal_value" t-value="'All'"/>
-            <t t-foreach="options['journals']" t-as="j">
-                <t t-if="j.get('selected') == True">
-                    <t t-set="journal_value" t-value="''"/>
-                    <t t-esc="j.get('code')"/>
-                </t>
+            <t t-set="selected_journals" t-value="', '.join(journal.get('code') for journal in options['journals'] if journal.get('selected'))"/>
+            <t t-if="selected_journals">
+                <t t-esc="selected_journals"/>
             </t>
-            <t t-esc="journal_value"/>
+            <t t-else="">
+                All
+            </t>
             <span class="caret"/>
         </a>
         <ul class="dropdown-menu o_filters_menu" role="menu">
