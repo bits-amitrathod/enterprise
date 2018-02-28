@@ -156,6 +156,7 @@ class MxReportPartnerLedger(models.AbstractModel):
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
         tag_16 = self.env.ref('l10n_mx.tag_diot_16')
+        tag_imp = self.env.ref('l10n_mx.tag_diot_16_imp')
         tag_0 = self.env.ref('l10n_mx.tag_diot_0')
         tag_ret = self.env.ref('l10n_mx.tag_diot_ret')
         tag_exe = self.env.ref('l10n_mx.tag_diot_exento')
@@ -163,6 +164,8 @@ class MxReportPartnerLedger(models.AbstractModel):
             ('type_tax_use', '=', 'purchase')])
         tax16 = tax_ids.search([('id', 'in', tax_ids.ids),
                                 ('tag_ids', 'in', tag_16.ids)])
+        taximp = tax_ids.search([('id', 'in', tax_ids.ids),
+                                ('tag_ids', 'in', tag_imp.ids)])
         tax0 = tax_ids.search([('id', 'in', tax_ids.ids),
                                ('tag_ids', 'in', tag_0.ids)])
         tax_ret = tax_ids.search([('id', 'in', tax_ids.ids),
@@ -188,14 +191,16 @@ class MxReportPartnerLedger(models.AbstractModel):
                 partner.vat or '', partner.country_id.code or '',
                 partner.l10n_mx_nationality or '']
             partner_data = grouped_partners[partner]
-            total_tax16 = 0
+            total_tax16 = total_taximp = 0
             total_tax0 = 0
             exempt = 0
             withh = 0
             for tax in tax16.ids:
                 total_tax16 += partner_data.get(tax, 0)
             p_columns.append(int(round(total_tax16, 0)))
-            p_columns.append(0)
+            for tax in taximp.ids:
+                total_taximp += partner_data.get(tax, 0)
+            p_columns.append(int(round(total_taximp, 0)))
             total_tax0 += sum([partner_data.get(tax, 0) for tax in tax0.ids])
             p_columns.append(int(round(total_tax0, 0)))
             exempt += sum([partner_data.get(exem, 0)
@@ -234,7 +239,7 @@ class MxReportPartnerLedger(models.AbstractModel):
                 name = name[:32] + "..." if len(name) > 35 else name
                 columns = ['', '', '', '']
                 columns.append('')
-                total_tax16 = 0
+                total_tax16 = total_taximp = 0
                 total_tax0 = 0
                 exempt = 0
                 withh = 0
@@ -242,7 +247,10 @@ class MxReportPartnerLedger(models.AbstractModel):
                     line.debit or line.credit * -1
                     for tax in tax16.ids if tax in line.tax_ids.ids])
                 columns.append(int(round(total_tax16, 0)))
-                columns.append(0)
+                total_taximp += sum([
+                    line.debit or line.credit * -1
+                    for tax in taximp.ids if tax in line.tax_ids.ids])
+                columns.append(int(round(total_taximp, 0)))
                 total_tax0 += sum([
                     line.debit or line.credit * -1
                     for tax in tax0.ids if tax in line.tax_ids.ids])
