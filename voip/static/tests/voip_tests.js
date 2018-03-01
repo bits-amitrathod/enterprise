@@ -54,8 +54,8 @@ QUnit.module('voip', {
         var $phoneLink = form.$('a.o_form_uri.o_field_widget');
         assert.strictEqual($phoneLink.length, 1,
             "should have a anchor with correct classes");
-        assert.strictEqual($phoneLink.text(), 'y\u00ADop',
-            "value should be displayed properly as text with the skype obfuscation");
+        assert.strictEqual($phoneLink.text(), 'yop',
+            "value should be displayed properly");
         assert.strictEqual($phoneLink.attr('href'), 'tel:yop',
             "should have proper tel prefix");
 
@@ -72,8 +72,8 @@ QUnit.module('voip', {
         // save
         form.$buttons.find('.o_form_button_save').click();
         $phoneLink = form.$('a.o_form_uri.o_field_widget');
-        assert.strictEqual($phoneLink.text(), 'n\u00ADew',
-            "new value should be displayed properly as text with the skype obfuscation");
+        assert.strictEqual($phoneLink.text(), 'new',
+            "new value should be displayed properly");
         assert.strictEqual($phoneLink.attr('href'), 'tel:new',
             "should still have proper tel prefix");
 
@@ -97,8 +97,8 @@ QUnit.module('voip', {
 
         assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').length, 5,
             "should have 5 cells");
-        assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').first().text(), 'y\u00ADop',
-            "value should be displayed properly as text with the skype obfuscation");
+        assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').first().text(), 'yop',
+            "value should be displayed properly");
 
         var $phoneLink = list.$('a.o_form_uri.o_field_widget');
         assert.strictEqual($phoneLink.length, 5,
@@ -118,7 +118,7 @@ QUnit.module('voip', {
         list.$buttons.find('.o_list_button_save').click();
         $cell = list.$('tbody td:not(.o_list_record_selector)').first();
         assert.ok(!$cell.parent().hasClass('o_selected_row'), 'should not be in edit mode anymore');
-        assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').first().text(), 'n\u00ADew',
+        assert.strictEqual(list.$('tbody td:not(.o_list_record_selector)').first().text(), 'new',
             "value should be properly updated");
         $phoneLink = list.$('a.o_form_uri.o_field_widget');
         assert.strictEqual($phoneLink.length, 5,

@@ -594,14 +594,6 @@ Phone.include({
         };
         this.trigger_up('voip_call', params);
     },
-    /**
-     * @override
-     * @private
-     * @returns {boolean} true
-     */
-    _canCall: function () {
-        return true;
-    },
 
     //--------------------------------------------------------------------------
     // Handlers
