@@ -10,9 +10,7 @@ lessc static/src/less/import.less > static/src/css/project_timesheet.css
 
 cp -r static extension/project_timesheet_synchro
 cp manifest.json extension
-
-[ -d extension/project_timesheet_synchro/views ] || mkdir -p extension/project_timesheet_synchro/views
-cp views/timesheet.html extension/project_timesheet_synchro/views
+cp views/timesheet.html extension
 
 [ -d extension/web/static/src/js ] || mkdir -p extension/web/static/src/js
 cp $odoo_path/addons/web/static/src/js/boot.js extension/web/static/src/js
