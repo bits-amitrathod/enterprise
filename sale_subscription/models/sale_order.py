@@ -81,7 +81,7 @@ class SaleOrder(models.Model):
             for subscription in subscriptions:
                 subscription_lines = order.order_line.filtered(lambda l: l.subscription_id == subscription)
                 line_values = subscription_lines._update_subscription_line_data(subscription)
-                subscription.write({'recurring_invoice_line_ids': line_values})
+                subscription.sudo().write({'recurring_invoice_line_ids': line_values})
         return res
 
     def create_subscriptions(self):
