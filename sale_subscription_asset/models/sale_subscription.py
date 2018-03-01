@@ -58,7 +58,8 @@ class SaleOrder(models.Model):
     def _prepare_subscription_data(self, template):
         """Add the correct asset category in subscription creation values dictionnary."""
         res = super(SaleOrder, self)._prepare_subscription_data(template)
-        company_ctx = {'force_company': self.company_id.id, 'company_id': self.company_id.id}
+        force_company_id = (self.payment_acquirer_id and self.payment_acquirer_id.company_id.id) or self.company_id.id
+        company_ctx = {'force_company': force_company_id, 'company_id': force_company_id}
         res['asset_category_id'] = template.with_context(company_ctx).template_asset_category_id.id
         return res
 
@@ -70,7 +71,8 @@ class SaleOrderLine(models.Model):
         """Add the deferred revenue category on the invoice line for subscription products."""
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         if self.product_id.recurring_invoice:
-            company_ctx = {'force_company': self.company_id.id, 'company_id': self.company_id.id}
+            force_company_id = (self.order_id.payment_acquirer_id and self.order_id.payment_acquirer_id.id) or self.company_id.id
+            company_ctx = {'force_company': force_company_id, 'company_id': force_company_id}
             asset_category = self.subscription_id.template_id.with_context(company_ctx).template_asset_category_id
             if asset_category:
                 account = self.order_id.fiscal_position_id.map_account(asset_category.account_asset_id)
