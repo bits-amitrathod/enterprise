@@ -121,7 +121,22 @@
     <div class='o_account_reports_body'>
         <div class="container o_account_reports_page o_account_reports_no_print">
             <h2><t t-esc="report.get('name')"></t></h2>
-            <h4 class='text-muted' t-esc="report.get('company_name')"/>
+            <t t-if="not options.get('multi_company')">
+                <h4 class='text-muted' t-esc="report.get('company_name')"/>
+            </t>
+            <t t-if="options.get('multi_company')">
+                <h4>
+                Companies:
+                <t t-set="company_value" t-value="'All'"/>
+                <t t-foreach="options['multi_company']" t-as="c">
+                    <t t-if="c.get('selected') == True">
+                        <t t-set="company_value" t-value="''"/>
+                        "<t t-esc="c.get('name')"/>"
+                    </t>
+                </t>
+                <t t-esc="company_value"/>
+                </h4>
+            </t>
             <t t-call="account_reports.filter_info_template"/>
             <div class="o_account_reports_summary">
                 <i class="fa fa-fw fa-pencil o_account_reports_edit_summary_pencil"></i>
