@@ -18,8 +18,8 @@ class MxReportPartnerLedger(models.AbstractModel):
     def get_columns_name(self, options):
         return [
             {},
-            {'name': _('Type of Operation')},
             {'name': _('Type of Third')},
+            {'name': _('Type of Operation')},
             {'name': _('VAT')},
             {'name': _('Country')},
             {'name': _('Nationality')},
