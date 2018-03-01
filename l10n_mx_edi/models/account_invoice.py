@@ -704,7 +704,7 @@ class AccountInvoice(models.Model):
         '''Create the values to fill the CFDI template.
         '''
         self.ensure_one()
-        precision_digits = self.env['decimal.precision'].precision_get('Account')
+        precision_digits = self.currency_id.decimal_places
         partner_id = self.partner_id
         if self.partner_id.type != 'invoice':
             partner_id = self.partner_id.commercial_partner_id

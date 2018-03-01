@@ -350,7 +350,7 @@ class AccountPayment(models.Model):
         payments."""
         self.ensure_one()
         invoice_obj = self.env['account.invoice']
-        precision_digits = self.env['decimal.precision'].precision_get('Account')
+        precision_digits = self.currency_id.decimal_places
         values = {
             'record': self,
             'supplier': self.company_id.partner_id.commercial_partner_id,
