@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-22 13:06+0000\n"
-"PO-Revision-Date: 2017-11-06 06:40+0000\n"
+"PO-Revision-Date: 2018-02-07 09:37+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Mongolian (http://www.transifex.com/odoo/odoo-9/language/mn/)\n"
 "MIME-Version: 1.0\n"
@@ -91,7 +91,7 @@ msgid ""
 "                                <b>%(date)s</b>: Current Date\n"
 "                                <b>%(user_signature)s</b>: User Name\n"
 "                                <b>%(company_name)s</b>: User's Company Name"
-msgstr ""
+msgstr "<b>%(partner_name)s</b>: Харилцагчийн нэр\n                                <b>%(date)s</b>: Огноо\n                                <b>%(user_signature)s</b>: Хэрэглэгчийн нэр\n                                <b>%(company_name)s</b>: Хэрэглэгчийн компанийн нэр"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
@@ -111,12 +111,12 @@ msgstr "<i class=\"fa fa-circle\" style=\"color: red;\"/> Муу Зээлдэг�
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_report_context_followup
 msgid "A particular context for the followup report"
-msgstr ""
+msgstr "Мөшгөлтийн тайланд зориулсан тодорхой агуулга"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
 msgid "A progress bar for followup reports"
-msgstr ""
+msgstr "Мөшгөлтийн тайланд зориулсан явцын шугам"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
@@ -156,7 +156,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
 msgid "Click to define follow-up levels and their related actions."
-msgstr ""
+msgstr "Мөшгөлтийн түвшин ба тэдэнтэй холбоотой үйлдлүүдийг тодорхойлох бол дарна уу."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_company_id
@@ -209,7 +209,7 @@ msgstr "Дэлгэцийн Нэр"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Do it Later"
-msgstr ""
+msgstr "Дараа хийх"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
@@ -270,7 +270,7 @@ msgid ""
 "For each step, specify the actions to be taken and delay in days. It is\n"
 "                possible to use print and e-mail templates to send specific messages to\n"
 "                the customer."
-msgstr ""
+msgstr "Шат бүрт хийх ёстой үйлдэл болон саатлыг өдрөөр тодорхойлно уу. \nЗахиалагч руу тодорхой зурвасыг илгээхдээ хэвлэлийн болон имэйл \nүлгэрийг ашиглах боломжтой."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
@@ -324,7 +324,7 @@ msgstr "Төвшин"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Log a Note"
-msgstr ""
+msgstr "Тэмдэглэл хөтлөх"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
@@ -336,7 +336,7 @@ msgstr "Гар үйлдэл"
 #: code:addons/account_reports_followup/account_followup_report.py:57
 #, python-format
 msgid "Manual action done\n"
-msgstr ""
+msgstr "Гар үйлдэл хийгдсэн\n"
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup.py:107
@@ -344,7 +344,7 @@ msgstr ""
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
-msgstr ""
+msgstr "\"%s\" компанид тодорхойлсон мөшгөлт алга.\nТодорхойлно уу."
 
 #. module: account_reports_followup
 #: selection:res.partner,trust:0
@@ -386,7 +386,7 @@ msgstr "Төлбөрийн Тэмдэглэл"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Print Letter"
-msgstr ""
+msgstr "Захидлыг хэвлэх"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_description
@@ -406,7 +406,7 @@ msgstr "Захидал илгээх"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Send a Letter or Email"
-msgstr ""
+msgstr "Захидал эсвэл имэйл илгээх"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_email
@@ -467,12 +467,12 @@ msgstr "Нийт дебит"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
 msgid "Urging reminder email"
-msgstr ""
+msgstr "Шаардсан сануулга имэйл"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
 msgid "Urging reminder letter"
-msgstr ""
+msgstr "Шаардсан сануулга захиад"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
