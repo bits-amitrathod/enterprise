@@ -7,7 +7,7 @@
     outline: none;
 }
 .o_input {
-    border: 1px solid $odoo-form-lightsecondary;
+    border: 1px solid $o-form-lightsecondary;
     border-top-style: none;
     border-right-style: none;
     border-left-style: none;
@@ -29,14 +29,14 @@ select { // FIXME buggy 'padding-left'
     border-radius: 0; // webkit OSX browsers have a border-radius on select
 
     color: transparent; // This is a hack to remove the outline in FF
-    text-shadow: 0 0 0 $odoo-main-text-color;
+    text-shadow: 0 0 0 $o-main-text-color;
     > option {
-        color: $odoo-main-text-color;
+        color: $o-main-text-color;
     }
 }
 
 @mixin o-placeholder { // Rules below need to be separeted. Otherwise all browsers will discard the whole rule.
-    color: $odoo-brand-secondary;
+    color: $o-brand-secondary;
     opacity: 0.5;
 }
 ::-webkit-input-placeholder { // WebKit, Blink, Edge
@@ -53,11 +53,85 @@ select { // FIXME buggy 'padding-left'
 // Misc.
 //------------------------------------------------------------------------------
 .o_loading {
-    background-color: $odoo-brand-primary;
+    background-color: $o-brand-primary;
     color: white;
     padding: 4px;
 }
 
 .oe_clear {
     clear: both;
+}
+
+//== Titles
+@media (max-width: $screen-xs-max) {
+    h1 {
+        font-size: $font-size-h1 * 3 / 4;
+    }
+    h2, h3, h4, h5, h6 {
+        font-size: $o-font-size-base-touch;
+    }
+}
+
+//== Alerts
+.alert {
+    &.alert-info, &.alert-success, &.alert-warning, &.alert-danger {
+        border-width: 0 0 0 3px;
+    }
+    a {
+        font-weight: $alert-link-font-weight;
+    }
+}
+
+//== Well
+.well {
+    box-shadow: none;
+}
+
+//== Badges
+.badge {
+    border: 1px solid $o-brand-optional;
+}
+
+//== Buttons
+.btn-icon {
+    @include button-variant($btn-icon-color, $btn-icon-bg, $btn-icon-border);
+
+    &.active {
+        &, &:hover, &:focus {
+            background-color: $gray-lighter-dark;
+            color: $headings-color;
+        }
+    }
+}
+
+.btn, .btn-sm, .btn-group > .btn {
+    border-radius: 0px;
+    border: none;
+    &:hover, &:active, &:focus, &:active:focus {
+        outline: none;
+    }
+}
+
+.btn-primary.active, .btn-default.active, .btn-icon.active {
+    @include box-shadow(none);
+}
+
+.btn-primary, .btn-default {
+    text-transform: uppercase;
+}
+
+//== Navbar
+.navbar .navbar-toggle {
+    border-color: transparent;
+}
+
+//== Labels
+.label {
+    border-radius: 0;
+    font-size: 1em; // Override 75% of .label
+}
+
+//== Popover
+.popover {
+    border-radius: $border-radius-base;
 }

@@ -29,7 +29,7 @@
         }
         .o_web_studio_statusbar_hook {
             text-align: center;
-            color: $odoo-brand-optional;
+            color: $o-brand-optional;
             background-color: lightgray;
             font-weight: bold;
             cursor: pointer;
@@ -71,8 +71,8 @@
                 cursor: pointer !important;
                 outline: none;
                 span.o_web_studio_hook_separator {
-                    background-color: rgba($odoo-brand-optional, 0.02);
-                    border: 1px dashed rgba($odoo-brand-optional, 0.5);
+                    background-color: rgba($o-brand-optional, 0.02);
+                    border: 1px dashed rgba($o-brand-optional, 0.5);
                     padding: 20px;
                     margin: 4px 0;
                 }
@@ -81,7 +81,7 @@
                 transition: border-color 0.5s;
                 padding: $-web-studio-form-edition-gap*0.5;
                 border-collapse: separate;
-                border: $-web-studio-form-edition-gap*0.5 solid rgba($odoo-brand-optional, 0.1);
+                border: $-web-studio-form-edition-gap*0.5 solid rgba($o-brand-optional, 0.1);
 
                 tr:not(.o_web_studio_hovered) td > *:not(.o_horizontal_separator) {
                     opacity: 0.5;
@@ -110,15 +110,15 @@
         }
         .o_web_studio_hovered {
             cursor: pointer;
-            outline: 1px dashed $odoo-brand-optional;
+            outline: 1px dashed $o-brand-optional;
             &:not(.o_statusbar_status) {
                 outline-offset: -1px;
             }
         }
         .o_clicked {
-            outline: 2px solid $odoo-brand-optional;
+            outline: 2px solid $o-brand-optional;
             &.btn {
-                outline: 2px solid darken($odoo-brand-optional, 5%);
+                outline: 2px solid darken($o-brand-optional, 5%);
             }
             &:not(.o_statusbar_status) {
                 outline-offset: -2px;
@@ -136,7 +136,7 @@
             content: "\f0fe";
             font-family: FontAwesome;
             font-size: 16px;
-            color: $odoo-brand-optional;
+            color: $o-brand-optional;
         }
         .o_notebook li {
             margin-right: 3px;
@@ -214,7 +214,7 @@ table.o_web_studio_new_elements {
         font-size: medium;
 
         &.o_selected {
-            outline: 1px solid $odoo-brand-optional;
+            outline: 1px solid $o-brand-optional;
         }
     }
 }

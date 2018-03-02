@@ -1,10 +1,11 @@
-$o-mid-gray: darken($gray-lighter, 30%);
-
-/* Dialing Panel */
-$o-dial-panel-bg: white;
-$o-dial-panel-width: 300px;
 
 .o_dial {
+    $o-mid-gray: darken($gray-lighter, 30%);
+
+    /* Dialing Panel */
+    $o-dial-panel-bg: white;
+    $o-dial-panel-width: 300px;
+
     @include o-flex-display;
     @include o-flex-flow(column, nowrap);
     @include box-shadow(4px 0 17px -2px rgba(0,0,0,0.42));
@@ -39,7 +40,7 @@ $o-dial-panel-width: 300px;
     }
     .o_dial_fold {
         cursor: pointer;
-        background-color: $odoo-brand-primary;
+        background-color: $o-brand-primary;
         color: #fff;
         padding-right: 10px;
         height: 30px;
@@ -55,7 +56,7 @@ $o-dial-panel-width: 300px;
             margin-top: 5px;
 
             &:hover {
-                background-color: darken($odoo-brand-primary, 10%);
+                background-color: darken($o-brand-primary, 10%);
             }
         }
     }
@@ -154,7 +155,7 @@ $o-dial-panel-width: 300px;
                 .o_dial_keypad_button {
                     border: none;
                     background: transparent;
-                    color: $odoo-brand-optional;
+                    color: $o-brand-optional;
                 }
             }
             .o_dial_keypad_button_small {
@@ -221,7 +222,7 @@ $o-dial-panel-width: 300px;
             }
         }
         .fa-check {
-            color: $odoo-brand-optional;
+            color: $o-brand-optional;
         }
     }
     .o_dial_buttons{
@@ -258,7 +259,7 @@ $o-dial-panel-width: 300px;
         }
         .o_dial_call_button .fa {
             font-size: 50px;
-            color: $odoo-brand-optional;
+            color: $o-brand-optional;
         }
         .o_dial_keypad_button:first-child .fa, .o_dial_keypad_button:last-child .fa {
             color: $o-mid-gray;

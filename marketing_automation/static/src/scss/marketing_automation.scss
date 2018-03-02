@@ -1,6 +1,3 @@
-$o-ma-border-color: $gray-lighter-dark;
-$o-ma-hierarchy-background: #F0F0F0;
-$o-ma-color-white: #FFFFFF;
 
 // ------------------------------------------------------------------
 // Campaign Kanban
@@ -40,11 +37,11 @@ $o-ma-color-white: #FFFFFF;
 // Abstract Hierarchy
 // ------------------------------------------------------------------
 .o_ma_hierarchy {
-    margin-left: -$odoo-horizontal-padding;
-    margin-right: -$odoo-horizontal-padding;
+    margin-left: -$o-horizontal-padding;
+    margin-right: -$o-horizontal-padding;
     @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
-        margin-left: -$odoo-horizontal-padding*2;
-        margin-right: -$odoo-horizontal-padding*2;
+        margin-left: -$o-horizontal-padding*2;
+        margin-right: -$o-horizontal-padding*2;
     }
     margin-bottom:-24px;
     padding: 10px 0px 24px 16px;
@@ -130,7 +127,7 @@ $o-ma-color-white: #FFFFFF;
                         content: '';
                         @include o-position-absolute($top: 14px, $left: -28px);
                         @include square(12px);
-                        border: 2px solid $odoo-brand-optional;
+                        border: 2px solid $o-brand-optional;
                         border-radius: 10px;
                         background: $o-ma-hierarchy-background;
                     }
@@ -174,7 +171,7 @@ $o-ma-color-white: #FFFFFF;
                 color: $o-ma-color-white;
                 font-size: 14px;
                 border-radius: 3px;
-                @include o-skew-gradient($odoo-brand-optional, darken($odoo-brand-optional, 5%));
+                @include o-skew-gradient($o-brand-optional, darken($o-brand-optional, 5%));
             }
             .o_ma_title {
                 @include o-position-absolute;
@@ -214,7 +211,7 @@ $o-ma-color-white: #FFFFFF;
                         border-bottom-color: $o-ma-border-color;
                     }
                     &.active {
-                        color: $odoo-brand-optional;
+                        color: $o-brand-optional;
                         border-bottom-color: $o-ma-color-white;
                         background-color: $o-ma-color-white;
                     }
@@ -346,7 +343,7 @@ $o-ma-color-white: #FFFFFF;
                     border-left-width: 0px;
                 }
                 &.active {
-                    color: $odoo-brand-optional;
+                    color: $o-brand-optional;
                 }
             }
         }
@@ -363,7 +360,7 @@ $o-ma-color-white: #FFFFFF;
 // Colors
 // ------------------------------------------------------------------
 .o_ma_text_processed {
-    color: $odoo-brand-optional;
+    color: $o-brand-optional;
 }
 .o_ma_text_rejected {
     color: $brand-danger;
@@ -375,10 +372,10 @@ $o-ma-color-white: #FFFFFF;
     color: #8F8F8F;
 }
 .o_ma_text_scheduled {
-    color: $odoo-brand-primary;
+    color: $o-brand-primary;
 }
 .o_ma_processed {
-    background-color: $odoo-brand-optional;
+    background-color: $o-brand-optional;
 }
 .o_ma_rejected {
     background-color: $brand-danger;
@@ -390,5 +387,5 @@ $o-ma-color-white: #FFFFFF;
     background-color: #8F8F8F;
 }
 .o_ma_scheduled {
-    background-color: $odoo-brand-primary;
+    background-color: $o-brand-primary;
 }

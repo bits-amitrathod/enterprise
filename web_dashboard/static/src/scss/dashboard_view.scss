@@ -7,15 +7,15 @@ $o-dashboard-lg-screen: $o-screen-sidechatter-min;
 
 .o_dashboard_view {
     // Scoped dashboard's variables
-    $padding: $odoo-horizontal-padding;
-    $padding-small: $odoo-horizontal-padding*0.5;
+    $padding: $o-horizontal-padding;
+    $padding-small: $o-horizontal-padding*0.5;
 
     @include o-flex-display;
     @include o-flex-flow(row, wrap);
     @include o-align-items(flex-start);
     width: 100%;
     height: auto;
-    padding: $odoo-sheet-vpadding 0;
+    padding: $o-sheet-vpadding 0;
 
     > .o_group, .o_subview {
         // By default dashboard entries are full-width...
@@ -37,7 +37,7 @@ $o-dashboard-lg-screen: $o-screen-sidechatter-min;
         @include o-flex-flow(row, wrap);
         @include o-align-items(flex-start);
 
-        @for $i from 1 through $odoo-form-group-cols {
+        @for $i from 1 through $o-form-group-cols {
             .o_group_col_#{$i} {
                 padding: 0 $padding-small;
                 width: 50%;

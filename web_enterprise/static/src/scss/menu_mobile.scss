@@ -20,9 +20,9 @@
     z-index: 10;
 
     .o_burger_menu_topbar {
-        @include o-flex(0, 0, $odoo-navbar-height);
+        @include o-flex(0, 0, $o-navbar-height);
         padding: 10px 16px;
-        background: darken($odoo-brand-primary, 10%);
+        background: darken($o-brand-primary, 10%);
         color: white;
         .o_burger_menu_avatar {
             height: 26px;
@@ -41,7 +41,7 @@
         overflow: auto;
         background: white;
         &.o_burger_menu_dark {
-            background-color: $odoo-brand-primary;
+            background-color: $o-brand-primary;
         }
 
         .o_burger_menu_app {
@@ -75,10 +75,10 @@
         }
 
         .o_burger_menu_user {
-            color: $odoo-main-text-color;
+            color: $o-main-text-color;
             .o_burger_menu_companies {
                 padding: 16px;
-                border-bottom: 1px solid $odoo-main-color-muted;
+                border-bottom: 1px solid $o-main-color-muted;
                 .o_burger_menu_user_title {
                     font-size: 12px;
                     margin-bottom: 5px;
@@ -99,14 +99,14 @@
                 list-style: none;
                 > li {
                     &.divider {
-                        background-color: $odoo-main-color-muted;
+                        background-color: $o-main-color-muted;
                         height: 1px;
                         margin: 10px -16px;
                     }
                     > a {
                         display: block;
                         padding: 10px 0;
-                        color: $odoo-main-text-color;
+                        color: $o-main-text-color;
                     }
                 }
             }

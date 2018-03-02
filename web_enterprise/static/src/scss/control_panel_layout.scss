@@ -1,6 +1,6 @@
 @mixin o-when-not-full {
     width: 0;
-    max-height: $breadcrumb-height;
+    max-height: $o-cp-breadcrumb-height;
     transition: width 400ms ease, max-height 0ms ease 0ms;
 }
 @mixin o-when-full {
@@ -80,7 +80,7 @@
                 @include o-when-not-full;
 
                 > div { // searchview or custom widget
-                    max-height: $breadcrumb-height;
+                    max-height: $o-cp-breadcrumb-height;
                     transition: max-height 0ms ease 0ms;
                 }
             }

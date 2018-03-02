@@ -370,10 +370,10 @@
 
 <!-- stylesheets -->
 <template id="assets_financial_report">
+    <t t-call="web._assets_helpers"><t t-set="no_bs_vars" t-value="True"/></t>
+
     <link rel="stylesheet" type="text/scss" href="/web/static/src/scss/import_bootstrap.scss"/>
     <link rel="stylesheet" type="text/scss" href="/web/static/src/scss/fonts.scss"/>
-    <link rel="stylesheet" type="text/scss" href="/web/static/src/scss/variables.scss"/>
-    <link rel="stylesheet" type="text/scss" href="/web/static/src/scss/utils.scss"/>
     <link rel="stylesheet" type="text/scss" href="/account_reports/static/src/scss/account_financial_report.scss"/>
     <link rel="stylesheet" type="text/scss" href="/account_reports/static/src/scss/account_report_print.scss"/>
 </template>

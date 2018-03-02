@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="_assets_helpers" inherit_id="web._assets_helpers" priority='15'>
-        <xpath expr="//link[@href='/web/static/src/scss/variables.scss']" position="after">
-            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/variables.scss"/>
+    <template id="_assets_primary_variables" inherit_id="web._assets_primary_variables" priority="15">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/primary_variables.scss"/>
+        </xpath>
+    </template>
+
+    <template id="_assets_secondary_variables" inherit_id="web._assets_secondary_variables" priority="15">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/secondary_variables.scss"/>
+        </xpath>
+    </template>
+
+    <template id="_assets_backend_helpers" inherit_id="web._assets_backend_helpers" priority="15">
+        <xpath expr="//link[@href='/web/static/src/scss/bootstrap_overridden.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/bootstrap_overridden.scss"/>
         </xpath>
     </template>
 
@@ -16,9 +28,6 @@
     </template>
 
     <template id="assets_backend" name="web_enterprise assets backend" inherit_id="web.assets_backend">
-        <xpath expr="//link[@href='/web/static/src/scss/bootstrap_overridden.scss']" position="replace">
-            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/bootstrap_overridden.scss"/>
-        </xpath>
         <xpath expr="//link[@href='/web/static/src/scss/webclient_extra.scss']" position="replace">
             <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/webclient.scss"/>
         </xpath>

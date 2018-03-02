@@ -4,24 +4,24 @@
 
     // Define left and right padding according to screen resolution
     @mixin o-form-sheet-inner-left-padding {
-        padding-left: $odoo-horizontal-padding;
+        padding-left: $o-horizontal-padding;
         @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
-            padding-left: $odoo-horizontal-padding*2;
+            padding-left: $o-horizontal-padding*2;
         }
     }
     @mixin o-form-sheet-inner-right-padding {
-        padding-right: $odoo-horizontal-padding;
+        padding-right: $o-horizontal-padding;
         @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
-            padding-right: $odoo-horizontal-padding*2;
+            padding-right: $o-horizontal-padding*2;
         }
     }
     // Compensate margins
     @mixin o-form-sheet-negative-margin {
-        margin-left: -$odoo-horizontal-padding;
-        margin-right: -$odoo-horizontal-padding;
+        margin-left: -$o-horizontal-padding;
+        margin-right: -$o-horizontal-padding;
         @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
-            margin-left: -$odoo-horizontal-padding*2;
-            margin-right: -$odoo-horizontal-padding*2;
+            margin-left: -$o-horizontal-padding*2;
+            margin-right: -$o-horizontal-padding*2;
         }
     }
 
@@ -34,7 +34,7 @@
     // Sheet
     .o_form_sheet_bg {
         @include o-flex(1, 0, auto);
-        background-color: $odoo-webclient-background-color;
+        background-color: $o-webclient-background-color;
         border-bottom: 1px solid $gray-lighter-dark;
 
         > .o_form_sheet {
@@ -50,14 +50,14 @@
               width: $container-lg;
             }
 
-            background-color: $odoo-view-background-color;
+            background-color: $o-view-background-color;
             border: 1px solid $gray-lighter-darker;
             box-shadow: 0 5px 20px -15px black;
-            margin: $odoo-sheet-vpadding*0.2 auto;
+            margin: $o-sheet-vpadding*0.2 auto;
             @media (min-width: $screen-sm-min) {
-                margin: $odoo-sheet-vpadding*0.5 auto;
+                margin: $o-sheet-vpadding*0.5 auto;
             }
-            padding: $odoo-sheet-vpadding;
+            padding: $o-sheet-vpadding;
             @include o-form-sheet-inner-right-padding;
             @include o-form-sheet-inner-left-padding;
 
@@ -72,7 +72,7 @@
     .oe_title {
         color: $headings-color;
         @media (min-width: $screen-xs-min) {
-            padding-right: $odoo-innergroup-rpadding;
+            padding-right: $o-innergroup-rpadding;
         }
     }
 
@@ -81,14 +81,14 @@
         margin-bottom: 10px;
 
         > img {
-            max-width: $odoo-avatar-size;
-            max-height: $odoo-avatar-size;
+            max-width: $o-avatar-size;
+            max-height: $o-avatar-size;
             vertical-align: top;
-            border: 1px solid $odoo-main-color-muted;
+            border: 1px solid $o-main-color-muted;
         }
 
         + .oe_title {
-            padding-right: $odoo-avatar-size + 10;
+            padding-right: $o-avatar-size + 10;
         }
     }
 
@@ -96,8 +96,8 @@
     .oe_button_box {
         position: relative;
         display: block;
-        margin-bottom: $odoo-sheet-vpadding;
-        margin-top: -$odoo-sheet-vpadding;
+        margin-bottom: $o-sheet-vpadding;
+        margin-top: -$o-sheet-vpadding;
         @include o-form-sheet-negative-margin;
         text-align: right;
         // Use box-shadow instead of border-bottom because some button boxes are
@@ -127,8 +127,8 @@
         }
 
         .btn.oe_stat_button {
-            height: $odoo-statbutton-height;
-            padding: 0 $odoo-statbutton-spacing 0 0; // padding-left will be achieved through margin-left of content
+            height: $o-statbutton-height;
+            padding: 0 $o-statbutton-spacing 0 0; // padding-left will be achieved through margin-left of content
             text-align: left;
             background-color: transparent;
             opacity: 0.8;
@@ -140,10 +140,10 @@
             }
 
             > .o_button_icon {
-                margin-left: $odoo-statbutton-spacing; // To create the button padding left (firefox bug)
+                margin-left: $o-statbutton-spacing; // To create the button padding left (firefox bug)
                 display: inline-block;
                 vertical-align: middle;
-                line-height: $odoo-statbutton-height;
+                line-height: $o-statbutton-height;
                 width: 30%;
 
                 &:before {
@@ -153,7 +153,7 @@
             }
 
             > .o_field_percent_pie {
-                margin-left: $odoo-statbutton-spacing; // To create the button padding left (firefox bug)
+                margin-left: $o-statbutton-spacing; // To create the button padding left (firefox bug)
             }
 
             // Some buttons only display text without using StatInfo template
@@ -168,13 +168,13 @@
                 font-weight: 500;
 
                 max-width: 70%;
-                padding-right: $odoo-statbutton-spacing;
+                padding-right: $o-statbutton-spacing;
                 line-height: 1.3;
 
                 .o_stat_value {
                     @include o-text-overflow(block);
                     font-weight: 700;
-                    color: $odoo-brand-primary;
+                    color: $o-brand-primary;
                     line-height: 1.2;
                 }
                 > .o_stat_text {
@@ -226,11 +226,11 @@
                 }
             }
         }
-        @include o-generate-groups($odoo-form-group-cols);
+        @include o-generate-groups($o-form-group-cols);
 
         &.o_inner_group {
             > tbody > tr > td {
-                padding: 0 $odoo-innergroup-rpadding 0 0;
+                padding: 0 $o-innergroup-rpadding 0 0;
             }
         }
 
@@ -243,7 +243,7 @@
             }
 
             .o_form_label {
-                margin-bottom: $odoo-form-spacing-unit;
+                margin-bottom: $o-form-spacing-unit;
             }
         }
         @media (max-width: $screen-sm-max) {
@@ -260,7 +260,7 @@
             font-weight: normal;
         }
         @media (max-width: $screen-xs-max) {
-            font-size: $odoo-font-size-base-touch;
+            font-size: $o-font-size-base-touch;
         }
     }
 
@@ -311,7 +311,7 @@
 
                     &, &:hover, &:focus, &:active {
                         color: $headings-color;
-                        border-top-color: $odoo-brand-primary;
+                        border-top-color: $o-brand-primary;
                         background-color: white;
                     }
                 }
@@ -326,7 +326,7 @@
             border-bottom: 1px solid $gray-lighter-darker;
 
             > .tab-pane {
-                padding: $odoo-horizontal-padding 0;
+                padding: $o-horizontal-padding 0;
 
                 > :first-child {
                     // Reset margin to 0 and use tab-pane's padding
@@ -336,7 +336,7 @@
                     // These elements will appear attached to the tabs
                     &.oe_form_field_html_text {
                         @include o-form-sheet-negative-margin;
-                        margin-top: -$odoo-horizontal-padding;
+                        margin-top: -$o-horizontal-padding;
                         border: none;
 
                         .note-editor.panel {
@@ -347,7 +347,7 @@
                             @include o-form-sheet-inner-left-padding;
                             @include o-form-sheet-inner-right-padding;
                             border-top: none;
-                            padding-top: $odoo-horizontal-padding*0.3;
+                            padding-top: $o-horizontal-padding*0.3;
                             background: white;
 
                             .btn-default {
@@ -364,7 +364,7 @@
                         // If immediatly followed by an .oe_clear element, the note-editor it's the 'only'
                         // tab's element. Reset margins to push the bar at the bottom.
                         + .oe_clear:last-child {
-                            margin-bottom: -$odoo-horizontal-padding - $odoo-sheet-vpadding - $line-height-computed;
+                            margin-bottom: -$o-horizontal-padding - $o-sheet-vpadding - $line-height-computed;
                         }
                     }
 
@@ -372,7 +372,7 @@
                         display: block;
                         width: auto;
                         @include o-form-sheet-negative-margin;
-                        margin-top: -$odoo-horizontal-padding;
+                        margin-top: -$o-horizontal-padding;
 
                         tr > :first-child {
                             &, .o_input {
@@ -400,7 +400,7 @@
             padding-top:30px;
             ul.nav-tabs {
                 min-width: 100%;
-                max-width:  calc(100% + #{$odoo-horizontal-padding});
+                max-width:  calc(100% + #{$o-horizontal-padding});
                 position: absolute;
                 z-index:1;
                 top: 0;
@@ -468,7 +468,7 @@
 
             // Last element at the right should respect overall padding
             &:first-of-type {
-                padding-right: $odoo-horizontal-padding;
+                padding-right: $o-horizontal-padding;
             }
         }
     }
@@ -479,15 +479,15 @@
 
         > .o_form_sheet_bg {
             @include o-flex(1, 1, auto); // Side chatter is disabled if this has to shrink but this was added for safety
-            width: $o-form-sheet-min-width + 2 * $odoo-horizontal-padding;
-            // max-width: $container-lg + 2 * $odoo-horizontal-padding; // would be logical but breaks no-chatter form views
-            padding: 0 $odoo-horizontal-padding;
+            width: $o-form-sheet-min-width + 2 * $o-horizontal-padding;
+            // max-width: $container-lg + 2 * $o-horizontal-padding; // would be logical but breaks no-chatter form views
+            padding: 0 $o-horizontal-padding;
             overflow: auto;
             border-bottom: none;
 
             > :not(.o_form_sheet) {
-                margin-left: -$odoo-horizontal-padding;
-                margin-right: -$odoo-horizontal-padding;
+                margin-left: -$o-horizontal-padding;
+                margin-right: -$o-horizontal-padding;
             }
             > .o_form_sheet {
                 width: 100%;
@@ -509,15 +509,15 @@
                 > .btn, > .o_followers {
                     padding-top: 0;
                     padding-bottom:0;
-                    height: $odoo-statusbar-height;
-                    line-height: $odoo-statusbar-height - $padding-base-vertical;
+                    height: $o-statusbar-height;
+                    line-height: $o-statusbar-height - $padding-base-vertical;
                 }
                 > .btn:first-child {
-                    padding: 0 $odoo-horizontal-padding;
+                    padding: 0 $o-horizontal-padding;
                     border-left: none!important;
                 }
                 .o_followers {
-                    padding-right: $odoo-horizontal-padding;
+                    padding-right: $o-horizontal-padding;
                 }
             }
             &.o_chatter_composer_active .o_chatter_topbar {
@@ -541,7 +541,7 @@
                 }
             }
             .o_followers_title_box {
-                margin-left: $odoo-horizontal-padding/2;
+                margin-left: $o-horizontal-padding/2;
 
                 .dropdown-toggle {
                     padding-right: 0;
@@ -577,9 +577,9 @@
 
     .o_form_label {
         margin-top: 3px;
-        font-size: $odoo-label-font-size-factor * $odoo-font-size-base-touch;
+        font-size: $o-label-font-size-factor * $o-font-size-base-touch;
         font-weight: normal;
-        color: $odoo-brand-secondary;
+        color: $o-brand-secondary;
 
         &.o_form_label_empty {
             display: none;

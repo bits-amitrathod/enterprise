@@ -7,11 +7,11 @@
 
     .o_subscription_kanban_main {
         @include o-flex(0, 0, auto);
-        padding: $odoo-horizontal-padding;
+        padding: $o-horizontal-padding;
         width: 70%; // for IE11 overflow issue
 
         // give space for manage section at the bottom
-        margin-bottom: $odoo-horizontal-padding/2 + 19px;
+        margin-bottom: $o-horizontal-padding/2 + 19px;
 
         .o_kanban_card_content {
             font-size: 12px;
@@ -23,7 +23,7 @@
         .o_subscription_kanban_manage {
             .o_kanban_manage_toggle_button {
                 font-size: 18px;
-                padding: $odoo-horizontal-padding/2 $odoo-horizontal-padding;
+                padding: $o-horizontal-padding/2 $o-horizontal-padding;
             }
         }
         .o_kanban_card_manage_pane .o_kanban_card_manage_title {
@@ -65,7 +65,7 @@
             background-color: grey;
         }
         .o_subscription_kanban_box:nth-child(odd) {
-            background-color: $odoo-brand-optional;
+            background-color: $o-brand-optional;
         }
     }
 }

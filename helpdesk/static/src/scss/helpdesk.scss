@@ -7,11 +7,11 @@
     }
 
     .o_helpdesk_dashboard {
-        margin: (0 - $o-kanban-record-margin) ($o-kanban-record-margin - $odoo-horizontal-padding) $o-kanban-record-margin;
+        margin: (0 - $o-kanban-record-margin) ($o-kanban-record-margin - $o-horizontal-padding) $o-kanban-record-margin;
         @include o-flex(1, 0, 100%);
-        padding: 10px ($odoo-horizontal-padding - $sale-table-spacing);
+        padding: 10px ($o-horizontal-padding - $sale-table-spacing);
 
-        background-color: $odoo-view-background-color;
+        background-color: $o-view-background-color;
         position: relative;
 
         .o_welcome_message {
@@ -48,7 +48,7 @@
                 > tbody > tr > td {
                     vertical-align: middle;
                     text-align: center;
-                    border-top: 1px solid $odoo-view-background-color;
+                    border-top: 1px solid $o-view-background-color;
                     width: 25%;
 
                     height: 33px;
@@ -62,9 +62,9 @@
                     }
 
                     &.o_main {
-                        background-color: $odoo-brand-optional;
+                        background-color: $o-brand-optional;
                         &:hover {
-                            background-color: darken($odoo-brand-optional, 10%);
+                            background-color: darken($o-brand-optional, 10%);
                         }
                         a {
                             color: white;
@@ -80,9 +80,9 @@
                         }
                     }
                     &.o_secondary {
-                        background-color: $odoo-brand-lightsecondary;
+                        background-color: $o-brand-lightsecondary;
                         &:hover {
-                            background-color: darken($odoo-brand-lightsecondary, 10%);
+                            background-color: darken($o-brand-lightsecondary, 10%);
                         }
                         a {
                             color: black;

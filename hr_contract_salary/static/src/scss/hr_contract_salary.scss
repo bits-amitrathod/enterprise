@@ -25,7 +25,7 @@
         }
 
         a {
-            color: $odoo-brand-optional;
+            color: $o-brand-optional;
         }
 
         input:focus::-webkit-input-placeholder { color:transparent; }
@@ -47,7 +47,7 @@
         #hr_cs_sidebar {
             .form-group {
                 .control-label {
-                    color: $odoo-brand-primary;
+                    color: $o-brand-primary;
                     font-weight: 500;
                 }
             }
@@ -83,7 +83,7 @@
                         @include o-position-absolute($top: -20px, $left: 15px);
                         @include size(30px, 45px);
                         line-height: 58px;
-                        background-color: $odoo-brand-primary;
+                        background-color: $o-brand-primary;
                         color: #fff;
                         &.fa-lg {
                             font-size: 1.5em;
@@ -115,7 +115,7 @@
             h2 {
                 padding-bottom: 10px;
                 border-bottom: 1px solid lighten($gray-light, 40%);
-                color: $odoo-brand-primary;
+                color: $o-brand-primary;
             }
             .form-group {
                 border: 0;
@@ -123,7 +123,7 @@
                 .form-control {
                     &:hover,
                     &:focus {
-                        border-color: $odoo-brand-optional;
+                        border-color: $o-brand-optional;
                         @include box-shadow(none);
                     }
                 }
@@ -137,7 +137,7 @@
             display: block;
             width: 100%;
             margin-top: 30px;
-            background-color: $odoo-brand-optional;
+            background-color: $o-brand-optional;
             color: #fff;
 
             a {
@@ -206,8 +206,8 @@
 
         /* Checked state */
         .hr_cs_control input:checked ~ .hr_cs_control_indicator {
-            background-color:  $odoo-brand-optional;
-            border-color:  $odoo-brand-optional;
+            background-color:  $o-brand-optional;
+            border-color:  $o-brand-optional;
             &.hr_cs_control_no {
                 background-color: #E46F78;
                 border-color: #E46F78;
@@ -263,14 +263,14 @@
             @include square(18px);
             border: 0;
             margin-top: -7px;
-            background-color: $odoo-brand-optional;
+            background-color: $o-brand-optional;
             border-radius: 50%;
             cursor: pointer;
         }
 
         @mixin progress {
             height: 5px;
-            background: $odoo-brand-optional;
+            background: $o-brand-optional;
         }
 
         .hr_cs_control_range {
@@ -326,7 +326,7 @@
             &.select2-container-active {
                 .select2-choice {
                     @include border-bottom-radius(0);
-                    border-color: $odoo-brand-optional;
+                    border-color: $o-brand-optional;
                     @include box-shadow(none);
                 }
             }
@@ -334,14 +334,14 @@
             &:focus {
                 @include box-shadow(none);
                 .select2-choice {
-                    border-color: $odoo-brand-optional;
+                    border-color: $o-brand-optional;
                 }
             }
             &.form-control-primary {
                 .select2-choice {
-                    border-color: $odoo-brand-optional;
+                    border-color: $o-brand-optional;
                     .select2-arrow {
-                        background-color: $odoo-brand-optional;
+                        background-color: $o-brand-optional;
                         color: #fff;
                     }
                 }
@@ -355,7 +355,7 @@
     }
 
     .select2-drop-active {
-        border-color: $odoo-brand-optional;
+        border-color: $o-brand-optional;
     }
 
     .select2-results .select2-highlighted {
@@ -365,5 +365,5 @@
 }
 
 .hr_cs_brand_optional {
-    color: $odoo-brand-optional;
+    color: $o-brand-optional;
 }
