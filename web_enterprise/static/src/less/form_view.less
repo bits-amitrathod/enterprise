@@ -254,7 +254,7 @@
     }
 
     // Chatter
-    .oe_chatter {
+    > .oe_chatter {
         .o-flex(1000, 0, auto);
         .container;
         padding: @grid-gutter-width*0.25 0;
@@ -507,6 +507,17 @@
             .o_chat_composer {
                 border-width: 1px 0;
                 margin-top: 0;
+
+                // have mention drowdown below composer
+                .o_composer_mention_dropdown {
+                    position: absolute;
+                    top: 100%;
+
+                    > .dropdown-menu {
+                        top: 100%;
+                        bottom: auto;
+                    }
+                }
             }
             .o_followers_title_box {
                 margin-left: @odoo-horizontal-padding/2;

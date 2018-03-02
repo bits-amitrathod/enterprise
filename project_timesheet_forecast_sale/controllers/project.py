@@ -170,7 +170,7 @@ class TimesheetForecastController(SaleTimesheetController):
 
         # use _read_group_raw to get date range
         ts_max_month_date = fields.Date.from_string(max(timesheet_months))+relativedelta(months=1)
-        ts_domain = domain + [('so_line', '!=', False), ('date', '<', fields.Date.to_string(ts_max_month_date)), ('date', '>=', min(timesheet_months))]
+        ts_domain = domain + [('so_line', '!=', False), ('date', '<', fields.Date.to_string(ts_max_month_date)), ('date', '>=', min(timesheet_months)), ('employee_id', '!=', False)]  # required to have employee to be display in plan project
         data_timesheet = request.env['account.analytic.line'].sudo()._read_group_raw(ts_domain, ['so_line', 'unit_amount', 'employee_id', 'date'], ['date:month', 'so_line', 'employee_id'], lazy=False)
         for timesheet_row in data_timesheet:
             current_date = timesheet_row['date:month'][0].split('/')[0]

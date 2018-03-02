@@ -75,20 +75,22 @@
 
         // Both Top Blocks
         .workorder_bar, .workorder_actions {
-            .o-flex-display();
-            .o-flex-flow(row, nowrap);
             background-color: darken(@o-wo-tablet-bg, 5%);
             background-image: url(/web/static/lib/pdfjs/web/images/texture.png);
         }
 
         // First Top Block
         .workorder_bar {
+            .o-flex-display();
+            .o-flex-flow(row, wrap);
             padding: @o-wo-tablet-padding*0.5 @o-wo-tablet-padding;
             padding-left: @o-wo-tablet-padding - @o-wo-tablet-btn-margin;
         }
 
         // Last top Block
         .workorder_actions {
+            .o-flex-display();
+            .o-flex-flow(row, nowrap);
             padding: @o-wo-tablet-padding*0.5 @o-wo-tablet-padding - @o-wo-tablet-btn-margin @o-wo-tablet-padding;
             box-shadow: 0 1px 1px fade(black, 30%);
             font-size: 1.2em;

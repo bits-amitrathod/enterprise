@@ -412,7 +412,7 @@ class WebStudioController(http.Controller):
         view.key = new_view_xml_id
         # Create report
         report = request.env['ir.actions.report'].create({
-            'name': _('%s Report' % (model.name)),
+            'name': _('%s Report') % model.name,
             'model': model.model,
             'report_type': 'qweb-pdf',
             'report_name': view.name,
@@ -1139,7 +1139,7 @@ class WebStudioController(http.Controller):
         """
         model_id = request.env['ir.model'].search([('model', '=', model)])
         if not model_id:
-            raise UserError(_('The model %s does not exist.' % model))
+            raise UserError(_('The model %s does not exist.') % model)
 
         if not operation.get('field'):
             raise UserError(_('Please specify a field.'))
@@ -1149,7 +1149,7 @@ class WebStudioController(http.Controller):
             ('name', '=', operation['field'])
         ])
         if not field_id:
-            raise UserError(_('The field %s does not exist.' % operation['field']))
+            raise UserError(_('The field %s does not exist.') % operation['field'])
 
         # add field at the beginning
         etree.SubElement(arch, 'xpath', {
@@ -1182,7 +1182,7 @@ class WebStudioController(http.Controller):
         """
         model_id = request.env['ir.model'].search([('model', '=', model)])
         if not model_id:
-            raise UserError(_('The model %s does not exist.' % model))
+            raise UserError(_('The model %s does not exist.') % model)
 
         if operation.get('field'):
             field_id = request.env['ir.model.fields'].search([
@@ -1190,7 +1190,7 @@ class WebStudioController(http.Controller):
                 ('name', '=', operation['field'])
             ])
             if not field_id:
-                raise UserError(_('The field %s does not exist.' % operation['field']))
+                raise UserError(_('The field %s does not exist.') % operation['field'])
 
         else:
             field_id = request.env['ir.model.fields'].search([

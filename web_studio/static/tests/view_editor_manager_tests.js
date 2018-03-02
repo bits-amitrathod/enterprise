@@ -1202,7 +1202,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a related field', function(assert) {
-        assert.expect(12);
+        assert.expect(13);
 
 
         this.data.coucou.fields.related_field = {
@@ -1245,6 +1245,9 @@ QUnit.module('ViewEditorManager', {
             },
         });
 
+        // listen to 'warning' events bubbling up
+        testUtils.intercept(vem, 'warning', assert.step.bind(assert, 'warning'));
+
         // used to generate the new fields view in mockRPC
         fieldsView = $.extend(true, {}, vem.fields_view);
 
@@ -1254,12 +1257,8 @@ QUnit.module('ViewEditorManager', {
 
         // try to create an empty related field
         $('.modal button:contains("Confirm")').click();
-        assert.strictEqual($('.modal').length, 2, "an alert should be displayed");
-
-        // remove the alert
-        $('.modal:eq(1) button:contains("Ok")').click();
-        assert.strictEqual(nbEdit, 0, "should not have edited the view");
-        assert.strictEqual($('.modal').length, 1, "the first  modal should still be displayed");
+        assert.verifySteps(['warning'], "should have triggered a warning");
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
 
         $('.modal .o_field_selector').focusin(); // open the selector popover
         $('.o_field_selector_popover li[data-name=m2o]').click();
@@ -1285,6 +1284,178 @@ QUnit.module('ViewEditorManager', {
         $('.modal-footer .btn-primary:first').click(); // confirm
 
         assert.strictEqual(nbEdit, 3, "should have edited the view");
+        assert.verifySteps(['warning'], "should have triggered only one warning");
+
+        vem.destroy();
+    });
+
+    QUnit.test('add a one2many field', function(assert) {
+        assert.expect(7);
+
+        var arch = '<form><group>' +
+                        '<field name="display_name"/>' +
+                    '</group></form>';
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (args.method === 'name_search') {
+                    return $.when([
+                        [1, 'Field 1'],
+                        [2, 'Field 2'],
+                    ]);
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.step('edit');
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // listen to 'warning' events bubbling up
+        testUtils.intercept(vem, 'warning', assert.step.bind(assert, 'warning'));
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_one2many'), $('.o_web_studio_hook'));
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+
+        // try to confirm without specifying a related field
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
+        assert.verifySteps(['warning'], "should have triggered a warning");
+
+        // select a related field and confirm
+        $('.modal .o_field_many2one input').click();
+        var $dropdown = $('.o_field_many2one input').autocomplete('widget');
+        $dropdown.find('li:first').click();
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 0, "the modal should be closed");
+        assert.verifySteps(['warning', 'edit'], "should have created the field");
+
+        vem.destroy();
+    });
+
+    QUnit.test('add a many2many field', function(assert) {
+        assert.expect(7);
+
+        var arch = '<form><group>' +
+                        '<field name="display_name"/>' +
+                    '</group></form>';
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (args.method === 'name_search') {
+                    return $.when([
+                        [1, 'Model 1'],
+                        [2, 'Model 2'],
+                    ]);
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.step('edit');
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // listen to 'warning' events bubbling up
+        testUtils.intercept(vem, 'warning', assert.step.bind(assert, 'warning'));
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_many2many'), $('.o_web_studio_hook'));
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+
+        // try to confirm without specifying a relation
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
+        assert.verifySteps(['warning'], "should have triggered a warning");
+
+        // select a model and confirm
+        $('.modal .o_field_many2one input').click();
+        var $dropdown = $('.o_field_many2one input').autocomplete('widget');
+        $dropdown.find('li:first').click();
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 0, "the modal should be closed");
+        assert.verifySteps(['warning', 'edit'], "should have created the field");
+
+        vem.destroy();
+    });
+
+    QUnit.test('add a many2one field', function(assert) {
+        assert.expect(7);
+
+        var arch = '<form><group>' +
+                        '<field name="display_name"/>' +
+                    '</group></form>';
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (args.method === 'name_search') {
+                    return $.when([
+                        [1, 'Model 1'],
+                        [2, 'Model 2'],
+                    ]);
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.step('edit');
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // listen to 'warning' events bubbling up
+        testUtils.intercept(vem, 'warning', assert.step.bind(assert, 'warning'));
+
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_many2one'), $('.o_web_studio_hook'));
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+
+        // try to confirm without specifying a relation
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
+        assert.verifySteps(['warning'], "should have triggered a warning");
+
+        // select a model and confirm
+        $('.modal .o_field_many2one input').click();
+        var $dropdown = $('.o_field_many2one input').autocomplete('widget');
+        $dropdown.find('li:first').click();
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 0, "the modal should be closed");
+        assert.verifySteps(['warning', 'edit'], "should have created the field");
 
         vem.destroy();
     });

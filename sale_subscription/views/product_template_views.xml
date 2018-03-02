@@ -22,7 +22,7 @@
             </page>
             <group name="invoicing" position="after">
                 <group name="subscription" string="Subscription">
-                    <field name="recurring_invoice" attrs="{'invisible': True}"/>
+                    <field name="recurring_invoice" attrs="{'invisible': [('type', '!=', 'service')]}"/>
                     <field name="subscription_template_id" class="field_sub_template_id" attrs="{'invisible': [('recurring_invoice', '=', False)]}"/>
                 </group>
             </group>

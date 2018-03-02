@@ -146,7 +146,7 @@ class ProjectForecast(models.Model):
     @api.one
     @api.constrains('resource_hours')
     def _check_time_positive(self):
-        if self.resource_hours and (self.resource_hours < 0):
+        if self.resource_hours and self.resource_hours < 0:
             raise ValidationError(_("Forecasted time must be positive"))
 
     @api.one

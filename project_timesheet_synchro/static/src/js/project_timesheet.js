@@ -91,7 +91,6 @@ odoo.define('project_timeshee.ui', function (require ) {
                 self.server = local_storage.getItem('pt_current_server') ? local_storage.getItem('pt_current_server') : "$no_server$";
                 self.get_user_data(self.user, self.server);
                 self.sanitize_all_ids();
-                defs.push($.Deferred().resolve());
             }
             defs.push(this._super.apply(this, arguments));
             return $.when.apply($, defs);
@@ -1968,20 +1967,13 @@ odoo.define('project_timeshee.ui', function (require ) {
                 self.getParent().db_list = ["openerp"];
                 self.getParent().show_premise_login_form_screen();
                 return;
-            } else if (server_address.endsWith("odoo.com")) {
-                var dbname = server_address.substring(0, server_address.length -9);
-                self.getParent().db_list = [dbname];
-                self.getParent().show_premise_login_form_screen();
-                return;
-            }
-
-            if (this.$(".pt_premise_db") && this.$(".pt_premise_db").val()) {
+            } else if (this.$(".pt_premise_db") && this.$(".pt_premise_db").val()) {
                 self.getParent().db_list = [this.$(".pt_premise_db").val()];
                 self.getParent().show_premise_login_form_screen();
                 return;
             }
 
-            session.rpc('/jsonrpc',  { method : 'list' , service : 'db', args : []}).then(function(result) {
+            session.rpc('/web/database/list').then(function(result) {
                 self.getParent().db_list = result;
                 self.getParent().show_premise_login_form_screen();
             }).fail(function(error) {

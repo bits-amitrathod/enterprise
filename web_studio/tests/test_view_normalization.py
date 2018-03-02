@@ -1,3 +1,4 @@
+import random
 import textwrap
 from odoo.http import _request_stack
 from odoo.tests.common import TransactionCase
@@ -12,6 +13,15 @@ class TestViewNormalization(TransactionCase):
         super(TestViewNormalization, self).setUp()
         _request_stack.push(self)
         self.base_view = self.env.ref('base.view_partner_form')
+        self.gantt_view = self.env['ir.ui.view'].create({
+            'arch_base':
+            """
+            <gantt date_start="date" date_stop="" string="Test">
+            </gantt>
+            """,
+            'model': 'res.partner',
+            'type': 'gantt',
+        })
         self.view = self.base_view.create({
             'arch_base':
             """
@@ -102,16 +112,21 @@ class TestViewNormalization(TransactionCase):
             'model': 'res.partner'})
         self.studio_controller = WebStudioController()
 
-    def _test_view_normalization(self, original, expected):
-        original = original and textwrap.dedent(original)
-        self.studio_controller._set_studio_view(self.view, original)
+    def _test_view_normalization(self, original, expected, view='form'):
+        if view == 'gantt':
+            view = self.gantt_view
+        else:
+            view = self.view
 
-        studio_view = self.studio_controller._get_studio_view(self.view)
+        original = original and textwrap.dedent(original)
+        self.studio_controller._set_studio_view(view, original)
+
+        studio_view = self.studio_controller._get_studio_view(view)
         studio_view = studio_view.with_context(load_all_views=True)
         normalized = studio_view.normalize()
 
-        self.studio_controller._set_studio_view(self.view, normalized)
-        self.env[self.view.model].with_context(studio=True, load_all_views=True).fields_view_get(self.view.id, self.view.type)
+        self.studio_controller._set_studio_view(view, normalized)
+        self.env[self.view.model].with_context(studio=True, load_all_views=True).fields_view_get(view.id, view.type)
 
         normalized = normalized and normalized.strip()
         expected = expected and textwrap.dedent(expected).strip()
@@ -742,6 +757,91 @@ class TestViewNormalization(TransactionCase):
               </xpath>
             </data>
         """)
+
+    # Correctly calculate the expr on flat views
+    def test_view_normalization_23(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//gantt[1]" position="attributes">
+                <attribute name="date_stop">date</attribute>
+              </xpath>
+            </data>
+            """, """
+            <data>
+              <xpath expr="//gantt[1]" position="attributes">
+                <attribute name="date_stop">date</attribute>
+              </xpath>
+            </data>
+            """, 'gantt'
+        )
+
+    # test that unnamed groups/pages are given a pseudo-random name attribute
+    def test_view_normalization_24(self):
+        random.seed("https://i.redd.it/pnyr50lf0jh01.png")
+        self._test_view_normalization("""
+            <data>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="after">
+                  <group>
+                    <p>hello world!</p>
+                  </group>
+                  <group>
+                    <p>foo bar baz</p>
+                  </group>
+                  <group>
+                    <p>spam eggs bacon</p>
+                  </group>
+                </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="after">
+                <group name="studio_group_a9eb51">
+                  <p>hello world!</p>
+                </group>
+                <group name="studio_group_70d54a">
+                  <p>foo bar baz</p>
+                </group>
+                <group name="studio_group_71063a">
+                  <p>spam eggs bacon</p>
+                </group>
+              </xpath>
+            </data>
+        """)
+        random.seed()
+
+    # test that unnamed pages are given a pseudo-random name attribute
+    def test_view_normalization_25(self):
+        random.seed("https://i.redd.it/pnyr50lf0jh01.png")
+        self._test_view_normalization("""
+            <data>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                  <page>
+                    <p>hello world!</p>
+                  </page>
+                  <page>
+                    <p>foo bar baz</p>
+                  </page>
+                  <page>
+                    <p>spam eggs bacon</p>
+                  </page>
+                </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page name="studio_page_a9eb51">
+                  <p>hello world!</p>
+                </page>
+                <page name="studio_page_70d54a">
+                  <p>foo bar baz</p>
+                </page>
+                <page name="studio_page_71063a">
+                  <p>spam eggs bacon</p>
+                </page>
+              </xpath>
+            </data>
+        """)
+        random.seed()
 
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()

@@ -227,8 +227,16 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
     _onSave: function () {
         var values = {};
         if (this.type === 'one2many') {
+            if (!this.many2one_field.value) {
+                this.trigger_up('warning', {title: _t('You must select a related field')});
+                return;
+            }
             values.relation_field_id = this.many2one_field.value.res_id;
         } else if (_.contains(['many2many', 'many2one'], this.type)) {
+            if (!this.many2one_model.value) {
+                this.trigger_up('warning', {title: _t('You must select a relation')});
+                return;
+            }
             values.relation_id = this.many2one_model.value.res_id;
             values.field_description = this.many2one_model.m2o_value;
         } else if (this.type === 'selection') {
@@ -236,7 +244,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         } else if (this.type === 'related') {
             var selectedField = this.fieldSelector.getSelectedField();
             if (!selectedField) {
-                Dialog.alert(this, _t('You cannot create an empty related field.'));
+                this.trigger_up('warning', {title: _t('You must select a related field')});
                 return;
             }
             values.related = this.fieldSelector.chain.join('.');

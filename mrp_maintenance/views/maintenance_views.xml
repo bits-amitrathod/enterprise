@@ -56,7 +56,7 @@
                 </div>
             </xpath>
             <field name="equipment_id" position="attributes">
-                <attribute name="domain">['|', ('workcenter_id', '=', False), ('workcenter_id.order_ids', 'in', workorder_id)]</attribute>
+                <attribute name="domain">['|', (not workorder_id and 1 or 0, '=', 1), '|', ('workcenter_id', '=', False), ('workcenter_id.order_ids', 'in', workorder_id)]</attribute>
             </field>
         </field>
     </record>
