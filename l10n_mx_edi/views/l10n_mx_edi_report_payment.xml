@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_payment_document_mx" inherit_id="account.report_payment_receipt">
+    <template id="report_payment_document_mx" inherit_id="account.report_payment_receipt_document">
         <xpath expr="//div[1]" position="before">
             <t t-if="not o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_is_required()">
                 <div class="btn btn-danger">
