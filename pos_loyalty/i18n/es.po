@@ -6,13 +6,13 @@
 # Martin Trigaux, 2017
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
 # Ivan Nieto <ivan.n.s@tuta.io>, 2017
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
 # Gustavo Valverde, 2017
 # RGB Consulting <odoo@rgbconsulting.com>, 2017
 # Ana Juaristi <ajuaristio@gmail.com>, 2017
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2017
 # Alejandro Santana <alejandrosantana@anubia.es>, 2017
-# Gelo Joga Landoo <gj@landoo.es>, 2017
 # e2f <projects@e2f.com>, 2018
 # e2f_EPV Translator <e2f_EPV@outlook.com>, 2018
 msgid ""
@@ -47,8 +47,7 @@ msgstr "<strong>Puntos por producto:</strong>"
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_name
 msgid "An internal identification for the loyalty program configuration"
-msgstr ""
-"Identificación interna para la configuración del programa de fidelidad"
+msgstr "Identificación interna para la configuración del programa de lealtad"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_name
@@ -68,7 +67,7 @@ msgstr "Categoría"
 #. module: pos_loyalty
 #: model:ir.actions.act_window,help:pos_loyalty.action_loyalty_program_form
 msgid "Click to create a Loyalty Program."
-msgstr "Click para crear un Programa de Fidelidad."
+msgstr "Clic para crear un Programa de Lealtad."
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_res_partner
@@ -103,7 +102,7 @@ msgstr "Descuento"
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_discount_product_id
 msgid "Discount Product"
-msgstr "Product de descuento"
+msgstr "Producto de descuento"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_display_name
@@ -186,7 +185,7 @@ msgstr "Última Actualización el"
 #: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
 #: model:ir.model.fields,field_description:pos_loyalty.field_res_users_loyalty_points
 msgid "Loyalty Points"
-msgstr "Puntos de lealtad"
+msgstr "Puntos de Lealtad"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_loyalty_program_id
@@ -215,7 +214,7 @@ msgid ""
 "Loyalty Programs allows you customer to earn points\n"
 "                    and rewards when doing business at your shops."
 msgstr ""
-"Los Programas de Lealtad permite ganar puntos y premios a sus clientes al "
+"Los Programas de Lealtad permiten ganar puntos y premios a sus clientes al "
 "momento de hacer compras en su tienda."
 
 #. module: pos_loyalty
@@ -266,7 +265,7 @@ msgstr "Punto de producto"
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_pos_order
 msgid "Point of Sale Orders"
-msgstr "Pedidos del TPV"
+msgstr "Pedidos del Punto de Venta"
 
 #. module: pos_loyalty
 #. openerp-web
@@ -383,13 +382,13 @@ msgid ""
 "Rules change how loyalty points are earned for specific products or "
 "categories"
 msgstr ""
-"Las reglas cambian la forma en que se obtienen puntos de fidelidad para "
+"Las reglas cambian la forma en que se obtienen puntos de lealtad para "
 "productos o categorías específicas"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_category_id
 msgid "Target Category"
-msgstr "Categoría objetivo"
+msgstr "Categoría del objetivo"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_product_id
@@ -432,20 +431,20 @@ msgstr "El porcentaje de descuento"
 #, python-format
 msgid "The discount product field is mandatory for discount rewards"
 msgstr ""
-"Este campo de descuentos en producto es obligatorio para premios de "
+"El campo del producto de descuento es obligatorio para las recompensas de "
 "descuento"
 
 #. module: pos_loyalty
 #: code:addons/pos_loyalty/models/pos_loyalty.py:50
 #, python-format
 msgid "The gift product field is mandatory for gift rewards"
-msgstr "El campo de regalos es obligatorio para premios de tipo regalo"
+msgstr "El campo de regalos es obligatorio para premios de regalo"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_rounding
 msgid "The loyalty point amounts are rounded to multiples of this value."
 msgstr ""
-"Las cantidades de puntos de fidelidad son redondeadas a múltiplos de este "
+"Las cantidades de puntos de lealtad son redondeadas a múltiplos de este "
 "valor."
 
 #. module: pos_loyalty
@@ -453,8 +452,7 @@ msgstr ""
 #: model:ir.model.fields,help:pos_loyalty.field_res_users_loyalty_points
 msgid "The loyalty points the user won as part of a Loyalty Program"
 msgstr ""
-"Los puntos de fidelidad que el cliente ganó o perdió en un programa de "
-"fidelidad"
+"Los puntos de lealtad que el cliente ganó o perdió en un Programa de Lealtad"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_pos_config_loyalty_id
@@ -517,8 +515,8 @@ msgid ""
 "There are no rewards available for this customer as part of the loyalty "
 "program"
 msgstr ""
-"No hay premios disponibles para este cliente dentro del programa de "
-"fidelidad"
+"No hay recompensas disponibles para este cliente como parte del programa de "
+"lealtad"
 
 #. module: pos_loyalty
 #. openerp-web
@@ -552,4 +550,4 @@ msgstr "loyalty.rule"
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_pos_config
 msgid "pos.config"
-msgstr "Configuración del TPV"
+msgstr "pos.config"

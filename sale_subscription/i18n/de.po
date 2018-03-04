@@ -14,6 +14,7 @@
 # Fabian Liesch <fabian.liesch@gmail.com>, 2017
 # Niki Waibel, 2017
 # Krakataua Katarajtu <shlok@hotmail.de>, 2017
+# Katharina Moritz <kmo@e2f.com>, 2017
 # Philipp Hug <philipp@hug.cx>, 2017
 # Dejan Dinic, 2017
 # JackTheHunter <Maximilian.N98@gmail.com>, 2017
@@ -27,7 +28,6 @@
 # Felix Schubert <felix.schubert@go-erp.com>, 2017
 # Andi, 2017
 # AppleMentalist <felix.schnatbaum@gmail.com>, 2017
-# Katharina Moritz <kmo@e2f.com>, 2017
 # e2f_de_t6 <e2f_de_t6@outlook.com>, 2017
 # e2f <projects@e2f.com>, 2018
 # e2f FFE <e2f_de_FFE@outlook.com>, 2018
@@ -80,7 +80,7 @@ msgstr ""
 " Ein Artikel kann storniert werden, bis die Zahlung verarbeitet wurde. Sobald die Zahlung verarbeitet wurde, ist der Käufer für die Zahlung verantwortlich.\n"
 "\n"
 " Beschwerden\n"
-" Beschwerden über Artikel oder Verkäufer können an unser Support-Team gesendet werden: support@wesellyourstuff.com oder (888) 555-0198. Es gibt keine Garantie für eine Lösung. Jeder Fall wird einzeln betrachtet, und der Verkäufer wird dazu mit einbezogen."
+" Beschwerden über Artikel oder Verkäufer können an unser Support-Team gesendet werden: support@wirverkaufenihrewaren.de oder (+49) 123456789. Es gibt keine Garantie für eine Lösung. Jeder Fall wird einzeln betrachtet, und der Verkäufer wird dazu mit einbezogen."
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_success
@@ -624,8 +624,8 @@ msgid ""
 "<span class=\"label label-success\"><i class=\"fa fa-fw fa-check\"/> In "
 "Progress</span>"
 msgstr ""
-"<span class=\"label label-success\"><i class=\"fa fa-fw fa-check\"/> In "
-"Bearbeitung</span>"
+"<span class=\"label label-success\"><i class=\"fa fa-fw fa-check\"/> "
+"Laufend</span>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -1333,7 +1333,7 @@ msgstr ""
 #: selection:sale.subscription.report,state:0
 #, python-format
 msgid "In Progress"
-msgstr "In Arbeit"
+msgstr "Laufend"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_industry_id
@@ -1384,7 +1384,7 @@ msgstr "Rechnung für Abonnement ${ctx.get('code')}"
 #. module: sale_subscription
 #: model:mail.template,report_name:sale_subscription.email_payment_success
 msgid "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
-msgstr "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
+msgstr "Rechnung_${ctx.get('code')}_${ctx.get('previous_date')}"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -2070,14 +2070,14 @@ msgid ""
 "Subscriptions can be automatically generated from sales orders of Sales or eCommerce\n"
 "                apps. To do so, set a Subscription Template on your Subscription Products."
 msgstr ""
-"Abonnements können automatisch aus Kundenaufträgen von Verkäufen oder E"
+"Abonnements können automatisch aus Kundenaufträgen von Verkaufs- oder E"
 "-Commerce-Apps generiert werden. Legen Sie dazu eine Abonnementvorlage für "
 "Ihre Abonnementprodukte fest."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Subscriptions in progress"
-msgstr "Abonnements in Bearbeitung"
+msgstr "Laufende Abonnements"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -2408,7 +2408,7 @@ msgstr "indem Sie Ihre Rechnung bezahlen."
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "day(s)"
-msgstr "day(s)"
+msgstr "Tag(e)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2418,7 +2418,7 @@ msgstr "fehlenden Zahlungen (von"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "month(s)"
-msgstr "month(s)"
+msgstr "Monat(e)"
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_saas
@@ -2459,12 +2459,12 @@ msgstr "bis heute) automatisch verarbeitet."
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "week(s)"
-msgstr "week(s)"
+msgstr "woche(n)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "year(s)"
-msgstr "year(s)"
+msgstr "jahr(e)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form

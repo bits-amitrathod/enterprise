@@ -9,10 +9,12 @@
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
 # Antonio Trueba, 2017
 # Nicolás Broggi <rnbroggi@gmail.com>, 2017
+# e2f_EPV Translator <e2f_EPV@outlook.com>, 2017
 # Gustavo Orozco H. <gustavo.orozco.h@app-247.com>, 2017
 # Ana Juaristi <ajuaristio@gmail.com>, 2017
 # Martin Trigaux, 2017
 # Eduardo Magdalena <emagdalena@close2circle.com>, 2017
+# ES R1 <e2fes@hotmail.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -32,12 +34,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_bill_my_account
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order_ups_bill_my_account
 msgid "Bill My Account"
-msgstr "Facturar a Mi Cuenta"
+msgstr "Facturar a mi cuenta"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_cod_funds_code
 msgid "COD Funding Option"
-msgstr "Opción de pago contra reembolso"
+msgstr "Opción de pago contrarrembolso"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_delivery_carrier
@@ -68,7 +70,7 @@ msgstr "Cheque, cheque de caja o giro"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_cod
 msgid "Collect on Delivery"
-msgstr "Pago contra reembolso"
+msgstr "Pago contrarrembolso"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
@@ -92,7 +94,7 @@ msgid ""
 "If checked, ecommerce users will be prompted their UPS account number\n"
 "and delivery fees will be charged on it."
 msgstr ""
-"Si el pago es mediante cheque, se pedirá a los usuarios del comercio electrónico su número de cuenta de UPS\n"
+"Si el pago es mediante cheque, se pedirá a los usuarios de la tienda del sitio web su número de cuenta de UPS\n"
 "y se cargarán en ella los gastos del envío."
 
 #. module: delivery_ups
@@ -154,8 +156,8 @@ msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> "
 "%s<br/><b>Packages:</b> %s"
 msgstr ""
-"Envío creado en los <b>números de seguimiento de UPS:</b><br/><b> %s "
-"Paquetes:</b><br/> %s"
+"Envío creado en los <br/><b>números de seguimiento de UPS:</b> "
+"%s<br/><b>Paquetes:</b> %s"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:196
@@ -164,8 +166,8 @@ msgid ""
 "The address of your company is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
-"La dirección de su compañía falta o es errónea.\n"
-"(Campo(s) faltante : %s)"
+"La dirección de su compañía está incompleta o no es válida.\n"
+"[Campo(s) que falta(n): %s]"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:206
@@ -174,8 +176,8 @@ msgid ""
 "The address of your warehouse is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
-"La dirección de su almacén falta o es errónea.\n"
-"(Campo(s) faltante : %s)"
+"La dirección de su almacén está incompleta o no es válida.\n"
+"[Campo(s) que falta(n): %s]"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:226
@@ -213,7 +215,7 @@ msgid ""
 "from your customer."
 msgstr ""
 "Este servicio de valor añadido permite a UPS recibir el pago del envío "
-"directamente desde su cliente"
+"directamente desde su cliente."
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier_ups_saturday_delivery
@@ -254,7 +256,7 @@ msgstr "Tipo de Paquete Predeterminado de UPS"
 #: model:ir.ui.view,arch_db:delivery_ups.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_ups.res_config_settings_view_form_stock
 msgid "UPS Delivery Methods"
-msgstr "Formas de envío de UPS"
+msgstr "Métodos de entrega de UPS"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_label_file_type
@@ -297,7 +299,7 @@ msgstr "Unidades para tamaño de Paquete UPS"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_package_weight_unit
 msgid "Ups Package Weight Unit"
-msgstr "Unidad de peso de los paquete de UPS"
+msgstr "Unidad de peso de los paquetes de UPS"
 
 #. module: delivery_ups
 #: model:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
