@@ -25,7 +25,7 @@ class AccountBatchDeposit(models.Model):
             self.currency_id = False
 
     @api.one
-    @api.depends('payment_ids', 'journal_id')
+    @api.depends('payment_ids', 'payment_ids.amount', 'journal_id')
     def _compute_amount(self):
         company_currency = self.journal_id.company_id.currency_id or self.env.user.company_id.currency_id
         journal_currency = self.journal_id.currency_id or company_currency
