@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 import logging
+import re
 import StringIO
 from xml.etree import ElementTree
 
@@ -58,6 +60,26 @@ class PatchedOfxParser(OfxParserClass):
         tag = ofx.find('unitprice')
         cls_.decimal_separator_cleanup(tag)
         return super(PatchedOfxParser, cls_).parseInvestmentTransaction(ofx)
+
+    @classmethod
+    def parseOfxDateTime(cls_, ofxDateTime):
+        res = re.search("^[0-9]*\.([0-9]{0,5})", ofxDateTime)
+        if res:
+            msec = datetime.timedelta(seconds=float("0." + res.group(1)))
+        else:
+            msec = datetime.timedelta(seconds=0)
+
+        try:
+            local_date = datetime.datetime.strptime(
+                ofxDateTime[:14], '%Y%m%d%H%M%S'
+            )
+            return local_date + msec
+        except:
+            if ofxDateTime[:8] == "00000000":
+                return None
+
+            return datetime.datetime.strptime(
+                ofxDateTime[:8], '%Y%m%d') + msec
 
 
 class AccountBankStatementImport(models.TransientModel):
