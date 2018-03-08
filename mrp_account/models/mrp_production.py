@@ -32,6 +32,19 @@ class MrpProduction(models.Model):
                 finished_move.value = sum([-m.value for m in consumed_moves]) + work_center_cost
         return True
 
+    def _prepare_wc_analytic_line(self, wc_line):
+        wc = wc_line.workcenter_id
+        hours = wc_line.duration / 60.0
+        value = hours * wc.costs_hour
+        account = wc.costs_hour_account_id.id
+        return {
+            'name': wc_line.name + ' (H)',
+            'amount': value,
+            'account_id': account,
+            'ref': wc.code,
+            'unit_amount': hours,
+        }
+
     def _costs_generate(self):
         """ Calculates total costs at the end of the production.
         :param production: Id of production order.
@@ -52,13 +65,7 @@ class MrpProduction(models.Model):
                     # we user SUPERUSER_ID as we do not guarantee an mrp user
                     # has access to account analytic lines but still should be
                     # able to produce orders
-                    AccountAnalyticLine.sudo().create({
-                        'name': wc_line.name + ' (H)',
-                        'amount': value,
-                        'account_id': account,
-                        'ref': wc.code,
-                        'unit_amount': hours,
-                    })
+                    AccountAnalyticLine.sudo().create(self._prepare_wc_analytic_line(wc_line))
         return amount
 
     @api.multi
