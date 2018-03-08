@@ -16,8 +16,6 @@ return AbstractWebClient.extend({
     custom_events: _.extend({}, AbstractWebClient.prototype.custom_events, {
         app_clicked: 'on_app_clicked',
         menu_clicked: 'on_menu_clicked',
-        getScrollTop: '_onGetScrollTop',
-        scrollTo: 'scrollTo',
         show_home_menu: '_onShowHomeMenu',
         hide_home_menu: '_onHideHomeMenu',
     }),
@@ -289,7 +287,7 @@ return AbstractWebClient.extend({
             var self = this;
             this.clear_uncommitted_changes().then(function() {
                 // Save the current scroll position
-                self.scrollTop = self.getScrollTop();
+                self.scrollPosition = self.getScrollPosition();
 
                 // Detach the web_client contents
                 var $to_detach = self.$el.contents()
@@ -316,7 +314,7 @@ return AbstractWebClient.extend({
                 in_DOM: true,
                 callbacks: [{widget: this.action_manager}],
             });
-            this.trigger_up('scrollTo', {offset: this.scrollTop || 0});
+            this.trigger_up('scrollTo', this.scrollPosition);
             this.home_menu_displayed = false;
             this.$el.removeClass('o_home_menu_background');
             this.menu.toggle_mode(false, this.action_manager.getCurrentAction() !== null);
@@ -339,25 +337,42 @@ return AbstractWebClient.extend({
             this.toggle_home_menu(false);
         }
     },
-    // --------------------------------------------------------------
-    // Scrolltop handling
-    // --------------------------------------------------------------
-    getScrollTop: function () {
-        if (config.device.isMobile) {
-            return this.el.scrollTop;
-        } else {
-            return this.action_manager.el.scrollTop;
-        }
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * Returns the left and top scroll positions of the main scrolling area
+     * (i.e. the action manager in desktop and the webclient itself in mobile).
+     *
+     * @returns {Object} with keys left and top
+     */
+    getScrollPosition: function () {
+        var isMobile = config.device.isMobile;
+        return {
+            left: isMobile ? $(window).scrollLeft() : this.action_manager.el.scrollLeft,
+            top: isMobile ? $(window).scrollTop() : this.action_manager.el.scrollTop,
+        };
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     * @private
+     */
+    _onGetScrollPosition: function (ev) {
+        ev.data.callback(this.getScrollPosition());
     },
     /**
-     * Scrolls the webclient to either a given offset or a target element
-     * Must be called with: trigger_up('scrollTo', options)
-     * @param {Integer} [options.offset] the number of pixels to scroll from top
-     * @param {Integer} [options.offset_left] the number of pixels to scroll from left
-     * @param {String} [options.selector] the selector of the target element to scroll to
+     * @override
+     * @private
      */
-    scrollTo: function (ev) {
-        var offset = {top: ev.data.offset, left: ev.data.offset_left || 0};
+    _onScrollTo: function (ev) {
+        var offset = {top: ev.data.top, left: ev.data.left || 0};
         var isMobile = config.device.isMobile;
         if (!offset.top) {
             offset = dom.getPosition(document.querySelector(ev.data.selector));
@@ -372,9 +387,6 @@ return AbstractWebClient.extend({
             this.action_manager.el.scrollTop = offset.top;
         }
         this.action_manager.el.scrollLeft = offset.left;
-    },
-    _onGetScrollTop: function (ev) {
-        ev.data.callback(this.getScrollTop());
     },
 });
 
