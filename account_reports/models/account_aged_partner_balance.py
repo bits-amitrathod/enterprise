@@ -123,7 +123,13 @@ class account_context_aged_receivable(models.TransientModel):
         return self.env['account.aged.receivable']
 
     def get_columns_names(self):
-        return [_("Not&nbsp;due&nbsp;on&nbsp;&nbsp; %s") % self.date_to, _("0&nbsp;-&nbsp;30"), _("30&nbsp;-&nbsp;60"), _("60&nbsp;-&nbsp;90"), _("90&nbsp;-&nbsp;120"), _("Older"), _("Total")]
+        return [_(u"Not\N{NO-BREAK SPACE}due\N{NO-BREAK SPACE}on %s") % self.date_to,
+                u"0\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}30",
+                u"30\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}60",
+                u"60\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}90",
+                u"90\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}120",
+                _(u"Older"),
+                _(u"Total")]
 
     @api.multi
     def get_columns_types(self):
@@ -177,7 +183,13 @@ class account_context_aged_payable(models.TransientModel):
         return self.env['account.aged.payable']
 
     def get_columns_names(self):
-        return [_("Not&nbsp;due&nbsp;on&nbsp;&nbsp; %s") % self.date_to, _("0&nbsp;-&nbsp;30"), _("30&nbsp;-&nbsp;60"), _("60&nbsp;-&nbsp;90"), _("90&nbsp;-&nbsp;120"), _("Older"), _("Total")]
+        return [_(u"Not\N{NO-BREAK SPACE}due\N{NO-BREAK SPACE}on %s") % self.date_to,
+                u"0\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}30",
+                u"30\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}60",
+                u"60\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}90",
+                u"90\N{NO-BREAK SPACE}-\N{NO-BREAK SPACE}120",
+                _(u"Older"),
+                _(u"Total")]
 
     @api.multi
     def get_columns_types(self):
