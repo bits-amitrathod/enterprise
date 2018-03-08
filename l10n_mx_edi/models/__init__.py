@@ -12,4 +12,5 @@ from . import payment_method
 from . import product
 from . import res_company
 from . import res_country
+from . import res_currency
 from . import res_partner

@@ -704,7 +704,12 @@ class AccountInvoice(models.Model):
         '''Create the values to fill the CFDI template.
         '''
         self.ensure_one()
-        precision_digits = self.currency_id.decimal_places
+        precision_digits = self.currency_id.l10n_mx_edi_decimal_places
+        if precision_digits is False:
+            raise UserError(_(
+                "The SAT does not provide information for the currency %s.\n"
+                "You must get manually a key from the PAC to confirm the "
+                "currency rate is accurate enough."), self.currency_id)
         partner_id = self.partner_id
         if self.partner_id.type != 'invoice':
             partner_id = self.partner_id.commercial_partner_id
