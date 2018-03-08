@@ -819,7 +819,7 @@
                         <page string="Notes">
                             <field name="reason" placeholder="Describe why you need to perform this quality check..."/>
                         </page>
-                        <page string="Message If Failure" attrs="{'invisible': [('test_type', 'in', ['picture', 'dummy', 'register_consumed_materials'])]}">
+                        <page name="message_if_failure" string="Message If Failure" attrs="{'invisible': [('test_type', '!=', 'measure')]}">
                             <field name="failure_message"/>
                         </page>
                     </notebook>
