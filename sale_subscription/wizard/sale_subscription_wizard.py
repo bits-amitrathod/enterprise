@@ -27,6 +27,7 @@ class SaleSubscriptionWizard(models.TransientModel):
             'pricelist_id': self.subscription_id.pricelist_id.id,
             'fiscal_position_id': fpos_id,
             'subscription_management': 'upsell',
+            'origin': self.subscription_id.code,
         })
         for line in self.option_lines:
             self.subscription_id.partial_invoice_line(order, line, date_from=self.date_from)

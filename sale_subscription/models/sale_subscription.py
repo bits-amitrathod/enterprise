@@ -388,6 +388,7 @@ class SaleSubscription(models.Model):
                 'order_line': order_lines,
                 'analytic_account_id': subscription.analytic_account_id.id,
                 'subscription_management': 'renew',
+                'origin': subscription.code,
                 'note': subscription.description,
                 'fiscal_position_id': fpos_id,
                 'user_id': subscription.user_id.id,
