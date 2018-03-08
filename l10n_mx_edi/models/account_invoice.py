@@ -949,7 +949,8 @@ class AccountInvoice(models.Model):
         result = super(AccountInvoice, self).invoice_validate()
         version = self.l10n_mx_edi_get_pac_version()
         for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
-            if record.type == 'out_refund' and not record.refund_invoice_id.l10n_mx_edi_cfdi_uuid:
+            if record.type == 'out_refund' and (
+                record.refund_invoice_id and not record.refund_invoice_id.l10n_mx_edi_cfdi_uuid):
                 record.message_post(
                     body='<p style="color:red">' + _(
                         'The invoice related has no valid fiscal folio. For this '

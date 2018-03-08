@@ -98,8 +98,10 @@ var PickingBarcodeHandler = AbstractField.extend({
 
         this.trigger_up('activeBarcode', {
             name: this.name,
+            notifyChange: false,
             fieldName: 'move_line_ids',
             quantity: 'qty_done',
+            setQuantityWithKeypress: true,
             commands: {
                 'barcode': '_barcodePickingAddRecordId',
                 'O-CMD.MAIN-MENU': _.bind(this.do_action, this, 'stock_barcode.stock_barcode_action_main_menu', {clear_breadcrumbs: true}),

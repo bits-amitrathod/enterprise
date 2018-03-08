@@ -139,7 +139,7 @@ class MrpProductionWorkcenterLine(models.Model):
         self.component_remaining_qty -= float_round(self.qty_done, precision_rounding=move.product_uom.rounding)
         # Assign move line to quality check if necessary
         if not self.move_line_id:
-            if self.component_tracking == 'none' or self.current_quality_check_id.component_is_byproduct:
+            if self.component_tracking == 'none' or self.current_quality_check_id.component_is_byproduct or not lines_without_lots:
                 self.move_line_id = self.env['stock.move.line'].create({
                     'move_id': move.id,
                     'product_id': move.product_id.id,
