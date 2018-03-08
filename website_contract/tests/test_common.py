@@ -7,7 +7,7 @@ class TestContractCommon(common.TransactionCase):
     def setUp(self):
         super(TestContractCommon, self).setUp()
 
-        self.env.user.company_id.currency_id = self.env.ref('base.EUR')
+        self.cr.execute("UPDATE res_company SET currency_id = %s WHERE id = %s", [self.env.ref("base.EUR").id, self.env.user.company_id.id])
 
         Contract = self.env['sale.subscription']
         Template = self.env['sale.subscription.template']
