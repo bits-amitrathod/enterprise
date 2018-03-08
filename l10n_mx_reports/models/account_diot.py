@@ -2,6 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from __future__ import division
 
+import re
+from unicodedata import normalize
 from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare
@@ -171,7 +173,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             p_columns = [
                 partner.l10n_mx_type_of_third or '', partner.l10n_mx_type_of_operation or '',
                 partner.vat or '', partner.country_id.code or '',
-                partner.l10n_mx_nationality or '']
+                self.str_format(partner.l10n_mx_nationality, True)]
             partner_data = grouped_partners[partner]
             total_tax16 = 0
             total_tax0 = 0
@@ -194,7 +196,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             unfolded = 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all
             lines.append({
                 'id': 'partner_' + str(partner.id),
-                'name': partner.name,
+                'name': self.str_format(partner.name)[:45],
                 'columns': [{'name': v if index < 5 else int(round(v, 0))} for index, v in enumerate(p_columns)],
                 'level': 2,
                 'unfoldable': True,
@@ -278,6 +280,27 @@ class MxReportPartnerLedger(models.AbstractModel):
                 })
             lines += domain_lines
         return lines
+
+    __diot_supplier_re = re.compile(u'''[^A-Za-z0-9 Ññ&]''')
+    __diot_nationality_re = re.compile(u'''[^rA-Za-z0-9 Ññ]''')
+
+    @staticmethod
+    def str_format(text, is_nationality=False):
+        if not text:
+            return ''
+        trans_tab = {
+            ord(char): None for char in (
+                u'\N{COMBINING GRAVE ACCENT}',
+                u'\N{COMBINING ACUTE ACCENT}',
+                u'\N{COMBINING DIAERESIS}',
+            )
+        }
+        text_n = normalize(
+            'NFKC', normalize('NFKD', text).translate(trans_tab))
+        check_re = MxReportPartnerLedger.__diot_supplier_re
+        if is_nationality:
+            check_re = MxReportPartnerLedger.__diot_nationality_re
+        return check_re.sub('', text_n)
 
     @api.model
     def get_report_name(self):
