@@ -730,8 +730,8 @@ class AccountInvoice(models.Model):
         ctx = dict(company_id=self.company_id.id, date=self.date_invoice)
         mxn = self.env.ref('base.MXN').with_context(ctx)
         invoice_currency = self.currency_id.with_context(ctx)
-        values['rate'] = ('%0.*f' % (
-            precision_digits, invoice_currency.compute(1, mxn))) if self.currency_id.name != 'MXN' else False
+        values['rate'] = ('%.6f' % (
+            invoice_currency.compute(1, mxn))) if self.currency_id.name != 'MXN' else False
 
         version = self.l10n_mx_edi_get_pac_version()
         values['document_type'] = 'ingreso' if self.type == 'out_invoice' else 'egreso'
