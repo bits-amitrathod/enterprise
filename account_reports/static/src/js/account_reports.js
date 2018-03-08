@@ -2,7 +2,7 @@ odoo.define('account_reports.account_report', function (require) {
 'use strict';
 
 var core = require('web.core');
-var Widget = require('web.Widget');
+var AbstractAction = require('web.AbstractAction');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var Dialog = require('web.Dialog');
 var framework = require('web.framework');
@@ -16,7 +16,7 @@ var QWeb = core.qweb;
 var _t = core._t;
 
 
-var accountReportsWidget = Widget.extend(ControlPanelMixin, {
+var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
 
     events: {
         'click .o_account_reports_summary': 'edit_summary',

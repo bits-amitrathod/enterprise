@@ -1,12 +1,12 @@
 odoo.define('web_studio.Main', function (require) {
 "use strict";
 
+var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
 var dom = require('web.dom');
 var form_common = require('web.view_dialogs');
 var session = require('web.session');
-var Widget = require('web.Widget');
 
 var ActionEditor = require('web_studio.ActionEditor');
 var bus = require('web_studio.bus');
@@ -16,7 +16,7 @@ var ViewEditorManager = require('web_studio.ViewEditorManager');
 var _t = core._t;
 var _lt = core._lt;
 
-var Main = Widget.extend({
+var Main = AbstractAction.extend({
     className: 'o_web_studio_client_action',
     error_messages: {
         'wrong_xpath': _lt("This operation caused an error, probably because a xpath was broken"),

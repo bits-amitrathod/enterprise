@@ -4,10 +4,10 @@ odoo.define('account_plaid.acc_config_widget', function(require) {
 var core = require('web.core');
 var framework = require('web.framework');
 var QWeb = core.qweb;
-var Widget = require('web.Widget');
+var AbstractAction = require('web.AbstractAction');
 
 
-var PlaidAccountConfigurationWidget = Widget.extend({
+var PlaidAccountConfigurationWidget = AbstractAction.extend({
 
     call: function(params, mfa) {
         var self = this;

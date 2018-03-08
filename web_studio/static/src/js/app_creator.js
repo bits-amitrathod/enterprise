@@ -1,11 +1,10 @@
 odoo.define('web_studio.AppCreator', function (require) {
 "use strict";
 
+var AbstractAction = require('web.AbstractAction');
 var config = require('web.config');
 var core = require('web.core');
-var Dialog = require('web.Dialog');
 var framework = require('web.framework');
-var Widget = require('web.Widget');
 var relational_fields = require('web.relational_fields');
 var session = require('web.session');
 
@@ -16,7 +15,7 @@ var QWeb = core.qweb;
 var FieldMany2One = relational_fields.FieldMany2One;
 var _t = core._t;
 
-var AppCreator = Widget.extend(StandaloneFieldManagerMixin, {
+var AppCreator = AbstractAction.extend(StandaloneFieldManagerMixin, {
     template: 'web_studio.AppCreator',
     events: {
         'click .o_web_studio_app_creator_next': '_onNext',

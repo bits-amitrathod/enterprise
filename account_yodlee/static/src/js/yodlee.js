@@ -1,14 +1,14 @@
 odoo.define('account_yodlee.acc_config_widget', function(require) {
 "use strict";
 
+var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
 var framework = require('web.framework');
-var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
 
 
-var YodleeAccountConfigurationWidget = Widget.extend({
+var YodleeAccountConfigurationWidget = AbstractAction.extend({
 
     process_next_step: function() {
         var self = this;

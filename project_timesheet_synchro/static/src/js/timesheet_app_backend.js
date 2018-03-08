@@ -1,11 +1,11 @@
 odoo.define('projcet_timesheet_synchro.app', function (require) {
 'use strict';
 
+    var AbstractAction = require('web.AbstractAction');
     var core = require('web.core');
     var IFrameWidget = require('web.IFrameWidget');
-    var Widget = require('web.Widget');
 
-    var project_timesheet_synchro_demo = Widget.extend({
+    var project_timesheet_synchro_demo = AbstractAction.extend({
         template: 'project_timesheet_synchro.demo',
         init: function(parent) {
             this._super(parent);

@@ -1,6 +1,7 @@
 odoo.define('sale_subscription_dashboard.dashboard', function (require) {
 'use strict';
 
+var AbstractAction = require('web.AbstractAction');
 var ajax = require('web.ajax');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var core = require('web.core');
@@ -29,7 +30,7 @@ because of the calculation and is then rendered separately.
 */
 
 // Abstract widget with common methods
-var sale_subscription_dashboard_abstract = Widget.extend(ControlPanelMixin, {
+var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMixin, {
     cssLibs: [
         '/web/static/lib/nvd3/nv.d3.css'
     ],

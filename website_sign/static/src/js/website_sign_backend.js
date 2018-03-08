@@ -127,6 +127,7 @@ odoo.define('website_sign.views_custo', function(require) {
 odoo.define('website_sign.template', function(require) {
     'use strict';
 
+    var AbstractAction = require('web.AbstractAction');
     var ControlPanelMixin = require('web.ControlPanelMixin');
     var core = require('web.core');
     var Dialog = require('web.Dialog');
@@ -717,7 +718,7 @@ odoo.define('website_sign.template', function(require) {
         },
     });
 
-    var Template = Widget.extend(ControlPanelMixin, {
+    var Template = AbstractAction.extend(ControlPanelMixin, {
         className: "o_sign_template",
 
         events: {

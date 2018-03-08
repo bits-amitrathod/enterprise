@@ -9,13 +9,13 @@ odoo.define('website_studio.FormManager', function (require) {
  * @module website_studio.FormManager
  */
 
+var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
 var framework = require('web.framework');
-var Widget = require('web.Widget');
 
 var _t = core._t;
 
-var FormManager = Widget.extend({
+var FormManager = AbstractAction.extend({
     template: 'website_studio.FormManager',
 
     events: {

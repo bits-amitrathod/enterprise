@@ -3,10 +3,10 @@ odoo.define('account_online_sync.acc_config_widget', function(require) {
 
 var core = require('web.core');
 var framework = require('web.framework');
-var Widget = require('web.Widget');
+var AbstractAction = require('web.AbstractAction');
 var QWeb = core.qweb;
 
-var OnlineSyncAccountInstitutionSelector = Widget.extend({
+var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
     template: 'OnlineSyncSearchBank',
     init: function(parent, context) {
         this._super(parent, context);

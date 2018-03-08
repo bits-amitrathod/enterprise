@@ -1,14 +1,14 @@
 odoo.define('stock_barcode.MainMenu', function (require) {
 "use strict";
 
+var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
-var Widget = require('web.Widget');
 var Dialog = require('web.Dialog');
 var Session = require('web.session');
 
 var _t = core._t;
 
-var MainMenu = Widget.extend({
+var MainMenu = AbstractAction.extend({
     template: 'main_menu',
 
     events: {

@@ -1,9 +1,9 @@
 odoo.define('event_barcode.EventScanView', function (require) {
 "use strict";
 
+var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
-var Widget = require('web.Widget');
 var time = require('web.time');
 
 var _t = core._t;
@@ -11,7 +11,7 @@ var QWeb = core.qweb;
 
 
 // load widget with main barcode scanning View
-var EventScanView = Widget.extend({
+var EventScanView = AbstractAction.extend({
     template: 'event_barcode_template',
     events: {
         'keypress #event_barcode': 'on_manual_scan',

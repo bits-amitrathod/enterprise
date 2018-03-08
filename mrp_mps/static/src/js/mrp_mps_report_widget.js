@@ -3,7 +3,7 @@ odoo.define('mrp_mps.mrp_mps_report', function (require) {
 
 var core = require('web.core');
 var session = require('web.session');
-var Widget = require('web.Widget');
+var AbstractAction = require('web.AbstractAction');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var SearchView = require('web.SearchView');
 var data = require('web.data');
@@ -13,7 +13,7 @@ var field_utils = require('web.field_utils');
 var QWeb = core.qweb;
 var _t = core._t;
 
-var mrp_mps_report = Widget.extend(ControlPanelMixin, {
+var mrp_mps_report = AbstractAction.extend(ControlPanelMixin, {
     custom_events: {
         search: '_onSearch',
     },
