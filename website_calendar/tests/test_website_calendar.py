@@ -21,7 +21,7 @@ class WebsiteCalendarTest(common.HttpCase):
 
         self.attendance = self.env['resource.calendar.attendance'].create({
             'name': 'monday morning',
-            'dayofweek': 0,
+            'dayofweek': '0',
             'hour_from': 8,
             'hour_to': 12,
             'calendar_id': self.resource_calendar.id
