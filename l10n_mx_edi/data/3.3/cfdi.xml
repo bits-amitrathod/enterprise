@@ -92,8 +92,8 @@
                 </cfdi:Conceptos>
                 <t t-if="taxes['total_transferred'] is not None or taxes['total_withhold'] is not None">
                     <cfdi:Impuestos
-                        t-att-TotalImpuestosTrasladados="'%.*f' % (decimal_precision, taxes['total_transferred'])"
-                        t-att-TotalImpuestosRetenidos="'%.*f' % (decimal_precision, taxes['total_withhold'])">
+                        t-att-TotalImpuestosTrasladados="'%.*f' % (decimal_precision, taxes['total_transferred']) if taxes['total_transferred'] else None"
+                        t-att-TotalImpuestosRetenidos="'%.*f' % (decimal_precision, taxes['total_withhold']) if taxes['total_withhold'] else None">
                         <t t-if="taxes['withholding']">
                             <cfdi:Retenciones>
                                 <t t-foreach="taxes['withholding']" t-as="withhold">

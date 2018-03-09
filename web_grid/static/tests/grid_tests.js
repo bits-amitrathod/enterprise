@@ -284,7 +284,9 @@ QUnit.module('Views', {
                 '</grid>',
             currentDate: "2017-02-25",
             viewOptions: {
-                views: [[23, 'form']],
+                action: {
+                    views: [{viewID: 23, type: 'form'}],
+                },
             },
             archs: this.archs,
             mockRPC: function (route, args) {
@@ -350,7 +352,9 @@ QUnit.module('Views', {
                 '</grid>',
             currentDate: "2017-02-25",
             viewOptions: {
-                views: [[23, 'form']],
+                action: {
+                    views: [{viewID: 23, type: 'form'}],
+                },
             },
             domain: [['date', '>', '2014-09-09']],
             archs: this.archs,
@@ -585,6 +589,9 @@ QUnit.module('Views', {
             currentDate: "2017-01-25",
             mockRPC: function (route) {
                 return this._super.apply(this, arguments);
+            },
+            action: {
+                views: [{viewID: 23, type: 'form'}],
             },
             context: {'hide_second_button': true}
         });

@@ -8,6 +8,7 @@ from lxml.builder import E
 from odoo import models
 import json
 import uuid
+import random
 
 from odoo.tools import pycompat
 
@@ -227,6 +228,10 @@ class View(models.Model):
                 elif line.startswith('+'):
                     node = next(new_view_iterator)
 
+                    if node.tag in ('group', 'page') and 'name' not in node.attrib:
+                        uid = str(uuid.UUID(int=random.getrandbits(128)))[:6]
+                        node.attrib['name'] = 'studio_%s_%s' % (node.tag, uid)
+
                     if node.tag == 'attributes':
                         continue
 
@@ -350,8 +355,14 @@ class View(models.Model):
                 for n in target_node.iterancestors()
                 if n.getparent() is not None
             ]
-            expr = '//%s/%s' % ('/'.join(reversed(ancestors)),
-                                self._identify_node(target_node))
+            node = self._identify_node(target_node)
+            if ancestors:
+                expr = '//%s/%s' % ('/'.join(reversed(ancestors)), node)
+            else:
+                # There are cases where there might not be any ancestors
+                # like in a brand new gantt or calendar view, if that's the
+                # case then just give the identified node
+                expr = '//%s' % node
 
         return expr
 

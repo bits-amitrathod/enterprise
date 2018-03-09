@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from ebaysdk.trading import Connection as Trading
+from odoo.addons.sale_ebay.tools.ebaysdk import Trading
 from ebaysdk.exception import ConnectionError
 from odoo import models, fields, api
 

@@ -243,15 +243,15 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         default_template = self.env.ref(
             'account.mail_template_data_payment_receipt')
         wizard_mail = self.env['mail.compose.message'].with_context({
-            'default_template_id': default_template.id}).create({})
+            'default_template_id': default_template.id,
+            'default_model': 'account.payment',
+            'default_res_id': payment.id}).create({})
         res = wizard_mail.onchange_template_id(
             default_template.id, wizard_mail.composition_mode,
             'account_payment', payment.id)
         wizard_mail.write({'attachment_ids': res.get('value', {}).get(
             'attachment_ids', [])})
         wizard_mail.send_mail()
-        attachment = self.env['ir.attachment'].search([
-            ('res_id', '=', payment.id),
-            ('res_model', '=', 'account.payment')])
+        attachment = payment.l10n_mx_edi_retrieve_attachments()
         self.assertEqual(len(attachment), 2,
                          'Documents not attached correctly')

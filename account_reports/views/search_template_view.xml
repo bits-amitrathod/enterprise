@@ -5,7 +5,7 @@
     <template id="search_template_date_filter">
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
             <span class="fa fa-calendar"/>
-            <t t-if="options['date'].get('string') and options['date'].get('filter') != 'custom'"><t t-raw="options['date']['string']"/></t>
+            <t t-if="options['date'].get('string') and options['date'].get('filter') != 'custom'"><t t-esc="options['date']['string']"/></t>
             <t t-if="options['date'].get('filter') == 'custom'">
                 <t t-if="options['date'].get('date')">Date: <span class="js_format_date"><t t-esc="options['date']['date']"/></span></t>
                 <t t-if="options['date'].get('date_from')">From: <span class="js_format_date"><t t-esc="options['date']['date_from']"/></span> <br/><span class="o_reports_date_to">to: <span class="js_format_date"><t t-esc="options['date']['date_to']"/></span></span></t>
@@ -56,7 +56,7 @@
     <template id="search_template_comparison">
         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
             <span class="fa fa-bar-chart"/> Comparison: <br/>
-            <t t-if="options['comparison'].get('string') and options['comparison'].get('filter') != 'custom'"><t t-raw="options['comparison']['string']"/></t>
+            <t t-if="options['comparison'].get('string') and options['comparison'].get('filter') != 'custom'"><t t-esc="options['comparison']['string']"/></t>
             <t t-if="options['comparison'].get('filter') == 'custom'">
                 <t t-if="options['comparison'].get('date_from')"><span class="o_reports_date_to">From: <span class="js_format_date"><t t-esc="options['comparison']['date_from']"/></span></span> <br/><span class="o_reports_date_to">to: <span class="js_format_date"><t t-esc="options['comparison']['date_to']"/></span></span></t>
                 <t t-if="options['comparison'].get('date')">Date: <span class="js_format_date"><t t-esc="options['comparison']['date']"/></span></t>

@@ -121,3 +121,4 @@ class StockBarcodeLotLine(models.TransientModel):
     qty_done = fields.Float('Quantity Done')
     stock_barcode_lot_id = fields.Many2one('stock_barcode.lot')
     move_line_id = fields.Many2one('stock.move.line')
+    product_barcode = fields.Char('Barcode', related='lot_name')

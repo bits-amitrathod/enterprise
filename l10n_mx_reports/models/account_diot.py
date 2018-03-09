@@ -2,8 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from __future__ import division
 
-from datetime import datetime, timedelta
-
 from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_compare
@@ -20,8 +18,8 @@ class MxReportPartnerLedger(models.AbstractModel):
     def get_columns_name(self, options):
         return [
             {},
-            {'name': _('Type of Operation')},
             {'name': _('Type of Third')},
+            {'name': _('Type of Operation')},
             {'name': _('VAT')},
             {'name': _('Country')},
             {'name': _('Nationality')},
@@ -69,11 +67,6 @@ class MxReportPartnerLedger(models.AbstractModel):
         partners = {}
         results = self.do_query(options, line_id)
         mx_country = self.env.ref('base.mx')
-        initial_bal_date_to = datetime.strptime(self.env.context[
-            'date_from_aml'], DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
-        initial_bal_results = self.with_context(
-            date_to=initial_bal_date_to.strftime(
-                DEFAULT_SERVER_DATE_FORMAT)).do_query(options, line_id)
         context = self.env.context
         journal_ids = []
         for company in self.env['res.company'].browse(
@@ -88,7 +81,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             ('company_id', 'in', context['company_ids']),
             ('journal_id', 'in', journal_ids),
             ('account_id', 'not in', account_tax_ids.ids),
-            ('tax_ids', '!=', False),
+            ('tax_ids', 'in', tax_ids.ids),
         ]
         if context['date_from_aml']:
             base_domain.append(('date', '>=', context['date_from_aml']))
@@ -99,8 +92,6 @@ class MxReportPartnerLedger(models.AbstractModel):
             domain.append(('partner_id', '=', partner_id))
             partner = self.env['res.partner'].browse(partner_id)
             partners[partner] = result
-            partners[partner]['initial_bal'] = initial_bal_results.get(
-                partner.id, {'balance': 0, 'debit': 0, 'credit': 0})
             if not context.get('print_mode'):
                 #  fetch the 81 first amls. The report only displays the first
                 # 80 amls. We will use the 81st to know if there are more than
@@ -143,19 +134,15 @@ class MxReportPartnerLedger(models.AbstractModel):
         if line_id:
             line_id = line_id.replace('partner_', '')
         context = self.env.context
-        company_id = context.get('company_id') or self.env.user.company_id
-        grouped_partners = self.with_context(
-            date_from_aml=context['date_from'], date_from=context[
-                'date_from'] and company_id.compute_fiscalyear_dates(
-                    datetime.strptime(
-                        context['date_from'], DEFAULT_SERVER_DATE_FORMAT))[
-                            'date_from'] or None).group_by_partner_id(options, line_id)
+        grouped_partners = self.with_context(date_from_aml=context[
+            'date_from']).group_by_partner_id(options, line_id)
         # Aml go back to the beginning of the user chosen range but the
         # amount on the partner line should go back to either the beginning of
         # the fy or the beginning of times depending on the partner
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
         tag_16 = self.env.ref('l10n_mx.tag_diot_16')
+        tag_imp = self.env.ref('l10n_mx.tag_diot_16_imp')
         tag_0 = self.env.ref('l10n_mx.tag_diot_0')
         tag_ret = self.env.ref('l10n_mx.tag_diot_ret')
         tag_exe = self.env.ref('l10n_mx.tag_diot_exento')
@@ -163,6 +150,8 @@ class MxReportPartnerLedger(models.AbstractModel):
             ('type_tax_use', '=', 'purchase')])
         tax16 = tax_ids.search([('id', 'in', tax_ids.ids),
                                 ('tag_ids', 'in', tag_16.ids)])
+        taximp = tax_ids.search([('id', 'in', tax_ids.ids),
+                                ('tag_ids', 'in', tag_imp.ids)])
         tax0 = tax_ids.search([('id', 'in', tax_ids.ids),
                                ('tag_ids', 'in', tag_0.ids)])
         tax_ret = tax_ids.search([('id', 'in', tax_ids.ids),
@@ -188,14 +177,16 @@ class MxReportPartnerLedger(models.AbstractModel):
                 partner.vat or '', partner.country_id.code or '',
                 partner.l10n_mx_nationality or '']
             partner_data = grouped_partners[partner]
-            total_tax16 = 0
+            total_tax16 = total_taximp = 0
             total_tax0 = 0
             exempt = 0
             withh = 0
             for tax in tax16.ids:
                 total_tax16 += partner_data.get(tax, 0)
             p_columns.append(int(round(total_tax16, 0)))
-            p_columns.append(0)
+            for tax in taximp.ids:
+                total_taximp += partner_data.get(tax, 0)
+            p_columns.append(int(round(total_taximp, 0)))
             total_tax0 += sum([partner_data.get(tax, 0) for tax in tax0.ids])
             p_columns.append(int(round(total_tax0, 0)))
             exempt += sum([partner_data.get(exem, 0)
@@ -234,7 +225,7 @@ class MxReportPartnerLedger(models.AbstractModel):
                 name = name[:32] + "..." if len(name) > 35 else name
                 columns = ['', '', '', '']
                 columns.append('')
-                total_tax16 = 0
+                total_tax16 = total_taximp = 0
                 total_tax0 = 0
                 exempt = 0
                 withh = 0
@@ -242,7 +233,10 @@ class MxReportPartnerLedger(models.AbstractModel):
                     line.debit or line.credit * -1
                     for tax in tax16.ids if tax in line.tax_ids.ids])
                 columns.append(int(round(total_tax16, 0)))
-                columns.append(0)
+                total_taximp += sum([
+                    line.debit or line.credit * -1
+                    for tax in taximp.ids if tax in line.tax_ids.ids])
+                columns.append(int(round(total_taximp, 0)))
                 total_tax0 += sum([
                     line.debit or line.credit * -1
                     for tax in tax0.ids if tax in line.tax_ids.ids])
@@ -318,9 +312,9 @@ class MxReportPartnerLedger(models.AbstractModel):
             data[1] = columns[1]['name']
             data[2] = columns[2]['name'] if columns[0]['name'] == '04' else ''
             data[3] = columns[2]['name'] if columns[0]['name'] != '04' else ''
-            data[4] = u''.join(line.get('name', '')).encode('utf-8').strip().decode("utf-8")
-            data[5] = columns[3]['name']
-            data[6] = u''.join(columns[4]['name']).encode('utf-8').strip().decode("utf-8")
+            data[4] = u''.join(line.get('name', '')).encode('utf-8').strip().decode('utf-8') if columns[0]['name'] != '04' else ''
+            data[5] = columns[3]['name'] if columns[0]['name'] != '04' else ''
+            data[6] = u''.join(columns[4]['name']).encode('utf-8').strip().decode('utf-8') if columns[0]['name'] != '04' else ''
             data[7] = int(columns[5]['name']) if columns[5]['name'] else ''
             data[13] = int(columns[6]['name']) if columns[6]['name'] else ''
             data[18] = int(columns[7]['name']) if columns[7]['name'] else ''

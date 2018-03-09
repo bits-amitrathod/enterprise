@@ -178,8 +178,8 @@ class MarketingCampaign(models.Model):
             # check uniqueness based on 'unique_field_id' field
             if campaign.unique_field_id and campaign.unique_field_id.name != 'id':
                 # Don't use browse maybe record is deleted
-                existing_records = RecordModel.read(existing_rec_ids, [campaign.unique_field_id.name])
-                unique_field_vals = set([rec[campaign.unique_field_id.name] for rec in existing_records])
+                existing_records = RecordModel.browse(existing_rec_ids).read([campaign.unique_field_id.name])
+                unique_field_vals = list({rec[campaign.unique_field_id.name] for rec in existing_records})
                 unique_domain = [(campaign.unique_field_id.name, 'not in', unique_field_vals)]
                 record_domain = expression.AND([unique_domain, record_domain])
             db_rec_ids = set(RecordModel.search(record_domain).ids)
@@ -319,7 +319,8 @@ class MarketingActivity(models.Model):
     @api.constrains('trigger_type', 'parent_id')
     def _check_trigger_begin(self):
         if any(activity.trigger_type == 'begin' and activity.parent_id for activity in self):
-            raise ValidationError(_("Error! You can't define a child activity with a trigger of type 'begin'."))
+            raise ValidationError(
+                _('Error! You can\'t define a child activity with a trigger of type "beginning of campaign".'))
 
     @api.model
     def create(self, values):

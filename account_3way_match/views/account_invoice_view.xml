@@ -25,7 +25,7 @@
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.view_account_invoice_filter"/>
         <field name="arch" type="xml">
-            <xpath expr="//filter[@name='refunds']" position='after'>
+            <xpath expr="//filter[@name='late']" position='after'>
                 <separator/>
                 <filter name="bills_to_pay" string="Bills to Pay" domain="['&amp;', ('state', '=', 'open'), '|', ('date_due', '&lt;', time.strftime('%%Y-%%m-%%d')), ('release_to_pay','=', 'yes')]"/>
                 <filter name="exception" string="Bills in Exception" domain="[('release_to_pay','=', 'exception')]"/>

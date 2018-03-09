@@ -36,6 +36,7 @@ class AccountBankStatementImport(models.TransientModel):
 
         curr_cache = {c['name']: c['id'] for c in self.env['res.currency'].search_read([], ['id', 'name'])}
         statement_list = []
+        unique_import_set = set([])
         currency = account_no = False
         for statement in root[0].findall('ns:Stmt', ns):
             statement_vals = {}
@@ -104,11 +105,14 @@ class AccountBankStatementImport(models.TransientModel):
                     entry_ref = entry.xpath('ns:NtryRef/text()', namespaces=ns)
                     if entry_ref:
                         entry_vals['unique_import_id'] = '{}-{}'.format(unique_import_ref[0], entry_ref[0])
-                    else:
+                    elif not entry_ref and unique_import_ref[0] not in unique_import_set:
                         entry_vals['unique_import_id'] = unique_import_ref[0]
+                    else:
+                        entry_vals['unique_import_id'] = '{}-{}'.format(unique_import_ref[0], sequence)
                 else:
                     entry_vals['unique_import_id'] = '{}-{}'.format(statement_vals['name'], sequence)
 
+                unique_import_set.add(entry_vals['unique_import_id'])
                 transactions.append(entry_vals)
             statement_vals['transactions'] = transactions
 

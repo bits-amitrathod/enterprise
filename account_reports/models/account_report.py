@@ -359,7 +359,7 @@ class AccountReport(models.AbstractModel):
                     }
 
                 #sum line values in hierarchy leaves
-                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in pycompat.izip(hierarchy_list[group_key]['values']['columns'], [c['no_format_name'] for c in columns])]
+                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in pycompat.izip(hierarchy_list[group_key]['values']['columns'], [c.get('no_format_name', 0) for c in columns])]
 
                 #loop on
                 if account_id.group_id:
@@ -502,7 +502,7 @@ class AccountReport(models.AbstractModel):
                 return '%s - %s' % ((dt_to.year - 1), dt_to.year)
         if not dt_from:
             return _('As of %s') % (format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)),)
-        return _('From %s <br/> to  %s') % (format_date(self.env, dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)), format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
+        return _('From %s <br/> to  %s').replace('<br/>', '\n') % (format_date(self.env, dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)), format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
 
     def apply_date_filter(self, options):
         if not options.get('date'):
@@ -585,7 +585,8 @@ class AccountReport(models.AbstractModel):
             dt_to = options['date'].get('date_to') or options['date'].get('date')
             dt_to = datetime.strptime(dt_to, "%Y-%m-%d")
             display_value = False
-            for index in range(0, options['comparison'].get('number_period', 1)):
+            number_period = options['comparison'].get('number_period', 1) or 0
+            for index in range(0, number_period):
                 if cmp_filter == 'same_last_year' or options_filter in ('this_year', 'last_year'):
                     ly = lambda d: d - timedelta(days=366 if calendar.isleap(d.year) else 365)
                     if dt_from:

@@ -8,7 +8,7 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     # TODO pĥase 2: mps_warehouse_ids = fields.Many2many('stock.warehouse', 'MPS in Warehouses')
-    mps_active = fields.Boolean('MPS Active')
+    mps_active = fields.Boolean('Active in MPS')
     mps_forecasted = fields.Float('Forecasted Target', default=0.0)
     mps_min_supply = fields.Float('Minimum to Supply', default=0.0)
     mps_max_supply = fields.Float('Maximum to Supply', default=0.0)

@@ -24,39 +24,44 @@ odoo.define('project_timeshee.ui', function (require ) {
     var SANITIZERREGEX = /\./g; // Since it will be used in a loop, we don't want to compile the regex at each iteration.
     var MODULE_KEY = '__import__.'; // Xml_id prefix.
 
+    // Mobile device detection
+    // Awesome Timesheet is used in Android/iOS native app.
+    var isMobile = navigator.userAgent.match(/Android/i) ||
+                   navigator.userAgent.match(/webOS/i) ||
+                   navigator.userAgent.match(/iPhone/i) ||
+                   navigator.userAgent.match(/iPad/i) ||
+                   navigator.userAgent.match(/iPod/i) ||
+                   navigator.userAgent.match(/BlackBerry/i) ||
+                   navigator.userAgent.match(/Windows Phone/i);
+    // Desktop detection
+    // In Odoo, Awesome Timesheet is embedded inside an iframe.
+    var isDesktop = !isMobile && window.location.origin.indexOf("chrome-extension://") === -1;
+    // Because of the iframe src (/project_timesheet_synchro/timesheet_app),
+    // the current path location is 'project_timesheet_synchro' instead of the root path.
+    // We need to know the root path to load assets which is the parent folder of
+    // 'project_timesheet_synchro' in this case.
+    var rootPath = isDesktop ? '..' : '.';
+
     //Main widget to instantiate the app
     var ProjectTimesheet = Widget.extend(ServiceProviderMixin, {
         template: "app",
         xmlDependencies: ['/project_timesheet_synchro/static/src/xml/project_timesheet.xml'],
         cssLibs: [
-            '/web/static/lib/nvd3/nv.d3.css'
+            rootPath + '/web/static/lib/nvd3/nv.d3.css'
         ],
         jsLibs: [
-            '/web/static/lib/nvd3/d3.v3.js',
-            '/web/static/lib/nvd3/nv.d3.js',
-            '/web/static/src/js/libs/nvd3.js'
+            rootPath + '/web/static/lib/nvd3/d3.v3.js',
+            rootPath + '/web/static/lib/nvd3/nv.d3.js',
+            rootPath + '/web/static/src/js/libs/nvd3.js'
         ],
         init: function(parent) {
             var self = this;
             this._super(parent);
             ServiceProviderMixin.init.call(this);
 
-            // Mobile device detection
-            if ( navigator.userAgent.match(/Android/i) ||
-            navigator.userAgent.match(/webOS/i) ||
-            navigator.userAgent.match(/iPhone/i) ||
-            navigator.userAgent.match(/iPad/i) ||
-            navigator.userAgent.match(/iPod/i) ||
-            navigator.userAgent.match(/BlackBerry/i) ||
-            navigator.userAgent.match(/Windows Phone/i)
-            ) {
-                this.isMobile = true;
-            } else {
-                this.isMobile = false;
+            if (isDesktop) {
+                $('body').css({'width': '100%', 'height': '100%'}); // Necessary for app embedding
             }
-            // Desktop detection
-            self.isDesktop = (!this.isMobile && window.location.origin.indexOf("chrome-extension://") === -1);
-            if (self.isDesktop) $('body').css({'width': '100%', 'height': '100%'}); // Necessary for app embedding
 
             // Listeners
             core.bus.on('change_screen', this, this.go_to_screen);
@@ -78,7 +83,7 @@ odoo.define('project_timeshee.ui', function (require ) {
             var defs = [
                 ajax.loadLibs(this)
             ];
-            if(self.isDesktop) {
+            if(isDesktop) {
                 defs.push(session.session_reload().then(function() {
                     self.user = session.username;
                     self.server = session.origin;
@@ -91,7 +96,6 @@ odoo.define('project_timeshee.ui', function (require ) {
                 self.server = local_storage.getItem('pt_current_server') ? local_storage.getItem('pt_current_server') : "$no_server$";
                 self.get_user_data(self.user, self.server);
                 self.sanitize_all_ids();
-                defs.push($.Deferred().resolve());
             }
             defs.push(this._super.apply(this, arguments));
             return $.when.apply($, defs);
@@ -699,8 +703,6 @@ odoo.define('project_timeshee.ui', function (require ) {
         // ----------------------------------------------------------
         init: function(parent) {
             this._super(parent);
-            this.isMobile = parent.isMobile;
-            this.isDesktop = parent.isDesktop;
             this.time_module = time_module;  // Makes the time_module accessible inside qweb templates
             this.has_been_loaded = false;
 
@@ -1288,6 +1290,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                     "click .pt_delete_activity" : "delete_activity",
                 }
             );
+            this.isMobile = isMobile;
             this.reset_activity();
         },
         attach: function(el, options) {
@@ -1968,20 +1971,13 @@ odoo.define('project_timeshee.ui', function (require ) {
                 self.getParent().db_list = ["openerp"];
                 self.getParent().show_premise_login_form_screen();
                 return;
-            } else if (server_address.endsWith("odoo.com")) {
-                var dbname = server_address.substring(0, server_address.length -9);
-                self.getParent().db_list = [dbname];
-                self.getParent().show_premise_login_form_screen();
-                return;
-            }
-
-            if (this.$(".pt_premise_db") && this.$(".pt_premise_db").val()) {
+            } else if (this.$(".pt_premise_db") && this.$(".pt_premise_db").val()) {
                 self.getParent().db_list = [this.$(".pt_premise_db").val()];
                 self.getParent().show_premise_login_form_screen();
                 return;
             }
 
-            session.rpc('/jsonrpc',  { method : 'list' , service : 'db', args : []}).then(function(result) {
+            session.rpc('/web/database/list').then(function(result) {
                 self.getParent().db_list = result;
                 self.getParent().show_premise_login_form_screen();
             }).fail(function(error) {

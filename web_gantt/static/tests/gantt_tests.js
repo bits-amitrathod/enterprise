@@ -6,6 +6,7 @@ var testUtils = require('web.test_utils');
 
 var initialDate = new Date("2016-12-12T08:00:00Z");
 
+var createActionManager = testUtils.createActionManager;
 var createAsyncView = testUtils.createAsyncView;
 
 QUnit.module('Views', {
@@ -72,7 +73,7 @@ QUnit.module('Views', {
             gantt.$buttons.find('.o_gantt_button_scale[data-value="day"]').trigger('click');
             assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 3,
                 "should display 3 tasks in day mode");
-            assert.strictEqual(gantt.get('title'), "Forecast (12 Dec)", "should have correct title");
+            assert.strictEqual(gantt.get('title'), "Forecasts (12 Dec)", "should have correct title");
 
             gantt.$buttons.find('.o_gantt_button_right').trigger('click');
             assert.strictEqual(gantt.$('.gantt_bars_area .gantt_task_line').length, 3,
@@ -90,6 +91,60 @@ QUnit.module('Views', {
             gantt.destroy();
             done();
         });
+    });
+
+    QUnit.test('breadcrumbs are updated with the displayed period', function (assert) {
+        assert.expect(5);
+
+        var archs = {
+            'task,1,gantt': '<gantt date_start="start" date_stop="stop" progress="progress"></gantt>',
+            'task,false,search': '<search></search>',
+        };
+
+        var actions = [{
+            id: 1,
+            flags: {
+                initialDate: initialDate,
+            },
+            name: 'Forecast Test',
+            res_model: 'task',
+            type: 'ir.actions.act_window',
+            views: [[1, 'gantt']],
+        }];
+
+        var actionManager = createActionManager({
+            actions: actions,
+            archs: archs,
+            data: this.data,
+        });
+
+        actionManager.doAction(1);
+
+        // there is no selected period by default
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+            'Forecast Test', "should display no period");
+
+        // switch to day mode
+        actionManager.controlPanel.$('.o_gantt_button_scale[data-value=day]').click();
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+            'Forecast Test (12 Dec)', "should display the current day");
+
+        // switch to week mode
+        actionManager.controlPanel.$('.o_gantt_button_scale[data-value=week]').click();
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+            'Forecast Test (11 Dec - 17 Dec)', "should display the current week");
+
+        // switch to month mode
+        actionManager.controlPanel.$('.o_gantt_button_scale[data-value=month]').click();
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+            'Forecast Test (December 2016)', "should display the current month");
+
+        // switch to year mode
+        actionManager.controlPanel.$('.o_gantt_button_scale[data-value=year]').click();
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+            'Forecast Test (2016)', "should display the current year");
+
+        actionManager.destroy();
     });
 
     QUnit.test('create a task', function (assert) {

@@ -2,6 +2,7 @@
 
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta, MO, SU
+from lxml import etree
 
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import UserError, ValidationError
@@ -67,7 +68,7 @@ class ProjectForecast(models.Model):
     stage_id = fields.Many2one(related='task_id.stage_id', string="Task stage")
     tag_ids = fields.Many2many(related='task_id.tag_ids', string="Task tags")
 
-    time = fields.Float(string="%", help="Percentage of working time", compute='_compute_time', store=True, digits=(16, 2))
+    time = fields.Float(string="Allocated time / Time span", help="Percentage of working time", compute='_compute_time', store=True, digits=(16, 2))
 
     start_date = fields.Date(default=_default_start_date, required=True)
     end_date = fields.Date(default=_default_end_date, required=True)
@@ -145,7 +146,7 @@ class ProjectForecast(models.Model):
     @api.one
     @api.constrains('resource_hours')
     def _check_time_positive(self):
-        if self.resource_hours and (self.resource_hours < 0):
+        if self.resource_hours and self.resource_hours < 0:
             raise ValidationError(_("Forecasted time must be positive"))
 
     @api.one
@@ -200,6 +201,22 @@ class ProjectForecast(models.Model):
     @api.onchange('start_date')
     def _onchange_start_date(self):
         self.end_date = self.with_context(default_start_date=self.start_date)._default_end_date()
+
+    # ----------------------------------------------------
+    # ORM overrides
+    # ----------------------------------------------------
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        """ Set the widget `float_time` on `resource_time` field on view, depending on company configuration (so it can not be a groups on inherited view) """
+        result = super(ProjectForecast, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+
+        if view_type in ['tree', 'form', 'grid'] and self.env.user.company_id.forecast_uom == 'hour':
+            doc = etree.XML(result['arch'])
+            for node in doc.xpath("//field[@name='resource_time']"):
+                node.set('widget', 'float_time')
+            result['arch'] = etree.tostring(doc, encoding='unicode')
+        return result
 
     # ----------------------------------------------------
     # Actions
