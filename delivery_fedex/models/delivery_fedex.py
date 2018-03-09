@@ -99,11 +99,11 @@ class ProviderFedex(models.Model):
     @tools.ormcache('environment', 'account_number', 'meter_number', 'droppoff_type', 'service_type',
                     'package_code', 'weight_unit', 'fedex_saturday_delivery', 'currency_name',
                     'shipper_company', 'shipper_warehouse', 'recipient', 'weight', 'max_weight',
-                    'cache_interval')
+                    'cache_interval', 'total_custom_amount')
     def _fedex_get_rate(self, environment, account_number, meter_number, droppoff_type, service_type,
                         package_code, weight_unit, fedex_saturday_delivery, order_name, currency_name,
                         shipper_company, shipper_warehouse, recipient, weight, max_weight,
-                        cache_interval):
+                        cache_interval, total_custom_amount):
         Partner = self.env['res.partner']
         shipper_company = Partner.browse(shipper_company[0])
         shipper_warehouse = Partner.browse(shipper_warehouse[0])
@@ -122,6 +122,8 @@ class ProviderFedex(models.Model):
         srm.set_currency(_convert_curr_iso_fdx(currency_name))
         srm.set_shipper(shipper_company, shipper_warehouse)
         srm.set_recipient(recipient)
+        if recipient.company_id.country_id.code == 'IN' and shipper_company.country_id.code == 'IN':
+            srm.customs_value(_convert_curr_iso_fdx(currency_name), total_custom_amount, "NON_DOCUMENTS")
 
         if max_weight and weight > max_weight:
             total_package = int(weight / max_weight)
@@ -157,6 +159,12 @@ class ProviderFedex(models.Model):
 
         # Cache the rate for 4 hours
         cache_interval = int(time.time() / (4 * 3600))
+        total_custom_amount = 0.0
+        if order.partner_id.country_id.code == 'IN' and self.company_id.country_id.code == 'IN':
+            total_custom_amount = sum([
+                (line.product_id.list_price * line.product_uom_qty)
+                for line in order.order_line.filtered(lambda l: l.product_id.type in ['product', 'consu'])
+            ])
 
         request = self._fedex_get_rate(
             self.prod_environment,
@@ -175,6 +183,7 @@ class ProviderFedex(models.Model):
             weight_value,
             max_weight,
             cache_interval,
+            total_custom_amount,
         )
 
         warnings = request.get('warnings_message')
@@ -232,7 +241,7 @@ class ProviderFedex(models.Model):
             net_weight = _convert_weight(picking.shipping_weight, self.fedex_weight_unit)
 
             # Commodities for customs declaration (international shipping)
-            if self.fedex_service_type in ['INTERNATIONAL_ECONOMY', 'INTERNATIONAL_PRIORITY']:
+            if self.fedex_service_type in ['INTERNATIONAL_ECONOMY', 'INTERNATIONAL_PRIORITY'] or (picking.partner_id.country_id.code == 'IN' and picking.picking_type_id.warehouse_id.partner_id.country_id.code == 'IN'):
 
                 commodity_currency = order_currency
                 total_commodities_amount = 0.0
