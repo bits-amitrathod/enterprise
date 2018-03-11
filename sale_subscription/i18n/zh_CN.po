@@ -18,6 +18,7 @@
 # Talway <9010446@qq.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -158,16 +159,16 @@ msgstr ""
 " \n"
 " \n"
 " \n"
-" 尊敬的 ${object.partner_id.name}，您的订阅（${ctx.get('code')}）已更新\n"
-" %if ctx.get('total_amount') and ctx.get('payment_token')：<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
+" 尊敬的 ${object.partner_id.name}，您已续订（${ctx.get('code')}\n"
+" %if ctx.get('total_amount') 和 ctx.get('payment_token')：<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
 " 通过使用 ${ctx['payment_token']} 支付 ${ctx['total_amount']} ${ctx['currency']} \n"
 "。\n"
 " %endif\n"
 " \n"
-" 会给您开具发票。\n"
+" 为您附上发票。\n"
 " %if ctx.get('next_date')：\n"
 " \n"
-" 您的下一张发票将在 ${ctx.get('next_date')。\n"
+" 您的下一张发票将在 ${ctx.get('next_date') 开出。\n"
 " \n"
 " %endif\n"
 " \n"
@@ -407,7 +408,7 @@ msgstr ""
 " \n"
 "\n"
 " \n"
-" 如果期望解决此问题，请直接练习我们。\n"
+" 如果期望解决此问题，请直接联系我们。\n"
 " 感谢您选择 ${object.company_id.name or 'us'} ！% if user.signature\n"
 " ${user.signature | safe}\n"
 " \n"
@@ -513,7 +514,7 @@ msgstr ""
 " \n"
 " 您好 ${object.partner_id.name}，\n"
 " \n"
-" % if ctx.get('payment_token') and ctx.get('total_amount')：<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
+" % if ctx.get('payment_token') 和 ctx.get('total_amount')：<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"></td></tr></tbody></table>\n"
 " 不能使用您的付款方式\n"
 " ${ctx['payment_token']}\n"
 " 为您的订阅付款 ${ctx['total_amount']} ${ctx.get('currency')}。\n"
@@ -1801,7 +1802,7 @@ msgstr "保存，已设置完毕！只<br/>需简单销售此产品，便可自�
 #: code:addons/sale_subscription/static/src/js/tour.js:47
 #, python-format
 msgid "Save this template and the modifications you've made to it."
-msgstr "保存此模版以及对此模版所做的修改。"
+msgstr "保存此模板以及对此模板所做的修改。"
 
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
@@ -1815,7 +1816,7 @@ msgstr "查看订阅"
 msgid ""
 "Select your newly created template. Every sale of this product will generate"
 " a new subscription!"
-msgstr "选择新建的模板每次销售此产品都将生成新的订阅！"
+msgstr "选择新建的模板。每次销售此产品都将生成新的订阅！"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_sequence
@@ -1973,7 +1974,7 @@ msgstr "订阅不符合我的要求"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_1
 msgid "Subscription is too expensive"
-msgstr "订阅不划算"
+msgstr "订阅太贵"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.product_template_search_view_inherit_sale_subscription
@@ -1983,7 +1984,7 @@ msgstr "订阅产品"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
 msgid "Subscription reached its end date"
-msgstr "订阅达到结束日期"
+msgstr "订阅到达结束日期"
 
 #. module: sale_subscription
 #: model:mail.message.subtype,description:sale_subscription.subtype_state_change
@@ -2022,8 +2023,8 @@ msgid ""
 "Subscriptions can be automatically generated from sales orders of Sales or eCommerce\n"
 "                apps. To do so, set a Subscription Template on your Subscription Products."
 msgstr ""
-"销售的销售订单或电子商务\n"
-" 应用可自动生成订阅。为此，请在订阅产品上设置订阅模板"
+"销售或电子商务\n"
+" 应用的销售订单可自动生成订阅。为此，请在订阅产品上设置订阅模板。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -2090,9 +2091,9 @@ msgid ""
 "                can be selected by the salespeople to quickly configure the\n"
 "                terms and conditions of the subscription."
 msgstr ""
-"可使用模版来预示订阅\n"
-" 销售人员可选择此模版来快速配置\n"
-" 订阅的条款"
+"可使用模板来预示订阅，\n"
+" 销售人员可选择此模板来快速配置\n"
+" 订阅的条款和条件"
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_close
@@ -2146,7 +2147,7 @@ msgstr "用户将拥有读取订阅的权限。"
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_manager
 msgid "The user will have write access to Subscriptions."
-msgstr "用户将拥有书写订阅的权限。"
+msgstr "用户将拥有编辑订阅的权限。"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:311
@@ -2221,9 +2222,9 @@ msgid ""
 "                work done, expenses and/or sales orders. Odoo will automatically manage\n"
 "                the alerts for the renewal of the subscriptions to the right salesperson."
 msgstr ""
-"使用订阅来跟踪任务、问题、工时表或基于\n"
-" 已完成工作、费用和/或销售订单的结算。Odoo 会自动管理\n"
-" 订阅更新的警告，以确保交给正确的销售人员 。"
+"使用订阅来跟踪任务、问题、时间表或基于\n"
+" 已完成工作、费用和/或销售订单开发票。Odoo 会自动管理\n"
+" 订阅续订的通知，以确保交给正确的销售人员 。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2299,7 +2300,7 @@ msgstr "你必须首先选择一个订阅的客户 %s!"
 #: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
 msgid ""
 "You will find here all the products related to this subscription template."
-msgstr "您将在此处找到所有与订阅模版相关的产品。"
+msgstr "您将在此处找到所有与订阅模板相关的产品。"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -2308,8 +2309,8 @@ msgid ""
 "            end date is passed or the working effort is higher than the\n"
 "            maximum authorized one."
 msgstr ""
-"您将在此处找到working effort\n"
-" 结束日期已过或实际工作时间远远大于最大估计时间的待更新合约。"
+"您将在此处找到由于\n"
+" 结束日期已过或实际工作量远远大于最大授权而要续订的订阅。"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription

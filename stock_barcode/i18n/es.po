@@ -3,6 +3,7 @@
 # * stock_barcode
 # 
 # Translators:
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Miguel Orueta <mo@landoo.es>, 2017
 # José Vicente <txusev@gmail.com>, 2017
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
@@ -45,7 +46,7 @@ msgid ""
 "                            Then, print it via the <i>Print</i> menu and stick it in a visible and convenient place."
 msgstr ""
 ").\n"
-"Después, imprimirlo a travez de el menú <i>Imprimir</i> y póngalo en un lugar visible y conveniente."
+"Después, imprímalo a través del menú <i>Imprimir</i> y póngalo en un lugar visible y conveniente."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -64,7 +65,7 @@ msgid ""
 "                            you can always define your own barcode format for internal use."
 msgstr ""
 "<strong>Códigos de barra EAN-13 barcodes:</strong> usados por la mayoría\n"
-"de productos comerciales, no se pueden hacer sin una autorización: debes \n"
+"de productos comerciales, no se pueden hacer sin una autorización: debe \n"
 "pagar a la Asociación Internacional de Numeración Artículos una cuota por \n"
 "la secuencia del código EAN (es por eso que dos productos en una tienda \n"
 "nunca van a tener el mismo código EAN). \n"
@@ -116,8 +117,8 @@ msgid ""
 "<strong>Scan barcodes on picking lists:</strong> suitable if a significant "
 "percentage of your products do not have a barcode on them."
 msgstr ""
-"<Strong>Escanee los códigos de barras en los impresos de albarán:</strong> "
-"recomendable si un porcentaje significativo de sus productos no tiene un "
+"<Strong>Escanee los códigos de barras en las listas de recolección:</strong>"
+" recomendable si un porcentaje significativo de sus productos no tiene un "
 "código de barras."
 
 #. module: stock_barcode
@@ -153,7 +154,7 @@ msgid ""
 msgstr ""
 "<Strong>El siguiente paso es asignar códigos de barras a sus "
 "productos,</strong> estableciendo el valor correcto en el campo Código de "
-"barras del formulario Producto."
+"barras del formulario de Producto."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -162,7 +163,8 @@ msgid ""
 "the Location form (accessible from your"
 msgstr ""
 "<Strong>Para asignar un código de barras a una ubicación,</strong> "
-"simplemente introduzca uno en el formulario Ubicación (accessible desde su"
+"simplemente introduzca uno en el formulario de Ubicación (accessible desde "
+"su"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -175,13 +177,13 @@ msgid ""
 "<strong>To process Delivery Orders from a computer or mobile "
 "device:</strong>"
 msgstr ""
-"<Strong>Para procesar albaranes desde un ordenador o dispositivo "
-"móvil:</strong>"
+"<Strong>Para procesar pedidos de entrega desde una computadora o dispositivo"
+" móvil:</strong>"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "<strong>To process printed Delivery Orders:</strong>"
-msgstr "<Strong>Para procesar albaranes impresos: </strong>"
+msgstr "<Strong>Para procesar pedidos de entrega impresos: </strong>"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -219,7 +221,7 @@ msgstr "Código de barras"
 #: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:8
 #, python-format
 msgid "Barcode Scanning"
-msgstr "Escaneando Código de Barras"
+msgstr "Escaneo de Código de Barras"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -252,10 +254,10 @@ msgstr ""
 "Por defecto, Odoo tiene un retardo de 50 milisegundos entre escaneos (para "
 "prevenir dobles escaneos accidentales). Si quiere suprimir este retardo, "
 "puede configurar su escaner insertando un carácter de retorno de carro al "
-"final de cada código de barras. Normalmente ésta es la configuración por "
-"defecto y puede ser configurada explicitamente mediante el escaneo de un "
-"código de barras específico en el manual de usuario del scanner ('CR suffix "
-"ON', 'Apply Enter for suffix', etc.)"
+"final de cada código de barras. Normalmente ésta es la configuración "
+"predeterminada y puede ser configurada explícitamente mediante el escaneo de"
+" un código de barras específico en el manual de usuario del escáner ('CR "
+"suffix ON', 'Apply Enter for suffix', etc.)"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
@@ -265,7 +267,7 @@ msgstr "Cancelar"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Choose Hardware"
-msgstr ""
+msgstr "Eligir Hardware"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -274,7 +276,7 @@ msgid ""
 "station"
 msgstr ""
 "Elija un escáner de código de barras USB si planea escanear productos desde "
-"el ordenador"
+"la computadora"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -299,7 +301,7 @@ msgstr "Configure y aprenda a utilizar su escáner de código de barras."
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Congratulations, you're ready to go live!"
-msgstr "¡Enhorabuena, ya está listo para hacerlo en vivo!"
+msgstr "¡Felicitaciones, ya está listo para hacerlo en vivo!"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_create_uid
@@ -337,7 +339,7 @@ msgid ""
 "Do you want to permanently remove this message ?\n"
 "                It won't appear anymore, so make sure you don't need the barcodes sheet or you have a copy."
 msgstr ""
-"¿Quieres eliminar este mensaje de forma permanente?\n"
+"¿Quiere eliminar este mensaje de forma permanente?\n"
 "                No aparecerá más, así que asegúrese de que no necesita la hoja de códigos de barras o que tiene una copia."
 
 #. module: stock_barcode
@@ -359,7 +361,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Go Live"
-msgstr ""
+msgstr "Ir a vivir"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -396,8 +398,8 @@ msgid ""
 "If you have a static computer station, it's better to use 'pistols' formats "
 "as they are more practical to handle and aim."
 msgstr ""
-"Si usted ordenador 'fijo', es mejor utilizar los formatos de 'pistolas' pues"
-" son más prácticos de manejar y de apuntar."
+"Si usted tiene una computadora 'fija', es mejor utilizar los formatos de "
+"'pistolas' pues son más prácticos de manejar y de apuntar."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -449,7 +451,7 @@ msgstr "Inventario"
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_inventory_line
 msgid "Inventory Line"
-msgstr "Línea inventario"
+msgstr "Línea de inventario"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -495,7 +497,8 @@ msgstr "Lista de Ubicaciones"
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Load all the Delivery Orders marked as \"To Do\", and open the first one."
 msgstr ""
-"Cargue todos los albaranes marcadas como \"Para hacer\", y abra el primero."
+"Cargue todos los pedidos de entrega marcadas como \"Para hacer\", y abra el "
+"primero."
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line_location_processed
@@ -505,7 +508,7 @@ msgstr "Ubicación procesada"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Locations Barcodes"
-msgstr ""
+msgstr "Ubicaciones de códigos de barras"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line_lot_name
@@ -526,17 +529,17 @@ msgstr ""
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:86
 #, python-format
 msgid "Lot/Serial Number Details"
-msgstr "Detalles del Lote/Serie"
+msgstr "Detalles del Lote/Número de serie"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Lots / Serial Numbers"
-msgstr ""
+msgstr "Lotes/Números de serie"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Making an Inventory"
-msgstr ""
+msgstr "Haciendo un inventario"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -559,8 +562,8 @@ msgid ""
 "Move to the next Delivery Order to process by clicking on the top-right "
 "right arrow or scanning the Pager-Next barcode action."
 msgstr ""
-"Vaya al siguiente albarán para procesar haciendo clic en la flecha superior "
-"derecha o escaneando la acción del código de barras 'Pager-Next'."
+"Vaya al siguiente pedido de entrega para procesar haciendo clic en la flecha"
+" superior derecha o escaneando la acción del código de barras 'Pager-Next'."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -568,7 +571,7 @@ msgid ""
 "Naming the locations within your warehouse(s) is crucial for a good "
 "inventory management."
 msgstr ""
-"Identificar las ubicaciones dentro de su almacén(s) es crucial para una "
+"Identificar las ubicaciones dentro de su almacén(es) es crucial para una "
 "buena gestión de inventario."
 
 #. module: stock_barcode
@@ -595,7 +598,8 @@ msgstr "Lote no encontrado"
 #: code:addons/stock_barcode/controllers/main.py:23
 #, python-format
 msgid "No picking corresponding to barcode %(barcode)s"
-msgstr "Ningun albarán se corresponde con el código de barras %(barcode)s"
+msgstr ""
+"Ninguna recolección se corresponde con el código de barras %(barcode)s"
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/controllers/main.py:21
@@ -611,7 +615,7 @@ msgid ""
 msgstr ""
 "Tenga en cuenta que las conexiones Bluetooth son adecuadas para un máximo de"
 " 30 pies (10 metros) por lo que tendrá que escanear los productos cerca de "
-"su ordenador."
+"su computadora."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -621,8 +625,8 @@ msgid ""
 "train them on your favorite process."
 msgstr ""
 "Ahora que todos los flujos han sido probados y configurados, es hora de "
-"entrar en producción. Haga algunos albaranes de prueba con sus trabajadores "
-"y preparelos en su trabajo habitual."
+"entrar en producción. Haga algunos pedidos de entrega de prueba con sus "
+"trabajadores y prepárelos en su trabajo habitual."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -678,9 +682,9 @@ msgid ""
 "Once you start processing your delivery orders, scan the barcode on the top-"
 "right corner of the document to load the right record on the screen."
 msgstr ""
-"Una vez ha comenzado a procesar sus albaranes, escanee el código de barras "
-"en la esquina superior derecha del documento para cargar el registro "
-"correcto en la pantalla."
+"Una vez que haya comenzado a procesar sus pedidos de entrega, escanee el "
+"código de barras en la esquina superior derecha del documento para cargar el"
+" registro correcto en la pantalla."
 
 #. module: stock_barcode
 #. openerp-web
@@ -710,14 +714,14 @@ msgstr "Recoger y escanear los productos"
 #: model:ir.actions.act_window,name:stock_barcode.stock_picking_action_form
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_picking_id
 msgid "Picking"
-msgstr "Albarán"
+msgstr "Recolección"
 
 #. module: stock_barcode
 #. openerp-web
 #: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:113
 #, python-format
 msgid "Picking %s"
-msgstr "Seleccionando %s"
+msgstr "Recolección%s"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_web_planner
@@ -730,8 +734,9 @@ msgid ""
 "Print delivery orders of the day by selecting all documents from the \"To "
 "Do\" list and print \"Picking Lists\" from the top menu."
 msgstr ""
-"Imprima los albaranes del día seleccionando todos los documentos de la lista"
-" \"Para hacer\" e imprima \"Listas de picking\" en el menú superior."
+"Imprima los pedidos de entrega del día seleccionando todos los documentos de"
+" la lista \"Para hacer\" e imprima \"Listas de recolección\" en el menú "
+"superior."
 
 #. module: stock_barcode
 #. openerp-web
@@ -859,7 +864,7 @@ msgstr "Ubicación escaneada"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Scanner Configuration"
-msgstr ""
+msgstr "Configuración del escáner"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -985,7 +990,7 @@ msgstr "USB, inalámbrico o Bluetooth?"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Use Cases"
-msgstr ""
+msgstr "Casos de uso"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner

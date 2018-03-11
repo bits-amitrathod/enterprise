@@ -12,6 +12,7 @@
 # waveyeung <waveyeung@qq.com>, 2017
 # liulixia <liu.lixia@elico-corp.com>, 2017
 # Maie <m@maie.name>, 2017
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -70,30 +71,45 @@ msgid ""
 "</div>\n"
 "            </data>"
 msgstr ""
-"<?xml version=\"1.0\"?><data><div "
-"style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top "
-"/100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" "
-"style=\"width:600px;border-"
-"collapse:collapse;background:inherit;color:inherit\"><tbody><tr><td "
-"valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-"
-"size: 12px\"><img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; "
-"height: auto; width: 80px;\" "
-"alt=\"${user.company_id.name}\"/></td></tr></tbody></table></div><div "
-"style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top "
-"/100%;color:#777777\"><table cellspacing=\"0\" cellpadding=\"0\" "
-"style=\"width:600px ;text-align:justify; margin:0 auto; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p></p><p></p><center><a"
-" href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; "
-"padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-"
-"size: 14px;\" "
-"class=\"o_default_snippet_text\"></a></center><p></p></td></tr><tr><td "
-"style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
-"14px;\"></p><p style=\"font-size: 11px;\"><strong><a "
-"href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; "
-"color: #875A7B;\"><strong></strong></a><a href=\"www.odoo.com\" style"
-"=\"text-decoration:none; color: "
-"#875A7B;\"><strong></strong></a></strong></p></td></tr></tbody></table></div></data>"
+"<?xml version=\"1.0\"?>\n"
+"<data><div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
+"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            <p>尊敬的 ${object.name}：</p>\n"
+"            <p>谨提醒您批准以下期间的团队工时：${ctx.get('date_start')} - ${ctx.get('date_stop')}。</p>\n"
+"            % if ctx.get('action_url'):\n"
+"                <center>\n"
+"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">验证工时表</a>\n"
+"                </center>\n"
+"            % endif\n"
+"            <p>此致，</p>\n"
+"        </td>\n"
+"    </tr><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            % if user.signature\n"
+"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"            </p>\n"
+"            % endif\n"
+"            <p style=\"font-size: 11px;\"><strong>发件人\n"
+"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                <strong>${user.company_id.name}</strong>\n"
+"            </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"            </strong></p>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"            </data>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -139,38 +155,56 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
-"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat "
-"top /100%;color:#777777\"><table cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"width:600px;border-"
-"collapse:collapse;background:inherit;color:inherit\"><tbody><tr><td "
-"style=\"padding:10px 10px 10px 5px;font-size: 12px\" valign=\"center\" "
-"width=\"200\"><img alt=\"${user.company_id.name}\" src=\"/logo.png\" "
-"style=\"padding: 0px; margin: 0px; height: auto; width: "
-"80px;\"/></td></tr></tbody></table></div><div "
-"style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top "
-"/100%;color:#777777\"><table cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"width:600px ;text-align:justify; margin:0 auto; border-"
-"collapse:collapse; background:inherit; color:inherit\"><tbody><tr><td "
-"style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p/><p/><center><a "
-"class=\"o_default_snippet_text\" href=\"${ctx.get('action_url')}\" style"
-"=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: "
-"#fff; border-radius: 5px; font-size: 14px;\"/></center><p/></td></tr><tr><td"
-" style=\"padding:0px 10px 5px 5px;font-size: 14px;\"><p style=\"font-size: "
-"14px;\"/><p style=\"font-size: 11px;\"><strong><a "
-"href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; "
-"color: #875A7B;\"><strong/></a><a href=\"www.odoo.com\" style=\"text-"
-"decoration:none; color: "
-"#875A7B;\"><strong/></a></strong></p></td></tr></tbody></table></div>"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
+"            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"    <tbody><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            <p>尊敬的 ${object.name}：</p>\n"
+"            <p>谨提醒您记录以下期间的工时：${ctx.get('date_start')} - ${ctx.get('date_stop')}。\n"
+"                目前您仅记录 ${ctx.get('timesheet_hours')} 小时，应 ${ctx.get('working_hours')} 要求。\n"
+"            </p>\n"
+"            % if ctx.get('action_url'):\n"
+"                <center>\n"
+"                    <a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">填写工时表</a>\n"
+"                </center>\n"
+"            % endif\n"
+"            <p>此致，</p>\n"
+"        </td>\n"
+"    </tr><tr>\n"
+"        <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"            % if user.signature\n"
+"            <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"            </p>\n"
+"            % endif\n"
+"            <p style=\"font-size: 11px;\"><strong>发件人\n"
+"            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                <strong>${user.company_id.name}</strong>\n"
+"            </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"            </strong></p>\n"
+"        </td>\n"
+"    </tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"            "
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet managers"
-msgstr ""
+msgstr "为时间表管理员激活定期电子邮件提醒"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet users"
-msgstr ""
+msgstr "为时间表用户激活定期电子邮件提醒"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:79
@@ -186,12 +220,12 @@ msgstr "分析行"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Android App"
-msgstr ""
+msgstr "安卓应用"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Apple App"
-msgstr ""
+msgstr "苹果应用"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
@@ -203,12 +237,12 @@ msgstr "取消"
 #: code:addons/timesheet_grid/static/src/js/tour.js:22
 #, python-format
 msgid "Choose a <b>project name</b>. (e.g. name of a customer, or product)"
-msgstr "<b/>"
+msgstr "选择<b>项目名称</b>。（例如客户名称或产品）"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Chrome Plugin"
-msgstr ""
+msgstr "Chrome 插件"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
@@ -235,7 +269,7 @@ msgstr "创建时间"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
-msgstr ""
+msgstr "日期截止到验证员工时间表之后"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
@@ -253,7 +287,7 @@ msgstr "显示名称"
 #: code:addons/timesheet_grid/static/src/js/tour.js:43
 #, python-format
 msgid "Easily switch to the monthly or daily view to control your time"
-msgstr ""
+msgstr "轻松转入每月或每日视图以便控制时间"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee
@@ -265,7 +299,7 @@ msgstr "员工"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_allow
 msgid "Employee Reminder"
-msgstr ""
+msgstr "员工提醒"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_interval
@@ -278,17 +312,17 @@ msgstr "频率"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Android app"
-msgstr ""
+msgstr "获取安卓应用"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Chrome plugin"
-msgstr ""
+msgstr "获取 Chrome 插件"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get iOS app"
-msgstr ""
+msgstr "获取 iOS 应用"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_id
@@ -299,21 +333,21 @@ msgstr "ID"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "If checked, send an email to all manager"
-msgstr ""
+msgstr "如果检查完毕，请向所有的经理发送电子邮件"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_manager_allow
 msgid ""
 "If checked, send an email to all managers who have not validated their "
 "timesheet"
-msgstr ""
+msgstr "如果检查完毕，请向那些尚未验证时间表的经理发送电子邮件"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_user_allow
 msgid ""
 "If checked, send an email to all users who have not recorded their timesheet"
-msgstr ""
+msgstr "如果检查完毕，请向那些尚未记录时间表的用户发送电子邮件"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation___last_update
@@ -348,13 +382,13 @@ msgstr "上周"
 #: code:addons/timesheet_grid/static/src/js/tour.js:17
 #, python-format
 msgid "Let's create your first timesheet entry."
-msgstr ""
+msgstr "让我们创建您的第一个时间表条目。"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "Manager Reminder"
-msgstr ""
+msgstr "经历提醒"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
@@ -369,7 +403,7 @@ msgstr "月"
 msgid ""
 "Multiple timesheet entries match the modified value. Please change the "
 "search options or modify the entries individually."
-msgstr ""
+msgstr "多个时间表条目与修改后的值相匹配。请更改检索选项或单独修改条目。"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -380,12 +414,12 @@ msgstr "我的团队"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_nextdate
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_nextdate
 msgid "Next scheduled date for manager reminder"
-msgstr ""
+msgstr "经理提醒的下一个制表日期"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
-msgstr ""
+msgstr "非验证"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_delay
@@ -401,34 +435,34 @@ msgstr "天数"
 msgid ""
 "Only a Timesheets Officer is allowed to create an entry older than the "
 "validation limit."
-msgstr ""
+msgstr "只允许时间表管理员创建比验证限制更大的条目。"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:116
 #, python-format
 msgid "Only a Timesheets Officer is allowed to delete a validated entry."
-msgstr ""
+msgstr "只允许时间表管理员删除已验证的条目。"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:110
 #, python-format
 msgid "Only a Timesheets Officer is allowed to modify a validated entry."
-msgstr ""
+msgstr "只允许时间表管理员修改已验证的条目。"
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_manager
 msgid "Reminder: please approve your team's timesheets"
-msgstr ""
+msgstr "提醒：请批准您团队的时间表"
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Reminder: please log your hours"
-msgstr ""
+msgstr "提醒：请记录您的时间"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
-msgstr ""
+msgstr "如果解析线代表时间表轴的话。"
 
 #. module: timesheet_grid
 #. openerp-web
@@ -437,13 +471,13 @@ msgstr ""
 msgid ""
 "Set the number of hours done on this project, for every day of the week. "
 "(e.g. 1.5 or 1:30)"
-msgstr ""
+msgstr "在每周的每一天，设置完成该项目所需的时间。（例如，1.5 或 1:30）"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:74
 #, python-format
 msgid "There aren't any timesheet to validate"
-msgstr ""
+msgstr "这并没有任何需要验证的时间表"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
@@ -453,7 +487,7 @@ msgstr "花费的时间"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Timesheet Control"
-msgstr ""
+msgstr "时间表控制"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_is_timesheet
@@ -463,21 +497,21 @@ msgstr "工时表明细"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_manager_id
 msgid "Timesheet Responsible"
-msgstr ""
+msgstr "时间表主管"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
 #: model:ir.cron,cron_name:timesheet_grid.timesheet_reminder_user
 #: model:ir.cron,name:timesheet_grid.timesheet_reminder_user
 msgid "Timesheet: Employees Email Reminder"
-msgstr ""
+msgstr "时间表：员工电子邮件提醒"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_manager_ir_actions_server
 #: model:ir.cron,cron_name:timesheet_grid.timesheet_reminder_manager
 #: model:ir.cron,name:timesheet_grid.timesheet_reminder_manager
 msgid "Timesheet: Managers Email Reminder"
-msgstr ""
+msgstr "时间表：管理员电子邮件提醒"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
@@ -489,7 +523,7 @@ msgstr "工时表"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Timesheets Validation Date"
-msgstr ""
+msgstr "时间表验证日期"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
@@ -503,7 +537,7 @@ msgstr "待验证"
 msgid ""
 "Track your timesheets to invoice easily, or control costs. <i>It starts "
 "here.</i>"
-msgstr "<i/>"
+msgstr "跟踪您的工时表以便轻松开票或控制成本。 <i>从这里开始。</i>"
 
 #. module: timesheet_grid
 #. openerp-web
@@ -512,12 +546,12 @@ msgstr "<i/>"
 msgid ""
 "Use tasks to track the different type of activities. (e.g. Graphic Design, "
 "Programming, Project Management)"
-msgstr ""
+msgstr "使用任务追踪不同类型的任务（例如，平面设计、程序设计、项目管理）"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_manager_id
 msgid "User responsible of timesheet validation. Should be Timesheet Manager."
-msgstr ""
+msgstr "时间表验证的用户主管。应为时间表管理员。"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_validate
@@ -534,17 +568,17 @@ msgstr "验证工时表"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Validate the timesheets of the selected employees up to"
-msgstr ""
+msgstr "验证所选员工的时间表直至"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_timesheet_validation_line_validate
 msgid "Validate this employee's timesheet up to the chosen date"
-msgstr ""
+msgstr "验证该员工的时间表直至已选定的日期"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_date
 msgid "Validate up to"
-msgstr ""
+msgstr "验证到"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -555,12 +589,12 @@ msgstr "已验证"
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_week
 msgid "Validated Timesheets"
-msgstr ""
+msgstr "验证完毕的时间表"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_validated
 msgid "Validated line"
-msgstr ""
+msgstr "验证完毕的线"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_validation_id
@@ -570,7 +604,7 @@ msgstr "验证"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_line_ids
 msgid "Validation Line"
-msgstr ""
+msgstr "验证线"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
@@ -582,19 +616,19 @@ msgstr "周"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "You will be able to register your working hours on the given task."
-msgstr ""
+msgstr "您可在指定任务中注册工作时间。"
 
 #. module: timesheet_grid
 #: selection:res.company,timesheet_mail_employee_interval:0
 #: selection:res.company,timesheet_mail_manager_interval:0
 msgid "after end of month"
-msgstr ""
+msgstr "月底之后"
 
 #. module: timesheet_grid
 #: selection:res.company,timesheet_mail_employee_interval:0
 #: selection:res.company,timesheet_mail_manager_interval:0
 msgid "after end of week"
-msgstr ""
+msgstr "周末之后"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -609,9 +643,9 @@ msgstr "res.config.settings"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_validation
 msgid "timesheet.validation"
-msgstr ""
+msgstr "timesheet.validation"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_validation_line
 msgid "timesheet.validation.line"
-msgstr ""
+msgstr "时间表。验证。线"

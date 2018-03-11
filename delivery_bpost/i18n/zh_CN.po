@@ -8,15 +8,16 @@
 # Amanda Li <lidan5452@126.com>, 2017
 # fausthuang, 2017
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
-# e2f <projects@e2f.com>, 2018
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # Tison He <hedisen@sina.com>, 2018
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
 "PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: Tison He <hedisen@sina.com>, 2018\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +43,7 @@ msgstr "账户号码"
 #. module: delivery_bpost
 #: model:ir.model.fields,help:delivery_bpost.field_delivery_carrier_bpost_saturday
 msgid "Allow deliveries on Saturday (extra charges apply)"
-msgstr "允许在星期六发货（额外收费）"
+msgstr "允许在星期六交货（额外收费）"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:96
@@ -158,7 +159,7 @@ msgstr "PNG"
 #: code:addons/delivery_bpost/models/bpost_request.py:122
 #, python-format
 msgid "Packages over 30 Kg are not accepted by bpost."
-msgstr "比利时邮政不接受超过 30 公斤的包。"
+msgstr "比利时邮政不接收超过 30 Kg的包裹。"
 
 #. module: delivery_bpost
 #: model:ir.model,name:delivery_bpost.model_product_packaging
@@ -195,7 +196,7 @@ msgstr "示例"
 #: code:addons/delivery_bpost/models/delivery_bpost.py:79
 #, python-format
 msgid "Shipment created into bpost <br/> <b>Tracking Number : </b>%s"
-msgstr "在比利时邮政<br/><b>中创建装运 运单号：</b>%s"
+msgstr "比利时邮政<br/><b>创建的运输单跟踪号码：</b>%s"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:48
@@ -204,7 +205,7 @@ msgid ""
 "The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n"
 " %s)"
 msgstr ""
-"您公司/仓库的地址不完整或错误（缺少字段：\n"
+"您公司/仓库的地址不完整或错误（缺少字段： \n"
 " %s）"
 
 #. module: delivery_bpost
@@ -213,7 +214,7 @@ msgstr ""
 msgid ""
 "The estimated shipping cannot be computed because the weight of your product"
 " is missing."
-msgstr "由于您的产品重量不足，估计的运费无法计算。"
+msgstr "由于您的产品未提供重量信息，无法计算预计运费。"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:54
@@ -221,7 +222,7 @@ msgstr "由于您的产品重量不足，估计的运费无法计算。"
 msgid ""
 "The estimated shipping price cannot be computed because all your products "
 "are service/digital."
-msgstr "由于您的所有产品都是服务/数字，估计的运费价格无法计算。"
+msgstr "由于您的所有产品都是服务/数字，无法计算预计运费价格。"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:40
@@ -239,13 +240,13 @@ msgstr ""
 msgid ""
 "You can not cancel a bpost shipment when a shipping label has already been "
 "generated."
-msgstr "已经生成运输标签后，您无法取消比利时邮政运送货物。"
+msgstr "已经生成运输标签后，您无法取消比利时邮政运输。"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/delivery_bpost.py:95
 #, python-format
 msgid "You cannot compute a passphrase for non-bpost carriers."
-msgstr "您无法计算非比利时邮政承运人的密码。"
+msgstr "您不能为非比利时邮政承运人计算密码。"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:50
@@ -291,7 +292,7 @@ msgstr "比利时邮政配置"
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier_bpost_default_packaging_id
 msgid "bpost Default Packaging Type"
-msgstr "比利时邮政默认包装类型"
+msgstr "比利时邮政默认打包类型"
 
 #. module: delivery_bpost
 #: model:ir.ui.view,arch_db:delivery_bpost.res_config_settings_view_form_sale
@@ -319,4 +320,4 @@ msgstr "比利时邮政国际只用于在比利时境外运送。请将送货方
 #: code:addons/delivery_bpost/models/bpost_request.py:100
 #, python-format
 msgid "bpost did not return prices for this destination country."
-msgstr "比利时邮政没有为此目标国返回价格。"
+msgstr "比利时邮政没有为此目的地国返回价格。"

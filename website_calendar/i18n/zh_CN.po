@@ -12,6 +12,7 @@
 # liAnGjiA <liangjia@qq.com>, 2017
 # Si Ling Lau <happy8645@hotmail.com>, 2017
 # Eddie Lim <bhweelim@yahoo.com>, 2017
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -36,7 +37,7 @@ msgstr " (副本)"
 #. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type_appointment_count
 msgid "# Appointments"
-msgstr "# 约会"
+msgstr "约会数"
 
 #. module: website_calendar
 #: code:addons/website_calendar/controllers/main.py:138
@@ -77,7 +78,7 @@ msgid ""
 "                            It's too late to cancel online, please contact the attendees another way if you really can't make it."
 msgstr ""
 "<br/>\n"
-" 现在已无法在线取消，如果您实在不能参加，请采用其他方式练习出席者。"
+" 在线取消已经太迟，如果您不能如期赴约，请采用其他方式联系出席者。"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_validated
@@ -102,7 +103,7 @@ msgstr "<span>天</span>"
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
 msgid "<span> hours before</span>"
-msgstr "<span>小时前</span>"
+msgstr "<span>小时，早于</span>"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
@@ -130,7 +131,7 @@ msgid ""
 "<strong>Appointment canceled!</strong>\n"
 "                            You can schedule another appointment from here."
 msgstr ""
-"<strong>取消约会成功！</strong>\n"
+"<strong>约会取消成功！</strong>\n"
 " 您可在此处安排下次约会。"
 
 #. module: website_calendar
@@ -141,10 +142,10 @@ msgid ""
 "                            Someone has booked the same time slot a few\n"
 "                            seconds before you."
 msgstr ""
-"<strong>取消约会失败！</strong>\n"
-" 所选档期已失效。\n"
+"<strong>约会失败！</strong>\n"
+" 所选时间段不可用。\n"
 " 短短数\n"
-" 秒之前，有人抢先预定了相同的档期。"
+" 秒之前，有人抢先预定了相同的时间段。"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment
@@ -153,9 +154,9 @@ msgid ""
 "                            The selected timeslot is not available.\n"
 "                            It appears you already have another meeting with us at that date."
 msgstr ""
-"<strong>取消约会失败！</strong>\n"
-" 所选档期失效。\n"
-" 如果您已预定了当天的会议，那么便会出现这种情况。"
+"<strong>约会失败！</strong>\n"
+" 所选时间段不可用。\n"
+" 似乎您已经与我们在这一天安排了会面。"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_validated
@@ -188,9 +189,7 @@ msgstr "允许取消"
 msgid ""
 "Allow your customers to book an appointment on your website\n"
 "                by creating appointment types here."
-msgstr ""
-"\n"
-" 在此处创建约会类型，可允许客户在您的网站预约。"
+msgstr "在此处创建约会类型，可允许客户在您的网站预约。"
 
 #. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_answer_name
@@ -286,17 +285,17 @@ msgstr "日历"
 #. module: website_calendar
 #: model:ir.model,name:website_calendar.model_calendar_appointment_answer
 msgid "Calendar Scheduler Answers"
-msgstr "日历调度答案"
+msgstr "日历时间表答案"
 
 #. module: website_calendar
 #: model:ir.model,name:website_calendar.model_calendar_appointment_question
 msgid "Calendar Scheduler Questions"
-msgstr "日历调度问题"
+msgstr "日历时间表问题"
 
 #. module: website_calendar
 #: model:ir.model,name:website_calendar.model_calendar_appointment_slot
 msgid "Calendar Scheduler Slots"
-msgstr "日历调度插槽"
+msgstr "日历时间段"
 
 #. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type_min_cancellation_hours
@@ -570,7 +569,7 @@ msgstr "占位符"
 #: code:addons/website_calendar/models/calendar_appointment.py:290
 #, python-format
 msgid "Please enter a valid hour between 0:00 to 24:00 for your slots."
-msgstr "请为您的插槽在0:00 至 24:00之间输入有效时间。"
+msgstr "请为您的时段在0:00 至 24:00之间输入有效时间。"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment
@@ -617,7 +616,7 @@ msgstr "报告"
 #. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_question_question_required
 msgid "Required Answer"
-msgstr "必要答案"
+msgstr "必答"
 
 #. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type_country_ids
@@ -679,7 +678,7 @@ msgstr "单行文本"
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
 msgid "Slots"
-msgstr "插槽"
+msgstr "时段"
 
 #. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_slot_hour

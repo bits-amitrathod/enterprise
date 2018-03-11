@@ -13,6 +13,7 @@
 # hman tsao <herman.tsao@gmail.com>, 2017
 # fausthuang, 2017
 # 老窦 北京 <2662059195@qq.com>, 2018
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -50,7 +51,7 @@ msgstr "<span>预测</span>"
 msgid ""
 "A project must have a start date to use a forecast grid, found no start date"
 " for {project.display_name}"
-msgstr "项目必须有使用预测网格的开始日期，发现{project.display_name}没有开始日期"
+msgstr "项目必须有使用预测网格的开始日期，发现 {project.display_name} 没有开始日期"
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:170
@@ -58,7 +59,7 @@ msgstr "项目必须有使用预测网格的开始日期，发现{project.displa
 msgid ""
 "A project must have an end date to use a forecast grid, found no end date "
 "for {project.display_name}"
-msgstr "项目必须有使用预测网格的截止日期，发现{project.display_name}没有截止日期"
+msgstr "项目必须有使用预测网格的截止日期，发现 {project.display_name} 没有截止日期"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_active
@@ -259,8 +260,8 @@ msgid ""
 " field and the 'resource_hours' cell field, got respectively "
 "%(column_field)r and %(cell_field)r"
 msgstr ""
-"项目预测的网格调整仅支持 'start_date' 列字段和 'resource_hours' 细胞字段，获得各自的 %(column_field)r "
-"和 %(cell_field)r"
+"项目预测的网格调整仅支持 'start_date' 列字段和 'resource_hours' 单元格字段，分别为 %(column_field)r 和"
+" %(cell_field)r"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -354,7 +355,7 @@ msgstr "项目预测"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
 msgid "Project Forecast By Project"
-msgstr "项目的项目预测"
+msgstr "按项目划分的项目预测"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
@@ -364,7 +365,7 @@ msgstr "用户的项目预测"
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
 msgid "Project Forecast: Archive/Restore forecasts"
-msgstr "项目预测：档案/修复预测"
+msgstr "项目预测：归档/恢复预测"
 
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.action_generate_forecast
@@ -437,7 +438,7 @@ msgstr "年"
 #: code:addons/project_forecast/models/project_forecast.py:88
 #, python-format
 msgid "You cannot set a user with no working time."
-msgstr "您不能设置没有工作时间的用户。"
+msgstr "您无法设置没有工作时间的用户。"
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:103

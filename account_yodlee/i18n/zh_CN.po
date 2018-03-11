@@ -10,6 +10,7 @@
 # 苏州远鼎 <tiexinliu@126.com>, 2017
 # Martin Trigaux, 2017
 # Ryan Zhang <so_happy_boy@hotmail.com>, 2017
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -124,7 +125,7 @@ msgid ""
 "Credential Re-Verification Required (402): We could not update your account "
 "because your username and/or password were reported to be incorrect.  Please"
 " re-verify your username and password."
-msgstr "需要重新验证凭据 (402)：因未正确报告您的用户名和/或密码，我们无法更新您的账户。请重新验证您的用户名和密码。"
+msgstr "需要重新验证凭据 (402)：因报告您的用户名和/或密码不正确，我们无法更新您的账户。请重新验证您的用户名和密码。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:400
@@ -132,7 +133,7 @@ msgstr "需要重新验证凭据 (402)：因未正确报告您的用户名和/�
 msgid ""
 "Credential Re-Verification Required (420):The site has merged with another. "
 "Please re-verify your credentials at the site and update the same."
-msgstr "需要重新验证凭据 (420)：该网站已与其他网站合并。请在网站上重新验证您的凭证并进行更新。"
+msgstr "需要重新验证凭据 (420)：该网站已与其他网站合并。请在网站上重新验证您的凭据并进行更新。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:311
@@ -179,8 +180,8 @@ msgid ""
 "introduced. Ensure your account settings in <Cobrand> are updated with this "
 "information."
 msgstr ""
-"MFA 错误：需要额外的认证注册 (521)：请在已引入的新安全认证系统中注册。<Account "
-"Name>确保您的账户设置更新了此信息。<Cobrand>"
+"MFA 错误：需要额外的认证注册 (521)：请在已引入 <Account Name> 的新安全认证系统中注册。确保已使用此信息更新了 "
+"<Cobrand> 中的账户设置。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:419
@@ -223,7 +224,7 @@ msgid ""
 "MFA error: Authentication Information Unavailable (518):Your account was not"
 " updated as the required additional authentication information was "
 "unavailable. Please try now."
-msgstr "MFA 错误：认证信息不可用 (518)：您的账户未更新，因为必填的其他认证信息不可用。请现在尝试。"
+msgstr "MFA 错误：认证信息不可用 (518)：您的账户未更新，因为必填的其他认证信息不可用。请立即尝试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:420
@@ -232,7 +233,7 @@ msgid ""
 "MFA error: Credential Re-Verification Required (526): We could not update "
 "your account because your username/password or additional security "
 "credentials are incorrect. Please try again."
-msgstr "MFA 错误：需重新验证凭据 (526)：我们无法更新您的账户，因为您的用户名/密码或其他安全凭据不正确。请再次尝试。"
+msgstr "MFA 错误：需重新验证凭据 (526)：我们无法更新您的账户，因为您的用户名/密码或其他安全凭据不正确。请重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:431
@@ -243,7 +244,7 @@ msgid ""
 " We apologize for the inconvenience. Please try again later."
 msgstr ""
 "MFA 错误：更新账户时出现问题 "
-"(525)：出于技术原因，我们无法更新您的账户。此类型的错误通常会在几天内解决。为您带来不便，我们深表歉意。请稍后再试。"
+"(525)：出于技术原因，我们无法更新您的账户。此类型的错误通常会在几天内解决。为您带来不便，我们深表歉意。请稍后重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:417
@@ -252,7 +253,7 @@ msgid ""
 "MFA error: Request Timed Out (522) :Your request has timed out as the "
 "required security information was unavailable or was not provided within the"
 " expected time. Please try again."
-msgstr "MFA 错误：请求已过时 (522)：所需的安全信息不可用或未在预定时间内提供，因此您的请求已超时。请再次尝试。"
+msgstr "MFA 错误：请求超时 (522)：所需的安全信息不可用或未在预定时间内提供，因此您的请求已超时。请重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:429
@@ -291,7 +292,7 @@ msgid ""
 "persists, please contact customer support at online@odoo.com for further "
 "assistance."
 msgstr ""
-"未找到账户 (423)：我们未能检测到任何账户。请验证此时您的账户信息是否可用，如果问题仍存在，请在 online@odoo.com "
+"未找到账户 (423)：我们未能检测到任何账户。请验证您的账户信息此时是否可用，如果问题仍存在，请在 online@odoo.com "
 "上联系客户支持以寻求进一步帮助。"
 
 #. module: account_yodlee
@@ -330,7 +331,7 @@ msgid ""
 "update your account credentials in case they are changed else try again."
 msgstr ""
 "更新账户时遇到问题 "
-"(406)：该网站要求您执行一些额外操作，因此无法更新您的账户。请访问站点或联系其客户支持以解决此问题。问题解决后，请更新您的账户凭据，以防这些凭据被更改，并再次尝试。"
+"(406)：该网站要求您执行一些额外操作，因此无法更新您的账户。请访问网站或联系其客户支持以解决此问题。问题解决后，请更新您的账户凭据，以防这些凭据被更改，并重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:430
@@ -338,7 +339,7 @@ msgstr ""
 msgid ""
 "Problem Updating Account (517) :We'resorry, there was a technical problem "
 "updating your account. Please try again."
-msgstr "更新账户时遇到问题 (517)：很抱歉，更新您的账户时遇到技术问题。请再次尝试。"
+msgstr "更新账户时遇到问题 (517)：很抱歉，更新您的账户时遇到技术问题。请重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:421
@@ -346,7 +347,7 @@ msgstr "更新账户时遇到问题 (517)：很抱歉，更新您的账户时遇
 msgid ""
 "Problem Updating Account(401):We're sorry, your request timed out. Please "
 "try again."
-msgstr "更新账户时遇到问题 (401)：很抱歉，您的请求已超时。请再次尝试。"
+msgstr "更新账户时遇到问题 (401)：很抱歉，您的请求已超时。请重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:422
@@ -355,7 +356,7 @@ msgid ""
 "Problem Updating Account(403):We're sorry, there was a technical problem "
 "updating your account. This kind of error is usually resolved in a few days."
 " Please try again later."
-msgstr "更新账户时遇到问题 (403)：很抱歉，更新您的账户时遇到技术问题。此类错误通常会在几天内解决。请稍后再试。"
+msgstr "更新账户时遇到问题 (403)：很抱歉，更新您的账户时遇到技术问题。此类错误通常会在几天内解决。请稍后重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:423
@@ -363,7 +364,7 @@ msgstr "更新账户时遇到问题 (403)：很抱歉，更新您的账户时遇
 msgid ""
 "Problem Updating Account(404):We're sorry, there was a technical problem "
 "updating your account. Please try again later."
-msgstr "更新账户时遇到问题 (404)：很抱歉，更新您的账户时遇到技术问题。请稍后再尝试"
+msgstr "更新账户时遇到问题 (404)：很抱歉，更新您的账户时遇到技术问题。请稍后重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:381
@@ -388,7 +389,7 @@ msgid ""
 "Problem Updating Account(413):We're sorry, we couldn't update your account "
 "at the site because of a technical issue. This type of problem is usually "
 "resolved in a few days. Please try again later."
-msgstr "更新账户时遇到问题 (413)：很抱歉，由于技术问题，我们无法在该网站上更新您的账户。此类问题通常会在几天内解决。请稍后再尝试"
+msgstr "更新账户时遇到问题 (413)：很抱歉，由于技术问题，我们无法在该网站上更新您的账户。此类问题通常会在几天内解决。请稍后重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:384
@@ -413,7 +414,7 @@ msgid ""
 "Problem Updating Account(419):We're sorry, we couldn't update your account "
 "because of unexpected variations at the site. This kind of problem is "
 "usually resolved in a few days. Please try again later."
-msgstr "更新账户时遇到问题 (419)：很抱歉，由于网站突然变化，我们无法更新您的账户。此类问题通常会在几天内解决。请稍后再试。"
+msgstr "更新账户时遇到问题 (419)：很抱歉，由于网站突然发生变化，我们无法更新您的账户。此类问题通常会在几天内解决。请稍后重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:389
@@ -439,7 +440,7 @@ msgid ""
 "Problem Updating Account(507):We're sorry, Yodlee has just started providing"
 " data updates for this site, and it may take a few days to be successful as "
 "we get started. Please try again later."
-msgstr "更新账户时遇到问题 (507)：很抱歉，Yodlee 刚刚开始为该网站提供数据更新，在开始时可能需要几天时间才能成功。请稍后再试。"
+msgstr "更新账户时遇到问题 (507)：很抱歉，Yodlee 刚刚开始为该网站提供数据更新，开始后可能需要几天时间才能成功。请稍后再试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:392
@@ -518,7 +519,7 @@ msgstr "注册需要注意 (435)：您的自动注册无法完成，需要您输
 msgid ""
 "Request Timed Out (508): We are sorry, your request timed out due to "
 "technical reasons. Please try again."
-msgstr "请求已超时 (508)：很抱歉，由于技术原因，您的请求已超时。请再次尝试。"
+msgstr "请求已超时 (508)：很抱歉，由于技术原因，您的请求已超时。请重试。"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:398
@@ -564,7 +565,7 @@ msgid ""
 "Site Not Supported (505): We currently does not support the security system "
 "used by this site. We apologize for any inconvenience. Check back "
 "periodically if this situation has changed."
-msgstr "网站不受支持 (505)：我们目前不支持该网站使用的安全系统。为您带来任何不便，我们深表歉意。如果此状况已发生改变，则定期查看记录。"
+msgstr "网站不受支持 (505)：我们目前不支持该网站使用的安全系统。为您带来任何不便，我们深表歉意。如果此状况已发生改变，请定期查看记录。"
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
@@ -598,7 +599,7 @@ msgstr "更新请求已取消 (405)：由于您取消了请求，因此未更新
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_account_status
 msgid "Yodlee Account Status"
-msgstr "Yodlee 账号状态"
+msgstr "Yodlee 账户状态"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_additional_status
@@ -608,7 +609,7 @@ msgstr "Yodlee 附加状态"
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_last_attempted_refresh
 msgid "Yodlee Last Attempted Refresh"
-msgstr "Yodlee 最后一次尝试刷新"
+msgstr "Yodlee 上一次尝试刷新"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh

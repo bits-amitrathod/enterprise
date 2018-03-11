@@ -12,13 +12,14 @@
 # 苏州远鼎 <tiexinliu@126.com>, 2017
 # 老窦 北京 <2662059195@qq.com>, 2018
 # e2f <projects@e2f.com>, 2018
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: e2f_cn c5 <jarvisn@ecinnovations.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -96,7 +97,7 @@ msgstr "在向该公司购买的时候创建销售订单"
 msgid ""
 "Default value to set on Purchase Orders that will be created based on Sales "
 "Orders made to this company."
-msgstr "在该公司销售订单的基础上建立的采购订单的默认值"
+msgstr "在该公司销售订单的基础上建立的采购订单的默认值。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_warehouse_id
@@ -128,7 +129,7 @@ msgid ""
 " The intercompany user must at least be Purchase User."
 msgstr ""
 "当该公司作为客户创建销售订单时生成采购订单。\n"
-" 公司间的用户至少有一个必须是采购用户。"
+" 公司间用户必须至少是采购用户。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_so_from_po
@@ -144,7 +145,7 @@ msgid ""
 " The intercompany user must at least be Sale User."
 msgstr ""
 "当该公司作为供应商创建采购订单时生成销售订单。\n"
-" 公司间的用户至少有一个必须是销售用户。"
+" 公司间用户必须至少是销售用户。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_intercompany_user_id
@@ -275,7 +276,7 @@ msgstr "当该公司的销售订单或者采购订单由公司间的规则创建
 msgid ""
 "When a Sales Order or a Purchase Order is created by a multi company rule "
 "for this company, it will automatically validate it"
-msgstr "当该公司的销售订单或者采购订单由公司间的规则创建，规则就会自动验证订单"
+msgstr "当该公司的销售订单或者采购订单按公司间的规则创建时，将自动验证订单"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -293,9 +294,9 @@ msgid ""
 "                    simultaneously with another option ('Create Sales Orders when buying to this\n"
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
-"您不能选择基于其他发票创建的发票 \n"
-" 同时还有其他选项（“购买该 \n"
-" 公司时创建销售订单”或“卖出该公司时创建采购订单”）！"
+"您不能选择同时基于其他发票 \n"
+"和另一选项（“向该公司购买时创建销售订单” \n"
+" 或“向该公司出售时创建采购订单”）创建发票！"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings

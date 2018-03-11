@@ -12,13 +12,14 @@
 # zieloo <zieloo@gmail.com>, 2017
 # Paweł Michoń <michon.pawel@wp.pl>, 2017
 # Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2017
+# Tomasz Leppich <t.leppich@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
 "PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2017\n"
+"Last-Translator: Tomasz Leppich <t.leppich@gmail.com>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,6 +86,61 @@ msgid ""
 "        \n"
 "        "
 msgstr ""
+"\n"
+"            <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
+"\n"
+"            <div style=\"width:90%; max-width:600px; margin:auto; font-size:10pt; padding:20px 0; font-family:'Lato', serif;\">\n"
+"                <div style=\"background-color:#EFEDED; padding: 20px;\">\n"
+"                    % if ctx['template_type'] == \"request\":\n"
+"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) Poprosił o złożenie Twojego elektronicznego podpisu w tym dokumencie:\n"
+"                    % endif\n"
+"                    % if ctx['template_type'] == \"follower\":\n"
+"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) zostałeś dodany jako obserwator do tego dokumentu\n"
+"                    % endif\n"
+"                    % if ctx['template_type'] == \"completed\":\n"
+"                        Ten dokument jest kompletny i podpisany przez wszystkich:\n"
+"                    % endif\n"
+"\n"
+"                    <h1 style=\"font-size:1.25em; margin:15px 0 25px 0;\">${object['reference']}</h1>\n"
+"                    \n"
+"                    <div style=\"margin:0 -15px\">\n"
+"                        <a style=\"float:left; display:inline-block; margin:0 15px 10px 15px; padding:5px 10px; border-radius: 3px; background-color:#5C6ED0; text-align:center; text-decoration:none; color:#F7FBFD;\" href=${ctx['link']}>\n"
+"                            % if ctx['template_type'] == \"request\":\n"
+"                                Podpisz Dokument Teraz\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"follower\":\n"
+"                                Zobacz prośbę o podpis\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"completed\":\n"
+"                                Zobacz podpisany dokument\n"
+"                            % endif\n"
+"                        </a>\n"
+"                        \n"
+"                        <div style=\"font-size:0.8em; color:#999999; margin:0 15px 10px 15px\">\n"
+"                            % if ctx['template_type'] == \"request\":\n"
+"                                <strong style=\"font-weight:bold; color:black;\">Uwaga: nie przekazuj tej wiadomości do innych ludzi!</strong><br/>\n"
+"                                Będą oni w stanie uzyskać dostęp do tego dokumentu i podpisać go samemu w Twoim imieniu.\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"follower\":\n"
+"                                Zostaniesz powiadomiony, gdy dokument zostanie podpisany przez wszystkich uczestników.\n"
+"                            % endif\n"
+"                        </div>\n"
+"                        <div style=\"clear:both;\"/>\n"
+"                    </div>\n"
+"                    \n"
+"                    % if ctx['msgbody']:\n"
+"                    <div style=\"background-color:white; padding:10px;\">\n"
+"                        ${ctx['msgbody']|safe}\n"
+"                    </div>\n"
+"                    % endif\n"
+"                </div>\n"
+"                \n"
+"                <div style=\"font-size:0.8em; margin-top:10px;\">\n"
+"                    <span style=\"color:#428BCA;\">Wysłane z aplikacji <strong style=\"font-weight:bold;\">Odoo Podpisy</strong></span>\n"
+"                </div>\n"
+"            </div>\n"
+"        \n"
+"        "
 
 #. module: website_sign
 #: model:mail.template,subject:website_sign.website_sign_mail_template
@@ -106,7 +162,7 @@ msgstr "<span>(1.0 = pełny rozmiar strony)</span>"
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:1109
 #, python-format
 msgid "A copy has been sent to the new followers."
-msgstr ""
+msgstr "Kopia została wysłana do nowych obserwujących."
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_search
@@ -119,7 +175,7 @@ msgstr "Aktywne"
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:200
 #, python-format
 msgid "Add Initials"
-msgstr ""
+msgstr "Dodaj inicjały"
 
 #. module: website_sign
 #. openerp-web
@@ -190,6 +246,10 @@ msgid ""
 "for all purposes when it is used on documents, including legally binding "
 "contracts."
 msgstr ""
+"Klikając przycisk Popraw i Podpisz, zgadzam się, że wybrany podpis/inicjały "
+"będą ważną elektroniczną reprezentacją mojego podpisu/inicjałów odręcznych "
+"do wszystkich celów, gdy będzie używany na dokumentach, w tym prawnie "
+"wiążących umowach."
 
 #. module: website_sign
 #. openerp-web
@@ -207,7 +267,7 @@ msgstr "Anuluj"
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:1178
 #, python-format
 msgid "Cancel Request"
-msgstr ""
+msgstr "Anuluj zapytanie"
 
 #. module: website_sign
 #: selection:signature.request,state:0
@@ -239,6 +299,8 @@ msgid ""
 "Click on <em>Request a Signature</em> to upload a template (or use an existing one) to automate\n"
 "                your signature process for employment contracts, trade sale, NDA to sign, ..."
 msgstr ""
+"Kliknij przycisk Poproś o podpis, aby przesłać szablon (lub użyć istniejącego), aby zautomatyzować\n"
+"Twój proces podpisywania umów o pracę, sprzedaży handlowej, podpisania umowy NDA, ..."
 
 #. module: website_sign
 #. openerp-web
@@ -326,12 +388,12 @@ msgstr "Data"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_default_height
 msgid "Default Height"
-msgstr ""
+msgstr "Domyślna wysokość"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_default_width
 msgid "Default Width"
-msgstr ""
+msgstr "Domyślna szerokość"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_kanban
@@ -389,12 +451,12 @@ msgstr "Podpis dokumentu"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_template_id
 msgid "Document Template"
-msgstr ""
+msgstr "Szablon dokumentu"
 
 #. module: website_sign
 #: model:ir.ui.menu,name:website_sign.signature_request_template_menu
 msgid "Document Templates"
-msgstr ""
+msgstr "Szablony dokumentów"
 
 #. module: website_sign
 #: model:ir.model,name:website_sign.model_signature_request
@@ -413,14 +475,14 @@ msgstr "Dokumenty"
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "Download Document"
-msgstr ""
+msgstr "Pobierz dokument"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:77
 #, python-format
 msgid "Download original document"
-msgstr ""
+msgstr "Pobierz oryginalny dokument"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
@@ -432,40 +494,40 @@ msgstr "Szkic"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_nb_draft
 msgid "Draft Requests"
-msgstr ""
+msgstr "Projekt zapytania"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:124
 #, python-format
 msgid "Drag & Drop a field in the PDF"
-msgstr ""
+msgstr "Przeciągnij i upuść pole w PDF"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:56
 #, python-format
 msgid "Draw"
-msgstr ""
+msgstr "Podpisz"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:964
 #, python-format
 msgid "Duplicated Template"
-msgstr ""
+msgstr "Duplikuj Szablon"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_form
 msgid "Edit fields"
-msgstr ""
+msgstr "Edytuj pola"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:104
 #, python-format
 msgid "Edit template name"
-msgstr ""
+msgstr "Edytuj Nazwę Szablonu"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signer_email
@@ -523,7 +585,7 @@ msgstr "Nazwa pola"
 #. module: website_sign
 #: model:ir.ui.menu,name:website_sign.signature_item_type_menu
 msgid "Field Types"
-msgstr ""
+msgstr "Typy Pól"
 
 #. module: website_sign
 #. openerp-web
@@ -593,6 +655,8 @@ msgid ""
 "If you leave your document without any fields, the signers will be requested"
 " for an unique signature alongside the document"
 msgstr ""
+"Jeśli opuścisz dokument bez żadnych pól, osoby podpisujące będą proszone o "
+"unikalny podpis obok dokumentu"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_item_view_form
@@ -607,7 +671,7 @@ msgstr "Initial"
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
 msgid "Initials"
-msgstr ""
+msgstr "Inicjały"
 
 #. module: website_sign
 #. openerp-web
@@ -617,6 +681,8 @@ msgid ""
 "It's easy, incredibly efficient and totally free: you just have to create an"
 " Odoo account."
 msgstr ""
+"Jest łatwy, niesamowicie wydajny i całkowicie darmowy: wystarczy założyć "
+"konto Odoo."
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item___last_update
@@ -654,14 +720,14 @@ msgstr "Ostatnia aktualizacja"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_latitude
 msgid "Latitude"
-msgstr ""
+msgstr "Szerokość"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:83
 #, python-format
 msgid "Link to Share"
-msgstr ""
+msgstr "Lind do wysłania"
 
 #. module: website_sign
 #. openerp-web
@@ -692,29 +758,29 @@ msgstr "Wiadomość"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.deleted_sign_request
 msgid "Missing signature request"
-msgstr ""
+msgstr "Brakuje prośby o podpis"
 
 #. module: website_sign
 #: selection:signature.item.type,type:0
 msgid "Multiline Text"
-msgstr ""
+msgstr "Tekst wielowierszowy"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_multiline_text
 msgid "Multiline text"
-msgstr ""
+msgstr "Tekst wielowierszowy"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:426
 #, python-format
 msgid "Multiple Signature Requests"
-msgstr ""
+msgstr "Wiele próśb o podpis"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_search
 msgid "My documents"
-msgstr ""
+msgstr "Moje dokumenty"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_party_name
@@ -727,19 +793,21 @@ msgstr "Nazwa"
 #: code:addons/website_sign/static/src/js/website_sign_common.js:57
 #, python-format
 msgid "Need a valid PDF to add signature fields !"
-msgstr ""
+msgstr "Potrzebujesz poprawnego pliku PDF, aby dodać pola podpisu!"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "Need to sign? Check your inbox to get your secure access"
 msgstr ""
+"Chcesz podpisać? Sprawdź swoją skrzynkę e-mailową aby przejść do "
+"bezpiecznego portalu"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:399
 #, python-format
 msgid "New Document"
-msgstr ""
+msgstr "Nowy Dokument"
 
 #. module: website_sign
 #. openerp-web
@@ -754,7 +822,7 @@ msgstr "Nowy szablon"
 #: code:addons/website_sign/static/src/js/website_sign_common.js:471
 #, python-format
 msgid "New: "
-msgstr ""
+msgstr "Nowy:"
 
 #. module: website_sign
 #. openerp-web
@@ -772,7 +840,7 @@ msgstr "Otwarta"
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 msgid "Or, you can"
-msgstr ""
+msgstr "Albo, możesz"
 
 #. module: website_sign
 #: model:ir.ui.menu,name:website_sign.signature_item_party_menu
@@ -787,7 +855,7 @@ msgstr "Partner"
 #. module: website_sign
 #: model:ir.model.fields,help:website_sign.field_signature_item_type_auto_field
 msgid "Partner field to use to auto-complete the fields of this type"
-msgstr ""
+msgstr "Pole partnera używane do automatycznego uzupełniania pól tego typu"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_phone
@@ -802,24 +870,24 @@ msgstr "Miejsce"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "Please Review And Act On This Document"
-msgstr ""
+msgstr "Proszę sprawdzić i podpisać ten dokument"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_posX
 msgid "Position X"
-msgstr ""
+msgstr "Pozycja X"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_posY
 msgid "Position Y"
-msgstr ""
+msgstr "Pozycja Y"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:76
 #, python-format
 msgid "Print original document"
-msgstr ""
+msgstr "Drukuj oryginalny dokument"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_progress
@@ -836,14 +904,14 @@ msgstr "Usuń"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_request_item_infos
 msgid "Request Item Infos"
-msgstr ""
+msgstr "Poproś o informacje o przedmiotach"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:79
 #, python-format
 msgid "Request a Signature"
-msgstr ""
+msgstr "Poproś o podpis"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_required
@@ -902,14 +970,14 @@ msgstr "Token uprawnień"
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:52
 #, python-format
 msgid "Select Signature Style"
-msgstr ""
+msgstr "Wybierz styl podpisu"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:356
 #, python-format
 msgid "Select the responsible"
-msgstr ""
+msgstr "Wybierz odpowiedzialnego"
 
 #. module: website_sign
 #. openerp-web
@@ -926,7 +994,7 @@ msgstr "Wyślij"
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:248
 #, python-format
 msgid "Send Signature Request"
-msgstr ""
+msgstr "Wyślij prośbę o podpis"
 
 #. module: website_sign
 #. openerp-web
@@ -948,7 +1016,7 @@ msgstr "Wyślij kopię do"
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:1092
 #, python-format
 msgid "Send a copy to third parties"
-msgstr ""
+msgstr "Wyślij kopię do stron trzecich"
 
 #. module: website_sign
 #. openerp-web
@@ -962,7 +1030,7 @@ msgstr "Wyślij notatkę..."
 #: code:addons/website_sign/static/src/js/website_sign_common.js:271
 #, python-format
 msgid "Send note"
-msgstr ""
+msgstr "Wyślij notatkę"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
@@ -972,7 +1040,7 @@ msgstr "Nadawca"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_nb_wait
 msgid "Sent Requests"
-msgstr ""
+msgstr "Wysłane prośby o podpis"
 
 #. module: website_sign
 #. openerp-web
@@ -984,7 +1052,7 @@ msgstr "Udostępnij"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_template_share_link
 msgid "Share Link"
-msgstr ""
+msgstr "Link do udostępniania"
 
 #. module: website_sign
 #. openerp-web
@@ -995,6 +1063,9 @@ msgid ""
 " the link. The link is private, only those that receive the link will be "
 "able to sign it."
 msgstr ""
+"Udostępnij ten link, a Odoo utworzy nowy dokument dla każdej osobę, która "
+"kliknie w link. Link jest prywatny, tylko osoby, które otrzymają link, będą "
+"mogły go podpisać."
 
 #. module: website_sign
 #. openerp-web
@@ -1002,7 +1073,7 @@ msgstr ""
 #: model:ir.ui.menu,name:website_sign.menu_document
 #, python-format
 msgid "Sign"
-msgstr ""
+msgstr "Podpisz"
 
 #. module: website_sign
 #. openerp-web
@@ -1022,32 +1093,32 @@ msgstr "Podpis"
 #. module: website_sign
 #: model:ir.model,name:website_sign.model_signature_item
 msgid "Signature Field For Document To Sign"
-msgstr ""
+msgstr "Pole podpisu dokumentu"
 
 #. module: website_sign
 #: model:ir.model,name:website_sign.model_signature_item_value
 msgid "Signature Field Value For Document To Sign"
-msgstr ""
+msgstr "Wartość pola podpisu dla dokumentu do podpisania"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_item_id
 msgid "Signature Item"
-msgstr ""
+msgstr "Pozycja podpisu"
 
 #. module: website_sign
 #: model:ir.actions.act_window,name:website_sign.signature_item_party_action
 msgid "Signature Item Party"
-msgstr ""
+msgstr "Pozycja podpisu Strony"
 
 #. module: website_sign
 #: model:ir.actions.act_window,name:website_sign.signature_item_type_action
 msgid "Signature Item Type"
-msgstr ""
+msgstr "Typ pozycji podpisu"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_template_signature_item_ids
 msgid "Signature Items"
-msgstr ""
+msgstr "Pozycje podpisu"
 
 #. module: website_sign
 #. openerp-web
@@ -1057,23 +1128,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature_request_id
 #, python-format
 msgid "Signature Request"
-msgstr ""
+msgstr "Prośba o podpis"
 
 #. module: website_sign
 #: model:ir.model,name:website_sign.model_signature_request_template
 msgid "Signature Request Template"
-msgstr ""
+msgstr "Szablon prośby o podpis"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_template_signature_request_ids
 #: model:ir.ui.menu,name:website_sign.signature_request_menu
 msgid "Signature Requests"
-msgstr ""
+msgstr "Prośby o podpis"
 
 #. module: website_sign
 #: selection:signature.request,state:0
 msgid "Signatures in Progress"
-msgstr ""
+msgstr "Podpisy w toku"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_search
@@ -1110,21 +1181,21 @@ msgstr "Podpisujący"
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:101
 #, python-format
 msgid "So you can close the window and come back later."
-msgstr ""
+msgstr "Możesz zamknąć to okno i wrócić później"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:1153
 #, python-format
 msgid "Some fields have still to be completed !"
-msgstr ""
+msgstr "Niektóre z pól muszą być wypełnione!"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:953
 #, python-format
 msgid "Somebody is already filling a document which uses this template"
-msgstr ""
+msgstr "Ktoś już wypełnia dokument wykorzystujący ten szablon"
 
 #. module: website_sign
 #. openerp-web
@@ -1132,12 +1203,12 @@ msgstr ""
 #: code:addons/website_sign/static/src/js/website_sign_common.js:1217
 #, python-format
 msgid "Sorry, an error occured, please try to fill the document again."
-msgstr ""
+msgstr "Przepraszamy, wystąpił błąd, prosimy o ponowne wypełnienie dokumentu"
 
 #. module: website_sign
 #: model:ir.model,name:website_sign.model_signature_item_type
 msgid "Specialized type for signature fields"
-msgstr ""
+msgstr "Specjalny typ dla pól podpisu"
 
 #. module: website_sign
 #. openerp-web
@@ -1199,11 +1270,13 @@ msgid ""
 "The signature access you are trying to reach does not exist. Maybe the signature request has been deleted or modified. <br/>\n"
 "                    If there still exists a signature request for this document, check your inbox to get your access!"
 msgstr ""
+"Dostęp do podpisu, do którego próbujesz dotrzeć, nie istnieje. Być może prośba o podpis została usunięta lub zmodyfikowana.<br/>\n"
+"                     Jeśli nadal istnieje prośba podpisu dla tego dokumentu, sprawdź swoją skrzynkę odbiorczą, aby uzyskać dostęp!"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "This document cannot be filled right now"
-msgstr ""
+msgstr "Tego dokumentu nie można teraz wypełnić"
 
 #. module: website_sign
 #. openerp-web
@@ -1213,6 +1286,8 @@ msgid ""
 "This template is used by some signature requests.\n"
 "            If you want to edit it,"
 msgstr ""
+"Ten szablon jest używany przez niektóre prośby o podpis.\n"
+" Jeśli chcesz go edytować,"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
@@ -1220,6 +1295,8 @@ msgid ""
 "This will delete all the already completed documents of this request and "
 "disable every sent accesses, are you sure?"
 msgstr ""
+"Spowoduje to usunięcie wszystkich już wypełnionych dokumentów tego wniosku i"
+" wyłączenie każdego wysłanego dostępu, czy na pewno?"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_tip
@@ -1229,7 +1306,7 @@ msgstr "Wskazówka"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_search
 msgid "To Sign"
-msgstr ""
+msgstr "Do podpisu"
 
 #. module: website_sign
 #. openerp-web
@@ -1238,6 +1315,8 @@ msgstr ""
 msgid ""
 "To be able to share, there must be only one responsible for all fields !"
 msgstr ""
+"Aby móc wysłać do innych, musi być tylko jeden odpowiedzialny za wszystkie "
+"pola!"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id
@@ -1248,32 +1327,32 @@ msgstr "Typ"
 #. module: website_sign
 #: model:ir.model,name:website_sign.model_signature_item_party
 msgid "Type of partner which can access a particular signature field"
-msgstr ""
+msgstr "Typ partnera, który ma dostęp do określonego pola podpisu"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:70
 #, python-format
 msgid "Upload a PDF Template"
-msgstr ""
+msgstr "Załaduj szablon PDF"
 
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_with_archived_action
 msgid "Upload a PDF of contract to sign."
-msgstr ""
+msgstr "Załaduj PDF kontraktu do podpisania"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:908
 #, python-format
 msgid "Validate & Send"
-msgstr ""
+msgstr "Zatwierdź i Wyślij"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 msgid "Validate &amp; Send Completed Document"
-msgstr ""
+msgstr "Zatwierdź &amp; Wyślij Wypełniony Dokument"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_value
@@ -1296,18 +1375,18 @@ msgstr "Pokaż historię"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 msgid "Waiting Signatures ("
-msgstr ""
+msgstr "Oczekiwane podpisy ("
 
 #. module: website_sign
 #: selection:signature.request.item,state:0
 msgid "Waiting for completion"
-msgstr ""
+msgstr "Czeka na ukończenie"
 
 #. module: website_sign
 #: code:addons/website_sign/models/signature_request.py:368
 #, python-format
 msgid "Waiting for signatures."
-msgstr ""
+msgstr "Czeka na podpisy."
 
 #. module: website_sign
 #. openerp-web
@@ -1321,7 +1400,7 @@ msgstr "Ostrzeżenie"
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:101
 #, python-format
 msgid "We will let you know by email once everyone has signed."
-msgstr ""
+msgstr "Powiadomimy Cię e-mailem, gdy wszyscy się podpiszą."
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_width
@@ -1345,7 +1424,7 @@ msgstr "Masz skompletowany dokument"
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_action
 msgid "You have no document to sign."
-msgstr ""
+msgstr "Nie masz żadnych dokumentów do podpisania."
 
 #. module: website_sign
 #. openerp-web
@@ -1398,17 +1477,17 @@ msgstr "komentarz"
 #: model:signature.item.type,tip:website_sign.signature_item_type_phone
 #: model:signature.item.type,tip:website_sign.signature_item_type_text
 msgid "fill in"
-msgstr ""
+msgstr "Wypełnij"
 
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 msgid "load our templates of contract"
-msgstr ""
+msgstr "załaduj nasze szablony umowy"
 
 #. module: website_sign
 #: model:signature.item.type,tip:website_sign.signature_item_type_initial
 msgid "mark it"
-msgstr ""
+msgstr "zaznacz"
 
 #. module: website_sign
 #. openerp-web
@@ -1420,16 +1499,16 @@ msgstr "na"
 #. module: website_sign
 #: model:signature.item.type,tip:website_sign.signature_item_type_signature
 msgid "sign it"
-msgstr ""
+msgstr "podpisz"
 
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 msgid "to quickly evaluate this application."
-msgstr ""
+msgstr "aby szybko ocenić tę aplikację."
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:110
 #, python-format
 msgid "to start a new template from this one !"
-msgstr ""
+msgstr "aby rozpocząć nowy szablon na podstawie tego!"

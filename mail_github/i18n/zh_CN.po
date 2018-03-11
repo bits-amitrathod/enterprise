@@ -8,13 +8,14 @@
 # Xu Lei <xulei8@qq.com>, 2017
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: e2f_cn c5 <jarvisn@ecinnovations.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,7 +56,7 @@ msgid ""
 "request, Pull request review, Pull request review comment</i> and "
 "<i>Push</i> events are supported."
 msgstr ""
-"在此之后，您可以在频道中选择您想要关注的事件。注意，只<i>支持提交评论、发布问题、问题评论、Gollum、拉取请求评论和推送事件。</i><i/>"
+"在此之后，您可以选择想要在渠道中关注的事件。注意，只支持<i>提交评论、发布问题、问题评论、Gollum、拉取请求审核、拉取请求审核评论</i>和<i>推送</i>事件。"
 
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_channel_ids
@@ -65,7 +66,7 @@ msgstr "频道"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "Channels allowed to follow repositories."
-msgstr "频道允许关注知识库。"
+msgstr "允许关注知识库的渠道。"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
@@ -169,7 +170,7 @@ msgstr "知识库"
 #. module: mail_github
 #: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_github_repository_id
 msgid "Repository ID"
-msgstr "知识库标识符"
+msgstr "知识库 ID"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
@@ -189,19 +190,19 @@ msgstr "机密"
 #. module: mail_github
 #: model:ir.model.fields,help:mail_github.field_mail_channel_github_repo_ids
 msgid "The Github repositories the channel will follow"
-msgstr "频道将关注 Github 知识库"
+msgstr "渠道将关注的 Github 知识库"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid "The signature to be pasted when setting up the webhook on Github"
-msgstr "在 Github 设置网络挂接时，要粘贴签名"
+msgstr "在 Github 设置网络挂接时，要粘贴的签名"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid ""
 "The webhook 'Content Type' should be set to <b>application/x-www-form-"
 "urlencoded</b>."
-msgstr "网络挂接的“内容类型”应在<b>应用程序中设置/x-www-form-urlencoded。</b>"
+msgstr "网络挂接的“内容类型”应设置为 <b>application/x-www-form-urlencoded</b>。"
 
 #. module: mail_github
 #: model:ir.model.fields,help:mail_github.field_mail_channel_github_url_token
@@ -227,12 +228,12 @@ msgstr "提交"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "commit(s) on"
-msgstr "在何处提交"
+msgstr "提交日期"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "created a new"
-msgstr "创建新增"
+msgstr "新建"
 
 #. module: mail_github
 #: code:addons/mail_github/controllers/main.py:197
@@ -248,7 +249,7 @@ msgstr "mail.channel.github"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "modified the following"
-msgstr "修改以下操作"
+msgstr "修改以下"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
@@ -275,4 +276,4 @@ msgstr "推送"
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "remove the following"
-msgstr "删除以下操作"
+msgstr "删除以下"

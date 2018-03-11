@@ -5,7 +5,7 @@
 # Translators:
 # Pernille Kristensen <pernillekristensen1994@gmail.com>, 2017
 # Sanne Kristensen <sanne@vkdata.dk>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Morten Schou <ms@msteknik.dk>, 2017
 # Jesper Carstensen <jc@danodoo.dk>, 2017
 # Ejner Sønniksen <ejner@vkdata.dk>, 2017
@@ -48,6 +48,25 @@ msgid ""
 "              \n"
 "            "
 msgstr ""
+"\n"
+"                <body>\n"
+"                      <p>Kære ${object.partner_id.name},</p>\n"
+"\n"
+"                      <p>Under den sidste proces med \"Udskriv og send\" dokumenter vises nogle fejl. Her er en liste over den mislykkede udskrivningsordre, du har lavet.</p>\n"
+"                      <p>Vær opmærksom på, at der er registreret nogle fejl. Du kan finde dem i <i>Indstillinger> Udskriv ordrer</i>.</p>\n"
+"\n"
+"                      % if ctx.get('print_errors'):\n"
+"                            <p>\n"
+"                            Print Order ID  |    Fejlbesked <br/>\n"
+"                            -------------------------------------- <br/>\n"
+"                                  % for print_order_id, error_text in ctx.get('print_errors'):\n"
+"                                        ${print_order_id}    |    ${error_text} <br/>\n"
+"                                  % endfor\n"
+"                            </p>\n"
+"                      % endif\n"
+"                </body>\n"
+"              \n"
+"            "
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
@@ -480,7 +499,7 @@ msgstr "Modtager adresse"
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
 #: model:ir.model.fields,field_description:print.field_print_order_partner_id
 msgid "Recipient partner"
-msgstr ""
+msgstr "Modtager partner"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_report_id
