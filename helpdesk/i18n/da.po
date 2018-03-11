@@ -3,7 +3,7 @@
 # * helpdesk
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Sanne Kristensen <sanne@vkdata.dk>, 2016
 # peso <peer.sommerlund@gmail.com>, 2016
 # Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2016
@@ -146,6 +146,23 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"    <div style=\"margin-left:30px;align=center;\">\n"
+"        Kære ${object.partner_id.name or 'Madam, Sir'},\n"
+"    </div>\n"
+"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
+"        Denne automatiske besked informerer dig om, at vi har lukket din opgave (reference ${object.id}).\n"
+"\n"
+"        Vi håber, at de leverede ydelser har opfyldt dine forventninger.\n"
+"        Hvis du har flere spørgsmål eller kommentarer, så svar venligst på denne e-mail for at genåbne din opgave.\n"
+"\n"
+"        Tak for dit samarbejde.\n"
+"    </div><br/>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">Med venlig hilsen </span>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} Team.</span>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template

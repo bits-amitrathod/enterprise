@@ -3,7 +3,7 @@
 # * website_contract
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Morten Schou <ms@msteknik.dk>, 2016
 # jonas jensen <j.jensen@tcomp.dk>, 2016
 # peso <peer.sommerlund@gmail.com>, 2016
@@ -225,6 +225,62 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Kære ${object.subscription_id.partner_id.name},</p>\n"
+"                <p>Dit abonnement ${object.subscription_id.name} er aktivt.</p>\n"
+"\n"
+"                <p>Du kan se dit abonnement online ved at gå til vores <a style=\"text-decoration:none; color: #875A7B;\" href=\"/my/home\">online portal</a> eller ved at følge dette link\n"
+"                <p style=\"text-align: center;\"><a style=\"padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px\" href=\"/my/contract/${object.subscription_id.id}/${object.subscription_id.uuid}\">Se abonnement</a></p>\n"
+"\n"
+"                <p>Med denne side kan du nemt administrere dine abonnementer:</p>\n"
+"                <ul>\n"
+"                    <li>Tilføj eller fjern indstillinger</li>\n"
+"                    <li>Skift din abonnementsperiode fra månedligt til årligt</li>\n"
+"                    <li>Kontakt din salgskonsulent</li>\n"
+"                </ul>\n"
+"                <p>Du kan få adgang til dette link eller dele det med en anden for at give ham / hende ret til at administrere dette abonnement.</p>\n"
+"\n"
+"                <p>Hvis du har spørgsmål, tøv ikke med at kontakte os.</p>\n"
+"                <p>Tak fordi du valgte\n"
+" ${object.subscription_id.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Send af\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a>Vi anvender <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_payment_reminder
@@ -292,6 +348,66 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Hej ${object.partner_id.name},</p>\n"
+"                <p>\n"
+"                % if ctx.get('payment_token) and ctx.get('total_amount'):\n"
+"                  Vores sidste forsøg på at gennemføre betaling af dit abonnement ved hjælp af din betalingsmetode\n"
+"                  ${ctx['payment_token']}\n"
+"                  på ${ctx['total_amount']} ${ctx.get('currency')} fejlede.\n"
+"                  % if ctx.get('error'):\n"
+"                    Din bank eller pengeinstitut gav følgende oplysninger om problemet: <pre>${ctx['error']}</pre>.\n"
+"                  %endif\n"
+"                % else:\n"
+"                  Vores sidste forsøg på at gennemføre betaling af dit abonnement mislykkedes, fordi vi ikke har registreret en betalingsmetode for dig\n"
+"                % endif \n"
+"                </p>\n"
+"\n"
+"                <p>\n"
+"                  Da din betaling skulle have været foretaget <strong> for 15 dage siden</strong>, er dit abonnement nu ophørt.\n"
+"                </p>\n"
+"\n"
+"                <br/>\n"
+"                <p>Skulle du ønske at fortsætte med dit abonnemet, så tøv ikke med at kontakte os.</p>\n"
+"                <p>Tak fordi du valgte ${object.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Sendt af\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> ved brug af <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_payment_close
@@ -436,19 +552,19 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.chatter_change_contract
 msgid "&amp;bull; <b>Invoicing Period</b>:"
-msgstr ""
+msgstr "&amp;bull; <b>Faktureringsperiode</b>:"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.chatter_add_option
 #: model:ir.ui.view,arch_db:website_contract.chatter_add_paid_option
 #: model:ir.ui.view,arch_db:website_contract.chatter_remove_option
 msgid "&amp;bull; <b>Option</b>:"
-msgstr ""
+msgstr "&amp;bull; <b>Valg</b>:"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.chatter_add_option
 msgid "&amp;bull; <b>Price</b>:"
-msgstr ""
+msgstr "&amp;bull; <b>Pris</b>:"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.chatter_add_paid_option
@@ -459,17 +575,17 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.chatter_add_paid_option
 msgid "&amp;bull; <b>Sale Order</b>:"
-msgstr ""
+msgstr "&amp;bull; <b>Salgsordre</b>:"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.chatter_add_option
 msgid "&amp;bull; <b>Sale Order</b>: None"
-msgstr ""
+msgstr "&amp;bull; <b>Salgsordre</b>: Ingen"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.chatter_change_contract
 msgid "&amp;bull; <b>Template</b>:"
-msgstr ""
+msgstr "&amp;bull; <b>Skabelon</b>:"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
@@ -507,11 +623,13 @@ msgid ""
 "<abbr title=\"You need to be logged in as this contract's customer to change"
 " country\">Taxes</abbr>:"
 msgstr ""
+"<abbr title=\"You need to be logged in as this contract's customer to change"
+" country\">Moms</abbr>:"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Automatic payments"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/> Automatisk betaling"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
