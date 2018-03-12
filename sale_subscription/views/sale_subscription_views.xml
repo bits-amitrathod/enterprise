@@ -31,6 +31,9 @@
                 <field name="user_id"/>
                 <field name="template_id"/>
                 <field name="code"/>
+                <filter name="my_subscriptions" string="My Subscriptions" domain="[('user_id','=',uid)]"/>
+                <filter string="Unassigned" name="contracts_not_assigned" help="Subscriptions that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
+                <separator/>
                 <filter name="new" string="New" domain="[('state','=','draft')]" help="New Subscriptions"/>
                 <filter name="open" string="In Progress" domain="[('state','=','open')]" help="Subscriptions in progress"/>
                 <filter name="pending" string="To Renew" domain="[('state','=','pending')]" help="Pending subscriptions"/>
@@ -43,12 +46,10 @@
                     domain="[('state','in',('open','draft','pending')), '|', ('date', '!=', False), ('date', '&lt;=', time.strftime('%%Y-%%m-%%d'))]"
                     help="End date passed" />
                 <filter
-                    string="Expiring soon"
+                    string="Expiring Next Month"
                     name="expiring_soon"
                     domain="[('date', '!=', False), ('date', '&lt;=', (context_today() + datetime.timedelta(30)).strftime('%%Y-%%m-%%d') )]"
                     help="End date is in the next month" />
-                <separator/>
-                <filter string="Subscriptions not assigned" name="contracts_not_assigned" help="Subscriptions that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
                 <separator/>
                 <filter string="My Activities" name="activities_my"
                     domain="[('activity_ids.user_id', '=', uid)]"/>
@@ -63,14 +64,13 @@
                         ]"/>
                 <group expand="0" string="Group By">
                     <filter string="Status" name="status" domain="[]" context="{'group_by':'state'}"/>
-                    <filter string="Account Manager" name="account_manager" domain="[]" context="{'group_by':'user_id'}"/>
-                    <filter string="Partner" name="partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter string="Salesperson" name="sales_person" domain="[]" context="{'group_by':'user_id'}"/>
+                    <filter string="Customer" name="customer" domain="[]" context="{'group_by':'partner_id'}"/>
                     <filter string="Country" name="country" domain="[]" context="{'group_by': 'country_id'}"/>
                     <filter string="Industry" name="industry" domain="[]" context="{'group_by': 'industry_id'}"/>
                     <filter string="Template" name="template" domain="[]" context="{'group_by':'template_id'}"/>
                     <filter string="Start Month" name="start_month" domain="[]" context="{'group_by' : 'date_start'}" />
                     <filter string="End Month" name="end_month" domain="[]" context="{'group_by' : 'date'}" />
-                    <filter string="Pricelist" name="pricelist" domain="[]" context="{'group_by' : 'pricelist_id'}" />
                 </group>
             </search>
         </field>
@@ -81,7 +81,7 @@
         <field name="res_model">sale.subscription</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form,pivot,graph</field>
-        <field name="context">{}</field>
+        <field name="context">{"search_default_my_subscriptions":1}</field>
         <field name="domain">[]</field>
         <field name="search_view_id" eval='False'/>
         <field name="help" type="html">
