@@ -58,8 +58,10 @@ class SaleSubscriptionWizard(models.TransientModel):
 
     @api.multi
     def add_lines(self):
-        rec_lines = self._prepare_subscription_lines()
-        self.subscription_id.sudo().write({'recurring_invoice_line_ids': rec_lines})
+        for wiz in self:
+            rec_lines = wiz._prepare_subscription_lines()
+            wiz.subscription_id.sudo().write({'recurring_invoice_line_ids': rec_lines})
+        return True
 
 
 class SaleSubscriptionWizardOption(models.TransientModel):
