@@ -275,6 +275,9 @@ class SaleSubscription(models.Model):
     def set_pending(self):
         return self.write({'state': 'pending'})
 
+    def set_restart(self):
+        return self.write({'state': 'draft'})
+
     def set_cancel(self):
         return self.write({'state': 'cancel'})
 

@@ -170,17 +170,17 @@
         <field name="arch" type="xml">
             <form string="Subscription">
                 <header>
-                    <button name="set_open" string="Start Subscription" type="object"
-                            attrs="{'invisible': [('state','=','open')]}" class="oe_highlight"/>
-                    <button name="set_pending" string="To Renew" type="object"
+                    <button name="set_open" string="Start" type="object" states="draft" class="oe_highlight"/>
+                    <button name="set_pending" string="Mark As To Renew" type="object"
                             attrs="{'invisible': [('state','in',['pending','draft','close','cancel'])]}"/>
-                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Close Subscription"
+                    <button name="set_restart" string="Restart" type="object" attrs="{'invisible': [('state','in',['draft','open'])]}"/>
+                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Close"
                             type="action" attrs="{'invisible': [('state','in',['draft','close','cancel'])]}"/>
-                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Cancel Subscription"
+                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Cancel"
                             type="action" context="{'cancel':1}"
                             attrs="{'invisible': [('state','in',['cancel','close'])]}"/>
-                    <button string="Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': [('state', '=', 'draft')]}" />
-                    <button string="Upsell Subscription" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
+                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button string="Upsell" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet string="Subscription">
