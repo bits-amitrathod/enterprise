@@ -189,7 +189,7 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
             });
             self.end_picker.on('datetime_changed', self, function() {
                 if (this.end_picker.getValue()) {
-                    this.start_picker.picker.maxDate(moment(this.end_picker.getValue()));
+                    this.start_picker.picker.maxDate(moment(this.end_picker.getValue()).add(1, 'M'));
                 }
             });
 
@@ -223,8 +223,8 @@ var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.exte
         this._super(parent);
 
         this.main_dashboard_action_id = context.id;
-        this.start_date = moment().subtract(1, 'M');
-        this.end_date = moment();
+        this.start_date = moment().subtract(1, 'M').startOf('month');
+        this.end_date = moment().subtract(1, 'M').endOf('month');
 
         this.filters = {
             template_ids: [],
@@ -987,8 +987,8 @@ var sale_subscription_dashboard_salesman = sale_subscription_dashboard_abstract.
 
     init: function() {
         this._super.apply(this, arguments);
-        this.start_date = moment().startOf('month');
-        this.end_date = moment().endOf('month');
+        this.start_date = moment().subtract(1, 'M').startOf('month');
+        this.end_date = moment().subtract(1, 'M').endOf('month');
     },
 
     willStart: function() {
