@@ -231,41 +231,41 @@
                             <field name="close_reason_id" attrs="{'invisible': [('state','in',['draft','open','pending'])]}"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Subscription Lines" id="lines">
-                            <div>
-                                <field name="recurring_invoice_line_ids">
-                                    <tree editable="bottom">
-                                        <field name="product_id" domain="[('recurring_invoice', '=', True)]" context="{'default_recurring_invoice': True}"/>
-                                        <field name="name"/>
-                                        <field name="quantity"/>
-                                        <field name="uom_id" groups="product.group_uom"/>
-                                        <field name="price_unit"/>
-                                        <field name="discount" groups="sale.group_discount_per_so_line"/>
-                                        <field name="price_subtotal"/>
-                                    </tree>
-                                </field>
-                                <group class="oe_subtotal_footer oe_right">
-                                    <field name="recurring_total" class="oe_subtotal_footer_separator"
-                                        widget="monetary" options="{'currency_field': 'currency_id'}"
-                                        modifiers="{'readonly': true}"
-                                    />
+                    <group>
+                        <notebook>
+                            <page string="Subscription Lines" id="lines">
+                                <div>
+                                    <field name="recurring_invoice_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="product_id" domain="[('recurring_invoice', '=', True)]" context="{'default_recurring_invoice': True}"/>
+                                            <field name="name"/>
+                                            <field name="quantity"/>
+                                            <field name="uom_id" groups="product.group_uom"/>
+                                            <field name="price_unit"/>
+                                            <field name="discount" groups="sale.group_discount_per_so_line"/>
+                                            <field name="price_subtotal"/>
+                                        </tree>
+                                    </field>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <field name="recurring_total" class="oe_subtotal_footer_separator"
+                                            widget="monetary" options="{'currency_field': 'currency_id'}"
+                                            modifiers="{'readonly': true}"
+                                        />
+                                    </group>
+                                </div>
+                            </page>
+                            <page string="Settings" id="settings">
+                                <group>
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                    <field name="payment_mandatory" invisible="1"/>
+                                    <field name="payment_token_id" attrs="{'invisible': [('payment_mandatory', '==', False)]}"/>
                                 </group>
-                            </div>
-                        </page>
-                        <page string="Settings" id="settings">
-                            <group>
-                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
-                                <field name="payment_mandatory" invisible="1"/>
-                                <field name="payment_token_id" attrs="{'invisible': [('payment_mandatory', '==', False)]}"/>
-                            </group>
-                            <group>
-                            </group>
-                        </page>
-                    </notebook>
-                    <div>
-                        <field name="description"/>
+                            </page>
+                        </notebook>
+                    </group>
+                    <div name="description">
+                        <field name="description" placeholder="Terms and Conditions"/>
                     </div>
                 </sheet>
                 <div class="oe_chatter">
