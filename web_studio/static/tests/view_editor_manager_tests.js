@@ -1791,7 +1791,7 @@ QUnit.module('ViewEditorManager', {
                             id: 1,
                             inherit_id: false,
                         }],
-                        less: [],
+                        scss: [],
                     });
                 }
                 return this._super.apply(this, arguments);
