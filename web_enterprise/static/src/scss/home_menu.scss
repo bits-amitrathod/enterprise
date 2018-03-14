@@ -96,12 +96,12 @@
                 @include o-text-overflow;
                 color: $o-brand-lightsecondary;
                 margin-bottom: 3px;
-                @media (min-width: $screen-sm-min) {
+                @include media-breakpoint-up(md) {
                     font-size: 20px;
                 }
                 outline: none;
                 width: 100%;
-                @media (max-width: $screen-xs-max) {
+                @include media-breakpoint-down(sm) {
                     padding: 5px 0;
                 }
                 &:hover {
@@ -134,7 +134,7 @@
     max-width: 768px;
     width: 100%;
     .alert {
-        @media (min-width: $screen-md-min) {
+        @include media-breakpoint-up(lg) {
             margin-top: 25px;
         }
         margin-bottom: 0px;

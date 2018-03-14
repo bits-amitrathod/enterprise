@@ -166,7 +166,7 @@
     // it (and consider it does not exist) and change the default table paddings
     @include o-list-view-full-width-padding($base: $table-condensed-cell-padding, $ratio: 2);
     &:not(.o_list_view_grouped) {
-        @media (min-width: $screen-lg-min) {
+        @include media-breakpoint-up(xl) {
             @include o-list-view-full-width-padding($base: $table-condensed-cell-padding, $ratio: 2.5);
         }
     }

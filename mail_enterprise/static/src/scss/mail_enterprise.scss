@@ -1,5 +1,5 @@
 .o_form_view {
-    @media screen and (min-width: $o-screen-sidechatter-min) {
+    @include media-breakpoint-up(xxl, $o-extra-grid-breakpoints) {
         .o_attachment_preview {
             display: block;
             flex: 1 0 auto;
@@ -54,7 +54,7 @@
             padding: $o-sheet-vpadding;
         }
     }
-    @media screen and (max-width: $screen-lg-max) {
+    @include media-breakpoint-down(xl, $o-extra-grid-breakpoints) {
         .o_attachment_preview {
             display: none;
         }

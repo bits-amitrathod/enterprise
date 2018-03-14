@@ -84,7 +84,7 @@
         display: flex;
         flex-flow: column nowrap;
         @include o-position-absolute(0, 0, 0, 0);
-        @media (max-width: $screen-xs-max) {
+        @include media-breakpoint-down(sm) {
             position: static;
             .o_sign_pdf_iframe {
                 flex: 0 0 500px;

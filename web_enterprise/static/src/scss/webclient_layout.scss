@@ -25,14 +25,14 @@ html {
 
         .o_content {
             flex: 1 1 auto;
-            @media (min-width: $screen-sm-min) {
+            @include media-breakpoint-up(md) {
                 overflow: auto;
                 height: 100%;
                 // iOS fix for scroll-x element inside scroll-y element
                 -webkit-overflow-scrolling: touch;
             }
             position: relative;  // Allow to redistribute the 100% height to its child
-            @media (max-width: $screen-xs-max) {
+            @include media-breakpoint-down(sm) {
                 overflow: visible;
                 height: auto;
             }
@@ -45,7 +45,7 @@ html {
                 left: 0;
                 height: 100%;
                 &.o_field_widget {
-                    @media (max-width: $screen-xs-max) {
+                    @include media-breakpoint-down(sm) {
                         position: static;  // reset the height 100% distribution on flex item
                         height: auto;  // reset height inheritance
                     }
@@ -54,7 +54,7 @@ html {
         }
     }
 
-    @media (max-width: $screen-xs-max) {
+    @include media-breakpoint-down(sm) {
         .o_web_client {
             &.modal-open {
                 .o_content {

@@ -39,7 +39,7 @@
 .o_ma_hierarchy {
     margin-left: -$o-horizontal-padding;
     margin-right: -$o-horizontal-padding;
-    @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
+    @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
         margin-left: -$o-horizontal-padding*2;
         margin-right: -$o-horizontal-padding*2;
     }

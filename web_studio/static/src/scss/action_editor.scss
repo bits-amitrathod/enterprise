@@ -13,11 +13,11 @@
             flex: 1 1 auto;
             @include o-web-studio-thumbnails;
 
-            @media screen and (min-width: $screen-md-min) {
+            @include media-breakpoint-up(lg) {
                 flex-flow: column wrap;
             }
 
-            @media screen and (min-width: ($screen-lg)) {
+            @include media-breakpoint-up(xl) {
                 align-content: center;
             }
 

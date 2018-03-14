@@ -1,10 +1,10 @@
 .o_searchview {
-    @media (min-width: $screen-sm-min) {
+    @include media-breakpoint-up(md) {
         border-bottom: 1px solid $o-brand-secondary;
     }
 
     .o_searchview_facet {
-        @media (max-width: $screen-xs-max) {
+        @include media-breakpoint-down(sm) {
             flex-flow: row wrap;
         }
 

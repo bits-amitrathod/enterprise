@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
 
-    @media (min-width: $screen-sm-min) {
+    @include media-breakpoint-up(md) {
         @include o-position-absolute(0, 0, 0, 0);
     }
 }
@@ -45,7 +45,7 @@
         margin-bottom: 0;
     }
 
-    @media (min-width: $screen-sm-min) {
+    @include media-breakpoint-up(md) {
         flex: 0 0 auto;
         width: 550px;
         border-radius: 10px;

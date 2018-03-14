@@ -63,7 +63,7 @@ select { // FIXME buggy 'padding-left'
 }
 
 //== Titles
-@media (max-width: $screen-xs-max) {
+@include media-breakpoint-down(sm) {
     h1 {
         font-size: $font-size-h1 * 3 / 4;
     }

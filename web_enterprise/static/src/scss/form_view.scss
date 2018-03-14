@@ -5,13 +5,13 @@
     // Define left and right padding according to screen resolution
     @mixin o-form-sheet-inner-left-padding {
         padding-left: $o-horizontal-padding;
-        @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
+        @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
             padding-left: $o-horizontal-padding*2;
         }
     }
     @mixin o-form-sheet-inner-right-padding {
         padding-right: $o-horizontal-padding;
-        @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
+        @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
             padding-right: $o-horizontal-padding*2;
         }
     }
@@ -19,13 +19,13 @@
     @mixin o-form-sheet-negative-margin {
         margin-left: -$o-horizontal-padding;
         margin-right: -$o-horizontal-padding;
-        @media screen and (min-width: $screen-md-min) and (max-width: ($o-screen-sidechatter-min - 1px)) {
+        @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
             margin-left: -$o-horizontal-padding*2;
             margin-right: -$o-horizontal-padding*2;
         }
     }
 
-    @media (min-width: $screen-sm-min) {
+    @include media-breakpoint-up(md) {
         display: flex;
         flex-flow: column nowrap;
         min-height: 100%;
@@ -40,13 +40,13 @@
         > .o_form_sheet {
             // Mimic a .container (TODO improve)
             @include container-fixed;
-            @media (min-width: $screen-sm-min) {
+            @include media-breakpoint-up(sm) {
               width: $container-sm;
             }
-            @media (min-width: $screen-md-min) {
+            @include media-breakpoint-up(md) {
               width: $container-md;
             }
-            @media (min-width: $screen-lg-min) {
+            @include media-breakpoint-up(lg) {
               width: $container-lg;
             }
 
@@ -54,7 +54,7 @@
             border: 1px solid $gray-lighter-darker;
             box-shadow: 0 5px 20px -15px black;
             margin: $o-sheet-vpadding*0.2 auto;
-            @media (min-width: $screen-sm-min) {
+            @include media-breakpoint-up(md) {
                 margin: $o-sheet-vpadding*0.5 auto;
             }
             padding: $o-sheet-vpadding;
@@ -71,7 +71,7 @@
     // Title & avatar
     .oe_title {
         color: $headings-color;
-        @media (min-width: $screen-xs-min) {
+        @include media-breakpoint-up(vsm, $o-extra-grid-breakpoints) {
             padding-right: $o-innergroup-rpadding;
         }
     }
@@ -115,13 +115,13 @@
         > .btn.oe_stat_button, > .o_dropdown_more {
             flex: 0 0 auto;
             width: percentage(1/3); // Adapt the number of visible buttons for each screen width
-            @media (min-width: $screen-sm-min) {
+            @include media-breakpoint-up(md) {
                 width: percentage(1/5);
             }
-            @media (min-width: $screen-md-min) {
+            @include media-breakpoint-up(lg) {
                 width: percentage(1/7);
             }
-            @media (min-width: $screen-lg-min) {
+            @include media-breakpoint-up(xl) {
                 width: percentage(1/8);
             }
         }
@@ -207,7 +207,7 @@
             border: 1px solid $gray-lighter-dark;
             margin: 0;
             padding: 0;
-            @media (max-width: $screen-xs-max) {
+            @include media-breakpoint-down(sm) {
                 position: relative;
                 margin-left: 1px;
                 margin-bottom: 20px;
@@ -216,7 +216,7 @@
             }
             > li {
                 padding: 0;
-                @media (max-width: $screen-xs-max) {
+                @include media-breakpoint-down(sm) {
                     display: inline-block;
                     width: percentage(1/3);
                     border-right: 1px solid $gray-lighter-darker;
@@ -236,7 +236,7 @@
         @mixin o-generate-groups($n) {
             @for $i from 1 through $n {
                 .o_group_col_#{$i} {
-                    @media (max-width: $screen-sm-max) {
+                    @include media-breakpoint-down(md) {
                         width: 100%;
                     }
                 }
@@ -250,7 +250,7 @@
             }
         }
 
-        @media (min-width: $screen-xs-min) {
+        @include media-breakpoint-up(vsm, $o-extra-grid-breakpoints) {
             .o_field_widget {
                 &.o_text_overflow {
                     width: 1px!important; // hack to make the table layout believe it is a small element (so that the table does not grow too much) ...
@@ -262,7 +262,7 @@
                 margin-bottom: $o-form-spacing-unit;
             }
         }
-        @media (max-width: $screen-sm-max) {
+        @include media-breakpoint-down(md) {
             &.o_label_nowrap .o_form_label {
                 white-space: normal;
             }
@@ -275,7 +275,7 @@
             opacity: 0.5;
             font-weight: normal;
         }
-        @media (max-width: $screen-xs-max) {
+        @include media-breakpoint-down(sm) {
             font-size: $o-font-size-base-touch;
         }
     }
@@ -285,13 +285,13 @@
         flex: 1000 0 auto;
         // Mimic a .container (TODO improve)
         @include container-fixed;
-        @media (min-width: $screen-sm-min) {
+        @include media-breakpoint-up(sm) {
           width: $container-sm;
         }
-        @media (min-width: $screen-md-min) {
+        @include media-breakpoint-up(md) {
           width: $container-md;
         }
-        @media (min-width: $screen-lg-min) {
+        @include media-breakpoint-up(lg) {
           width: $container-lg;
         }
         padding: $grid-gutter-width*0.25 0;
@@ -410,7 +410,7 @@
         }
     }
     // Notebooks for small screen
-    @media (max-width: $screen-xs-max) {
+    @include media-breakpoint-down(sm) {
         .o_notebook {
             position: relative;
             // We need this to be 39px and not only 30px because when there is a table
@@ -492,7 +492,7 @@
         }
     }
 
-    @media screen and (min-width: $o-screen-sidechatter-min) {
+    @include media-breakpoint-up(xxl, $o-extra-grid-breakpoints) {
         flex-flow: row nowrap;
         height: 100%;
 
@@ -573,7 +573,7 @@
 // Overriden style when form view in modal
 .modal .modal-dialog {
     .o_form_view {
-        @media (max-width: $screen-sm-max) {
+        @include media-breakpoint-down(md) {
             .o_group.o_inner_group > tbody > tr > td.o_td_label {
                 min-width: 100px;
             }

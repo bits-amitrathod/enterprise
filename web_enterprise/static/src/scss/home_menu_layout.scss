@@ -24,7 +24,7 @@
                 float: left;
                 margin: 0 1.5% 15px;
                 width: 13.66%; // +3% margin = 6 apps per line
-                @media (max-width: $screen-xs-max) {
+                @include media-breakpoint-down(sm) {
                     width: 22%; // +3% margin = 4 apps per line
                 }
                 padding: 10px 0;
@@ -59,7 +59,7 @@
 
             flex: 1 0 auto;
             .o_menuitem {
-                @media (max-width: $screen-xs-max) {
+                @include media-breakpoint-down(sm) {
                     padding: 6px;
                 }
             }

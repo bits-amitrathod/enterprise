@@ -18,8 +18,7 @@ $o-sheet-cancel-bpadding: $o-horizontal-padding + $o-sheet-vpadding;
 
 // Side chatter
 $o-chatter-min-width: 530px;
-$o-form-sheet-min-width: $o-container-desktop; // Safest is BS $container-md as
-                                            // it is the minimal width of the
-                                            // default form view design for
-                                            // md/lg sizes
-$o-screen-sidechatter-min: $screen-xl-min;
+$o-form-sheet-min-width: $o-container-desktop;
+                                // Safest is map-get($container-max-widths, md)
+                                // as it is the minimal width of the default
+                                // form view design for md/lg sizes

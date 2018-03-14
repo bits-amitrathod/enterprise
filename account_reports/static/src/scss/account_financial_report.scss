@@ -107,15 +107,15 @@ p.o_account_reports_contact_info {
         display: inline-block;
         padding-bottom: $o-horizontal-padding*3;
 
-        @media screen and (min-width: $screen-sm-min) {
+        @include media-breakpoint-up(md) {
             margin: $o-horizontal-padding auto;
             border: 1px solid $gray-lighter-dark;
             min-width: 800px;
         }
 
-        @media screen and (min-width: $screen-lg-min) {
+        @include media-breakpoint-up(xl) {
             margin: $o-horizontal-padding auto;
-            max-width: $screen-lg-min;
+            max-width: map-get($grid-breakpoints, 'xl');
         }
 
     }
@@ -223,7 +223,7 @@ p.o_account_reports_contact_info {
     .number, .o_account_report_column_value {
         text-align: right;
 
-        @media (max-width: $screen-md-max) {
+        @include media-breakpoint-down(lg) {
             width: 1%;
         }
     }

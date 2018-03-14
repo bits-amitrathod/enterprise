@@ -29,7 +29,7 @@ $o-cohort-hover-color: lighten($o-cohort-heading-bg-color, 2%);
                             cursor: pointer;
                         }
                         background-color: $o-cohort-hover-color;
-                        @media (min-width: $screen-md-min) {
+                        @include media-breakpoint-up(lg) {
                             td:first-child {
                                 position: relative;
                                 &:before {
