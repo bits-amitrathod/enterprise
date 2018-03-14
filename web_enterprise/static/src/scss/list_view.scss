@@ -2,33 +2,33 @@
 // ------- Provide room for the caret -------
 @mixin o-list-view-sortable-caret-padding($base: $table-cell-padding, $ratio: 1) {
     > thead > tr > th.o_column_sortable:not(:empty) {
-        padding-right: ceil($base * $ratio) + 5px;
+        padding-right: ceil((($base * $ratio) / 1rem) * $o-root-font-size) + 5px; // FIXME
 
         // Extra room when needed
         &:last-child {
-            padding-right: ceil($base * $ratio) + 5px + $o-horizontal-padding!important;
+            padding-right: ceil((($base * $ratio) / 1rem) * $o-root-font-size) + 5px + $o-horizontal-padding!important; // FIXME
         }
     }
 }
 
 // ------- Define paddings independently for each table component -------
 @mixin o-list-view-full-width-padding($base: $table-cell-padding, $ratio: 1) {
-    $body-padding: floor($base * $ratio*0.7);
+    $body-padding: floor((($base * $ratio * 0.7) / 1rem) * $o-root-font-size); // FIXME
 
     > thead > tr > :not(:empty) {
-        padding: (ceil($base * $ratio) + 4px) 4px;
+        padding: ceil((($base * $ratio) / 1rem) * $o-root-font-size + 4px) 4px; // FIXME
     }
     > tbody > tr:not(.o_list_view_grouped) > td {
         padding: $body-padding 4px;
     }
     > tbody > tr.o_group_header {
         > th, > td {
-            padding-top: floor($table-condensed-cell-padding*0.2);
-            padding-bottom: floor($table-condensed-cell-padding*0.2);
+            padding-top: ($table-cell-padding-sm*0.2);
+            padding-bottom: ($table-cell-padding-sm*0.2);
         }
     }
     > tfoot > tr > :not(:empty) {
-        padding: (ceil($base * $ratio) + 2px) 4px;
+        padding: ceil((($base * $ratio) / 1rem) * $o-root-font-size + 2px) 4px; // FIXME
     }
 
     @include o-list-view-sortable-caret-padding($base, $ratio);
@@ -80,8 +80,8 @@
             // List views always have the table-condensed class, maybe we should
             // remove it (and consider it does not exist) and change the default
             // table paddings
-            padding-top: $table-condensed-cell-padding + 3px;
-            padding-bottom: $table-condensed-cell-padding + 3px;
+            padding-top: $table-cell-padding-sm * 1.25;
+            padding-bottom: $table-cell-padding-sm * 1.25;
         }
     }
 
@@ -155,7 +155,7 @@
     .o_data_row.o_selected_row > .o_data_cell:not(.o_readonly_modifier) {
         border-right: 1px solid $table-border-color;
         .o_input {
-            padding-right: $table-condensed-cell-padding - 1;
+            padding-right: ($table-cell-padding-sm * 0.9);
         }
     }
 }
@@ -164,10 +164,10 @@
 .o_content > div > .table-responsive > .o_list_view.table {
     // List views always have the table-condensed class, maybe we should remove
     // it (and consider it does not exist) and change the default table paddings
-    @include o-list-view-full-width-padding($base: $table-condensed-cell-padding, $ratio: 2);
+    @include o-list-view-full-width-padding($base: $table-cell-padding-sm, $ratio: 2);
     &:not(.o_list_view_grouped) {
         @include media-breakpoint-up(xl) {
-            @include o-list-view-full-width-padding($base: $table-condensed-cell-padding, $ratio: 2.5);
+            @include o-list-view-full-width-padding($base: $table-cell-padding-sm, $ratio: 2.5);
         }
     }
 }
