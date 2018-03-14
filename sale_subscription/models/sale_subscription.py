@@ -20,7 +20,7 @@ _logger = logging.getLogger(__name__)
 
 class SaleSubscription(models.Model):
     _name = "sale.subscription"
-    _description = "Sale Subscription"
+    _description = "Subscription"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(required=True, track_visibility="always")
@@ -754,7 +754,7 @@ class SaleSubscriptionCloseReason(models.Model):
 
 class SaleSubscriptionTemplate(models.Model):
     _name = "sale.subscription.template"
-    _description = "Sale Subscription Template"
+    _description = "Subscription Template"
     _inherit = "mail.thread"
 
     active = fields.Boolean(default=True)
