@@ -38,17 +38,8 @@
         border-bottom: 1px solid $gray-lighter-dark;
 
         > .o_form_sheet {
-            // Mimic a .container (TODO improve)
-            @include container-fixed;
-            @include media-breakpoint-up(sm) {
-              width: $container-sm;
-            }
-            @include media-breakpoint-up(md) {
-              width: $container-md;
-            }
-            @include media-breakpoint-up(lg) {
-              width: $container-lg;
-            }
+            @include make-container();
+            @include make-container-max-widths();
 
             background-color: $o-view-background-color;
             border: 1px solid $gray-lighter-darker;
@@ -283,17 +274,8 @@
     // Chatter
     > .oe_chatter {
         flex: 1000 0 auto;
-        // Mimic a .container (TODO improve)
-        @include container-fixed;
-        @include media-breakpoint-up(sm) {
-          width: $container-sm;
-        }
-        @include media-breakpoint-up(md) {
-          width: $container-md;
-        }
-        @include media-breakpoint-up(lg) {
-          width: $container-lg;
-        }
+        @include make-container();
+        @include make-container-max-widths();
         padding: $grid-gutter-width*0.25 0;
     }
 
@@ -499,7 +481,7 @@
         > .o_form_sheet_bg {
             flex: 1 1 auto; // Side chatter is disabled if this has to shrink but this was added for safety
             width: $o-form-sheet-min-width + 2 * $o-horizontal-padding;
-            // max-width: $container-lg + 2 * $o-horizontal-padding; // would be logical but breaks no-chatter form views
+            // max-width: map-get($container-max-widths, xl) + 2 * $o-horizontal-padding; // would be logical but breaks no-chatter form views
             padding: 0 $o-horizontal-padding;
             overflow: auto;
             border-bottom: none;
@@ -510,7 +492,7 @@
             }
             > .o_form_sheet {
                 width: 100%;
-                max-width: $container-lg;
+                max-width: map-get($container-max-widths, xl);
             }
         }
         > .oe_chatter {
