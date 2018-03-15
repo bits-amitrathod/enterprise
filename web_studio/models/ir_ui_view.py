@@ -18,12 +18,13 @@ class View(models.Model):
     _inherit = ['studio.mixin', 'ir.ui.view']
 
     def _apply_group(self, model, node, modifiers, fields):
-        result = super(View, self)._apply_group(model, node, modifiers, fields)
 
         # apply_group only returns the view groups ids.
         # As we need also need their name and display in Studio to edit these groups
         # (many2many widget), they have been added to node (only in Studio).
-        if self._context.get('studio'):
+        # This preprocess cannot be done at validation time because the
+        # attribute `studio_groups` is not RNG valid.
+        if self._context.get('studio') and not self._context.get('check_field_names'):
             if node.get('groups'):
                 studio_groups = []
                 for xml_id in node.attrib['groups'].split(','):
@@ -36,7 +37,7 @@ class View(models.Model):
                         })
                 node.attrib['studio_groups'] = json.dumps(studio_groups)
 
-        return result
+        return super(View, self)._apply_group(model, node, modifiers, fields)
 
     def create_simplified_form_view(self, res_model):
         model = self.env[res_model]

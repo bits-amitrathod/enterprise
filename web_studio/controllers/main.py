@@ -932,7 +932,7 @@ class WebStudioController(http.Controller):
         ir_model_data = request.env['ir.model.data']
         new_attrs = operation['new_attrs']
 
-        if (new_attrs.get('groups')):
+        if 'groups' in new_attrs:
             eval_attr = []
             for many2many_value in new_attrs['groups']:
                 group_xmlid = ir_model_data.search([
