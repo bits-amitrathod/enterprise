@@ -53,7 +53,7 @@
 
         <div t-if="!widget.isPDF" class="o_sign_image_document">
             <t t-set="webimage" t-value="new RegExp('image.*(gif|jpe|jpg|png)').test(widget.sign_template.attachment_id.mimetype)"/>
-            <img t-if="webimage" class="img img-responsive" t-attf-src="/web/image/{{widget.sign_template.attachment_id.id}}" alt="Signature"/>
+            <img t-if="webimage" class="img img-fluid" t-attf-src="/web/image/{{widget.sign_template.attachment_id.id}}" alt="Signature"/>
             <div t-if="!webimage" class="o_image" t-att-data-mimetype="widget.sign_template.attachment_id.mimetype"/>
         </div>
 

@@ -17,7 +17,7 @@
     <div class="row mt16" t-as="row" t-foreach="rows">
         <div class="col-sm-2 o_unsplash_img_cell" t-as="img" t-foreach="row">
             <div class="o_image o_webimage" t-att-data-imgid="img.id" t-att-data-url="img.urls.regular" t-att-data-download-url="img.links.download_location">
-                <img class="img-responsive" t-att-src="img.urls.thumb" />
+                <img class="img-fluid" t-att-src="img.urls.thumb" />
             </div>
             <div class="author_name text-center"><a t-att-href="img.user.links.html" target="_blank"><t t-esc="img.user.name"/></a></div>
         </div>
