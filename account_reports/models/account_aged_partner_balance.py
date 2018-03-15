@@ -14,7 +14,13 @@ class report_account_aged_partner(models.AbstractModel):
 
     def get_columns_name(self, options):
         columns = [{}]
-        columns += [{'name': v, 'class': 'number'} for v in [_("Not&nbsp;due&nbsp;on %s") % options['date'].get('string'), _("0&nbsp;-&nbsp;30"), _("30&nbsp;-&nbsp;60"), _("60&nbsp;-&nbsp;90"), _("90&nbsp;-&nbsp;120"), _("Older"), _("Total")]]
+        columns += [{'name': v, 'class': 'number'} for v in [
+            _("Not&nbsp;due&nbsp;on %s").replace('&nbsp;', ' ') % options['date'].get('string'), 
+            _("0&nbsp;-&nbsp;30").replace('&nbsp;', ' '), 
+            _("30&nbsp;-&nbsp;60").replace('&nbsp;', ' '), 
+            _("60&nbsp;-&nbsp;90").replace('&nbsp;', ' '), 
+            _("90&nbsp;-&nbsp;120").replace('&nbsp;', ' '), 
+            _("Older"), _("Total")]]
         return columns
 
     def get_templates(self):
