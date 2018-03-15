@@ -278,13 +278,13 @@
 
     // Notebooks
     .o_notebook {
-        > ul.nav.nav-tabs {
+        > .nav.nav-tabs {
             border-bottom: 1px solid $gray-lighter-darker;
             @include o-form-sheet-negative-margin;
             @include o-form-sheet-inner-left-padding;
 
-            > li {
-                > a {
+            > .nav-item {
+                > .nav-link {
                     color: $body-color;
                     border: none;
                     background-color: $gray-lighter;
@@ -294,25 +294,21 @@
                         outline: none;
                         color: $link-color;
                     }
-                }
 
-                &:not(.active) {
-                    margin-bottom: 0; // Override bootstrap negative margin so that active and non-active tab have same height
-                }
+                    &.active {
+                        border: 1px solid $gray-lighter-darker;
+                        border-bottom: 0;
 
-                &.active > a {
-                    border: 1px solid $gray-lighter-darker;
-                    border-bottom: 0;
-
-                    &, &:hover, &:focus, &:active {
-                        color: $headings-color;
-                        border-top-color: $o-brand-primary;
-                        background-color: white;
+                        &, &:hover, &:focus, &:active {
+                            color: $headings-color;
+                            border-top-color: $o-brand-primary;
+                            background-color: white;
+                        }
                     }
-                }
 
-                &.disabled > a {
-                    color: $text-muted;
+                    &.disabled {
+                        color: $text-muted;
+                    }
                 }
             }
         }
