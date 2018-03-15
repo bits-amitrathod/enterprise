@@ -52,7 +52,7 @@ class report_account_followup_report(models.AbstractModel):
                     date_due = (date_due, 'color: red;')
                 if is_payment:
                     date_due = ''
-                amount = formatLang(self.env, amount, currency_obj=currency).replace(' ', '&nbsp;')
+                amount = formatLang(self.env, amount, currency_obj=currency)
                 line_num += 1
                 lines.append({
                     'id': aml.id,
@@ -65,7 +65,7 @@ class report_account_followup_report(models.AbstractModel):
                     'columns': [formatLangDate(aml.date), date_due, aml.invoice_id.name or aml.name] + (not public and [aml.expected_pay_date and (aml.expected_pay_date, aml.internal_note) or ('', ''), aml.blocked] or []) + [amount],
                     'blocked': aml.blocked,
                 })
-            total = formatLang(self.env, total, currency_obj=currency).replace(' ', '&nbsp;')
+            total = formatLang(self.env, total, currency_obj=currency)
             line_num += 1
             lines.append({
                 'id': line_num,
@@ -77,7 +77,7 @@ class report_account_followup_report(models.AbstractModel):
                 'columns': (not public and ['', ''] or []) + ['', '', total >= 0 and _('Total Due') or ''] + [total],
             })
             if total_issued > 0:
-                total_issued = formatLang(self.env, total_issued, currency_obj=currency).replace(' ', '&nbsp;')
+                total_issued = formatLang(self.env, total_issued, currency_obj=currency)
                 line_num += 1
                 lines.append({
                     'id': line_num,
