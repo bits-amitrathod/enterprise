@@ -341,7 +341,7 @@ var SearchEditor = SearchRenderer.extend(EditorMixin, {
             this._addHookBeforeFirstChild($result, this.first_filter, 'filter');
             this.first_filter = 'done';
         } else if (type ==='group_by' && this.first_group_by && this.first_group_by !== 'done') {
-            this._addHookBeforeFirstChild($result, this.first_group_by.children[0], 'group_by');
+            this._addHookBeforeFirstChild($result, this.first_group_by, 'group_by');
             this.first_group_by = 'done';
         }
     },

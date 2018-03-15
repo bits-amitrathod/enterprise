@@ -73,21 +73,6 @@ var SearchRenderer = Widget.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * Process each element of a 'group by' element
-     *
-     * @private
-     * @param {Object} groups
-     *
-     */
-    _processGroupBy: function (groups) {
-        var self = this;
-        _.each(groups.children, function (node) {
-            if (node.tag === "filter"){
-                self._renderGroupBy(node);
-            }
-        });
-    },
-    /**
      * Parse the arch to render each node.
      *
      * @private
@@ -99,29 +84,35 @@ var SearchRenderer = Widget.extend({
         this.first_field = undefined;
         this.first_filter = undefined;
         this.first_group_by = undefined;
-        _.each(this.arch.children, function (node) {
+        var nodesToTreat = this.arch.children.slice();
+        while (nodesToTreat.length) {
+            var node = nodesToTreat.shift();
             if (node.tag === "field"){
                 if (!self.first_field){
                     self.first_field = node;
                 }
                 self._renderField(node);
             } else if (node.tag === "filter") {
-                if (!self.first_filter){
-                    self.first_filter = node;
+                if (/(['"])group_by\1\s*:/.test(node.attrs.context || '')) {
+                    if (!self.first_group_by) {
+                        self.first_group_by = node;
+                    }
+                    self._renderGroupBy(node);
+                } else {
+                    if (!self.first_filter) {
+                        self.first_filter = node;
+                    }
+                    self._renderFilter(node);
                 }
-                self._renderFilter(node);
             } else if (node.tag === "separator") {
                 if (!self.first_filter){
                     self.first_filter = node;
                 }
                 self._renderSeparator(node);
             } else if (node.tag === "group") {
-                if (!self.first_group_by){
-                    self.first_group_by = node;
-                }
-                self._processGroupBy(node);
+                nodesToTreat = nodesToTreat.concat(node.children);
             }
-        });
+        };
     },
     /**
      * @private
