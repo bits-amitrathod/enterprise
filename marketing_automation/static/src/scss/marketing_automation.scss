@@ -117,7 +117,8 @@
                         content: '';
                         @include o-position-absolute($top: 12px, $left: -17px);
                         margin-left: 10px;
-                        @include square(14px);
+                        width: 14px;
+                        height: 14px;
                         background: $o-ma-color-white;
                         border-bottom: 1px solid $o-ma-border-color;
                         transform: rotate(45deg);
@@ -126,7 +127,8 @@
                     &:after {
                         content: '';
                         @include o-position-absolute($top: 14px, $left: -28px);
-                        @include square(12px);
+                        width: 12px;
+                        height: 12px;
                         border: 2px solid $o-brand-optional;
                         border-radius: 10px;
                         background: $o-ma-hierarchy-background;
@@ -167,7 +169,8 @@
                 display: inline-block;
                 padding: 4px 7px;
                 margin: 5px;
-                @include square(28px);
+                width: 28px;
+                height: 28px;
                 color: $o-ma-color-white;
                 font-size: 14px;
                 border-radius: 3px;
@@ -196,7 +199,8 @@
             .o_ma_switch {
                 @include o-position-absolute($top: 0px, $right: 0px);
                 > span {
-                    @include square(39px);
+                    width: 39px;
+                    height: 39px;
                     display: inline-block;
                     border-left: 1px solid $o-ma-border-color;
                     border-bottom: 1px solid transparent;
@@ -316,7 +320,8 @@
             display: inline-block;
             padding: 4px 7px;
             margin: 5px;
-            @include square(28px);
+            width: 28px;
+            height: 28px;
             color: $o-ma-color-white;
             font-size: 14px;
             border-radius: 3px;
