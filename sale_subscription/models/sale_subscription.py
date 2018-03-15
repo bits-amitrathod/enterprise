@@ -309,6 +309,7 @@ class SaleSubscription(models.Model):
         end_date = end_date - relativedelta(days=1)     # remove 1 day as normal people thinks in term of inclusive ranges.
         addr = self.partner_id.address_get(['delivery'])
 
+        sale_order = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)], order="id desc", limit=1)
         return {
             'account_id': self.partner_id.property_account_receivable_id.id,
             'type': 'out_invoice',
@@ -318,7 +319,7 @@ class SaleSubscription(models.Model):
             'journal_id': journal.id,
             'origin': self.code,
             'fiscal_position_id': fpos_id,
-            'payment_term_id': self.partner_id.property_payment_term_id.id,
+            'payment_term_id': sale_order.payment_term_id.id if sale_order else self.partner_id.property_payment_term_id.id,
             'company_id': company.id,
             'comment': _("This invoice covers the following period: %s - %s") % (format_date(self.env, next_date), format_date(self.env, end_date)),
             'user_id': self.user_id.id,
@@ -382,6 +383,7 @@ class SaleSubscription(models.Model):
                     'discount': line.discount,
                 }))
             addr = subscription.partner_id.address_get(['delivery', 'invoice'])
+            sale_order = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)], order="id desc", limit=1)
             res[subscription.id] = {
                 'pricelist_id': subscription.pricelist_id.id,
                 'partner_id': subscription.partner_id.id,
@@ -395,7 +397,7 @@ class SaleSubscription(models.Model):
                 'note': subscription.description,
                 'fiscal_position_id': fpos_id,
                 'user_id': subscription.user_id.id,
-                'payment_term_id': subscription.partner_id.property_payment_term_id.id,
+                'payment_term_id': sale_order.payment_term_id.id if sale_order else subscription.partner_id.property_payment_term_id.id,
             }
         return res
 
