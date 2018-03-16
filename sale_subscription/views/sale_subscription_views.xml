@@ -179,7 +179,7 @@
                     <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Cancel"
                             type="action" context="{'cancel':1}"
                             attrs="{'invisible': [('state','in',['cancel','close'])]}"/>
-                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': ['|',('state', '=', 'draft'),('recurring_rule_boundary','=','unlimited')]}"/>
                     <button string="Upsell" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
                     <field name="state" widget="statusbar"/>
                 </header>
@@ -227,7 +227,8 @@
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="date_start"/>
-                            <field name="date"/>
+                            <field name="recurring_rule_boundary" invisible="1"/>
+                            <field name="date" attrs="{'invisible':[('recurring_rule_boundary','=','unlimited')]}"/>
                             <field name="close_reason_id" attrs="{'invisible': [('state','in',['draft','open','pending'])]}"/>
                         </group>
                     </group>
@@ -414,6 +415,12 @@
                             <div class="o_row">
                                 <field name="recurring_interval"/>
                                 <field name="recurring_rule_type" class="field_rule_type"/>
+                            </div>
+                            <field name="recurring_rule_boundary" widget="radio" options="{'horizontal':true}"/>
+                            <label string="End After" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}"/>
+                            <div class="o_row" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}">
+                                <field name="recurring_rule_count"/>
+                                <span class="ml8"><strong>repeats</strong></span>
                             </div>
                         </group>
                         <group name="website_subscription">

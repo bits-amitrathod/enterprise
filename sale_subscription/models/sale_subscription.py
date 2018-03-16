@@ -58,6 +58,7 @@ class SaleSubscription(models.Model):
     # add tax calculation
     recurring_amount_tax = fields.Float('Taxes', compute="_amount_all")
     recurring_amount_total = fields.Float('Total', compute="_amount_all")
+    recurring_rule_boundary = fields.Selection(related="template_id.recurring_rule_boundary")
 
     _sql_constraints = [
         ('uuid_uniq', 'unique (uuid)', """UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be unique!"""),
@@ -181,6 +182,15 @@ class SaleSubscription(models.Model):
         self.pricelist_id = self.partner_id.property_product_pricelist.id
         if self.partner_id.user_id:
             self.user_id = self.partner_id.user_id
+
+    @api.onchange('date_start', 'template_id')
+    def onchange_date_start(self):
+        if self.recurring_rule_boundary == 'time_bounding':
+            periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
+            self.date = fields.Datetime.from_string(self.date_start) + relativedelta(**{
+                periods[self.recurring_rule_type]: self.template_id.recurring_rule_count * self.template_id.recurring_interval})
+        else:
+            self.date = False
 
     @api.onchange('template_id')
     def on_change_template(self):
@@ -769,6 +779,11 @@ class SaleSubscriptionTemplate(models.Model):
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly', track_visibility='onchange')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
+    recurring_rule_boundary = fields.Selection([
+        ('unlimited', 'Unlimited'),
+        ('time_bounding', 'Time bounding')
+        ], string='Period', default='unlimited')
+    recurring_rule_count = fields.Integer(string="End After", default=1)
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
     product_ids = fields.One2many('product.template', 'subscription_template_id', copy=True)
