@@ -104,6 +104,13 @@ var NewFieldDialog = Dialog.extend(FieldManagerMixin, {
         } else if (this.ttype === 'related') {
             values.related = this.fieldSelector.chain;
             values.ttype = this.fieldSelector.selectedField.type;
+            if (_.contains(['many2one', 'many2many'], this.fieldSelector.selectedField.type)) {
+                values.relation = this.fieldSelector.selectedField.relation;
+            } else if (this.fieldSelector.selectedField.type === 'one2many') {
+                return this.do_warn(_t("Error"), _t("You cannot create related one2many in this version."));
+            } else if (this.fieldSelector.selectedField.type === 'selection') {
+                values.selection = this.fieldSelector.selectedField.selection;
+            }
         }
         this.trigger('field_default_values_saved', values);
     },
