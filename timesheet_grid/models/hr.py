@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import datetime, time
+
 from odoo import api, fields, models
 from odoo.tools import float_round
 
@@ -24,9 +26,9 @@ class Employee(models.Model):
     @api.multi
     def get_timesheet_and_working_hours(self, date_start, date_stop):
         """ Get the difference between the supposed working hour (based on resource calendar) and
-            the timesheeted hours, for the given period `date_start` - `date_stop`.
-            :param date_start : start date of the period to check (string)
-            :param date_stop : end date of the period to check (string)
+            the timesheeted hours, for the given period `date_start` - `date_stop` (inclusives).
+            :param date_start : start date of the period to check (date string)
+            :param date_stop : end date of the period to check (date string)
             :returns dict : a dict mapping the employee_id with his timesheeted and working hours for the
                 given period.
         """
@@ -46,10 +48,15 @@ class Employee(models.Model):
             result[data_row['employee_id']]['timesheet_hours'] = float_round(data_row['amount_sum'], 2)
 
         # find working hours for the given period of employees with working calendar
+        # Note: convert date str into datetime object. Time will be 00:00:00 and 23:59:59
+        # respectively for date_start and date_stop, because we want the date_stop to be included.
+        datetime_min = datetime.combine(fields.Date.from_string(date_start), time.min)
+        datetime_max = datetime.combine(fields.Date.from_string(date_stop), time.max)
+
         for employee in employees:
             working_hours = employee.resource_calendar_id.get_work_hours_count(
-                fields.Datetime.from_string(date_start),
-                fields.Datetime.from_string(date_stop),
+                datetime_min,
+                datetime_max,
                 compute_leaves=False, resource_id=employee.resource_id.id
             )
             result[employee.id]['working_hours'] = float_round(working_hours, 2)

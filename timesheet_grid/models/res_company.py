@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, time
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
@@ -68,7 +68,9 @@ class Company(models.Model):
         """ Send an email reminder to the user having at least one timesheet since the last 3 month. From those ones, we exclude
             ones having complete their timesheet (meaning timesheeted the same hours amount than their working calendar).
         """
-        companies = self.search([('timesheet_mail_employee_allow', '=', True), ('timesheet_mail_employee_nextdate', '<=', fields.Datetime.now())])
+        today_min = fields.Datetime.to_string(datetime.combine(date.today(), time.min))
+        today_max = fields.Datetime.to_string(datetime.combine(date.today(), time.max))
+        companies = self.search([('timesheet_mail_employee_allow', '=', True), ('timesheet_mail_employee_nextdate', '<', today_max), ('timesheet_mail_employee_nextdate', '>=', today_min)])
         for company in companies:
             # get the employee that have at least a timesheet for the last 3 months
             users = self.env['account.analytic.line'].search([
@@ -83,8 +85,8 @@ class Company(models.Model):
             else:
                 date_start = date.today() - timedelta(days=datetime.now().weekday()+1)
 
-            date_start = fields.Datetime.to_string(date_start)
-            date_stop = company.timesheet_mail_employee_nextdate
+            date_start = fields.Date.to_string(date_start)
+            date_stop = fields.Date.to_string(fields.Datetime.from_string(company.timesheet_mail_employee_nextdate).date())
 
             # get the related employees timesheet status for the cron period
             employees = self.env['hr.employee'].search([('user_id', 'in', users.ids)])
@@ -105,7 +107,9 @@ class Company(models.Model):
     @api.model
     def _cron_timesheet_reminder_manager(self):
         """ Send a email reminder to all users having the group 'timesheet manager'. """
-        companies = self.search([('timesheet_mail_manager_allow', '=', True), ('timesheet_mail_manager_nextdate', '<=', fields.Datetime.now())])
+        today_min = fields.Datetime.to_string(datetime.combine(date.today(), time.min))
+        today_max = fields.Datetime.to_string(datetime.combine(date.today(), time.max))
+        companies = self.search([('timesheet_mail_employee_allow', '=', True), ('timesheet_mail_manager_nextdate', '<', today_max), ('timesheet_mail_manager_nextdate', '>=', today_min)])
         for company in companies:
             # calculate the period
             if company.timesheet_mail_manager_interval == 'months':
@@ -113,8 +117,8 @@ class Company(models.Model):
             else:
                 date_start = date.today() - timedelta(days=datetime.now().weekday()+1)
 
-            date_start = fields.Datetime.to_string(date_start)
-            date_stop = company.timesheet_mail_manager_nextdate
+            date_start = fields.Date.to_string(date_start)
+            date_stop = fields.Date.to_string(fields.Datetime.from_string(company.timesheet_mail_employee_nextdate).date())
 
             values = {
                 'date_start': date_start,
