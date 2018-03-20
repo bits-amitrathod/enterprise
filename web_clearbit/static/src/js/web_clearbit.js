@@ -64,7 +64,6 @@ var FieldClearbit = FieldChar.extend({
     _getBase64Image: function (url) {
         var def = $.Deferred();
         var xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
         xhr.onload = function () {
             var reader  = new FileReader();
             reader.onloadend = function () {
@@ -73,6 +72,7 @@ var FieldClearbit = FieldChar.extend({
             reader.readAsDataURL(xhr.response);
         };
         xhr.open('GET', url);
+        xhr.responseType = 'blob';
         xhr.onerror = def.reject.bind(def);
         xhr.send();
         return def;
