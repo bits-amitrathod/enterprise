@@ -920,7 +920,11 @@ var Model = Class.extend({
             _.each(fields, function(value, key) {
                 if (key in result) {
                     if (value.type === 'many2many') {
-                        data[key] = result[key][0];
+                        // We do not process default m2m values in Studio
+                        // as it could be a list of commands for example, which
+                        // is out of scope for this very basic implementation.
+                        // Not needed in 11.0 as model.js has been rewritten.
+                        data[key] = [];
                     } else {
                         data[key] = result[key];
                     }
