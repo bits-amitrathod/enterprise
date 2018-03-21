@@ -206,6 +206,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         refund_id = result.get('domain')[1][2]
         refund = self.invoice_model.browse(refund_id)
         refund.action_invoice_open()
+        refund.refresh()
         xml = refund.l10n_mx_edi_get_xml_etree()
         self.assertEquals(xml.CfdiRelacionados.CfdiRelacionado.get('UUID'),
                           invoice.l10n_mx_edi_cfdi_uuid,

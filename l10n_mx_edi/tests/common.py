@@ -106,6 +106,7 @@ class InvoiceTransactionCase(AccountingTestCase):
         else:
             xml_expected.attrib['Fecha'] = xml.attrib['Fecha']
             xml_expected.attrib['Sello'] = xml.attrib['Sello']
+            xml_expected.attrib['Serie'] = xml.attrib['Serie']
         xml_expected.Complemento = xml.Complemento
 
     def xml2dict(self, xml):

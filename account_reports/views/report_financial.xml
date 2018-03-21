@@ -138,7 +138,7 @@
                 </h4>
             </t>
             <t t-call="account_reports.filter_info_template"/>
-            <div class="o_account_reports_summary">
+            <div class="o_account_reports_summary" style="white-space: pre-wrap; padding-bottom:40px;">
                 <i class="fa fa-fw fa-pencil o_account_reports_edit_summary_pencil"></i>
                 <div class="o_account_report_summary" role="alert">
                     <span t-if="report.get('summary')"><t t-esc="report['summary']"/></span>

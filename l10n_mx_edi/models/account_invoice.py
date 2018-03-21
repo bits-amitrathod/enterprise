@@ -665,7 +665,7 @@ class AccountInvoice(models.Model):
                 if tax.amount not in taxes:
                     taxes.update({tax.amount: {
                         'name': (tax.tag_ids[0].name
-                                if tax.tag_ids else tax.name).upper(),
+                                 if tax.tag_ids else tax.name).upper(),
                         'amount': amount,
                         'rate': round(abs(tax.amount), 2),
                         'type': tax.l10n_mx_cfdi_tax_type,
