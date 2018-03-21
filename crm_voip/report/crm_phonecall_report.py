@@ -39,10 +39,9 @@ class CrmPhonecallReport(models.Model):
                     c.partner_id,
                     c.duration,
                     c.company_id,
+                    c.state,
                     1 as nbr,
                     c.date
                 from
                     crm_phonecall c
-                where
-                    c.state = 'done'
             )""")
