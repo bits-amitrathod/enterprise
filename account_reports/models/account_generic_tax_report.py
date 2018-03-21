@@ -18,10 +18,10 @@ class generic_tax_report(models.AbstractModel):
     def get_columns_name(self, options):
         dt_to = options['date'].get('date_to') or options['date'].get('date')
         dt_from = options['date'].get('date_from', False)
-        columns_header = [{}, {'name': '%s <br/> %s' % (_('NET'), self.format_date(dt_to, dt_from, options)), 'class': 'number'}, {'name': _('TAX'), 'class': 'number'}]
+        columns_header = [{}, {'name': '%s \n %s' % (_('NET'), self.format_date(dt_to, dt_from, options)), 'class': 'number', 'style': 'white-space: pre;'}, {'name': _('TAX'), 'class': 'number'}]
         if options.get('comparison') and options['comparison'].get('periods'):
             for p in options['comparison']['periods']:
-                columns_header += [{'name': '%s <br/> %s' % (_('NET'), p.get('string')), 'class': 'number'}, {'name': _('TAX'), 'class': 'number'}]
+                columns_header += [{'name': '%s \n %s' % (_('NET'), p.get('string')), 'class': 'number', 'style': 'white-space: pre;'}, {'name': _('TAX'), 'class': 'number'}]
         return columns_header
 
     def set_context(self, options):
@@ -167,7 +167,7 @@ class generic_tax_report(models.AbstractModel):
                 if tax['show']:
                     columns = []
                     for period in tax['periods']:
-                        columns += [{'name': self.format_value(period['net'] * sign)},{'name': self.format_value(period['tax'] * sign)}]
+                        columns += [{'name': self.format_value(period['net'] * sign), 'style': 'white-space:nowrap;'},{'name': self.format_value(period['tax'] * sign), 'style': 'white-space:nowrap;'}]
                     lines.append({
                         'id': tax['obj'].id,
                         'name': tax['obj'].name + ' (' + str(tax['obj'].amount) + ')',
@@ -179,7 +179,7 @@ class generic_tax_report(models.AbstractModel):
                     for child in tax.get('children', []):
                         columns = []
                         for period in child['periods']:
-                            columns += [{'name': self.format_value(period['net'] * sign)},{'name': self.format_value(period['tax'] * sign)}]
+                            columns += [{'name': self.format_value(period['net'] * sign), 'style': 'white-space:nowrap;'},{'name': self.format_value(period['tax'] * sign), 'style': 'white-space:nowrap;'}]
                         lines.append({
                             'id': child['obj'].id,
                             'name': '   ' + child['obj'].name + ' (' + str(child['obj'].amount) + ')',

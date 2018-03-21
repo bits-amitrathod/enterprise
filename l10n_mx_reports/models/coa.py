@@ -5,6 +5,7 @@ from odoo import models, _, fields
 from openerp.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import check_with_xsd
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 MX_NS_REFACTORING = {
     'catalogocuentas__': 'catalogocuentas',
@@ -21,7 +22,6 @@ class MXReportAccountCoa(models.AbstractModel):
     _inherit = "l10n_mx.trial.report"
     _description = "Mexican Chart of Account Report"
 
-    filter_date = None
     filter_comparison = None
     filter_cash_basis = None
     filter_all_entries = None
@@ -129,10 +129,13 @@ class MXReportAccountCoa(models.AbstractModel):
                 'level': '2',
                 'nature': tag.nature,
             })
+        ctx = self.set_context(options)
+        date = fields.datetime.strptime(
+            ctx['date_from'], DEFAULT_SERVER_DATE_FORMAT)
         chart = {
             'vat': self.env.user.company_id.vat or '',
-            'month': str(fields.date.today().month).zfill(2),
-            'year': fields.date.today().year,
+            'month': str(date.month).zfill(2),
+            'year': date.year,
             'accounts': accounts
         }
         return chart
@@ -150,10 +153,23 @@ class MXReportAccountCoa(models.AbstractModel):
         check_with_xsd(cfdicoa, CFDICOA_XSD % version)
         return cfdicoa
 
+    def get_html(self, options, line_id=None, additional_context=None):
+        return super(MXReportAccountCoa, self.with_context(
+            self.set_context(options))).get_html(
+                options, line_id, additional_context)
+
+    def get_report_filename(self, options):
+        return super(MXReportAccountCoa, self.with_context(
+            self.set_context(options))).get_report_filename(options)
+
     def get_report_name(self):
         """The structure to name the CoA reports is:
         VAT + YEAR + MONTH + CT"""
+        context = self.env.context
+        date_report = fields.datetime.strptime(
+            context['date_from'], DEFAULT_SERVER_DATE_FORMAT) if context.get(
+                'date_from') else fields.date.today()
         return '%s%s%sCT' % (
             self.env.user.company_id.vat or '',
-            fields.date.today().year,
-            str(fields.date.today().month).zfill(2))
+            date_report.year,
+            str(date_report.month).zfill(2))

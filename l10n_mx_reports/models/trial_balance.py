@@ -263,6 +263,15 @@ class MxReportAccountTrial(models.AbstractModel):
         check_with_xsd(cfdicoa, CFDIBCE_XSD % version)
         return cfdicoa
 
+    def get_html(self, options, line_id=None, additional_context=None):
+        return super(MxReportAccountTrial, self.with_context(
+            self.set_context(options))).get_html(
+                options, line_id, additional_context)
+
+    def get_report_filename(self, options):
+        return super(MxReportAccountTrial, self.with_context(
+            self.set_context(options))).get_report_filename(options)
+
     def get_report_name(self):
         """The structure to name the Trial Balance reports is:
         VAT + YEAR + MONTH + ReportCode
@@ -270,7 +279,11 @@ class MxReportAccountTrial(models.AbstractModel):
         BN - Trial balance with normal information
         BC - Trial balance with with complementary information. (Now is
         not suportes)"""
+        context = self.env.context
+        date_report = fields.datetime.strptime(
+            context['date_from'], DEFAULT_SERVER_DATE_FORMAT) if context.get(
+                'date_from') else fields.date.today()
         return '%s%s%sBN' % (
             self.env.user.company_id.vat or '',
-            fields.date.today().year,
-            str(fields.date.today().month).zfill(2))
+            date_report.year,
+            str(date_report.month).zfill(2))

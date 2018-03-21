@@ -15,7 +15,13 @@ class report_account_aged_partner(models.AbstractModel):
 
     def get_columns_name(self, options):
         columns = [{}]
-        columns += [{'name': v, 'class': 'number'} for v in [_("Not&nbsp;due&nbsp;on %s") % options['date'].get('string'), _("0&nbsp;-&nbsp;30"), _("30&nbsp;-&nbsp;60"), _("60&nbsp;-&nbsp;90"), _("90&nbsp;-&nbsp;120"), _("Older"), _("Total")]]
+        columns += [{'name': v, 'class': 'number'} for v in [
+            _("Not&nbsp;due&nbsp;on %s").replace('&nbsp;', ' ') % options['date'].get('string'), 
+            _("0&nbsp;-&nbsp;30").replace('&nbsp;', ' '), 
+            _("30&nbsp;-&nbsp;60").replace('&nbsp;', ' '), 
+            _("60&nbsp;-&nbsp;90").replace('&nbsp;', ' '), 
+            _("90&nbsp;-&nbsp;120").replace('&nbsp;', ' '), 
+            _("Older"), _("Total")]]
         return columns
 
     def get_templates(self):
@@ -33,7 +39,7 @@ class report_account_aged_partner(models.AbstractModel):
         sign = -1.0 if self.env.context.get('aged_balance') else 1.0
         lines = []
         account_types = [self.env.context.get('account_type')]
-        results, total, amls = self.env['report.account.report_agedpartnerbalance']._get_partner_move_lines(account_types, self._context['date_to'], 'posted', 30)
+        results, total, amls = self.env['report.account.report_agedpartnerbalance'].with_context(include_nullified_amount=True)._get_partner_move_lines(account_types, self._context['date_to'], 'posted', 30)
         for values in results:
             if line_id and 'partner_%s' % (values['partner_id'],) != line_id:
                 continue

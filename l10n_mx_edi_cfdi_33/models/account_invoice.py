@@ -339,9 +339,23 @@ class AccountInvoice(models.Model):
         """Complete the taxes values to fill the CFDI template."""
         self.ensure_one()
         values = super(AccountInvoice, self)._l10n_mx_edi_create_taxes_cfdi_values()
+        taxes = {}
+        for invoice_line in self.invoice_line_ids:
+            for tax in invoice_line.invoice_line_tax_ids:
+                amount = round(abs(tax.amount / 100 * float("%.2f" % invoice_line.price_subtotal)), 2)
+                if tax.amount not in taxes:
+                    taxes.update({tax.amount: {
+                        'amount': amount,
+                        'rate': round(abs(tax.amount), 2),
+                    }})
+                else:
+                    taxes[tax.amount].update({
+                        'amount': taxes[tax.amount]['amount'] + amount
+                    })
         for tax in values.get('transferred', []):
-            line = self.tax_line_ids.filtered(lambda t: t.tax_id and round(
-                abs(t.amount or 0.0), 2) == tax.get('amount', 0.0) and round(
-                    abs(t.tax_id.amount), 2) == tax.get('rate', 0.0))
+            if taxes[tax.get('rate')].get('amount') == tax.get('amount', 0.0):
+                line = self.tax_line_ids.filtered(
+                    lambda t: t.tax_id and round(
+                        abs(t.tax_id.amount), 2) == tax.get('rate', 0.0))
             tax.update({'type': line.tax_id.l10n_mx_cfdi_tax_type})
         return values
