@@ -5,14 +5,19 @@ var Tour = require('web_tour.tour');
 
 Tour.register('account_followup_reports_widgets', {
     test: true,
-    url: '/web?#action=account_reports.action_account_followup_all',
+    url: '/web#action=account_reports.action_view_list_customer_statements',
     },
      [
         {
             content: 'wait for web client',
-            trigger: "#trustDropdown",
+            trigger: ".o_list_view",
             extra_trigger: ".breadcrumb",
-            run: function() {}
+            run: function () {}
+        },
+        {
+            content: 'click first item',
+            trigger: ".o_list_view .o_data_row",
+            run: 'click'
         },
         {
             content: 'click trust ball',
@@ -21,28 +26,18 @@ Tour.register('account_followup_reports_widgets', {
         },
         {
             content: 'change trust',
-            trigger: '.changeTrust[data-new-trust="good"]',
+            trigger: '.o_change_trust[data-new-trust="good"]',
             run: 'click'
-        },
-        {
-            content: 'exclude one line',
-            trigger: '.o_account_reports_table tr:not(:has(td.color-red)) input[type="checkbox"]:first',
-            run: 'click'
-        },
-        {
-            content: 'ensure that line has been excluded',
-            trigger: '.o_account_reports_table .o_account_followup_blocked',
-            run: function() {}
         },
         {
             content: 'send by mail',
-            trigger: '.followup-email',
+            trigger: '.o_account_reports_followup_send_mail_button',
             run: 'click'
         },
         {
             content: 'check that message telling that mail has been sent is shown',
             trigger: '.alert:contains(The follow-up report was successfully emailed!)',
-            run: function() {}
+            run: function () {}
         },
         {
             content: 'dismiss alert',
@@ -50,46 +45,10 @@ Tour.register('account_followup_reports_widgets', {
             run: 'click'
         },
         {
-            content:      "change filter",
-            trigger:    ".o_account_reports_followup-filter > a",
-        },
-        {
-            content:      "change filter",
-            trigger:    ".js_account_reports_one_choice_filter[data-id='all'] > a",
-            run: 'click'
-        },
-        {
-            content: "open history button",
-            trigger: '#history:visible .dropdown > a',
-            run: 'click'
-        },
-        // TODO /!\ fix this fragile selector, since other modules can insert other overdue invoices for Agrolait
-        //          and then block the tour
-        {
-            content: "Check that sent mail has only 2 invoices",
-            trigger: '.o_account_reports_history li table:first tbody:not(:has(tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(Total))))',
-            extra_trigger: '.o_account_reports_history li table:first tbody:has(tr:has(td:contains(INV))+tr:has(td:contains(INV))+tr:has(td:contains(Total)))',
-            run: function() {}
-        },
-        {
-            content:      "change filter",
-            trigger:    ".o_account_reports_followup-filter > a",
-        },
-        {
-            content:      "change filter",
-            trigger:    ".js_account_reports_one_choice_filter[data-id='action'] > a",
-            run: 'click'
-        },
-        {
             content: 'Click the Do it later button',
-            trigger: '.o_account_reports_followup_skip',
+            trigger: '.o_account_reports_followup_do_it_later_button',
             run: 'click'
         },
-        {
-            content: 'Check that we have nothing to display',
-            trigger: '.alert-info:contains(No follow-up to send! You have skipped 1 partner(s))'
-        },
-
      ]
 );
 

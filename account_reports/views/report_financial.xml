@@ -178,8 +178,8 @@
                 <textarea name="summary"><t t-if="report.get('summary')" t-esc="report['summary']" /></textarea>
                 <button class="btn btn-primary js_account_report_save_summary">Save</button>
             </div>
-            <div class="table-responsive">
-                <table width="100%" class="o_account_reports_table">
+            <div>
+                <table class="o_account_reports_table">
                     <thead>
                         <tr>
                             <t t-foreach="lines.get('columns_header')" t-as="column_header">

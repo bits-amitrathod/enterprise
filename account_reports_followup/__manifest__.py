@@ -31,6 +31,9 @@ of recall defined. You can define different policies for different companies.
         'views/res_config_settings_views.xml',
         'views/report_followup.xml',
     ],
+    'qweb': [
+        'static/src/xml/account_reports_followup_template.xml',
+    ],
     'demo': ['data/account_followup_demo.xml'],
     'installable': True,
     'auto_install': False,

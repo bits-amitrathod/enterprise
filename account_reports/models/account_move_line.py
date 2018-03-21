@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 
 
 class AccountMoveLine(models.Model):
@@ -16,5 +16,5 @@ class AccountMoveLine(models.Model):
     def write_blocked(self, blocked):
         """ This function is used to change the 'blocked' status of an aml.
             You need to be able to change it even if the aml is locked by the lock date
-            (this function is used in the customer statements) """
+            (this function is used in the follow-ups) """
         return self.with_context(check_move_validity=False).write({'blocked': blocked})

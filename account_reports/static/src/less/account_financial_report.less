@@ -25,6 +25,14 @@
     border-bottom-style: @border-bottom-style;
 }
 
+.o_form_view {
+    .o_account_reports_page {
+        .o_input {
+            width: 100%;
+        }
+    }
+}
+
 .o_account_reports_page {
     background-color: @odoo-view-background-color;
     color: @odoo-main-text-color;
@@ -41,6 +49,9 @@
             tbody tr:hover {
                 background-color: #f0f0f0;
             }
+        }
+        &.o_account_reports_followup {
+            padding-top: 0px;
         }
     }
     .o_account_followup_blocked {
@@ -126,7 +137,7 @@
     div.o_account_reports_saved_summary {
         padding-left: 5px;
     }
-    div.o_account_reports_summary, .o_account_reports_web_action, .changeTrust,
+    div.o_account_reports_summary, .o_account_reports_web_action, .o_change_trust,
     span.o_account_reports_web_action, div.o_account_reports_saved_summary span,
     td.o_account_reports_unfoldable, td.o_account_reports_foldable, span.partner_id, span.move_line_id, input[type=checkbox] {
         cursor: pointer;
@@ -314,6 +325,14 @@
     }
     .o_account_reports_history {
         min-width: 300px;
+    }
+}
+
+.o_form_view {
+    .o_account_reports_no_print {
+        .o_account_reports_table {
+            margin-bottom: 0px;
+        }
     }
 }
 
