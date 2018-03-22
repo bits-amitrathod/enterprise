@@ -231,9 +231,13 @@
 
     // All required form fields
     .o_form_required {
-        &.o_form_input, .o_form_input, &.o_form_textarea, .o_form_textarea {
+        // style many2manytags directly since the o_form_input is just a part of them
+        &.o_form_input, .o_form_input, &.o_form_textarea, .o_form_textarea, &.o_form_field_many2manytags {
             border-width: 2px;
             border-color: @odoo-main-text-color;
+        }
+        &.o_form_field_many2manytags.o_form_invalid {
+            border-color: @brand-danger;
         }
     }
 
