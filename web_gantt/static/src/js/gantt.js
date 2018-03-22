@@ -473,6 +473,8 @@ var GanttView = View.extend({
                         
                 groups.push(new_g);
             }
+            // only use first_groups for first level of group_by
+            self.first_groups = [];
             _.each(tasks, function (task) {
                 var group_name = task[_.first(group_bys)];
                 var group = _.find(groups, function (group) {
