@@ -62,13 +62,13 @@ class AccountPayment(models.Model):
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
-        res = {'domain': {}}
         if hasattr(super(AccountPayment, self), '_onchange_partner_id'):
             res = super(AccountPayment, self)._onchange_partner_id()
         if self.partner_id and len(self.partner_id.bank_ids) > 0:
             self.partner_bank_account_id = self.partner_id.bank_ids[0]
         else:
             self.partner_bank_account_id = False
+        res = res or {'domain': {}}
         res['domain']['partner_bank_account_id'] = [
             ('partner_id', 'in', [self.partner_id.id, self.partner_id.commercial_partner_id.id])
         ]
