@@ -18,6 +18,8 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def _compute_attachments(self):
+        if not self.user_has_groups('mrp.group_mrp_user'):
+            return
         for p in self:
             attachments = self.env['mrp.document'].search(['&', ('res_model', '=', 'product.template'), ('res_id', '=', p.id)])
             p.template_attachment_count = len(attachments)

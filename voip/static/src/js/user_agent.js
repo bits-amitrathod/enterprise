@@ -390,6 +390,10 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
                     window.focus();
                     var callOptions = {
                         media: {
+                            constraints: {
+                                video: false,
+                                audio: true
+                            },
                             render: {
                                 remote: self.remoteAudio
                             }
@@ -415,6 +419,10 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
                         }
                         var callOptions = {
                             media: {
+                                constraints: {
+                                    video: false,
+                                    audio: true
+                                },
                                 render: {
                                     remote: self.remoteAudio
                                 }

@@ -182,5 +182,7 @@ class SalemanDashboard(http.Controller):
 
     def _get_template_name(self, line):
         """ Get the subscription template name for an invoice line """
-        sub = request.env['sale.subscription'].search([('analytic_account_id', '=', line.account_analytic_id.id)])
-        return sub.template_id.name
+        if line.account_analytic_id:
+            sub = request.env['sale.subscription'].search([('analytic_account_id', '=', line.account_analytic_id.id)])
+            return sub.template_id.name
+        return False

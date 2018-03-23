@@ -25,12 +25,12 @@ class report_account_followup_report(models.AbstractModel):
 
     def get_columns_name(self, options):
         headers = [{}, 
-                {'name': _(' Date '), 'class': 'date', 'style': 'text-align:center;'}, 
-                {'name': _(' Due Date '), 'class': 'date', 'style': 'text-align:center;'}, 
-                {'name': _('Communication'), 'style': 'text-align:right;'}, 
-                {'name': _(' Expected Date '), 'class': 'date'}, 
-                {'name': _(' Excluded '), 'class': 'date'}, 
-                {'name': _(' Total Due '), 'class': 'number', 'style': 'text-align:right;'}
+                {'name': _(' Date '), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'}, 
+                {'name': _(' Due Date '), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'}, 
+                {'name': _('Communication'), 'style': 'text-align:right; white-space:nowrap;'}, 
+                {'name': _(' Expected Date '), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'}, 
+                {'name': _(' Excluded '), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'}, 
+                {'name': _(' Total Due '), 'class': 'number', 'style': 'text-align:right; white-space:nowrap;'}
                 ]
         if self.env.context.get('print_mode'):
             headers = headers[:4] + headers[6:]
@@ -67,11 +67,10 @@ class report_account_followup_report(models.AbstractModel):
                 if is_overdue or is_payment:
                     total_issued += not aml.blocked and amount or 0
                 if is_overdue:
-                    date_due = {'name': date_due, 'class': 'color-red date'}
+                    date_due = {'name': date_due, 'class': 'color-red date', 'style': 'white-space:nowrap;text-align:center;color: red;'}
                 if is_payment:
                     date_due = ''
                 amount = formatLang(self.env, amount, currency_obj=currency)
-                amount = amount.replace(' ', '&nbsp;') if self.env.context.get('mail') else amount
                 line_num += 1
                 columns = [format_date(self.env, aml.date, lang_code=lang_code), date_due, aml.invoice_id.name or aml.name, aml.expected_pay_date and aml.expected_pay_date +' '+ aml.internal_note or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
                 if self.env.context.get('print_mode'):
@@ -86,7 +85,6 @@ class report_account_followup_report(models.AbstractModel):
                     'columns': [type(v) == dict and v or {'name': v} for v in columns],
                 })
             totalXXX = formatLang(self.env, total, currency_obj=currency)
-            totalXXX = totalXXX.replace(' ', '&nbsp;') if self.env.context.get('mail') else totalXXX
             line_num += 1
             lines.append({
                 'id': line_num,
@@ -98,7 +96,6 @@ class report_account_followup_report(models.AbstractModel):
             })
             if total_issued > 0:
                 total_issued = formatLang(self.env, total_issued, currency_obj=currency)
-                total_issued = total_issued.replace(' ', '&nbsp;') if self.env.context.get('mail') else total_issued
                 line_num += 1
                 lines.append({
                     'id': line_num,

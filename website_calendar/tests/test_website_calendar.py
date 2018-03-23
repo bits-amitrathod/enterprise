@@ -65,13 +65,23 @@ class WebsiteCalendarTest(common.HttpCase):
         # Verifying
         utc_now = datetime.utcnow()
         mondays_count = 0
+        # If the appointment has slots in the next month (the appointment can be taken 15 days in advance)
+        # We'll have the next month displayed, and if the last day of current month is not a sunday
+        # the first week of current month will be in the next month's starting week
+        # but greyed and therefore without slot (and we should have already checked that day anyway)
+        already_checked = set()
+
         for month in months:
             for week in month['weeks']:
                 for day in week:
                     # For the sake of this test NOT to break each monday,
                     # we only control those mondays that are *strictly* superior than today
-                    if day['day'] > utc_now.date() and day['day'] <= (utc_now + relativedelta(days=appointment.max_schedule_days)).date() and day['day'].weekday() == 0:
+                    if day['day'] > utc_now.date() and\
+                        day['day'] <= (utc_now + relativedelta(days=appointment.max_schedule_days)).date() and\
+                        day['day'].weekday() == 0 and\
+                        day['day'] not in already_checked:
                         mondays_count += 1
+                        already_checked.add(day['day'])
                         self.assertEqual(len(day['slots']), 1, 'Each monday should have only one slot')
                         slot = day['slots'][0]
                         self.assertEqual(slot['employee_id'], self.employee.id, 'The right employee should be available on each slot')

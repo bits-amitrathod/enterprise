@@ -890,10 +890,12 @@ QUnit.module('ViewEditorManager', {
                     "name='my_name' " +
                     "domain='[(\"display_name\",\"=\",coucou)]'" +
                 "/>" +
-                "<filter string='My Name2' " +
-                    "name='my_name2' " +
-                    "domain='[(\"display_name\",\"=\",coucou2)]'" +
-                "/>" +
+                "<group expand='0' string='Filters'>" +
+                    "<filter string='My Name2' " +
+                        "name='my_name2' " +
+                        "domain='[(\"display_name\",\"=\",coucou2)]'" +
+                    "/>" +
+                "</group>" +
                 "<group expand='0' string='Group By'>" +
                     "<filter name='groupby_display_name' " +
                     "domain='[]' context=\"{'group_by':'display_name'}\"/>" +

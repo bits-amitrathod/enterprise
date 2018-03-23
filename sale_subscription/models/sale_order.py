@@ -71,7 +71,7 @@ class SaleOrder(models.Model):
         """
         res = []
         for order in self:
-            subscriptions = order.order_line.mapped('subscription_id')
+            subscriptions = order.order_line.mapped('subscription_id').sudo()
             if subscriptions and order.subscription_management != 'renew':
                 order.subscription_management = 'upsell'
             res.append(subscriptions.ids)
@@ -81,7 +81,7 @@ class SaleOrder(models.Model):
             for subscription in subscriptions:
                 subscription_lines = order.order_line.filtered(lambda l: l.subscription_id == subscription)
                 line_values = subscription_lines._update_subscription_line_data(subscription)
-                subscription.sudo().write({'recurring_invoice_line_ids': line_values})
+                subscription.write({'recurring_invoice_line_ids': line_values})
         return res
 
     def create_subscriptions(self):
