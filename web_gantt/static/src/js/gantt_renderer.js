@@ -613,30 +613,7 @@ return AbstractRenderer.extend({
             if (grouped_by.length === 0) {
                 return tasks;
             }
-            // Create the group of the first level (with query.group_by())
-            // TODO : this code is duplicate with the group created on the other level
             var groups = [];
-            for (var g in self.first_groups) {
-                var new_g = {tasks: [], __is_group: true,
-                             group_start: false, group_stop: false, percent: [],
-                             open: true};
-                new_g.name = self.first_groups[g].attributes.value;
-                new_g.create = [_.first(grouped_by), self.first_groups[g].attributes.value];
-                // the group color
-                // var model = self.state.fields[_.first(grouped_by)].relation;
-                // if (model && _.has(color_by_group, model)) {
-                //     new_g.consolidation_color = color_by_group[model][new_g.name[0]];
-                // }
-
-                // folded or not
-                if ((self.fold_last_level && grouped_by.length <= 1) ||
-                    self.state.context.fold_all ||
-                    self.type === 'planning') {
-                    new_g.open = false;
-                }
-
-                groups.push(new_g);
-            }
             _.each(tasks, function (task) {
                 var group_name = task[_.first(grouped_by)];
                 var group = _.find(groups, function (group) {

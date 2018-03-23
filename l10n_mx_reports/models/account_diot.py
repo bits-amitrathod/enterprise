@@ -49,6 +49,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             ('journal_id', 'in', journal_ids),
             ('account_id', 'not in', account_tax_ids.ids),
             ('tax_ids', 'in', tax_ids.ids),
+            ('date', '>=', context['date_from']),
         ]
         tables, where_clause, where_params = self.env[
             'account.move.line']._query_get(domain)
@@ -183,23 +184,23 @@ class MxReportPartnerLedger(models.AbstractModel):
             withh = 0
             for tax in tax16.ids:
                 total_tax16 += partner_data.get(tax, 0)
-            p_columns.append(int(round(total_tax16, 0)))
+            p_columns.append(total_tax16)
             for tax in taximp.ids:
                 total_taximp += partner_data.get(tax, 0)
             p_columns.append(int(round(total_taximp, 0)))
             total_tax0 += sum([partner_data.get(tax, 0) for tax in tax0.ids])
-            p_columns.append(int(round(total_tax0, 0)))
+            p_columns.append(total_tax0)
             exempt += sum([partner_data.get(exem, 0)
                            for exem in tax_exe.ids])
-            p_columns.append(int(round(exempt, 0)))
+            p_columns.append(exempt)
             withh += sum([abs(partner_data.get(ret.id, 0) / (100 / ret.amount))
                           for ret in tax_ret])
-            p_columns.append(int(round(withh, 0)))
+            p_columns.append(withh)
             unfolded = 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all
             lines.append({
                 'id': 'partner_' + str(partner.id),
                 'name': partner.name,
-                'columns': [{'name': v} for v in p_columns],
+                'columns': [{'name': v if index < 5 else int(round(v, 0))} for index, v in enumerate(p_columns)],
                 'level': 2,
                 'unfoldable': True,
                 'unfolded': unfolded,
@@ -232,7 +233,7 @@ class MxReportPartnerLedger(models.AbstractModel):
                 total_tax16 += sum([
                     line.debit or line.credit * -1
                     for tax in tax16.ids if tax in line.tax_ids.ids])
-                columns.append(int(round(total_tax16, 0)))
+                columns.append(self.format_value(total_tax16))
                 total_taximp += sum([
                     line.debit or line.credit * -1
                     for tax in taximp.ids if tax in line.tax_ids.ids])
@@ -240,16 +241,16 @@ class MxReportPartnerLedger(models.AbstractModel):
                 total_tax0 += sum([
                     line.debit or line.credit * -1
                     for tax in tax0.ids if tax in line.tax_ids.ids])
-                columns.append(int(round(total_tax0, 0)))
+                columns.append(self.format_value(total_tax0))
                 exempt += sum([line.debit or line.credit * -1
                                for exem in tax_exe.ids
                                if exem in line.tax_ids.ids])
-                columns.append(int(round(exempt, 0)))
+                columns.append(self.format_value(exempt))
                 withh += sum([
                     abs((line.debit or line.credit * -1) / (100 / ret.amount))
                     for ret in tax_ret
                     if ret.id in line.tax_ids.ids])
-                columns.append(int(round(withh, 0)))
+                columns.append(self.format_value(withh))
                 caret_type = 'account.move'
                 if line.invoice_id:
                     caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'
@@ -268,7 +269,7 @@ class MxReportPartnerLedger(models.AbstractModel):
                 'parent_id': 'partner_' + str(partner.id),
                 'class': 'o_account_reports_domain_total',
                 'name': _('Total') + ' ' + partner.name,
-                'columns': [{'name': v} for v in p_columns],
+                'columns': [{'name': v if index < 5 else self.format_value(v)} for index, v in enumerate(p_columns)],
                 'level': 1,
             })
             if too_many:

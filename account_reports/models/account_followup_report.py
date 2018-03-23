@@ -26,13 +26,13 @@ class AccountFollowupReport(models.AbstractModel):
         Return the name of the columns of the follow-ups report
         """
         headers = [{},
-                   {'name': _('Date'), 'class': 'date', 'style': 'text-align:center;'},
-                   {'name': _('Due Date'), 'class': 'date', 'style': 'text-align:center;'},
-                   {'name': _('Source Document'), 'style': 'text-align:center;'},
-                   {'name': _('Communication'), 'style': 'text-align:right;'},
-                   {'name': _('Expected Date'), 'class': 'date'},
-                   {'name': _('Excluded'), 'class': 'date'},
-                   {'name': _('Total Due'), 'class': 'number', 'style': 'text-align:right;'}
+                   {'name': _('Date'), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'},
+                   {'name': _('Due Date'), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'},
+                   {'name': _('Source Document'), 'style': 'text-align:center; white-space:nowrap;'},
+                   {'name': _('Communication'), 'style': 'text-align:right; white-space:nowrap;'},
+                   {'name': _('Expected Date'), 'class': 'date', 'style': 'white-space:nowrap;'},
+                   {'name': _('Excluded'), 'class': 'date', 'style': 'white-space:nowrap;'},
+                   {'name': _('Total Due'), 'class': 'number', 'style': 'text-align:right; white-space:nowrap;'}
                   ]
         if self.env.context.get('print_mode'):
             headers = headers[:5] + headers[7:]  # Remove the 'Expected Date' and 'Excluded' columns
@@ -73,11 +73,10 @@ class AccountFollowupReport(models.AbstractModel):
                 if is_overdue or is_payment:
                     total_issued += not aml.blocked and amount or 0
                 if is_overdue:
-                    date_due = {'name': date_due, 'class': 'color-red date'}
+                    date_due = {'name': date_due, 'class': 'color-red date', 'style': 'white-space:nowrap;text-align:center;color: red;'}
                 if is_payment:
                     date_due = ''
                 amount = formatLang(self.env, amount, currency_obj=currency)
-                amount = amount.replace(' ', '&nbsp;') if self.env.context.get('mail') else amount
                 line_num += 1
                 columns = [format_date(self.env, aml.date, lang_code=lang_code), date_due, aml.invoice_id.origin, aml.invoice_id.name or aml.name, aml.expected_pay_date or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
                 if self.env.context.get('print_mode'):
@@ -95,7 +94,6 @@ class AccountFollowupReport(models.AbstractModel):
                     'columns': [type(v) == dict and v or {'name': v} for v in columns],
                 })
             total_due = formatLang(self.env, total, currency_obj=currency)
-            total_due = total_due.replace(' ', '&nbsp;') if self.env.context.get('mail') else total_due
             line_num += 1
             lines.append({
                 'id': line_num,
@@ -107,7 +105,6 @@ class AccountFollowupReport(models.AbstractModel):
             })
             if total_issued > 0:
                 total_issued = formatLang(self.env, total_issued, currency_obj=currency)
-                total_issued = total_issued.replace(' ', '&nbsp;') if self.env.context.get('mail') else total_issued
                 line_num += 1
                 lines.append({
                     'id': line_num,

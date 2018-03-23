@@ -22,7 +22,7 @@ class website_hr_contract_salary(http.Controller):
 
     def _check_employee_access_right(self, contract_id):
         contract_sudo = request.env['hr.contract'].sudo().browse(contract_id)
-        if not contract_sudo.employee_id:
+        if not contract_sudo.employee_id or contract_sudo.employee_id.user_id == request.env.user:
             return contract_sudo
         try:
             contract = request.env['hr.contract'].browse(contract_id)

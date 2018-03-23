@@ -104,6 +104,7 @@
                         <h3 t-if="not part_pms" class="mb24">Register a payment method with</h3>
                         <t t-call="payment.payment_tokens_list">
                             <t t-set="form_action" t-value="'/my/subscription/' + str(account.id) + '/' + str(account.uuid) + '/set_pm'"/>
+                            <t t-set="return_url" t-value="'/my/subscription/' + str(account.id) + '/' + str(account.uuid)"/>
                             <t t-set="pms" t-value="part_pms"/>
                             <t t-set="icon_class" t-value="'fa-lock'"/>
                             <t t-set="submit_txt" t-value="'Change'"/>

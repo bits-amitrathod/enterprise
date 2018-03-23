@@ -6,6 +6,7 @@ import re
 import logging
 from datetime import datetime
 from io import BytesIO
+from pytz import timezone
 
 from lxml import etree
 from lxml.objectify import fromstring
@@ -664,7 +665,7 @@ class AccountInvoice(models.Model):
                 if tax.amount not in taxes:
                     taxes.update({tax.amount: {
                         'name': (tax.tag_ids[0].name
-                                if tax.tag_ids else tax.name).upper(),
+                                 if tax.tag_ids else tax.name).upper(),
                         'amount': amount,
                         'rate': round(abs(tax.amount), 2),
                         'type': tax.l10n_mx_cfdi_tax_type,
@@ -977,6 +978,7 @@ class AccountInvoice(models.Model):
             if not record.l10n_mx_edi_time_invoice:
                 record.l10n_mx_edi_time_invoice = date_mx.strftime(
                     DEFAULT_SERVER_TIME_FORMAT)
+        self._l10n_mx_edi_update_hour_timezone()
         return super(AccountInvoice, self).action_date_assign()
 
     @api.multi
@@ -1069,3 +1071,31 @@ class AccountInvoice(models.Model):
         origin = '%s|%s' % (rtype, ids)
         self.update({'l10n_mx_edi_origin': origin})
         return origin
+
+    def _l10n_mx_edi_update_hour_timezone(self):
+        for inv in self:
+            partner = inv.journal_id.l10n_mx_address_issued_id or inv.company_id.partner_id.commercial_partner_id
+            # northwest area
+            if partner.state_id.code == 'BCN':
+                tz = timezone('America/Tijuana')
+            # Southeast area
+            elif partner.state_id.code == 'ROO':
+                tz = timezone('America/Cancun')
+            # Pacific area
+            elif partner.state_id.code in ('BCS', 'CHH', 'SIN', 'NAY'):
+                tz = timezone('America/Chihuahua')
+            # Sonora
+            elif partner.state_id.code in ('SON',):
+                tz = timezone('America/Hermosillo')
+            # By default, takes the central area timezone
+            else:
+                tz = timezone('America/Mexico_City')
+
+            # Check the TZ should be forced for the current journal
+            tz_force = self.env['ir.config_parameter'].sudo().get_param(
+                'l10n_mx_edi_tz_%s' % inv.journal_id.id, default=None)
+            if tz_force:
+                tz = timezone(tz_force)
+
+            datetime_mx_tz = datetime.now(tz)
+            inv.l10n_mx_edi_time_invoice = datetime_mx_tz.strftime("%H:%M:%S")

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgid "<br/>According to your needs, you will need to contact different certific
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_account_number
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Account Number"
 msgstr ""
 
@@ -61,12 +61,12 @@ msgid "DROP_BOX"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_default_packaging_id
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_default_packaging_id
 msgid "Default Package Type"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_key
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_key
 msgid "Developer Key"
 msgstr ""
 
@@ -83,7 +83,7 @@ msgid "Error:\n"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_file_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_file_type
 msgid "FEDEX Label File Type"
 msgstr ""
 
@@ -108,9 +108,19 @@ msgid "FIRST_OVERNIGHT"
 msgstr ""
 
 #. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_account_number
+msgid "FedEx Account Number"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
 msgid "FedEx Delivery Methods"
+msgstr ""
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
+msgid "FedEx Saturday Delivery"
 msgstr ""
 
 #. module: delivery_fedex
@@ -130,12 +140,12 @@ msgid "Fedex International"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_stock_type
 msgid "Fedex Label Stock Type"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_service_type
 msgid "Fedex Service Type"
 msgstr ""
 
@@ -156,12 +166,12 @@ msgid "Fedex Website"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_weight_unit
 msgid "Fedex Weight Unit"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_droppoff_type
 msgid "Fedex drop-off type"
 msgstr ""
 
@@ -191,7 +201,7 @@ msgid "LB"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_meter_number
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_meter_number
 msgid "Meter Number"
 msgstr ""
 
@@ -262,7 +272,7 @@ msgid "Packaging"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_password
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_password
 msgid "Password"
 msgstr ""
 
@@ -317,7 +327,7 @@ msgid "STOCK_4X9_TRAILING_DOC_TAB"
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Saturday Delivery"
 msgstr ""
 
@@ -340,7 +350,7 @@ msgid "Shipment created into Fedex<br/><b>Tracking Numbers:</b> %s<br/><b>Packag
 msgstr ""
 
 #. module: delivery_fedex
-#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
 msgid "Special service:Saturday Delivery, can be requested on following days.\n"
 "                                                                                 Thursday:\n"
 "1.FEDEX_2_DAY.\n"
@@ -376,6 +386,14 @@ msgstr ""
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_file_type:0
 msgid "ZPLII"
+msgstr ""
+
+#. module: delivery_fedex
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter_product_template
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us_product_template
+msgid "kg"
 msgstr ""
 
 #. module: delivery_fedex
