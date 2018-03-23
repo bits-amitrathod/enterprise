@@ -379,6 +379,7 @@
                 <!-- sla_id and team_id are necessary to avoid some fields recomputation -->
                 <field name="sla_id"/>
                 <field name="team_id"/>
+                <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
