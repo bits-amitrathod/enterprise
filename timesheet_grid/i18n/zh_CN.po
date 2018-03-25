@@ -7,6 +7,7 @@
 # liAnGjiA <liangjia@qq.com>, 2017
 # Liping Wang <lynn.config@gmail.com>, 2017
 # Yaorong Li <55yaorong.li@gmail.com>, 2017
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # Martin Trigaux, 2017
 # Xu Lei <xulei8@qq.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
@@ -103,7 +104,7 @@ msgstr ""
 "            <p style=\"font-size: 11px;\"><strong>发件人\n"
 "            <a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
 "                <strong>${user.company_id.name}</strong>\n"
-"            </a> using <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"            </a> 使用 <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
 "            </strong></p>\n"
 "        </td>\n"
 "    </tr></tbody>\n"
@@ -258,7 +259,7 @@ msgstr "公司"
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_create_uid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_create_uid
 msgid "Created by"
-msgstr "创建人"
+msgstr "创建者"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_create_date
@@ -269,7 +270,7 @@ msgstr "创建时间"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
-msgstr "日期截止到验证员工时间表之后"
+msgstr "日期截止到验证员工时间表后"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
@@ -287,7 +288,7 @@ msgstr "显示名称"
 #: code:addons/timesheet_grid/static/src/js/tour.js:43
 #, python-format
 msgid "Easily switch to the monthly or daily view to control your time"
-msgstr "轻松转入每月或每日视图以便控制时间"
+msgstr "轻松转入每月或每日视图以便控制你的时间"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee
@@ -340,7 +341,7 @@ msgstr "如果检查完毕，请向所有的经理发送电子邮件"
 msgid ""
 "If checked, send an email to all managers who have not validated their "
 "timesheet"
-msgstr "如果检查完毕，请向那些尚未验证时间表的经理发送电子邮件"
+msgstr "如果检查完毕，请向那些尚未验证时间表的经理发送电子邮件。"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
@@ -388,7 +389,7 @@ msgstr "让我们创建您的第一个时间表条目。"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "Manager Reminder"
-msgstr "经历提醒"
+msgstr "经理提醒"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
@@ -414,7 +415,7 @@ msgstr "我的团队"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_nextdate
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_nextdate
 msgid "Next scheduled date for manager reminder"
-msgstr "经理提醒的下一个制表日期"
+msgstr "经理提醒的下一个已约定的日期"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -462,7 +463,7 @@ msgstr "提醒：请记录您的时间"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
-msgstr "如果解析线代表时间表轴的话。"
+msgstr "如果解析线代表时间表行的话进行配置。"
 
 #. module: timesheet_grid
 #. openerp-web
@@ -497,7 +498,7 @@ msgstr "工时表明细"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_manager_id
 msgid "Timesheet Responsible"
-msgstr "时间表主管"
+msgstr "负责时间表"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
@@ -578,7 +579,7 @@ msgstr "验证该员工的时间表直至已选定的日期"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_date
 msgid "Validate up to"
-msgstr "验证到"
+msgstr "验证至"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -616,7 +617,7 @@ msgstr "周"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "You will be able to register your working hours on the given task."
-msgstr "您可在指定任务中注册工作时间。"
+msgstr "你可在指定任务中注册你的工作时间。"
 
 #. module: timesheet_grid
 #: selection:res.company,timesheet_mail_employee_interval:0
@@ -648,4 +649,4 @@ msgstr "timesheet.validation"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_validation_line
 msgid "timesheet.validation.line"
-msgstr "时间表。验证。线"
+msgstr "timesheet.validation.line"

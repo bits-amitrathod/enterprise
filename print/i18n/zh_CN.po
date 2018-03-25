@@ -3,12 +3,13 @@
 # * print
 # 
 # Translators:
-# Luke <cialuo@qq.com>, 2017
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
 # Jonathon Li <jonathonli@gmail.com>, 2017
 # xiaobin wu <bd5dml@gmail.com>, 2017
+# Luke <cialuo@qq.com>, 2017
 # Martin Trigaux, 2017
 # liAnGjiA <liangjia@qq.com>, 2017
 # Eddie Lim <bhweelim@yahoo.com>, 2017
@@ -98,7 +99,7 @@ msgstr "<strong>提供程序</strong>"
 #: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
-msgstr "至少有一个你要发出的文档有错误"
+msgstr "至少有一个你要发出的文档包含错误。"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_user_id
@@ -108,7 +109,7 @@ msgstr "作者"
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Black & White"
-msgstr "黑白"
+msgstr "黑与白"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -124,7 +125,7 @@ msgstr "城市"
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Colour"
-msgstr "彩色"
+msgstr "颜色"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -153,7 +154,7 @@ msgstr "国家"
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_create_uid
 #: model:ir.model.fields,field_description:print.field_print_provider_create_uid
 msgid "Created by"
-msgstr "创建人"
+msgstr "创建者"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_create_date
@@ -255,7 +256,7 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:print.field_print_order_ink
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_ink
 msgid "Ink"
-msgstr "喷墨"
+msgstr "墨"
 
 #. module: print
 #: model:ir.model,name:print.model_account_invoice
@@ -290,7 +291,7 @@ msgstr "最后修改时间"
 #: model:ir.model.fields,field_description:print.field_print_mixin_print_sent_date
 #: model:ir.model.fields,field_description:print.field_sale_order_print_sent_date
 msgid "Last Postal Sent Date"
-msgstr "最后信息日期"
+msgstr "最后发送邮件日期"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_last_send_date
@@ -495,7 +496,7 @@ msgstr "就绪"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Recipient Address"
-msgstr "收件地址"
+msgstr "收件人地址"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
@@ -558,7 +559,7 @@ msgstr "立即快递发送"
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action
 msgid "Send by Post"
-msgstr "邮递"
+msgstr "透过邮递"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_sent_date
@@ -615,7 +616,7 @@ msgstr "该货币将用于金额、余额账户、打印订单价格等"
 msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
 "file, or set up the Object ID and Model Name fields."
-msgstr "这张单子没有相关的PDF:有必须要选定一个附件或者设置对象ID和模型名字字段"
+msgstr "这张单子没有相关的PDF：你要选定一个附件文档或者设置对象ID和模型名字字段。"
 
 #. module: print
 #: code:addons/print/models/print_provider.py:221
@@ -640,7 +641,7 @@ msgid ""
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
-"这张发票被快递 %(provider_name)s发送给以下地址 <br/><br/> %(partner_name)s <br/> "
+"这张发票被快递 %(provider_name)s发送给以下地址 的服务商 。<br/><br/> %(partner_name)s<br/> "
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 
@@ -652,7 +653,7 @@ msgstr "更新"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "When the error is resolved, please click on 'Reset to draft'."
-msgstr "问题解决后，然后点击‘重设为草稿’"
+msgstr "问题解决后，然后点击‘重设为草稿’。"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_zip

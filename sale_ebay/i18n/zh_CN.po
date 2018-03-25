@@ -4,12 +4,13 @@
 # 
 # Translators:
 # liAnGjiA <liangjia@qq.com>, 2017
-# fausthuang <faust_huang@hotmail.com>, 2017
-# Jeffery CHEN <jeffery9@gmail.com>, 2017
+# fausthuang, 2017
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
 # 卓忆科技 <zhanghao@jointd.com>, 2017
-# Joray <13637815@qq.com>, 2017
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
+# Joray <13637815@qq.com>, 2017
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
 # 钟小华 <mackz@sina.com>, 2017
 # Talway <9010446@qq.com>, 2017
@@ -58,8 +59,9 @@ msgid ""
 " You need to have at least 2 variations selected for a multi-variations listing.\n"
 " Or if you try to delete a variation, you cannot do it by unselecting it. Setting the quantity to 0 is the safest method to make a variation unavailable."
 msgstr ""
-"你必须至少选择2个变体对于多变体清单.否则如果你尝试删除一个变体，你将不能选择它。\n"
-"设置数量为0，是使一个变体无效的安全方法。"
+"你必须选择至少2个改变用于多变清单。\n"
+"如果你尝试删除一个改变，你将不能只透过选择它来进行。\n"
+"将数量设置为0是使一个改变无效的最安全方法。"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
@@ -92,7 +94,7 @@ msgstr "7天"
 msgid ""
 "All the quantities must be greater than 0 or you need to enable the Out Of "
 "Stock option."
-msgstr "所有的数量必须大于0或者你必须激活缺货选项"
+msgstr "所有的数量必须大于0或者你必须激活缺货选项。"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_best_offer
@@ -249,7 +251,7 @@ msgstr "易趣网：在易趣网上列出产品模板"
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_relist_items
 msgid "Ebay: Relist Product Templates on eBay"
-msgstr "易趣网：将易趣网产品模板"
+msgstr "易趣网：将产品重新列在易趣网产品模板"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_revise_items
@@ -290,8 +292,8 @@ msgid ""
 "Error Encountered.\n"
 " No Variant Set To Be Listed On eBay."
 msgstr ""
-"遇到问题.\n"
-" eBay 上的产品没有设置变体."
+"遇到错误。\n"
+" eBay 上的产品没有设置变体。"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/models/product.py:389
@@ -300,7 +302,7 @@ msgid ""
 "Error Encountered.\n"
 "'%s'"
 msgstr ""
-"遇到问题.\n"
+"遇到问题。\n"
 "'%s'"
 
 #. module: sale_ebay
@@ -341,7 +343,7 @@ msgstr "ID"
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Import eBay config data and sync transactions"
-msgstr "导入易趣网配置数据和同步事务"
+msgstr "导入易趣网配置数据和同步交易"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/models/product.py:381
@@ -350,8 +352,8 @@ msgid ""
 "Impossible to revise a listing into a multi-variations listing.\n"
 " Create a new listing."
 msgstr ""
-"不能把一个产品修改成多变体产品.\n"
-" 创建一个新产品."
+"无法把一个列表修改成多变体列表。\n"
+"创建一个新列表。"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_item_condition_id
@@ -400,7 +402,7 @@ msgstr "叶类"
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
 msgid "Link Existing Listing"
-msgstr "链接现有的上市"
+msgstr "链接现有的列表"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
@@ -415,7 +417,7 @@ msgstr "链接现有的易趣网上列表"
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.ebay_link_listing_view
 msgid "Link with eBay Listing"
-msgstr "与易趣网上列表链接"
+msgstr "与易趣网的列表链接"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
@@ -466,13 +468,13 @@ msgstr "eBay官方分类"
 #: code:addons/sale_ebay/models/product.py:351
 #, python-format
 msgid "One parameter is missing."
-msgstr "缺少一个参数"
+msgstr "缺少一个参数。"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/models/product.py:377
 #, python-format
 msgid "Or the condition is not compatible with the category."
-msgstr "或者条件和类别不匹配"
+msgstr "或者条件和类别不匹配。"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_out_of_stock
@@ -499,7 +501,7 @@ msgstr "政策ID"
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_private_listing
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_private_listing
 msgid "Private Listing"
-msgstr "私有上市"
+msgstr "私有清单"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_product_product
@@ -524,12 +526,12 @@ msgstr "生产"
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_app_id
 msgid "Production App Key"
-msgstr "正式应用密钥"
+msgstr "生产应用密钥"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_cert_id
 msgid "Production Cert Key"
-msgstr "正式证书密钥"
+msgstr "生产正式密钥"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_token
@@ -610,7 +612,7 @@ msgstr "沙箱令牌"
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_seller_shipping_policy_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_seller_shipping_policy_id
 msgid "Shipping Policy"
-msgstr "交货策略"
+msgstr "交货政策"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_start_date
@@ -678,7 +680,7 @@ msgstr "购买者选择了如下送货方式 :\n"
 #: code:addons/sale_ebay/models/product.py:715
 #, python-format
 msgid "The Buyer Posted :\n"
-msgstr "买方发布 :\n"
+msgstr "买方已过账 :\n"
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_subtitle
@@ -686,13 +688,13 @@ msgstr "买方发布 :\n"
 msgid ""
 "The subtitle is restricted to 55 characters. Fees can be claimed by eBay for"
 " this feature"
-msgstr "子标题限制55个字符.对于此功能eBAY 要收费"
+msgstr "子标题限制在55个字符。对于此功能eBAY 可以收费"
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_title
 #: model:ir.model.fields,help:sale_ebay.field_product_template_ebay_title
 msgid "The title is restricted to 80 characters"
-msgstr "标题支持80个字符"
+msgstr "标题的限制为80个字符"
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_category_2_id
@@ -700,7 +702,7 @@ msgstr "标题支持80个字符"
 msgid ""
 "The use of a secondary category is not allowed on every eBay sites. Fees can"
 " be claimed by eBay for this feature"
-msgstr "eBay 不支持免费使用第二分类，此功能要收费。"
+msgstr "每个eBay站点不支持免费使用第二分类。eBay可按此功能要收费。"
 
 #. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product_ebay_template_id
@@ -783,7 +785,7 @@ msgstr "eBay ID"
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_link_listing_ebay_id
 msgid "eBay Listing ID"
-msgstr "eBay上市 ID"
+msgstr "eBay 清单 ID"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
@@ -819,7 +821,7 @@ msgid ""
 "eBay error: Impossible to synchronize the categories. \n"
 "'%s'"
 msgstr ""
-"eBay 错误:不能同步种类。\n"
+"eBay 错误：不能令种类同步。\n"
 "'%s'"
 
 #. module: sale_ebay
@@ -837,7 +839,7 @@ msgstr ""
 #: code:addons/sale_ebay/models/product.py:379
 #, python-format
 msgid "eBay is unreachable. Please try again later."
-msgstr "eBay 无法访问. 请再试."
+msgstr "eBay 无法访问。请稍后再试。"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form

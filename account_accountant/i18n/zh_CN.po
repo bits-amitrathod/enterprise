@@ -5,6 +5,7 @@
 # Translators:
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
 # liAnGjiA <liangjia@qq.com>, 2017
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
 # 老窦 北京 <2662059195@qq.com>, 2017
@@ -64,7 +65,7 @@ msgstr "修改锁定日期"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_uid
 msgid "Created by"
-msgstr "创建人"
+msgstr "创建者"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_date
@@ -84,7 +85,7 @@ msgstr "财务报告"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Period Closing"
-msgstr "会计期间关闭中"
+msgstr "财政期间关闭中"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -94,7 +95,7 @@ msgstr "财政年度"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_day
 msgid "Fiscalyear Last Day"
-msgstr "会计年度的最后一天"
+msgstr "财政年度的最后一天"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_month
@@ -109,14 +110,14 @@ msgstr "ID"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Inter-Banks Transfers"
-msgstr "内部银行账户转账"
+msgstr "银行间转账"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_transfer_account_id
 msgid ""
 "Intermediary account used when moving money from a liquidity account to "
 "another"
-msgstr "中间科目，用于从一个流动性科目到另外一个科目转账"
+msgstr "中间账户，用于从一个流动性账户的钱转到另外一个账户"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -141,7 +142,7 @@ msgstr "最后更新时间"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last day of your fiscal year, for automatic opening entries"
-msgstr "会计年度的最后一天，用于自动生成期初分录"
+msgstr "你的财政年度的最后一天，用于自动生成期初分录"
 
 #. module: account_accountant
 #. openerp-web
@@ -154,7 +155,7 @@ msgstr "从新建客户发票开始。"
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_lock_date
 msgid "Lock Date for All Users"
-msgstr "对所有用户锁定会计期间"
+msgstr "对所有用户锁定日期"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_period_lock_date
@@ -170,19 +171,19 @@ msgstr "锁定日期"
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_view_account_change_lock_date
 msgid "Lock your Fiscal Period"
-msgstr "锁定会计期间"
+msgstr "锁定你的财政期间"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Lock your fiscal period"
-msgstr "锁定会计期间"
+msgstr "锁定你的财政期间"
 
 #. module: account_accountant
 #. openerp-web
 #: code:addons/account_accountant/static/src/js/tour.js:17
 #, python-format
 msgid "Make your system ready to invoice in a few steps."
-msgstr "使你的系统可以通过几步进行开票"
+msgstr "使你的系统准备好通过几步进行开票。"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
@@ -190,7 +191,7 @@ msgstr "使你的系统可以通过几步进行开票"
 msgid ""
 "No users, including Advisers, can edit accounts prior to and inclusive of "
 "this date. Use it for fiscal year locking for example."
-msgstr "没有用户，包含顾问在内，能够在此日期之前（包括此日期）修改帐户。例如，使用它作为会计年度锁定。"
+msgstr "没有用户，包含顾问在内，能够在此日期之前（包括此日期）修改帐户。例如，使用它作为财政年度锁定。"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_period_lock_date
@@ -198,7 +199,7 @@ msgid ""
 "Only users with the 'Adviser' role can edit accounts prior to and inclusive "
 "of this date. Use it for period locking inside an open fiscal year, for "
 "example."
-msgstr "只有具有“顾问”角色的用户才能在此日期之前（包括此日期）修改帐户。例如，使用它作为在开放会计年度内的期间锁定。"
+msgstr "只有具有“顾问”角色的用户才能在此日期之前（包括此日期）修改帐户。例如，使用它作为在开放财政年度内的期间锁定。"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_period_lock_date
@@ -225,7 +226,7 @@ msgstr "准备好了吗——您将使用世界级最新最好用的<b>财务管
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Record cost of goods sold in your journal entries"
-msgstr "在你的日记账分录中记录销售的货物的成本"
+msgstr "在你的日记账分录中记录已销售的货物成本"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -237,7 +238,7 @@ msgstr "保存"
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid ""
 "The last day of the month will be taken if the chosen day doesn't exist."
-msgstr "如果没选择日期，则将在本月最后一天进行。"
+msgstr "如果选择的日期不存在，则选定本月最后的一天。"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_transfer_account_id
@@ -251,7 +252,7 @@ msgstr "转账科目"
 msgid ""
 "Use the path to quickly click back to <b>previous screens</b>, without "
 "reloading the page."
-msgstr "使用路径快速回到<b>前一窗口</b>，不需要重新加载页面。"
+msgstr "使用路径快速回到<b>之前的屏幕</b>，不需要重新加载页面。         "
 
 #. module: account_accountant
 #. openerp-web
@@ -267,7 +268,7 @@ msgstr "当您准备就绪后，请关闭该计划程序并继续浏览。"
 msgid ""
 "Your reports are available in real time. <i>No need to close a fiscal year "
 "to get a Profit &amp; Loss statement or view the Balance Sheet.</i>"
-msgstr "你的报表是实时的。<i>不需要关闭财务年度以获取损益表和利润表。</i>"
+msgstr "你的报表是实时的。<i>不需要关闭财务年度以获取损益表或查看资产负债表。</i>"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_res_config_settings

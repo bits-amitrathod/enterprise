@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# Gary Wei <Gary.wei@elico-corp.com>, 2017
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # Liping Wang <lynn.config@gmail.com>, 2017
 # Martin Trigaux, 2017
 # waveyeung <waveyeung@qq.com>, 2017
@@ -71,7 +71,7 @@ msgstr "公司"
 msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
-msgstr "在菜单:设置/用户/公司中,为公司(%s)配置正确的仓库"
+msgstr "在菜单：设置/用户/公司中，为公司(%s)配置正确的仓库"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_auto_generate_invoices
@@ -84,7 +84,7 @@ msgstr "在向该公司编码发票/信用票据时，创建发票/信用票据"
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_po_from_so
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_po_from_so
 msgid "Create Purchase Orders when selling to this company"
-msgstr "给该公司销售的时候创建采购订单"
+msgstr "向该公司销售时创建采购订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_so_from_po
@@ -120,7 +120,7 @@ msgstr ""
 msgid ""
 "Generate a Purchase Order when a Sale Order with this company as customer is"
 " created."
-msgstr "在该公司作为客户时的销售订单生成一张采购订单"
+msgstr "在该公司作为客户时的销售订单生成一张采购订单。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_po_from_so
@@ -136,7 +136,7 @@ msgstr ""
 msgid ""
 "Generate a Sale Order when a Purchase Order with this company as vendor is "
 "created."
-msgstr "在该公司作为供应商的采购订单生成销售订单"
+msgstr "当该公司作为供应商的采购订单创建时生成销售订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_so_from_po
@@ -179,14 +179,14 @@ msgstr " 请定义%s日记账到该公司\"%s\" (id:%d)."
 #: code:addons/inter_company_rules/models/purchase_order.py:39
 #, python-format
 msgid "Provide at least one user for inter company relation for % "
-msgstr "请为%提供至少一个公司间用户"
+msgstr "请为%提供公司间关系的至少一个用户"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/account_invoice.py:44
 #: code:addons/inter_company_rules/models/sale_order.py:43
 #, python-format
 msgid "Provide one user for intercompany relation for % "
-msgstr "请为%提供一个公司间用户"
+msgstr "请为%提供一个公司间关系的用户"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
@@ -202,7 +202,7 @@ msgstr "报价单"
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_intercompany_user_id
 msgid ""
 "Responsible user for creation of documents triggered by intercompany rules."
-msgstr "对公司内部的规则触发文件创建的责任用户。"
+msgstr "用户负责对公司内部规则触发的文件创建。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_rule_type
@@ -222,12 +222,12 @@ msgstr "请选择公司"
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rules_company_id
 msgid "Select company to setup Inter company rules."
-msgstr "选择公司用了建立公司内部规则"
+msgstr "选择公司以建立公司内部规则。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rule_type
 msgid "Select the type to setup inter company rules in selected company."
-msgstr "在选择的公司中,选择类型用来建立内部公司规则"
+msgstr "在选择的公司中，选择类型用来建立公司间规则。"
 
 #. module: inter_company_rules
 #: selection:res.config.settings,rule_type:0
@@ -269,7 +269,7 @@ msgstr "采购订单的仓库"
 msgid ""
 "When a Sale Order or a Purchase Order is created by a multi\n"
 "            company rule for this company, it will automatically validate it."
-msgstr "当该公司的销售订单或者采购订单由公司间的规则创建，它就会自动验证它"
+msgstr "当该销售订单或者采购订单由此公司的多个公司规则创建，它就会自动验证它。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_validation
@@ -284,7 +284,7 @@ msgstr "当该公司的销售订单或者采购订单按公司间的规则创建
 msgid ""
 "You cannot create SO from PO because sale price list currency is different "
 "than purchase price list currency."
-msgstr "因为销售价格表和采购价格表的币种不一致，所以不能从采购订单创建销售订单"
+msgstr "因为销售价格表和采购价格表的币种不一致，所以你不能以采购订单创建销售订单。"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/res_company.py:32

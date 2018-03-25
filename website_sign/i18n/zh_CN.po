@@ -4,11 +4,12 @@
 # 
 # Translators:
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# Gary Wei <Gary.wei@elico-corp.com>, 2017
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # Siyuan Gu <siyuancn@hotmail.com>, 2017
 # glovebx <ruinning@163.com>, 2017
 # Talway <9010446@qq.com>, 2017
 # Martin Trigaux, 2017
+# Gary Wei <Gary.wei@elico-corp.com>, 2017
 # liAnGjiA <liangjia@qq.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
 # xiaobin wu <bd5dml@gmail.com>, 2017
@@ -95,60 +96,60 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-" \n"
+"            <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
 "\n"
-" \n"
-" \n"
-" % if ctx['template_type'] == \"request\":\n"
-" ${ctx['email_from_usr']} (${ctx['email_from_mail']}) 要求您在该文件上签字：\n"
-" % endif\n"
-" % if ctx['template_type'] == \"follower\":<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'><div style=\"width:90%; max-width:600px; margin:auto; font-size:10pt; padding:20px 0; font-family:'Lato', serif;\"><div style=\"background-color:#EFEDED; padding: 20px;\"><a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\"></a>\n"
-" ${ctx['email_from_usr']} (${ctx['email_from_mail']}) 添加您作为这个签名请求的关注者：\n"
-" % endif\n"
-" % if ctx['template_type'] == \"completed\":\n"
-" 这份文件已经完成并已得到每个人签字：<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\"></a>\n"
-" % endif\n"
+"            <div style=\"width:90%; max-width:600px; margin:auto; font-size:10pt; padding:20px 0; font-family:'Lato', serif;\">\n"
+"                <div style=\"background-color:#EFEDED; padding: 20px;\">\n"
+"                    % if ctx['template_type'] == \"request\":\n"
+"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) 请求您在本文件上签名：\n"
+"                    % endif\n"
+"                    % if ctx['template_type'] == \"follower\":\n"
+"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) 已添加您作为本签名请求的关注者：\n"
+"                    % endif\n"
+"                    % if ctx['template_type'] == \"completed\":\n"
+"                        本文件已由所有人完成并签名：\n"
+"                    % endif\n"
 "\n"
-" ${object['reference']}\n"
-" \n"
-" \n"
-" \n"
-" % if ctx['template_type'] == \"request\":\n"
-" 立即签署文件 \n"
-" % endif\n"
-" % if ctx['template_type'] == \"follower\":\n"
-" 查看签名要求 \n"
-" % endif\n"
-" % if ctx['template_type'] == \"completed\":\n"
-" 查看签名文件 \n"
-" % endif\n"
-" \n"
-" \n"
-" \n"
-" % if ctx['template_type'] == \"request\":\n"
-" 警告：不要把这封邮件转发给其他人！<h1 style=\"font-size:1.25em; margin:15px 0 25px 0;\"></h1>\n"
-" 他们可以访问这个文档并且代您签署 \n"
-" % endif\n"
-" % if ctx['template_type'] == \"follower\":\n"
-" 如果每个相关人员都签署了这份文件，您将会得到通知 \n"
-" % endif\n"
-" \n"
-" \n"
-" \n"
-" \n"
-" % if ctx['msgbody']:\n"
-" \n"
-" ${ctx['msgbody']|safe}\n"
-" \n"
-" % endif\n"
-" \n"
-" \n"
-" \n"
-" 带着 Odoo 标志发送\n"
-" \n"
-" \n"
-" \n"
-"<div style=\"margin:0 -15px\"><a style=\"float:left; display:inline-block; margin:0 15px 10px 15px; padding:5px 10px; border-radius: 3px; background-color:#5C6ED0; text-align:center; text-decoration:none; color:#F7FBFD;\" href=${ctx['link']}></a><div style=\"font-size:0.8em; color:#999999; margin:0 15px 10px 15px\"><strong style=\"font-weight:bold; color:black;\"></strong><br/></div><div style=\"clear:both;\"/></div><div style=\"background-color:white; padding:10px;\"></div></div><div style=\"font-size:0.8em; margin-top:10px;\"><span style=\"color:#428BCA;\"><strong style=\"font-weight:bold;\"></strong></span></div></div>"
+"                    <h1 style=\"font-size:1.25em; margin:15px 0 25px 0;\">${object['reference']}</h1>\n"
+"                    \n"
+"                    <div style=\"margin:0 -15px\">\n"
+"                        <a style=\"float:left; display:inline-block; margin:0 15px 10px 15px; padding:5px 10px; border-radius: 3px; background-color:#5C6ED0; text-align:center; text-decoration:none; color:#F7FBFD;\" href=${ctx['link']}>\n"
+"                            % if ctx['template_type'] == \"request\":\n"
+"                                立即签署文件\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"follower\":\n"
+"                                查看签名请求\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"completed\":\n"
+"                                查看签名文件\n"
+"                            % endif\n"
+"                        </a>\n"
+"                        \n"
+"                        <div style=\"font-size:0.8em; color:#999999; margin:0 15px 10px 15px\">\n"
+"                            % if ctx['template_type'] == \"request\":\n"
+"                                <strong style=\"font-weight:bold; color:black;\">警告：不要将这封电子邮件转发给其他人！</strong><br/>\n"
+"                                否则其他人可能会访问本文件并代您签名。\n"
+"                            % endif\n"
+"                            % if ctx['template_type'] == \"follower\":\n"
+"                                所有相关人员均签署文件后，您将收到通知。\n"
+"                            % endif\n"
+"                        </div>\n"
+"                        <div style=\"clear:both;\"/>\n"
+"                    </div>\n"
+"                    \n"
+"                    % if ctx['msgbody']:\n"
+"                    <div style=\"background-color:white; padding:10px;\">\n"
+"                        ${ctx['msgbody']|safe}\n"
+"                    </div>\n"
+"                    % endif\n"
+"                </div>\n"
+"                \n"
+"                <div style=\"font-size:0.8em; margin-top:10px;\">\n"
+"                    <span style=\"color:#428BCA;\">通过 <strong style=\"font-weight:bold;\">Odoo 签名</strong>发送</span>\n"
+"                </div>\n"
+"            </div>\n"
+"        \n"
+"        "
 
 #. module: website_sign
 #: model:mail.template,subject:website_sign.website_sign_mail_template
@@ -158,7 +159,7 @@ msgstr "${ctx['subject']|safe}"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 msgid "<br/>(the email access has not been sent)"
-msgstr "<br/>(邮件未发出)"
+msgstr "<br/>(访问邮件尚未发出)"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_item_type_view_form
@@ -170,7 +171,7 @@ msgstr "<span>(1.0 = full page size)</span>"
 #: code:addons/website_sign/static/src/js/website_sign_backend.js:1109
 #, python-format
 msgid "A copy has been sent to the new followers."
-msgstr "副本已经被发给新的关注者"
+msgstr "副本已经被发给新的关注者。"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_search
@@ -312,7 +313,7 @@ msgstr ""
 #: code:addons/website_sign/static/src/js/website_sign_common.js:810
 #, python-format
 msgid "Click to start"
-msgstr "单击开始"
+msgstr "点击开始"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_color
@@ -434,7 +435,7 @@ msgstr "显示名称"
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:109
 #, python-format
 msgid "Do you also send documents to sign?"
-msgstr "你也发送了要签核的文档吗"
+msgstr "你也发送了要签核的文档吗?"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_follower_ids
@@ -564,7 +565,7 @@ msgstr "错误"
 #: code:addons/website_sign/controllers/main.py:170
 #, python-format
 msgid "Everybody Signed."
-msgstr "所有人都已签署."
+msgstr "所有人都已签署。"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_favorited_ids
@@ -617,7 +618,7 @@ msgstr "关注者("
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:45
 #, python-format
 msgid "Full Name"
-msgstr "完整名称"
+msgstr "全名"
 
 #. module: website_sign
 #: selection:signature.request,state:0
@@ -659,7 +660,7 @@ msgstr "ID"
 msgid ""
 "If you leave your document without any fields, the signers will be requested"
 " for an unique signature alongside the document"
-msgstr "一旦你在文档上没有留下任何区域，签名者需要在文档的侧边签核一个特定的签字"
+msgstr "一旦你在文档上没有留下任何字段，签名者将需要在文档的侧边签核一个唯一的签字。"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_item_view_form
@@ -683,7 +684,7 @@ msgstr "首字母"
 msgid ""
 "It's easy, incredibly efficient and totally free: you just have to create an"
 " Odoo account."
-msgstr "这很容易，难以置信的效率和完全的自由：你只需要创建一个odoo账号"
+msgstr "这很容易，难以置信的效率和完全的自由：你只需要创建一个odoo账号。"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item___last_update
@@ -799,7 +800,7 @@ msgstr "需要有效的PDF来添加签字字段！"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "Need to sign? Check your inbox to get your secure access"
-msgstr "需要签名？检查收件箱检查一下你的安全权限"
+msgstr "需要签名？检查你的收件箱检查一下你的安全权限"
 
 #. module: website_sign
 #. openerp-web
@@ -854,7 +855,7 @@ msgstr "业务伙伴"
 #. module: website_sign
 #: model:ir.model.fields,help:website_sign.field_signature_item_type_auto_field
 msgid "Partner field to use to auto-complete the fields of this type"
-msgstr "使用自动完成这种类型的字段的业务伙伴字段"
+msgstr "自动完成此类型字段所使用的业务伙伴字段"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_phone
@@ -869,7 +870,7 @@ msgstr "占位符"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "Please Review And Act On This Document"
-msgstr "请审查并且这个文档上做出相关动作"
+msgstr "请审查并且就此文档执行行动"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_posX
@@ -938,7 +939,7 @@ msgstr "重发！"
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_responsible_id
 #, python-format
 msgid "Responsible"
-msgstr "负责人"
+msgstr "负责"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_kanban
@@ -1008,7 +1009,7 @@ msgstr "发送副本"
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:46
 #, python-format
 msgid "Send a copy to"
-msgstr "抄送"
+msgstr "抄送给"
 
 #. module: website_sign
 #. openerp-web
@@ -1022,7 +1023,7 @@ msgstr "发送副本给第三方"
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:24
 #, python-format
 msgid "Send a note..."
-msgstr "发送备注"
+msgstr "发送备注..."
 
 #. module: website_sign
 #. openerp-web
@@ -1039,7 +1040,7 @@ msgstr "发送者"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_nb_wait
 msgid "Sent Requests"
-msgstr "送出请求"
+msgstr "已发送请求"
 
 #. module: website_sign
 #. openerp-web
@@ -1106,7 +1107,7 @@ msgstr "签字项"
 #. module: website_sign
 #: model:ir.actions.act_window,name:website_sign.signature_item_party_action
 msgid "Signature Item Party"
-msgstr "签字项部分"
+msgstr "签字项方"
 
 #. module: website_sign
 #: model:ir.actions.act_window,name:website_sign.signature_item_type_action
@@ -1164,7 +1165,7 @@ msgstr "签署在"
 #: code:addons/website_sign/controllers/main.py:168
 #, python-format
 msgid "Signed."
-msgstr "已签署"
+msgstr "已签署。"
 
 #. module: website_sign
 #. openerp-web
@@ -1179,14 +1180,14 @@ msgstr "签署人"
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:101
 #, python-format
 msgid "So you can close the window and come back later."
-msgstr "所以你可以关闭窗口等一会回来"
+msgstr "所以你可以关闭窗口等一会回来。"
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:1153
 #, python-format
 msgid "Some fields have still to be completed !"
-msgstr "有些字段还是需要完成的"
+msgstr "有些字段还是需要完成的！"
 
 #. module: website_sign
 #. openerp-web
@@ -1201,7 +1202,7 @@ msgstr "有人已经用这个模板填写了文档"
 #: code:addons/website_sign/static/src/js/website_sign_common.js:1217
 #, python-format
 msgid "Sorry, an error occured, please try to fill the document again."
-msgstr "抱歉，发生错误，请再次填写该文档"
+msgstr "抱歉，发生错误，请再次填写文档。"
 
 #. module: website_sign
 #: model:ir.model,name:website_sign.model_signature_item_type
@@ -1283,14 +1284,16 @@ msgstr "现在不能填写该文档"
 msgid ""
 "This template is used by some signature requests.\n"
 "            If you want to edit it,"
-msgstr "这个模板是用于一些签字请求。如果你想编辑它，"
+msgstr ""
+"这个模板是用于一些签字请求。\n"
+"如果你想编辑它，"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
 msgid ""
 "This will delete all the already completed documents of this request and "
 "disable every sent accesses, are you sure?"
-msgstr "这将删除此请求的所有已完成的文件，并禁用每个发送的访问，你确定？"
+msgstr "这将删除此请求的所有已完成的文件，并禁用每个已发送的访问，你确定？"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_tip
@@ -1308,7 +1311,7 @@ msgstr "待签字"
 #, python-format
 msgid ""
 "To be able to share, there must be only one responsible for all fields !"
-msgstr "为了能够共享，也必须只有一个负责所有领域！"
+msgstr "为了能够共享，也必须只有一个负责所有字段！"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id
@@ -1332,7 +1335,7 @@ msgstr "上传 PDF 模板"
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_with_archived_action
 msgid "Upload a PDF of contract to sign."
-msgstr "上传一个要签字的合同."
+msgstr "上传一个要签字的合同。"
 
 #. module: website_sign
 #. openerp-web
@@ -1344,7 +1347,7 @@ msgstr "确认和发送"
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 msgid "Validate &amp; Send Completed Document"
-msgstr "确认&amp;发送完成的文档"
+msgstr "确认并发送完成的文档"
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_value
@@ -1378,7 +1381,7 @@ msgstr "等待完成"
 #: code:addons/website_sign/models/signature_request.py:368
 #, python-format
 msgid "Waiting for signatures."
-msgstr "等待签字"
+msgstr "等待签字。"
 
 #. module: website_sign
 #. openerp-web
@@ -1446,7 +1449,7 @@ msgstr "你的名字"
 #: code:addons/website_sign/static/src/js/website_sign_common.js:953
 #, python-format
 msgid "Your signature has been saved."
-msgstr "你的签字已经保存"
+msgstr "你的签字已经保存。"
 
 #. module: website_sign
 #. openerp-web
@@ -1496,7 +1499,7 @@ msgstr ""
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 msgid "to quickly evaluate this application."
-msgstr "快速试用本应用."
+msgstr "快速评估本应用。"
 
 #. module: website_sign
 #. openerp-web

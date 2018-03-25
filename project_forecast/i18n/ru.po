@@ -3,10 +3,11 @@
 # * project_forecast
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
-# SV <sv@grimmette.ru>, 2017
+# Martin Trigaux, 2017
+# Sergey Vilizhanin <sv@grimmette.ru>, 2017
 # Viktor Pogrebniak <vp@aifil.ru>, 2017
-# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Collex100, 2017
+# sergeiruzkiicode <sergei.ruzki@icode.by>, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
 # Denis Trepalin <zekarious@gmail.com>, 2017
 msgid ""
@@ -56,6 +57,8 @@ msgid ""
 "A project must have an end date to use a forecast grid, found no end date "
 "for {project.display_name}"
 msgstr ""
+"Проект должен иметь дату окончания использования сетки прогноза, не найдено "
+"даты окончания для {project.display_name}"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_active
@@ -179,7 +182,7 @@ msgstr "Прогноз"
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_report_activities
 #: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
 msgid "Forecast Analysis"
-msgstr ""
+msgstr "Анализ прогнозов"
 
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.action_project_forecast_grid_by_project
@@ -243,7 +246,7 @@ msgstr "Будущее"
 #. module: project_forecast
 #: model:ir.ui.menu,name:project_forecast.project_forecast_gantt
 msgid "Gantt"
-msgstr "Диаграмма Ганта"
+msgstr "Диаграмма Гантта"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_pivot
@@ -282,7 +285,7 @@ msgstr "Номер"
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast___last_update
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment___last_update
 msgid "Last Modified on"
-msgstr "Последнее изменение"
+msgstr "Изменено"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_write_uid
@@ -294,7 +297,7 @@ msgstr "Последний раз обновил"
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_assignment_write_date
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Обновлено"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
@@ -359,22 +362,22 @@ msgstr "Прогноз проекта"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
 msgid "Project Forecast By Project"
-msgstr ""
+msgstr "Прогнозы по проектам"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
 msgid "Project Forecast By User"
-msgstr "Прогноз проекта по пользователю"
+msgstr "Прогнозы по пользователям"
 
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
 msgid "Project Forecast: Archive/Restore forecasts"
-msgstr ""
+msgstr "Прогноз проекта: Архивация/восстановление прогнозов"
 
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.action_generate_forecast
 msgid "Project: Generate Task Forecast"
-msgstr ""
+msgstr "Проект: Создайте прогноз по задачам"
 
 #. module: project_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_forecast_user_id
@@ -442,7 +445,7 @@ msgstr "Год"
 #: code:addons/project_forecast/models/project_forecast.py:88
 #, python-format
 msgid "You cannot set a user with no working time."
-msgstr ""
+msgstr "Вы не можете указать пользователя без записей рабочего времени."
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:103
