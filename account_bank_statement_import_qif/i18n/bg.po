@@ -27,6 +27,9 @@ msgid ""
 " be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
 msgstr ""
+"Счетоводен дневник, свързан с банковото извлечение, което внасяте. Той "
+"трябва да бъде избран ръчно за формати на изявления, които не позволяват "
+"автоматично откриване на списания (например QIF)."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
@@ -35,22 +38,26 @@ msgid ""
 "financial institutions use the local format.Therefore, it is frequent "
 "outside the US to have QIF date formated day-first (dd/mm/yy)."
 msgstr ""
+"Въпреки че историческият формат на QIF е първият месец (мм / дд / гг), много"
+" финансови институции използват местния формат. Следователно е често срещано"
+" извън САЩ, за да се получи датата QIF, формирана от първия ден (дд / мм / "
+"гг)."
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:61
 #, python-format
 msgid "Could not decipher the QIF file."
-msgstr ""
+msgstr "Не може да се дешифрира QIF файла."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
 msgid "Dates format"
-msgstr ""
+msgstr "Формат на датите"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_hide_journal_field
 msgid "Hide the journal field in the view"
-msgstr ""
+msgstr "Скрийте полето за дневник в изгледа"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model,name:account_bank_statement_import_qif.model_account_bank_statement_import
@@ -65,7 +72,7 @@ msgstr "Дневник"
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_qif
 msgid "Quicken Interchange Format (.QIF)"
-msgstr ""
+msgstr "Quicken Interchange Format (.QIF)"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_show_qif_date_format
@@ -78,6 +85,8 @@ msgid ""
 "Technical field used to ask the user for the date format used in the QIF "
 "file, as this format is ambiguous."
 msgstr ""
+"Техническото поле се използва, за да се поиска от потребителя формата за "
+"дата, използван в файла QIF, тъй като този формат е двусмислен."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view_inherited
@@ -85,6 +94,8 @@ msgid ""
 "The QIF format is ambiguous about dates: please check with your financial "
 "institution whether they format it with month or day first.<br/>"
 msgstr ""
+"Форматът QIF е двусмислен за датите: моля, проверете във финансовата "
+"институция, дали го форматират първо с месеца или ден.<br/>"
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:101
@@ -100,7 +111,7 @@ msgstr "_Импортиране"
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "dd/mm/yy"
-msgstr ""
+msgstr "дд/мм/гг"
 
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
