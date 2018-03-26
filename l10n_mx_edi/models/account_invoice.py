@@ -659,7 +659,7 @@ class AccountInvoice(models.Model):
             'transferred': [],
         }
         taxes = {}
-        for line in self.invoice_line_ids:
+        for line in self.invoice_line_ids.filtered('price_subtotal'):
             for tax in line.invoice_line_tax_ids:
                 amount = round(abs(tax.amount / 100 * float("%.2f" % line.price_subtotal)), 2)
                 if tax.amount not in taxes:
