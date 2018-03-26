@@ -66,11 +66,15 @@ ActionManager.include({
         // reset to correctly update the breadcrumbs
         this.studioControllerIndex = undefined;
 
-        return this.doAction(action.id, {
+        var options = {
             additional_context: action.context,
             index: index,
             viewType: this.studioViewType,
-        });
+        };
+        if (this.studioViewType === 'form') {
+            options.resID = action.env.currentId;
+        }
+        return this.doAction(action.id, options);
     },
 
     //--------------------------------------------------------------------------

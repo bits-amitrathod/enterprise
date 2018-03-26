@@ -105,7 +105,6 @@ QUnit.module('Studio Navigation', {
 
         actionManager.doAction('action_web_studio_main', {
             action: actionManager.getCurrentAction(),
-            studio_clear_breadcrumbs: true,
         });
         bus.trigger('studio_toggled', 'main');
 
@@ -184,7 +183,6 @@ QUnit.module('Studio Navigation', {
         var action = actionManager.getCurrentAction();
         actionManager.doAction('action_web_studio_main', {
             action: action,
-            studio_clear_breadcrumbs: true,
         });
         bus.trigger('studio_toggled', 'main');
 
@@ -250,7 +248,7 @@ QUnit.module('Studio Navigation', {
 
         actionManager.doAction('action_web_studio_main', {
             action: actionManager.getCurrentAction(),
-            studio_clear_breadcrumbs: true,
+            studio_clear_breadcrumbs: true,  // is normally set by the webclient
         });
 
         rpcs.push('/web_studio/get_studio_view_arch');
@@ -309,11 +307,46 @@ QUnit.module('Studio Navigation', {
         actionManager.doAction(1);  // open a act_window_action
         actionManager.doAction('action_web_studio_main', {
             action: actionManager.getCurrentAction(),
-            studio_clear_breadcrumbs: true,
         });
         bus.trigger('studio_toggled', 'main');
         actionManager.restoreStudioAction();  // simulate leaving Studio
         assert.strictEqual(nbLoadAction, 2, "the action should have been loaded twice");
+        actionManager.destroy();
+    });
+
+    QUnit.test('open same record when leaving form', function (assert) {
+        assert.expect(3);
+
+        var actionManager = createActionManager({
+            actions: this.actions,
+            archs: this.archs,
+            data: this.data,
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_studio_view_arch') {
+                    return $.when();
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        actionManager.doAction(2);  // open a act_window_action
+        actionManager.$('.o_list_view tbody tr:first td:contains(Twilight Sparkle)').click();
+
+        var action = actionManager.getCurrentAction();
+        actionManager.doAction('action_web_studio_main', {
+            action: action,
+            viewType: 'form',  // is normally set by the webclient
+        });
+        bus.trigger('studio_toggled', 'main');
+
+        assert.strictEqual(actionManager.$('.o_web_studio_client_action .o_web_studio_form_view_editor').length, 1,
+            "the form view should be opened");
+        actionManager.restoreStudioAction();  // simulate leaving Studio
+        assert.strictEqual(actionManager.$('.o_form_view').length, 1,
+            "the form view should be opened");
+        assert.strictEqual(actionManager.$('.o_form_view span:contains(Twilight Sparkle)').length, 1,
+            "should have open the same record");
+
         actionManager.destroy();
     });
 });
