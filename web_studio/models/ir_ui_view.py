@@ -197,7 +197,8 @@ class View(models.Model):
         old_view_iterator = old_view_tree.getiterator()
         new_view_iterator = new_view_tree.getiterator()
         for line in diff:
-            if line.strip() and not line.startswith('?'):  # Ignore details lines
+            # Ignore details lines and [@closed] that are used so diff has correct order
+            if line.strip() and not line.startswith('?') and not line.endswith('[@closed]'):
                 if line.startswith('-'):
                     node = next(old_view_iterator)
 
@@ -467,6 +468,9 @@ class View(models.Model):
         self._generate_node_attributes(node)
         for child in node.iterchildren():
             result += self._stringify_node(node_string, child)
+
+        # have a end marker so same location changes are not mixed
+        result += node_string + '[@closed]' + '\n'
 
         return result
 

@@ -843,6 +843,27 @@ class TestViewNormalization(TransactionCase):
         """)
         random.seed()
 
+    # Adjacent addition/removal changes ends with correct xpath
+    def test_view_normalization_26(self):
+        self._test_view_normalization("""
+            <data>
+              <field name="category_id" position="attributes">
+                <attribute name="placeholder" />
+                <attribute name="widget" />
+              </field>
+              <field name="category_id" position="after">
+                <field name="create_uid"/>
+              </field>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='category_id']" position="attributes"/>
+              <xpath expr="//field[@name='category_id']" position="after">
+                <field name="create_uid"/>
+              </xpath>
+            </data>
+        """)
+
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
         _request_stack.pop()
