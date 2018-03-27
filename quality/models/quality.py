@@ -59,7 +59,7 @@ class QualityPoint(models.Model):
     check_ids = fields.One2many('quality.check', 'point_id')
     test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', required=True,
             default=lambda self: self.env['quality.point.test_type'].search([('technical_name', '=', 'passfail')]))
-    test_type = fields.Char(related='test_type_id.technical_name')
+    test_type = fields.Char(related='test_type_id.technical_name', readonly=True)
 
     norm = fields.Float('Norm', digits=dp.get_precision('Quality Tests'))  # TDE RENAME ?
     tolerance_min = fields.Float('Min Tolerance', digits=dp.get_precision('Quality Tests'))
