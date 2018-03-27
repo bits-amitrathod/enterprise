@@ -10,7 +10,7 @@ class SaleSubscriptionWizard(models.TransientModel):
 
     subscription_id = fields.Many2one('sale.subscription', string="Subscription", required=True, default=_default_subscription, ondelete="cascade")
     option_lines = fields.One2many('sale.subscription.wizard.option', 'wizard_id', string="Options")
-    date_from = fields.Date('Discount Date', default=fields.Date.today(),
+    date_from = fields.Date('Discount Date', default=fields.Date.today,
                             help="The discount applied when creating a sales order will be computed as the ratio between "
                                  "the full invoicing period of the subscription and the period between this date and the "
                                  "next invoicing date.")
@@ -27,6 +27,7 @@ class SaleSubscriptionWizard(models.TransientModel):
             'pricelist_id': self.subscription_id.pricelist_id.id,
             'fiscal_position_id': fpos_id,
             'subscription_management': 'upsell',
+            'origin': self.subscription_id.code,
         })
         for line in self.option_lines:
             self.subscription_id.partial_invoice_line(order, line, date_from=self.date_from)
@@ -57,8 +58,10 @@ class SaleSubscriptionWizard(models.TransientModel):
 
     @api.multi
     def add_lines(self):
-        rec_lines = self._prepare_subscription_lines()
-        self.subscription_id.sudo().write({'recurring_invoice_line_ids': rec_lines})
+        for wiz in self:
+            rec_lines = wiz._prepare_subscription_lines()
+            wiz.subscription_id.sudo().write({'recurring_invoice_line_ids': rec_lines})
+        return True
 
 
 class SaleSubscriptionWizardOption(models.TransientModel):

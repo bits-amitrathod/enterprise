@@ -190,6 +190,16 @@ class TestSubscription(TestSubscriptionCommon):
         res = self.subscription.prepare_renewal_order()
         renewal_so_id = res['res_id']
         renewal_so = self.env['sale.order'].browse(renewal_so_id)
+        so_line_vals = {
+            'name': self.product.name,
+            'order_id': renewal_so_id,
+            'product_id': self.product.id,
+            'product_uom_qty': 2,
+            'product_uom': self.product.uom_id.id,
+            'price_unit': self.product.list_price}
+        new_line = self.env['sale.order.line'].with_context(dbo=True).create(so_line_vals)
+        self.assertEqual(new_line.subscription_id, self.subscription, 'sale_subscription: SO lines added to renewal orders manually should have the correct subscription set on them')
+        self.assertEqual(renewal_so.origin, self.subscription.code, 'sale_subscription: renewal order must have the "source document" set to the subscription code')
         self.assertTrue(renewal_so.subscription_management == 'renew', 'sale_subscription: renewal quotation generation is wrong')
         self.subscription.write({'recurring_invoice_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'price_unit': 50, 'uom_id': self.product.uom_id.id})]})
         renewal_so.write({'order_line': [(0, 0, {'product_id': self.product.id, 'subscription_id': self.subscription.id, 'name': 'TestRenewalLine', 'product_uom': self.product.uom_id.id})]})
@@ -198,6 +208,30 @@ class TestSubscription(TestSubscriptionCommon):
         self.assertTrue('TestRecurringLine' not in lines, 'sale_subscription: old line still present after renewal quotation confirmation')
         self.assertTrue('TestRenewalLine' in lines, 'sale_subscription: new line not present after renewal quotation confirmation')
         self.assertEqual(renewal_so.subscription_management, 'renew', 'sale_subscription: so should be set to "renew" in the renewal process')
+
+    def test_upsell_via_so(self):
+        """Test the upsell flow using an intermediary upsell quote."""
+        wiz = self.env['sale.subscription.wizard'].create({
+            'subscription_id': self.subscription.id,
+            'option_lines': [(0, False, {'product_id': self.product.id, 'name': self.product.name, 'uom_id': self.product.uom_id.id})]
+        })
+        upsell_so_id = wiz.create_sale_order()['res_id']
+        upsell_so = self.env['sale.order'].browse(upsell_so_id)
+        # add line to quote manually, it must be taken into account in the subscription after validation
+        so_line_vals = {
+            'name': self.product2.name,
+            'order_id': upsell_so_id,
+            'product_id': self.product2.id,
+            'product_uom_qty': 2,
+            'product_uom': self.product2.uom_id.id,
+            'price_unit': self.product2.list_price}
+        new_line = self.env['sale.order.line'].create(so_line_vals)
+        self.assertEqual(self.subscription, new_line.subscription_id,
+                         '''sale_subscription: upsell line added to quote after '''
+                         '''creation but before validation must be automatically '''
+                         '''linked to correct subscription''')
+        upsell_so.action_confirm()
+        self.assertEqual(len(self.subscription.recurring_invoice_line_ids), 2)
 
     def test_recurring_revenue(self):
         """Test computation of recurring revenue"""
