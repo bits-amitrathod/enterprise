@@ -72,8 +72,7 @@ class account_move_line(models.Model):
     def _get_result(self):
         self.result = self.debit - self.credit
 
-    followup_line_id = fields.Many2one('account_followup.followup.line', 'Follow-up Level',
-                                       ondelete='restrict') #restrict deletion of the followup line
+    followup_line_id = fields.Many2one('account_followup.followup.line', 'Follow-up Level')
     followup_date = fields.Date('Latest Follow-up', index=True)
     result = fields.Monetary(compute='_get_result', method=True, string="Balance") #'balance' field is not the same
 
@@ -200,4 +199,3 @@ class res_partner(models.Model):
                                              help="Optionally you can assign a user to this field, which will make him responsible for the action.",
                                              track_visibility="onchange", copy=False, company_dependent=True)
     payment_note = fields.Text('Customer Payment Promise', help="Payment Note", track_visibility="onchange", copy=False, company_dependent=True)
-
