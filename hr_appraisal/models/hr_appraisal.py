@@ -107,18 +107,29 @@ class HrAppraisal(models.Model):
         for appraisal in self:
             if appraisal.meeting_id and appraisal.meeting_id.allday:
                 appraisal.meeting_id.write(values)
+                appraisal.activity_reschedule(['mail.mail_activity_data_meeting'], date_deadline=interview_deadline)
             elif appraisal.meeting_id and not appraisal.meeting_id.allday:
                 date = fields.Date.from_string(interview_deadline)
                 meeting_date = fields.Datetime.to_string(date)
                 appraisal.meeting_id.write({'start_datetime': meeting_date, 'stop_datetime': meeting_date})
+                appraisal.activity_reschedule(['mail.mail_activity_data_meeting'], date_deadline=interview_deadline)
             if not appraisal.meeting_id:
-                attendee_ids = [(4, manager.related_partner_id.id) for manager in appraisal.manager_ids if manager.related_partner_id]
-                if appraisal.employee_id.related_partner_id:
-                    attendee_ids.append((4, appraisal.employee_id.related_partner_id.id))
+                employee_attendees = appraisal.manager_ids | appraisal.employee_id
                 values['name'] = _('Appraisal Meeting For %s') % appraisal.employee_id.name
                 values['allday'] = True
-                values['partner_ids'] = attendee_ids
-                appraisal.meeting_id = CalendarEvent.create(values)
+                values['partner_ids'] = [(4, partner.id) for partner in employee_attendees.mapped('related_partner_id')]
+                user_ids = employee_attendees.mapped('user_id').ids or [self.env.uid]
+                values['user_id'] = user_ids[0]
+                # values['activity_ids'] = [(4, activity.id)]
+                meeting = CalendarEvent.create(values)
+                appraisal.activity_schedule(
+                    'mail.mail_activity_data_meeting', interview_deadline,
+                    note=_('<a href="#" data-oe-model="%s" data-oe-id="%s">Meeting</a> for <a href="#" data-oe-model="%s" data-oe-id="%s">%s\'s</a> appraisal') % (
+                        meeting._name, meeting.id, appraisal.employee_id._name,
+                        appraisal.employee_id.id, appraisal.employee_id.display_name),
+                    user_id=user_ids[0],
+                    calendar_event_id=meeting.id)
+                appraisal.meeting_id = meeting.id
         return True
 
     def _prepare_user_input_receivers(self):
@@ -144,6 +155,8 @@ class HrAppraisal(models.Model):
             for survey, receivers in appraisal_receiver:
                 for employee in receivers:
                     email = employee.related_partner_id.email or employee.work_email
+                    if not email:
+                        continue
                     render_template = appraisal.mail_template_id.with_context(email=email, survey=survey, employee=employee).generate_email([appraisal.id])
                     values = {
                         'survey_id': survey.id,
@@ -158,20 +171,27 @@ class HrAppraisal(models.Model):
                     }
                     compose_message_wizard = ComposeMessage.with_context(active_id=appraisal.id, active_model=appraisal._name).create(values)
                     compose_message_wizard.send_mail()  # Sends a mail and creates a survey.user_input
-            appraisal.message_post(body=_("Appraisal(s) form have been sent"), subtype="hr_appraisal.mt_appraisal_sent")
+                    if employee.user_id:
+                        appraisal.activity_schedule(
+                            'hr_appraisal.mail_act_appraisal_form', appraisal.date_close,
+                            note=_('Fill form <a href="#" data-oe-model="%s" data-oe-id="%s">%s</a> for <a href="#" data-oe-model="%s" data-oe-id="%s">%s\'s</a> appraisal') % (
+                                survey._name, survey.id, survey.display_name,
+                                appraisal.employee_id._name, appraisal.employee_id.id, appraisal.employee_id.display_name),
+                            user_id=employee.user_id.id)
+            appraisal.message_post(body=_("Appraisal form(s) have been sent"))
         return True
 
     @api.multi
     def cancel_appraisal(self):
-        """
-        Cancels the appraisal process, removing related calendar events, and removes sent surveys.
-        """
+        """ Cancels the appraisal process, removing related calendar events,
+        removes sent surveys and generated activities. """
         for appraisal in self:
             if appraisal.meeting_id:
                 appraisal.meeting_id.unlink()
 
             appraisal.survey_sent_ids.unlink()
             appraisal.date_final_interview = False
+        self.activity_unlink(['mail.mail_activity_data_meeting', 'hr_appraisal.mail_act_appraisal_form'])
 
     @api.model
     def create(self, vals):
@@ -192,6 +212,8 @@ class HrAppraisal(models.Model):
                 self.send_appraisal()
         result = super(HrAppraisal, self).write(vals)
         date_final_interview = vals.get('date_final_interview')
+        if vals.get('date_close'):
+            self.activity_reschedule(['hr_appraisal.mail_act_appraisal_form'], date_deadline=vals['date_close'])
         if date_final_interview:
             # creating employee meeting and interview date
             self.schedule_final_meeting(date_final_interview)
@@ -267,16 +289,8 @@ class HrAppraisal(models.Model):
     @api.multi
     def button_done_appraisal(self):
         self.write({'state': 'done'})
+        self.activity_feedback(['mail.mail_activity_data_meeting', 'hr_appraisal.mail_act_appraisal_form'])
 
     @api.multi
     def button_cancel_appraisal(self):
         self.write({'state': 'cancel'})
-
-    @api.multi
-    def _track_subtype(self, init_values):
-        self.ensure_one()
-        if 'state' in init_values and self.state == 'new':
-            return 'hr_appraisal.mt_appraisal_new'
-        if 'date_final_interview' in init_values and not self.meeting_id:
-            return 'hr_appraisal.mt_appraisal_meeting'
-        return super(HrAppraisal, self)._track_subtype(init_values)

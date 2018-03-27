@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
+        <record id="mail_act_appraisal_form" model="mail.activity.type">
+            <field name="name">Appraisal Form to Fill</field>
+            <field name="icon">fa-star</field>
+            <field name="res_model_id" ref="hr_appraisal.model_hr_appraisal"/>
+        </record>
+
         <record id="send_appraisal_template" model="mail.template">
             <field name="name">Appraisal Survey - Send by Email</field>
             <field name="model_id" ref="hr_appraisal.model_hr_appraisal" />
@@ -22,25 +28,6 @@
                 </div>
                 ]]>
             </field>
-        </record>
-        <record id="mt_appraisal_new" model="mail.message.subtype">
-            <field name="name">Appraisal Created</field>
-            <field name="res_model">hr.appraisal</field>
-            <field name="default" eval="True"/>
-            <field name="hidden" eval="False"/>
-            <field name="description">Appraisal Created</field>
-        </record>
-        <record id="mt_appraisal_meeting" model="mail.message.subtype">
-            <field name="name">Meeting Scheduled</field>
-            <field name="res_model">hr.appraisal</field>
-            <field name="default" eval="False"/>
-            <field name="description">Meeting Scheduled</field>
-        </record>
-        <record id="mt_appraisal_sent" model="mail.message.subtype">
-            <field name="name">Appraisal sent</field>
-            <field name="res_model">hr.appraisal</field>
-            <field name="default" eval="False"/>
-            <field name="description">Appraisal Sent</field>
         </record>
     </data>
 </odoo>
