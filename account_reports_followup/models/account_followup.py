@@ -67,8 +67,7 @@ Best Regards,
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    followup_line_id = fields.Many2one('account_followup.followup.line', 'Follow-up Level',
-                                       ondelete='restrict') #restrict deletion of the followup line
+    followup_line_id = fields.Many2one('account_followup.followup.line', 'Follow-up Level')
     followup_date = fields.Date('Latest Follow-up', index=True)
 
 

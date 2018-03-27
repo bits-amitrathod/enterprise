@@ -5,6 +5,15 @@ from odoo.addons.http_routing.models.ir_http import slugify
 class PageVersion(models.Model):
     _inherit = "website.page"
 
+    @api.multi
+    def get_view_identifier(self):
+        """ Override so when a version is being displayed the identifier is the
+            view key which can allow for another version of the view to be shown
+        """
+        if self.env.context.get('version_id'):
+            return self.view_id.key
+        return super(PageVersion, self).get_view_identifier()
+
     @api.model
     def save_page_info(self, website_id, data):
         """ With website_version enabled, a page's version is a ir.ui.view with

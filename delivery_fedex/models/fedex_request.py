@@ -246,6 +246,10 @@ class FedexRequest():
         self.RequestedShipment.CustomsClearanceDetail = self.client.factory.create('CustomsClearanceDetail')
         self.RequestedShipment.CustomsClearanceDetail.CustomsValue.Currency = customs_value_currency
         self.RequestedShipment.CustomsClearanceDetail.CustomsValue.Amount = customs_value_amount
+        if self.RequestedShipment.Shipper.Address.CountryCode == "IN" and self.RequestedShipment.Recipient.Address.CountryCode == "IN":
+            self.RequestedShipment.CustomsClearanceDetail.CommercialInvoice.Purpose = 'SOLD'
+            del self.RequestedShipment.CustomsClearanceDetail.CommercialInvoice.TaxesOrMiscellaneousChargeType
+
         # Old keys not requested anymore but still in WSDL; not removing them causes crash
         del self.RequestedShipment.CustomsClearanceDetail.ClearanceBrokerage
         del self.RequestedShipment.CustomsClearanceDetail.FreightOnValue
