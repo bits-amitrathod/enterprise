@@ -115,7 +115,7 @@ class ProviderFedex(models.Model):
             order_currency = order.currency_id
             srm.set_currency(_convert_curr_iso_fdx(order_currency.name))
             srm.set_shipper(order.company_id.partner_id, order.warehouse_id.partner_id)
-            srm.set_recipient(order.partner_id)
+            srm.set_recipient(order.partner_shipping_id)
 
             if max_weight and weight_value > max_weight:
                 total_package = int(weight_value / max_weight)
