@@ -3,25 +3,23 @@
 # * delivery_fedex
 # 
 # Translators:
-# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
-# Richard Mathot <rim@odoo.com>, 2017
-# Martin Trigaux, 2017
-# Xavier Symons <xsy@openerp.com>, 2017
-# Cyrille de Lambert <cdelambert@auguria.net>, 2017
-# Quentin THEURET <odoo@kerpeo.com>, 2017
+# Xavier Belmere <Info@cartmeleon.com>, 2016
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
+# Richard Mathot <rim@odoo.com>, 2016
+# Cyrille de Lambert <cdelambert@auguria.net>, 2016
+# Xavier Symons <xsy@openerp.com>, 2016
+# Quentin THEURET <odoo@kerpeo.com>, 2016
+# Olivier Lenoir <olivier.lenoir@free.fr>, 2016
+# Martin Trigaux, 2016
 # lap.odoo <lap@odoo.com>, 2017
-# Olivier Dony <odo@odoo.com>, 2017
-# Olivier Lenoir <olivier.lenoir@free.fr>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
-# Xavier Belmere <Info@cartmeleon.com>, 2017
-# fr rev <e2ffr02@hotmail.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +44,7 @@ msgstr ""
 "certifications différentes :"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_account_number
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Account Number"
 msgstr "Numéro de compte"
 
@@ -81,12 +79,12 @@ msgid "DROP_BOX"
 msgstr "DROP_BOX"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_default_packaging_id
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_default_packaging_id
 msgid "Default Package Type"
 msgstr "Type de colis par défaut"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_key
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_key
 msgid "Developer Key"
 msgstr "Clé développeur"
 
@@ -106,7 +104,7 @@ msgstr ""
 "%s"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_file_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_file_type
 msgid "FEDEX Label File Type"
 msgstr "Type de fichier d'étiquette FEDEX"
 
@@ -131,10 +129,20 @@ msgid "FIRST_OVERNIGHT"
 msgstr "FIRST_OVERNIGHT"
 
 #. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_account_number
+msgid "FedEx Account Number"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
 msgid "FedEx Delivery Methods"
 msgstr "Méthodes de livraison FedEx"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
+msgid "FedEx Saturday Delivery"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -153,12 +161,12 @@ msgid "Fedex International"
 msgstr "Fedex International"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_stock_type
 msgid "Fedex Label Stock Type"
 msgstr "Type d'étiquette Fedex"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_service_type
 msgid "Fedex Service Type"
 msgstr "Type de service FedEx"
 
@@ -179,19 +187,19 @@ msgid "Fedex Website"
 msgstr "Site web de Fedex"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_weight_unit
 msgid "Fedex Weight Unit"
 msgstr "Unité de poids Fedex"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_droppoff_type
 msgid "Fedex drop-off type"
 msgstr "Type de dépôt Fedex"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Go to"
-msgstr "Allez sur"
+msgstr "Aller à"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
@@ -214,7 +222,7 @@ msgid "LB"
 msgstr "livres"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_meter_number
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_meter_number
 msgid "Meter Number"
 msgstr "Numéro de compteur"
 
@@ -222,7 +230,7 @@ msgstr "Numéro de compteur"
 #: code:addons/delivery_fedex/models/delivery_fedex.py:379
 #, python-format
 msgid "No packages for this picking"
-msgstr "Aucun colis pour cette préparatio"
+msgstr "Aucun paquet pour cette sélection"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -285,7 +293,7 @@ msgid "Packaging"
 msgstr "Conditionnement"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_password
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_password
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -340,7 +348,7 @@ msgid "STOCK_4X9_TRAILING_DOC_TAB"
 msgstr "STOCK_4X9_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Saturday Delivery"
 msgstr "Livraison le samedi "
 
@@ -362,11 +370,10 @@ msgstr "Envoi créé dans Fedex  <br/> <b>Numéro de suivi : </b>%s"
 msgid ""
 "Shipment created into Fedex<br/><b>Tracking Numbers:</b> "
 "%s<br/><b>Packages:</b> %s"
-msgstr ""
-"Envoi créé dans Fedex<br/><b>Numéros de suivi :</b> %s<br/><b>Colis :</b> %s"
+msgstr "<br/><b/><br/><b/>"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
 msgid ""
 "Special service:Saturday Delivery, can be requested on following days.\n"
 "                                                                                 Thursday:\n"
@@ -377,7 +384,7 @@ msgid ""
 "                                                                                 3.INTERNATIONAL_PRIORITY.\n"
 "(To Select Countries)"
 msgstr ""
-"Service spécial : livraison le samedi, demande possible les jours suivants.\n"
+"Service spécial : Livraison le samedi peut être demandé pour les jours suivants.\n"
 " Jeudi :\n"
 "1. FEDEX_2_DAY.\n"
 "Vendredi :\n"
@@ -402,8 +409,8 @@ msgid ""
 "These certifications usually require that you contact the FedEx support team"
 " by email."
 msgstr ""
-"Ces certifications demandent habituellement que vous contactiez l'équipe "
-"support de FedEx par email."
+"Ces certifications demande habituellement que vous contactiez l'équipe "
+"support de FedEx par courriel."
 
 #. module: delivery_fedex
 #: code:addons/delivery_fedex/models/delivery_fedex.py:203
@@ -419,6 +426,14 @@ msgstr ""
 #: selection:delivery.carrier,fedex_label_file_type:0
 msgid "ZPLII"
 msgstr "ZPLII"
+
+#. module: delivery_fedex
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter_product_template
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us_product_template
+msgid "kg"
+msgstr "kg"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex

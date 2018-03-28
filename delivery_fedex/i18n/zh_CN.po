@@ -3,18 +3,18 @@
 # * delivery_fedex
 # 
 # Translators:
-# fausthuang, 2017
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# liAnGjiA <liangjia@qq.com>, 2017
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
 # e2f <projects@e2f.com>, 2018
 # Tison He <hedisen@sina.com>, 2018
+# liAnGjiA <liangjia@qq.com>, 2018
+# Martin Trigaux, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Tison He <hedisen@sina.com>, 2018\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,10 +32,10 @@ msgstr "，点击“获得产品钥匙”并跟随以下步骤"
 msgid ""
 "<br/>According to your needs, you will need to contact different "
 "certifications :"
-msgstr "<br/>根据你的需求,你需要联系不同的认证 :"
+msgstr "<br/>根据您的需求,您需要联系不同的认证 :"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_account_number
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Account Number"
 msgstr "账户号码"
 
@@ -57,7 +57,7 @@ msgstr "业务—服务—中心"
 #. module: delivery_fedex
 #: model:ir.model,name:delivery_fedex.model_delivery_carrier
 msgid "Carrier"
-msgstr "承运商"
+msgstr "承运方"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -70,12 +70,12 @@ msgid "DROP_BOX"
 msgstr "DROP_BOX"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_default_packaging_id
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_default_packaging_id
 msgid "Default Package Type"
 msgstr "默认包裹类型"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_key
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_key
 msgid "Developer Key"
 msgstr "开发者密钥"
 
@@ -91,39 +91,49 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
-"错误：\n"
+"错误:\n"
 "%s"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_file_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_file_type
 msgid "FEDEX Label File Type"
 msgstr "FEDEX 标签文件类型"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
 msgid "FEDEX_2_DAY"
-msgstr "FEDEX_2_DAY"
+msgstr "FEDEX_2_天"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
 msgid "FEDEX_2_DAY_AM"
-msgstr "FEDEX_2_DAY_AM"
+msgstr "FEDEX_2_天_上午"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
 msgid "FEDEX_GROUND"
-msgstr "FEDEX_GROUND"
+msgstr "FEDEX_路运"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
 msgid "FIRST_OVERNIGHT"
-msgstr "FIRST_OVERNIGHT"
+msgstr "第一_隔夜"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_account_number
+msgid "FedEx Account Number"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
 msgid "FedEx Delivery Methods"
 msgstr "FedEx 交货方式"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
+msgid "FedEx Saturday Delivery"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -142,12 +152,12 @@ msgid "Fedex International"
 msgstr "Fedex 国际"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_stock_type
 msgid "Fedex Label Stock Type"
 msgstr "Fedex 标签库存类型"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_service_type
 msgid "Fedex Service Type"
 msgstr "Fedex 服务类型"
 
@@ -168,12 +178,12 @@ msgid "Fedex Website"
 msgstr "Fedex 网站"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_weight_unit
 msgid "Fedex Weight Unit"
 msgstr "Fedex 重量类型"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_droppoff_type
 msgid "Fedex drop-off type"
 msgstr "Fedex 投递类型"
 
@@ -185,7 +195,7 @@ msgstr "去"
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
 msgid "INTERNATIONAL_ECONOMY"
-msgstr "INTERNATIONAL_ECONOMY"
+msgstr "国际_经济"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
@@ -203,7 +213,7 @@ msgid "LB"
 msgstr "磅"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_meter_number
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_meter_number
 msgid "Meter Number"
 msgstr "表号"
 
@@ -221,22 +231,22 @@ msgstr "一旦你的账号建立好了，去"
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
 msgid "PAPER_4X6"
-msgstr "PAPER_4X6"
+msgstr "纸_4X6"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
 msgid "PAPER_4X8"
-msgstr "PAPER_4X8"
+msgstr "纸_4X8"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
 msgid "PAPER_4X9"
-msgstr "PAPER_4X9"
+msgstr "纸_4X9"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
 msgid "PAPER_7X4.75"
-msgstr "PAPER_7X4.75"
+msgstr "纸_7X4.75"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
@@ -246,12 +256,12 @@ msgstr "PAPER_8.5X11_BOTTOM_HALF_LABEL"
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
 msgid "PAPER_8.5X11_TOP_HALF_LABEL"
-msgstr "PAPER_8.5X11_TOP_HALF_LABEL"
+msgstr "纸_8.5X11_顶部_一半_标签"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_stock_type:0
 msgid "PAPER_LETTER"
-msgstr "PAPER_LETTER"
+msgstr "纸_信"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_label_file_type:0
@@ -274,24 +284,24 @@ msgid "Packaging"
 msgstr "包装"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_password
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_password
 msgid "Password"
 msgstr "密码"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_droppoff_type:0
 msgid "REGULAR_PICKUP"
-msgstr "REGULAR_PICKUP"
+msgstr "标准_收取"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_droppoff_type:0
 msgid "REQUEST_COURIER"
-msgstr "REQUEST_COURIER"
+msgstr "需求_快递"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_service_type:0
 msgid "STANDARD_OVERNIGHT"
-msgstr "STANDARD_OVERNIGHT"
+msgstr "标准_隔夜"
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_droppoff_type:0
@@ -329,7 +339,7 @@ msgid "STOCK_4X9_TRAILING_DOC_TAB"
 msgstr "STOCK_4X9_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Saturday Delivery"
 msgstr "星期六交货"
 
@@ -351,10 +361,10 @@ msgstr "装运创建成Fedex <br/> <b>跟踪号码 : </b>%s"
 msgid ""
 "Shipment created into Fedex<br/><b>Tracking Numbers:</b> "
 "%s<br/><b>Packages:</b> %s"
-msgstr "装运创建成 Fedex <br/><b>运单号：</b>%s <br/><b>包裹：</b>%s"
+msgstr "<br/><b/><br/><b/>"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
 msgid ""
 "Special service:Saturday Delivery, can be requested on following days.\n"
 "                                                                                 Thursday:\n"
@@ -405,6 +415,14 @@ msgstr ""
 #: selection:delivery.carrier,fedex_label_file_type:0
 msgid "ZPLII"
 msgstr "ZPLII"
+
+#. module: delivery_fedex
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter_product_template
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us_product_template
+msgid "kg"
+msgstr "kg"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex

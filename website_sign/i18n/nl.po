@@ -3,18 +3,18 @@
 # * website_sign
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
-# Cas Vissers <casvissers@brahoo.nl>, 2017
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
-# Eric Geens <ericgeens@yahoo.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
+# Eric Geens <ericgeens@yahoo.com>, 2016
+# Martin Trigaux, 2016
+# Cas Vissers <casvissers@brahoo.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -154,12 +154,14 @@ msgstr "<span>(1.0 = volledige pagina grootte)</span>"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1109
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1107
 #, python-format
 msgid "A copy has been sent to the new followers."
 msgstr "Een kopie is verzonden naar de nieuwe volgers."
 
 #. module: website_sign
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__active
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__active
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_search
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_search
 msgid "Active"
@@ -167,21 +169,21 @@ msgstr "Actief"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:200
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:196
 #, python-format
 msgid "Add Initials"
 msgstr "Voeg initialen toe"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:209
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:205
 #, python-format
 msgid "Add on all pages"
 msgstr "Toevoegen op alle pagina's"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:205
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:201
 #, python-format
 msgid "Add once"
 msgstr "Eenmalig toevoegen"
@@ -207,15 +209,13 @@ msgid "Archive"
 msgstr "Archiveren"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_archived
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_archived
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_search
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_search
 msgid "Archived"
 msgstr "Gearchiveerd"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_attachment_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__attachment_id
 msgid "Attachment"
 msgstr "Bijlage"
 
@@ -227,7 +227,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_auto_field
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__auto_field
 msgid "Automatic Partner Field"
 msgstr "Automatisch relatieveld"
 
@@ -248,7 +248,7 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:255
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:251
 #: code:addons/website_sign/static/src/js/website_sign_common.js:283
 #: code:addons/website_sign/static/src/js/website_sign_common.js:670
 #: code:addons/website_sign/static/src/js/website_sign_common.js:925
@@ -259,7 +259,7 @@ msgstr "Annuleer"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1178
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1176
 #, python-format
 msgid "Cancel Request"
 msgstr "Aanvraag annuleren"
@@ -270,7 +270,7 @@ msgid "Canceled"
 msgstr "Geannuleerd"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:378
+#: code:addons/website_sign/models/signature_request.py:384
 #, python-format
 msgid "Canceled."
 msgstr "Geannuleerd."
@@ -289,15 +289,6 @@ msgid "Clear Signature"
 msgstr "Handtekening wissen"
 
 #. module: website_sign
-#: model:ir.actions.act_window,help:website_sign.signature_request_action
-msgid ""
-"Click on <em>Request a Signature</em> to upload a template (or use an existing one) to automate\n"
-"                your signature process for employment contracts, trade sale, NDA to sign, ..."
-msgstr ""
-"Klik op <em>Vraag een handtekening</em> om een sjabloon te uploaden (of gebruik makend van een bestaande) om automatisch\n"
-"uw handtekening proces voor arbeidsovereenkomsten, verkoopcontracten, NDA te ondertekenen, ..."
-
-#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:810
 #, python-format
@@ -305,8 +296,8 @@ msgid "Click to start"
 msgstr "Klik om te starten"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_color
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_color
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__color
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__color
 msgid "Color"
 msgstr "Kleur"
 
@@ -322,12 +313,12 @@ msgid "Completed"
 msgstr "Voltooid"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_completed_document
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__completed_document
 msgid "Completed Document"
 msgstr "Voltooid document"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_nb_closed
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__nb_closed
 msgid "Completed Signatures"
 msgstr "Voltooide handtekeningen"
 
@@ -341,25 +332,24 @@ msgid "Create: \""
 msgstr "Aanmaken: \""
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_create_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party_create_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_create_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_create_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_create_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_create_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_create_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__create_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party__create_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__create_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__create_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__create_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__create_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__create_uid
 msgid "Created by"
 msgstr "Aangemaakt door"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_create_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party_create_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_create_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_create_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_create_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_create_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_last_action_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_create_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__create_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party__create_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__create_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__create_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__create_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__create_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__create_date
 msgid "Created on"
 msgstr "Aangemaakt op"
 
@@ -370,7 +360,7 @@ msgstr "Klant"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:151
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:147
 #, python-format
 msgid "Customize Field"
 msgstr "Veld personaliseren"
@@ -381,12 +371,12 @@ msgid "Date"
 msgstr "Datum"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_default_height
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__default_height
 msgid "Default Height"
 msgstr "Standaard hoogte"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_default_width
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__default_width
 msgid "Default Width"
 msgstr "Standaard breedte"
 
@@ -394,14 +384,14 @@ msgstr "Standaard breedte"
 #: model:ir.ui.view,arch_db:website_sign.signature_request_template_view_kanban
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_kanban
 msgid "Delete"
-msgstr "Verwijderen"
+msgstr "Verwijder"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1117
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1115
 #, python-format
 msgid "Discard"
-msgstr "Annuleren"
+msgstr "Negeren"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.signature_item_view_form
@@ -409,13 +399,13 @@ msgid "Display"
 msgstr "Tonen"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_display_name
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party_display_name
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_display_name
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_display_name
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_display_name
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_display_name
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_display_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__display_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party__display_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__display_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__display_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__display_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__display_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__display_name
 msgid "Display Name"
 msgstr "Schermnaam"
 
@@ -427,12 +417,12 @@ msgid "Do you also send documents to sign?"
 msgstr "Verstuurt u ook documenten om te tekenen?"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_follower_ids
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__follower_ids
 msgid "Document Followers"
 msgstr "Document volgers"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_page
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__page
 msgid "Document Page"
 msgstr "Document pagina"
 
@@ -444,7 +434,7 @@ msgid "Document Sign"
 msgstr "Document ondertekenen"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_template_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__template_id
 msgid "Document Template"
 msgstr "Documentsjabloon"
 
@@ -466,7 +456,7 @@ msgstr "Documenten"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1014
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1013
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "Download Document"
@@ -487,7 +477,7 @@ msgid "Draft"
 msgstr "Concept"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_nb_draft
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__nb_draft
 msgid "Draft Requests"
 msgstr "Concept aanvragen"
 
@@ -507,7 +497,7 @@ msgstr "Teken"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:964
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:963
 #, python-format
 msgid "Duplicated Template"
 msgstr "Gedupliceerd sjabloon"
@@ -525,7 +515,7 @@ msgid "Edit template name"
 msgstr "Wijzig sjabloonnaam"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signer_email
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__signer_email
 #: model:signature.item.type,name:website_sign.signature_item_type_email
 msgid "Email"
 msgstr "E-mail"
@@ -557,8 +547,8 @@ msgid "Everybody Signed."
 msgstr "Iedereen heeft getekend."
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_favorited_ids
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_favorited_ids
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__favorited_ids
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__favorited_ids
 msgid "Favorite of"
 msgstr "Favoriet van"
 
@@ -571,8 +561,8 @@ msgstr "Favorieten"
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:6
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_name
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__name
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__name
 #, python-format
 msgid "Field Name"
 msgstr "Veldnaam"
@@ -585,7 +575,7 @@ msgstr "Veldtypes"
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:68
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_reference
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__reference
 #, python-format
 msgid "Filename"
 msgstr "Bestandsnaam"
@@ -620,7 +610,7 @@ msgid "Get Completed Document"
 msgstr "Krijg voltooid document"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_height
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__height
 msgid "Height"
 msgstr "Hoogte"
 
@@ -632,13 +622,13 @@ msgid "History"
 msgstr "Geschiedenis"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id_7338
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_id_7307
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party__id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__id
 msgid "ID"
 msgstr "ID"
 
@@ -661,7 +651,7 @@ msgstr "Informatie"
 #. module: website_sign
 #: selection:signature.item.type,type:0
 msgid "Initial"
-msgstr "Initialen"
+msgstr "Initieel"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
@@ -680,40 +670,45 @@ msgstr ""
 "Odoo account aan te maken."
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item___last_update
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party___last_update
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type___last_update
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value___last_update
-#: model:ir.model.fields,field_description:website_sign.field_signature_request___last_update
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item___last_update
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template___last_update
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__last_action_date
+msgid "Last Action Date"
+msgstr ""
+
+#. module: website_sign
+#: model:ir.model.fields,field_description:website_sign.field_signature_item____last_update
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party____last_update
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type____last_update
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value____last_update
+#: model:ir.model.fields,field_description:website_sign.field_signature_request____last_update
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item____last_update
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template____last_update
 msgid "Last Modified on"
 msgstr "Laatst gewijzigd op"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party_write_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_write_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_write_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_write_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_write_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_write_uid
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_write_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__write_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party__write_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__write_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__write_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__write_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__write_uid
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__write_uid
 msgid "Last Updated by"
 msgstr "Laatst bijgewerkt door"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party_write_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_write_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_write_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_write_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_write_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_write_date
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_write_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__write_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party__write_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__write_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__write_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__write_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__write_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__write_date
 msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_latitude
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__latitude
 msgid "Latitude"
 msgstr "Breedtegraad"
 
@@ -732,7 +727,7 @@ msgid "Load"
 msgstr "Laden"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_longitude
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__longitude
 msgid "Longitude"
 msgstr "Lengtegraad"
 
@@ -767,7 +762,7 @@ msgstr "Tekst meerdere regels"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:426
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:422
 #, python-format
 msgid "Multiple Signature Requests"
 msgstr "Meerdere handtekening aanvragen"
@@ -778,7 +773,7 @@ msgid "My documents"
 msgstr "Mijn documenten"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_party_name
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_party__name
 #: model:signature.item.type,name:website_sign.signature_item_type_name
 msgid "Name"
 msgstr "Naam"
@@ -797,14 +792,14 @@ msgstr "Moet u tekenen? Controleer uw inbox om beveiligde toegang te krijgen"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:399
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:395
 #, python-format
 msgid "New Document"
 msgstr "Nieuw document"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:105
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:101
 #, python-format
 msgid "New Template"
 msgstr "Nieuw sjabloon"
@@ -818,8 +813,13 @@ msgid "New: "
 msgstr "Nieuw:"
 
 #. module: website_sign
+#: model:ir.actions.act_window,help:website_sign.signature_request_action
+msgid "No documents to sign"
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1228
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1226
 #, python-format
 msgid "Ok"
 msgstr "Ok"
@@ -841,12 +841,12 @@ msgid "Parties"
 msgstr "Partijen"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_partner_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__partner_id
 msgid "Partner"
 msgstr "Relatie"
 
 #. module: website_sign
-#: model:ir.model.fields,help:website_sign.field_signature_item_type_auto_field
+#: model:ir.model.fields,help:website_sign.field_signature_item_type__auto_field
 msgid "Partner field to use to auto-complete the fields of this type"
 msgstr ""
 "Relatie veld gebruikt om automatisch de velden van deze soort aan te vullen"
@@ -857,9 +857,9 @@ msgid "Phone"
 msgstr "Telefoon"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_placeholder
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__placeholder
 msgid "Placeholder"
-msgstr "Label"
+msgstr "Plaatshouder"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
@@ -867,12 +867,12 @@ msgid "Please Review And Act On This Document"
 msgstr "Controleer en reageer op dit document aub"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_posX
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__posX
 msgid "Position X"
 msgstr "Positie X"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_posY
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__posY
 msgid "Position Y"
 msgstr "Positie Y"
 
@@ -884,44 +884,51 @@ msgid "Print original document"
 msgstr "Origineel document afdrukken"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_progress
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__progress
 msgid "Progress"
 msgstr "Voortgang"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:164
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:160
 #, python-format
 msgid "Remove"
 msgstr "Verwijderen"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_request_item_infos
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__request_item_infos
 msgid "Request Item Infos"
 msgstr "Vraag item informatie"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:79
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:75
 #, python-format
 msgid "Request a Signature"
 msgstr "Handtekening nodig"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_required
+#: model:ir.actions.act_window,help:website_sign.signature_request_action
+msgid ""
+"Request a signature to upload a template (or use an existing one)\n"
+"                to automate your signature process."
+msgstr ""
+
+#. module: website_sign
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__required
 msgid "Required"
 msgstr "Verplicht"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1202
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1200
 #, python-format
 msgid "Resend the invitation"
 msgstr "Verzend uitnodiging opnieuw"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1142
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1140
 #, python-format
 msgid "Resent !"
 msgstr "Opnieuw verzenden!"
@@ -930,7 +937,7 @@ msgstr "Opnieuw verzenden!"
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:12
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:31
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_responsible_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__responsible_id
 #, python-format
 msgid "Responsible"
 msgstr "Verantwoordelijke"
@@ -942,7 +949,7 @@ msgid "Restore"
 msgstr "Terugzetten"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_role_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__role_id
 msgid "Role"
 msgstr "Functie"
 
@@ -951,11 +958,11 @@ msgstr "Functie"
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
-msgstr "Opgeslagen"
+msgstr "Bewaard"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_access_token
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_access_token
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__access_token
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__access_token
 msgid "Security Token"
 msgstr "Veiligheidstoken"
 
@@ -975,9 +982,9 @@ msgstr "Selecteer de verantwoordelijke"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:252
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:775
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1098
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:248
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:771
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1096
 #: model:ir.ui.view,arch_db:website_sign.signature_request_view_form
 #, python-format
 msgid "Send"
@@ -985,14 +992,14 @@ msgstr "Verzenden"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:248
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:244
 #, python-format
 msgid "Send Signature Request"
 msgstr "Verzend handtekening aanvraag"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1171
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1169
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:94
 #, python-format
 msgid "Send a copy"
@@ -1007,7 +1014,7 @@ msgstr "Verstuur een kopie naar"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1092
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1090
 #, python-format
 msgid "Send a copy to third parties"
 msgstr "Verstuur een kopie naar derde partijen"
@@ -1032,19 +1039,19 @@ msgid "Sender"
 msgstr "Afzender"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_nb_wait
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__nb_wait
 msgid "Sent Requests"
 msgstr "Verzend aanvragen"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:781
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:777
 #, python-format
 msgid "Share"
-msgstr "Dee"
+msgstr "Deel"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_share_link
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__share_link
 msgid "Share Link"
 msgstr "Koppeling delen"
 
@@ -1063,22 +1070,22 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1160
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1158
 #: model:ir.ui.menu,name:website_sign.menu_document
 #, python-format
 msgid "Sign"
-msgstr "Ondertekenen"
+msgstr "Teken"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1155
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1153
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "Sign Document"
-msgstr "Ondreteken document"
+msgstr "Teken document"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
@@ -1095,7 +1102,7 @@ msgid "Signature Field Value For Document To Sign"
 msgstr "Document veldwaarde voor te tekenen document"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_item_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__signature_item_id
 msgid "Signature Item"
 msgstr "Handtekening item"
 
@@ -1110,7 +1117,7 @@ msgid "Signature Item Type"
 msgstr "Handtekening item soort"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_signature_item_ids
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__signature_item_ids
 msgid "Signature Items"
 msgstr "Handtekening items"
 
@@ -1118,8 +1125,8 @@ msgstr "Handtekening items"
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature_request_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__signature_request_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__signature_request_id
 #, python-format
 msgid "Signature Request"
 msgstr "Handtekening aanvraag"
@@ -1130,7 +1137,7 @@ msgid "Signature Request Template"
 msgstr "Handtekening aanvraag sjabloon"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_signature_request_ids
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_template__signature_request_ids
 #: model:ir.ui.menu,name:website_sign.signature_request_menu
 msgid "Signature Requests"
 msgstr "Handtekening aanvragen"
@@ -1151,7 +1158,7 @@ msgid "Signed ("
 msgstr "Getekend ("
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signing_date
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__signing_date
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 msgid "Signed on"
 msgstr "Getekend op"
@@ -1164,8 +1171,8 @@ msgstr "Getekend."
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:307
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_request_item_ids
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:303
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__request_item_ids
 #, python-format
 msgid "Signers"
 msgstr "Getekenden"
@@ -1186,7 +1193,7 @@ msgstr "Sommige velden moeten nog voltooid worden!"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:953
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:952
 #, python-format
 msgid "Somebody is already filling a document which uses this template"
 msgstr "Iemand is dit document al aan het invullen dat dit sjabloon gebruikt"
@@ -1213,8 +1220,8 @@ msgid "Start Using Odoo Sign Now"
 msgstr "Start het gebruik van Odoo ondertekenen nu"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_item_state
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_state
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__state
+#: model:ir.model.fields,field_description:website_sign.field_signature_request_item__state
 msgid "State"
 msgstr "Status"
 
@@ -1234,15 +1241,15 @@ msgstr "Onderwerp"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:395
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1109
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:391
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1107
 #: code:addons/website_sign/static/src/js/website_sign_common.js:277
 #, python-format
 msgid "Success"
 msgstr "Succes"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_request_template_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__template_id
 msgid "Template"
 msgstr "Sjabloon"
 
@@ -1294,7 +1301,7 @@ msgstr ""
 " elke toegang tot verzonden aanvragen. Bent u zeker?"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_tip
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__tip
 msgid "Tip"
 msgstr "Tip"
 
@@ -1313,8 +1320,8 @@ msgstr ""
 "Om te kunnen delen kan er maar één verantwoordelijke zijn voor alle velden!"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_id
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_type_type
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__type_id
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_type__type
 msgid "Type"
 msgstr "Soort"
 
@@ -1326,7 +1333,7 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:70
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:66
 #, python-format
 msgid "Upload a PDF Template"
 msgstr "Upload een PDF sjabloon"
@@ -1334,23 +1341,23 @@ msgstr "Upload een PDF sjabloon"
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_with_archived_action
-msgid "Upload a PDF of contract to sign."
-msgstr "Upload een PDF of een contract om te tekenen."
+msgid "Upload a PDF of contract to sign"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:908
 #, python-format
 msgid "Validate & Send"
-msgstr "Bevestig & verstuur"
+msgstr "Valideren & verzenden"
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 msgid "Validate &amp; Send Completed Document"
-msgstr "Bevestig &amp; Verzend voltooid document"
+msgstr "Valideer &amp; Verzend voltooid document"
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_value_value
+#: model:ir.model.fields,field_description:website_sign.field_signature_item_value__value
 msgid "Value"
 msgstr "Waarde"
 
@@ -1361,7 +1368,7 @@ msgstr "Weergave"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:1015
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:1014
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 #, python-format
 msgid "View History"
@@ -1378,7 +1385,7 @@ msgid "Waiting for completion"
 msgstr "Wachtend op voltooiing"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:368
+#: code:addons/website_sign/models/signature_request.py:374
 #, python-format
 msgid "Waiting for signatures."
 msgstr "Wachtend op handtekeningen."
@@ -1399,13 +1406,13 @@ msgstr ""
 "We laten u via e-mail weten wanneer iedereen het document heeft getekend."
 
 #. module: website_sign
-#: model:ir.model.fields,field_description:website_sign.field_signature_item_width
+#: model:ir.model.fields,field_description:website_sign.field_signature_item__width
 msgid "Width"
 msgstr "Breedte"
 
 #. module: website_sign
 #. openerp-web
-#: code:addons/website_sign/static/src/js/website_sign_backend.js:325
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:321
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:48
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:96
 #, python-format
@@ -1416,11 +1423,6 @@ msgstr "Schrijf e-mail of zoek contact..."
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "You have completed the document"
 msgstr "U heeft het document voltooid"
-
-#. module: website_sign
-#: model:ir.actions.act_window,help:website_sign.signature_request_action
-msgid "You have no document to sign."
-msgstr "U heeft gene documenten te tekenen."
 
 #. module: website_sign
 #. openerp-web
@@ -1450,7 +1452,7 @@ msgstr "Uw naam"
 #: code:addons/website_sign/static/src/js/website_sign_common.js:953
 #, python-format
 msgid "Your signature has been saved."
-msgstr "Uw handtekening is opgeslagen."
+msgstr "Uw handtekening is bewaard."
 
 #. module: website_sign
 #. openerp-web
@@ -1465,9 +1467,25 @@ msgid "comment"
 msgstr "opmerking"
 
 #. module: website_sign
+#: model:signature.item.type,tip:website_sign.signature_item_type_company
+#: model:signature.item.type,tip:website_sign.signature_item_type_date
+#: model:signature.item.type,tip:website_sign.signature_item_type_email
+#: model:signature.item.type,tip:website_sign.signature_item_type_multiline_text
+#: model:signature.item.type,tip:website_sign.signature_item_type_name
+#: model:signature.item.type,tip:website_sign.signature_item_type_phone
+#: model:signature.item.type,tip:website_sign.signature_item_type_text
+msgid "fill in"
+msgstr "vul in"
+
+#. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action
 msgid "load our templates of contract"
 msgstr "een contract sjabloon laden"
+
+#. module: website_sign
+#: model:signature.item.type,tip:website_sign.signature_item_type_initial
+msgid "mark it"
+msgstr "markeer het"
 
 #. module: website_sign
 #. openerp-web
@@ -1475,6 +1493,11 @@ msgstr "een contract sjabloon laden"
 #, python-format
 msgid "on"
 msgstr "op"
+
+#. module: website_sign
+#: model:signature.item.type,tip:website_sign.signature_item_type_signature
+msgid "sign it"
+msgstr "teken het"
 
 #. module: website_sign
 #: model:ir.actions.act_window,help:website_sign.signature_request_template_action

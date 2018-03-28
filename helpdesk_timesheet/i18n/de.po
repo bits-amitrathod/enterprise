@@ -3,24 +3,22 @@
 # * helpdesk_timesheet
 # 
 # Translators:
-# Ermin Trevisan <trevi@twanda.com>, 2017
 # Renzo Meister, 2017
 # Martin Trigaux, 2017
 # Andi, 2017
 # Thorsten Vocks <thorsten.vocks@openbig.org>, 2017
-# darenkster <inactive+darenkster@transifex.com>, 2017
 # Niki Waibel, 2017
+# darenkster <inactive+darenkster@transifex.com>, 2017
 # Anja Funk <anja.funk@afimage.de>, 2017
 # Malte Jansen <work@maltejansen.de>, 2017
 # e2f <projects@e2f.com>, 2018
-# Katharina Moritz <kmo@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Katharina Moritz <kmo@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,14 +27,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project_ticket_count
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__ticket_count
 msgid "# Tickets"
 msgstr "# Tickets"
-
-#. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_is_task_active
-msgid "Active"
-msgstr "Aktiv"
 
 #. module: helpdesk_timesheet
 #: code:addons/helpdesk_timesheet/models/helpdesk.py:73
@@ -45,9 +38,8 @@ msgid ""
 "All timesheet hours will be assigned to the selected task on save. Discard "
 "to avoid the change."
 msgstr ""
-"Alle Stunden in der Zeiterfassung werden beim Speichern den ausgewählten "
-"Aufgaben zugeordnet. Wenn Sie dies nicht wünschen, verwerfen Sie diese "
-"Änderungen."
+"Alle Stunden im Arbeitszeitnachweis werden den ausgewählten gespeicherten "
+"Aufgaben zugeordnet. Verwerfen, um Änderungen zu vermeiden."
 
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_account_analytic_line
@@ -87,7 +79,7 @@ msgid "Helpdesk Team"
 msgstr "Helpdesk-Team"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_account_analytic_line_helpdesk_ticket_id
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_account_analytic_line__helpdesk_ticket_id
 msgid "Helpdesk Ticket"
 msgstr "Kundendienst Ticket"
 
@@ -99,19 +91,24 @@ msgid "In Progress"
 msgstr "In Arbeit"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_is_closed
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__is_closed
 msgid "Is Closed"
 msgstr "Geschlossen"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_task_type_is_closed
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__is_task_active
+msgid "Is Task Active"
+msgstr ""
+
+#. module: helpdesk_timesheet
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_task_type__is_closed
 msgid "Is a close stage"
 msgstr "Ist Abschlußstufe"
 
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_project_project
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_team_project_id
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_project_id
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_team__project_id
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__project_id
 msgid "Project"
 msgstr "Projekt"
 
@@ -121,7 +118,7 @@ msgid "Project Tickets"
 msgstr "Projekt-Tickets"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_task_id
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__task_id
 msgid "Task"
 msgstr "Aufgabe"
 
@@ -131,18 +128,18 @@ msgid "Task Stage"
 msgstr "Aufgabenstufe"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket_is_closed
-#: model:ir.model.fields,help:helpdesk_timesheet.field_project_task_type_is_closed
+#: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket__is_closed
+#: model:ir.model.fields,help:helpdesk_timesheet.field_project_task_type__is_closed
 msgid "Tasks in this stage are considered as closed."
 msgstr "Aufgaben in dieser Stufe werden als beendet interpretiert."
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket_task_id
+#: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket__task_id
 msgid "The task must have the same customer as this ticket."
 msgstr "Die Aufgabe muss den gleichen Kunden wie dieses Ticket haben."
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket_use_helpdesk_timesheet
+#: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket__use_helpdesk_timesheet
 msgid "This required to have project module installed."
 msgstr "Dies erfordert, dass das Projektmodul installiert ist."
 
@@ -152,8 +149,9 @@ msgid "Ticket"
 msgstr "Ticket"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project_ticket_ids
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__ticket_ids
 #: model:ir.ui.view,arch_db:helpdesk_timesheet.project_project_view_form_inherit_helpdesk_timesheet
+#: model:ir.ui.view,arch_db:helpdesk_timesheet.project_project_view_project_tickets_kanban_inherited
 msgid "Tickets"
 msgstr "Veranstaltungs-Ticket"
 
@@ -163,9 +161,9 @@ msgid "Timesheet Activities"
 msgstr "Zeiterfassungsaktivitäten"
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_use_helpdesk_timesheet
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__use_helpdesk_timesheet
 msgid "Timesheet activated on Team"
-msgstr "Zeiterfassung im Team aktiviert"
+msgstr "Arbeitszeitnachweis im Team aktiviert"
 
 #. module: helpdesk_timesheet
 #: code:addons/helpdesk_timesheet/models/helpdesk.py:75
@@ -174,11 +172,11 @@ msgid ""
 "Timesheet hours will not be assigned to a customer task. Set a task to "
 "charge a customer."
 msgstr ""
-"Die Stunden in der Zeiterfassung werden keiner Kundenaufgabe zugeordnet. "
+"Die Stunden im Arbeitszeitnachweis werden keiner Kundenaufgabe zugeordnet. "
 "Erstellen Sie eine Aufgabe, um einem Kunden etwas zu berechnen."
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_timesheet_ids
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__timesheet_ids
 #: model:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
 msgid "Timesheets"
 msgstr "Zeiterfassung"
