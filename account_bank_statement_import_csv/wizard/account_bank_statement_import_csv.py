@@ -137,7 +137,7 @@ class AccountBankStmtImportCSV(models.TransientModel):
         return super(AccountBankStmtImportCSV, self).parse_preview(options, count=count)
 
     @api.multi
-    def do(self, fields, options, dryrun=False):
+    def do(self, fields, columns, options, dryrun=False):
         if options.get('bank_stmt_import', False):
             self._cr.execute('SAVEPOINT import_bank_stmt')
             vals = {
@@ -145,14 +145,14 @@ class AccountBankStmtImportCSV(models.TransientModel):
                 'reference': self.file_name
             }
             statement = self.env['account.bank.statement'].create(vals)
-            res = super(AccountBankStmtImportCSV, self.with_context(bank_statement_id=statement.id)).do(fields, options, dryrun=dryrun)
+            res = super(AccountBankStmtImportCSV, self.with_context(bank_statement_id=statement.id)).do(fields, columns, options, dryrun=dryrun)
 
             try:
                 if dryrun:
                     self._cr.execute('ROLLBACK TO SAVEPOINT import_bank_stmt')
                 else:
                     self._cr.execute('RELEASE SAVEPOINT import_bank_stmt')
-                    res.append({
+                    res['messages'].append({
                         'statement_id': statement.id,
                         'type': 'bank_statement'
                         })
@@ -160,4 +160,4 @@ class AccountBankStmtImportCSV(models.TransientModel):
                 pass
             return res
         else:
-            return super(AccountBankStmtImportCSV, self).do(fields, options, dryrun=dryrun)
+            return super(AccountBankStmtImportCSV, self).do(fields, columns, options, dryrun=dryrun)

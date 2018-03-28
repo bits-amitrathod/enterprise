@@ -37,7 +37,7 @@ class TestCSVFile(TransactionCase):
             'float_decimal_separator': '.',
             'advanced': False}
         fields = ['date', False, 'name', 'amount', 'balance']
-        import_wizard.with_context(journal_id=bank_journal_id).do(fields, options, dryrun=False)
+        import_wizard.with_context(journal_id=bank_journal_id).do(fields, [], options, dryrun=False)
 
         # Check the imported bank statement
         bank_st_record = self.env['account.bank.statement'].search([('reference', '=', 'test_csv.csv')])[0]
