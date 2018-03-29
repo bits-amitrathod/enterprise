@@ -1629,6 +1629,113 @@ QUnit.module('ViewEditorManager', {
         });
     });
 
+    QUnit.test('XML editor: reset operations stack', function(assert) {
+        assert.expect(6);
+        var done = assert.async();
+
+        // the XML editor button is only available in debug mode
+        var initialDebugMode = config.debug;
+        config.debug = true;
+
+        // the XML editor lazy loads its libs and its templates so its start
+        // method is monkey-patched to know when the widget has started
+        var XMLEditorDef = $.Deferred();
+        testUtils.patch(ace, {
+            start: function () {
+                return this._super.apply(this, arguments).then(function () {
+                    XMLEditorDef.resolve();
+                });
+            },
+        });
+
+        var arch = "<form><sheet><field name='display_name'/></sheet></form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                } else if (route === '/web_studio/edit_view') {
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                        studio_view_id: 42,
+                    });
+                } else if (route === '/web_studio/edit_view_arch') {
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                    });
+                } else if (route === '/web_editor/get_assets_editor_resources') {
+                    assert.strictEqual(args.key, 1, "the correct view should be fetched");
+                    return $.when({
+                        views: [{
+                            active: true,
+                            arch: arch,
+                            id: 1,
+                            inherit_id: false,
+                            name: "base view",
+                        }, {
+                            active: true,
+                            arch: "<data/>",
+                            id: 42,
+                            inherit_id: 1,
+                            name: "studio view",
+                        }],
+                        less: [],
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+            viewID: 1,
+            studioViewID: 42,
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor').length, 1,
+            "the form editor should be displayed");
+        // do an operation
+        vem.$('.o_web_studio_form_view_editor .o_field_widget[name="display_name"]').click();
+        vem.$('.o_web_studio_sidebar input[name="string"]').val('Kikou').trigger('change');
+        assert.strictEqual(vem.operations.length, 1,
+            "there should be one operation in the stack (label rename)");
+
+        // open the XML editor
+        vem.$('.o_web_studio_sidebar_header [name="view"]').click();
+        assert.strictEqual(vem.$('.o_web_studio_sidebar .o_web_studio_xml_editor').length, 1,
+            "there should be a button to open the XML editor");
+        vem.$('.o_web_studio_sidebar .o_web_studio_xml_editor').click();
+
+        XMLEditorDef.then(function () {
+            assert.strictEqual(vem.$('.o_ace_view_editor').length, 1, "the XML editor should be opened");
+
+            // the ace editor is too complicated to mimick so call the handler directly
+            vem.XMLEditor._saveView({
+                id: 42,
+                text: "<data></data>",
+            });
+            assert.strictEqual(vem.operations.length, 0,
+                "the operation stack should be reset");
+
+            // restore monkey-patched elements
+            config.debug = initialDebugMode;
+            testUtils.unpatch(ace);
+
+            vem.destroy();
+            done();
+        });
+    });
+
     QUnit.test('new button in buttonbox', function(assert) {
         assert.expect(4);
 

@@ -203,8 +203,11 @@ var ViewEditorManager = Widget.extend({
             }
 
             // the studio_view could have been created at the first edition so
-            // studio_view_id must be updated
-            self.studio_view_id = result.studio_view_id;
+            // studio_view_id must be updated (but /web_studio/edit_view_arch
+            // doesn't return the view id)
+            if (result.studio_view_id) {
+                self.studio_view_id = result.studio_view_id;
+            }
 
             if (self.x2mField) {
                 self.view_type = self.mainViewType;
