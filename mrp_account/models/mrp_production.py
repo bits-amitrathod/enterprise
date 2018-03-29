@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.tools import float_is_zero
 
 
 class MrpProductionWorkcenterLineTime(models.Model):
@@ -39,7 +40,7 @@ class MrpProduction(models.Model):
         account = wc.costs_hour_account_id.id
         return {
             'name': wc_line.name + ' (H)',
-            'amount': value,
+            'amount': -value,
             'account_id': account,
             'ref': wc.code,
             'unit_amount': hours,
@@ -47,26 +48,17 @@ class MrpProduction(models.Model):
 
     def _costs_generate(self):
         """ Calculates total costs at the end of the production.
-        :param production: Id of production order.
-        :return: Calculated amount.
         """
         self.ensure_one()
-        AccountAnalyticLine = self.env['account.analytic.line']
-        amount = 0.0
-        for wc_line in self.workorder_ids:
-            wc = wc_line.workcenter_id
-            if wc.costs_hour_account_id:
-                # Cost per hour
-                hours = wc_line.duration / 60.0
-                value = hours * wc.costs_hour
-                account = wc.costs_hour_account_id.id
-                if value and account:
-                    amount += value
-                    # we user SUPERUSER_ID as we do not guarantee an mrp user
-                    # has access to account analytic lines but still should be
-                    # able to produce orders
-                    AccountAnalyticLine.sudo().create(self._prepare_wc_analytic_line(wc_line))
-        return amount
+        AccountAnalyticLine = self.env['account.analytic.line'].sudo()
+        for wc_line in self.workorder_ids.filtered('workcenter_id.costs_hour_account_id'):
+            vals = self._prepare_wc_analytic_line(wc_line)
+            precision_rounding = wc_line.workcenter_id.costs_hour_account_id.currency_id.rounding
+            if not float_is_zero(vals.get('amount', 0.0), precision_rounding=precision_rounding):
+                # we use SUPERUSER_ID as we do not guarantee an mrp user
+                # has access to account analytic lines but still should be
+                # able to produce orders
+                AccountAnalyticLine.create(vals)
 
     @api.multi
     def button_mark_done(self):
