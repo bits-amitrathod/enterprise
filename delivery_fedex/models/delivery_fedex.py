@@ -172,7 +172,7 @@ class ProviderFedex(models.Model):
                 order_currency.name,
                 (order.company_id.partner_id.id, order.company_id.partner_id['__last_update']),
                 (order.warehouse_id.partner_id.id, order.warehouse_id.partner_id['__last_update']),
-                (order.partner_id.id, order.partner_id['__last_update']),
+                (order.partner_shipping_id.id, order.partner_shipping_id['__last_update']),
                 weight_value,
                 max_weight,
                 cache_interval,

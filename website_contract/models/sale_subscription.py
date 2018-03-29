@@ -383,16 +383,18 @@ class SaleSubscription(models.Model):
         template_res = self.env['mail.template']
         current_date = time.strftime('%Y-%m-%d')
         next_date = datetime.datetime.strptime(self.recurring_next_date or current_date, "%Y-%m-%d")
-        periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
-        invoicing_period = relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
-        new_date = next_date + invoicing_period
+        # if no recurring next date, have next invoice be today + interval
+        if not self.recurring_next_date:
+            periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
+            invoicing_period = relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
+            next_date = next_date + invoicing_period
         _, template_id = imd_res.get_object_reference('website_contract', 'email_payment_success')
         email_context = self.env.context.copy()
         email_context.update({
             'payment_token': self.payment_token_id.name,
             'renewed': True,
             'total_amount': tx.amount,
-            'next_date': new_date.date(),
+            'next_date': next_date.date(),
             'previous_date': self.recurring_next_date,
             'email_to': self.partner_id.email,
             'code': self.code,
