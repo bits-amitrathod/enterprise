@@ -79,6 +79,18 @@ var Main = Widget.extend({
         }
         return $.when(def, this._super.apply(this, arguments));
     },
+    on_attach_callback: function () {
+        this.isInDOM = true;
+        if (this.view_editor) {
+            this.view_editor.on_attach_callback();
+        }
+    },
+    on_detach_callback: function () {
+        this.isInDOM = false;
+        if (this.view_editor) {
+            this.view_editor.on_detach_callback();
+        }
+    },
 
     //--------------------------------------------------------------------------
     // Private
@@ -199,7 +211,7 @@ var Main = Widget.extend({
                         dom.detach([{widget: self.action_editor}]);
                     }
                     dom.append(self.$el, [fragment], {
-                        in_DOM: true,
+                        in_DOM: self.isInDOM,
                         callbacks: [{widget: self.view_editor}],
                     });
 
