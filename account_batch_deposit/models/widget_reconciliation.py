@@ -14,11 +14,14 @@ class AccountReconciliation(models.AbstractModel):
     def get_move_lines_by_batch_deposit(self, st_line_id, batch_deposit_id):
         """ As get_move_lines_for_bank_statement_line, but returns lines from a batch deposit """
         st_line = self.env['account.bank.statement.line'].browse(st_line_id)
-        payments = self.env['account.batch.deposit'].browse(batch_deposit_id).payment_ids
+        # batch deposits from any journal can be selected in bank statement reconciliation widget,
+        # so we need to filter not only on lines of type 'liquidity' but also on any bank/cash
+        # account set as 'Allow Reconciliation'.
+        for payment in self.env['account.batch.deposit'].browse(batch_deposit_id).payment_ids:
+            journal_accounts = [payment.journal_id.default_debit_account_id.id, payment.journal_id.default_credit_account_id.id]
+            move_lines |= payment.move_line_ids.filtered(lambda r: r.account_id.id in journal_accounts and r.account_id.reconcile)
 
-        move_lines = payments.mapped('move_line_ids').filtered(lambda r: r.account_id.internal_type == 'liquidity')
         target_currency = st_line.currency_id or st_line.journal_id.currency_id or st_line.journal_id.company_id.currency_id
-        # todo update
         return self._prepare_move_lines(move_lines, target_currency=target_currency, target_date=st_line.date)
 
     @api.model
@@ -30,9 +33,6 @@ class AccountReconciliation(models.AbstractModel):
 
         batch_deposits = []
         batch_deposits_domain = [('state', '!=', 'reconciled')]
-        if statement:
-            # If called on an empty recordset, don't filter on journal
-            batch_deposits_domain.append(('journal_id', 'in', tuple(set(statement.mapped('journal_id.id')))))
 
         for batch_deposit in Batch_deposit.search(batch_deposits_domain, order='id asc'):
             payments = batch_deposit.payment_ids

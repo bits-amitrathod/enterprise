@@ -99,10 +99,8 @@ var Model = {
         if (line.st_line.partner_id) {
             line.relevant_deposits = [];
         } else {
-            // Select deposits from the same journal as the bank statement
-            line.relevant_deposits = _.filter(this.batchDeposits, function (batch_deposit) {
-                return batch_deposit.journal_id === line.st_line.journal_id;
-            });
+            // Batch Deposits can only be used when thereis no partner selected
+            line.relevant_deposits = this.batchDeposits;
         }
         return this._super.apply(this, arguments);
     },
