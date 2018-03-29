@@ -39,7 +39,7 @@ class MrpProduction(models.Model):
         account = wc.costs_hour_account_id.id
         return {
             'name': wc_line.name + ' (H)',
-            'amount': value,
+            'amount': -value,
             'account_id': account,
             'ref': wc.code,
             'unit_amount': hours,
@@ -61,7 +61,7 @@ class MrpProduction(models.Model):
                 value = hours * wc.costs_hour
                 account = wc.costs_hour_account_id.id
                 if value and account:
-                    amount += value
+                    amount -= value
                     # we user SUPERUSER_ID as we do not guarantee an mrp user
                     # has access to account analytic lines but still should be
                     # able to produce orders
