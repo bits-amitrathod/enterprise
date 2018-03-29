@@ -275,10 +275,11 @@ var ViewEditorManager = Widget.extend({
         // The search view in studio has its own renderer.
         if (this.view_type === 'search') {
             if (this.mode === 'edition') {
-                def = $.when(new Editors.search(this, fields_view));
+                this.view = new Editors.search(this, fields_view);
             } else {
-                def = $.when(new SearchRenderer(this, fields_view));
+                this.view = new SearchRenderer(this, fields_view);
             }
+            def = $.when(this.view);
         } else {
             var View = view_registry.get(this.view_type);
             this.view = new View(fields_view, this.view_env);

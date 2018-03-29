@@ -968,6 +968,57 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('delete a field', function(assert) {
+        assert.expect(3);
+
+        var arch = "<search>" +
+                "<field name='display_name'/>" +
+            "</search>";
+        var fieldsView;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    assert.deepEqual(args.operations[0], {
+                        target: {
+                            attrs: {name: 'display_name'},
+                            tag: 'field',
+                        },
+                        type: 'remove',
+                    });
+                    fieldsView.arch = "<search/>";
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            search: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('[data-node-id]').length, 1, "there should be one node");
+        // edit the autocompletion field
+        vem.$('.o_web_studio_search_autocompletion_container [data-node-id]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        $('.modal .btn-primary').click();
+
+        assert.strictEqual(vem.$('[data-node-id]').length, 0, "there should be no node anymore");
+
+        vem.destroy();
+    });
+
     QUnit.module('Pivot');
 
     QUnit.test('empty pivot editor', function(assert) {
