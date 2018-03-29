@@ -7,6 +7,7 @@ var mailTestUtils = require('mail.testUtils');
 var ace = require('web_editor.ace');
 var concurrency = require('web.concurrency');
 var config = require('web.config');
+var dom = require('web.dom');
 var ListRenderer = require('web.ListRenderer');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
@@ -61,7 +62,13 @@ var createViewEditorManager = function (params) {
         widget.destroy();
     };
 
-    vem.appendTo($client_action);
+    var fragment = document.createDocumentFragment();
+    vem.appendTo(fragment).then(function () {
+        dom.append($client_action, fragment, {
+            callbacks: [{widget: vem}],
+            in_DOM: true,
+        });
+    });
     return vem;
 };
 

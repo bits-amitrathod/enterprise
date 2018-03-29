@@ -86,6 +86,26 @@ var Main = AbstractAction.extend({
             }
         });
     },
+    /**
+     * @override
+     */
+    on_attach_callback: function () {
+        this._super.apply(this, arguments);
+        this.isInDOM = true;
+        if (this.view_editor) {
+            this.view_editor.on_attach_callback();
+        }
+    },
+    /**
+     * @override
+     */
+    on_detach_callback: function () {
+        this._super.apply(this, arguments);
+        this.isInDOM = false;
+        if (this.view_editor) {
+            this.view_editor.on_detach_callback();
+        }
+    },
 
     //--------------------------------------------------------------------------
     // Private
@@ -215,7 +235,7 @@ var Main = AbstractAction.extend({
                         dom.detach([{widget: self.action_editor}]);
                     }
                     dom.append(self.$el, [fragment], {
-                        in_DOM: true,
+                        in_DOM: self.isInDOM,
                         callbacks: [{widget: self.view_editor}],
                     });
                 });
