@@ -1,5 +1,10 @@
 <odoo>
     <data noupdate="1">
+        <!-- Project forecast will warn if the user assigned to a forecast doesn't have a timezone -->
+        <record id="base.user_demo" model="res.users">
+            <field name="tz">Europe/Brussels</field>
+        </record>
+
         <record id="project.project_project_2" model="project.project">
             <field name="allow_forecast" eval="True"/>
             <field name="date_start" eval="(datetime.now().date().replace(day=1) + relativedelta(months=-3)).isoformat()"/>

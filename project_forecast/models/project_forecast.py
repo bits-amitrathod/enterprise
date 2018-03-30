@@ -2,11 +2,15 @@
 
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
+import pytz
+import logging
 
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 from odoo.tools import pycompat
+
+_logger = logging.getLogger(__name__)
 
 
 class ProjectForecast(models.Model):
@@ -80,12 +84,22 @@ class ProjectForecast(models.Model):
     @api.one
     @api.depends('resource_hours', 'start_date', 'end_date', 'employee_id.resource_calendar_id')
     def _compute_time(self):
+        # We want to compute the number of hours that an **employee** works between 00:00:00 and 23:59:59
+        # according to him -- his **timezone**
         start = fields.Datetime.from_string(self.start_date)
         stop = fields.Datetime.from_string(self.end_date).replace(hour=23, minute=59, second=59, microsecond=999999)
+        employee_tz = self.employee_id.user_id.tz and pytz.timezone(self.employee_id.user_id.tz)
+        if employee_tz:
+            start = employee_tz.localize(start).astimezone(pytz.utc)
+            stop = employee_tz.localize(stop).astimezone(pytz.utc)
+        tz_warning = _('The employee (%s) doesn\'t have a timezone, this might cause errors in the time computation. It is configurable on the user linked to the employee') % self.employee_id.name
         if self.employee_id.resource_calendar_id:
-            hours = self.employee_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
+            if not employee_tz:
+                _logger.warning(tz_warning)
+            hours = self.employee_id.with_context(tz=self.employee_id.user_id.tz).resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
             if hours == 0:
-                raise UserError(_("You cannot set a user with no working time."))
+                raise UserError(_("You cannot set a user with no working time.") +
+                                (('\n' + tz_warning) if not employee_tz else ''))
             self.time = self.resource_hours * 100.0 / hours
         else:
             self.time = 0
