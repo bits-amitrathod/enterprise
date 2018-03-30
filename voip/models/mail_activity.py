@@ -68,14 +68,12 @@ class MailActivity(models.Model):
     @api.multi
     def action_feedback(self, feedback=False):
         mail_message_id = False
-        phone_activities = self.filtered(lambda self: self.voip_phonecall_id)
+        phone_activities = self.filtered(lambda a: a.voip_phonecall_id)
         if phone_activities:
             remaining = self - phone_activities
             for activity in phone_activities:
                 user_id = activity.user_id.partner_id.id
                 note = activity.note
-                mail_message_id = super(MailActivity, activity).action_feedback(feedback)
-
                 vals = {
                     'state': 'done',
                     'mail_message_id': mail_message_id,
@@ -88,6 +86,7 @@ class MailActivity(models.Model):
                     (self._cr.dbname, 'res.partner', user_id),
                     {'type': 'refresh_voip'}
                 )
+                mail_message_id = super(MailActivity, activity).action_feedback(feedback)
         else:
             remaining = self
         if remaining:
