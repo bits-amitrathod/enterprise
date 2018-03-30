@@ -21,7 +21,7 @@ class AccountReconciliation(models.AbstractModel):
         move_lines = self.env['account.move.line']
         for payment in self.env['account.batch.deposit'].browse(batch_deposit_id).payment_ids:
             journal_accounts = [payment.journal_id.default_debit_account_id.id, payment.journal_id.default_credit_account_id.id]
-            move_lines |= payment.move_line_ids.filtered(lambda r: r.account_id.id in journal_accounts and r.account_id.reconcile)
+            move_lines |= payment.move_line_ids.filtered(lambda r: r.account_id.id in journal_accounts)
 
         target_currency = st_line.currency_id or st_line.journal_id.currency_id or st_line.journal_id.company_id.currency_id
         return self._prepare_move_lines(move_lines, target_currency=target_currency, target_date=st_line.date)

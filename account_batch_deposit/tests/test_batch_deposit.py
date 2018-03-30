@@ -22,7 +22,6 @@ class TestBatchDeposit(AccountingTestCase):
             'code': 'BNKT',
             'name': 'Bank Test',
             'user_type_id': self.ref('account.data_account_type_liquidity'),
-            'reconcile': True,
         })
         self.journal = self.env['account.journal'].create({
             'name': 'Bank Test',
