@@ -1,0 +1,40 @@
+.o_dashboard_view {
+    height: auto;
+    background-color: white;
+
+    .o_horizontal_separator {
+        text-transform: uppercase;
+        color: @odoo-brand-optional;
+    }
+
+    .o_formula:hover {
+    	cursor: default;
+    }
+
+	.o_aggregate {
+		display: inline-block;
+		&:hover {
+			color: black;
+			cursor: pointer;
+			label {
+				cursor: pointer;
+			}
+		}
+	}
+    .o_value {
+	    font-weight: bold;
+	    font-size: 20px;
+	}
+
+	.o_subview {
+		.o_view_nocontent {
+			position: relative;
+		}
+		.o_view_controller {
+			margin-top: 10px;
+		}
+		&[type=graph] .o_view_controller {
+			height: 300px;
+		}
+	}
+}
