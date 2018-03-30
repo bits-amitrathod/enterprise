@@ -17,7 +17,7 @@ class AccountBankStatementImport(models.TransientModel):
             root = etree.parse(io.BytesIO(data_file)).getroot()
         except:
             return None
-        if root.tag.find('camt.053'):
+        if root.tag.find('camt.053') != -1:
             return root
         return None
 
