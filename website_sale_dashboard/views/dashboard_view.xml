@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sale_dashboard_view">
+            <field name="name">Website Sale: Dashboard View</field>
+            <field name="model">sale.report</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <dashboard>
+                    <view type="graph" ref="sale_report.view_order_product_graph"/>
+                        <group col="1" string="At a glance">
+                            <group col="3">
+                                <aggregate name="price_subtotal_confirmed_orders" field="price_subtotal" string="Sold" domain="[['state', 'in', ['sale','done']]]" widget="monetary" domain_label="Confirmed Orders"/>
+                                <aggregate name="order_id_confirmed_orders" field="order_id" string="Orders" domain="[['state', 'in', ['sale','done']]]" domain_label="Confirmed Orders"/>
+                                <aggregate name="price_subtotal_abandoned_carts" field="price_subtotal" string="Abandoned Carts" domain="[['is_abandoned_cart', '=', True]]" widget="monetary"/>
+                            </group>
+                            <group col="3">
+                                <aggregate name="price_subtotal_all_orders" field="price_subtotal" invisible="1" domain="[['state', 'in', ['done','sale','draft','sent']]]"/>
+                                <formula name="conversion" string="Conversion" value="record.price_subtotal_confirmed_orders / record.price_subtotal_all_orders" widget="percentage"/>
+                                <formula name="total" string="Average Untaxed Total" value="record.price_subtotal_confirmed_orders / record.order_id_confirmed_orders" widget="monetary"/>
+                            </group>
+                        </group>
+                    <view type="pivot" ref="sale_report.view_order_product_pivot"/>
+                </dashboard>
+            </field>
+        </record>
+
+        <record id="sale_dashboard_search_view" model="ir.ui.view">
+            <field name="name">Website Sale: Search View</field>
+            <field name="model">sale.report</field>
+            <field name="arch" type="xml">
+                <search string="e-Commerce Analysis">
+                    <field name="date"/>
+                    <filter name="today" string="Today" domain="[['date', '=', context_today().strftime('%Y-%m-%d')]]"/>
+                    <filter name="week" string="This Week"
+                                domain="[
+                                    '&amp;',
+                                    ('date', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                                    ('date', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),
+                                ]"/>
+                    <filter string="This Month" name="month" domain="[('date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                    <filter string="This Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="sale_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">dashboard</field>
+            <field name="domain">[('team_id.team_type', '=', 'website')]</field>
+            <field name="search_view_id" ref="sale_dashboard_search_view"/>
+        </record>
+    </data>
+</odoo>
