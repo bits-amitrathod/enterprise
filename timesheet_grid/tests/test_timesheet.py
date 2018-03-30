@@ -8,7 +8,7 @@ from odoo import fields
 
 from odoo.addons.web_grid.models import END_OF
 from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
 
 
 class TestTimesheetValidation(TestCommonTimesheet):
@@ -50,7 +50,7 @@ class TestTimesheetValidation(TestCommonTimesheet):
         with self.assertRaises(AccessError):
             self.timesheet2.sudo(self.user_employee.id).unlink()
         # Employee can not create new timesheet in the validated period
-        with self.assertRaises(AccessError):
+        with self.assertRaises(ValidationError):
             last_month = fields.Date.to_string(datetime.now() - relativedelta(months=1))
             self.env['account.analytic.line'].sudo(self.user_employee.id).create({
                 'name': "my timesheet 3",

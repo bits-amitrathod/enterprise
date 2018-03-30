@@ -18,7 +18,7 @@ class AnalyticLine(models.Model):
     amount = fields.Monetary(copy=False)
     validated = fields.Boolean("Validated line", compute='_compute_timesheet_validated', store=True, compute_sudo=True)
     is_timesheet = fields.Boolean(
-        string="Timesheet Line",
+        string="Timesheet Line", compute_sudo=True,
         compute='_compute_is_timesheet', search='_search_is_timesheet',
         help="Set if this analytic line represents a line of timesheet.")
     task_id = fields.Many2one(group_expand='_read_group_task_ids')
@@ -96,24 +96,9 @@ class AnalyticLine(models.Model):
     def create(self, vals):
         line = super(AnalyticLine, self).create(vals)
         # A line created before validation limit will be automatically validated
-        if not self.user_has_groups('hr_timesheet.group_hr_timesheet_user') and line.is_timesheet and line.validated:
-            raise ValidationError(_('Only a Timesheets Officer is allowed to create an entry older than the validation limit.'))
+        if not self.user_has_groups('hr_timesheet.group_timesheet_manager') and line.is_timesheet and line.validated:
+            raise ValidationError(_('Only a Timesheets Manager is allowed to create an entry older than the validation limit.'))
         return line
-
-    @api.multi
-    def write(self, vals):
-        res = super(AnalyticLine, self).write(vals)
-        # Write then check: otherwise, the use can create the timesheet in the future, then change
-        # its date.
-        if not self.user_has_groups('hr_timesheet.group_hr_timesheet_user') and self.filtered(lambda r: r.is_timesheet and r.validated):
-            raise ValidationError(_('Only a Timesheets Officer is allowed to modify a validated entry.'))
-        return res
-
-    @api.multi
-    def unlink(self):
-        if not self.user_has_groups('hr_timesheet.group_hr_timesheet_user') and self.filtered(lambda r: r.is_timesheet and r.validated):
-            raise ValidationError(_('Only a Timesheets Officer is allowed to delete a validated entry.'))
-        return super(AnalyticLine, self).unlink()
 
     @api.multi
     def adjust_grid(self, row_domain, column_field, column_value, cell_field, change):
