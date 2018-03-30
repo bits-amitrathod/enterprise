@@ -17,6 +17,7 @@ class AccountReconciliation(models.AbstractModel):
         # batch deposits from any journal can be selected in bank statement reconciliation widget,
         # so we need to filter not only on lines of type 'liquidity' but also on any bank/cash
         # account set as 'Allow Reconciliation'.
+        move_lines = self.env['account.move.line']
         for payment in self.env['account.batch.deposit'].browse(batch_deposit_id).payment_ids:
             journal_accounts = [payment.journal_id.default_debit_account_id.id, payment.journal_id.default_credit_account_id.id]
             move_lines |= payment.move_line_ids.filtered(lambda r: r.account_id.id in journal_accounts and r.account_id.reconcile)
@@ -28,7 +29,6 @@ class AccountReconciliation(models.AbstractModel):
     def get_batch_deposits_data(self, bank_statement_ids):
         """ Return a list of dicts containing informations about unreconciled batch deposits """
 
-        statement = self.env['account.bank.statement'].browse(bank_statement_ids)
         Batch_deposit = self.env['account.batch.deposit']
 
         batch_deposits = []
