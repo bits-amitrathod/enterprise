@@ -5,16 +5,16 @@
 # Translators:
 # e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# liAnGjiA <liangjia@qq.com>, 2017
 # Martin Trigaux, 2017
 # liulixia <liu.lixia@elico-corp.com>, 2017
+# liAnGjiA <liangjia@qq.com>, 2017
 # Ted Wang <feiyuwang2012@gmail.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
-# 卓忆科技 <zhanghao@jointd.com>, 2017
 # niulin lnc. <admin@niulin.net>, 2017
 # Talway <9010446@qq.com>, 2017
 # Si Ling Lau <happy8645@hotmail.com>, 2017
+# 卓忆科技 <zhanghao@jointd.com>, 2017
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018
 # 老窦 北京 <2662059195@qq.com>, 2018
 # e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
@@ -682,7 +682,7 @@ msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
-msgstr "所收的邮件都将附上一条线程（记录）选配的ID，即使它们不曾回复过它。如果设置了，这个将完全阻止新记录的创建。"
+msgstr "所有的收件都将附上一条线程（记录）选配的ID，即使它们不曾回复过它。如果设置了，这个将完全阻止新记录的创建。"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
@@ -744,10 +744,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
-"政策是通过邮件网关在文档上提交一个消息\n"
-"- everyone: 任何人都可以提交\n"
-"- partners: 只有认证过的合作伙伴\n"
-"- followers: 只有相关文件或下列频道成员的跟随者\n"
+"通过邮件网关在文档上提交一个消息的政策。\n"
+"- 每一个人: 任何人都可以提交\n"
+"- 合作伙伴：只有认证过的合作伙伴\n"
+"- 追随者: 只有相关文件或下列频道成员的跟随者\n"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_preventive
@@ -1073,8 +1073,7 @@ msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
-msgstr ""
-"相应于这个别名对应的模型(Odoo单据种类)。任何一封不属于对某个已存在的记录的收件，将导致此模型中新记录的创建(例如，一个新的项目任务)。"
+msgstr "相应于此别名对应的模型(Odoo单据种类)。任何一封不属于对某个已存在的记录的收件，将导致此模型中新记录的创建(例如：一个新的项目任务)。"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_name
@@ -1091,7 +1090,7 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
-"在收到此别名的电子邮件时创建记录的所有者。如果此字段未设置，系统将尝试根据发件人(发件人)地址查找正确的所有者，或者如果没有找到该地址的系统用户，将使用管理员帐户。"
+"在收到此别名的电子邮件时创建记录的所有者。如果此字段未设置，系统将尝试根据发件人(发件人)地址查找正确的所有者，或者如果没有找到该地址的系统用户将使用管理员帐户。"
 
 #. module: quality
 #: model:res.groups,comment:quality.group_quality_manager

@@ -110,6 +110,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
+"Un dizionario Python che verrà valutato per fornire valori predefiniti "
+"durante la creazione di nuovi record per questo alias."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_active
@@ -250,7 +252,7 @@ msgstr "Archiviato"
 #. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
-msgstr ""
+msgstr "Prima Possibile"
 
 #. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
@@ -270,7 +272,7 @@ msgstr "Allegati"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
 msgid "Bill of Material"
-msgstr ""
+msgstr "Distinta base"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:150
@@ -280,7 +282,7 @@ msgstr ""
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_boms
 #, python-format
 msgid "Bill of Materials"
-msgstr ""
+msgstr "Distinta Base"
 
 #. module: mrp_plm
 #: selection:mrp.eco,kanban_state:0
@@ -739,7 +741,7 @@ msgstr ""
 #. module: mrp_plm
 #: selection:mrp.eco,priority:0
 msgid "High"
-msgstr ""
+msgstr "Alto"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_id
@@ -759,6 +761,8 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
+"ID del record padre che contiene l’alias (esempio: progetto che contiene "
+"l’alias di creazione dell’attività)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_active
@@ -787,12 +791,12 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_is_rejected
 msgid "Is Rejected"
-msgstr ""
+msgstr "È Rifiutato"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval.template,approval_type:0
 msgid "Is required to approve"
-msgstr ""
+msgstr "È richiesto per l'approvazione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_kanban_state
@@ -970,6 +974,9 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"ID facoltativo di un thread (record) a cui verranno allegati tutti i "
+"messaggi in arrivo, anche se non hanno risposto ad esso. Se impostato, "
+"disabiliterà completamente la creazione di nuovi record."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -995,7 +1002,7 @@ msgstr "Modello Genitore"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "ID discussione record principale"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_parent_model_id
@@ -1004,6 +1011,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"Modello principale con alias. Il modello che contiene il riferimento alias "
+"non è necessariamente il modello fornito da alias_model_id (esempio: "
+"progetto (parent_model) e attività (modello))"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_contact
@@ -1013,6 +1023,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Politica per pubblicare un messaggio sul documento utilizzando il mail gateway.\n"
+"- tutti: tutti possono postare\n"
+"- partner: solo partner autenticati\n"
+"- follower: solo follower del documento correlato o membri dei seguenti canali\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_previous_bom_id
@@ -1098,12 +1112,12 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "Registra ID discussione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_name
 msgid "Reference"
-msgstr ""
+msgstr "Riferimento"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1334,6 +1348,10 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"Il modello (Odoo Document Kind) a cui corrisponde questo alias. Qualsiasi "
+"messaggio di posta elettronica in arrivo che non risponde a un record "
+"esistente causerà la creazione di un nuovo record di questo modello (ad "
+"esempio un’attività di progetto)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_name
@@ -1341,6 +1359,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"Il nome dell’alias email, ad es. “lavori” se vuoi prendere e-mail per "
+"<jobs@example.odoo.com>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -1350,6 +1370,11 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"Il proprietario dei record creati al ricevimento di e-mail su questo alias. "
+"Se questo campo non è impostato, il sistema tenterà di trovare il "
+"proprietario corretto in base all’indirizzo mittente (Da) o utilizzerà "
+"l’account Amministratore se nessun utente di sistema viene trovato per "
+"quell’indirizzo."
 
 #. module: mrp_plm
 #. openerp-web
@@ -1370,7 +1395,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,state:0
 msgid "To Do"
-msgstr ""
+msgstr "Da fare"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search

@@ -15,14 +15,15 @@
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
 # fausthuang, 2017
 # Xu Lei <xulei8@qq.com>, 2017
-# liulixia <liu.lixia@elico-corp.com>, 2017
 # Talway <9010446@qq.com>, 2017
 # 卓忆科技 <zhanghao@jointd.com>, 2017
 # Michael Chong <michaelchong2005@gmail.com>, 2017
+# liulixia <liu.lixia@elico-corp.com>, 2017
 # xiaobin wu <bd5dml@gmail.com>, 2017
 # Ted Wang <feiyuwang2012@gmail.com>, 2017
 # Bo Cao, 2017
 # waveyeung <waveyeung@qq.com>, 2017
+# e2f_cn r14 <e2f_cn_r14@outlook.com>, 2017
 # Si Ling Lau <happy8645@hotmail.com>, 2017
 # e2f <projects@e2f.com>, 2018
 msgid ""
@@ -131,73 +132,73 @@ msgid ""
 "        "
 msgstr ""
 "<?xml version=\"1.0\"?>\n"
-"\n"
+"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
 "% set access_token = object.rating_get_access_token()\n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" 满意度调查\n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" 您好，\n"
-" 请花些时间为与已分配到 ${object.rating_get_rated_partner_id().name} 的服务单 \"${object.name}\"\n"
-" 相关的服务进行评价。\n"
-" 我们期待您的反馈。<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\"><table style=\"width:600px;margin:5px auto;\"><tbody><tr><td><a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a></td>这将帮助我们不断改进。\n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" 请让我们了解您对我们服务的满意度：\n"
-" \n"
-"（点击其中的一个表情）\n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" ${(object.user_id.signature or '') | safe}\n"
-" \n"
-" \n"
-" \n"
-" \n"
-" \n"
-" 这项客户调查已被发送，因为您的服务单已移至 ${object.stage_id.name} 阶段\n"
-" 电子邮件将由 Odoo 帮助中心向 ${object.team_id.company_id.name} 发送\n"
-" \n"
-" \n"
-" \n"
-"\n"
-"<td style=\"text-align:right;vertical-align:middle;\"></td></tr></tbody></table><table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\"><tbody><tr><td style=\"padding:15px 20px 10px 20px;\"><p></p><p><strong></strong><strong></strong></p><p></p></td></tr><tr><td style=\"padding:10px 20px\"><table summary=\"o_mail_notification\" style=\"width:100%;border-top:1px solid #e1e1e1;\"><tr><td style=\"text-align:center;\"><h2 style=\"font-weight:300;font-size:18px;\"></h2><div style=\"text-color: #888888\"></div></td></tr><tr><td style=\"padding:10px 10px;\"><table style=\"width:100%;text-align:center;\"><tr><td><a href=\"/rating/${access_token}/10\"><img alt=\"Satisfied\" src=\"/rating/static/src/img/rating_10.png\" title=\"Satisfied\"/></a></td><td><a href=\"/rating/${access_token}/5\"><img alt=\"Not satisfied\" src=\"/rating/static/src/img/rating_5.png\" title=\"Not satisfied\"/></a></td><td><a href=\"/rating/${access_token}/1\"><img alt=\"Highly Dissatisfied\" src=\"/rating/static/src/img/rating_1.png\" title=\"Highly Dissatisfied\"/></a></td></tr></table></td></tr></table></td></tr><tr><td style=\"padding:15px 20px 10px 20px;\"></td></tr></tbody></table><table style=\"width:600px;margin:auto;text-align:center;font-size:12px;\"><tbody><tr><td style=\"padding-top:10px;color:#afafaf;\"><p><b></b></p><p><a target=\"_blank\" href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\"></a><a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\"></a></p></td></tr></tbody></table></div>"
+"    <table style=\"width:600px;margin:5px auto;\">\n"
+"        <tbody>\n"
+"            <tr><td>\n"
+"                <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
+"            </td><td style=\"text-align:right;vertical-align:middle;\">\n"
+"                    满意度调查\n"
+"            </td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"    <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
+"        <tbody>\n"
+"            <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
+"                <p>您好！</p>\n"
+"                <p>请花一些宝贵时间评价与 \"<strong>${object.name}</strong>\" 服务单相关的服务，\n"
+"                   服务单已经分配到 <strong>${object.rating_get_rated_partner_id().name}</strong>。</p>\n"
+"                <p>我们期待您的反馈，以帮助我们不断改进。</p>\n"
+"            </td></tr>\n"
+"            <tr><td style=\"padding:10px 20px\">\n"
+"                <table summary=\"o_mail_notification\" style=\"width:100%;border-top:1px solid #e1e1e1;\">\n"
+"                    <tr>\n"
+"                        <td style=\"text-align:center;\">\n"
+"                            <h2 style=\"font-weight:300;font-size:18px;\">\n"
+"                                请告诉我们您对服务的感受：\n"
+"                            </h2>\n"
+"                            <div style=\"text-color: #888888\">（请点击其中一个表情）</div>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px;\">\n"
+"                            <table style=\"width:100%;text-align:center;\">\n"
+"                                <tr>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/10\">\n"
+"                                            <img alt=\"Satisfied\" src=\"/rating/static/src/img/rating_10.png\" title=\"Satisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/5\">\n"
+"                                            <img alt=\"Not satisfied\" src=\"/rating/static/src/img/rating_5.png\" title=\"Not satisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/1\">\n"
+"                                            <img alt=\"Highly Dissatisfied\" src=\"/rating/static/src/img/rating_1.png\" title=\"Highly Dissatisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </table>\n"
+"            </td></tr>\n"
+"            <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '') | safe}</td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"    <table style=\"width:600px;margin:auto;text-align:center;font-size:12px;\">\n"
+"        <tbody>\n"
+"            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
+"                <p>此客户调查已经发送，因为您的服务单已经移动到阶段 <b>${object.stage_id.name}</b></p>\n"
+"                <p>电子邮件由 <a target=\"_blank\" href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo 服务台</a>根据<a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a>自动发送</p>\n"
+"            </td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
@@ -221,22 +222,20 @@ msgid ""
 "        "
 msgstr ""
 "<?xml version=\"1.0\"?>\n"
-"\n"
-" \n"
-" 亲爱的 ${object.sudo().partner_id.name or 'Madam, Sir'}，\n"
-" \n"
-" \n"
-" 该自动消息通知您，我们已经关闭了您的服务单 (reference ${object.id})。\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"<div style=\"margin-left:30px;align=center;\">\n"
+"亲爱的 ${object.sudo().partner_id.name or 'Madam, Sir'}，\n"
+"</div>\n"
+" <div style=\"margin-left:30px;align=center;\" width=\"60%\">该自动消息通知您，我们已经关闭了您的服务单 (reference ${object.id})。\n"
 "\n"
 " 我们希望所提供的服务达到了您的预期。\n"
 " 如果您有其他任何问题或意见，尽管回复此电子邮件，我们将重新打开您的服务单。\n"
 "\n"
-" 谢谢您的合作。\n"
+" 谢谢您的合作。</div><br/>\n"
 " \n"
-" 谨致问候， \n"
-" ${object.team_id.name or 'Helpdesk'} 团队。\n"
-"\n"
-"<div style=\"max-width:600px; height:auto; margin-left:30px;\"><div style=\"margin-left:30px;align=center;\"></div><div style=\"margin-left:30px;align=center;\" width=\"60%\"></div><br/><span style=\"margin-left:30px;font-weight:normal;\"></span><span style=\"margin-left:30px;font-weight:normal;\"></span></div>"
+" <span style=\"margin-left:30px;font-weight:normal;\">谨致问候， </span>\n"
+" <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} 团队。</span>\n"
+"</div>"
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
@@ -1123,7 +1122,7 @@ msgid ""
 "You can search ticket by typing /helpdesk_search [Keyword1],[Keyword2],."
 msgstr ""
 "在频道中：你可以创建新的服务单，通过输入/helpdesk [服务单主题]。你可以搜索服务单，通过输入/helpdesk_search "
-"[关键词1],[关键词2]。"
+"[关键词1],[关键词2],。"
 
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_in_progress
@@ -1394,7 +1393,7 @@ msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
-msgstr "所收的邮件都将附上一条线程（记录）选配的ID，即使它们不曾回复过它。如果设置了，这个将完全阻止新记录的创建。"
+msgstr "所有收到的邮件都将附上一条线程（记录）选配的ID，即使它们不曾回复过它。如果设置了，这将完全阻止新记录的创建。"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_user_id
@@ -1735,14 +1734,16 @@ msgstr "阶段"
 msgid ""
 "Stages the team will use. This team's tickets will only be able to be in "
 "these stages."
-msgstr "团队将要使用的阶段，这个团队的服务单都会在这些阶段中。"
+msgstr "团队将要使用的阶段。这个团队的服务单都会在这些阶段中。"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_stage_action
 msgid ""
 "Stages will allow operators to easily track how a specific\n"
 "            tickets are positioned in the process."
-msgstr "阶段可以运行操作员轻松的追踪服务单的整个处理流程。"
+msgstr ""
+"阶段可以允许运行操作员轻松的追踪一个特定的\n"
+"服务单时如何处于流程。"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -1809,7 +1810,7 @@ msgstr "摘要"
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_tag_action
 msgid "Tags allows to organize tickets."
-msgstr "标签允许组织管理服务单。"
+msgstr "标签允许管理服务单。"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -1886,8 +1887,7 @@ msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
-msgstr ""
-"相应于这个别名对应的模型(Odoo单据种类)。任何一封不属于对某个已存在的记录的收件，将导致此模型中新记录的创建(例如，一个新的项目任务)。"
+msgstr "此别名对应的模型(Odoo单据种类)。任何一封非回复已存在的记录的收件将导致此模型创建新的记录(例如：一个项目任务)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_name
@@ -1904,7 +1904,7 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
-"在收到此别名的电子邮件时创建记录的所有者。如果此字段未设置，系统将尝试根据发件人(发件人)地址查找正确的所有者，或者如果没有找到该地址的系统用户，将使用管理员帐户。"
+"收到此别名的电子邮件时创建记录的所有者。如果此字段未设置，系统将尝试根据发件人(发件人)地址查找正确的所有者，或者如果没有找到该地址的系统用户，将使用管理员帐户。"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -1927,7 +1927,7 @@ msgstr "这需要安装项目模块。"
 #: code:addons/helpdesk/models/helpdesk.py:345
 #, python-format
 msgid "This target does not exist."
-msgstr "这个目标不存在."
+msgstr "这个目标不存在。"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
@@ -2078,7 +2078,7 @@ msgstr "Twitter"
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_type_action
 msgid "Type allows to organize tickets."
-msgstr "类型允许组织管理服务单。"
+msgstr "允许管理服务单的类型。"
 
 #. module: helpdesk
 #: sql_constraint:helpdesk.ticket.type:0
@@ -2181,7 +2181,7 @@ msgstr "想要<b>提高您的客户满意度？</b><br/><i>点击帮助中心开
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_form
 msgid "Website Form"
-msgstr "网站页面"
+msgstr "网站表格"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -2207,7 +2207,7 @@ msgstr "如果要改变分配方式，你必须要有可分配的团队成员。
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Your teams will appear here."
-msgstr "你的团队会出现在这里."
+msgstr "你的团队会出现在这里。"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -2217,7 +2217,7 @@ msgstr "天<br/>"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "e.g. Close urgent tickets within 36 hours"
-msgstr "例如：36小时解决紧急的服务单"
+msgstr "例如：36小时内紧急解决的服务单"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_slides
