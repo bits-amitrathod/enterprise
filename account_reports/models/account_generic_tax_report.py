@@ -126,6 +126,9 @@ class generic_tax_report(models.AbstractModel):
                 taxes[result[0]]['periods'][period_number]['net'] = result[1]
                 taxes[result[0]]['show'] = True
 
+    def _get_type_tax_use_string(self, value):
+        return [option[1] for option in self.env['account.tax']._fields['type_tax_use'].selection if option[0] == value][0]
+
     @api.model
     def get_lines(self, options, line_id=None):
         taxes = {}
@@ -139,7 +142,7 @@ class generic_tax_report(models.AbstractModel):
             period_number += 1
             self.with_context(date_from=period.get('date_from'), date_to=period.get('date_to'))._compute_from_amls(options, taxes, period_number)
         lines = []
-        types = ['sale', 'purchase']
+        types = ['sale', 'purchase', 'adjustment']
         groups = dict((tp, {}) for tp in types)
         for key, tax in taxes.items():
             if tax['obj'].type_tax_use == 'none':
@@ -155,10 +158,12 @@ class generic_tax_report(models.AbstractModel):
             groups[tax['obj'].type_tax_use][key] = tax
         line_id = 0
         for tp in types:
+            if not any([tax.get('show') for key, tax in groups[tp].items()]):
+                continue
             sign = tp == 'sale' and -1 or 1
             lines.append({
                     'id': tp,
-                    'name': tp == 'sale' and _('Sale') or _('Purchase'),
+                    'name': self._get_type_tax_use_string(tp),
                     'unfoldable': False,
                     'columns': [{} for k in range(0, 2*(period_number+1) or 2)],
                     'level': 1,
