@@ -186,14 +186,21 @@ class MarketingCampaign(models.Model):
             to_create = db_rec_ids - existing_rec_ids
             to_remove = existing_rec_ids - db_rec_ids
 
-            for rec_id in to_create:
+            BATCH_SIZE = 100
+            for index, rec_id in enumerate(to_create, start=1):
                 participants |= participants.create({
                     'campaign_id': campaign.id,
                     'res_id': rec_id,
                 })
+                if not index % BATCH_SIZE:
+                    self.env.cr.commit()
 
             if to_remove:
-                participants.search([('res_id', 'in', list(to_remove))]).action_set_unlink()
+                participants_to_unlink = participants.search([('res_id', 'in', list(to_remove))])
+                for index, participant in enumerate(participants_to_unlink, start=1):
+                    participant.action_set_unlink()
+                    if not index % BATCH_SIZE:
+                        self.env.cr.commit()
 
         return participants
 
@@ -427,8 +434,13 @@ class MarketingActivity(models.Model):
                 trace_to_activities[trace.activity_id] |= trace
 
         # execute activity on their traces
+        BATCH_SIZE = 40
+        index = 1
         for activity, traces in trace_to_activities.items():
             activity.execute_on_traces(traces)
+            if not index % BATCH_SIZE:
+                self.env.cr.commit()
+            index += 1
 
     def execute_on_traces(self, traces):
         """ Execute current activity on given traces.
