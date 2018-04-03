@@ -75,7 +75,7 @@ class AccountBankStatementImport(models.TransientModel):
                     entry_vals['currency_id'] = curr_cache[instruc_curr[0]]
 
                 # Date 0..1
-                transaction_date = entry.xpath('ns:ValDt/ns:Dt/text() | ns:BookgDt/ns:Dt/text()', namespaces=ns)
+                transaction_date = entry.xpath('ns:ValDt/ns:Dt/text() | ns:BookgDt/ns:Dt/text() | ns:BookgDt/ns:DtTm/text()', namespaces=ns)
                 entry_vals['date'] = transaction_date and transaction_date[0] or False
 
                 # Name 0..1
