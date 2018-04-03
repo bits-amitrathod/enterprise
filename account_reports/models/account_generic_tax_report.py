@@ -231,7 +231,7 @@ class AccountReportContextTax(models.TransientModel):
             columns += [_('Base Amount') + '\n' + self.get_cmp_date(), _('Tax')]
         else:
             for period in self.get_cmp_periods(display=True):
-                columns += [_('Base Amount') + '\n' + str(period), _('Tax')]
+                columns += [_('Base Amount') + '\n' + period or '', _('Tax')]
         return columns
 
     @api.multi
