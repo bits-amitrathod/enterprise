@@ -36,22 +36,4 @@ FieldStatus.include({
     },
 });
 
-relational_fields.FieldOne2Many.include({
-
-    //--------------------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------------------
-
-    /**
-     * @override
-     * @private
-     */
-    _renderButtons: function () {
-        if (this.activeActions.create) {
-            _.extend(this.nodeOptions, { create_text: _t('Add')});
-            this._super.apply(this, arguments);
-        }
-    },
-});
-
 });
