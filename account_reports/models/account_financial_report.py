@@ -224,17 +224,20 @@ class ReportAccountFinancialReport(models.Model):
                         'id': report.id,
                     },
                 }
-                action_id = IMD._update('ir.actions.client', module, action_vals,
-                                    xml_id='account_financial_html_report_action_' + str(report.id), noupdate=True)
+                action_xmlid = "%s.%s" % (module, 'account_financial_html_report_action_' + str(report.id))
+                data = dict(xml_id=action_xmlid, values=action_vals, noupdate=True)
+                action = self.env['ir.actions.client']._load_records([data])
+
                 menu_vals = {
                     'name': report._get_report_name(),
                     'parent_id': parent_id or IMD.xmlid_to_res_id('account.menu_finance_reports'),
-                    'action': 'ir.actions.client,%s' % (action_id,),
+                    'action': 'ir.actions.client,%s' % (action.id,),
                 }
+                menu_xmlid = "%s.%s" % (module, 'account_financial_html_report_menu_' + str(report.id))
+                data = dict(xml_id=menu_xmlid, values=menu_vals, noupdate=True)
+                menu = self.env['ir.ui.menu']._load_records([data])
 
-                new_menu = IMD._update('ir.ui.menu', module, menu_vals,
-                            xml_id='account_financial_html_report_menu_' + str(report.id), noupdate=True)
-                self.write({'generated_menu_id': new_menu})
+                self.write({'generated_menu_id': menu.id})
 
     @api.model
     def create(self, vals):
