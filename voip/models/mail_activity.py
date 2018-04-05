@@ -74,19 +74,21 @@ class MailActivity(models.Model):
             for activity in phone_activities:
                 user_id = activity.user_id.partner_id.id
                 note = activity.note
+                voip_phonecall_id = activity.voip_phonecall_id
+                mail_message_id = super(MailActivity, activity).action_feedback(feedback)
+
                 vals = {
                     'state': 'done',
                     'mail_message_id': mail_message_id,
                     'note': feedback if feedback else note,
                 }
-                if not activity.voip_phonecall_id.call_date:
+                if not voip_phonecall_id.call_date:
                     vals.update(call_date=fields.Datetime.now())
-                activity.voip_phonecall_id.write(vals)
+                voip_phonecall_id.write(vals)
                 self.env['bus.bus'].sendone(
                     (self._cr.dbname, 'res.partner', user_id),
                     {'type': 'refresh_voip'}
                 )
-                mail_message_id = super(MailActivity, activity).action_feedback(feedback)
         else:
             remaining = self
         if remaining:
