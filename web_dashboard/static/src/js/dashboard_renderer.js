@@ -7,7 +7,7 @@ var FormRenderer = require('web.FormRenderer');
 var viewRegistry = require('web.view_registry');
 
 var DashboardRenderer = FormRenderer.extend({
-    className: "o_dashboard_view o_form_view",
+    className: "o_dashboard_view",
     events: {
         'click .o_aggregate': '_onAggregateClicked',
     },
@@ -148,7 +148,7 @@ var DashboardRenderer = FormRenderer.extend({
 
         // render the button to open the view in full screen
         $('<button>')
-            .addClass("btn btn-default fa fa-codepen o_button_switch")
+            .addClass("btn btn-default fa fa-expand pull-right o_button_switch")
             .attr({title: 'Full Screen View', viewType: controller.viewType})
             .tooltip()
             .on('click', this._onViewSwitcherClicked.bind(this))
