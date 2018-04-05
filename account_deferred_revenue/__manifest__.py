@@ -15,9 +15,6 @@ Keeps track of the revenue recognition installments, and creates corresponding j
     """,
     'website': 'https://www.odoo.com/page/accounting',
     'category': 'Accounting',
-    'demo': [
-        'demo/account_deferred_revenue_demo.xml',
-    ],
     'data': [
         'wizard/wizard_asset_compute_view.xml',
         'report/account_deferred_revenue_report_view.xml',
