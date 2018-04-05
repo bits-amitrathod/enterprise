@@ -255,8 +255,9 @@ class ProjectForecast(models.Model):
         elif company.forecast_span == 'month':
             context['forecast_hide_range_week'] = True
             context['forecast_hide_range_month'] = True
-
         action['context'] = context
+        # include UoM in action name, because in grid view we only see number and we don't know if it is hours or days
+        action['display_name'] = _('Forecast (in %s)') % ({key: value for key, value in self._fields['forecast_uom']._description_selection(self.env)}[company.forecast_uom],)
         return action
 
     # ----------------------------------------------------
