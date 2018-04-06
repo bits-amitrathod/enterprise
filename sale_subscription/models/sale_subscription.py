@@ -48,8 +48,8 @@ class SaleSubscription(models.Model):
     description = fields.Text()
     user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange')
     invoice_count = fields.Integer(compute='_compute_invoice_count')
-    country_id = fields.Many2one('res.country', related='analytic_account_id.partner_id.country_id', store=True)
-    industry_id = fields.Many2one('res.partner.industry', related='analytic_account_id.partner_id.industry_id', store=True)
+    country_id = fields.Many2one('res.country', related='partner_id.country_id', store=True)
+    industry_id = fields.Many2one('res.partner.industry', related='partner_id.industry_id', store=True)
     sale_order_count = fields.Integer(compute='_compute_sale_order_count')
     # customer portal
     uuid = fields.Char('Account UUID', default=lambda s: uuid.uuid4(), copy=False, required=True)
