@@ -1,165 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-  <t t-name="OnlineSyncInstitutionsList">
-    <div class="institution_result">
-    <hr/>
-    <t t-if="length != 0">
-      <table id="table_institution_result" class="o_list_view table table-condensed table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Country Code</th>
-          </tr>
-        </thead>
-        <tfoot>
-          <tr></tr>
-          <tr></tr>
-          <tr></tr>
-        </tfoot>
-        <tbody>
-          <t t-foreach="institutions" t-as="institution">
-            <tr t-att-data-id="institution.id">
-              <td><t t-esc="institution.name"/></td>
-              <td><t t-esc="institution.status"/></td>
-              <td><t t-esc="institution.countryISOCode"/></td>
-            </tr>
-          </t>
-        </tbody>
-      </table>
-    </t>
-    <t t-if="length == 0">
-      <p>Sorry no results were found</p>
-    </t>
-      </div>
-  </t>
-
-  <t t-name="OnlineSyncInstitutionsDetail">
-      <div class="institution_detail">
-        <div>
-          <img t-att-src="institution.logo"/>
-          <div class="mt16 o_institution_detail_form">
-            <table class="col-md-8">
-              <tbody>
-                <tr>
-                  <td colspan="1" class="o_institution_detail_label">
-                    <label>Name</label>
-                  </td>
-                  <td colspan="1" class="o_institution_detail_value">
-                    <span><t t-esc="institution.name"/></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="1" class="o_institution_detail_label">
-                    <label>Site URL</label>
-                  </td>
-                  <td colspan="1" class="o_institution_detail_value">
-                    <span><t t-esc="institution.baseUrl"/></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="1" class="o_institution_detail_label">
-                    <label>Site Login URL</label>
-                  </td>
-                  <td colspan="1" class="o_institution_detail_value">
-                    <span><t t-esc="institution.loginUrl"/></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table class="col-md-4">
-              <tbody>
-                <tr>
-                  <td colspan="1" class="o_institution_detail_label">
-                    <label>Country ISO Code</label>
-                  </td>
-                  <td colspan="1" class="o_institution_detail_value">
-                    <span><t t-esc="institution.countryISOCode"/></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="1" class="o_institution_detail_label">
-                    <label title="If status is beta, the site might not be fully working">Status</label>
-                  </td>
-                  <td colspan="1" class="o_institution_detail_value">
-                    <span><t t-esc="institution.status"/></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="1" class="o_institution_detail_label">
-                    <label>Online ID</label>
-                  </td>
-                  <td colspan="1" class="o_institution_detail_value">
-                    <span><t t-esc="institution.id"/></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="1" class="o_institution_detail_label">
-                    <label>Provider</label>
-                  </td>
-                  <td colspan="1" class="o_institution_detail_value">
-                    <span><t t-esc="institution.type_provider"/></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+  <t t-name="OnlineSyncSearchBankTable">
+    <div>
+    <t t-if="institutions.length > 0">
+      <t t-foreach="institutions" t-as="inst">
+        <div class="row institutionLine">
+          <div class="col-xs-12">
+            <hr class="searchSeparator"/>
+            <div class="pointer js_institution" t-att-data-inst-id="inst.institution_identifier" t-att-data-provider="inst.provider"
+              t-att-data-beta="inst.beta">
+              <!-- Line containing basic information on institution (img, name, country, beta) -->
+              <div class="row">
+                <div class="col-xs-7 col-sm-7">
+                  <h4><t t-esc="inst.name"></t></h4>
+                </div>
+                <div class="col-xs-1 col-sm-1">
+                  <h4><strong><t t-esc="inst.country"></t></strong></h4>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                  <t t-if="inst.picture">
+                    <div class="inst_icon" t-att-style="'background-image: url('+inst.picture+')'">
+                    </div>
+                  </t>
+                </div>
+                <div class="col-sm-2 col-xs-3">
+                  <t t-if="inst.beta">
+                    <img class="img-responsive pull-right beta-img" src="/account_online_sync/static/src/img/beta_icon.png"/>
+                  </t>
+                </div>
+              </div>
+              <!-- Detail of institution -->
+              <div class="row hidden js_institution_detail" t-att-id="inst.institution_identifier">
+                <div class="col-xs-12">
+                  <div class="border-info">
+                    <div class="row">
+                      <div class="col-sm-5 col-xs-12">
+                      <h6 title="The third party provider used to synchronize with your account">Provider: <small><t t-esc="inst.provider"/></small></h6>
+                      <h6 title="The country in which your institution is located">Country: <small><t t-esc="inst.country || 'US'"/></small></h6>
+                      <h6 title="this id is used to identy the institution with our third party provider">Online identifier: <small><t t-esc="inst.institution_identifier"/></small></h6>
+                      </div>
+                      <t t-if="inst.site_url">
+                        <div class="col-sm-7 col-xs-12">
+                        <h6 title="Website of the institution">Site URL: 
+                          <small class="wordbreak">
+                            <a t-att-href="inst.site_url" target="_blank"><t t-esc="inst.site_url"/></a>
+                          </small>
+                        </h6>
+                        <h6 title="If you have a doubt wheter or not you've choosen the right institution. Try login in with your credentials at this url to see if it works">Login URL: 
+                          <small class="wordbreak">
+                            <a t-att-href="inst.login_url" target="_blank"><t t-esc="inst.login_url"/></a>
+                          </small>
+                        </h6>
+                        </div>
+                      </t>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <hr/>
-        <div>
-          <t t-if="show_select_button">
-          <button type="button" class="btn btn-sm btn-primary js_choose_institution"><span>Choose this one</span></button>
-          </t>
-          <button type="button" class="btn btn-sm btn-default js_return_list_institution"><span>Return to list</span></button>
-        </div>
-      </div>
-  </t>  
+      </t>
+    </t>
+  </div>
+  </t>
 
-  <t t-name="OnlineSyncSearchBank">
-    <div class="institution_search">
-      <div class="o_online_sync_text mb8">
-        <i class="fa fa-search"></i>
-        Search for a bank (minimum 3 characters):
-      </div>
-      <form id="search_form" target="#" method="post">
-      <div class="input-group col-md-7">
-        <input type="text" id="search_institution" class="o_input form-control" placeholder="Bank Name..." aria-describedby="click_search_institution" autocomplete="off">
-        <span class="input-group-addon" id="click_search_institution"><i class="fa fa-search"></i></span>
-        </input>
-        <input type="submit" style="display: none;"/>
-      </div>
-      </form>
-    </div>
-    <div class="institution_result">
-    </div>
-    <div class="institution_detail">
+  <t t-name="OnlineSyncSearchBankFooter">
+    <div>
+      <button class="btn btn-default js_select_institution hidden" disabled="true">Connect to institution</button>
+      <button class="btn btn-default js_cancel">Cancel</button>
     </div>
   </t>
 
-
-  <t t-name="Success">
-    <div class="alert alert-success" role="alert">
-      <t t-if="init_call">
-        <strong>Well done!</strong>
-        Your banking institution is now synchronized with Odoo and a total of <strong><t t-esc="number_added"/></strong> bank accounts have been retrieved.
-        You can associate those bank accounts to a journal in order to automatically retrieve the latest statements from your bank.
-      </t>
-      <t t-if="!init_call">
-        Your account has been successfully updated.
-        <t t-if="transactions">
-          <br/>
-          <br/>
-          The following transactions have been loaded into the system:
-          <t t-foreach="transactions" t-as="tr">
-            <br/>
-            Journal: <strong><t t-esc="tr.journal"/></strong> - <t t-esc="tr.count"/> transactions loaded
+  <t t-name="OnlineSyncSearchBank">
+    <div class="o_inst_search">
+      <div class="pull-right" style="margin-bottom:10px;">
+        <input id="country" type="radio" class="switch_country" name="country" t-att-value="widget.context.country" checked="checked"/>
+        <label for="country" style="margin-right:10px;"><t t-esc="widget.context.country_name"></t></label>
+        <input id="worldwide" type="radio" class="switch_country" name="country" value="worldwide"/>
+        <label for="worldwide">Worldwide</label>
+      </div>
+      <div class="institution_search">
+        <form id="search_form" target="#" method="post">
+        <div class="input-group col-md-12 o_input_group">
+          <input type="text" id="search_institution" class="o_input form-control o_input_search" placeholder="Seach for a bank..." aria-describedby="click_search_institution" autocomplete="off">
+          <span class="input-group-addon o_input_icon" id="click_search_institution"><i class="fa fa-search"></i></span>
+          </input>
+          <input type="submit" style="display: none;"/>
+        </div>
+        </form>
+      </div>
+      <div class="favorite_institutions">
+        <div class="favorite_institutions_result">
+        <div class="row">
+          <t t-foreach="widget.starred_inst" t-as="inst">
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="inst_panel pointer o_institution" t-att-style="'background-image: url('+inst.picture+')'" t-att-data-inst-id="inst.institution_identifier" t-att-data-provider="inst.provider" t-att-title="inst.name">
+              </div>
+            </div>
           </t>
-        </t>
-      </t>
-    </div>
-    <div class="footer">
-      <button class="js_process_cancel btn btn-primary" type="button">Close</button>
+        </div>
+        </div>
+        <div class="favorite_institutions_no_result hidden">
+          <div class="row">
+            <div class="col-xs-12 text-center no_result">
+              <span><i class="fa fa-university fa-2"></i></span>
+              <h4>Search through thousands<br/> of institutions</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="institutions_search hidden">
+        <div class="institution_result">
+        </div>
+        <div class="institution_no_result hidden">
+          <div class="row">
+            <div class="col-xs-12 text-center no_result">
+              <span><i class="fa fa-search fa-2"></i></span>
+              <h4>No results found!</h4>
+              <h6>Search again through thousands<br/> of institutions</h6>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </t>
 

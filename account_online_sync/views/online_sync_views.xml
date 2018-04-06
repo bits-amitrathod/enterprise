@@ -66,7 +66,6 @@
       <field name="arch" type="xml">
         <tree create="false" edit="false">
           <field name="name"/>
-          <field name="provider_account_identifier"/>
           <field name="status"/>
           <field name="last_refresh"/>
           <field name="next_refresh"/>
@@ -76,7 +75,7 @@
     </record>
 
     <record id="action_online_provider_account" model="ir.actions.act_window">
-        <field name="name">Online Provider Account</field>
+        <field name="name">Online Institution Accounts</field>
         <field name="res_model">account.online.provider</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
@@ -88,38 +87,71 @@
         <field name="name">account.online.wizard.form</field>
         <field name="model">account.online.wizard</field>
         <field name="arch" type="xml">
-            <form string="Online Sync configuration">
-              <div class="alert alert-success" role="alert" attrs="{'invisible': [('number_added', '=', False)]}">
-                  <strong>Well done!</strong>
-                  Your banking institution is now synchronized with Odoo and a total of <strong><field name="number_added"/></strong> bank accounts have been retrieved.
-                  You can associate those bank accounts to a journal in order to automatically retrieve the latest statements from your bank.
-              </div>
-              <group attrs="{'invisible': [('count_account_online_journal', '=', 0)]}">
-                <group>
-                  <field name="account_online_journal_id" options="{'no_create': True}"/>
-                  <field name="sync_date" attrs="{'invisible': [('account_online_journal_id', '=', False)]}"/>
-                </group>
-                  <field name="journal_id" invisible="1"/>
-                  <field name="count_account_online_journal" invisible="1"/>
-                <group>
-                </group>
-              </group>
-              <button name="new_institution" type="object" class="oe_link" attrs="{'invisible': [('number_added', '!=', False)]}">
-                <i class="fa fa-plus-circle" aria-hidden="true"/> <span> Add a new bank to the system</span>
-              </button>
-            <footer>
-              <button name="configure"
-                  string="Associate to journal"
-                  type="object" class="btn-primary"
-                  attrs="{'invisible': [('account_online_journal_id', '=', False)]}"/>
-              <button string="Close" class="btn-default" special="cancel"/>
-            </footer>
+            <form string="Online Synchronization">
+                <field name="number_added" invisible="1"/>
+                <field name="status" invisible="1"/>
+                <field name="method" invisible="1"/>
+                <field name="hide_table" invisible="1"/>
+                <!-- Failed synchronization message -->
+                <div attrs="{'invisible': [('status', '!=', 'failed')]}">
+                  <div class="alert alert-danger" role="alert">
+                    <p><strong>Ooops</strong> We could not <field name="method"/> your account because of the following 
+                    error during the process:</p>
+                    <br/>
+                    <h4><field name="message"/></h4>
+                  </div>
+                </div>
+                <!-- Action abandonned message -->
+                <div attrs="{'invisible': [('status', '!=', 'cancelled')]}">
+                  <div class="alert alert-warning" role="alert">
+                    <p><strong>Ooops</strong> It would seems that the process to <field name="method"/> your account was not 
+                    thoroughly completed. You can try to manually update your account by clicking the refresh button on the dashboard
+                    or in the online synchronization menu.</p>
+                  </div>
+                </div>
+                <!-- Action success message -->
+                <div attrs="{'invisible': [('status', '!=', 'success')]}">
+                  <div class="alert alert-success" role="alert">
+                    <p attrs="{'invisible': [('method', '!=', 'add')]}"><strong>Well done!</strong> Your banking institution is now synchronized with Odoo.</p>
+                    <p attrs="{'invisible': [('method', '!=', 'edit')]}"><strong>Success!</strong> Your account has been succesfully updated.</p>
+                    <p attrs="{'invisible': [('method', '!=', 'refresh')]}"><strong>Success!</strong> Your account has been succesfully refreshed.</p>
+                    <p attrs="{'invisible': [('number_added', '=', 0)]}">A total of "<strong><field name="number_added"/></strong>" bank accounts have been retrieved.</p>
+                    <p attrs="{'invisible': [('hide_table', '=', True)]}">You can associate those bank accounts to a journal in order to automatically retrieve the latest statements from your bank.</p>
+                    <p attrs="{'invisible': ['|', ('number_added', '!=', 1), ('method', '!=', 'add')]}">The account has been linked to your bank journal.</p>
+                    <field name="transactions" attrs="{'invisible': [('method', '=', 'add')]}"/>
+                  </div>
+                  <!-- Show transactions that have been loaded -->
+                  <!-- Show table to link journal only if there are some present -->
+                  <div attrs="{'invisible': [('number_added', '=', 0)]}">
+                    <group>
+                      <group>
+                        <field name="sync_date"/>
+                      </group>
+                      <group>
+                      </group>
+                    </group>
+                    <field name="account_ids" nolabel="1" widget="one2many_list" mode="tree" attrs="{'invisible': [('hide_table', '=', True)]}">
+                      <tree create="false" editable="true">
+                        <field name="account_number"/>
+                        <field name="name"/>
+                        <field name="balance"/>
+                        <field name="action"/>
+                        <field name="journal_id" attrs="{'readonly': [('action', '!=', 'link')], 'required': [('action', '=', 'link')]}"/>
+                      </tree>
+                    </field>
+                  </div>
+                </div>
+                <footer>
+                    <button string="Done" class="btn-primary" type="object" name="open_accounting_dashboard" attrs="{'invisible': [('number_added', '!=', 0)]}"/>
+                    <button string="Synchronize now" name="sync_now" type="object" class="btn-primary" attrs="{'invisible': ['|', ('number_added', '=', 0), ('status', '!=', 'success')]}"/>
+                    <button string="Cancel" class="btn-default" type="object" name="open_accounting_dashboard"/>
+                </footer>
            </form>
         </field>
     </record>
 
     <record id="action_account_online_wizard_form" model="ir.actions.act_window">
-        <field name="name">Online Synchronization</field>
+        <field name="name">Synchronization result</field>
         <field name="res_model">account.online.wizard</field>
         <field name="view_type">form</field>
         <field name="view_mode">form</field>
@@ -138,8 +170,8 @@
           <field name="synchronization_status"/>
         </field>
         <xpath expr='//div[@name="bank_journal_default_cta"]/button' position='after'>
-          <br t-if="dashboard.number_to_reconcile == 0"/><button t-if="dashboard.number_to_reconcile == 0" type="action" name="%(action_account_online_wizard_form)d" class="btn btn-primary btn-sm">Online Synchronization</button>
-          <a t-if="dashboard.number_to_reconcile > 0" type="action" name="%(action_account_online_wizard_form)d" class="oe_inline">Online Synchronization</a>
+          <br t-if="dashboard.number_to_reconcile == 0"/><button t-if="dashboard.number_to_reconcile == 0" type="object" name="action_choose_institution" class="btn btn-primary btn-sm">Online Synchronization</button>
+          <a t-if="dashboard.number_to_reconcile > 0" type="object" name="action_choose_institution" class="oe_inline">Online Synchronization</a>
         </xpath>
         <xpath expr='//div[@name="bank_journal_cta"]' position='inside'>
           <t t-if="dashboard.bank_statements_source == 'online_sync'">
@@ -147,8 +179,8 @@
               <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="btn btn-primary btn-sm">Synchronize now</button>
               <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="oe_inline">Synchronize now</a>
             </t>
-            <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="action" name="%(action_account_online_wizard_form)d" class="btn btn-primary btn-sm">Online Synchronization</button>
-            <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="action" name="%(action_account_online_wizard_form)d" class="oe_inline">Online Synchronization</a>
+            <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="btn btn-primary btn-sm">Online Synchronization</button>
+            <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="oe_inline">Online Synchronization</a>
           </t>
         </xpath>
         <xpath expr="//div[hasclass('o_kanban_primary_left')]" position="inside">
@@ -172,7 +204,7 @@
           <group string="Online Synchronization" attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}">
             <field name="bank_statement_creation"/>
             <field name="account_online_journal_id" options="{'no_create': True}"/>
-            <button string="Configure" type="action" name="%(action_account_online_wizard_form)d" class="btn btn-primary btn-sm"/>
+            <button string="Configure" type="object" name="action_choose_institution" class="btn btn-primary btn-sm"/>
           </group>
         </xpath>
       </field>
@@ -187,7 +219,7 @@
           <label for="account_online_journal_id" attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}"/>
           <div attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}">
             <field name="account_online_journal_id" options="{'no_create': True}" class="oe_inline"/>
-            <button string="Configure" type="action" name="%(action_account_online_wizard_form)d" class="btn btn-primary btn-sm oe_inline"/>
+            <button string="Configure" type="object" name="action_choose_institution" class="btn btn-primary btn-sm oe_inline"/>
           </div>
         </xpath>
       </field>

@@ -1,148 +1,100 @@
 odoo.define('account_plaid.acc_config_widget', function(require) {
 "use strict";
 
+var ajax = require('web.ajax');
 var core = require('web.core');
 var framework = require('web.framework');
 var QWeb = core.qweb;
 var AbstractAction = require('web.AbstractAction');
 
-
 var PlaidAccountConfigurationWidget = AbstractAction.extend({
-
-    call: function(params, mfa) {
-        var self = this;
-        if (this.in_rpc_call === false){
-            this.blockUI(true);
-            self.$('.js_wait_updating_account').toggleClass('hidden');
-            var request = this._rpc({
-                    model: 'account.online.provider',
-                    method: 'plaid_add_update_provider_account',
-                    args: [[this.id], params, this.site_info.id, this.site_info.name, mfa, this.context],
-                })
-                .then(function(result){
-                    self.blockUI(false);
-                    if (result.account_online_provider_id !== undefined) {
-                        self.id = result.account_online_provider_id;
-                    }
-                    self.resp_json = result;
-                    self.renderElement();
-                })
-                .fail(function(result){
-                    self.$('.js_wait_updating_account').toggleClass('hidden');
-                    self.blockUI(false);
-                });
-            return request;
+    on_attach_callback: function () {
+        if (this.exit === true) {
+            this.do_action({type: 'ir.actions.act_window_close'});
         }
     },
-
-    process_next_step: function() {
-        var login = this.$('.js_plaid_login').val();
-        var password = this.$('.js_plaid_password').val();
-        var pin = this.$('.js_plaid_pin').val();
-        var params = {username: login, password: password, type: this.site_info.type, options: '{"login_only": true, "list": true}'};
-        if (pin !== '') {
-            params.pin = pin;
-        }
-        return this.call(params, false);
-    },
-
-    blockUI: function(state) {
-        this.in_rpc_call = state;
-        this.$('.btn').toggleClass('disabled');
-        if (state === true) {
-            framework.blockUI();
-        }
-        else {
-            framework.unblockUI();
-        }
-    },
-
     init: function(parent, context) {
         this._super(parent, context);
-        this.site_info = context.site_info;
-        this.resp_json = context.resp_json;
-        this.in_rpc_call = false;
-        // In case we launch wizard in an advanced step (like updating credentials or mfa)
-        // We need to set this.init_call to false and this.id (both should be in context)
-        this.init_call = true;
-        if (context.context.init_call !== undefined) {
-            this.init_call = context.context.init_call;
-        }
-        if (context.context.provider_account_identifier !== undefined) {
-            this.id = context.context.provider_account_identifier;
-        }
-        if (context.context.open_action_end !== undefined) {
-            this.action_end = context.context.open_action_end;
-        }
+        var self = this;
         this.context = context.context;
+        this.exit = false;
+        this.loaded = $.Deferred();
+        this.institution_id = context.institution_id;
+        this.plaid_link = context.open_link;
+        this.account_online_provider_id = context.account_online_provider_id;
+        this.public_key = context.public_key;
+        this.public_token = context.public_token;
+        if (context.result) {
+            this.result = context.result;
+        }
+    },
+    
+    willStart: function() {
+        var self = this;
+        if (this.plaid_link === true) {
+            ajax.loadJS('https://cdn.plaid.com/link/v2/stable/link-initialize.js')
+                .then(function() {
+                    var plaid_options = {
+                        clientName: 'Odoo',
+                        env: 'production',
+                        key: self.public_key,
+                        product: ['transactions'],
+                        onSuccess: function(public_token, metadata) {
+                            if (self.public_token === undefined) {
+                                return self.linkSuccess(public_token, metadata);
+                            }
+                            else {
+                                self.exit = true;
+                                self.loaded.resolve();
+                            }
+                        },
+                        onExit: function(err, metadata) {
+                            if (err) {
+                                console.log(err);
+                                console.log(metadata);
+                            }
+                            self.exit = true;
+                            self.loaded.resolve();
+                        },
+                    }
+                    if (self.public_token !== undefined) {
+                        plaid_options['token'] = self.public_token;
+                    }
+                    self.plaid_link = Plaid.create(plaid_options);
+                    // Open link in update mode for a specific item
+                    if (self.public_token !== undefined) {
+                        self.plaid_link.open();
+                    }
+                    else {
+                        // Open link in create mode with the institution id as parameter
+                        // in order to open directly on that institution
+                        self.plaid_link.open(self.institution_id);
+                    }
+                });
+        }
+        else {
+            // Just show how many transactions have been fetched
+            this.loaded.resolve();
+        }
+        return this.loaded;
     },
 
-    bind_button: function() {
+    linkSuccess: function(public_token, metadata) {
         var self = this;
-        this.$('.js_process_next_step').click(function(){
-            self.process_next_step();
-        });
-        this.$('.js_process_mfa_step').click(function(){
-            self.process_mfa_step();
-        });
-        this.$('.js_process_cancel').click(function(){
-            self.$el.parents('.modal').modal('hide');
-        });
+        return this._rpc({
+                        model: 'account.online.provider',
+                        method: 'link_success',
+                        args: [[self.id], public_token, metadata, self.context],
+                    }).then(function(result) {
+                        self.do_action(result);
+                    });
     },
 
     renderElement: function() {
         var self = this;
-        if (this.resp_json && this.resp_json.action === 'success') {
-            if (this.action_end) {
-                return this._rpc({
-                        model: 'account.online.provider',
-                        method: 'open_action',
-                        args: [[self.id], this.action_end, this.resp_json.numberAccountAdded, this.context],
-                    })
-                    .then(function(result) {
-                        self.do_action(result);
-                    });
-            }
-            else {
-                var local_dict = {
-                                init_call: this.init_call, 
-                                number_added: this.resp_json.numberAccountAdded,
-                                transactions: this.resp_json.transactions,};
-                self._replaceElement($(QWeb.render('Success', local_dict)));
-            }
+        if (this.exit === true) {
+            return this._super.apply(this, arguments);
         }
-        else {
-            var local_dict = {call: 'init'};
-            if (this.resp_json && this.resp_json.action === 'mfa') {
-                // this.show_mfa_to_user(this.resp_json);
-                local_dict.call = 'mfa';
-                local_dict.mfa = this.resp_json;
-            }
-            self._replaceElement($(QWeb.render('PlaidLogin', local_dict)));
-        }
-        self.bind_button();
-    },
-
-    process_mfa_step: function() {
-        var params = {'access_token': this.resp_json.access_token, 'options': '{"login_only": true, "list": true}'}
-        if ($('input[name="mfa-selection"]').length > 0){
-            params['options'] = '{"send_method": {"mask": "'+ $('input[name="mfa-selection"]:checked').attr('mask') +'"}}';
-        }
-        else {
-            //Get all input with information
-            var $answers = $('.js_plaid_answer');
-            var user_reply = [];
-            if ($answers.length === 1){
-                params['mfa'] = $answers.val();
-            }
-            else {
-                $.each($answers, function(k,v){
-                    user_reply = user_reply.concat(v.val());
-                });
-                params['mfa'] = JSON.stringify(user_reply);
-            }
-        }
-        return this.call(params, true);
     },
 });
 
