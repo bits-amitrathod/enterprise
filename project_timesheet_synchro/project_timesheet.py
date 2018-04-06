@@ -137,6 +137,7 @@ class account_analytic_line(models.Model):
                     ls_projects_to_import.append([
                         str(ls_project['id']),
                         ls_project['name'],
+                        'True'  # allow_timesheets
                     ])
                 else:
                     ls_projects_to_remove.append(str(ls_project['id']))
@@ -146,6 +147,7 @@ class account_analytic_line(models.Model):
         projects_fields = [
             'id',
             'name',
+            'allow_timesheets'  # allowing timesheet without giving analytic account will generate an analytic account for the project
         ]
         project_errors = self.load_wrapper(self.env["project.project"], projects_fields, ls_projects_to_import)
 
