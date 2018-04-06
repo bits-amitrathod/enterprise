@@ -83,6 +83,18 @@
                     <t t-esc="analytic_tag_value"/>
                 </t>
             </div>
+            <div class="col-xs-12">
+                <t t-if="options.get('ir_filters') != None">
+                    Filter:
+                    <t t-set="selected_filter_name" t-value="'None'"/>
+                    <t t-foreach="options['ir_filters']" t-as="current_filter">
+                        <t t-if="current_filter['selected']">
+                            <t t-set="selected_filter_name" t-value="current_filter['name']"/>
+                        </t>
+                    </t>
+                    <t t-esc="selected_filter_name"/>
+                </t>
+            </div>
         </div>
     </div>
 </template>
@@ -136,7 +148,7 @@
                     </t>
             </td>
             <t t-foreach="line.get('columns')" t-as="column">
-                <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[column_index+line.get('colspan', 1)].get('class', '')))" t-att-style="column.get('style', lines.get('columns_header')[column_index+line.get('colspan', 1)].get('style', ''))">
+                <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('class', '')))" t-att-style="column.get('style', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('style', ''))">
                     <span class="o_account_report_column_value" t-att-title="column.get('title', column.get('name'))">
                         <t t-esc="column.get('name')"/>
                     </span>
@@ -180,15 +192,34 @@
             </div>
             <div>
                 <table class="o_account_reports_table">
-                    <thead>
-                        <tr>
-                            <t t-foreach="lines.get('columns_header')" t-as="column_header">
-                                <th t-att-class="'o_account_report_column_header ' + (column_header.get('class', ''))" t-att-style="column_header.get('style', '')">
-                                    <t t-esc="column_header.get('name')"/>
-                                </th>
+                    <t t-if="len(lines.get('columns_header', [])) > 1">
+                        <thead class="o_account_reports_header_hierarchy">
+                            <t t-foreach="lines.get('columns_header')" t-as="header_line">
+                                <tr>
+                                    <t t-foreach="header_line" t-as="header">
+                                        <th t-att-colspan="header.get('colspan')">
+                                            <t t-esc="header.get('name')"/>
+                                        </th>
+                                    </t>
+                                </tr>
                             </t>
-                        </tr>
-                    </thead>
+                            <!-- Empty <tr> to create a bottom border on the above
+                                 <tr>. Necessary due to "border-collapse: collapse;" on the
+                                 table. -->
+                            <tr><th t-att-colspan="len(lines.get('columns_header')[-1])"></th></tr>
+                        </thead>
+                    </t>
+                    <t t-else="">
+                        <thead>
+                            <tr class="o_account_report_column_header">
+                                <t t-foreach="lines.get('columns_header')[0]" t-as="column_header">
+                                    <th t-att-class="'o_account_report_column_header ' + (column_header.get('class', ''))" t-att-style="column_header.get('style', '')">
+                                        <t t-raw="column_header.get('name')"/>
+                                    </th>
+                                </t>
+                            </tr>
+                        </thead>
+                    </t>
                     <tbody>
                         <t t-if="lines.get('lines')">
                                 <t t-call="account_reports.line_template" />
@@ -298,7 +329,7 @@
 
 <!-- trial balance templates -->
 <template id="template_coa_report" inherit_id="account_reports.main_template" primary="True">
-    <xpath expr="//thead/tr" position="before">
+    <xpath expr="//thead//tr[hasclass('o_account_report_column_header')]" position="before">
         <tr>
             <th t-att-class="'o_account_report_column_header'" colspan="1"/>
             <th t-att-class="'o_account_report_column_header text-center'" colspan="2">Initial Balance</th>

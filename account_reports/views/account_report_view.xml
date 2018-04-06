@@ -25,6 +25,7 @@
                             <group>
                                 <field name="debit_credit"/>
                                 <field name="tax_report"/>
+                                <field name="applicable_filters_ids" widget="many2many_tags" context="{'default_model_id': 'account.move.line'}"/>
                                 <field name="generated_menu_id"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
                             </group>

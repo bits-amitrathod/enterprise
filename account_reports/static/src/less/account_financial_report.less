@@ -99,12 +99,27 @@
         display: none;
     }
     .o_account_reports_table {
+
+        width: 100%;
+
         .number {
             text-align: right;
             width: 1%;
         }
         .date {
             text-align: center;
+        }
+        .o_account_reports_header_hierarchy {
+            th {
+                border-bottom: none;
+            }
+            th:not(:first-child) {
+                border: 1px solid #e6e6e6;
+                text-align: center;
+                border-collapse: separate;
+                padding-right: 2px;
+                padding-left: 2px;
+            }
         }
     }
     .folded {

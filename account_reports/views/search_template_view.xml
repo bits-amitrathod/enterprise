@@ -225,6 +225,33 @@
         </ul>
     </template>
 
+    <template id="search_template_ir_filters">
+        <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="fa fa-filter"/>
+            Filters:
+            <t t-set="filter_name" t-value="'None'"/>
+            <t t-foreach="options['ir_filters']" t-as="ir_filter">
+                <t t-if="ir_filter['selected']">
+                    <t t-set="filter_name" t-value="ir_filter['name']"/>
+                </t>
+            </t>
+            <t t-esc="filter_name"/>
+            <span class="caret"/>
+        </a>
+        <ul class="dropdown-menu o_filters_menu" role="menu">
+            <t t-foreach="options['ir_filters']" t-as="ir_filter">
+                <li t-att-title="ir_filter['name']"
+                    t-att-data-id="ir_filter['id']"
+                    data-filter="ir_filters"
+                    class="js_account_report_choice_filter">
+                    <a>
+                        <t t-esc="ir_filter['name']"/>
+                    </a>
+                </li>
+            </t>
+        </ul>
+    </template>
+
     <template id="search_template">
         <div class="btn-group o_dropdown o_account_reports_filter_date" t-if="options.get('date') != None">
             <t t-call="account_reports.search_template_date_filter"/>
@@ -246,6 +273,9 @@
         </div>
         <div class="btn-group o_dropdown o_account_reports_filter_analytic" t-if="options.get('analytic') != None or options.get('analytic_tags') != None">
             <t t-call="account_reports.search_template_analytic"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_ir_filters" t-if="options.get('ir_filters') != None">
+            <t t-call="account_reports.search_template_ir_filters"/>
         </div>
     </template>
 

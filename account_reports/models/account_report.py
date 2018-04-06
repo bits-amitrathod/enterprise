@@ -110,6 +110,15 @@ class AccountReport(models.AbstractModel):
                 self.filter_analytic = None
         return self._build_options(previous_options)
 
+    def get_header(self, options):
+        if not options.get('groups', {}).get('ids'):
+            return [self.get_columns_name(options)]
+        return self._get_columns_name_hierarchy(options)
+
+    #TO BE OVERWRITTEN
+    def _get_columns_name_hierarchy(self, options):
+        return []
+
     #TO BE OVERWRITTEN
     def get_columns_name(self, options):
         return []
@@ -415,7 +424,7 @@ class AccountReport(models.AbstractModel):
                     footnotes_to_render.append({'id': f.id, 'number': number, 'text': f.text})
 
         rcontext = {'report': report,
-                    'lines': {'columns_header': self.get_columns_name(options), 'lines': lines},
+                    'lines': {'columns_header': self.get_header(options), 'lines': lines},
                     'options': options,
                     'context': self.env.context,
                     'model': self,
@@ -694,7 +703,7 @@ class AccountReport(models.AbstractModel):
             header = headers
 
         landscape = False
-        if len(self.with_context(print_mode=True).get_columns_name(options)) > 5:
+        if len(self.with_context(print_mode=True).get_header(options)[-1]) > 5:
             landscape = True
 
         return self.env['ir.actions.report']._run_wkhtmltopdf(
@@ -754,11 +763,17 @@ class AccountReport(models.AbstractModel):
         #     sheet.write(y_offset, x, '', title_style)
         #     y_offset += 1
 
-        x = 0
-        for column in self.get_columns_name(options):
-            sheet.write(y_offset, x, column.get('name', '').replace('<br/>', ' ').replace('&nbsp;', ' '), title_style)
-            x += 1
-        y_offset += 1
+        for row in self.get_header(options):
+            x = 0
+            for column in row:
+                colspan = column.get('colspan', 1)
+                header_label = column.get('name', '').replace('<br/>', ' ').replace('&nbsp;', ' ')
+                if colspan == 1:
+                    sheet.write(y_offset, x, header_label, title_style)
+                else:
+                    sheet.merge_range(y_offset, x, y_offset, x + colspan - 1, header_label, title_style)
+                x += colspan
+            y_offset += 1
         ctx = self.set_context(options)
         ctx.update({'no_format':True, 'print_mode':True})
         lines = self.with_context(ctx).get_lines(options)

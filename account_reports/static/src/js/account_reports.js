@@ -200,6 +200,8 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
                 if (''+el.id == ''+option_id){
                     if (el.selected === undefined || el.selected === null){el.selected = false;}
                     el.selected = !el.selected;
+                } else if (option_value === 'ir_filters') {
+                    el.selected = false;
                 }
                 return el;
             });
