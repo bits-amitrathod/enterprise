@@ -7,7 +7,7 @@
             <div class="oe_structure"/>
             <div class="row oe_website_contract">
                 <div class="col-md-8">
-                    <h3 class="page-header">Subscription <span t-field="account.name"/>
+                    <h3 class="page-header">Subscription <span t-field="account.display_name"/>
                         <t t-call="portal.record_pager"/>
                         <small class="pull-right">
                             <t t-if="account.state == 'open'">
@@ -264,7 +264,7 @@
                     <t t-foreach="accounts" t-as="account">
                         <tr>
                             <td>
-                                <a t-att-href="'/my/subscription/'+str(account.id)+'/'+str(account.uuid)+'?'+keep_query()"><t t-esc="account.name"/></a>
+                                <a t-att-href="'/my/subscription/'+str(account.id)+'/'+str(account.uuid)+'?'+keep_query()"><t t-esc="account.display_name"/></a>
                             </td>
                             <td id="subscription_state">
                                 <t t-if="account.state == 'open'">
