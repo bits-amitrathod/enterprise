@@ -23,6 +23,7 @@ var DashboardRenderer = FormRenderer.extend({
         this._super.apply(this, arguments);
         this.mode = 'readonly';
         this.subFieldsViews = params.subFieldsViews;
+        this.additionalMeasures = params.additionalMeasures;
         this.subControllers = {};
         this.subControllersContext = _.pick(state.context || {}, 'pivot', 'graph');
         this.formatOptions = {
@@ -205,6 +206,7 @@ var DashboardRenderer = FormRenderer.extend({
             modelName: this.state.model,
             withControlPanel: false,
             hasSwitchButton: true,
+            additionalMeasures: this.additionalMeasures,
         };
         var SubView = viewRegistry.get(viewType);
         var subView = new SubView(this.subFieldsViews[viewType], subViewParams);
@@ -301,6 +303,7 @@ var DashboardRenderer = FormRenderer.extend({
         this.trigger_up('open_view', {
             context: _.extend({}, this.state.context, controller.getContext()),
             viewType: viewType,
+            additionalMeasures: this.additionalMeasures,
         });
     },
 });

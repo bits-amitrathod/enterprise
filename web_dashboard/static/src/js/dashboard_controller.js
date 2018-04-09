@@ -41,6 +41,8 @@ var DashboardController = AbstractController.extend({
      *
      * @private
      * @param {OdooEvent} ev
+     * @param {string[]} [ev.data.additionalMeasures] view options to specify
+     *  additional fields to consider for measures.
      * @param {Object} ev.data.context
      * @param {string} ev.data.viewType
      */
@@ -55,6 +57,11 @@ var DashboardController = AbstractController.extend({
             type: 'ir.actions.act_window',
             views: [[false, data.viewType]],
         };
+        if (!_.isEmpty(ev.data.additionalMeasures)) {
+            action.flags = {
+                additionalMeasures: ev.data.additionalMeasures
+            };
+        }
         this.do_action(action, {keepSearchView: true});
     },
     /**
@@ -67,7 +74,7 @@ var DashboardController = AbstractController.extend({
      * @override
      * @private
      * @param {OdooEvent} ev
-     * @param {Array[Array]} ev.data.domain
+     * @param {Array[]} ev.data.domain
      * @param {string} ev.data.domainLabel
      */
     _onReload: function (ev) {

@@ -906,6 +906,69 @@ QUnit.module('Views', {
         dashboard.destroy();
     });
 
+    QUnit.test('aggregates of type many2one should be measures of subviews', function (assert) {
+        assert.expect(5);
+
+        // Define an aggregate on many2one field
+        this.data.test_report.fields.product_id = {string: "Product", type: 'many2one', relation: 'product', store: true};
+        this.data.product = {
+            fields: {
+                name: {string: "Product Name", type: "char"}
+            },
+            records: [{
+                id: 37,
+                display_name: "xphone",
+            }, {
+                id: 41,
+                display_name: "xpad",
+            }],
+        };
+        this.data.test_report.records[0].product_id = 37;
+        this.data.test_report.records[0].product_id = 41;
+
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard>' +
+                        '<aggregate name="product_id" field="product_id"/>' +
+                        '<view type="graph"/>' +
+                        '<view type="pivot"/>' +
+                    '</dashboard>',
+            archs: {
+                'test_report,false,graph': '<graph>' +
+                        '<field name="categ_id"/>' +
+                        '<field name="sold" type="measure"/>' +
+                    '</graph>',
+                'test_report,false,pivot': '<pivot>' +
+                    '<field name="sold" type="measure"/>' +
+                '</pivot>',
+            },
+            intercepts: {
+                do_action: function (ev) {
+                    assert.step('doAction');
+                    var expectedActionFlags = {
+                        additionalMeasures: ['product_id'],
+                    };
+                    assert.deepEqual(ev.data.action.flags, expectedActionFlags,
+                        "should have passed additional measures in fullscreen");
+                },
+            },
+        });
+
+        assert.strictEqual(dashboard.$('.o_graph_buttons li[data-field=product_id]').length, 1,
+            "should have 'Product' as a measure in the graph view");
+        assert.strictEqual(dashboard.$('.o_pivot_measures_list li[data-field=product_id]').length, 1,
+            "should have 'Product' as measure in the pivot view");
+
+        // open graph in fullscreen
+        dashboard.$('.o_graph_buttons .o_button_switch').click();
+
+        assert.verifySteps(['doAction']);
+
+        dashboard.destroy();
+    });
+
     QUnit.test('interact with subviews, open one fullscreen and come back', function (assert) {
         assert.expect(8);
 
