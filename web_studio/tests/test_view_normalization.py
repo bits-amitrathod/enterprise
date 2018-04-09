@@ -11,6 +11,7 @@ class TestViewNormalization(TransactionCase):
 
     def setUp(self):
         super(TestViewNormalization, self).setUp()
+        random.seed('https://youtu.be/tFjNH9l6-sQ')
         _request_stack.push(self)
         self.base_view = self.env.ref('base.view_partner_form')
         self.gantt_view = self.env['ir.ui.view'].create({
@@ -547,7 +548,7 @@ class TestViewNormalization(TransactionCase):
         """, """
             <data>
               <xpath expr="//form[1]/sheet[1]" position="after">
-                <div class="oe_chatter">
+                <div class="oe_chatter" name="studio_div_302a40">
                   <field name="message_follower_ids" widget="mail_followers"/>
                   <field name="message_ids" widget="mail_thread"/>
                 </div>
@@ -736,22 +737,24 @@ class TestViewNormalization(TransactionCase):
                 <attribute name="color">lang</attribute>
               </xpath>
               <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]/field[@name='name']" position="after">
-                <div class="o_dropdown_kanban dropdown">
+                <div class="o_dropdown_kanban dropdown" name="studio_div_302a40">
                   <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
                     <span class="fa fa-bars fa-lg"/>
                   </a>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" name="studio_ul_4e2ccd">
                     <t t-if="widget.editable">
-                      <li>
+                      <li name="studio_li_ff8328">
                         <a type="edit">Edit</a>
-                        <a type="delete">Delete</a>
-                        <ul class="oe_kanban_colorpicker" data-field="lang"/>
                       </li>
                     </t>
                     <t t-if="widget.deletable">
-                      <li/>
+                      <li name="studio_li_277a32">
+                        <a type="delete">Delete</a>
+                      </li>
                     </t>
-                    <li/>
+                    <li name="studio_li_4f9d39">
+                      <ul class="oe_kanban_colorpicker" data-field="lang" name="studio_ul_857488"/>
+                    </li>
                   </ul>
                 </div>
               </xpath>
@@ -811,7 +814,6 @@ class TestViewNormalization(TransactionCase):
 
     # test that unnamed pages are given a pseudo-random name attribute
     def test_view_normalization_25(self):
-        random.seed("https://i.redd.it/pnyr50lf0jh01.png")
         self._test_view_normalization("""
             <data>
                 <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
@@ -829,19 +831,18 @@ class TestViewNormalization(TransactionCase):
         """, """
             <data>
               <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
-                <page name="studio_page_a9eb51">
+                <page name="studio_page_302a40">
                   <p>hello world!</p>
                 </page>
-                <page name="studio_page_70d54a">
+                <page name="studio_page_4e2ccd">
                   <p>foo bar baz</p>
                 </page>
-                <page name="studio_page_71063a">
+                <page name="studio_page_ff8328">
                   <p>spam eggs bacon</p>
                 </page>
               </xpath>
             </data>
         """)
-        random.seed()
 
     # Adjacent addition/removal changes ends with correct xpath
     def test_view_normalization_26(self):
@@ -864,6 +865,59 @@ class TestViewNormalization(TransactionCase):
             </data>
         """)
 
+    # Test descendants equivalent nodes does not change children
+    def test_view_normalization_27(self):
+        self._test_view_normalization("""
+            <data>
+              <field name="website" position="after">
+                <div>
+                    <field name="create_uid"/>
+                </div>
+                <div>
+                    <field name="write_uid"/>
+                </div>
+              </field>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='website']" position="after">
+                <div name="studio_div_302a40">
+                  <field name="create_uid"/>
+                </div>
+                <div name="studio_div_4e2ccd">
+                  <field name="write_uid"/>
+                </div>
+              </xpath>
+            </data>
+        """)
+
+    # Test descendants equivalent nodes does not change children with unwrapped field
+    def test_view_normalization_28(self):
+        self._test_view_normalization("""
+            <data>
+              <field name="website" position="after">
+                <div>
+                    <div>
+                    <field name="create_uid"/>
+                    </div>
+                    <field name="write_uid"/>
+                </div>
+              </field>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='website']" position="after">
+                <div name="studio_div_302a40">
+                  <div name="studio_div_4e2ccd">
+                    <field name="create_uid"/>
+                  </div>
+                  <field name="write_uid"/>
+                </div>
+              </xpath>
+            </data>
+        """)
+
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
+        random.seed()
         _request_stack.pop()

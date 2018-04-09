@@ -3,6 +3,7 @@
 
 import difflib
 import io
+from collections import defaultdict
 from lxml import etree
 from lxml.builder import E
 from odoo import models
@@ -11,6 +12,11 @@ import uuid
 import random
 
 from odoo.tools import pycompat
+
+
+CONTAINER_TYPES = (
+    'group', 'page', 'sheet', 'div', 'ul', 'li',
+)
 
 
 class View(models.Model):
@@ -196,6 +202,13 @@ class View(models.Model):
         xpath = etree.Element('xpath')
         old_view_iterator = old_view_tree.getiterator()
         new_view_iterator = new_view_tree.getiterator()
+
+        # keep track of nameless elements with more than 1 occurrence
+        nameless_count = defaultdict(int)
+        for node in new_view_tree.getiterator():
+            if not node.get('name'):
+                nameless_count[node.tag] += 1
+
         for line in diff:
             # Ignore details lines and [@closed] that are used so diff has correct order
             if line.strip() and not line.startswith('?') and not line.endswith('[@closed]'):
@@ -230,7 +243,11 @@ class View(models.Model):
                 elif line.startswith('+'):
                     node = next(new_view_iterator)
 
-                    if node.tag in ('group', 'page') and 'name' not in node.attrib:
+                    # if there is more than one element with this tag and it doesn't have a way
+                    # to identify itself, give it a name
+                    if (node.tag in CONTAINER_TYPES
+                            and nameless_count[node.tag] > 1
+                            and not node.get('name')):
                         uid = str(uuid.UUID(int=random.getrandbits(128)))[:6]
                         node.attrib['name'] = 'studio_%s_%s' % (node.tag, uid)
 
