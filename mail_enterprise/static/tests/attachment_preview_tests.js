@@ -78,7 +78,7 @@ QUnit.module('MailAttachmentOnSide', {
             res_id: 2,
             config: {
                 device: {
-                    size_class: config.device.SIZES.LG,
+                    size_class: config.device.SIZES.XL,
                 },
             },
             mockRPC: function (route, args) {
@@ -164,7 +164,7 @@ QUnit.module('MailAttachmentOnSide', {
                 '</form>',
             config: {
                 device: {
-                    size_class: config.device.SIZES.LG,
+                    size_class: config.device.SIZES.XL,
                 },
             },
             services: [ChatManager, createBusService()],
@@ -172,6 +172,66 @@ QUnit.module('MailAttachmentOnSide', {
 
         assert.strictEqual(form.$('.o_form_sheet_bg .o_attachment_preview').length, 1, "the preview should not be displayed");
         assert.strictEqual(form.$('.o_form_sheet_bg .o_attachment_preview').children().length, 0, "the preview should be empty");
+        assert.strictEqual(form.$('.o_form_sheet_bg + .o_chatter').length, 1, "chatter should not have been moved");
+
+        form.destroy();
+    });
+
+    QUnit.test('Attachment on side not displayed on smaller screens', function (assert) {
+        assert.expect(2);
+
+        this.data.partner.records[0].message_ids = [1];
+        var messages = [{
+            attachment_ids: [{
+                filename: 'image1.jpg',
+                id:1,
+                mimetype: 'image/jpeg',
+                name: 'Test Image 1',
+                url: '/web/content/1?download=true',
+            }],
+            author_id: ["1", "Kamlesh Sulochan"],
+            body: "Attachment viewer test",
+            date: "2016-12-20 09:35:40",
+            displayed_author: "Kamlesh Sulochan",
+            id: 1,
+            is_note: false,
+            is_discussion: true,
+            is_starred: false,
+            model: 'partner',
+            res_id: 2,
+        }];
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch: '<form string="Partners">' +
+                    '<sheet>' +
+                        '<field name="foo"/>' +
+                    '</sheet>' +
+                    '<div class="o_attachment_preview" options="{\'order\':\'desc\'}"></div>' +
+                    '<div class="oe_chatter">' +
+                        '<field name="message_ids" widget="mail_thread" options="{\'display_log_button\': True}"/>' +
+                    '</div>' +
+                '</form>',
+            res_id: 2,
+            config: {
+                device: {
+                    size_class: config.device.SIZES.LG,
+                },
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'message_format') {
+                    var requested_msgs = _.filter(messages, function (msg) {
+                        return _.contains(args.args[0], msg.id);
+                    });
+                    return $.when(requested_msgs);
+                }
+                return this._super.apply(this, arguments);
+            },
+            services: [ChatManager, createBusService()],
+        });
+        assert.strictEqual(form.$('.o_attachment_preview').children().length, 0, "there should be nothing previewed");
         assert.strictEqual(form.$('.o_form_sheet_bg + .o_chatter').length, 1, "chatter should not have been moved");
 
         form.destroy();
