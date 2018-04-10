@@ -12,12 +12,11 @@ var view_registry = require('web.view_registry');
 var Widget = require('web.Widget');
 
 var bus = require('web_studio.bus');
+var EditorMixin = require('web_studio.EditorMixin');
 
 var CalendarEditor = require('web_studio.CalendarEditor');
 var FormEditor = require('web_studio.FormEditor');
-var GanttEditor = require('web_studio.GanttEditor');
 var GraphEditor = require('web_studio.GraphEditor');
-var GridEditor =require('web_studio.GridEditor');
 var KanbanEditor = require('web_studio.KanbanEditor');
 var ListEditor = require('web_studio.ListEditor');
 var PivotEditor = require('web_studio.PivotEditor');
@@ -37,11 +36,9 @@ var Editors = {
     form: FormEditor,
     kanban: KanbanEditor,
     list: ListEditor,
-    grid: GridEditor,
     pivot: PivotEditor,
     graph: GraphEditor,
     calendar: CalendarEditor,
-    gantt: GanttEditor,
     search: SearchEditor,
 };
 
@@ -306,6 +303,10 @@ var ViewEditorManager = Widget.extend({
             this.view = new View(fields_view, this.view_env);
             if (this.mode === 'edition') {
                 var Editor = Editors[this.view_type];
+                if (!Editor) {
+                    // generate the Editor on the fly if it doesn't exist
+                    Editor = View.prototype.config.Renderer.extend(EditorMixin);
+                }
                 var chatterAllowed = this.x2mField ? false : this.chatter_allowed;
                 var editorParams = _.defaults(params, {
                     mode: 'readonly',
