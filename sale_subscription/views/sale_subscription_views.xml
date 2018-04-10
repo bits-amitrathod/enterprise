@@ -315,12 +315,12 @@
                             <div class="o_subscription_kanban_main">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
-                                        <div class="o_primary">
-                                            <span><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></span>
-                                        </div>
-                                        <span>Recurrence: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></span>
-                                        <span t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</span>
-                                        <span t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</span>
+                                        <h3 class="mt0">
+                                            <strong><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></strong>
+                                        </h3>
+                                        <div>Recurrence: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></div>
+                                        <div t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</div>
+                                        <div t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</div>
                                     </div>
                                 </div><div class="o_kanban_card_manage_pane dropdown-menu">
                                     <div class="o_kanban_card_manage_section o_kanban_manage_reports">
@@ -339,14 +339,11 @@
                                     <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" /></a>
                                 </div>
                             </div>
-
-                            <div class="o_subscription_kanban_boxes">
-                                <div class="o_subscription_kanban_box">
-                                    <a name="%(sale_subscription_action_filtered)d" type="action">
-                                        <span class="o_value"><t t-esc="record.subscription_count.value"/></span>
-                                        <span class="o_label">Subscriptions</span>
-                                    </a>
-                                </div>
+                            <div class="ml16">
+                                <a name="%(sale_subscription_action_filtered)d" type="action">
+                                    <span><t t-esc="record.subscription_count.value"/></span>
+                                    <span>Subscriptions</span>
+                                </a>
                             </div>
                         </div>
                     </t>
