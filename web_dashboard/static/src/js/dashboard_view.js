@@ -42,7 +42,7 @@ var DashboardView = BasicView.extend({
 
         // pass all measurable fields to subviews
         var fields = this.fieldsInfo.dashboard;
-        var additionalMeasures = _.pluck(_.filter(fields, {realType: 'many2one'}), 'name');
+        var additionalMeasures = _.pluck(_.filter(fields, {realType: 'many2one'}), 'field');
         this.rendererParams.additionalMeasures = additionalMeasures;
 
         this.loadParams.aggregates = this.fieldsView.aggregates;
