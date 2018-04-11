@@ -6,7 +6,7 @@
             <field name="model">sale.report</field>
             <field name="mode">primary</field>
             <field name="arch" type="xml">
-                <dashboard>
+                <dashboard js_class="website_sale_dashboard">
                     <view type="graph" ref="sale_report.view_order_product_graph"/>
                         <group col="1" string="At a glance">
                             <group col="3">

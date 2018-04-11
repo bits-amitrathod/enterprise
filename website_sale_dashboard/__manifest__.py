@@ -15,6 +15,7 @@ It also provides new tools to analyse your data
     'depends': ['website_sale', 'web_dashboard'],
     'data': [
         'views/dashboard_view.xml',
+        'views/assets.xml',
     ],
     'qweb': ['static/src/xml/*.xml'],
     'auto_install': True,
