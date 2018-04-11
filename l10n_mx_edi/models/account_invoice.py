@@ -818,10 +818,12 @@ class AccountInvoice(models.Model):
             'record': self,
         }
         tree = fromstring(base64.decodestring(xml_signed))
-        addenda_node = tree.Addenda if hasattr(
-            tree, 'Addenda') else etree.Element(etree.QName(
+        addenda_node = fromstring(addenda.render(values=values))
+        if addenda_node.tag != '{http://www.sat.gob.mx/cfd/3}Addenda':
+            node = etree.Element(etree.QName(
                 'http://www.sat.gob.mx/cfd/3', 'Addenda'))
-        addenda_node.append(fromstring(addenda.render(values=values)))
+            node.append(addenda_node)
+            addenda_node = node
         tree.append(addenda_node)
         self.message_post(
             body=_('Addenda has been added in the CFDI with success'),
