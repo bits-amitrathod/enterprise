@@ -13,7 +13,7 @@ can embed graph and/or pivot views, and displays aggregate values.
         """,
     'depends': ['base'],
     'data': [
-        'views/templates.xml',
+        'views/assets.xml',
     ],
     'qweb': [
         "static/src/xml/dashboard_view.xml",
