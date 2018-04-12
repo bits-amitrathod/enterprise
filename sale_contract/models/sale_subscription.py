@@ -299,7 +299,7 @@ class SaleSubscription(osv.osv):
         res = dict()
         for contract in self.browse(cr, uid, ids, context=context):
             order_lines = []
-            company_id = self.pool('res.users').browse(cr, uid, [1]).company_id.id
+            company_id = self.pool('res.users').browse(cr, uid, [uid]).company_id.id
             order_seq_id = self.pool['ir.sequence'].search(cr, uid, [('code', '=', 'sale.order'), '|', ('company_id', '=', company_id), ('company_id', '=', False)], order="company_id asc", limit=1, context=context)
             order_seq = self.pool['ir.sequence'].browse(cr, uid, order_seq_id, context=context)
             fpos_id = self.pool['account.fiscal.position'].get_fiscal_position(cr, uid, contract.partner_id.id, context=context)
