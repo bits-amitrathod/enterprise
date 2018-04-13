@@ -45,3 +45,4 @@
         journal = self.env['account.journal'].search([('type', '=', 'general'), ('id', '!=', company.currency_exchange_journal_id.id)])
         if journal and self.invoice_count < 1:
             invoice = self._recurring_create_invoice()
+            invoice.action_invoice_open()
