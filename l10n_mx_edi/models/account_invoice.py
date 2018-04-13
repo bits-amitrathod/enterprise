@@ -719,10 +719,6 @@ class AccountInvoice(models.Model):
         partner_id = self.partner_id
         if self.partner_id.type != 'invoice':
             partner_id = self.partner_id.commercial_partner_id
-            self.message_post(body=_(
-                'The business partner address was used for the generation of '
-                'the CFDI, since the customer address is not a billing address.'),
-                subtype='account.mt_invoice_validated')
         values = {
             'record': self,
             'currency_name': self.currency_id.name,
