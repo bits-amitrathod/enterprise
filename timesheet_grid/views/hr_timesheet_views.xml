@@ -34,7 +34,7 @@
                             </group>
                             <group invisible="context.get('view_grid_add_line')">
                                 <field name="date"/>
-                                <field name="unit_amount" string="Time Spent" widget="float_time"/>
+                                <field name="unit_amount" string="Time Spent" widget="timesheet_uom"/>
                             </group>
                         </group>
                     </sheet>
@@ -53,8 +53,7 @@
                         <range name="week" string="Week" span="week" step="day"/>
                         <range name="month" string="Month" span="month" step="day"/>
                     </field>
-                    <field name="unit_amount" type="measure"
-                           widget="float_time"/>
+                    <field name="unit_amount" type="measure" widget="timesheet_uom"/>
                 </grid>
             </field>
         </record>
@@ -87,8 +86,7 @@
                         <range name="week" string="Week" span="week" step="day"/>
                         <range name="month" string="Month" span="month" step="day"/>
                     </field>
-                    <field name="unit_amount" type="measure"
-                           widget="float_time"/>
+                    <field name="unit_amount" type="measure" widget="timesheet_uom"/>
                 </grid>
             </field>
         </record>
@@ -149,8 +147,7 @@
                         <range name="week" string="Week" span="week" step="day"/>
                         <range name="month" string="Month" span="month" step="day"/>
                     </field>
-                    <field name="unit_amount" type="measure"
-                           widget="float_time"/>
+                    <field name="unit_amount" type="measure" widget="timesheet_uom"/>
                 </grid>
             </field>
         </record>
