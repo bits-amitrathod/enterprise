@@ -6,13 +6,14 @@
 # Murat Kaplan <muratk@projetgrup.com>, 2017
 # Martin Trigaux, 2017
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2017
+# Umur Akın <umura@projetgrup.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-22 14:21+0000\n"
 "PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2017\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,12 +32,12 @@ msgstr ""
 #. module: account_3way_match
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
 msgid "Bills in Exception"
-msgstr ""
+msgstr "İstisna Faturalar"
 
 #. module: account_3way_match
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
 msgid "Bills to Pay"
-msgstr ""
+msgstr "Ödenecek Faturalar"
 
 #. module: account_3way_match
 #: selection:account.invoice,release_to_pay:0
@@ -48,7 +49,7 @@ msgstr "İstisna"
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice__force_release_to_pay
 msgid "Force status"
-msgstr ""
+msgstr "Güç durumu"
 
 #. module: account_3way_match
 #: model:ir.model.fields,help:account_3way_match.field_account_invoice__force_release_to_pay
@@ -56,6 +57,8 @@ msgid ""
 "Indicates whether the 'Can be paid' status is defined automatically or "
 "manually."
 msgstr ""
+"'Ödeme yapılabilir' durumunun otomatik olarak mi yoksa manuel olarak mı "
+"tanımlandığını belirtir."
 
 #. module: account_3way_match
 #: model:ir.model,name:account_3way_match.model_account_invoice
@@ -82,13 +85,13 @@ msgstr "Hayır"
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_line__can_be_paid
 msgid "Release to Pay"
-msgstr ""
+msgstr "Ödemeyi Borçtan Kurtarma"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice__release_to_pay
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_form_inherit
 msgid "Should be paid"
-msgstr ""
+msgstr "Ödenmelidir."
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice__release_to_pay_manual
@@ -104,6 +107,11 @@ msgid ""
 "  * Exception, there is a difference between received and billed quantities\n"
 "This status is defined automatically, but you can force it by ticking the 'Force Status' checkbox."
 msgstr ""
+"Bu alan devam eden önerilerden birini alabilir.\n"
+"*Evet: faturayı ödemelisiniz, ürünler elinize ulaştı\n"
+"*Hayır, faturayı ödememelisiniz, ürünler elinize ulaşmadı.\n"
+"*Nadiren, faturalanmış miktar ile ulaşan miktar arasındaki fark vardır. \n"
+"Bu durum otomatik olarak tanımlanmıştır, ancak siz kontrol kutusundan 'Güç Durumu'nu işaretleyebilirsiniz."
 
 #. module: account_3way_match
 #: selection:account.invoice,release_to_pay:0
