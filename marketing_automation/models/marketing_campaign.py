@@ -7,9 +7,9 @@ import logging
 from datetime import timedelta, date, datetime
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.fields import Datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, AccessError
 from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 from odoo.tools.safe_eval import safe_eval
@@ -527,8 +527,11 @@ class MarketingActivity(models.Model):
             active_ids=res_ids,
         )
 
+        # we only allow to continue if the user has sufficient rights, as a sudo() follows
+        if self.env.uid != SUPERUSER_ID and not self.user_has_groups('marketing_automation.group_marketing_automation_user'):
+            raise AccessError(_('To use this feature you should be an administrator or belong to the marketing automation group.'))
         try:
-            mailing.send_mail(res_ids)
+            mailing.sudo().send_mail(res_ids)
         except Exception as e:
             _logger.warning(_('Marketing Automation: activity <%s> encountered mass mailing issue %s'), self.id, str(e), exc_info=True)
             traces.write({
