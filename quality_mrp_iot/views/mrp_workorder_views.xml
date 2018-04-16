@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_workorder_view_form_tablet_iot_inherit_quality" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.form.inherit.quality.iot.tablet</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="quality_mrp_workorder.mrp_workorder_view_form_tablet_inherit_quality"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='measure']" position="before">
+                <field name="ip" invisible="1"/>
+                <field name="identifier" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='measure']" position="attributes">
+                <attribute name="widget">iot</attribute>
+                <attribute name="options">{'ip_field': 'ip', 'identifier_field': 'identifier'}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
