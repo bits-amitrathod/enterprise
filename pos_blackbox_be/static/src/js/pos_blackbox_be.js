@@ -162,6 +162,7 @@ odoo.define('pos_blackbox_be.pos_blackbox_be', function (require) {
 
         get_vat_letter: function () {
             var taxes = this.get_taxes()[0];
+            taxes = this._map_tax_fiscal_position(taxes);
             var line_name = this.get_product().display_name;
 
             if (! taxes) {
@@ -1105,7 +1106,7 @@ can no longer be modified. Please create a new line with eg. a negative quantity
                     order.blackbox_vsc_identification_number = parsed_response.vsc_identification_number;
                     order.blackbox_unique_fdm_production_number = parsed_response.fdm_unique_production_number;
                     order.blackbox_plu_hash = self._prepare_hash_for_ticket(packet.fields[packet.fields.length - 1].content);
-                    order.blackbox_pos_version = "Odoo " + self.version.server_version + "1705BE_FDM";
+                    order.blackbox_pos_version = "Odoo " + self.version.server_version + "1805BE_FDM";
                     order.blackbox_pos_production_id = self.config.blackbox_pos_production_id;
                     order.blackbox_terminal_id = self.blackbox_terminal_id;
 
@@ -1384,12 +1385,6 @@ can no longer be modified. Please create a new line with eg. a negative quantity
                         });
                     }
                 };
-            }
-
-            var fiscal_position_button = this.action_buttons['set_fiscal_position'];
-
-            if (fiscal_position_button) {
-                fiscal_position_button.hide();
             }
 
             // splitting bills is not an issue. The issue is that
