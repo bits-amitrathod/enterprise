@@ -64,6 +64,7 @@ class ReportAccountFinancialReport(models.Model):
     def create_action_and_menu(self, parent_id):
         # create action and menu with corresponding external ids, in order to
         # remove those entries when deinstalling the corresponding module
+        user_created = self._context.get('user_created')
         module = self._context.get('install_mode_data', {}).get('module', 'account_reports')
         IMD = self.env['ir.model.data']
         action_vals = {
@@ -75,21 +76,21 @@ class ReportAccountFinancialReport(models.Model):
             },
         }
         action_id = IMD._update('ir.actions.client', module, action_vals,
-                                'account_financial_html_report_action_' + str(self.id))
+                                'account_financial_html_report_action_' + str(self.id), noupdate=user_created)
         menu_vals = {
             'name': self.get_report_name(),
             'parent_id': parent_id or IMD.xmlid_to_res_id('account.menu_finance_reports'),
             'action': 'ir.actions.client,%s' % (action_id,),
         }
         IMD._update('ir.ui.menu', module, menu_vals,
-                    'account_financial_html_report_menu_' + str(self.id))
+                    'account_financial_html_report_menu_' + str(self.id), noupdate=user_created)
         self.write({'menuitem_created': True})
 
     @api.model
     def create(self, vals):
         parent_id = vals.pop('parent_id', False)
         res = super(ReportAccountFinancialReport, self).create(vals)
-        res.create_action_and_menu(parent_id)
+        res.with_context(user_created=self._context.get('account_reports.usr_created')).create_action_and_menu(parent_id)
         return res
 
     @api.multi

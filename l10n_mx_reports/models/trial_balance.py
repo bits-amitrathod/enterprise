@@ -130,9 +130,6 @@ class MxReportAccountTrial(models.AbstractModel):
                                options, comparison_table):
         """Return list of accounts found in the third level"""
         lines = []
-        context = self.env.context
-        company_id = context.get('company_id') or self.env.user.company_id
-        is_zero = company_id.currency_id.is_zero
         domain = safe_eval(line.domain or '[]')
         domain.append((('deprecated', '=', False)))
         account_ids = self.env['account.account'].search(domain, order='code')
@@ -140,12 +137,6 @@ class MxReportAccountTrial(models.AbstractModel):
             lambda r: r.color == 4).sorted(key=lambda a: a.name)
         for tag in tags:
             accounts = account_ids.search([('tag_ids', 'in', [tag.id])])
-            if not options.get('coa_only'):
-                # skip accounts with all periods = 0 and no initial balance
-                accounts = [a for a in accounts if a in grouped_accounts and (
-                    not is_zero(initial_balances.get(a, 0)) or not is_zero(
-                        sum([grouped_accounts[a][p]['balance']
-                            for p in range(len(comparison_table))])))]
             name = tag.name
             name = name[:98] + "..." if len(name) > 100 else name
             cols = [{'name': ''}]
@@ -173,7 +164,22 @@ class MxReportAccountTrial(models.AbstractModel):
 
     def _get_lines_fourth_level(self, accounts, grouped_accounts, initial_balances, options, comparison_table):
         lines = []
+        company_id = self.env.context.get('company_id') or self.env.user.company_id
+        is_zero = company_id.currency_id.is_zero
         for account in accounts:
+            # skip accounts with all periods = 0 (debit and credit) and no initial balance
+            if not options.get('coa_only'):
+                non_zero = False
+                for period in range(len(comparison_table)):
+                    if account in grouped_accounts and (
+                        not is_zero(initial_balances.get(account, )) or
+                        not is_zero(grouped_accounts[account][period]['debit']) or
+                        not is_zero(grouped_accounts[account][period]['credit'])
+                    ):
+                        non_zero = True
+                        break
+                if not non_zero:
+                    continue
             name = account.code + " " + account.name
             name = name[:98] + "..." if len(name) > 100 else name
             tag = account.tag_ids.filtered(lambda r: r.color == 4)
