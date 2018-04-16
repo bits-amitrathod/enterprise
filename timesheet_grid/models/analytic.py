@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api, _
 from odoo.addons.web_grid.models import END_OF, STEP_BY, START_OF
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError, AccessError
 from odoo.osv import expression
 
 
@@ -100,7 +100,7 @@ class AnalyticLine(models.Model):
         line = super(AnalyticLine, self).create(vals)
         # A line created before validation limit will be automatically validated
         if not self.user_has_groups('hr_timesheet.group_timesheet_manager') and line.is_timesheet and line.validated:
-            raise ValidationError(_('Only a Timesheets Manager is allowed to create an entry older than the validation limit.'))
+            raise AccessError(_('Only a Timesheets Manager is allowed to create an entry older than the validation limit.'))
         return line
 
     @api.multi
