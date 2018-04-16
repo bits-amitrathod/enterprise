@@ -94,6 +94,7 @@
         <field name="name">Operations</field>
         <field name="res_model">stock.picking.type</field>
         <field name="view_mode">kanban,form</field>
+        <field name="domain">[('code', 'in', ('incoming', 'outgoing', 'internal'))]</field>
         <field name="view_id" ref="stock_picking_type_kanban"/>
         <field name="context">{
             'form_view_initial_mode': 'edit',

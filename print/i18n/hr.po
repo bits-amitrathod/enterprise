@@ -3,21 +3,20 @@
 # * print
 # 
 # Translators:
-# Bole <bole@dajmi5.com>, 2017
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
 # Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
 # Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Tina Milas <tina@uvid.hr>, 2017
+# Martin Trigaux, 2017
+# Bole <bole@dajmi5.com>, 2017
 # Filip Cuk <filipcuk2@gmail.com>, 2017
-# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Tina Milas, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Tina Milas, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,8 +54,8 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
-"<b> Kreditna pogreška :</b> Dobavljač Vašeg kreditnog računa je negativan. "
-"Molimo Vas da obnovite kreditni račun kako biste mogli poslati dokumente. "
+"<b> Kreditna pogreška :</b> Dobavljač vašeg kreditnog računa je negativan. "
+"Molim vas obnovite kreditni račun kako biste mogli poslati dokumente. "
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -80,14 +79,14 @@ msgid "At least one of the document you want to send contains a mistake."
 msgstr "Najmanje jedan dokument koji želite poslati sadrži pogrešku."
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_user_id
+#: model:ir.model.fields,field_description:print.field_print_order__user_id
 msgid "Author"
 msgstr "Autor"
 
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Black & White"
-msgstr "Crno i bijelo"
+msgstr "Crno & Bijelo"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -96,7 +95,7 @@ msgid "Cancel"
 msgstr "Odustani"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_city
+#: model:ir.model.fields,field_description:print.field_print_order__partner_city
 msgid "City"
 msgstr "Grad"
 
@@ -116,63 +115,68 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_price
+#: model:ir.model.fields,field_description:print.field_print_order__price
 msgid "Cost to Deliver"
 msgstr "Trošak Dostave"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_country_id
+#: model:ir.model.fields,field_description:print.field_print_order__partner_country_id
 msgid "Country"
 msgstr "Država"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_create_uid
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_create_uid
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_create_uid
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_create_uid
-#: model:ir.model.fields,field_description:print.field_print_provider_create_uid
+#: model:ir.model.fields,field_description:print.field_print_order__create_uid
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__create_uid
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__create_uid
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__create_uid
+#: model:ir.model.fields,field_description:print.field_print_provider__create_uid
 msgid "Created by"
 msgstr "Kreirao"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_create_date
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_create_date
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_create_date
-#: model:ir.model.fields,field_description:print.field_print_provider_create_date
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__create_date
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__create_date
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__create_date
+#: model:ir.model.fields,field_description:print.field_print_provider__create_date
 msgid "Created on"
-msgstr "Kreirano"
+msgstr "Datum kreiranja"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_create_date
+#: model:ir.model.fields,field_description:print.field_print_order__create_date
 msgid "Creation Date"
 msgstr "Datum kreiranja"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_provider_balance
+#: model:ir.model.fields,field_description:print.field_print_provider__balance
 msgid "Credit"
 msgstr "Potražuje"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_currency_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_currency_id
-#: model:ir.model.fields,field_description:print.field_print_provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_order__currency_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_provider__currency_id
 msgid "Currency"
 msgstr "Valuta"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_mixin_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_display_name
-#: model:ir.model.fields,field_description:print.field_print_provider_display_name
+#: model:ir.model.fields,field_description:print.field_print_mixin__display_name
+#: model:ir.model.fields,field_description:print.field_print_order__display_name
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__display_name
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__display_name
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__display_name
+#: model:ir.model.fields,field_description:print.field_print_provider__display_name
 msgid "Display Name"
 msgstr "Naziv za prikaz"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_name
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_name
 msgid "Document"
 msgstr "Dokument"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_sendable
+msgid "Document Can Be Sent"
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -180,28 +184,23 @@ msgid "Document Detail"
 msgstr "Detalji Dokumenta"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
-msgid "Document sensable"
-msgstr ""
-
-#. module: print
 #: selection:print.order,state:0
 msgid "Draft"
 msgstr "Nacrt"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_environment
-#: model:ir.model.fields,field_description:print.field_print_provider_environment
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_environment
+#: model:ir.model.fields,field_description:print.field_print_provider__environment
 msgid "Environment"
 msgstr "Okolina"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_error_message
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__error_message
 msgid "Error"
 msgstr "Greška"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_error_message
+#: model:ir.model.fields,field_description:print.field_print_order__error_message
 msgid "Error Message"
 msgstr "Poruka greške:"
 
@@ -221,18 +220,18 @@ msgid "Group By..."
 msgstr "Grupiraj po..."
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_mixin_id
-#: model:ir.model.fields,field_description:print.field_print_order_id
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_id
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_id
-#: model:ir.model.fields,field_description:print.field_print_provider_id
+#: model:ir.model.fields,field_description:print.field_print_mixin__id
+#: model:ir.model.fields,field_description:print.field_print_order__id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__id
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__id
+#: model:ir.model.fields,field_description:print.field_print_provider__id
 msgid "ID"
 msgstr "ID"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_ink
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_ink
+#: model:ir.model.fields,field_description:print.field_print_order__ink
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__ink
 msgid "Ink"
 msgstr "TInta"
 
@@ -242,65 +241,65 @@ msgid "Invoice"
 msgstr "Račun"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_res_partner_has_address
-#: model:ir.model.fields,field_description:print.field_res_users_has_address
+#: model:ir.model.fields,field_description:print.field_res_partner__has_address
+#: model:ir.model.fields,field_description:print.field_res_users__has_address
 msgid "Is address valid"
 msgstr "Je li adresa važeća"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
-#: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
-#: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_account_invoice__print_is_sendable
+#: model:ir.model.fields,field_description:print.field_print_mixin__print_is_sendable
+#: model:ir.model.fields,field_description:print.field_sale_order__print_is_sendable
 msgid "Is sendable"
 msgstr "Može se poslati"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_mixin___last_update
-#: model:ir.model.fields,field_description:print.field_print_order___last_update
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard___last_update
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard___last_update
-#: model:ir.model.fields,field_description:print.field_print_order_wizard___last_update
-#: model:ir.model.fields,field_description:print.field_print_provider___last_update
+#: model:ir.model.fields,field_description:print.field_print_mixin____last_update
+#: model:ir.model.fields,field_description:print.field_print_order____last_update
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard____last_update
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard____last_update
+#: model:ir.model.fields,field_description:print.field_print_order_wizard____last_update
+#: model:ir.model.fields,field_description:print.field_print_provider____last_update
 msgid "Last Modified on"
 msgstr "Zadnja promjena"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_account_invoice_print_sent_date
-#: model:ir.model.fields,field_description:print.field_print_mixin_print_sent_date
-#: model:ir.model.fields,field_description:print.field_sale_order_print_sent_date
+#: model:ir.model.fields,field_description:print.field_account_invoice__print_sent_date
+#: model:ir.model.fields,field_description:print.field_print_mixin__print_sent_date
+#: model:ir.model.fields,field_description:print.field_sale_order__print_sent_date
 msgid "Last Postal Sent Date"
 msgstr "Datum zadnjeg slanja poštom"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_last_send_date
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__last_send_date
 msgid "Last Send Date"
 msgstr "Datum zadnjeg slanja"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_uid
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_write_uid
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_write_uid
-#: model:ir.model.fields,field_description:print.field_print_order_write_uid
-#: model:ir.model.fields,field_description:print.field_print_provider_write_uid
+#: model:ir.model.fields,field_description:print.field_print_order__write_uid
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__write_uid
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__write_uid
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__write_uid
+#: model:ir.model.fields,field_description:print.field_print_provider__write_uid
 msgid "Last Updated by"
 msgstr "Promijenio"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_date
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_write_date
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_write_date
-#: model:ir.model.fields,field_description:print.field_print_order_write_date
-#: model:ir.model.fields,field_description:print.field_print_provider_write_date
+#: model:ir.model.fields,field_description:print.field_print_order__write_date
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__write_date
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__write_date
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__write_date
+#: model:ir.model.fields,field_description:print.field_print_provider__write_date
 msgid "Last Updated on"
 msgstr "Vrijeme promjene"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__print_order_line_wizard_ids
 msgid "Lines"
 msgstr "Stavke"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_res_model
+#: model:ir.model.fields,field_description:print.field_print_order__res_model
 msgid "Model Name"
 msgstr "Naziv modela"
 
@@ -310,18 +309,18 @@ msgid "My Print Orders"
 msgstr "Moji ispisi naloga"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_name
-#: model:ir.model.fields,field_description:print.field_print_provider_name
+#: model:ir.model.fields,field_description:print.field_print_order__partner_name
+#: model:ir.model.fields,field_description:print.field_print_provider__name
 msgid "Name"
 msgstr "Naziv"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_nbr_pages
+#: model:ir.model.fields,field_description:print.field_print_order__nbr_pages
 msgid "Number of Pages"
 msgstr "Broj Stranica"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_res_id
+#: model:ir.model.fields,field_description:print.field_print_order__res_id
 msgid "Object ID"
 msgstr "Objekt ID"
 
@@ -346,15 +345,15 @@ msgid "Orders Waiting"
 msgstr "Nalozi na Čekanju"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_attachment_id
+#: model:ir.model.fields,field_description:print.field_print_order__attachment_id
 msgid "PDF"
 msgstr "PDF"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_paper_weight
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_paper_weight
+#: model:ir.model.fields,field_description:print.field_print_order__paper_weight
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__paper_weight
 msgid "Paper Weight"
-msgstr "Težina papira"
+msgstr "Težina Papira"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
@@ -362,7 +361,7 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__partner_has_address
 msgid "Partner has an addess"
 msgstr ""
 
@@ -402,18 +401,19 @@ msgstr ""
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__print_order_ids
 msgid "Print Order"
 msgstr "Ispis naloga"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_line_wizard_view_tree
+#: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Print Order Lines"
 msgstr ""
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_wizard
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__print_order_wizard_id
 msgid "Print Order Wizard"
 msgstr "Čarobnjak za ispis naloga"
 
@@ -427,8 +427,8 @@ msgstr "Nalozi ispisa"
 #. module: print
 #: model:ir.actions.act_window,name:print.print_provider_action
 #: model:ir.model,name:print.model_print_provider
-#: model:ir.model.fields,field_description:print.field_print_order_provider_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_id
+#: model:ir.model.fields,field_description:print.field_print_order__provider_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_id
 #: model:ir.ui.menu,name:print.print_provider_menu
 msgid "Print Provider"
 msgstr "Davatelj ispisa"
@@ -451,13 +451,13 @@ msgid "Production"
 msgstr "Proizvodnja"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_provider_provider
+#: model:ir.model.fields,field_description:print.field_print_provider__provider
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Provider"
 msgstr "Davatelj "
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_balance
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_balance
 msgid "Provider Credit"
 msgstr ""
 
@@ -477,14 +477,14 @@ msgid "Recipient Address"
 msgstr "Adresa Primatelja"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
-#: model:ir.model.fields,field_description:print.field_print_order_partner_id
+#: model:ir.model.fields,field_description:print.field_print_order__partner_id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__partner_id
 msgid "Recipient partner"
 msgstr "Primatelj partnera"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_report_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
+#: model:ir.model.fields,field_description:print.field_print_order__report_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__report_id
 msgid "Report"
 msgstr "Izvješće"
 
@@ -494,12 +494,12 @@ msgid "Reset to Draft"
 msgstr "Vrati u nacrt"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_id
 msgid "Resource ID"
 msgstr "ID resursa"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__res_model
 msgid "Resource Model"
 msgstr "Model resursa"
 
@@ -511,12 +511,12 @@ msgstr "Pošalji"
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action_multi_print
 msgid "Send Invoices by post"
-msgstr "Pošalji račune poštom"
+msgstr "Pošalji fakture poštom"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.account_invoice_view_form_inherit_print
 msgid "Send Letter"
-msgstr "Pošalji pismo"
+msgstr "Pošalji Pismo"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -540,7 +540,7 @@ msgid "Send by Post"
 msgstr "Pošalji poštom"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_sent_date
+#: model:ir.model.fields,field_description:print.field_print_order__sent_date
 msgid "Sending Date"
 msgstr "Datum slanja"
 
@@ -550,23 +550,23 @@ msgid "Sent"
 msgstr "Poslano"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
+#: model:ir.model.fields,field_description:print.field_print_order__partner_state_id
 msgid "State"
 msgstr "Stanje"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_state
+#: model:ir.model.fields,field_description:print.field_print_order__state
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Status"
 msgstr "Status"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_street
+#: model:ir.model.fields,field_description:print.field_print_order__partner_street
 msgid "Street"
 msgstr "Ulica"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_street2
+#: model:ir.model.fields,field_description:print.field_print_order__partner_street2
 msgid "Street2"
 msgstr "Ulica2"
 
@@ -581,8 +581,8 @@ msgid "Test"
 msgstr "Test"
 
 #. module: print
-#: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
-#: model:ir.model.fields,help:print.field_print_provider_currency_id
+#: model:ir.model.fields,help:print.field_print_order_wizard__provider_currency_id
+#: model:ir.model.fields,help:print.field_print_provider__currency_id
 msgid ""
 "The currency will be used for amount, balance account, print order price, "
 "..."
@@ -631,7 +631,7 @@ msgid "When the error is resolved, please click on 'Reset to draft'."
 msgstr ""
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_zip
+#: model:ir.model.fields,field_description:print.field_print_order__partner_zip
 msgid "Zip"
 msgstr "Poštanski br."
 

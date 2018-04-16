@@ -3,27 +3,25 @@
 # * hr_contract_salary
 # 
 # Translators:
-# liAnGjiA <liangjia@qq.com>, 2017
-# Martin Trigaux, 2017
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# Talway <9010446@qq.com>, 2017
-# 钟小华 <mackz@sina.com>, 2017
-# waveyeung <waveyeung@qq.com>, 2017
-# Ted Wang <feiyuwang2012@gmail.com>, 2017
-# Xu Lei <xulei8@qq.com>, 2017
-# Jonathon Li <jonathonli@gmail.com>, 2017
 # Siyuan Gu <siyuancn@hotmail.com>, 2017
-# SHRe Liu <shreliu@outlook.com>, 2017
+# Jonathon Li <jonathonli@gmail.com>, 2017
+# Martin Trigaux, 2017
 # Luke <cialuo@qq.com>, 2017
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
+# 钟小华 <mackz@sina.com>, 2017
+# Talway <9010446@qq.com>, 2017
+# 老窦 北京 <2662059195@qq.com>, 2017
+# waveyeung <waveyeung@qq.com>, 2017
+# liAnGjiA <liangjia@qq.com>, 2017
+# Xu Lei <xulei8@qq.com>, 2017
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018
-# 老窦 北京 <2662059195@qq.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -35,17 +33,12 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer
 msgid "${object.company_id.name} : Job Offer - ${object.name}"
-msgstr ""
-
-#. module: hr_contract_salary
-#: model:mail.template,subject:hr_contract_salary.mail_template_data_notification_email_send_offer
-msgid "${object.subject}"
-msgstr "${object.subject}"
+msgstr "${object.company_id.name}：工作机会 - ${object.name}"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "+ International Communication"
-msgstr ""
+msgstr "+ 国际通信"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -55,7 +48,7 @@ msgstr "+32 2 290 34 90"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "00.00.00-000.00"
-msgstr ""
+msgstr "00.00.00-000.00"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -65,7 +58,7 @@ msgstr "110欧元"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "150 €"
-msgstr ""
+msgstr "150 欧元"
 
 #. module: hr_contract_salary
 #: model:mail.template,body_html:hr_contract_salary.mail_template_send_offer
@@ -88,113 +81,6 @@ msgstr ""
 "=\"background-color: #1abc9c; padding: 20px; text-decoration: none; color: "
 "#fff; border-radius: 5px; font-size: 16px;\" "
 "class=\"o_default_snippet_text\"></a><br/><br/><br/></center></div>"
-
-#. module: hr_contract_salary
-#: model:mail.template,body_html:hr_contract_salary.mail_template_data_notification_email_send_offer
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<html>\n"
-"                <head/>\n"
-"                % set record = ctx.get('record')\n"
-"                % set company = record and record.company_id or user.company_id\n"
-"                <body style=\"margin: 0; padding: 0;\">\n"
-"                <table border=\"0\" width=\"100%\" cellpadding=\"0\" bgcolor=\"#ededed\" style=\"padding: 20px; background-color: #ededed\" summary=\"o_mail_notification\">\n"
-"                    <tbody>\n"
-"\n"
-"                      <!-- HEADER -->\n"
-"                      <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
-"                            <tr>\n"
-"                              <td valign=\"middle\">\n"
-"                                  <span style=\"font-size:20px; color:white; font-weight: bold;\">\n"
-"                                      ${object.record_name}\n"
-"                                  </span>\n"
-"                              </td>\n"
-"                              <td valign=\"middle\" align=\"right\">\n"
-"                                  <img src=\"/logo.png?company=${company.id}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${company.name}\"/>\n"
-"                              </td>\n"
-"                            </tr>\n"
-"                          </table>\n"
-"                        </td>\n"
-"                      </tr>\n"
-"\n"
-"                      <!-- CONTENT -->\n"
-"                      <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\" style=\"min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;\">\n"
-"                            <tbody>\n"
-"                              <td valign=\"top\" style=\"font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;\">\n"
-"                                ${object.body | safe}\n"
-"                              </td>\n"
-"                            </tbody>\n"
-"                          </table>\n"
-"                        </td>\n"
-"                      </tr>\n"
-"\n"
-"                      <!-- FOOTER -->\n"
-"                      <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
-"                            <tr>\n"
-"                              <td valign=\"middle\" align=\"left\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
-"                                ${company.name}<br/>\n"
-"                                ${company.phone or ''}\n"
-"                              </td>\n"
-"                              <td valign=\"middle\" align=\"right\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
-"                                % if company.email:\n"
-"                                <a href=\"mailto:${company.email}\" style=\"text-decoration:none; color: white;\">${company.email}</a><br/>\n"
-"                                % endif\n"
-"                                % if company.website:\n"
-"                                    <a href=\"${company.website}\" style=\"text-decoration:none; color: white;\">\n"
-"                                        ${company.website}\n"
-"                                    </a>\n"
-"                                % endif\n"
-"                              </td>\n"
-"                            </tr>\n"
-"                          </table>\n"
-"                        </td>\n"
-"                      </tr>\n"
-"                      <tr>\n"
-"                        <td align=\"center\">\n"
-"                            Powered by <a target=\"_blank\" href=\"https://www.odoo.com\">Odoo</a>.\n"
-"                        </td>\n"
-"                      </tr>\n"
-"                    </tbody>\n"
-"                </table>\n"
-"                </body>\n"
-"                </html>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?><html><head/><body style=\"margin: 0; padding: "
-"0;\"><table border=\"0\" width=\"100%\" cellpadding=\"0\" "
-"bgcolor=\"#ededed\" style=\"padding: 20px; background-color: #ededed\" "
-"summary=\"o_mail_notification\"><tbody><!-- HEADER --><tr><td "
-"align=\"center\" style=\"min-width: 590px;\"><table width=\"590\" "
-"border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px;"
-" background-color: rgb(135,90,123); padding: 20px;\"><tr><td "
-"valign=\"middle\"><span style=\"font-size:20px; color:white; font-weight: "
-"bold;\"></span></td><td valign=\"middle\" align=\"right\"><img "
-"src=\"/logo.png?company=${company.id}\" style=\"padding: 0px; margin: 0px; "
-"height: auto; width: 80px;\" "
-"alt=\"${company.name}\"/></td></tr></table></td></tr><!-- CONTENT --><tr><td"
-" align=\"center\" style=\"min-width: 590px;\"><table width=\"590\" "
-"border=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\" style=\"min-width: 590px;"
-" background-color: rgb(255, 255, 255); padding: 20px;\"><tbody><td "
-"valign=\"top\" style=\"font-family:Arial,Helvetica,sans-serif; color: #555; "
-"font-size: 14px;\"></td></tbody></table></td></tr><!-- FOOTER --><tr><td "
-"align=\"center\" style=\"min-width: 590px;\"><table width=\"590\" "
-"border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px;"
-" background-color: rgb(135,90,123); padding: 20px;\"><tr><td "
-"valign=\"middle\" align=\"left\" style=\"color: #fff; padding-top: 10px; "
-"padding-bottom: 10px; font-size: 12px;\"><br/></td><td valign=\"middle\" "
-"align=\"right\" style=\"color: #fff; padding-top: 10px; padding-bottom: "
-"10px; font-size: 12px;\"><a href=\"mailto:${company.email}\" style=\"text-"
-"decoration:none; color: white;\"></a><br/><a href=\"${company.website}\" "
-"style=\"text-decoration:none; color: "
-"white;\"></a></td></tr></table></td></tr><tr><td align=\"center\"><a "
-"target=\"_blank\" "
-"href=\"https://www.odoo.com\"></a></td></tr></tbody></table></body></html>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -233,18 +119,19 @@ msgstr "<i class=\"fa fa-1x fa-male fa-fw fa-lg\"/>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Company Car"
-msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/>"
+msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Company Car)"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Internet"
-msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/>"
+msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Internet)"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> ATN Phone Subscription"
-msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/>"
+msgid ""
+"<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Phone Subscription)"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -273,18 +160,18 @@ msgstr "<i class=\"fa fa-1x fa-mobile fa-fw fa-lg\"/>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Company Car"
-msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind (Company Car)"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Internet"
-msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind (Internet)"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> ATN Phone Subscription"
-msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>"
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Benefit in Kind Phone (Subscription)"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -303,8 +190,8 @@ msgstr "<i class=\"fa fa-1x fa-plus fa-fw\"/>"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<i class=\"fa fa-1x fa-suitcase fa-fw\"/> Double Holidays"
-msgstr "<i class=\"fa fa-1x fa-suitcase fa-fw\"/>"
+msgid "<i class=\"fa fa-1x fa-suitcase fa-fw\"/> Holiday Bonus"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -362,11 +249,12 @@ msgstr "<span class=\"help-block mt8\"/>"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
-"<span class=\"help-block mt8\">The cost of the car is depreciated over 5 "
-"years. For example, a new car may cost 500€/month the first year but its "
-"cost will decrease at each yearly appraisal to reach 100€/month after 5 "
-"years.</span>"
-msgstr "<span class=\"help-block mt8\"/>"
+"<span class=\"help-block mt8\">The cost of a car is depreciated by 8% per "
+"year, for 7 years. So, your gross salary increases automatically to keep the"
+" same employee budget. Once a car has 7 years, the car is fully depreciated "
+"and the only remaining costs are the maintenance, insurances and "
+"taxes.</span>"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -378,15 +266,9 @@ msgstr "<span class=\"help-block\"/>"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
-"<span class=\"help-block\">This commission is only effective if the target "
-"is reached. The commissions are paid using warrants that you receive every "
-"three months.</span>"
-msgstr "<span class=\"help-block\"/>"
-
-#. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "<span class=\"help-block\">This is a monthly net amount.</span>"
-msgstr "<span class=\"help-block\"/>"
+"<span class=\"help-block\">This is a monthly net amount, taken into account "
+"in your payslip.</span>"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -425,22 +307,22 @@ msgstr "<span class=\"o_stat_text\"/>"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "Accept Request"
-msgstr ""
+msgstr "接受请求"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_access_token_end_date
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__access_token_end_date
 msgid "Access Token Validity Date"
-msgstr ""
+msgstr "访问令牌的有效性日期"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_active_employee
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__active_employee
 msgid "Active"
 msgstr "有效"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_additional_note
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__additional_note
 msgid "Additional Note"
-msgstr ""
+msgstr "附加说明"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -455,18 +337,18 @@ msgstr "申请人"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "BASIC SALARY"
-msgstr ""
+msgstr "基本工资"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "BE10 3631 0709 4104"
-msgstr ""
+msgstr "BE10 3631 0709 4104"
 
 #. module: hr_contract_salary
 #: selection:hr.employee,certificate:0
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Bachelor"
-msgstr ""
+msgstr "学士"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -476,12 +358,17 @@ msgstr "银行账户"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Batman"
-msgstr ""
+msgstr "蝙蝠侠"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Birthdate"
 msgstr "生日"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "CO2 Emission: <span name=\"co2\"/>"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -491,12 +378,12 @@ msgstr "现金"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Certificate"
-msgstr ""
+msgstr "证书"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_certificate
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__certificate
 msgid "Certificate Level"
-msgstr ""
+msgstr "证书等级"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -504,24 +391,19 @@ msgid "City"
 msgstr "城市"
 
 #. module: hr_contract_salary
-#: model:ir.actions.act_window,help:hr_contract_salary.action_hr_contract_templates
-msgid "Click here to create new contracts."
-msgstr "点击创建一个新的合同"
-
-#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Company Car"
-msgstr ""
+msgstr "公司配车"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Computer Science"
-msgstr ""
+msgstr "计算机科学"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_access_token_consumed
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__access_token_consumed
 msgid "Consumed Access Token"
-msgstr ""
+msgstr "已消耗的访问令牌"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -532,17 +414,17 @@ msgstr "联系信息"
 #: model:ir.actions.act_window,name:hr_contract_salary.action_hr_contract_templates
 #: model:ir.ui.menu,name:hr_contract_salary.hr_menu_contract_templates
 msgid "Contract Templates"
-msgstr ""
+msgstr "合同模板"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job_contract_update_template_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job__contract_update_template_id
 msgid "Contract Update Document Template"
-msgstr ""
+msgstr "合同更新文档模板"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_signature_request_template_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__signature_request_template_id
 msgid "Contract template that the employee will have to sign."
-msgstr ""
+msgstr "员工必须签字的合同模板。"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -552,42 +434,47 @@ msgstr "国家"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_applicant_view_form
 msgid "Create Offer"
+msgstr "创建报价"
+
+#. module: hr_contract_salary
+#: model:ir.actions.act_window,help:hr_contract_salary.action_hr_contract_templates
+msgid "Create a new contract"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Customize your salary"
-msgstr ""
+msgstr "定制您的薪资"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_res_config_settings_access_token_validity
+#: model:ir.model.fields,field_description:hr_contract_salary.field_res_config_settings__access_token_validity
 msgid "Default Access Token Validity Duration"
-msgstr ""
+msgstr "默认访问令牌的有效期限"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant_default_contract_id
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job_default_contract_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant__default_contract_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job__default_contract_id
 msgid "Default Contract for New Employees"
-msgstr ""
+msgstr "新员工的默认合同"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_applicant_default_contract_id
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_job_default_contract_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_applicant__default_contract_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_job__default_contract_id
 msgid "Default contract used when making an offer to an applicant."
-msgstr ""
+msgstr "向申请人制定报价时使用的默认合同。"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_job_signature_request_template_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_job__signature_request_template_id
 msgid ""
 "Default document that the applicant will have to sign to accept a contract "
 "offer."
-msgstr ""
+msgstr "默认文档，即申请人因为接受合同报价而应当签署的文档。"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_job_contract_update_template_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_job__contract_update_template_id
 msgid ""
 "Default document that the employee will have to sign to update his contract."
-msgstr ""
+msgstr "默认文档，即员工为更新他的合同应当签署的文档。"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -597,7 +484,7 @@ msgstr "细节"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Disabled"
-msgstr ""
+msgstr "残疾"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -625,9 +512,14 @@ msgid "Divorced"
 msgstr "离异"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_signature_request_template_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__signature_request_template_id
 msgid "Document Template"
 msgstr "文档模板"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Doors Number: <span name=\"door_number\"/>"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_employee_view_form
@@ -640,14 +532,14 @@ msgid "Email"
 msgstr "电子邮箱"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_emergency_contact
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__emergency_contact
 msgid "Emergency Contact"
-msgstr ""
+msgstr "紧急联系人"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_emergency_phone
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__emergency_phone
 msgid "Emergency Phone"
-msgstr ""
+msgstr "紧急电话"
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_employee
@@ -661,7 +553,7 @@ msgstr "员工合约"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Employee Total Cost"
+msgid "Employer Cost"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -670,25 +562,35 @@ msgid "Female"
 msgstr "女性"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_study_field
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__study_field
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Field of Study"
+msgstr "研究领域"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Fuel Type: <span name=\"fuel_type\"/>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Full time equivalent employer cost"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "GROSS SALARY"
-msgstr ""
+msgstr "总薪资"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Gross"
-msgstr ""
+msgstr "毛额"
 
 #. module: hr_contract_salary
 #: model:signature.item.party,name:hr_contract_salary.signature_item_party_job_responsible
 msgid "HR Responsible"
-msgstr ""
+msgstr "人力资源主管"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
@@ -703,7 +605,7 @@ msgid "Hide <i class=\"fa fa-chevron-up\"/>"
 msgstr "<i class=\"fa fa-chevron-up\"/>"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_active_employee
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__active_employee
 msgid ""
 "If the active field is set to False, it will allow you to hide the resource "
 "record without removing it."
@@ -711,14 +613,13 @@ msgstr "如果这有效字段设为否，那么可以隐藏此记录且并不删
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid ""
-"If you want to choose another car model, please contact your HR manager."
+msgid "Immatriculation Date: <span name=\"immatriculation\"/>"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "In case of emergency"
-msgstr ""
+msgstr "在紧急情况下"
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_job
@@ -727,8 +628,13 @@ msgstr "工作岗位"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Legal Leaves"
+msgid "Last Odometer: <span name=\"odometer\"/>"
 msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Legal Leaves"
+msgstr "法定假期"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -743,7 +649,7 @@ msgstr "婚姻状况"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Married / Legal Cohabitant"
-msgstr ""
+msgstr "已婚/法律同居者"
 
 #. module: hr_contract_salary
 #: selection:hr.employee,certificate:0
@@ -754,7 +660,7 @@ msgstr "主版本"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Advantages"
-msgstr ""
+msgstr "每月的优势"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -763,23 +669,28 @@ msgstr "每月现金优势"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Monthly Benefits"
+msgid "Monthly Advantages in Net"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Monthly Benefit in Kind"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Equivalent"
-msgstr ""
+msgstr "每月的等价"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Salary"
-msgstr ""
+msgstr "月薪"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "NET SALARY"
-msgstr ""
+msgstr "净收入"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -789,17 +700,17 @@ msgstr "名称"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "National Identification Number"
-msgstr ""
+msgstr "公民的识别号码"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Nationality"
-msgstr ""
+msgstr "国籍"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Nature"
-msgstr ""
+msgstr "自然人"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -809,12 +720,12 @@ msgstr "净"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Net calculation"
-msgstr ""
+msgstr "净计算"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job_signature_request_template_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job__signature_request_template_id
 msgid "New Contract Document Template"
-msgstr ""
+msgstr "新增的合同文档模板"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -822,41 +733,41 @@ msgid "No"
 msgstr "否"
 
 #. module: hr_contract_salary
-#: code:addons/hr_contract_salary/controllers/main.py:293
+#: code:addons/hr_contract_salary/controllers/main.py:336
 #, python-format
 msgid ""
 "No HR responsible defined on the job position. Please contact an "
 "administrator."
-msgstr ""
+msgstr "在工作岗位中没有定义人力资源主管。请与管理员联系。"
 
 #. module: hr_contract_salary
 #: code:addons/hr_contract_salary/models/hr_contract.py:110
 #, python-format
 msgid "No home address defined on the employee!"
-msgstr ""
+msgstr "员工没有定义家庭住址！"
 
 #. module: hr_contract_salary
-#: code:addons/hr_contract_salary/controllers/main.py:290
+#: code:addons/hr_contract_salary/controllers/main.py:333
 #, python-format
 msgid ""
 "No signature template defined on the job position. Please contact the HR "
 "responsible."
-msgstr ""
+msgstr "在工作岗位中没有定义签名模板。请与人力资源主管联系。"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Number of Dependent Children"
-msgstr ""
+msgstr "受抚养的子女数"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Number of Disabled Children"
-msgstr ""
+msgstr "残疾儿童个数"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_origin_contract_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__origin_contract_id
 msgid "Origin Contract"
-msgstr ""
+msgstr "原始合同"
 
 #. module: hr_contract_salary
 #: selection:hr.employee,certificate:0
@@ -867,7 +778,7 @@ msgstr "其他"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Other Dependent People"
-msgstr ""
+msgstr "其他受抚养的人"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -877,12 +788,12 @@ msgstr "<span class=\"help-block\"/>"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Person to call"
-msgstr ""
+msgstr "召唤某人"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Phone number"
-msgstr ""
+msgstr "电话号码"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -896,64 +807,64 @@ msgstr "<br/>"
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_job_view_form
 msgid "Preview Contract"
-msgstr ""
+msgstr "预览合同"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant_proposed_contracts
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant__proposed_contracts
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_applicant_view_form
 msgid "Proposed Contracts"
-msgstr ""
+msgstr "草拟合同"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant_proposed_contracts_count
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant__proposed_contracts_count
 msgid "Proposed Contracts Count"
-msgstr ""
+msgstr "草拟的合同数"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Public Transportation"
-msgstr ""
+msgstr "公共交通工具"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "Refuse Request"
-msgstr ""
+msgstr "拒绝请求"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_signature_request_ids
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__signature_request_ids
 msgid "Requested Signatures"
-msgstr ""
+msgstr "请求的签名"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Review Contract &amp; Sign"
-msgstr ""
+msgstr "审查合同并签署"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.res_config_settings_view_form
 msgid "Salary Package Configurator"
-msgstr ""
+msgstr "薪资包配置"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee_study_school
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__study_school
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "School"
-msgstr ""
+msgstr "学校"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_access_token
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__access_token
 msgid "Security Token"
 msgstr "安全令牌"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "Send Contract Link"
-msgstr ""
+msgstr "发送合同链接"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "Send Offer"
-msgstr ""
+msgstr "发送报价"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -966,9 +877,9 @@ msgid "Show <i class=\"fa fa-chevron-down\"/>"
 msgstr "<i class=\"fa fa-chevron-down\"/>"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_signature_request_count
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__signature_request_count
 msgid "Signature Request Count"
-msgstr ""
+msgstr "签名请求数"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -978,17 +889,17 @@ msgstr "单身"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Spouse Net Revenue"
-msgstr ""
+msgstr "配偶的净收入"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Spouse Other Net Revenue"
-msgstr ""
+msgstr "配偶其他净收入"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "State"
-msgstr "状态"
+msgstr "省份"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -998,12 +909,12 @@ msgstr "街道"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Street 2"
-msgstr ""
+msgstr "2 号街"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "TAXABLE INCOME"
-msgstr ""
+msgstr "应纳税所得额"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1011,26 +922,41 @@ msgid "Tax status for spouse"
 msgstr "配偶缴税状态"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_origin_contract_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__origin_contract_id
 msgid "The contract from which this contract has been duplicated."
-msgstr ""
+msgstr "本合同是复制的合同。"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
 "The number of days you get depends on your working schedule, the number of "
 "days used in your previous job and the number of months worked previously."
+msgstr "您得到的天数取决于您的工作计划、先前工作所用的天数和先前工作的月份数。"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"This commission is only effective if the target is reached. The commissions "
+"are paid using warrants that you receive every three months. This results to"
+" a net warrant value of"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"This cost simulation is only for information. If you want to choose another "
+"car model, please contact your HR manager."
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Total"
-msgstr "总计"
+msgstr "合计"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.res_config_settings_view_form
 msgid "Validity duration for salary package requests for new applicants"
-msgstr ""
+msgstr "新申请人薪资包请求的有效期限"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1050,12 +976,12 @@ msgstr "无收入"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Yearly Advantages"
-msgstr ""
+msgstr "每年的优势"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Yearly Advantages in Cash"
-msgstr ""
+msgstr "每年的现金优势"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1065,17 +991,17 @@ msgstr "是"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Your Personal Information"
-msgstr ""
+msgstr "您的个人信息"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
 msgid "Your contract has been sent to:"
-msgstr ""
+msgstr "您的合同已发送至："
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Zip Code"
-msgstr ""
+msgstr "压缩代码"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1085,4 +1011,4 @@ msgstr "天"
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_res_config_settings
 msgid "res.config.settings"
-msgstr "res.config.settings"
+msgstr "设置-基础设置"

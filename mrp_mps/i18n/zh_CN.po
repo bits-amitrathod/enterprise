@@ -3,21 +3,15 @@
 # * mrp_mps
 # 
 # Translators:
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# zhining wu <wzn63@21cn.com>, 2017
-# liAnGjiA <liangjia@qq.com>, 2017
-# waveyeung <waveyeung@qq.com>, 2017
-# Martin Trigaux, 2017
-# Yaorong Li <55yaorong.li@gmail.com>, 2017
-# fausthuang, 2017
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
 # 老窦 北京 <2662059195@qq.com>, 2017
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-21 17:04+0000\n"
-"PO-Revision-Date: 2017-11-21 17:04+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +33,7 @@ msgstr "<span class=\"fa fa-fw\">-</span> 需求预测"
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"fa fa-fw\">-</span> Indirect Demand"
-msgstr "<span class=\"fa fa-fw\">-</span> 间接需求"
+msgstr "<span class=\"fa fa-fw\">-</span> 非直接需求"
 
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -48,12 +42,17 @@ msgid ""
 "                                    Forecasted Inventory"
 msgstr ""
 "<span class=\"fa fa-fw\">=</span> \n"
-"                                    预测库存"
+"                                    预测的库存"
 
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"text-muted\"> by</span>"
 msgstr "<span class=\"text-muted\"> 于</span>"
+
+#. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_active
+msgid "Active in MPS"
+msgstr ""
 
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.mrp_mps_report_view_form
@@ -62,7 +61,7 @@ msgstr "添加产品"
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:176
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:184
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 #, python-format
 msgid "Add a Product"
@@ -74,14 +73,14 @@ msgid "Apply"
 msgstr "应用"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_product_product_apply_active
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product__apply_active
 msgid "Apply Active"
 msgstr "应用"
 
 #. module: mrp_mps
 #: selection:sale.forecast,mode:0
 msgid "Automatic"
-msgstr "自动"
+msgstr "自动的"
 
 #. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.mrp_mps_report_view_form
@@ -95,26 +94,21 @@ msgid "Companies"
 msgstr "公司"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_company_id
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__company_id
 msgid "Company"
 msgstr "公司"
 
 #. module: mrp_mps
-#: model:stock.inventory.line,product_name:mrp_mps.mps_stock_inventory_line_1
-msgid "Computer SC234"
-msgstr "电脑 SC234"
-
-#. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_create_uid
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_create_uid
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_create_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__create_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__create_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__create_uid
 msgid "Created by"
 msgstr "创建人"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_create_date
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_create_date
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_create_date
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__create_date
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__create_date
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__create_date
 msgid "Created on"
 msgstr "创建时间"
 
@@ -129,19 +123,19 @@ msgid "Daily"
 msgstr "每天"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_date
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_date
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__date
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__date
 msgid "Date"
-msgstr "日期   "
+msgstr "日期"
 
 #. module: mrp_mps
-#: model:ir.model.fields,help:mrp_mps.field_sale_forecast_product_uom_id
+#: model:ir.model.fields,help:mrp_mps.field_sale_forecast__product_uom_id
 msgid "Default Unit of Measure used for all stock operation."
 msgstr "所有库存作业的默认计量单位"
 
 #. module: mrp_mps
-#: model:ir.model.fields,help:mrp_mps.field_res_company_manufacturing_period
-#: model:ir.model.fields,help:mrp_mps.field_res_config_settings_manufacturing_period
+#: model:ir.model.fields,help:mrp_mps.field_res_company__manufacturing_period
+#: model:ir.model.fields,help:mrp_mps.field_res_config_settings__manufacturing_period
 msgid ""
 "Default value for the time ranges in Master Production Schedule report."
 msgstr "主生产计划报表中的时间范围的默认值。"
@@ -149,15 +143,15 @@ msgstr "主生产计划报表中的时间范围的默认值。"
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:37
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_forecast_qty
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__forecast_qty
 #, python-format
 msgid "Demand Forecast"
 msgstr "需求预测"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_display_name
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_display_name
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_display_name
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__display_name
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__display_name
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
@@ -180,26 +174,26 @@ msgstr "预测库存"
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:202
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:211
 #: model:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
 #, python-format
 msgid "Forecast Product"
 msgstr "预测产品"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_product_product_mps_forecasted
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_forecasted
 msgid "Forecasted Target"
 msgstr "预测目标"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_id
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_id
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_id
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mrp_mps
-#: model:ir.model.fields,help:mrp_mps.field_sale_forecast_to_supply
+#: model:ir.model.fields,help:mrp_mps.field_sale_forecast__to_supply
 msgid "If mode is Manual, this is the forced value"
 msgstr "如果模式是手动，这是强制值"
 
@@ -208,36 +202,36 @@ msgstr "如果模式是手动，这是强制值"
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:42
 #, python-format
 msgid "Indirect Demand"
-msgstr "间接需求"
+msgstr "非直接需求"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_quantity
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__quantity
 msgid "Indirect Quantity"
-msgstr "间接数量"
+msgstr "非直接数量"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report___last_update
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast___last_update
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect___last_update
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report____last_update
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast____last_update
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect____last_update
 msgid "Last Modified on"
-msgstr "最后修改时间"
+msgstr "最后修改日"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_write_uid
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_write_uid
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_write_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__write_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__write_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__write_uid
 msgid "Last Updated by"
 msgstr "最后更新人"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_write_date
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_write_date
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_write_date
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__write_date
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__write_date
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_product_product_mps_apply
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_apply
 msgid "Latest Apply"
 msgstr "最近应用"
 
@@ -259,11 +253,6 @@ msgid "MPS"
 msgstr "MPS"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_product_product_mps_active
-msgid "MPS Active"
-msgstr "MPS 有效"
-
-#. module: mrp_mps
 #: model:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "MPS in Main Warehouse"
 msgstr "主仓库 MPS"
@@ -274,8 +263,8 @@ msgid "Manual"
 msgstr "手动"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_res_company_manufacturing_period
-#: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings_manufacturing_period
+#: model:ir.model.fields,field_description:mrp_mps.field_res_company__manufacturing_period
+#: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings__manufacturing_period
 msgid "Manufacturing Period"
 msgstr "制造期间"
 
@@ -286,17 +275,17 @@ msgid "Master Production Schedule"
 msgstr "主生产排程"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_product_product_mps_max_supply
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_max_supply
 msgid "Maximum to Supply"
 msgstr "要供应的最大量"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_product_product_mps_min_supply
+#: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_min_supply
 msgid "Minimum to Supply"
 msgstr "要供应的最小量"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_mode
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__mode
 msgid "Mode"
 msgstr "模式"
 
@@ -311,12 +300,12 @@ msgid "Monthly"
 msgstr "每月"
 
 #. module: mrp_mps
-#: model:stock.inventory.line,product_name:mrp_mps.mps_stock_inventory_line_0
-msgid "Mouse, Wireless"
-msgstr "无线鼠标"
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__product_origin_id
+msgid "Origin Product"
+msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_period
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__period
 msgid "Period"
 msgstr "期间"
 
@@ -328,7 +317,7 @@ msgid "Period:"
 msgstr "期间："
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_group_id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__group_id
 msgid "Procurement Group"
 msgstr "补货组"
 
@@ -339,22 +328,21 @@ msgstr "补货规则"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_product_product
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report_product_id
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_product_id
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_product_origin_id
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_product_id
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__product_id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__product_id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__product_id
 #: model:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
 msgid "Product"
 msgstr "产品"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_product_uom_id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__product_uom_id
 msgid "Product UoM"
 msgstr "产品计量单位"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect_warehouse_id
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_warehouse_id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__warehouse_id
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__warehouse_id
 msgid "Production Location"
 msgstr "生产位置"
 
@@ -379,7 +367,7 @@ msgid "Starting Inventory"
 msgstr "开始盘点"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_state
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__state
 msgid "State"
 msgstr "状态"
 
@@ -396,18 +384,18 @@ msgid "To Produce"
 msgstr "待生产"
 
 #. module: mrp_mps
-#: code:addons/mrp_mps/models/mrp_mps_report.py:123
+#: code:addons/mrp_mps/models/mrp_mps_report.py:128
 #, python-format
 msgid "To Receive / To Supply / Produce"
 msgstr "接收/供应/生产"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_to_supply
+#: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__to_supply
 msgid "To Supply"
 msgstr "待供应"
 
 #. module: mrp_mps
-#: code:addons/mrp_mps/models/mrp_mps_report.py:149
+#: code:addons/mrp_mps/models/mrp_mps_report.py:154
 #, python-format
 msgid "Week %s"
 msgstr "%s 周"
@@ -424,8 +412,8 @@ msgstr "每周"
 
 #. module: mrp_mps
 #. openerp-web
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:80
-#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:218
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:82
+#: code:addons/mrp_mps/static/src/js/mrp_mps_report_widget.js:227
 #, python-format
 msgid "Wrong value entered!"
 msgstr "错误值输入!"
@@ -443,7 +431,7 @@ msgstr "mrp.mps.report"
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_res_config_settings
 msgid "res.config.settings"
-msgstr "res.config.settings"
+msgstr "设置-基础设置"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_sale_forecast

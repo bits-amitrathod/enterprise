@@ -3,19 +3,19 @@
 # * currency_rate_live
 # 
 # Translators:
-# lap.odoo <lap@odoo.com>, 2017
-# Cyrille de Lambert <cdelambert@auguria.net>, 2017
+# Cyrille de Lambert <cdelambert@auguria.net>, 2016
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
+# Martin Trigaux, 2016
+# Olivier Lenoir <olivier.lenoir@free.fr>, 2016
 # Alexandre Fayolle <alexandre.fayolle@camptocamp.com>, 2017
-# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
-# Martin Trigaux, 2017
-# Olivier Lenoir <olivier.lenoir@free.fr>, 2017
+# lap.odoo <lap@odoo.com>, 2017
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,11 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: currency_rate_live
+#: selection:res.company,currency_provider:0
+msgid "Bank Of Canada"
+msgstr ""
 
 #. module: currency_rate_live
 #: model:ir.model,name:currency_rate_live.model_res_company
@@ -57,14 +62,14 @@ msgid "Interval"
 msgstr "Intervalle"
 
 #. module: currency_rate_live
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_company_currency_interval_unit
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings_currency_interval_unit
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_company__currency_interval_unit
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings__currency_interval_unit
 msgid "Interval Unit"
 msgstr "Unité de l'intervalle"
 
 #. module: currency_rate_live
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_company_last_currency_sync_date
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings_last_currency_sync_date
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_company__last_currency_sync_date
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings__last_currency_sync_date
 #: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "Last Sync Date"
 msgstr "Date de dernière synchronisation"
@@ -85,8 +90,8 @@ msgid "Monthly"
 msgstr "Mensuel"
 
 #. module: currency_rate_live
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_company_currency_next_execution_date
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings_currency_next_execution_date
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_company__currency_next_execution_date
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings__currency_next_execution_date
 msgid "Next Execution Date"
 msgstr "Prochaine date d'exécution"
 
@@ -101,13 +106,21 @@ msgid "Service"
 msgstr "Service"
 
 #. module: currency_rate_live
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_company_currency_provider
-#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings_currency_provider
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_company__currency_provider
+#: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings__currency_provider
 msgid "Service Provider"
 msgstr "Fournisseur du service"
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:77
+#: code:addons/currency_rate_live/models/res_config_settings.py:75
+#, python-format
+msgid ""
+"The Yahoo currency rate web service has been discontinued. Please select "
+"another currency rate provider."
+msgstr ""
+
+#. module: currency_rate_live
+#: code:addons/currency_rate_live/models/res_config_settings.py:85
 #, python-format
 msgid ""
 "Unable to connect to the online exchange rate platform. The web service may "
@@ -124,8 +137,16 @@ msgstr "Hebdomadaire"
 
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
-msgid "Yahoo"
-msgstr "Yahoo"
+msgid "Yahoo (DISCONTINUED)"
+msgstr ""
+
+#. module: currency_rate_live
+#: code:addons/currency_rate_live/models/res_config_settings.py:120
+#, python-format
+msgid ""
+"Your main currency %s is unsupported by this exchange rate provider. Please "
+"choose another one."
+msgstr ""
 
 #. module: currency_rate_live
 #: model:ir.model,name:currency_rate_live.model_res_config_settings

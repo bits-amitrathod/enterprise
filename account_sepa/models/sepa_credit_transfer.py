@@ -344,7 +344,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
 
         CdtrAcct = etree.Element("CdtrAcct")
         Id = etree.SubElement(CdtrAcct, "Id")
-        if self.is_generic:
+        if self.is_generic and bank_account.acc_type != 'iban':
             Othr = etree.SubElement(Id, "Othr")
             _Id = etree.SubElement(Othr, "Id")
             _Id.text = bank_account.acc_number

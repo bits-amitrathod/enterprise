@@ -453,7 +453,7 @@
             <input id="string" name="string" type="text" data-type="attributes"
                 t-att-value="widget.state.attrs.string"/>
         </div>
-        <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_text">
+        <div t-if="widget.view_type === 'form'" class="o_web_studio_sidebar_text">
             <label for="help">Help Tooltip</label>
             <input id="help" name="help" type="text" data-type="attributes"
                 t-att-value="widget.state.attrs.help"/>

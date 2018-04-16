@@ -3,33 +3,30 @@
 # * print
 # 
 # Translators:
-# Bertrand LATOUR <divoir@gmail.com>, 2017
-# Micky Jault <micky037@hotmail.fr>, 2017
-# Melanie Bernard <mbe@odoo.com>, 2017
-# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
-# Clo <clo@odoo.com>, 2017
-# Olivier Dony <odo@odoo.com>, 2017
+# Xavier Belmere <Info@cartmeleon.com>, 2016
+# Martin Trigaux, 2016
+# Melanie Bernard <mbe@odoo.com>, 2016
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
+# Clo <clo@odoo.com>, 2016
+# ShevAbam, 2016
+# Olivier Dony <odo@odoo.com>, 2016
+# Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2016
+# Nancy Bolognesi <nb@microcom.ca>, 2016
+# Florian Hatat, 2016
+# Maxime Solinas <msolinas@t2o.ca>, 2016
+# Xavier Symons <xsy@openerp.com>, 2016
+# Lucas Deliege <lud@odoo.com>, 2016
+# Olivier Lenoir <olivier.lenoir@free.fr>, 2016
+# Daniel & Delphine <dd2013@leschoupinous.net>, 2016
+# Miguel Vidali <mvidali129@gmail.com>, 2016
 # Eloïse Stilmant <est@odoo.com>, 2017
-# Martin Trigaux, 2017
-# Fred Gilson <fgi@odoo.com>, 2017
-# Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
-# Alexis de Lattre <alexis@via.ecp.fr>, 2017
-# Nancy Bolognesi <nb@microcom.ca>, 2017
-# Florian Hatat, 2017
-# Xavier Belmere <Info@cartmeleon.com>, 2017
-# Maxime Solinas <msolinas@t2o.ca>, 2017
-# Xavier Symons <xsy@openerp.com>, 2017
-# Lucas Deliege <lud@odoo.com>, 2017
-# Daniel & Delphine <dd2013@leschoupinous.net>, 2017
-# leemannd <denis.leemann@camptocamp.com>, 2017
-# Olivier Lenoir <olivier.lenoir@free.fr>, 2017
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -87,14 +84,14 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
-"<b>Erreur de crédit:</b> Votre compte de crédit fournisseur est négatif. "
+"<b> Erreur de crédit :</b> Votre compte de crédit fournisseur est négatif. "
 "Veuillez ajouter des crédits sur votre compte fournisseur pour envoyer des "
 "documents."
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
 msgid "<strong>Environment</strong>"
-msgstr "<strong>Environnement</strong>"
+msgstr "<strong/>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -104,7 +101,7 @@ msgstr "<strong>Nom</strong>"
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
 msgid "<strong>Provider</strong>"
-msgstr "<strong>Fournisseur</strong>"
+msgstr "<strong/>"
 
 #. module: print
 #: code:addons/print/wizard/print_order_wizard.py:70
@@ -114,7 +111,7 @@ msgstr ""
 "Au moins un des documents que vous voulez envoyer contient une erreur."
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_user_id
+#: model:ir.model.fields,field_description:print.field_print_order__user_id
 msgid "Author"
 msgstr "Auteur"
 
@@ -130,7 +127,7 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_city
+#: model:ir.model.fields,field_description:print.field_print_order__partner_city
 msgid "City"
 msgstr "Ville"
 
@@ -150,63 +147,68 @@ msgid "Contact"
 msgstr "Contact"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_price
+#: model:ir.model.fields,field_description:print.field_print_order__price
 msgid "Cost to Deliver"
 msgstr "Coût d'envoi"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_country_id
+#: model:ir.model.fields,field_description:print.field_print_order__partner_country_id
 msgid "Country"
 msgstr "Pays"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_create_uid
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_create_uid
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_create_uid
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_create_uid
-#: model:ir.model.fields,field_description:print.field_print_provider_create_uid
+#: model:ir.model.fields,field_description:print.field_print_order__create_uid
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__create_uid
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__create_uid
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__create_uid
+#: model:ir.model.fields,field_description:print.field_print_provider__create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_create_date
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_create_date
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_create_date
-#: model:ir.model.fields,field_description:print.field_print_provider_create_date
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__create_date
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__create_date
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__create_date
+#: model:ir.model.fields,field_description:print.field_print_provider__create_date
 msgid "Created on"
 msgstr "Créé le"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_create_date
+#: model:ir.model.fields,field_description:print.field_print_order__create_date
 msgid "Creation Date"
 msgstr "Date de création"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_provider_balance
+#: model:ir.model.fields,field_description:print.field_print_provider__balance
 msgid "Credit"
 msgstr "Crédit"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_currency_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_currency_id
-#: model:ir.model.fields,field_description:print.field_print_provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_order__currency_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_currency_id
+#: model:ir.model.fields,field_description:print.field_print_provider__currency_id
 msgid "Currency"
 msgstr "Devise"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_mixin_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_display_name
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_display_name
-#: model:ir.model.fields,field_description:print.field_print_provider_display_name
+#: model:ir.model.fields,field_description:print.field_print_mixin__display_name
+#: model:ir.model.fields,field_description:print.field_print_order__display_name
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__display_name
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__display_name
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__display_name
+#: model:ir.model.fields,field_description:print.field_print_provider__display_name
 msgid "Display Name"
-msgstr "Nom à afficher"
+msgstr "Nom affiché"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_name
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_name
 msgid "Document"
 msgstr "Document"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_sendable
+msgid "Document Can Be Sent"
+msgstr ""
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -214,28 +216,23 @@ msgid "Document Detail"
 msgstr "Détail du document"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
-msgid "Document sensable"
-msgstr "Le document peut être envoyé"
-
-#. module: print
 #: selection:print.order,state:0
 msgid "Draft"
 msgstr "Brouillon"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_environment
-#: model:ir.model.fields,field_description:print.field_print_provider_environment
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_environment
+#: model:ir.model.fields,field_description:print.field_print_provider__environment
 msgid "Environment"
 msgstr "Environnement"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_error_message
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__error_message
 msgid "Error"
 msgstr "Erreur"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_error_message
+#: model:ir.model.fields,field_description:print.field_print_order__error_message
 msgid "Error Message"
 msgstr "Message d'erreur"
 
@@ -255,18 +252,18 @@ msgid "Group By..."
 msgstr "Regrouper par..."
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_mixin_id
-#: model:ir.model.fields,field_description:print.field_print_order_id
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_id
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_id
-#: model:ir.model.fields,field_description:print.field_print_provider_id
+#: model:ir.model.fields,field_description:print.field_print_mixin__id
+#: model:ir.model.fields,field_description:print.field_print_order__id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__id
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__id
+#: model:ir.model.fields,field_description:print.field_print_provider__id
 msgid "ID"
 msgstr "ID"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_ink
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_ink
+#: model:ir.model.fields,field_description:print.field_print_order__ink
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__ink
 msgid "Ink"
 msgstr "Encre"
 
@@ -276,65 +273,65 @@ msgid "Invoice"
 msgstr "Facture"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_res_partner_has_address
-#: model:ir.model.fields,field_description:print.field_res_users_has_address
+#: model:ir.model.fields,field_description:print.field_res_partner__has_address
+#: model:ir.model.fields,field_description:print.field_res_users__has_address
 msgid "Is address valid"
 msgstr "L'adresse est valide"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
-#: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
-#: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
+#: model:ir.model.fields,field_description:print.field_account_invoice__print_is_sendable
+#: model:ir.model.fields,field_description:print.field_print_mixin__print_is_sendable
+#: model:ir.model.fields,field_description:print.field_sale_order__print_is_sendable
 msgid "Is sendable"
 msgstr "Peut être envoyé"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_mixin___last_update
-#: model:ir.model.fields,field_description:print.field_print_order___last_update
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard___last_update
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard___last_update
-#: model:ir.model.fields,field_description:print.field_print_order_wizard___last_update
-#: model:ir.model.fields,field_description:print.field_print_provider___last_update
+#: model:ir.model.fields,field_description:print.field_print_mixin____last_update
+#: model:ir.model.fields,field_description:print.field_print_order____last_update
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard____last_update
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard____last_update
+#: model:ir.model.fields,field_description:print.field_print_order_wizard____last_update
+#: model:ir.model.fields,field_description:print.field_print_provider____last_update
 msgid "Last Modified on"
-msgstr "Dernière modification le"
+msgstr "Dernière Modification le"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_account_invoice_print_sent_date
-#: model:ir.model.fields,field_description:print.field_print_mixin_print_sent_date
-#: model:ir.model.fields,field_description:print.field_sale_order_print_sent_date
+#: model:ir.model.fields,field_description:print.field_account_invoice__print_sent_date
+#: model:ir.model.fields,field_description:print.field_print_mixin__print_sent_date
+#: model:ir.model.fields,field_description:print.field_sale_order__print_sent_date
 msgid "Last Postal Sent Date"
 msgstr "Date du dernier message envoyé"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_last_send_date
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__last_send_date
 msgid "Last Send Date"
 msgstr "Dernière date d'envoi"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_uid
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_write_uid
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_write_uid
-#: model:ir.model.fields,field_description:print.field_print_order_write_uid
-#: model:ir.model.fields,field_description:print.field_print_provider_write_uid
+#: model:ir.model.fields,field_description:print.field_print_order__write_uid
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__write_uid
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__write_uid
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__write_uid
+#: model:ir.model.fields,field_description:print.field_print_provider__write_uid
 msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_date
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_write_date
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_write_date
-#: model:ir.model.fields,field_description:print.field_print_order_write_date
-#: model:ir.model.fields,field_description:print.field_print_provider_write_date
+#: model:ir.model.fields,field_description:print.field_print_order__write_date
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__write_date
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__write_date
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__write_date
+#: model:ir.model.fields,field_description:print.field_print_provider__write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__print_order_line_wizard_ids
 msgid "Lines"
 msgstr "Lignes"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_res_model
+#: model:ir.model.fields,field_description:print.field_print_order__res_model
 msgid "Model Name"
 msgstr "Nom de Modèle"
 
@@ -344,18 +341,18 @@ msgid "My Print Orders"
 msgstr "Mes commandes imprimées"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_name
-#: model:ir.model.fields,field_description:print.field_print_provider_name
+#: model:ir.model.fields,field_description:print.field_print_order__partner_name
+#: model:ir.model.fields,field_description:print.field_print_provider__name
 msgid "Name"
 msgstr "Nom"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_nbr_pages
+#: model:ir.model.fields,field_description:print.field_print_order__nbr_pages
 msgid "Number of Pages"
 msgstr "nombre de pages"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_res_id
+#: model:ir.model.fields,field_description:print.field_print_order__res_id
 msgid "Object ID"
 msgstr "Identifiant de l'objet"
 
@@ -367,7 +364,7 @@ msgstr "Information de la commande"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Orders"
-msgstr "Commandes"
+msgstr "Tri"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
@@ -380,13 +377,13 @@ msgid "Orders Waiting"
 msgstr "Commandes en attente"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_attachment_id
+#: model:ir.model.fields,field_description:print.field_print_order__attachment_id
 msgid "PDF"
 msgstr "PDF"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_paper_weight
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_paper_weight
+#: model:ir.model.fields,field_description:print.field_print_order__paper_weight
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__paper_weight
 msgid "Paper Weight"
 msgstr "Poids du papier"
 
@@ -396,7 +393,7 @@ msgid "Partner"
 msgstr "Partenaire"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_has_address
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__partner_has_address
 msgid "Partner has an addess"
 msgstr "Le partenaire possède une adresse"
 
@@ -424,7 +421,7 @@ msgstr "Impressions postales"
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 #: model:ir.ui.view,arch_db:print.print_provider_view_tree
 msgid "Postal Provider"
-msgstr "Prestataire de services postaux"
+msgstr "Fournisseur postal"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
@@ -438,18 +435,19 @@ msgstr "Imprimer Mixin (Objet imprimable)"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
-#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
+#: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__print_order_ids
 msgid "Print Order"
 msgstr "Imprimer la commande"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_line_wizard_view_tree
+#: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Print Order Lines"
 msgstr "Imprimer les lignes de commande"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_wizard
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__print_order_wizard_id
 msgid "Print Order Wizard"
 msgstr "Imprimer l'assistant de commande"
 
@@ -463,11 +461,11 @@ msgstr "Imprimer le bon de livraison"
 #. module: print
 #: model:ir.actions.act_window,name:print.print_provider_action
 #: model:ir.model,name:print.model_print_provider
-#: model:ir.model.fields,field_description:print.field_print_order_provider_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_id
+#: model:ir.model.fields,field_description:print.field_print_order__provider_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_id
 #: model:ir.ui.menu,name:print.print_provider_menu
 msgid "Print Provider"
-msgstr "Prestataire de services d'impression"
+msgstr "Fournisseur d'impression"
 
 #. module: print
 #: model:ir.actions.server,name:print.ir_cron_print_scheduler_action_ir_actions_server
@@ -487,13 +485,13 @@ msgid "Production"
 msgstr "Fabrication"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_provider_provider
+#: model:ir.model.fields,field_description:print.field_print_provider__provider
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Provider"
 msgstr "Fournisseur"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_balance
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_balance
 msgid "Provider Credit"
 msgstr "Fournisseur de crédit"
 
@@ -513,14 +511,14 @@ msgid "Recipient Address"
 msgstr "Adresse du destinataire"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
-#: model:ir.model.fields,field_description:print.field_print_order_partner_id
+#: model:ir.model.fields,field_description:print.field_print_order__partner_id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__partner_id
 msgid "Recipient partner"
 msgstr "Partenaire destinataire"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_report_id
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
+#: model:ir.model.fields,field_description:print.field_print_order__report_id
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__report_id
 msgid "Report"
 msgstr "Rapport"
 
@@ -530,12 +528,12 @@ msgid "Reset to Draft"
 msgstr "Remettre en brouillon"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_id
+#: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_id
 msgid "Resource ID"
 msgstr "ID de la ressource"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
+#: model:ir.model.fields,field_description:print.field_print_order_wizard__res_model
 msgid "Resource Model"
 msgstr "Modèle de la ressource"
 
@@ -576,33 +574,33 @@ msgid "Send by Post"
 msgstr "Envoyé par la poste"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_sent_date
+#: model:ir.model.fields,field_description:print.field_print_order__sent_date
 msgid "Sending Date"
 msgstr "Date d'envoi"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Sent"
-msgstr "Envoyé"
+msgstr "Envoyer par email"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
+#: model:ir.model.fields,field_description:print.field_print_order__partner_state_id
 msgid "State"
-msgstr "Statut"
-
-#. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_state
-#: model:ir.ui.view,arch_db:print.print_order_view_search
-msgid "Status"
 msgstr "État"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_street
+#: model:ir.model.fields,field_description:print.field_print_order__state
+#: model:ir.ui.view,arch_db:print.print_order_view_search
+msgid "Status"
+msgstr "Statut"
+
+#. module: print
+#: model:ir.model.fields,field_description:print.field_print_order__partner_street
 msgid "Street"
 msgstr "Rue"
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_street2
+#: model:ir.model.fields,field_description:print.field_print_order__partner_street2
 msgid "Street2"
 msgstr "Rue 2"
 
@@ -617,8 +615,8 @@ msgid "Test"
 msgstr "Test"
 
 #. module: print
-#: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
-#: model:ir.model.fields,help:print.field_print_provider_currency_id
+#: model:ir.model.fields,help:print.field_print_order_wizard__provider_currency_id
+#: model:ir.model.fields,help:print.field_print_provider__currency_id
 msgid ""
 "The currency will be used for amount, balance account, print order price, "
 "..."
@@ -679,7 +677,7 @@ msgstr ""
 "Quand le problème est résolu, cliquez sur \"Remettre à l'état de brouillon\""
 
 #. module: print
-#: model:ir.model.fields,field_description:print.field_print_order_partner_zip
+#: model:ir.model.fields,field_description:print.field_print_order__partner_zip
 msgid "Zip"
 msgstr "Code postal"
 

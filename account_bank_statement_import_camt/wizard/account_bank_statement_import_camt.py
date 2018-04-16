@@ -17,7 +17,7 @@ class AccountBankStatementImport(models.TransientModel):
             root = etree.parse(io.BytesIO(data_file)).getroot()
         except:
             return None
-        if root.tag.find('camt.053'):
+        if root.tag.find('camt.053') != -1:
             return root
         return None
 
@@ -75,7 +75,7 @@ class AccountBankStatementImport(models.TransientModel):
                     entry_vals['currency_id'] = curr_cache[instruc_curr[0]]
 
                 # Date 0..1
-                transaction_date = entry.xpath('ns:ValDt/ns:Dt/text() | ns:BookgDt/ns:Dt/text()', namespaces=ns)
+                transaction_date = entry.xpath('ns:ValDt/ns:Dt/text() | ns:BookgDt/ns:Dt/text() | ns:BookgDt/ns:DtTm/text()', namespaces=ns)
                 entry_vals['date'] = transaction_date and transaction_date[0] or False
 
                 # Name 0..1

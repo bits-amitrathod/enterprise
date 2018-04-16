@@ -3,18 +3,20 @@
 # * delivery_dhl
 # 
 # Translators:
-# Mateus Lopes <mateus1@gmail.com>, 2017
-# grazziano <gra.negocia@gmail.com>, 2017
-# Ricardo Freitas Rodrigues <ricardo.freitasgr@gmail.com>, 2017
-# danimaribeiro <danimaribeiro@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Ricardo Freitas Rodrigues <ricardo.freitasgr@gmail.com>, 2016
+# grazziano <gra.negocia@gmail.com>, 2016
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# Mateus Lopes <mateus1@gmail.com>, 2016
+# Martin Trigaux, 2016
+# Hildeberto Abreu Magalhães <hildeberto@gmail.com>, 2018
+# Diego Bittencourt <diegomb86@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Diego Bittencourt <diegomb86@gmail.com>, 2018\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,12 +27,12 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "0 - Logistics Services"
-msgstr ""
+msgstr "0 - Serviços de Logística"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "1 - Domestic Express 12:00"
-msgstr ""
+msgstr "1 - Expresso Doméstico 12:00"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -75,7 +77,7 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "7 - Express Easy"
-msgstr ""
+msgstr "7 - Expresso Fácil"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -135,12 +137,12 @@ msgstr "América"
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_region_code:0
 msgid "Asia Pacific"
-msgstr ""
+msgstr "Ásia-Pacífico"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "B - Break Bulk Express"
-msgstr ""
+msgstr "B - Expresso de Carga Fracionada"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -158,17 +160,17 @@ msgid "Centimeters"
 msgstr "Centímetros"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier_dhl_dutiable
+#: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier__dhl_dutiable
 msgid "Check this if your package is dutiable."
 msgstr ""
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "D - Express Worldwide"
-msgstr ""
+msgstr "D - Expresso Mundial"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_account_number
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_account_number
 msgid "DHL Account Number"
 msgstr "Número de Conta DHL"
 
@@ -178,29 +180,34 @@ msgid "DHL Configuration"
 msgstr "Configuração DHL"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_default_packaging_id
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_packaging_id
 msgid "DHL Default Packaging Type"
-msgstr ""
+msgstr "Tipo de embalagem padrão da DHL"
 
 #. module: delivery_dhl
 #: model:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_stock
 msgid "DHL Delivery Methods"
-msgstr ""
+msgstr "Métodos de entrega da DHL"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_password
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_password
 msgid "DHL Password"
 msgstr "Senha DHL"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:382
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_product_code
+msgid "DHL Product"
+msgstr ""
+
+#. module: delivery_dhl
+#: code:addons/delivery_dhl/models/dhl_request.py:376
 #, python-format
 msgid "DHL Site ID is missing, please modify your delivery method settings."
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_SiteID
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_SiteID
 msgid "DHL SiteID"
 msgstr ""
 
@@ -208,31 +215,31 @@ msgstr ""
 #: model:product.product,name:delivery_dhl.product_product_delivery_dhl_usa
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_usa_product_template
 msgid "DHL USA"
-msgstr ""
+msgstr "DHL EUA"
 
 #. module: delivery_dhl
 #: model:product.product,name:delivery_dhl.product_product_delivery_dhl_intl
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_intl_product_template
 msgid "DHL USA -> International"
-msgstr ""
+msgstr "DHL EUA -> Internacional"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:386
+#: code:addons/delivery_dhl/models/dhl_request.py:380
 #, python-format
 msgid ""
 "DHL account number is missing, please modify your delivery method settings."
 msgstr ""
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:384
+#: code:addons/delivery_dhl/models/dhl_request.py:378
 #, python-format
 msgid "DHL password is missing, please modify your delivery method settings."
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_dutiable
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_dutiable
 msgid "Dutiable Material"
-msgstr ""
+msgstr "Material Tributável"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -295,12 +302,12 @@ msgid "L - Express 10:30"
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_image_format
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_label_image_format
 msgid "Label Image Format"
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_template
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_label_template
 msgid "Label Template"
 msgstr ""
 
@@ -315,13 +322,13 @@ msgid "N - Domestic Express"
 msgstr ""
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:185
+#: code:addons/delivery_dhl/models/dhl_request.py:179
 #, python-format
 msgid "No service available for the selected product"
-msgstr ""
+msgstr "Serviço indisponível para o produto selecionado"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:88
+#: code:addons/delivery_dhl/models/dhl_request.py:82
 #, python-format
 msgid "No shipping available for the selected DHL product"
 msgstr ""
@@ -342,14 +349,14 @@ msgid "PDF"
 msgstr "PDF"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_package_dimension_unit
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_package_dimension_unit
 msgid "Package Dimension Unit"
-msgstr ""
+msgstr "Unidade de tamanho do pacote"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_package_weight_unit
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_package_weight_unit
 msgid "Package Weight Unit"
-msgstr ""
+msgstr "Unidade de peso do pacote"
 
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_product_packaging
@@ -357,7 +364,7 @@ msgid "Packaging"
 msgstr "Empacotamento"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:404
+#: code:addons/delivery_dhl/models/dhl_request.py:398
 #, python-format
 msgid "Please provide at least one item to ship."
 msgstr "Por favor, forneça pelo menos  um item para o ship."
@@ -366,11 +373,6 @@ msgstr "Por favor, forneça pelo menos  um item para o ship."
 #: selection:delivery.carrier,dhl_package_weight_unit:0
 msgid "Pounds"
 msgstr "Libra Esterlina"
-
-#. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_product_code
-msgid "Product"
-msgstr "Produto"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -383,7 +385,7 @@ msgid "R - GlobalMail Business"
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_region_code
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_region_code
 msgid "Region"
 msgstr "Região"
 
@@ -404,23 +406,27 @@ msgid "T - Express 12:00"
 msgstr ""
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:392
+#: code:addons/delivery_dhl/models/dhl_request.py:386
 #, python-format
 msgid ""
 "The address of the customer is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"O endereço do cliente está ausente ou errado (Campo(s) ausente(s) :\n"
+" %s)"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:400
+#: code:addons/delivery_dhl/models/dhl_request.py:394
 #, python-format
 msgid ""
 "The address of your company warehouse is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"O endereço do depósito da empresa está ausente ou errado (Ausente(s) :\n"
+" %s)"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:406
+#: code:addons/delivery_dhl/models/dhl_request.py:400
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -468,3 +474,11 @@ msgstr ""
 #: selection:delivery.carrier,dhl_label_image_format:0
 msgid "ZPL2"
 msgstr ""
+
+#. module: delivery_dhl
+#: model:product.product,weight_uom_name:delivery_dhl.product_product_delivery_dhl_intl
+#: model:product.product,weight_uom_name:delivery_dhl.product_product_delivery_dhl_usa
+#: model:product.template,weight_uom_name:delivery_dhl.product_product_delivery_dhl_intl_product_template
+#: model:product.template,weight_uom_name:delivery_dhl.product_product_delivery_dhl_usa_product_template
+msgid "kg"
+msgstr "kg"

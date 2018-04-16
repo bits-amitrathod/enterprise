@@ -3,20 +3,18 @@
 # * account_yodlee
 # 
 # Translators:
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
+# 苏州远鼎 <tiexinliu@126.com>, 2016
 # hman tsao <herman.tsao@gmail.com>, 2017
-# fausthuang, 2017
 # Ted Wang <feiyuwang2012@gmail.com>, 2017
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# 苏州远鼎 <tiexinliu@126.com>, 2017
-# Martin Trigaux, 2017
 # Ryan Zhang <so_happy_boy@hotmail.com>, 2017
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -83,12 +81,12 @@ msgid ""
 msgstr "不支持帐户类型 (417): 我们发现当前的帐户类型目前不支持。请删除此站点，并添加为手动帐户。"
 
 #. module: account_yodlee
-#: model:ir.model.fields,help:account_yodlee.field_account_online_journal_yodlee_account_status
+#: model:ir.model.fields,help:account_yodlee.field_account_online_journal__yodlee_account_status
 msgid "Active/Inactive on Yodlee system"
 msgstr "在Yodlee系统上的活动/非活动"
 
 #. module: account_yodlee
-#: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_additional_status
+#: model:ir.model.fields,help:account_yodlee.field_account_online_provider__yodlee_additional_status
 msgid "Additional information on status"
 msgstr "额外的状态信息"
 
@@ -178,9 +176,7 @@ msgid ""
 "enroll in the new security authentication system, <Account Name> has "
 "introduced. Ensure your account settings in <Cobrand> are updated with this "
 "information."
-msgstr ""
-"MFA 错误：需要额外的认证注册 (521)：请在已引入的新安全认证系统中注册。<Account "
-"Name>确保您的账户设置更新了此信息。<Cobrand>"
+msgstr "<Account Name><Cobrand>"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:419
@@ -567,7 +563,7 @@ msgid ""
 msgstr "网站不受支持 (505)：我们目前不支持该网站使用的安全系统。为您带来任何不便，我们深表歉意。如果此状况已发生改变，则定期查看记录。"
 
 #. module: account_yodlee
-#: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
+#: model:ir.model.fields,help:account_yodlee.field_account_online_provider__yodlee_next_schedule_refresh
 msgid "Technical field: scheduled time for yodlee to perform an update"
 msgstr "技术领域：yodlee 执行更新的计划时间"
 
@@ -596,46 +592,46 @@ msgid ""
 msgstr "更新请求已取消 (405)：由于您取消了请求，因此未更新您的账户。"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_account_status
+#: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal__yodlee_account_status
 msgid "Yodlee Account Status"
 msgstr "Yodlee 账号状态"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_additional_status
+#: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider__yodlee_additional_status
 msgid "Yodlee Additional Status"
 msgstr "Yodlee 附加状态"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_last_attempted_refresh
+#: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider__yodlee_last_attempted_refresh
 msgid "Yodlee Last Attempted Refresh"
 msgstr "Yodlee 最后一次尝试刷新"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
+#: model:ir.model.fields,field_description:account_yodlee.field_account_online_provider__yodlee_next_schedule_refresh
 msgid "Yodlee Next Schedule Refresh"
 msgstr "Yodlee 下一次计划刷新"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_status_code
+#: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal__yodlee_status_code
 msgid "Yodlee Status Code"
 msgstr "Yodlee 状态代码"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_access_token
+#: model:ir.model.fields,field_description:account_yodlee.field_res_company__yodlee_user_access_token
 msgid "Yodlee access token"
 msgstr "Yodlee 访问令牌"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_login
+#: model:ir.model.fields,field_description:account_yodlee.field_res_company__yodlee_user_login
 msgid "Yodlee login"
 msgstr "Yodlee 登陆"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_password
+#: model:ir.model.fields,field_description:account_yodlee.field_res_company__yodlee_user_password
 msgid "Yodlee password"
 msgstr "Yodlee 密码"
 
 #. module: account_yodlee
-#: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_access_token
+#: model:ir.model.fields,field_description:account_yodlee.field_res_company__yodlee_access_token
 msgid "access_token"
 msgstr "access_token"
