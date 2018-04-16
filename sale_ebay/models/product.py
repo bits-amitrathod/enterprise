@@ -791,6 +791,6 @@ class ProductProduct(models.Model):
     ebay_use = fields.Boolean('Publish On eBay', default=False)
     ebay_quantity_sold = fields.Integer('Quantity Sold', readonly=True)
     ebay_fixed_price = fields.Float('eBay Fixed Price')
-    ebay_quantity = fields.Integer(string='Quantity', default=1)
+    ebay_quantity = fields.Integer(string='Quantity On eBay', default=1)
     ebay_listing_type = fields.Selection(related='product_tmpl_id.ebay_listing_type')
     ebay_variant_url = fields.Char('eBay Variant URL')
