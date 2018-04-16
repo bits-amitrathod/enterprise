@@ -77,9 +77,10 @@ class WebsiteCalendarTest(common.HttpCase):
                     # For the sake of this test NOT to break each monday,
                     # we only control those mondays that are *strictly* superior than today
                     if day['day'] > utc_now.date() and\
-                        day['day'] <= (utc_now + relativedelta(days=appointment.max_schedule_days)).date() and\
+                        day['day'] < (utc_now + relativedelta(days=appointment.max_schedule_days)).date() and\
                         day['day'].weekday() == 0 and\
                         day['day'] not in already_checked:
+
                         mondays_count += 1
                         already_checked.add(day['day'])
                         self.assertEqual(len(day['slots']), 1, 'Each monday should have only one slot')

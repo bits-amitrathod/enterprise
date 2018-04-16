@@ -659,7 +659,7 @@ class AccountInvoice(models.Model):
             'transferred': [],
         }
         taxes = {}
-        for line in self.invoice_line_ids:
+        for line in self.invoice_line_ids.filtered('price_subtotal'):
             for tax in line.invoice_line_tax_ids:
                 amount = round(abs(tax.amount / 100 * float("%.2f" % line.price_subtotal)), 2)
                 if tax.amount not in taxes:
@@ -1003,7 +1003,7 @@ class AccountInvoice(models.Model):
         '''
         url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
         for inv in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
-            if self.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
+            if inv.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
                 continue
             supplier_rfc = inv.l10n_mx_edi_cfdi_supplier_rfc
             customer_rfc = inv.l10n_mx_edi_cfdi_customer_rfc

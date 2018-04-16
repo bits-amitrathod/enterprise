@@ -7,9 +7,9 @@ import logging
 from datetime import timedelta, date, datetime
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.fields import Datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, AccessError
 from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 from odoo.tools.safe_eval import safe_eval
@@ -186,14 +186,21 @@ class MarketingCampaign(models.Model):
             to_create = db_rec_ids - existing_rec_ids
             to_remove = existing_rec_ids - db_rec_ids
 
-            for rec_id in to_create:
+            BATCH_SIZE = 100
+            for index, rec_id in enumerate(to_create, start=1):
                 participants |= participants.create({
                     'campaign_id': campaign.id,
                     'res_id': rec_id,
                 })
+                if not index % BATCH_SIZE:
+                    self.env.cr.commit()
 
             if to_remove:
-                participants.search([('res_id', 'in', list(to_remove))]).action_set_unlink()
+                participants_to_unlink = participants.search([('res_id', 'in', list(to_remove))])
+                for index, participant in enumerate(participants_to_unlink, start=1):
+                    participant.action_set_unlink()
+                    if not index % BATCH_SIZE:
+                        self.env.cr.commit()
 
         return participants
 
@@ -428,8 +435,13 @@ class MarketingActivity(models.Model):
                 trace_to_activities[trace.activity_id] |= trace
 
         # execute activity on their traces
+        BATCH_SIZE = 40
+        index = 1
         for activity, traces in trace_to_activities.items():
             activity.execute_on_traces(traces)
+            if not index % BATCH_SIZE:
+                self.env.cr.commit()
+            index += 1
 
     def execute_on_traces(self, traces):
         """ Execute current activity on given traces.
@@ -496,7 +508,7 @@ class MarketingActivity(models.Model):
                 trace.write({
                     'state': 'error',
                     'schedule_date': Datetime.now(),
-                    'state_msg': _('Exception in server action: %s') % e.message,
+                    'state_msg': _('Exception in server action: %s') % str(e),
                 })
             else:
                 traces_ok |= trace
@@ -516,14 +528,17 @@ class MarketingActivity(models.Model):
             active_ids=res_ids,
         )
 
+        # we only allow to continue if the user has sufficient rights, as a sudo() follows
+        if self.env.uid != SUPERUSER_ID and not self.user_has_groups('marketing_automation.group_marketing_automation_user'):
+            raise AccessError(_('To use this feature you should be an administrator or belong to the marketing automation group.'))
         try:
-            mailing.send_mail(res_ids)
+            mailing.sudo().send_mail(res_ids)
         except Exception as e:
             _logger.warning(_('Marketing Automation: activity <%s> encountered mass mailing issue %s'), self.id, str(e), exc_info=True)
             traces.write({
                 'state': 'error',
                 'schedule_date': Datetime.now(),
-                'state_msg': _('Exception in mass mailing: %s') % e.message,
+                'state_msg': _('Exception in mass mailing: %s') % str(e),
             })
         else:
             traces.write({

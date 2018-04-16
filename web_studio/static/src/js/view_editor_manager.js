@@ -6,6 +6,7 @@ var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var framework = require('web.framework');
+var dom = require('web.dom');
 var session = require('web.session');
 var view_registry = require('web.view_registry');
 var Widget = require('web.Widget');
@@ -158,6 +159,24 @@ var ViewEditorManager = Widget.extend({
         bus.trigger('undo_not_available');
         bus.trigger('redo_not_available');
         this._super.apply(this, arguments);
+    },
+    /**
+     * Called each time the view editor manager is attached to the DOM. This is
+     * important for the graph editor, which only renders itself when it is in
+     * the DOM
+     */
+    on_attach_callback: function () {
+        if (this.editor && this.editor.on_attach_callback) {
+            this.editor.on_attach_callback();
+        }
+        this.isInDOM = true;
+    },
+    /**
+     * Called each time the view editor manager is detached from the DOM.
+     * @returns {[type]} [description]
+     */
+    on_detach_callback: function () {
+        this.isInDOM = false;
     },
 
     //--------------------------------------------------------------------------
@@ -397,7 +416,10 @@ var ViewEditorManager = Widget.extend({
                 def.reject();
             }
             return $.when(def).then(function () {
-                self.$('.o_web_studio_view_renderer').append(fragment);
+                dom.append(self.$('.o_web_studio_view_renderer'), [fragment], {
+                    in_DOM: self.isInDOM,
+                    callbacks: [{widget: editor}],
+                });
                 self.editor = editor;
                 oldEditor.destroy();
 

@@ -78,6 +78,7 @@ class ReportAccountFinancialReport(models.Model):
     def create_action_and_menu(self, parent_id):
         # create action and menu with corresponding external ids, in order to
         # remove those entries when deinstalling the corresponding module
+        user_created = self._context.get('user_created')
         module = self._context.get('install_mode_data', {}).get('module', 'account_reports')
         IMD = self.env['ir.model.data']
         for report in self:
