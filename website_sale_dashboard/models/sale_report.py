@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class SaleReport(models.Model):
     _inherit = 'sale.report'
 
-    order_id = fields.Many2one(string="Order ID", comodel_name='sale.report', readonly=True)
+    order_id = fields.Many2one(string="Order", comodel_name='sale.order', readonly=True)
     is_abandoned_cart = fields.Boolean(string="Abandoned Cart", readonly=True)
 
     def _select(self):
