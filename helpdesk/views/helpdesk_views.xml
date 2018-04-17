@@ -260,8 +260,8 @@
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
             <search string="Tickets Search">
-                <field name="display_name" filter_domain="['|', ('name', 'ilike', self), ('id', '=', self)]"/>
-                <field name="id"/>
+                <field name="display_name"/>
+                <field name="id" string="Ticket ID"/>
                 <field name="tag_ids"/>
                 <field name="ticket_type_id"/>
 

@@ -7,6 +7,7 @@ var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var dom = require('web.dom');
 var framework = require('web.framework');
+var dom = require('web.dom');
 var session = require('web.session');
 var view_registry = require('web.view_registry');
 var Widget = require('web.Widget');
@@ -221,8 +222,11 @@ var ViewEditorManager = Widget.extend({
             }
 
             // the studio_view could have been created at the first edition so
-            // studio_view_id must be updated
-            self.studio_view_id = result.studio_view_id;
+            // studio_view_id must be updated (but /web_studio/edit_view_arch
+            // doesn't return the view id)
+            if (result.studio_view_id) {
+                self.studio_view_id = result.studio_view_id;
+            }
 
             if (self.x2mField) {
                 self.view_type = self.mainViewType;
@@ -294,10 +298,11 @@ var ViewEditorManager = Widget.extend({
         // The search view in studio has its own renderer.
         if (this.view_type === 'search') {
             if (this.mode === 'edition') {
-                def = $.when(new Editors.search(this, fields_view));
+                this.view = new Editors.search(this, fields_view);
             } else {
-                def = $.when(new SearchRenderer(this, fields_view));
+                this.view = new SearchRenderer(this, fields_view);
             }
+            def = $.when(this.view);
         } else {
             var View = view_registry.get(this.view_type);
             this.view = new View(fields_view, this.view_env);

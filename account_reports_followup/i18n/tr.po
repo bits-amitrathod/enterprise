@@ -3,16 +3,15 @@
 # * account_reports_followup
 # 
 # Translators:
-# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
 # Murat Kaplan <muratk@projetgrup.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Umur Akın <umura@projetgrup.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,8 +21,6 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line3
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line5
 msgid ""
 "\n"
 "Dear %(partner_name)s,\n"
@@ -94,7 +91,7 @@ msgstr ""
 "\n"
 "Bir anımsatma göndermemize karşın hesabınızın ciddi olarak geciktiğini görmek bizi üzmüştür.\n"
 "\n"
-"İvedilikle ödeme yapmanız gerekmektedir, aksi durumda hesabınız durdurulacak olup şirketinize hiçbir hizmet ve malzeme tedariği yapılmayacaktır.\n"
+"İvedilikle ödeme yapmanız gerekmektedir, aksi durumda hesabınız durdurulacak olup firmanıza hiçbir hizmet ve malzeme tedariği yapılmayacaktır.\n"
 "Lütfen önümüzdeki 8 gün içinde bu ödemeyi yaparak durumu telafi edin.\n"
 "\n"
 "Eğer bilemediğimiz bir nedenden dolayı ödemeyi yapamıyorsanız hızlı şekilde çözüm sağlamak lütfen muhasebe yetkilimizle görüşmekten çekinmeyin.\n"
@@ -121,7 +118,7 @@ msgstr ": Kullanıcı Adı"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid ": User's Company Name"
-msgstr ": Kullanıcının Şirket Adı"
+msgstr ": Kullanıcının Şirket Ünvanı"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_report_all
@@ -134,9 +131,9 @@ msgid "Account Follow-up"
 msgstr "Hesap Takibi"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_note
 msgid "Action To Do"
-msgstr "Yapılması Gerekenler"
+msgstr "Yapılacak Eylem"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -144,34 +141,24 @@ msgid "After"
 msgstr "Sonra"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_responsible_id
 msgid "Assign a Responsible"
 msgstr "Bir Sorumlu Ata"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_result
-msgid "Balance"
-msgstr "Bakiye"
-
-#. module: account_reports_followup
-#: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
-msgid "Click to define follow-up levels and their related actions."
-msgstr "Takip düzeylerini ve ilgili eylemlerini tanımlamak için tıklayın."
-
-#. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_company
 msgid "Companies"
-msgstr "Şirketler"
+msgstr "Firmalar"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_company_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__company_id
 msgid "Company"
-msgstr "Şirket"
+msgstr "Firma"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_name
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__name
 msgid "Company Name"
-msgstr "Şirket Adı"
+msgstr "Firma Adı"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_partner
@@ -179,20 +166,20 @@ msgid "Contact"
 msgstr "Kontak"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__create_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__create_uid
 msgid "Created by"
 msgstr "Oluşturan"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_date
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__create_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturulma zamanı"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner__payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users__payment_note
 msgid "Customer Payment Promise"
 msgstr "Müşteri Ödeme Sözü"
 
@@ -202,8 +189,13 @@ msgid "Days of the follow-up levels must be different"
 msgstr "Takip düzeyi günleri farklı olmalı"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_display_name
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_display_name
+#: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
+msgid "Define follow-up levels and their related actions"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__display_name
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__display_name
 msgid "Display Name"
 msgstr "Görünüm Adı"
 
@@ -218,14 +210,14 @@ msgid "Done"
 msgstr "Biten"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__delay
 msgid "Due Days"
 msgstr "Vade Tarihleri"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Duration between two reminders"
-msgstr ""
+msgstr "İki hatırlatıcı arasındaki süre."
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -233,17 +225,17 @@ msgid "First reminder email"
 msgstr "İlk hatırlatıcı e-posta"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_followup_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__followup_id
 msgid "Follow Ups"
 msgstr "Takipler"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_name
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__name
 msgid "Follow-Up Action"
 msgstr "Takip Eylemi"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_followup_line_ids
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__followup_line_ids
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_tree
 msgid "Follow-up"
@@ -255,7 +247,7 @@ msgid "Follow-up Criteria"
 msgstr "Takip Kriteri"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_line_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__followup_line_id
 msgid "Follow-up Level"
 msgstr "Takip Düzeyi"
 
@@ -266,8 +258,8 @@ msgid "Follow-up Levels"
 msgstr "Takip Düzeyleri"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner__payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users__payment_responsible_id
 msgid "Follow-up Responsible"
 msgstr "Takip Sorumlusu"
 
@@ -293,13 +285,13 @@ msgstr ""
 "                Müşteriye belirli mesajlar göndermek için yazdırma ve e-posta şablonlarını kullanmak mümkündür."
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__sequence
 msgid "Gives the sequence order when displaying a list of follow-up lines."
 msgstr "Takip kalemlerini görüntülerken sıra numarası verir."
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_id
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -309,30 +301,30 @@ msgid "Journal Item"
 msgstr "Yevmiye Kalemleri"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup___last_update
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line___last_update
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup____last_update
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line____last_update
 msgid "Last Modified on"
 msgstr "Son Güncelleme"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_uid
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__write_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__write_uid
 msgid "Last Updated by"
 msgstr "Son Güncelleyen"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_date
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__write_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__write_date
 msgid "Last Updated on"
 msgstr "Son Güncelleme"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__followup_date
 msgid "Latest Follow-up"
 msgstr "En Son Takip"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:56
+#: code:addons/account_reports_followup/models/account_followup_report.py:58
 #, python-format
 msgid "Level: "
 msgstr "Seviye:"
@@ -343,13 +335,13 @@ msgid "Log a Note"
 msgstr "Not Ekleyin"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Manual Action"
 msgstr "Elle Eylem"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:68
+#: code:addons/account_reports_followup/models/account_followup_report.py:70
 #, python-format
 msgid "Manual action done"
 msgstr "Manuel işlem tamamlandı"
@@ -357,11 +349,11 @@ msgstr "Manuel işlem tamamlandı"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "Minimum"
-msgstr ""
+msgstr "Minimum"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings_min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_company__min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings__min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr "İki takip arasındaki minimum gün sayısı"
 
@@ -378,11 +370,11 @@ msgstr ""
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
 msgid "Only one follow-up per company is allowed"
-msgstr "Her şirket için yalnız bir takibe izin verilir"
+msgstr "Her firma için yalnız bir izlemeye izin verilir"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
-#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_partner__payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_users__payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
@@ -406,8 +398,8 @@ msgid "Payment Follow-ups"
 msgstr "Tahsilat Takipleri"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
-#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_partner__payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_users__payment_note
 msgid "Payment Note"
 msgstr "Ödeme Bildirimi"
 
@@ -417,9 +409,14 @@ msgid "Print Letter"
 msgstr "Mektubu Yazdır"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_description
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__description
 msgid "Printed Message"
 msgstr "Yazılı Mesaj"
+
+#. module: account_reports_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__result
+msgid "Result"
+msgstr "Sonuç"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_filter
@@ -432,7 +429,7 @@ msgid "Second reminder letter and email"
 msgstr "İkinci hatırlatma mektubu ve e-postası"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_letter
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__send_letter
 msgid "Send a Letter"
 msgstr "Bir Mektup Gönder"
 
@@ -442,7 +439,7 @@ msgid "Send a Letter or Email"
 msgstr "Mektup veya E-posta Göndermek"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_email
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__send_email
 msgid "Send an Email"
 msgstr "Bir Eposta Gönder"
 
@@ -452,12 +449,12 @@ msgid "Send by email"
 msgstr "Eposta ile Gönder"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_sequence
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__sequence
 msgid "Sequence"
 msgstr "Sıra"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_delay
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__delay
 msgid ""
 "The number of days after the due date of the invoice to wait before sending "
 "the reminder.  Could be negative if you want to send a polite alert "
@@ -502,18 +499,8 @@ msgid "Total debit"
 msgstr "Toplam Borç"
 
 #. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
-msgid "Urging reminder email"
-msgstr ""
-
-#. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
-msgid "Urging reminder letter"
-msgstr ""
-
-#. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings_min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_company__min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings__min_days_between_followup
 msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
@@ -522,17 +509,17 @@ msgstr ""
 "istiyorsanız bunu kullanın."
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__send_letter
 msgid "When processing, it will print a letter"
 msgstr "İşlenirken bir mektup basılacaktır"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_email
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__send_email
 msgid "When processing, it will send an email"
 msgstr "İşlenirken eposta gönderilecektir"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_manual_action
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__manual_action
 msgid ""
 "When processing, it will set the manual action to be taken for that "
 "customer. "
@@ -568,7 +555,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
 msgid "days between each reminder"
-msgstr ""
+msgstr "Hatırlatıcılar arasındaki günler"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form

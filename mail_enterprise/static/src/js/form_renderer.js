@@ -50,7 +50,7 @@ FormRenderer.include({
      * @param {boolean} enablePreview
      */
     _interchangeChatter: function (enablePreview) {
-        if (config.device.size_class < config.device.SIZES.LG) {
+        if (config.device.size_class < config.device.SIZES.XL) {
             return;
         }
         if (!this.$attachmentPreview) {
@@ -122,7 +122,7 @@ FormRenderer.include({
      * @param {OdooEvent} ev
      */
     _onAttachmentPreview: function (ev) {
-        if (config.device.size_class < config.device.SIZES.LG) {
+        if (config.device.size_class < config.device.SIZES.XL) {
             return;
         }
         if (!this.$attachmentPreview) {

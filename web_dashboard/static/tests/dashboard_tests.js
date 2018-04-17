@@ -2,7 +2,6 @@ odoo.define('web_dashboard.dashboard_tests', function (require) {
 "use strict";
 
 var BasicFields = require('web.basic_fields');
-var concurrency = require('web.concurrency');
 var DashboardView = require('web_dashboard.DashboardView');
 var fieldRegistry = require('web.field_registry');
 var testUtils = require('web.test_utils');
@@ -931,7 +930,7 @@ QUnit.module('Views', {
             model: 'test_report',
             data: this.data,
             arch: '<dashboard>' +
-                        '<aggregate name="product_id" field="product_id"/>' +
+                        '<aggregate name="product_id_something" field="product_id"/>' +
                         '<view type="graph"/>' +
                         '<view type="pivot"/>' +
                     '</dashboard>',

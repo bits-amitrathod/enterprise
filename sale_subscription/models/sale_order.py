@@ -184,12 +184,14 @@ class SaleOrderLine(models.Model):
     def _update_subscription_line_data(self, subscription):
         """Prepare a dictionnary of values to add or update lines on a subscription."""
         values = list()
+        dict_changes = dict()
         for line in self:
             sub_line = subscription.recurring_invoice_line_ids.filtered(lambda l: (l.product_id, l.uom_id) == (line.product_id, line.product_uom))
             if sub_line:
-                values.append((1, sub_line.id, {
-                    'quantity': sub_line.quantity + line.product_uom_qty,
-                }))
+                dict_changes.setdefault(sub_line.id, sub_line.quantity)
+                dict_changes[sub_line.id] += line.product_uom_qty
             else:
                 values.append(line._prepare_subscription_line_data()[0])
+
+        values += [(1, sub_id, {'quantity': dict_changes[sub_id],}) for sub_id in dict_changes]
         return values

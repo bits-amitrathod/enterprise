@@ -24,6 +24,11 @@ var DashboardController = AbstractController.extend({
         this.actionDomain = params.actionDomain;
         this.currentFilters = [];
     },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
     /**
      * @override
      */

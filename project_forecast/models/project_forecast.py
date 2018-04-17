@@ -3,6 +3,8 @@
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta, MO, SU
 from lxml import etree
+import pytz
+import logging
 
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import UserError, ValidationError
@@ -12,6 +14,8 @@ from odoo.osv import expression
 from odoo.tools import pycompat
 
 from odoo.addons.resource.models.resource import HOURS_PER_DAY
+
+_logger = logging.getLogger(__name__)
 
 
 class ProjectForecast(models.Model):
@@ -116,9 +120,18 @@ class ProjectForecast(models.Model):
     @api.one
     @api.depends('resource_hours', 'start_date', 'end_date', 'employee_id')
     def _compute_time(self):
+        # We want to compute the number of hours that an **employee** works between 00:00:00 and 23:59:59
+        # according to him -- his **timezone**
         start = fields.Datetime.from_string(self.start_date)
         stop = fields.Datetime.from_string(self.end_date).replace(hour=23, minute=59, second=59, microsecond=999999)
-        hours = self.employee_id.resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
+        employee_tz = self.employee_id.user_id.tz and pytz.timezone(self.employee_id.user_id.tz)
+        if employee_tz:
+            start = employee_tz.localize(start).astimezone(pytz.utc)
+            stop = employee_tz.localize(stop).astimezone(pytz.utc)
+        tz_warning = _('The employee (%s) doesn\'t have a timezone, this might cause errors in the time computation. It is configurable on the user linked to the employee') % self.employee_id.name
+        if not employee_tz:
+            _logger.warning(tz_warning)
+        hours = self.employee_id.with_context(tz=self.employee_id.user_id.tz).resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
         if hours > 0:
             self.time = self.resource_hours * 100.0 / hours
         else:

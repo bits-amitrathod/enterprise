@@ -3,18 +3,18 @@
 # * delivery_fedex
 # 
 # Translators:
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
-# Eric Geens <ericgeens@yahoo.com>, 2017
-# Stephan Van Dyck <stephan.vandyck@vanroey.be>, 2017
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
+# Stephan Van Dyck <stephan.vandyck@vanroey.be>, 2016
+# Eric Geens <ericgeens@yahoo.com>, 2016
 # Cas Vissers <casvissers@brahoo.nl>, 2017
+# Martin Trigaux, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,11 +33,11 @@ msgid ""
 "<br/>According to your needs, you will need to contact different "
 "certifications :"
 msgstr ""
-"<br/>Afhankelijk van uw behoeftes moet u verschillende certificeringen "
+"<br/>Afhankelijk van uw noden moet u verschillende certificeringen "
 "contacteren:"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_account_number
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Account Number"
 msgstr "Rekeningnummer"
 
@@ -72,12 +72,12 @@ msgid "DROP_BOX"
 msgstr "DROP_BOX"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_default_packaging_id
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_default_packaging_id
 msgid "Default Package Type"
 msgstr "Standaard verpakkingstype"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_key
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_key
 msgid "Developer Key"
 msgstr "Ontwikkelaarssleutel"
 
@@ -97,7 +97,7 @@ msgstr ""
 "%s"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_file_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_file_type
 msgid "FEDEX Label File Type"
 msgstr "Fedex label bestand soort"
 
@@ -122,10 +122,20 @@ msgid "FIRST_OVERNIGHT"
 msgstr "FIRST_OVERNIGHT"
 
 #. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_account_number
+msgid "FedEx Account Number"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
 msgid "FedEx Delivery Methods"
 msgstr "FedEx leveringsmethodes"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
+msgid "FedEx Saturday Delivery"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -144,12 +154,12 @@ msgid "Fedex International"
 msgstr "Fedex internationaal"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_label_stock_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_stock_type
 msgid "Fedex Label Stock Type"
 msgstr "Fedex label voorraadsoort"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_service_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_service_type
 msgid "Fedex Service Type"
 msgstr "Fedex service type"
 
@@ -170,12 +180,12 @@ msgid "Fedex Website"
 msgstr "Fedex website"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_weight_unit
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_weight_unit
 msgid "Fedex Weight Unit"
 msgstr "Fedex gewichtseenheid"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_droppoff_type
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_droppoff_type
 msgid "Fedex drop-off type"
 msgstr "Fedex aflevertype"
 
@@ -205,7 +215,7 @@ msgid "LB"
 msgstr "LB"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_meter_number
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_meter_number
 msgid "Meter Number"
 msgstr "Meternummer"
 
@@ -276,7 +286,7 @@ msgid "Packaging"
 msgstr "Verpakking"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_developer_password
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_developer_password
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -331,7 +341,7 @@ msgid "STOCK_4X9_TRAILING_DOC_TAB"
 msgstr "STOCK_4X9_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Saturday Delivery"
 msgstr "Levering op zaterdag"
 
@@ -358,7 +368,7 @@ msgstr ""
 "</b>%s<br/><b>Verpakkingen:</b>%s"
 
 #. module: delivery_fedex
-#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier_fedex_saturday_delivery
+#: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
 msgid ""
 "Special service:Saturday Delivery, can be requested on following days.\n"
 "                                                                                 Thursday:\n"
@@ -411,6 +421,14 @@ msgstr ""
 #: selection:delivery.carrier,fedex_label_file_type:0
 msgid "ZPLII"
 msgstr "ZPLII"
+
+#. module: delivery_fedex
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter
+#: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter_product_template
+#: model:product.template,weight_uom_name:delivery_fedex.product_product_delivery_fedex_us_product_template
+msgid "kg"
+msgstr "kg"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex

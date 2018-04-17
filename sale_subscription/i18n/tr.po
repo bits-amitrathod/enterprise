@@ -4,41 +4,28 @@
 # 
 # Translators:
 # Murat Kaplan <muratk@projetgrup.com>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
+# Martin Trigaux, 2017
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
+# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2017
+# Levent Karakaş <levent@mektup.at>, 2017
+# cagri erarslan <cagri.erarslan@mechsoft.com.tr>, 2017
+# Saban Yildiz <sabany@projetgrup.com>, 2018
+# Umur Akın <umura@projetgrup.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 08:43+0000\n"
-"PO-Revision-Date: 2018-01-30 08:43+0000\n"
-"Last-Translator: Murat Kaplan <muratk@projetgrup.com>, 2017\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#. module: sale_subscription
-#: model:sale.subscription.template,description:sale_subscription.odoo_monthly
-#: model:sale.subscription.template,description:sale_subscription.odoo_yearly
-msgid ""
-"\n"
-"        Payment\n"
-"        All payments are due upon receipt. If a payment is not received or payment method is declined, the buyer forfeits the ownership of any items purchased. If no payment is received, no items will be shipped.\n"
-"\n"
-"        Shipping Policies\n"
-"        Shipping will be paid for by the buyer in the amount agreed upon by the seller at the time of purchase. If an item is lost during shipping, the total cost of item, including shipping, will be refunded to the buyer by the seller. Shipping costs may double if shipping internationally. If an item is damaged during shipping, seller will not be held responsible.\n"
-"\n"
-"        Refund/Return Policy\n"
-"        Items are entitled to be refunded or returned based on complaint. If an item is damaged during shipping, a replacement item will be sent free of charge. If an item is unsatisfactory, a written explanation is needed before the item may be considered for a refund. Buyer must take into account the description of the item before requesting a refund. If the item matches the description by the seller and the buyer is unsatisfied, seller is not responsible for refund. Exchanges are granted on a case-by-case basis.\n"
-"\n"
-"        Cancellation\n"
-"        An item may be cancelled up until payment has been processed. Once payment has been processed, the buyer is responsible for payment.\n"
-"\n"
-"        Complaints\n"
-"        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
-"            "
-msgstr ""
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_success
@@ -82,7 +69,7 @@ msgid ""
 "                %endif\n"
 "                <br/>\n"
 "                <p>If you have any question, do not hesitate to contact us.</p>\n"
-"                <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
+"                <p>Thank you for choosing ${object.company_id.name}!</p>\n"
 "            </td>\n"
 "        </tr><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
@@ -142,7 +129,7 @@ msgid ""
 "                <p>You can access this link publicly or share it with someone else to give him/her the right to manage this subscription.</p>\n"
 "\n"
 "                <p>If you have any question, do not hesitate to contact us.</p>\n"
-"                <p>Thank you for choosing ${object.subscription_id.company_id.name or 'us'}!</p>\n"
+"                <p>Thank you for choosing ${object.subscription_id.company_id.name}!</p>\n"
 "            </td>\n"
 "        </tr><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
@@ -207,7 +194,7 @@ msgid ""
 "\n"
 "                <br/>\n"
 "                <p>Should you wish to resolve this issue, do not hesitate to contact us.</p>\n"
-"                <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
+"                <p>Thank you for choosing ${object.company_id.name}!</p>\n"
 "            </td>\n"
 "        </tr><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
@@ -274,7 +261,7 @@ msgid ""
 "\n"
 "                <br/>\n"
 "                <p>If you have any question, do not hesitate to contact us.</p>\n"
-"                <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
+"                <p>Thank you for choosing ${object.company_id.name}!</p>\n"
 "            </td>\n"
 "        </tr><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
@@ -370,7 +357,7 @@ msgid "Account Manager"
 msgstr "Hesap Yöneticisi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_uuid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__uuid
 msgid "Account UUID"
 msgstr ""
 
@@ -380,12 +367,12 @@ msgid "Accounting"
 msgstr "Muhasebe"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_journal_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__journal_id
 msgid "Accounting Journal"
 msgstr "Yevmiye Hesabı"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_active
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__active
 msgid "Active"
 msgstr "Aktif"
 
@@ -409,12 +396,12 @@ msgstr ""
 #: code:addons/sale_subscription/controllers/portal.py:45
 #, python-format
 msgid "All"
-msgstr "Hepsi"
+msgstr "Tümü"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_account_analytic_account
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_analytic_account_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_analytic_account_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__analytic_account_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__analytic_account_id
 msgid "Analytic Account"
 msgstr "Analitik Hesap"
 
@@ -429,8 +416,8 @@ msgid "Archived"
 msgstr "Arşivlendi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_payment_mandatory
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_payment_mandatory
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__payment_mandatory
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__payment_mandatory
 msgid "Automatic Payment"
 msgstr "Otomatik Ödeme"
 
@@ -513,35 +500,14 @@ msgid "Click here to create <b>your first subscription template</b>"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
-msgid "Click here to create a template of subscription."
-msgstr "Abonelik şablonu oluşturmak için buraya tıklayın."
-
-#. module: sale_subscription
-#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
-#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_filtered
-msgid "Click to create a new subscription."
-msgstr "Yeni bir abonelik oluşturmak için tıklatın."
-
-#. module: sale_subscription
-#: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
-msgid "Click to define a new product."
-msgstr "Yeni bir ürün tanımlamak için tıklayın."
-
-#. module: sale_subscription
-#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
-msgid "Click to define a new subscription."
-msgstr ""
-
-#. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_user_closable
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__user_closable
 msgid "Closable by customer"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_close_reason_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_close_reason_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__close_reason_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__close_reason_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__close_reason_id
 msgid "Close Reason"
 msgstr "Kapatma Nedeni"
 
@@ -594,23 +560,23 @@ msgid "Closing text : "
 msgstr "Kapama Notu:"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_code
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__code
 msgid "Code"
 msgstr "Kod"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_color
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__color
 msgid "Color"
 msgstr "Renk"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_commercial_partner_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__commercial_partner_id
 msgid "Commercial Partner"
 msgstr "İş Ortağı"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_company_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_company_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__company_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__company_id
 msgid "Company"
 msgstr "Şirket"
 
@@ -629,7 +595,7 @@ msgstr "Abonelik şablonlarınızı yapılandırın"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Confirm"
-msgstr "Onayla"
+msgstr "Doğrula"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_res_partner
@@ -637,8 +603,8 @@ msgid "Contact"
 msgstr "Kontak"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_country_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_country_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__country_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__country_id
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Country"
 msgstr "Ülke"
@@ -647,6 +613,22 @@ msgstr "Ülke"
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
 msgid "Create & View Quotation"
 msgstr "Teklif Oluştur & Görüntüle"
+
+#. module: sale_subscription
+#: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
+msgid "Create a new product"
+msgstr "Yeni bir ürün oluştur"
+
+#. module: sale_subscription
+#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
+#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_filtered
+msgid "Create a new subscription"
+msgstr ""
+
+#. module: sale_subscription
+#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
+msgid "Create a new template of subscription"
+msgstr ""
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -671,24 +653,24 @@ msgid "Create your first subscription product here"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_create_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_create_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_create_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_create_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_create_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_create_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_create_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__create_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__create_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__create_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__create_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__create_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__create_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__create_uid
 msgid "Created by"
 msgstr "Oluşturan"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_create_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_create_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_create_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_create_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_create_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_create_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_create_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__create_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__create_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__create_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__create_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__create_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__create_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__create_date
 msgid "Created on"
 msgstr "Oluşturulma"
 
@@ -698,7 +680,7 @@ msgid "Creation"
 msgstr "Oluşturma"
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_order_subscription_management
+#: model:ir.model.fields,help:sale_subscription.field_sale_order__subscription_management
 msgid ""
 "Creation: The Sales Order created the subscription\n"
 "Upselling: The Sales Order added lines to the subscription\n"
@@ -706,7 +688,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_currency_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__currency_id
 msgid "Currency"
 msgstr "Para Birimi"
 
@@ -716,76 +698,10 @@ msgid "Current plan:"
 msgstr "Güncel Plan:"
 
 #. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_custom_domain
-#: model:product.template,name:sale_subscription.odoo_custom_domain_product_template
-msgid "Custom Domain"
-msgstr "Özel Domain"
-
-#. module: sale_subscription
-#: model:product.product,description_sale:sale_subscription.odoo_custom_domain
-#: model:product.product,description_sale:sale_subscription.odoo_custom_domain_yearly
-#: model:product.template,description_sale:sale_subscription.odoo_custom_domain_product_template
-#: model:product.template,description_sale:sale_subscription.odoo_custom_domain_yearly_product_template
-msgid ""
-"Custom Domain\n"
-"        Access your Odoo Instance using your own domain."
-msgstr ""
-
-#. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_custom_domain_yearly
-#: model:product.template,name:sale_subscription.odoo_custom_domain_yearly_product_template
-msgid "Custom Domain (Yearly)"
-msgstr "Özel Domain (Yıllık)"
-
-#. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_partner_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_partner_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__partner_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__partner_id
 msgid "Customer"
-msgstr "Müşteri"
-
-#. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_custom_module
-#: model:product.template,name:sale_subscription.odoo_custom_module_product_template
-msgid "Customized Module"
-msgstr "Özelleştirilmiş Modül"
-
-#. module: sale_subscription
-#: model:product.product,description_sale:sale_subscription.odoo_custom_module
-#: model:product.product,description_sale:sale_subscription.odoo_custom_module_yearly
-#: model:product.template,description_sale:sale_subscription.odoo_custom_module_product_template
-#: model:product.template,description_sale:sale_subscription.odoo_custom_module_yearly_product_template
-msgid ""
-"Customized Module\n"
-"        Customize a module to better match your business process."
-msgstr ""
-
-#. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_custom_module_yearly
-#: model:product.template,name:sale_subscription.odoo_custom_module_yearly_product_template
-msgid "Customized Module (Yearly)"
-msgstr "Özelleştirilmiş Modül (Yıllık)"
-
-#. module: sale_subscription
-#: model:product.product,description_sale:sale_subscription.odoo_custom_view
-#: model:product.product,description_sale:sale_subscription.odoo_custom_view_yearly
-#: model:product.template,description_sale:sale_subscription.odoo_custom_view_product_template
-#: model:product.template,description_sale:sale_subscription.odoo_custom_view_yearly_product_template
-msgid ""
-"Customized View\n"
-"        Customize one or more views (in a single module) to better suit your needs."
-msgstr ""
-
-#. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_custom_view
-#: model:product.template,name:sale_subscription.odoo_custom_view_product_template
-msgid "Customized Views"
-msgstr "Özelleştirilmiş  Görünümler"
-
-#. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_custom_view_yearly
-#: model:product.template,name:sale_subscription.odoo_custom_view_yearly_product_template
-msgid "Customized Views (Yearly)"
-msgstr "Özelleştirilmiş Görünümler (Yıllık)"
+msgstr "Kayıtlı Müşteri"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
@@ -793,17 +709,17 @@ msgid "Dashboard"
 msgstr "Panel"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_date_end
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__date_end
 msgid "Date End"
 msgstr "Bitiş Tarihi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_date_start
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__date_start
 msgid "Date Start"
 msgstr "Başlama Tarihi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_next_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_next_date
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Date of Next Invoice"
 msgstr "Sonraki Fatura Tarihi"
@@ -819,41 +735,46 @@ msgid "Deferred Revenue"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_asset
+#: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings__module_sale_subscription_asset
 msgid "Deferred revenue management for subscriptions"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_description
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_name
+#: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
+msgid "Define a new subscription"
+msgstr ""
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__description
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__name
 msgid "Description"
 msgstr "Açıklama"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_discount
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__discount
 msgid "Discount (%)"
 msgstr "İndirim (%)"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_date_from
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__date_from
 msgid "Discount Date"
 msgstr "İndirim Tarihi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_display_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_display_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_display_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_display_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_display_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_display_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_display_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__display_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__display_name
 msgid "Display Name"
 msgstr "Görünüm Adı"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__date
 msgid "End Date"
 msgstr "Bitiş Tarihi"
 
@@ -922,52 +843,52 @@ msgid "I don't use it"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_6476
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id_6508
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__id
 msgid "ID"
 msgstr "ID"
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_user_closable
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__user_closable
 msgid ""
 "If checked, the user will be able to close his account from the frontend"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_payment_token_id
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_date
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__date
 msgid ""
 "If set in advance, the subscription will be set to pending 1 month before "
 "the date and will be closed on the date set in this field."
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_product_product_recurring_invoice
-#: model:ir.model.fields,help:sale_subscription.field_product_template_recurring_invoice
+#: model:ir.model.fields,help:sale_subscription.field_product_product__recurring_invoice
+#: model:ir.model.fields,help:sale_subscription.field_product_template__recurring_invoice
 msgid ""
 "If set, confirming a sale order with this product will create a subscription"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_payment_mandatory
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_payment_mandatory
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__payment_mandatory
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__payment_mandatory
 msgid ""
 "If set, payments will be made automatically and invoices will not be "
 "generated if payment attempts are unsuccessful."
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_journal_id
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__journal_id
 msgid ""
 "If set, subscriptions with this template will invoice in this journal; "
 "otherwise the sales journal with the lowest sequence is used."
@@ -1006,11 +927,11 @@ msgstr ""
 #: selection:sale.subscription.report,state:0
 #, python-format
 msgid "In Progress"
-msgstr "Sürüyor..."
+msgstr "Aktif"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_industry_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_industry_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__industry_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__industry_id
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Industry"
 msgstr "Endüstri"
@@ -1022,12 +943,12 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_payment_transaction_invoice_id
+#: model:ir.ui.view,arch_db:sale_subscription.transaction_form
 msgid "Invoice"
 msgstr "Fatura"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_invoice_count
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__invoice_count
 msgid "Invoice Count"
 msgstr "Fatura Sayısı"
 
@@ -1037,13 +958,13 @@ msgid "Invoice Line"
 msgstr "Fatura Satırı"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_invoice_line_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_invoice_line_ids
 msgid "Invoice Lines"
 msgstr "Fatura Satırları"
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_recurring_rule_type
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_recurring_rule_type
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__recurring_rule_type
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__recurring_rule_type
 msgid "Invoice automatically repeat at specified interval"
 msgstr "Belirlenen aralıklarda faturalar otomatik yinelenir"
 
@@ -1074,43 +995,43 @@ msgid "Keeps track of the revenue recognition installments"
 msgstr "Ertelenmiş gelir tahakkuklarını takip edin"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription___last_update
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason___last_update
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard___last_update
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line___last_update
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report___last_update
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template___last_update
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard___last_update
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option___last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription____last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason____last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard____last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line____last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report____last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template____last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard____last_update
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option____last_update
 msgid "Last Modified on"
 msgstr "Son Güncelleme"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_write_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_write_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_write_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_write_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_write_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_write_uid
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_write_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__write_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__write_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__write_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__write_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__write_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__write_uid
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__write_uid
 msgid "Last Updated by"
 msgstr "Son Güncelleyen"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_write_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_write_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_write_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_write_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_write_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_write_date
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_write_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__write_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__write_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__write_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__write_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__write_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__write_date
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__write_date
 msgid "Last Updated on"
 msgstr "Son Güncelleme"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Late Activities"
-msgstr "Gecikmiş Aktiviteler"
+msgstr "Geciken Aktiviteler"
 
 #. module: sale_subscription
 #. openerp-web
@@ -1144,13 +1065,12 @@ msgid "Manage your payment methods"
 msgstr "Ödeme yöntemlerinizi yönetin"
 
 #. module: sale_subscription
-#: model:product.uom,name:sale_subscription.subscription_uom_month
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Month(s)"
 msgstr "Ay"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_monthly
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_monthly
 msgid "Monthly Recurring Revenue"
 msgstr "Aylık Tekrarlanan Ciro"
 
@@ -1161,10 +1081,10 @@ msgstr "Aktivitelerim"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:42
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_name
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__name
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__name
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
 #, python-format
 msgid "Name"
@@ -1194,26 +1114,9 @@ msgid "Next invoice:"
 msgstr "Sonraki Fatura:"
 
 #. module: sale_subscription
-#: model:product.product,description_sale:sale_subscription.odoo_saas
-#: model:product.template,description_sale:sale_subscription.odoo_saas_product_template
-msgid ""
-"Odoo Custom Module\n"
-"        A custom module tailored especifically for your company"
+#: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
+msgid "No product found"
 msgstr ""
-
-#. module: sale_subscription
-#: model:product.product,description_sale:sale_subscription.odoo_saas_yearly
-#: model:product.template,description_sale:sale_subscription.odoo_saas_yearly_product_template
-msgid ""
-"Odoo SAAS\n"
-"        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
-msgstr ""
-
-#. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_saas_yearly
-#: model:product.template,name:sale_subscription.odoo_saas_yearly_product_template
-msgid "Odoo SAAS (Yearly)"
-msgstr "Odoo SAAS (yıllık)"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -1234,7 +1137,7 @@ msgid "Online Preview"
 msgstr "Online Önizleme"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_lines
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__option_lines
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
 msgid "Options"
 msgstr "Seçenekler"
@@ -1260,7 +1163,7 @@ msgid "Pay with"
 msgstr "Öde"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_payment_token_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__payment_token_id
 msgid "Payment Token"
 msgstr "Ödeme Token'ı"
 
@@ -1268,6 +1171,11 @@ msgstr "Ödeme Token'ı"
 #: model:ir.model,name:sale_subscription.model_payment_transaction
 msgid "Payment Transaction"
 msgstr "Ödeme İşlemi"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_payment_transaction__invoice_id
+msgid "Payment Transaction Invoice"
+msgstr ""
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1285,51 +1193,51 @@ msgid "Pending subscriptions"
 msgstr "Bekleyen Abonelikler"
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:294
+#: code:addons/sale_subscription/models/sale_subscription.py:303
 #, python-format
 msgid "Please define Date of Next Invoice of \"%s\"."
 msgstr ""
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:290
+#: code:addons/sale_subscription/models/sale_subscription.py:299
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
 msgstr "Lütfen \"%s\" şirketi için bir satış yevmiyesi tanımlayın."
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_pricelist_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_pricelist_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__pricelist_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__pricelist_id
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Pricelist"
 msgstr "Fiyat Listesi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_product_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_product_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_product_ids
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_product_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__product_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__product_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__product_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__product_id
 msgid "Product"
 msgstr "Ürün"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_categ_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__categ_id
 msgid "Product Category"
 msgstr "Ürün Kategorisi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_product_count
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__product_count
 msgid "Product Count"
 msgstr "Ürün Sayısı"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_product_template
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_product_tmpl_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__product_tmpl_id
 msgid "Product Template"
 msgstr "Ürün Şablonu"
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_product_product_subscription_template_id
-#: model:ir.model.fields,help:sale_subscription.field_product_template_subscription_template_id
+#: model:ir.model.fields,help:sale_subscription.field_product_product__subscription_template_id
+#: model:ir.model.fields,help:sale_subscription.field_product_template__subscription_template_id
 msgid "Product will be included in a selected template"
 msgstr ""
 
@@ -1340,15 +1248,15 @@ msgid "Products"
 msgstr "Ürünler"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_quantity
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_quantity
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_quantity
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__quantity
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__quantity
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__quantity
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Quantity"
 msgstr "Miktar"
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_line_quantity
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_line__quantity
 msgid "Quantity that will be invoiced."
 msgstr "Faturalanacak miktar."
 
@@ -1363,11 +1271,11 @@ msgid "Reason"
 msgstr "Sebep"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_rule_type
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_recurring_rule_type
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_rule_type
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__recurring_rule_type
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "Recurrence"
-msgstr ""
+msgstr "Tekrarlama"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -1375,17 +1283,17 @@ msgid "Recurrence:"
 msgstr "Periyot:"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_total
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_total
 msgid "Recurring Price"
 msgstr "Yinelenen Fiyat"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_recurring_price
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__recurring_price
 msgid "Recurring price(per period)"
 msgstr "Yinelenen Fiyat"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_code
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__code
 msgid "Reference"
 msgstr "Referans"
 
@@ -1410,14 +1318,14 @@ msgid "Renewal Quotation"
 msgstr "Yenileme Teklifi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_interval
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_recurring_interval
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_interval
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__recurring_interval
 msgid "Repeat Every"
 msgstr "Tekrarlama Durumu"
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_recurring_interval
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_recurring_interval
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__recurring_interval
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__recurring_interval
 msgid "Repeat every (Days/Week/Month/Year)"
 msgstr "Tekrarlama Durumu (Gün/Hafta/Ay/Yıl)"
 
@@ -1428,7 +1336,7 @@ msgid "Reporting"
 msgstr "Raporlama"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_sale_order_count
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__sale_order_count
 msgid "Sale Order Count"
 msgstr "Sipariş Sayısı"
 
@@ -1438,7 +1346,7 @@ msgid "Sale Subscription"
 msgstr "Satış Aboneliği"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_dashboard
+#: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings__module_sale_subscription_dashboard
 msgid "Sale Subscription Dashboard"
 msgstr ""
 
@@ -1477,19 +1385,19 @@ msgid "Sales Order Line"
 msgstr "Satış Sipariş Satırı"
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:87
+#: code:addons/sale_subscription/models/sale_subscription.py:89
 #: model:ir.ui.view,arch_db:sale_subscription.sale_order_view_tree_subscription
 #, python-format
 msgid "Sales Orders"
 msgstr "Satış Siparişleri"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_user_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__user_id
 msgid "Sales Rep"
 msgstr "Satış Temsilcisi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_user_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__user_id
 msgid "Salesperson"
 msgstr "Satış Temsilcisi"
 
@@ -1524,7 +1432,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_sequence
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason__sequence
 msgid "Sequence"
 msgstr "Sıra"
 
@@ -1542,7 +1450,7 @@ msgid "Show all records which has next action date is before today"
 msgstr "Bir sonraki eylem tarihi bugünden önce olan tüm kayıtları göster"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_date_start
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__date_start
 msgid "Start Date"
 msgstr "Başlangıç Tarihi"
 
@@ -1562,9 +1470,9 @@ msgid "Start date:"
 msgstr "Başlangıç Tarihi:"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_state
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__state
 msgid "State"
-msgstr "Durumu"
+msgstr "Durum"
 
 #. module: sale_subscription
 #: model:mail.message.subtype,name:sale_subscription.subtype_state_change
@@ -1572,13 +1480,13 @@ msgid "State Change"
 msgstr "Durumunu Değiştir"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_state
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__state
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Status"
 msgstr "Durumu"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_price_subtotal
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__price_subtotal
 msgid "Sub Total"
 msgstr "Ara Toplam"
 
@@ -1588,10 +1496,11 @@ msgid "Submit"
 msgstr "Gönder"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_account_invoice_line_subscription_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_order_line_subscription_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_analytic_account_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_subscription_id
+#: model:ir.model.fields,field_description:sale_subscription.field_account_invoice_line__subscription_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_order_line__subscription_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__analytic_account_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard__subscription_id
+#: model:ir.ui.view,arch_db:sale_subscription.product_template_view_form_recurring
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1612,9 +1521,10 @@ msgid "Subscription Close Reason"
 msgstr "Abonelik Kapatılma Nedeni"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_count
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_order_subscription_count
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account__subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_project_project__subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_order__subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__subscription_count
 msgid "Subscription Count"
 msgstr "Abonelik Sayısı"
 
@@ -1629,7 +1539,7 @@ msgid "Subscription Lines"
 msgstr "Abonelik Kalemleri"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_order_subscription_management
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_order__subscription_management
 msgid "Subscription Management"
 msgstr "Abonelik Yönetimi"
 
@@ -1639,8 +1549,8 @@ msgid "Subscription Manager"
 msgstr "Abonelik Yöneticisi"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_product_product_recurring_invoice
-#: model:ir.model.fields,field_description:sale_subscription.field_product_template_recurring_invoice
+#: model:ir.model.fields,field_description:sale_subscription.field_product_product__recurring_invoice
+#: model:ir.model.fields,field_description:sale_subscription.field_product_template__recurring_invoice
 msgid "Subscription Product"
 msgstr "Abonelik Ürünü"
 
@@ -1656,10 +1566,10 @@ msgid "Subscription Statistics"
 msgstr "Abonelik İstatistikleri"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_product_product_subscription_template_id
-#: model:ir.model.fields,field_description:sale_subscription.field_product_template_subscription_template_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_template_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id
+#: model:ir.model.fields,field_description:sale_subscription.field_product_product__subscription_template_id
+#: model:ir.model.fields,field_description:sale_subscription.field_product_template__subscription_template_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__template_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__template_id
 msgid "Subscription Template"
 msgstr "Abonelik Şablonu"
 
@@ -1700,9 +1610,10 @@ msgstr "Abonelik durumu değiştirildi"
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_filtered
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_res_partner
-#: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_ids
-#: model:ir.model.fields,field_description:sale_subscription.field_res_partner_subscription_count
-#: model:ir.model.fields,field_description:sale_subscription.field_res_users_subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account__subscription_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_project_project__subscription_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_res_partner__subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_res_users__subscription_count
 #: model:ir.module.category,name:sale_subscription.module_category_subscription_management
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_action
@@ -1725,8 +1636,8 @@ msgstr "Abonelikler"
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
 msgid ""
-"Subscriptions can be automatically generated from sales orders of Sales or eCommerce\n"
-"                apps. To do so, set a Subscription Template on your Subscription Products."
+"Subscriptions can be automatically generated from sales orders of sales or eCommerce\n"
+"                apps. To do so, set a subscription template on your subscription products."
 msgstr ""
 
 #. module: sale_subscription
@@ -1761,13 +1672,13 @@ msgid "Subtotal:"
 msgstr "Ara Toplam :"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_tag_ids
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_tag_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__tag_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__tag_ids
 msgid "Tags"
 msgstr "Etiketler"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_amount_tax
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_amount_tax
 msgid "Taxes"
 msgstr "Vergiler"
 
@@ -1801,7 +1712,7 @@ msgid "Termination of subscription ${object.code}"
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_description
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__description
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "Terms and Conditions"
 msgstr "Şartlar ve Koşullar"
@@ -1812,7 +1723,7 @@ msgid "Terms and conditions"
 msgstr "Şartlar ve Koşullar"
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_wizard_date_from
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_wizard__date_from
 msgid ""
 "The discount applied when creating a sales order will be computed as the "
 "ratio between the full invoicing period of the subscription and the period "
@@ -1820,26 +1731,16 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_website_url
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__website_url
 msgid "The full URL to access the document through the website."
 msgstr "Belgeye web sitesinden erişim için tam URL adresi."
 
 #. module: sale_subscription
-#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_recurring_next_date
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__recurring_next_date
 msgid ""
 "The next invoice will be created on this date then the period will be "
 "extended."
 msgstr ""
-
-#. module: sale_subscription
-#: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
-msgid ""
-"The product form contains information to simplify the sale\n"
-"            process: price, notes in the quotation, accounting data,\n"
-"            procurement methods, etc."
-msgstr ""
-"Ürün formunda, satış işlemini basitleştirilecek bilgiler bulunur:\n"
-" Fiyat bilgileri, teklif notları, muhasebe verileri, satın alma yöntemleri vb."
 
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_view
@@ -1852,15 +1753,10 @@ msgid "The user will have write access to Subscriptions."
 msgstr ""
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:311
+#: code:addons/sale_subscription/models/sale_subscription.py:320
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
 msgstr ""
-
-#. module: sale_subscription
-#: model:product.uom.categ,name:sale_subscription.uom_categ_time
-msgid "Time"
-msgstr "Zaman"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:47
@@ -1878,7 +1774,7 @@ msgid "Today Activities"
 msgstr "Bugünkü Aktiviteler"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_amount_total
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_amount_total
 msgid "Total"
 msgstr "Toplam"
 
@@ -1895,15 +1791,15 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_price_unit
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__price_unit
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Unit Price"
-msgstr "Birim Fiyat"
+msgstr "Birim Maliyet"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_uom_id
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_product_uom
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_uom_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__uom_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__product_uom
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__uom_id
 msgid "Unit of Measure"
 msgstr "Ölçü Birimi"
 
@@ -1947,9 +1843,9 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_website_url
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__website_url
 msgid "Website URL"
-msgstr "Web sitesi URL'si"
+msgstr "Web Sitesi URL Adresi"
 
 #. module: sale_subscription
 #: selection:sale.subscription.template,recurring_rule_type:0
@@ -1957,12 +1853,11 @@ msgid "Week(s)"
 msgstr "Hafta"
 
 #. module: sale_subscription
-#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_wizard_id
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__wizard_id
 msgid "Wizard"
 msgstr "Sihirbaz"
 
 #. module: sale_subscription
-#: model:product.uom,name:sale_subscription.subscription_uom_year
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Year(s)"
 msgstr "Yıl"
@@ -1984,15 +1879,12 @@ msgstr "Herhangi bir aboneliğiniz henüz yok."
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
 msgid ""
-"You must define a product for everything you sell, whether it's\n"
-"            a physical product, a consumable or a service you offer to\n"
-"            customers."
+"You must define a product for everything you purchase,\n"
+"            whether it's a physical product, a consumable or services."
 msgstr ""
-"Müşterilere sunduğunuz fiziksel bir ürün, sarf malzemesi veya bir hizmet "
-"olsun sattığınız her şey için bir ürün tanımlamanız gerekir."
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_subscription.py:279
+#: code:addons/sale_subscription/models/sale_subscription.py:288
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
 msgstr ""
@@ -2045,12 +1937,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "month(s)"
 msgstr "ay"
-
-#. module: sale_subscription
-#: model:product.product,name:sale_subscription.odoo_saas
-#: model:product.template,name:sale_subscription.odoo_saas_product_template
-msgid "odoo_custom_module"
-msgstr "odoo_custom_module"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_payment_token

@@ -139,6 +139,7 @@ class MrpMpsReport(models.TransientModel):
             date = datetime.datetime(date.year, date.month, 1)
         elif self.period == 'week':
             date = date - relativedelta.relativedelta(days=date.weekday())
+
         if date < datetime.datetime.today():
             initial = product.with_context(to_date=date.strftime('%Y-%m-%d')).qty_available
         else:
@@ -201,8 +202,8 @@ class MrpMpsReport(models.TransientModel):
             forecasted = to_supply - demand + initial - indirect_total
             result.append({
                 'period': name,
-                'date': date.replace(tzinfo=pytz.utc).astimezone(local_tz).strftime('%Y-%m-%d'),
-                'date_to': date_to.replace(tzinfo=pytz.utc).astimezone(local_tz).strftime('%Y-%m-%d'),
+                'date': date.strftime('%Y-%m-%d'),
+                'date_to': date_to.strftime('%Y-%m-%d'),
                 'initial': initial,
                 'demand': demand,
                 'mode': mode,
@@ -213,7 +214,7 @@ class MrpMpsReport(models.TransientModel):
                 'route_type': display,
                 'procurement_enable': True if not proc_dec and leadtime >= date else False,
                 'procurement_done': proc_dec,
-                'lead_time': leadtime.replace(tzinfo=pytz.utc).astimezone(local_tz).strftime('%Y-%m-%d'),
+                'lead_time': leadtime.strftime('%Y-%m-%d'),
             })
             initial = forecasted
             date = date_to

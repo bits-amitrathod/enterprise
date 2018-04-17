@@ -3,27 +3,18 @@
 # * delivery_usps
 # 
 # Translators:
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
 # 肖彤 吴 <944086436@qq.com>, 2017
-# fausthuang, 2017
 # liAnGjiA <liangjia@qq.com>, 2017
-# waveyeung <waveyeung@qq.com>, 2017
-# Gary Wei <Gary.wei@elico-corp.com>, 2017
-# Joray <13637815@qq.com>, 2017
-# Amanda Li <lidan5452@126.com>, 2017
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# Martin Trigaux, 2017
-# 菜小蛇 <lttlsnk@gmail.com>, 2017
-# bro old <382065875@qq.com>, 2017
-# Talway <9010446@qq.com>, 2017
-# Melody <alangwansui@gmail.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# Martin Trigaux, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,17 +28,17 @@ msgid "Abandon"
 msgstr "放弃"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_account_validated
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Account Validated"
 msgstr "账号有效"
 
 #. module: delivery_usps
 #: model:ir.model,name:delivery_usps.model_delivery_carrier
 msgid "Carrier"
-msgstr "承运商"
+msgstr "承运方"
 
 #. module: delivery_usps
-#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_account_validated
+#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Check this box if your account is validated by USPS"
 msgstr "如果你的账户已被USPS确认，勾选此复选框。"
 
@@ -58,12 +49,12 @@ msgid "Company phone number is invalid. Please insert a US phone number."
 msgstr "公司电话号码是无效的。请输入一个美国电话号码。"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_content_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
 msgid "Content Type"
 msgstr "内容类型"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_delivery_nature
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
 msgstr "运输种类"
 
@@ -78,13 +69,13 @@ msgid "Domestic"
 msgstr "国内的"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:102
+#: code:addons/delivery_usps/models/delivery_usps.py:104
 #, python-format
 msgid ""
 "Error:\n"
 "%s"
 msgstr ""
-"错误：\n"
+"错误:\n"
 "%s"
 
 #. module: delivery_usps
@@ -163,7 +154,7 @@ msgid "Letter"
 msgstr "信"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_machinable
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Machinable"
 msgstr "可加工的"
 
@@ -178,7 +169,7 @@ msgid "Merchandise"
 msgstr "货物"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_intl_non_delivery_option
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_intl_non_delivery_option
 msgid "Non delivery option"
 msgstr "没有运输选项"
 
@@ -203,22 +194,22 @@ msgid "Package Service"
 msgstr "包装服务"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_girth
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_girth
 msgid "Package girth (in inches)"
 msgstr "以英尺为单位记录包装周长"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_height
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_height
 msgid "Package height (in inches)"
 msgstr "以英尺为单位记录包装高度"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_length
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_length
 msgid "Package length (in inches)"
 msgstr "包装长度"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_width
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_width
 msgid "Package width (in inches)"
 msgstr "以英尺为单位记录包装宽度"
 
@@ -234,17 +225,17 @@ msgid "Parcel"
 msgstr "包裹"
 
 #. module: delivery_usps
-#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_machinable
+#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_machinable
 msgid ""
 "Please check on USPS website to ensure that your package is machinable."
 msgstr "请使用USPS网站进行检查确保你的包装是可加工的。"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:81
+#: code:addons/delivery_usps/models/usps_request.py:83
 #, python-format
 msgid ""
 "Please choose another service (maximum weight of this service is 4 pounds)"
-msgstr ""
+msgstr "请选择其他服务（此服务的最大重量是 4 磅）"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:69
@@ -270,7 +261,7 @@ msgstr "请至少提供一个项目去发货"
 msgid ""
 "Please set country U.S.A in your company address, Service is only available "
 "for U.S.A"
-msgstr "请在你的公司地址里将国家设为美国，服务只对美国地区有效"
+msgstr "请在您的公司地址里将国家设为美国，服务只对美国地区有效"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
@@ -283,10 +274,10 @@ msgid "Priority"
 msgstr "优先级"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:371
+#: code:addons/delivery_usps/models/usps_request.py:366
 #, python-format
 msgid "Recipient address cannot be found. Please check the address exists."
-msgstr ""
+msgstr "收件人地址无法找到。请检查地址是否存在。"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_container:0
@@ -299,7 +290,7 @@ msgid "Redirect"
 msgstr "重定向"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_redirect_partner_id
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_redirect_partner_id
 msgid "Redirect Partner"
 msgstr "重新寄送的对象"
 
@@ -317,7 +308,7 @@ msgstr "一般小于12英尺"
 #: selection:delivery.carrier,usps_content_type:0
 #: selection:delivery.carrier,usps_intl_non_delivery_option:0
 msgid "Return"
-msgstr "退回"
+msgstr "退货"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_content_type:0
@@ -325,13 +316,13 @@ msgid "Sample"
 msgstr "示例"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:163
+#: code:addons/delivery_usps/models/delivery_usps.py:165
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "装运N° %s已经被取消"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:143
+#: code:addons/delivery_usps/models/delivery_usps.py:145
 #, python-format
 msgid "Shipment created into USPS <br/> <b>Tracking Number : </b>%s"
 msgstr "装运形成USPS<br/><b>运单号：</b>%s"
@@ -349,7 +340,7 @@ msgstr "小号统一费用信封"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_label_file_type:0
 msgid "TIF"
-msgstr ""
+msgstr "TIF"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:58
@@ -360,7 +351,7 @@ msgid ""
 msgstr "公司的地址缺失或者错误(缺失字段(集): %s)"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:79
+#: code:addons/delivery_usps/models/usps_request.py:78
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -378,10 +369,10 @@ msgstr ""
 "%s)"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:164
+#: code:addons/delivery_usps/models/usps_request.py:166
 #, python-format
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
-msgstr ""
+msgstr "选定的 USPS 服务 (%s) 不能用于运输这个包裹。"
 
 #. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
@@ -389,17 +380,17 @@ msgid "To Company"
 msgstr "公司"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_international_regular_container
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_international_regular_container
 msgid "Type of USPS International regular container"
-msgstr ""
+msgstr "USPS 国际常规容器的类型"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_domestic_regular_container
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_domestic_regular_container
 msgid "Type of USPS domestic regular container"
-msgstr ""
+msgstr "USPS 国内常规容器的类型"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_container
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_container
 msgid "Type of container"
 msgstr "容器类型"
 
@@ -412,13 +403,13 @@ msgstr "USPS配置"
 #: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
 msgid "USPS Delivery Methods"
-msgstr ""
+msgstr "USPS 交货方式"
 
 #. module: delivery_usps
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_domestic
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic Flat Rate Envelope"
-msgstr ""
+msgstr "USPS 国内统一费用信封"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:73
@@ -426,12 +417,12 @@ msgstr ""
 msgid ""
 "USPS Domestic is used only to ship inside of the U.S.A. Please change the "
 "delivery method into USPS International."
-msgstr ""
+msgstr "USPS 国内仅用于在美国境内运送。请将送货方式更改为 USPS 国内。"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_first_class_mail_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_first_class_mail_type
 msgid "USPS First Class Mail Type"
-msgstr ""
+msgstr "USPS 一等邮件类型"
 
 #. module: delivery_usps
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_international
@@ -445,35 +436,43 @@ msgstr "USPS国际统一费用纸盒"
 msgid ""
 "USPS International is used only to ship outside of the U.S.A. Please change "
 "the delivery method into USPS Domestic."
-msgstr ""
+msgstr "USPS 国际仅用于在美国境外运送。请将送货方式更改为 USPS 国内。"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_label_file_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
 msgid "USPS Label File Type"
-msgstr ""
+msgstr "USPS 标签文件类型"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_mail_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_mail_type
 msgid "USPS Mail Type"
-msgstr ""
+msgstr "USPS 邮件类型"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_service
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
 msgstr "USPS服务"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_username
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
 msgid "USPS User ID"
 msgstr "USPS用户ID"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_size_container
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_size_container
 msgid "Usps Size Container"
-msgstr ""
+msgstr "USPS 尺寸容器"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:373
+#: code:addons/delivery_usps/models/usps_request.py:368
 #, python-format
 msgid "Your company or recipient ZIP code is incorrect."
-msgstr ""
+msgstr "贵公司邮编填写错误"
+
+#. module: delivery_usps
+#: model:product.product,weight_uom_name:delivery_usps.product_product_delivery_usps_domestic
+#: model:product.product,weight_uom_name:delivery_usps.product_product_delivery_usps_international
+#: model:product.template,weight_uom_name:delivery_usps.product_product_delivery_usps_domestic_product_template
+#: model:product.template,weight_uom_name:delivery_usps.product_product_delivery_usps_international_product_template
+msgid "kg"
+msgstr "kg"

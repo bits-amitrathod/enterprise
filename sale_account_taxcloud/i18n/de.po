@@ -7,10 +7,10 @@
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 09:24+0000\n"
-"PO-Revision-Date: 2017-10-24 09:24+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
@@ -30,13 +30,18 @@ msgid "Quotation"
 msgstr "Angebot"
 
 #. module: sale_account_taxcloud
-#: code:addons/sale_account_taxcloud/models/sale_order.py:65
+#: code:addons/sale_account_taxcloud/models/sale_order.py:34
 #, python-format
-msgid ""
-"The tax rates have been updated, you may want to check it before validation"
+msgid "The configuration of TaxCloud is in the Accounting app, Settings menu."
 msgstr ""
-"Die Steuersätze wurden aktualisiert. Sie können diese vor der Validierung "
-"überprüfen."
+"Die Konfiguration von TaxCloud befindet sich in der Buchhaltungs-App, im "
+"Menü „Einstellungen“."
+
+#. module: sale_account_taxcloud
+#: code:addons/sale_account_taxcloud/models/sale_order.py:34
+#, python-format
+msgid "Unable to retrieve taxes from TaxCloud: "
+msgstr "Steuern können nicht aus der TaxCloud erfasst werden:"
 
 #. module: sale_account_taxcloud
 #: model:ir.actions.server,name:sale_account_taxcloud.action_sale_order_update_taxes

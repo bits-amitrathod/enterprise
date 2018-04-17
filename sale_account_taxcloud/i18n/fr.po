@@ -6,13 +6,14 @@
 # Martin Trigaux, 2017
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# fr rev <e2ffr02@hotmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 09:24+0000\n"
-"PO-Revision-Date: 2017-10-24 09:24+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: fr rev <e2ffr02@hotmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,13 +32,18 @@ msgid "Quotation"
 msgstr "Devis"
 
 #. module: sale_account_taxcloud
-#: code:addons/sale_account_taxcloud/models/sale_order.py:65
+#: code:addons/sale_account_taxcloud/models/sale_order.py:34
 #, python-format
-msgid ""
-"The tax rates have been updated, you may want to check it before validation"
+msgid "The configuration of TaxCloud is in the Accounting app, Settings menu."
 msgstr ""
-"Les taux d'imposition ont été mis à jour. Nous vous recommandons de les "
-"vérifier avant la validation"
+"La configuration de TaxCloud s'effectue dans le menu Paramètres de "
+"l'application Comptabilité."
+
+#. module: sale_account_taxcloud
+#: code:addons/sale_account_taxcloud/models/sale_order.py:34
+#, python-format
+msgid "Unable to retrieve taxes from TaxCloud: "
+msgstr "Impossible de récupérer les taxes à partir de TaxCloud :"
 
 #. module: sale_account_taxcloud
 #: model:ir.actions.server,name:sale_account_taxcloud.action_sale_order_update_taxes

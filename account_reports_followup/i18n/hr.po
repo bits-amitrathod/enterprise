@@ -4,17 +4,18 @@
 # 
 # Translators:
 # Bole <bole@dajmi5.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Tina Milas <tina@uvid.hr>, 2017
-# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
+# Martin Trigaux, 2017
+# Tina Milas, 2017
 # Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
+# Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2017
+# Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
 # Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
 "Last-Translator: Karolina Tonković <karolina.tonkovic@storm.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -25,8 +26,6 @@ msgstr ""
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line3
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line4
-#: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line5
 msgid ""
 "\n"
 "Dear %(partner_name)s,\n"
@@ -104,7 +103,7 @@ msgid "Account Follow-up"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_note
 msgid "Action To Do"
 msgstr "Za napraviti"
 
@@ -114,18 +113,8 @@ msgid "After"
 msgstr "Nakon"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_responsible_id
 msgid "Assign a Responsible"
-msgstr ""
-
-#. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_result
-msgid "Balance"
-msgstr "Saldo"
-
-#. module: account_reports_followup
-#: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
-msgid "Click to define follow-up levels and their related actions."
 msgstr ""
 
 #. module: account_reports_followup
@@ -134,14 +123,14 @@ msgid "Companies"
 msgstr "Tvrtke"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_company_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__company_id
 msgid "Company"
 msgstr "Tvrtka"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_name
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__name
 msgid "Company Name"
-msgstr "Tvrtka"
+msgstr "Naziv za prikaz"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_partner
@@ -149,20 +138,20 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_uid
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__create_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__create_uid
 msgid "Created by"
 msgstr "Kreirao"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_create_date
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_create_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__create_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__create_date
 msgid "Created on"
-msgstr "Kreirano"
+msgstr "Datum kreiranja"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_note
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner__payment_note
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users__payment_note
 msgid "Customer Payment Promise"
 msgstr ""
 
@@ -172,8 +161,13 @@ msgid "Days of the follow-up levels must be different"
 msgstr "Dani nivoa pratećih koraka moraju biti različiti"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_display_name
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_display_name
+#: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
+msgid "Define follow-up levels and their related actions"
+msgstr ""
+
+#. module: account_reports_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__display_name
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__display_name
 msgid "Display Name"
 msgstr "Naziv za prikaz"
 
@@ -188,7 +182,7 @@ msgid "Done"
 msgstr "Riješeno"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_delay
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__delay
 msgid "Due Days"
 msgstr "Prekoračeni dani"
 
@@ -203,17 +197,17 @@ msgid "First reminder email"
 msgstr "Prvi e-mail podsjetnik"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_followup_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__followup_id
 msgid "Follow Ups"
 msgstr "IOS-i"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_name
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__name
 msgid "Follow-Up Action"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_followup_line_ids
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__followup_line_ids
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_tree
 msgid "Follow-up"
@@ -225,7 +219,7 @@ msgid "Follow-up Criteria"
 msgstr "Kriterij pratećih koraka"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_line_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__followup_line_id
 msgid "Follow-up Level"
 msgstr "Nivo IOSa"
 
@@ -236,8 +230,8 @@ msgid "Follow-up Levels"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner_payment_responsible_id
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_users_payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner__payment_responsible_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_users__payment_responsible_id
 msgid "Follow-up Responsible"
 msgstr ""
 
@@ -261,13 +255,13 @@ msgid ""
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__sequence
 msgid "Gives the sequence order when displaying a list of follow-up lines."
 msgstr "Daje redni nalog prilikom prikazivanja pratećih koraka."
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_id
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__id
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -277,30 +271,30 @@ msgid "Journal Item"
 msgstr "Stavka dnevnika"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup___last_update
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line___last_update
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup____last_update
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line____last_update
 msgid "Last Modified on"
 msgstr "Zadnja promjena"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_uid
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__write_uid
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__write_uid
 msgid "Last Updated by"
 msgstr "Promijenio"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_write_date
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_write_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__write_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__write_date
 msgid "Last Updated on"
 msgstr "Vrijeme promjene"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line_followup_date
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__followup_date
 msgid "Latest Follow-up"
 msgstr "Zadnji IOS-i"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:56
+#: code:addons/account_reports_followup/models/account_followup_report.py:58
 #, python-format
 msgid "Level: "
 msgstr "Razina:"
@@ -311,13 +305,13 @@ msgid "Log a Note"
 msgstr "Unesi bilješku"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Manual Action"
 msgstr ""
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:68
+#: code:addons/account_reports_followup/models/account_followup_report.py:70
 #, python-format
 msgid "Manual action done"
 msgstr ""
@@ -328,8 +322,8 @@ msgid "Minimum"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings_min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_company__min_days_between_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings__min_days_between_followup
 msgid "Minimum days between two follow-ups"
 msgstr ""
 
@@ -347,8 +341,8 @@ msgid "Only one follow-up per company is allowed"
 msgstr "Dopušten je samo jedan prateći korak po organizaciji"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
-#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_partner__payment_responsible_id
+#: model:ir.model.fields,help:account_reports_followup.field_res_users__payment_responsible_id
 msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
@@ -370,8 +364,8 @@ msgid "Payment Follow-ups"
 msgstr "Prateći koraci plaćanja"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_note
-#: model:ir.model.fields,help:account_reports_followup.field_res_users_payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_partner__payment_note
+#: model:ir.model.fields,help:account_reports_followup.field_res_users__payment_note
 msgid "Payment Note"
 msgstr ""
 
@@ -381,9 +375,14 @@ msgid "Print Letter"
 msgstr "Ispiši pismo"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_description
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__description
 msgid "Printed Message"
 msgstr "Ispisana Poruka"
+
+#. module: account_reports_followup
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__result
+msgid "Result"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_filter
@@ -396,7 +395,7 @@ msgid "Second reminder letter and email"
 msgstr "Drugi podsjetnik i e-mail"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_letter
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__send_letter
 msgid "Send a Letter"
 msgstr "Pošalji pismo"
 
@@ -406,7 +405,7 @@ msgid "Send a Letter or Email"
 msgstr "Pošalji pismo ili e-mail"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_email
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__send_email
 msgid "Send an Email"
 msgstr "Pošalji e-mail"
 
@@ -416,12 +415,12 @@ msgid "Send by email"
 msgstr "Pošalji e-mailom"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_sequence
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__sequence
 msgid "Sequence"
 msgstr "Sekvenca"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_delay
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__delay
 msgid ""
 "The number of days after the due date of the invoice to wait before sending "
 "the reminder.  Could be negative if you want to send a polite alert "
@@ -457,35 +456,25 @@ msgid "Total debit"
 msgstr "Ukupni dug"
 
 #. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
-msgid "Urging reminder email"
-msgstr ""
-
-#. module: account_reports_followup
-#: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
-msgid "Urging reminder letter"
-msgstr ""
-
-#. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_company_min_days_between_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings_min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_company__min_days_between_followup
+#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings__min_days_between_followup
 msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__send_letter
 msgid "When processing, it will print a letter"
 msgstr "Prilikom procesiranja, ispisat će pismo"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_email
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__send_email
 msgid "When processing, it will send an email"
 msgstr ""
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_manual_action
+#: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__manual_action
 msgid ""
 "When processing, it will set the manual action to be taken for that "
 "customer. "
