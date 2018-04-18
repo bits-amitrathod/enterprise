@@ -1,55 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="less_helpers" name="web_enterprise less helpers" inherit_id="web.less_helpers" priority='15'>
-        <xpath expr="//link[@href='/web/static/src/less/variables.less']" position="after">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/variables.less"/>
+    <template id="_assets_primary_variables" inherit_id="web._assets_primary_variables" priority="15">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/primary_variables.scss"/>
+        </xpath>
+    </template>
+
+    <template id="_assets_secondary_variables" inherit_id="web._assets_secondary_variables" priority="15">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/secondary_variables.scss"/>
+        </xpath>
+    </template>
+
+    <template id="_assets_backend_helpers" inherit_id="web._assets_backend_helpers" priority="15">
+        <xpath expr="//link[@href='/web/static/src/scss/bootstrap_overridden.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/bootstrap_overridden.scss"/>
         </xpath>
     </template>
 
     <template id="assets_common" name="web_enterprise assets common" inherit_id="web.assets_common">
-        <xpath expr="//link[@href='/web/static/src/less/ui_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/ui.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/ui_extra.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/ui.scss"/>
         </xpath>
         <xpath expr="//link[last()]" position="after">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/fonts.less"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/fonts.scss"/>
         </xpath>
     </template>
 
     <template id="assets_backend" name="web_enterprise assets backend" inherit_id="web.assets_backend">
-        <xpath expr="//link[@href='/web/static/src/less/bootstrap_overridden.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/bootstrap_overridden.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/webclient_extra.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/webclient.scss"/>
         </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/webclient_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/webclient.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/webclient_layout.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/webclient_layout.scss"/>
         </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/webclient_layout.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/webclient_layout.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/fields_extra.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/fields.scss"/>
         </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/fields_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/fields.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/form_view_extra.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/form_view.scss"/>
         </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/form_view_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/form_view.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/list_view_extra.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/list_view.scss"/>
         </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/list_view_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/list_view.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/search_view_extra.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/search_view.scss"/>
         </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/search_view_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/search_view.less"/>
-        </xpath>
-        <xpath expr="//link[@href='/web/static/src/less/dropdown_extra.less']" position="replace">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/dropdown.less"/>
+        <xpath expr="//link[@href='/web/static/src/scss/dropdown_extra.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/dropdown.scss"/>
         </xpath>
         <xpath expr="//link[last()]" position="after">
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/home_menu.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/home_menu_layout.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/menu_mobile.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/menu_search.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/control_panel_layout.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/datepicker.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/kanban_view.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/touch_device.less"/>
-            <link rel="stylesheet" type="text/less" href="/web_enterprise/static/src/less/keyboard.less"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/home_menu.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/home_menu_layout.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/menu_mobile.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/menu_search.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/control_panel_layout.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/datepicker.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/kanban_view.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/touch_device.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_enterprise/static/src/scss/keyboard.scss"/>
         </xpath>
 
         <xpath expr="//script[@src='/web/static/src/js/chrome/web_client.js']" position="replace">

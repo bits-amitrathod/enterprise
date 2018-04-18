@@ -1543,7 +1543,7 @@ var ViewEditorManager = Widget.extend({
 
         this.XMLEditor = new XMLEditor(this, this.view_id, {
             position: 'left',
-            doNotLoadLess: true,
+            doNotLoadSCSS: true,
 
         });
         this.mode = 'rendering';

@@ -170,7 +170,7 @@ var ReportEditor = ReportAction.extend({
 
         this.XMLEditor = new XMLEditor(this, this.view_id, {
             position: 'left',
-            doNotLoadLess: true,
+            doNotLoadSCSS: true,
         });
 
         $.when(this.XMLEditor.prependTo(this.$el)).then(function () {

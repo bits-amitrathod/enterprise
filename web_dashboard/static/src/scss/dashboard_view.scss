@@ -1,0 +1,161 @@
+// This file duplicates some less rules of the form view (mainly for groups),
+// and slightly tweaks them. Those rules should be extracted from form_view.less
+// and parameterized so that they can be shared between the form view and the
+// dashboard view
+
+$o-dashboard-lg-screen: $o-screen-sidechatter-min;
+
+.o_dashboard_view {
+    // Scoped dashboard's variables
+    $padding: $o-horizontal-padding;
+    $padding-small: $o-horizontal-padding*0.5;
+
+    @include o-flex-display;
+    @include o-flex-flow(row, wrap);
+    @include o-align-items(flex-start);
+    width: 100%;
+    height: auto;
+    padding: $o-sheet-vpadding 0;
+
+    > .o_group, .o_subview {
+        // By default dashboard entries are full-width...
+        @include o-flex(1,1,100%);
+        margin: 0 $padding $padding*2;
+        padding: $padding;
+        border: 1px solid $gray-lighter-darker;
+        background-color: white;
+        box-shadow: 0px 5px 2px -5px;
+
+        //...trig masonery layout for very large screens
+        @media (min-width: $o-dashboard-lg-screen) {
+            @include o-flex(1, 1, 47%);
+        }
+    }
+
+    .o_group {
+        @include o-flex-display;
+        @include o-flex-flow(row, wrap);
+        @include o-align-items(flex-start);
+
+        @for $i from 1 through $o-form-group-cols {
+            .o_group_col_#{$i} {
+                padding: 0 $padding-small;
+                width: 50%;
+                @include o-flex(1, 1, 50%);
+
+                @media (max-width: $screen-sm-max) {
+                    &.o_group {
+                        width: 100%;
+                        @include o-flex(1, 1, 100%);
+                    }
+                }
+
+                @media (min-width: $screen-md-min) {
+                    width: floor(100% / 12 * $i);
+                    @include o-flex(0, 0, floor(100% / 12 * $i));
+                }
+            }
+        }
+
+        .o_group {
+            margin: 0 -10px $padding;
+        }
+
+        .o_horizontal_separator {
+            margin-bottom: $padding-small;
+            width: 100%;
+            padding: 3px $padding-small;
+            border-bottom: 1px solid  $gray-lighter-dark;
+            font-size: 1.3em;
+            color: $gray-light;
+        }
+
+        .o_aggregate, .o_formula {
+            margin-bottom: $padding-small;
+
+            > label {
+                margin-bottom: 0;
+
+                &:empty {
+                    display: none;
+
+                    + .o_value {
+                        font-size: 2.5em;
+                    }
+                }
+            }
+
+            .o_value {
+                font-size: 1.4em;
+            }
+        }
+
+        .o_aggregate {
+            .o_value {
+                // .btn-link(); FIXME
+                cursor: pointer;
+                font-size: 1.4em;
+
+                &:after {
+                    font: $font-size-base/1 "FontAwesome";
+                    content: '\f021';
+                    vertical-align: middle;
+                    margin-left: $padding-small;
+                    color: $brand-primary;
+                    opacity: 0;
+                }
+
+                &:hover:after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    // Let expand first's group columns to fit the card size.
+    > .o_group {
+        @include o-justify-content(stretch);
+
+        > [class*="o_group_col_"] {
+            @media (min-width: $screen-xs-min) and (max-width: $screen-sm-max){
+                width: 100%;
+                @include o-flex(1, 0, 100%);
+            }
+
+            @media (min-width: $screen-md-min){
+                @include o-flex(1, 1, auto);
+                margin-right: -$padding-small*0.5;
+            }
+        }
+    }
+
+    .o_graph_buttons, .o_pivot_buttons {
+        padding: $padding-small $padding;
+        margin: (-$padding) (-$padding) $padding-small (-$padding);
+        border-bottom: 1px solid $gray-lighter-darker;
+    }
+
+    .o_subview {
+        .o_view_nocontent {
+            position: relative;
+        }
+
+        .o_view_controller {
+            padding-top: $padding-small;
+        }
+
+        &[type=graph] {
+            padding-bottom: 0;
+
+            .o_view_controller {
+                width: 100%;
+                min-height: 300px;
+                position: relative;
+
+                .o_graph_svg_container {
+                    @include o-position-absolute(0, 0, 0, 0);
+                }
+            }
+        }
+    }
+}

@@ -370,12 +370,12 @@
 
 <!-- stylesheets -->
 <template id="assets_financial_report">
-    <link rel="stylesheet" href="/web/static/src/less/import_bootstrap.less"/>
-    <link rel="stylesheet" href="/web/static/src/less/fonts.less"/>
-    <link rel="stylesheet" href="/web/static/src/less/variables.less"/>
-    <link rel="stylesheet" href="/web/static/src/less/utils.less"/>
-    <link rel="stylesheet" href="/account_reports/static/src/less/account_financial_report.less" />
-    <link rel="stylesheet" href="/account_reports/static/src/less/account_report_print.less" />
+    <t t-call="web._assets_helpers"><t t-set="no_bs_vars" t-value="True"/></t>
+
+    <link rel="stylesheet" type="text/scss" href="/web/static/src/scss/import_bootstrap.scss"/>
+    <link rel="stylesheet" type="text/scss" href="/web/static/src/scss/fonts.scss"/>
+    <link rel="stylesheet" type="text/scss" href="/account_reports/static/src/scss/account_financial_report.scss"/>
+    <link rel="stylesheet" type="text/scss" href="/account_reports/static/src/scss/account_report_print.scss"/>
 </template>
 
 <!-- This template is only used when printing a financial report to a PDF output -->

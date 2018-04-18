@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-        <record model="ir.ui.view" id="view_website_form_extend"> 
+        <record model="ir.ui.view" id="view_website_form_extend">
             <field name="name">website.form</field>
-            <field name="model">website</field> 
+            <field name="model">website</field>
             <field name="inherit_id" ref="website.view_website_form"/>
             <field name="priority">1</field>
             <field name="arch" type="xml">
@@ -10,45 +10,45 @@
                 <field name="name" position="replace">
                 </field>
                 <field name="google_analytics_key" position="before">
-                    <field name="tuto_google_analytics"/>                           
+                    <field name="tuto_google_analytics"/>
                     <div colspan="2">
                         <div attrs="{'invisible':[('tuto_google_analytics','=',False)]}">
                             <br/><h2>How to get the Google Analytics Key and the View ID</h2>
-                            <ul> 
+                            <ul>
                                 <li> Go to <a href='https://www.google.com/analytics/' target='_blank'>https://www.google.com/analytics/</a>
                                 and connect you.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_login.png' class='analytics_img_tuto'/> 
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_login.png' class='analytics_img_tuto'/>
                                 </li>
-                                <li> 
+                                <li>
                                     Click on <b>"Admin"</b>.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_admin.png' class='analytics_img_tuto'/>    
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_admin.png' class='analytics_img_tuto'/>
                                 </li>
-                                <li> 
+                                <li>
                                     Click on <b>"Tracking Code"</b>.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_tracking_code.png' class='analytics_img_tuto'/>   
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_tracking_code.png' class='analytics_img_tuto'/>
                                 </li>
-                                <li> 
+                                <li>
                                     Copy the <b>"Tracking ID"</b> and paste it in the field Google Analytics key.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_tracking_id.png' class='analytics_img_tuto'/>   
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_tracking_id.png' class='analytics_img_tuto'/>
                                 </li>
-                                <li> 
+                                <li>
                                     Click on <b>"Admin"</b> and click on <b>"View Settings"</b>.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_view_settings.png' class='analytics_img_tuto'/>  
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_view_settings.png' class='analytics_img_tuto'/>
                                 </li>
-                                <li> 
+                                <li>
                                     Copy the <b>"View ID"</b> and paste it in the field View ID.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_view_id.png' class='analytics_img_tuto'/>  
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_view_id.png' class='analytics_img_tuto'/>
                                 </li>
-                                <li> 
+                                <li>
                                     Click on Save.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_save.png' class='analytics_img_tuto' />  
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_save.png' class='analytics_img_tuto' />
                                 </li>
-                                <li> 
+                                <li>
                                     Click on Authorize Google.
-                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_authorize.png' class='analytics_img_tuto' />  
+                                    <br/><br/><img src='/website_version/static/src/img/GA/GA_authorize.png' class='analytics_img_tuto' />
                                 </li>
-                                <a href="#" class="oe_link">Return at Top</a>                                             
-                            </ul>                                
+                                <a href="#">Return at Top</a>
+                            </ul>
                         </div>
                     </div>
                 </field>
@@ -106,7 +106,7 @@
         </record>
 
 
-        <record model="ir.ui.view" id="view_view_form_extend"> 
+        <record model="ir.ui.view" id="view_view_form_extend">
             <field name="model">ir.ui.view</field>
 
             <field name="inherit_id" ref="base.view_view_form"/>
@@ -118,7 +118,7 @@
 
                 <sheet position="before">
                     <header>
-                        <button icon="fa-pencil" name="action_publish" string="Publish" type="object" class="oe_stat_button pull-right" 
+                        <button icon="fa-pencil" name="action_publish" string="Publish" type="object" class="oe_stat_button pull-right"
                             attrs="{'invisible': ['|','|',('type', '!=', 'qweb'),('website_id', '=',False), ('version_id', '=', False)]}"
                             />
                     </header>

@@ -1,0 +1,82 @@
+
+.o_home_menu {
+    height: 100%;
+    overflow: auto;
+    @include o-flex-display;
+    @include o-flex-flow(column, nowrap);
+    @include o-align-items(center);
+
+    .o_home_menu_scrollable {
+        @include o-flex-display;
+        @include o-flex-flow(column, nowrap);
+        @include o-align-items(center);
+        @include o-flex(1, 0, auto);
+        width: 100%;
+        max-width: $o-home-menu-container-size;
+
+        .o_apps {
+            @include o-flex(0, 0, auto);
+            width: 100%;
+            max-width: $o-home-menu-container-size;
+            @include clearfix;
+
+            .o_app {
+                float: left;
+                margin: 0 1.5% 15px;
+                width: 13.66%; // +3% margin = 6 apps per line
+                @media (max-width: $screen-xs-max) {
+                    width: 22%; // +3% margin = 4 apps per line
+                }
+                padding: 10px 0;
+
+                .o_app_icon {
+                    position: relative;
+                    width: 80%;
+                    max-width: 70px;
+                    overflow: hidden;
+                    margin: auto;
+
+                    &:before { // so that the div is a square
+                        content: "";
+                        display: block;
+                        padding-top: 100%;
+                    }
+
+                    > i.fa { // studio
+                        @include o-position-absolute(27%, 0, auto, 0);
+                        font-size: 36px;
+
+                        @media screen and (max-width: 408px) { // where icons start to shrink
+                            font-size: 30px; // on old browser, optimized for mobile range
+                            font-size: 8.826vw; // ~36px at 408px
+                        }
+                    }
+                }
+            }
+        }
+        .o_menuitems {
+            width: 100%;
+
+            @include o-flex(1, 0, auto);
+            .o_menuitem {
+                @media (max-width: $screen-xs-max) {
+                    padding: 6px;
+                }
+            }
+
+        }
+        .o_no_results {
+            @include o-flex(1, 0, auto);
+        }
+    }
+    .o_home_menu_footer {
+        @include o-flex-display;
+        @include o-flex(1, 0, auto);
+        align-items: flex-end;
+
+        img {
+            -webkit-filter: drop-shadow(0 1px 0px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(0 1px 0px rgba(0, 0, 0, 0.4));
+        }
+    }
+}
