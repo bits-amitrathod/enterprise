@@ -115,6 +115,9 @@ class AccountPayment(models.Model):
 
         DrctDbtTxInf = create_xml_node_chain(PmtInf, ['DrctDbtTxInf','PmtId','EndToEndId'], str(end2end_counter))[0]
 
+        if self.communication:
+            create_xml_node_chain(DrctDbtTxInf, ['RmtInf', 'Ustrd'], self.communication.strip()[:140]) #The maximum size of communications for SDD transactions is 140 characters
+
         InstdAmt = create_xml_node(DrctDbtTxInf, 'InstdAmt', float_repr(self.amount, precision_digits=2))
         InstdAmt.attrib['Ccy'] = self.currency_id.name
 
