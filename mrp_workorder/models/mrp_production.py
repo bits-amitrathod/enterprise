@@ -56,11 +56,13 @@ class MrpProduction(models.Model):
                                         ('state', 'in', ('ready', 'pending', 'progress')),
                                         ('date_planned_finished', '>=', start_date.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT))], order='date_planned_start')
                 from_date = start_date
-                to_date = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id.plan_hours(workorder.duration_expected / 60.0, from_date)
-                if not to_date:
+                intervals = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id._schedule_hours(workorder.duration_expected / 60.0, from_date)
+                if intervals:
+                    to_date = intervals[-1][1]
                     if not from_date_set:
                         from_date = intervals[0][0]
                         from_date_set = True
+                else:
                     to_date = from_date + relativedelta(minutes=workorder.duration_expected)
                 # Check interval
                 for wo in wos:

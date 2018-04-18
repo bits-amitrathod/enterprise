@@ -139,6 +139,9 @@ class AccountPayment(models.Model):
 
         create_xml_node_chain(DrctDbtTxInf, ['DbtrAcct','Id','IBAN'], self.sdd_mandate_id.partner_bank_id.sanitized_acc_number)
 
+        if self.communication:
+            create_xml_node_chain(DrctDbtTxInf, ['RmtInf', 'Ustrd'], self.communication.strip()[:140]) #The maximum size of communications for SDD transactions is 140 characters
+
     def _group_payments_per_mandate(self):
         """ Groups the payments of this recordset per associated mandate, in a dictionnary of recordsets.
         """
