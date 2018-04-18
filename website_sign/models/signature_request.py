@@ -102,7 +102,7 @@ class SignatureRequest(models.Model):
     @api.multi
     def go_to_document(self):
         self.ensure_one()
-        request_item = self.request_item_ids.filtered(lambda r: r.partner_id and r.partner_id.id == self.env.user.partner_id.id)
+        request_item = self.request_item_ids.filtered(lambda r: r.partner_id and r.partner_id.id == self.env.user.partner_id.id)[:1]
         return {
             'name': "Document \"%(name)s\"" % {'name': self.reference},
             'type': 'ir.actions.client',
@@ -371,7 +371,7 @@ class SignatureRequest(models.Model):
         return {
             'id': signature_request.id,
             'token': signature_request.access_token,
-            'sign_token': signature_request.request_item_ids.filtered(lambda r: r.partner_id == self.env.user.partner_id).access_token,
+            'sign_token': signature_request.request_item_ids.filtered(lambda r: r.partner_id == self.env.user.partner_id)[:1].access_token,
         }
 
     @api.model
