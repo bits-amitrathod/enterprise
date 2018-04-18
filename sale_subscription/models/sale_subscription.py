@@ -270,7 +270,7 @@ class SaleSubscription(models.Model):
         return self._recurring_create_invoice(automatic=True)
 
     def set_open(self):
-        return self.write({'state': 'open', 'date': False})
+        return self.write({'state': 'open'})
 
     def set_pending(self):
         return self.write({'state': 'pending'})

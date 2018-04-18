@@ -25,40 +25,44 @@ class account_bank_reconciliation_report(models.AbstractModel):
 
     def add_title_line(self, options, title, amount):
         self.line_number += 1
+        line_currency = self.env.context.get('line_currency', False)
         return {
             'id': 'line_' + str(self.line_number),
             'name': title,
-            'columns': [{'name': v} for v in [options['date']['date'], '', self.format_value(amount)]],
+            'columns': [{'name': v} for v in [options['date']['date'], '', self.format_value(amount, line_currency)]],
             'level': 0,
         }
 
     def add_subtitle_line(self, title, amount=None):
         self.line_number += 1
+        line_currency = self.env.context.get('line_currency', False)
         return {
             'id': 'line_' + str(self.line_number),
             'name': title,
-            'columns': [{'name': v} for v in ['', '', amount and self.format_value(amount) or '']],
+            'columns': [{'name': v} for v in ['', '', amount and self.format_value(amount, line_currency) or '']],
             'level': 1,
         }
 
     def add_total_line(self, amount):
         self.line_number += 1
+        line_currency = self.env.context.get('line_currency', False)
         return {
             'id': 'line_' + str(self.line_number),
             'name': '',
-            'columns': [{'name': v} for v in ["", "", self.format_value(amount)]],
+            'columns': [{'name': v} for v in ["", "", self.format_value(amount, line_currency)]],
             'level': 2,
         }
 
     def add_bank_statement_line(self, line, amount):
         name = line.name
+        line_currency = self.env.context.get('line_currency', False)
         return {
             'id': str(line.id),
             #'statement_id': line.statement_id.id,
             #'type': 'bank_statement_id',
             'caret_options': True,
             'name': len(name) >= 85 and name[0:80] + '...' or name,
-            'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(amount)]],
+            'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(amount, line_currency)]],
             'level': 1,
         }
 
@@ -78,6 +82,8 @@ class account_bank_reconciliation_report(models.AbstractModel):
         #Start amount
         use_foreign_currency = journal.currency_id and journal.currency_id != journal.company_id.currency_id or False
         account_ids = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]))
+        line_currency = use_foreign_currency and journal.currency_id or False
+        self = self.with_context(line_currency=line_currency)
         lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', account_ids),
                                                                         ('date', '<=', self.env.context['date_to']),
                                                                         ('company_id', 'in', self.env.context['company_ids'])])
@@ -102,7 +108,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
                     #'type': 'move_line_id',
                     #'action': line.get_model_id_and_name(),
                     'name': line.name,
-                    'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(line.balance)]],
+                    'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(line.balance, line_currency)]],
                     'level': 1,
                 })
                 unrec_tot += line.amount_currency if use_foreign_currency else line.balance

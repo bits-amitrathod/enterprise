@@ -47,6 +47,9 @@ class StockBarcodeLot(models.TransientModel):
 
         return res
 
+    def _update_quantity_done(self):
+        self.qty_done = sum(self.stock_barcode_lot_line_ids.mapped('qty_done'))
+
     def on_barcode_scanned(self, barcode):
         suitable_line = self.stock_barcode_lot_line_ids.filtered(lambda l: l.lot_name == barcode or not l.lot_name)
         vals = {}
@@ -62,6 +65,7 @@ class StockBarcodeLot(models.TransientModel):
             vals['qty_done'] = 1
             vals['stock_barcode_lot_id'] = self.id
             self.env['stock_barcode.lot.line'].new(vals)
+        self.update({'qty_done': self.qty_done + 1})
         return
 
     def validate_lot(self):
@@ -122,3 +126,9 @@ class StockBarcodeLotLine(models.TransientModel):
     stock_barcode_lot_id = fields.Many2one('stock_barcode.lot')
     move_line_id = fields.Many2one('stock.move.line')
     product_barcode = fields.Char('Barcode', related='lot_name')
+
+    @api.onchange('qty_done')
+    def onchange_qty_done(self):
+        if self.stock_barcode_lot_id.product_id.tracking == 'serial' and self.qty_done > 1:
+            raise UserError(_('You cannot scan two times the same serial number'))
+        self.stock_barcode_lot_id._update_quantity_done()
