@@ -1,11 +1,10 @@
 odoo.define('web_mobile.notification_manager', function (require) {
 "use strict";
 
-var NotificationManager = require('web.NotificationManager');
-
+var NotificationService = require('web.NotificationService');
 var mobile = require('web_mobile.rpc');
 
-NotificationManager.include({
+NotificationService.include({
 
     //--------------------------------------------------------------------------
     // Public
@@ -14,7 +13,7 @@ NotificationManager.include({
     /**
      * @override
      */
-    display: function () {
+    notify: function () {
         if (mobile.methods.vibrate) {
             mobile.methods.vibrate({'duration': 100});
         }
