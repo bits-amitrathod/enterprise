@@ -84,6 +84,28 @@
                 </t>
             </div>
             <div class="col-xs-12">
+                <t t-if="options.get('partner_ids') != None">
+                    Partners:
+                    <t t-set="res_partner_value" t-value="'All'"/>
+                    <t t-foreach="options['selected_partner_ids']" t-as="partner_name">
+                        <t t-set="res_partner_value" t-value="''"/>
+                        <t t-esc="partner_name"/>
+                    </t>
+                    <t t-esc="res_partner_value"/>
+                </t>
+            </div>
+            <div class="col-xs-12">
+                <t t-if="options.get('partner_categories') != None">
+                    Partner Categories:
+                    <t t-set="res_partner_category_value" t-value="'All'"/>
+                    <t t-foreach="options['selected_partner_categories']" t-as="partner_category_name">
+                        <t t-set="res_partner_category_value" t-value="''"/>
+                        <t t-esc="partner_category_name"/>
+                    </t>
+                    <t t-esc="res_partner_category_value"/>
+                </t>
+            </div>
+            <div class="col-xs-12">
                 <t t-if="options.get('ir_filters') != None">
                     Filter:
                     <t t-set="selected_filter_name" t-value="'None'"/>

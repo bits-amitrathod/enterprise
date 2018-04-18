@@ -58,6 +58,7 @@ class AccountReport(models.AbstractModel):
     filter_analytic = None
     filter_unfold_all = None
     filter_hierarchy = None
+    filter_partner = None
 
     def _build_options(self, previous_options=None):
         if not previous_options:
@@ -108,6 +109,9 @@ class AccountReport(models.AbstractModel):
             #don't display the analytic filtering options if no option would be shown
             if self.filter_analytic_accounts is None and self.filter_analytic_tags is None:
                 self.filter_analytic = None
+        if self.filter_partner:
+            self.filter_partner_ids = []
+            self.filter_partner_categories = []
         return self._build_options(previous_options)
 
     def get_header(self, options):
@@ -293,6 +297,10 @@ class AccountReport(models.AbstractModel):
             ctx['analytic_account_ids'] = self.env['account.analytic.account'].browse([int(acc) for acc in options['analytic_accounts']])
         if options.get('analytic_tags'):
             ctx['analytic_tag_ids'] = self.env['account.analytic.tag'].browse([int(t) for t in options['analytic_tags']])
+        if options.get('partner_ids'):
+            ctx['partner_ids'] = self.env['res.partner'].browse([int(partner) for partner in options['partner_ids']])
+        if options.get('partner_categories'):
+            ctx['partner_categories'] = self.env['res.partner.category'].browse([int(category) for category in options['partner_categories']])
         return ctx
 
     @api.multi
@@ -313,6 +321,12 @@ class AccountReport(models.AbstractModel):
         if options.get('analytic_tags') is not None:
             searchview_dict['analytic_tags'] = self.env.user.id in self.env.ref('analytic.group_analytic_tags').users.ids and [(t.id, t.name) for t in self.env['account.analytic.tag'].search([])] or False
             options['selected_analytic_tag_names'] = [self.env['account.analytic.tag'].browse(int(tag)).name for tag in options['analytic_tags']]
+        if options.get('partner'):
+            searchview_dict['res_partners'] = [(partner.id, partner.name) for partner in self.env['res.partner'].search([])] or False
+            searchview_dict['res_partner_categories'] = [(category.id, category.name) for category in self.env['res.partner.category'].search([])] or False
+            options['selected_partner_ids'] = [self.env['res.partner'].browse(int(partner)).name for partner in options['partner_ids']]
+            options['selected_partner_categories'] = [self.env['res.partner.category'].browse(int(category)).name for category in options['partner_categories']]
+
         report_manager = self.get_report_manager(options)
         info = {'options': options,
                 'context': self.env.context,

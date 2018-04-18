@@ -18,8 +18,7 @@ class ReportPartnerLedger(models.AbstractModel):
     filter_unfold_all = False
     filter_account_type = [{'id': 'receivable', 'name': _('Receivable'), 'selected': False}, {'id': 'payable', 'name': _('Payable'), 'selected': False}]
     filter_unreconciled = False
-    #TODO add support for partner_id
-    filter_partner_id = False
+    filter_partner = True
 
     def get_templates(self):
         templates = super(ReportPartnerLedger, self).get_templates()

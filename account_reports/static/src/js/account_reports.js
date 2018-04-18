@@ -248,6 +248,20 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
                 self.$searchview_buttons.find('.account_analytic_filter').click();
             })
         });
+
+        // partner filter
+        this.$searchview_buttons.find('.js_account_partner_auto_complete').select2();
+        if (this.report_options.partner) {
+            this.$searchview_buttons.find('[data-filter="res_partners"]').select2("val", this.report_options.partner_ids);
+            this.$searchview_buttons.find('[data-filter="res_partner_categories"]').select2("val", this.report_options.partner_categories);
+        }
+        this.$searchview_buttons.find('.js_account_partner_auto_complete').on('change', function(){
+            self.report_options.partner_ids = self.$searchview_buttons.find('[data-filter="res_partners"]').val();
+            self.report_options.partner_categories = self.$searchview_buttons.find('[data-filter="res_partner_categories"]').val();
+            return self.reload().then(function(){
+                self.$searchview_buttons.find('.account_partner_filter').click();
+            })
+        });
     },
     format_date: function(moment_date) {
         var date_format = 'YYYY-MM-DD';
