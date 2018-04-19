@@ -136,6 +136,9 @@ var AppSwitcher = Widget.extend({
                 event.preventDefault();
                 break;
             case $.ui.keyCode.TAB:
+                if ($input.val() === "") {
+                    return;
+                }
                 event.preventDefault();
                 var f = elem_focused ? (event.shiftKey ? -1 : 1) : 0;
                 this.update({focus: f});
@@ -156,11 +159,14 @@ var AppSwitcher = Widget.extend({
                     var menus = app_focused ? state.apps : state.menu_items;
                     var index = app_focused ? state.focus : state.focus - state.apps.length;
                     this.open_menu(menus[index]);
+                    event.preventDefault();
                 }
-                event.preventDefault();
                 return;
             case $.ui.keyCode.PAGE_DOWN:
             case $.ui.keyCode.PAGE_UP:
+            case 16: // Shift
+            case 17: // CTRL
+            case 18: // Alt
                 break;
             default:
                 if (!this.$input.is(':focus')) {
