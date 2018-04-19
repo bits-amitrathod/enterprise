@@ -34,3 +34,28 @@
         }
     }
 }
+
+// Buttons used as dropdown toggler
+.o_dropdown_toggler_btn {
+    padding: 0;
+    color: $o-main-text-color;
+    text-transform: initial;
+
+    &:hover, &:focus, &:active {
+        &, &:active {
+            @extend %o-dropdown-toggle-btn-accent;
+        }
+    }
+    .open > &.dropdown-toggle {
+        &, &:hover, &:focus, &:active {
+            &, &:active {
+                @extend %o-dropdown-toggle-btn-accent;
+            }
+        }
+    }
+}
+%o-dropdown-toggle-btn-accent {
+    background: transparent;
+    color: darken($o-main-text-color, 20%);
+    box-shadow: none;
+}
