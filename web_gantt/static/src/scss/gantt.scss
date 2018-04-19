@@ -20,9 +20,9 @@
         @each $key, $value in $colors {
             @for $i from $iterations through 0 {
                 .o_gantt_color#{$key}_#{$i} {
-                    background-color: rgba($value, 100% - 10 * $i);
+                    background-color: rgba($value, 1 - 0.1 * $i);
                     &.gantt_task_inline_color {
-                        border-color: rgba($value, 100% - 10 * $i);
+                        border-color: rgba($value, 1 - 0.1 * $i);
                     }
                 }
             }
