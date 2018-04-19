@@ -389,7 +389,7 @@ odoo.define('website_sign.template', function(require) {
                         args: [self.templateID, signers, followers, reference, subject, message],
                     })
                     .then(function(sr) {
-                        self.do_notify(_t("Success"), _("Your signature request has been sent."));
+                        self.do_notify(_t("Success"), _t("Your signature request has been sent."));
                         self.do_action({
                             type: "ir.actions.client",
                             tag: 'website_sign.Document',
