@@ -1,43 +1,32 @@
 
 .o_gantt_view {
     $iterations: 5;
-    $color0: hsl(41, 77%, 81%);
-    $color1: hsl(0, 0%, 100%);
-    $color2: hsl(309, 20%, 87%);
-    $color3: hsl(56, 53%, 84%);
-    $color4: hsl(62, 62%, 69%);
-    $color5: hsl(168, 32%, 75%);
-    $color6: hsl(186, 51%, 82%);
-    $color7: hsl(41, 77%, 81%);
-    $color8: hsl(304, 12%, 44%);
-    $color9: hsl(309, 20%, 81%);
-    $color10: hsl(135, 50%, 52%);
-    $colorgreen: hsl(120, 100%, 25%);
+    $colors: (
+        0: hsl(41, 77%, 81%),
+        1: hsl(0, 0%, 100%),
+        2: hsl(309, 20%, 87%),
+        3: hsl(56, 53%, 84%),
+        4: hsl(62, 62%, 69%),
+        5: hsl(168, 32%, 75%),
+        6: hsl(186, 51%, 82%),
+        7: hsl(41, 77%, 81%),
+        8: hsl(304, 12%, 44%),
+        9: hsl(309, 20%, 81%),
+        10: hsl(135, 50%, 52%),
+        green: hsl(120, 100%, 25%),
+    );
 
-    @mixin mixin-simple-loop($color, $n) {
-        @for $i from $n through 0 {
-            .o_gantt_#{$color}_#{$i} {
-                background-color: rgba($color, 100% - 10 * $i);
-                &.gantt_task_inline_color{
-                    border-color: rgba($color, 100% - 10 * $i);
+    .gantt_container {
+        @each $key, $value in $colors {
+            @for $i from $iterations through 0 {
+                .o_gantt_color#{$key}_#{$i} {
+                    background-color: rgba($value, 100% - 10 * $i);
+                    &.gantt_task_inline_color {
+                        border-color: rgba($value, 100% - 10 * $i);
+                    }
                 }
             }
         }
-    }
-
-    .gantt_container {
-        @include mixin-simple-loop($color0, $iterations);
-        @include mixin-simple-loop($color1, $iterations);
-        @include mixin-simple-loop($color2, $iterations);
-        @include mixin-simple-loop($color3, $iterations);
-        @include mixin-simple-loop($color4, $iterations);
-        @include mixin-simple-loop($color5, $iterations);
-        @include mixin-simple-loop($color6, $iterations);
-        @include mixin-simple-loop($color7, $iterations);
-        @include mixin-simple-loop($color8, $iterations);
-        @include mixin-simple-loop($color9, $iterations);
-        @include mixin-simple-loop($color10, $iterations);
-        @include mixin-simple-loop($colorgreen, $iterations);
         .o_gantt_color_transparent {
             background-color: "transparent";
         }
