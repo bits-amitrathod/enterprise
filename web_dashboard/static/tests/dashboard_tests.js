@@ -249,7 +249,7 @@ QUnit.module('Views', {
                 if (args.method === 'read_group') {
                     nbReadGroup++;
                     var groupBy = nbReadGroup === 1 ? [] : ['categ_id'];
-                    assert.deepEqual(args.kwargs.fields, ['categ_id', 'sold'],
+                    assert.deepEqual(args.kwargs.fields, ['sold'],
                         "should read the correct fields");
                     assert.deepEqual(args.kwargs.groupby, groupBy,
                         "should group by the correct field");
@@ -661,12 +661,12 @@ QUnit.module('Views', {
         assert.verifySteps([
             ['untaxed:sum(untaxed)', 'sold:sum(sold)'], // fields
             ['categ_id', 'sold'], // graph
-            ['categ_id', 'sold'], // pivot
-            ['categ_id', 'sold'], // pivot
+            ['sold'], // pivot
+            ['sold'], // pivot
             ['untaxed:sum(untaxed)', 'sold:sum(sold)'], // fields
             ['categ_id', 'untaxed'], // graph
-            ['categ_id', 'untaxed'], // pivot
-            ['categ_id', 'untaxed'], // pivot
+            ['untaxed'], // pivot
+            ['untaxed'], // pivot
         ]);
 
         actionManager.destroy();
