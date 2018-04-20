@@ -293,7 +293,7 @@ class HelpdeskTicket(models.Model):
             'assign_date': now,
             'close_date': now,
         }))
-        self.filtered(lambda ticket: ticket.deadline != ticket_to_dl[ticket.id]).activity_update()
+        self.filtered(lambda ticket: ticket.deadline != ticket_to_dl[ticket.id] or ticket in closed_tickets).activity_update()
 
         if vals.get('partner_id'):
             self.message_subscribe([vals['partner_id']])
@@ -482,13 +482,18 @@ class HelpdeskTicket(models.Model):
     def activity_update(self):
         """ Update automated activities. Consider that all tickets in the record
         set have a modified deadline, therefore deleting old activities and
-        creating new one if necessary. """
-        self.activity_unlink(['helpdesk.mail_act_helpdesk_handle'])
-        for ticket in self.filtered(lambda ticket: ticket.deadline):
-            ticket.activity_schedule(
-                'helpdesk.mail_act_helpdesk_handle',
-                ticket.deadline,
-                user_id=ticket.user_id.id or self.env.uid)
+        creating new one if necessary. Closed tickets have their activities
+        set as done. """
+        for ticket in self:
+            if ticket.stage_id.is_close:
+                ticket.activity_feedback(['helpdesk.mail_act_helpdesk_handle'])
+            else:
+                ticket.activity_unlink(['helpdesk.mail_act_helpdesk_handle'])
+                if ticket.deadline:
+                    ticket.activity_schedule(
+                        'helpdesk.mail_act_helpdesk_handle',
+                        ticket.deadline,
+                        user_id=ticket.user_id.id or self.env.uid)
 
     # ------------------------------------------------------------
     # Rating Mixin
