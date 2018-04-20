@@ -3,17 +3,17 @@
 # * account_accountant
 # 
 # Translators:
+# 敬雲 林 <chingyun@yuanchih-consult.com>, 2017
 # Martin Trigaux, 2017
 # Michael Yeung, 2017
 # Bill Hsu <hcm86@icloud.com>, 2018
-# 敬雲 林 <chingyun@yuanchih-consult.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:49+0000\n"
 "PO-Revision-Date: 2017-10-02 11:49+0000\n"
-"Last-Translator: 敬雲 林 <chingyun@yuanchih-consult.com>, 2018\n"
+"Last-Translator: Bill Hsu <hcm86@icloud.com>, 2018\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/odoo/teams/41243/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,12 +24,12 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_account_group
 msgid "Account Groups"
-msgstr ""
+msgstr "科目組"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.account_tag_menu
 msgid "Account Tags"
-msgstr ""
+msgstr "科目標籤"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -59,12 +59,12 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_uid
 msgid "Created by"
-msgstr "建立者"
+msgstr "創建人"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_date
 msgid "Created on"
-msgstr "建立於"
+msgstr "創建時間"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_display_name
@@ -89,17 +89,17 @@ msgstr "會計年度"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_day
 msgid "Fiscalyear Last Day"
-msgstr ""
+msgstr "會計年度最後一天"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid "Fiscalyear Last Month"
-msgstr ""
+msgstr "會計年度最後一月"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_id
 msgid "ID"
-msgstr "編號"
+msgstr "ID"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -111,7 +111,7 @@ msgstr ""
 msgid ""
 "Intermediary account used when moving money from a liquidity account to "
 "another"
-msgstr "將資金從流動性帳戶轉入另一帳戶時使用的暫時性賬戶"
+msgstr "中間科目，用於將錢從一個流動性科目到另外一個"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -121,17 +121,17 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date___last_update
 msgid "Last Modified on"
-msgstr "最後修改:"
+msgstr "最後修改時間"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_write_uid
 msgid "Last Updated by"
-msgstr "最後更新："
+msgstr "最後更新者"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_write_date
 msgid "Last Updated on"
-msgstr "最後更新於"
+msgstr "最後更新時間"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -185,7 +185,7 @@ msgstr ""
 msgid ""
 "No users, including Advisers, can edit accounts prior to and inclusive of "
 "this date. Use it for fiscal year locking for example."
-msgstr "沒有使用者，包含主辦會計在內，能夠在此日期之前（包括此日期）修改帳戶。實務上將使用它作為會計年度鎖定。"
+msgstr "沒有使用者，包含主辦會計，可以編輯之前到今天的帳戶。例如用它來做會計年度的鎖定。"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_period_lock_date
@@ -193,7 +193,7 @@ msgid ""
 "Only users with the 'Adviser' role can edit accounts prior to and inclusive "
 "of this date. Use it for period locking inside an open fiscal year, for "
 "example."
-msgstr "只有具有「主辦會計」角色的使用者才能在此日期之前（包括此日期）修改帳戶。實務上使用它作為在開放會計年度內的期間鎖定。"
+msgstr "只有帶有「主辦會計」角色的使用者可以編輯此日期前以及包括此日期的帳戶。例如：用它來對開啟狀態的會計年度進行期間鎖定。"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_period_lock_date
@@ -232,7 +232,7 @@ msgstr "保存"
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid ""
 "The last day of the month will be taken if the chosen day doesn't exist."
-msgstr ""
+msgstr "如果選擇的日期不存在，將使用該月的最後一天。"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_transfer_account_id

@@ -74,18 +74,20 @@ msgid ""
 "Create Invoices/Credit Notes when encoding invoices/credit notes made to "
 "this company"
 msgstr ""
+"Şirkete yapılan Fatura/İade-Fiyat Farkı'nı kodlarken, Fatura/İade-Fiyat "
+"Farkı notları oluştur."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_po_from_so
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_po_from_so
 msgid "Create Purchase Orders when selling to this company"
-msgstr ""
+msgstr "Şirkete yapılan alımlar için Satın Alma Talebi oluştur."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_so_from_po
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_so_from_po
 msgid "Create Sales Orders when buying to this company"
-msgstr ""
+msgstr "Şirketten yapılan satışlar için Satış Siparişi oluştur."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_warehouse_id
@@ -93,6 +95,8 @@ msgid ""
 "Default value to set on Purchase Orders that will be created based on Sales "
 "Orders made to this company."
 msgstr ""
+"Şirket için yapılan Satış Siparişi baz alınarak yapılacak Satın Alma Talebi "
+"için varsayılan değer."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_warehouse_id
@@ -100,6 +104,8 @@ msgid ""
 "Default value to set on Purchase(Sales) Orders that will be created based on"
 " Sale(Purchase) Orders made to this company"
 msgstr ""
+"Şirket için yapılan Satış Siparişi baz alınarak yapılacak Satın Alma Talebi "
+"için varsayılan değer."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_generate_invoices
@@ -107,6 +113,8 @@ msgid ""
 "Generate Customer/Vendor Bills (and credit notes) when encoding invoices (or credit notes) made to this company.\n"
 " e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
 msgstr ""
+"Bu şirkete yapılan faturaları (veya kredi notlarını) kodlarken Müşteri / Tedarikçi Faturası (ve kredi notları) oluşturun.\n"
+"örnek: Tedarikçi olarak bu şirket ile bir Tedarikçi Faturası oluşturulduğunda bir Müşteri Faturası oluşturun."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_po_from_so
@@ -114,6 +122,8 @@ msgid ""
 "Generate a Purchase Order when a Sale Order with this company as customer is"
 " created."
 msgstr ""
+"Bu şirket ile bir Satış Siparişi, müşteri olarak oluşturulduğunda  Satın "
+"Alma Talebi oluşturun."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_po_from_so
@@ -130,6 +140,8 @@ msgid ""
 "Generate a Sale Order when a Purchase Order with this company as vendor is "
 "created."
 msgstr ""
+"Bu şirket ile bir Satın Alma Talebi , tedarikçi olarak oluşturulduğunda "
+"Satış Siparişi oluşturun"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_so_from_po
@@ -203,12 +215,12 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_rule_type
 msgid "Rule Type"
-msgstr ""
+msgstr "Kural Türü"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_auto_validation
 msgid "Sale/Purchase Orders Auto Validation"
-msgstr ""
+msgstr "Satış/Satın Alma Talepleri Oto Onayı"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_rules_company_id
@@ -218,7 +230,7 @@ msgstr "Şirket Seç"
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rules_company_id
 msgid "Select company to setup Inter company rules."
-msgstr ""
+msgstr "Grup şirket kurallarına göre ayarlamak için şirket seçin."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rule_type
@@ -235,17 +247,17 @@ msgstr "Faturaları Gönder"
 #. module: inter_company_rules
 #: selection:res.config.settings,rule_type:0
 msgid "Send Sales & Purchase Orders"
-msgstr ""
+msgstr "Satış/Satın Alma Talebi gönder."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_invoice_id
 msgid "Source Invoice"
-msgstr ""
+msgstr "Kaynak Faturası"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_purchase_order_id
 msgid "Source Purchase Order"
-msgstr ""
+msgstr "Kaynak Satın Alma Talebi"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_sale_order_id
@@ -268,6 +280,9 @@ msgid ""
 "When a Sale Order or a Purchase Order is created by a multi\n"
 "            company rule for this company, it will automatically validate it."
 msgstr ""
+"Bu şirket için birden çok şirket kuralı tarafından oluşturulduğunda bir "
+"Satış Siparişi ya da bir Satın Alma Talebi, bu otomatik olarak "
+"doğrulanacaktır."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_validation
@@ -275,6 +290,9 @@ msgid ""
 "When a Sales Order or a Purchase Order is created by a multi company rule "
 "for this company, it will automatically validate it"
 msgstr ""
+"Bu şirket için birden çok şirket kuralı tarafından oluşturulduğunda bir "
+"Satış Siparişi ya da bir Satın Alma Talebi, bu otomatik olarak "
+"doğrulanacaktır."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -292,6 +310,9 @@ msgid ""
 "                    simultaneously with another option ('Create Sales Orders when buying to this\n"
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
+"başka seçenekle birlikte rastgele başka bir faturayı baz alarak fatura "
+"oluşturmayı seçemezsiniz ( Bu şirketten bir şey alıyorsanız 'Satış Siparişi "
+"Oluştur' ya da şirkete bir şey satıyorsanız 'Satın Alma Talebi Oluştur')!"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
