@@ -255,6 +255,17 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 values.relational_model = selectedField.model;
             } else if (selectedField.type === 'selection') {
                 values.selection = selectedField.selection;
+            } else if (selectedField.type === 'monetary') {
+                // find the associated currency field on the related model in
+                // case there is no currency field on the current model
+                var currencyField = _.find(_.last(this.fieldSelector.pages), function (el) {
+                    return el.name === 'currency_id' || el.name === 'x_currency_id';
+                });
+                if (currencyField) {
+                    var chain = this.fieldSelector.chain.slice();
+                    chain.splice(chain.length - 1, 1, currencyField.name);
+                    values._currency = chain.join('.');
+                }
             }
         }
         this.trigger('field_default_values_saved', values);

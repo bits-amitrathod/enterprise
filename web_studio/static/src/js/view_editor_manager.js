@@ -628,6 +628,31 @@ var ViewEditorManager = Widget.extend({
     _addField: function (type, field_description, node, xpath_info, position, new_attrs, data) {
         var self = this;
         var def_field_values;
+        var dialog;
+
+        var openCurrencyCreationDialog = function (relatedCurrency) {
+            var msg = _t("In order to use a monetary field, you need a currency field on the model. " +
+                "Do you want to create a currency field first? You can make this field invisible afterwards.");
+            return Dialog.confirm(this, msg, {
+                confirm_callback: function () {
+                    new_attrs = {};
+                    // modifies the current operation in place to create a
+                    // currency field instead
+                    field_description = {
+                        default_value: session.company_currency_id,
+                        field_description: 'Currency',
+                        model_name: modelName,
+                        name: 'x_currency_id',
+                        relation: 'res.currency',
+                        type: 'many2one',
+                    };
+                    if (relatedCurrency) {
+                        field_description.related = relatedCurrency;
+                    }
+                    def_field_values.resolve();
+                },
+            });
+        };
 
         // The field doesn't exist: field_description is the definition of the new field.
         // No need to have field_description of an existing field
@@ -651,16 +676,24 @@ var ViewEditorManager = Widget.extend({
             } else if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.type)) {
                 // open dialog to precise the required fields for this field
                 def_field_values = $.Deferred();
-                var dialog = new NewFieldDialog(this, modelName, field_description, this.fields).open();
+                dialog = new NewFieldDialog(this, modelName, field_description, this.fields).open();
                 dialog.on('field_default_values_saved', this, function (values) {
                     if (values.related && values.type === 'monetary') {
                         if (this._hasCurrencyField()) {
                             def_field_values.resolve(values);
+                            dialog.close();
+                        } else {
+                            var relatedCurrency = values._currency;
+                            delete values._currency;
+                            var currencyDialog = openCurrencyCreationDialog(relatedCurrency);
+                            currencyDialog.on('closed', this, function () {
+                                dialog.close();
+                            });
                         }
                     } else {
                         def_field_values.resolve(values);
+                        dialog.close();
                     }
-                    dialog.close();
                 });
                 dialog.on('closed', this, function () {
                     def_field_values.reject();
@@ -670,7 +703,10 @@ var ViewEditorManager = Widget.extend({
                 if (this._hasCurrencyField()) {
                     def_field_values.resolve();
                 } else {
-                    def_field_values.reject();
+                    dialog = openCurrencyCreationDialog();
+                    dialog.on('closed', this, function () {
+                        def_field_values.reject();
+                    });
                 }
             }
         }
@@ -813,9 +849,6 @@ var ViewEditorManager = Widget.extend({
             return field.type === 'many2one' && field.relation === 'res.currency' &&
                 (field.name === 'currency_id' || field.name === 'x_currency_id');
         });
-        if (!currencyField) {
-            Dialog.alert(this, _t('This field type cannot be dropped on this model.'));
-        }
         return !!currencyField;
     },
     /**

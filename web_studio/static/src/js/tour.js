@@ -195,6 +195,26 @@ tour.register('web_studio_tests_tour', {
     trigger: 'input[data-type="field_name"][value="coucou_1"]',
     run: 'text coucou_2',
 }, {
+    trigger: '.o_web_studio_sidebar .o_web_studio_new',
+}, {
+    // add a monetary field --> create a currency field
+    trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_monetary',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+}, {
+    trigger: '.modal-footer .btn.btn-primary',
+}, {
+    // click on the currency field to verify that it is in the view
+    trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("Currency")',
+}, {
+    trigger: '.o_web_studio_sidebar .o_web_studio_new',
+}, {
+    // add a monetary field
+    trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_monetary',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+}, {
+    // click on the monetary field to verify that it is in the view
+    trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("New Monetary")',
+}, {
     // add a statusbar
     trigger: '.o_web_studio_statusbar_hook',
 }, {

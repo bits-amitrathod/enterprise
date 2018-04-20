@@ -1338,36 +1338,47 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a monetary field without currency_id', function(assert) {
-        assert.expect(7);
+        assert.expect(4);
 
         this.data.product.fields.monetary_field = {
             string: 'Monetary',
             type: 'monetary',
             searchable: true,
         };
+        var arch = "<tree><field name='display_name'/></tree>";
         var vem = createViewEditorManager({
             data: this.data,
             model: 'coucou',
-            arch: "<tree><field name='display_name'/></tree>",
-            mockRPC: function (route) {
+            arch: arch,
+            mockRPC: function (route, args) {
                 if (route === '/web_studio/edit_view') {
-                    assert.ok(false, "should not edit the view");
+                    assert.deepEqual(args.operations[0].node.field_description, {
+                        field_description: 'Currency',
+                        model_name: 'coucou',
+                        name: 'x_currency_id',
+                        relation: 'res.currency',
+                        type: 'many2one',
+                    });
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
                 }
                 return this._super.apply(this, arguments);
             },
         });
-
-        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
-            "there should be one node");
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+        var currencyCreationText = "In order to use a monetary field, you need a currency field on the model. " +
+            "Do you want to create a currency field first? You can make this field invisible afterwards.";
 
         // add a monetary field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), vem.$('th.o_web_studio_hook').first());
-        assert.strictEqual($('.modal-body').text(), "This field type cannot be dropped on this model.",
-            "this should trigger an alert");
-        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
-            "there should still be one node");
-        $('.modal-footer .btn-primary:first').click(); // confirm
-        assert.strictEqual($('.modal').length, 0, "there should be no modal anymore");
+        assert.strictEqual($('.modal-body').text(), currencyCreationText, "this should trigger an alert");
+        $('.modal-footer .btn:contains(Cancel)').click(); // cancel
 
         // add a related monetary field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), vem.$('th.o_web_studio_hook').first());
@@ -1377,10 +1388,8 @@ QUnit.module('ViewEditorManager', {
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=monetary_field]').click();
         $('.modal-footer .btn-primary:first').click(); // confirm
-        assert.strictEqual($('.modal-body').text(), "This field type cannot be dropped on this model.",
-            "this should trigger an alert");
-        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
-            "there should still be one node");
+        assert.strictEqual($('.modal-body:eq(1)').text(), currencyCreationText, "this should trigger an alert");
+        $('.modal-footer:eq(1) .btn:contains(Ok)').click(); // confirm
 
         vem.destroy();
     });
