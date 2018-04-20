@@ -73,6 +73,9 @@ class TestViewNormalization(TransactionCase):
                             <field name="lang"/>
                             <field name="category_id" widget="many2many_tags" placeholder="Tags..."/>
                         </group>
+                        <group>
+                            <field name="display_name"/>
+                        </group>
                     </group>
 
                     <notebook colspan="4">
@@ -632,9 +635,8 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='mobile']" position="replace"/>
               <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="after">
-                <field name="mobile" widget="phone"/>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='mobile']" position="move"/>
               </xpath>
             </data>
         """)
@@ -653,9 +655,11 @@ class TestViewNormalization(TransactionCase):
         """, """
             <data>
               <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="replace">
-                <field name="phone"/>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="move"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="replace"/>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="attributes">
+                <attribute name="widget"></attribute>
+              </xpath>
             </data>
         """)
 
@@ -672,9 +676,12 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="replace"/>
               <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="replace">
-                <field name="email"/>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="move"/>
+              </xpath>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="attributes">
+                <attribute name="attrs"></attribute>
+                <attribute name="widget"></attribute>
               </xpath>
             </data>
         """)
@@ -775,8 +782,7 @@ class TestViewNormalization(TransactionCase):
                 <attribute name="date_stop">date</attribute>
               </xpath>
             </data>
-            """, 'gantt'
-        )
+            """, 'gantt')
 
     # test that unnamed groups/pages are given a pseudo-random name attribute
     def test_view_normalization_24(self):
@@ -916,6 +922,140 @@ class TestViewNormalization(TransactionCase):
                   </div>
                   <field name="write_uid"/>
                 </div>
+              </xpath>
+            </data>
+        """)
+
+    # Move an existing element (after its position)
+    def test_view_normalization_29_1(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='email']" position="after">
+                <field name="function" position="move"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              </xpath>
+            </data>
+        """)
+
+    # Move an existing element (before its position)
+    def test_view_normalization_29_2(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='website']" position="after">
+                <field name="function" position="move"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='website']" position="after">
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              </xpath>
+            </data>
+        """)
+
+    # Move two existing elements (after its position)
+    def test_view_normalization_30_1(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='email']" position="after">
+                <field name="function" position="move"/>
+              </xpath>
+              <xpath expr="//field[@name='email']" position="after">
+                <field name="lang" position="move"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
+                <xpath expr="//field[@name='lang']" position="move"/>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              </xpath>
+            </data>
+        """)
+
+    # Move two existing elements (before its position)
+    def test_view_normalization_30_2(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='website']" position="after">
+                <field name="function" position="move"/>
+              </xpath>
+              <xpath expr="//field[@name='website']" position="after">
+                <field name="lang" position="move"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='website']" position="after">
+                <xpath expr="//field[@name='lang']" position="move"/>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              </xpath>
+            </data>
+        """)
+
+    # xpath based on a moved element
+    def test_view_normalization_31(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='email']" position="after">
+                <field name="function" position="move"/>
+              </xpath>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="credit_limit"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+                <field name="credit_limit"/>
+              </xpath>
+            </data>
+        """)
+
+    # Move an existing element and its attributes
+    def test_view_normalization_32(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='email']" position="after">
+                <field name="function" position="move"/>
+              </xpath>
+              <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="placeholder">Kikou</attribute>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              </xpath>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="attributes">
+                <attribute name="placeholder">Kikou</attribute>
+              </xpath>
+            </data>
+        """)
+
+    # Move fields and one of them needs to generate an absolute xpath
+    def test_view_normalization_33(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='display_name']" position="before">
+                <field name="title" position="move"/>
+                <field name="lang" position="move"/>
+                <field name="category_id" position="move"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//field[@name='display_name']" position="before">
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='title']" position="move"/>
+                <xpath expr="//field[@name='lang']" position="move"/>
+                <xpath expr="//field[@name='category_id']" position="move"/>
               </xpath>
             </data>
         """)

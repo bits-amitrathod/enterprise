@@ -166,6 +166,10 @@ class View(models.Model):
             else:
                 arch.append(xpath)
 
+        def is_moved(node):
+            """ Helper method that determines if a node is a moved field."""
+            return node.tag == 'field' and node.get('name') in moved_fields
+
         # Fetch the root view
         root_view = self
         while root_view.mode != 'primary':
@@ -184,10 +188,8 @@ class View(models.Model):
         new_view_tree.append(etree.parse(io.StringIO(new_view), parser).getroot())
         old_view_tree = etree.Element('data')
         old_view_tree.append(etree.parse(io.StringIO(old_view), parser).getroot())
-
         new_view_arch_string = self._stringify_view(new_view_tree)
         old_view_arch_string = self._stringify_view(old_view_tree)
-
         diff = difflib.ndiff(old_view_arch_string.split('\n'), new_view_arch_string.split('\n'))
 
         # Format of difflib.ndiff output is:
@@ -198,24 +200,129 @@ class View(models.Model):
         # <empty line after details>
         #   unchanged
 
-        arch = etree.Element('data')
-        xpath = etree.Element('xpath')
-        old_view_iterator = old_view_tree.getiterator()
-        new_view_iterator = new_view_tree.getiterator()
+        old_view_iterator = old_view_tree.iter()
+        new_view_iterator = new_view_tree.iter()
 
-        # keep track of nameless elements with more than 1 occurrence
+        # Determine which fields have moved. This information will be used to
+        # compute the second diff because the moved nodes must appear in the
+        # diff (see @stringify_node).
+        removed_fields = {}
+        added_fields = {}
+        moved_fields = {}
+        changes = {
+            '-': [],
+            '+': []
+        }
+        moving_boundary = None
+        node = None
+
+        def store_field(operation):
+            if operation == '-':
+                node = next(old_view_iterator)
+                if node.tag == 'field':
+                    removed_fields[node.get('name')] = node
+            elif operation == '+':
+                node = next(new_view_iterator)
+                if node.tag == 'field':
+                    added_fields[node.get('name')] = node
+
+        for line in diff:
+            if line.strip() and not line.startswith('?'):
+                if line.startswith('-') or line.startswith('+'):
+                    operation, line = line.split(' ', 1)
+                    nodes = changes[operation]
+
+                    if line.endswith('[@closed]') and nodes and nodes[-1] + '[@closed]' == line:
+                        # This is the closing of a node we were operating on.
+                        # It is not a candidate for moving boundary.
+                        nodes.pop()
+
+                    elif moving_boundary and moving_boundary != operation:
+                        # We are already in a moving boundary mode.
+                        # Look into the corresponding nodes for a match.
+                        nodes = changes.get(moving_boundary)
+
+                        if nodes and line == nodes[0]:
+                            # The node matches the current moving boundary.
+                            # We can stop watching this node.
+                            nodes.pop(0)
+
+                            if not nodes:
+                                # The moving boundary is over as we found
+                                # all its nodes twice.
+                                moving_boundary = None
+
+                        if not line.endswith('[@closed]'):
+                            # If we are operating on a field, let's store it.
+                            store_field(operation)
+
+                    elif line.endswith('[@closed]'):
+                        # We are operating on the closing of a node that
+                        # we are not not operating on ! Moving boundary !
+                        nodes.append(line)
+                        moving_boundary = operation
+
+                    else:
+                        # Store this node to match when we close it.
+                        nodes.append(line)
+
+                        # If we are operating on a field, let's store it.
+                        store_field(operation)
+
+                else:
+                    # This node seemingly has not moved.
+                    if not line.endswith('[@closed]'):
+                        # Only the nodes can be moved, we ignore the closings
+                        old_node = next(old_view_iterator)
+                        node = next(new_view_iterator)
+                        # If we are in moving boundary mode, then this node
+                        # definitely moved, since the boundary moved around it !
+                        if moving_boundary and node.tag == 'field':
+                            # Only fields are currently supported.
+                            removed_fields[node.get('name')] = old_node
+                            added_fields[node.get('name')] = node
+
+        # Look at the fields we decided to watch. If they were both
+        # removed and added, it means they have been moved.
+        for name in removed_fields:
+            if name in added_fields:
+                moved_fields[name] = {
+                    'old': removed_fields[name],
+                    'new': added_fields[name],
+                }
+
+        # Recreate the trees as they have been modified during the first processing
+        new_view_tree = etree.Element('data')
+        new_view_tree.append(etree.parse(io.StringIO(new_view), parser).getroot())
+        old_view_tree = etree.Element('data')
+        old_view_tree.append(etree.parse(io.StringIO(old_view), parser).getroot())
+        old_view_iterator = old_view_tree.iter()
+        new_view_iterator = new_view_tree.iter()
+        new_view_arch_string = self._stringify_view(new_view_tree, moved_fields)
+        old_view_arch_string = self._stringify_view(old_view_tree)
+        diff = difflib.ndiff(old_view_arch_string.split('\n'), new_view_arch_string.split('\n'))
+
+        # Keep track of nameless elements with more than 1 occurrence
         nameless_count = defaultdict(int)
-        for node in new_view_tree.getiterator():
+        for node in new_view_tree.iter():
             if not node.get('name'):
                 nameless_count[node.tag] += 1
 
+        arch = etree.Element('data')
+        xpath = etree.Element('xpath')
         for line in diff:
             # Ignore details lines and [@closed] that are used so diff has correct order
             if line.strip() and not line.startswith('?') and not line.endswith('[@closed]'):
+                line = line.replace('[@moved]', '')
                 if line.startswith('-'):
                     node = next(old_view_iterator)
 
                     if node.tag == 'attribute':
+                        continue
+
+                    if is_moved(node) or \
+                            any([is_moved(x) for x in node.iterancestors()]):
+                        # nothing to do here, the node will be moved in the '+'
                         continue
 
                     # If we are already writing an xpath, we need to either
@@ -259,27 +366,40 @@ class View(models.Model):
                     if node.tag == 'attributes':
                         continue
 
+                    if any([is_moved(x) for x in node.iterancestors()]):
+                        # moved attributes will be computed afterwards because
+                        # the move xpaths don't support children
+                        # (see @get_node_attributes_diff)
+                        continue
+
                     # The node for which this is the attribute may have been
                     # added by studio, in which case we don't need a new
                     # xpath to handle it properly
-                    if node.tag == 'attribute' and self._get_node_from_xpath(xpath, node.getparent().getparent()) is not None:
+                    if node.tag == 'attribute' and self._get_node_from_xpath(xpath, node.getparent().getparent(), moved_fields) is not None:
                         continue
 
                     # If the current xpath is not compatible with what we want
                     # to add, we need to close it.
-                    if xpath.get('expr') and not self._is_compatible(xpath, node):
+                    if xpath.get('expr') and not self._is_compatible(xpath, node, moved_fields):
                             add_xpath_to_arch(arch, xpath)
                             xpath = etree.Element('xpath')
 
                     # At this point, we either have no current xpath, or the one
                     # that exists is compatible with what we want to add
                     if not xpath.get('expr'):
-                        xpath.attrib['expr'], xpath.attrib['position'] = self._closest_node_to_xpath(node, old_view_tree)
+                        xpath.attrib['expr'], xpath.attrib['position'] = self._closest_node_to_xpath(node, old_view_tree, moved_fields)
+
+                    if node.tag == 'field' and node.get('name') in moved_fields:
+                        # manually replace the node by the `move` xpath
+                        node = etree.Element('xpath', {
+                            'expr': self._node_to_xpath(moved_fields[node.get('name')]['old']),
+                            'position': 'move',
+                        })
 
                     # Is your parent a studio node ? If yes, append inside of it
                     parent_node = node.getparent()
                     if parent_node is not None:
-                        studio_parent_node = self._get_node_from_xpath(xpath, parent_node)
+                        studio_parent_node = self._get_node_from_xpath(xpath, parent_node, moved_fields)
                     if parent_node is not None and studio_parent_node is not None:
                         self._clone_and_append_to(node, studio_parent_node)
                     else:
@@ -298,10 +418,39 @@ class View(models.Model):
         if xpath.get('expr') is not None:
             add_xpath_to_arch(arch, xpath)
 
+        def get_node_attributes_diff(node1, node2):
+            """ Computes the differences of attributes between two nodes."""
+            diff = {}
+            for attr in node1.attrib:
+                if attr not in node2.attrib:
+                    diff[attr] = ''
+                elif node1.attrib[attr] != node2.attrib[attr]:
+                    diff[attr] = node2.attrib[attr]
+            for attr in dict(node2.attrib).keys() - dict(node1.attrib).keys():
+                diff[attr] = node2.attrib[attr]
+            return diff
+
+        # Add xpath attributes for moved fields
+        for f in moved_fields:
+            old_node = moved_fields[f]['old']
+            new_node = moved_fields[f]['new']
+            attrs_diff = get_node_attributes_diff(old_node, new_node)
+            if len(attrs_diff):
+                xpath = etree.Element('xpath')
+                xpath.attrib['expr'] = self._node_to_xpath(new_node)
+                xpath.attrib['position'] = 'attributes'
+                # alphabetically sort attributes by name
+                node_attributes = sorted(attrs_diff.keys())
+                for attr in node_attributes:
+                    etree.SubElement(xpath, 'attribute', {
+                        'name': attr,
+                    }).text = attrs_diff[attr]
+                add_xpath_to_arch(arch, xpath)
+
         normalized_arch = etree.tostring(self._indent_tree(arch), encoding='unicode') if len(arch) else u''
         return normalized_arch
 
-    def _is_compatible(self, xpath, node):
+    def _is_compatible(self, xpath, node, moved_fields):
         """
         Check if a node can be merged inside an existing xpath
 
@@ -327,17 +476,26 @@ class View(models.Model):
             if previous_node.tag == 'attributes':
                 previous_node = previous_node.getparent()
 
-        return self._get_node_from_xpath(xpath, previous_node) is not None
+        return self._get_node_from_xpath(xpath, previous_node, moved_fields) is not None
 
-    def _get_node_from_xpath(self, xpath, node):
+    def _get_node_from_xpath(self, xpath, node, moved_fields):
         """
         Get a node from within an xpath if it exists
 
         Returns a node if it exists within the given xpath, None otherwise
         """
-        for n in xpath.getiterator():
+        for n in xpath.iter():
             if n.tag == node.tag and n.attrib == node.attrib and n.text == node.text:
                 return n
+            # Find the node if it had been moved (only fields can be moved)
+            if node.tag == 'field':  # Only fields are currently supported
+                name = node.get('name')
+                if n.get('position') == 'move' and name in moved_fields:
+                    # the moved nodes are set as xpath so in order to match the
+                    # nodes we need to compare both xpath
+                    old_node = moved_fields.get(name)['old']
+                    if n.get('expr') == self._node_to_xpath(old_node):
+                        return n
         return None
 
     def _clone_and_append_to(self, node, parent_node):
@@ -408,7 +566,7 @@ class View(models.Model):
 
         return node_str
 
-    def _closest_node_to_xpath(self, node, old_view):
+    def _closest_node_to_xpath(self, node, old_view, moved_fields):
         """
         Returns an expr and position for the node closest to the passed-in node so
         that it may be used as a target.
@@ -421,6 +579,9 @@ class View(models.Model):
         """
         def _is_valid_anchor(target_node):
             if (target_node is None) or (target_node.tag in ['attribute', 'attributes']):
+                return None
+            if target_node.tag == 'field' and target_node.get('name') in moved_fields:
+                # a moved field cannot be used as anchor
                 return None
             target_node_expr = '.' + self._node_to_xpath(target_node)
             return old_view.find(target_node_expr) is not None
@@ -461,10 +622,10 @@ class View(models.Model):
         reanchor_expr = self._node_to_xpath(target_node)
         return reanchor_expr, reanchor_position
 
-    def _stringify_view(self, arch):
-        return self._stringify_node('', arch)
+    def _stringify_view(self, arch, moved_fields=None):
+        return self._stringify_node('', arch, moved_fields)
 
-    def _stringify_node(self, ancestor, node):
+    def _stringify_node(self, ancestor, node, moved_fields=None):
         """
         Converts a node into its string representation
 
@@ -487,11 +648,18 @@ class View(models.Model):
             node_string += '[@text=%s]' % node.text.strip().replace('\n', ' ')
         if node.tail and node.tail.strip():
             node_string += '[@tail=%s]' % node.tail.strip().replace('\n', ' ')
+        if node.tag == 'field' and moved_fields and node.get('name') in moved_fields:
+            # make sure we don't tagged fields which are not really moved
+            # (i.e. if the field appears more than once in the view)
+            if self._node_to_xpath(node) == self._node_to_xpath(moved_fields[node.get('name')]['new']):
+                # ensure that moved fields do appear in the final diff
+                # (if they don't, it's not possible to reconstruct `move` xpaths)
+                node_string += '[@moved]'
         result += node_string + '\n'
 
         self._generate_node_attributes(node)
         for child in node.iterchildren():
-            result += self._stringify_node(node_string, child)
+            result += self._stringify_node(node_string, child, moved_fields)
 
         # have a end marker so same location changes are not mixed
         result += node_string + '[@closed]' + '\n'
