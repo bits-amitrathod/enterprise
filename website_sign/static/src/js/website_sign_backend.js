@@ -983,12 +983,12 @@ odoo.define('website_sign.DocumentBackend', function (require) {
     var ControlPanelMixin = require('web.ControlPanelMixin');
     var core = require('web.core');
     var framework = require('web.framework');
-    var Widget = require('web.Widget');
+    var AbstractAction = require('web.AbstractAction');
     var Document = require('website_sign.Document');
 
     var _t = core._t;
 
-    var DocumentBackend = Widget.extend(ControlPanelMixin, {
+    var DocumentBackend = AbstractAction.extend(ControlPanelMixin, {
         className: 'o_sign_document',
 
         go_back_to_kanban: function () {
@@ -999,7 +999,6 @@ odoo.define('website_sign.DocumentBackend', function (require) {
 
         init: function (parent, options) {
             this._super.apply(this, arguments);
-
             if(options.context.id === undefined) {
                 return;
             }
@@ -1023,12 +1022,13 @@ odoo.define('website_sign.DocumentBackend', function (require) {
 
         start: function () {
             var self = this;
-
             if(this.documentID === undefined) {
                 return this.go_back_to_kanban();
             }
-
-            return $.when(this._super(), ajax.jsonRpc('/sign/get_document/' + this.documentID + '/' + this.token, 'call', {'message': this.message}).then(function(html) {
+            var def = this._rpc({
+                route: '/sign/get_document/' + this.documentID + '/' + this.token,
+                params: {message: this.message}
+            }).then(function(html) {
                 self.$el.append($(html.trim()));
 
                 var $cols = self.$('.col-md-4').toggleClass('col-md-6 col-md-4');
@@ -1054,7 +1054,8 @@ odoo.define('website_sign.DocumentBackend', function (require) {
                     }
                 };
                 core.bus.on('DOM_updated', null, init_page);
-            }));
+            });
+            return $.when(this._super(), def);
         },
 
         get_document_class: function () {
