@@ -198,9 +198,9 @@ class AccountInvoice(models.Model):
         '''
         #TODO helper which is not of too much help and should be removed
         self.ensure_one()
-        if cfdi is None:
+        if cfdi is None and self.l10n_mx_edi_cfdi:
             cfdi = base64.decodestring(self.l10n_mx_edi_cfdi)
-        return fromstring(cfdi)
+        return fromstring(cfdi) if cfdi else None
 
     @api.model
     def l10n_mx_edi_get_tfd_etree(self, cfdi):

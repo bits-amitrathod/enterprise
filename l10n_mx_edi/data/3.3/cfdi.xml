@@ -68,7 +68,7 @@
                                                     t-att-Impuesto="tax_name(tax.tag_ids[0].name if tax.tag_ids else '')"
                                                     t-att-TipoFactor="tax.l10n_mx_cfdi_tax_type"
                                                     t-att-TasaOCuota="'%.6f' % abs(tax.amount / 100.0) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"
-                                                    t-att-Importe="'%.2f' % abs(tax.amount / 100.0 * line.price_subtotal) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"/>
+                                                    t-att-Importe="'%.2f' % round(abs(tax.amount / 100.0 * round(line.price_subtotal, 2)), 2) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"/>
                                             </t>
                                         </cfdi:Traslados>
                                     </t>
@@ -81,7 +81,7 @@
                                                     t-att-Impuesto="tax_name(tag_name[0].name if tag_name else '')"
                                                     t-att-TipoFactor="tax.l10n_mx_cfdi_tax_type"
                                                     t-att-TasaOCuota="'%.6f' % abs(tax.amount / 100.0)"
-                                                    t-att-Importe="'%.2f' % abs(tax.amount / 100.0 * line.price_subtotal)"/>
+                                                    t-att-Importe="'%.2f' % round(abs(tax.amount / 100.0 * round(line.price_subtotal, 2)), 2)"/>
                                             </t>
                                         </cfdi:Retenciones>
                                     </t>
