@@ -294,9 +294,10 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                 self.$el.find('.o_account_reports_summary_edit').hide();
                 self.$el.find('.o_account_reports_summary').show();
                 if (!text) {
-                    text = "<input type='text' class='o_input o_field_widget' name='summary' placeholder='Click to add an introductory explanation' />";
-                }
-                return $(e.target).parent().siblings('.o_account_reports_summary').find('> .o_account_report_summary').html('<span>'+text+'</span');
+                    text = "<input type='text' class='o_input' name='summary' placeholder='Click to add an introductory explanation' />";
+                } else
+                    text = '<span style="white-space: pre-wrap;">' + text + '</span>'
+                return $(e.target).parent().siblings('.o_account_reports_summary').find('> .o_account_report_summary').html(text);
             });
     },
     render_footnotes: function() {

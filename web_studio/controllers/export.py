@@ -178,7 +178,7 @@ def generate_module(module, data):
     manifest = """# -*- coding: utf-8 -*-
 {
     'name': %r,
-    'version': '1.0',
+    'version': %r,
     'category': 'Studio',
     'description': %s,
     'author': %r,
@@ -191,6 +191,7 @@ def generate_module(module, data):
 }
 """ % (
         module.display_name,
+        module.installed_version,
         'u"""\n%s\n"""' % module.description,
         module.author,
         ''.join("\n        %r," % d for d in sorted(depends)),

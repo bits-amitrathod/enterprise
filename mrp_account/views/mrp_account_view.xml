@@ -58,7 +58,7 @@
             <field name="arch" type="xml">
                 <button name="toggle_active" position="before">
                     <field name="mo_count" invisible="1"/>
-                    <button name="%(mrp_account.action_cost_struct_product_template)d" type="action"
+                    <button name="action_cost_structure" type="object"
                         class="oe_stat_button" icon="fa-dollar" string="Cost Analysis" attrs="{'invisible': [('mo_count', '=', 0)]}">
                     </button>
                 </button>

@@ -5,7 +5,7 @@ from copy import deepcopy
 from lxml import etree
 from odoo import http, models, _
 from odoo.http import content_disposition, request
-from odoo.exceptions import UserError, AccessError
+from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.addons.web_studio.controllers import export
 
 from odoo.tools import ustr
@@ -659,7 +659,7 @@ class WebStudioController(http.Controller):
         try:
             normalized_view = studio_view.normalize()
             self._set_studio_view(view, normalized_view)
-        except ValueError:  # Element '<...>' cannot be located in parent view
+        except ValidationError:  # Element '<...>' cannot be located in parent view
             # If the studio view is not applicable after normalization, let's
             # just ignore the normalization step, it's better to have a studio
             # view that is not optimized than to prevent the user from making
