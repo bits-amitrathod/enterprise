@@ -205,7 +205,9 @@ var GanttView = View.extend({
                 if (task.is_group) {
                     text = self._consolidation_children(task);
                 } else {
-                    text = task.consolidation + "<span class=\"half_opacity\"> " + self.fields[self.fields_view.arch.attrs.consolidation].string + "</span>";
+                    var consolidation = formats.format_value(
+                        task.consolidation, self.fields[self.fields_view.arch.attrs.consolidation]);
+                    text = consolidation + "<span class=\"half_opacity\"> " + self.fields[self.fields_view.arch.attrs.consolidation].string + "</span>";
                 }
             }
             return text;
@@ -1106,7 +1108,8 @@ var GanttView = View.extend({
                 var content;
                 if (self.type === 'consolidate') {
                     var label = self.fields_view.arch.attrs.string || self.fields[self.fields_view.arch.attrs.consolidation].string;
-                    content = acc + "<span class=\"half_opacity\"> " + label + "</span>";
+                    var acc_format = formats.format_value(acc, self.fields[self.fields_view.arch.attrs.consolidation])
+                    content = acc_format + "<span class=\"half_opacity\"> " + label + "</span>";
                     if (acc === 0 || width < 15 || (self.consolidation_max && acc === self.consolidation_max)) content = "";
                 } else {
                     if (exclude.length + not_exclude > 1) {
