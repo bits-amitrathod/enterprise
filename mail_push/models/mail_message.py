@@ -21,35 +21,36 @@ FCM_RETRY_ATTEMPT = 2
 _logger = logging.getLogger(__name__)
 
 
-class MailChannel(models.Model):
-    _inherit = 'mail.channel'
+class MailMessage(models.Model):
+    _inherit = 'mail.message'
 
     @api.multi
-    def _notify(self, message):
+    def _notify(self, layout=False, force_send=False, send_after_commit=True, values=None):
         """ We want to send a Cloud notification for every mentions of a partner and every direct
         message. We have to take into account the risk of duplicated notifications in case of a
         mention in a channel of `chat` type.
         """
-        super(MailChannel, self)._notify(message)
+        super(MailMessage, self)._notify(layout=layout, force_send=force_send, send_after_commit=send_after_commit, values=values)
 
-        receiver_ids = self.env['res.partner']  # Empty recordset for set operations
+        self_sudo = self.sudo()
+
         # Create Cloud messages for messages in a chat
-        if message.message_type == 'comment':
-            for channel in message.channel_ids.filtered(lambda c: c.channel_type == 'chat'):
-                receiver_ids |= channel.channel_partner_ids - message.author_id
+        if self_sudo.message_type == 'comment':
+            receiver_ids = self_sudo.needaction_partner_ids
+
+            for channel in self_sudo.channel_ids.filtered(lambda c: c.channel_type == 'chat'):
+                receiver_ids |= channel.channel_partner_ids - self_sudo.author_id
 
             # Create Cloud messages for needactions, but ignore the needaction if it is a result
             # of a mention in a chat. In this case the previously created Cloud message is enough.
-            receiver_ids |= message.partner_ids
-            receiver_ids |= message.needaction_partner_ids
             identities = receiver_ids.mapped('device_identity_ids')
             if identities:
                 for service, service_str in self.env['mail_push.device']._default_service_type():
                     method_name = "_push_notify_%s" % (service)
                     if hasattr(self, method_name):
-                        method = getattr(self, method_name)
+                        method = getattr(self_sudo, method_name)
                         service_identities = identities.filtered(lambda r: r.service_type == service)
-                        method(service_identities, message)
+                        method(service_identities)
 
     def _get_default_fcm_credentials(self):
         params = self.env['ir.config_parameter'].sudo()
@@ -60,11 +61,10 @@ class MailChannel(models.Model):
         )
 
     @api.model
-    def _push_notify_fcm(self, identities, message):
+    def _push_notify_fcm(self, identities):
         # Divided into chunks because FCM supports only 1000 users in multi-cast
-        message.ensure_one()
         identities_chunks = [identities[i:i+FCM_MESSAGES_LIMIT] for i in range(0, len(identities), FCM_MESSAGES_LIMIT)]
-        payload = self._fcm_prepare_payload(message)
+        payload = self._fcm_prepare_payload()
         for identities in identities_chunks:
             subscription_ids = identities.mapped('subscription_id')
             fcm_api_key = self._get_default_fcm_credentials()['fcm_api_key']
@@ -146,28 +146,28 @@ class MailChannel(models.Model):
         return push_uuid
 
     @api.model
-    def _fcm_prepare_payload(self, message):
+    def _fcm_prepare_payload(self):
         """Returns dictionary containing message information for mobile device. This info will be delivered
         to mobile device via Google Firebase Cloud Messaging(FCM). And it is having limit of 4000 bytes (4kb)
         """
         payload = {
-            "author_name": message.author_id.name,
-            "model": message.model,
-            "res_id": message.res_id,
+            "author_name": self.author_id.name,
+            "model": self.model,
+            "res_id": self.res_id,
             "db_id": self._get_mobile_push_uuid()
         }
-        if message.model == 'mail.channel':
-            channel = message.channel_ids.filtered(lambda r: r.id == message.res_id)
+        if self.model == 'mail.channel':
+            channel = self.channel_ids.filtered(lambda r: r.id == self.res_id)
             if channel.channel_type == 'chat':
-                payload['subject'] = message.author_id.name
+                payload['subject'] = self.author_id.name
                 payload['type'] = 'chat'
             else:
-                payload['subject'] = "#%s" % (message.record_name)
+                payload['subject'] = "#%s" % (self.record_name)
         else:
-            payload['subject'] = message.record_name or message.subject
+            payload['subject'] = self.record_name or self.subject
         payload_length = len(str(payload).encode("utf-8"))
         if payload_length < 4000:
-            body = re.sub(r'<a(.*?)>', r'<a>', message.body)  # To-Do : Replace this fix
+            body = re.sub(r'<a(.*?)>', r'<a>', self.body)  # To-Do : Replace this fix
             payload['body'] = html2text(body)[:4000-payload_length]
         return payload
 

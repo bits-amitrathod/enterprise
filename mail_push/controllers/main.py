@@ -9,4 +9,4 @@ class Main(http.Controller):
 
     @http.route("/mobile/push_uuid", auth='user', type='json')
     def mobile_push_uuid(self):
-        return request.env['mail.channel']._get_mobile_push_uuid()
+        return request.env['mail.message']._get_mobile_push_uuid()
