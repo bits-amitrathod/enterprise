@@ -192,9 +192,7 @@ tour.register('web_studio_tests_tour', {
     run: 'text COUCOU',
 }, {
     // verify that the field name has changed (post-fixed by _1)
-    trigger: 'input[data-type="field_name"][value="coucou_1"]',
-    run: 'text coucou_2',
-}, {
+    extra_trigger: 'input[data-type="field_name"][value="coucou_1"]',
     trigger: '.o_web_studio_sidebar .o_web_studio_new',
 }, {
     // add a monetary field --> create a currency field
@@ -203,18 +201,16 @@ tour.register('web_studio_tests_tour', {
 }, {
     trigger: '.modal-footer .btn.btn-primary',
 }, {
-    // click on the currency field to verify that it is in the view
-    trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("Currency")',
-}, {
+    // verify that the currency field is in the view
+    extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("Currency")',
     trigger: '.o_web_studio_sidebar .o_web_studio_new',
 }, {
     // add a monetary field
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_monetary',
     run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
 }, {
-    // click on the monetary field to verify that it is in the view
-    trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("New Monetary")',
-}, {
+    // verify that the monetary field is in the view
+    extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("New Monetary")',
     // add a statusbar
     trigger: '.o_web_studio_statusbar_hook',
 }, {
@@ -223,8 +219,7 @@ tour.register('web_studio_tests_tour', {
     trigger: '.o_statusbar_status',
 }, {
     // verify that a default value has been set for the statusbar
-    trigger: '.o_web_studio_sidebar select[name="default_value"]:contains(First Status)',
-}, {
+    extra_trigger: '.o_web_studio_sidebar select[name="default_value"]:contains(First Status)',
     // switch in list view
     trigger: '.o_web_studio_menu .o_web_studio_views_icons a[data-name="list"]',
 }, {
@@ -232,8 +227,9 @@ tour.register('web_studio_tests_tour', {
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
     run: 'drag_and_drop .o_web_studio_list_view_editor th.o_web_studio_hook:first',
 }, {
-    trigger: '.o_web_studio_list_view_editor th:contains("COUCOU")',
-}, {
+    // verify that the field is correctly named
+    extra_trigger: '.o_web_studio_list_view_editor th:contains("COUCOU")',
+    // leave Studio
     trigger: '.o_web_studio_leave',
 }, {
     // re-open studio
