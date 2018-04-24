@@ -20,7 +20,7 @@ tour.register('web_studio_home_menu_background_tour', {
     content: _t('Click here.'),
     position: 'right',
 }, {
-    trigger: '.o_web_studio_home_studio_menu ul.dropdown-menu li:eq(0)',
+    trigger: '.o_web_studio_home_studio_menu .dropdown-menu .dropdown-item:eq(0)',
     content: _t('Change the <b>background</b>, make it yours.'),
     position: 'bottom',
 }]);

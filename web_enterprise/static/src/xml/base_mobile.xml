@@ -6,7 +6,7 @@
         <div class="btn-group">
             <a role="button" class="btn btn-primary dropdown-toggle" href="#"
                 data-toggle="dropdown" aria-expanded="false">Action</a>
-            <ul class="dropdown-menu" role="menu"/>
+            <div class="dropdown-menu" role="menu"/>
         </div>
     </div>
 </t>
@@ -15,20 +15,19 @@
     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
         <t t-if="status" t-esc="status.display_name"/>
     </button>
-    <ul class="dropdown-menu o-status-more" role="menu">
-        <li t-foreach="selection" t-as="i" role="menuitem">
+    <div class="dropdown-menu o-status-more" role="menu">
+        <t t-foreach="selection" t-as="i">
             <t t-call="FieldStatus.content.button"/>
-        </li>
-    </ul>
+        </t>
+    </div>
 </t>
 
 <t t-name="BurgerMenu">
     <div class="o_burger_menu o_in_home_menu">
         <div class="o_burger_menu_topbar">
-            <span>
+            <span class="dropdown-toggle">
                 <img class="img-circle o_burger_menu_avatar" t-att-src="'/web/image?model=res.users&amp;field=image_small&amp;id=' + session.uid" alt="Menu"/>
                 <span class="o_burger_menu_username"><t t-esc="session.name"/></span>
-                <span class="o_burger_menu_caret"><span class="caret"/></span>
             </span>
             <span class="fa fa-close o_burger_menu_close pull-right" role="img" aria-label="Close menu" title="Close menu"/>
         </div>

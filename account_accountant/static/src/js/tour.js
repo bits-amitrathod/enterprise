@@ -57,7 +57,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content:      "change date filter",
-            trigger:    ".js_account_report_date_filter[data-filter='last_year'] > a",
+            trigger:    ".dropdown-item.js_account_report_date_filter[data-filter='last_year']",
             run: 'click'
         },
         {
@@ -70,7 +70,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content:      "change comparison filter",
-            trigger:    ".js_foldable_trigger[data-filter='previous_period_filter'] > a"
+            trigger:    ".dropdown-item.js_foldable_trigger[data-filter='previous_period_filter']"
         },
         {
             content:      "change comparison filter",
@@ -107,7 +107,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content:      "change cash basis filter",
-            trigger:    ".js_account_report_bool_filter[data-filter='cash_basis'] > a",
+            trigger:    ".dropdown-item.js_account_report_bool_filter[data-filter='cash_basis']",
             run: 'click'
         },
         {

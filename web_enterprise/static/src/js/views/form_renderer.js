@@ -40,7 +40,7 @@ var MobileFormRenderer = FormRenderer.extend({
             $headerButtons = $(qweb.render('StatusbarButtons'));
             var $dropdownMenu = $headerButtons.find('.dropdown-menu');
             _.each(buttons, function ($button) {
-                $dropdownMenu.append($('<li>').append($button));
+                $dropdownMenu.append($button.addClass('dropdown-item'));
             });
         }
 

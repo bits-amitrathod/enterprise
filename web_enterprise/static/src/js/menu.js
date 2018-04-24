@@ -17,7 +17,7 @@ var Menu = Widget.extend({
     menusTemplate: 'Menu.sections',
     events: {
         'click .o_menu_toggle': '_onToggleHomeMenu',
-        'mouseover .o_menu_sections > li:not(.open)': '_onMouseOverMenu',
+        'mouseover .o_menu_sections > li:not(.show)': '_onMouseOverMenu',
         'click .o_menu_brand': '_onAppNameClicked',
     },
 
@@ -197,7 +197,7 @@ var Menu = Widget.extend({
             var $extraItems = $items.slice(nbItems).detach();
             this.$extraItemsToggle = $("<li/>", {"class": "o_extra_menu_items"});
             this.$extraItemsToggle.append($("<a/>", {href: "#", "class": "dropdown-toggle fa fa-plus", "data-toggle": "dropdown"}));
-            this.$extraItemsToggle.append($("<ul/>", {"class": "dropdown-menu"}).append($extraItems));
+            this.$extraItemsToggle.append($("<div/>", {"class": "dropdown-menu"}).append($extraItems)); // FIXME
             this.$extraItemsToggle.appendTo(this.$section_placeholder);
         }
     },
@@ -234,10 +234,10 @@ var Menu = Widget.extend({
      */
     _onMouseOverMenu: function (ev) {
         if (!config.device.isMobile) {
-            var $opened = this.$('.o_menu_sections > li.open');
+            var $opened = this.$('.o_menu_sections > li.show');
             if ($opened.length) {
-                $opened.removeClass('open');
-                $(ev.currentTarget).addClass('open').find('> a').focus();
+                $opened.removeClass('show');
+                $(ev.currentTarget).addClass('show').find('> a').focus();
             }
         }
     },

@@ -6,13 +6,16 @@
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                 Measures <span class="caret" />
             </button>
-            <ul class="dropdown-menu o_cohort_measures_list">
-                <li t-foreach="measures" t-as="measure" t-att-data-field="measure">
-                    <a href="#"><t t-esc="measures[measure]" /></a>
-                </li>
-                <li class="divider"></li>
-                <li data-field="__count__"><a href="#">Count</a></li>
-            </ul>
+            <div class="dropdown-menu o_cohort_measures_list">
+                <button t-foreach="measures" t-as="measure"
+                    type="button"
+                    class="dropdown-item"
+                    t-att-data-field="measure">
+                    <t t-esc="measures[measure]"/>
+                </button>
+                <div class="dropdown-divider"/>
+                <button type="button" class="dropdown-item" data-field="__count__">Count</button>
+            </div>
         </div>
         <div class="btn-group" t-if="isMobile">
             <a class="btn btn-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">

@@ -60,14 +60,14 @@
                     ul {
                         display: none;
                     }
-                    &.open {
+                    &.show {
                         > ul {
                             display: block;
                         }
                     }
                 }
                 @for $index from 1 through 5 {
-                    > li .o_menu_entry_lvl_#{$index} {
+                    .o_menu_entry_lvl_#{$index} {
                         padding-left: ($index - 1) * 16px;
                     }
                 }
@@ -98,7 +98,7 @@
                 padding: 16px;
                 list-style: none;
                 > li {
-                    &.divider {
+                    &.divider { // FIXME ?
                         background-color: $o-main-color-muted;
                         height: 1px;
                         margin: 10px -16px;

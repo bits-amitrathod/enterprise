@@ -31,7 +31,7 @@ var FieldClearbit = FieldChar.extend({
     /**
      * @constructor
      * Prepares the basic rendering of edit mode by setting the root to be a
-     * div.dropdown.open.
+     * div.dropdown.show.
      * @see FieldChar.init
      */
     init: function () {
@@ -41,7 +41,7 @@ var FieldClearbit = FieldChar.extend({
         }
         if (this.mode === 'edit') {
             this.tagName = 'div';
-            this.className += ' dropdown open';
+            this.className += ' dropdown show';
         }
         if (this.debounceSuggestions > 0) {
             this._suggestCompanies = _.debounce(this._suggestCompanies.bind(this), this.debounceSuggestions);

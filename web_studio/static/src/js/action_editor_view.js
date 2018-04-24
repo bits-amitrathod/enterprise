@@ -6,7 +6,7 @@ var Widget = require('web.Widget');
 var ActionEditorView = Widget.extend({
     template: 'web_studio.ActionEditorView',
     events: {
-        'click .dropdown-menu > li > a': '_onMenu',
+        'click .dropdown-item': '_onMenu',
         'click .o_web_studio_thumbnail': '_onThumbnail',
     },
     /**

@@ -122,11 +122,11 @@
                                         <span t-esc="day['day'].day"/>
                                       </strong>
                                     </div>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li t-foreach="day['slots']" t-as="slot">
-                                            <a role="menuitem" t-if='slot' t-attf-href="/website/calendar/#{appointment_type.id}/info?employee_id=#{slot['employee_id']}&amp;date_time=#{slot['datetime']}" t-esc="slot['hours']"/>
-                                        </li>
-                                    </ul>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-foreach="day['slots']" t-as="slot">
+                                            <a t-if='slot' role="menuitem" class="dropdown-item" t-attf-href="/website/calendar/#{appointment_type.id}/info?employee_id=#{slot['employee_id']}&amp;date_time=#{slot['datetime']}" t-esc="slot['hours']"/>
+                                        </t>
+                                    </div>
                                 </t>
                                 <t t-if="not day['slots']">
                                     <div t-esc="day['day'].day" t-att-class="day['mute_cls']"/>

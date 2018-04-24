@@ -65,7 +65,7 @@ QUnit.module('web_enterprise', {
         form.$('.o_statusbar_buttons a').click();
         assert.strictEqual(form.$('.o_statusbar_buttons .dropdown-menu:visible').length, 1,
             "dropdown should be visible");
-        assert.strictEqual(form.$('.o_statusbar_buttons .dropdown-menu > li > button').length, 2,
+        assert.strictEqual(form.$('.o_statusbar_buttons .dropdown-menu > button').length, 2,
             "dropdown should contain 2 buttons");
 
         form.destroy();

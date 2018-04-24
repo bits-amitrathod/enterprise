@@ -46,9 +46,9 @@
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSupport" data-toggle="dropdown" aria-label="Dropdown menu" title="Dropdown menu">
                                         <i class="fa fa-cog"/>
                                     </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSupport">
-                                        <li role="helpdesk"><a role="menuitem" tabindex="-1" t-attf-href="/web#id=#{team.id}&amp;view_type=form&amp;model=helpdesk.team">Team Settings</a></li>
-                                    </ul>
+                                    <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSupport">
+                                        <a role="menuitem" tabindex="-1" class="dropdown-item" t-attf-href="/web#id=#{team.id}&amp;view_type=form&amp;model=helpdesk.team">Team Settings</a>
+                                    </div>
                                 </span>
                                 </form>
                             </li>

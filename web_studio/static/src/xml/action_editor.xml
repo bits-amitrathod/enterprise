@@ -37,17 +37,17 @@
         </div>
         <div class="o_web_studio_name"><t t-esc="widget.view_type"/></div>
         <i class="dropdown-toggle fa fa-ellipsis-v o_web_studio_more" data-toggle="dropdown" role="img" aria-label="Dropdown menu" title="Dropdown menu"/>
-        <ul class="dropdown-menu" role="menu">
-            <li t-if="widget.can_default">
-                <a role="menuitem" href="#" t-att-class="widget.default_view ? 'o_web_studio_view_type_default' : ''" data-action="set_default_view">
+        <div class="dropdown-menu" role="menu">
+            <t t-if="widget.can_default">
+                <a href="#" role="menuitem" t-attf-class="dropdown-item#{widget.default_view ? ' o_web_studio_view_type_default' : ''}" data-action="set_default_view">
                     <i t-if="widget.default_view" class="fa fa-check" role="img" aria-label="Is default view" title="Is default view"/>
                     Set as Default
                 </a>
-            </li>
-            <li t-if="widget.can_set_another"><a role="menuitem" href="#" data-action="set_another_view">Set another view</a></li>
-            <li t-if="widget.can_be_disabled" class="divider" role="separator"/>
-            <li t-if="widget.can_be_disabled"><a role="menuitem" href="#" data-action="disable_view">Disable</a></li>
-        </ul>
+            </t>
+            <a role="menuitem" href="#" data-action="set_another_view" class="dropdown-item" t-if="widget.can_set_another">Set another view</a>
+            <div t-if="widget.can_be_disabled" class="dropdown-divider" role="separator"/>
+            <a role="menuitem" href="#" data-action="disable_view" class="dropdown-item" t-if="widget.can_be_disabled">Disable</a>
+        </div>
     </div>
 </t>
 

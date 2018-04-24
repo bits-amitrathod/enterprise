@@ -1137,14 +1137,14 @@ class WebStudioController(http.Controller):
         # add the dropdown before the rest
         dropdown_node = etree.fromstring("""
             <div class="o_dropdown_kanban dropdown">
-                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" >
                     <span class="fa fa-bars fa-lg"/>
                 </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
-                    <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
-                    <li><ul class="oe_kanban_colorpicker" data-field="%(field)s"/></li>
-                </ul>
+                <div class="dropdown-menu" role="menu">
+                    <t t-if="widget.editable"><a type="edit" class="dropdown-item">Edit</a></t>
+                    <t t-if="widget.deletable"><a type="delete" class="dropdown-item">Delete</a></t>
+                    <ul class="oe_kanban_colorpicker" data-field="%(field)s"/>
+                </div>
             </div>
         """ % {'field': color_field_name})
         etree.SubElement(arch, 'xpath', {

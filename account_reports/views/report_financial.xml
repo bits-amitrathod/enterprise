@@ -166,17 +166,16 @@
                     </t>
                     <t t-if="line.get('caret_options')">
                         <div class="dropdown">
-                            <a data-toggle="dropdown" href='#'>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href='#'>
                                 <span t-att-data-id="line['id']" t-att-class="domainClass">
                                     <t t-esc="line.get('name')"/>
                                 </span>
-                                <span class="caret"></span>
                             </a>
                             <span class="js_account_report_line_footnote" t-att-data-id="line['id']"><sup t-if="line.get('footnote')"><b class="o_account_reports_footnote_sup"><a t-att-href="'#footnote'+line['footnote']"></a><t t-esc="line['footnote']"/></b></sup></span>
-                            <ul class="dropdown-menu o_account_reports_domain_dropdown" role="menu">
+                            <div class="dropdown-menu o_account_reports_domain_dropdown" role="menu">
                                 <t t-call="account_reports.line_caret_options"/>
-                                <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="js_account_reports_add_footnote">Annotate</a></li>
-                            </ul>
+                                <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="dropdown-item js_account_reports_add_footnote">Annotate</a>
+                            </div>
                         </div>
                     </t>
             </td>
@@ -299,15 +298,15 @@
 
 <!-- Business Statements Aged receivable templates  -->
  <template id="line_template_aged_receivable_report" inherit_id="account_reports.template_aged_partner_balance_line_report" primary="True">
-     <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-         <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user">View Journal Entry</a></li>
+     <xpath expr="//div[hasclass('o_account_reports_domain_dropdown')]/*[last()]" position="before">
+        <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user" class="dropdown-item">View Journal Entry</a>
      </xpath>
  </template>
 
  <!-- Business Statements Aged Payable templates -->
  <template id="line_template_aged_payable_report" inherit_id="account_reports.template_aged_partner_balance_line_report" primary="True">
-     <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-         <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user">View Journal Entry</a></li>
+     <xpath expr="//div[hasclass('o_account_reports_domain_dropdown')]/*[last()]" position="before">
+        <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user" class="dropdown-item">View Journal Entry</a>
      </xpath>
  </template>
 
@@ -324,16 +323,16 @@
             <span class="fa fa-circle color-transparent trust-partner" role="img" aria-label="Partner ledger is normal" title="Partner ledger is normal"></span>
         </t>
     </xpath>
-    <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-        <li t-if="line['caret_options'] != 'account.tax'" groups="account.group_account_user"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
+    <xpath expr="//div[hasclass('o_account_reports_domain_dropdown')]/*[last()]" position="before">
+        <t t-if="line['caret_options'] != 'account.tax'" groups="account.group_account_user"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" class="dropdown-item">View Journal Entry</a></t>
     </xpath>
 </template>
 <template id="line_template_general_ledger_report" inherit_id="account_reports.line_template" primary="True">
     <xpath expr="//span[hasclass('account_report_line_name')]" position="inside">
         &amp;nbsp;<a t-if="line.get('unfolded')" t-att-data-id="line.get('id')" action="view_all_journal_items" class="no_print o_journal_entries"> ⇒ journal items</a>
     </xpath>
-    <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-        <li t-if="line['caret_options'] != 'account.tax'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
+    <xpath expr="//div[hasclass('o_account_reports_domain_dropdown')]/*[last()]" position="before">
+        <t t-if="line['caret_options'] != 'account.tax'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" class="dropdown-item">View Journal Entry</a></t>
     </xpath>
 </template>
 

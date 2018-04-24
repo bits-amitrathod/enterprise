@@ -122,7 +122,7 @@ QUnit.module('Views', {
         assert.ok(cohort.$('.table thead tr:first th:nth-child(3):contains(Stop - By Week)').length,
             'should contain "Stop - By Week" in title');
 
-        cohort.$buttons.find('.o_cohort_measures_list [data-field=__count__] a').click();
+        cohort.$buttons.find('.o_cohort_measures_list [data-field=__count__]').click();
         assert.ok(cohort.$buttons.find('.o_cohort_measures_list [data-field=__count__]').hasClass('selected'),
                 'should active count for measure');
         assert.ok(cohort.$('.table thead tr:first th:nth-child(2):contains(Count)').length,

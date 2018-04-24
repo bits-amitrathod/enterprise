@@ -2,13 +2,9 @@
 <templates xml:space="preserve">
 
     <t t-extend="UserMenu.Actions">
-        <t t-jquery="li:last" t-operation="after">
-            <li>
-                <a href="#" class="d-none" data-menu="shortcut">Add to Home Screen</a>
-            </li>
-            <li>
-                <a href="#" class="d-none" data-menu="switch"> Switch/Add Account</a>
-            </li>
+        <t t-jquery=".dropdown-item:last" t-operation="after">
+            <a href="#" class="dropdown-item d-none" data-menu="shortcut">Add to Home Screen</a>
+            <a href="#" class="dropdown-item d-none" data-menu="switch"> Switch/Add Account</a>
         </t>
     </t>
 

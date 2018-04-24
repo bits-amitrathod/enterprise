@@ -5,37 +5,37 @@
             <xpath expr="//li[@id='customize-menu']" position="before">
                     <li class="dropdown" id="version-menu" groups="website.group_website_designer">
                         <a id="version-menu-button" class="dropdown-toggle" data-toggle="dropdown" href="#" t-att-data-version_id="website.get_current_version()[0]" t-att-data-version_name="website.get_current_version()[1]">
-                            Version 
+                            Version
                                         <span><t t-esc="website.get_current_version()[1]"></t></span>
                         </a>
-                        <ul class="dropdown-menu version_menu" role="menu">
+                        <div class="dropdown-menu version_menu" role="menu">
                             <t t-if="not translatable">
                                 <t t-if="website.get_current_version()[0] == 0 ">
-                                    <li><a role="menuitem" href="#" data-action="duplicate_version">New Version</a></li>
+                                    <a href="#" data-action="duplicate_version" class="dropdown-item" role="menuitem">New Version</a>
                                 </t>
                                 <t t-if="website.get_current_version()[0] != 0 ">
-                                    <li><a role="menuitem" href="#" data-action="duplicate_version">Duplicate Version</a></li>
-                                    <li><a role="menuitem" href="#" data-action="publish_version">Publish Version</a></li>
-                                    <li><a role="menuitem" href="#" data-action="diff_version" groups="base.group_no_one">List Modified Pages</a></li>
+                                    <a href="#" data-action="duplicate_version" class="dropdown-item" role="menuitem">Duplicate Version</a>
+                                    <a href="#" data-action="publish_version" class="dropdown-item" role="menuitem">Publish Version</a>
+                                    <a href="#" data-action="diff_version" groups="base.group_no_one" class="dropdown-item" role="menuitem">List Modified Pages</a>
                                 </t>
-                                <li class="divider o_publish_version" role="separator"> </li>
+                                <div class="dropdown-divider o_publish_version" role="separator"/>
                             </t>
-                            <li role="separator" class="dropdown-header" style="text-transform: uppercase;">All versions</li>
+                            <div class="dropdown-header" style="text-transform: uppercase;">All versions</div>
                             <t t-if="website.get_current_version()[0] == 0 ">
-                                <li><a role="menuitem" href="#" data-action="change_version"><b>Master</b></a></li>
+                                <a href="#" data-action="change_version" class="dropdown-item" role="menuitem"><b>Master</b></a>
                             </t>
                             <t t-if="website.get_current_version()[0] != 0 ">
-                                <li><a role="menuitem" href="#" data-action="change_version">Master</a></li>
+                                <a href="#" data-action="change_version" class="dropdown-item" role="menuitem">Master</a>
                             </t>
-                            <li role="separator" class="first_divider divider"> </li>
-                            <li class="create_experiment"><a role="menuitem" href="#" data-action="create_experiment">Launch A/B tests</a></li>
-                        </ul>
+                            <div class="first_divider dropdown-divider" role="separator"> </div>
+                            <a href="#" data-action="create_experiment" class="dropdown-item create_experiment" role="menuitem">Launch A/B tests</a>
+                        </div>
                     </li>
-            </xpath> 
+            </xpath>
         </template>
 
         <template id="disable_html_editor" inherit_id="website.user_navbar">
-            <xpath expr="//li[@id='html_editor']" position="attributes">
+            <xpath expr="//*[@id='html_editor']" position="attributes">
                 <attribute name="t-if">not version_id</attribute>
             </xpath>
         </template>
@@ -74,4 +74,3 @@
             </xpath>
         </template>
 </odoo>
-

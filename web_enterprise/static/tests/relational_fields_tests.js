@@ -67,9 +67,9 @@ QUnit.module('relational_fields', {
         form.$('.o_statusbar_status > button').click();
         assert.strictEqual(form.$('.o_statusbar_status .o-status-more:visible').length, 1,
             "dropdown should be visible");
-        assert.strictEqual(form.$('.o_statusbar_status .o-status-more li').length, 3,
+        assert.strictEqual(form.$('.o_statusbar_status .o-status-more button').length, 3,
             "should have 3 status");
-        var $activeStatus = form.$('.o_statusbar_status .o-status-more li button[data-value=4]');
+        var $activeStatus = form.$('.o_statusbar_status .o-status-more button[data-value=4]');
         assert.ok($activeStatus.hasClass('btn-primary'), "active status should be btn-primary");
 
         form.destroy();
@@ -101,16 +101,16 @@ QUnit.module('relational_fields', {
             'statusbar widget should have a button');
         assert.strictEqual(form.$('.o_statusbar_status button.dropdown-toggle').text().trim(), '',
             'statusbar button has no text');  // Behavior as of saas-15, might be improved
-        assert.strictEqual(form.$('.o_statusbar_status ul').length, 1,
-            'statusbar widget should have a ul');
-        assert.strictEqual(form.$('.o_statusbar_status ul li').length, 3,
-            'statusbar widget dropdown menu should have 3 li');
-        assert.strictEqual(form.$('.o_statusbar_status ul li').eq(0).text().trim(), 'first record',
-            'statusbar widget dropdown first li should display the first record display_name');
-        assert.strictEqual(form.$('.o_statusbar_status ul li').eq(1).text().trim(), 'second record',
-            'statusbar widget dropdown second li should display the second record display_name');
-        assert.strictEqual(form.$('.o_statusbar_status ul li').eq(2).text().trim(), 'aaa',
-            'statusbar widget dropdown three li should display the third record display_name');
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu').length, 1,
+            'statusbar widget should have a dropdown menu');
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu button').length, 3,
+            'statusbar widget dropdown menu should have 3 buttons');
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu button').eq(0).text().trim(), 'first record',
+            'statusbar widget dropdown first button should display the first record display_name');
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu button').eq(1).text().trim(), 'second record',
+            'statusbar widget dropdown second button should display the second record display_name');
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu button').eq(2).text().trim(), 'aaa',
+            'statusbar widget dropdown third button should display the third record display_name');
         form.destroy();
     });
 });

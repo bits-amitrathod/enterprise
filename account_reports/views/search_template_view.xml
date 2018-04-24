@@ -10,27 +10,26 @@
                 <t t-if="options['date'].get('date')">Date: <span class="js_format_date"><t t-esc="options['date']['date']"/></span></t>
                 <t t-if="options['date'].get('date_from')">From: <span class="js_format_date"><t t-esc="options['date']['date_from']"/></span> <br/><span class="o_reports_date_to">to: <span class="js_format_date"><t t-esc="options['date']['date_to']"/></span></span></t>
             </t>
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
+        <div class="dropdown-menu o_filters_menu" role="menu">
             <t t-if="options['date'].get('date')">
-                <li title="Today" data-filter="today" class="js_account_report_date_filter"><a role="menuitem">Today</a></li>
-                <li title="End of Last Month" data-filter="last_month" class="js_account_report_date_filter"><a role="menuitem">End of Last Month</a></li>
-                <li title="End of Last Quarter" data-filter="last_quarter" class="js_account_report_date_filter"><a role="menuitem">End of Last Quarter</a></li>
-                <li title="End of Last Financial Year" data-filter="last_year" class="js_account_report_date_filter"><a role="menuitem">End of Last Financial Year</a></li>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="Today" data-filter="today">Today</a>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="End of Last Month" data-filter="last_month">End of Last Month</a>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="End of Last Quarter" data-filter="last_quarter">End of Last Quarter</a>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="End of Last Financial Year" data-filter="last_year">End of Last Financial Year</a>
             </t>
             <t t-if="options['date'].get('date_from')">
-                <li title="This Month" data-filter="this_month" class="js_account_report_date_filter"><a role="menuitem">This Month</a></li>
-                <li title="This Quarter" data-filter="this_quarter" class="js_account_report_date_filter"><a role="menuitem">This Quarter</a></li>
-                <li title="This Financial Year" data-filter="this_year" class="js_account_report_date_filter"><a role="menuitem">This Financial Year</a></li>
-                <li class="divider"></li>
-                <li title="Last Month" data-filter="last_month" class="js_account_report_date_filter"><a role="menuitem">Last Month</a></li>
-                <li title="Last Quarter" data-filter="last_quarter" class="js_account_report_date_filter"><a role="menuitem">Last Quarter</a></li>
-                <li title="Last Financial Year" data-filter="last_year" class="js_account_report_date_filter"><a role="menuitem">Last Financial Year</a></li>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="This Month" data-filter="this_month">This Month</a>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="This Quarter" data-filter="this_quarter">This Quarter</a>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="This Financial Year" data-filter="this_year">This Financial Year</a>
+                <div role="separator" class="dropdown-divider"></div>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="Last Month" data-filter="last_month">Last Month</a>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="Last Quarter" data-filter="last_quarter">Last Quarter</a>
+                <a role="menuitem" class="dropdown-item js_account_report_date_filter" title="Last Financial Year" data-filter="last_year">Last Financial Year</a>
             </t>
-            <li class="divider" role="separator"></li>
-            <li class="js_foldable_trigger o_closed_menu" data-filter='custom_filter_date'><a role="menuitem">Custom</a></li>
-            <li class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='custom_filter_date' role="menuitem">
+            <div role="separator" class="dropdown-divider"></div>
+            <a role="menuitem" class="dropdown-item js_foldable_trigger o_closed_menu" data-filter='custom_filter_date'>Custom</a>
+            <div class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='custom_filter_date'>
                 <t t-if="options['date'].get('date_from') != None">
                     <label class="custom-date" for="date_from">Start Date :</label>
                     <div class="form-group custom-date">
@@ -49,8 +48,8 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-primary js_account_report_date_filter" data-filter="custom">Apply</button>
-            </li>
-        </ul>
+            </div>
+        </div>
     </template>
 
     <template id="search_template_comparison">
@@ -61,27 +60,26 @@
                 <t t-if="options['comparison'].get('date_from')"><span class="o_reports_date_to"><span class="js_format_date"><t t-esc="options['comparison']['date_from']"/></span></span> <span class="o_reports_date_to"> - <span class="js_format_date"><t t-esc="options['comparison']['date_to']"/></span></span></t>
                 <t t-if="options['comparison'].get('date')">Date: <span class="js_format_date"><t t-esc="options['comparison']['date']"/></span></t>
             </t>
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
-            <li title="No Comparison" data-filter="no_comparison" class="js_account_report_date_cmp_filter"><a role="menuitem">No Comparison</a></li>
-            <li class="divider" role="separator"></li>
-            <li class="js_foldable_trigger o_closed_menu" data-filter='previous_period_filter'><a role="menuitem">Previous Period</a></li>
-            <li class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='previous_period_filter' role="menuitem">
+        <div class="dropdown-menu o_filters_menu" role="menu">
+            <a role="menuitem" title="No Comparison" data-filter="no_comparison" class="dropdown-item js_account_report_date_cmp_filter">No Comparison</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a role="menuitem" class="dropdown-item js_foldable_trigger o_closed_menu" data-filter='previous_period_filter'>Previous Period</a>
+            <div class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='previous_period_filter'>
                 <label for="periods_number">Number of periods :</label><br />
                 <input type="number" name="periods_number" t-att-value="options['comparison'].get('number_period')"/><br />
                 <button type="button" class="btn btn-primary js_account_report_date_cmp_filter" data-filter='previous_period'>Apply</button>
-            </li>
-            <li class="divider" role="separator"></li>
-            <li class="js_foldable_trigger o_closed_menu" data-filter='same_last_year_filter'><a role="menuitem">Same Period Last Year</a></li>
-            <li class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='same_last_year_filter' role="menuitem">
+            </div>
+            <div role="separator" class="dropdown-divider"></div>
+            <a role="menuitem" class="dropdown-item js_foldable_trigger o_closed_menu" data-filter='same_last_year_filter'>Same Period Last Year</a>
+            <li class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='same_last_year_filter'>
                 <label for="periods_number">Number of periods :</label><br />
                 <input type="number" name="periods_number" t-att-value="options['comparison'].get('number_period')"/><br />
                 <button type="button" class="btn btn-primary js_account_report_date_cmp_filter" data-filter='same_last_year'>Apply</button>
             </li>
-            <li class="divider" role="separator"></li>
-            <li class="js_foldable_trigger o_closed_menu" data-filter='custom_cmp_filter'><a role="menuitem">Custom</a></li>
-            <li class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='custom_cmp_filter' role="menuitem">
+            <div role="separator" class="dropdown-divider"></div>
+            <a role="menuitem" class="dropdown-item js_foldable_trigger o_closed_menu" data-filter='custom_cmp_filter'>Custom</a>
+            <div class="o_foldable_menu o_closed_menu o_account_report_search" data-filter='custom_cmp_filter'>
                 <t t-if="options['comparison'].get('date_from') != None">
                     <label class="custom-date" for="date_from_cmp">Start Date :</label>
                     <div class="form-group custom-date">
@@ -100,8 +98,8 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-primary js_account_report_date_cmp_filter" data-filter='custom'>Apply</button>
-            </li>
-        </ul>
+            </div>
+        </div>
     </template>
 
     <template id="search_template_extra_options">
@@ -120,15 +118,14 @@
                 <t t-if="options['unreconciled']" t-set="display_options" t-value="display_options + ['Only Show Unreconciled Entries']"/>
             </t>
             <t t-esc="', '.join(display_options)"/>
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
-            <li t-if="options.get('cash_basis') != None" title="Cash Basis Method" data-filter="cash_basis" class="js_account_report_bool_filter" groups="account.group_account_user"><a role="menuitem">Cash Basis Method</a></li>
-            <li t-if="options.get('all_entries') != None" title="Include unposted entries" data-filter="all_entries" class="js_account_report_bool_filter" groups="account.group_account_user"><a role="menuitem">Include Unposted Entries</a></li>
-            <li t-if="options.get('hierarchy') != None" title="Hierarchy" data-filter="hierarchy" class="js_account_report_bool_filter"><a role="menuitem">Hierarchy and Subtotals</a></li>
-            <li t-if="options.get('unreconciled') != None" title="Unreconciled" data-filter="unreconciled" class="js_account_report_bool_filter"><a role="menuitem">Only Show Unreconciled Entries</a></li>
-            <li t-if="options.get('unfold_all') != None" title="Unfold" data-filter="unfold_all" class="js_account_report_bool_filter"><a role="menuitem">Unfold All</a></li>
-        </ul>
+        <div class="dropdown-menu o_filters_menu" role="menu">
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('cash_basis') != None" title="Cash Basis Method" data-filter="cash_basis" groups="account.group_account_user">Cash Basis Method</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('all_entries') != None" title="Include unposted entries" data-filter="all_entries" groups="account.group_account_user">Include Unposted Entries</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('hierarchy') != None" title="Hierarchy" data-filter="hierarchy">Hierarchy and Subtotals</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('unreconciled') != None" title="Unreconciled" data-filter="unreconciled">Only Show Unreconciled Entries</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('unfold_all') != None" title="Unfold" data-filter="unfold_all">Unfold All</a>
+        </div>
     </template>
 
     <template id="search_template_multi_company">
@@ -142,13 +139,12 @@
             <t t-else="">
                 All
             </t>
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
+        <div class="dropdown-menu o_filters_menu" role="menu">
             <t t-foreach="options['multi_company']" t-as="c">
-                <li t-att-title="c.get('name')" data-filter="multi_company" t-att-data-id="c.get('id')" class="js_account_report_choice_filter"><a role="menuitem"><t t-esc="c.get('name')"/></a></li>
+                <a role="menuitem" class="dropdown-item js_account_report_choice_filter" t-att-title="c.get('name')" data-filter="multi_company" t-att-data-id="c.get('id')"><t t-esc="c.get('name')"/></a>
             </t>
-        </ul>
+        </div>
     </template>
 
     <template id="search_template_journals">
@@ -162,20 +158,19 @@
             <t t-else="">
                 All
             </t>
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
+        <div class="dropdown-menu o_filters_menu" role="menu">
             <t t-foreach="options['journals']" t-as="j">
                 <t t-if="j.get('id') == 'divider'">
-                    <li class="divider" role="separator"></li>
-                    <li role="menuitem"><b class="ml4"><t t-esc="j.get('name')"/></b></li>
-                    <li class="divider" role="separator"></li>
+                    <div role="separator" class="dropdown-divider"/>
+                    <b role="menuitem" class="ml4 dropdown-item-text"><t t-esc="j.get('name')"/></b>
+                    <div role="separator" class="dropdown-divider"/>
                 </t>
                 <t t-if="j.get('id') != 'divider'">
-                    <li t-att-title="j.get('name')+ '-' + j.get('code')" t-att-data-id="j.get('id')" data-filter="journals" class="js_account_report_choice_filter"><a role="menuitem"><t t-esc="j.get('name')"/></a></li>
+                    <a role="menuitem" class="dropdown-item js_account_report_choice_filter" t-att-title="j.get('name')+ '-' + j.get('code')" t-att-data-id="j.get('id')" data-filter="journals"><t t-esc="j.get('name')"/></a>
                 </t>
             </t>
-        </ul>
+        </div>
     </template>
 
     <template id="search_template_account_type">
@@ -190,39 +185,37 @@
                 </t>
             </t>
             <t t-esc="account_value"/>
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
+        <div class="dropdown-menu o_filters_menu" role="menu">
             <t t-foreach="options['account_type']" t-as="a">
-                <li t-att-title="a.get('name')" t-att-data-id="a.get('id')" data-filter="account_type" class="js_account_report_choice_filter"><a role="menuitem"><t t-esc="a.get('name')"/></a></li>
+                <a role="menuitem" class="dropdown-item js_account_report_choice_filter" t-att-title="a.get('name')" t-att-data-id="a.get('id')" data-filter="account_type"><t t-esc="a.get('name')"/></a>
             </t>
-        </ul>
+        </div>
     </template>
 
     <template id="search_template_analytic">
         <a t-if="options.get('analytic')" type="button" class="dropdown-toggle account_analytic_filter" data-toggle="dropdown">
             <span class="fa fa-folder-open"/> Analytic
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
-            <li role="menuitem" t-if="options.get('analytic_accounts') != None" class="o_account_report_search">
+        <div class="dropdown-menu o_filters_menu" role="menu">
+            <div t-if="options.get('analytic_accounts') != None" class="o_account_report_search" role="menuitem">
                 <b>Accounts</b><br />
                 <select class="js_account_reports_analytic_auto_complete o_account_report_select" data-filter="analytic_accounts" multiple="multiple">
                     <t t-foreach="analytic_accounts" t-as="a">
                         <option t-att-value="a[0]"><t t-esc="a[1]" /></option>
                     </t>
                 </select>
-            </li>
-            <li role="menuitem" t-if="options.get('analytic_tags') != None" class="o_account_report_search">
+            </div>
+            <div t-if="options.get('analytic_tags') != None" class="o_account_report_search" role="menuitem">
                 <b>Tags</b><br />
                 <select class="js_account_reports_analytic_auto_complete o_account_report_select" data-filter="analytic_tags" multiple="multiple">
                     <t t-foreach="analytic_tags" t-as="t">
                         <option t-att-value="t[0]"><t t-esc="t[1]" /></option>
                     </t>
                 </select>
-            </li>
-            <li class="divider" role="separator"></li>
-        </ul>
+            </div>
+            <div class="dropdown-divider" role="separator"></div>
+        </div>
     </template>
 
     <template id="search_template_ir_filters">
@@ -236,47 +229,44 @@
                 </t>
             </t>
             <t t-esc="filter_name"/>
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
+        <div class="dropdown-menu o_filters_menu" role="menu">
             <t t-foreach="options['ir_filters']" t-as="ir_filter">
-                <li t-att-title="ir_filter['name']"
+                <a t-att-title="ir_filter['name']"
                     t-att-data-id="ir_filter['id']"
                     data-filter="ir_filters"
-                    class="js_account_report_choice_filter">
-                    <a role="menuitem">
-                        <t t-esc="ir_filter['name']"/>
-                    </a>
-                </li>
+                    class="dropdown-item js_account_report_choice_filter"
+                    role="menuitem">
+                    <t t-esc="ir_filter['name']"/>
+                </a>
             </t>
-            <li class="divider"></li>
-        </ul>
+            <div class="dropdown-divider" role="separator"></div>
+        </div>
     </template>
 
     <template id="search_template_partner">
         <a t-if="options.get('partner')" type="button" class="dropdown-toggle account_partner_filter" data-toggle="dropdown">
             <span class="fa fa-folder-open"/> Partners
-            <span class="caret"/>
         </a>
-        <ul class="dropdown-menu o_filters_menu" role="menu">
-            <li role="menuitem" t-if="options.get('partner_ids') != None" class="o_account_report_search">
+        <div class="dropdown-menu o_filters_menu" role="menu">
+            <div t-if="options.get('partner_ids') != None" class="o_account_report_search" role="menuitem">
                 <b>Partners</b><br />
                 <select class="js_account_partner_auto_complete o_account_report_select" data-filter="res_partners" multiple="multiple">
                     <t t-foreach="res_partners" t-as="a">
                         <option t-att-value="a[0]"><t t-esc="a[1]" /></option>
                     </t>
                 </select>
-            </li>
-            <li role="menuitem" t-if="options.get('partner_categories') != None" class="o_account_report_search">
+            </div>
+            <div t-if="options.get('partner_categories') != None" class="o_account_report_search" role="menuitem">
                 <b>Tags</b><br />
                 <select class="js_account_partner_auto_complete o_account_report_select" data-filter="res_partner_categories" multiple="multiple">
                     <t t-foreach="res_partner_categories" t-as="t">
                         <option t-att-value="t[0]"><t t-esc="t[1]" /></option>
                     </t>
                 </select>
-            </li>
-            <li class="divider" role="separator"></li>
-        </ul>
+            </div>
+            <div class="dropdown-divider" role="separator"></div>
+        </div>
     </template>
 
     <template id="search_template">

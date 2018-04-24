@@ -683,25 +683,25 @@ QUnit.module('Views', {
             views: [[false, 'dashboard']],
         });
 
-        assert.ok(actionManager.$('.o_graph_measures_list li[data-field=sold]').hasClass('selected'),
+        assert.ok(actionManager.$('.o_graph_measures_list .dropdown-item[data-field=sold]').hasClass('selected'),
             "sold measure should be active in graph view");
-        assert.notOk(actionManager.$('.o_graph_measures_list li[data-field=untaxed]').hasClass('selected'),
+        assert.notOk(actionManager.$('.o_graph_measures_list .dropdown-item[data-field=untaxed]').hasClass('selected'),
             "untaxed measure should not be active in graph view");
-        assert.ok(actionManager.$('.o_pivot_measures_list li[data-field=sold]').hasClass('selected'),
+        assert.ok(actionManager.$('.o_pivot_measures_list .dropdown-item[data-field=sold]').hasClass('selected'),
             "sold measure should be active in pivot view");
-        assert.notOk(actionManager.$('.o_pivot_measures_list li[data-field=untaxed]').hasClass('selected'),
+        assert.notOk(actionManager.$('.o_pivot_measures_list .dropdown-item[data-field=untaxed]').hasClass('selected'),
             "untaxed measure should not be active in pivot view");
 
         // click on the 'untaxed' field: it should activate the 'untaxed' measure in both subviews
         actionManager.$('.o_aggregate[name=untaxed]').click();
 
-        assert.notOk(actionManager.$('.o_graph_measures_list li[data-field=sold]').hasClass('selected'),
+        assert.notOk(actionManager.$('.o_graph_measures_list .dropdown-item[data-field=sold]').hasClass('selected'),
             "sold measure should not be active in graph view");
-        assert.ok(actionManager.$('.o_graph_measures_list li[data-field=untaxed]').hasClass('selected'),
+        assert.ok(actionManager.$('.o_graph_measures_list .dropdown-item[data-field=untaxed]').hasClass('selected'),
             "untaxed measure should be active in graph view");
-        assert.notOk(actionManager.$('.o_pivot_measures_list li[data-field=sold]').hasClass('selected'),
+        assert.notOk(actionManager.$('.o_pivot_measures_list .dropdown-item[data-field=sold]').hasClass('selected'),
             "sold measure should not be active in pivot view");
-        assert.ok(actionManager.$('.o_pivot_measures_list li[data-field=untaxed]').hasClass('selected'),
+        assert.ok(actionManager.$('.o_pivot_measures_list .dropdown-item[data-field=untaxed]').hasClass('selected'),
             "untaxed measure should be active in pivot view");
 
         assert.verifySteps([
@@ -760,17 +760,17 @@ QUnit.module('Views', {
             views: [[false, 'dashboard']],
         });
 
-        assert.ok(actionManager.$('.o_cohort_measures_list li[data-field=sold]').hasClass('selected'),
+        assert.ok(actionManager.$('.o_cohort_measures_list [data-field=sold]').hasClass('selected'),
             "sold measure should be active in cohort view");
-        assert.notOk(actionManager.$('.o_cohort_measures_list li[data-field=untaxed]').hasClass('selected'),
+        assert.notOk(actionManager.$('.o_cohort_measures_list [data-field=untaxed]').hasClass('selected'),
             "untaxed measure should not be active in cohort view");
 
         // click on the 'untaxed' field: it should activate the 'untaxed' measure in cohort subview
         actionManager.$('.o_aggregate[name=untaxed]').click();
 
-        assert.notOk(actionManager.$('.o_cohort_measures_list li[data-field=sold]').hasClass('selected'),
+        assert.notOk(actionManager.$('.o_cohort_measures_list [data-field=sold]').hasClass('selected'),
             "sold measure should not be active in cohort view");
-        assert.ok(actionManager.$('.o_cohort_measures_list li[data-field=untaxed]').hasClass('selected'),
+        assert.ok(actionManager.$('.o_cohort_measures_list [data-field=untaxed]').hasClass('selected'),
             "untaxed measure should be active in cohort view");
 
         assert.verifySteps([
@@ -1076,9 +1076,9 @@ QUnit.module('Views', {
 
         // select 'untaxed' as measure
         activeMeasure = 'untaxed';
-        assert.strictEqual(dashboard.$('.o_graph_buttons li[data-field=untaxed]').length, 1,
+        assert.strictEqual(dashboard.$('.o_graph_buttons .dropdown-item[data-field=untaxed]').length, 1,
             "should have 'untaxed' in the list of measures");
-        dashboard.$('.o_graph_buttons li[data-field=untaxed] a').click();
+        dashboard.$('.o_graph_buttons .dropdown-item[data-field=untaxed]').click();
 
         // open graph in fullscreen
         dashboard.$('.o_graph_buttons .o_button_switch').click();
@@ -1136,9 +1136,9 @@ QUnit.module('Views', {
 
         // select 'untaxed' as measure
         activeMeasure = 'untaxed';
-        assert.strictEqual(dashboard.$('.o_cohort_buttons li[data-field=untaxed]').length, 1,
+        assert.strictEqual(dashboard.$('.o_cohort_buttons [data-field=untaxed]').length, 1,
             "should have 'untaxed' in the list of measures");
-        dashboard.$('.o_cohort_buttons li[data-field=untaxed] a').click();
+        dashboard.$('.o_cohort_buttons [data-field=untaxed]').click();
 
         // open cohort in fullscreen
         dashboard.$('.o_cohort_buttons .o_button_switch').click();
@@ -1197,9 +1197,9 @@ QUnit.module('Views', {
             },
         });
 
-        assert.strictEqual(dashboard.$('.o_graph_buttons li[data-field=product_id]').length, 1,
+        assert.strictEqual(dashboard.$('.o_graph_buttons .dropdown-item[data-field=product_id]').length, 1,
             "should have 'Product' as a measure in the graph view");
-        assert.strictEqual(dashboard.$('.o_pivot_measures_list li[data-field=product_id]').length, 1,
+        assert.strictEqual(dashboard.$('.o_pivot_measures_list .dropdown-item[data-field=product_id]').length, 1,
             "should have 'Product' as measure in the pivot view");
 
         // open graph in fullscreen
@@ -1250,10 +1250,10 @@ QUnit.module('Views', {
         });
 
         // select 'untaxed' as measure in graph view
-        actionManager.$('.o_graph_buttons li[data-field=untaxed] a').click();
+        actionManager.$('.o_graph_buttons .dropdown-item[data-field=untaxed]').click();
 
         // select 'untaxed' as additional measure in pivot view
-        actionManager.$('.o_pivot_measures_list li[data-field=untaxed] a').click();
+        actionManager.$('.o_pivot_measures_list .dropdown-item[data-field=untaxed]').click();
 
         // open graph in fullscreen
         actionManager.$('.o_pivot_buttons .o_button_switch').click();
@@ -1421,7 +1421,7 @@ QUnit.module('Views', {
             graph_intervalMapping: {},
         }, "context should be correct");
 
-        dashboard.$('li[data-field="sold"] a').click(); // change measure
+        dashboard.$('.dropdown-item[data-field="sold"]').click(); // change measure
         dashboard.$('button[data-mode="line"]').click(); // change mode
 
         assert.deepEqual(dashboard.getContext().graph, {
@@ -1455,7 +1455,7 @@ QUnit.module('Views', {
             pivot_row_groupby: ['categ_id'],
         }, "context should be correct");
 
-        dashboard.$('li[data-field="sold"] a').click(); // change measure
+        dashboard.$('.dropdown-item[data-field="sold"]').click(); // change measure
         dashboard.$('.o_pivot_flip_button').click(); // change mode
 
         assert.deepEqual(dashboard.getContext().pivot, {
@@ -1493,7 +1493,7 @@ QUnit.module('Views', {
             cohort_interval: 'week',
         }, "context should be correct");
 
-        dashboard.$('li[data-field="sold"] a').click(); // change measure
+        dashboard.$('[data-field="sold"]').click(); // change measure
         dashboard.$('button[data-mode="line"]').click(); // change mode
 
         assert.deepEqual(dashboard.getContext().cohort, {
@@ -1752,12 +1752,12 @@ QUnit.module('Views', {
         });
 
         $('.o_graph_buttons button:first').click();
-        $('.o_graph_buttons .o_graph_measures_list li a').eq(1).click();
-        assert.ok($('.o_graph_buttons .o_graph_measures_list li').eq(1).hasClass('selected'),
+        $('.o_graph_buttons .o_graph_measures_list .dropdown-item').eq(1).click();
+        assert.ok($('.o_graph_buttons .o_graph_measures_list .dropdown-item').eq(1).hasClass('selected'),
             'groupby should be unselected');
         $('.o_search_options button span.fa-filter').click();
         $('.o_filters_menu li a').eq(0).click();
-        assert.ok($('.o_graph_buttons .o_graph_measures_list li').eq(1).hasClass('selected'),
+        assert.ok($('.o_graph_buttons .o_graph_measures_list .dropdown-item').eq(1).hasClass('selected'),
             'groupby should be unselected');
         actionManager.destroy();
     });
@@ -1797,9 +1797,9 @@ QUnit.module('Views', {
 
         // Clicking on aggregate to activate count measure
         actionManager.$('.o_aggregate:first .o_value').click();
-        assert.ok(actionManager.$('.o_graph_measures_list li[data-field=\'__count__\']').hasClass('selected'),
+        assert.ok(actionManager.$('.o_graph_measures_list [data-field=\'__count__\']').hasClass('selected'),
             'count measure should be selected in graph view');
-        assert.ok(actionManager.$('.o_pivot_measures_list li[data-field=\'__count\']').hasClass('selected'),
+        assert.ok(actionManager.$('.o_pivot_measures_list [data-field=\'__count\']').hasClass('selected'),
             'count measure should be selected in pivot view');
 
         actionManager.destroy();
@@ -1840,9 +1840,9 @@ QUnit.module('Views', {
 
         // Clicking on aggregate to activate untaxed measure
         actionManager.$('.o_aggregate:nth(1) .o_value').click();
-        assert.ok(actionManager.$('.o_graph_measures_list li[data-field=\'untaxed\']').hasClass('selected'),
+        assert.ok(actionManager.$('.o_graph_measures_list [data-field=\'untaxed\']').hasClass('selected'),
             'untaxed measure should be selected in graph view');
-        assert.ok(actionManager.$('.o_pivot_measures_list li[data-field=\'untaxed\']').hasClass('selected'),
+        assert.ok(actionManager.$('.o_pivot_measures_list [data-field=\'untaxed\']').hasClass('selected'),
             'untaxed measure should be selected in pivot view');
 
         actionManager.destroy();
@@ -1882,12 +1882,12 @@ QUnit.module('Views', {
         });
 
         $('.o_cohort_buttons button:first').click();
-        $('.o_cohort_buttons .o_cohort_measures_list li a').eq(1).click();
-        assert.ok($('.o_cohort_buttons .o_cohort_measures_list li').eq(1).hasClass('selected'),
+        $('.o_cohort_buttons .o_cohort_measures_list .dropdown-item').eq(1).click();
+        assert.ok($('.o_cohort_buttons .o_cohort_measures_list .dropdown-item').eq(1).hasClass('selected'),
             'groupby should be unselected');
         $('.o_search_options button span.fa-filter').click();
         $('.o_filters_menu li a').eq(0).click();
-        assert.ok($('.o_cohort_buttons .o_cohort_measures_list li').eq(1).hasClass('selected'),
+        assert.ok($('.o_cohort_buttons .o_cohort_measures_list .dropdown-item').eq(1).hasClass('selected'),
             'groupby should be unselected');
 
         actionManager.destroy();
@@ -1924,7 +1924,7 @@ QUnit.module('Views', {
                     "Clickable = false aggregate should not be clickable");
 
         dashboard.$('div[name="c"]').click();
-        assert.ok(dashboard.$('.o_graph_measures_list li[data-field="sold"]').hasClass('selected'),
+        assert.ok(dashboard.$('.o_graph_measures_list [data-field="sold"]').hasClass('selected'),
                     "Measure on graph should not have changed")
 
         dashboard.destroy();

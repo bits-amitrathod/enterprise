@@ -205,17 +205,14 @@
                 width: 100%;
                 border-width: 0px;
             }
-            > li {
-                padding: 0;
+            > .btn.oe_stat_button {
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid $gray-lighter-dark;
+
                 @include media-breakpoint-down(sm) {
-                    display: inline-block;
                     width: percentage(1/3);
                     border-right: 1px solid $gray-lighter-darker;
-                }
-                > .btn.oe_stat_button {
-                    width: 100%;
-                    border: none;
-                    border-bottom: 1px solid $gray-lighter-dark;
                 }
             }
         }
