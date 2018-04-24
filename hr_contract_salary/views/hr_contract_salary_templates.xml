@@ -75,7 +75,7 @@
                                                             </t>
                                                         </t>
                                                     </select>
-                                                    <span class="help-block mt8 hidden" name="car_info">
+                                                    <span class="help-block mt8 d-none" name="car_info">
                                                         <ul>
                                                             <li name="door_number">Doors Number: <span name="door_number"/></li>
                                                             <li name="fuel_type">Fuel Type: <span name="fuel_type"/></li>
@@ -87,12 +87,12 @@
                                                     <!-- <span><t t-esc="contract.available_cars_amount"/></span> -->
                                                     <span class="help-block mt8">The cost of a car is depreciated by 8% per year, for 7 years. So, your gross salary increases automatically to keep the same employee budget. Once a car has 7 years, the car is fully depreciated and the only remaining costs are the maintenance, insurances and taxes.</span>
                                                     <span t-if="contract.available_cars_amount &lt; max_unused_cars" class="help-block mt8" name="new_car_message">This cost simulation is only for information. If you want to choose another car model, please contact your HR manager.</span>
-                                                    <div class="row" t-att-class="'hidden' if (new_car or applicant_id or contract.available_cars_amount &lt; max_unused_cars) else ''">
+                                                    <div class="row" t-att-class="'d-none' if (new_car or applicant_id or contract.available_cars_amount &lt; max_unused_cars) else ''">
                                                         <label class="hr_cs_control hr_cs_control_checkbox col-sm-offset-1 mt16">
                                                             <input type="checkbox" name="waiting_list"/>add me to the waiting list for a new car
                                                             <div class="hr_cs_control_indicator"/>
                                                         </label>
-                                                        <select name="select_waiting_list_model" class="form-control form-control-primary mt16 mb8 hidden">
+                                                        <select name="select_waiting_list_model" class="form-control form-control-primary mt16 mb8 d-none">
                                                             <t t-foreach="can_be_requested_models" t-as="model">
                                                                 <option t-att-value="model.id"><t t-esc="model.name_get()[0][1] + u' \u2022 ' + str(round(model.default_total_depreciated_cost, 2)) + u' €  \u2022 New Car'"/></option>
                                                             </t>
@@ -210,7 +210,7 @@
                                                 <i class="fa fa-1x fa-suitcase fa-fw"/> Legal Leaves
                                             </label>
                                             <div class="col-sm-7">
-                                                <div t-att-class="'hidden' if not contract.holidays_editable else ''">
+                                                <div t-att-class="'d-none' if not contract.holidays_editable else ''">
                                                     <span class="label label-default"><t t-esc="contract.get_attribute('holidays', 'lower_bound')"/></span>
                                                     <input type="range" t-att-value="contract.holidays" t-att-min="contract.get_attribute('holidays', 'lower_bound')" t-att-max="contract.get_attribute('holidays', 'upper_bound')" step="1" list="holidays-range" name="holidays_slider" class="advantage_input hr_cs_control_range" t-att-disabled="not contract.holidays_editable"/>
                                                     <span class="label label-default"><t t-esc="contract.get_attribute('holidays', 'upper_bound')"/></span>
@@ -222,7 +222,7 @@
                                                     </datalist>
                                                 </div>
                                                 <span t-att-class="'help-block mt8' if contract.holidays_editable else 'help-block'">The number of days you get depends on your working schedule, the number of days used in your previous job and the number of months worked previously.</span>
-                                                <div t-att-class="'hidden' if not contract.holidays_editable else ''">
+                                                <div t-att-class="'d-none' if not contract.holidays_editable else ''">
                                                     <div name="holidays_20_days" class="mt8">
                                                         <span class="help-block mt8" name="holidays_20_days" style="display: inline;"> You will receive 20 days of paid leaves. However, if you only use </span>
                                                         <span class="help-block" style="display: inline;" name="holidays_amount">X</span>
@@ -237,7 +237,7 @@
                                                     <input class="form-control" name="holidays_input" type="text" t-att-value="contract.holidays" disabled="disabled"/>
                                                     <div class="input-group-addon">day(s)</div>
                                                 </div>
-                                                <div class="input-group hidden" name="holidays_compensation">
+                                                <div class="input-group d-none" name="holidays_compensation">
                                                     <input class="form-control" name="holidays_compensation_input" type="text" t-att-value="contract.holidays_compensation" disabled="disabled"/>
                                                     <div class="input-group-addon">€</div>
                                                 </div>
@@ -261,11 +261,11 @@
                                                         <input type="radio" name="representation_fees_radio" value="0.0" t-att-checked="contract.representation_fees == 0.0" class="advantage_input"/>
                                                         <div class="hr_cs_control_indicator"/>
                                                     </label>
-                                                    <label t-att-class="'hr_cs_control hr_cs_control_radio' + (' hidden' if customer_relation else '')">110 €
+                                                    <label t-att-class="'hr_cs_control hr_cs_control_radio' + (' d-none' if customer_relation else '')">110 €
                                                         <input type="radio" name="representation_fees_radio" value="110.0" t-att-checked="contract.representation_fees == 110.0" class="advantage_input"/>
                                                         <div class="hr_cs_control_indicator"/>
                                                     </label>
-                                                    <label t-att-class="'hr_cs_control hr_cs_control_radio' + (' hidden' if not customer_relation else '')">150 €
+                                                    <label t-att-class="'hr_cs_control hr_cs_control_radio' + (' d-none' if not customer_relation else '')">150 €
                                                         <input type="radio" name="representation_fees_radio" value="150.0" t-att-checked="contract.representation_fees == 150.0" class="advantage_input"/>
                                                         <div class="hr_cs_control_indicator"/>
                                                     </label>
@@ -284,7 +284,7 @@
                                         </div>
 
 
-                                        <div t-att-class="'form-group' + (' hidden' if not contract.ip_wage_rate else '')">
+                                        <div t-att-class="'form-group' + (' d-none' if not contract.ip_wage_rate else '')">
                                             <div class="row">
                                                 <span class="col-sm-3 o_form_label control-label">
                                                     <i class="fa fa-1x fa-puzzle-piece fa-fw fa-lg"/> Intellectual Property
@@ -351,8 +351,8 @@
                                                 <div class="col-sm-2 text-right">
                                                     <div class="input-group">
                                                         <input class="form-control advantage_input" type="text" t-att-value="contract.commission_on_target" disabled="disabled" name="commission_on_target"/>
-                                                        <input class="form-control advantage_input hidden" type="text" t-att-value="round(contract.warrant_value_employee / 12.0, 2)" disabled="disabled" name="warrant_value"/>
-                                                        <input class="form-control advantage_input hidden" type="text" t-att-value="round(contract.warrants_cost / 12.0, 2)" disabled="disabled" name="warrant_cost"/>
+                                                        <input class="form-control advantage_input d-none" type="text" t-att-value="round(contract.warrant_value_employee / 12.0, 2)" disabled="disabled" name="warrant_value"/>
+                                                        <input class="form-control advantage_input d-none" type="text" t-att-value="round(contract.warrants_cost / 12.0, 2)" disabled="disabled" name="warrant_cost"/>
                                                         <div class="input-group-addon">€</div>
                                                     </div>
                                                 </div>
@@ -450,7 +450,7 @@
 
                                     <h2>Monthly Salary</h2>
                                     
-                                    <div class="hidden">
+                                    <div class="d-none">
                                         <input class="form-control" t-att-id="contract.id" type="text" t-att-value="contract.name" disabled="disabled" name="contract"/>
                                         <input class="form-control" t-att-id="contract.resource_calendar_id.id" type="text" t-att-value="contract.resource_calendar_id.name" disabled="disabled"/>
                                     </div>
@@ -460,8 +460,8 @@
                                         <label class="col-sm-6 control-label" for="wage">Gross</label>
                                             <div class="col-sm-6">
                                                 <div class="input-group">
-                                                    <input class="form-control advantage_input hidden" type="text" t-att-value="contract.wage" name="wage" disabled="disabled"/>
-                                                    <div class="input-group-addon hidden">€</div>
+                                                    <input class="form-control advantage_input d-none" type="text" t-att-value="contract.wage" name="wage" disabled="disabled"/>
+                                                    <div class="input-group-addon d-none">€</div>
                                                     <input class="form-control advantage_input" type="text" t-att-value="contract.wage_with_holidays" name="wage_with_holidays" disabled="disabled"/>
                                                     <div class="input-group-addon">€</div>
                                                 </div>
@@ -513,7 +513,7 @@
 
                                     <h2>Yearly Advantages</h2>
 
-                                    <input type="text" class="hidden" t-att-value="contract.eco_checks" disabled="disabled" name="eco_checks"/>
+                                    <input type="text" class="d-none" t-att-value="contract.eco_checks" disabled="disabled" name="eco_checks"/>
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-6 control-label" for="yearly_cash">Cash</label>
@@ -559,7 +559,7 @@
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="employee_total_cost" class="form-control" t-att-value="contract.final_yearly_costs"/>
                                                     <div class="input-group-addon">€</div>
-                                                    <input type="text" disabled="disabled" name="fixed_yearly_costs" class="form-control hidden" t-att-value="contract.final_yearly_costs"/>
+                                                    <input type="text" disabled="disabled" name="fixed_yearly_costs" class="form-control d-none" t-att-value="contract.final_yearly_costs"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -576,7 +576,7 @@
 
                                     <t t-if="submit">
                                         <button type="button" id="hr_cs_submit" class="btn hr_cs_btn_submit" name="submit1">Review Contract &amp; Sign</button>
-                                        <div class="alert alert-danger hidden" name="scale_alert" role="alert">
+                                        <div class="alert alert-danger d-none" name="scale_alert" role="alert">
                                             Your gross salary is below the scale. You can change values of the configurator to increase the gross according to the CP 200 scales.
                                         </div>
                                     </t>
@@ -594,13 +594,13 @@
                                 </div>
             
                                 <div class="col-sm-4 mt48">
-                                    <button t-att-class="'hidden' if need_personal_information else 'btn'" type="button" name="toggle_personal_information">Show <i class="fa fa-chevron-down"></i></button>
-                                    <button class="hidden btn" type="button" name="toggle_personal_information">Hide <i class="fa fa-chevron-up"></i></button>
+                                    <button t-att-class="'d-none' if need_personal_information else 'btn'" type="button" name="toggle_personal_information">Show <i class="fa fa-chevron-down"></i></button>
+                                    <button class="d-none btn" type="button" name="toggle_personal_information">Hide <i class="fa fa-chevron-up"></i></button>
                                 </div>
                             </div>
                             <div class="row">
 
-                                <div t-att-class="'col-sm-8' if need_personal_information else 'col-sm-8 hidden'" name="personal_info">
+                                <div t-att-class="'col-sm-8' if need_personal_information else 'col-sm-8 d-none'" name="personal_info">
 
                                     <!-- Name + Gender -->
                                     <div class="row">
@@ -858,14 +858,14 @@
                                                 <option value="high_pension" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_other_net_revenue &gt;= 450.0">With Pensions &gt;= 450 €/month</option>
                                             </select>
                                         </div>
-                                        <div class="form-group mb0 hidden" name="spouse_fiscal_status">
+                                        <div class="form-group mb0 d-none" name="spouse_fiscal_status">
                                             <label class="control-label" for="spouse_fiscal_status">Tax status for spouse</label>
                                             <select name="spouse_fiscal_status" class="form-control advantage_input">
                                                 <option value="without income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
                                                 <option value="with income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income'">With Income</option>
                                             </select>
                                         </div>
-                                        <div name="spouse_revenue_information" class="hidden">
+                                        <div name="spouse_revenue_information" class="d-none">
                                             <div class="form-group mt16">
                                                 <label class="control-label" for="spouse_net_revenue">Spouse Net Revenue</label>
                                                 <input type="number" name="spouse_net_revenue" placeholder="0" class="form-control" t-att-value="contract.employee_id.spouse_net_revenue"/>
@@ -958,7 +958,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <button type="button" id="hr_cs_submit" class="hr_cs_btn_submit btn" name="submit2">Review Contract &amp; Sign</button>
-                                    <div class="alert alert-danger hidden" name="scale_alert" role="alert">
+                                    <div class="alert alert-danger d-none" name="scale_alert" role="alert">
                                         Your gross salary is below the scale. You can change values of the configurator to increase the gross according to the CP 200 scales.
                                     </div>
                                 </div>
@@ -985,8 +985,8 @@
                                             <label class="col-sm-10 control-label" for="wage">BASIC SALARY</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
-                                                    <input class="form-control hidden" type="text" value="2600" disabled="disabled" name="wage"/>
-                                                    <div class="input-group-addon hidden">€</div>
+                                                    <input class="form-control d-none" type="text" value="2600" disabled="disabled" name="wage"/>
+                                                    <div class="input-group-addon d-none">€</div>
                                                     <input class="form-control" type="text" value="2600" disabled="disabled" name="wage_with_holidays"/>
                                                     <div class="input-group-addon">€</div>
                                                 </div>

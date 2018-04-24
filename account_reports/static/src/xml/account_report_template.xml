@@ -33,7 +33,7 @@
     </t>
 
     <div t-name="CustomerStatements.followupProgressbar" class="progress o_account-progress" data-toggle="tooltip" title="Follow-ups Done / Total Follow-ups">
-        <span class="show text-center o_account-progress-bar-content"><t t-esc="current + '/' + max" /></span>
+        <span class="d-block text-center o_account-progress-bar-content"><t t-esc="current + '/' + max" /></span>
         <div class="progress-bar" role="context" t-att-aria-valuenow="current" aria-valuemin="0" t-att-aria-valuemax="max" t-att-style="'width: ' + percent + '%;'">
         </div>
     </div>
@@ -54,8 +54,8 @@
         <form role="form">
             <label for="expectedDate">Expected Payment Date</label>
             <div class='o_account_reports_payment_date_picker' />
-            <input type='hidden' id='target_id' t-att-value='target_id' />
+            <input type="hidden" id='target_id' t-att-value='target_id' />
         </form>
-    </div>    
+    </div>
 
 </templates>

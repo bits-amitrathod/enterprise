@@ -18,7 +18,7 @@
                 <div class="col-xs-1 col-sm-1">
                   <h4><strong><t t-esc="inst.country"></t></strong></h4>
                 </div>
-                <div class="col-sm-2 hidden-xs">
+                <div class="col-sm-2 d-none d-md-block">
                   <t t-if="inst.picture">
                     <div class="inst_icon" t-att-style="'background-image: url('+inst.picture+')'">
                     </div>
@@ -31,7 +31,7 @@
                 </div>
               </div>
               <!-- Detail of institution -->
-              <div class="row hidden js_institution_detail" t-att-id="inst.institution_identifier">
+              <div class="row d-none js_institution_detail" t-att-id="inst.institution_identifier">
                 <div class="col-xs-12">
                   <div class="border-info">
                     <div class="row">
@@ -82,10 +82,10 @@
 
   <t t-name="OnlineSyncSearchBank">
     <div class="o_inst_search">
-      <div class="sync_error hidden">
+      <div class="sync_error d-none">
       </div>
 
-      <div class="institution_search hidden">
+      <div class="institution_search d-none">
         <div class="row">
           <div class="col-md-8">
             <form id="search_form" target="#" method="post">
@@ -107,7 +107,7 @@
         </div>
       </div>
 
-      <div class="favorite_institutions_no_result hidden">
+      <div class="favorite_institutions_no_result d-none">
         <div class="row">
           <div class="col-xs-12 text-center no_result">
             <span><i class="fa fa-university fa-2" role="img" aria-label="Institution" title="Institution"></i></span>
@@ -115,10 +115,10 @@
           </div>
         </div>
       </div>
-      <div class="institutions_search hidden">
+      <div class="institutions_search d-none">
         <div class="institution_result">
         </div>
-        <div class="institution_no_result hidden">
+        <div class="institution_no_result d-none">
           <div class="row">
             <div class="col-xs-12 text-center no_result">
               <span><i class="fa fa-search fa-2" role="img" aria-label="No result" title="No result"></i></span>

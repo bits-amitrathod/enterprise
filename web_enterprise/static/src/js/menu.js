@@ -83,9 +83,9 @@ var Menu = Widget.extend({
         } else {
             this.$menu_toggle.attr('accesskey', 'h');
         }
-        this.$menu_toggle.toggleClass('hidden', this.home_menu_displayed && !this.backbutton_displayed);
-        this.$menu_brand_placeholder.toggleClass('hidden', this.home_menu_displayed);
-        this.$section_placeholder.toggleClass('hidden', this.home_menu_displayed);
+        this.$menu_toggle.toggleClass('d-none', this.home_menu_displayed && !this.backbutton_displayed);
+        this.$menu_brand_placeholder.toggleClass('d-none', this.home_menu_displayed);
+        this.$section_placeholder.toggleClass('d-none', this.home_menu_displayed);
     },
     change_menu_section: function (primary_menu_id) {
         if (!this.$menu_sections[primary_menu_id]) {

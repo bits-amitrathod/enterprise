@@ -1061,15 +1061,15 @@ odoo.define('project_timeshee.ui', function (require ) {
             if (local_storage.getItem("pt_start_timer_time") === null) {
                 var duration_box = this.$(event.currentTarget);
                 duration_box.addClass("pt_duration_continue");
-                duration_box.children(".pt_duration_time").addClass("hidden");
-                duration_box.children(".pt_continue_activity_btn").removeClass("hidden");
+                duration_box.children(".pt_duration_time").addClass('d-none');
+                duration_box.children(".pt_continue_activity_btn").removeClass('d-none');
             }
         },
         on_duration_out: function(event) {
             var duration_box = this.$(event.currentTarget);
             duration_box.removeClass("pt_duration_continue");
-            duration_box.children(".pt_duration_time").removeClass("hidden");
-            duration_box.children(".pt_continue_activity_btn").addClass("hidden");
+            duration_box.children(".pt_duration_time").removeClass('d-none');
+            duration_box.children(".pt_continue_activity_btn").addClass('d-none');
         },
         get_total_time: function() {
             var total_time = 0;

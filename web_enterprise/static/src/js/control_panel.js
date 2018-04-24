@@ -11,7 +11,7 @@ ControlPanel.include({
         var is_last = (index === length-1);
         var is_before_last = (index === length-2);
 
-        $bc.toggleClass('hidden-xs', !is_last && !is_before_last)
+        $bc.toggleClass('d-none d-md-inline-block', !is_last && !is_before_last)
            .toggleClass('o_back_button', is_before_last)
            .toggleClass('btn btn-sm btn-default', is_before_last && config.device.isMobile);
 

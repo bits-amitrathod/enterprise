@@ -699,7 +699,7 @@
                 <button class="btn btn-sm btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
                 <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
             </div>
-            <span class="hide">
+            <span class="d-none">
                 <t t-call="HiddenInputFile">
                     <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
                     <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
