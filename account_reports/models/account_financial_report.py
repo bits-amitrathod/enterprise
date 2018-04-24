@@ -763,7 +763,14 @@ class AccountFinancialReportLine(models.Model):
     def _build_cmp(self, balance, comp):
         if comp != 0:
             res = round((balance - comp) / comp * 100, 1)
-            if (res > 0) != self.green_on_positive:
+            # In case the comparison is made on a negative figure, the color should be the other
+            # way around. For example:
+            #                       2018         2017           %
+            # Product Sales      1000.00     -1000.00     -200.0%
+            #
+            # The percentage is negative, which is mathematically correct, but my sales increased
+            # => it should be green, not red!
+            if (res > 0) != (self.green_on_positive and comp > 0):
                 return {'name': str(res) + '%', 'class': 'number color-red'}
             else:
                 return {'name': str(res) + '%', 'class': 'number color-green'}

@@ -123,9 +123,6 @@ class AccountPayment(models.Model):
         create_xml_node_chain(DrctDbtTxInf, ['DbtrAgt','FinInstnId','BIC'], self.sdd_mandate_id.partner_bank_id.bank_id.bic)
         Dbtr = create_xml_node_chain(DrctDbtTxInf, ['Dbtr','Nm'], self.sdd_mandate_id.partner_bank_id.acc_holder_name or partner.name)[0]
 
-        if self.sdd_mandate_id.debtor_id_code:
-            create_xml_node(Dbtr, 'Id', self.sdd_mandate_id.debtor_id_code)
-
         if partner.contact_address:
             PstlAdr = create_xml_node(Dbtr, 'PstlAdr')
             if partner.country_id and partner.country_id.code:
@@ -137,7 +134,16 @@ class AccountPayment(models.Model):
                 contact_address = contact_address[70:]
                 n_line = n_line + 1
 
+        if self.sdd_mandate_id.debtor_id_code:
+            chain_keys = ['Id', 'PrvtId', 'Othr', 'Id']
+            if partner.commercial_partner_id.is_company:
+                chain_keys = ['Id', 'OrgId', 'Othr', 'Id']
+            create_xml_node_chain(Dbtr, chain_keys, self.sdd_mandate_id.debtor_id_code)
+
         create_xml_node_chain(DrctDbtTxInf, ['DbtrAcct','Id','IBAN'], self.sdd_mandate_id.partner_bank_id.sanitized_acc_number)
+
+        if self.communication:
+            create_xml_node_chain(DrctDbtTxInf, ['RmtInf', 'Ustrd'], self.communication.strip()[:140]) #The maximum size of communications for SDD transactions is 140 characters
 
     def _group_payments_per_mandate(self):
         """ Groups the payments of this recordset per associated mandate, in a dictionnary of recordsets.

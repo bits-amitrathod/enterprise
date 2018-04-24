@@ -114,7 +114,7 @@ var EventScanView = AbstractAction.extend({
             } else if (result.success) {
                 self.do_notify(result.success, false, false, 'o_event_success');
             } else if (result.warning) {
-                self.do_warn(_("Warning"), result.warning);
+                self.do_warn(_t("Warning"), result.warning);
             }
         });
     },

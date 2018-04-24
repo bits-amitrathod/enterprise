@@ -265,6 +265,9 @@ var HomeMenu = Widget.extend({
                 ev.preventDefault();
                 break;
             case $.ui.keyCode.TAB:
+                if ($input.val() === "") {
+                    return;
+                }
                 ev.preventDefault();
                 var f = elemFocused ? (ev.shiftKey ? -1 : 1) : 0;
                 this._update({focus: f});
@@ -285,11 +288,14 @@ var HomeMenu = Widget.extend({
                     var menus = appFocused ? state.apps : state.menuItems;
                     var index = appFocused ? state.focus : state.focus - state.apps.length;
                     this._openMenu(menus[index]);
+                    ev.preventDefault();
                 }
-                ev.preventDefault();
                 return;
             case $.ui.keyCode.PAGE_DOWN:
             case $.ui.keyCode.PAGE_UP:
+            case 16: // Shift
+            case 17: // CTRL
+            case 18: // Alt
                 break;
             case $.ui.keyCode.ESCAPE:
                 // clear text on search, hide it if no content before ESC

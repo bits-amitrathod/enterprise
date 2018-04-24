@@ -10,7 +10,6 @@ var LotBarcodeHandler = AbstractField.extend({
 
         this.trigger_up('activeBarcode', {
             name: this.name,
-            notifyChange: false,
             fieldName: 'stock_barcode_lot_line_ids',
             quantity: 'qty_done',
             setQuantityWithKeypress: true,
