@@ -138,7 +138,7 @@
                 <div class="o_workorder_data">
                     <field class="o_workorder_note" name="note"/>
                     <div class="workorder_picture">
-                        <field name="picture" widget="tablet_image" attrs="{'invisible': [('test_type', '!=', 'picture')], 'required': [('test_type', '=', 'picture')]}"/>
+                        <field name="picture" widget="tablet_image" attrs="{'invisible': [('test_type', '!=', 'picture')]}"/>
                     </div>
                     <div attrs="{'invisible': [('test_type', '!=', 'measure')]}" class="o_row mb8">
                         <label for="measure" string="Measure:" />
