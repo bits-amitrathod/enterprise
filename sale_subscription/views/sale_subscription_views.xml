@@ -31,6 +31,9 @@
                 <field name="user_id"/>
                 <field name="template_id"/>
                 <field name="code"/>
+                <filter name="my_subscriptions" string="My Subscriptions" domain="[('user_id','=',uid)]"/>
+                <filter string="Unassigned" name="contracts_not_assigned" help="Subscriptions that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
+                <separator/>
                 <filter name="new" string="New" domain="[('state','=','draft')]" help="New Subscriptions"/>
                 <filter name="open" string="In Progress" domain="[('state','=','open')]" help="Subscriptions in progress"/>
                 <filter name="pending" string="To Renew" domain="[('state','=','pending')]" help="Pending subscriptions"/>
@@ -43,12 +46,10 @@
                     domain="[('state','in',('open','draft','pending')), '|', ('date', '!=', False), ('date', '&lt;=', time.strftime('%%Y-%%m-%%d'))]"
                     help="End date passed" />
                 <filter
-                    string="Expiring soon"
+                    string="Expiring Next Month"
                     name="expiring_soon"
                     domain="[('date', '!=', False), ('date', '&lt;=', (context_today() + datetime.timedelta(30)).strftime('%%Y-%%m-%%d') )]"
                     help="End date is in the next month" />
-                <separator/>
-                <filter string="Subscriptions not assigned" name="contracts_not_assigned" help="Subscriptions that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
                 <separator/>
                 <filter string="My Activities" name="activities_my"
                     domain="[('activity_ids.user_id', '=', uid)]"/>
@@ -63,14 +64,13 @@
                         ]"/>
                 <group expand="0" string="Group By">
                     <filter string="Status" name="status" domain="[]" context="{'group_by':'state'}"/>
-                    <filter string="Account Manager" name="account_manager" domain="[]" context="{'group_by':'user_id'}"/>
-                    <filter string="Partner" name="partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter string="Salesperson" name="sales_person" domain="[]" context="{'group_by':'user_id'}"/>
+                    <filter string="Customer" name="customer" domain="[]" context="{'group_by':'partner_id'}"/>
                     <filter string="Country" name="country" domain="[]" context="{'group_by': 'country_id'}"/>
                     <filter string="Industry" name="industry" domain="[]" context="{'group_by': 'industry_id'}"/>
                     <filter string="Template" name="template" domain="[]" context="{'group_by':'template_id'}"/>
                     <filter string="Start Month" name="start_month" domain="[]" context="{'group_by' : 'date_start'}" />
                     <filter string="End Month" name="end_month" domain="[]" context="{'group_by' : 'date'}" />
-                    <filter string="Pricelist" name="pricelist" domain="[]" context="{'group_by' : 'pricelist_id'}" />
                 </group>
             </search>
         </field>
@@ -81,7 +81,7 @@
         <field name="res_model">sale.subscription</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form,pivot,graph</field>
-        <field name="context">{}</field>
+        <field name="context">{"search_default_my_subscriptions":1}</field>
         <field name="domain">[]</field>
         <field name="search_view_id" eval='False'/>
         <field name="help" type="html">
@@ -170,17 +170,17 @@
         <field name="arch" type="xml">
             <form string="Subscription">
                 <header>
-                    <button name="set_open" string="Start Subscription" type="object"
-                            attrs="{'invisible': [('state','=','open')]}" class="oe_highlight"/>
-                    <button name="set_pending" string="To Renew" type="object"
+                    <button name="set_open" string="Start" type="object" states="draft" class="oe_highlight"/>
+                    <button name="set_pending" string="Mark As To Renew" type="object"
                             attrs="{'invisible': [('state','in',['pending','draft','close','cancel'])]}"/>
-                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Close Subscription"
+                    <button name="set_restart" string="Restart" type="object" attrs="{'invisible': [('state','in',['draft','open'])]}"/>
+                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Close"
                             type="action" attrs="{'invisible': [('state','in',['draft','close','cancel'])]}"/>
-                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Cancel Subscription"
+                    <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Cancel"
                             type="action" context="{'cancel':1}"
                             attrs="{'invisible': [('state','in',['cancel','close'])]}"/>
-                    <button string="Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': [('state', '=', 'draft')]}" />
-                    <button string="Upsell Subscription" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
+                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': ['|',('state', '=', 'draft'),('recurring_rule_boundary','=','unlimited')]}"/>
+                    <button string="Upsell" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet string="Subscription">
@@ -227,45 +227,46 @@
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="date_start"/>
-                            <field name="date"/>
+                            <field name="recurring_rule_boundary" invisible="1"/>
+                            <field name="date" attrs="{'invisible':[('recurring_rule_boundary','=','unlimited')]}"/>
                             <field name="close_reason_id" attrs="{'invisible': [('state','in',['draft','open','pending'])]}"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Subscription Lines" id="lines">
-                            <div>
-                                <field name="recurring_invoice_line_ids">
-                                    <tree editable="bottom">
-                                        <field name="product_id" domain="[('recurring_invoice', '=', True)]" context="{'default_recurring_invoice': True}"/>
-                                        <field name="name"/>
-                                        <field name="quantity"/>
-                                        <field name="uom_id" groups="product.group_uom"/>
-                                        <field name="price_unit"/>
-                                        <field name="discount" groups="sale.group_discount_per_so_line"/>
-                                        <field name="price_subtotal"/>
-                                    </tree>
-                                </field>
-                                <group class="oe_subtotal_footer oe_right">
-                                    <field name="recurring_total" class="oe_subtotal_footer_separator"
-                                        widget="monetary" options="{'currency_field': 'currency_id'}"
-                                        modifiers="{'readonly': true}"
-                                    />
+                    <group>
+                        <notebook>
+                            <page string="Subscription Lines" id="lines">
+                                <div>
+                                    <field name="recurring_invoice_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="product_id" domain="[('recurring_invoice', '=', True)]" context="{'default_recurring_invoice': True}"/>
+                                            <field name="name"/>
+                                            <field name="quantity"/>
+                                            <field name="uom_id" groups="product.group_uom"/>
+                                            <field name="price_unit"/>
+                                            <field name="discount" groups="sale.group_discount_per_so_line"/>
+                                            <field name="price_subtotal"/>
+                                        </tree>
+                                    </field>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <field name="recurring_total" class="oe_subtotal_footer_separator"
+                                            widget="monetary" options="{'currency_field': 'currency_id'}"
+                                            modifiers="{'readonly': true}"
+                                        />
+                                    </group>
+                                </div>
+                            </page>
+                            <page string="Settings" id="settings">
+                                <group>
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                    <field name="payment_mandatory" invisible="1"/>
+                                    <field name="payment_token_id" attrs="{'invisible': [('payment_mandatory', '==', False)]}"/>
                                 </group>
-                            </div>
-                        </page>
-                        <page string="Settings" id="settings">
-                            <group>
-                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
-                                <field name="payment_mandatory" invisible="1"/>
-                                <field name="payment_token_id" attrs="{'invisible': [('payment_mandatory', '==', False)]}"/>
-                            </group>
-                            <group>
-                            </group>
-                        </page>
-                    </notebook>
-                    <div>
-                        <field name="description"/>
+                            </page>
+                        </notebook>
+                    </group>
+                    <div name="description">
+                        <field name="description" placeholder="Terms and Conditions"/>
                     </div>
                 </sheet>
                 <div class="oe_chatter">
@@ -314,12 +315,12 @@
                             <div class="o_subscription_kanban_main">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
-                                        <div class="o_primary">
-                                            <span><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></span>
-                                        </div>
-                                        <span>Recurrence: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></span>
-                                        <span t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</span>
-                                        <span t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</span>
+                                        <h3 class="mt0">
+                                            <strong><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></strong>
+                                        </h3>
+                                        <div>Recurrence: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></div>
+                                        <div t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</div>
+                                        <div t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</div>
                                     </div>
                                 </div><div class="o_kanban_card_manage_pane dropdown-menu">
                                     <div class="o_kanban_card_manage_section o_kanban_manage_reports">
@@ -338,14 +339,11 @@
                                     <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" /></a>
                                 </div>
                             </div>
-
-                            <div class="o_subscription_kanban_boxes">
-                                <div class="o_subscription_kanban_box">
-                                    <a name="%(sale_subscription_action_filtered)d" type="action">
-                                        <span class="o_value"><t t-esc="record.subscription_count.value"/></span>
-                                        <span class="o_label">Subscriptions</span>
-                                    </a>
-                                </div>
+                            <div class="ml16">
+                                <a name="%(sale_subscription_action_filtered)d" type="action">
+                                    <span><t t-esc="record.subscription_count.value"/></span>
+                                    <span>Subscriptions</span>
+                                </a>
                             </div>
                         </div>
                     </t>
@@ -415,12 +413,18 @@
                                 <field name="recurring_interval"/>
                                 <field name="recurring_rule_type" class="field_rule_type"/>
                             </div>
+                            <field name="recurring_rule_boundary" widget="radio" options="{'horizontal':true}"/>
+                            <label string="End After" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}"/>
+                            <div class="o_row" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}">
+                                <field name="recurring_rule_count"/>
+                                <span class="ml8"><strong>repeats</strong></span>
+                            </div>
                         </group>
                         <group name="website_subscription">
                         </group>
                     </group>
                     <group name="config">
-                        <group name="accounting" string="Accounting" groups="account.group_account_user">
+                        <group name="accounting" string="Accounting" groups="account.group_account_manager">
                             <field name="journal_id" options="{'no_create': True}"/>
                         </group>
                         <group name="online" string="Online Management">

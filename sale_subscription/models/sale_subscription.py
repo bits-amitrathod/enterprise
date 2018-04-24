@@ -20,7 +20,7 @@ _logger = logging.getLogger(__name__)
 
 class SaleSubscription(models.Model):
     _name = "sale.subscription"
-    _description = "Sale Subscription"
+    _description = "Subscription"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(required=True, track_visibility="always")
@@ -58,6 +58,7 @@ class SaleSubscription(models.Model):
     # add tax calculation
     recurring_amount_tax = fields.Float('Taxes', compute="_amount_all")
     recurring_amount_total = fields.Float('Total', compute="_amount_all")
+    recurring_rule_boundary = fields.Selection(related="template_id.recurring_rule_boundary")
 
     _sql_constraints = [
         ('uuid_uniq', 'unique (uuid)', """UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be unique!"""),
@@ -182,6 +183,15 @@ class SaleSubscription(models.Model):
         if self.partner_id.user_id:
             self.user_id = self.partner_id.user_id
 
+    @api.onchange('date_start', 'template_id')
+    def onchange_date_start(self):
+        if self.recurring_rule_boundary == 'time_bounding':
+            periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
+            self.date = fields.Datetime.from_string(self.date_start) + relativedelta(**{
+                periods[self.recurring_rule_type]: self.template_id.recurring_rule_count * self.template_id.recurring_interval})
+        else:
+            self.date = False
+
     @api.onchange('template_id')
     def on_change_template(self):
         if self.template_id:
@@ -270,10 +280,13 @@ class SaleSubscription(models.Model):
         return self._recurring_create_invoice(automatic=True)
 
     def set_open(self):
-        return self.write({'state': 'open', 'date': False})
+        return self.write({'state': 'open'})
 
     def set_pending(self):
         return self.write({'state': 'pending'})
+
+    def set_restart(self):
+        return self.write({'state': 'draft'})
 
     def set_cancel(self):
         return self.write({'state': 'cancel'})
@@ -306,6 +319,7 @@ class SaleSubscription(models.Model):
         end_date = end_date - relativedelta(days=1)     # remove 1 day as normal people thinks in term of inclusive ranges.
         addr = self.partner_id.address_get(['delivery'])
 
+        sale_order = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)], order="id desc", limit=1)
         return {
             'account_id': self.partner_id.property_account_receivable_id.id,
             'type': 'out_invoice',
@@ -315,7 +329,7 @@ class SaleSubscription(models.Model):
             'journal_id': journal.id,
             'origin': self.code,
             'fiscal_position_id': fpos_id,
-            'payment_term_id': self.partner_id.property_payment_term_id.id,
+            'payment_term_id': sale_order.payment_term_id.id if sale_order else self.partner_id.property_payment_term_id.id,
             'company_id': company.id,
             'comment': _("This invoice covers the following period: %s - %s") % (format_date(self.env, next_date), format_date(self.env, end_date)),
             'user_id': self.user_id.id,
@@ -379,6 +393,7 @@ class SaleSubscription(models.Model):
                     'discount': line.discount,
                 }))
             addr = subscription.partner_id.address_get(['delivery', 'invoice'])
+            sale_order = self.env['sale.order'].search([('order_line.subscription_id', 'in', self.ids)], order="id desc", limit=1)
             res[subscription.id] = {
                 'pricelist_id': subscription.pricelist_id.id,
                 'partner_id': subscription.partner_id.id,
@@ -392,7 +407,7 @@ class SaleSubscription(models.Model):
                 'note': subscription.description,
                 'fiscal_position_id': fpos_id,
                 'user_id': subscription.user_id.id,
-                'payment_term_id': subscription.partner_id.property_payment_term_id.id,
+                'payment_term_id': sale_order.payment_term_id.id if sale_order else subscription.partner_id.property_payment_term_id.id,
             }
         return res
 
@@ -751,7 +766,7 @@ class SaleSubscriptionCloseReason(models.Model):
 
 class SaleSubscriptionTemplate(models.Model):
     _name = "sale.subscription.template"
-    _description = "Sale Subscription Template"
+    _description = "Subscription Template"
     _inherit = "mail.thread"
 
     active = fields.Boolean(default=True)
@@ -764,6 +779,11 @@ class SaleSubscriptionTemplate(models.Model):
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly', track_visibility='onchange')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
+    recurring_rule_boundary = fields.Selection([
+        ('unlimited', 'Unlimited'),
+        ('time_bounding', 'Time bounding')
+        ], string='Period', default='unlimited')
+    recurring_rule_count = fields.Integer(string="End After", default=1)
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
     product_ids = fields.One2many('product.template', 'subscription_template_id', copy=True)
