@@ -244,7 +244,7 @@ class SaleSubscription(models.Model):
     def name_get(self):
         res = []
         for sub in self:
-            name = '%s - %s' % (sub.code, sub.partner_id.sudo().name) if sub.code else sub.partner_id.name
+            name = '%s - %s' % (sub.code, sub.partner_id.sudo().display_name) if sub.code else sub.partner_id.display_name
             res.append((sub.id, '%s/%s' % (sub.template_id.sudo().code, name) if sub.template_id.sudo().code else name))
         return res
 
