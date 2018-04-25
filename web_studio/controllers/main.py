@@ -298,7 +298,7 @@ class WebStudioController(http.Controller):
                                         <strong>Subtitle 1:</strong>
                                     </div>
                                 </div>
-                                <table class="table table-condensed">
+                                <table class="table table-sm">
                                     <thead>
                                         <tr>
                                             <th/>

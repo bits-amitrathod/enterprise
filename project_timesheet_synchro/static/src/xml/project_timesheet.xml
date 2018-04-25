@@ -76,7 +76,7 @@
 
             <div class="pt_activities_screen pt_content">
                 <div class="pt_activities_list_div">
-                    <table class="table table-condensed table-striped pt_activities_list">
+                    <table class="table table-sm table-striped pt_activities_list">
                         <t t-if="widget.getParent().data.account_analytic_lines.length > 0">
                             <t t-foreach="widget.activities_list" t-as="aal">
                                 <t t-set="widget.aal_flag" t-value="true"/>
@@ -305,7 +305,7 @@
                     </div>
                 </div>
                 <svg class="pt_stats_svg"></svg>
-                 <table class="table table-condensed bordered table-striped">
+                 <table class="table table-sm bordered table-striped">
                     <t t-foreach="widget.projects_stats" t-as="project">
                         <tr>
                             <td>

@@ -77,7 +77,7 @@
     // ------- Increase thead and tfoot vertical padding -------
     > thead, > tfoot {
         > tr > * {
-            // List views always have the table-condensed class, maybe we should
+            // List views always have the table-sm class, maybe we should
             // remove it (and consider it does not exist) and change the default
             // table paddings
             padding-top: $table-cell-padding-sm * 1.25;
@@ -162,7 +162,7 @@
 
 // Standalone list views
 .o_content > div > .table-responsive > .o_list_view.table {
-    // List views always have the table-condensed class, maybe we should remove
+    // List views always have the table-sm class, maybe we should remove
     // it (and consider it does not exist) and change the default table paddings
     @include o-list-view-full-width-padding($base: $table-cell-padding-sm, $ratio: 2);
     &:not(.o_list_view_grouped) {

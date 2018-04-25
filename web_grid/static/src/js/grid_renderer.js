@@ -340,7 +340,7 @@ return AbstractRenderer.extend({
         var self = this;
         var col_field = this.state.colField;
         return h('div.o_view_grid', [
-            h('table.table.table-condensed.table-responsive.table-striped', [
+            h('table.table.table-sm.table-responsive.table-striped', [
                 h('thead', [
                     h('tr', [
                         h('th.o_grid_title_header'),

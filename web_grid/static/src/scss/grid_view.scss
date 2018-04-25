@@ -55,7 +55,7 @@
             }
         }
         tr:nth-of-type(odd) th > div:after {
-            background-color: $table-bg-accent;
+            background-color: $table-accent-bg;
         }
 
         .o_grid_cell_information {
@@ -114,11 +114,11 @@
         // row of the tbody) and the row labels of both title and regular rows
         &.o_grid_section {
             tr th {
-                padding-left: 3 * $table-condensed-cell-padding;
+                padding-left: 3 * $table-cell-padding-sm;
             }
             tr:first-child {
                 th {
-                    padding-left: $table-condensed-cell-padding;
+                    padding-left: $table-cell-padding-sm;
                     white-space: nowrap;
                     text-align: left;
                 }
