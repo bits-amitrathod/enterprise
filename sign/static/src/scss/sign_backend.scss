@@ -9,17 +9,17 @@
             &.favorite_sign_button_enabled {
                 color: orange;
                 &:hover {
-                    color: $brand-danger;
+                    color: theme-color('danger');
                 }
             }
         }
 
         .o_signers > span {
             &.o_sign_waiting {
-                color: $brand-danger;
+                color: theme-color('danger');
             }
             &.o_sign_completed {
-                color: $brand-success;
+                color: theme-color('success');
             }
 
             &:before {
@@ -133,11 +133,11 @@
     .o_sign_create_partner {
         .fa-exclamation-circle {
             padding: 0 10px;
-            color: $brand-danger;
+            color: theme-color('danger');
         }
         .fa-check-circle {
             padding-left: 10px;
-            color: $brand-success;
+            color: theme-color('success');
         }
     }
 

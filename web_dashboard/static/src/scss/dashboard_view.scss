@@ -20,7 +20,7 @@
         flex: 1 1 100%;
         margin: 0 $padding $padding*2;
         padding: $padding;
-        border: 1px solid $gray-lighter-darker;
+        border: 1px solid gray('400');
         background-color: white;
         box-shadow: 0px 5px 2px -5px;
 
@@ -63,9 +63,9 @@
             margin-bottom: $padding-small;
             width: 100%;
             padding: 3px $padding-small;
-            border-bottom: 1px solid  $gray-lighter-dark;
+            border-bottom: 1px solid  gray('300');
             font-size: 1.3em;
-            color: $gray-light;
+            color: gray('600');
         }
 
         .o_aggregate, .o_formula {
@@ -99,7 +99,7 @@
                     content: '\f0b0';
                     vertical-align: middle;
                     margin-left: $padding-small;
-                    color: $brand-primary;
+                    color: theme-color('primary');
                     opacity: 0;
                 }
 
@@ -130,7 +130,7 @@
     .o_graph_buttons, .o_pivot_buttons {
         padding: $padding-small $padding;
         margin: (-$padding) (-$padding) $padding-small (-$padding);
-        border-bottom: 1px solid $gray-lighter-darker;
+        border-bottom: 1px solid gray('400');
     }
 
     .o_graph_buttons .btn-group + .btn-group.o_dropdown {

@@ -13,14 +13,15 @@ $gray-200: $o-color-silver; // FIXME keep this or use bootstrap default ? (also 
 $gray-300: #dee2e6 !default; // This is BS default
 $gray-400: #ced4da !default; // This is BS default
 $gray-500: #adb5bd !default; // This is BS default
-$gray-600: $o-color-gray-light !default; // This is BS default
+$gray-600: #6c757d !default; // This is BS default
 $gray-700: #495057 !default; // This is BS default
 $gray-800: #343a40 !default; // This is BS default
 $gray-900: #2F3136 !default; // This is BS default
 $black:    #000 !default; // This is BS default
 
 $primary: $o-brand-primary;
-$success: #00A04A;
+$secondary: $white;
+$success: #00A04A; // FIXME should we really change the default ones ?
 $info: #87C0D1;
 $warning: #F0AD4E;
 $danger: #DC6965;
@@ -36,7 +37,7 @@ $body-color: $o-main-text-color;
 //
 // Style anchor elements.
 
-$link-color: darken($o-brand-optional, 5%);
+$link-color: darken($o-brand-primary, 5%);
 $link-hover-decoration: none;
 
 // Grid columns
@@ -54,7 +55,7 @@ $border-radius-lg: 0;
 $border-radius-sm: 0;
 
 $component-active-color: $gray-200;
-$component-active-bg: $o-brand-optional;
+$component-active-bg: $o-brand-primary;
 
 // Fonts
 //
@@ -120,7 +121,7 @@ $dropdown-link-hover-bg: $gray-300;
 
 $nav-tabs-border-color: transparent;
 $nav-tabs-link-hover-border-color:  gray-light; // FIXME
-$nav-tabs-link-active-color:        $o-brand-optional;
+$nav-tabs-link-active-color:        $o-brand-primary;
 $nav-tabs-link-active-bg:           $gray-200;
 $nav-tabs-link-active-border-color: transparent;
 

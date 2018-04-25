@@ -35,14 +35,14 @@
     .o_form_sheet_bg {
         flex: 1 0 auto;
         background-color: $o-webclient-background-color;
-        border-bottom: 1px solid $gray-lighter-dark;
+        border-bottom: 1px solid gray('300');
 
         > .o_form_sheet {
             @include make-container();
             @include make-container-max-widths();
 
             background-color: $o-view-background-color;
-            border: 1px solid $gray-lighter-darker;
+            border: 1px solid gray('400');
             box-shadow: 0 5px 20px -15px black;
             margin: $o-sheet-vpadding*0.2 auto;
             @include media-breakpoint-up(md) {
@@ -94,13 +94,13 @@
         // Use box-shadow instead of border-bottom because some button boxes are
         // empty in some cases and we do not want to see a floating border in
         // that cases.
-        box-shadow: inset 0 -1px 0 $gray-lighter-darker;
+        box-shadow: inset 0 -1px 0 gray('400');
 
         &.o_full .oe_stat_button:not(.o_invisible_modifier) ~ .oe_stat_button {
-            border-left: 1px solid $gray-lighter-darker;
+            border-left: 1px solid gray('400');
         }
         &.o_not_full .oe_stat_button {
-            border-left: 1px solid $gray-lighter-darker;
+            border-left: 1px solid gray('400');
         }
 
         > .btn.oe_stat_button, > .o_dropdown_more {
@@ -165,7 +165,7 @@
                 .o_stat_value {
                     @include o-text-overflow(block);
                     font-weight: 700;
-                    color: $o-brand-primary;
+                    color: $o-brand-odoo;
                     line-height: 1.2;
                 }
                 > .o_stat_text {
@@ -195,7 +195,7 @@
             @include o-position-absolute(100%, 0);
             min-width: 0;
             border: none;
-            border: 1px solid $gray-lighter-dark;
+            border: 1px solid gray('300');
             margin: 0;
             padding: 0;
             @include media-breakpoint-down(sm) {
@@ -208,11 +208,11 @@
             > .btn.oe_stat_button {
                 width: 100%;
                 border: none;
-                border-bottom: 1px solid $gray-lighter-dark;
+                border-bottom: 1px solid gray('300');
 
                 @include media-breakpoint-down(sm) {
                     width: percentage(1/3);
-                    border-right: 1px solid $gray-lighter-darker;
+                    border-right: 1px solid gray('400');
                 }
             }
         }
@@ -279,7 +279,7 @@
     // Notebooks
     .o_notebook {
         > .nav.nav-tabs {
-            border-bottom: 1px solid $gray-lighter-darker;
+            border-bottom: 1px solid gray('400');
             @include o-form-sheet-negative-margin;
             @include o-form-sheet-inner-left-padding;
 
@@ -287,7 +287,7 @@
                 > .nav-link {
                     color: $body-color;
                     border: none;
-                    background-color: $gray-lighter;
+                    background-color: gray('200');
                     padding: $btn-padding-y-lg $btn-padding-x-lg;
 
                     &:hover, &:focus, &:active {
@@ -296,12 +296,12 @@
                     }
 
                     &.active {
-                        border: 1px solid $gray-lighter-darker;
+                        border: 1px solid gray('400');
                         border-bottom: 0;
 
                         &, &:hover, &:focus, &:active {
                             color: $headings-color;
-                            border-top-color: $o-brand-primary;
+                            border-top-color: $o-brand-odoo;
                             background-color: white;
                         }
                     }
@@ -314,7 +314,7 @@
         }
 
         > .tab-content {
-            border-bottom: 1px solid $gray-lighter-darker;
+            border-bottom: 1px solid gray('400');
 
             > .tab-pane {
                 padding: $o-horizontal-padding 0;
@@ -425,7 +425,7 @@
             }
             // Show "border" if tfoot has content only
             > tfoot > tr {
-                box-shadow: inset 0 1px 0 $gray-lighter-dark;
+                box-shadow: inset 0 1px 0 gray('300');
                 > td {
                     border:none;
 
@@ -445,9 +445,9 @@
 
     // Specific style classes
     .o_group.o_inner_group.oe_subtotal_footer {
-        border-top: 1px solid $gray-lighter-dark;;
+        border-top: 1px solid gray('300');
         .oe_subtotal_footer_separator {
-            border-top: 1px solid $gray-lighter-dark;;
+            border-top: 1px solid gray('300');
         }
     }
 
@@ -493,7 +493,7 @@
             width: $o-chatter-min-width;
             padding: 0;
             overflow: auto;
-            border-left: 1px solid $gray-lighter-dark;
+            border-left: 1px solid gray('300');
             background-color: white;
 
             .o_chatter_topbar {

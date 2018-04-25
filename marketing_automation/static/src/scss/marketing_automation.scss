@@ -1,3 +1,4 @@
+$o-ma-border-color: gray($o-ma-border-color-gray-value);
 
 // ------------------------------------------------------------------
 // Campaign Kanban
@@ -129,7 +130,7 @@
                         @include o-position-absolute($top: 14px, $left: -28px);
                         width: 12px;
                         height: 12px;
-                        border: 2px solid $o-brand-optional;
+                        border: 2px solid $o-brand-primary;
                         border-radius: 10px;
                         background: $o-ma-hierarchy-background;
                     }
@@ -174,7 +175,7 @@
                 color: $o-ma-color-white;
                 font-size: 14px;
                 border-radius: 3px;
-                background: linear-gradient(linear, left top, right bottom, $o-brand-optional, darken($o-brand-optional, 5%));
+                background: linear-gradient(linear, left top, right bottom, $o-brand-primary, darken($o-brand-primary, 5%));
             }
             .o_ma_title {
                 @include o-position-absolute;
@@ -215,7 +216,7 @@
                         border-bottom-color: $o-ma-border-color;
                     }
                     &.active {
-                        color: $o-brand-optional;
+                        color: $o-brand-primary;
                         border-bottom-color: $o-ma-color-white;
                         background-color: $o-ma-color-white;
                     }
@@ -348,7 +349,7 @@
                     border-left-width: 0px;
                 }
                 &.active {
-                    color: $o-brand-optional;
+                    color: $o-brand-primary;
                 }
             }
         }
@@ -365,32 +366,32 @@
 // Colors
 // ------------------------------------------------------------------
 .o_ma_text_processed {
-    color: $o-brand-optional;
+    color: $o-brand-primary;
 }
 .o_ma_text_rejected {
-    color: $brand-danger;
+    color: theme-color('danger');
 }
 .o_ma_text_canceled {
-    color: $brand-warning;
+    color: theme-color('warning');
 }
 .o_ma_text_error {
     color: #8F8F8F;
 }
 .o_ma_text_scheduled {
-    color: $o-brand-primary;
+    color: $o-brand-odoo;
 }
 .o_ma_processed {
-    background-color: $o-brand-optional;
+    background-color: $o-brand-primary;
 }
 .o_ma_rejected {
-    background-color: $brand-danger;
+    background-color: theme-color('danger');
 }
 .o_ma_canceled {
-    background-color: $brand-warning;
+    background-color: theme-color('warning');
 }
 .o_ma_error {
     background-color: #8F8F8F;
 }
 .o_ma_scheduled {
-    background-color: $o-brand-primary;
+    background-color: $o-brand-odoo;
 }

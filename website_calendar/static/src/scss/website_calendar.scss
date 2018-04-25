@@ -2,11 +2,11 @@
     font-size: 16px;
     height: 40px;
     .o_weekend {
-        background-color: $gray-lighter;
+        background-color: gray('200');
     }
     .o_day{
-        background-color: $brand-primary;
-        color: o-get-most-contrast($brand-primary, $body-color, #FFF);
+        background-color: theme-color('primary');
+        color: o-get-most-contrast(theme-color('primary'), $body-color, #FFF);
         cursor: pointer;
         &.dropdown{
             padding: 0px;

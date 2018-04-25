@@ -37,7 +37,7 @@
             visibility: hidden;
             @include o-position-absolute($top: 10px, $right: 25px);
             color: white;
-            background-color: $o-brand-optional;
+            background-color: $o-brand-primary;
         }
 
         &:hover {
@@ -83,7 +83,7 @@
 
             .o_web_studio_app_creator_model_choice {
                 margin-top: 25px;
-                @include o-web-studio-checkbox($body-color, $o-web-studio-bg-medium, $o-web-studio-bg-dark, white, $gray-light);
+                @include o-web-studio-checkbox($body-color, $o-web-studio-bg-medium, $o-web-studio-bg-dark, white, gray('600'));
             }
 
             .o_web_studio_app_creator_model {
@@ -140,8 +140,8 @@
             &.is_ready {
                 opacity: 1;
                 cursor: pointer;
-                background-color: $o-brand-optional;
-                border-color: darken($o-brand-optional, 3%);
+                background-color: $o-brand-primary;
+                border-color: darken($o-brand-primary, 3%);
                 color: white;
                 transition: all 0.3s ease 0s;
                 transition-property: padding background;
@@ -153,8 +153,8 @@
                 }
 
                 &:hover, &:focus {
-                    background-color: lighten($o-brand-optional, 2%);
-                    border-color: $o-brand-optional;
+                    background-color: lighten($o-brand-primary, 2%);
+                    border-color: $o-brand-primary;
                     color: white;
                 }
             }
