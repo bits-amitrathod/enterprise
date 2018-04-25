@@ -2,7 +2,7 @@
 <templates>
 
 <t t-name="web_studio.Sidebar.Parameters" t-if="widget.debug">
-    <button class="btn btn-default o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
+    <button class="btn btn-secondary o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Remove">
@@ -22,7 +22,7 @@
 </div>
 
 <t t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
-    <button class="btn btn-default o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
+    <button class="btn btn-secondary o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Toolbox">
@@ -384,7 +384,7 @@
                 </t>
 
                 <t t-if="_.contains(['list', 'form'], widget.view_type)">
-                    <button class="btn btn-default o_web_studio_defaults">Default Values</button>
+                    <button class="btn btn-secondary o_web_studio_defaults">Default Values</button>
                 </t>
             </t>
         </t>
@@ -696,8 +696,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
-                <button t-if="rainbow.img_url" class="btn btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
+                <button class="btn btn-secondary o_img_upload"><i class="fa fa-upload"/> Change Image</button>
+                <button t-if="rainbow.img_url" class="btn btn-secondary o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
             </div>
             <span class="d-none">
                 <t t-call="HiddenInputFile">

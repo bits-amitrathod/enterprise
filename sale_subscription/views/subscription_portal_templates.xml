@@ -146,7 +146,7 @@
                         <div><strong>Next invoice: <span t-field="account.recurring_next_date"/></strong></div>
                         <a t-if="account.state=='open' and account.template_id and display_change_plan" role="button" class="mt8 btn btn-primary" t-att-href="'/my/subscription/'+str(account.id)+'/change'+'?uuid='+str(account.uuid)">Change plan</a>
                         <div>Payment method: <t t-esc="account.payment_token_id.short_name"/></div>
-                        <a role="button" class="mt8 btn btn-default" href="?change_pm">Change Payment Method</a>
+                        <a role="button" class="mt8 btn btn-secondary" href="?change_pm">Change Payment Method</a>
                     </div>
                     <div t-if="account.user_id">
                         <a name="wc-your-contact"/>
@@ -174,7 +174,7 @@
                                         year(s)
                                     </t>
                         by paying your invoice.</p>
-                        <a role="button" class="mt8 btn btn-default" href="" id="wc-close-account" data-toggle="modal" data-target="#wc-modal-close">Close your account</a>
+                        <a role="button" class="mt8 btn btn-secondary" href="" id="wc-close-account" data-toggle="modal" data-target="#wc-modal-close">Close your account</a>
                     </div>
                     <div class="oe_structure"/>
                 </div>
@@ -214,7 +214,7 @@
                                 </div>
                             </main>
                             <footer class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 <button class="btn btn-primary contract-submit">Confirm</button>
                             </footer>
                         </form>

@@ -57,8 +57,8 @@ var FollowupFormRenderer = FormRenderer.extend({
      */
     renderAutoReminder: function (date) {
         this.$('.o_account_reports_next_action_date').html(date);
-        this.$('.o_account_reports_followup_manual').toggleClass('btn-default btn-primary');
-        this.$('.o_account_reports_followup_auto').toggleClass('btn-default btn-primary');
+        this.$('.o_account_reports_followup_manual').toggleClass('btn-secondary btn-primary');
+        this.$('.o_account_reports_followup_auto').toggleClass('btn-secondary btn-primary');
         this.$('div.o_account_reports_next_action_date_picker').hide();
         this.$('.o_account_reports_next_action_date').show();
     },
@@ -82,8 +82,8 @@ var FollowupFormRenderer = FormRenderer.extend({
      * datepicker.
      */
     renderManualReminder: function () {
-        this.$('.o_account_reports_followup_manual').toggleClass('btn-default btn-primary');
-        this.$('.o_account_reports_followup_auto').toggleClass('btn-default btn-primary');
+        this.$('.o_account_reports_followup_manual').toggleClass('btn-secondary btn-primary');
+        this.$('.o_account_reports_followup_auto').toggleClass('btn-secondary btn-primary');
         this.$('div.o_account_reports_next_action_date_picker').show();
         this.$('.o_account_reports_next_action_date').hide();
     },
@@ -135,12 +135,12 @@ var FollowupFormRenderer = FormRenderer.extend({
         this.nextActionDatePicker.setValue(moment());
         if (this.state.data.next_action === 'auto'){
             $element.find('div.o_account_reports_next_action_date_picker').hide();
-            $element.find('.o_account_reports_followup_manual').addClass('btn-default');
+            $element.find('.o_account_reports_followup_manual').addClass('btn-secondary');
             $element.find('.o_account_reports_followup_auto').addClass('btn-primary');
             $element.find('.o_account_reports_next_action_date').html(this.state.data.next_action_date_auto);
         } else {
             $element.find('.o_account_reports_followup_manual').addClass('btn-primary');
-            $element.find('.o_account_reports_followup_auto').addClass('btn-default');
+            $element.find('.o_account_reports_followup_auto').addClass('btn-secondary');
             $element.find('.o_account_reports_next_action_date').hide();
             this.nextActionDatePicker.setValue(new moment(this.state.data.next_action_date));
         }

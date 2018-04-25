@@ -104,7 +104,7 @@ var FollowupFormController = FormController.extend({
      */
     _removeHighlightEmail: function () {
         this.$buttons.find('button.o_account_reports_followup_send_mail_button')
-            .removeClass('btn-primary').addClass('btn-default');
+            .removeClass('btn-primary').addClass('btn-secondary');
     },
     /**
      * Remove the highlight on Print Letter button.
@@ -113,7 +113,7 @@ var FollowupFormController = FormController.extend({
      */
     _removeHighlightPrint: function () {
         this.$buttons.find('button.o_account_reports_followup_print_letter_button')
-            .removeClass('btn-primary').addClass('btn-default');
+            .removeClass('btn-primary').addClass('btn-secondary');
     },
     /**
      * @override

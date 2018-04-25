@@ -57,27 +57,27 @@ FollowupFormController.include({
         var followupLevel = this.model.get(this.handle).data.followup_level;
         if (followupLevel.send_letter) {
             this.$buttons.find('button.o_account_reports_followup_print_letter_button')
-                .removeClass('btn-default').addClass('btn-primary');
+                .removeClass('btn-secondary').addClass('btn-primary');
         } else {
             this.$buttons.find('button.o_account_reports_followup_print_letter_button')
-                .removeClass('btn-primary').addClass('btn-default');
+                .removeClass('btn-primary').addClass('btn-secondary');
         }
         if (followupLevel.send_email) {
             this.$buttons.find('button.o_account_reports_followup_send_mail_button')
-                .removeClass('btn-default').addClass('btn-primary');
+                .removeClass('btn-secondary').addClass('btn-primary');
         } else {
             this.$buttons.find('button.o_account_reports_followup_send_mail_button')
-                .removeClass('btn-primary').addClass('btn-default');
+                .removeClass('btn-primary').addClass('btn-secondary');
         }
         if (followupLevel.manual_action) {
             this.$buttons.find('button.o_account_reports_followup_manual_action_button')
                 .html(followupLevel.manual_action_note);
             if (!followupLevel.manual_action_done) {
                 this.$buttons.find('button.o_account_reports_followup_manual_action_button')
-                    .removeClass('btn-default').addClass('btn-primary');
+                    .removeClass('btn-secondary').addClass('btn-primary');
             } else {
                 this.$buttons.find('button.o_account_reports_followup_manual_action_button')
-                    .removeClass('btn-primary').addClass('btn-default');
+                    .removeClass('btn-primary').addClass('btn-secondary');
             }
         } else {
             this.$buttons.find('button.o_account_reports_followup_manual_action_button').hide();

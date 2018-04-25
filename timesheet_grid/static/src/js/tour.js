@@ -28,7 +28,7 @@ tour.register('timesheet_tour', {
     content: _t('Use tasks to track the different type of activities. (e.g. Graphic Design, Programming, Project Management)'),
     position: "right",
     run: function (actions) {
-        actions.auto(".modal-footer .btn-default");
+        actions.auto(".modal-footer .btn-secondary");
     },
 }, {
     trigger: '.o_grid_input',

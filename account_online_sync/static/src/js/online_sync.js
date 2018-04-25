@@ -158,14 +158,14 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
                 self.selected = false;
                 self.$('.js_institution[data-inst-id='+instId+']').removeClass('selected');
                 self.$buttons.find('.js_select_institution').prop('disabled', true);
-                self.$buttons.find('.js_select_institution').toggleClass('btn-primary btn-default');
+                self.$buttons.find('.js_select_institution').toggleClass('btn-primary btn-secondary');
             }
             else {
                 self.selected = instId;
                 self.$buttons.find('.js_select_institution').prop('disabled', false);
                 self.$('.js_institution').removeClass('selected');
                 self.$('.js_institution[data-inst-id='+instId+']').addClass('selected');
-                self.$buttons.find('.js_select_institution').removeClass('btn-default');
+                self.$buttons.find('.js_select_institution').removeClass('btn-secondary');
                 self.$buttons.find('.js_select_institution').addClass('btn-primary');
             }
             self.$('.js_institution_detail:not(.d-none):not(#'+instId+')').addClass('d-none');

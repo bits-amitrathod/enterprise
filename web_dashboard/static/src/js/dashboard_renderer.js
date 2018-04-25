@@ -180,7 +180,7 @@ var DashboardRenderer = FormRenderer.extend({
 
         // render the button to open the view in full screen
         $('<button>')
-            .addClass("btn btn-default fa fa-expand pull-right o_button_switch")
+            .addClass("btn btn-secondary fa fa-expand pull-right o_button_switch")
             .attr({title: 'Full Screen View', viewType: controller.viewType})
             .tooltip()
             .on('click', this._onViewSwitcherClicked.bind(this))

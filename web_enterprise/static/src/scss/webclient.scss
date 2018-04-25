@@ -50,6 +50,20 @@ select { // FIXME buggy 'padding-left'
 }
 
 //------------------------------------------------------------------------------
+// Buttons
+//------------------------------------------------------------------------------
+
+.btn-secondary {
+    // Bootstrap variables do not control the color for btn-secondary text
+    // anymore. All buttons are either assigned the chosen dark or the chosen
+    // light color, automatically according to their background color. Setting
+    // the dark color to be our Odoo green is not a solution as BS would choose
+    // that green as text color for btn-warning / btn-info / ... which is not
+    // what we want.
+    color: $primary;
+}
+
+//------------------------------------------------------------------------------
 // Misc.
 //------------------------------------------------------------------------------
 .o_loading {
@@ -112,11 +126,11 @@ select { // FIXME buggy 'padding-left'
     }
 }
 
-.btn-primary.active, .btn-default.active, .btn-icon.active {
+.btn-primary.active, .btn-secondary.active, .btn-icon.active {
     box-shadow: none;
 }
 
-.btn-primary, .btn-default {
+.btn-primary, .btn-secondary {
     text-transform: uppercase;
 }
 
