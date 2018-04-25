@@ -356,6 +356,7 @@ class AccountPayment(models.Model):
             'customer': self.partner_id.commercial_partner_id,
             'fiscal_position': self.company_id.partner_id.property_account_position_id,
             'invoice': invoice_obj,
+            '_': _, # DO NOT FORWARD PORT! ONLY FOR SAAS-14!!!
         }
 
         values.update(invoice_obj._l10n_mx_get_serie_and_folio(self.name))
@@ -700,4 +701,3 @@ class AccountRegisterPayments(models.TransientModel):
             'l10n_mx_edi_payment_method_id': self.l10n_mx_edi_payment_method_id.id,
         })
         return res
-
