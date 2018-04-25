@@ -3,7 +3,7 @@
 
 from odoo import models, api, _, fields
 from odoo.tools.misc import formatLang
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_is_zero
 from datetime import datetime, timedelta
 
 
@@ -91,6 +91,18 @@ class ReportPartnerLedger(models.AbstractModel):
                 partners[partner]['lines'] = self.env['account.move.line'].search(domain, order='date', limit=81)
             else:
                 partners[partner]['lines'] = self.env['account.move.line'].search(domain, order='date')
+
+        # Add partners with an initial balance != 0 but without any AML in the selected period.
+        prec = self.env.user.company_id.currency_id.rounding
+        missing_partner_ids = initial_bal_results.keys() - results.keys()
+        for partner_id in missing_partner_ids:
+            if not float_is_zero(initial_bal_results[partner_id]['balance'], precision_rounding=prec):
+                partner = self.env['res.partner'].browse(partner_id)
+                partners[partner] = {'balance': 0, 'debit': 0, 'credit': 0}
+                partners[partner]['initial_bal'] = initial_bal_results[partner_id]
+                partners[partner]['balance'] += partners[partner]['initial_bal']['balance']
+                partners[partner]['lines'] = self.env['account.move.line']
+
         return partners
 
     @api.model
