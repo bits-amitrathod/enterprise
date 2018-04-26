@@ -18,6 +18,18 @@ class TestType(models.Model):
             return [('technical_name', 'not in', ['register_consumed_materials', 'dummy', 'picture'])]
 
 
+class MrpRouting(models.Model):
+    _inherit = "mrp.routing"
+
+    @api.multi
+    def action_mrp_workorder_show_steps(self):
+        self.ensure_one()
+        picking_type_id = self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1).id
+        action = self.env.ref('mrp_workorder.action_mrp_workorder_show_steps').read()[0]
+        ctx = dict(self._context, default_picking_type_id=picking_type_id)
+        action.update({'context': ctx})
+        return action
+
 class QualityPoint(models.Model):
     _inherit = "quality.point"
 
@@ -33,18 +45,23 @@ class QualityPoint(models.Model):
     # Used with type register_consumed_materials the product raw to encode.
     component_id = fields.Many2one('product.product', 'Component')
 
-    @api.onchange('product_id')
+    @api.onchange('product_id', 'product_tmpl_id', 'picking_type_id')
     def _onchange_product(self):
         bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', self.product_tmpl_id.id)])
         component_ids = set([])
-        product = self.product_id or self.product_tmpl_id.product_variant_ids[:1]
         for bom in bom_ids:
-            boms_done, lines_done = bom.explode(product, 1.0)
-            component_ids |= {l[0]['product_id']['id'] for l in lines_done}
-        component_ids.discard(product.id)
-        component_ids = list(component_ids)
+            boms_done, lines_done = bom.explode(self.product_id, 1.0)
+            component_ids |= {l[0].product_id.id for l in lines_done}
         routing_ids = bom_ids.mapped('routing_id.id')
-        return {'domain': {'operation_id': [('routing_id', 'in', routing_ids)], 'component_id': [('id', 'in', component_ids)]}}
+        if self.picking_type_id.code == 'mrp_operation':
+            return {
+                'domain': {
+                    'operation_id': [('routing_id', 'in', routing_ids)],
+                    'component_id': [('id', 'in', list(component_ids))],
+                    'product_tmpl_id': [('bom_ids', '!=', False), ('bom_ids.routing_id', '!=', False)],
+                    'product_id': [('variant_bom_ids', '!=', False), ('variant_bom_ids.routing_id', '!=', False)],
+                }
+            }
 
 
 class QualityAlert(models.Model):

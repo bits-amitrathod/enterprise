@@ -14,11 +14,11 @@
 * Cost Structure report (mrp_account)""",
     'data': [
         'data/mrp_workorder_data.xml',
+        'views/quality_views.xml',
         'views/mrp_production_views.xml',
         'views/mrp_routing_views.xml',
         'views/mrp_workorder_views.xml',
         'views/mrp_workcenter_views.xml',
-        'views/quality_views.xml',
     ],
     'qweb': [
         'static/src/xml/widget_template.xml',
