@@ -44,6 +44,7 @@ class RevenueKPIsDashboard(http.Controller):
             'has_template': bool(request.env['sale.subscription.template'].search_count([])),
             'has_def_revenues': bool(request.env['sale.subscription.template'].search([]).mapped('template_asset_category_id')),
             'has_mrr': bool(request.env['account.invoice.line'].search_count([('asset_start_date', '!=', False)])),
+            'sales_team': request.env['crm.team'].search_read([], fields=['name'])
         }
 
     @http.route('/sale_subscription_dashboard/companies_check', type='json', auth='user')

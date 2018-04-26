@@ -32,6 +32,12 @@ def _build_sql_query(fields, tables, conditions, query_args, filters, groupby=No
         conditions.append("sale_subscription.template_id IN %(template_ids)s")
         query_args['template_ids'] = tuple(filters.get('template_ids'))
 
+    if filters.get('sale_team_ids'):
+        tables.append("crm_team")
+        conditions.append("account_invoice.team_id = crm_team.id")
+        conditions.append("crm_team.id IN %(team_ids)s")
+        query_args['team_ids'] = tuple(filters.get('sale_team_ids'))
+
     if filters.get('tag_ids'):
         tables.append("sale_subscription")
         tables.append("account_analytic_tag_sale_subscription_rel")

@@ -79,6 +79,7 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
         this.end_date = this.end_picker.getValue()  || '9999-12-31';
         this.filters.template_ids = this.get_filtered_template_ids();
         this.filters.tag_ids = this.get_filtered_tag_ids();
+        this.filters.sale_team_ids = this.get_filtered_sales_team_ids();
 
         var company_ids = this.get_filtered_company_ids();
 
@@ -128,9 +129,14 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
         }
     },
 
+    get_filtered_sales_team_ids: function() {
+        var $sales_team_inputs = this.$searchview_buttons.find(".selected > .o_sales_team_filter");
+        return _.map($sales_team_inputs, function(el) { return $(el).data('id'); });
+    },
+
     render_filters: function() {
         this.$searchview_buttons = $();
-        if(this.contract_templates.length || this.companies.length || this.tags.length) {
+        if(this.contract_templates.length || this.companies.length || this.tags.length || this.sales_team.length) {
             this.$searchview_buttons = $(QWeb.render("sale_subscription_dashboard.dashboard_option_filters", {widget: this}));
         }
         this.$searchview_buttons.on('click', '.js_tag', function(e) {
@@ -148,6 +154,9 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
         });
         _.each(this.filters.company_ids, function(id) {
             self.$searchview_buttons.find('.o_companies_filter[data-id=' + id + ']').parent().addClass('selected');
+        });
+        _.each(this.filters.sale_team_ids, function(id) {
+            self.$searchview_buttons.find('.o_sales_team_filter[data-id=' + id + ']').parent().addClass('selected');
         });
     },
 
@@ -229,6 +238,7 @@ var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.exte
         this.filters = {
             template_ids: [],
             tag_ids: [],
+            sale_team_ids: [],
             company_ids: [session.company_id],
         };
 
@@ -287,6 +297,7 @@ var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.exte
                 self.has_mrr = result.has_mrr;
                 self.has_def_revenues = result.has_def_revenues;
                 self.has_template = result.has_template;
+                self.sales_team = result.sales_team;
         });
     },
 
@@ -362,6 +373,7 @@ var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.exte
             'filters': this.filters,
             'currency_id': this.currency_id,
             'push_main_state': true,
+            'sales_team': this.sales_team,
         };
         this.load_action("sale_subscription_dashboard.action_subscription_dashboard_report_detailed", options);
     },
@@ -379,6 +391,7 @@ var sale_subscription_dashboard_main = sale_subscription_dashboard_abstract.exte
             'filters': this.filters,
             'currency_id': this.currency_id,
             'push_main_state': true,
+            'sales_team': this.sale_team_ids,
         };
         this.load_action("sale_subscription_dashboard.action_subscription_dashboard_report_forecast", options);
     },
@@ -414,6 +427,7 @@ var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.
         this.companies = options.companies;
         this.filters = options.filters;
         this.currency_id = options.currency_id;
+        this.sales_team = options.sales_team;
 
         this.display_stats_by_plan = !_.contains(['nrr', 'arpu', 'logo_churn'], this.selected_stat);
         this.report_name = this.stat_types[this.selected_stat].name;
@@ -674,6 +688,7 @@ var sale_subscription_dashboard_forecast = sale_subscription_dashboard_abstract.
         this.companies = options.companies;
         this.filters = options.filters;
         this.currency_id = options.currency_id;
+        this.sales_team = options.sales_team;
 
         this.values = {};
     },
