@@ -23,6 +23,9 @@ class SaleSubscription(models.Model):
     _description = "Subscription"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    def _get_default_pricelist(self):
+        return self.env['product.pricelist'].search([('currency_id', '=', self.env.user.company_id.currency_id.id)], limit=1).id
+
     name = fields.Char(required=True, track_visibility="always")
     code = fields.Char(string="Reference", required=True, track_visibility="onchange", index=True, copy=False)
     state = fields.Selection([('draft', 'New'), ('open', 'In Progress'), ('pending', 'To Renew'),
@@ -34,7 +37,7 @@ class SaleSubscription(models.Model):
     tag_ids = fields.Many2many('account.analytic.tag', string='Tags')
     date_start = fields.Date(string='Start Date', default=fields.Date.today)
     date = fields.Date(string='End Date', track_visibility='onchange', help="If set in advance, the subscription will be set to pending 1 month before the date and will be closed on the date set in this field.")
-    pricelist_id = fields.Many2one('product.pricelist', string='Pricelist', required=True)
+    pricelist_id = fields.Many2one('product.pricelist', string='Pricelist', default=_get_default_pricelist, required=True)
     currency_id = fields.Many2one('res.currency', related='pricelist_id.currency_id', string='Currency', readonly=True)
     recurring_invoice_line_ids = fields.One2many('sale.subscription.line', 'analytic_account_id', string='Invoice Lines', copy=True)
     recurring_rule_type = fields.Selection(string='Recurrence', help="Invoice automatically repeat at specified interval", related="template_id.recurring_rule_type", readonly=1)
@@ -179,7 +182,8 @@ class SaleSubscription(models.Model):
 
     @api.onchange('partner_id')
     def onchange_partner_id(self):
-        self.pricelist_id = self.partner_id.property_product_pricelist.id
+        if self.partner_id:
+            self.pricelist_id = self.partner_id.property_product_pricelist.id
         if self.partner_id.user_id:
             self.user_id = self.partner_id.user_id
 
@@ -661,11 +665,14 @@ class SaleSubscriptionLine(models.Model):
     _name = "sale.subscription.line"
     _description = "Subscription Line"
 
+    def _get_default_uom_id(self):
+        return self.env['uom.uom'].search([], limit=1, order='id').id
+
     product_id = fields.Many2one('product.product', string='Product', domain="[('recurring_invoice','=',True)]", required=True)
     analytic_account_id = fields.Many2one('sale.subscription', string='Subscription')
     name = fields.Text(string='Description', required=True)
     quantity = fields.Float(string='Quantity', help="Quantity that will be invoiced.", default=1.0)
-    uom_id = fields.Many2one('uom.uom', string='Unit of Measure', required=True)
+    uom_id = fields.Many2one('uom.uom', default=_get_default_uom_id, string='Unit of Measure', required=True)
     price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
     discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'))
     price_subtotal = fields.Float(compute='_compute_price_subtotal', string='Sub Total', digits=dp.get_precision('Account'), store=True)
@@ -749,6 +756,14 @@ class SaleSubscriptionLine(models.Model):
             if compute_vals:
                 val += compute_vals[0].get('amount', 0)
         return val
+
+    @api.model
+    def create(self, values):
+        if values.get('product_id') and not values.get('name'):
+            line = self.new(values)
+            line.onchange_product_id()
+            values['name'] = line._fields['name'].convert_to_write(line['name'], line)
+        return super(SaleSubscriptionLine, self).create(values)
 
 
 class SaleSubscriptionCloseReason(models.Model):
