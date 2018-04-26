@@ -5,3 +5,4 @@ from . import mrp_bom
 from . import mrp_eco
 from . import mrp_routing
 from . import product
+from . import res_users
