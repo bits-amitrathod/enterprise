@@ -36,6 +36,7 @@ Features:
         'views/assets.xml',
         'views/subscription_portal_templates.xml',
         'views/res_config_settings_views.xml',
+        'views/mail_activity_views.xml',
         'data/sale_subscription_data.xml',
         'data/mail_template_data.xml',
         'report/sale_subscription_report_view.xml',
