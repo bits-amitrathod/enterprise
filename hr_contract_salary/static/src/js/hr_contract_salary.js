@@ -12,6 +12,9 @@ var SalaryPackageWidget = Widget.extend({
     events: {
         "change .advantage_input": "onchange_advantage",
         "change input[name='mobility']": "onchange_mobility",
+        "change input[name='transport_mode_car']": "onchange_mobility",
+        "change input[name='transport_mode_public']": "onchange_mobility",
+        "change input[name='transport_mode_others']": "onchange_mobility",
         "change input[name='representation_fees_radio']": "onchange_representation_fees",
         "change input[name='fuel_card_slider']": "onchange_fuel_card",
         "input input[name='holidays_slider']": "onchange_holidays",
@@ -28,6 +31,11 @@ var SalaryPackageWidget = Widget.extend({
         "click button[name='compute_button']": "compute_net",
         "click a[name='recompute']": "recompute",
         "click button[name='toggle_personal_information']": "toggle_personal_information",
+        "change input[name='ip']": "onchange_ip",
+        "change input[name='others_employee_amount']": "onchange_others",
+        "click #send_email": "send_offer_to_responsible",
+        "change select[name='spouse_professional_situation']": "onchange_spouse_professional_situation",
+        "change input[name='waiting_list']": "onchange_waiting_list",
     },
 
     init: function(parent, options) {
@@ -35,9 +43,6 @@ var SalaryPackageWidget = Widget.extend({
         this.dp = new concurrency.DropPrevious();
         this.update_gross_to_net_computation();
         $("div#company_car select").val() === 'new' ? $("div#new_company_car").removeClass('hidden') : $("div#new_company_car").addClass('hidden')
-        var transport_mode = _.find($("input[name='mobility']"), function(transport_mode) {
-            return transport_mode.checked;
-        }).value;
         this.onchange_mobile();
         this.onchange_internet();
         this.onchange_holidays();
@@ -47,8 +52,7 @@ var SalaryPackageWidget = Widget.extend({
         this.onchange_spouse_fiscal_status();
         this.onchange_other_dependent_people();
         $('body').attr('id', 'hr_contract_salary');
-        $(".mobility-options").addClass('hidden');
-        $(".mobility-options#" + transport_mode).removeClass('hidden');
+        this.onchange_mobility();
         $("a[name='recompute']").addClass("hidden");
         $("#hr_contract_salary select").select2({
             minimumResultsForSearch: -1
@@ -64,6 +68,7 @@ var SalaryPackageWidget = Widget.extend({
         $('b[role="presentation"]').hide();
         $('.select2-arrow').append('<i class="fa fa-chevron-down"></i>');
         this.update_gross = _.debounce(this.update_gross, 1000);
+        this.onchange_ip();
     },
 
     willStart: function() {
@@ -111,6 +116,13 @@ var SalaryPackageWidget = Widget.extend({
             'bank_account': $("input[name='bank_account']").val(),
             'emergency_person': $("input[name='emergency_person']").val(),
             'emergency_phone_number': $("input[name='emergency_phone_number']").val(),
+            'country_of_birth': parseInt($("select[name='country_of_birth']").val()),
+            'place_of_birth': $("input[name='place_of_birth']").val(),
+            'spouse_complete_name': $("input[name='spouse_complete_name']").val(),
+            'spouse_birthdate': $("input[name='spouse_birthdate']").val(),
+            'km_home_work': parseInt($("input[name='km_home_work']").val()),
+            'spouse_professional_situation': $("select[name='spouse_professional_situation']").val(),
+            'job_title': $("input[name='job_title']").val(),
         };
     },
 
@@ -135,13 +147,13 @@ var SalaryPackageWidget = Widget.extend({
         }
         var advantages = {
             'wage': $("input[name='wage']")[0].value,
-            'has_internet': $("input[name='internet']")[0].checked,
+            'internet': $("input[name='internet']")[0].value,
             'has_mobile': $("input[name='mobile']")[0].checked,
             'international_communication': $("input[name='mobile-ic']")[0].checked,
             'fuel_card': parseFloat($("input[name='fuel_card_input']")[0].value) || 0.0,
-            'transport_mode': _.find($("input[name='mobility']"), function(transport_mode) {
-                return transport_mode.checked;
-            }).value,
+            'transport_mode_car': $("input[name='transport_mode_car']")[0].checked,
+            'transport_mode_public': $("input[name='transport_mode_public']")[0].checked,
+            'transport_mode_others': $("input[name='transport_mode_others']")[0].checked,
             'car_employee_deduction': parseFloat($("input[name='car_employee_deduction']")[0].value) || 0.0,
             'holidays': parseFloat($("input[name='holidays_slider']")[0].value) || 0.0,
             'commission_on_target': has_commission ? parseFloat($("input[name='commission_on_target']")[0].value) || 0.0 : 0.0,
@@ -154,9 +166,13 @@ var SalaryPackageWidget = Widget.extend({
             'personal_info': personal_info,
             'meal_voucher_amount': has_meal_voucher ? parseFloat($("input[name='meal_voucher_amount']")[0].value) || 0.0 : 0.0,
             'final_yearly_costs': parseFloat($("input[name='fixed_yearly_costs']")[0].value),
+            'ip': $("input[name='ip']")[0].checked,
+            'ip_wage_rate': $("input[name='ip_wage_rate']").val(),
+            'contract_type': $("input[name='contract_type']").val(),
+            'waiting_list': $("input[name='waiting_list']")[0].checked,
+            'waiting_list_model': parseInt($("select[name='select_waiting_list_model']").val()),
         };
         return advantages;
-
     },
 
     update_gross_to_net_computation: function () {
@@ -215,6 +231,13 @@ var SalaryPackageWidget = Widget.extend({
         $("div[name='compute_loading']").addClass("hidden");
         $("div[name='net']").removeClass("hidden").hide().slideDown( "slow" );
         $("input[name='NET']").removeClass('o_outdated');
+        $("input[name='IP']").val(data['IP']);
+        $("input[name='IP.DED']").val(-data['IP.DED']);
+        var ip_div = $("div[name='ip_div']");
+        data['IP'] ? ip_div.removeClass('hidden') : ip_div.addClass('hidden');
+        $("input[name='TAXED']").val(data['TAXED']);
+        var taxed_div = $("div[name='taxed_div']");
+        data['TAXED'] !== data['NET'] ? taxed_div.removeClass('hidden') : taxed_div.addClass('hidden');
     },
 
     onchange_advantage: function() {
@@ -245,11 +268,35 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     onchange_mobility: function(event) {
-        var transport_mode = event.target.value;
         $(".mobility-options").addClass('hidden');
-        $(".mobility-options#" + transport_mode).removeClass('hidden');
         var fuel_card_div = $("div[name='fuel_card']");
-        event.target.value === 'company_car' ? fuel_card_div.removeClass("hidden") : fuel_card_div.addClass("hidden");
+        if ($("input[name='transport_mode_car']")[0].checked) {
+            $(".mobility-options#company_car").removeClass('hidden');
+            fuel_card_div.removeClass("hidden");
+        } else {
+            $("input[name='fuel_card_input']").val(0.0);
+            $("input[name='fuel_card_slider']").val(0.0);
+            fuel_card_div.addClass("hidden");
+
+        }
+        if ($("input[name='transport_mode_public']")[0].checked){
+            $(".mobility-options#public_transport").removeClass('hidden');
+        }
+        if ($("input[name='transport_mode_others']")[0].checked){
+            $(".mobility-options#others").removeClass('hidden');
+        }
+
+        if (!$("input[name='transport_mode_car']")[0].checked) {
+        }
+    },
+
+    onchange_waiting_list: function() {
+        var select_waiting_list_model = $("select[name='select_waiting_list_model']");
+        if ($("input[name='waiting_list']")[0].checked) {
+            select_waiting_list_model.removeClass('hidden');
+        } else {
+            select_waiting_list_model.addClass('hidden');
+        }
     },
 
     onchange_representation_fees: function(event) {
@@ -287,15 +334,10 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     onchange_internet: function(event) {
-        var has_internet = $("input[name='internet']")[0].checked;
+        var internet = $("input[name='internet']")[0].value;
         var tooltip = $("span#internet_tooltip");
-        has_internet ? tooltip.removeClass("hidden") : tooltip.addClass("hidden");
-        ajax.jsonRpc('/salary_package/onchange_internet', 'call', {
-            'contract_id': parseInt($("input[name='contract']")[0].id),
-            'advantages': this.get_advantages(),
-        }).then(function(data) {
-            $("input[name='internet_amount']").val(data['internet']);
-        });
+        internet ? tooltip.removeClass("hidden") : tooltip.addClass("hidden");
+        $("input[name='internet_amount']").val(internet);
     },
 
     onchange_car_id: function(event) {
@@ -336,13 +378,29 @@ var SalaryPackageWidget = Widget.extend({
     onchange_marital: function(event) {
         var marital = $("select[name='marital']").val();
         var spouse_info_div = $("div[name='spouse_information']");
-        marital === 'married' ? spouse_info_div.removeClass('hidden') : spouse_info_div.addClass('hidden');
+        $("div[name='spouse_fiscal_status']").addClass("hidden");
+        var spouse_professional_situation_div = $("div[name='spouse_professional_situation']");
+        if (marital === 'married' || marital === 'cohabitant') {
+            spouse_info_div.removeClass('hidden');
+            $("input[name='spouse_birthdate']").attr('required', '');
+            $("input[name='spouse_complete_name']").attr('required', '');
+            $("input[name='spouse_professional_situation']").attr('required', '');
+            $("input[name='disabled_spouse_bool']").attr('required', '');
+            spouse_professional_situation_div.removeClass('hidden');
+        } else {
+            spouse_info_div.addClass('hidden');
+            $("input[name='spouse_birthdate']").removeAttr('required');
+            $("input[name='spouse_complete_name']").removeAttr('required');
+            $("input[name='spouse_professional_situation']").removeAttr('required');
+            $("input[name='disabled_spouse_bool']").removeAttr('required');
+            spouse_professional_situation_div.addClass('hidden');
+        }
     },
 
     onchange_spouse_fiscal_status: function(event) {
         var fiscal_status = $("select[name='spouse_fiscal_status']").val();
         var spouse_revenue_info_div = $("div[name='spouse_revenue_information']");
-        fiscal_status === "with income" ? spouse_revenue_info_div.removeClass("hidden") : spouse_revenue_info_div.addClass("hidden")
+        spouse_revenue_info_div.addClass("hidden");
     },
 
     onchange_disabled_children: function(event) {
@@ -355,6 +413,40 @@ var SalaryPackageWidget = Widget.extend({
         var other_dependent_people = $("input[name='other_dependent_people']")[0].checked;
         var other_dependent_people_div = $("div[name='other_dependent_people_info']");
         other_dependent_people ? other_dependent_people_div.removeClass('hidden') : other_dependent_people_div.addClass('hidden');
+    },
+
+    onchange_ip: function(event) {
+        var has_ip = $("input[name='ip']")[0].checked;
+        var tooltip = $("span#ip_tooltip");
+        has_ip ? tooltip.removeClass("hidden") : tooltip.addClass("hidden");
+    },
+
+    onchange_others: function() {
+        $("input[name='others_reimbursed_amount']").val($("input[name='others_employee_amount']").val());
+    },
+
+    onchange_spouse_professional_situation: function() {
+        var situation = $("select[name='spouse_professional_situation']").val();
+        if (situation === 'without_income') {
+            $("select[name='spouse_fiscal_status']").val("without income").change();
+            $("input[name='spouse_net_revenue']").val(0);
+            $("input[name='spouse_other_net_revenue']").val(0);
+        } else {
+            $("select[name='spouse_fiscal_status']").val("with income").change();
+            if (situation === 'low_income') {
+                $("input[name='spouse_net_revenue']").val(1);
+                $("input[name='spouse_other_net_revenue']").val(0);
+            } else if (situation === 'high_income') {
+                $("input[name='spouse_net_revenue']").val(500);
+                $("input[name='spouse_other_net_revenue']").val(0);
+            } else if (situation === 'low_pension') {
+                $("input[name='spouse_net_revenue']").val(0);
+                $("input[name='spouse_other_net_revenue']").val(1);
+            } else if (situation === 'high_pension') {
+                $("input[name='spouse_net_revenue']").val(0);
+                $("input[name='spouse_other_net_revenue']").val(500);
+            }
+        }
     },
 
     recompute: function(event) {
@@ -371,7 +463,7 @@ var SalaryPackageWidget = Widget.extend({
         var dotpos = email.lastIndexOf(".");
         var invalid_email = atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length;
         if(required_empty_input || required_empty_select) {
-            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + _t('Some required fields are not filled') + "</div>");
+            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + _('Some required fields are not filled') + "</div>");
             _.each($("input:required"), function(input) {
                 if (input.value === '') {
                     $(input).addClass('bg-danger');
@@ -390,7 +482,7 @@ var SalaryPackageWidget = Widget.extend({
         }
         if (invalid_email) {
             $("input[name='email']").addClass('bg-danger');
-            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + _t('Not a valid e-mail address') + "</div>");
+            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + _('Not a valid e-mail address') + "</div>");
             $("section#hr_cs_personal_information")[0].scrollIntoView({block: "end", behavior: "smooth"});
         } else {
             $("input[name='email']").removeClass('bg-danger');
@@ -406,7 +498,26 @@ var SalaryPackageWidget = Widget.extend({
             'contract_id': parseInt($("input[name='contract']")[0].id),
             'token': $("input[name='token']").val(),
             'advantages': this.get_advantages(),
+            'applicant_id': parseInt($("input[name='applicant_id']").val()) || false,
+            'employee_contract_id': parseInt($("input[name='employee_contract_id']").val()) || false,
+            'original_link': $("input[name='original_link']").val()
         };
+    },
+
+    send_offer_to_responsible: function(event) {
+        if (this.check_form_validity()) {
+            ajax.jsonRpc('/salary_package/send_email/', 'call', {
+                'contract_id': parseInt($("input[name='contract']")[0].id),
+                'token': $("input[name='token']").val(),
+                'advantages': this.get_advantages(),
+                'applicant_id': parseInt($("input[name='applicant_id']").val()) || false,
+                'original_link': $("input[name='original_link']").val(),
+                'contract_type': $("input[name='contract_type']").val(),
+                'job_title': $("input[name='job_title']").val(),
+            }).then(function (data) {
+                document.location.pathname = '/salary_package/thank_you/' + data;
+            });
+        }
     },
 
     submit_salary_package: function(event) {

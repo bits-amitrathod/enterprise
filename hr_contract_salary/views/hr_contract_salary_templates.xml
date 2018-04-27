@@ -26,6 +26,18 @@
                                 </div>
 
                                 <input type="hidden" name="token" t-att-value="token"/>
+                                <input type="hidden" name="applicant_id" t-att-value="applicant_id"/>
+                                <input type="hidden" name="employee_contract_id" t-att-value="employee_contract_id"/>
+                                <input type="hidden" name="original_link" t-att-value="original_link"/>
+                                <input type="hidden" name="contract_type" t-att-value="contract_type"/>
+                                <input type="hidden" name="job_title" t-att-value="job_title"/>
+
+                                <div class="col-sm-12">
+                                    <p class='text-muted'>
+                                        This is the <b>average salary package</b> for your experience. Top performers get <b>up to 50% more</b>
+                                        and people below expectations get 20% less.
+                                    </p>
+                                </div>
 
                                 <!-- Configuration -->
                                 <div id="hr_cs_configurator" class="col-md-9 col-lg-8">
@@ -42,27 +54,12 @@
                                             </label>
 
                                             <div class="col-sm-7">
-                                                <label class="hr_cs_control hr_cs_control_radio">Company Car
-                                                    <input type="radio" name="mobility" value="company_car" t-att-checked="contract.transport_mode == 'company_car'" class="advantage_input"/>
-                                                    <div class="hr_cs_control_indicator"/>
-                                                </label>
-                                                <label class="hr_cs_control hr_cs_control_radio">Public Transportation
-                                                    <input type="radio" name="mobility" value="public_transport" t-att-checked="contract.transport_mode == 'public_transport'" class="advantage_input"/>
-                                                    <div class="hr_cs_control_indicator"/>
-                                                </label>
-                                                <label class="hr_cs_control hr_cs_control_radio">Other
-                                                    <input type="radio" name="mobility" value="others" t-att-checked="contract.transport_mode == 'others'" class="advantage_input"/>
-                                                    <div class="hr_cs_control_indicator"/>
-                                                </label>
-                                            </div>
-
-                                            <!-- Other transport -->
-                                            <div class="mobility-options col-sm-2" id="others">
-                                                <div class="input-group">
-                                                    <input class="form-control" type="text" t-att-value="contract.others_reimbursed_amount or '0'" name="others_reimbursed_amount" disabled="disabled"/>
-                                                    <div class="input-group-addon">€</div>
-                                                </div>
-                                            </div>
+                                                <label class="hr_cs_control hr_cs_control_checkbox">
+                                                    Company Car
+                                                    <input type="checkbox" name="transport_mode_car" t-att-checked="contract.transport_mode_car" class="advantage_input"/>
+                                                     <div class="hr_cs_control_indicator"/>
+                                                 </label>
+                                             </div>
 
                                             <!-- Company Car -->
                                             <div class="mobility-options" id="company_car">
@@ -72,9 +69,9 @@
                                                         <t t-foreach="available_cars" t-as="car">
                                                             <option t-att-value="'old-'+str(car.id)" t-att-selected="not contract.new_car and contract.car_id.id == car.id"><t t-esc="car.model_id.brand_id.name + '/' + car.model_id.name + u' \u2022 ' + str(round(car.total_depreciated_cost, 2)) + u' € \u2022 ' + car._get_acquisition_date()"/></option>
                                                         </t>
-                                                        <t t-if="contract.available_cars_amount &lt; max_unused_cars">
+                                                        <t t-if="new_car or contract.available_cars_amount &lt; max_unused_cars">
                                                             <t t-foreach="can_be_requested_models" t-as="model">
-                                                                <option t-att-value="'new-'+str(model.id)" t-att-selected="contract.new_car and contract.new_car_model_id.id == model.id"><t t-esc="model.name_get()[0][1] + u' €  \u2022 New Car'"/></option>
+                                                                <option t-att-value="'new-'+str(model.id)" t-att-selected="contract.new_car and contract.new_car_model_id.id == model.id"><t t-esc="model.name_get()[0][1] + u' \u2022 ' + str(round(model.default_total_depreciated_cost, 2)) + u' €  \u2022 New Car'"/></option>
                                                             </t>
                                                         </t>
                                                     </select>
@@ -90,6 +87,17 @@
                                                     <!-- <span><t t-esc="contract.available_cars_amount"/></span> -->
                                                     <span class="help-block mt8">The cost of a car is depreciated by 8% per year, for 7 years. So, your gross salary increases automatically to keep the same employee budget. Once a car has 7 years, the car is fully depreciated and the only remaining costs are the maintenance, insurances and taxes.</span>
                                                     <span t-if="contract.available_cars_amount &lt; max_unused_cars" class="help-block mt8" name="new_car_message">This cost simulation is only for information. If you want to choose another car model, please contact your HR manager.</span>
+                                                    <div class="row" t-att-class="'hidden' if (new_car or applicant_id or contract.available_cars_amount &lt; max_unused_cars) else ''">
+                                                        <label class="hr_cs_control hr_cs_control_checkbox col-sm-offset-1 mt16">
+                                                            <input type="checkbox" name="waiting_list"/>add me to the waiting list for a new car
+                                                            <div class="hr_cs_control_indicator"/>
+                                                        </label>
+                                                        <select name="select_waiting_list_model" class="form-control form-control-primary mt16 mb8 hidden">
+                                                            <t t-foreach="can_be_requested_models" t-as="model">
+                                                                <option t-att-value="model.id"><t t-esc="model.name_get()[0][1] + u' \u2022 ' + str(round(model.default_total_depreciated_cost, 2)) + u' €  \u2022 New Car'"/></option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2 mt24">
                                                     <div class="input-group">
@@ -100,6 +108,14 @@
                                             </div>
 
                                             <!-- Public transport -->
+                                            <div class="col-sm-7 col-sm-offset-3 mt8">
+                                                <label class="hr_cs_control hr_cs_control_checkbox">
+                                                    Public Transportation
+                                                    <input type="checkbox" name="transport_mode_public" t-att-checked="contract.transport_mode_public" class="advantage_input"/>
+                                                    <div class="hr_cs_control_indicator"/>
+                                                </label>
+                                            </div>
+
                                             <div class="mobility-options" id="public_transport">
                                                 <div class="col-sm-7 col-sm-offset-3">
                                                     <input class="form-control form-control-primary mt16 mb8 advantage_input" type="number" t-att-value="contract.public_transport_employee_amount or '0'" name="public_transport_employee_amount"/>
@@ -113,6 +129,27 @@
                                                 </div>
                                             </div>
 
+                                            <!-- Other transport -->
+                                            <div class="col-sm-7 col-sm-offset-3 mt8">
+                                                <label class="hr_cs_control hr_cs_control_checkbox">
+                                                    Other Transport Mode
+                                                    <input type="checkbox" name="transport_mode_others" t-att-checked="contract.transport_mode_others" class="advantage_input"/>
+                                                    <div class="hr_cs_control_indicator"/>
+                                                </label>
+                                            </div>
+
+                                            <div class="mobility-options" id="others">
+                                                <div class="col-sm-7 col-sm-offset-3">
+                                                    <input class="form-control form-control-primary mt16 mb8 advantage_input" type="number" t-att-value="contract.others_reimbursed_amount or '0'" name="others_employee_amount"/>
+                                                    <span class="help-block mt8">Enter the monthly amount that should be reimbursed by your employer on transportation (other than public) to go to work.</span>
+                                                </div>
+                                                <div class="col-sm-2 mt24">
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" t-att-value="contract.others_reimbursed_amount or '0'" name="others_reimbursed_amount" disabled="disabled"/>
+                                                        <div class="input-group-addon">€</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -123,15 +160,8 @@
                                                 <i class="fa fa-1x fa-globe fa-fw fa-lg"/> Internet Subscription
                                             </label>
                                             <div class="col-sm-7">
-                                                <label class="hr_cs_control hr_cs_control_radio">
-                                                    <input type="radio" name="internet" value="1" t-att-checked="contract.internet" class="advantage_input"/> Yes
-                                                    <div class="hr_cs_control_indicator"/>
-                                                </label>
-                                                <label class="hr_cs_control hr_cs_control_radio">
-                                                    <input type="radio" name="internet" value="0" t-att-checked="not contract.internet" class="advantage_input"/> No
-                                                    <div class="hr_cs_control_indicator hr_cs_control_no"/>
-                                                </label>
-                                                <span class="help-block mt8" id="internet_tooltip">Your internet subscription will be paid up to this amount.</span>
+                                                <input class="form-control form-control-primary mb8 advantage_input" type="number" t-att-value="contract.internet or '0'" name="internet"/>
+                                                <span class="help-block mt8" id="internet_tooltip">Enter the amount of your internet subscription invoice. If you have a pack only the internet part of your operator subscription will be paid by the employer.</span>
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
@@ -231,23 +261,49 @@
                                                         <input type="radio" name="representation_fees_radio" value="0.0" t-att-checked="contract.representation_fees == 0.0" class="advantage_input"/>
                                                         <div class="hr_cs_control_indicator"/>
                                                     </label>
-                                                    <label class="hr_cs_control hr_cs_control_radio">110 €
+                                                    <label t-att-class="'hr_cs_control hr_cs_control_radio' + (' hidden' if customer_relation else '')">110 €
                                                         <input type="radio" name="representation_fees_radio" value="110.0" t-att-checked="contract.representation_fees == 110.0" class="advantage_input"/>
                                                         <div class="hr_cs_control_indicator"/>
                                                     </label>
-                                                    <label class="hr_cs_control hr_cs_control_radio">150 €
+                                                    <label t-att-class="'hr_cs_control hr_cs_control_radio' + (' hidden' if not customer_relation else '')">150 €
                                                         <input type="radio" name="representation_fees_radio" value="150.0" t-att-checked="contract.representation_fees == 150.0" class="advantage_input"/>
                                                         <div class="hr_cs_control_indicator"/>
                                                     </label>
                                                 </div>
 
-                                                <div class="col-sm-7 col-sm-offset-3 mt8">
-                                                    <span class="help-block">This is a monthly net amount, taken into account in your payslip.</span>
-                                                </div>
                                                 <div class="col-sm-2">
                                                     <div class="input-group">
                                                         <input class="form-control" type="text" t-att-value="contract.representation_fees" disabled="disabled" name="representation_fees"/>
                                                         <div class="input-group-addon">€</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7 col-sm-offset-3 mt8">
+                                                    <span class="help-block">This is a monthly net amount, taken into account in your payslip.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div t-att-class="'form-group' + (' hidden' if not contract.ip_wage_rate else '')">
+                                            <div class="row">
+                                                <label class="col-sm-3 control-label">
+                                                    <i class="fa fa-1x fa-puzzle-piece fa-fw fa-lg"/> Intellectual Property
+                                                </label>
+                                                <div class="col-sm-7">
+                                                    <label class="hr_cs_control hr_cs_control_radio">
+                                                        <input type="radio" name="ip" value="1" t-att-checked="contract.ip" class="advantage_input"/> Yes
+                                                        <div class="hr_cs_control_indicator"/>
+                                                    </label>
+                                                    <label class="hr_cs_control hr_cs_control_radio">
+                                                        <input type="radio" name="ip" value="0" t-att-checked="not contract.ip" class="advantage_input"/> No
+                                                        <div class="hr_cs_control_indicator hr_cs_control_no"/>
+                                                    </label>
+                                                    <span class="help-block mt8" id="ip_tooltip">As Odoo invests massively in developing and writing Intellectual Property content, we benefit from fiscal ruling allowing us to pay a part of employee's salary as an intellectual property income instead of a regular salary. This amount will be paid in cash every month and is less taxed.</span>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" t-att-value="contract.ip_wage_rate" disabled="disabled" name="ip_wage_rate"/>
+                                                        <div class="input-group-addon">%</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -386,6 +442,11 @@
                                 
                                 <!-- Sidebar -->
                                 <div id="hr_cs_sidebar" class="col-md-3 col-lg-offset-1">
+                                    <t t-if="redirect_to_job">
+                                        <a t-att-href="'https://www.odoo.com/jobs/detail/' + redirect_to_job" target="_new">
+                                            <button type="button" id="apply_now" class="hr_cs_btn_submit btn">Apply Now</button>
+                                        </a>
+                                    </t>
 
                                     <h2>Monthly Salary</h2>
                                     
@@ -503,8 +564,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <t t-if="simulation and not redirect_to_job">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div>
+                                                    <button type="button" id="send_email" class="hr_cs_btn_submit btn">Send to Responsible</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+
                                     <t t-if="submit">
                                         <button type="button" id="hr_cs_submit" class="btn hr_cs_btn_submit" name="submit1">Review Contract &amp; Sign</button>
+                                        <div class="alert alert-danger hidden" name="scale_alert">
+                                            Your gross salary is below the scale. You can change values of the configurator to increase the gross according to the CP 200 scales.
+                                        </div>
                                     </t>
                                 </div>
                             </div>
@@ -526,14 +600,14 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-sm-8" name="personal_info">
+                                <div t-att-class="'col-sm-8' if need_personal_information else 'col-sm-8 hidden'" name="personal_info">
 
                                     <!-- Name + Gender -->
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Name</label>
-                                                <input type="text" name="name" class="form-control" required="required" t-att-value="contract.employee_id.name or ''"/>
+                                                <input type="text" name="name" class="form-control" required="required" t-att-value="contract.employee_id.name if contract.employee_id.name != 'Simulation Employee' else ''"/>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -559,7 +633,27 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Birthdate</label>
-                                                <input type="date" name="birthdate" class="form-control" required="required" t-att-value="contract.employee_id.birthday"/>
+                                                <input type="date" name="birthdate" class="form-control advantage_input" required="required" t-att-value="contract.employee_id.birthday"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Country of birth</label>
+                                                <select name="country_of_birth" class="form-control" data-placeholder="Select a country" required="required">
+                                                    <option/>
+                                                    <t t-foreach="countries" t-as="country">
+                                                      <option t-att-value="country.id" t-att-selected="contract.employee_id.country_of_birth.name == country.name"><t t-esc="country.name"/></option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Place of birth</label>
+                                                <input type="text" name="place_of_birth" class="form-control" required="required" t-att-value="contract.employee_id.place_of_birth"/>
                                             </div>
                                         </div>
                                     </div>
@@ -629,6 +723,12 @@
                                                       <option t-att-value="country.id" t-att-selected="contract.employee_id.address_home_id.country_id.name == country.name"><t t-esc="country.name"/></option>
                                                   </t>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Km Home to Work</label>
+                                                <input type="number" name="km_home_work" class="form-control" t-att-value="contract.employee_id.km_home_work" required="required"/>
                                             </div>
                                         </div>
                                     </div>
@@ -718,7 +818,7 @@
 
                                 </div>
 
-                                <div class="col-md-3 col-lg-offset-1" name="personal_info_withholding_taxes">
+                                <div t-att-class="'col-md-3' + (' col-lg-offset-1' if need_personal_information else '')" name="personal_info_withholding_taxes">
 
                                     <div class="form-group">
                                         <label class="hr_cs_control hr_cs_control_checkbox">Disabled
@@ -733,7 +833,8 @@
                                         <select name="marital" class="form-control advantage_input" data-placeholder="Select a status">
                                             <option/>
                                             <option value="single" t-att-selected="contract.employee_id.marital == 'single'">Single</option>
-                                            <option value="married" t-att-selected="contract.employee_id.marital == 'married'">Married / Legal Cohabitant</option>
+                                            <option value="married" t-att-selected="contract.employee_id.marital == 'married'">Married</option>
+                                            <option value="cohabitant" t-att-selected="contract.employee_id.marital == 'cohabitant'">Legal Cohabitant</option>
                                             <option value="widower" t-att-selected="contract.employee_id.marital == 'widower'">Widower</option>
                                             <option value="divorced" t-att-selected="contract.employee_id.marital == 'divorced'">Divorced</option>
                                         </select>
@@ -747,14 +848,24 @@
                                                 <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
                                             </label>
                                         </div>
-                                        <div class="form-group mb0" name="spouse_fiscal_status">
+                                        <div class="form-group mb0" name="spouse_professional_situation">
+                                            <label class="control-label">Spouse Professional Situation</label>
+                                            <select name="spouse_professional_situation" class="form-control advantage_input">
+                                                <option value="without_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
+                                                <option value="low_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_net_revenue &lt; 225.0">With Income &lt; 225 €/month</option>
+                                                <option value="high_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_net_revenue &gt;= 225.0">With Income &gt;= 225 €/month</option>
+                                                <option value="low_pension" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_other_net_revenue &lt; 450.0">With Pensions &lt; 450 €/month</option>
+                                                <option value="high_pension" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_other_net_revenue &gt;= 450.0">With Pensions &gt;= 450 €/month</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb0 hidden" name="spouse_fiscal_status">
                                             <label class="control-label">Tax status for spouse</label>
                                             <select name="spouse_fiscal_status" class="form-control advantage_input">
                                                 <option value="without income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
                                                 <option value="with income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income'">With Income</option>
                                             </select>
                                         </div>
-                                        <div name="spouse_revenue_information">
+                                        <div name="spouse_revenue_information" class="hidden">
                                             <div class="form-group mt16">
                                                 <label class="control-label">Spouse Net Revenue</label>
                                                 <input type="number" name="spouse_net_revenue" placeholder="0" class="form-control" t-att-value="contract.employee_id.spouse_net_revenue"/>
@@ -763,6 +874,14 @@
                                                 <label class="control-label">Spouse Other Net Revenue</label>
                                                 <input type="number" name="spouse_other_net_revenue" placeholder="0" class="form-control" t-att-value="contract.employee_id.spouse_other_net_revenue"/>
                                             </div>
+                                        </div>
+                                        <div class="form-group mt16">
+                                            <label class="control-label">Spouse Name and First Name</label>
+                                            <input type="text" name="spouse_complete_name" class="form-control" t-att-value="contract.employee_id.spouse_complete_name"/>
+                                        </div>
+                                        <div class="form-group mt16">
+                                            <label class="control-label">Spouse Birthdate</label>
+                                            <input type="date" name="spouse_birthdate" class="form-control" t-att-required="true if contract.employee_id.marital in ['married', 'cohabitant'] else false" t-att-value="contract.employee_id.spouse_birthdate"/>
                                         </div>
                                     </div>
 
@@ -814,12 +933,34 @@
                         </div>
 
                     </section>
-                    
+
+                    <t t-if="simulation and not redirect_to_job">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button type="button" id="send_email" class="hr_cs_btn_submit btn">Send to Responsible</button>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="redirect_to_job">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3 mb8">
+                                    <a t-att-href="'https://www.odoo.com/jobs/detail/' + redirect_to_job" target="_new"><button type="button" id="apply_now" class="hr_cs_btn_submit btn">Apply Now</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
                     <t t-if="submit">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button type="button" id="hr_cs_submit" class="hr_cs_btn_submit btn" name="submit1">Review Contract &amp; Sign</button>
+                                    <button type="button" id="hr_cs_submit" class="hr_cs_btn_submit btn" name="submit2">Review Contract &amp; Sign</button>
+                                    <div class="alert alert-danger hidden" name="scale_alert">
+                                        Your gross salary is below the scale. You can change values of the configurator to increase the gross according to the CP 200 scales.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -932,6 +1073,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group" name="ip_div">
+                                        <div class="row">
+                                            <label class="col-sm-10 control-label"><i class="fa fa-1x fa-minus fa-fw"/> Intellectual Property</label>
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" t-att-value="25.0" disabled="disabled" name="IP"/>
+                                                    <div class="input-group-addon">€</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!--  -->
                                     <div class="form-group">
                                         <div class="row">
@@ -1037,6 +1190,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group" name="taxed_div">
+                                        <div class="row">
+                                            <label class="col-sm-10 control-label">TAXED SALARY</label>
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" value="2238.38" disabled="disabled" name="TAXED"/>
+                                                    <div class="input-group-addon">€</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!--  -->
                                     <div class="form-group" name="representation_fees_div">
                                         <div class="row">
@@ -1044,6 +1209,29 @@
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="contract.representation_fees" disabled="disabled" name="representation_fees"/>
+                                                    <div class="input-group-addon">€</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" name="ip_div">
+                                        <div class="row">
+                                            <label class="col-sm-10 control-label"><i class="fa fa-1x fa-plus fa-fw"/> Intellectual Property</label>
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" t-att-value="25.0" disabled="disabled" name="IP"/>
+                                                    <div class="input-group-addon">€</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div name="ip_div" class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-10 control-label"><i class="fa fa-1x fa-minus fa-fw"/> Intellectual Property Income Deduction</label>
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" value="0" disabled="disabled" name="IP.DED"/>
                                                     <div class="input-group-addon">€</div>
                                                 </div>
                                             </div>

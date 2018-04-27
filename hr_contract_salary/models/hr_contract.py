@@ -1,12 +1,17 @@
 # -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import logging
 import uuid
 
-from odoo import api, fields, http, models, _
+from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
+
+from odoo import api, fields, models, _
+from odoo.fields import Date
 from odoo.exceptions import ValidationError
 
-from datetime import timedelta
+_logger = logging.getLogger(__name__)
 
 
 class HrContract(models.Model):
@@ -18,14 +23,89 @@ class HrContract(models.Model):
     access_token_end_date = fields.Date('Access Token Validity Date', copy=False)
     signature_request_ids = fields.Many2many('signature.request', string="Requested Signatures")
     signature_request_count = fields.Integer(compute='_compute_signature_request_count')
-    active_employee = fields.Boolean(related='employee_id.active')
-    signature_request_template_id = fields.Many2one('signature.request.template', string="Document Template",
-        help="Contract template that the employee will have to sign.")
+    active_employee = fields.Boolean(related='employee_id.active', string="Active Employee")
+    applicant_id = fields.Many2one('hr.applicant')
+    contract_reviews_count = fields.Integer(compute="_compute_contract_reviews_count", string="Proposed Contracts Count")
+    contract_type = fields.Selection([
+        ('PFI', 'PFI'),
+        ('CDI', 'CDI'),
+        ('CDD', 'CDD')], string="Contract Type", default="PFI")
+    hr_responsible_id = fields.Many2one('res.users', "HR Responsible", track_visibility='onchange',
+        help="Person responsible of validating the employee's contracts.")
+    default_contract_id = fields.Many2one('hr.contract', string="Contract Template",
+        help="Default contract used when making an offer to an applicant.")
+    signature_request_template_id = fields.Many2one('signature.request.template', string="New Contract Document Template",
+        help="Default document that the applicant will have to sign to accept a contract offer.")
+    contract_update_template_id = fields.Many2one('signature.request.template', string="Contract Update Document Template",
+        help="Default document that the employee will have to sign to update his contract.")
+    signatures_count = fields.Integer(compute='_compute_signatures_count', string='# Signatures',
+        help="The number of signatures on the mostly signed pdf contract.")
+
+    @api.depends('signature_request_ids.nb_closed')
+    def _compute_signatures_count(self):
+        for contract in self:
+            if not contract.signature_request_ids:
+                contract.signature_request_count = 0.0
+            else:
+                contract.signatures_count = max(contract.signature_request_ids.mapped('nb_closed'))
 
     @api.depends('signature_request_ids')
     def _compute_signature_request_count(self):
         for contract in self:
             contract.signature_request_count = len(contract.signature_request_ids)
+
+    @api.depends('origin_contract_id')
+    def _compute_contract_reviews_count(self):
+        for contract in self:
+            contract.contract_reviews_count = self.with_context(active_test=False).search_count(
+                [('origin_contract_id', '=', contract.id)])
+
+    def _clean_redundant_salary_data(self):
+        # Unlink archived draft contract older than 7 days linked to a signature
+        # Unlink the related employee, partner, and new car (if any)
+        seven_days_ago = date.today() + relativedelta(days=-7)
+        contracts = self.search([
+            ('state', '=', 'draft'),
+            ('active', '=', False),
+            ('signature_request_ids', '!=', False),
+            ('create_date', '<=', Date.to_string(seven_days_ago))])
+        employees = contracts.mapped('employee_id').filtered(lambda employee: not employee.active)
+        partners = employees.mapped('address_home_id').filtered(
+            lambda partner: not partner.active and partner.type == 'private')
+        cars = contracts.mapped('car_id').filtered(lambda car: not car.active and not car.license_plate)
+        vehicle_contracts = cars.with_context(active_test=False).mapped('log_contracts').filtered(
+            lambda contract: not contract.active)
+        costs = vehicle_contracts.mapped('cost_id')
+
+        if contracts or employees or partners or cars or vehicle_contracts or costs:
+            _logger.info('Salary: About to unlink vehicle costs %s, vehicle contracts %s, vehicles %s, partners %s, employees %s, contracts %s.',
+                         costs.ids, vehicle_contracts.ids, cars.ids, partners.ids, employees.ids, contracts.ids)
+            # Delete costs and vehicle contracts in cascade
+            for cost in costs:
+                try:
+                    cost.unlink()
+                except ValueError:
+                    pass
+            for car in cars:
+                try:
+                    car.unlink()
+                except ValueError:
+                    pass
+            for partner in partners:
+                try:
+                    partner.unlink()
+                except ValueError:
+                    pass
+            for employee in employees:
+                try:
+                    employee.unlink()
+                except ValueError:
+                    pass
+            for contract in contracts:
+                try:
+                    contract.unlink()
+                except ValueError:
+                    pass
 
     def configure_access_token(self):
         for contract in self:
@@ -43,20 +123,13 @@ class HrContract(models.Model):
         self.state = 'open'
         self.access_token_consumed = True
         self.employee_id.active = True
-        if self.car_id:
-            self.car_id.driver_id = self.employee_id.address_home_id
+        if not self.new_car and self.car_id:
+            if self.origin_contract_id and self.origin_contract_id.car_id \
+                    and self.origin_contract_id.car_id != self.car_id:
+                self.origin_contract_id.car_id.driver_id = False
 
     def action_refuse_package(self):
         self.state = 'close'
-
-    def open_package_contract(self):
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_url',
-            'name': "Redirect to the package configurator for an employee",
-            'target': 'self',
-            'url': "/salary_package/contract/%s" % (self.id,)
-        }
 
     def open_signature_requests(self):
         self.ensure_one()
@@ -70,6 +143,15 @@ class HrContract(models.Model):
                 'res_model': 'signature.request',
                 'domain': [('id', 'in', self.signature_request_ids.ids)]
             }
+
+    def action_show_contract_reviews(self):
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "hr.contract",
+            "views": [[False, "tree"], [False, "form"]],
+            "domain": [["origin_contract_id", "=", self.id], '|', ["active", "=", False], ["active", "=", True]],
+            "name": "Contracts Reviews",
+        }
 
     def send_offer(self):
         self.ensure_one()
@@ -94,7 +176,7 @@ class HrContract(models.Model):
                 'default_template_id': template_id,
                 'default_composition_mode': 'comment',
                 'salary_package_url': base_url + path,
-                'custom_layout': "mail.mail_notification_borders",
+                'custom_layout': "hr_contract_salary.mail_template_data_notification_email_send_offer",
             }
             return {
                 'type': 'ir.actions.act_window',

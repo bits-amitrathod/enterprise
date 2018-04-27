@@ -7,20 +7,6 @@ from odoo import fields, models
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    additional_note = fields.Text(string='Additional Note')
-    certificate = fields.Selection([
-        ('bachelor', 'Bachelor'),
-        ('master', 'Master'),
-        ('other', 'Other'),
-    ], 'Certificate Level', default='master')
-    study_field = fields.Char("Field of Study", placeholder='Computer Science')
-    study_school = fields.Char("School")
-    emergency_contact = fields.Char("Emergency Contact")
-    emergency_phone = fields.Char("Emergency Phone")
-
-    def open_package_employee(self):
-        self.ensure_one()
-        return self.contract_id.open_package_contract()
 
     def get_partner_values(self, personal_info):
         return {
@@ -32,7 +18,8 @@ class HrEmployee(models.Model):
             'country_id': personal_info['country'],
             'phone': personal_info['phone'],
             'email': personal_info['email'],
-            'type': 'other',
+            'type': 'private',
+            'name': personal_info['name'],
         }
 
     def get_employee_values(self, personal_info):
@@ -59,6 +46,11 @@ class HrEmployee(models.Model):
             'certificate': personal_info['certificate'],
             'study_field': personal_info['certificate_name'],
             'study_school': personal_info['certificate_school'],
+            'country_of_birth': personal_info['country_of_birth'],
+            'place_of_birth': personal_info['place_of_birth'],
+            'spouse_complete_name': personal_info['spouse_complete_name'],
+            'km_home_work': personal_info['km_home_work'],
+            'job_title': personal_info['job_title'],
         }
 
     def update_personal_info(self, personal_info, no_name_write=False):
@@ -66,6 +58,8 @@ class HrEmployee(models.Model):
 
         # Update personal info on the partner
         partner_values = self.get_partner_values(personal_info)
+        if no_name_write:
+            del partner_values['name']
 
         if self.address_home_id:
             partner = self.address_home_id
@@ -73,6 +67,7 @@ class HrEmployee(models.Model):
             partner_values.pop('email', None)
             self.address_home_id.write(partner_values)
         else:
+            partner_values['active'] = False
             partner = self.env['res.partner'].create(partner_values)
 
         # Update personal info on the employee
@@ -89,9 +84,15 @@ class HrEmployee(models.Model):
         vals['bank_account_id'] = bank_account.id
         vals['address_home_id'] = partner.id
 
+        if partner.type != 'private':
+            partner.type = 'private'
+
         if not no_name_write:
             vals['name'] = personal_info['name']
 
         if personal_info['birthdate'] != '':
             vals.update({'birthday': personal_info['birthdate']})
+        if personal_info['spouse_birthdate'] != '':
+            vals.update({'spouse_birthdate': personal_info['spouse_birthdate']})
+
         self.write(vals)
