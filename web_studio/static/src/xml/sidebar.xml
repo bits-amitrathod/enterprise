@@ -2,11 +2,11 @@
 <templates>
 
 <t t-name="web_studio.Sidebar.Parameters" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
+    <button class="btn btn-default o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Remove">
-    <button class="btn btn-sm btn-danger pull-right o_web_studio_remove">Remove from View</button>
+    <button class="btn btn-danger pull-right o_web_studio_remove">Remove from View</button>
 </t>
 
 <div t-name="web_studio.Sidebar.Warning.Groups" class="o_web_studio_remove_warning_groups">
@@ -22,7 +22,7 @@
 </div>
 
 <t t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
+    <button class="btn btn-default o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Toolbox">
@@ -384,7 +384,7 @@
                 </t>
 
                 <t t-if="_.contains(['list', 'form'], widget.view_type)">
-                    <button class="btn btn-sm btn-default o_web_studio_defaults">Default Values</button>
+                    <button class="btn btn-default o_web_studio_defaults">Default Values</button>
                 </t>
             </t>
         </t>
@@ -444,7 +444,7 @@
             <span/>
         </div>
         <label for="invisible">Invisible</label>
-        <a href="#" data-type="invisible" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+        <a href="#" data-type="invisible" role="button" class="btn btn-link o_web_studio_attrs">Conditional</a>
     </div>
     <t t-if="widget.state.modifiers.invisible !== true">
         <t t-if="_.contains(['list', 'form'], widget.view_type)">
@@ -457,7 +457,7 @@
                     <span/>
                 </div>
                 <label for="required">Required</label>
-                <a href="#" data-type="required" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+                <a href="#" data-type="required" role="button" class="btn btn-link o_web_studio_attrs">Conditional</a>
             </div>
             <div class="clearfix o_web_studio_sidebar_checkbox">
                 <t t-set="attrs_readonly" t-value="widget.state.modifiers.readonly and widget.state.modifiers.readonly !== true"/>
@@ -467,7 +467,7 @@
                     <span/>
                 </div>
                 <label for="readonly">Read only</label>
-                <a href="#" data-type="readonly" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+                <a href="#" data-type="readonly" role="button" class="btn btn-link o_web_studio_attrs">Conditional</a>
             </div>
         </t>
         <div t-if="widget.view_type === 'kanban'" class="o_web_studio_sidebar_checkbox">
@@ -571,7 +571,7 @@
         <div class="o_groups"/>
     </div>
     <div t-if="widget.state.field.manual and widget.state.field.type === 'selection'">
-        <a href="#" role="button" class="btn btn-sm btn-link o_web_studio_edit_selection_values"><i class="fa fa-pencil"/> Edit Possible Values</a>
+        <a href="#" role="button" class="btn btn-link o_web_studio_edit_selection_values"><i class="fa fa-pencil"/> Edit Possible Values</a>
     </div>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Parameters"/>
@@ -696,8 +696,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-sm btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
-                <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
+                <button class="btn btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
+                <button t-if="rainbow.img_url" class="btn btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
             </div>
             <span class="d-none">
                 <t t-call="HiddenInputFile">

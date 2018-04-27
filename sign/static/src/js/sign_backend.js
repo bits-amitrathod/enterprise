@@ -64,7 +64,7 @@ odoo.define('sign.views_custo', function(require) {
                     _sign_upload_file.call(self, true);
                 });
                 this.$buttons.find(selector_button).after(
-                    $('<button class="btn btn-link btn-sm o-kanban-button-new ml8" type="button">UPLOAD A PDF TEMPLATE</button>')
+                    $('<button class="btn btn-link o-kanban-button-new ml8" type="button">UPLOAD A PDF TEMPLATE</button>')
                     .off('click')
                     .on('click', function (e) {
                         e.preventDefault();
@@ -603,7 +603,7 @@ odoo.define('sign.template', function(require) {
 
             var self = this;
             var $sendButton = $('<button/>', {html: _t("Send"), type: "button"})
-                .addClass('btn btn-primary btn-sm')
+                .addClass('btn btn-primary')
                 .on('click', function() {
                     self.do_action({
                         type: 'ir.actions.act_window',
@@ -616,7 +616,7 @@ odoo.define('sign.template', function(require) {
                     });
                 });
             var $shareButton = $('<button/>', {html: _t("Share"), type: "button"})
-                .addClass('btn btn-default btn-sm')
+                .addClass('btn btn-default')
                 .on('click', function() {
                     self.do_action({
                         type: 'ir.actions.act_window',
@@ -860,7 +860,7 @@ odoo.define('sign.DocumentBackend', function (require) {
 
             var self = this;
 
-            this.$downloadButton = $('<a/>', {html: _t("Download Document")}).addClass('btn btn-sm btn-primary o_hidden');
+            this.$downloadButton = $('<a/>', {html: _t("Download Document")}).addClass('btn btn-primary o_hidden');
             this.cp_content = {$buttons: this.$downloadButton};
         },
 
@@ -951,7 +951,7 @@ odoo.define('sign.document_edition', function(require) {
             this.is_sent = (this.state === 'sent');
 
             if (options && options.context && options.context.sign_token) {
-                var $signButton = $('<button/>', {html: _t("Sign Document"), type: "button", 'class': 'btn btn-sm btn-primary'});
+                var $signButton = $('<button/>', {html: _t("Sign Document"), type: "button", 'class': 'btn btn-primary'});
                 $signButton.on('click', function () {
                     self.do_action({
                         type: "ir.actions.client",

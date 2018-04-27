@@ -246,7 +246,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             // Add buttonbox hook
             if (!self.$('.oe_button_box').length) {
                 var $buttonbox_hook = $('<button>')
-                    .addClass('btn btn-sm oe_stat_button o_web_studio_button_hook')
+                    .addClass('btn oe_stat_button o_web_studio_button_hook')
                     .click(function (event) {
                         event.preventDefault();
                         self.trigger_up('view_change', {
@@ -311,7 +311,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     _renderButtonBox: function () {
         var self = this;
         var $buttonbox = this._super.apply(this, arguments);
-        var $buttonhook = $('<button>').addClass('btn btn-sm oe_stat_button o_web_studio_button_hook');
+        var $buttonhook = $('<button>').addClass('btn oe_stat_button o_web_studio_button_hook');
         $buttonhook.click(function (event) {
             event.preventDefault();
 

@@ -837,7 +837,7 @@ odoo.define('sign.document_signing', function(require) {
             if(!options.buttons) {
                 options.buttons = [{
                     text: _t("Verify"),
-                    classes: "btn btn-sm btn-primary o_sign_validate_sms",
+                    classes: "btn btn-primary o_sign_validate_sms",
                     click: this._onValidateSMS
                 }]
             }

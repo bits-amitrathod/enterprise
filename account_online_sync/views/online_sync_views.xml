@@ -176,7 +176,7 @@
             <t t-if="record.synchronization_status.value != 'FAILED'">
               <a attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="oe_inline">Synchronize now</a>
             </t>
-            <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="btn btn-primary btn-sm">Online Synchronization</button>
+            <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="btn btn-primary">Online Synchronization</button>
             <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="oe_inline">Online Synchronization</a>
           </t>
         </xpath>
@@ -202,7 +202,7 @@
           <group string="Online Synchronization" attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}">
             <field name="bank_statement_creation"/>
             <field name="account_online_journal_id" options="{'no_create': True}"/>
-            <button string="Configure" type="object" name="action_choose_institution" class="btn btn-primary btn-sm"/>
+            <button string="Configure" type="object" name="action_choose_institution" class="btn-primary"/>
           </group>
         </xpath>
       </field>
@@ -217,7 +217,7 @@
           <label for="account_online_journal_id" attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}"/>
           <div attrs="{'invisible': [('bank_statements_source', '!=', 'online_sync')]}">
             <field name="account_online_journal_id" options="{'no_create': True}" class="oe_inline"/>
-            <button string="Configure" type="object" name="action_choose_institution" class="btn btn-primary btn-sm oe_inline"/>
+            <button string="Configure" type="object" name="action_choose_institution" class="btn-primary oe_inline"/>
           </div>
         </xpath>
       </field>

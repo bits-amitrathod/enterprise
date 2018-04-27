@@ -233,13 +233,13 @@
                 <option name="salesman" t-att-selected="salesman &amp;&amp; salesman['id'] === sman['id'] ? 'selected' : undefined" t-att-value="sman['id']"><t t-esc="sman['name']"/></option>
             </t>
         </select>
-        <button class="btn btn-sm btn-primary o_update_options">Update</button>
+        <button class="btn btn-primary o_update_options">Update</button>
     </div>
 
     <!-- Common top bar -->
     <!-- TODO: Hide in mobile as it is going to push in control panel and it breaks UI, maybe we will improve it in future -->
     <div t-name="sale_subscription_dashboard.dashboard_option_pickers" class="o_datepickers_searchview d-none d-md-block">
-        <span class="o_datepicker_separator"> to </span><button class="btn btn-sm btn-primary o_update_options">Update</button>
+        <span class="o_datepicker_separator"> to </span><button class="btn btn-primary o_update_options">Update</button>
     </div>
     <t t-name="sale_subscription_dashboard.dashboard_option_filters">
         <!-- Subscriptions -->
