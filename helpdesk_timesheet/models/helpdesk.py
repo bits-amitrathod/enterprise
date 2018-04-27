@@ -59,11 +59,9 @@ class HelpdeskTicket(models.Model):
         if self.project_id:
             domain = [('project_id', '=', self.project_id.id)]
             if self.partner_id:
-                domain.append(('partner_id', '=', self.partner_id.id))
-                # Take the latest task of the selected customer and set it.
-                self.task_id = self.env['project.task'].search(domain, limit=1)
-            else:
-                self.task_id = None
+                    domain.append(('partner_id', 'child_of', self.partner_id.commercial_partner_id.id))
+            # Take the latest task and set it.
+            self.task_id = self.env['project.task'].search(domain, limit=1)
             return {'domain': {'task_id': domain}}
 
     @api.onchange('task_id')
