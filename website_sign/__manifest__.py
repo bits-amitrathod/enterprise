@@ -11,6 +11,7 @@ Let your customers follow the signature process easily.
     'website': 'http://www.odoo.com',
     'depends': ['mail', 'document', 'portal'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
 
         'views/signature_request_templates.xml',
@@ -19,8 +20,11 @@ Let your customers follow the signature process easily.
         'views/signature_request_views.xml',
         'views/signature_request_template_views.xml',
 
+        'views/res_users_views.xml',
+
         'data/signature_request_data.xml',
         'data/signature_request_template_data.xml',
+
     ],
     'qweb': ['static/src/xml/*.xml'],
     'demo': [
