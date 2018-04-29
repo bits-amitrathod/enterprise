@@ -261,7 +261,7 @@ msgstr ""
 #: code:addons/sale_coupon/models/sale_coupon.py:68
 #, python-format
 msgid "A Coupon is already applied for the same reward"
-msgstr ""
+msgstr "Aynı ödül için bir kupon çoktan uygulandı."
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:62
@@ -273,7 +273,7 @@ msgstr ""
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__active
 msgid "A program is available for the customers when active"
-msgstr ""
+msgstr "Müşteriler etkin olduğunda bir program müşteriler için mevcut."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__promo_code
@@ -293,6 +293,8 @@ msgid ""
 "                A coupon program generates coupons with a code that can be used to generate a discount on the current\n"
 "                order or create a coupon for a next order."
 msgstr ""
+"Bir tanıtım programı kod olmadan sınırlı bir tanıtım teklifi olabilir (otomatik olarak uygulanan) ya da  kod ile birlikte güncel sipariş için indirim ve ya bir sonraki sipariş için kupon oluşturabilir ( örneğin bir dergide göstermek).\n"
+"Bir kupon programı, güncel sipariş için indirim ya da bir daha ki sipariş için kupon oluşturan kodlar ile kuponlar oluşturmak için kullanılır."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__active
@@ -309,33 +311,33 @@ msgstr "Uygulanabilirlik"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order__applied_coupon_ids
 msgid "Applied Coupons"
-msgstr ""
+msgstr "Uygulanmış Kuponlar"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order__no_code_promo_program_ids
 msgid "Applied Immediate Promo Programs"
-msgstr ""
+msgstr "Acele Uygulanan Reklam Programları"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order__code_promo_program_id
 msgid "Applied Promo Program"
-msgstr ""
+msgstr "Uygulanan Reklam Programı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon__sales_order_id
 msgid "Applied on order"
-msgstr ""
+msgstr "Sipariş üzerinde uygulanan"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_order__promo_code
 msgid "Applied program code"
-msgstr ""
+msgstr "Uygulanan program kodu"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_apply_code_view_form
 #: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
 msgid "Apply Coupon"
-msgstr ""
+msgstr "Kupon Uygula"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
@@ -345,34 +347,34 @@ msgstr "İndirim Yap"
 #. module: sale_coupon
 #: selection:sale.coupon.program,promo_applicability:0
 msgid "Apply On Current Order"
-msgstr ""
+msgstr "Güncel Siparişe Uygula"
 
 #. module: sale_coupon
 #: selection:sale.coupon.program,promo_applicability:0
 msgid "Apply On Next Order"
-msgstr ""
+msgstr "Gelecek Siparişe Uygula"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_apply_code_view_form
 msgid "Apply coupon"
-msgstr ""
+msgstr "Kupon uygula"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
 msgid "Apply on First"
-msgstr ""
+msgstr "Öncelikli Uygula"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:79
 #: code:addons/sale_coupon/models/sale_coupon_program.py:166
 #, python-format
 msgid "At least one of the required conditions is not met to get the reward!"
-msgstr ""
+msgstr "Ödül almak için gerekli şartlardan en az biri karşılanmaz!"
 
 #. module: sale_coupon
 #: selection:sale.coupon.program,promo_code_usage:0
 msgid "Automatically Applied"
-msgstr ""
+msgstr "Otomatik Olarak Uygulanan"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__promo_code_usage
@@ -380,18 +382,20 @@ msgid ""
 "Automatically Applied - No code is required, if the program rules are met, the reward is applied (Except the global discount or the free shipping rewards which are not cumulative)\n"
 "Use a code - If the program rules are met, a valid code is mandatory for the reward to be applied\n"
 msgstr ""
+"Otomatik Olarak Uygulanan - Eğer program kuralları karşılanıyorsa kod gerekmez ve ödül uygulanır. (Yığılan küresel indirim ya da ücretsiz teslimat ödülleri hariç)\n"
+"Bir kod kullan - Eğer program kuralları karşılarsa, ödülün uygulanması için bir onay kodu mecburidir.\n"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__rule_partners_domain
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule__rule_partners_domain
 msgid "Based on Customers"
-msgstr ""
+msgstr "Müşteriler Bazında"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__rule_products_domain
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule__rule_products_domain
 msgid "Based on Products"
-msgstr ""
+msgstr "Ürünler Bazında"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_promo_program
@@ -416,7 +420,7 @@ msgstr "Sonlanmış (Closed)"
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_search
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_search
 msgid "Closed Programs"
-msgstr ""
+msgstr "Kapanan Programlar"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon__code
@@ -452,7 +456,7 @@ msgstr "Tüketilen"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_apply_code__coupon_code
 msgid "Coupon"
-msgstr ""
+msgstr "Kupon"
 
 #. module: sale_coupon
 #: model:ir.actions.report,name:sale_coupon.report_coupon_code
@@ -462,19 +466,19 @@ msgstr "Kupon Kodu"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__coupon_count
 msgid "Coupon Count"
-msgstr ""
+msgstr "Kupon Sayımı"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_program_action_coupon_program
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 #: selection:sale.coupon.program,program_type:0
 msgid "Coupon Program"
-msgstr ""
+msgstr "Kupon Programı"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form
 msgid "Coupon Program Name..."
-msgstr ""
+msgstr "Kupon Program Adı"
 
 #. module: sale_coupon
 #: model:ir.ui.menu,name:sale_coupon.menu_coupon_type_config
@@ -491,13 +495,13 @@ msgstr ""
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__rule_date_to
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule__rule_date_to
 msgid "Coupon program end date"
-msgstr ""
+msgstr "Kupon programı bitiş tarihi"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__rule_date_from
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule__rule_date_from
 msgid "Coupon program start date"
-msgstr ""
+msgstr "Kupon programı başlangıç tarihi"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__sequence
@@ -505,12 +509,14 @@ msgid ""
 "Coupon program will be applied based on given sequence if multiple programs "
 "are defined on same condition(For minimum amount)"
 msgstr ""
+"Eğer aynı şartlarda birden çok program tanımlanmışsa, kupon programı verilen"
+" sırayı baz alıp uygulanacaktır."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__rule_partners_domain
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule__rule_partners_domain
 msgid "Coupon program will work for selected customers only"
-msgstr ""
+msgstr "Kupon programı sadece seçilen müşteri ile çalışacak"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_action
@@ -519,7 +525,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_view_form
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_view_tree
 msgid "Coupons"
-msgstr ""
+msgstr "Kuponlar"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_coupon_program
@@ -587,30 +593,33 @@ msgid ""
 "Free Product - Free product will be provide as reward \n"
 "Free Shipping - Free shipping will be provided as reward (Need delivery module)"
 msgstr ""
+"İndirim - Ödül indirim olarak karşılanacak.\n"
+"Ücretsiz Ürün - Ücretsiz ürün ödül olarak karşılanacak\n"
+"Ücretsiz Teslimat - Ücretsiz "
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__discount_apply_on
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_reward__discount_apply_on
 msgid "Discount Apply On"
-msgstr ""
+msgstr "İndirim Uygula"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__discount_max_amount
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_reward__discount_max_amount
 msgid "Discount Max Amount"
-msgstr ""
+msgstr "İndirimli Maksimum Tutar"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__discount_type
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_reward__discount_type
 msgid "Discount Type"
-msgstr ""
+msgstr "İndirim Türü"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_reward.py:52
 #, python-format
 msgid "Discount percentage should be between 1-100"
-msgstr ""
+msgstr "İndirim yüzdesi 1-100 arasında olmalı"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_order.py:137
@@ -638,7 +647,7 @@ msgstr "Bitiş Tarihi"
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_apply_code_action
 msgid "Enter Coupon Code"
-msgstr ""
+msgstr "Kupon Kodu Gir"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon__expiration_date
@@ -654,7 +663,7 @@ msgstr "Son Kullanım"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_search
 msgid "Expired Programs"
-msgstr ""
+msgstr "Süresi Dolmuş Programlar"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__discount_fixed_amount
@@ -667,7 +676,7 @@ msgstr "Sabit Tutar"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon__partner_id
 msgid "For Customer"
-msgstr ""
+msgstr "Müşteri için"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_order.py:93
@@ -676,7 +685,7 @@ msgstr ""
 #: selection:sale.coupon.reward,reward_type:0
 #, python-format
 msgid "Free Product"
-msgstr ""
+msgstr "Ücretsiz Ürün"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_reward.py:63
@@ -687,7 +696,7 @@ msgstr ""
 #. module: sale_coupon
 #: selection:sale.coupon.reward,reward_type:0
 msgid "Free Shipping"
-msgstr ""
+msgstr "Ücretsiz Sevkiyat"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_generate_view_form
@@ -697,12 +706,12 @@ msgstr "Genel"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form
 msgid "Generate Coupon"
-msgstr ""
+msgstr "Kupon Oluştur"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_generate_view_form
 msgid "Generate Coupons"
-msgstr ""
+msgstr "Kuponlar Oluştur"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,help:sale_coupon.sale_coupon_program_action_coupon_program
@@ -714,24 +723,24 @@ msgstr ""
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__coupon_ids
 msgid "Generated Coupons"
-msgstr ""
+msgstr "Oluşturulmuş Kuponlar"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_generate__generation_type
 msgid "Generation Type"
-msgstr ""
+msgstr "Oluşum Türü"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:70
 #, python-format
 msgid "Global discounts are not cumulable."
-msgstr ""
+msgstr "Küresel indirimler paraya çevrilemez."
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:157
 #, python-format
 msgid "Global discounts are not cumulative."
-msgstr ""
+msgstr "Küresel indirimler biriktirilemez."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_report_sale_coupon_report_coupon__id
@@ -748,12 +757,12 @@ msgstr "ID"
 #: code:addons/sale_coupon/models/sale_coupon.py:66
 #, python-format
 msgid "Invalid partner."
-msgstr ""
+msgstr "Doğrulanmamış İş Ortağı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order_line__is_reward_line
 msgid "Is a program reward line"
-msgstr ""
+msgstr "Bir program ödül satırı "
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_report_sale_coupon_report_coupon____last_update
@@ -789,28 +798,28 @@ msgstr "Son Güncelleme"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Max Discount Amount"
-msgstr ""
+msgstr "Maksimum İndirim Tutarı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__maximum_use_number
 msgid "Maximum Use Number"
-msgstr ""
+msgstr "Maksimum Kullanım Sayısı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__discount_max_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward__discount_max_amount
 msgid "Maximum amount of discount that can be provided"
-msgstr ""
+msgstr "Sağlanabilen maksimum indirim tutarı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__maximum_use_number
 msgid "Maximum number of sales orders in which reward can be provided"
-msgstr ""
+msgstr "Ödül sağlanabilen satış siparişlerinin maksimum sayısı."
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Minimum Purchase Of"
-msgstr ""
+msgstr "Minimum Satın Alma"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__rule_min_quantity
@@ -827,25 +836,25 @@ msgstr ""
 #: code:addons/sale_coupon/models/sale_coupon_rules.py:34
 #, python-format
 msgid "Minimum purchased amount should be greater than 0"
-msgstr ""
+msgstr "Minimum satın alma miktarı sıfırdan büyük olmalı"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_rules.py:39
 #, python-format
 msgid "Minimum quantity should be greater than 0"
-msgstr ""
+msgstr "Minimum miktar sıfırdan büyük olmalı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__rule_minimum_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule__rule_minimum_amount
 msgid "Minimum required amount to get the reward"
-msgstr ""
+msgstr "Ödül almak için gerekli minimum miktar"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__rule_min_quantity
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule__rule_min_quantity
 msgid "Minimum required product quantity to get the reward"
-msgstr ""
+msgstr "Ödül almak için gereken minimum ürün miktarı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__name
@@ -856,37 +865,37 @@ msgstr "Adı"
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_generate__nbr_coupons
 #: selection:sale.coupon.generate,generation_type:0
 msgid "Number of Coupons"
-msgstr ""
+msgstr "Kuponların Sayısı"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_generate_action
 msgid "Number of Coupons To Generate"
-msgstr ""
+msgstr "Oluşturulacak Kuponların Sayısı"
 
 #. module: sale_coupon
 #: selection:sale.coupon.generate,generation_type:0
 msgid "Number of Selected Customers"
-msgstr ""
+msgstr "Seçilen Müşteri Sayısı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_generate__nbr_coupons
 msgid "Number of coupons"
-msgstr ""
+msgstr "Kuponların sayısı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order__generated_coupon_ids
 msgid "Offered Coupons"
-msgstr ""
+msgstr "Teklif Edilen Kuponların"
 
 #. module: sale_coupon
 #: selection:sale.coupon.reward,discount_apply_on:0
 msgid "On Cheapest Product"
-msgstr ""
+msgstr "En Ucuz Ürün"
 
 #. module: sale_coupon
 #: selection:sale.coupon.reward,discount_apply_on:0
 msgid "On Order"
-msgstr ""
+msgstr "Siparişte"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__discount_apply_on
@@ -896,28 +905,31 @@ msgid ""
 "Cheapest product - Discount on cheapest product of the order\n"
 "Specific product - Discount on selected specific product"
 msgstr ""
+"Siparişi Verilmiş - Tüm siparişlerde indirim\n"
+"En ucuz ürün - Siparişin en ucuz ürünündeki indirim\n"
+"Belirli ürün - Seçilen belirli üründeki indirim"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__rule_products_domain
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule__rule_products_domain
 msgid "On Purchase of selected product, reward will be given"
-msgstr ""
+msgstr "Seçili ürünün satın alınması halinde, ödül verilecektir."
 
 #. module: sale_coupon
 #: selection:sale.coupon.reward,discount_apply_on:0
 msgid "On Specific Product"
-msgstr ""
+msgstr "Belirli Üründe"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_search
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_search
 msgid "Opened Programs"
-msgstr ""
+msgstr "Açılan Programlar"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__order_count
 msgid "Order Count"
-msgstr ""
+msgstr "Sipariş Sayımı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__order_line_ids
@@ -941,6 +953,8 @@ msgid ""
 "Percentage - Entered percentage discount will be provided\n"
 "Amount - Entered fixed amount discount will be provided"
 msgstr ""
+"Yüzde - Girilen yüzde indirimi sağlanacaktır\n"
+"Tutar - Girilen sabit miktar indirimi sağlanacaktır."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__discount_specific_product_id
@@ -954,12 +968,12 @@ msgstr "Ürün"
 msgid ""
 "Product that will be discounted if the discount is applied on a specific "
 "product"
-msgstr ""
+msgstr "Eğer belirli bir ürüne indirim uygulandığında indirim yapılacak ürün"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon__discount_line_product_id
 msgid "Product used in the sales order to apply the discount."
-msgstr ""
+msgstr "İndirimin uygulanması için satış siparişinde kullanılan ürün."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__discount_line_product_id
@@ -968,26 +982,28 @@ msgid ""
 "Product used in the sales order to apply the discount. Each coupon program "
 "has its own reward product for reporting purpose"
 msgstr ""
+"İndirimin uygulanması için satış siparişinde kullanılan ürün. Her ürün "
+"programı raporlama amacı için kendi ödül ürününe sahiptir."
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon__program_id
 msgid "Program"
-msgstr ""
+msgstr "Program"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Program Name"
-msgstr ""
+msgstr "Program Adı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__program_type
 msgid "Program Type"
-msgstr ""
+msgstr "Program Türü"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__promo_code_usage
 msgid "Promo Code Usage"
-msgstr ""
+msgstr "Promosyon Kodu Kullanımı "
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:143
@@ -999,29 +1015,29 @@ msgstr ""
 #: code:addons/sale_coupon/models/sale_coupon_program.py:153
 #, python-format
 msgid "Promo code is expired"
-msgstr ""
+msgstr "Promosyon kodunun tarihi geçmiş"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:151
 #, python-format
 msgid "Promo code is invalid"
-msgstr ""
+msgstr "Geçersiz promosyon kodu"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__promo_code
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order__promo_code
 msgid "Promotion Code"
-msgstr ""
+msgstr "Promosyon Kodu"
 
 #. module: sale_coupon
 #: model:ir.actions.act_window,name:sale_coupon.sale_coupon_program_action_promo_program
 msgid "Promotion Program"
-msgstr ""
+msgstr "Tanıtım Programı"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
 msgid "Promotion Program Name..."
-msgstr ""
+msgstr "Promosyon Program Adı"
 
 #. module: sale_coupon
 #: model:ir.ui.menu,name:sale_coupon.menu_promotion_type_config
@@ -1032,13 +1048,13 @@ msgstr "Promosyon Kampanyaları"
 #. module: sale_coupon
 #: selection:sale.coupon.program,program_type:0
 msgid "Promotional Program"
-msgstr ""
+msgstr "Tanıtıcı Program"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:155
 #, python-format
 msgid "Promotionals codes are not cumulative."
-msgstr ""
+msgstr "Promosyon kodları birikemez"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__reward_product_quantity
@@ -1066,26 +1082,26 @@ msgstr "Ödül"
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_order__reward_amount
 msgid "Reward Amount"
-msgstr ""
+msgstr "Ödül Miktarı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__reward_description
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_reward__reward_description
 msgid "Reward Description"
-msgstr ""
+msgstr "Ödül Tanımı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon__discount_line_product_id
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__discount_line_product_id
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_reward__discount_line_product_id
 msgid "Reward Line Product"
-msgstr ""
+msgstr "Ödül Satır Ürünü"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__reward_product_id
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward__reward_product_id
 msgid "Reward Product"
-msgstr ""
+msgstr "Ödül Ürün"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__reward_type
@@ -1097,7 +1113,7 @@ msgstr "Ödül Türü"
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__reward_product_quantity
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward__reward_product_quantity
 msgid "Reward product quantity"
-msgstr ""
+msgstr "Ödül ürünü miktarı"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
@@ -1108,13 +1124,13 @@ msgstr "Ödüller"
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__rule_minimum_amount
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule__rule_minimum_amount
 msgid "Rule Minimum Amount"
-msgstr ""
+msgstr "Minimum Miktar Kuralı"
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__rule_minimum_amount_tax_inclusion
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_rule__rule_minimum_amount_tax_inclusion
 msgid "Rule Minimum Amount Tax Inclusion"
-msgstr ""
+msgstr "Vergi İçeriği Minimum Miktar Kuralı"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
@@ -1124,17 +1140,17 @@ msgstr "Satış"
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon
 msgid "Sales Coupon"
-msgstr ""
+msgstr "Satış Kuponları"
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_program
 msgid "Sales Coupon Program"
-msgstr ""
+msgstr "Satış Kuponu Programı"
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_reward
 msgid "Sales Coupon Reward"
-msgstr ""
+msgstr "Satış Kupon Ödülü"
 
 #. module: sale_coupon
 #: model:ir.model,name:sale_coupon.model_sale_coupon_rule
@@ -1160,22 +1176,22 @@ msgstr "Satış Siparişleri"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Select company"
-msgstr ""
+msgstr "Şirket seçin"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_promo_program_form
 msgid "Select customer"
-msgstr ""
+msgstr "Müşteri seçin"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Select product"
-msgstr ""
+msgstr "Ürün seçin"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_program_view_form_common
 msgid "Select reward product"
-msgstr ""
+msgstr "Ödül ürünü seçin"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_coupon_view_form
@@ -1201,12 +1217,12 @@ msgstr "Durumu"
 #. module: sale_coupon
 #: selection:sale.coupon.rule,rule_minimum_amount_tax_inclusion:0
 msgid "Tax Excluded"
-msgstr ""
+msgstr "Vergi Hariç"
 
 #. module: sale_coupon
 #: selection:sale.coupon.rule,rule_minimum_amount_tax_inclusion:0
 msgid "Tax Included"
-msgstr ""
+msgstr "Vergi Dahil"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/wizard/sale_coupon_apply_code.py:51
@@ -1217,7 +1233,7 @@ msgstr ""
 #. module: sale_coupon
 #: sql_constraint:sale.coupon:0
 msgid "The coupon code must be unique!"
-msgstr ""
+msgstr "Kupon kodlar eşsiz olmalıdır !"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:64
@@ -1230,36 +1246,36 @@ msgstr ""
 #: code:addons/sale_coupon/models/sale_coupon_program.py:161
 #, python-format
 msgid "The customer doesn't have access to this reward."
-msgstr ""
+msgstr "Müşterinin bu ödüle erişimi yoktur"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__discount_fixed_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward__discount_fixed_amount
 msgid "The discount in fixed amount"
-msgstr ""
+msgstr "Sabit tutarda indirim"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__discount_percentage
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward__discount_percentage
 msgid "The discount in percentage, between 1 to 100"
-msgstr ""
+msgstr "İndirim yüzdesi, 1 ile 100 arası"
 
 #. module: sale_coupon
 #: sql_constraint:sale.coupon.program:0
 msgid "The program code must be unique!"
-msgstr ""
+msgstr "Program kodu eşsiz olmalı !"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:147
 #, python-format
 msgid "The promo code is already applied on this order"
-msgstr ""
+msgstr "Promosyon kodu bu siparişe çoktan uygulandı"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:149
 #, python-format
 msgid "The promotional offer is already applied on this order"
-msgstr ""
+msgstr "Promosyon teklifi bu siparişe çoktan uygulandı"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:72
@@ -1269,22 +1285,24 @@ msgid ""
 "The reward products should be in the sales order lines to apply the "
 "discount."
 msgstr ""
+"Ödül ürünü,indirim uygulanabilmesi için satış siparişleri satırlarında "
+"olmalı."
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon__order_id
 msgid "The sales order from which coupon is generated"
-msgstr ""
+msgstr "Kuponun oluşturulduğu satış siparişi"
 
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon__sales_order_id
 msgid "The sales order on which the coupon is applied"
-msgstr ""
+msgstr "Kuponun uygulandığı satış siparişi"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_rules.py:29
 #, python-format
 msgid "The start date must be before the end date"
-msgstr ""
+msgstr "Başlangıç tarihi, bitiş tarihinden önce olmalıdır"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:60
@@ -1307,12 +1325,12 @@ msgstr "Ölçü Birimi"
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
 msgid "Update Promotions"
-msgstr ""
+msgstr "Promosyon Güncelleme"
 
 #. module: sale_coupon
 #: selection:sale.coupon.program,promo_code_usage:0
 msgid "Use a code"
-msgstr ""
+msgstr "Kod kullan"
 
 #. module: sale_coupon
 #: model:ir.ui.view,arch_db:sale_coupon.report_coupon
@@ -1343,13 +1361,13 @@ msgstr "Geçerlilik Süresi"
 #. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__validity_duration
 msgid "Validity duration for a coupon after its generation"
-msgstr ""
+msgstr "Oluşumundan sonra bir kupon için geçerlilik süresi"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon_program.py:111
 #, python-format
 msgid "You can not delete a program in active state"
-msgstr ""
+msgstr "Etkin durumdaki bir programı silemezsiniz."
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:76
@@ -1369,6 +1387,10 @@ msgid ""
 "recorded on the sales order (Example: You need to have 3 T-shirts on your "
 "sales order if the promotion is 'Buy 2, Get 1 Free'."
 msgstr ""
+"Gerekli ürün miktarına, satış siparişiniz üzerinde sahip değilsiniz. Eğer "
+"ödül aynı ürün miktarı ise, lütfen tüm ürünlerin satış siparişine "
+"kaydedildiğinden emin olun. (Örneğin: Eğer kampanya '2 tane alana 1 tane "
+"bedava' ise, satış siparişinizde 3 tane T-shirt olmalı)"
 
 #. module: sale_coupon
 #: model:mail.template,report_name:sale_coupon.mail_template_sale_coupon
