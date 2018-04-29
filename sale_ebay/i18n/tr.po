@@ -5,18 +5,19 @@
 # Translators:
 # Murat Kaplan <muratk@projetgrup.com>, 2017
 # gokhun lekesiz <gokhun.lekesiz@rammar.com.tr>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Thermo Dynamic <emirhanayar2004@gmail.com>, 2017
 # Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2017
 # Ediz Duman <neps1192@gmail.com>, 2017
 # Alexander B. <road2monstercat@gmail.com>, 2017
+# Umur Akın <umura@projetgrup.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Alexander B. <road2monstercat@gmail.com>, 2017\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,6 +47,8 @@ msgid ""
 " If you want to set quantity to 0, the Out Of Stock option should be enabled"
 " and the listing duration should set to Good 'Til Canceled"
 msgstr ""
+"Miktarı 0 olarak ayarlamak isterseniz, Tükenmiş seçeneği etkinleştirilmeli "
+"ve listeleme süresi  'İptal Olana Kadar İyi' olarak ayarlanmalıdır."
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/models/product.py:386
@@ -54,6 +57,8 @@ msgid ""
 " You need to have at least 2 variations selected for a multi-variations listing.\n"
 " Or if you try to delete a variation, you cannot do it by unselecting it. Setting the quantity to 0 is the safest method to make a variation unavailable."
 msgstr ""
+"Çok varyasyonlu listeleme için en az 2 varyasyon seçmeniz gerekir.\n"
+" Veya bir varyasyonu silmeye çalışırsanız, seçimini kaldırarak bunu yapamazsınız. Miktarı 0 olarak ayarlamak, bir varyasyonu kullanmamak için en güvenli yöntemdir."
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
@@ -87,12 +92,14 @@ msgid ""
 "All the quantities must be greater than 0 or you need to enable the Out Of "
 "Stock option."
 msgstr ""
+"Tüm miktarlar 0 dan büyük olmalıdır ya da Tükenmiş seçeneğini "
+"etkinleştirmeniz gereklidir."
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_best_offer
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_best_offer
 msgid "Allow Best Offer"
-msgstr ""
+msgstr "En İyi Teklife İzin Ver"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_type:0
@@ -103,7 +110,7 @@ msgstr "Açık Arttırma Müzayede"
 #: model:ir.model.fields,field_description:sale_ebay.field_res_country_ebay_available
 #: model:ir.model.fields,field_description:sale_ebay.field_res_currency_ebay_available
 msgid "Availability To Use For eBay API"
-msgstr ""
+msgstr "eBay API Kullanımı Mevcut"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_buy_it_now_price
@@ -136,7 +143,7 @@ msgstr "Kategori ID"
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_category_parent_id
 msgid "Category Parent ID"
-msgstr ""
+msgstr "Kategori Üst ID"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_category_type
@@ -152,7 +159,7 @@ msgstr "Kod"
 #: code:addons/sale_ebay/models/product.py:352
 #, python-format
 msgid "Configure The eBay Integrator Now"
-msgstr ""
+msgstr "eBay Entegratörünü Şimdi Yapılandır"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_res_partner
@@ -162,7 +169,7 @@ msgstr "Kontak"
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Countries & Currencies"
-msgstr ""
+msgstr "Ülkeler & Para Birimleri"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_res_country
@@ -197,12 +204,12 @@ msgstr "Para Birimi"
 #. module: sale_ebay
 #: selection:ebay.category,category_type:0
 msgid "Custom Store Category"
-msgstr ""
+msgstr "Özel Mağaza Kategorisi"
 
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Describe the product characteristics..."
-msgstr ""
+msgstr "Ürün özelliklerini tanıtın"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_template_id
@@ -233,22 +240,22 @@ msgstr "Süre"
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_end_items_listings
 msgid "Ebay: End Product Templates Listings on eBay"
-msgstr ""
+msgstr "Ebay: Bitmiş Ürün Şablonlar Listesi eBay'de"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_list_items
 msgid "Ebay: List Product Templates on eBay"
-msgstr ""
+msgstr "Ebay: Ürün Şablonları Listesi eBay'de"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_relist_items
 msgid "Ebay: Relist Product Templates on eBay"
-msgstr ""
+msgstr "Ebay: Ürün Şablonlarını eBay'de Yeniden Listele"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_revise_items
 msgid "Ebay: Revise Product Templates on eBay"
-msgstr ""
+msgstr "Ebay: Ürün Şablonlarını eBay'de Revize Et"
 
 #. module: sale_ebay
 #: model:ir.actions.server,name:sale_ebay.action_unlink_items_listings

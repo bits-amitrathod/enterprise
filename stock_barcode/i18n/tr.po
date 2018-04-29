@@ -10,13 +10,14 @@
 # Ediz Duman <neps1192@gmail.com>, 2017
 # Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
 # Emre Akayoğlu <emre.akayoglu@mechsoft.com.tr>, 2017
+# Umur Akın <umura@projetgrup.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
 "PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: Emre Akayoğlu <emre.akayoglu@mechsoft.com.tr>, 2017\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -160,7 +161,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Automatic carriage return"
-msgstr ""
+msgstr "Otomatik taşıma dönüşü"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -189,6 +190,8 @@ msgid ""
 "Before we start, you should choose your working process. There are three "
 "suitable approaches to work with barcodes:"
 msgstr ""
+"Biz başlamadan önce, çalışma işleminizi belirlemelisiniz. Barkodlarla "
+"çalışmak için 3 uygun yaklaşım vardır:"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -196,6 +199,8 @@ msgid ""
 "But better yet is to transform this naming into a barcode that can be "
 "scanned easily and without error."
 msgstr ""
+"Ancak daha iyisi, bu isimleri hatasız ve kolayca taranabilen barkodlara "
+"dönüştürebilmektir."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -207,6 +212,13 @@ msgid ""
 "be explicitly configured by scanning a specific barcode in your scanner user"
 " manual ('CR suffix ON', 'Apply Enter for suffix', etc.)"
 msgstr ""
+"Varsayılan olarak, Odoo, her başarılı tarama arasında 50 mili saniyeye "
+"gecikmeye sahiptir (bu kazara iki kere okumadan kaçınmak içindir). Eğer bu "
+"gecikmeyi bastırmak isterseniz, taşıyıcının içine, her barkodun sonuna geri "
+"dönüş sembolü ekleme yaparak yapılandırabilirsiniz. Bu genelde varsayılan "
+"yapılandırmasındadır ve tarayıcınızın kullanım kılavuzundaki belirli bir "
+"barkodu tarayarak açıkça yapılandırılabilir  ('CR son eki ON', 'Son ek "
+"girişini uygula' gibi)"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
@@ -216,7 +228,7 @@ msgstr "İptal"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Choose Hardware"
-msgstr ""
+msgstr "Donanım Seçin"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -224,11 +236,13 @@ msgid ""
 "Choose a USB barcode scanner if you plan to scan products at the computer "
 "station"
 msgstr ""
+"Bilgisayar istasyonunda ürünleri tarama planınız varsa USB barkod "
+"tarayıcısını seçin"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Click on 'Inventory'"
-msgstr ""
+msgstr "'Stok'a tıklayın"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -238,17 +252,17 @@ msgstr "Yapılandırma"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Configure Product Barcodes"
-msgstr ""
+msgstr "Ürün Barkodlarını Yapılandır"
 
 #. module: stock_barcode
 #: model:web.planner,tooltip_planner:stock_barcode.planner_barcode
 msgid "Configure and learn how to use your Barcode Scanner."
-msgstr ""
+msgstr "Barkod Tarayıcınızı yapılandırın ve nasıl kullanılacağını öğrenin"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Congratulations, you're ready to go live!"
-msgstr ""
+msgstr "Tebrikler, artık canlıya geçmek için hazırsınız"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_create_uid
@@ -265,7 +279,7 @@ msgstr "Oluşturulma"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_default_move_id
 msgid "Default Move"
-msgstr ""
+msgstr "Varsayılan Hareket"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -286,13 +300,15 @@ msgid ""
 "Do you want to permanently remove this message ?\n"
 "                It won't appear anymore, so make sure you don't need the barcodes sheet or you have a copy."
 msgstr ""
+"Bu mesajı kalıcı olarak kaldırmak istiyor musunuz?\n"
+"Bu mesaj bir daha gözükmeyecek, bu yüzden barkod kağıdı ya da bir kopyasına ihtiyacınız olmadığından emin olun."
 
 #. module: stock_barcode
 #. openerp-web
 #: code:addons/stock_barcode/static/src/js/stock_barcode.js:51
 #, python-format
 msgid "Don't show this message again"
-msgstr ""
+msgstr "Bu mesajı bir daha gösterme"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -304,7 +320,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Go Live"
-msgstr ""
+msgstr "Canlıya Geç"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -312,11 +328,13 @@ msgid ""
 "Go for a wireless scanner if you want to scan products at different "
 "locations"
 msgstr ""
+"Farklı konumlarda ürünlerin barkodlarını taramak isterseniz, kablosuz bir "
+"tarayıcıyı seçin."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Here, you have three options:"
-msgstr ""
+msgstr "Burada 3 seçeneğiniz var :"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_id
@@ -330,6 +348,8 @@ msgid ""
 "If this product should be manage by lots, a window opens to help you scan "
 "the lots / serial numbers"
 msgstr ""
+"Bu ürün lotlar tarafından yönetiliyorsa, bir pencere lot/seri numarası ile "
+"tarama yapmanıza yardımcı olmak için açılacak."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -337,6 +357,8 @@ msgid ""
 "If you have a static computer station, it's better to use 'pistols' formats "
 "as they are more practical to handle and aim."
 msgstr ""
+"Eğer sabit bir bilgisayar istasyonunuz varsa, 'tabanca' formatlarını "
+"kullanmak daha pratik ve kullanımı daha kolay olacaktır."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -344,6 +366,8 @@ msgid ""
 "If you use a mobile device, you may prefer a smaller format that is "
 "connected in Bluetooth."
 msgstr ""
+"Eğer mobil bir cihaz kullanıyorsanız, Bluetooth ile bağlanılan daha küçük "
+"bir cihaz tercih edebilirsiniz."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
