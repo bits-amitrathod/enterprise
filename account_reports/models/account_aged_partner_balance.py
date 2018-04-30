@@ -14,7 +14,7 @@ class report_account_aged_partner(models.AbstractModel):
 
     def get_columns_name(self, options):
         columns = [{}]
-        columns += [{'name': v, 'class': 'number'} for v in [
+        columns += [{'name': v, 'class': 'number', 'style': 'white-space:nowrap;'} for v in [
             _("Not&nbsp;due&nbsp;on %s").replace('&nbsp;', ' ') % options['date'].get('string'), 
             _("0&nbsp;-&nbsp;30").replace('&nbsp;', ' '), 
             _("30&nbsp;-&nbsp;60").replace('&nbsp;', ' '), 
