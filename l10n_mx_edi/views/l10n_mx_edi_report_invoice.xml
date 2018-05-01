@@ -31,11 +31,11 @@
         <xpath expr="//div[@name='reference']" position="after">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <div class="col-xs-2">
-                    <strong>Payment Method:</strong>
+                    <strong>Payment Way:</strong>
                     <p t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])"/>
                 </div>
                 <div class="col-xs-2">
-                    <strong>Payment Type:</strong>
+                    <strong>Payment Method:</strong>
                     <p t-esc="xml.get('formaDePago', xml.get('MetodoPago'))"/>
                 </div>
                 <div class="col-xs-2" t-if="xml.get('NumCtaPago')">

@@ -92,7 +92,7 @@ class AccountInvoice(models.Model):
         help='The bank account the client will pay from. Leave empty if '
         'unkown and the XML will show "Unidentified".')
     l10n_mx_edi_payment_method_id = fields.Many2one('l10n_mx_edi.payment.method',
-        string='Payment Method',
+        string='Payment Way',
         readonly=True,
         states={'draft': [('readonly', False)]},
         help='Indicates the way the invoice was/will be paid, where the '

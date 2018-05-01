@@ -19,7 +19,7 @@
                 <span t-if="o.partner_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc">XML VAT: <span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"></span></span>
             </div>
             <div class="col-xs-6" t-if="o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_payment_method_id">
-                <strong>Payment Method CFDI:</strong>
+                <strong>Payment Way CFDI:</strong>
                 <span t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])"/>
             </div>
         </xpath>

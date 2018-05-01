@@ -5,8 +5,8 @@
             <field name="name">view.l10n_mx.payment.method.form</field>
             <field name="model">l10n_mx_edi.payment.method</field>
             <field name="arch" type="xml">
-                <form string="Payment Method">
-                    <sheet string="Payment Method">
+                <form string="Payment Way">
+                    <sheet string="Payment Way">
                         <group>
                             <field name="code"/>
                             <field name="name"/>
@@ -21,7 +21,7 @@
             <field name="name">view.l10n_mx.payment.method.tree</field>
             <field name="model">l10n_mx_edi.payment.method</field>
             <field name="arch" type="xml">
-                <tree string="Payment Method">
+                <tree string="Payment Way">
                     <field name="code"/>
                     <field name="name" select="1"/>
                 </tree>
@@ -29,14 +29,14 @@
         </record>
 
         <record id="action_l10n_mx_payment_method" model="ir.actions.act_window">
-            <field name="name">Payment Method</field>
+            <field name="name">Payment Way</field>
             <field name="res_model">l10n_mx_edi.payment.method</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem
-            id="cfd_22_metodos_pago" name="Payment Method Codes (MX)" parent='payment.root_payment_menu' sequence="50"
+            id="cfd_22_metodos_pago" name="Payment Way Codes (MX)" parent='payment.root_payment_menu' sequence="50"
             action='action_l10n_mx_payment_method'
         />
     </data>
