@@ -46,13 +46,18 @@ class report_account_coa(models.AbstractModel):
                 if account not in grouped_accounts.keys():
                     grouped_accounts[account] = [{'balance': 0, 'debit': 0, 'credit': 0} for p in context['periods']]
                 grouped_accounts[account][period_number]['balance'] = res[account]['balance'] - res[account]['initial_bal']['balance']
+                for line in res[account]['lines']:
+                    if line.date >= period[0] and line.date <= period[1]:
+                        grouped_accounts[account][period_number]['debit'] += line.debit
+                        grouped_accounts[account][period_number]['credit'] += line.credit
             period_number += 1
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
         title_index = ''
         for account in sorted_accounts:
             non_zero = False
             for p in xrange(len(context['periods'])):
-                if not company_id.currency_id.is_zero(grouped_accounts[account][p]['balance']) or not company_id.currency_id.is_zero(initial_balances.get(account, 0)):
+                if (grouped_accounts[account][p]['debit'] or grouped_accounts[account][p]['credit']) or\
+                    not company_id.currency_id.is_zero(initial_balances.get(account, 0)):
                     non_zero = True
             if not non_zero:
                 continue
@@ -91,9 +96,12 @@ class report_account_coa(models.AbstractModel):
                 'name': account.code + " " + account.name,
                 'footnotes': self.env.context['context_id']._get_footnotes('account_id', account.id),
                 'columns': [account in initial_balances and self._format(initial_balances[account]) or self._format(0.0)] +
-                            sum([[grouped_accounts[account][p]['balance'] > 0 and self._format(grouped_accounts[account][p]['balance']) or '',
-                                 grouped_accounts[account][p]['balance'] < 0 and self._format(-grouped_accounts[account][p]['balance']) or '']
-                                for p in xrange(len(context['periods']))], []) +
+                            sum([
+                                    [
+                                        grouped_accounts[account][p]['debit'] > 0 and self._format(grouped_accounts[account][p]['debit']) or '',
+                                        grouped_accounts[account][p]['credit'] > 0 and self._format(grouped_accounts[account][p]['credit']) or ''
+                                    ] for p in xrange(len(context['periods']))
+                                ], []) +
                             [self._format((account in initial_balances and initial_balances[account] or 0.0) + sum([grouped_accounts[account][p]['balance'] for p in xrange(len(context['periods']))]))],
                 'level': 1,
                 'unfoldable': False,
