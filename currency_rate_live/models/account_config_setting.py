@@ -52,17 +52,19 @@ class ResCompany(models.Model):
     @api.multi
     def update_currency_rates(self):
         ''' This method is used to update all currencies given by the provider. Depending on the selection call _update_currency_ecb _update_currency_yahoo. '''
+        all_good = True
         res = True
         for company in self:
             if company.currency_provider == 'yahoo':
                 _logger.warning("Call to the discontinued Yahoo currency rate web service.")
-                raise UserError(_("The Yahoo currency rate web service has been discontinued. Please select another currency rate provider."))
             elif company.currency_provider == 'ecb':
                 res = company._update_currency_ecb()
             elif company.currency_provider == 'fta':
                 res = company._update_currency_fta()
             if not res:
-                raise UserError(_('Unable to connect to the online exchange rate platform. The web service may be temporary down. Please try again in a moment.'))
+                all_good = False
+                _logger.warning(_('Unable to connect to the online exchange rate platform %s. The web service may be temporary down.') % company.currency_provider)
+        return all_good
 
     def _update_currency_fta(self):
         ''' This method is used to update the currency rates using Switzerland's
@@ -212,4 +214,9 @@ class AccountConfigSettings(models.TransientModel):
     @api.multi
     def update_currency_rates(self):
         companies = self.env['res.company'].browse([record.company_id.id for record in self])
-        companies.update_currency_rates()
+
+        if 'yahoo' in companies.mapped('currency_provider'):
+            raise UserError(_("The Yahoo currency rate web service has been discontinued. Please select another currency rate provider."))
+
+        if not companies.update_currency_rates():
+            raise UserError(_('Unable to connect to the online exchange rate platform. The web service may be temporary down. Please try again in a moment.'))
