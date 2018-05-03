@@ -353,15 +353,16 @@ class account_report_context_followup(models.TransientModel):
     def send_email(self):
         email = self.env['res.partner'].browse(self.partner_id.address_get(['invoice'])['invoice']).email
         if email and email.strip():
-            email = self.env['mail.mail'].create({
+            body_html = self.with_context(public=True, mode='print').get_html()
+            msg = self._get_email_sent_log()
+            msg += '<br>' + ustr(body_html)
+            msg_id = self.partner_id.message_post(body=msg, subtype='account_reports.followup_logged_action')
+            email = self.env['mail.mail'].with_context(default_mail_message_id=msg_id).create({
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + self.partner_id.name,
-                'body_html': append_content_to_html(self.with_context(public=True, mode='print').get_html(), self.env.user.signature, plaintext=False),
+                'body_html': append_content_to_html(body_html, self.env.user.signature, plaintext=False),
                 'email_from': self.env.user.email or '',
                 'email_to': email,
             })
-            msg = self._get_email_sent_log()
-            msg += '<br>' + ustr(self.with_context(public=True, mode='print').get_html())
-            self.partner_id.message_post(body=msg, subtype='account_reports.followup_logged_action')
             return True
         return False
 
