@@ -80,7 +80,7 @@ class SaleOrder(models.Model):
                 subscriptions.increment_period()
                 subscriptions.write({'state': 'open', 'date': False})
             for subscription in subscriptions:
-                subscription_lines = order.order_line.filtered(lambda l: l.subscription_id == subscription)
+                subscription_lines = order.order_line.filtered(lambda l: l.subscription_id == subscription and l.product_id.recurring_invoice)
                 line_values = subscription_lines._update_subscription_line_data(subscription)
                 subscription.write({'recurring_invoice_line_ids': line_values})
         return res
