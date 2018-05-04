@@ -431,14 +431,14 @@ class SaleSubscription(models.Model):
             subscription.write({'recurring_next_date': new_date})
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
         args = args or []
         domain = ['|', ('code', operator, name), ('name', operator, name)]
-        partners = self.env['res.partner'].search([('name', operator, name)], limit=limit)
-        if partners:
-            domain = ['|'] + domain + [('partner_id', 'in', partners.ids)]
-        rec = self.search(domain + args, limit=limit)
-        return rec.name_get()
+        partner_ids = self.env['res.partner']._search([('name', operator, name)], access_rights_uid=name_get_uid)
+        if partner_ids:
+            domain = ['|'] + domain + [('partner_id', 'in', partner_ids)]
+        subscription_ids = self._search(domain + args, limit=limit, access_rights_uid=name_get_uid)
+        return self.browse(subscription_ids).name_get()
 
     def wipe(self):
         """Wipe a subscription clean by deleting all its lines."""
@@ -810,15 +810,15 @@ class SaleSubscriptionTemplate(models.Model):
             template.product_count = result.get(template.id, 0)
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
         # positive and negative operators behave differently
         if operator in ('=', 'ilike', '=ilike', 'like', '=like'):
             domain = ['|', ('code', operator, name), ('name', operator, name)]
         else:
             domain = ['&', ('code', operator, name), ('name', operator, name)]
         args = args or []
-        rec = self.search(domain + args, limit=limit)
-        return rec.name_get()
+        subscription_template_ids = self._search(domain + args, limit=limit, access_rights_uid=name_get_uid)
+        return self.browse(subscription_template_ids).name_get()
 
     def name_get(self):
         res = []

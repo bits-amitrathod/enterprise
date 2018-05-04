@@ -63,8 +63,8 @@ class ProductSatCode(models.Model):
         return result
 
     @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
         args = args or []
         domain_name = ['|', ('name', 'ilike', name), ('code', 'ilike', name)]
-        recs = self.search(domain_name + args, limit=limit)
-        return recs.name_get()
+        sat_code_ids = self._search(domain_name + args, limit=limit, access_rights_uid=name_get_uid)
+        return self.browse(sat_code_ids).name_get()

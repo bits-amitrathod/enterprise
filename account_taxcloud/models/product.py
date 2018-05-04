@@ -12,14 +12,14 @@ class ProductTicCategory(models.Model):
     description = fields.Char(string='TIC Description', required=True)
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
         args = args or []
-        recs = self.browse()
+        tic_category_ids = []
         if name:
-            recs = self.search([('description', operator, name)] + args, limit=limit)
-        if not recs:
-            recs = self.search([('code', operator, name)] + args, limit=limit)
-        return recs.name_get()
+            tic_category_ids = self._search([('description', operator, name)] + args, limit=limit, access_rights_uid=name_get_uid)
+        if not tic_category_ids:
+            tic_category_ids = self._search([('code', operator, name)] + args, limit=limit, access_rights_uid=name_get_uid)
+        return self.browse(tic_category_ids).name_get()
 
     @api.multi
     def name_get(self):
