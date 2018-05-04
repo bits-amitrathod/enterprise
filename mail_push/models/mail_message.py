@@ -32,25 +32,37 @@ class MailMessage(models.Model):
         """
         super(MailMessage, self)._notify_recipients(rdata, record, msg_vals, **kwargs)
 
+        notif_pids = [r['id'] for r in rdata['partners']]
+        chat_cids = [r['id'] for r in rdata['channels'] if r['type'] == 'chat']
+
+        if not notif_pids and not chat_cids:
+            return
+
         self_sudo = self.sudo()
+        msg_type = msg_vals.get('message_type') or self_sudo.message_type
 
-        # Create Cloud messages for messages in a chat
-        if self_sudo.message_type == 'comment':
-            receiver_ids = self_sudo.needaction_partner_ids
-
-            for channel in self_sudo.channel_ids.filtered(lambda c: c.channel_type == 'chat'):
-                receiver_ids |= channel.channel_partner_ids - self_sudo.author_id
-
+        if msg_type == 'comment':
             # Create Cloud messages for needactions, but ignore the needaction if it is a result
             # of a mention in a chat. In this case the previously created Cloud message is enough.
-            identities = receiver_ids.sudo().mapped('device_identity_ids')
-            if identities:
-                for service, service_str in self.env['mail_push.device']._default_service_type():
-                    method_name = "_push_notify_%s" % (service)
-                    if hasattr(self, method_name):
-                        method = getattr(self_sudo, method_name)
-                        service_identities = identities.filtered(lambda r: r.service_type == service)
-                        method(service_identities)
+
+            if chat_cids:
+                channel_pids = self.env['mail.channel.partner'].sudo().search([
+                    ('channel_id', 'in', chat_cids),
+                ]).ids
+            else:
+                channel_pids = []
+            pids = (set(notif_pids) | set(channel_pids)) - set(self_sudo.author_id.ids)
+            if pids:
+                identities = self.env['mail_push.device'].sudo().search([
+                    ('partner_id', 'in', list(pids)),
+                ])
+                if identities:
+                    for service, service_str in self.env['mail_push.device']._default_service_type():
+                        method_name = "_push_notify_%s" % (service)
+                        if hasattr(self_sudo, method_name):
+                            method = getattr(self_sudo, method_name)
+                            service_identities = identities.filtered(lambda r: r.service_type == service)
+                            method(service_identities)
 
     def _get_default_fcm_credentials(self):
         params = self.env['ir.config_parameter'].sudo()
