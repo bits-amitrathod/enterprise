@@ -458,6 +458,8 @@ return AbstractRenderer.extend({
                     ids.join(" ") + "\" style=\"pointer-events: "+pointer+"; padding-left: "+ padding_left + 
                     "px; left:"+(last_left )+"px; width:"+width+"px;\">"+content+"</div>";
             }
+            // since the forwardport of 9fe5006bb, 2240e7d50 is probably not
+            // necessary anymore, so it could be removed in master
             acc = Math.round((acc + el.consolidation) * 100) / 100;
             last_left = el.left;
             if(el.type === "start"){
