@@ -223,9 +223,9 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 // Append hover content (chatter preview)
                 $chatter_hook.append($(Qweb.render('mail.Chatter')).find('.o_chatter_topbar')
                     .addClass('container')
-                    .append($(Qweb.render('mail.Chatter.Buttons', {
-                        new_message_btn: true,
-                        log_note_btn: true,
+                    .append($(Qweb.render('mail.chatter.Buttons', {
+                        newMessageButton: true,
+                        logNoteButton: true,
                     })))
                     .append($(Qweb.render('mail.Followers')))
                 );

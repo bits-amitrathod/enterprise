@@ -19,9 +19,9 @@ ThreadField.include({
     _fetchAndRenderThread: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
-            if (self.thread.attachments.length) {
+            if (self._threadWidget.attachments.length) {
                 self.trigger_up('preview_attachment', {
-                    attachments: self.thread.attachments,
+                    attachments: self._threadWidget.attachments,
                 });
             }
         });

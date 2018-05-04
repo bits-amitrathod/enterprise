@@ -13,7 +13,7 @@ var Activity = MailActivity.include({
      */
     init: function () {
         this._super.apply(this, arguments);
-        this.call('chat_manager', 'getChatBus').on('voip_reload_chatter', this, function () {
+        this.call('mail_service', 'getMailBus').on('voip_reload_chatter', this, function () {
             this._reload({activity: true, thread: true});
         });
     },
