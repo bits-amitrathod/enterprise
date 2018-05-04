@@ -25,9 +25,14 @@
             <div class="container mt16">
                 <div class="navbar navbar-default">
                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#o-helpdesk-teams-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <div class="navbar-brand">Helpdesk</div>
                     </div>
-                    <div class="collapse navbar-collapse">
+                    <div class="collapse navbar-collapse" id="o-helpdesk-teams-navbar-collapse">
                         <t t-if="len(teams)>1">
                             <ul class="nav navbar-nav team_menu">
                                 <t t-foreach="teams" t-as="tteam">

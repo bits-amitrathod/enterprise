@@ -76,7 +76,7 @@
                     <tr>
                         <td>Growth Type:</td>
                         <td>
-                            <input class="growth_type" name="growth_type_mrr" type="radio" value="linear" data-type="mrr" checked="checked"> Linear</input><br/> 
+                            <input class="growth_type" name="growth_type_mrr" type="radio" value="linear" data-type="mrr" checked="checked"> Linear</input><br/>
                             <input class="growth_type" name="growth_type_mrr" type="radio" value="exponential" data-type="mrr"> Exponential</input>
                         </td>
                     </tr>
@@ -417,10 +417,10 @@
 
     <t t-name="sale_subscription_dashboard.contract_modifications">
         <div t-if="!modifications.length">
-            <i>There is no subscription modification during this period.</i> 
+            <i>There is no subscription modification during this period.</i>
         </div>
 
-        <div t-if="modifications.length" class="table-responsive"> 
+        <div t-if="modifications.length" class="table-responsive">
             <table style="width: auto;" class="table table-hover">
                 <tr>
                     <th/>
@@ -433,8 +433,8 @@
                 <tr t-foreach="modifications" t-as="modification">
                     <td><i t-att-class="modification['class_type']"/></td>
                     <td><t t-esc="modification['partner'] or ''"/></td>
-                    <td><t t-esc="modification['account_analytic'] or ''"/></td>
-                    <td><t t-esc="modification['account_analytic_template'] or ''"/></td>
+                    <td><t t-esc="modification['subscription'] or ''"/></td>
+                    <td><t t-esc="modification['subscription_template'] or ''"/></td>
                     <td><t t-esc="format_number(modification['previous_mrr'])"/></td>
                     <td><t t-esc="format_number(modification['current_mrr'])"/> (<span t-att-class="get_color_class(modification['diff'], 'up')"><t t-esc="format_number(modification['diff'])"/></span>)</td>
                 </tr>
@@ -444,7 +444,7 @@
 
     <t t-name="sale_subscription_dashboard.nrr_invoices">
         <div t-if="!invoices.length">
-            <i>There is no NRR invoice during this period.</i> 
+            <i>There is no NRR invoice during this period.</i>
         </div>
 
         <div t-if="invoices.length" class="table-responsive">
@@ -457,8 +457,8 @@
                 </tr>
                 <tr t-foreach="invoices" t-as="invoice">
                     <td><t t-esc="invoice['partner'] or ''"/></td>
-                    <td><t t-esc="invoice['account_analytic'] or ''"/></td>
-                    <td><t t-esc="invoice['account_analytic_template'] or ''"/></td>
+                    <td><t t-esc="invoice['subscription'] or ''"/></td>
+                    <td><t t-esc="invoice['subscription_template'] or ''"/></td>
                     <td><t t-esc="format_number(invoice['nrr'])"/></td>
                 </tr>
             </table>

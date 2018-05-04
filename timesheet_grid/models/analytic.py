@@ -54,10 +54,13 @@ class AnalyticLine(models.Model):
         span = self.env.context.get('grid_range', 'week')
         date_ago = fields.Date.to_string(anchor - STEP_BY[span] + START_OF[span])
 
-        tasks |= self.env['account.analytic.line'].search([
+        domain = [
             ('user_id', '=', self.env.user.id),
             ('date', '>=', date_ago)
-        ]).mapped('task_id')
+        ]
+        if 'default_project_id' in self.env.context:
+            domain += [('project_id', '=', self.env.context['default_project_id'])]
+        tasks |= self.env['account.analytic.line'].search(domain).mapped('task_id')
         return tasks
 
     @api.multi

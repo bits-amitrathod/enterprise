@@ -35,7 +35,7 @@ class QualityPoint(models.Model):
 
     @api.onchange('product_id')
     def _onchange_product(self):
-        bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', self.product_id.product_tmpl_id.id)])
+        bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', self.product_tmpl_id.id)])
         component_ids = set([])
         for bom in bom_ids:
             boms_done, lines_done = bom.explode(self.product_id, 1.0)
