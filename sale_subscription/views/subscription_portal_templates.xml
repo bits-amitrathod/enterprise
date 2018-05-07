@@ -246,9 +246,9 @@
 
     <template id="portal_my_subscriptions" name="My Subscriptions">
         <t t-call="portal.portal_layout">
-            <h3>Subscriptions
-                <t t-call="portal.portal_searchbar"/>
-            </h3>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Subscriptions</t>
+            </t>
             <t t-if="not accounts">
                 <p>You don't have any subscriptions yet.</p>
             </t>
