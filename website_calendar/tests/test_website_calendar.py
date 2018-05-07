@@ -10,6 +10,10 @@ class WebsiteCalendarTest(common.HttpCase):
 
     def setUp(self):
         super(WebsiteCalendarTest, self).setUp()
+
+        # calendar events can mess up the availability of our employee later on.
+        self.env['calendar.event'].search([]).unlink()
+
         self.company = self.env['res.company'].search([], limit=1)
 
         self.resource_calendar = self.env['resource.calendar'].create({
