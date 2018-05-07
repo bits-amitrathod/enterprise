@@ -97,11 +97,9 @@ class AccountPayment(models.Model):
             elif partner != partner_payment.partner_id:
                 raise UserError("Trying to generate a single XML payment group for payments with different partners.")
 
-            end2end_counter = 0
-            partner_payment.sdd_xml_gen_payment(company_id, mandate.partner_id, end2end_counter, PmtInf)
-            end2end_counter += 1
+        partner_payment.sdd_xml_gen_payment(company_id, mandate.partner_id, partner_payment.name[:35], PmtInf)
 
-    def sdd_xml_gen_payment(self,company_id, partner, end2end_counter, PmtInf):
+    def sdd_xml_gen_payment(self,company_id, partner, end2end_name, PmtInf):
         """ Appends to a SDD XML file being generated all the data related to the
         payments of a given partner.
         """
@@ -113,7 +111,7 @@ class AccountPayment(models.Model):
         if self.payment_method_id.code != 'sdd':
             raise UserError(_("Trying to generate a Direct Debit XML for payments coming from another payment method than SEPA Direct Debit."))
 
-        DrctDbtTxInf = create_xml_node_chain(PmtInf, ['DrctDbtTxInf','PmtId','EndToEndId'], str(end2end_counter))[0]
+        DrctDbtTxInf = create_xml_node_chain(PmtInf, ['DrctDbtTxInf','PmtId','EndToEndId'], end2end_name)[0]
 
         InstdAmt = create_xml_node(DrctDbtTxInf, 'InstdAmt', float_repr(self.amount, precision_digits=2))
         InstdAmt.attrib['Ccy'] = self.currency_id.name
