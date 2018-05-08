@@ -452,7 +452,12 @@ class AccountFinancialReportLine(models.Model):
         strict_range = self.special_date_changer == 'strict_range'
         if self.special_date_changer == 'from_beginning':
             date_from = False
-        if self.special_date_changer == 'to_beginning_of_period' and date_from:
+        if self.special_date_changer == 'to_beginning_of_period':
+            if not date_from:
+                raise UserError(_(
+                    'Incorrect configuration! The analysis period is configured to use a single date '
+                    'while the special date changer is set \'At the beginning of the period\'.'
+                ))
             date_tmp = datetime.strptime(self._context['date_from'], "%Y-%m-%d") - relativedelta(days=1)
             date_to = date_tmp.strftime('%Y-%m-%d')
             date_from = False
@@ -689,11 +694,6 @@ class AccountFinancialReportLine(models.Model):
                 date_to = period.get('date_to', False) or period.get('date', False)
                 date_from, date_to, strict_range = line.with_context(date_from=date_from, date_to=date_to)._compute_date_range()
                 r = line.with_context(date_from=date_from, date_to=date_to, strict_range=strict_range)._eval_formula(financial_report, debit_credit, currency_table, linesDicts[k])
-                    if not period_from:
-                        raise UserError(_(
-                            'Incorrect configuration! The analysis period is configured to use a single date '
-                            'while the special date changer is set \'At the beginning of the period\'.'
-                        ))
                 debit_credit = False
                 res.append(r)
                 domain_ids.update(r)
