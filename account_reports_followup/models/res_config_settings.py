@@ -7,8 +7,6 @@ from odoo import api, fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    min_days_between_followup = fields.Integer(related='company_id.min_days_between_followup', string='Minimum days between two follow-ups')
-
     @api.multi
     def open_followup_level_form(self):
         followup = self.env['account_followup.followup'].search([], limit=1)
