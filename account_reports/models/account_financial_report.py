@@ -7,7 +7,7 @@ from odoo.tools.misc import formatLang
 from odoo.tools import float_is_zero, ustr
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 
 
@@ -526,6 +526,11 @@ class AccountFinancialReportLine(models.Model):
                 if line.special_date_changer == 'from_beginning':
                     period_from = False
                 if line.special_date_changer == 'to_beginning_of_period':
+                    if not period_from:
+                        raise UserError(_(
+                            'Incorrect configuration! The analysis period is configured to use a single date '
+                            'while the special date changer is set \'At the beginning of the period\'.'
+                        ))
                     date_tmp = datetime.strptime(period_from, "%Y-%m-%d") - relativedelta(days=1)
                     period_to = date_tmp.strftime('%Y-%m-%d')
                     period_from = False

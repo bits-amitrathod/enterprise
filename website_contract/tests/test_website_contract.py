@@ -114,7 +114,7 @@ class TestContract(TestContractCommon):
     def test_auto_payment_with_token(self):
         from mock import patch
 
-        self.company = self.env['res.company'].search([], limit=1)
+        self.company = self.env.user.company_id
 
         self.account_type_receivable = self.env['account.account.type'].create(
             {'name': 'receivable',
@@ -184,6 +184,11 @@ class TestContract(TestContractCommon):
         self.contract.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
         self.assertEqual(self.mock_send_success_count, 1, 'website_contract: a mail to the invoice recipient should have been sent')
         self.assertEqual(self.contract.state, 'open', 'website_contract: subscription with online payment and a payment method set should stay opened when transaction succeeds')
+        invoice = self.env['account.invoice'].search(self.contract.action_subscription_invoice()['domain'])[0]
+        recurring_total_with_taxes = self.contract.recurring_total + (self.contract.recurring_total * (self.percent_tax.amount / 100.0))
+        self.assertEqual(invoice.amount_total, recurring_total_with_taxes, 'website_contract: the total of the recurring invoice created should be the contract recurring total + the products taxes')
+        self.assertTrue(all(line.invoice_line_tax_ids.ids == self.percent_tax.ids for line in invoice.invoice_line_ids), 'website_contract: All lines of the recurring invoice created should have the percent tax set on the contract products')
+        self.assertTrue(all(tax_line.tax_id == self.percent_tax for tax_line in invoice.tax_line_ids), 'The invoice tax lines should be set and should all use the tax set on the contract products')
 
         for patcher in patchers:
             patcher.stop()
