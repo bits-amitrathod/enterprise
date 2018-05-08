@@ -7,16 +7,16 @@ from odoo import fields, models
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    additional_note = fields.Text(string='Additional Note')
+    additional_note = fields.Text(string='Additional Note', groups="hr.group_hr_user")
     certificate = fields.Selection([
         ('bachelor', 'Bachelor'),
         ('master', 'Master'),
         ('other', 'Other'),
-    ], 'Certificate Level', default='master')
-    study_field = fields.Char("Field of Study", placeholder='Computer Science')
-    study_school = fields.Char("School")
-    emergency_contact = fields.Char("Emergency Contact")
-    emergency_phone = fields.Char("Emergency Phone")
+    ], 'Certificate Level', default='master', groups="hr.group_hr_user")
+    study_field = fields.Char("Field of Study", placeholder='Computer Science', groups="hr.group_hr_user")
+    study_school = fields.Char("School", groups="hr.group_hr_user")
+    emergency_contact = fields.Char("Emergency Contact", groups="hr.group_hr_user")
+    emergency_phone = fields.Char("Emergency Phone", groups="hr.group_hr_user")
 
     def open_package_employee(self):
         self.ensure_one()
