@@ -114,7 +114,7 @@ class TestContract(TestContractCommon):
     def test_auto_payment_with_token(self):
         from mock import patch
 
-        self.company = self.env['res.company'].search([], limit=1)
+        self.company = self.env.user.company_id
 
         self.account_type_receivable = self.env['account.account.type'].create(
             {'name': 'receivable',
