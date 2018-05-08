@@ -97,7 +97,7 @@ class AccountPayment(models.Model):
             elif partner != partner_payment.partner_id:
                 raise UserError("Trying to generate a single XML payment group for payments with different partners.")
 
-        partner_payment.sdd_xml_gen_payment(company_id, mandate.partner_id, partner_payment.name[:35], PmtInf)
+            partner_payment.sdd_xml_gen_payment(company_id, mandate.partner_id, partner_payment.name[:35], PmtInf)
 
     def sdd_xml_gen_payment(self,company_id, partner, end2end_name, PmtInf):
         """ Appends to a SDD XML file being generated all the data related to the
