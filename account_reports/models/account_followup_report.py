@@ -122,7 +122,8 @@ class account_report_context_followup_all(models.TransientModel):
     @api.depends('valuenow')  # Doesn't directly depend on valuenow but when valuenow is updated it means that this should change
     def _compute_pages(self):
         for context in self:
-            partners = self.env['res.partner'].get_partners_in_need_of_action() - context.skipped_partners_ids
+            overdue_filter = context.partner_filter == 'all'
+            partners = self.env['res.partner'].get_partners_in_need_of_action(overdue_filter) - context.skipped_partners_ids
             context.last_page = math.ceil(float(len(partners)) / float(self.PAGER_SIZE))
 
     valuenow = fields.Integer('current amount of invoices done', default=0)
