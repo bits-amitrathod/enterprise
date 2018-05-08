@@ -7,7 +7,7 @@ from odoo.tools.misc import formatLang
 from odoo.tools import float_is_zero, ustr
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 
 
@@ -689,6 +689,11 @@ class AccountFinancialReportLine(models.Model):
                 date_to = period.get('date_to', False) or period.get('date', False)
                 date_from, date_to, strict_range = line.with_context(date_from=date_from, date_to=date_to)._compute_date_range()
                 r = line.with_context(date_from=date_from, date_to=date_to, strict_range=strict_range)._eval_formula(financial_report, debit_credit, currency_table, linesDicts[k])
+                    if not period_from:
+                        raise UserError(_(
+                            'Incorrect configuration! The analysis period is configured to use a single date '
+                            'while the special date changer is set \'At the beginning of the period\'.'
+                        ))
                 debit_credit = False
                 res.append(r)
                 domain_ids.update(r)
