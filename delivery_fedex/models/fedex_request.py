@@ -149,13 +149,18 @@ class FedexRequest():
             self.RequestedShipment.MasterTrackingId.TrackingIdType = 'FEDEX'
             self.RequestedShipment.MasterTrackingId.TrackingNumber = master_tracking_id
 
-    def add_package(self, weight_value, sequence_number=False, mode='shipping'):
+    def add_package(self, weight_value, package_code=False, package_height=0, package_width=0, package_length=0, sequence_number=False, mode='shipping'):
         package = self.client.factory.create('RequestedPackageLineItem')
         package_weight = self.client.factory.create('Weight')
         package_weight.Value = weight_value
         package_weight.Units = self.RequestedShipment.TotalWeight.Units
 
         package.PhysicalPackaging = 'BOX'
+        if package_code == 'YOUR_PACKAGING':
+            package.Dimensions.Height = package_height
+            package.Dimensions.Width = package_width
+            package.Dimensions.Length = package_length
+            package.Dimensions.Units = "IN"
         package.Weight = package_weight
         if mode == 'rating':
             package.GroupPackageCount = 1

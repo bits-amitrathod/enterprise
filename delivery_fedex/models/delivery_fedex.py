@@ -97,11 +97,11 @@ class ProviderFedex(models.Model):
         self.fedex_saturday_delivery = False
 
     @tools.ormcache('environment', 'account_number', 'meter_number', 'droppoff_type', 'service_type',
-                    'package_code', 'weight_unit', 'fedex_saturday_delivery', 'currency_name',
+                    'package_code', 'package_height', 'package_width', 'package_length', 'weight_unit', 'fedex_saturday_delivery', 'currency_name',
                     'shipper_company', 'shipper_warehouse', 'recipient', 'weight', 'max_weight',
                     'cache_interval', 'total_custom_amount')
     def _fedex_get_rate(self, environment, account_number, meter_number, droppoff_type, service_type,
-                        package_code, weight_unit, fedex_saturday_delivery, order_name, currency_name,
+                        package_code, package_height, package_width, package_length, weight_unit, fedex_saturday_delivery, order_name, currency_name,
                         shipper_company, shipper_warehouse, recipient, weight, max_weight,
                         cache_interval, total_custom_amount):
         Partner = self.env['res.partner']
@@ -128,15 +128,37 @@ class ProviderFedex(models.Model):
         if max_weight and weight > max_weight:
             total_package = int(weight / max_weight)
             last_package_weight = weight % max_weight
-
             for sequence in range(1, total_package + 1):
-                srm.add_package(max_weight, sequence_number=sequence, mode='rating')
+                srm.add_package(
+                    max_weight,
+                    package_code=package_code,
+                    package_height=package_height,
+                    package_width=package_width,
+                    package_length=package_length,
+                    sequence_number=sequence,
+                    mode='rating',
+                )
             if last_package_weight:
                 total_package = total_package + 1
-                srm.add_package(last_package_weight, sequence_number=total_package, mode='rating')
+                srm.add_package(
+                    last_package_weight,
+                    package_code=package_code,
+                    package_height=package_height,
+                    package_width=package_width,
+                    package_length=package_length,
+                    sequence_number=total_package,
+                    mode='rating',
+                )
             srm.set_master_package(weight, total_package)
         else:
-            srm.add_package(weight, mode='rating')
+            srm.add_package(
+                weight,
+                package_code=package_code,
+                package_height=package_height,
+                package_width=package_width,
+                package_length=package_length,
+                mode='rating',
+            )
             srm.set_master_package(weight, 1)
         return srm.rate()
 
@@ -173,6 +195,9 @@ class ProviderFedex(models.Model):
             self.fedex_droppoff_type,
             self.fedex_service_type,
             self.fedex_default_packaging_id.shipper_package_code,
+            self.fedex_default_packaging_id.height,
+            self.fedex_default_packaging_id.width,
+            self.fedex_default_packaging_id.length,
             self.fedex_weight_unit,
             self.fedex_saturday_delivery,
             order.name,
@@ -288,7 +313,15 @@ class ProviderFedex(models.Model):
                 for sequence, package in enumerate(picking.package_ids, start=1):
 
                     package_weight = self._fedex_convert_weight(package.shipping_weight, self.fedex_weight_unit)
-                    srm.add_package(package_weight, sequence_number=sequence)
+                    packaging = package.packaging_id
+                    srm.add_package(
+                        package_weight,
+                        package_code=packaging.shipper_package_code,
+                        package_height=packaging.height,
+                        package_width=packaging.width,
+                        package_length=packaging.length,
+                        sequence_number=sequence,
+                    )
                     srm.set_master_package(net_weight, package_count, master_tracking_id=master_tracking_id)
                     request = srm.process_shipment()
                     package_name = package.name or sequence
@@ -356,7 +389,14 @@ class ProviderFedex(models.Model):
             # One package #
             ###############
             elif package_count == 1:
-                srm.add_package(net_weight)
+                packaging = picking.package_ids[:1].packaging_id or picking.carrier_id.fedex_default_packaging_id
+                srm.add_package(
+                    net_weight,
+                    package_code=packaging.shipper_package_code,
+                    package_height=packaging.height,
+                    package_width=-packaging.width,
+                    package_length=packaging.length,
+                )
                 srm.set_master_package(net_weight, 1)
 
                 # Ask the shipping to fedex
