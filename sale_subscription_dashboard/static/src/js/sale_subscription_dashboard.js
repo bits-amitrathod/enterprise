@@ -555,7 +555,7 @@ var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.
         if (this.selected_stat === 'mrr') {
             additional_context = {
                 'search_default_asset_end_date': moment(this.end_date).toDate(),
-                'search_default_asset_start_date': moment(this.end_date).toDate(),
+                'search_default_asset_start_date': moment(this.start_date).toDate(),
                 // TODO: add contract_ids as another filter
             };
             view_xmlid = "sale_subscription_dashboard.action_invoice_line_entries_report";
