@@ -37,16 +37,28 @@ class pos_config(models.Model):
 
     @api.constrains('blackbox_pos_production_id')
     def _check_one_posbox_per_config(self):
-        # we need to iterate over all the config records
         pos_config = self.env['pos.config']
 
-        if self.blackbox_pos_production_id:
-            if len(self.blackbox_pos_production_id) != 14:
-                raise ValidationError(_("Serial number must consist of 14 characters."))
+        for config in self:
+            if config.blackbox_pos_production_id:
+                if len(config.blackbox_pos_production_id) != 14:
+                    raise ValidationError(_("Serial number must consist of 14 characters."))
 
-            if pos_config.search([('id', '!=', self.id),
-                                  ('blackbox_pos_production_id', '=', self.blackbox_pos_production_id)]):
-                raise ValidationError(_("Only one Point of Sale allowed per registered POSBox."))
+                if pos_config.search([('id', '!=', config.id),
+                                      ('blackbox_pos_production_id', '=', config.blackbox_pos_production_id)]):
+                    raise ValidationError(_("Only one Point of Sale allowed per registered POSBox."))
+
+    @api.constrains('blackbox_pos_production_id', 'fiscal_position_ids')
+    def _check_posbox_fp_tax_code(self):
+        for config in self:
+            if not config.blackbox_pos_production_id:
+                continue
+
+            for fp in config.fiscal_position_ids:
+                for tax_line in fp.tax_ids:
+                    if tax_line.tax_src_id.identification_letter and not tax_line.tax_dest_id.identification_letter:
+                        raise ValidationError(_("Fiscal Position %s (tax %s) has an invalid tax amount. Only 21%%, 12%%, 6%% and 0%% are allowed.") % (fp.name, tax_line.tax_dest_id.name))
+
 
     def get_next_report_sequence_number(self):
         to_return = self.report_sequence_number
