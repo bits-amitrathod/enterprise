@@ -47,7 +47,8 @@ class report_account_coa(models.AbstractModel):
             #skip accounts with all periods = 0 and no initial balance
             non_zero = False
             for p in range(len(comparison_table)):
-                if not company_id.currency_id.is_zero(grouped_accounts[account][p]['balance']) or not company_id.currency_id.is_zero(initial_balances.get(account, 0)):
+                if (grouped_accounts[account][p]['debit'] or grouped_accounts[account][p]['credit']) or\
+                    not company_id.currency_id.is_zero(initial_balances.get(account, 0)):
                     non_zero = True
             if not non_zero:
                 continue
@@ -93,8 +94,10 @@ class report_account_coa(models.AbstractModel):
             total_periods = 0
             for period in range(len(comparison_table)):
                 amount = grouped_accounts[account][period]['balance']
+                debit = grouped_accounts[account][period]['debit']
+                credit = grouped_accounts[account][period]['credit']
                 total_periods += amount
-                cols += [{'name': amount > 0 and self.format_value(amount) or ''}, {'name': amount < 0 and self.format_value(-amount) or ''}]
+                cols += [{'name': debit > 0 and self.format_value(debit) or ''}, {'name': credit > 0 and self.format_value(credit) or ''}]
             cols += [{'name': self.format_value(initial_balances.get(account, 0.0) + total_periods)}]
             lines.append({
                 'id': account.id,
