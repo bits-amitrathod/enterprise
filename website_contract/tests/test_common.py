@@ -7,9 +7,10 @@ class TestContractCommon(common.TransactionCase):
     def setUp(self):
         super(TestContractCommon, self).setUp()
 
-        self.env.user.company_id.currency_id = self.env.ref('base.EUR')
+        self.env.cr.execute('UPDATE res_company SET currency_id = %s', (self.env.ref('base.EUR').id,))
 
         Contract = self.env['sale.subscription']
+        Tax = self.env['account.tax']
         Template = self.env['sale.subscription.template']
         Product = self.env['product.product']
         ProductTmpl = self.env['product.template']
@@ -35,6 +36,13 @@ class TestContractCommon(common.TransactionCase):
             'factor_inv': 10,
         })
 
+        # Test taxes
+        self.percent_tax = Tax.create({
+            'name': "Percent tax",
+            'amount_type': 'percent',
+            'amount': 10,
+        })
+
         # Test products
         self.product_tmpl = ProductTmpl.create({
             'name': 'TestProduct',
@@ -42,7 +50,8 @@ class TestContractCommon(common.TransactionCase):
             'recurring_invoice': True,
             'uom_id': self.uom_base.id,
             'uom_po_id': self.uom_base.id,
-            'price': 50.0
+            'price': 50.0,
+            'taxes_id': [(6, 0, [self.percent_tax.id])],
         })
         self.product = Product.create({
             'product_tmpl_id': self.product_tmpl.id,
@@ -54,7 +63,8 @@ class TestContractCommon(common.TransactionCase):
             'recurring_invoice': True,
             'uom_id': self.uom_base.id,
             'uom_po_id': self.uom_base.id,
-            'price': 20.0
+            'price': 20.0,
+            'taxes_id': [(6, 0, [self.percent_tax.id])],
         })
         self.product_opt = Product.create({
             'product_tmpl_id': self.product_opt_tmpl.id,
@@ -66,7 +76,8 @@ class TestContractCommon(common.TransactionCase):
             'recurring_invoice': True,
             'uom_id': self.uom_base.id,
             'uom_po_id': self.uom_base.id,
-            'price': 15.0
+            'price': 15.0,
+            'taxes_id': [(6, 0, [self.percent_tax.id])],
         })
         self.product2 = Product.create({
             'product_tmpl_id': self.product_tmpl2.id,
