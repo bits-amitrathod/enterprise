@@ -163,7 +163,8 @@ class TestSubscription(TestSubscriptionCommon):
         self.assertEqual(self.mock_send_success_count, 1, 'a mail to the invoice recipient should have been sent')
         self.assertEqual(self.subscription.state, 'open', 'subscription with online payment and a payment method set should stay opened when transaction succeeds')
 
-        invoice = self.env['account.invoice'].search(self.subscription.action_subscription_invoice()['domain'])[0]
+        invoice_id = self.subscription.action_subscription_invoice()['res_id']
+        invoice = self.env['account.invoice'].browse(invoice_id)
         recurring_total_with_taxes = self.subscription.recurring_total + (self.subscription.recurring_total * (self.percent_tax.amount / 100.0))
         self.assertEqual(invoice.amount_total, recurring_total_with_taxes, 'website_subscription: the total of the recurring invoice created should be the subscription recurring total + the products taxes')
         self.assertTrue(all(line.invoice_line_tax_ids.ids == self.percent_tax.ids for line in invoice.invoice_line_ids), 'website_subscription: All lines of the recurring invoice created should have the percent tax set on the subscription products')
