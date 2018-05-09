@@ -10,6 +10,10 @@ class WebsiteCalendarTest(common.HttpCase):
 
     def setUp(self):
         super(WebsiteCalendarTest, self).setUp()
+
+        # calendar events can mess up the availability of our employee later on.
+        self.env['calendar.event'].search([]).unlink()
+
         self.company = self.env['res.company'].search([], limit=1)
 
         self.resource_calendar = self.env['resource.calendar'].create({
@@ -27,10 +31,10 @@ class WebsiteCalendarTest(common.HttpCase):
             'calendar_id': self.resource_calendar.id
         })
 
-        self.first_user_in_brussel = self.env['res.users'].search([], limit=1)
+        self.first_user_in_brussel = self.env['res.users'].create({'name': 'Grace Slick', 'login': 'grace'})
         self.first_user_in_brussel.write({'tz': 'Europe/Brussels'})
 
-        self.second_user_in_australia = self.env['res.users'].search([('id', '!=', self.first_user_in_brussel.id)], limit=1)
+        self.second_user_in_australia = self.env['res.users'].create({'name': 'Australian guy', 'login': 'australian'})
         self.second_user_in_australia.write({'tz': 'Australia/West'})
 
         self.employee = self.env['hr.employee'].create({

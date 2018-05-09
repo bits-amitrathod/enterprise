@@ -656,7 +656,7 @@ class AccountInvoice(models.Model):
         }
         taxes = {}
         for line in self.invoice_line_ids.filtered('price_subtotal'):
-            for tax in line.invoice_line_tax_ids:
+            for tax in line.invoice_line_tax_ids.filtered(lambda r: r.l10n_mx_cfdi_tax_type != 'Exento'):
                 amount = round(abs(tax.amount / 100 * float("%.2f" % line.price_subtotal)), 2)
                 if tax.amount not in taxes:
                     taxes.update({tax.amount: {

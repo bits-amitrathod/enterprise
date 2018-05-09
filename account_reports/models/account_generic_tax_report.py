@@ -129,7 +129,7 @@ class generic_tax_report(models.AbstractModel):
     @api.model
     def get_lines(self, options, line_id=None):
         taxes = {}
-        for tax in self.env['account.tax'].search([]):
+        for tax in self.env['account.tax'].with_context(active_test=False).search([]):
             taxes[tax.id] = {'obj': tax, 'show': False, 'periods': [{'net': 0, 'tax': 0}]}
             for period in options['comparison'].get('periods'):
                 taxes[tax.id]['periods'].append({'net': 0, 'tax': 0})

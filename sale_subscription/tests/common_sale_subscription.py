@@ -10,6 +10,7 @@ class TestSubscriptionCommon(AccountingTestCase):
         Subscription = self.env['sale.subscription']
         SubTemplate = self.env['sale.subscription.template']
         SaleOrder = self.env['sale.order']
+        Tax = self.env['account.tax']
         Product = self.env['product.product']
         ProductTmpl = self.env['product.template']
 
@@ -23,6 +24,13 @@ class TestSubscriptionCommon(AccountingTestCase):
             'description': 'Test Subscription Template 2',
         })
 
+        # Test taxes
+        self.percent_tax = Tax.create({
+            'name': "Percent tax",
+            'amount_type': 'percent',
+            'amount': 10,
+        })
+
         # Test products
         self.product_tmpl = ProductTmpl.create({
             'name': 'TestProduct',
@@ -33,7 +41,8 @@ class TestSubscriptionCommon(AccountingTestCase):
         })
         self.product = Product.create({
             'product_tmpl_id': self.product_tmpl.id,
-            'price': 50.0
+            'price': 50.0,
+            'taxes_id': [(6, 0, [self.percent_tax.id])],
         })
 
         self.product_tmpl_2 = ProductTmpl.create({
@@ -45,7 +54,8 @@ class TestSubscriptionCommon(AccountingTestCase):
         })
         self.product2 = Product.create({
             'product_tmpl_id': self.product_tmpl_2.id,
-            'price': 20.0
+            'price': 20.0,
+            'taxes_id': [(6, 0, [self.percent_tax.id])],
         })
 
         self.product_tmpl_3 = ProductTmpl.create({
@@ -57,7 +67,8 @@ class TestSubscriptionCommon(AccountingTestCase):
         })
         self.product3 = Product.create({
             'product_tmpl_id': self.product_tmpl_3.id,
-            'price': 15.0
+            'price': 15.0,
+            'taxes_id': [(6, 0, [self.percent_tax.id])],
         })
 
         # Test user

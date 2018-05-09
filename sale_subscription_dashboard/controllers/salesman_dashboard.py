@@ -4,7 +4,6 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from itertools import groupby
-import calendar
 
 from odoo import http
 from odoo.http import request
@@ -55,14 +54,14 @@ class SalemanDashboard(http.Controller):
         starting_invoice_line_ids = request.env['account.invoice.line'].search(domain + [
             ('asset_start_date', '>=', start_date),
             ('asset_start_date', '<=', end_date),
-        ], order='account_analytic_id')
+        ], order='subscription_id')
         stopping_invoice_lines_ids = request.env['account.invoice.line'].search(domain + [
             ('asset_end_date', '>=', start_date),
             ('asset_end_date', '<=', end_date),
-        ], order='account_analytic_id')
+        ], order='subscription_id')
 
         # CANCELLED ONES
-        for contract, previous_il_ids_it in groupby(stopping_invoice_lines_ids, lambda il: il.account_analytic_id):
+        for contract, previous_il_ids_it in groupby(stopping_invoice_lines_ids, lambda il: il.subscription_id):
             previous_il_ids = list(previous_il_ids_it)
             previous_mrr = sum([x['asset_mrr'] for x in previous_il_ids])
             previous_il_id = previous_il_ids[0]
@@ -70,15 +69,15 @@ class SalemanDashboard(http.Controller):
             next_il_ids = request.env['account.invoice.line'].search([
                 ('asset_start_date', '>=', previous_il_id.asset_end_date),
                 ('asset_start_date', '<', (datetime.strptime(previous_il_id.asset_end_date, DEFAULT_SERVER_DATE_FORMAT) + relativedelta(months=+1))),
-                ('account_analytic_id', '=', previous_il_id.account_analytic_id.id)
+                ('subscription_id', '=', previous_il_id.subscription_id.id)
             ])
             if not next_il_ids:
                 # CANCELLED ONES
                 contract_modifications.append({
                     'type': 'churn',
                     'partner': previous_il_id.partner_id.name,
-                    'account_analytic': previous_il_id.account_analytic_id.name,
-                    'account_analytic_template': self._get_template_name(previous_il_id),
+                    'subscription': previous_il_id.subscription_id.name,
+                    'subscription_template': previous_il_id.subscription_id.template_id.name,
                     'previous_mrr': str(previous_mrr),
                     'current_mrr': str(0),
                     'diff': -previous_mrr,
@@ -86,22 +85,22 @@ class SalemanDashboard(http.Controller):
                 churned_mrr += previous_mrr
 
         # UP & DOWN & NEW ONES
-        for contract, next_il_ids_it in groupby(starting_invoice_line_ids, lambda il: il.account_analytic_id):
+        for contract, next_il_ids_it in groupby(starting_invoice_line_ids, lambda il: il.subscription_id):
             next_il_ids = list(next_il_ids_it)
             next_mrr = sum([x['asset_mrr'] for x in next_il_ids])
             next_il_id = next_il_ids[0]
 
             new_contract_modification = {
                 'partner': next_il_id.partner_id.name,
-                'account_analytic': next_il_id.account_analytic_id.name,
-                'account_analytic_template': self._get_template_name(next_il_id),
+                'subscription': next_il_id.subscription_id.name,
+                'subscription_template': next_il_id.subscription_id.template_id.name,
             }
 
             # Was there any invoice_line in the last 30 days for this subscription ?
             previous_il_ids = request.env['account.invoice.line'].search([
                 ('asset_end_date', '<=', next_il_id.asset_start_date),
                 ('asset_end_date', '>', (datetime.strptime(next_il_id.asset_start_date, DEFAULT_SERVER_DATE_FORMAT) - relativedelta(months=+1))),
-                ('account_analytic_id', '=', next_il_id.account_analytic_id.id)]
+                ('subscription_id', '=', next_il_id.subscription_id.id)]
             )
             # Careful : what happened if invoice_lines from multiple invoices during last 30 days ?
             if previous_il_ids:
@@ -130,7 +129,7 @@ class SalemanDashboard(http.Controller):
                 active_invoice_line_ids = request.env['account.invoice.line'].search([
                     ('asset_start_date', '<', next_il_id.asset_start_date),
                     ('asset_end_date', '>', next_il_id.asset_start_date),
-                    ('account_analytic_id', '=', next_il_id.account_analytic_id.id)]
+                    ('subscription_id', '=', next_il_id.subscription_id.id)]
                 )
                 if active_invoice_line_ids:
                     # If there is already a subscription running but we add some products, it should
@@ -164,8 +163,8 @@ class SalemanDashboard(http.Controller):
                 invoice_line = invoice_id.invoice_line_ids[0]
                 nrr_invoice_ids.append({
                     'partner': invoice_line.partner_id.name,
-                    'account_analytic': invoice_line.account_analytic_id.name,
-                    'account_analytic_template': self._get_template_name(invoice_line),
+                    'subscription': invoice_line.subscription_id.name,
+                    'subscription_template': invoice_line.subscription_id.template_id.name,
                     'nrr': str(invoice_nrr),
                 })
 
@@ -179,10 +178,3 @@ class SalemanDashboard(http.Controller):
             'nrr': total_nrr,
             'nrr_invoices': nrr_invoice_ids,
         }
-
-    def _get_template_name(self, line):
-        """ Get the subscription template name for an invoice line """
-        if line.account_analytic_id:
-            sub = request.env['sale.subscription'].search([('analytic_account_id', '=', line.account_analytic_id.id)])
-            return sub.template_id.name
-        return False
