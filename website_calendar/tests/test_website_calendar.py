@@ -31,10 +31,10 @@ class WebsiteCalendarTest(common.HttpCase):
             'calendar_id': self.resource_calendar.id
         })
 
-        self.first_user_in_brussel = self.env['res.users'].search([], limit=1)
+        self.first_user_in_brussel = self.env['res.users'].create({'name': 'Grace Slick', 'login': 'grace'})
         self.first_user_in_brussel.write({'tz': 'Europe/Brussels'})
 
-        self.second_user_in_australia = self.env['res.users'].search([('id', '!=', self.first_user_in_brussel.id)], limit=1)
+        self.second_user_in_australia = self.env['res.users'].create({'name': 'Australian guy', 'login': 'australian'})
         self.second_user_in_australia.write({'tz': 'Australia/West'})
 
         self.employee = self.env['hr.employee'].create({
