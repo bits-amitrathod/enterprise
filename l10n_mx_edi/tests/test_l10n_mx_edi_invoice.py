@@ -170,6 +170,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice = self.create_invoice()
         addenda_autozone = self.ref('l10n_mx_edi.l10n_mx_edi_addenda_autozone')
         invoice.sudo().partner_id.l10n_mx_edi_addenda = addenda_autozone
+        invoice.sudo().user_id.partner_id.ref = '8765'
         invoice.message_ids.unlink()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
@@ -179,8 +180,11 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         xml = objectify.fromstring(xml_str)
         xml_expected = objectify.fromstring(
             '<ADDENDA10 xmlns:cfdi="http://www.sat.gob.mx/cfd/3" '
-            'DEPTID="DEPTID" VERSION="VERSION" BUYER="BUYER" VENDOR_ID="VENDOR_ID" POID="POID" PODATE="PODATE" '
-            'EMAIL="%s"/>' % invoice.company_id.partner_id.email)
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'xsi:noNamespaceSchemaLocation="https://azfes.autozone.com/xsd/Addenda_Merch_32.xsd" '
+            'VERSION="1.0" BUYER="%s" VENDOR_ID="8765" '
+            'EMAIL="%s"/>' % (invoice.partner_id.name,
+                              invoice.company_id.partner_id.email))
         xml_addenda = xml.Addenda.xpath('//ADDENDA10')[0]
         self.assertEqualXML(xml_addenda, xml_expected)
 
