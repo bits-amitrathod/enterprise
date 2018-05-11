@@ -16,7 +16,7 @@ can embed graph and/or pivot views, and displays aggregate values.
         'views/assets.xml',
     ],
     'qweb': [
-        "static/src/xml/dashboard_view.xml",
+        "static/src/xml/dashboard.xml",
     ],
     'auto_install': True,
 }

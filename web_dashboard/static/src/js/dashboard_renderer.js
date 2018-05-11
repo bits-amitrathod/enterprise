@@ -1,10 +1,14 @@
 odoo.define('web_dashboard.DashboardRenderer', function (require) {
 "use strict";
 
+var config = require('web.config');
+var core = require('web.core');
 var Domain = require('web.Domain');
 var fieldUtils = require('web.field_utils');
 var FormRenderer = require('web.FormRenderer');
 var viewRegistry = require('web.view_registry');
+
+var QWeb = core.qweb;
 
 var DashboardRenderer = FormRenderer.extend({
     className: "o_dashboard_view",
@@ -83,6 +87,25 @@ var DashboardRenderer = FormRenderer.extend({
     //--------------------------------------------------------------------------
 
     /**
+     * Add a tooltip on a $node.
+     * The message can be customize using the tooltip attribute
+     *
+     * @param {FieldWidget} widget
+     * @param {$node} $node
+     */
+    _addStatisticTooltip: function ($el, node) {
+        $el.tooltip({
+            delay: { show: 1000, hide: 0 },
+            title: function () {
+                return QWeb.render('web_dashboard.StatisticTooltip', {
+                    debug: config.debug,
+                    node: node,
+                });
+            }
+        });
+    },
+
+    /**
      * Renders an aggregate (or formula)'s label.
      *
      * @private
@@ -133,6 +156,9 @@ var DashboardRenderer = FormRenderer.extend({
             .append($label)
             .append($value);
         this._registerModifiers(node, this.state, $el);
+        if (config.debug || node.attrs.help) {
+            this._addStatisticTooltip($el, node);
+        }
         return $el;
     },
     /**
