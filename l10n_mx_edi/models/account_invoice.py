@@ -274,7 +274,7 @@ class AccountInvoice(models.Model):
         # Split integer and decimal part
         amount_i, amount_d = divmod(amount, 1)
         amount_d = round(amount_d, 2)
-        amount_d = int(amount_d * 100)
+        amount_d = int(round(amount_d * 100, 2))
         words = num2words(amount_i, lang=lang).upper()
         invoice_words = '%(words)s %(curr_mx)s %(amount_d)02d/100 %(curr_t)s' % dict(
             words=words, curr_mx=currency_mx, amount_d=amount_d, curr_t=currency_type)
