@@ -243,7 +243,7 @@ class MarketingActivity(models.Model):
         string='Filter', default='[]',
         help='Activity will only be performed if record satisfies this domain')
     model_id = fields.Many2one('ir.model', related='campaign_id.model_id', string='Model', readonly=True)
-    model_name = fields.Char(related='campaign_id.model_id.model', string='Model Name', readonly=True)
+    model_name = fields.Char(related='model_id.model', string='Model Name', readonly=True)
 
     activity_type = fields.Selection([
         ('email', 'Email'),

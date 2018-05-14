@@ -14,7 +14,7 @@ class AccountJournal(models.Model):
         'journal. If empty, the node won\'t be added.')
     l10n_mx_edi_payment_method_id = fields.Many2one(
         'l10n_mx_edi.payment.method',
-        string='Payment Method',
+        string='Payment Way',
         help='Indicates the way the payment was/will be received, where the '
         'options could be: Cash, Nominal Check, Credit Card, etc.')
 
