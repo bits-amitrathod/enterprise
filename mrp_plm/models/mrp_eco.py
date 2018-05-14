@@ -110,8 +110,12 @@ class MrpEcoStage(models.Model):
     _order = "sequence, id"
     _fold_name = 'folded'
 
+    def _default_sequence(self):
+        last_stage = self.search([], order='sequence DESC', limit=1)
+        return 1 + (last_stage.sequence or 0)
+
     name = fields.Char('Name', required=True)
-    sequence = fields.Integer('Sequence', default=0)
+    sequence = fields.Integer('Sequence', default=lambda s: s._default_sequence())
     folded = fields.Boolean('Folded in kanban view')
     allow_apply_change = fields.Boolean('Final Stage')
     type_id = fields.Many2one('mrp.eco.type', 'Type', required=True, default=lambda self: self.env['mrp.eco.type'].search([], limit=1))
