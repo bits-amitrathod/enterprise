@@ -440,6 +440,7 @@
                         <group name="online" string="Online Management">
                             <field name="user_closable"/>
                             <field name="payment_mandatory"/>
+                            <field name="auto_close_limit" attrs="{'invisible': [('payment_mandatory', '=', False)]}"/>
                             <field name="tag_ids" string="Category" widget="many2many_tags"
                                    options="{'color_field': 'color'}" />
                         </group>

@@ -8,5 +8,5 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     module_sale_subscription_dashboard = fields.Boolean('Sale Subscription Dashboard')
-    module_account_invoicing = fields.Boolean('Account Invoicing ')
+    module_account_invoicing = fields.Boolean('Invoicing')
     module_sale_subscription_asset = fields.Boolean('Deferred revenue management for subscriptions')
