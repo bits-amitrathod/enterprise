@@ -135,7 +135,9 @@ class AccountBankStatementImport(models.TransientModel):
             #   CLAV : Closing Available
             end_amount = float(statement.xpath("ns:Bal/ns:Tp/ns:CdOrPrtry[ns:Cd='CLBD' or ns:Cd='CLAV']/../../ns:Amt/text()",
                                                               namespaces=ns)[0])
-            sign = statement.xpath('ns:Bal/ns:CdtDbtInd/text()', namespaces=ns)[0]
+            sign = statement.xpath(
+                "ns:Bal/ns:Tp/ns:CdOrPrtry[ns:Cd='CLBD' or ns:Cd='CLAV']/../../ns:CdtDbtInd/text()", namespaces=ns
+            )[0]
             if sign == 'DBIT':
                 end_amount *= -1
             statement_vals['balance_end_real'] = end_amount

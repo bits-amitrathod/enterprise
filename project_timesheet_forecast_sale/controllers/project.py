@@ -57,7 +57,7 @@ class TimesheetForecastController(SaleTimesheetController):
                 timesheet_forecast_values[order_name_get]['forecast'][fc_slot] += sol_line_value['forecast'][fc_slot]
 
         sol_task_planned_hour_mapping = {}
-        for task in request.env['project.task'].sudo().search([('sale_line_id', 'in', so_line_ids)]):
+        for task in request.env['project.task'].sudo().search([('sale_line_id', 'in', so_line_ids), ('parent_id', '=', False)]):
             sol_task_planned_hour_mapping.setdefault(task.sale_line_id.id, 0.0)
             sol_task_planned_hour_mapping[task.sale_line_id.id] += task.planned_hours
 
