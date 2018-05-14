@@ -208,7 +208,7 @@ class WebsiteCalendar(http.Controller):
         event = request.env['calendar.event'].sudo().search([('access_token', '=', access_token)], limit=1)
         if not event or not event.attendee_ids:
             return request.not_found()
-        files = event.get_ics_file()
+        files = event._get_ics_file()
         content = files[event.id]
         return request.make_response(content, [
             ('Content-Type', 'application/octet-stream'),
