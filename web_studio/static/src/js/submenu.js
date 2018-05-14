@@ -91,7 +91,7 @@ var SubMenu = Widget.extend({
         var self = this;
         var is_last = (index === length-1);
         var li_content = bc.title && _.escape(bc.title.trim());
-        var $bc = $('<li>')
+        var $bc = $('<li>', {class: 'breadcrumb-item'})
             .append(li_content)
             .toggleClass('active', is_last);
         if (!is_last) {

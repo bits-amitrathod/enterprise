@@ -925,7 +925,7 @@ QUnit.module('Views', {
             views: [[false, 'dashboard']],
         });
 
-        assert.strictEqual($('.o_control_panel .breadcrumb li').text(), 'Dashboard',
+        assert.strictEqual($('.o_control_panel .breadcrumb-item').text(), 'Dashboard',
             "'Dashboard' should be displayed in the breadcrumbs");
 
         // activate 'Category 1' filter
@@ -935,7 +935,7 @@ QUnit.module('Views', {
 
         // open graph in fullscreen
         actionManager.$('.o_graph_buttons .o_button_switch').click();
-        assert.strictEqual($('.o_control_panel .breadcrumb li:nth(1)').text(), 'Graph Analysis',
+        assert.strictEqual($('.o_control_panel .breadcrumb-item:nth(1)').text(), 'Graph Analysis',
             "'Graph Analysis' should have been stacked in the breadcrumbs");
         assert.strictEqual($('.o_control_panel .o_facet_values').text().trim(), 'Category 1',
             "the filter should have been kept");

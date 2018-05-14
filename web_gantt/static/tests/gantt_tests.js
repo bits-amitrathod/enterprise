@@ -121,27 +121,27 @@ QUnit.module('Views', {
         actionManager.doAction(1);
 
         // there is no selected period by default
-        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb-item').text(),
             'Forecast Test', "should display no period");
 
         // switch to day mode
         actionManager.controlPanel.$('.o_gantt_button_scale[data-value=day]').click();
-        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb-item').text(),
             'Forecast Test (12 Dec)', "should display the current day");
 
         // switch to week mode
         actionManager.controlPanel.$('.o_gantt_button_scale[data-value=week]').click();
-        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb-item').text(),
             'Forecast Test (11 Dec - 17 Dec)', "should display the current week");
 
         // switch to month mode
         actionManager.controlPanel.$('.o_gantt_button_scale[data-value=month]').click();
-        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb-item').text(),
             'Forecast Test (December 2016)', "should display the current month");
 
         // switch to year mode
         actionManager.controlPanel.$('.o_gantt_button_scale[data-value=year]').click();
-        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb li').text(),
+        assert.strictEqual(actionManager.controlPanel.$('.breadcrumb-item').text(),
             'Forecast Test (2016)', "should display the current year");
 
         actionManager.destroy();

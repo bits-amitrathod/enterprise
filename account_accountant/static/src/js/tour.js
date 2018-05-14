@@ -130,7 +130,7 @@ tour.register('account_accountant_tour', {
     content:  _t("Let\'s start with a new customer invoice."),
     position: "bottom"
 }, {
-    trigger: ".breadcrumb li:not(.active):last",
+    trigger: ".breadcrumb-item:not(.active):last",
     extra_trigger: "[data-id='open'].btn-primary, [data-id='open'].oe_active",
     content:  _t("Use the path to quickly click back to <b>previous screens</b>, without reloading the page."),
     position: "bottom"
