@@ -61,6 +61,10 @@ select { // FIXME buggy 'padding-left'
     // that green as text color for btn-warning / btn-info / ... which is not
     // what we want.
     color: $primary;
+
+    &.fa {
+        color: $yiq-text-dark;
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -107,17 +111,6 @@ select { // FIXME buggy 'padding-left'
 }
 
 //== Buttons
-.btn-icon {
-    @include button-variant($btn-icon-color, $btn-icon-bg, $btn-icon-border);
-
-    &.active {
-        &, &:hover, &:focus {
-            background-color: $gray-lighter-dark;
-            color: $headings-color;
-        }
-    }
-}
-
 .btn, .btn-group > .btn {
     border-radius: 0px;
     border: none;
@@ -126,7 +119,7 @@ select { // FIXME buggy 'padding-left'
     }
 }
 
-.btn-primary.active, .btn-secondary.active, .btn-icon.active {
+.btn-primary.active, .btn-secondary.active {
     box-shadow: none;
 }
 
