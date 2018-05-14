@@ -3,6 +3,7 @@
 
 from odoo import models, fields, api, _
 from odoo.tools.misc import formatLang
+from odoo.osv import expression
 
 
 class account_bank_reconciliation_report(models.AbstractModel):
@@ -71,6 +72,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
 
         journal_id = self._context.get('active_id') or options.get('active_id')
         journal = self.env['account.journal'].browse(journal_id)
+        selected_companies = self.env['res.company'].browse(self.env.context['company_ids'])
 
         rslt['use_foreign_currency'] = \
                 journal.currency_id != journal.company_id.currency_id \
@@ -84,16 +86,23 @@ class account_bank_reconciliation_report(models.AbstractModel):
         rslt['odoo_balance'] = sum([line.amount_currency if rslt['use_foreign_currency'] else line.balance for line in lines_already_accounted])
 
         # Payments not reconciled with a bank statement line
-        move_lines = self.env['account.move.line'].search(
-                [
-                    ('move_id.journal_id', '=', journal_id),
-                    '|', ('statement_line_id', '=', False), 
-                    ('statement_line_id.date', '>', self.env.context['date_to']),
-                    ('user_type_id.type', '=', 'liquidity'),
-                    ('full_reconcile_id', '=', False),
-                    ('date', '<=', self.env.context['date_to']),
-                    ('company_id', 'in', self.env.context['company_ids'])
-                ])
+        aml_domain = [('move_id.journal_id', '=', journal_id),
+                     '|', ('statement_line_id', '=', False),
+                     ('statement_line_id.date', '>', self.env.context['date_to']),
+                     ('user_type_id.type', '=', 'liquidity'),
+                     ('full_reconcile_id', '=', False),
+                     ('date', '<=', self.env.context['date_to']),
+        ]
+        companies_unreconciled_selection_domain = []
+        for company in selected_companies:
+            company_domain = [('company_id', '=', company.id)]
+            if company.account_bank_reconciliation_start:
+                company_domain = expression.AND([company_domain, [('date', '>=', company.account_bank_reconciliation_start)]])
+            companies_unreconciled_selection_domain = expression.OR([companies_unreconciled_selection_domain, company_domain])
+        aml_domain += companies_unreconciled_selection_domain
+
+        move_lines = self.env['account.move.line'].search(aml_domain)
+
         if move_lines:
             rslt['not_reconciled_pmts'] = move_lines
 
@@ -114,7 +123,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         last_statement = self.env['account.bank.statement'].search(
                 [
                     ('journal_id', '=', journal_id),
-                    ('date', '<=', self.env.context['date_to']), 
+                    ('date', '<=', self.env.context['date_to']),
                     ('company_id', 'in', self.env.context['company_ids'])
                 ], order="date desc, id desc", limit=1)
         rslt['last_st_balance'] = last_statement.balance_end
