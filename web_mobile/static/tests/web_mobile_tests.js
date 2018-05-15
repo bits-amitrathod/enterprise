@@ -193,7 +193,7 @@ QUnit.module('web_mobile', {
             res_id: 2,
             config: {
                 device: {
-                    size_class: config.device.SIZES.XS,
+                    size_class: config.device.SIZES.VSM,
                 },
             },
             viewOptions: {mode: 'edit'},

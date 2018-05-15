@@ -51,7 +51,7 @@ QUnit.module('relational_fields', {
             res_id: 1,
             config: {
                 device: {
-                    size_class: config.device.SIZES.XS,
+                    size_class: config.device.SIZES.VSM,
                 },
             },
         });
@@ -88,7 +88,7 @@ QUnit.module('relational_fields', {
             res_id: 4,
             config: {
                 device: {
-                    size_class: config.device.SIZES.XS,
+                    size_class: config.device.SIZES.VSM,
                 },
             },
         });

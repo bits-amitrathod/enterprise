@@ -46,7 +46,7 @@ QUnit.module('voip', {
             res_id: 1,
             config: {
                 device: {
-                    size_class: config.device.SIZES.SM,
+                    size_class: config.device.SIZES.MD,
                 }
             },
         });
@@ -90,7 +90,7 @@ QUnit.module('voip', {
             arch: '<tree editable="bottom"><field name="foo"  widget="phone"/></tree>',
             config: {
                 device: {
-                    size_class: config.device.SIZES.SM,
+                    size_class: config.device.SIZES.MD,
                 }
             },
         });
