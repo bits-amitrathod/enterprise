@@ -1,107 +1,124 @@
-// ------------------------------------------------------------------
-// Bootstrap variables
-// ------------------------------------------------------------------
+///
+/// This file is a copy of the bootstrap _variables.scss file where all the
+/// left-untouched variables definition have been removed.
+///
 
-//== Grid
-$grid-gutter-width: $o-horizontal-padding*2;
-$container-desktop: $o-container-desktop;
+//
+// Color system
+//
 
-//== Colors
-$brand-primary: $o-brand-primary;
-$brand-success: #00a04a;
-$brand-info: #87c0d1;
-$brand-warning: #f0ad4e;
-$brand-danger: #dc6965;
+$white:    #fff !default; // This is BS default
+$gray-100: #f8f9fa !default; // This is BS default
+$gray-200: $o-color-silver; // FIXME keep this or use bootstrap default ? (also default 100 is very close to this color)
+$gray-300: #dee2e6 !default; // This is BS default
+$gray-400: #ced4da !default; // This is BS default
+$gray-500: #adb5bd !default; // This is BS default
+$gray-600: $o-color-gray-light !default; // This is BS default
+$gray-700: #495057 !default; // This is BS default
+$gray-800: #343a40 !default; // This is BS default
+$gray-900: #2F3136 !default; // This is BS default
+$black:    #000 !default; // This is BS default
 
-//== Greyscale
-$gray-base: #000;
-$gray-darker: #1e2124;
-$gray-dark: #2f3136;
-$gray: lighten($gray-base, 33.5%);
-$gray-light: $o-color-gray-light;
-$gray-lighter: $o-color-silver;
+$primary: $o-brand-primary;
+$success: #00A04A;
+$info: #87C0D1;
+$warning: #F0AD4E;
+$danger: #DC6965;
 
-//== Titles
-$font-size-h1: $o-font-size-base + 19px;
-$font-size-h2: $o-font-size-base + 7px;
-$font-size-h3: $o-font-size-base + 3px;
-$font-size-h4: $o-font-size-base + 2px;
-$font-size-h5: $o-font-size-base + 1px;
-$font-size-h6: $o-font-size-base;
+// Body
+//
+// Settings for the `<body>` element.
 
-//== Scaffolding
 $body-bg: $o-brand-secondary;
-$text-color: $o-main-text-color;
+$body-color: $o-main-text-color;
+
+// Links
+//
+// Style anchor elements.
+
 $link-color: darken($o-brand-optional, 5%);
 $link-hover-decoration: none;
 
-//== Typography
-$font-family-sans-serif: Roboto;
-$font-family-serif: Roboto;
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: $o-container-desktop, // FIXME ?
+  xl: 1140px
+);
+
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-gutter-width: $o-horizontal-padding * 2;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+$component-active-color: $gray-200;
+$component-active-bg: $o-brand-optional;
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$font-family-sans-serif: 'Roboto';
+
 $font-size-base: $o-font-size-base;
-$headings-font-weight: 400;
-$headings-color: $gray-dark;
+
 $line-height-base: $o-line-height-base;
 
-//== Components
-$border-radius-base: 0;
-$border-radius-large: 0;
-$border-radius-small: 0;
-$component-active-bg: $gray-lighter;
-$component-active-color: $o-brand-optional;
+$h1-font-size: $o-font-size-base + 19px;
+$h2-font-size: $o-font-size-base + 7px;
+$h3-font-size: $o-font-size-base + 3px;
+$h4-font-size: $o-font-size-base + 2px;
+$h5-font-size: $o-font-size-base + 1px;
 
-//== Badges
-$badge-bg: transparent;
-$badge-color: $o-brand-optional;
-$badge-line-height: $o-line-height-base;
-$badge-link-hover-color: darken($o-brand-optional, 10%);
+$headings-font-weight: 400;
+$headings-color: $gray-900;
 
-//== Breadcrumbs
-$breadcrumb-active-color: $o-brand-secondary;
-$breadcrumb-bg: $o-control-panel-background-color;
-$breadcrumb-color: $o-brand-secondary;
-$breadcrumb-padding-horizontal: 0;
-$breadcrumb-padding-vertical: 0;
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
 
-//== Buttons
+$table-cell-padding-sm:       5px;
+
+$table-accent-bg: $gray-200;
+$table-hover-bg: rgba($gray-300, 0.5);
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+
+// FIXME default / primary / icon
+
 $btn-font-weight: 500;
 
-$btn-default-bg: white;
-$btn-default-border: white;
-$btn-default-color: $link-color;
+// Dropdowns
+//
+// Dropdown menu container and contents.
 
-$btn-primary-bg: $o-brand-optional;
-$btn-primary-border: $o-brand-optional;
-$btn-primary-color: white;
+$dropdown-border-color: $gray-300;
+$dropdown-divider-bg: $gray-300;
 
-$btn-icon-bg: white;
-$btn-icon-border: white;
-$btn-icon-color: $o-main-text-color;
-
-$btn-success-border: $brand-success;
-$btn-info-border: $brand-info;
-$btn-warning-border: $brand-warning;
-$btn-danger-border: $brand-danger;
-
-//== Dropdowns
-$dropdown-bg: white;
-$dropdown-border: $gray-lighter-dark;
-$dropdown-divider-bg: $gray-lighter-dark;
 $dropdown-link-color: $o-main-text-color;
-$dropdown-link-hover-color: $gray-dark;
-$dropdown-link-hover-bg: $gray-lighter-dark;
-$dropdown-link-active-color: $component-active-color;
-$dropdown-link-active-bg: $component-active-bg;
-$dropdown-link-disabled-color: $gray-light;
-$dropdown-header-color: $gray-light;
+$dropdown-link-hover-color: $gray-900;
+$dropdown-link-hover-bg: $gray-300;
 
-//== Modals
-$modal-sm: 300px;
-$modal-md: 650px;
-$modal-lg: 980px;
-$modal-inner-padding: $o-horizontal-padding;
-$modal-title-padding: $o-horizontal-padding;
-
+// Z-index master list
+//
 // Change the z-index of the modal-backdrop elements to be equal to the
 // modal elements' ones. Bootstrap does not support multi-modals, and without
 // this rule all the modal-backdrops are below all the opened modals.
@@ -111,51 +128,54 @@ $modal-title-padding: $o-horizontal-padding;
 // cannot happen in odoo though as modals are not hidden but removed from
 // the DOM and are always put at the end of the body when opened.
 //
-// Note that the variable $zindex-modal-background may be renamed/removed in
-// newer versions of bootstrap.
-//
 // TODO the following code was disabled because it is saas-incompatible
 //
-// $zindex-modal-background: $zindex-modal;
+// $zindex-modal-backdrop: $zindex-modal;
 
-//== Navs
-$nav-link-padding: 5px 10px;
+// Navs
 
-//== Navbar
-$navbar-height: $o-navbar-height - 2;
-$navbar-margin-bottom: 0;
-$navbar-inverse-bg: $o-brand-primary;
-$navbar-inverse-link-color: white;
-$navbar-inverse-link-hover-bg: $o-navbar-inverse-link-hover-bg;
-$navbar-inverse-toggle-hover-bg: $o-brand-primary;
+$nav-link-padding-y: 5px;
+$nav-link-padding-x: 10px;
 
-//== Tabs
 $nav-tabs-border-color: transparent;
-$nav-tabs-link-hover-border-color: gray-light;
-$nav-tabs-active-link-hover-bg: $gray-lighter;
-$nav-tabs-active-link-hover-color: $o-brand-optional;
-$nav-tabs-active-link-hover-border-color: transparent;
+$nav-tabs-link-hover-border-color:  gray-light; // FIXME
+$nav-tabs-link-active-color:        $o-brand-optional;
+$nav-tabs-link-active-bg:           $gray-200;
+$nav-tabs-link-active-border-color: transparent;
 
-//== Tables
-// List views always have the table-condensed class, maybe we should remove it
-// (and consider it does not exist) and change the default table paddings
-$table-condensed-cell-padding: 5px;
-$table-bg-accent: $gray-lighter;
-$table-bg-hover: rgba($gray-lighter-dark, 0.5);
-$table-bg-active: $table-bg-hover;
-$table-border-color: $gray-lighter-dark;
+// Navbar
 
-//== Well
-$well-bg: $o-color-silver;
-$well-border: $o-color-silver;
+// FIXME $navbar-height, margin-bottom ? inverse-* ?
 
-//== Alerts
-$alert-link-font-weight: bold;
-$state-success-text: #3c763d; // This is BS default
-$state-info-text: #31708f; // This is BS default
-$state-warning-text: #8a6d3b; // This is BS default
-$state-danger-text: #a94442; // This is BS default
-$alert-success-border: $state-success-text;
-$alert-info-border: $state-info-text;
-$alert-warning-border: $state-warning-text;
-$alert-danger-border: $state-danger-text;
+// Cards
+
+$card-border-color: $o-color-silver;
+$card-bg: $o-color-silver;
+
+// Badges
+
+// FIXME $badge-bg, $badge-color, $badge-line-height, $badge-link-hover-color
+
+// Modals
+
+// Padding applied to the modal body
+$modal-inner-padding: $o-horizontal-padding;
+
+// FIXME  $modal-title-padding
+
+$modal-lg: 980px;
+$modal-md: 650px;
+
+// Alerts
+//
+// Define alert colors, border radius, and padding.
+
+$alert-border-width: 0;
+
+// Breadcrumbs
+
+$breadcrumb-padding-y: 0;
+$breadcrumb-padding-x: 0;
+
+$breadcrumb-bg: $o-control-panel-background-color;
+$breadcrumb-active-color: $o-brand-secondary;
