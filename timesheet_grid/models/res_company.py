@@ -18,7 +18,7 @@ class Company(models.Model):
         ('weeks', 'after end of week'),
         ('months', 'after end of month')
     ], string='Frequency', required=True, default="weeks")
-    timesheet_mail_employee_nextdate = fields.Datetime('Next scheduled date for manager reminder', readonly=True)
+    timesheet_mail_employee_nextdate = fields.Datetime('Next scheduled date for employee reminder', readonly=True)
 
     # reminder for manager
     timesheet_mail_manager_allow = fields.Boolean("Manager Reminder", default=True,
@@ -50,18 +50,20 @@ class Company(models.Model):
     def _calculate_timesheet_mail_employee_nextdate(self):
         for company in self:
             now = datetime.now()
-            nextdate = now - timedelta(days=now.weekday()+1)
-            if company.timesheet_mail_employee_interval == 'months':  # end of previous week or month
-                nextdate = now + relativedelta(day=31) - relativedelta(months=1)
-            company.timesheet_mail_employee_nextdate = fields.Datetime.to_string(nextdate + timedelta(days=company.timesheet_mail_employee_delay))
+            if company.timesheet_mail_employee_interval == 'weeks':
+                nextdate = now + relativedelta(weeks=1, days=-now.weekday() + company.timesheet_mail_employee_delay - 1)
+            if company.timesheet_mail_employee_interval == 'months':
+                nextdate = now + relativedelta(day=1, months=1, days=company.timesheet_mail_employee_delay - 1)
+            company.timesheet_mail_employee_nextdate = fields.Datetime.to_string(nextdate)
 
     def _calculate_timesheet_mail_manager_nextdate(self):
         for company in self:
             now = datetime.now()
-            nextdate = now - timedelta(days=now.weekday()+1)
-            if company.timesheet_mail_manager_interval == 'months':  # end of previous week or month
-                nextdate = now + relativedelta(day=31) - relativedelta(months=1)
-            company.timesheet_mail_manager_nextdate = fields.Datetime.to_string(nextdate + timedelta(days=company.timesheet_mail_manager_delay))
+            if company.timesheet_mail_manager_interval == 'weeks':
+                nextdate = now + relativedelta(weeks=1, days=-now.weekday() + company.timesheet_mail_manager_delay - 1)
+            if company.timesheet_mail_manager_interval == 'months':
+                nextdate = now + relativedelta(day=1, months=1, days=company.timesheet_mail_manager_delay - 1)
+            company.timesheet_mail_manager_nextdate = fields.Datetime.to_string(nextdate)
 
     @api.model
     def _cron_timesheet_reminder_employee(self):
