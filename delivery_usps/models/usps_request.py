@@ -302,14 +302,15 @@ class USPSRequest():
         if not account_validated:
             dict_response['ShipmentDeleted'] = True
         else:
-            url = 'https://stg-secure.shippingapis.com/ShippingAPI.dll?API=CarrierPickupCancel'
-            xml = '&XML=%s' % (quote(request_text))
-            full_url = '%s%s' % (url, xml)
+            url = 'https://stg-secure.shippingapis.com/ShippingAPI.dll'
+            api = 'CarrierPickupCancel'
             try:
                 self.debug_logger(request_text, 'usps_request_cancel')
-                response_text = urlopen(Request(full_url)).read()
+                req = requests.get(url, params={'API': api, 'XML': request_text})
+                req.raise_for_status()
+                response_text = req.content
                 self.debug_logger(response_text, 'usps_response_cancel')
-            except URLError:
+            except IOError:
                 dict_response['error_message'] = 'USPS Server Not Found - Check your connectivity'
             root = etree.fromstring(response_text)
             errors_return = root.findall('.//Description')
