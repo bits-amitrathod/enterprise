@@ -2,12 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
 import datetime
-import uuid
 import time
 import traceback
 
 from collections import Counter
 from dateutil.relativedelta import relativedelta
+from uuid import uuid4
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -52,7 +52,7 @@ class SaleSubscription(models.Model):
     industry_id = fields.Many2one('res.partner.industry', related='partner_id.industry_id', store=True)
     sale_order_count = fields.Integer(compute='_compute_sale_order_count')
     # customer portal
-    uuid = fields.Char('Account UUID', default=lambda s: uuid.uuid4(), copy=False, required=True)
+    uuid = fields.Char('Account UUID', default=lambda self: str(uuid4()), copy=False, required=True)
     website_url = fields.Char('Website URL', compute='_website_url', help='The full URL to access the document through the website.')
     payment_token_id = fields.Many2one('payment.token', 'Payment Token', help='If not set, the default payment token of the partner will be used.', domain="[('partner_id','=',partner_id)]", oldname='payment_method_id')
     # add tax calculation
@@ -229,7 +229,7 @@ class SaleSubscription(models.Model):
                           self._table, column_name)
             self.env.cr.execute("SELECT id FROM %s WHERE uuid IS NULL" % self._table)
             acc_ids = self.env.cr.dictfetchall()
-            query_list = [{'id': acc_id['id'], 'uuid': str(uuid.uuid4())} for acc_id in acc_ids]
+            query_list = [{'id': acc_id['id'], 'uuid': str(uuid4())} for acc_id in acc_ids]
             query = 'UPDATE ' + self._table + ' SET uuid = %(uuid)s WHERE id = %(id)s;'
             self.env.cr._obj.executemany(query, query_list)
             self.env.cr.commit()
