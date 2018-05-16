@@ -122,8 +122,8 @@
                                     </t>
                                     <!-- If the aal is on a timesheet in closed state, we display it but don't allow actions on it-->
                                     <t t-if="aal.sheet_state === 'closed'">
-                                        <td class="col-xs-1"></td>
-                                        <td class="col-xs-2 pt_lock">
+                                        <td class="col-1"></td>
+                                        <td class="col-2 pt_lock">
                                             <t t-if="aal.unit_amount">
                                                 <t t-esc="widget.unit_amount_to_hours_minutes(aal.unit_amount)"/>
                                             </t>
@@ -131,7 +131,7 @@
                                                 00:00
                                             </t>
                                         </td>
-                                        <td class="col-xs-1 pt_lock">
+                                        <td class="col-1 pt_lock">
                                             <div class="row">
                                                 <span class="fa fa-lock" role="img" aria-label="Locked" title="Locked"/>
                                             </div>
@@ -163,7 +163,7 @@
             </div>
             <div class="pt_footer container-fluid">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <!--Start button / stop button-->
                         <t t-if="(!widget.current_activity) &amp;&amp; (!widget.timer_on)">
                             <a href="#" role="button" class="btn btn-primary pt_btn_start_timer">
@@ -181,7 +181,7 @@
                             </a>
                         </t>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <div t-att-class="!widget.current_activity ? 'row pt_timer_clock no_activity' : 'row pt_timer_clock'">
                             <span class="pt_timer_clock_hh_mm"></span><span class="pt_timer_clock_ss"></span>
                         </div>
@@ -229,10 +229,10 @@
             </div>
             <div class="pt_footer container-fluid">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <a href="#" role="button" class="btn btn-primary pt_today_link">Today</a>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <div class="pt_day_plan_message">Activity created</div>
                     </div>
                 </div>
@@ -281,22 +281,22 @@
                 <div class="container">
                     <div class="row pt_stats_row">
                         <t t-if="(moment(new Date()).startOf('week').diff(widget.start_of_week, 'weeks') &lt;= 2)">
-                            <div class="col-xs-3 pt_prev_week"><a href="#" class="fa fa-arrow-left" aria-label="Previous week" title="Previous week"/></div>
+                            <div class="col-3 pt_prev_week"><a href="#" class="fa fa-arrow-left" aria-label="Previous week" title="Previous week"/></div>
                         </t>
                         <t t-if="(moment(new Date()).startOf('week').diff(widget.start_of_week, 'weeks') &gt; 2)">
-                            <div class="col-xs-3"><a class="fa fa-arrow-left pt_muted" aria-label="Previous week unavailable" title="Previous week unavailable"/></div>
+                            <div class="col-3"><a class="fa fa-arrow-left pt_muted" aria-label="Previous week unavailable" title="Previous week unavailable"/></div>
                         </t>
-                        <div class="pt_stats_title col-xs-6">
+                        <div class="pt_stats_title col-6">
                             <t t-esc="moment(widget.start_of_week).startOf('week').format('DD-MM') +  ' to ' + moment(widget.start_of_week).endOf('week').format('DD-MM')"/>
                             <br/>
                             Week <t t-esc="moment(widget.start_of_week).format('w')"/>
                         </div>
 
                         <t t-if="!(moment(new Date()).startOf('week').format('MM-DD-YYYY') == widget.start_of_week.format('MM-DD-YYYY'))">
-                            <div class="col-xs-3 pt_next_week"><a href="#" class="fa fa-arrow-right" aria-label="Next week" title="Next week"/></div>
+                            <div class="col-3 pt_next_week"><a href="#" class="fa fa-arrow-right" aria-label="Next week" title="Next week"/></div>
                         </t>
                         <t t-if="(moment(new Date()).startOf('week').format('MM-DD-YYYY') == widget.start_of_week.format('MM-DD-YYYY'))">
-                            <div class="col-xs-3"><a class="fa fa-arrow-right pt_muted" aria-label="Next week unavailable" title="Next week unavailable"/></div>
+                            <div class="col-3"><a class="fa fa-arrow-right pt_muted" aria-label="Next week unavailable" title="Next week unavailable"/></div>
                         </t>
                     </div>
                 </div>
@@ -357,18 +357,18 @@
                             <label for="">Time spent (hhmm)</label>
                             <div class="row">
                                 <t t-if="widget.activity.unit_amount">
-                                    <div class="col-xs-2 pt_duration_col_hh">
+                                    <div class="col-2 pt_duration_col_hh">
                                         <input type="number" class="pt_activity_duration_hh form-control" t-att-value="widget.unit_amount_to_hours_minutes(widget.activity.unit_amount).split(':')[0]"></input>
                                     </div>
-                                    <div class="col-xs-2 pt_duration_col_mm">
+                                    <div class="col-2 pt_duration_col_mm">
                                         <input type="number" class="pt_activity_duration_mm form-control" t-att-value="widget.unit_amount_to_hours_minutes(widget.activity.unit_amount).split(':')[1]"></input>
                                     </div>
                                 </t>
                                 <t t-if="!widget.activity.unit_amount">
-                                    <div class="col-xs-2 pt_duration_col_hh">
+                                    <div class="col-2 pt_duration_col_hh">
                                         <input type="number" class="pt_activity_duration_hh form-control" placeholder="00"></input>
                                     </div>
-                                    <div class="col-xs-2 pt_duration_col_mm">
+                                    <div class="col-2 pt_duration_col_mm">
                                         <input type="number" class="pt_activity_duration_mm form-control" placeholder="00"></input>
                                     </div>
                                 </t>

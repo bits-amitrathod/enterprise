@@ -290,11 +290,11 @@ class WebStudioController(http.Controller):
                         <t t-call="web.external_layout">
                             <div class="page">
                                 <div class="row">
-                                    <div name="address" class="col-xs-5 col-xs-offset-7"/>
+                                    <div name="address" class="col-5 offset-7"/>
                                 </div>
                                 <h2 name="title"/>
                                 <div class="row mt32 mb32">
-                                    <div name="date" class="col-xs-3">
+                                    <div name="date" class="col-3">
                                         <strong>Subtitle 1:</strong>
                                     </div>
                                 </div>

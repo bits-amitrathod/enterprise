@@ -42,10 +42,10 @@
                             You can schedule another appointment from here.
                         </p>
                     </div>
-                    <form class="form-horizontal o_website_appoinment_form col-md-6" t-attf-action="/website/calendar/#{ slug(appointment_type) }/appointment" type="post">
+                    <form class="form-horizontal o_website_appoinment_form col-lg-6" t-attf-action="/website/calendar/#{ slug(appointment_type) }/appointment" type="post">
                       <div id="appointment" class="form-group">
-                        <label for="calendarType" class="col-sm-4 control-label">Appointment:</label>
-                        <div class="col-sm-7">
+                        <label for="calendarType" class="col-md-4 control-label">Appointment:</label>
+                        <div class="col-md-7">
                           <select class="form-control" id="calendarType" t-att-disabled="len(suggested_appointment_types)==1 and '1' or None">
                             <t t-foreach="suggested_appointment_types" t-as="cal">
                                 <option t-att-value="cal.id" t-att-selected="cal.id == appointment_type.id and 'selected'">
@@ -57,12 +57,12 @@
                       </div>
                       <t t-call="website_calendar.employee_select"/>
                       <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-8">
+                        <div class="offset-md-4 col-md-8">
                             <button type="submit" class="btn btn-primary">View Availabilities <span class="fa fa-arrow-right"/></button>
                         </div>
                       </div>
                     </form>
-                    <div t-raw="appointment_type.message_intro" class="o_calendar_intro col-md-6 mb32"/>
+                    <div t-raw="appointment_type.message_intro" class="o_calendar_intro col-lg-6 mb32"/>
                 </div>
             </div>
         </t>
@@ -70,8 +70,8 @@
 
     <template id="employee_select" name="Website Appointment: Appointment Calendars">
       <div name="employee_select" t-att-class="'form-group ' + (appointment_type.assignation_method!='chosen' and 'o_hidden' or '')">
-        <label for="selectEmployee" class="col-sm-4 control-label">With:</label>
-        <div class="col-sm-7">
+        <label for="selectEmployee" class="col-md-4 control-label">With:</label>
+        <div class="col-md-7">
           <!-- do not add the disabled tag or it won't be submitted with the form -->
           <select class="form-control" name="employee_id" id="selectEmployee">
             <t t-foreach="suggested_employees" t-as="emp">
@@ -87,8 +87,8 @@
     <template id="appointment_select_timezone" inherit_id="website_calendar.index" active="False" customize_show="True" name="Website Appointment: Timezone Selection">
         <xpath expr="//div[@id='appointment']" position="after">
           <div class="form-group">
-            <label for="calendarTimezone" class="col-sm-4 control-label">Time zone:</label>
-            <div class="col-sm-7">
+            <label for="calendarTimezone" class="col-md-4 control-label">Time zone:</label>
+            <div class="col-md-7">
               <select class="form-control" name="timezone">
                 <t t-foreach="appointment_type._fields['appointment_tz'].selection(appointment_type)" t-as="timezone">
                     <option t-att-value="timezone[0]" t-esc="timezone[1]" t-att-selected="(timezone[1] == request.session.timezone) and 1 or None"/>
@@ -101,7 +101,7 @@
 
     <template id="appointment_calendar" name="Website Appointment: Appointment Calendars">
         <div class="row">
-            <div t-foreach="slots" t-as="month" class="col-md-6">
+            <div t-foreach="slots" t-as="month" class="col-lg-6">
                 <h3 t-esc="month['month']"/>
                 <table class="table">
                     <tr class="active">
@@ -205,14 +205,14 @@
                       <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                       <input type="hidden" name="datetime_str" t-att-value="datetime_str"/>
                       <input type="hidden" name="employee_id" t-att-value="employee_id"/>
-                      <div class="form-group col-lg-8">
-                        <label for="name" class="col-sm-4 control-label">Your Name</label>
-                        <div class="col-sm-8">
+                      <div class="form-group col-xl-8">
+                        <label for="name" class="col-md-4 control-label">Your Name</label>
+                        <div class="col-md-8">
                           <input type="char" class="form-control" name="name" required="1" t-att-value="'name' in partner_data and partner_data['name']"/>
                         </div>
-                      </div><div class="form-group col-lg-8">
-                        <label class="col-sm-4 control-label" for="country_id">Your Country</label>
-                        <div class="col-sm-8">
+                      </div><div class="form-group col-xl-8">
+                        <label class="col-md-4 control-label" for="country_id">Your Country</label>
+                        <div class="col-md-8">
                           <select name="country_id" class="form-control" required="1" id="country_field">
                               <t t-if="'country_id' not in partner_data or not partner_data['country_id']">
                                 <option disabled="1" selected="1"> -- select a country -- </option>
@@ -224,14 +224,14 @@
                         </div>
                       </div>
 
-                      <div class="form-group col-lg-8">
-                        <label for="email" class="col-sm-4 control-label">Your Email</label>
-                        <div class="col-sm-8">
+                      <div class="form-group col-xl-8">
+                        <label for="email" class="col-md-4 control-label">Your Email</label>
+                        <div class="col-md-8">
                           <input type="email" class="form-control" name="email" t-att-value="'email' in partner_data and partner_data['email']" required="1"/>
                         </div>
-                      </div><div class="form-group col-lg-8">
-                        <label for="phone" class="col-sm-4 control-label">Your Phone</label>
-                        <div class="col-sm-8">
+                      </div><div class="form-group col-xl-8">
+                        <label for="phone" class="col-md-4 control-label">Your Phone</label>
+                        <div class="col-md-8">
                           <input type="tel" class="form-control" name="phone" placeholder="+1 (650) 691-3277" required="1" id="phone_field" t-att-value="'mobile' in partner_data and partner_data['mobile']"/>
                           <small t-if="appointment_type.reminder_ids.filtered(lambda r:r.type=='sms')" class="text-muted">
                               A text message reminder is sent to you before your appointment
@@ -240,9 +240,9 @@
                       </div>
 
                       <t t-foreach="appointment_type.question_ids" t-as="question">
-                          <div class="form-group col-lg-8" t-if="question.question_type!='text'">
-                            <label t-att-for="question_#{question.id}" class="col-sm-4 control-label" t-esc="question.name"/>
-                            <div class="col-sm-8">
+                          <div class="form-group col-xl-8" t-if="question.question_type!='text'">
+                            <label t-att-for="question_#{question.id}" class="col-md-4 control-label" t-esc="question.name"/>
+                            <div class="col-md-8">
                               <t t-if="question.question_type=='char'">
                                   <input type="char" class="form-control"
                                         t-attf-name="question_#{question.id}"
@@ -277,9 +277,9 @@
                               </t>
                             </div>
                           </div>
-                          <div class="form-group col-lg-8" t-if="question.question_type=='text'">
-                              <label t-att-for="question_#{question.id}" class="col-sm-4 control-label" t-esc="question.name"/>
-                              <div class="col-sm-8">
+                          <div class="form-group col-xl-8" t-if="question.question_type=='text'">
+                              <label t-att-for="question_#{question.id}" class="col-md-4 control-label" t-esc="question.name"/>
+                              <div class="col-md-8">
                                   <textarea class="form-control" rows="8"
                                       t-att-required="question.question_required or None"
                                       t-attf-name="question_#{question.id}"
@@ -289,7 +289,7 @@
                       </t>
 
                       <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
+                        <div class="offset-md-2 col-md-10">
                           <button type="submit" class="btn btn-primary">Confirm Appointment <span class="fa fa-arrow-right"/></button>
                         </div>
                       </div>
@@ -319,39 +319,39 @@
                       <t t-if="event.appointment_type_id">
                           <div t-raw="event.appointment_type_id.message_confirmation" style="margin-bottom:10px;"/>
                       </t>
-                      <div class="col-sm-9">
+                      <div class="col-md-9">
                         <div class="row">
-                            <div class="col-sm-2 text-right">
+                            <div class="col-md-2 text-right">
                                 <label>When:</label>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-md-10">
                                 <t t-esc="datetime_start"/>
                                 <br/>
                                 <i class="text-muted">(timezone: <t t-esc="request.session.timezone"/>)</i>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2 text-right">
+                            <div class="col-md-2 text-right">
                                 <label>Duration:</label>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-md-10">
                                 <t t-esc="int(event.duration)"/><t t-if="event.duration % 1">:<t t-esc="'%02d' % (int(event.duration % 1 * 60),)"/></t>
                                 hour<t t-if="event.duration>=2">s</t>
                             </div>
                         </div>
                         <div t-if="event.location" class="row">
-                            <div class="col-sm-2 text-right">
+                            <div class="col-md-2 text-right">
                                 <label>Location:</label>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-md-10">
                                 <t t-esc="event.location"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2 text-right">
+                            <div class="col-md-2 text-right">
                                 <label>Attendees:</label>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-md-10">
                                 <div t-foreach="event.attendee_ids" t-as="attendee">
                                     <t t-esc="attendee.common_name"/>
                                     <span t-if="attendee.state=='accepted'" class="fa fa-check text-success" title="Confirmed" role="img" aria-label="Confirmed"/>
@@ -360,15 +360,15 @@
                             </div>
                         </div>
                         <div t-if="event.description" class="row">
-                            <div class="col-sm-2 text-right">
+                            <div class="col-md-2 text-right">
                                 <label>Description:</label>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-md-10">
                                 <div t-field="event.description"/>
                             </div>
                         </div>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-md-3">
                           <a role="button" class="btn btn-block btn-primary" t-attf-href="/website/calendar/ics/#{event.access_token}.ics">
                               <i class="fa fa-fw fa-arrow-right"></i>Add to iCal/Outlook
                           </a>

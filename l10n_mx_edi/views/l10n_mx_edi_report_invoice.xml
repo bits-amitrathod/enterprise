@@ -84,7 +84,7 @@
         <xpath expr="//p[@t-if='o.fiscal_position_id.note']" position="after">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <div class="row" id='complement'>
-                    <div class="barcode col-xs-3">
+                    <div class="barcode col-3">
                         <t t-set="sello" t-value="xml.get('Sello', 'No identificado')[-8:]"/>
                         <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s' % quote_plus(
                             'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(
@@ -93,7 +93,7 @@
                                 + '&amp;fe=%s' % quote_plus(
                                     sello, 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
                     </div>
-                    <div class="complement-details col-xs-9">
+                    <div class="complement-details col-9">
                         <div class="digital-stamp">
                             <span>Digital stamp of the emitter</span>
                         </div>

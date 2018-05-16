@@ -875,7 +875,7 @@ odoo.define('sign.DocumentBackend', function (require) {
             }).then(function(html) {
                 self.$el.append($(html.trim()));
 
-                var $cols = self.$('.col-md-4').toggleClass('col-md-6 col-md-4');
+                var $cols = self.$('.col-lg-4').toggleClass('col-lg-6 col-lg-4');
                 var $buttonsContainer = $cols.first().remove();
 
                 var url = $buttonsContainer.find('.o_sign_download_document_button').attr('href');

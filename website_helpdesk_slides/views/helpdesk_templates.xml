@@ -25,9 +25,9 @@
     <template id="website_helpdesk_slides_team_page" inherit_id="website_helpdesk.team">
         <xpath expr="//h2[@id='team-page']" position="after">
             <t t-if="channel or team.use_website_helpdesk_slides">
-                <div class="col-md-6" id="slides_posts">
+                <div class="col-lg-6" id="slides_posts">
                     <h2>Popular Presentations</h2>
-                    <div class="col-md-10" id="slides_posts" style="padding-left:0px;">
+                    <div class="col-lg-10" id="slides_posts" style="padding-left:0px;">
                         <p t-if="not slides" class="text-muted">
                             No presentations yet.
                         </p>

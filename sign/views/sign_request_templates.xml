@@ -47,14 +47,14 @@
             </div>
 
             <div class="row o_sign_page_info">
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <h4 class="o_sign_request_reference_title"><t t-esc="sign_request.reference"/></h4>
 
 
                     <a role="button" t-if="sign_request.state == 'signed'" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/completed" class="btn btn-primary o_sign_download_document_button">Download Document</a>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="clearfix">
                         <img class="media-object pull-left mr8" t-attf-src="/web/image/res.partner/#{sign_request.create_uid.partner_id.id}/image_small" alt="Signature"/>
                         <t t-if="sign_request.create_uid.partner_id.name">From: <t t-esc="sign_request.create_uid.partner_id.name"/><br/></t>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <t t-if="sign_request.state != 'signed'">
                         <t t-foreach="sign_request.request_item_ids" t-as="sign">
                             <div t-if="sign.state != 'completed'" class="o_sign_signer_status clearfix" t-att-data-id="sign.id">
@@ -79,7 +79,7 @@
             </div>
 
             <div t-if="not hasItems and not isPDF" class="row">
-                <div class="col-md-12">
+                <div class="col-lg-12">
                     <a class="o_sign_image_document" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/origin" target="_blank">
                         <img t-if="webimage" class="img img-fluid" t-attf-src="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/origin" alt="Signature"/>
                         <div t-if="not webimage" class="o_image" t-att-data-mimetype="sign_request.template_id.attachment_id.mimetype"/>

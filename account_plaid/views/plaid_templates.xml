@@ -10,20 +10,20 @@
       <form class="form-horizontal js_online_sync_form">
         <t t-if="call=='init'">
           <div class="form-group">
-            <label class="col-md-2">Login (*)</label>
-            <div class="col-md-4">
+            <label class="col-lg-2">Login (*)</label>
+            <div class="col-lg-4">
                 <input type="text" class="form-control js_plaid_login"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-2">Password (*)</label>
-            <div class="col-md-4">
+            <label class="col-lg-2">Password (*)</label>
+            <div class="col-lg-4">
                 <input type="password" class="form-control js_plaid_password"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-2">PIN</label>
-            <div class="col-md-4">
+            <label class="col-lg-2">PIN</label>
+            <div class="col-lg-4">
                 <input type="text" class="form-control js_plaid_pin"/>
             </div>
           </div>
@@ -31,9 +31,9 @@
         <t t-if="call=='mfa'">
           <t t-if="mfa.type == 'list'">
             <div class="form-group">
-            <label class="col-sm-4">Select a method of verification</label>
+            <label class="col-md-4">Select a method of verification</label>
               <t t-foreach="mfa.mfa" t-as="choice">
-                <div class="radio col-sm-12">
+                <div class="radio col-md-12">
                   <label>
                     <input type="radio" name="mfa-selection" t-att-mask="choice.mask" t-att-value="choice.type"><t t-esc="choice.type"/> (<t t-esc="choice.mask"/>)</input>
                   </label>
@@ -44,14 +44,14 @@
           <t t-if="mfa.type == 'questions' || mfa.type == 'selections'">
             <div class="form-group">
               <t t-foreach="mfa.mfa" t-as="q">
-                    <label class="col-sm-12"><t t-esc="q.question"/></label>
+                    <label class="col-md-12"><t t-esc="q.question"/></label>
                     <t t-if="mfa.type == 'questions'">
-                      <div class="col-sm-12">
+                      <div class="col-md-12">
                         <input type="text" class="form-control js_plaid_answer" optional="false"/>
                       </div>
                     </t>
                     <t t-if="mfa.type == 'selections'">
-                      <div class="col-sm-12">
+                      <div class="col-md-12">
                         <select class="form-control js_plaid_answer" optional="false">
                           <t t-foreach="q.answers" t-as="v">
                             <option t-att-value="v"><t t-esc="v"/></option>
@@ -64,8 +64,8 @@
           </t>
           <t t-if="mfa.type == 'device'">
             <div class="form-group">
-              <label class="col-sm-12"><t t-esc="mfa.mfa.message"/> (Enter code in area below)</label>
-              <div class="col-sm-3">
+              <label class="col-md-12"><t t-esc="mfa.mfa.message"/> (Enter code in area below)</label>
+              <div class="col-md-3">
                 <input class="form-control js_plaid_answer" optional="false"/>
               </div>
             </div>

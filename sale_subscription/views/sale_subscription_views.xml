@@ -472,19 +472,19 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <strong><span><t t-esc="record.partner_id.value"/></span></strong>
                                 </div>
-                                <div class="col-xs-6 pull-right text-right">
+                                <div class="col-6 pull-right text-right">
                                     <strong><field name="recurring_total" widget="monetary"/></strong>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6 text-muted">
+                                <div class="col-6 text-muted">
                                     <div><t t-esc="record.code.value"/></div>
                                     <div><t t-esc="record.template_id.value"/></div>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <span class="pull-right text-right">
                                         <field name="state" widget="label_selection" options="{'classes': {'draft': 'info', 'cancel': 'default',
                                         'open': 'success', 'close': 'default', 'pending': 'danger'}}"/>

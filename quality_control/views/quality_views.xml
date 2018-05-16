@@ -339,18 +339,18 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <strong><span><t t-esc="record.name.value"/></span></strong>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <strong><span t-attf-class="pull-right text-right label #{['none'].indexOf(record.quality_state.raw_value) > -1 ? 'label-default' : ['fail'].indexOf(record.quality_state.raw_value) > -1 ? 'label-danger' : ['done'].indexOf(record.quality_state.raw_value) > -1 ? 'label-primary' : 'label-success'}"><t t-esc="record.quality_state.value"/></span></strong>
                                 </div>
                             </div>
                             <div class="row text-muted">
-                                <div class="col-xs-8">
+                                <div class="col-8">
                                     <span><t t-esc="record.product_id.value"/></span>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-4">
                                     <span><t t-esc="record.lot_id.value"/></span>
                                 </div>
                             </div>
@@ -524,19 +524,19 @@
                             </div>
                             <div class="container o_kanban_card_content">
                                 <div class="row">
-                                    <div class="col-xs-6 o_kanban_primary_left">
+                                    <div class="col-6 o_kanban_primary_left">
                                         <button class="btn btn-primary" name="%(quality_alert_action_team)d" type="action">
                                             <span><field name="alert_count"/> Quality Alerts</span>
                                         </button>
                                     </div>
-                                    <div class="col-xs-6 o_kanban_primary_right">
+                                    <div class="col-6 o_kanban_primary_right">
                                         <div class="row">
-                                            <div class="col-xs-9">
+                                            <div class="col-9">
                                                 <a class="oe_kanban_stock_picking_type_list" name="%(quality_check_action_team)d" type="action">
                                                     Checks In Progress
                                                 </a>
                                             </div>
-                                            <div class="col-xs-3">
+                                            <div class="col-3">
                                                 <field name="check_count"/>
                                             </div>
                                         </div>
@@ -544,16 +544,16 @@
                                 </div>
                             </div><div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
                                 <div class="row">
-                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
                                     </div>
-                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_new">
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_new">
                                     </div>
                                 </div>
                                 <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
-                                    <div role="menuitem" aria-haspopup="true" class="col-xs-8">
+                                    <div role="menuitem" aria-haspopup="true" class="col-8">
                                         <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
                                     </div>
-                                    <div class="col-xs-4 text-right">
+                                    <div class="col-4 text-right">
                                         <a type="edit">Settings</a>
                                     </div>
                                 </div>
@@ -619,7 +619,7 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_content oe_kanban_global_click">
                             <div class="row">
-                                <div class="col-xs-12">
+                                <div class="col-12">
                                     <strong><field name="name"/></strong>
                                 </div>
                             </div>

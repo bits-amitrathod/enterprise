@@ -15,10 +15,10 @@
             </t>
         </xpath>
         <xpath expr="//div[hasclass('row')]/div[1]" position="after">
-            <div class="col-xs-6" t-if="o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_cfdi_supplier_rfc">
+            <div class="col-6" t-if="o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_cfdi_supplier_rfc">
                 <span t-if="o.company_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc">XML VAT: <span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"></span></span>
             </div>
-            <div class="col-xs-6" t-if="o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_payment_method_id">
+            <div class="col-6" t-if="o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_payment_method_id">
                 <strong>Payment Way CFDI:</strong>
                 <span t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])"/>
             </div>
@@ -26,12 +26,12 @@
         <xpath expr="//table" position="after">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <div class="row" id='complement'>
-                    <div class="barcode col-xs-3">
+                    <div class="barcode col-3">
                         <img alt="Barcode" t-att-src="'/report/barcode/QR/%s' % quote_plus('?') + keep_query(
                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,
                                 tt=0, id=o.l10n_mx_edi_cfdi_uuid)"/>
                     </div>
-                    <div class="complement-details col-xs-9">
+                    <div class="complement-details col-9">
                         <div class="digital-stamp">
                             <span>Digital stamp of the emitter</span>
                         </div>

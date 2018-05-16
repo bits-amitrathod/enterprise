@@ -57,17 +57,17 @@
                     <t t-if="versions.length != 0 and config == 1">
                         <form id="productForm" class="form-horizontal" role="form">
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Experiment Name</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-3 control-label">Experiment Name</label>
+                                <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_name o_required_field"/>
                                 </div>
 
                             </div>
 
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Objective: </label>
-                                <div class="col-sm-8 ">
-                                    <select class="form-control col-sm-2 box">
+                                <label class="col-md-3 control-label">Objective: </label>
+                                <div class="col-md-8 ">
+                                    <select class="form-control col-md-2 box">
                                         <t t-foreach="goals" t-as="item">
                                             <option t-att-value="item.id"><t t-esc="item.name"></t></option>
                                         </t>
@@ -76,8 +76,8 @@
                             </div>
 
                             <div class="form-group form-group">
-                                <div class="col-sm-3"></div>
-                                <div class="checkbox col-sm-8">
+                                <div class="col-md-3"></div>
+                                <div class="checkbox col-md-8">
                                     <label>
                                         <input type="checkbox" checked="checked" disabled="disabled"/> Master
                                     </label>
@@ -87,8 +87,8 @@
                             <div class="o_versions">
                                 <t t-foreach="versions" t-as="item">
                                     <div class="form-group form-group-lg">
-                                        <div class="col-sm-3"></div>
-                                        <div class="checkbox col-sm-8">
+                                        <div class="col-md-3"></div>
+                                        <div class="checkbox col-md-8">
                                             <label>
                                                 <input type="checkbox" class="o_version" t-att-data-version_id="item.id"/> <t t-esc="item.name"></t>
                                             </label>
@@ -157,15 +157,15 @@
                               </div>
                             </div>
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">GA Key</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-3 control-label">GA Key</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_ga_key o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_ga_key o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">View ID</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-3 control-label">View ID</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_view_id o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_view_id o_required_field" disabled="disabled"/>
                                 </div>
@@ -224,15 +224,15 @@
                               </div>
                             </div>
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Client ID</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-3 control-label">Client ID</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_client_id o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_client_id o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Client Secret</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-3 control-label">Client Secret</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_client_secret o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_client_secret o_required_field" disabled="disabled"/>
                                 </div>
@@ -246,14 +246,14 @@
                         </div>
                         <form id="productForm" class="form-horizontal" role="form">
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">GA Key</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-3 control-label">GA Key</label>
+                                <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_ga_key o_required_field"/>
                                 </div>
                             </div>
                             <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">View ID</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-3 control-label">View ID</label>
+                                <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_view_id o_required_field"/>
                                 </div>
                             </div>
@@ -448,8 +448,8 @@
                 </p>
                 <form id="productForm" class="form-horizontal" role="form">
                     <div class="form-group form-group">
-                        <label class="col-sm-3 control-label">New Version</label>
-                        <div class="col-sm-8">
+                        <label class="col-md-3 control-label">New Version</label>
+                        <div class="col-md-8">
                             <input type="text" class="form-control form-field-label o_version_name o_required_field" t-attf-value="{{default_name}}"/>
                         </div>
                     </div>

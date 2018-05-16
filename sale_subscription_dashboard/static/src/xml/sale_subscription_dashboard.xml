@@ -69,8 +69,8 @@
     <!-- 3. Forecast dashboard -->
     <div t-name="sale_subscription_dashboard.forecast" class="container o_account_contract_dashboard">
         <div class="row box">
-            <h3 class="text-center col-sm-12" id="forecast_summary_mrr"/>
-            <div class="col-sm-4 o_forecast_options">
+            <h3 class="text-center col-md-12" id="forecast_summary_mrr"/>
+            <div class="col-md-4 o_forecast_options">
                 <table class="table">
                     <tr>
                     <tr>
@@ -121,12 +121,12 @@
                     </tr>
                 </table>
             </div>
-            <div id="forecast_chart_div_mrr" class="col-sm-8"/>
+            <div id="forecast_chart_div_mrr" class="col-md-8"/>
         </div>
 
         <div class="row box">
-            <h3 class="text-center col-sm-12" id="forecast_summary_contracts"/>
-            <div class="col-sm-4 o_forecast_options">
+            <h3 class="text-center col-md-12" id="forecast_summary_contracts"/>
+            <div class="col-md-4 o_forecast_options">
                 <table class="table">
                     <tr>
                     <tr>
@@ -178,7 +178,7 @@
                     </tr>
                 </table>
             </div>
-            <div id="forecast_chart_div_contracts" class="col-sm-8"/>
+            <div id="forecast_chart_div_contracts" class="col-md-8"/>
         </div>
     </div>
 
@@ -299,12 +299,12 @@
     </div>
 
     <t t-name="sale_subscription_dashboard.stats_history">
-        <div class="col-md-3 text-center">
+        <div class="col-lg-3 text-center">
             <h4 class="text-muted o_small_caps">Current</h4>
             <h2><t t-esc="format_number(value, stat_types[stat_type]['add_symbol'])"/></h2>
         </div>
 
-        <div class="col-md-3 text-center">
+        <div class="col-lg-3 text-center">
             <h4 class="text-muted o_small_caps">1 month ago</h4>
             <h2>
                 <t t-esc="format_number(stats_history['value_1_months_ago'], stat_types[stat_type]['add_symbol'])"/>
@@ -312,7 +312,7 @@
             </h2>
         </div>
 
-        <div class="col-md-3 text-center">
+        <div class="col-lg-3 text-center">
             <h4 class="text-muted o_small_caps">3 months ago</h4>
             <h2>
                 <t t-esc="format_number(stats_history['value_3_months_ago'], stat_types[stat_type]['add_symbol'])"/>
@@ -320,7 +320,7 @@
             </h2>
         </div>
 
-        <div class="col-md-3 text-center">
+        <div class="col-lg-3 text-center">
             <h4 class="text-muted o_small_caps">12 months ago</h4>
             <h2>
                 <t t-esc="format_number(stats_history['value_12_months_ago'], stat_types[stat_type]['add_symbol'])"/>
@@ -366,11 +366,11 @@
     </div>
 
     <t t-name="sale_subscription_dashboard.salesman_summary">
-        <div class="col-md-6" style="font-weight: 800;">
+        <div class="col-lg-6" style="font-weight: 800;">
             <h3>MRR : <t t-esc="format_number(Math.round(mrr*100)/100)"/></h3>
         </div>
 
-        <div class="col-md-6" style="font-weight: 800;">
+        <div class="col-lg-6" style="font-weight: 800;">
             <h3 class="pull-right">NRR : <t t-esc="format_number(Math.round(nrr*100)/100)"/></h3>
         </div>
     </t>
