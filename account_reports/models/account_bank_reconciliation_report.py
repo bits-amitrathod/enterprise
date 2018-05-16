@@ -90,8 +90,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
                                                            ('user_type_id.type', '=', 'liquidity'),
                                                            ('full_reconcile_id', '=', False),
                                                            ('date', '<=', self.env.context['date_to']),
-                                                           ('company_id', 'in', self.env.context['company_ids']),
-                                                           ('reconciled', '=', False)])
+                                                           ('company_id', 'in', self.env.context['company_ids'])])
         unrec_tot = 0
         if move_lines:
             tmp_lines = []
