@@ -841,47 +841,49 @@
                                     </div>
 
                                     <!-- Spouse -->
-                                    <div name="spouse_information" class="well">
-                                        <div class="form-group">
-                                            <label class="hr_cs_control hr_cs_control_checkbox">Disabled Spouse
-                                                <input type="checkbox" name="disabled_spouse_bool" class="advantage_input" t-att-checked="contract.employee_id.disabled_spouse_bool"/>
-                                                <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
-                                            </label>
-                                        </div>
-                                        <div class="form-group mb0" name="spouse_professional_situation">
-                                            <label class="control-label" for="spouse_professional_situation">Spouse Professional Situation</label>
-                                            <select name="spouse_professional_situation" class="form-control advantage_input">
-                                                <option value="without_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
-                                                <option value="low_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_net_revenue &lt; 225.0">With Income &lt; 225 €/month</option>
-                                                <option value="high_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_net_revenue &gt;= 225.0">With Income &gt;= 225 €/month</option>
-                                                <option value="low_pension" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_other_net_revenue &lt; 450.0">With Pensions &lt; 450 €/month</option>
-                                                <option value="high_pension" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_other_net_revenue &gt;= 450.0">With Pensions &gt;= 450 €/month</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group mb0 d-none" name="spouse_fiscal_status">
-                                            <label class="control-label" for="spouse_fiscal_status">Tax status for spouse</label>
-                                            <select name="spouse_fiscal_status" class="form-control advantage_input">
-                                                <option value="without income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
-                                                <option value="with income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income'">With Income</option>
-                                            </select>
-                                        </div>
-                                        <div name="spouse_revenue_information" class="d-none">
+                                    <div name="spouse_information" class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label class="hr_cs_control hr_cs_control_checkbox">Disabled Spouse
+                                                    <input type="checkbox" name="disabled_spouse_bool" class="advantage_input" t-att-checked="contract.employee_id.disabled_spouse_bool"/>
+                                                    <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mb0" name="spouse_professional_situation">
+                                                <label class="control-label" for="spouse_professional_situation">Spouse Professional Situation</label>
+                                                <select name="spouse_professional_situation" class="form-control advantage_input">
+                                                    <option value="without_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
+                                                    <option value="low_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_net_revenue &lt; 225.0">With Income &lt; 225 €/month</option>
+                                                    <option value="high_income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_net_revenue &gt;= 225.0">With Income &gt;= 225 €/month</option>
+                                                    <option value="low_pension" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_other_net_revenue &lt; 450.0">With Pensions &lt; 450 €/month</option>
+                                                    <option value="high_pension" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income' and contract.employee_id.spouse_other_net_revenue &gt;= 450.0">With Pensions &gt;= 450 €/month</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group mb0 d-none" name="spouse_fiscal_status">
+                                                <label class="control-label" for="spouse_fiscal_status">Tax status for spouse</label>
+                                                <select name="spouse_fiscal_status" class="form-control advantage_input">
+                                                    <option value="without income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'without income'">Without Income</option>
+                                                    <option value="with income" t-att-selected="contract.employee_id.spouse_fiscal_status == 'with income'">With Income</option>
+                                                </select>
+                                            </div>
+                                            <div name="spouse_revenue_information" class="d-none">
+                                                <div class="form-group mt16">
+                                                    <label class="control-label" for="spouse_net_revenue">Spouse Net Revenue</label>
+                                                    <input type="number" name="spouse_net_revenue" placeholder="0" class="form-control" t-att-value="contract.employee_id.spouse_net_revenue"/>
+                                                </div>
+                                                <div class="form-group mb0">
+                                                    <label class="control-label" for="spouse_other_net_revenue">Spouse Other Net Revenue</label>
+                                                    <input type="number" name="spouse_other_net_revenue" placeholder="0" class="form-control" t-att-value="contract.employee_id.spouse_other_net_revenue"/>
+                                                </div>
+                                            </div>
                                             <div class="form-group mt16">
-                                                <label class="control-label" for="spouse_net_revenue">Spouse Net Revenue</label>
-                                                <input type="number" name="spouse_net_revenue" placeholder="0" class="form-control" t-att-value="contract.employee_id.spouse_net_revenue"/>
+                                                <label class="control-label" for="spouse_complete_name">Spouse Name and First Name</label>
+                                                <input type="text" name="spouse_complete_name" class="form-control" t-att-value="contract.employee_id.spouse_complete_name"/>
                                             </div>
-                                            <div class="form-group mb0">
-                                                <label class="control-label" for="spouse_other_net_revenue">Spouse Other Net Revenue</label>
-                                                <input type="number" name="spouse_other_net_revenue" placeholder="0" class="form-control" t-att-value="contract.employee_id.spouse_other_net_revenue"/>
+                                            <div class="form-group mt16">
+                                                <label class="control-label" for="spouse_birthdate">Spouse Birthdate</label>
+                                                <input type="date" name="spouse_birthdate" class="form-control" t-att-required="true if contract.employee_id.marital in ['married', 'cohabitant'] else false" t-att-value="contract.employee_id.spouse_birthdate"/>
                                             </div>
-                                        </div>
-                                        <div class="form-group mt16">
-                                            <label class="control-label" for="spouse_complete_name">Spouse Name and First Name</label>
-                                            <input type="text" name="spouse_complete_name" class="form-control" t-att-value="contract.employee_id.spouse_complete_name"/>
-                                        </div>
-                                        <div class="form-group mt16">
-                                            <label class="control-label" for="spouse_birthdate">Spouse Birthdate</label>
-                                            <input type="date" name="spouse_birthdate" class="form-control" t-att-required="true if contract.employee_id.marital in ['married', 'cohabitant'] else false" t-att-value="contract.employee_id.spouse_birthdate"/>
                                         </div>
                                     </div>
 
@@ -896,10 +898,12 @@
                                             <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
                                         </label>
                                     </div>
-                                    <div name="disabled_children_info" class="well">
-                                        <div class="form-group mb0">
-                                            <label class="control-label" for="disabled_children_count">Number of Disabled Children</label>
-                                            <input type="number" name="disabled_children_count" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.disabled_children_number"/>
+                                    <div name="disabled_children_info" class="card">
+                                        <div class="card-body">
+                                            <div class="form-group mb0">
+                                                <label class="control-label" for="disabled_children_count">Number of Disabled Children</label>
+                                                <input type="number" name="disabled_children_count" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.disabled_children_number"/>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -910,22 +914,24 @@
                                             <div class="hr_cs_control_indicator hr_cs_control_indicator_white"/>
                                         </label>
                                     </div>
-                                    <div name="other_dependent_people_info" class="well">
-                                        <div class="form-group">
-                                            <label class="control-label" for="other_senior_dependant">Seniors <span class="help-block">&amp;ge; 65 years old</span></label>
-                                            <input type="number" name="other_senior_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_senior_dependent"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="other_disabled_senior_dependent">Disabled seniors <span class="help-block">&amp;ge; 65 years old</span></label>
-                                            <input type="number" name="other_disabled_senior_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_disabled_senior_dependent"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="other_juniors_dependant">People <span class="help-block">&amp;le; 65 years old</span></label>
-                                            <input type="number" name="other_juniors_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_juniors_dependent"/>
-                                        </div>
-                                        <div class="form-group mb0">
-                                            <label class="control-label" for="other_disabled_juniors_dependant">Disabled people <span class="help-block">&amp;le; 65 years old</span></label>
-                                            <input type="number" name="other_disabled_juniors_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_disabled_juniors_dependent"/>
+                                    <div name="other_dependent_people_info" class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label class="control-label" for="other_senior_dependant">Seniors <span class="help-block">&amp;ge; 65 years old</span></label>
+                                                <input type="number" name="other_senior_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_senior_dependent"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="other_disabled_senior_dependent">Disabled seniors <span class="help-block">&amp;ge; 65 years old</span></label>
+                                                <input type="number" name="other_disabled_senior_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_disabled_senior_dependent"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="other_juniors_dependant">People <span class="help-block">&amp;le; 65 years old</span></label>
+                                                <input type="number" name="other_juniors_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_juniors_dependent"/>
+                                            </div>
+                                            <div class="form-group mb0">
+                                                <label class="control-label" for="other_disabled_juniors_dependant">Disabled people <span class="help-block">&amp;le; 65 years old</span></label>
+                                                <input type="number" name="other_disabled_juniors_dependent" placeholder="0" class="form-control advantage_input" t-att-value="contract.employee_id.other_disabled_juniors_dependent"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

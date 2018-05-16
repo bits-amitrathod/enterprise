@@ -1119,7 +1119,7 @@ odoo.define('sign.document_signing', function(require) {
                 var isEmpty = ((signature)? (signDialog.emptySignature === signature) : true);
 
                 signDialog.$('.o_sign_signer_info').toggleClass('has-error', !name);
-                signDialog.$('.o_sign_signature_draw').toggleClass('panel-danger', isEmpty).toggleClass('panel-default', !isEmpty);
+                signDialog.$('.o_sign_signature_draw').toggleClass('bg-danger text-white', isEmpty);
                 if(isEmpty || !name) {
                     return false;
                 }

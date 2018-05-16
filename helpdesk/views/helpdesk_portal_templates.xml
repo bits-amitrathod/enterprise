@@ -30,7 +30,7 @@
             <t t-if="not tickets">
                 <p>There are currently no Ticket for your account.</p>
             </t>
-            <div t-if="tickets" class="panel panel-default">
+            <div t-if="tickets" class="card">
                 <div class="table-responsive"><table class="table table-hover o_portal_my_doc_table">
                     <thead>
                         <tr class="active">
@@ -56,8 +56,8 @@
 
     <template id="tickets_followup" name="Helpdesk Tickets">
         <t t-call="portal.portal_layout">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="card">
+                <div class="card-header">
                     <div class="row">
                         <div class="col-lg-12">
                             <h4>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="row">
                         <strong class="col-lg-2">Reported on</strong>
                         <span class="col-lg-4" t-field="ticket.create_date" t-field-options='{"widget": "date"}'/>
@@ -124,8 +124,8 @@
                     <div class="row">
                         <t t-foreach="teams" t-as="team">
                             <div t-if="team.percentage_satisfaction != -1" class="col-md-6 col-4 col-lg-4 col-xl-4">
-                                <div class="thumbnail">
-                                    <div>
+                                <div class="card">
+                                    <div class="card-body">
                                         <div class="caption">
                                             <h4><t t-esc="team.name"/></h4>
                                             <p t-if="team.percentage_satisfaction"  class="text-muted">

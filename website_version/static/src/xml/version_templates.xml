@@ -112,18 +112,16 @@
                             <p>Odoo uses Google Analytics to track the performances of an A/B testing experiment comparing several versions.</p>
                         </div>
                         <form id="productForm" class="form-horizontal" role="form">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                              <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                  <h4 class="panel-title">
+                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="card">
+                                <h4 class="card-header" role="tab" id="headingOne">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                       To get your GA Key and your View ID
                                       <span class="fa fa-info-circle" />
                                     </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
-                                    <div class="panel-body">
+                                </h4>
+                                <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
+                                    <div class="card-body">
                                         <ul>
                                             <li> Go to <a href='https://www.google.com/analytics/' target='_blank'>https://www.google.com/analytics/</a>
                                             and connect you.
@@ -170,18 +168,16 @@
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_view_id o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                              <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                  <h4 class="panel-title">
+                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="card">
+                                <h4 class="card-header" role="tab" id="headingOne">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                       To get your Client ID and your Client Secret, follow these steps
                                       <span class="fa fa-info-circle" />
                                     </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
-                                    <div class="panel-body">
+                                </h4>
+                                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
+                                    <div class="card-body">
                                         <ul>
                                             <li> Connect on your google account and go to <a href='https://console.developers.google.com' target='_blank'>https://console.developers.google.com</a> </li>
                                             <li>
