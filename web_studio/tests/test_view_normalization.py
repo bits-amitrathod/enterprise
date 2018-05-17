@@ -858,7 +858,10 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='category_id']" position="attributes"/>
+              <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="placeholder"/>
+                <attribute name="widget"/>
+              </xpath>
               <xpath expr="//field[@name='category_id']" position="after">
                 <field name="create_uid"/>
               </xpath>

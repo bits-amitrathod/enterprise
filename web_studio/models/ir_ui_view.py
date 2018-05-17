@@ -215,6 +215,9 @@ class View(models.Model):
                 if line.startswith('-'):
                     node = next(old_view_iterator)
 
+                    if node.tag == 'attribute':
+                        continue
+
                     # If we are already writing an xpath, we need to either
                     # close it or ignore this line
                     if xpath.get('expr'):
@@ -228,15 +231,17 @@ class View(models.Model):
                         # we could as well replace it directly by what we want to add
                         # Also take care not to close the xpath is we are still
                         # in the attributes section of a given node
-                        elif ((node.tag != 'attribute' and xpath.get('position') != 'after') or
-                                (node.tag == 'attribute' and xpath.get('position') != 'attributes')):
+                        elif ((node.tag != 'attributes' and xpath.get('position') != 'after') or
+                                (node.tag == 'attributes' and xpath.get('position') != 'attributes')):
                             # Consecutive removals need different xpath
                             add_xpath_to_arch(arch, xpath)
                             xpath = etree.Element('xpath')
 
                     xpath.attrib['expr'] = self._node_to_xpath(node)
-                    if node.tag == 'attribute':
+                    if node.tag == 'attributes':
                         xpath.attrib['position'] = 'attributes'
+                        # The attribute is removed
+                        etree.SubElement(xpath, 'attribute', {'name': node.get('name')})
                     else:
                         xpath.attrib['position'] = 'replace'
 
@@ -319,8 +324,8 @@ class View(models.Model):
         previous_node = node.getprevious()
         if (previous_node is None or previous_node.tag in ['attribute', 'attributes']):
             previous_node = node.getparent()
-            if node.getparent() == 'attributes':
-                previous_node = node.getparent()
+            if previous_node.tag == 'attributes':
+                previous_node = previous_node.getparent()
 
         return self._get_node_from_xpath(xpath, previous_node) is not None
 
@@ -359,6 +364,8 @@ class View(models.Model):
         """
         if target_node.tag == 'attribute':
             target_node = target_node.getparent().getparent()
+        elif target_node.tag == 'attributes':
+            target_node = target_node.getparent()
 
         root = target_node.getroottree()
         el_name = target_node.get('name')
@@ -493,20 +500,22 @@ class View(models.Model):
 
     def _generate_node_attributes(self, node):
         """
-        Generates an attributes element with all of the node's
-        attributes and inserts it as its first child of the node
+        Generates attributes wrapper elements for each of the node's
+        attributes and prepend them as first children of the node
         """
-        if node.tag != 'attribute':
+        if node.tag not in ('attribute', 'attributes'):
             # node.items() gives a list of tuples, each tuple representing
             # a key, value pair for attributes
-            node_attributes = sorted(node.items(), key=lambda i: i[0])  # alphabetically sort attributes by name
+            node_attributes = sorted(node.items(), key=lambda i: i[0], reverse=True)  # inverse alphabetically sort attributes by name
             if len(node_attributes):
-                attributes = etree.Element('attributes')
                 for attr in node_attributes:
+                    attributes = etree.Element('attributes', {
+                        'name': attr[0],
+                    })
                     etree.SubElement(attributes, 'attribute', {
                         'name': attr[0],
                     }).text = attr[1]
-                node.insert(0, attributes)
+                    node.insert(0, attributes)
 
     def _indent_tree(self, elem, level=0):
         """
