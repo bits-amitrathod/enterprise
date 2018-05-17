@@ -646,25 +646,6 @@ class MrpEco(models.Model):
         }
 
     @api.multi
-    def action_create_alert(self):
-        self.ensure_one()
-        return {
-            'name': _('Workorder Messages'),
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'mrp.message',
-            'view_id': self.env.ref('mrp.mrp_message_view_form_embedded_bom').id,
-            'type': 'ir.actions.act_window',
-            'context': {
-                'default_product_id': self.env['product.product'].search([('product_tmpl_id', '=', self.product_tmpl_id.id)], limit=1).id,
-                'default_routing_id': self.routing_id.id,
-                'default_bom_id': self.bom_id.id,
-                'default_message': '%s is updated or might be soon.' % self.name
-            },
-            'target': 'new',
-        }
-
-    @api.multi
     def open_new_bom(self):
         self.ensure_one()
         return {

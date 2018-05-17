@@ -56,7 +56,6 @@ class TestDeliveryDHL(TransactionCase):
         picking = sale_order.picking_ids[0]
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
-        picking.force_assign()
         picking.move_lines[0].quantity_done = 1.0
         self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
@@ -95,7 +94,6 @@ class TestDeliveryDHL(TransactionCase):
         picking = sale_order.picking_ids[0]
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
-        picking.force_assign()
         picking.move_lines[0].quantity_done = 1.0
         self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
@@ -139,7 +137,6 @@ class TestDeliveryDHL(TransactionCase):
         picking = sale_order.picking_ids[0]
         self.assertEquals(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
-        picking.force_assign()
         move0 = picking.move_lines[0]
         move0.quantity_done = 1.0
         picking._put_in_pack()

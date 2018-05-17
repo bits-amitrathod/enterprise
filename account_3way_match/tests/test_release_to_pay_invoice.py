@@ -56,7 +56,6 @@ class TestReleaseToPayInvoice(AccountingTestCase):
 
             elif action == 'receive':
                 picking = purchase_order.picking_ids[0] if not back_orders_stack else self.env['stock.picking'].search([('backorder_id', '=', back_orders_stack.pop(-1))])
-                picking.force_assign()
                 picking.move_line_ids.write({'qty_done': params['qty']})
                 picking.button_validate()
 

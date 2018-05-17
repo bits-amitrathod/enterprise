@@ -53,26 +53,6 @@ class QualityAlert(models.Model):
     workcenter_id = fields.Many2one('mrp.workcenter', 'Work Center')
     production_id = fields.Many2one('mrp.production', "Production Order")
 
-    @api.multi
-    def action_create_message(self):
-        self.ensure_one()
-        return {
-            'name': _('Work Order Messages'),
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'mrp.message',
-            'view_id': self.env.ref('mrp.mrp_message_view_form_embedded_product').id,
-            'type': 'ir.actions.act_window',
-            'context': {
-                'default_workcenter_id': self.workcenter_id.id,
-                'default_product_tmpl_id': self.product_tmpl_id.id,
-                'default_product_id': self.product_id.id,
-                'default_message': 'Quality Alert For Product: %s' % self.product_id.name
-            },
-            'target': 'new',
-        }
-
-
 class QualityCheck(models.Model):
     _inherit = "quality.check"
 
