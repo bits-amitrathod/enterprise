@@ -458,12 +458,7 @@ class AccountFinancialReportLine(models.Model):
         strict_range = self.special_date_changer == 'strict_range'
         if self.special_date_changer == 'from_beginning':
             date_from = False
-        if self.special_date_changer == 'to_beginning_of_period':
-            if not date_from:
-                raise UserError(_(
-                    'Incorrect configuration! The analysis period is configured to use a single date '
-                    'while the special date changer is set \'At the beginning of the period\'.'
-                ))
+        if self.special_date_changer == 'to_beginning_of_period' and date_from:
             date_tmp = datetime.strptime(self._context['date_from'], "%Y-%m-%d") - relativedelta(days=1)
             date_to = date_tmp.strftime('%Y-%m-%d')
             date_from = False
