@@ -5,7 +5,7 @@
         <xpath expr="//link[last()]" position="after">
             <link rel="stylesheet" type="text/scss" href="/hr_contract_salary/static/src/scss/hr_contract_salary.scss"/>
         </xpath>
-        <xpath expr="//script[last()]" position="after">  
+        <xpath expr="//script[last()]" position="after">
             <script type="text/javascript" src="/hr_contract_salary/static/src/js/hr_contract_salary.js"></script>
         </xpath>
     </template>
@@ -102,7 +102,9 @@
                                                 <div class="col-md-2 mt24">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control advantage_input" t-att-value="contract.company_car_total_depreciated_cost or '0'" disabled="disabled" name="car_employee_deduction"/>
-                                                        <div class="input-group-addon">€</div>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">€</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -124,7 +126,9 @@
                                                 <div class="col-md-2 mt24">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control advantage_input" t-att-value="contract.public_transport_reimbursed_amount or '0'" disabled="disabled" name="public_transport_reimbursed_amount"/>
-                                                        <div class="input-group-addon">€</div>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">€</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,7 +150,9 @@
                                                 <div class="col-md-2 mt24">
                                                     <div class="input-group">
                                                         <input class="form-control" type="text" t-att-value="contract.others_reimbursed_amount or '0'" name="others_reimbursed_amount" disabled="disabled"/>
-                                                        <div class="input-group-addon">€</div>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">€</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -166,7 +172,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="contract.internet" disabled="disabled" name="internet_amount"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +205,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="contract.mobile + contract.mobile_plus" disabled="disabled" name="mobile_amount"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,11 +245,15 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" name="holidays_input" type="text" t-att-value="contract.holidays" disabled="disabled"/>
-                                                    <div class="input-group-addon">day(s)</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">day(s)</div>
+                                                    </div>
                                                 </div>
                                                 <div class="input-group d-none" name="holidays_compensation">
                                                     <input class="form-control" name="holidays_compensation_input" type="text" t-att-value="contract.holidays_compensation" disabled="disabled"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,7 +288,9 @@
                                                 <div class="col-md-2">
                                                     <div class="input-group">
                                                         <input class="form-control" type="text" t-att-value="contract.representation_fees" disabled="disabled" name="representation_fees"/>
-                                                        <div class="input-group-addon">€</div>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">€</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7 offset-md-3 mt8">
@@ -303,7 +319,9 @@
                                                 <div class="col-md-2">
                                                     <div class="input-group">
                                                         <input class="form-control" type="text" t-att-value="contract.ip_wage_rate" disabled="disabled" name="ip_wage_rate"/>
-                                                        <div class="input-group-addon">%</div>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">%</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -332,14 +350,16 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control advantage_input" name="fuel_card_input" type="text" t-att-value="contract.fuel_card" disabled="disabled"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Commissions -->
-                                    <t t-if="contract.commission_on_target"> 
+                                    <t t-if="contract.commission_on_target">
                                         <div class="form-group" name="commission_on_target_div">
                                             <div class="row">
                                                 <label class="col-md-3 control-label" for="commission_on_target">
@@ -353,7 +373,9 @@
                                                         <input class="form-control advantage_input" type="text" t-att-value="contract.commission_on_target" disabled="disabled" name="commission_on_target"/>
                                                         <input class="form-control advantage_input d-none" type="text" t-att-value="round(contract.warrant_value_employee / 12.0, 2)" disabled="disabled" name="warrant_value"/>
                                                         <input class="form-control advantage_input d-none" type="text" t-att-value="round(contract.warrants_cost / 12.0, 2)" disabled="disabled" name="warrant_cost"/>
-                                                        <div class="input-group-addon">€</div>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">€</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -374,7 +396,9 @@
                                                 <div class="col-md-2">
                                                     <div class="input-group">
                                                         <input class="form-control" name="meal_voucher_amount" type="text" t-att-value="contract.meal_voucher_amount * 20.0 " disabled="disabled"/>
-                                                        <div class="input-group-addon">€</div>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">€</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -396,7 +420,9 @@
                                             <div class="col-md-2 text-right">
                                                 <div class="input-group">
                                                     <input class="form-control text-right" type="text" t-att-value="contract.eco_checks" disabled="disabled" name="eco_checks"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -414,7 +440,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control text-right" type="text" t-att-value="contract.thirteen_month" disabled="disabled" name="thirteen_month"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -432,14 +460,16 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="contract.double_holidays" disabled="disabled" name="double_holidays"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                </div> 
-                                
+                                </div>
+
                                 <!-- Sidebar -->
                                 <div id="hr_cs_sidebar" class="col-lg-3 offset-xl-1">
                                     <t t-if="redirect_to_job">
@@ -449,7 +479,7 @@
                                     </t>
 
                                     <h2>Monthly Salary</h2>
-                                    
+
                                     <div class="d-none">
                                         <input class="form-control" t-att-id="contract.id" type="text" t-att-value="contract.name" disabled="disabled" name="contract"/>
                                         <input class="form-control" t-att-id="contract.resource_calendar_id.id" type="text" t-att-value="contract.resource_calendar_id.name" disabled="disabled"/>
@@ -461,9 +491,13 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <input class="form-control advantage_input d-none" type="text" t-att-value="contract.wage" name="wage" disabled="disabled"/>
-                                                    <div class="input-group-addon d-none">€</div>
+                                                    <div class="input-group-append d-none">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                     <input class="form-control advantage_input" type="text" t-att-value="contract.wage_with_holidays" name="wage_with_holidays" disabled="disabled"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -479,7 +513,9 @@
                                             <div class="col-md-5">
                                                 <div class="input-group">
                                                     <input class="form-control text-right" type="text" value="2238.38" disabled="disabled" name="NET"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -493,7 +529,9 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="monthly_nature" class="form-control"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -505,7 +543,9 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="monthly_cash" class="form-control"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -520,7 +560,9 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="yearly_cash" class="form-control"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -532,7 +574,9 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="holidays_input" class="form-control" t-att-value="contract.holidays"/>
-                                                    <div class="input-group-addon">day(s)</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">day(s)</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -546,7 +590,9 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="monthly_total"  class="form-control"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -558,7 +604,9 @@
                                             <div class="col-md-5">
                                                 <div class="input-group">
                                                     <input type="text" disabled="disabled" name="employee_total_cost" class="form-control" t-att-value="contract.final_yearly_costs"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                     <input type="text" disabled="disabled" name="fixed_yearly_costs" class="form-control d-none" t-att-value="contract.final_yearly_costs"/>
                                                 </div>
                                             </div>
@@ -592,7 +640,7 @@
                                 <div class="col-md-8">
                                     <h1>Your Personal Information</h1>
                                 </div>
-            
+
                                 <div class="col-md-4 mt48">
                                     <button t-att-class="'d-none' if need_personal_information else 'btn'" type="button" name="toggle_personal_information">Show <i class="fa fa-chevron-down"></i></button>
                                     <button class="d-none btn" type="button" name="toggle_personal_information">Hide <i class="fa fa-chevron-up"></i></button>
@@ -767,7 +815,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Contact -->
                                     <div class="row">
                                         <div class="col-md-12">
@@ -992,9 +1040,13 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control d-none" type="text" value="2600" disabled="disabled" name="wage"/>
-                                                    <div class="input-group-addon d-none">€</div>
+                                                    <div class="input-group-append d-none">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                     <input class="form-control" type="text" value="2600" disabled="disabled" name="wage_with_holidays"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1009,7 +1061,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="5" disabled="disabled" name="ATN.INT.1"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1022,7 +1076,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="12.50" disabled="disabled" name="ATN.MOB.1"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1035,7 +1091,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="2600" disabled="disabled" name="SALARY"/>
-                                                    <div class="input-group-addon o_box_subtotal">€</div>
+                                                    <div class="input-group-append o_box_subtotal">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1048,7 +1106,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="250" disabled="disabled" name="ATN.CAR.1"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1060,7 +1120,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="339.82" disabled="disabled" name="ONSS"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1073,7 +1135,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="0.0" disabled="disabled" name="EMP.BONUS"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1085,7 +1149,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="25.0" disabled="disabled" name="IP"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1098,7 +1164,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="2260.18" disabled="disabled" name="GROSS"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1111,7 +1179,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control"  value="~" disabled="disabled" name="P.P"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1124,7 +1194,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" value="0.0" disabled="disabled" name="PP.RED"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1137,7 +1209,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control"  value="0.0" disabled="disabled" name="M.ONSS"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1150,7 +1224,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control"  value="21.80" disabled="disabled" name="MEAL_V_EMP"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1163,7 +1239,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" value="250" disabled="disabled" name="ATN.CAR.2"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1177,7 +1255,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="5" disabled="disabled" name="ATN.INT.2"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1190,7 +1270,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="12.50" disabled="disabled" name="ATN.MOB.2"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1202,7 +1284,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="2238.38" disabled="disabled" name="TAXED"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1215,7 +1299,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="contract.representation_fees" disabled="disabled" name="representation_fees"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1227,7 +1313,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="25.0" disabled="disabled" name="IP"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1238,7 +1326,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="0" disabled="disabled" name="IP.DED"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1251,7 +1341,9 @@
                                             <div class="col-md-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="2238.38" disabled="disabled" name="NET"/>
-                                                    <div class="input-group-addon">€</div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1267,7 +1359,7 @@
                     </div>
 
                 </form>
-            </div>      
+            </div>
         </t>
     </template>
 
